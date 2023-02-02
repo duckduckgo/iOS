@@ -93,7 +93,7 @@ struct SyncCodeCollectionView: View {
                     .padding(.bottom, 20)
                     .onTapGesture {
                         #warning("remove this before going live")
-                        model.codeScanned("camera unavailable")
+                        _ = model.codeScanned("camera unavailable")
                     }
 
                 Text("Camera is Unavailable")

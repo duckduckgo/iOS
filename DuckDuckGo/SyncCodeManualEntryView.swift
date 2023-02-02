@@ -57,18 +57,30 @@ struct SyncCodeManualEntryView: View {
 
     @ViewBuilder
     func codeEntrySection() -> some View {
-        VStack(spacing: 20) {
-            codeEntryField()
-                .padding(.top, 20)
-
-            Button(action: model.pasteCode) {
-                Label("Paste", image: "SyncPaste")
+        ZStack {
+            VStack {
+                HStack { Spacer() }
+                Spacer()
             }
-            .buttonStyle(SyncLabelButtonStyle())
-            .padding(.bottom, 20)
 
+            RoundedRectangle(cornerRadius: 8).foregroundColor(.white.opacity(0.09))
+
+            VStack(spacing: 20) {
+                Spacer()
+
+                codeEntryField()
+
+                Spacer()
+
+                Button(action: model.pasteCode) {
+                    Label("Paste", image: "SyncPaste")
+                }
+                .buttonStyle(SyncLabelButtonStyle())
+                .padding(.bottom, 20)
+            }
         }
-        .background(RoundedRectangle(cornerRadius: 8).foregroundColor(.white.opacity(0.09)))
+        .frame(maxWidth: 350, maxHeight: 350)
+        .padding()
     }
 
     @ViewBuilder
@@ -90,16 +102,13 @@ struct SyncCodeManualEntryView: View {
         ZStack(alignment: .top) {
             VStack(spacing: 20) {
                 codeEntrySection()
-
                 instructions()
-
                 Spacer()
-
                 button()
             }
             .frame(maxWidth: SyncUIConstants.maxWidth, alignment: .center)
-            .padding(.horizontal, 20)
         }
+        .padding(.horizontal, 20)
         .navigationTitle("Manually Enter Code")
         .modifier(SyncBackButtonModifier())
         .ignoresSafeArea(.keyboard)

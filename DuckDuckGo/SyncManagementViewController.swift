@@ -43,6 +43,7 @@ class SyncManagementViewController: HostingController<SyncManagementView> {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        applyTheme(ThemeManager.shared.currentTheme)
     }
 
 }

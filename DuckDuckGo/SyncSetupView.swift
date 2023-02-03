@@ -81,6 +81,7 @@ struct SyncSetupView: View {
                     }
                 }
         }
+            .navigationViewStyle(.stack)
     }
 
 }

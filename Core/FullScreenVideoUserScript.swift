@@ -28,6 +28,7 @@ public class FullScreenVideoUserScript: NSObject, UserScript {
     public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart
     public var forMainFrameOnly: Bool = false
     public var messageNames: [String] = []
+    public var requiresRunInPageContentWorld: Bool { true }
 
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {}
 }

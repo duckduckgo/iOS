@@ -1,3 +1,4 @@
-• Bug fixes and other improvements
+• Fix for fullscreen video on iPad
+• Additional bug fixes and improvements.
 
 Join our fully distributed team and help raise the standard of trust online — from anywhere! https://duckduckgo.com/hiring

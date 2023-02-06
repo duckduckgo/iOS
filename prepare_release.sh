@@ -27,12 +27,11 @@ print_usage_and_exit() {
 
 	cat <<- EOF
 	Usage:
-	  $ $(basename "$0") <version> [-h] [-m] [-v]
+	  $ $(basename "$0") <version> [-h] [-v]
 	  Current version: $(cut -d' ' -f3 < Configuration/Version.xcconfig)
 
 	Options:
 	  -h         Make hotfix release
-	  -m <path>  Path to updated metadata
 	  -v         Enable verbose mode
 
 	EOF
@@ -48,13 +47,10 @@ read_command_line_arguments() {
 
 	shift 1
 
-	while getopts 'hm:v' option; do
+	while getopts 'hv' option; do
 		case "${option}" in
 			h)
 				is_hotfix=1
-				;;
-			m)
-			    metadata=${OPTARG}
 				;;
 			v)
 				mute=
@@ -139,30 +135,6 @@ update_embedded_files() {
 	fi
 }
 
-update_metadata() {
-	echo "Updating metadata files ... "
-	local destination="fastlane/metadata/"
-	if [[ "${metadata}" == *.zip ]]; then
-		local tempdir
-		tempdir="$(mktemp -d)"
-		trap 'rm -rf "$tempdir"' EXIT
-		unzip "${metadata}" -d "${tempdir}" -x "__MACOSX/*"
-		rsync -a --delete "${tempdir}"/*/ "${destination}"
-	else
-		rsync -a --delete "${metadata}/" "${destination}"
-	fi
-
-	./check_metadata_length.sh
-
-	git add fastlane/metadata
-	if [[ $(git diff --cached) ]]; then
-		eval git commit -m \"Update metadata files\" "$mute"
-		echo "✅"
-	else
-		printf "\nNo changes to metadata files ✅\n"
-	fi
-}
-
 update_release_notes() {
 	local release_notes_path="fastlane/metadata/default/release_notes.txt"
 	echo "Please update release notes and save the file."
@@ -195,9 +167,6 @@ main() {
 	update_marketing_version
 	update_build_version
 	update_embedded_files
-	if [[ -n "${metadata}" ]]; then
-		update_metadata
-	fi
 	update_release_notes
 	create_pull_request
 }

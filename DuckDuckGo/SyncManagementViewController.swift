@@ -20,6 +20,7 @@
 import SwiftUI
 import Combine
 import AVFoundation
+import SyncUI
 
 // Can this be re-used on macOS? 
 typealias HostingController = UIHostingController
@@ -124,7 +125,7 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
         })
         navigationController?.present(controller, animated: true) {
             self.rootView.model.showDevices()
-            self.rootView.model.devices.append(.init(id: UUID().uuidString, name: "Another Device", isThisDevice: false))
+            self.rootView.model.appendDevice(.init(id: UUID().uuidString, name: "Another Device", isThisDevice: false))
             print(#function, "completed")
         }
 

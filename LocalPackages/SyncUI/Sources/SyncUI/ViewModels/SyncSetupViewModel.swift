@@ -19,11 +19,11 @@
 
 import Foundation
 
-class SyncSetupViewModel: ObservableObject {
+public class SyncSetupViewModel: ObservableObject {
 
     let finished: (SyncSetupViewModel) -> Void
 
-    init(finished: @escaping (SyncSetupViewModel) -> Void) {
+    public init(finished: @escaping (SyncSetupViewModel) -> Void) {
         self.finished = finished
     }
 

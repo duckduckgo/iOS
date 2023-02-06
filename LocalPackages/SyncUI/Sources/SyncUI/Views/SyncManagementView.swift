@@ -21,9 +21,13 @@ import SwiftUI
 
 // https://www.figma.com/proto/mpFLwzGJFlbsmyD1JkAwt2/Sync-6?page-id=3744%3A50448&node-id=4101%3A70169&viewport=546%2C933%2C0.11&scaling=scale-down
 
-struct SyncManagementView: View {
+public struct SyncManagementView: View {
 
-    @ObservedObject var model: SyncManagementViewModel
+    @ObservedObject public var model: SyncManagementViewModel
+
+    public init(model: SyncManagementViewModel) {
+        self.model = model
+    }
 
     @ViewBuilder
     func syncToggle() -> some View {
@@ -71,7 +75,7 @@ struct SyncManagementView: View {
         }
     }
 
-    var body: some View {
+    public var body: some View {
         List {
             syncToggle()
 

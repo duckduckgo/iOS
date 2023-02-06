@@ -20,7 +20,7 @@
 import Foundation
 import UIKit
 
-protocol SyncManagementViewModelDelegate: AnyObject {
+public protocol SyncManagementViewModelDelegate: AnyObject {
 
     func showSyncSetup()
     func showRecoverData()
@@ -31,17 +31,23 @@ protocol SyncManagementViewModelDelegate: AnyObject {
 
 }
 
-class SyncManagementViewModel: ObservableObject {
+public class SyncManagementViewModel: ObservableObject {
 
-    struct Device: Identifiable, Hashable {
+    public struct Device: Identifiable, Hashable {
 
-        func hash(into hasher: inout Hasher) {
+        public func hash(into hasher: inout Hasher) {
             hasher.combine(id)
         }
 
-        let id: String
+        public let id: String
         let name: String
         let isThisDevice: Bool
+
+        public init(id: String, name: String, isThisDevice: Bool) {
+            self.id = id
+            self.name = name
+            self.isThisDevice = isThisDevice
+        }
 
     }
 
@@ -54,22 +60,20 @@ class SyncManagementViewModel: ObservableObject {
     @Published var isBusy = false
     @Published var devices = [Device]()
 
-    weak var delegate: SyncManagementViewModelDelegate? {
-        didSet {
-            print(#function)
-        }
-    }
+    public weak var delegate: SyncManagementViewModelDelegate?
 
-    init() {
-        print(Self.self, #function)
-    }
+    public init() { }
 
-    func showDevices() {
+    public func showDevices() {
         isBusy = false
         isSyncEnabled = true
         devices = [
             Device(id: UUID().uuidString, name: UIDevice.current.name, isThisDevice: true)
         ]
+    }
+
+    public func appendDevice(_ device: Device) {
+        devices.append(device)
     }
 
     func enableSync() {
@@ -82,7 +86,7 @@ class SyncManagementViewModel: ObservableObject {
         print(#function)
     }
 
-    func setupFinished(_ model: SyncSetupViewModel) {
+    public func setupFinished(_ model: SyncSetupViewModel) {
         switch model.state {
         case .turnOn:
             delegate?.createAccountAndStartSyncing()
@@ -98,7 +102,7 @@ class SyncManagementViewModel: ObservableObject {
         }
     }
 
-    func codeCollectionCancelled() {
+    public func codeCollectionCancelled() {
         print(#function)
         isBusy = false
         isSyncEnabled = false

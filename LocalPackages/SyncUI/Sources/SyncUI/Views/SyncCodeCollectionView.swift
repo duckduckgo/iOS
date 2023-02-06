@@ -19,9 +19,13 @@
 
 import SwiftUI
 
-struct SyncCodeCollectionView: View {
+public struct SyncCodeCollectionView: View {
 
     @ObservedObject var model: SyncCodeCollectionViewModel
+
+    public init(model: SyncCodeCollectionViewModel) {
+        self.model = model
+    }
 
     @ViewBuilder
     func fullscreenCameraBackground() -> some View {
@@ -170,7 +174,7 @@ struct SyncCodeCollectionView: View {
         }
     }
 
-    var body: some View {
+    public var body: some View {
         GeometryReader { g in
             ZStack(alignment: .top) {
                 fullscreenCameraBackground()

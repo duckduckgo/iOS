@@ -20,13 +20,17 @@
 import SwiftUI
 import DuckUI
 
-struct SyncRecoveryPDFView: View {
+public struct SyncRecoveryPDFView: View {
 
     @Environment(\.presentationMode) var presentation
 
     let showRecoveryPDFAction: () -> Void
 
-    var body: some View {
+    public init(showRecoveryPDFAction: @escaping () -> Void) {
+        self.showRecoveryPDFAction = showRecoveryPDFAction
+    }
+
+    public var body: some View {
         VStack {
             Image("SyncDownloadRecoveryCode")
                 .padding(.bottom, 20)

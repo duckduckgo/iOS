@@ -167,7 +167,7 @@ private struct CodeEntryView: UIViewRepresentable {
 
         func textViewDidChange(_ textView: UITextView) {
             print(#function, textView.text ?? "nil")
-            if textView.text.trimmingWhitespace().isEmpty {
+            if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 view.text = nil
             } else {
                 let text = textView.text.groups(ofSize: 4)

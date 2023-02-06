@@ -20,11 +20,15 @@
 import SwiftUI
 import DuckUI
 
-struct SyncDeviceConnectedView: View {
+public struct SyncDeviceConnectedView: View {
 
     let showRecoveryPDFAction: () -> Void
 
     @State var showRecoveryPDF = false
+
+    public init(showRecoveryPDFAction: @escaping () -> Void) {
+        self.showRecoveryPDFAction = showRecoveryPDFAction
+    }
 
     @ViewBuilder
     func deviceSyncedView() -> some View {
@@ -68,7 +72,7 @@ struct SyncDeviceConnectedView: View {
         }
     }
 
-    var body: some View {
+    public var body: some View {
         Group {
             if showRecoveryPDF {
                 SyncRecoveryPDFView(showRecoveryPDFAction: showRecoveryPDFAction)

@@ -19,7 +19,7 @@
 
 import Foundation
 
-protocol SyncCodeCollectionViewModelDelegate: AnyObject {
+public protocol SyncCodeCollectionViewModelDelegate: AnyObject {
 
     var pasteboardString: String? { get }
 
@@ -32,22 +32,23 @@ protocol SyncCodeCollectionViewModelDelegate: AnyObject {
 
 }
 
-class SyncCodeCollectionViewModel: ObservableObject {
+public class SyncCodeCollectionViewModel: ObservableObject {
 
-    enum StartConnectModeResult {
-        case authorised(code: String), denied, failed
-    }
-
-    enum VideoPermission {
+    public enum VideoPermission {
         case unknown, authorised, denied
     }
 
-    enum State {
+    public enum State {
         case showScanner, manualEntry, showQRCode
     }
 
+    public enum StartConnectModeResult {
+        case authorised(code: String), denied, failed
+    }
+
+    @Published public var videoPermission: VideoPermission = .unknown
+
     @Published var showCamera = true
-    @Published var videoPermission: VideoPermission = .unknown
     @Published var state = State.showScanner
     @Published var manuallyEnteredCode: String?
 
@@ -55,13 +56,13 @@ class SyncCodeCollectionViewModel: ObservableObject {
         manuallyEnteredCode?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false
     }
 
-    weak var delegate: SyncCodeCollectionViewModelDelegate?
+    public weak var delegate: SyncCodeCollectionViewModelDelegate?
 
     var showQRCodeModel: ShowQRCodeViewModel?
 
     let canShowQRCode: Bool
 
-    init(canShowQRCode: Bool) {
+    public init(canShowQRCode: Bool) {
         self.canShowQRCode = canShowQRCode
     }
 

@@ -20,14 +20,17 @@
 import SwiftUI
 import DuckUI
 
-struct SyncSetupView: View {
+public struct SyncSetupView: View {
 
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
-    @ObservedObject var model: SyncSetupViewModel
-    @State var scrollUnder = false
-
     @State var turnOnSyncNavigation = false
+
+    @ObservedObject var model: SyncSetupViewModel
+
+    public init(model: SyncSetupViewModel) {
+        self.model = model
+    }
 
     @ViewBuilder
     func turnOnSyncView() -> some View {
@@ -68,7 +71,7 @@ struct SyncSetupView: View {
         .navigationBarBackButtonHidden(true)
     }
 
-    var body: some View {
+    public var body: some View {
         NavigationView {
             turnOnSyncView()
                 .toolbar {

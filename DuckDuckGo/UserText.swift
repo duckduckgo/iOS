@@ -517,11 +517,5 @@ public struct UserText {
     public static let autofillLoginDetailsSaveDuplicateLoginAlertAction = NSLocalizedString("autofill.logins.details.save-duplicate-alert.action", value:"OK", comment: "Action text for alert when attempting to save a duplicate login")
 
     public static let autofillNavigationButtonItemTitleClose = NSLocalizedString("autofill.logins.list.close-title", value:"Close", comment: "Title for close navigation button")
-
-    public static let syncTurnOnMessage = "This will save an encrypted backup of your bookmarks on DuckDuckGo’s servers, which can be synced with your other devices.\n\nThe decryption key is stored on your device and cannot be read by DuckDuckGo."
-
-    public static let syncWithAnotherDeviceMessage = "Your bookmarks are backed up! Would you like to sync with a second device now?"
-
-    public static let syncRecoveryPDFMessage = "If you lose access to your devices, you will need a code to recover your synced data. You can save this code to your device as a PDF.\n\nAnyone with access to this code can access your synced data, so please keep it in a safe place."
     
 }

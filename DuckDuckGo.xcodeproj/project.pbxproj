@@ -127,6 +127,10 @@
 		31DD208427395A5A008FB313 /* VoiceSearchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DD208327395A5A008FB313 /* VoiceSearchHelper.swift */; };
 		31E69A63280F4CB600478327 /* DuckUI in Frameworks */ = {isa = PBXBuildFile; productRef = 31E69A62280F4CB600478327 /* DuckUI */; };
 		31EF52E1281B3BDC0034796E /* AutofillLoginListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EF52E0281B3BDC0034796E /* AutofillLoginListItemViewModel.swift */; };
+		37FCAAA729911A05000E420A /* WaitlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FCAAA629911A05000E420A /* WaitlistViewModel.swift */; };
+		37FCAAA929911A46000E420A /* WaitlistStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FCAAA829911A46000E420A /* WaitlistStorage.swift */; };
+		37FCAAAB29911BF1000E420A /* Waitlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FCAAAA29911BF1000E420A /* Waitlist.swift */; };
+		37FCAAAE29911CA1000E420A /* WaitlistStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FCAAAC29911C77000E420A /* WaitlistStorageTests.swift */; };
 		4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */; };
 		4B04ABBC27FFD92800945B5D /* MacBrowserWaitlistStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B04ABBB27FFD92800945B5D /* MacBrowserWaitlistStorageTests.swift */; };
 		4B04ABBE27FFD96900945B5D /* MacBrowserWaitlistMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B04ABBD27FFD96900945B5D /* MacBrowserWaitlistMocks.swift */; };
@@ -143,8 +147,6 @@
 		4B6484EE27FD1E350050A7A1 /* MacBrowserWaitlistDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E427FD1E340050A7A1 /* MacBrowserWaitlistDebugViewController.swift */; };
 		4B6484EF27FD1E350050A7A1 /* MacWaitlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E527FD1E340050A7A1 /* MacWaitlistViewController.swift */; };
 		4B6484F027FD1E350050A7A1 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E627FD1E340050A7A1 /* FontExtension.swift */; };
-		4B6484F127FD1E350050A7A1 /* MacBrowserWaitlistStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E727FD1E340050A7A1 /* MacBrowserWaitlistStorage.swift */; };
-		4B6484F227FD1E350050A7A1 /* MacWaitlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E827FD1E340050A7A1 /* MacWaitlistViewModel.swift */; };
 		4B6484F327FD1E350050A7A1 /* MenuControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E927FD1E340050A7A1 /* MenuControllerView.swift */; };
 		4B6484FA27FFCF750050A7A1 /* MacWaitlistViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484F727FFCF3D0050A7A1 /* MacWaitlistViewModelTests.swift */; };
 		4B6484FC27FFD14F0050A7A1 /* MacBrowserWaitlistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484FB27FFD14F0050A7A1 /* MacBrowserWaitlistTests.swift */; };
@@ -914,6 +916,10 @@
 		31CC224828369B38001654A4 /* AutofillLoginSettingsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginSettingsListViewController.swift; sourceTree = "<group>"; };
 		31DD208327395A5A008FB313 /* VoiceSearchHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSearchHelper.swift; sourceTree = "<group>"; };
 		31EF52E0281B3BDC0034796E /* AutofillLoginListItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginListItemViewModel.swift; sourceTree = "<group>"; };
+		37FCAAA629911A05000E420A /* WaitlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitlistViewModel.swift; sourceTree = "<group>"; };
+		37FCAAA829911A46000E420A /* WaitlistStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitlistStorage.swift; sourceTree = "<group>"; };
+		37FCAAAA29911BF1000E420A /* Waitlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Waitlist.swift; sourceTree = "<group>"; };
+		37FCAAAC29911C77000E420A /* WaitlistStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitlistStorageTests.swift; sourceTree = "<group>"; };
 		4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationDebugViewController.swift; sourceTree = "<group>"; };
 		4B04ABBB27FFD92800945B5D /* MacBrowserWaitlistStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistStorageTests.swift; sourceTree = "<group>"; };
 		4B04ABBD27FFD96900945B5D /* MacBrowserWaitlistMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistMocks.swift; sourceTree = "<group>"; };
@@ -929,8 +935,6 @@
 		4B6484E427FD1E340050A7A1 /* MacBrowserWaitlistDebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistDebugViewController.swift; sourceTree = "<group>"; };
 		4B6484E527FD1E340050A7A1 /* MacWaitlistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacWaitlistViewController.swift; sourceTree = "<group>"; };
 		4B6484E627FD1E340050A7A1 /* FontExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
-		4B6484E727FD1E340050A7A1 /* MacBrowserWaitlistStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistStorage.swift; sourceTree = "<group>"; };
-		4B6484E827FD1E340050A7A1 /* MacWaitlistViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacWaitlistViewModel.swift; sourceTree = "<group>"; };
 		4B6484E927FD1E340050A7A1 /* MenuControllerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuControllerView.swift; sourceTree = "<group>"; };
 		4B6484F727FFCF3D0050A7A1 /* MacWaitlistViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacWaitlistViewModelTests.swift; sourceTree = "<group>"; };
 		4B6484FB27FFD14F0050A7A1 /* MacBrowserWaitlistTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistTests.swift; sourceTree = "<group>"; };
@@ -2467,18 +2471,35 @@
 			path = LocalPackages;
 			sourceTree = "<group>";
 		};
-		4B6484F427FD1E390050A7A1 /* Waitlist */ = {
+		37FCAAA0299117F9000E420A /* MacBrowser */ = {
 			isa = PBXGroup;
 			children = (
 				4B6484E327FD1E340050A7A1 /* MacBrowserWaitlist.swift */,
 				4B6484E427FD1E340050A7A1 /* MacBrowserWaitlistDebugViewController.swift */,
-				4B6484E727FD1E340050A7A1 /* MacBrowserWaitlistStorage.swift */,
 				4B6484E027FD1E340050A7A1 /* MacBrowserWaitlistView.swift */,
 				4B6484E527FD1E340050A7A1 /* MacWaitlistViewController.swift */,
-				4B6484E827FD1E340050A7A1 /* MacWaitlistViewModel.swift */,
+			);
+			name = MacBrowser;
+			sourceTree = "<group>";
+		};
+		37FCAAA129911801000E420A /* WindowsBrowser */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = WindowsBrowser;
+			sourceTree = "<group>";
+		};
+		4B6484F427FD1E390050A7A1 /* Waitlist */ = {
+			isa = PBXGroup;
+			children = (
 				4B6484E927FD1E340050A7A1 /* MenuControllerView.swift */,
 				4B6484E127FD1E340050A7A1 /* NotificationService.swift */,
+				37FCAAAA29911BF1000E420A /* Waitlist.swift */,
 				4B6484E227FD1E340050A7A1 /* WaitlistRequest.swift */,
+				37FCAAA629911A05000E420A /* WaitlistViewModel.swift */,
+				37FCAAA829911A46000E420A /* WaitlistStorage.swift */,
+				37FCAAA0299117F9000E420A /* MacBrowser */,
+				37FCAAA129911801000E420A /* WindowsBrowser */,
 			);
 			name = Waitlist;
 			sourceTree = "<group>";
@@ -2486,6 +2507,7 @@
 		4B6484F927FFCF520050A7A1 /* Waitlist */ = {
 			isa = PBXGroup;
 			children = (
+				37FCAAAC29911C77000E420A /* WaitlistStorageTests.swift */,
 				4B6484F727FFCF3D0050A7A1 /* MacWaitlistViewModelTests.swift */,
 				4B04ABBB27FFD92800945B5D /* MacBrowserWaitlistStorageTests.swift */,
 				4B6484FB27FFD14F0050A7A1 /* MacBrowserWaitlistTests.swift */,
@@ -4997,6 +5019,7 @@
 				4B6484EA27FD1E350050A7A1 /* MacBrowserWaitlistView.swift in Sources */,
 				980891A72237D5D800313A70 /* FeedbackPresenter.swift in Sources */,
 				989B337522D7EF2100437824 /* EmptyCollectionReusableView.swift in Sources */,
+				37FCAAA929911A46000E420A /* WaitlistStorage.swift in Sources */,
 				8524CC94246C5C8900E59D45 /* DaxDialogViewController.swift in Sources */,
 				F42EF9312614BABE00101FB9 /* ActionSheetDaxDialogViewController.swift in Sources */,
 				F13B4BC01F180D8A00814661 /* TabsModel.swift in Sources */,
@@ -5009,7 +5032,6 @@
 				F1CDD3F21F16911700BE0581 /* AboutViewController.swift in Sources */,
 				98F0FC2021FF18E700CE77AB /* AutoClearSettingsViewController.swift in Sources */,
 				F1E90C201E678E7C005E7E21 /* HomeControllerDelegate.swift in Sources */,
-				4B6484F127FD1E350050A7A1 /* MacBrowserWaitlistStorage.swift in Sources */,
 				F17922DE1E7192E6006E3D97 /* SuggestionTableViewCell.swift in Sources */,
 				986C7FA724171C6000A3557D /* BrokenSiteCategories.swift in Sources */,
 				98DA6ECA2181E41F00E65433 /* ThemeManager.swift in Sources */,
@@ -5045,6 +5067,7 @@
 				9817C9C321EF594700884F65 /* AutoClear.swift in Sources */,
 				310C4B47281B60E300BA79A9 /* AutofillLoginDetailsViewModel.swift in Sources */,
 				85EE7F572246685B000FE757 /* WebContainerViewController.swift in Sources */,
+				37FCAAA729911A05000E420A /* WaitlistViewModel.swift in Sources */,
 				1E4DCF4E27B6A69600961E25 /* DownloadsListHostingController.swift in Sources */,
 				311BD1B12836C0CA00AEF6C1 /* AutofillLoginListAuthenticator.swift in Sources */,
 				B652DF13287C373A00C12A9C /* ScriptSourceProviding.swift in Sources */,
@@ -5082,6 +5105,7 @@
 				4B6484ED27FD1E350050A7A1 /* MacBrowserWaitlist.swift in Sources */,
 				310D091D2799F57200DC0060 /* Download.swift in Sources */,
 				1EEF124E2850EADE003DDE57 /* PrivacyIconView.swift in Sources */,
+				37FCAAAB29911BF1000E420A /* Waitlist.swift in Sources */,
 				F159BDA41F0BDB5A00B4A01D /* TabViewController.swift in Sources */,
 				F44D279C27F331BB0037F371 /* AutofillLoginPromptView.swift in Sources */,
 				CBD4F13E279EBFAB00B20FD7 /* HomeMessageView.swift in Sources */,
@@ -5091,7 +5115,6 @@
 				314C92B827C3DD660042EC96 /* QuickLookPreviewView.swift in Sources */,
 				F1AE54E81F0425FC00D9A700 /* AuthenticationViewController.swift in Sources */,
 				F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */,
-				4B6484F227FD1E350050A7A1 /* MacWaitlistViewModel.swift in Sources */,
 				85864FBC24D31EF300E756FF /* SuggestionTrayViewController.swift in Sources */,
 				1EF24235273BB9D200DE3D02 /* IntervalSlider.swift in Sources */,
 				853273B224FF114700E3C778 /* DeepLinks.swift in Sources */,
@@ -5166,6 +5189,7 @@
 				31C138AC27A403CB00FFD4B2 /* DownloadManagerTests.swift in Sources */,
 				F11E23211ED3B7A600523BC9 /* MockBundle.swift in Sources */,
 				F13B4BF91F18CA0600814661 /* TabsModelTests.swift in Sources */,
+				37FCAAAE29911CA1000E420A /* WaitlistStorageTests.swift in Sources */,
 				98B31290218CCB2200E54DE1 /* MockDependencyProvider.swift in Sources */,
 				B6AD9E3828D4512E0019CDE9 /* EmbeddedTrackerDataTests.swift in Sources */,
 				1E722729292EB24D003B5F53 /* AppSettingsMock.swift in Sources */,

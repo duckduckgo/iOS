@@ -75,6 +75,7 @@ class ProductWaitlistRequest: WaitlistRequest {
 
     enum Product: String {
         case macBrowser = "macosbrowser"
+        case windowsBrowser = "windowsbrowser"
     }
     
     private let product: Product
@@ -87,8 +88,8 @@ class ProductWaitlistRequest: WaitlistRequest {
 #endif
     }
 
-    init(product: Product) {
-        self.product = product
+    init(waitlist: Waitlist) {
+        self.product = waitlist.product
     }
     
     // MARK: - WaitlistRequesting
@@ -186,4 +187,16 @@ class ProductWaitlistRequest: WaitlistRequest {
         }
     }
     
+}
+
+private extension Waitlist {
+
+    var product: ProductWaitlistRequest.Product {
+        switch self {
+        case .macBrowser:
+            return .macBrowser
+        case .windowsBrowser:
+            return .windowsBrowser
+        }
+    }
 }

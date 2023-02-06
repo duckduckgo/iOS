@@ -943,6 +943,9 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Copy";
 
+/* Title for the invite code screen */
+"mac-waitlist.invite-screen.youre-invited" = "You’re Invited!";
+
 /* Description text above the Share Link button */
 "mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "On your Mac, go to:";
 
@@ -955,6 +958,12 @@
 /* Title for the macOS waitlist button redirecting to Windows waitlist */
 "mac-waitlist.join-waitlist-screen.windows" = "Looking for the Windows Version?";
 
+/* Text used for the Notifications Disabled state */
+"mac-waitlist.notification.disabled" = "We can notify you when it’s your turn, but notifications are currently disabled for DuckDuckGo.";
+
+/* Title for the queue screen */
+"mac-waitlist.queue-screen.on-the-list" = "You’re on the list!";
+
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Browse privately with our app for Mac";
 
@@ -965,7 +974,7 @@ Visit this URL on your Mac to download:
 https://duckduckgo.com/mac";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "DuckDuckGo for Mac";
+"mac-waitlist.share-sheet.title" = "You’re Invited!";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "DuckDuckGo App for Mac";
@@ -1177,6 +1186,24 @@ https://duckduckgo.com/mac";
 /* Voice-search footer note with on-device privacy warning */
 "voiceSearch.footer.note" = "Audio is processed on-device. It's not stored or shared with anyone, including DuckDuckGo.";
 
+/* Label text for the invite code */
+"waitlist.invite-code" = "Invite Code";
+
+/* Step title on the invite screen */
+"waitlist.invite-screen.step.title" = "Step %d";
+
+/* Title for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.join" = "Join the Private Waitlist";
+
+/* Temporary status text for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.joining" = "Joining Waitlist...";
+
+/* Notification text for the waitlist */
+"waitlist.joined.no-notification.get-notification" = "Notify Me";
+
+/* Privacy disclaimer for the Waitlist feature */
+"waitlist.privacy-disclaimer" = "You won’t need to share any personal information to join the waitlist. You’ll secure your place in line with a timestamp that exists solely on your device so we can notify you when it’s your turn.";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favorite removed";
 
@@ -1200,4 +1227,48 @@ https://duckduckgo.com/mac";
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "A message from %@:";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"windows-browser.waitlist.joined.notifications-declined" = "Your invite to try DuckDuckGo for Windows will arrive here. Check back soon, or we can send you a notification when it’s your turn.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"windows-browser.waitlist.joined.notifications-enabled" = "We’ll send you a notification when your copy of DuckDuckGo for Windows is ready for download.";
+
+/* Summary text for the Windows browser waitlist */
+"windows-browser.waitlist.summary" = "DuckDuckGo for Windows has the speed you need, the browsing features you expect, and comes packed with our best-in-class privacy essentials.";
+
+/* Title for the Windows waitlist notification */
+"windows-waitlist.available.notification.title" = "DuckDuckGo for Windows is ready!";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-1.description" = "Visit this URL on your PC to download:";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-2.description" = "Open the file to install, then enter your invite code to unlock.";
+
+/* Subtitle for the Windows Waitlist Invite screen */
+"windows-waitlist.invite-screen.subtitle" = "Ready to use DuckDuckGo on Windows?";
+
+/* Title for the Windows waitlist button redirecting to Mac waitlist */
+"windows-waitlist.join-waitlist-screen.mac" = "Looking for the Mac Version?";
+
+/* Title for the Join Windows Waitlist screen */
+"windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Try DuckDuckGo for Windows!";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"windows-waitlist.share-sheet.message" = "You’re invited!
+
+Ready to start browsing privately on Mac?
+
+Step 1
+Visit this URL on your Mac to download:
+https://duckduckgo.com/mac
+
+Step 2
+Open the file to install, then enter your invite code to unlock.
+
+Invite code: %@";
+
+/* Title for the Windows Waitlist feature */
+"windows-waitlist.title" = "DuckDuckGo App for Windows";
 

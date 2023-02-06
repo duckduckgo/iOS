@@ -1,8 +1,8 @@
 //
-//  MacWaitlistViewModel.swift
+//  WaitlistViewModel.swift
 //  DuckDuckGo
 //
-//  Copyright © 2022 DuckDuckGo. All rights reserved.
+//  Copyright © 2023 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -22,42 +22,44 @@ import SwiftUI
 import Combine
 import Core
 
-protocol MacWaitlistViewModelDelegate: AnyObject {
-    func macWaitlistViewModelDidOpenShareSheet(_ viewModel: MacWaitlistViewModel, senderFrame: CGRect)
+protocol WaitlistViewModelDelegate: AnyObject {
+    func waitlistViewModelDidOpenShareSheet(_ viewModel: WaitlistViewModel, senderFrame: CGRect)
 }
 
 @MainActor
-final class MacWaitlistViewModel: ObservableObject {
-    
+final class WaitlistViewModel: ObservableObject {
+
     enum ViewAction: Equatable {
         case openShareSheet(CGRect)
         case copyDownloadURLToPasteboard
     }
 
-    weak var delegate: MacWaitlistViewModelDelegate?
-    
-    private let waitlistRequest: WaitlistRequest
-    private let waitlistStorage: MacBrowserWaitlistStorage
+    weak var delegate: WaitlistViewModelDelegate?
 
-    init(waitlistRequest: WaitlistRequest = ProductWaitlistRequest(product: .macBrowser),
-         waitlistStorage: MacBrowserWaitlistStorage = MacBrowserWaitlistKeychainStore()) {
+    convenience init(waitlist: Waitlist) {
+        self.init(waitlistRequest: ProductWaitlistRequest(waitlist: waitlist), waitlistStorage: WaitlistKeychainStore(waitlist: waitlist))
+    }
+
+    init(waitlistRequest: WaitlistRequest, waitlistStorage: WaitlistStorage) {
         self.waitlistRequest = waitlistRequest
         self.waitlistStorage = waitlistStorage
     }
-    
+
     func perform(action: ViewAction) async {
         switch action {
         case .openShareSheet(let frame): openShareSheet(senderFrame: frame)
         case .copyDownloadURLToPasteboard: copyDownloadUrlToClipboard()
         }
     }
-    
+
     private func openShareSheet(senderFrame: CGRect) {
-        self.delegate?.macWaitlistViewModelDidOpenShareSheet(self, senderFrame: senderFrame)
+        self.delegate?.waitlistViewModelDidOpenShareSheet(self, senderFrame: senderFrame)
     }
-    
+
     private func copyDownloadUrlToClipboard() {
         UIPasteboard.general.url = AppUrls().macBrowserDownloadURL
     }
-    
+
+    private let waitlistRequest: WaitlistRequest
+    private let waitlistStorage: WaitlistStorage
 }

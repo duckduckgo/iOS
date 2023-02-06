@@ -19,11 +19,11 @@
 
 import SwiftUI
 
-typealias ViewActionHandler = (MacWaitlistViewModel.ViewAction) -> Void
+typealias ViewActionHandler = (WaitlistViewModel.ViewAction) -> Void
 
 struct MacBrowserWaitlistView: View {
 
-    @EnvironmentObject var viewModel: MacWaitlistViewModel
+    @EnvironmentObject var viewModel: WaitlistViewModel
     
     var body: some View {
         MacBrowserWaitlistContentView { action in
@@ -70,7 +70,7 @@ struct MacBrowserWaitlistContentView: View {
                     Text(Constants.downloadURL)
                         .font(.proximaNovaBold17)
                         .foregroundColor(.macWaitlistBlue)
-                        .menuController(UserText.macWaitlistCopy) {
+                        .menuController(UserText.waitlistCopy) {
                             action(.copyDownloadURLToPasteboard)
                         }
                         .fixedSize()
@@ -81,7 +81,7 @@ struct MacBrowserWaitlistContentView: View {
                         }, label: {
                             HStack {
                                 Image("Share-16")
-                                Text(UserText.macWaitlistShareLink)
+                                Text(UserText.waitlistShareLink)
                             }
                         }
                     )

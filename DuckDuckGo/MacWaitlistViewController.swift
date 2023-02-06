@@ -24,10 +24,10 @@ import Core
 
 final class MacWaitlistViewController: UIViewController {
     
-    private let viewModel: MacWaitlistViewModel
+    private let viewModel: WaitlistViewModel
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        self.viewModel = MacWaitlistViewModel()
+        self.viewModel = WaitlistViewModel(waitlistRequest: ProductWaitlistRequest(waitlist: .macBrowser), waitlistStorage: WaitlistKeychainStore(waitlist: .macBrowser))
         super.init(nibName: nil, bundle: nil)
         self.viewModel.delegate = self
     }
@@ -63,9 +63,9 @@ final class MacWaitlistViewController: UIViewController {
     
 }
 
-extension MacWaitlistViewController: MacWaitlistViewModelDelegate {
+extension MacWaitlistViewController: WaitlistViewModelDelegate {
 
-    func macWaitlistViewModelDidOpenShareSheet(_ viewModel: MacWaitlistViewModel, senderFrame: CGRect) {
+    func waitlistViewModelDidOpenShareSheet(_ viewModel: WaitlistViewModel, senderFrame: CGRect) {
         let linkMetadata = MacWaitlistLinkMetadata()
         let activityViewController = UIActivityViewController(activityItems: [linkMetadata], applicationActivities: nil)
         

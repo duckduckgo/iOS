@@ -1,5 +1,5 @@
 //
-//  MacWaitlistViewModelTests.swift
+//  WaitlistViewModelTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -21,7 +21,7 @@ import XCTest
 @testable import DuckDuckGo
 @testable import Core
 
-class MacWaitlistViewModelTests: XCTestCase {
+class WaitlistViewModelTests: XCTestCase {
 
     private let mockToken = "mock-token"
     private let oldTimestamp = 100
@@ -34,8 +34,8 @@ class MacWaitlistViewModelTests: XCTestCase {
         let storage = MockWaitlistStorage()
         storage.store(inviteCode: inviteCode)
 
-        let viewModel = MacWaitlistViewModel(waitlistRequest: request, waitlistStorage: storage)
-        let delegate = MockMacWaitlistViewModelDelegate()
+        let viewModel = WaitlistViewModel(waitlistRequest: request, waitlistStorage: storage)
+        let delegate = MockWaitlistViewModelDelegate()
         viewModel.delegate = delegate
         
         await viewModel.perform(action: .openShareSheet(.zero))

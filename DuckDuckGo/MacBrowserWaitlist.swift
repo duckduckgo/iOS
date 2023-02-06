@@ -54,11 +54,11 @@ struct MacBrowserWaitlist {
     
     static var shared = MacBrowserWaitlist()
     
-    private let waitlistStorage: MacBrowserWaitlistStorage
+    private let waitlistStorage: WaitlistStorage
     private let waitlistRequest: WaitlistRequest
 
-    init(store: MacBrowserWaitlistStorage = MacBrowserWaitlistKeychainStore(),
-         request: WaitlistRequest = ProductWaitlistRequest(product: .macBrowser)) {
+    init(store: WaitlistStorage = WaitlistKeychainStore(waitlist: .macBrowser),
+         request: WaitlistRequest = ProductWaitlistRequest(waitlist: .macBrowser)) {
         self.waitlistStorage = store
         self.waitlistRequest = request
     }

@@ -56,7 +56,7 @@ struct MockWaitlistRequest: WaitlistRequest {
     
 }
 
-class MockWaitlistStorage: MacBrowserWaitlistStorage {
+class MockWaitlistStorage: WaitlistStorage {
     
     private var token: String?
     private var timestamp: Int?
@@ -104,11 +104,11 @@ struct MockNotificationService: NotificationService {
     
 }
 
-class MockMacWaitlistViewModelDelegate: MacWaitlistViewModelDelegate {
+class MockWaitlistViewModelDelegate: WaitlistViewModelDelegate {
 
     private(set) var didOpenShareSheetCalled = false
     
-    func macWaitlistViewModelDidOpenShareSheet(_ viewModel: DuckDuckGo.MacWaitlistViewModel, senderFrame: CGRect) {
+    func waitlistViewModelDidOpenShareSheet(_ viewModel: DuckDuckGo.WaitlistViewModel, senderFrame: CGRect) {
         didOpenShareSheetCalled = true
     }
 

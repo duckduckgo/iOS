@@ -60,7 +60,7 @@ final class MacBrowserWaitlistDebugViewController: UITableViewController {
 
     }
 
-    private let storage = MacBrowserWaitlistKeychainStore()
+    private let storage = WaitlistKeychainStore(waitlist: .macBrowser)
 
     private var backgroundTaskExecutionDate: String?
 

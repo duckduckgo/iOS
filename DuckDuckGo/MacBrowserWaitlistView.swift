@@ -69,7 +69,7 @@ struct MacBrowserWaitlistContentView: View {
 
                     Text(Constants.downloadURL)
                         .font(.proximaNovaBold17)
-                        .foregroundColor(.blue)
+                        .foregroundColor(.macWaitlistBlue)
                         .menuController(UserText.macWaitlistCopy) {
                             action(.copyDownloadURLToPasteboard)
                         }
@@ -100,14 +100,23 @@ struct MacBrowserWaitlistContentView: View {
                     }
                     
                     Spacer(minLength: 24)
-                    
-                    Text(UserText.macWaitlistWindows)
-                        .font(.proximaNova(size: 13, weight: .regular))
-                        .foregroundColor(.macWaitlistSubtitle)
-                        .multilineTextAlignment(.center)
-                        .lineSpacing(5)
-                        .padding(.bottom, 12)
-                        .fixedSize(horizontal: false, vertical: true)
+
+                    Button(
+                        action: {
+
+                        }, label: {
+                            HStack {
+                                Image("MacWaitlistWindows")
+                                Text(UserText.macWaitlistWindows)
+                                    .font(.proximaNovaBold17)
+                                    .foregroundColor(.macWaitlistBlue)
+                                    .multilineTextAlignment(.center)
+                                    .lineSpacing(5)
+                            }
+                            .padding(.bottom, 12)
+                            .fixedSize(horizontal: false, vertical: true)
+                        }
+                    )
                 }
                 .padding([.leading, .trailing], 24)
                 .frame(minHeight: proxy.size.height)
@@ -157,10 +166,10 @@ private struct RoundedButtonStyle: ButtonStyle {
         configuration.label
             .font(.proximaNovaBold17)
             .frame(maxWidth: .infinity)
-            .padding([.top, .bottom], 12)
+            .padding([.top, .bottom], 16)
             .background(enabled ? Color.macWaitlistBlue : Color.macWaitlistBlue.opacity(0.2))
             .foregroundColor(.white)
-            .clipShape(Capsule())
+            .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 
 }

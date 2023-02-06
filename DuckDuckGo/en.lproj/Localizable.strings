@@ -1187,6 +1187,9 @@ https://duckduckgo.com/mac";
 /* Voice-search footer note with on-device privacy warning */
 "voiceSearch.footer.note" = "Audio is processed on-device. It's not stored or shared with anyone, including DuckDuckGo.";
 
+/* Title for the button to enable push notifications in system settings */
+"waitlist.allow-notifications" = "Allow Notifications";
+
 /* Label text for the invite code */
 "waitlist.invite-code" = "Invite Code";
 

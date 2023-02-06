@@ -40,6 +40,7 @@ final class WaitlistViewModel: ObservableObject {
 
     enum ViewAction: Equatable {
         case joinQueue
+        case requestNotificationPermission
         case openNotificationSettings
         case openShareSheet(CGRect)
         case copyDownloadURLToPasteboard
@@ -47,6 +48,7 @@ final class WaitlistViewModel: ObservableObject {
     }
 
     enum NotificationPermissionState {
+        case notDetermined
         case notificationAllowed
         case notificationsDisabled
     }
@@ -104,6 +106,7 @@ final class WaitlistViewModel: ObservableObject {
     func perform(action: ViewAction) async {
         switch action {
         case .joinQueue: await joinQueue()
+        case .requestNotificationPermission: await promptForNotifications()
         case .openNotificationSettings: openNotificationSettings()
         case .openShareSheet(let frame): openShareSheet(senderFrame: frame)
         case .copyDownloadURLToPasteboard: copyDownloadUrlToClipboard()
@@ -116,10 +119,13 @@ final class WaitlistViewModel: ObservableObject {
     private func checkNotificationPermissions() async {
         let notificationSettings = await UNUserNotificationCenter.current().notificationSettings()
 
-        if notificationSettings.authorizationStatus == .denied {
-            self.viewState = .joinedQueue(.notificationsDisabled)
-        } else {
-            self.viewState = .joinedQueue(.notificationAllowed)
+        switch notificationSettings.authorizationStatus {
+        case .notDetermined:
+            viewState = .joinedQueue(.notDetermined)
+        case .denied:
+            viewState = .joinedQueue(.notificationsDisabled)
+        default:
+            viewState = .joinedQueue(.notificationAllowed)
         }
     }
 
@@ -132,12 +138,10 @@ final class WaitlistViewModel: ObservableObject {
         case .success(let joinResponse):
             waitlistStorage.store(waitlistToken: joinResponse.token)
             waitlistStorage.store(waitlistTimestamp: joinResponse.timestamp)
+            await checkNotificationPermissions()
         case .failure:
             self.viewState = .notJoinedQueue
-            return
         }
-
-        await promptForNotifications()
     }
 
     private func promptForNotifications() async {
@@ -151,7 +155,7 @@ final class WaitlistViewModel: ObservableObject {
                 self.viewState = .joinedQueue(.notificationsDisabled)
             }
         } catch {
-            self.viewState = .joinedQueue(.notificationsDisabled)
+            await checkNotificationPermissions()
         }
     }
 

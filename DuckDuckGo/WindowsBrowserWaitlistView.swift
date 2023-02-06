@@ -142,14 +142,22 @@ struct WindowsBrowserWaitlistJoinedWaitlistView: View {
                     .foregroundColor(.windowsWaitlistText)
                     .lineSpacing(6)
 
-            case .notificationsDisabled:
+            default:
                 Text(UserText.windowsWaitlistJoinedWithoutNotifications)
                     .font(.proximaNovaRegular17)
                     .foregroundColor(.windowsWaitlistText)
                     .lineSpacing(6)
 
-                AllowNotificationsView(action: action)
-                    .padding(.top, 4)
+                if notificationState == .notificationsDisabled {
+                    AllowNotificationsView(action: action)
+                        .padding(.top, 4)
+                } else {
+                    Button(UserText.waitlistNotifyMe) {
+                        action(.requestNotificationPermission)
+                    }
+                    .buttonStyle(RoundedButtonStyle(enabled: true))
+                    .padding(.top, 32)
+                }
             }
 
             Spacer()
@@ -173,7 +181,7 @@ private struct AllowNotificationsView: View {
                 .foregroundColor(.windowsWaitlistText)
                 .lineSpacing(5)
 
-            Button("Allow Notifications") {
+            Button(UserText.waitlistAllowNotifications) {
                 action(.openNotificationSettings)
             }
             .buttonStyle(RoundedButtonStyle(enabled: true))

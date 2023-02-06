@@ -934,7 +934,8 @@
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo for Mac has the speed you need, the browsing features you expect, and comes packed with our best-in-class privacy essentials.";
 
-/* Body text for the macOS waitlist notification */
+/* Body text for the macOS waitlist notification
+   Body text for the waitlist notification */
 "mac-waitlist.available.notification.body" = "Open your invite";
 
 /* Title for the macOS waitlist notification */
@@ -1204,6 +1205,9 @@ https://duckduckgo.com/mac";
 /* Privacy disclaimer for the Waitlist feature */
 "waitlist.privacy-disclaimer" = "You won’t need to share any personal information to join the waitlist. You’ll secure your place in line with a timestamp that exists solely on your device so we can notify you when it’s your turn.";
 
+/* Title for the settings subtitle */
+"waitlist.settings.available-for-download" = "Available for download";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favorite removed";
 
@@ -1254,6 +1258,9 @@ https://duckduckgo.com/mac";
 
 /* Title for the Join Windows Waitlist screen */
 "windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Try DuckDuckGo for Windows!";
+
+/* Title for the settings subtitle */
+"windows-waitlist.settings.browse-privately" = "Browse privately with our app for Windows";
 
 /* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
 "windows-waitlist.share-sheet.message" = "You’re invited!

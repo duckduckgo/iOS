@@ -146,7 +146,7 @@ final class WaitlistViewModel: ObservableObject {
 
             if permissionGranted {
                 self.viewState = .joinedQueue(.notificationAllowed)
-                MacBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
+                WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
             } else {
                 self.viewState = .joinedQueue(.notificationsDisabled)
             }

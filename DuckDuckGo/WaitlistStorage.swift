@@ -91,7 +91,7 @@ class WaitlistKeychainStore: WaitlistStorage {
 
     func store(inviteCode: String) {
         add(string: inviteCode, forField: .inviteCode)
-        NotificationCenter.default.post(name: MacBrowserWaitlist.Notifications.inviteCodeChanged, object: nil)
+        NotificationCenter.default.post(name: WindowsBrowserWaitlist.Notifications.inviteCodeChanged, object: nil)
     }
 
     func deleteWaitlistState() {

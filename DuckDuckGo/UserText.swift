@@ -441,14 +441,16 @@ public struct UserText {
 
     public static let waitlistJoining = NSLocalizedString("waitlist.join-waitlist-screen.joining", value: "Joining Waitlist...", comment: "Temporary status text for the Join Waitlist screen")
 
-    public static let waitlistAvailableNotificationBody = NSLocalizedString("mac-waitlist.available.notification.body", value: "Open your invite", comment: "Body text for the macOS waitlist notification")
+    public static let waitlistAvailableNotificationBody = NSLocalizedString("mac-waitlist.available.notification.body", value: "Open your invite", comment: "Body text for the waitlist notification")
 
     public static let waitlistOnTheList = NSLocalizedString("mac-waitlist.queue-screen.on-the-list", value: "You’re on the list!", comment: "Title for the queue screen")
 
     public static let waitlistYoureInvited = NSLocalizedString("mac-waitlist.invite-screen.youre-invited", value: "You’re Invited!", comment: "Title for the invite code screen")
 
+    public static let waitlistAvailableForDownload = NSLocalizedString("waitlist.settings.available-for-download", value: "Available for download", comment: "Title for the settings subtitle")
+
     public static func waitlistInviteScreenStepTitle(step: Int) -> String {
-        NSLocalizedString("waitlist.invite-screen.step.title", value: "Step %d", comment: "Step title on the invite screen")
+        NSLocalizedString("waitlist.invite-screen.step.title", value: "Step %d", comment: "Step title on the invite screen").format(arguments: step)
     }
 
     public static let waitlistShareSheetTitle = NSLocalizedString("mac-waitlist.share-sheet.title", value: "You’re Invited!", comment: "Title for the share sheet entry")
@@ -463,6 +465,8 @@ public struct UserText {
     public static let windowsWaitlistTryDuckDuckGoForWindows = NSLocalizedString("windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows", value: "Try DuckDuckGo for Windows!", comment: "Title for the Join Windows Waitlist screen")
 
     public static let windowsWaitlistMac = NSLocalizedString("windows-waitlist.join-waitlist-screen.mac", value: "Looking for the Mac Version?", comment: "Title for the Windows waitlist button redirecting to Mac waitlist")
+
+    public static let windowsWaitlistBrowsePrivately = NSLocalizedString("windows-waitlist.settings.browse-privately", value: "Browse privately with our app for Windows", comment: "Title for the settings subtitle")
 
     public static let windowsWaitlistJoinedWithNotifications = NSLocalizedString("windows-browser.waitlist.joined.notifications-enabled",
                                                                                  value: "We’ll send you a notification when your copy of DuckDuckGo for Windows is ready for download.",

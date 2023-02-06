@@ -116,6 +116,7 @@ class SettingsViewController: UITableViewController {
         configureIconViews()
         configureEmailProtectionAccessoryText()
         configureMacBrowserWaitlistCell()
+        configureWindowsBrowserWaitlistCell()
         
         // Make sure muliline labels are correctly presented
         tableView.setNeedsLayout()
@@ -216,7 +217,11 @@ class SettingsViewController: UITableViewController {
     private func configureMacBrowserWaitlistCell() {
         macBrowserWaitlistCell.detailTextLabel?.text = MacBrowserWaitlist.shared.settingsSubtitle()
     }
-    
+
+    private func configureWindowsBrowserWaitlistCell() {
+        windowsBrowserWaitlistCell.detailTextLabel?.text = WindowsBrowserWaitlist.shared.settingsSubtitle()
+    }
+
     private func configureDebugCell() {
         debugCell.isHidden = !shouldShowDebugCell
     }

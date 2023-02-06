@@ -50,7 +50,7 @@ final class WindowsWaitlistViewController: UIViewController {
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(updateViewState),
-                                               name: MacBrowserWaitlist.Notifications.inviteCodeChanged,
+                                               name: WindowsBrowserWaitlist.Notifications.inviteCodeChanged,
                                                object: nil)
     }
 

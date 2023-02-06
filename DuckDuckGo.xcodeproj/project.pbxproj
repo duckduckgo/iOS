@@ -133,6 +133,7 @@
 		37FCAAAE29911CA1000E420A /* WaitlistStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FCAAAC29911C77000E420A /* WaitlistStorageTests.swift */; };
 		37FCAAB229914232000E420A /* WindowsBrowserWaitlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FCAAB129914232000E420A /* WindowsBrowserWaitlistView.swift */; };
 		37FCAAB429914C77000E420A /* WindowsWaitlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FCAAB329914C77000E420A /* WindowsWaitlistViewController.swift */; };
+		37FCAAB629919CEB000E420A /* WindowsBrowserWaitlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FCAAB529919CEB000E420A /* WindowsBrowserWaitlist.swift */; };
 		4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */; };
 		4B04ABBC27FFD92800945B5D /* MacBrowserWaitlistStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B04ABBB27FFD92800945B5D /* MacBrowserWaitlistStorageTests.swift */; };
 		4B04ABBE27FFD96900945B5D /* MacBrowserWaitlistMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B04ABBD27FFD96900945B5D /* MacBrowserWaitlistMocks.swift */; };
@@ -146,7 +147,7 @@
 		4B6484EB27FD1E350050A7A1 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E127FD1E340050A7A1 /* NotificationService.swift */; };
 		4B6484EC27FD1E350050A7A1 /* WaitlistRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E227FD1E340050A7A1 /* WaitlistRequest.swift */; };
 		4B6484ED27FD1E350050A7A1 /* MacBrowserWaitlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E327FD1E340050A7A1 /* MacBrowserWaitlist.swift */; };
-		4B6484EE27FD1E350050A7A1 /* MacBrowserWaitlistDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E427FD1E340050A7A1 /* MacBrowserWaitlistDebugViewController.swift */; };
+		4B6484EE27FD1E350050A7A1 /* WindowsBrowserWaitlistDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E427FD1E340050A7A1 /* WindowsBrowserWaitlistDebugViewController.swift */; };
 		4B6484EF27FD1E350050A7A1 /* MacWaitlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E527FD1E340050A7A1 /* MacWaitlistViewController.swift */; };
 		4B6484F027FD1E350050A7A1 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E627FD1E340050A7A1 /* FontExtension.swift */; };
 		4B6484F327FD1E350050A7A1 /* MenuControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E927FD1E340050A7A1 /* MenuControllerView.swift */; };
@@ -924,6 +925,7 @@
 		37FCAAAC29911C77000E420A /* WaitlistStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitlistStorageTests.swift; sourceTree = "<group>"; };
 		37FCAAB129914232000E420A /* WindowsBrowserWaitlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowsBrowserWaitlistView.swift; sourceTree = "<group>"; };
 		37FCAAB329914C77000E420A /* WindowsWaitlistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowsWaitlistViewController.swift; sourceTree = "<group>"; };
+		37FCAAB529919CEB000E420A /* WindowsBrowserWaitlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowsBrowserWaitlist.swift; sourceTree = "<group>"; };
 		4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationDebugViewController.swift; sourceTree = "<group>"; };
 		4B04ABBB27FFD92800945B5D /* MacBrowserWaitlistStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistStorageTests.swift; sourceTree = "<group>"; };
 		4B04ABBD27FFD96900945B5D /* MacBrowserWaitlistMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistMocks.swift; sourceTree = "<group>"; };
@@ -936,7 +938,7 @@
 		4B6484E127FD1E340050A7A1 /* NotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		4B6484E227FD1E340050A7A1 /* WaitlistRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitlistRequest.swift; sourceTree = "<group>"; };
 		4B6484E327FD1E340050A7A1 /* MacBrowserWaitlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlist.swift; sourceTree = "<group>"; };
-		4B6484E427FD1E340050A7A1 /* MacBrowserWaitlistDebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistDebugViewController.swift; sourceTree = "<group>"; };
+		4B6484E427FD1E340050A7A1 /* WindowsBrowserWaitlistDebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowsBrowserWaitlistDebugViewController.swift; sourceTree = "<group>"; };
 		4B6484E527FD1E340050A7A1 /* MacWaitlistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacWaitlistViewController.swift; sourceTree = "<group>"; };
 		4B6484E627FD1E340050A7A1 /* FontExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
 		4B6484E927FD1E340050A7A1 /* MenuControllerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuControllerView.swift; sourceTree = "<group>"; };
@@ -2479,7 +2481,6 @@
 			isa = PBXGroup;
 			children = (
 				4B6484E327FD1E340050A7A1 /* MacBrowserWaitlist.swift */,
-				4B6484E427FD1E340050A7A1 /* MacBrowserWaitlistDebugViewController.swift */,
 				4B6484E027FD1E340050A7A1 /* MacBrowserWaitlistView.swift */,
 				4B6484E527FD1E340050A7A1 /* MacWaitlistViewController.swift */,
 			);
@@ -2489,6 +2490,8 @@
 		37FCAAA129911801000E420A /* WindowsBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				37FCAAB529919CEB000E420A /* WindowsBrowserWaitlist.swift */,
+				4B6484E427FD1E340050A7A1 /* WindowsBrowserWaitlistDebugViewController.swift */,
 				37FCAAB129914232000E420A /* WindowsBrowserWaitlistView.swift */,
 				37FCAAB329914C77000E420A /* WindowsWaitlistViewController.swift */,
 			);
@@ -5126,7 +5129,7 @@
 				85864FBC24D31EF300E756FF /* SuggestionTrayViewController.swift in Sources */,
 				1EF24235273BB9D200DE3D02 /* IntervalSlider.swift in Sources */,
 				853273B224FF114700E3C778 /* DeepLinks.swift in Sources */,
-				4B6484EE27FD1E350050A7A1 /* MacBrowserWaitlistDebugViewController.swift in Sources */,
+				4B6484EE27FD1E350050A7A1 /* WindowsBrowserWaitlistDebugViewController.swift in Sources */,
 				F1D796EE1E7AF2EB0019D451 /* UIViewControllerExtension.swift in Sources */,
 				1EE411F12857C3640003FE64 /* TrackerAnimationImageProvider.swift in Sources */,
 				F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */,
@@ -5163,6 +5166,7 @@
 				984D60B2222A1284003B9E3B /* FeedbackFormViewController.swift in Sources */,
 				31A42564285A09E800049386 /* FaviconView.swift in Sources */,
 				85374D3821AC419800FF5A1E /* NavigationSearchHomeViewSectionRenderer.swift in Sources */,
+				37FCAAB629919CEB000E420A /* WindowsBrowserWaitlist.swift in Sources */,
 				98E888F2223FCC4A00B608A4 /* OnboardingViewController.swift in Sources */,
 				C1B7B51C28941E980098FD6A /* HomeMessageViewModelBuilder.swift in Sources */,
 				85BA58551F34F49E00C6E8CA /* AppUserDefaults.swift in Sources */,

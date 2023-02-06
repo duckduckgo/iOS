@@ -1,5 +1,5 @@
 //
-//  MacBrowserWaitlistDebugViewController.swift
+//  WindowsBrowserWaitlistDebugViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -21,7 +21,7 @@ import UIKit
 import Core
 import BackgroundTasks
 
-final class MacBrowserWaitlistDebugViewController: UITableViewController {
+final class WindowsBrowserWaitlistDebugViewController: UITableViewController {
 
     enum Sections: Int, CaseIterable {
 
@@ -60,7 +60,7 @@ final class MacBrowserWaitlistDebugViewController: UITableViewController {
 
     }
 
-    private let storage = WaitlistKeychainStore(waitlist: .macBrowser)
+    private let storage = WaitlistKeychainStore(waitlist: .windowsBrowser)
 
     private var backgroundTaskExecutionDate: String?
 
@@ -75,7 +75,7 @@ final class MacBrowserWaitlistDebugViewController: UITableViewController {
         navigationItem.rightBarButtonItem = clearDataItem
 
         BGTaskScheduler.shared.getPendingTaskRequests { tasks in
-            if let task = tasks.first(where: { $0.identifier == MacBrowserWaitlist.Constants.backgroundRefreshTaskIdentifier }) {
+            if let task = tasks.first(where: { $0.identifier == WindowsBrowserWaitlist.Constants.backgroundRefreshTaskIdentifier }) {
                 let formatter = DateFormatter()
                 formatter.dateStyle = .short
                 formatter.timeStyle = .medium
@@ -151,7 +151,7 @@ final class MacBrowserWaitlistDebugViewController: UITableViewController {
             case .scheduleWaitlistNotification:
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
                     self.storage.store(inviteCode: "ABCD1234")
-                    MacBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
+                    WindowsBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
                 }
             case .setMockInviteCode:
                 storage.store(inviteCode: "ABCD1234")

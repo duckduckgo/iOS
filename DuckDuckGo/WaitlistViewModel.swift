@@ -23,7 +23,8 @@ import Combine
 import Core
 
 protocol WaitlistViewModelDelegate: AnyObject {
-    func waitlistViewModelDidOpenShareSheet(_ viewModel: WaitlistViewModel, senderFrame: CGRect)
+    func waitlistViewModelDidOpenInviteCodeShareSheet(_ viewModel: WaitlistViewModel, inviteCode: String, senderFrame: CGRect)
+    func waitlistViewModelDidOpenDownloadURLShareSheet(_ viewModel: WaitlistViewModel, senderFrame: CGRect)
 }
 
 @MainActor
@@ -161,7 +162,17 @@ final class WaitlistViewModel: ObservableObject {
     }
 
     private func openShareSheet(senderFrame: CGRect) {
-        self.delegate?.waitlistViewModelDidOpenShareSheet(self, senderFrame: senderFrame)
+        if viewState == .waitlistRemoved {
+            self.delegate?.waitlistViewModelDidOpenDownloadURLShareSheet(self, senderFrame: senderFrame)
+            return
+        }
+
+        guard let inviteCode = waitlistStorage.getWaitlistInviteCode() else {
+             assertionFailure("Failed to get invite code when creating share sheet")
+             return
+         }
+
+        self.delegate?.waitlistViewModelDidOpenInviteCodeShareSheet(self, inviteCode: inviteCode, senderFrame: senderFrame)
     }
 
     private func copyDownloadUrlToClipboard() {

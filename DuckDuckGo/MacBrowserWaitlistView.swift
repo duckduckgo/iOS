@@ -19,7 +19,7 @@
 
 import SwiftUI
 
-typealias ViewActionHandler = (WaitlistViewModel.ViewAction) -> Void
+typealias WaitlistViewActionHandler = (WaitlistViewModel.ViewAction) -> Void
 
 struct MacBrowserWaitlistView: View {
 
@@ -44,7 +44,7 @@ struct MacBrowserWaitlistContentView: View {
         static let downloadURL = "duckduckgo.com/mac"
     }
     
-    let action: ViewActionHandler
+    let action: WaitlistViewActionHandler
     
     @State private var shareButtonFrame: CGRect = .zero
 
@@ -113,10 +113,10 @@ struct MacBrowserWaitlistContentView: View {
                                     .multilineTextAlignment(.center)
                                     .lineSpacing(5)
                             }
-                            .padding(.bottom, 12)
-                            .fixedSize(horizontal: false, vertical: true)
                         }
                     )
+                    .padding(.bottom, 12)
+                    .fixedSize(horizontal: false, vertical: true)
                 }
                 .padding([.leading, .trailing], 24)
                 .frame(minHeight: proxy.size.height)

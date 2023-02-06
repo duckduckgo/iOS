@@ -247,8 +247,12 @@ class SettingsViewController: UITableViewController {
         UIApplication.shared.open(AppUrls().emailProtectionQuickLink, options: [:], completionHandler: nil)
     }
 
-    private func showDesktopBrowserWaitlistViewController() {
+    private func showMacBrowserWaitlistViewController() {
         navigationController?.pushViewController(MacWaitlistViewController(nibName: nil, bundle: nil), animated: true)
+    }
+
+    private func showWindowsBrowserWaitlistViewController() {
+        navigationController?.pushViewController(WindowsWaitlistViewController(nibName: nil, bundle: nil), animated: true)
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -267,7 +271,10 @@ class SettingsViewController: UITableViewController {
             showEmailWebDashboard()
             
         case macBrowserWaitlistCell:
-            showDesktopBrowserWaitlistViewController()
+            showMacBrowserWaitlistViewController()
+
+        case windowsBrowserWaitlistCell:
+            showWindowsBrowserWaitlistViewController()
 
         case autofillCell:
             showAutofill()

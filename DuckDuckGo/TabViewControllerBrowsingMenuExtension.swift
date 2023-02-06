@@ -120,7 +120,7 @@ extension TabViewController {
                     do {
                         try await FirewallController.shared.setState(to: false)
                     } catch {
-                        os_log("[AppTP][Error] Could not disable AppTP: %s", log: generalLog,
+                        os_log("[Error] Could not disable AppTP: %s", log: FirewallController.apptpLog,
                                type: .error, error.localizedDescription)
                     }
                 }
@@ -133,7 +133,7 @@ extension TabViewController {
                     do {
                         try await FirewallController.shared.setState(to: true)
                     } catch {
-                        os_log("[AppTP][Error] Could not enable AppTP: %s", log: generalLog,
+                        os_log("[Error] Could not enable AppTP: %s", log: FirewallController.apptpLog,
                                type: .error, error.localizedDescription)
                     }
                 }

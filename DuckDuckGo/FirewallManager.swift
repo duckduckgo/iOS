@@ -21,9 +21,12 @@ import Foundation
 import NetworkExtension
 import Core
 import os.log
+import BrowserServicesKit
 
 class FirewallController {
     static let shared = FirewallController()
+    
+    static let apptpLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier, category: "AppTP")
     
     var manager: NETunnelProviderManager?
     
@@ -37,9 +40,10 @@ class FirewallController {
         let session = URLSession(configuration: config)
         let url = URL(string: "https://bad_url")
         let task = session.dataTask(with: url!) { _, _, _ in
-            os_log("[AppTP][INFO] Response from dummy URL while activating VPN", log: generalLog, type: .debug)
+            os_log("[INFO] Response from dummy URL while activating VPN",
+                   log: FirewallController.apptpLog, type: .debug)
         }
-        os_log("[AppTP][INFO] Calling dummy URL to force VPN", log: generalLog, type: .debug)
+        os_log("[INFO] Calling dummy URL to force VPN", log: FirewallController.apptpLog, type: .debug)
         task.resume()
     }
     
@@ -57,8 +61,8 @@ class FirewallController {
             let managers = try await NETunnelProviderManager.loadAllFromPreferences()
             if let manager = managers.first {
                 if self.manager == manager {
-                    os_log("[AppTP][INFO] Already have a reference to this manager, not replacing it.",
-                           log: generalLog, type: .debug)
+                    os_log("[INFO] Already have a reference to this manager, not replacing it.",
+                           log: FirewallController.apptpLog, type: .debug)
                     return
                 }
                 
@@ -66,7 +70,7 @@ class FirewallController {
                 self.manager = manager
             }
         } catch {
-            os_log("[AppTP][ERROR] Could not load managers", log: generalLog, type: .error)
+            os_log("[ERROR] Could not load managers", log: FirewallController.apptpLog, type: .error)
         }
     }
     
@@ -95,8 +99,8 @@ class FirewallController {
             
         } catch {
             if let error = error as? NEVPNError {
-                os_log("[AppTP][ERROR] Error setting VPN enabled to %s %s",
-                       log: generalLog, type: .debug, String(enabled), error.localizedDescription)
+                os_log("[ERROR] Error setting VPN enabled to %s %s",
+                       log: FirewallController.apptpLog, type: .debug, String(enabled), error.localizedDescription)
                 throw error
             }
         }
@@ -105,19 +109,19 @@ class FirewallController {
         guard enabled else { return }
         try await withCheckedThrowingContinuation { continuation in
             Task { @MainActor in
-                os_log("[AppTP][INFO] Starting VPN...", log: generalLog, type: .debug)
+                os_log("[INFO] Starting VPN...", log: FirewallController.apptpLog, type: .debug)
                 do {
                     try manager?.connection.startVPNTunnel()
                     fireDummyRequest()
-                    os_log("[AppTP][INFO] Refreshing manager", log: generalLog, type: .debug)
+                    os_log("[INFO] Refreshing manager", log: FirewallController.apptpLog, type: .debug)
                     await refreshManager()
                         
-                    os_log("[AppTP][OK] Refreshed manager", log: generalLog, type: .debug)
+                    os_log("[OK] Refreshed manager", log: FirewallController.apptpLog, type: .debug)
                     continuation.resume()
                     
                 } catch {
-                    os_log("[AppTP][ERROR] Error starting VPN after saving prefs: %s",
-                           log: generalLog, type: .error, error.localizedDescription)
+                    os_log("[ERROR] Error starting VPN after saving prefs: %s",
+                           log: FirewallController.apptpLog, type: .error, error.localizedDescription)
                     continuation.resume(throwing: error)
                 }
             }

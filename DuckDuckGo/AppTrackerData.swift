@@ -19,7 +19,7 @@
 
 import Foundation
 
-struct AppTrackerOwner: Codable {
+struct AppTrackerOwner: Codable, Equatable {
     let name: String
     let displayName: String
 }

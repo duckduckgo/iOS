@@ -42,5 +42,5 @@ struct AppTracker: Codable {
 }
 
 struct AppTrackerList: Codable {
-    let trackers: [String:AppTracker]
+    let trackers: [String: AppTracker]
 }

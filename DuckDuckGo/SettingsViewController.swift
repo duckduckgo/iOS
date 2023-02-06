@@ -45,6 +45,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var emailProtectionAccessoryText: UILabel!
     @IBOutlet weak var macBrowserWaitlistCell: UITableViewCell!
     @IBOutlet weak var macBrowserWaitlistAccessoryText: UILabel!
+    @IBOutlet weak var windowsBrowserWaitlistCell: UITableViewCell!
+    @IBOutlet weak var windowsBrowserWaitlistAccessoryText: UILabel!
     @IBOutlet weak var longPressCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
     @IBOutlet weak var textSizeCell: UITableViewCell!

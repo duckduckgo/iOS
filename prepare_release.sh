@@ -22,6 +22,26 @@ assert_ios_directory() {
 	fi
 }
 
+assert_fastlane_installed() {
+	if ! command -v bundle &> /dev/null; then
+		die "💥 Error: Bundle is not installed. See: https://app.asana.com/0/1202500774821704/1203766784006610/f"
+	fi
+
+	if ! bundle show fastlane &> /dev/null; then
+		die "💥 Error: Fastlane is not installed. See: https://app.asana.com/0/1202500774821704/1203766784006610/f"
+	fi
+}
+
+assert_gh_installed_and_authenticated() {
+	if ! command -v gh &> /dev/null; then
+		die "💥 Error: GitHub CLI is not installed. See: https://app.asana.com/0/1202500774821704/1203791243007683/f"
+	fi
+
+	if ! gh auth status 2>&1 | grep -q "✓ Logged in to github.com"; then
+		echo "💥 Error: GitHub CLI is not authenticated. See: https://app.asana.com/0/1202500774821704/1203791243007683/f"
+	fi
+}
+
 print_usage_and_exit() {
 	local reason=$1
 
@@ -160,6 +180,8 @@ create_pull_request() {
 
 main() {
 	assert_ios_directory
+	assert_fastlane_installed
+	assert_gh_installed_and_authenticated
 	read_command_line_arguments "$@"
 	stash
 	assert_clean_state

@@ -39,7 +39,6 @@ class SyncManagementViewController: HostingController<SyncManagementView> {
         // For some reason, on iOS 14, the viewDidLoad wasn't getting called
         rootView.model.delegate = self
         navigationItem.title = "Sync"
-        applyTheme(ThemeManager.shared.currentTheme)
     }
 
     override func viewDidLoad() {
@@ -54,6 +53,9 @@ extension SyncManagementViewController: Themable {
     func decorate(with theme: Theme) {
         view.backgroundColor = theme.backgroundColor
 
+        navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
+        navigationController?.navigationBar.tintColor = theme.navigationBarTintColor
+
         if #available(iOS 15.0, *) {
             let appearance = UINavigationBarAppearance()
             appearance.shadowColor = .clear
@@ -62,7 +64,7 @@ extension SyncManagementViewController: Themable {
             navigationController?.navigationBar.standardAppearance = appearance
             navigationController?.navigationBar.scrollEdgeAppearance = appearance
         }
-
+        
     }
 
 }

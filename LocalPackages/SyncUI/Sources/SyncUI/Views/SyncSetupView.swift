@@ -46,13 +46,13 @@ public struct SyncSetupView: View {
                       title: "Turn on Sync?",
                       message: UserText.syncTurnOnMessage,
                       primaryButton: "Turn on Sync",
-                      secondaryButton: "Not Now") {
+                      secondaryButton: "Recover Data") {
 
                 model.turnOnSyncAction()
                 turnOnSyncNavigation = true
 
             } secondaryAction: {
-                model.cancelAction()
+                model.recoverDataAction()
             }
         }
     }

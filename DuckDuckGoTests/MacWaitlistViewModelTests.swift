@@ -34,7 +34,7 @@ class WaitlistViewModelTests: XCTestCase {
         let storage = MockWaitlistStorage()
         storage.store(inviteCode: inviteCode)
 
-        let viewModel = WaitlistViewModel(waitlistRequest: request, waitlistStorage: storage)
+        let viewModel = WaitlistViewModel(waitlistRequest: request, waitlistStorage: storage, notificationService: nil)
         let delegate = MockWaitlistViewModelDelegate()
         viewModel.delegate = delegate
         

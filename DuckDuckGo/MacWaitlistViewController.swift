@@ -27,7 +27,7 @@ final class MacWaitlistViewController: UIViewController {
     private let viewModel: WaitlistViewModel
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        self.viewModel = WaitlistViewModel(waitlistRequest: ProductWaitlistRequest(waitlist: .macBrowser), waitlistStorage: WaitlistKeychainStore(waitlist: .macBrowser))
+        self.viewModel = WaitlistViewModel(waitlist: .macBrowser)
         super.init(nibName: nil, bundle: nil)
         self.viewModel.delegate = self
     }

@@ -22,4 +22,13 @@ import Foundation
 enum Waitlist: String {
     case macBrowser = "mac"
     case windowsBrowser = "windows"
+
+    var isRemoved: Bool {
+        switch self {
+        case .macBrowser:
+            return true
+        case .windowsBrowser:
+            return false
+        }
+    }
 }

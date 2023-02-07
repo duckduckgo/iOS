@@ -1,4 +1,4 @@
-// swift-tools-version: 5.7
+// swift-tools-version:5.7
 //  Package.swift
 //  DuckDuckGo
 //
@@ -31,10 +31,13 @@ let package = Package(
             targets: ["SyncUI"])
     ],
     dependencies: [
+        .package(path: "../DuckUI")
     ],
     targets: [
         .target(
             name: "SyncUI",
-            dependencies: [])
+            dependencies: [
+                .product(name: "DuckUI", package: "DuckUI")
+            ])
     ]
 )

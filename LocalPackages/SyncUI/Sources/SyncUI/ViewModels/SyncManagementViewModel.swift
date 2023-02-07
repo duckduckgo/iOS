@@ -77,13 +77,12 @@ public class SyncManagementViewModel: ObservableObject {
     }
 
     func enableSync() {
-        print(#function)
         isBusy = true
         delegate!.showSyncSetup()
     }
 
     func disableSync() {
-        print(#function)
+        isSyncEnabled = false
     }
 
     public func setupFinished(_ model: SyncSetupViewModel) {
@@ -103,7 +102,6 @@ public class SyncManagementViewModel: ObservableObject {
     }
 
     public func codeCollectionCancelled() {
-        print(#function)
         isBusy = false
         isSyncEnabled = false
     }

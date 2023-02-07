@@ -79,37 +79,29 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
     }
 
     func showSyncSetup() {
-        print(#function)
-        
+
         let model = SyncSetupViewModel { [weak self] model in
-            print(#function, self?.navigationController?.topViewController.self as Any)
             assert(self?.navigationController?.visibleViewController is DismissibleHostingController<SyncSetupView>)
             self?.navigationController?.topViewController?.dismiss(animated: true)
             self?.rootView.model.setupFinished(model)
         }
 
         let controller = DismissibleHostingController(rootView: SyncSetupView(model: model)) { [weak self] in
-            print(#function, "onDismiss", model)
             self?.rootView.model.setupFinished(model)
         }
 
-        navigationController?.present(controller, animated: true) {
-            print(#function, "completed")
-        }
+        navigationController?.present(controller, animated: true)
     }
 
     func showSyncWithAnotherDevice() {
-        print(#function)
         collectCode(canShowQRCode: true)
     }
 
     func showRecoverData() {
-        print(#function)
         collectCode(canShowQRCode: false)
     }
 
     func shareRecoveryPDF() {
-        print(#function)
         guard let view = navigationController?.visibleViewController?.view,
               let url = Bundle.main.url(forResource: "DuckDuckGo Recovery Document", withExtension: "pdf") else {
             return
@@ -120,37 +112,28 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
     }
 
     func showDeviceConnected() {
-        print(#function)
-
         let controller = HostingController(rootView: SyncDeviceConnectedView {
             self.shareRecoveryPDF()
         })
         navigationController?.present(controller, animated: true) {
             self.rootView.model.showDevices()
             self.rootView.model.appendDevice(.init(id: UUID().uuidString, name: "Another Device", isThisDevice: false))
-            print(#function, "completed")
         }
 
     }
     
     func showRecoveryPDF() {
-        print(#function)
         let controller = HostingController(rootView: SyncRecoveryPDFView {
             self.shareRecoveryPDF()
         })
-        navigationController?.present(controller, animated: true) {
-            print(#function, "completed")
-        }
+        navigationController?.present(controller, animated: true)
     }
 
     private func collectCode(canShowQRCode: Bool) {
-        print(#function)
-
         let model = SyncCodeCollectionViewModel(canShowQRCode: canShowQRCode)
         model.delegate = self
 
         let controller = DismissibleHostingController(rootView: SyncCodeCollectionView(model: model)) { [weak self] in
-            print(#function, "onDismiss", model)
             self?.rootView.model.codeCollectionCancelled()
         }
 
@@ -158,7 +141,6 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
         navController.overrideUserInterfaceStyle = .dark
         navController.modalPresentationStyle = .fullScreen
         navigationController?.present(navController, animated: true) {
-            print(#function, "completed")
             self.checkCameraPermission(model: model)
         }
     }
@@ -192,9 +174,6 @@ extension SyncManagementViewController: SyncCodeCollectionViewModelDelegate {
         if await authenticator.authenticate(reason: "Generate QRCode to connect to other devices") {
             return await syncService.retrieveConnectCode()
         }
-        defer {
-            print(#function, "handle cancel authentication")
-        }
         return nil
     }
 
@@ -205,7 +184,6 @@ extension SyncManagementViewController: SyncCodeCollectionViewModelDelegate {
     }
 
     func cancelled(_ model: SyncCodeCollectionViewModel) {
-        print(#function, model, navigationController?.visibleViewController as Any)
         assert(navigationController?.visibleViewController is DismissibleHostingController<SyncCodeCollectionView>)
         navigationController?.topViewController?.dismiss(animated: true)
         rootView.model.codeCollectionCancelled()

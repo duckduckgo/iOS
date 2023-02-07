@@ -26,23 +26,19 @@ struct QRCodeScannerView: UIViewRepresentable {
     var onCameraUnavailable: () -> Void
 
     func makeCoordinator() -> Coordinator {
-        print(#function)
         return Coordinator(self)
     }
 
     func makeUIView(context: Context) -> UIView {
-        print(#function)
         let view = AutoResizeLayersView()
         context.coordinator.start(view)
         return view
     }
 
     func updateUIView(_ uiView: UIView, context: Context) {
-        print(#function, uiView.frame)
     }
 
     static func dismantleUIView(_ uiView: UIView, coordinator: Coordinator) {
-        print(#function, uiView.frame)
         coordinator.stop()
     }
 
@@ -105,10 +101,6 @@ struct QRCodeScannerView: UIViewRepresentable {
             if cameraView.onQRCodeScanned(code) {
                 stop()
             }
-        }
-
-        deinit {
-            print(#function)
         }
     }
 

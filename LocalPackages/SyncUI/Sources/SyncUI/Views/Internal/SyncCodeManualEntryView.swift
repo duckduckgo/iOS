@@ -135,7 +135,6 @@ private struct CodeEntryView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: UITextView, context: Context) {
-        print(#function)
         uiView.text = text?.groups(ofSize: 4) ?? ""
     }
 
@@ -148,12 +147,10 @@ private struct CodeEntryView: UIViewRepresentable {
         }
 
         func textViewDidBeginEditing(_ textView: UITextView) {
-            print(#function)
             view.focused = true
         }
 
         func textViewDidEndEditing(_ textView: UITextView) {
-            print(#function)
             view.focused = false
         }
 
@@ -166,7 +163,6 @@ private struct CodeEntryView: UIViewRepresentable {
         }
 
         func textViewDidChange(_ textView: UITextView) {
-            print(#function, textView.text ?? "nil")
             if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 view.text = nil
             } else {

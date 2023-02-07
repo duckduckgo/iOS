@@ -67,12 +67,10 @@ public class SyncCodeCollectionViewModel: ObservableObject {
     }
 
     func codeScanned(_ code: String) -> Bool {
-        print(#function, code)
         return delegate?.handleCode(self, code: code) ?? false
     }
 
     func cameraUnavailable() {
-        print(#function)
         showCamera = false
     }
 
@@ -82,13 +80,12 @@ public class SyncCodeCollectionViewModel: ObservableObject {
     }
 
     func cancel() {
-        print(#function)
         delegate?.cancelled(self)
     }
 
     func submitAction() {
-        print(#function)
-        delegate?.handleCode(self, code: manuallyEnteredCode ?? "")
+        // what to do here??
+        _ = delegate?.handleCode(self, code: manuallyEnteredCode ?? "")
     }
 
     func startConnectMode() -> ShowQRCodeViewModel {

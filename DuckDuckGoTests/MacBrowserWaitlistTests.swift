@@ -28,7 +28,7 @@ class MacBrowserWaitlistTests: XCTestCase {
         let request = MockWaitlistRequest.failure()
         let waitlist = MacBrowserWaitlist(store: store, request: request)
         
-        XCTAssertEqual(waitlist.settingsSubtitle(), UserText.macWaitlistBrowsePrivately)
+        XCTAssertEqual(waitlist.settingsSubtitle, UserText.macWaitlistBrowsePrivately)
     }
     
     func testWhenUserHasIsInvited_ThenSettingsSubtitleIsCorrect() {
@@ -38,7 +38,7 @@ class MacBrowserWaitlistTests: XCTestCase {
         let request = MockWaitlistRequest.failure()
         let waitlist = MacBrowserWaitlist(store: store, request: request)
         
-        XCTAssertEqual(waitlist.settingsSubtitle(), UserText.macWaitlistBrowsePrivately)
+        XCTAssertEqual(waitlist.settingsSubtitle, UserText.macWaitlistBrowsePrivately)
     }
 
     func testWhenFetchingInviteCode_AndUserIsNotOnWaitlist_ThenErrorIsReturned() async {

@@ -34,13 +34,18 @@ class WaitlistViewModelTests: XCTestCase {
         let storage = MockWaitlistStorage()
         storage.store(inviteCode: inviteCode)
 
-        let viewModel = WaitlistViewModel(waitlistRequest: request, waitlistStorage: storage, notificationService: nil)
+        let viewModel = WaitlistViewModel(
+            waitlistRequest: request,
+            waitlistStorage: storage,
+            notificationService: nil,
+            downloadURL: AppUrls().macBrowserDownloadURL
+        )
         let delegate = MockWaitlistViewModelDelegate()
         viewModel.delegate = delegate
         
         await viewModel.perform(action: .openShareSheet(.zero))
         
-        XCTAssertTrue(delegate.didOpenShareSheetCalled)
+        XCTAssertTrue(delegate.didOpenDownloadURLShareSheetCalled)
     }
     
 }

@@ -105,11 +105,15 @@ struct MockNotificationService: NotificationService {
 }
 
 class MockWaitlistViewModelDelegate: WaitlistViewModelDelegate {
-
-    private(set) var didOpenShareSheetCalled = false
+    private(set) var didOpenInviteCodeShareSheetCalled = false
+    private(set) var didOpenDownloadURLShareSheetCalled = false
     
-    func waitlistViewModelDidOpenShareSheet(_ viewModel: DuckDuckGo.WaitlistViewModel, senderFrame: CGRect) {
-        didOpenShareSheetCalled = true
+    func waitlistViewModelDidOpenInviteCodeShareSheet(_ viewModel: DuckDuckGo.WaitlistViewModel, inviteCode: String, senderFrame: CGRect) {
+        didOpenInviteCodeShareSheetCalled = true
+    }
+
+    func waitlistViewModelDidOpenDownloadURLShareSheet(_ viewModel: DuckDuckGo.WaitlistViewModel, senderFrame: CGRect) {
+        didOpenDownloadURLShareSheetCalled = true
     }
 
 }

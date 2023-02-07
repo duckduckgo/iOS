@@ -54,7 +54,7 @@ class DDGObserverFactory: ObserverFactory {
                 
                 // Check firewall status
                 if let trackerData = trackerData, trackerData.shouldBlock(domain: session.host) {
-                    os_log("[AppTP][BLOCKED] %s on blocklist", log: generalLog,
+                    os_log("[AppTP][BLOCKED] %{public}s on blocklist", log: generalLog,
                            type: .error, session.host)
                     socket.forceDisconnect(becauseOf: BlockedReason())
                 }

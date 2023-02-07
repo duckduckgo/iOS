@@ -178,6 +178,7 @@ private struct AllowNotificationsView: View {
             Text(UserText.waitlistNotificationDisabled)
                 .font(.proximaNovaRegular17)
                 .foregroundColor(.waitlistText)
+                .fixMultilineScrollableText()
                 .lineSpacing(5)
 
             Button(UserText.waitlistAllowNotifications) {

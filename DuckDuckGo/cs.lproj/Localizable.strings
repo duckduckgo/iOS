@@ -1007,7 +1007,7 @@
 "number.of.tabs" = "number.of.tabs";
 
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
-"omnibar.notification.cookies-managed" = "Správa cookies je aktivní";
+"omnibar.notification.cookies-managed" = "O cookies je postaráno!";
 
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Skryté vyskakovací okno";

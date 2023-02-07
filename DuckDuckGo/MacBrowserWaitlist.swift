@@ -23,12 +23,11 @@ import UserNotifications
 import BackgroundTasks
 import os
 
-struct MacBrowserWaitlist: WaitlistProtocol {
+struct MacBrowserWaitlist: WaitlistHandling {
     static let feature: WaitlistFeature = .macBrowser
 
     static let shared: MacBrowserWaitlist = .init()
 
-    static let identifier = "mac"
     static let isWaitlistRemoved = true
 
     static let backgroundTaskName = "Mac Browser Waitlist Status Task"

@@ -23,12 +23,11 @@ import UserNotifications
 import BackgroundTasks
 import os
 
-struct WindowsBrowserWaitlist: WaitlistProtocol {
+struct WindowsBrowserWaitlist: WaitlistHandling {
     static let feature: WaitlistFeature = .windowsBrowser
 
     static let shared: WindowsBrowserWaitlist = .init()
 
-    static let identifier = "windows"
     static let isWaitlistRemoved = false
 
     static let backgroundTaskName = "Windows Browser Waitlist Status Task"

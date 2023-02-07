@@ -72,30 +72,15 @@ protocol WaitlistRequest {
 }
 
 class ProductWaitlistRequest: WaitlistRequest {
-
-    enum Product: String {
-        case macBrowser = "macosbrowser"
-        case windowsBrowser = "windowsbrowser"
-    }
     
-    private let product: Product
-    
-    private var endpoint: URL {
-#if DEBUG
-        return URL(string: "https://quackdev.duckduckgo.com/api/auth/waitlist/")!
-#else
-        return URL(string: "https://quack.duckduckgo.com/api/auth/waitlist/")!
-#endif
-    }
-
     init(feature: WaitlistFeature) {
-        self.product = feature.product
+        self.productName = feature.apiProductName
     }
     
     // MARK: - WaitlistRequesting
     
     func joinWaitlist(completionHandler: @escaping (Result<WaitlistResponse.Join, WaitlistResponse.JoinError>) -> Void) {
-        let url = endpoint.appendingPathComponent(product.rawValue).appendingPathComponent("join")
+        let url = endpoint.appendingPathComponent(productName).appendingPathComponent("join")
         
         APIRequest.request(url: url, method: .post) { response, error in
             guard let data = response?.data, error == nil else {
@@ -130,7 +115,7 @@ class ProductWaitlistRequest: WaitlistRequest {
     }
     
     func getWaitlistStatus(completionHandler: @escaping (Result<WaitlistResponse.Status, WaitlistResponse.StatusError>) -> Void) {
-        let url = endpoint.appendingPathComponent(product.rawValue).appendingPathComponent("status")
+        let url = endpoint.appendingPathComponent(productName).appendingPathComponent("status")
         
         APIRequest.request(url: url, method: .get) { response, error in
             guard let data = response?.data, error == nil else {
@@ -157,7 +142,7 @@ class ProductWaitlistRequest: WaitlistRequest {
     }
     
     func getInviteCode(token: String, completionHandler: @escaping (Result<WaitlistResponse.InviteCode, WaitlistResponse.InviteCodeError>) -> Void) {
-        let url = endpoint.appendingPathComponent(product.rawValue).appendingPathComponent("code")
+        let url = endpoint.appendingPathComponent(productName).appendingPathComponent("code")
         
         var components = URLComponents()
         components.queryItems = [URLQueryItem(name: "token", value: token)]
@@ -186,17 +171,15 @@ class ProductWaitlistRequest: WaitlistRequest {
             }
         }
     }
-    
-}
 
-private extension WaitlistFeature {
+    private let productName: String
 
-    var product: ProductWaitlistRequest.Product {
-        switch self {
-        case .macBrowser:
-            return .macBrowser
-        case .windowsBrowser:
-            return .windowsBrowser
-        }
+    private var endpoint: URL {
+#if DEBUG
+        return URL(string: "https://quackdev.duckduckgo.com/api/auth/waitlist/")!
+#else
+        return URL(string: "https://quack.duckduckgo.com/api/auth/waitlist/")!
+#endif
     }
+
 }

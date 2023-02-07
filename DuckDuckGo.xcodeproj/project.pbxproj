@@ -135,7 +135,6 @@
 		37FCAAB429914C77000E420A /* WindowsWaitlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FCAAB329914C77000E420A /* WindowsWaitlistViewController.swift */; };
 		37FCAAB629919CEB000E420A /* WindowsBrowserWaitlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FCAAB529919CEB000E420A /* WindowsBrowserWaitlist.swift */; };
 		37FCAAB829924675000E420A /* Color+Waitlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FCAAB729924675000E420A /* Color+Waitlist.swift */; };
-		37FCAABA29925AF3000E420A /* WaitlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FCAAB929925AF3000E420A /* WaitlistView.swift */; };
 		4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */; };
 		4B04ABBC27FFD92800945B5D /* MacBrowserWaitlistStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B04ABBB27FFD92800945B5D /* MacBrowserWaitlistStorageTests.swift */; };
 		4B04ABBE27FFD96900945B5D /* MacBrowserWaitlistMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B04ABBD27FFD96900945B5D /* MacBrowserWaitlistMocks.swift */; };
@@ -929,7 +928,6 @@
 		37FCAAB329914C77000E420A /* WindowsWaitlistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowsWaitlistViewController.swift; sourceTree = "<group>"; };
 		37FCAAB529919CEB000E420A /* WindowsBrowserWaitlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowsBrowserWaitlist.swift; sourceTree = "<group>"; };
 		37FCAAB729924675000E420A /* Color+Waitlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Waitlist.swift"; sourceTree = "<group>"; };
-		37FCAAB929925AF3000E420A /* WaitlistView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitlistView.swift; sourceTree = "<group>"; };
 		4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationDebugViewController.swift; sourceTree = "<group>"; };
 		4B04ABBB27FFD92800945B5D /* MacBrowserWaitlistStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistStorageTests.swift; sourceTree = "<group>"; };
 		4B04ABBD27FFD96900945B5D /* MacBrowserWaitlistMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistMocks.swift; sourceTree = "<group>"; };
@@ -2511,7 +2509,6 @@
 				4B6484E227FD1E340050A7A1 /* WaitlistRequest.swift */,
 				37FCAAA629911A05000E420A /* WaitlistViewModel.swift */,
 				37FCAAA829911A46000E420A /* WaitlistStorage.swift */,
-				37FCAAB929925AF3000E420A /* WaitlistView.swift */,
 				37FCAAA0299117F9000E420A /* MacBrowser */,
 				37FCAAA129911801000E420A /* WindowsBrowser */,
 				37FCAAB729924675000E420A /* Color+Waitlist.swift */,
@@ -4937,7 +4934,6 @@
 				F1BE54581E69DE1000FCF649 /* TutorialSettings.swift in Sources */,
 				1EE52ABB28FB1D6300B750C1 /* UIImageExtension.swift in Sources */,
 				858650D12469BCDE00C36F8A /* DaxDialogs.swift in Sources */,
-				37FCAABA29925AF3000E420A /* WaitlistView.swift in Sources */,
 				310D091B2799F54900DC0060 /* DownloadManager.swift in Sources */,
 				98D98A7425ED88D100D8E3DF /* BrowsingMenuEntryViewCell.swift in Sources */,
 				98F3A1D8217B37010011A0D4 /* Theme.swift in Sources */,

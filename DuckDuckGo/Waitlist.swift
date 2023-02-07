@@ -23,39 +23,31 @@ import UserNotifications
 import BackgroundTasks
 import os
 
-enum WaitlistInviteCodeFetchError: Error, Equatable {
-    case alreadyHasInviteCode
-    case notOnWaitlist
-    case noCodeAvailable
-    case failure(Error)
-
-    static func == (lhs: WaitlistInviteCodeFetchError, rhs: WaitlistInviteCodeFetchError) -> Bool {
-        switch (lhs, rhs) {
-        case (.alreadyHasInviteCode, .alreadyHasInviteCode): return true
-        case (.notOnWaitlist, .notOnWaitlist): return true
-        case (.noCodeAvailable, .noCodeAvailable): return true
-        default: return false
-        }
-    }
-}
-
 enum WaitlistFeature: String {
     case macBrowser = "mac"
     case windowsBrowser = "windows"
 
-    var isRemoved: Bool {
+    var isWaitlistRemoved: Bool {
         switch self {
         case .macBrowser:
             return true
-        case .windowsBrowser:
+        default:
             return false
+        }
+    }
+
+    var apiProductName: String {
+        switch self {
+        case .macBrowser:
+            return "macosbrowser"
+        case .windowsBrowser:
+            return "windowsbrowser"
         }
     }
 }
 
-protocol WaitlistConstants {
-    static var identifier: String { get }
-    static var isWaitlistRemoved: Bool { get }
+protocol WaitlistConstantsProviding {
+    static var feature: WaitlistFeature { get }
 
     static var backgroundTaskName: String { get }
     static var backgroundRefreshTaskIdentifier: String { get }
@@ -67,10 +59,9 @@ protocol WaitlistConstants {
     static var inviteAvailableNotificationBody: String { get }
 }
 
-protocol WaitlistProtocol: WaitlistConstants {
+protocol WaitlistHandling: WaitlistConstantsProviding {
 
     static var shared: Self { get }
-    static var feature: WaitlistFeature { get }
 
     var waitlistStorage: WaitlistStorage { get }
     var waitlistRequest: WaitlistRequest { get }
@@ -86,7 +77,7 @@ protocol WaitlistProtocol: WaitlistConstants {
     func sendInviteCodeAvailableNotification()
 }
 
-extension WaitlistProtocol {
+extension WaitlistHandling {
 
     init() {
         self.init(store: WaitlistKeychainStore(feature: Self.feature), request: ProductWaitlistRequest(feature: Self.feature))
@@ -198,4 +189,20 @@ extension WaitlistProtocol {
         UNUserNotificationCenter.current().add(request)
     }
 
+}
+
+enum WaitlistInviteCodeFetchError: Error, Equatable {
+    case alreadyHasInviteCode
+    case notOnWaitlist
+    case noCodeAvailable
+    case failure(Error)
+
+    static func == (lhs: WaitlistInviteCodeFetchError, rhs: WaitlistInviteCodeFetchError) -> Bool {
+        switch (lhs, rhs) {
+        case (.alreadyHasInviteCode, .alreadyHasInviteCode): return true
+        case (.notOnWaitlist, .notOnWaitlist): return true
+        case (.noCodeAvailable, .noCodeAvailable): return true
+        default: return false
+        }
+    }
 }

@@ -44,6 +44,15 @@ enum WaitlistFeature: String {
             return "windowsbrowser"
         }
     }
+
+    var downloadURL: URL {
+        switch self {
+        case .macBrowser:
+            return AppUrls().macBrowserDownloadURL
+        case .windowsBrowser:
+            return AppUrls().windowsBrowserDownloadURL
+        }
+    }
 }
 
 protocol WaitlistConstantsProviding {

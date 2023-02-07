@@ -62,14 +62,16 @@ final class WaitlistViewModel: ObservableObject {
         self.init(
             waitlistRequest: ProductWaitlistRequest(feature: feature),
             waitlistStorage: WaitlistKeychainStore(feature: feature),
-            notificationService: notificationService
+            notificationService: notificationService,
+            downloadURL: feature.downloadURL
         )
     }
 
-    init(waitlistRequest: WaitlistRequest, waitlistStorage: WaitlistStorage, notificationService: NotificationService?) {
+    init(waitlistRequest: WaitlistRequest, waitlistStorage: WaitlistStorage, notificationService: NotificationService?, downloadURL: URL) {
         self.waitlistRequest = waitlistRequest
         self.waitlistStorage = waitlistStorage
         self.notificationService = notificationService
+        self.downloadURL = downloadURL
 
         guard notificationService != nil else {
             viewState = .waitlistRemoved
@@ -180,7 +182,7 @@ final class WaitlistViewModel: ObservableObject {
     }
 
     private func copyDownloadUrlToClipboard() {
-        UIPasteboard.general.url = AppUrls().macBrowserDownloadURL
+        UIPasteboard.general.url = downloadURL
     }
 
     private func copyInviteCodeToClipboard() {
@@ -195,4 +197,5 @@ final class WaitlistViewModel: ObservableObject {
     private let waitlistRequest: WaitlistRequest
     private let waitlistStorage: WaitlistStorage
     private let notificationService: NotificationService?
+    private let downloadURL: URL
 }

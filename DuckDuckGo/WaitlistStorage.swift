@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import Core
 
 protocol WaitlistStorage {
 

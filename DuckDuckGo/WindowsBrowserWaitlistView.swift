@@ -18,12 +18,7 @@
 //
 
 import SwiftUI
-
-struct FailedAssertionView: View {
-    var body: some View { EmptyView() }
-    init(_ message: String) { assertionFailure(message) }
-}
-
+import Core
 
 // swiftlint:disable file_length
 struct WindowsBrowserWaitlistView: View {
@@ -49,10 +44,14 @@ struct WindowsBrowserWaitlistView: View {
                 Task { await viewModel.perform(action: action) }
             }
         case .waitlistRemoved:
-            FailedAssertionView("Windows waitlist is not removed")
+            FailedAssertionView("Windows waitlist is still active")
         }
     }
+}
 
+private struct FailedAssertionView: View {
+    var body: some View { EmptyView() }
+    init(_ message: String) { assertionFailure(message) }
 }
 
 struct WindowsBrowserWaitlistSignUpView: View {
@@ -219,14 +218,14 @@ struct WindowsBrowserWaitlistInvitedView: View {
                     Text(UserText.windowsWaitlistInviteScreenSubtitle)
                         .font(.proximaNovaRegular17)
                         .foregroundColor(.waitlistText)
-                        .padding(.top, 10)
+                        .padding(.top, 16)
                         .lineSpacing(6)
                         .fixedSize(horizontal: false, vertical: true)
 
                     Text(UserText.waitlistInviteScreenStepTitle(step: 1))
                         .font(.proximaNovaBold17)
                         .foregroundColor(.waitlistText)
-                        .padding(.top, 22)
+                        .padding(.top, 28)
                         .padding(.bottom, 8)
 
                     Text(UserText.windowsWaitlistInviteScreenStep1Description)
@@ -235,17 +234,17 @@ struct WindowsBrowserWaitlistInvitedView: View {
                         .lineSpacing(6)
 
                     if #available(iOS 14.0, *) {
-                        Text("duckduckgo.com/mac")
+                        Text(AppUrls().windowsBrowserDownloadURL.absoluteString.dropping(prefix: "https://"))
                             .font(.proximaNovaBold17)
-                            .foregroundColor(.blue)
+                            .foregroundColor(.waitlistBlue)
                             .menuController(UserText.waitlistCopy) {
                                 action(.copyDownloadURLToPasteboard)
                             }
-                            .padding(.top, 6)
+                            .scaledToFit()
                     } else {
-                        Text("duckduckgo.com/mac")
+                        Text(AppUrls().windowsBrowserDownloadURL.absoluteString.dropping(prefix: "https://"))
                             .font(.proximaNovaBold17)
-                            .foregroundColor(.blue)
+                            .foregroundColor(.waitlistBlue)
                             .padding(.top, 6)
                     }
 
@@ -466,5 +465,3 @@ private extension Font {
     }
 
 }
-
-// swiftlint:enable file_length

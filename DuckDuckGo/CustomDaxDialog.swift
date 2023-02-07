@@ -44,44 +44,52 @@ struct CustomDaxDialog: View {
                 }
                 .padding(.leading, Constants.Padding.daxLogoAndArrow)
                 
-                VStack(spacing: Constants.Spacing.dialogElements) {
-                    ForEach(model.content, id: \.self) { element in
-                        switch element {
-                        case .text(let text):
-                            Text(text)
-                                .font(Constants.Fonts.text)
-                                .foregroundColor(Constants.Colors.text)
-                                .lineSpacing(Constants.Spacing.textLineSpacing)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        case .animation(let name, let delay):
-                            LottieView(lottieFile: name, delay: delay)
-                                .fixedSize()
+                VStack {
+                    ScrollView {
+                        VStack(spacing: Constants.Spacing.dialogElements) {
+                            ForEach(model.content, id: \.self) { element in
+                                switch element {
+                                case .text(let text):
+                                    Text(text)
+                                        .font(Constants.Fonts.text)
+                                        .foregroundColor(Constants.Colors.text)
+                                        .lineSpacing(Constants.Spacing.textLineSpacing)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                case .animation(let name, let delay):
+                                    LottieView(lottieFile: name, delay: delay)
+                                        .fixedSize()
+                                }
+                            }
+                            
+                            ForEach(model.buttons, id: \.self) { button in
+                                switch button {
+                                case .bordered(let label, let action):
+                                    Button(action: action, label: {
+                                        Text(label)
+                                            .font(Constants.Fonts.button)
+                                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                    })
+                                    .frame(height: Constants.Size.buttonHeight)
+                                    .foregroundColor(Constants.Colors.borderedButtonText)
+                                    .background(Capsule().foregroundColor(Constants.Colors.borderedButtonBackground))
+                                case .borderless(let label, let action):
+                                    Button(action: action, label: {
+                                        Text(label)
+                                            .font(Constants.Fonts.button)
+                                            .frame(maxHeight: .infinity)
+                                    })
+                                    .frame(height: Constants.Size.buttonHeight)
+                                    .buttonStyle(.borderless)
+                                    .foregroundColor(Constants.Colors.borderlessButtonText)
+                                    .clipShape(Capsule())
+                                }
+                            }
                         }
                     }
-                    
-                    ForEach(model.buttons, id: \.self) { button in
-                        switch button {
-                        case .bordered(let label, let action):
-                            Button(action: action, label: {
-                                Text(label)
-                                    .font(Constants.Fonts.button)
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            })
-                            .frame(height: Constants.Size.buttonHeight)
-                            .foregroundColor(Constants.Colors.borderedButtonText)
-                            .background(Capsule().foregroundColor(Constants.Colors.borderedButtonBackground))
-                        case .borderless(let label, let action):
-                            Button(action: action, label: {
-                                Text(label)
-                                    .font(Constants.Fonts.button)
-                                    .frame(maxHeight: .infinity)
-                            })
-                            .frame(height: Constants.Size.buttonHeight)
-                            .buttonStyle(.borderless)
-                            .foregroundColor(Constants.Colors.borderlessButtonText)
-                            .clipShape(Capsule())
-                        }
+                    .if(verticalSizeClass != .compact) { view in
+                        view.simultaneousGesture(DragGesture(minimumDistance: 0))
                     }
+                    .fixedSize(horizontal: false, vertical: true)
                 }
                 .padding(Constants.Padding.dialogInsets)
                 .background(
@@ -90,8 +98,12 @@ struct CustomDaxDialog: View {
                 )
             }
             .padding([.leading, .trailing], Constants.Padding.dialogHorizontal)
+//            .padding([.leading, .trailing], verticalSizeClass == .regular ? Constants.Padding.dialogHorizontal : 70)
             .if(verticalSizeClass == .regular) { view in
                 view.padding(.bottom, Constants.Padding.dialogBottom)
+            }
+            .if(verticalSizeClass == .compact) { view in
+                view.padding([.leading, .trailing], Constants.Padding.dialogHorizontalWide)
             }
             .if(horizontalSizeClass == .regular) { view in
                 view.frame(width: Constants.Size.fixedDialogWidth)
@@ -126,6 +138,7 @@ private enum Constants {
         static let daxLogoAndArrow: CGFloat = 24
         static let dialogInsets = EdgeInsets(top: 24, leading: 16, bottom: 24, trailing: 16)
         static let dialogHorizontal: CGFloat = 8
+        static let dialogHorizontalWide: CGFloat = 70
         static let dialogBottom: CGFloat = 92
     }
     

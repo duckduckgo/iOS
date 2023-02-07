@@ -52,7 +52,7 @@ struct MacBrowserWaitlistContentView: View {
         GeometryReader { proxy in
             ScrollView {
                 VStack(alignment: .center, spacing: 8) {
-                    HeaderView(imageName: "MacWaitlistJoinWaitlist", title: UserText.macWaitlistTryDuckDuckGoForMac)
+                    WaitlistHeaderView(imageName: "MacWaitlistJoinWaitlist", title: UserText.macWaitlistTryDuckDuckGoForMac)
                     
                     Text(UserText.macWaitlistSummary)
                         .font(.proximaNova(size: 16, weight: .regular))
@@ -68,7 +68,7 @@ struct MacBrowserWaitlistContentView: View {
                         .padding(.top, 18)
 
                     Text(Constants.downloadURL)
-                        .font(.proximaNovaBold17)
+                        .font(.proximaNova(size: 17, weight: .bold))
                         .foregroundColor(.waitlistBlue)
                         .menuController(UserText.macWaitlistCopy) {
                             action(.copyDownloadURLToPasteboard)
@@ -85,7 +85,7 @@ struct MacBrowserWaitlistContentView: View {
                             }
                         }
                     )
-                    .buttonStyle(RoundedButtonStyle(enabled: true))
+                    .buttonStyle(WaitlistRoundedButtonStyle(enabled: true))
                     .padding(.top, 24)
                     .background(
                         GeometryReader { proxy in
@@ -108,7 +108,7 @@ struct MacBrowserWaitlistContentView: View {
                             HStack {
                                 Image("MacWaitlistWindows")
                                 Text(UserText.macWaitlistWindows)
-                                    .font(.proximaNovaBold17)
+                                    .font(.proximaNova(size: 17, weight: .bold))
                                     .foregroundColor(.waitlistBlue)
                                     .multilineTextAlignment(.center)
                                     .lineSpacing(5)
@@ -133,44 +133,6 @@ struct MacBrowserWaitlistContentView: View {
         })
         .frame(width: 44, height: 44)
         
-    }
-
-}
-
-// MARK: - Generic Views
- 
-private struct HeaderView: View {
-    
-    let imageName: String
-    let title: String
-    
-    var body: some View {
-        VStack(spacing: 18) {
-            Image(imageName)
-            
-            Text(title)
-                .font(.proximaNova(size: 22, weight: .bold))
-                .multilineTextAlignment(.center)
-                .fixMultilineScrollableText()
-        }
-        .padding(.top, 24)
-        .padding(.bottom, 12)
-    }
-    
-}
-
-private struct RoundedButtonStyle: ButtonStyle {
-
-    let enabled: Bool
-
-    func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .font(.proximaNovaBold17)
-            .frame(maxWidth: .infinity)
-            .padding([.top, .bottom], 16)
-            .background(enabled ? Color.waitlistBlue : Color.waitlistBlue.opacity(0.2))
-            .foregroundColor(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 
 }
@@ -211,20 +173,4 @@ private struct MacBrowserWaitlistView_Previews: PreviewProvider {
             .previewDisplayName(title)
         }
     }
-}
-
-// MARK: - Extensions
-
-private extension Font {
-    
-    static var proximaNovaRegular17: Self {
-        let fontName = "proximanova-\(Font.ProximaNovaWeight.regular.rawValue)"
-        return .custom(fontName, size: 17)
-    }
-    
-    static var proximaNovaBold17: Self {
-        let fontName = "proximanova-\(Font.ProximaNovaWeight.bold.rawValue)"
-        return .custom(fontName, size: 17)
-    }
-    
 }

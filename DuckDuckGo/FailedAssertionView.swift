@@ -1,8 +1,8 @@
 //
-//  FontExtension.swift
+//  FailedAssertionView.swift
 //  DuckDuckGo
 //
-//  Copyright © 2022 DuckDuckGo. All rights reserved.
+//  Copyright © 2023 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,22 +17,9 @@
 //  limitations under the License.
 //
 
-import Foundation
 import SwiftUI
 
-extension Font {
-    
-    enum ProximaNovaWeight: String {
-        case light
-        case regular
-        case semiBold = "semibold"
-        case bold
-        case extraBold = "extrabold"
-    }
-    
-    static func proximaNova(size: CGFloat, weight: ProximaNovaWeight = .regular) -> Self {
-        let fontName = "proximanova-\(weight.rawValue)"
-        return .custom(fontName, size: size)
-    }
-    
+struct FailedAssertionView: View {
+    var body: some View { EmptyView() }
+    init(_ message: String) { assertionFailure(message) }
 }

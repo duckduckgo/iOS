@@ -20,7 +20,6 @@
 import SwiftUI
 import Core
 
-// swiftlint:disable file_length
 struct WindowsBrowserWaitlistView: View {
 
     @EnvironmentObject var viewModel: WaitlistViewModel
@@ -49,11 +48,6 @@ struct WindowsBrowserWaitlistView: View {
     }
 }
 
-private struct FailedAssertionView: View {
-    var body: some View { EmptyView() }
-    init(_ message: String) { assertionFailure(message) }
-}
-
 struct WindowsBrowserWaitlistSignUpView: View {
 
     let requestInFlight: Bool
@@ -64,22 +58,22 @@ struct WindowsBrowserWaitlistSignUpView: View {
         GeometryReader { proxy in
             ScrollView {
                 VStack(alignment: .center, spacing: 8) {
-                    HeaderView(imageName: "WindowsWaitlistJoinWaitlist", title: UserText.windowsWaitlistTryDuckDuckGoForWindows)
+                    WaitlistHeaderView(imageName: "WindowsWaitlistJoinWaitlist", title: UserText.windowsWaitlistTryDuckDuckGoForWindows)
 
                     Text(UserText.windowsWaitlistSummary)
-                        .font(.proximaNova(size: 16, weight: .regular))
+                        .font(.proximaNova(size: 16))
                         .foregroundColor(.waitlistText)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
 
                     Button(UserText.waitlistJoin, action: { action(.joinQueue) })
-                        .buttonStyle(RoundedButtonStyle(enabled: !requestInFlight))
+                        .buttonStyle(WaitlistRoundedButtonStyle(enabled: !requestInFlight))
                         .padding(.top, 24)
 
                     if requestInFlight {
                         HStack {
                             Text(UserText.waitlistJoining)
-                                .font(.proximaNova(size: 15, weight: .regular))
+                                .font(.proximaNova(size: 15))
                                 .foregroundColor(.waitlistText)
 
                             ActivityIndicator(style: .medium)
@@ -96,7 +90,7 @@ struct WindowsBrowserWaitlistSignUpView: View {
                             HStack {
                                 Image("WindowsWaitlistMac")
                                 Text(UserText.windowsWaitlistMac)
-                                    .font(.proximaNovaBold17)
+                                    .font(.proximaNova(size: 17, weight: .bold))
                                     .foregroundColor(.waitlistBlue)
                                     .multilineTextAlignment(.center)
                                     .lineSpacing(5)
@@ -107,7 +101,7 @@ struct WindowsBrowserWaitlistSignUpView: View {
                     .fixedSize(horizontal: false, vertical: true)
 
                     Text(UserText.waitlistPrivacyDisclaimer)
-                        .font(.proximaNova(size: 13, weight: .regular))
+                        .font(.proximaNova(size: 13))
                         .foregroundColor(.waitlistSubtitle)
                         .multilineTextAlignment(.center)
                         .lineSpacing(5)
@@ -132,18 +126,18 @@ struct WindowsBrowserWaitlistJoinedWaitlistView: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            HeaderView(imageName: "WaitlistJoined", title: UserText.waitlistOnTheList)
+            WaitlistHeaderView(imageName: "WaitlistJoined", title: UserText.waitlistOnTheList)
 
             switch notificationState {
             case .notificationAllowed:
                 Text(UserText.windowsWaitlistJoinedWithNotifications)
-                    .font(.proximaNovaRegular17)
+                    .font(.proximaNova(size: 17))
                     .foregroundColor(.waitlistText)
                     .lineSpacing(6)
 
             default:
                 Text(UserText.windowsWaitlistJoinedWithoutNotifications)
-                    .font(.proximaNovaRegular17)
+                    .font(.proximaNova(size: 17))
                     .foregroundColor(.waitlistText)
                     .lineSpacing(6)
 
@@ -154,7 +148,7 @@ struct WindowsBrowserWaitlistJoinedWaitlistView: View {
                     Button(UserText.waitlistNotifyMe) {
                         action(.requestNotificationPermission)
                     }
-                    .buttonStyle(RoundedButtonStyle(enabled: true))
+                    .buttonStyle(WaitlistRoundedButtonStyle(enabled: true))
                     .padding(.top, 32)
                 }
             }
@@ -176,7 +170,7 @@ private struct AllowNotificationsView: View {
         VStack(spacing: 20) {
 
             Text(UserText.waitlistNotificationDisabled)
-                .font(.proximaNovaRegular17)
+                .font(.proximaNova(size: 17))
                 .foregroundColor(.waitlistText)
                 .fixMultilineScrollableText()
                 .lineSpacing(5)
@@ -184,7 +178,7 @@ private struct AllowNotificationsView: View {
             Button(UserText.waitlistAllowNotifications) {
                 action(.openNotificationSettings)
             }
-            .buttonStyle(RoundedButtonStyle(enabled: true))
+            .buttonStyle(WaitlistRoundedButtonStyle(enabled: true))
 
         }
         .padding(24)
@@ -214,29 +208,29 @@ struct WindowsBrowserWaitlistInvitedView: View {
         GeometryReader { proxy in
             ScrollView {
                 VStack(alignment: .center, spacing: 0) {
-                    HeaderView(imageName: "WaitlistInvited", title: UserText.waitlistYoureInvited)
+                    WaitlistHeaderView(imageName: "WaitlistInvited", title: UserText.waitlistYoureInvited)
 
                     Text(UserText.windowsWaitlistInviteScreenSubtitle)
-                        .font(.proximaNovaRegular17)
+                        .font(.proximaNova(size: 17))
                         .foregroundColor(.waitlistText)
                         .padding(.top, 16)
                         .lineSpacing(6)
                         .fixedSize(horizontal: false, vertical: true)
 
                     Text(UserText.waitlistInviteScreenStepTitle(step: 1))
-                        .font(.proximaNovaBold17)
+                        .font(.proximaNova(size: 17, weight: .bold))
                         .foregroundColor(.waitlistText)
                         .padding(.top, 28)
                         .padding(.bottom, 8)
 
                     Text(UserText.windowsWaitlistInviteScreenStep1Description)
-                        .font(.proximaNovaRegular17)
+                        .font(.proximaNova(size: 17))
                         .foregroundColor(.waitlistText)
                         .lineSpacing(6)
 
                     if #available(iOS 14.0, *) {
                         Text(AppUrls().windowsBrowserDownloadURL.absoluteString.dropping(prefix: "https://"))
-                            .font(.proximaNovaBold17)
+                            .font(.proximaNova(size: 17, weight: .bold))
                             .foregroundColor(.waitlistBlue)
                             .menuController(UserText.waitlistCopy) {
                                 action(.copyDownloadURLToPasteboard)
@@ -244,19 +238,19 @@ struct WindowsBrowserWaitlistInvitedView: View {
                             .scaledToFit()
                     } else {
                         Text(AppUrls().windowsBrowserDownloadURL.absoluteString.dropping(prefix: "https://"))
-                            .font(.proximaNovaBold17)
+                            .font(.proximaNova(size: 17, weight: .bold))
                             .foregroundColor(.waitlistBlue)
                             .padding(.top, 6)
                     }
 
                     Text(UserText.waitlistInviteScreenStepTitle(step: 2))
-                        .font(.proximaNovaBold17)
+                        .font(.proximaNova(size: 17, weight: .bold))
                         .foregroundColor(.waitlistText)
                         .padding(.top, 22)
                         .padding(.bottom, 8)
 
                     Text(UserText.windowsWaitlistInviteScreenStep2Description)
-                        .font(.proximaNovaRegular17)
+                        .font(.proximaNova(size: 17))
                         .foregroundColor(.waitlistText)
                         .lineSpacing(6)
 
@@ -306,84 +300,6 @@ struct WindowsBrowserWaitlistInvitedView: View {
             }
         }
 
-    }
-
-}
-
-private struct InviteCodeView: View {
-
-    let inviteCode: String
-
-    var body: some View {
-        VStack(spacing: 4) {
-            Text(UserText.waitlistInviteCode)
-                .font(.proximaNovaRegular17)
-                .foregroundColor(.white)
-                .padding([.top, .bottom], 4)
-
-            Text(inviteCode)
-                .font(.system(size: 34, weight: .semibold, design: .monospaced))
-                .padding([.leading, .trailing], 18)
-                .padding([.top, .bottom], 6)
-                .foregroundColor(.black)
-                .background(Color.white)
-                .cornerRadius(4)
-        }
-        .padding(4)
-        .background(Color.waitlistGreen)
-        .cornerRadius(8)
-    }
-
-}
-
-// MARK: - Generic Views
-
-private struct HeaderView: View {
-
-    let imageName: String
-    let title: String
-
-    var body: some View {
-        VStack(spacing: 18) {
-            Image(imageName)
-
-            Text(title)
-                .font(.proximaNova(size: 22, weight: .bold))
-        }
-        .padding(.top, 24)
-        .padding(.bottom, 12)
-    }
-
-}
-
-private struct RoundedButtonStyle: ButtonStyle {
-
-    let enabled: Bool
-
-    func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .font(.proximaNovaBold17)
-            .frame(maxWidth: .infinity)
-            .padding([.top, .bottom], 16)
-            .background(enabled ? Color.waitlistBlue : Color.waitlistBlue.opacity(0.2))
-            .foregroundColor(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 8))
-    }
-
-}
-
-private struct ActivityIndicator: UIViewRepresentable {
-
-    typealias UIViewType = UIActivityIndicatorView
-
-    let style: UIActivityIndicatorView.Style
-
-    func makeUIView(context: UIViewRepresentableContext<ActivityIndicator>) -> UIActivityIndicatorView {
-        return UIActivityIndicatorView(style: style)
-    }
-
-    func updateUIView(_ view: UIActivityIndicatorView, context: UIViewRepresentableContext<ActivityIndicator>) {
-        view.startAnimating()
     }
 
 }
@@ -449,20 +365,4 @@ private struct WindowsBrowserWaitlistView_Previews: PreviewProvider {
             .previewDisplayName(title)
         }
     }
-}
-
-// MARK: - Extensions
-
-private extension Font {
-
-    static var proximaNovaRegular17: Self {
-        let fontName = "proximanova-\(Font.ProximaNovaWeight.regular.rawValue)"
-        return .custom(fontName, size: 17)
-    }
-
-    static var proximaNovaBold17: Self {
-        let fontName = "proximanova-\(Font.ProximaNovaWeight.bold.rawValue)"
-        return .custom(fontName, size: 17)
-    }
-
 }

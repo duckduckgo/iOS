@@ -1007,7 +1007,7 @@ https://duckduckgo.com/mac";
 "number.of.tabs" = "number.of.tabs";
 
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
-"omnibar.notification.cookies-managed" = "Cookies managed";
+"omnibar.notification.cookies-managed" = "Cookies Managed";
 
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
 "omnibar.notification.popup-hidden" = "Pop-up Hidden";

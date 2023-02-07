@@ -2073,7 +2073,7 @@ extension TabViewController: AutoconsentUserScriptDelegate {
     }
     
     func autoconsentUserScript(_ script: AutoconsentUserScript, didRequestAskingUserForConsent completion: @escaping (Bool) -> Void) {
-        guard Locale.current.isRegionEUCountry,
+        guard Locale.current.isRegionInEurope,
               !isShowingFullScreenDaxDialog else { return }
         
         let model = CookieConsentDaxDialogModel(okAction: {

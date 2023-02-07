@@ -21,10 +21,10 @@ import Foundation
 
 extension Locale {
     
-    public var isRegionEUCountry: Bool {
-        return ["AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "ES", "FI",
-                "FR", "GR", "HR", "HU", "IE", "IT", "LT", "LU", "LV", "MT",
-                "NL", "PL", "PT", "RO", "SE", "SI", "SK"]
-            .contains(where: { regionCode == $0 })
+    public var isRegionInEurope: Bool {
+        ["AD", "AL", "AT", "AZ", "BA", "BE", "BG", "BY", "CH", "CY", "CZ", "DE", "DK", "EE", "ES",
+         "FI", "FR", "GE", "GI", "GR", "HR", "HU", "IE", "IS", "IT", "KZ", "LI", "LT", "LU", "LV",
+         "MC", "MD", "ME", "MK", "MT", "NL", "NO", "PL", "PT", "RO", "RS", "RU", "SE", "SI", "SK",
+         "SM", "TR", "UA", "UK", "VA"].contains(regionCode)
     }
 }

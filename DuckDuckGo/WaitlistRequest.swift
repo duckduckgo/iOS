@@ -88,8 +88,8 @@ class ProductWaitlistRequest: WaitlistRequest {
 #endif
     }
 
-    init(waitlist: Waitlist) {
-        self.product = waitlist.product
+    init(feature: WaitlistFeature) {
+        self.product = feature.product
     }
     
     // MARK: - WaitlistRequesting
@@ -189,7 +189,7 @@ class ProductWaitlistRequest: WaitlistRequest {
     
 }
 
-private extension Waitlist {
+private extension WaitlistFeature {
 
     var product: ProductWaitlistRequest.Product {
         switch self {

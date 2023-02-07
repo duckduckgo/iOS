@@ -215,11 +215,11 @@ class SettingsViewController: UITableViewController {
     }
     
     private func configureMacBrowserWaitlistCell() {
-        macBrowserWaitlistCell.detailTextLabel?.text = MacBrowserWaitlist.shared.settingsSubtitle()
+        macBrowserWaitlistCell.detailTextLabel?.text = MacBrowserWaitlist.shared.settingsSubtitle
     }
 
     private func configureWindowsBrowserWaitlistCell() {
-        windowsBrowserWaitlistCell.detailTextLabel?.text = WindowsBrowserWaitlist.shared.settingsSubtitle()
+        windowsBrowserWaitlistCell.detailTextLabel?.text = WindowsBrowserWaitlist.shared.settingsSubtitle
     }
 
     private func configureDebugCell() {

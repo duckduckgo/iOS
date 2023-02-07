@@ -53,18 +53,18 @@ class WaitlistKeychainStore: WaitlistStorage {
         case waitlistTimestamp = "timestamp"
         case inviteCode = "invite-code"
 
-        func keyValue(for waitlist: Waitlist) -> String {
+        func keyValue(for feature: WaitlistFeature) -> String {
             [
                 (Bundle.main.bundleIdentifier ?? "com.duckduckgo"),
                 "waitlist",
-                waitlist.rawValue,
+                feature.rawValue,
                 rawValue
             ].joined(separator: ".")
         }
     }
 
-    init(waitlist: Waitlist) {
-        self.waitlist = waitlist
+    init(feature: WaitlistFeature) {
+        self.feature = feature
     }
 
     func getWaitlistToken() -> String? {
@@ -91,7 +91,7 @@ class WaitlistKeychainStore: WaitlistStorage {
 
     func store(inviteCode: String) {
         add(string: inviteCode, forField: .inviteCode)
-        NotificationCenter.default.post(name: WindowsBrowserWaitlist.Notifications.inviteCodeChanged, object: nil)
+        NotificationCenter.default.post(name: WindowsBrowserWaitlist.notificationNameInviteCodeChanged, object: nil)
     }
 
     func deleteWaitlistState() {
@@ -118,7 +118,7 @@ class WaitlistKeychainStore: WaitlistStorage {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecMatchLimit as String: kSecMatchLimitOne,
-            kSecAttrService as String: field.keyValue(for: waitlist),
+            kSecAttrService as String: field.keyValue(for: feature),
             kSecReturnData as String: true]
 
         var item: CFTypeRef?
@@ -145,7 +145,7 @@ class WaitlistKeychainStore: WaitlistStorage {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrSynchronizable as String: false,
-            kSecAttrService as String: field.keyValue(for: waitlist),
+            kSecAttrService as String: field.keyValue(for: feature),
             kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlock,
             kSecValueData as String: data]
 
@@ -155,12 +155,12 @@ class WaitlistKeychainStore: WaitlistStorage {
     private func deleteItem(forField field: WaitlistKeychainField) {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: field.keyValue(for: waitlist)]
+            kSecAttrService as String: field.keyValue(for: feature)]
         SecItemDelete(query as CFDictionary)
     }
 
     // MARK: -
 
-    private let waitlist: Waitlist
+    private let feature: WaitlistFeature
 
 }

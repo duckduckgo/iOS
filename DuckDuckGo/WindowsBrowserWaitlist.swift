@@ -23,157 +23,43 @@ import UserNotifications
 import BackgroundTasks
 import os
 
-struct WindowsBrowserWaitlist {
+struct WindowsBrowserWaitlist: WaitlistProtocol {
+    static let feature: WaitlistFeature = .windowsBrowser
 
-    struct Constants {
-        static let backgroundTaskName = "Windows Browser Waitlist Status Task"
-        static let backgroundRefreshTaskIdentifier = "com.duckduckgo.app.windowsBrowserWaitlistStatus"
-        static let minimumConfigurationRefreshInterval: TimeInterval = 60 * 60 * 12
-        static let notificationIdentitier = "com.duckduckgo.ios.windows-browser.invite-code-available"
-    }
+    static let shared: WindowsBrowserWaitlist = .init()
 
-    struct Notifications {
-        public static let inviteCodeChanged = Notification.Name("com.duckduckgo.app.windows-waitlist.invite-code-changed")
-    }
+    static let identifier = "windows"
+    static let isWaitlistRemoved = false
 
-    static var shared = WindowsBrowserWaitlist()
+    static let backgroundTaskName = "Windows Browser Waitlist Status Task"
+    static let backgroundRefreshTaskIdentifier = "com.duckduckgo.app.windowsBrowserWaitlistStatus"
+    static let minimumConfigurationRefreshInterval: TimeInterval = 60 * 60 * 12
+    static let notificationIdentitier = "com.duckduckgo.ios.windows-browser.invite-code-available"
+    static let notificationNameInviteCodeChanged = Notification.Name("com.duckduckgo.app.windows-waitlist.invite-code-changed")
+    static let inviteAvailableNotificationTitle = UserText.windowsWaitlistAvailableNotificationTitle
+    static let inviteAvailableNotificationBody = UserText.waitlistAvailableNotificationBody
 
-    private let waitlist: Waitlist
-    private let waitlistStorage: WaitlistStorage
-    private let waitlistRequest: WaitlistRequest
+    let waitlistStorage: WaitlistStorage
+    let waitlistRequest: WaitlistRequest
 
-    init(waitlist: Waitlist = .windowsBrowser) {
-        let store = WaitlistKeychainStore(waitlist: waitlist)
-        let request = ProductWaitlistRequest(waitlist: waitlist)
-        self.init(waitlist: waitlist, store: store, request: request)
-    }
-
-    init(waitlist: Waitlist, store: WaitlistStorage, request: WaitlistRequest) {
-        self.waitlist = waitlist
+    init(store: WaitlistStorage, request: WaitlistRequest) {
         self.waitlistStorage = store
         self.waitlistRequest = request
     }
 
-    func settingsSubtitle() -> String {
-        if waitlist.isRemoved {
+    var settingsSubtitle: String {
+        if Self.isWaitlistRemoved {
             return UserText.windowsWaitlistBrowsePrivately
         }
-
+        
         if waitlistStorage.isInvited {
             return UserText.waitlistAvailableForDownload
         }
-
+        
         if waitlistStorage.isOnWaitlist {
             return UserText.waitlistOnTheList
         }
-
+        
         return UserText.windowsWaitlistBrowsePrivately
     }
-
-    func fetchInviteCodeIfAvailable() async -> WaitlistInviteCodeFetchError? {
-        await withCheckedContinuation { continuation in
-            fetchInviteCodeIfAvailable { error in
-                continuation.resume(returning: error)
-            }
-        }
-    }
-
-    func fetchInviteCodeIfAvailable(completion: @escaping (WaitlistInviteCodeFetchError?) -> Void) {
-        guard waitlistStorage.getWaitlistInviteCode() == nil else {
-            completion(.alreadyHasInviteCode)
-            return
-        }
-
-        guard let token = waitlistStorage.getWaitlistToken(), let storedTimestamp = waitlistStorage.getWaitlistTimestamp() else {
-            completion(.notOnWaitlist)
-            return
-        }
-
-        waitlistRequest.getWaitlistStatus { statusResult in
-            switch statusResult {
-            case .success(let statusResponse):
-                if statusResponse.timestamp >= storedTimestamp {
-                    waitlistRequest.getInviteCode(token: token) { inviteCodeResult in
-                        switch inviteCodeResult {
-                        case .success(let inviteCode):
-                            waitlistStorage.store(inviteCode: inviteCode.code)
-                            completion(nil)
-                        case .failure(let inviteCodeError):
-                            completion(.failure(inviteCodeError))
-                        }
-
-                    }
-                } else {
-                    // If the user is still in the waitlist, no code is available.
-                    completion(.noCodeAvailable)
-                }
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-
-    func registerBackgroundRefreshTaskHandler() {
-        BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.backgroundRefreshTaskIdentifier, using: nil) { task in
-            let waitlist = WindowsBrowserWaitlist.shared
-
-            guard waitlist.waitlistStorage.isOnWaitlist else {
-                task.setTaskCompleted(success: true)
-                return
-            }
-
-            waitlist.fetchInviteCodeIfAvailable { error in
-                guard error == nil else {
-                    task.setTaskCompleted(success: false)
-
-                    if error != .notOnWaitlist {
-                        scheduleBackgroundRefreshTask()
-                    }
-
-                    return
-                }
-
-                sendInviteCodeAvailableNotification()
-                task.setTaskCompleted(success: true)
-            }
-        }
-    }
-
-    func scheduleBackgroundRefreshTask() {
-        guard waitlistStorage.isOnWaitlist else {
-            return
-        }
-
-        let task = BGAppRefreshTaskRequest(identifier: Constants.backgroundRefreshTaskIdentifier)
-        task.earliestBeginDate = Date(timeIntervalSinceNow: Constants.minimumConfigurationRefreshInterval)
-
-        // Background tasks can be debugged by breaking on the `submit` call, stepping over, then running the following LLDB command, before resuming:
-        //
-        // e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateLaunchForTaskWithIdentifier:@"com.duckduckgo.app.waitlistStatus"]
-        //
-        // Task expiration can be simulated similarly:
-        //
-        // e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateExpirationForTaskWithIdentifier:@"com.duckduckgo.app.waitlistStatus"]
-
-        #if !targetEnvironment(simulator)
-        do {
-            try BGTaskScheduler.shared.submit(task)
-        } catch {
-            Pixel.fire(pixel: .backgroundTaskSubmissionFailed, error: error)
-        }
-        #endif
-    }
-
-    func sendInviteCodeAvailableNotification() {
-        let notificationContent = UNMutableNotificationContent()
-
-        notificationContent.title = UserText.windowsWaitlistAvailableNotificationTitle
-        notificationContent.body = UserText.waitlistAvailableNotificationBody
-
-        let notificationIdentifier = Constants.notificationIdentitier
-        let request = UNNotificationRequest(identifier: notificationIdentifier, content: notificationContent, trigger: nil)
-
-        UNUserNotificationCenter.current().add(request)
-    }
-
 }

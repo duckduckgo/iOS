@@ -27,7 +27,7 @@ final class WindowsWaitlistViewController: UIViewController {
     private let viewModel: WaitlistViewModel
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        self.viewModel = WaitlistViewModel(waitlist: .windowsBrowser)
+        self.viewModel = WaitlistViewModel(feature: .windowsBrowser)
         super.init(nibName: nil, bundle: nil)
         self.viewModel.delegate = self
     }
@@ -50,7 +50,7 @@ final class WindowsWaitlistViewController: UIViewController {
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(updateViewState),
-                                               name: WindowsBrowserWaitlist.Notifications.inviteCodeChanged,
+                                               name: WindowsBrowserWaitlist.notificationNameInviteCodeChanged,
                                                object: nil)
     }
 

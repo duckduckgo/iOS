@@ -57,11 +57,11 @@ final class WaitlistViewModel: ObservableObject {
 
     weak var delegate: WaitlistViewModelDelegate?
 
-    convenience init(waitlist: Waitlist) {
-        let notificationService: NotificationService? = waitlist.isRemoved ? nil : UNUserNotificationCenter.current()
+    convenience init(feature: WaitlistFeature) {
+        let notificationService: NotificationService? = feature.isRemoved ? nil : UNUserNotificationCenter.current()
         self.init(
-            waitlistRequest: ProductWaitlistRequest(waitlist: waitlist),
-            waitlistStorage: WaitlistKeychainStore(waitlist: waitlist),
+            waitlistRequest: ProductWaitlistRequest(feature: feature),
+            waitlistStorage: WaitlistKeychainStore(feature: feature),
             notificationService: notificationService
         )
     }

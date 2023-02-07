@@ -247,7 +247,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         BGTaskScheduler.shared.getPendingTaskRequests { tasks in
-            let hasMacBrowserWaitlistTask = tasks.contains { $0.identifier == WindowsBrowserWaitlist.Constants.backgroundRefreshTaskIdentifier }
+            let hasMacBrowserWaitlistTask = tasks.contains { $0.identifier == WindowsBrowserWaitlist.backgroundRefreshTaskIdentifier }
             if !hasMacBrowserWaitlistTask {
                 WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
             }
@@ -537,7 +537,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        if notification.request.identifier == WindowsBrowserWaitlist.Constants.notificationIdentitier {
+        if notification.request.identifier == WindowsBrowserWaitlist.notificationIdentitier {
             Pixel.fire(pixel: .windowsBrowserWaitlistNotificationShown)
         }
         
@@ -548,7 +548,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
-            if response.notification.request.identifier == WindowsBrowserWaitlist.Constants.notificationIdentitier {
+            if response.notification.request.identifier == WindowsBrowserWaitlist.notificationIdentitier {
                 Pixel.fire(pixel: .windowsBrowserWaitlistNotificationLaunched)
                 presentWindowsBrowserWaitlistSettingsModal()
             }

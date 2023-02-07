@@ -60,7 +60,7 @@ final class WindowsBrowserWaitlistDebugViewController: UITableViewController {
 
     }
 
-    private let storage = WaitlistKeychainStore(waitlist: .windowsBrowser)
+    private let storage = WaitlistKeychainStore(feature: .windowsBrowser)
 
     private var backgroundTaskExecutionDate: String?
 
@@ -75,7 +75,7 @@ final class WindowsBrowserWaitlistDebugViewController: UITableViewController {
         navigationItem.rightBarButtonItem = clearDataItem
 
         BGTaskScheduler.shared.getPendingTaskRequests { tasks in
-            if let task = tasks.first(where: { $0.identifier == WindowsBrowserWaitlist.Constants.backgroundRefreshTaskIdentifier }) {
+            if let task = tasks.first(where: { $0.identifier == WindowsBrowserWaitlist.backgroundRefreshTaskIdentifier }) {
                 let formatter = DateFormatter()
                 formatter.dateStyle = .short
                 formatter.timeStyle = .medium

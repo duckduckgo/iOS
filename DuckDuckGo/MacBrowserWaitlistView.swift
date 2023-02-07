@@ -70,7 +70,7 @@ struct MacBrowserWaitlistContentView: View {
                     Text(Constants.downloadURL)
                         .font(.proximaNovaBold17)
                         .foregroundColor(.waitlistBlue)
-                        .menuController(UserText.waitlistCopy) {
+                        .menuController(UserText.macWaitlistCopy) {
                             action(.copyDownloadURLToPasteboard)
                         }
                         .fixedSize()
@@ -81,7 +81,7 @@ struct MacBrowserWaitlistContentView: View {
                         }, label: {
                             HStack {
                                 Image("Share-16")
-                                Text(UserText.waitlistShareLink)
+                                Text(UserText.macWaitlistShareLink)
                             }
                         }
                     )
@@ -150,6 +150,8 @@ private struct HeaderView: View {
             
             Text(title)
                 .font(.proximaNova(size: 22, weight: .bold))
+                .multilineTextAlignment(.center)
+                .fixMultilineScrollableText()
         }
         .padding(.top, 24)
         .padding(.bottom, 12)

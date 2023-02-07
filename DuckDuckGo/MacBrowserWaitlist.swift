@@ -165,7 +165,7 @@ struct MacBrowserWaitlist {
         let notificationContent = UNMutableNotificationContent()
 
         notificationContent.title = UserText.macWaitlistAvailableNotificationTitle
-        notificationContent.body = UserText.macWaitlistAvailableNotificationBody
+        notificationContent.body = UserText.waitlistAvailableNotificationBody
 
         let notificationIdentifier = Constants.notificationIdentitier
         let request = UNNotificationRequest(identifier: notificationIdentifier, content: notificationContent, trigger: nil)

@@ -538,7 +538,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         if notification.request.identifier == WindowsBrowserWaitlist.Constants.notificationIdentitier {
-            Pixel.fire(pixel: .macBrowserWaitlistNotificationShown)
+            Pixel.fire(pixel: .windowsBrowserWaitlistNotificationShown)
         }
         
         completionHandler(.banner)
@@ -549,16 +549,16 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
             if response.notification.request.identifier == WindowsBrowserWaitlist.Constants.notificationIdentitier {
-                Pixel.fire(pixel: .macBrowserWaitlistNotificationLaunched)
-                presentMacBrowserWaitlistSettingsModal()
+                Pixel.fire(pixel: .windowsBrowserWaitlistNotificationLaunched)
+                presentWindowsBrowserWaitlistSettingsModal()
             }
         }
 
         completionHandler()
     }
     
-    private func presentMacBrowserWaitlistSettingsModal() {
-        let waitlistViewController = MacWaitlistViewController(nibName: nil, bundle: nil)
+    private func presentWindowsBrowserWaitlistSettingsModal() {
+        let waitlistViewController = WindowsWaitlistViewController(nibName: nil, bundle: nil)
         presentSettings(with: waitlistViewController)
     }
     

@@ -46,7 +46,7 @@ final class MacWaitlistViewController: UIViewController {
     private func addHostingControllerToViewHierarchy() {
         let waitlistView = MacBrowserWaitlistView().environmentObject(viewModel)
         let waitlistViewController = UIHostingController(rootView: waitlistView)
-        waitlistViewController.view.backgroundColor = UIColor(named: "MacWaitlistBackgroundColor")!
+        waitlistViewController.view.backgroundColor = UIColor(named: "WaitlistBackgroundColor")!
         
         addChild(waitlistViewController)
         waitlistViewController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -120,7 +120,7 @@ private final class MacWaitlistLinkMetadata: NSObject, UIActivityItemSource {
         }
 
         switch type {
-        case .message, .mail: return UserText.macWaitlistShareSheetMessage()
+        case .message, .mail: return UserText.macWaitlistShareSheetMessage
         default: return self.metadata.originalURL as Any
         }
     }

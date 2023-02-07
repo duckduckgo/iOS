@@ -69,7 +69,7 @@ struct WindowsBrowserWaitlistSignUpView: View {
 
                     Text(UserText.windowsWaitlistSummary)
                         .font(.proximaNova(size: 16, weight: .regular))
-                        .foregroundColor(.windowsWaitlistText)
+                        .foregroundColor(.waitlistText)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
 
@@ -81,7 +81,7 @@ struct WindowsBrowserWaitlistSignUpView: View {
                         HStack {
                             Text(UserText.waitlistJoining)
                                 .font(.proximaNova(size: 15, weight: .regular))
-                                .foregroundColor(.windowsWaitlistText)
+                                .foregroundColor(.waitlistText)
 
                             ActivityIndicator(style: .medium)
                         }
@@ -98,7 +98,7 @@ struct WindowsBrowserWaitlistSignUpView: View {
                                 Image("WindowsWaitlistMac")
                                 Text(UserText.windowsWaitlistMac)
                                     .font(.proximaNovaBold17)
-                                    .foregroundColor(.windowsWaitlistBlue)
+                                    .foregroundColor(.waitlistBlue)
                                     .multilineTextAlignment(.center)
                                     .lineSpacing(5)
                             }
@@ -109,7 +109,7 @@ struct WindowsBrowserWaitlistSignUpView: View {
 
                     Text(UserText.waitlistPrivacyDisclaimer)
                         .font(.proximaNova(size: 13, weight: .regular))
-                        .foregroundColor(.windowsWaitlistSubtitle)
+                        .foregroundColor(.waitlistSubtitle)
                         .multilineTextAlignment(.center)
                         .lineSpacing(5)
                         .padding(.bottom, 12)
@@ -139,13 +139,13 @@ struct WindowsBrowserWaitlistJoinedWaitlistView: View {
             case .notificationAllowed:
                 Text(UserText.windowsWaitlistJoinedWithNotifications)
                     .font(.proximaNovaRegular17)
-                    .foregroundColor(.windowsWaitlistText)
+                    .foregroundColor(.waitlistText)
                     .lineSpacing(6)
 
             default:
                 Text(UserText.windowsWaitlistJoinedWithoutNotifications)
                     .font(.proximaNovaRegular17)
-                    .foregroundColor(.windowsWaitlistText)
+                    .foregroundColor(.waitlistText)
                     .lineSpacing(6)
 
                 if notificationState == .notificationsDisabled {
@@ -178,7 +178,7 @@ private struct AllowNotificationsView: View {
 
             Text(UserText.waitlistNotificationDisabled)
                 .font(.proximaNovaRegular17)
-                .foregroundColor(.windowsWaitlistText)
+                .foregroundColor(.waitlistText)
                 .lineSpacing(5)
 
             Button(UserText.waitlistAllowNotifications) {
@@ -188,7 +188,7 @@ private struct AllowNotificationsView: View {
 
         }
         .padding(24)
-        .background(Color.windowsWaitlistNotificationBackground)
+        .background(Color.waitlistNotificationBackground)
         .cornerRadius(8)
         .shadow(color: .black.opacity(0.05), radius: 12, x: 0, y: 4)
 
@@ -214,24 +214,24 @@ struct WindowsBrowserWaitlistInvitedView: View {
         GeometryReader { proxy in
             ScrollView {
                 VStack(alignment: .center, spacing: 0) {
-                    HeaderView(imageName: "WindowsWaitlistInvited", title: UserText.waitlistYoureInvited)
+                    HeaderView(imageName: "WaitlistInvited", title: UserText.waitlistYoureInvited)
 
                     Text(UserText.windowsWaitlistInviteScreenSubtitle)
                         .font(.proximaNovaRegular17)
-                        .foregroundColor(.windowsWaitlistText)
+                        .foregroundColor(.waitlistText)
                         .padding(.top, 10)
                         .lineSpacing(6)
                         .fixedSize(horizontal: false, vertical: true)
 
                     Text(UserText.waitlistInviteScreenStepTitle(step: 1))
                         .font(.proximaNovaBold17)
-                        .foregroundColor(.windowsWaitlistText)
+                        .foregroundColor(.waitlistText)
                         .padding(.top, 22)
                         .padding(.bottom, 8)
 
                     Text(UserText.windowsWaitlistInviteScreenStep1Description)
                         .font(.proximaNovaRegular17)
-                        .foregroundColor(.windowsWaitlistText)
+                        .foregroundColor(.waitlistText)
                         .lineSpacing(6)
 
                     if #available(iOS 14.0, *) {
@@ -251,13 +251,13 @@ struct WindowsBrowserWaitlistInvitedView: View {
 
                     Text(UserText.waitlistInviteScreenStepTitle(step: 2))
                         .font(.proximaNovaBold17)
-                        .foregroundColor(.windowsWaitlistText)
+                        .foregroundColor(.waitlistText)
                         .padding(.top, 22)
                         .padding(.bottom, 8)
 
                     Text(UserText.windowsWaitlistInviteScreenStep2Description)
                         .font(.proximaNovaRegular17)
-                        .foregroundColor(.windowsWaitlistText)
+                        .foregroundColor(.waitlistText)
                         .lineSpacing(6)
 
                     if #available(iOS 14.0, *) {
@@ -291,7 +291,7 @@ struct WindowsBrowserWaitlistInvitedView: View {
             action(.openShareSheet(shareButtonFrame))
         }, label: {
             Image("Share")
-                .foregroundColor(.windowsWaitlistText)
+                .foregroundColor(.waitlistText)
         })
         .frame(width: 44, height: 44)
         .background(
@@ -330,7 +330,7 @@ private struct InviteCodeView: View {
                 .cornerRadius(4)
         }
         .padding(4)
-        .background(Color.windowsWaitlistGreen)
+        .background(Color.waitlistGreen)
         .cornerRadius(8)
     }
 
@@ -365,7 +365,7 @@ private struct RoundedButtonStyle: ButtonStyle {
             .font(.proximaNovaBold17)
             .frame(maxWidth: .infinity)
             .padding([.top, .bottom], 16)
-            .background(enabled ? Color.windowsWaitlistBlue : Color.windowsWaitlistBlue.opacity(0.2))
+            .background(enabled ? Color.waitlistBlue : Color.waitlistBlue.opacity(0.2))
             .foregroundColor(.white)
             .clipShape(RoundedRectangle(cornerRadius: 8))
     }
@@ -452,30 +452,6 @@ private struct WindowsBrowserWaitlistView_Previews: PreviewProvider {
 }
 
 // MARK: - Extensions
-
-private extension Color {
-
-    static var windowsWaitlistText: Color {
-        Color("WindowsWaitlistTextColor")
-    }
-
-    static var windowsWaitlistSubtitle: Color {
-        Color("WindowsWaitlistSubtitleColor")
-    }
-
-    static var windowsWaitlistGreen: Color {
-        Color("WindowsWaitlistGreen")
-    }
-
-    static var windowsWaitlistBlue: Color {
-        Color("WindowsWaitlistBlue")
-    }
-
-    static var windowsWaitlistNotificationBackground: Color {
-        Color("WindowsWaitlistNotificationsBackgroundColor")
-    }
-
-}
 
 private extension Font {
 

@@ -56,20 +56,20 @@ struct MacBrowserWaitlistContentView: View {
                     
                     Text(UserText.macWaitlistSummary)
                         .font(.proximaNova(size: 16, weight: .regular))
-                        .foregroundColor(.macWaitlistText)
+                        .foregroundColor(.waitlistText)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
                     
                     Text(UserText.macWaitlistOnYourMacGoTo)
                         .font(.proximaNova(size: 16, weight: .regular))
-                        .foregroundColor(.macWaitlistText)
+                        .foregroundColor(.waitlistText)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
                         .padding(.top, 18)
 
                     Text(Constants.downloadURL)
                         .font(.proximaNovaBold17)
-                        .foregroundColor(.macWaitlistBlue)
+                        .foregroundColor(.waitlistBlue)
                         .menuController(UserText.waitlistCopy) {
                             action(.copyDownloadURLToPasteboard)
                         }
@@ -109,7 +109,7 @@ struct MacBrowserWaitlistContentView: View {
                                 Image("MacWaitlistWindows")
                                 Text(UserText.macWaitlistWindows)
                                     .font(.proximaNovaBold17)
-                                    .foregroundColor(.macWaitlistBlue)
+                                    .foregroundColor(.waitlistBlue)
                                     .multilineTextAlignment(.center)
                                     .lineSpacing(5)
                             }
@@ -129,8 +129,7 @@ struct MacBrowserWaitlistContentView: View {
         Button(action: {
             action(.openShareSheet(shareButtonFrame))
         }, label: {
-            Image("Share")
-                .foregroundColor(.macWaitlistText)
+            Image("Share").foregroundColor(.waitlistText)
         })
         .frame(width: 44, height: 44)
         
@@ -167,7 +166,7 @@ private struct RoundedButtonStyle: ButtonStyle {
             .font(.proximaNovaBold17)
             .frame(maxWidth: .infinity)
             .padding([.top, .bottom], 16)
-            .background(enabled ? Color.macWaitlistBlue : Color.macWaitlistBlue.opacity(0.2))
+            .background(enabled ? Color.waitlistBlue : Color.waitlistBlue.opacity(0.2))
             .foregroundColor(.white)
             .clipShape(RoundedRectangle(cornerRadius: 8))
     }
@@ -213,22 +212,6 @@ private struct MacBrowserWaitlistView_Previews: PreviewProvider {
 }
 
 // MARK: - Extensions
-
-private extension Color {
-    
-    static var macWaitlistText: Color {
-        Color("MacWaitlistTextColor")
-    }
-
-    static var macWaitlistSubtitle: Color {
-        Color("MacWaitlistSubtitleColor")
-    }
-    
-    static var macWaitlistBlue: Color {
-        Color("MacWaitlistBlue")
-    }
-    
-}
 
 private extension Font {
     

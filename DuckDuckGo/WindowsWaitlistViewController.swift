@@ -67,7 +67,7 @@ final class WindowsWaitlistViewController: UIViewController {
     private func addHostingControllerToViewHierarchy() {
         let waitlistView = WindowsBrowserWaitlistView().environmentObject(viewModel)
         let waitlistViewController = UIHostingController(rootView: waitlistView)
-        waitlistViewController.view.backgroundColor = UIColor(named: "MacWaitlistBackgroundColor")!
+        waitlistViewController.view.backgroundColor = UIColor(named: "WaitlistBackgroundColor")!
 
         addChild(waitlistViewController)
         waitlistViewController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -90,13 +90,13 @@ extension WindowsWaitlistViewController: WaitlistViewModelDelegate {
         let linkMetadata = WindowsWaitlistLinkMetadata(inviteCode: inviteCode)
         let activityViewController = UIActivityViewController(activityItems: [linkMetadata], applicationActivities: nil)
 
-        Pixel.fire(pixel: .macBrowserWaitlistDidPressShareButton)
+        Pixel.fire(pixel: .windowsBrowserWaitlistDidPressShareButton)
 
         activityViewController.completionWithItemsHandler = { _, completed, _, _ in
             if completed {
-                Pixel.fire(pixel: .macBrowserWaitlistDidPressShareButtonShared)
+                Pixel.fire(pixel: .windowsBrowserWaitlistDidPressShareButtonShared)
             } else {
-                Pixel.fire(pixel: .macBrowserWaitlistDidPressShareButtonDismiss)
+                Pixel.fire(pixel: .windowsBrowserWaitlistDidPressShareButtonDismiss)
             }
         }
 

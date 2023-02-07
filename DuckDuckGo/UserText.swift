@@ -409,18 +409,6 @@ public struct UserText {
 
     public static let actionAutofillLogins = NSLocalizedString("action.title.autofill.logins", value: "Autofill Logins", comment: "Autofill Logins menu item opening the login list")
 
-    // MARK: - Mac Waitlist
-    
-    public static let macBrowserTitle = NSLocalizedString("mac-waitlist.title", value: "DuckDuckGo App for Mac", comment: "Title for the Mac Waitlist feature")
-    
-    public static let macWaitlistSummary = NSLocalizedString("mac-browser.waitlist.summary", value: "DuckDuckGo for Mac has the speed you need, the browsing features you expect, and comes packed with our best-in-class privacy essentials.", comment: "Summary text for the macOS browser waitlist")
-    
-    public static let macWaitlistTryDuckDuckGoForMac = NSLocalizedString("mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac", value: "Get DuckDuckGo for Mac!", comment: "Title for the Join Waitlist screen")
-    
-    public static let macWaitlistOnYourMacGoTo = NSLocalizedString("mac-waitlist.join-waitlist-screen.on-your-mac-go-to", value: "On your Mac, go to:", comment: "Description text above the Share Link button")
-    
-    public static let macWaitlistWindows = NSLocalizedString("mac-waitlist.join-waitlist-screen.windows", value: "Looking for the Windows Version?", comment: "Title for the macOS waitlist button redirecting to Windows waitlist")
-
     // MARK: - Waitlist
 
     public static let waitlistPrivacyDisclaimer = NSLocalizedString("waitlist.privacy-disclaimer",
@@ -429,13 +417,13 @@ public struct UserText {
 
     public static let waitlistInviteCode = NSLocalizedString("waitlist.invite-code", value: "Invite Code", comment: "Label text for the invite code")
 
-    public static let waitlistShareLink = NSLocalizedString("mac-waitlist.join-waitlist-screen.share-link", value: "Share Link", comment: "Title for the Share Link button")
+    public static let waitlistShareLink = NSLocalizedString("waitlist.join-waitlist-screen.share-link", value: "Share Link", comment: "Title for the Share Link button")
 
-    public static let waitlistCopy = NSLocalizedString("mac-waitlist.copy", value: "Copy", comment: "Title for the copy action")
+    public static let waitlistCopy = NSLocalizedString("waitlist.copy", value: "Copy", comment: "Title for the copy action")
 
     public static let waitlistNotifyMe = NSLocalizedString("waitlist.joined.no-notification.get-notification", value: "Notify Me", comment: "Notification text for the waitlist")
 
-    public static let waitlistNotificationDisabled = NSLocalizedString("mac-waitlist.notification.disabled", value: "We can notify you when it’s your turn, but notifications are currently disabled for DuckDuckGo.", comment: "Text used for the Notifications Disabled state")
+    public static let waitlistNotificationDisabled = NSLocalizedString("waitlist.notification.disabled", value: "We can notify you when it’s your turn, but notifications are currently disabled for DuckDuckGo.", comment: "Text used for the Notifications Disabled state")
 
     public static let waitlistJoin = NSLocalizedString("waitlist.join-waitlist-screen.join", value: "Join the Private Waitlist", comment: "Title for the Join Waitlist screen")
 
@@ -443,11 +431,11 @@ public struct UserText {
 
     public static let waitlistAllowNotifications = NSLocalizedString("waitlist.allow-notifications", value: "Allow Notifications", comment: "Title for the button to enable push notifications in system settings")
 
-    public static let waitlistAvailableNotificationBody = NSLocalizedString("mac-waitlist.available.notification.body", value: "Open your invite", comment: "Body text for the waitlist notification")
+    public static let waitlistAvailableNotificationBody = NSLocalizedString("waitlist.available.notification.body", value: "Open your invite", comment: "Body text for the waitlist notification")
 
-    public static let waitlistOnTheList = NSLocalizedString("mac-waitlist.queue-screen.on-the-list", value: "You’re on the list!", comment: "Title for the queue screen")
+    public static let waitlistOnTheList = NSLocalizedString("waitlist.queue-screen.on-the-list", value: "You’re on the list!", comment: "Title for the queue screen")
 
-    public static let waitlistYoureInvited = NSLocalizedString("mac-waitlist.invite-screen.youre-invited", value: "You’re Invited!", comment: "Title for the invite code screen")
+    public static let waitlistYoureInvited = NSLocalizedString("waitlist.invite-screen.youre-invited", value: "You’re Invited!", comment: "Title for the invite code screen")
 
     public static let waitlistAvailableForDownload = NSLocalizedString("waitlist.settings.available-for-download", value: "Available for download", comment: "Title for the settings subtitle")
 
@@ -455,8 +443,19 @@ public struct UserText {
         NSLocalizedString("waitlist.invite-screen.step.title", value: "Step %d", comment: "Step title on the invite screen").format(arguments: step)
     }
 
-    public static let waitlistShareSheetTitle = NSLocalizedString("mac-waitlist.share-sheet.title", value: "You’re Invited!", comment: "Title for the share sheet entry")
+    public static let waitlistShareSheetTitle = NSLocalizedString("waitlist.share-sheet.title", value: "You’re Invited!", comment: "Title for the share sheet entry")
 
+    // MARK: - Mac Waitlist
+
+    public static let macBrowserTitle = NSLocalizedString("mac-waitlist.title", value: "DuckDuckGo App for Mac", comment: "Title for the Mac Waitlist feature")
+
+    public static let macWaitlistSummary = NSLocalizedString("mac-browser.waitlist.summary", value: "DuckDuckGo for Mac has the speed you need, the browsing features you expect, and comes packed with our best-in-class privacy essentials.", comment: "Summary text for the macOS browser waitlist")
+
+    public static let macWaitlistTryDuckDuckGoForMac = NSLocalizedString("mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac", value: "Get DuckDuckGo for Mac!", comment: "Title for the Join Waitlist screen")
+
+    public static let macWaitlistOnYourMacGoTo = NSLocalizedString("mac-waitlist.join-waitlist-screen.on-your-mac-go-to", value: "On your Mac, go to:", comment: "Description text above the Share Link button")
+
+    public static let macWaitlistWindows = NSLocalizedString("mac-waitlist.join-waitlist-screen.windows", value: "Looking for the Windows Version?", comment: "Title for the macOS waitlist button redirecting to Windows waitlist")
 
     // MARK: - Windows Waitlist
 
@@ -491,11 +490,11 @@ public struct UserText {
         let localized = NSLocalizedString("windows-waitlist.share-sheet.message", value: """
             You’re invited!
 
-            Ready to start browsing privately on Mac?
+            Ready to start browsing privately on Windows?
 
             Step 1
-            Visit this URL on your Mac to download:
-            https://duckduckgo.com/mac
+            Visit this URL on your PC to download:
+            https://duckduckgo.com/windows
 
             Step 2
             Open the file to install, then enter your invite code to unlock.
@@ -510,8 +509,6 @@ public struct UserText {
     
     public static let macWaitlistAvailableNotificationTitle = NSLocalizedString("mac-waitlist.available.notification.title", value: "DuckDuckGo for Mac is ready!", comment: "Title for the macOS waitlist notification")
     
-    public static let macWaitlistAvailableNotificationBody = NSLocalizedString("mac-waitlist.available.notification.body", value: "Open your invite", comment: "Body text for the macOS waitlist notification")
-    
     // MARK: Settings Screen
     
     public static let emailSettingsSubtitle = NSLocalizedString("email.settings.subtitle", value: "Block email trackers and hide your address", comment: "Subtitle for the email settings cell")
@@ -522,14 +519,12 @@ public struct UserText {
     
     public static let macWaitlistShareSheetTitle = NSLocalizedString("mac-waitlist.share-sheet.title", value: "DuckDuckGo for Mac", comment: "Title for the share sheet entry")
     
-    public static func macWaitlistShareSheetMessage() -> String {
-        return NSLocalizedString("mac-waitlist.share-sheet.message", value: """
+    public static let macWaitlistShareSheetMessage = NSLocalizedString("mac-waitlist.share-sheet.message", value: """
         Ready to start browsing privately on Mac?
         
         Visit this URL on your Mac to download:
         https://duckduckgo.com/mac
         """, comment: "Message used when sharing to iMessage")
-    }
 
     public static let autofillLoginDetailsLoginName = NSLocalizedString("autofill.logins.details.login-name", value:"Login Title", comment: "Login name label for login details on autofill")
     public static let autofillLoginDetailsUsername = NSLocalizedString("autofill.logins.details.username", value:"Username", comment: "Username label for login details on autofill")

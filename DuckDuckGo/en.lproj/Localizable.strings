@@ -1250,7 +1250,7 @@ https://duckduckgo.com/mac";
 "windows-browser.waitlist.joined.notifications-enabled" = "We’ll send you a notification when your copy of DuckDuckGo for Windows is ready for download.";
 
 /* Summary text for the Windows browser waitlist */
-"windows-browser.waitlist.summary" = "DuckDuckGo for Windows has the speed you need, the browsing features you expect, and comes packed with our best-in-class privacy essentials.";
+"windows-browser.waitlist.summary" = "DuckDuckGo for Windows comes with our default privacy protections, including private search, tracker blocking, forced encryption, and cookie pop-up blocker.";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "DuckDuckGo for Windows is ready!";
@@ -1268,7 +1268,7 @@ https://duckduckgo.com/mac";
 "windows-waitlist.join-waitlist-screen.mac" = "Looking for the Mac Version?";
 
 /* Title for the Join Windows Waitlist screen */
-"windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Try DuckDuckGo for Windows!";
+"windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Get early access to try DuckDuckGo for Windows!";
 
 /* Title for the settings subtitle */
 "windows-waitlist.settings.browse-privately" = "Browse privately with our app for Windows";

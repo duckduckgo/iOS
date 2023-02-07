@@ -465,9 +465,9 @@ public struct UserText {
 
     public static let windowsWaitlistTitle = NSLocalizedString("windows-waitlist.title", value: "DuckDuckGo App for Windows", comment: "Title for the Windows Waitlist feature")
 
-    public static let windowsWaitlistSummary = NSLocalizedString("windows-browser.waitlist.summary", value: "DuckDuckGo for Windows has the speed you need, the browsing features you expect, and comes packed with our best-in-class privacy essentials.", comment: "Summary text for the Windows browser waitlist")
+    public static let windowsWaitlistSummary = NSLocalizedString("windows-browser.waitlist.summary", value: "DuckDuckGo for Windows comes with our default privacy protections, including private search, tracker blocking, forced encryption, and cookie pop-up blocker.", comment: "Summary text for the Windows browser waitlist")
 
-    public static let windowsWaitlistTryDuckDuckGoForWindows = NSLocalizedString("windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows", value: "Try DuckDuckGo for Windows!", comment: "Title for the Join Windows Waitlist screen")
+    public static let windowsWaitlistTryDuckDuckGoForWindows = NSLocalizedString("windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows", value: "Get early access to try DuckDuckGo for Windows!", comment: "Title for the Join Windows Waitlist screen")
 
     public static let windowsWaitlistMac = NSLocalizedString("windows-waitlist.join-waitlist-screen.mac", value: "Looking for the Mac Version?", comment: "Title for the Windows waitlist button redirecting to Mac waitlist")
 

@@ -132,7 +132,7 @@ struct WindowsBrowserWaitlistJoinedWaitlistView: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            HeaderView(imageName: "WindowsWaitlistJoined", title: UserText.waitlistOnTheList)
+            HeaderView(imageName: "WaitlistJoined", title: UserText.waitlistOnTheList)
 
             switch notificationState {
             case .notificationAllowed:

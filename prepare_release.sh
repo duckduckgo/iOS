@@ -4,7 +4,7 @@ set -eo pipefail
 
 mute=">/dev/null 2>&1"
 version="$1"
-release_branch_parent="develop"
+release_branch_parent="$(git rev-parse --abbrev-ref HEAD)"
 hotfix_branch_parent="main"
 
 #

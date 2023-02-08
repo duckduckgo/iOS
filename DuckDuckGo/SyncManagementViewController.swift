@@ -137,7 +137,10 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
             self?.rootView.model.codeCollectionCancelled()
         }
 
-        let navController = UINavigationController(rootViewController: controller)
+        let navController = UIDevice.current.userInterfaceIdiom == .phone
+            ? PortraitNavigationController(rootViewController: controller)
+            : UINavigationController(rootViewController: controller)
+
         navController.overrideUserInterfaceStyle = .dark
         navController.modalPresentationStyle = .fullScreen
         navigationController?.present(navController, animated: true) {
@@ -197,8 +200,7 @@ extension SyncManagementViewController: SyncCodeCollectionViewModelDelegate {
 
 }
 
-@MainActor
-class DismissibleHostingController<Content: View>: HostingController<Content> {
+private class DismissibleHostingController<Content: View>: HostingController<Content> {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ThemeManager.shared.currentTheme.statusBarStyle
@@ -219,4 +221,12 @@ class DismissibleHostingController<Content: View>: HostingController<Content> {
         super.viewWillDisappear(animated)
         onDismiss()
     }
+}
+
+private class PortraitNavigationController: UINavigationController {
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        [.portrait, .portraitUpsideDown]
+    }
+
 }

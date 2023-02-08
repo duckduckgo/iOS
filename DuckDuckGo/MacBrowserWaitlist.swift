@@ -21,19 +21,13 @@ import Foundation
 import Core
 import Waitlist
 
-struct MacBrowserWaitlistFeature: WaitlistFeature {
-    let identifier: String = "mac"
-    var isWaitlistRemoved: Bool = true
-    var apiProductName: String = "macosbrowser"
-    var downloadURL: URL = AppUrls().macBrowserDownloadURL
-}
-
-struct MacBrowserWaitlist: WaitlistHandling {
-    static let feature: WaitlistFeature = MacBrowserWaitlistFeature()
+struct MacBrowserWaitlist: Waitlist {
+    static let identifier: String = "mac"
+    static let isWaitlistRemoved: Bool = true
+    static let apiProductName: String = "macosbrowser"
+    static let downloadURL: URL = AppUrls().macBrowserDownloadURL
 
     static let shared: MacBrowserWaitlist = .init()
-
-    static let isWaitlistRemoved = true
 
     static let backgroundTaskName = "Mac Browser Waitlist Status Task"
     static let backgroundRefreshTaskIdentifier = "com.duckduckgo.app.macBrowserWaitlistStatus"

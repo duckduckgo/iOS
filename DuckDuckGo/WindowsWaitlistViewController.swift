@@ -28,7 +28,7 @@ final class WindowsWaitlistViewController: UIViewController {
     private let viewModel: WaitlistViewModel
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        self.viewModel = WaitlistViewModel(feature: WindowsBrowserWaitlistFeature())
+        self.viewModel = WaitlistViewModel(waitlist: WindowsBrowserWaitlist.shared)
         super.init(nibName: nil, bundle: nil)
         self.viewModel.delegate = self
     }
@@ -52,7 +52,7 @@ final class WindowsWaitlistViewController: UIViewController {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(updateViewState),
                                                name: WaitlistKeychainStore.inviteCodeDidChangeNotification,
-                                               object: WindowsBrowserWaitlistFeature().identifier)
+                                               object: WindowsBrowserWaitlist.identifier)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -87,7 +87,7 @@ final class WindowsWaitlistViewController: UIViewController {
 
 extension WindowsWaitlistViewController: WaitlistViewModelDelegate {
 
-    func waitlistViewModelDidJoinQueueWithNotificationsAllowed(_ viewModel: Waitlist.WaitlistViewModel) {
+    func waitlistViewModelDidJoinQueueWithNotificationsAllowed(_ viewModel: WaitlistViewModel) {
         WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
     }
 

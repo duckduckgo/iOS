@@ -21,19 +21,13 @@ import Foundation
 import Core
 import Waitlist
 
-struct WindowsBrowserWaitlistFeature: WaitlistFeature {
-    let identifier: String = "windows"
-    var isWaitlistRemoved: Bool = true
-    var apiProductName: String = "windowsbrowser"
-    var downloadURL: URL = AppUrls().windowsBrowserDownloadURL
-}
-
-struct WindowsBrowserWaitlist: WaitlistHandling {
-    static let feature: WaitlistFeature = WindowsBrowserWaitlistFeature()
+struct WindowsBrowserWaitlist: Waitlist {
+    static let identifier: String = "windows"
+    static let isWaitlistRemoved: Bool = false
+    static let apiProductName: String = "windowsbrowser"
+    static let downloadURL: URL = AppUrls().windowsBrowserDownloadURL
 
     static let shared: WindowsBrowserWaitlist = .init()
-
-    static let isWaitlistRemoved = false
 
     static let backgroundTaskName = "Windows Browser Waitlist Status Task"
     static let backgroundRefreshTaskIdentifier = "com.duckduckgo.app.windowsBrowserWaitlistStatus"

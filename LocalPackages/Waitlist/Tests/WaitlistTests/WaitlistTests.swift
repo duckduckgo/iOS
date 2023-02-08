@@ -1,3 +1,4 @@
+//
 //  WaitlistTests.swift
 //  DuckDuckGo
 //

@@ -61,7 +61,7 @@ final class WindowsBrowserWaitlistDebugViewController: UITableViewController {
 
     }
 
-    private let storage = WaitlistKeychainStore(waitlistIdentifier: WindowsBrowserWaitlistFeature().identifier)
+    private let storage = WaitlistKeychainStore(waitlistIdentifier: WindowsBrowserWaitlist.identifier)
 
     private var backgroundTaskExecutionDate: String?
 

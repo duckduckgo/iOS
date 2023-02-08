@@ -21,15 +21,11 @@ import Foundation
 import UserNotifications
 import BackgroundTasks
 
-public protocol WaitlistFeature {
-    var identifier: String { get }
-    var isWaitlistRemoved: Bool { get }
-    var apiProductName: String { get }
-    var downloadURL: URL { get }
-}
-
-public protocol WaitlistConstantsProviding {
-    static var feature: WaitlistFeature { get }
+public protocol WaitlistConstants {
+    static var identifier: String { get }
+    static var apiProductName: String { get }
+    static var downloadURL: URL { get }
+    static var isWaitlistRemoved: Bool { get }
 
     static var backgroundTaskName: String { get }
     static var backgroundRefreshTaskIdentifier: String { get }
@@ -40,11 +36,11 @@ public protocol WaitlistConstantsProviding {
     static var inviteAvailableNotificationBody: String { get }
 }
 
-public extension WaitlistConstantsProviding {
+public extension WaitlistConstants {
     static var minimumConfigurationRefreshInterval: TimeInterval { 60 * 60 * 12 }
 }
 
-public protocol WaitlistHandling: WaitlistConstantsProviding {
+public protocol Waitlist: WaitlistConstants {
 
     static var shared: Self { get }
 
@@ -80,7 +76,7 @@ public enum WaitlistInviteCodeFetchError: Error, Equatable {
     }
 }
 
-public extension WaitlistHandling {
+public extension Waitlist {
 
     func fetchInviteCodeIfAvailable() async -> WaitlistInviteCodeFetchError? {
         await withCheckedContinuation { continuation in

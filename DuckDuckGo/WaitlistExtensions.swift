@@ -1,5 +1,5 @@
 //
-//  Waitlist.swift
+//  WaitlistExtensions.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -22,12 +22,12 @@ import Core
 import UserNotifications
 import Waitlist
 
-extension WaitlistHandling {
+extension Waitlist {
 
     init() {
         self.init(
-            store: WaitlistKeychainStore(waitlistIdentifier: Self.feature.identifier),
-            request: ProductWaitlistRequest(feature: Self.feature)
+            store: WaitlistKeychainStore(waitlistIdentifier: Self.identifier),
+            request: ProductWaitlistRequest(productName: Self.apiProductName)
         )
     }
 
@@ -40,20 +40,21 @@ extension WaitlistHandling {
 
 extension WaitlistViewModel {
 
-    convenience init(feature: WaitlistFeature) {
-        let notificationService: NotificationService? = feature.isWaitlistRemoved ? nil : UNUserNotificationCenter.current()
+    convenience init(waitlist: Waitlist) {
+        let waitlistType = type(of: waitlist)
+        let notificationService: NotificationService? = waitlistType.isWaitlistRemoved ? nil : UNUserNotificationCenter.current()
         self.init(
-            waitlistRequest: ProductWaitlistRequest(feature: feature),
-            waitlistStorage: WaitlistKeychainStore(waitlistIdentifier: feature.identifier),
+            waitlistRequest: ProductWaitlistRequest(productName: waitlistType.apiProductName),
+            waitlistStorage: WaitlistKeychainStore(waitlistIdentifier: waitlistType.identifier),
             notificationService: notificationService,
-            downloadURL: feature.downloadURL
+            downloadURL: waitlistType.downloadURL
         )
     }
 }
 
 extension ProductWaitlistRequest {
 
-    convenience init(feature: WaitlistFeature) {
+    convenience init(productName: String) {
         let makeHTTPRequest: ProductWaitlistMakeHTTPRequest = { url, method, body, completion in
             guard let httpMethod = APIRequest.HTTPMethod(rawValue: method) else {
                 completion(nil, APIRequest.APIRequestError.noResponseOrError)
@@ -63,6 +64,6 @@ extension ProductWaitlistRequest {
                 completion(response?.data, error)
             })
         }
-        self.init(feature: feature, makeHTTPRequest: makeHTTPRequest)
+        self.init(productName: productName, makeHTTPRequest: makeHTTPRequest)
     }
 }

@@ -28,7 +28,7 @@ final class MacWaitlistViewController: UIViewController {
     private let viewModel: WaitlistViewModel
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        self.viewModel = WaitlistViewModel(feature: MacBrowserWaitlistFeature())
+        self.viewModel = WaitlistViewModel(waitlist: MacBrowserWaitlist.shared)
         super.init(nibName: nil, bundle: nil)
         self.viewModel.delegate = self
     }
@@ -65,7 +65,7 @@ final class MacWaitlistViewController: UIViewController {
 }
 
 extension MacWaitlistViewController: WaitlistViewModelDelegate {
-    func waitlistViewModelDidJoinQueueWithNotificationsAllowed(_ viewModel: Waitlist.WaitlistViewModel) {
+    func waitlistViewModelDidJoinQueueWithNotificationsAllowed(_ viewModel: WaitlistViewModel) {
         assertionFailure("Mac Waitlist is removed")
     }
 

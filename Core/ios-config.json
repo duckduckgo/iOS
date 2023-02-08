@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1675436756812,
+    "version": 1675856527575,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -235,6 +235,10 @@
                         "reason": "A banner at the bottom which warns of an 'Unsupported browser' and interferes with rest of the UI."
                     },
                     {
+                        "domain": "republicservices.com",
+                        "reason": "https://github.com/duckduckgo/privacy-configuration/issues/667"
+                    },
+                    {
                         "domain": "xfinity.com",
                         "reason": "Stream page shows an incompatibility warning and does not load further."
                     },
@@ -247,7 +251,7 @@
             },
             "exceptions": [],
             "state": "enabled",
-            "hash": "07e012a699eca5beda20298e27dd3f5f"
+            "hash": "e08e662d37f31acafe58b21067ae8705"
         },
         "duckPlayer": {
             "exceptions": [],
@@ -267,6 +271,10 @@
                 {
                     "domain": "kbb.com",
                     "reason": "Adblocker wall"
+                },
+                {
+                    "domain": "medium.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/592"
                 },
                 {
                     "domain": "speedtest.net",
@@ -1138,7 +1146,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "dde22884f79b05d7767818bc4391ff27"
+            "hash": "3bf687283e5ce5d96b49c28efdd1eb40"
         },
         "fingerprintingAudio": {
             "state": "disabled",
@@ -2659,6 +2667,13 @@
                     "pubmatic.com": {
                         "rules": [
                             {
+                                "rule": "ads.pubmatic.com/AdServer/",
+                                "domains": [
+                                    "hindustantimes.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/388"
+                            },
+                            {
                                 "rule": "hbopenbid.pubmatic.com/translator",
                                 "domains": [
                                     "aternos.org"
@@ -2715,6 +2730,17 @@
                                     "<all>"
                                 ],
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/356"
+                            }
+                        ]
+                    },
+                    "searchspring.io": {
+                        "rules": [
+                            {
+                                "rule": "searchspring.io",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/435"
                             }
                         ]
                     },
@@ -4567,7 +4593,7 @@
                 }
             },
             "exceptions": [],
-            "hash": "cb0dd5029cc5e060011373c82be7ebee"
+            "hash": "f75109a415ac65a0db6fafc5ba9e9fa9"
         },
         "trackingCookies1p": {
             "settings": {

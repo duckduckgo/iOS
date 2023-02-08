@@ -1,0 +1,19 @@
+#!/bin/bash
+
+required_xcode_version=$(<.xcode-version)
+current_xcode_version=$(xcodebuild -version | grep 'Xcode' | cut -d\  -f2)
+
+verlte() { 
+	printf '%s\n%s' "$1" "$2" | sort -C -V 
+}
+
+verlt() { 
+	! verlte "$2" "$1" 
+}
+
+if verlt "$current_xcode_version" "$required_xcode_version"; then
+	echo "error: You are using an oudated version of Xcode."
+	exit 1
+elif [[ "$current_xcode_version" != "$required_xcode_version" ]]; then
+	echo "warning: You are using a newer version of Xcode. If it is stable enough please consider updating the .xcode-version file to enforce it on the team."
+fi

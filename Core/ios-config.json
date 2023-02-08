@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1674773827532,
+    "version": 1675436756812,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -468,7 +468,7 @@
                         "type": "closest-empty"
                     },
                     {
-                        "selector": "[class*='adWrapper']",
+                        "selector": "[class^='adWrapper']",
                         "type": "closest-empty"
                     },
                     {
@@ -477,10 +477,6 @@
                     },
                     {
                         "selector": "[data-adunitpath]",
-                        "type": "closest-empty"
-                    },
-                    {
-                        "selector": "[data-unit]",
                         "type": "closest-empty"
                     },
                     {
@@ -1142,7 +1138,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "783c73d88967936790232d4073c7924f"
+            "hash": "dde22884f79b05d7767818bc4391ff27"
         },
         "fingerprintingAudio": {
             "state": "disabled",
@@ -1337,9 +1333,14 @@
             "hash": "d6bd423722e7888ee5372f871395f211"
         },
         "referrer": {
-            "exceptions": [],
+            "exceptions": [
+                {
+                    "domain": "canadapost-postescanada.ca",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/647"
+                }
+            ],
             "state": "enabled",
-            "hash": "52857469413a66e8b0c7b00de5589162"
+            "hash": "118f6c323fac42ad0ab7ac4c7ac8a93d"
         },
         "requestFilterer": {
             "state": "disabled",
@@ -1348,6 +1349,11 @@
                 "windowInMs": 0
             },
             "hash": "9439c856372a09f0cfdc9e2e0fd086fd"
+        },
+        "serviceworkerInitiatedRequests": {
+            "exceptions": [],
+            "state": "disabled",
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
         },
         "trackerAllowlist": {
             "state": "enabled",
@@ -2098,6 +2104,20 @@
                             },
                             {
                                 "rule": "cse.google.com/cse.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/475"
+                            },
+                            {
+                                "rule": "cse.google.com/cse/element/",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/475"
+                            },
+                            {
+                                "rule": "www.google.com/cse/static/",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -4547,7 +4567,7 @@
                 }
             },
             "exceptions": [],
-            "hash": "78d8adf2f232f99b94214e4aa89cb5fc"
+            "hash": "cb0dd5029cc5e060011373c82be7ebee"
         },
         "trackingCookies1p": {
             "settings": {

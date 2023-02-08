@@ -56,6 +56,13 @@ struct SyncCodeManualEntryView: View {
     }
 
     @ViewBuilder
+    func pasteButton() -> some View {
+        Button(action: model.pasteCode) {
+            Label("Paste", image: "SyncPaste")
+        }
+    }
+
+    @ViewBuilder
     func codeEntrySection() -> some View {
         ZStack {
             VStack {
@@ -72,11 +79,9 @@ struct SyncCodeManualEntryView: View {
 
                 Spacer()
 
-//                Button(action: model.pasteCode) {
-//                    Label("Paste", image: "SyncPaste")
-//                }
-//                .buttonStyle(SyncLabelButtonStyle())
-//                .padding(.bottom, 20)
+                pasteButton()
+                    .buttonStyle(SyncLabelButtonStyle())
+                    .padding(.bottom, 20)
             }
         }
         .frame(maxWidth: 350, maxHeight: 350)
@@ -104,7 +109,7 @@ struct SyncCodeManualEntryView: View {
                 codeEntrySection()
                 instructions()
                 Spacer()
-                // button()
+                button()
             }
             .frame(maxWidth: SyncUIConstants.maxWidth, alignment: .center)
         }
@@ -112,12 +117,8 @@ struct SyncCodeManualEntryView: View {
         .navigationTitle("Manually Enter Code")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-
-                } label: {
-                    Label("Paste", image: "SyncPaste")
-                        .foregroundColor(.white)
-                }
+                pasteButton()
+                    .foregroundColor(.white)
             }
         }
         .modifier(SyncBackButtonModifier())

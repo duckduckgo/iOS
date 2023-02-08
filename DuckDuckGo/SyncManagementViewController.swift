@@ -108,7 +108,12 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
         }
 
         navigationController?.visibleViewController?.presentShareSheet(withItems: [url],
-                                                                       fromView: view)
+                                                                       fromView: view) { [weak self] _, success, _, _ in
+            if success {
+                self?.navigationController?.visibleViewController?.dismiss(animated: true)
+            }
+        }
+
     }
 
     func showDeviceConnected() {

@@ -50,8 +50,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var textSizeCell: UITableViewCell!
     @IBOutlet weak var textSizeAccessoryText: UILabel!
     @IBOutlet weak var widgetEducationCell: UITableViewCell!
-    @IBOutlet weak var autofillCell: UITableViewCell!
     @IBOutlet weak var syncCell: UITableViewCell!
+    @IBOutlet weak var autofillCell: UITableViewCell!
     @IBOutlet weak var debugCell: UITableViewCell!
     @IBOutlet weak var voiceSearchCell: UITableViewCell!
     @IBOutlet weak var voiceSearchToggle: UISwitch!
@@ -59,7 +59,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
     
-    private let internalTestingSection = 1
+    private let syncSectionIndex = 1
+    private let autofillSectionIndex = 2
     private let debugSectionIndex = 7
 
     private lazy var emailManager = EmailManager()
@@ -84,10 +85,6 @@ class SettingsViewController: UITableViewController {
 
     private lazy var shouldShowSyncCell: Bool = {
         return featureFlagger.isFeatureOn(.sync)
-    }()
-
-    private lazy var shouldShowInternalTestingSection: Bool = {
-        return shouldShowAutofillCell || shouldShowSyncCell
     }()
 
     static func loadFromStoryboard() -> UIViewController {
@@ -233,8 +230,9 @@ class SettingsViewController: UITableViewController {
         debugCell.isHidden = !shouldShowDebugCell
     }
 
-    private func showSyncManagement(animated: Bool = true) {
-        navigationController?.pushViewController(SyncManagementViewController(), animated: animated)
+    private func showSync(animated: Bool = true) {
+        let controller = SyncManagementViewController()
+        navigationController?.pushViewController(controller, animated: animated)
     }
 
     private func showAutofill(animated: Bool = true) {
@@ -289,7 +287,7 @@ class SettingsViewController: UITableViewController {
             showAutofill()
 
         case syncCell:
-            showSyncManagement()
+            showSync()
 
         default: break
         }
@@ -334,7 +332,9 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if internalTestingSection == section && !shouldShowInternalTestingSection {
+        if syncSectionIndex == section && !shouldShowSyncCell {
+            return CGFloat.leastNonzeroMagnitude
+        } else if autofillSectionIndex == section && !shouldShowAutofillCell {
             return CGFloat.leastNonzeroMagnitude
         } else if debugSectionIndex == section && !shouldShowDebugCell {
             return CGFloat.leastNonzeroMagnitude
@@ -344,7 +344,9 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if internalTestingSection == section && !shouldShowInternalTestingSection {
+        if syncSectionIndex == section && !shouldShowSyncCell {
+            return CGFloat.leastNonzeroMagnitude
+        } else if autofillSectionIndex == section && !shouldShowAutofillCell {
             return CGFloat.leastNonzeroMagnitude
         } else if debugSectionIndex == section && !shouldShowDebugCell {
             return CGFloat.leastNonzeroMagnitude
@@ -355,13 +357,6 @@ class SettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return super.tableView(tableView, titleForFooterInSection: section)
-    }
-
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == internalTestingSection && !shouldShowInternalTestingSection {
-            return nil
-        }
-        return super.tableView(tableView, titleForHeaderInSection: section)
     }
 
     @IBAction func onVoiceSearchToggled(_ sender: UISwitch) {
@@ -431,7 +426,7 @@ extension SettingsViewController: Themable {
         
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor
-
+        
         UIView.transition(with: view,
                           duration: 0.2,
                           options: .transitionCrossDissolve, animations: {

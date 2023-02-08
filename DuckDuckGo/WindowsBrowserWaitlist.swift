@@ -18,7 +18,15 @@
 //
 
 import Foundation
+import Core
 import Waitlist
+
+struct WindowsBrowserWaitlistFeature: WaitlistFeature {
+    let identifier: String = "windows"
+    var isWaitlistRemoved: Bool = true
+    var apiProductName: String = "windowsbrowser"
+    var downloadURL: URL = AppUrls().windowsBrowserDownloadURL
+}
 
 struct WindowsBrowserWaitlist: WaitlistHandling {
     static let feature: WaitlistFeature = WindowsBrowserWaitlistFeature()

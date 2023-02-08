@@ -22,20 +22,6 @@ import Core
 import UserNotifications
 import Waitlist
 
-struct MacBrowserWaitlistFeature: WaitlistFeature {
-    let identifier: String = "mac"
-    var isWaitlistRemoved: Bool = true
-    var apiProductName: String = "macosbrowser"
-    var downloadURL: URL = AppUrls().macBrowserDownloadURL
-}
-
-struct WindowsBrowserWaitlistFeature: WaitlistFeature {
-    let identifier: String = "windows"
-    var isWaitlistRemoved: Bool = true
-    var apiProductName: String = "windowsbrowser"
-    var downloadURL: URL = AppUrls().windowsBrowserDownloadURL
-}
-
 extension WaitlistHandling {
 
     init() {

@@ -18,7 +18,15 @@
 //
 
 import Foundation
+import Core
 import Waitlist
+
+struct MacBrowserWaitlistFeature: WaitlistFeature {
+    let identifier: String = "mac"
+    var isWaitlistRemoved: Bool = true
+    var apiProductName: String = "macosbrowser"
+    var downloadURL: URL = AppUrls().macBrowserDownloadURL
+}
 
 struct MacBrowserWaitlist: WaitlistHandling {
     static let feature: WaitlistFeature = MacBrowserWaitlistFeature()

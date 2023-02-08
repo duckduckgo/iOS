@@ -20,8 +20,6 @@
 import SwiftUI
 import Waitlist
 
-typealias WaitlistViewActionHandler = (WaitlistViewModel.ViewAction) -> Void
-
 struct MacBrowserWaitlistView: View {
 
     @EnvironmentObject var viewModel: WaitlistViewModel

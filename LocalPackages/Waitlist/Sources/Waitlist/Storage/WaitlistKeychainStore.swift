@@ -1,5 +1,5 @@
 //
-//  WaitlistStorage.swift
+//  WaitlistKeychainStorage.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -18,32 +18,6 @@
 //
 
 import Foundation
-
-public protocol WaitlistStorage {
-
-    func getWaitlistToken() -> String?
-    func getWaitlistTimestamp() -> Int?
-    func getWaitlistInviteCode() -> String?
-
-    func store(waitlistToken: String)
-    func store(waitlistTimestamp: Int)
-    func store(inviteCode: String)
-
-    func deleteWaitlistState()
-
-}
-
-public extension WaitlistStorage {
-
-    var isOnWaitlist: Bool {
-        return getWaitlistToken() != nil && getWaitlistTimestamp() != nil && !isInvited
-    }
-
-    var isInvited: Bool {
-        return getWaitlistInviteCode() != nil
-    }
-
-}
 
 public class WaitlistKeychainStore: WaitlistStorage {
 

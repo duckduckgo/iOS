@@ -2078,10 +2078,12 @@ extension TabViewController: AutoconsentUserScriptDelegate {
         
         let viewModel = CookieConsentDaxDialogViewModel(okAction: {
             completion(true)
+            Pixel.fire(pixel: .daxDialogsAutoconsentConfirmed)
             self.dismiss(animated: true)
         }, noAction: {
             completion(false)
-            self.dismiss(animated: false)
+            Pixel.fire(pixel: .daxDialogsAutoconsentCancelled)
+            self.dismiss(animated: true)
         })
         
         Pixel.fire(pixel: .daxDialogsAutoconsentShown)

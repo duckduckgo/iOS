@@ -127,6 +127,9 @@ class SettingsViewController: UITableViewController {
         if segue.destination is DoNotSellSettingsViewController {
             Pixel.fire(pixel: .settingsDoNotSellShown)
             return
+        } else if segue.destination is AutoconsentSettingsViewController {
+            Pixel.fire(pixel: .settingsAutoconsentShown)
+            return
         } else if let textSizeSettings = segue.destination as? TextSizeSettingsViewController {
             Pixel.fire(pixel: .textSizeSettingsShown)
             presentationController?.delegate = textSizeSettings

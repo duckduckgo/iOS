@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 
 extension MainViewController {
     
@@ -30,6 +31,8 @@ extension MainViewController {
     }
     
     @objc private func showCookiesManagedNotification(_ notification: Notification) {
+        Pixel.fire(pixel: .autoconsentCookiePopupManaged)
+        
         guard let topURL = notification.userInfo?[AutoconsentUserScript.UserInfoKeys.topURL] as? URL,
               let isCosmetic = notification.userInfo?[AutoconsentUserScript.UserInfoKeys.isCosmetic] as? Bool,
               topURL == tabManager.current?.url

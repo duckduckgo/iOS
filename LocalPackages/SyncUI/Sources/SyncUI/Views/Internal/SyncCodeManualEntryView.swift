@@ -72,11 +72,11 @@ struct SyncCodeManualEntryView: View {
 
                 Spacer()
 
-                Button(action: model.pasteCode) {
-                    Label("Paste", image: "SyncPaste")
-                }
-                .buttonStyle(SyncLabelButtonStyle())
-                .padding(.bottom, 20)
+//                Button(action: model.pasteCode) {
+//                    Label("Paste", image: "SyncPaste")
+//                }
+//                .buttonStyle(SyncLabelButtonStyle())
+//                .padding(.bottom, 20)
             }
         }
         .frame(maxWidth: 350, maxHeight: 350)
@@ -104,12 +104,22 @@ struct SyncCodeManualEntryView: View {
                 codeEntrySection()
                 instructions()
                 Spacer()
-                button()
+                // button()
             }
             .frame(maxWidth: SyncUIConstants.maxWidth, alignment: .center)
         }
         .padding(.horizontal, 20)
         .navigationTitle("Manually Enter Code")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+
+                } label: {
+                    Label("Paste", image: "SyncPaste")
+                        .foregroundColor(.white)
+                }
+            }
+        }
         .modifier(SyncBackButtonModifier())
         .ignoresSafeArea(.keyboard)
     }
@@ -128,7 +138,7 @@ private struct CodeEntryView: UIViewRepresentable {
     func makeUIView(context: Context) -> UITextView {
         let textView = UITextView()
         textView.backgroundColor = .clear
-        textView.font = .monospacedSystemFont(ofSize: 18, weight: .regular)
+        textView.font = .monospacedSystemFont(ofSize: 20, weight: .regular)
         textView.adjustsFontForContentSizeCategory = true
         textView.delegate = context.coordinator
         return textView

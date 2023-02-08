@@ -55,7 +55,7 @@ public struct SyncRecoveryPDFView: View {
             Button {
                 presentation.wrappedValue.dismiss()
             } label: {
-                Text("Now Now")
+                Text("Not Now")
             }
             .buttonStyle(SecondaryButtonStyle())
         }

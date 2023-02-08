@@ -107,12 +107,6 @@ struct SyncCodeManualEntryView: View {
         }
         .padding(.horizontal, 20)
         .navigationTitle("Manually Enter Code")
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                pasteButton()
-                    .foregroundColor(.white)
-            }
-        }
         .modifier(SyncBackButtonModifier())
         .ignoresSafeArea(.keyboard)
     }
@@ -128,66 +122,6 @@ private extension View {
         } else {
             font(.system(size: size))
         }
-    }
-
-}
-
-private struct CodeEntryView: UIViewRepresentable {
-
-    @Binding var focused: Bool
-    @Binding var text: String?
-
-    func makeCoordinator() -> Coordinator {
-        return Coordinator(self)
-    }
-
-    func makeUIView(context: Context) -> UITextView {
-        let textView = UITextView()
-        textView.backgroundColor = .clear
-        textView.font = .monospacedSystemFont(ofSize: 20, weight: .regular)
-        textView.adjustsFontForContentSizeCategory = true
-        textView.delegate = context.coordinator
-        return textView
-    }
-
-    func updateUIView(_ uiView: UITextView, context: Context) {
-        uiView.text = text?.groups(ofSize: 4) ?? ""
-    }
-
-    class Coordinator: NSObject, UITextViewDelegate {
-
-        let view: CodeEntryView
-
-        init(_ view: CodeEntryView) {
-            self.view = view
-        }
-
-        func textViewDidBeginEditing(_ textView: UITextView) {
-            view.focused = true
-        }
-
-        func textViewDidEndEditing(_ textView: UITextView) {
-            view.focused = false
-        }
-
-        func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-            guard text.rangeOfCharacter(from: CharacterSet.newlines) == nil else {
-                textView.resignFirstResponder() // uncomment this to close the keyboard when return key is pressed
-                return false
-            }
-            return true
-        }
-
-        func textViewDidChange(_ textView: UITextView) {
-            if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                view.text = nil
-            } else {
-                let text = textView.text.groups(ofSize: 4)
-                view.text = text
-                textView.text = text
-            }
-        }
-
     }
 
 }

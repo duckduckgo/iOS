@@ -67,10 +67,8 @@ class TrackerDataParser {
         }
         
         var domainList: [String] = []
-        for (domain, obj) in blocklist.trackers {
-            if obj.defaultRule == "block" {
-                domainList.append(domain)
-            }
+        for (domain, obj) in blocklist.trackers where obj.defaultRule == "block" {
+            domainList.append(domain)
         }
         
         return domainList

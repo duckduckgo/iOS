@@ -1,5 +1,5 @@
 //
-//  CookieConsentDaxDialogModel.swift
+//  CookieConsentDaxDialogViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -19,10 +19,10 @@
 
 import Foundation
 
-final class CookieConsentDaxDialogModel: CustomDaxDialogModel {
+final class CookieConsentDaxDialogViewModel: CustomDaxDialogViewModel {
     
-    var okAction: () -> Void
-    var noAction: () -> Void
+    let okAction: () -> Void
+    let noAction: () -> Void
     
     init(okAction: @escaping () -> Void, noAction: @escaping () -> Void) {
         self.okAction = okAction

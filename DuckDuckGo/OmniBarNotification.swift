@@ -21,7 +21,7 @@ import SwiftUI
 
 struct OmniBarNotification: View {
     
-    @ObservedObject var model: OmniBarNotificationModel
+    @ObservedObject var viewModel: OmniBarNotificationViewModel
     
     @State var isAnimatingCookie: Bool = false
     
@@ -29,41 +29,13 @@ struct OmniBarNotification: View {
     @State var textWidth: CGFloat = 0
     
     @State var opacity: Double = 0
- 
+    
     var body: some View {
-        
         HStack {
             HStack(spacing: 0) {
-                ZStack {
-                    Rectangle()
-                        .foregroundColor(.clear)
-
-                    LottieView(lottieFile: model.animationName,
-                               isAnimating: $isAnimatingCookie)
-                    .frame(width: Constants.Size.animatedIcon.width, height: Constants.Size.animatedIcon.height)
-                }
-                .frame(width: Constants.Size.animatedIconContainer.width, height: Constants.Size.animatedIconContainer.height)
+                animation
                 
-                Text(model.text)
-                    .font(Constants.Fonts.text)
-                    .foregroundColor(Constants.Colors.text)
-                    .lineLimit(1)
-                    .offset(x: textOffset)
-                    .padding(.trailing, Constants.Spacing.textTrailingPadding)
-                    .clipShape(Rectangle().inset(by: Constants.Spacing.textClippingShapeOffset))
-                    .onReceive(model.$isOpen) { isOpen in
-                        withAnimation(.easeInOut(duration: OmniBarNotificationModel.Duration.notificationSlide)) {
-                            textOffset = isOpen ? 0 : -textWidth
-                        }
-                    }
-                    .onReceive(model.$animateCookie) { animateCookie in
-                        isAnimatingCookie = animateCookie
-                    }
-                    .modifier(SizeModifier())
-                    .onPreferenceChange(SizePreferenceKey.self) {
-                        textWidth = $0.width
-                        textOffset = -textWidth
-                    }
+                text
             }
             .background(
                 Capsule()
@@ -74,6 +46,37 @@ struct OmniBarNotification: View {
             
             Spacer()
         }
+    }
+    
+    @ViewBuilder
+    private var animation: some View {
+        LottieView(lottieFile: viewModel.animationName,
+                   isAnimating: $isAnimatingCookie)
+        .frame(width: Constants.Size.animatedIcon.width, height: Constants.Size.animatedIcon.height)
+    }
+    
+    @ViewBuilder
+    private var text: some View {
+        Text(viewModel.text)
+            .font(Constants.Fonts.text)
+            .foregroundColor(Constants.Colors.text)
+            .lineLimit(1)
+            .offset(x: textOffset)
+            .padding(.trailing, Constants.Spacing.textTrailingPadding)
+            .clipShape(Rectangle().inset(by: Constants.Spacing.textClippingShapeOffset))
+            .onReceive(viewModel.$isOpen) { isOpen in
+                withAnimation(.easeInOut(duration: OmniBarNotificationViewModel.Duration.notificationSlide)) {
+                    textOffset = isOpen ? 0 : -textWidth
+                }
+            }
+            .onReceive(viewModel.$animateCookie) { animateCookie in
+                isAnimatingCookie = animateCookie
+            }
+            .modifier(SizeModifier())
+            .onPreferenceChange(SizePreferenceKey.self) {
+                textWidth = $0.width
+                textOffset = -textWidth
+            }
     }
 }
 
@@ -114,8 +117,7 @@ private enum Constants {
     }
     
     enum Size {
-        static let animatedIcon = CGSize(width: 22, height: 22)
-        static let animatedIconContainer = CGSize(width: 36, height: 36)
+        static let animatedIcon = CGSize(width: 36, height: 36)
         static let cancel = CGSize(width: 13, height: 13)
         static let rowHeight: CGFloat = 76
     }

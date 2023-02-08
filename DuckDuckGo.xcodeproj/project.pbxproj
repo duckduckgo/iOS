@@ -16,7 +16,7 @@
 		0A6CC0EF23904D5400E4F627 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0A6CC0EE23904D5400E4F627 /* Settings.bundle */; };
 		1CB7B82123CEA1F800AA24EA /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82023CEA1F800AA24EA /* DateExtension.swift */; };
 		1CB7B82323CEA28300AA24EA /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */; };
-		1E016AB42949FEB500F21625 /* OmniBarNotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E016AB32949FEB500F21625 /* OmniBarNotificationModel.swift */; };
+		1E016AB42949FEB500F21625 /* OmniBarNotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E016AB32949FEB500F21625 /* OmniBarNotificationViewModel.swift */; };
 		1E016AB6294A5EB100F21625 /* CustomDaxDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E016AB5294A5EB100F21625 /* CustomDaxDialog.swift */; };
 		1E0A75EA27A2FBD000A2BFB6 /* Downloads.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E0A75E927A2FBD000A2BFB6 /* Downloads.storyboard */; };
 		1E16260229683C650004127F /* CustomDaxDialog.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E16260129683C650004127F /* CustomDaxDialog.xcassets */; };
@@ -24,8 +24,8 @@
 		1E1626072968413B0004127F /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1626062968413B0004127F /* ViewExtension.swift */; };
 		1E16260B296845120004127F /* cookie-banner-illustration-animated.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E162609296845120004127F /* cookie-banner-illustration-animated.json */; };
 		1E16260C296845120004127F /* cookie-banner-illustration-animated-dark.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E16260A296845120004127F /* cookie-banner-illustration-animated-dark.json */; };
-		1E162610296C5C630004127F /* CustomDaxDialogModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E16260F296C5C630004127F /* CustomDaxDialogModel.swift */; };
-		1E162613296C62820004127F /* CookieConsentDaxDialogModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E162612296C62820004127F /* CookieConsentDaxDialogModel.swift */; };
+		1E162610296C5C630004127F /* CustomDaxDialogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E16260F296C5C630004127F /* CustomDaxDialogViewModel.swift */; };
+		1E162613296C62820004127F /* CookieConsentDaxDialogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E162612296C62820004127F /* CookieConsentDaxDialogViewModel.swift */; };
 		1E162615296D910F0004127F /* cookie-icon-animated-40-dark.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E162614296D910F0004127F /* cookie-icon-animated-40-dark.json */; };
 		1E162618296D96430004127F /* OmniBarNotification.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E162617296D96430004127F /* OmniBarNotification.xcassets */; };
 		1E24295E293F57FA00584836 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E24295D293F57FA00584836 /* LottieView.swift */; };
@@ -830,7 +830,7 @@
 		0A6CC0EE23904D5400E4F627 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		1CB7B82023CEA1F800AA24EA /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
-		1E016AB32949FEB500F21625 /* OmniBarNotificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmniBarNotificationModel.swift; sourceTree = "<group>"; };
+		1E016AB32949FEB500F21625 /* OmniBarNotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmniBarNotificationViewModel.swift; sourceTree = "<group>"; };
 		1E016AB5294A5EB100F21625 /* CustomDaxDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDaxDialog.swift; sourceTree = "<group>"; };
 		1E0A75E927A2FBD000A2BFB6 /* Downloads.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Downloads.storyboard; sourceTree = "<group>"; };
 		1E16260129683C650004127F /* CustomDaxDialog.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = CustomDaxDialog.xcassets; sourceTree = "<group>"; };
@@ -838,8 +838,8 @@
 		1E1626062968413B0004127F /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		1E162609296845120004127F /* cookie-banner-illustration-animated.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cookie-banner-illustration-animated.json"; sourceTree = "<group>"; };
 		1E16260A296845120004127F /* cookie-banner-illustration-animated-dark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cookie-banner-illustration-animated-dark.json"; sourceTree = "<group>"; };
-		1E16260F296C5C630004127F /* CustomDaxDialogModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDaxDialogModel.swift; sourceTree = "<group>"; };
-		1E162612296C62820004127F /* CookieConsentDaxDialogModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieConsentDaxDialogModel.swift; sourceTree = "<group>"; };
+		1E16260F296C5C630004127F /* CustomDaxDialogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDaxDialogViewModel.swift; sourceTree = "<group>"; };
+		1E162612296C62820004127F /* CookieConsentDaxDialogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieConsentDaxDialogViewModel.swift; sourceTree = "<group>"; };
 		1E162614296D910F0004127F /* cookie-icon-animated-40-dark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cookie-icon-animated-40-dark.json"; sourceTree = "<group>"; };
 		1E162617296D96430004127F /* OmniBarNotification.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = OmniBarNotification.xcassets; sourceTree = "<group>"; };
 		1E24295D293F57FA00584836 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
@@ -2272,8 +2272,8 @@
 		1E162611296C62350004127F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				1E16260F296C5C630004127F /* CustomDaxDialogModel.swift */,
-				1E162612296C62820004127F /* CookieConsentDaxDialogModel.swift */,
+				1E16260F296C5C630004127F /* CustomDaxDialogViewModel.swift */,
+				1E162612296C62820004127F /* CookieConsentDaxDialogViewModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2281,7 +2281,7 @@
 		1E162616296D962A0004127F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				1E016AB32949FEB500F21625 /* OmniBarNotificationModel.swift */,
+				1E016AB32949FEB500F21625 /* OmniBarNotificationViewModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -5031,7 +5031,7 @@
 				8540BD5623D9E9C20057FDD2 /* PreserveLoginsSettingsViewController.swift in Sources */,
 				3161D13227AC161B00285CF6 /* DownloadMetadata.swift in Sources */,
 				F1668BCE1E798081008CBA04 /* BookmarksViewController.swift in Sources */,
-				1E162610296C5C630004127F /* CustomDaxDialogModel.swift in Sources */,
+				1E162610296C5C630004127F /* CustomDaxDialogViewModel.swift in Sources */,
 				8590CB69268A4E190089F6BF /* DebugEtagStorage.swift in Sources */,
 				F1CA3C371F045878005FADB3 /* PrivacyStore.swift in Sources */,
 				F4E1936625AF722F001D2666 /* HighlightCutOutView.swift in Sources */,
@@ -5138,7 +5138,7 @@
 				319A37172829C8AD0079FBCE /* UITableViewExtension.swift in Sources */,
 				85EE7F59224673C5000FE757 /* WebContainerNavigationController.swift in Sources */,
 				F4C9FBF528340DDA002281CC /* AutofillInterfaceEmailTruncator.swift in Sources */,
-				1E016AB42949FEB500F21625 /* OmniBarNotificationModel.swift in Sources */,
+				1E016AB42949FEB500F21625 /* OmniBarNotificationViewModel.swift in Sources */,
 				6AC6DAB328804F97002723C0 /* BarsAnimator.swift in Sources */,
 				B60DFF072872B64B0061E7C2 /* JSAlertController.swift in Sources */,
 				981FED6E22025151008488D7 /* BlankSnapshotViewController.swift in Sources */,
@@ -5318,7 +5318,7 @@
 				3132FA2827A0788400DD7A12 /* PassKitPreviewHelper.swift in Sources */,
 				8505836C219F424500ED4EDB /* TextFieldWithInsets.swift in Sources */,
 				CBD4F13F279EBFAF00B20FD7 /* HomeMessageViewModel.swift in Sources */,
-				1E162613296C62820004127F /* CookieConsentDaxDialogModel.swift in Sources */,
+				1E162613296C62820004127F /* CookieConsentDaxDialogViewModel.swift in Sources */,
 				1E4DCF4A27B6A38000961E25 /* DownloadListRepresentable.swift in Sources */,
 				2DC3FC65C6D9DA634426672D /* AutofillNoAuthAvailableView.swift in Sources */,
 			);

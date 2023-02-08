@@ -30,7 +30,7 @@ struct BrokenSite {
         case content
         case login
         case unsupported
-        case cookieprompt
+        case cookiePrompt = "cookieprompt"
         case other
         
         var categoryText: String {
@@ -51,7 +51,7 @@ struct BrokenSite {
                 return UserText.brokenSiteCategoryLogin
             case .unsupported:
                 return UserText.brokenSiteCategoryUnsupported
-            case .cookieprompt:
+            case .cookiePrompt:
                 return UserText.brokenSiteCategoryCookiePrompt
             case .other:
                 return UserText.brokenSiteCategoryOther

@@ -19,6 +19,7 @@
 
 import SwiftUI
 
+/// Triangle shape contained within the rectangular frame. It is an isosceles triangle with the base at the bottom of the frame and pointing up.
 struct Triangle: Shape {
     
     func path(in rect: CGRect) -> Path {

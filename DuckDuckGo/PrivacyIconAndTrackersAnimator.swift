@@ -142,9 +142,9 @@ final class PrivacyIconAndTrackersAnimator {
     }
     
     func completeForNoAnimation() {
-        self.state = .completed
-        self.onAnimationCompletion?()
-        self.onAnimationCompletion = nil
+        state = .completed
+        onAnimationCompletion?()
+        onAnimationCompletion = nil
     }
     
     func cancelAnimations(in omniBar: OmniBar) {

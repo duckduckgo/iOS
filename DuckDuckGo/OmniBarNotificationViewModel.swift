@@ -1,5 +1,5 @@
 //
-//  OmniBarNotificationModel.swift
+//  OmniBarNotificationViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -19,7 +19,7 @@
 
 import Foundation
 
-class OmniBarNotificationModel: ObservableObject {
+final class OmniBarNotificationViewModel: ObservableObject {
     
     enum Duration {
         static let notificationSlide: TimeInterval = 0.3

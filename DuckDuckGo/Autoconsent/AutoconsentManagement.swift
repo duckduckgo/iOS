@@ -21,6 +21,7 @@ import Foundation
 final class AutoconsentManagement {
     
     static let shared = AutoconsentManagement()
+    private init() {}
     
     var sitesNotifiedCache = Set<String>()
     var promptLastShown: Date?

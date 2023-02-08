@@ -24,81 +24,20 @@ struct CustomDaxDialog: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
     
-    @State var model: CustomDaxDialogModel
+    @State var viewModel: CustomDaxDialogViewModel
     
     var body: some View {
         ZStack {
-            Rectangle()
-                .foregroundColor(Constants.Colors.overlay)
+            overlay
             
             VStack(alignment: .leading, spacing: .zero) {
                 Spacer()
                 
-                VStack(spacing: Constants.Spacing.daxLogoAndArrow) {
-                    Image.daxLogo
-                        .resizable()
-                        .frame(width: Constants.Size.daxLogo.width, height: Constants.Size.daxLogo.height)
-                    Triangle()
-                        .frame(width: Constants.Size.bubbleArrow.width, height: Constants.Size.bubbleArrow.height)
-                        .foregroundColor(Constants.Colors.background)
-                }
-                .padding(.leading, Constants.Padding.daxLogoAndArrow)
+                daxAndBubbleArrow
                 
-                VStack {
-                    ScrollView {
-                        VStack(spacing: Constants.Spacing.dialogElements) {
-                            ForEach(model.content, id: \.self) { element in
-                                switch element {
-                                case .text(let text):
-                                    Text(text)
-                                        .font(Constants.Fonts.text)
-                                        .foregroundColor(Constants.Colors.text)
-                                        .lineSpacing(Constants.Spacing.textLineSpacing)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                case .animation(let name, let delay):
-                                    LottieView(lottieFile: name, delay: delay)
-                                        .fixedSize()
-                                }
-                            }
-                            
-                            ForEach(model.buttons, id: \.self) { button in
-                                switch button {
-                                case .bordered(let label, let action):
-                                    Button(action: action, label: {
-                                        Text(label)
-                                            .font(Constants.Fonts.button)
-                                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                    })
-                                    .frame(height: Constants.Size.buttonHeight)
-                                    .foregroundColor(Constants.Colors.borderedButtonText)
-                                    .background(Capsule().foregroundColor(Constants.Colors.borderedButtonBackground))
-                                case .borderless(let label, let action):
-                                    Button(action: action, label: {
-                                        Text(label)
-                                            .font(Constants.Fonts.button)
-                                            .frame(maxHeight: .infinity)
-                                    })
-                                    .frame(height: Constants.Size.buttonHeight)
-                                    .buttonStyle(.borderless)
-                                    .foregroundColor(Constants.Colors.borderlessButtonText)
-                                    .clipShape(Capsule())
-                                }
-                            }
-                        }
-                    }
-                    .if(verticalSizeClass != .compact) { view in
-                        view.simultaneousGesture(DragGesture(minimumDistance: 0))
-                    }
-                    .fixedSize(horizontal: false, vertical: true)
-                }
-                .padding(Constants.Padding.dialogInsets)
-                .background(
-                    RoundedRectangle(cornerRadius: Constants.Size.dialogCornerRadius)
-                        .foregroundColor(Constants.Colors.background)
-                )
+                bubbleBody
             }
             .padding([.leading, .trailing], Constants.Padding.dialogHorizontal)
-//            .padding([.leading, .trailing], verticalSizeClass == .regular ? Constants.Padding.dialogHorizontal : 70)
             .if(verticalSizeClass == .regular) { view in
                 view.padding(.bottom, Constants.Padding.dialogBottom)
             }
@@ -110,6 +49,92 @@ struct CustomDaxDialog: View {
             }
         }
     }
+    
+    @ViewBuilder
+    private var overlay: some View {
+        Rectangle()
+            .foregroundColor(Constants.Colors.overlay)
+    }
+    
+    @ViewBuilder
+    private var daxAndBubbleArrow: some View {
+        VStack(spacing: Constants.Spacing.daxLogoAndArrow) {
+            Image.daxLogo
+                .resizable()
+                .frame(width: Constants.Size.daxLogo.width, height: Constants.Size.daxLogo.height)
+            Triangle()
+                .frame(width: Constants.Size.bubbleArrow.width, height: Constants.Size.bubbleArrow.height)
+                .foregroundColor(Constants.Colors.bubbleBackground)
+        }
+        .padding(.leading, Constants.Padding.daxLogoAndArrow)
+    }
+    
+    @ViewBuilder
+    private var bubbleBody: some View {
+        VStack {
+            ScrollView {
+                VStack(spacing: Constants.Spacing.bubbleElements) {
+                    contentElements
+                    
+                    buttons
+                }
+            }
+            .if(verticalSizeClass != .compact) { view in
+                view.simultaneousGesture(DragGesture(minimumDistance: 0))
+            }
+            .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(Constants.Padding.dialogInsets)
+        .background(
+            RoundedRectangle(cornerRadius: Constants.Size.dialogCornerRadius)
+                .foregroundColor(Constants.Colors.bubbleBackground)
+        )
+    }
+    
+    @ViewBuilder
+    private var contentElements: some View {
+        ForEach(viewModel.content, id: \.self) { element in
+            switch element {
+            case .text(let text):
+                Text(text)
+                    .font(Constants.Fonts.text)
+                    .foregroundColor(Constants.Colors.text)
+                    .lineSpacing(Constants.Spacing.textLineSpacing)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            case .animation(let name, let delay):
+                LottieView(lottieFile: name, delay: delay)
+                    .fixedSize()
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var buttons: some View {
+        ForEach(viewModel.buttons, id: \.self) { button in
+            switch button {
+            case .bordered(let label, let action):
+                Button(action: action, label: {
+                    Text(label)
+                        .font(Constants.Fonts.button)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                })
+                .frame(height: Constants.Size.buttonHeight)
+                .foregroundColor(Constants.Colors.borderedButtonText)
+                .background(Capsule().foregroundColor(Constants.Colors.borderedButtonBackground))
+            case .borderless(let label, let action):
+                Button(action: action, label: {
+                    Text(label)
+                        .font(Constants.Fonts.button)
+                        .frame(maxHeight: .infinity)
+                })
+                .frame(height: Constants.Size.buttonHeight)
+                .buttonStyle(.borderless)
+                .foregroundColor(Constants.Colors.borderlessButtonText)
+                .clipShape(Capsule())
+            }
+        }
+    }
+    
 }
 
 private enum Constants {
@@ -121,7 +146,7 @@ private enum Constants {
     
     enum Colors {
         static let overlay = Color("CustomDaxDialogOverlayColor")
-        static let background = Color("CustomDaxDialogBackgroundColor")
+        static let bubbleBackground = Color("CustomDaxDialogBubbleBackgroundColor")
         static let text = Color("CustomDaxDialogTextColor")
         static let borderedButtonText = Color("CustomDaxDialogBorderedButtonTextColor")
         static let borderlessButtonText = Color("CustomDaxDialogBorderlessButtonTextColor")
@@ -130,7 +155,7 @@ private enum Constants {
 
     enum Spacing {
         static let daxLogoAndArrow: CGFloat = 8
-        static let dialogElements: CGFloat = 16
+        static let bubbleElements: CGFloat = 16
         static let textLineSpacing: CGFloat = 5
     }
     

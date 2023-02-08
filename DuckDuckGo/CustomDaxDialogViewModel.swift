@@ -1,5 +1,5 @@
 //
-//  CustomDaxDialogModel.swift
+//  CustomDaxDialogViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -19,7 +19,7 @@
 
 import Foundation
 
-protocol CustomDaxDialogModel {
+protocol CustomDaxDialogViewModel {
     var content: [DialogContentItem] { get }
     var buttons: [DialogButtonItem] { get }
 }

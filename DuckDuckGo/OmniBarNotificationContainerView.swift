@@ -31,20 +31,21 @@ final class OmniBarNotificationContainerView: UIView {
     
     func prepareAnimation(_ type: OmniBarNotificationType) {
         cleanUpPreviousNotification()
-
-        let model = makeNotificationModel(for: type)
-        let notificationViewController = UIHostingController(rootView: OmniBarNotification(model: model),
-                                                ignoreSafeArea: true)
+        
+        let viewModel = makeNotificationViewModel(for: type)
+        let notificationViewController = UIHostingController(rootView: OmniBarNotification(viewModel: viewModel),
+                                                             ignoreSafeArea: true)
         
         window?.rootViewController?.addChild(notificationViewController)
-        
         addSubview(notificationViewController.view)
+        notificationViewController.didMove(toParent: window?.rootViewController)
+        
         currentNotificationController = notificationViewController
         setupConstraints()
     }
     
     func startAnimation(completion: @escaping () -> Void) {
-        currentNotificationController?.rootView.model.showNotification(completion: { [weak self] in
+        currentNotificationController?.rootView.viewModel.showNotification(completion: { [weak self] in
             self?.cleanUpPreviousNotification()
             completion()
         })
@@ -57,6 +58,7 @@ final class OmniBarNotificationContainerView: UIView {
     private func cleanUpPreviousNotification() {
         guard let currentNotificationController = currentNotificationController else { return }
         
+        currentNotificationController.willMove(toParent: nil)
         currentNotificationController.view.removeFromSuperview()
         currentNotificationController.removeFromParent()
         
@@ -77,7 +79,7 @@ final class OmniBarNotificationContainerView: UIView {
         ])
     }
     
-    private func makeNotificationModel(for type: OmniBarNotificationType) -> OmniBarNotificationModel {
+    private func makeNotificationViewModel(for type: OmniBarNotificationType) -> OmniBarNotificationViewModel {
         let useLightStyle = ThemeManager.shared.currentTheme.currentImageSet == .light
         let notificationText: String
         let notificationAnimationName: String
@@ -91,6 +93,6 @@ final class OmniBarNotificationContainerView: UIView {
             notificationAnimationName = useLightStyle ? "cookie-icon-animated-40-light" : "cookie-icon-animated-40-dark"
         }
         
-        return OmniBarNotificationModel(text: notificationText, animationName: notificationAnimationName)
+        return OmniBarNotificationViewModel(text: notificationText, animationName: notificationAnimationName)
     }
 }

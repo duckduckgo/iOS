@@ -2076,7 +2076,7 @@ extension TabViewController: AutoconsentUserScriptDelegate {
         guard Locale.current.isRegionInEurope,
               !isShowingFullScreenDaxDialog else { return }
         
-        let model = CookieConsentDaxDialogModel(okAction: {
+        let viewModel = CookieConsentDaxDialogViewModel(okAction: {
             completion(true)
             self.dismiss(animated: true)
         }, noAction: {
@@ -2086,11 +2086,11 @@ extension TabViewController: AutoconsentUserScriptDelegate {
         
         Pixel.fire(pixel: .daxDialogsAutoconsentShown)
         
-        showCustomDaxDialog(model: model)
+        showCustomDaxDialog(viewModel: viewModel)
     }
     
-    private func showCustomDaxDialog(model: CustomDaxDialogModel) {
-        let daxDialog = UIHostingController(rootView: CustomDaxDialog(model: model), ignoreSafeArea: true)
+    private func showCustomDaxDialog(viewModel: CustomDaxDialogViewModel) {
+        let daxDialog = UIHostingController(rootView: CustomDaxDialog(viewModel: viewModel), ignoreSafeArea: true)
         daxDialog.modalPresentationStyle = .overFullScreen
         daxDialog.modalTransitionStyle = .crossDissolve
         daxDialog.view.backgroundColor = .clear

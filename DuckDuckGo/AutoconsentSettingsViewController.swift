@@ -19,12 +19,12 @@
 
 import UIKit
 
-class AutoconsentSettingsViewController: UITableViewController {
+final class AutoconsentSettingsViewController: UITableViewController {
     
-    @IBOutlet var labels: [UILabel]!
+    @IBOutlet private var labels: [UILabel]!
     
-    @IBOutlet weak var autoconsentToggle: UISwitch!
-    @IBOutlet weak var infoText: UILabel!
+    @IBOutlet private weak var autoconsentToggle: UISwitch!
+    @IBOutlet private weak var infoText: UILabel!
     
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
         
@@ -65,7 +65,7 @@ class AutoconsentSettingsViewController: UITableViewController {
         cell.decorate(with: theme)
     }
     
-    @IBAction func onAutoconsentValueChanged(_ sender: Any) {
+    @IBAction private func onAutoconsentValueChanged(_ sender: Any) {
         appSettings.autoconsentEnabled = autoconsentToggle.isOn
         appSettings.autoconsentPromptSeen = true
     }

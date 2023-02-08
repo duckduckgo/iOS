@@ -51,6 +51,8 @@ public class SyncCodeCollectionViewModel: ObservableObject {
     @Published var showCamera = true
     @Published var state = State.showScanner
     @Published var manuallyEnteredCode: String?
+    @Published var isValidating = false
+    @Published var codeError: String?
 
     var canSubmitManualCode: Bool {
         manuallyEnteredCode?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false
@@ -77,6 +79,24 @@ public class SyncCodeCollectionViewModel: ObservableObject {
     func pasteCode() {
         guard let string = delegate?.pasteboardString else { return }
         self.manuallyEnteredCode = string
+        isValidating = true
+
+        Task { @MainActor in
+
+            if #available(iOS 16.0, *) {
+                try await Task.sleep(for: .seconds(4))
+            }
+
+            // Tidy this up when wiring up to the backend
+            if manuallyEnteredCode == "wrong" {
+                isValidating = false
+                codeError = "Invalid code"
+            } else if let code = manuallyEnteredCode {
+                isValidating = false
+                _ = delegate?.handleCode(self, code: code)
+            }
+        }
+
     }
 
     func cancel() {

@@ -88,7 +88,7 @@ struct SyncQRCodeView: View {
                 Spacer()
             }
             .padding(.horizontal, 20)
-            .frame(maxWidth: SyncUIConstants.maxWidth, alignment: .center)
+            .frame(maxWidth: Constants.maxWidth, alignment: .center)
         }
         .navigationTitle("QR Code")
         .modifier(SyncBackButtonModifier())

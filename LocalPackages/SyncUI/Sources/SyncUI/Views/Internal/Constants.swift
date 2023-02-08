@@ -1,5 +1,5 @@
 //
-//  SyncUIConstants.swift
+//  Constants.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -19,10 +19,12 @@
 
 import Foundation
 
-struct SyncUIConstants {
+struct Constants {
 
     static let maxWidth = 640.0
     static let maxCameraHeight = 300.0
     static let hPad = 20.0
+    static let codeFontSize = 18.0
+    static let codeLines = 10
 
 }

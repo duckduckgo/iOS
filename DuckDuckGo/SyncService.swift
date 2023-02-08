@@ -33,7 +33,9 @@ class FakeSyncService: SyncService {
     }
 
     func createAccount() async {
-        try? await Task.sleep(nanoseconds: 1_000_000_000 * 2)
+        if #available(iOS 16.0, *) {
+            try? await Task.sleep(for: .seconds(2))
+        }
     }
 
 }

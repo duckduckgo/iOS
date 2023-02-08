@@ -83,7 +83,7 @@ public struct SyncCodeCollectionView: View {
                 .buttonStyle(SyncLabelButtonStyle())
                 .padding(.bottom, 40)
             }
-            .padding(.horizontal, SyncUIConstants.hPad)
+            .padding(.horizontal, Constants.hPad)
         }
     }
 
@@ -111,7 +111,7 @@ public struct SyncCodeCollectionView: View {
 
                 Spacer()
             }
-            .padding(.horizontal, SyncUIConstants.hPad)
+            .padding(.horizontal, Constants.hPad)
         }
     }
 
@@ -188,7 +188,7 @@ public struct SyncCodeCollectionView: View {
                     ZStack {
                         cameraViewPort()
                             .frame(width: g.size.width, height: g.size.width)
-                            .frame(maxHeight: g.size.height - SyncUIConstants.maxCameraHeight)
+                            .frame(maxHeight: g.size.height - Constants.maxCameraHeight)
 
                         Group {
                             cameraPermissionDenied()
@@ -204,7 +204,7 @@ public struct SyncCodeCollectionView: View {
 
                         VStack {
                             instructions()
-                                .padding(.horizontal, SyncUIConstants.hPad)
+                                .padding(.horizontal, Constants.hPad)
 
                             List {
                                 buttons()
@@ -213,7 +213,7 @@ public struct SyncCodeCollectionView: View {
                             .hideScrollContentBackground()
                             .disableScrolling()
                         }
-                        .frame(maxWidth: SyncUIConstants.maxWidth)
+                        .frame(maxWidth: Constants.maxWidth)
                     }
                 }
                 .ignoresSafeArea()

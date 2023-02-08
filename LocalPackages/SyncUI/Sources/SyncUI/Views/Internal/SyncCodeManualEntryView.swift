@@ -27,35 +27,6 @@ struct SyncCodeManualEntryView: View {
     @State var isEditingCode = false
 
     @ViewBuilder
-    func codeEntryField() -> some View {
-        ZStack {
-            ZStack(alignment: .topLeading) {
-                Group {
-                    CodeEntryView(focused: $isEditingCode, text: $model.manuallyEnteredCode)
-
-                    if !isEditingCode && model.manuallyEnteredCode == nil {
-                        Text("Recovery Code")
-                            .foregroundColor(.primary.opacity(0.36))
-                    }
-                }.padding(4)
-            }
-            .background(
-                ZStack {
-                    RoundedRectangle(cornerRadius: 8)
-                        .foregroundColor(.white.opacity(0.09))
-
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(.white.opacity(0.24))
-                }
-            )
-        }
-        .padding(.horizontal)
-        .frame(height: 150)
-        .padding(4)
-
-    }
-
-    @ViewBuilder
     func pasteButton() -> some View {
         Button(action: model.pasteCode) {
             Label("Paste", image: "SyncPaste")
@@ -72,16 +43,45 @@ struct SyncCodeManualEntryView: View {
 
             RoundedRectangle(cornerRadius: 8).foregroundColor(.white.opacity(0.09))
 
-            VStack(spacing: 20) {
+            VStack(spacing: 0) {
                 Spacer()
 
-                codeEntryField()
+                if let code = model.manuallyEnteredCode {
 
-                Spacer()
+                    Text(code)
+                        .kerning(3)
+                        .lineLimit(Constants.codeLines)
+                        .monospaceSystemFont(ofSize: Constants.codeFontSize)
+                        .padding()
+
+                    Spacer()
+
+                }
+
+                if model.isValidating {
+                    HStack(spacing: 4) {
+                        SwiftUI.ProgressView()
+                        Text("Validating code")
+                            .foregroundColor(.white.opacity(0.36))
+                    }
+                } else if let error = model.codeError {
+                    HStack {
+                        Image("SyncAlert")
+
+                        Text("\(error)")
+                            .foregroundColor(.white.opacity(0.36))
+                    }
+                } else {
+
+                    instructions()
+
+                    Spacer()
+                }
 
                 pasteButton()
-                    .buttonStyle(SyncLabelButtonStyle())
-                    .padding(.bottom, 20)
+                    .buttonStyle(PasteButtonStyle())
+                    .padding(.vertical, 20)
+
             }
         }
         .frame(maxWidth: 350, maxHeight: 350)
@@ -93,25 +93,17 @@ struct SyncCodeManualEntryView: View {
         Text("Enter the code on your recovery PDF, or connected device, above to recover your synced data.")
             .lineLimit(nil)
             .multilineTextAlignment(.center)
-    }
-
-    @ViewBuilder
-    func button() -> some View {
-        Button("Submit", action: model.submitAction)
-            .buttonStyle(PrimaryButtonStyle(disabled: !model.canSubmitManualCode))
-            .disabled(!model.canSubmitManualCode)
-            .padding(.bottom, 20)
+            .foregroundColor(.white.opacity(0.6))
+            .padding()
     }
 
     var body: some View {
         ZStack(alignment: .top) {
             VStack(spacing: 20) {
                 codeEntrySection()
-                instructions()
                 Spacer()
-                button()
             }
-            .frame(maxWidth: SyncUIConstants.maxWidth, alignment: .center)
+            .frame(maxWidth: Constants.maxWidth, alignment: .center)
         }
         .padding(.horizontal, 20)
         .navigationTitle("Manually Enter Code")
@@ -123,6 +115,19 @@ struct SyncCodeManualEntryView: View {
         }
         .modifier(SyncBackButtonModifier())
         .ignoresSafeArea(.keyboard)
+    }
+
+}
+
+private extension View {
+
+    @ViewBuilder
+    func monospaceSystemFont(ofSize size: Double) -> some View {
+        if #available(iOS 15.0, *) {
+            font(.system(size: size).monospaced())
+        } else {
+            font(.system(size: size))
+        }
     }
 
 }
@@ -200,6 +205,29 @@ private extension String {
 
     func groups(ofSize: Int) -> String {
         return components(separatedBy: .whitespaces).joined().chunks(ofSize: 4).joined(separator: " ")
+    }
+
+}
+
+struct PasteButtonStyle: ButtonStyle {
+
+    private var backgroundColor: Color {
+        .deprecatedBlue
+    }
+
+    private var foregroundColor: Color {
+        .black
+    }
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .foregroundColor(configuration.isPressed ? foregroundColor.opacity(0.7) : foregroundColor.opacity(1))
+            .padding(.horizontal)
+            .frame(height: 44)
+            .background(configuration.isPressed ? backgroundColor.opacity(0.7) : backgroundColor.opacity(1))
+            .cornerRadius(8)
+            .font(.system(size: 15, weight: .semibold))
+
     }
 
 }

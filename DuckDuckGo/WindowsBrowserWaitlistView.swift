@@ -19,6 +19,7 @@
 
 import SwiftUI
 import Core
+import Waitlist
 
 struct WindowsBrowserWaitlistView: View {
 
@@ -58,7 +59,7 @@ struct WindowsBrowserWaitlistSignUpView: View {
         GeometryReader { proxy in
             ScrollView {
                 VStack(alignment: .center, spacing: 8) {
-                    WaitlistHeaderView(imageName: "WindowsWaitlistJoinWaitlist", title: UserText.windowsWaitlistTryDuckDuckGoForWindows)
+                    HeaderView(imageName: "WindowsWaitlistJoinWaitlist", title: UserText.windowsWaitlistTryDuckDuckGoForWindows)
 
                     Text(UserText.windowsWaitlistSummary)
                         .font(.proximaNova(size: 16))
@@ -67,7 +68,7 @@ struct WindowsBrowserWaitlistSignUpView: View {
                         .lineSpacing(6)
 
                     Button(UserText.waitlistJoin, action: { action(.joinQueue) })
-                        .buttonStyle(WaitlistRoundedButtonStyle(enabled: !requestInFlight))
+                        .buttonStyle(RoundedButtonStyle(enabled: !requestInFlight))
                         .padding(.top, 24)
 
                     if requestInFlight {
@@ -126,7 +127,7 @@ struct WindowsBrowserWaitlistJoinedWaitlistView: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            WaitlistHeaderView(imageName: "WaitlistJoined", title: UserText.waitlistOnTheList)
+            HeaderView(imageName: "WaitlistJoined", title: UserText.waitlistOnTheList)
 
             switch notificationState {
             case .notificationAllowed:
@@ -148,7 +149,7 @@ struct WindowsBrowserWaitlistJoinedWaitlistView: View {
                     Button(UserText.waitlistNotifyMe) {
                         action(.requestNotificationPermission)
                     }
-                    .buttonStyle(WaitlistRoundedButtonStyle(enabled: true))
+                    .buttonStyle(RoundedButtonStyle(enabled: true))
                     .padding(.top, 32)
                 }
             }
@@ -178,7 +179,7 @@ private struct AllowNotificationsView: View {
             Button(UserText.waitlistAllowNotifications) {
                 action(.openNotificationSettings)
             }
-            .buttonStyle(WaitlistRoundedButtonStyle(enabled: true))
+            .buttonStyle(RoundedButtonStyle(enabled: true))
 
         }
         .padding(24)
@@ -208,7 +209,7 @@ struct WindowsBrowserWaitlistInvitedView: View {
         GeometryReader { proxy in
             ScrollView {
                 VStack(alignment: .center, spacing: 0) {
-                    WaitlistHeaderView(imageName: "WaitlistInvited", title: UserText.waitlistYoureInvited)
+                    HeaderView(imageName: "WaitlistInvited", title: UserText.waitlistYoureInvited)
 
                     Text(UserText.windowsWaitlistInviteScreenSubtitle)
                         .font(.proximaNova(size: 17))
@@ -255,13 +256,13 @@ struct WindowsBrowserWaitlistInvitedView: View {
                         .lineSpacing(6)
 
                     if #available(iOS 14.0, *) {
-                        InviteCodeView(inviteCode: inviteCode)
+                        InviteCodeView(title: UserText.waitlistInviteCode, inviteCode: inviteCode)
                             .menuController(UserText.waitlistCopy) {
                                 action(.copyInviteCodeToPasteboard)
                             }
                             .padding(.top, 28)
                     } else {
-                        InviteCodeView(inviteCode: inviteCode)
+                        InviteCodeView(title: UserText.waitlistInviteCode, inviteCode: inviteCode)
                             .padding(.top, 28)
                     }
 

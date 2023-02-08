@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import Waitlist
 
 typealias WaitlistViewActionHandler = (WaitlistViewModel.ViewAction) -> Void
 
@@ -52,7 +53,7 @@ struct MacBrowserWaitlistContentView: View {
         GeometryReader { proxy in
             ScrollView {
                 VStack(alignment: .center, spacing: 8) {
-                    WaitlistHeaderView(imageName: "MacWaitlistJoinWaitlist", title: UserText.macWaitlistTryDuckDuckGoForMac)
+                    HeaderView(imageName: "MacWaitlistJoinWaitlist", title: UserText.macWaitlistTryDuckDuckGoForMac)
                     
                     Text(UserText.macWaitlistSummary)
                         .font(.proximaNova(size: 16, weight: .regular))
@@ -85,7 +86,7 @@ struct MacBrowserWaitlistContentView: View {
                             }
                         }
                     )
-                    .buttonStyle(WaitlistRoundedButtonStyle(enabled: true))
+                    .buttonStyle(RoundedButtonStyle(enabled: true))
                     .padding(.top, 24)
                     .background(
                         GeometryReader { proxy in

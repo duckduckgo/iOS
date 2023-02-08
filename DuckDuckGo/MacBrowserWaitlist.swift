@@ -18,13 +18,10 @@
 //
 
 import Foundation
-import Core
-import UserNotifications
-import BackgroundTasks
-import os
+import Waitlist
 
 struct MacBrowserWaitlist: WaitlistHandling {
-    static let feature: WaitlistFeature = .macBrowser
+    static let feature: WaitlistFeature = MacBrowserWaitlistFeature()
 
     static let shared: MacBrowserWaitlist = .init()
 
@@ -32,9 +29,7 @@ struct MacBrowserWaitlist: WaitlistHandling {
 
     static let backgroundTaskName = "Mac Browser Waitlist Status Task"
     static let backgroundRefreshTaskIdentifier = "com.duckduckgo.app.macBrowserWaitlistStatus"
-    static let minimumConfigurationRefreshInterval: TimeInterval = 60 * 60 * 12
     static let notificationIdentitier = "com.duckduckgo.ios.mac-browser.invite-code-available"
-    static let notificationNameInviteCodeChanged = Notification.Name("com.duckduckgo.app.mac-waitlist.invite-code-changed")
     static let inviteAvailableNotificationTitle = UserText.macWaitlistAvailableNotificationTitle
     static let inviteAvailableNotificationBody = UserText.waitlistAvailableNotificationBody
 

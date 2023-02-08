@@ -20,17 +20,17 @@
 import UIKit
 import SwiftUI
 import Combine
-import Core
 
-protocol WaitlistViewModelDelegate: AnyObject {
+public protocol WaitlistViewModelDelegate: AnyObject {
+    func waitlistViewModelDidJoinQueueWithNotificationsAllowed(_ viewModel: WaitlistViewModel)
     func waitlistViewModelDidOpenInviteCodeShareSheet(_ viewModel: WaitlistViewModel, inviteCode: String, senderFrame: CGRect)
     func waitlistViewModelDidOpenDownloadURLShareSheet(_ viewModel: WaitlistViewModel, senderFrame: CGRect)
 }
 
 @MainActor
-final class WaitlistViewModel: ObservableObject {
+public final class WaitlistViewModel: ObservableObject {
 
-    enum ViewState: Equatable {
+    public enum ViewState: Equatable {
         case notJoinedQueue
         case joiningQueue
         case joinedQueue(NotificationPermissionState)
@@ -38,7 +38,7 @@ final class WaitlistViewModel: ObservableObject {
         case waitlistRemoved
     }
 
-    enum ViewAction: Equatable {
+    public enum ViewAction: Equatable {
         case joinQueue
         case requestNotificationPermission
         case openNotificationSettings
@@ -47,27 +47,17 @@ final class WaitlistViewModel: ObservableObject {
         case copyInviteCodeToPasteboard
     }
 
-    enum NotificationPermissionState {
+    public enum NotificationPermissionState {
         case notDetermined
         case notificationAllowed
         case notificationsDisabled
     }
 
-    @Published var viewState: ViewState
+    @Published public var viewState: ViewState
 
-    weak var delegate: WaitlistViewModelDelegate?
+    public weak var delegate: WaitlistViewModelDelegate?
 
-    convenience init(feature: WaitlistFeature) {
-        let notificationService: NotificationService? = feature.isWaitlistRemoved ? nil : UNUserNotificationCenter.current()
-        self.init(
-            waitlistRequest: ProductWaitlistRequest(feature: feature),
-            waitlistStorage: WaitlistKeychainStore(feature: feature),
-            notificationService: notificationService,
-            downloadURL: feature.downloadURL
-        )
-    }
-
-    init(waitlistRequest: WaitlistRequest, waitlistStorage: WaitlistStorage, notificationService: NotificationService?, downloadURL: URL) {
+    public init(waitlistRequest: WaitlistRequest, waitlistStorage: WaitlistStorage, notificationService: NotificationService?, downloadURL: URL) {
         self.waitlistRequest = waitlistRequest
         self.waitlistStorage = waitlistStorage
         self.notificationService = notificationService
@@ -91,7 +81,7 @@ final class WaitlistViewModel: ObservableObject {
          }
     }
 
-    func updateViewState() {
+    public func updateViewState() {
         if waitlistStorage.getWaitlistTimestamp() != nil, waitlistStorage.getWaitlistInviteCode() == nil {
             self.viewState = .joinedQueue(.notificationAllowed)
 
@@ -105,7 +95,7 @@ final class WaitlistViewModel: ObservableObject {
         }
     }
 
-    func perform(action: ViewAction) async {
+    public func perform(action: ViewAction) async {
         switch action {
         case .joinQueue: await joinQueue()
         case .requestNotificationPermission: await promptForNotifications()
@@ -119,9 +109,7 @@ final class WaitlistViewModel: ObservableObject {
     // MARK: - Private
 
     private func checkNotificationPermissions() async {
-        let notificationSettings = await UNUserNotificationCenter.current().notificationSettings()
-
-        switch notificationSettings.authorizationStatus {
+        switch await notificationService?.authorizationStatus() {
         case .notDetermined:
             viewState = .joinedQueue(.notDetermined)
         case .denied:
@@ -152,7 +140,7 @@ final class WaitlistViewModel: ObservableObject {
 
             if permissionGranted {
                 self.viewState = .joinedQueue(.notificationAllowed)
-                WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
+                delegate?.waitlistViewModelDidJoinQueueWithNotificationsAllowed(self)
             } else {
                 self.viewState = .joinedQueue(.notificationsDisabled)
             }

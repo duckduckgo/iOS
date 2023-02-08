@@ -19,7 +19,7 @@
 
 import SwiftUI
 
-extension Color {
+public extension Color {
 
     static var waitlistText: Color {
         Color("WaitlistTextColor")

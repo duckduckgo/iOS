@@ -21,13 +21,14 @@ import UIKit
 import SwiftUI
 import LinkPresentation
 import Core
+import Waitlist
 
 final class WindowsWaitlistViewController: UIViewController {
 
     private let viewModel: WaitlistViewModel
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        self.viewModel = WaitlistViewModel(feature: .windowsBrowser)
+        self.viewModel = WaitlistViewModel(feature: WindowsBrowserWaitlistFeature())
         super.init(nibName: nil, bundle: nil)
         self.viewModel.delegate = self
     }
@@ -50,8 +51,8 @@ final class WindowsWaitlistViewController: UIViewController {
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(updateViewState),
-                                               name: WindowsBrowserWaitlist.notificationNameInviteCodeChanged,
-                                               object: nil)
+                                               name: WaitlistKeychainStore.inviteCodeDidChangeNotification,
+                                               object: WindowsBrowserWaitlistFeature().identifier)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -85,6 +86,10 @@ final class WindowsWaitlistViewController: UIViewController {
 }
 
 extension WindowsWaitlistViewController: WaitlistViewModelDelegate {
+
+    func waitlistViewModelDidJoinQueueWithNotificationsAllowed(_ viewModel: Waitlist.WaitlistViewModel) {
+        WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
+    }
 
     func waitlistViewModelDidOpenInviteCodeShareSheet(_ viewModel: WaitlistViewModel, inviteCode: String, senderFrame: CGRect) {
         let linkMetadata = WindowsWaitlistLinkMetadata(inviteCode: inviteCode)

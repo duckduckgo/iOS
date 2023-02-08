@@ -1,8 +1,7 @@
-//
-//  NotificationService.swift
+//  WaitlistTests.swift
 //  DuckDuckGo
 //
-//  Copyright © 2022 DuckDuckGo. All rights reserved.
+//  Copyright © 2023 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,13 +16,10 @@
 //  limitations under the License.
 //
 
-import Foundation
-import UserNotifications
+import XCTest
+@testable import Waitlist
 
-protocol NotificationService {
-    
-    func requestAuthorization(options: UNAuthorizationOptions) async throws -> Bool
-
+final class WaitlistTests: XCTestCase {
+    func testExample() throws {
+    }
 }
-
-extension UNUserNotificationCenter: NotificationService { }

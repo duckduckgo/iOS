@@ -18,13 +18,10 @@
 //
 
 import Foundation
-import Core
-import UserNotifications
-import BackgroundTasks
-import os
+import Waitlist
 
 struct WindowsBrowserWaitlist: WaitlistHandling {
-    static let feature: WaitlistFeature = .windowsBrowser
+    static let feature: WaitlistFeature = WindowsBrowserWaitlistFeature()
 
     static let shared: WindowsBrowserWaitlist = .init()
 
@@ -32,9 +29,7 @@ struct WindowsBrowserWaitlist: WaitlistHandling {
 
     static let backgroundTaskName = "Windows Browser Waitlist Status Task"
     static let backgroundRefreshTaskIdentifier = "com.duckduckgo.app.windowsBrowserWaitlistStatus"
-    static let minimumConfigurationRefreshInterval: TimeInterval = 60 * 60 * 12
     static let notificationIdentitier = "com.duckduckgo.ios.windows-browser.invite-code-available"
-    static let notificationNameInviteCodeChanged = Notification.Name("com.duckduckgo.app.windows-waitlist.invite-code-changed")
     static let inviteAvailableNotificationTitle = UserText.windowsWaitlistAvailableNotificationTitle
     static let inviteAvailableNotificationBody = UserText.waitlistAvailableNotificationBody
 

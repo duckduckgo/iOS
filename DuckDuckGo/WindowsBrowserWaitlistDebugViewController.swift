@@ -20,6 +20,7 @@
 import UIKit
 import Core
 import BackgroundTasks
+import Waitlist
 
 final class WindowsBrowserWaitlistDebugViewController: UITableViewController {
 
@@ -60,7 +61,7 @@ final class WindowsBrowserWaitlistDebugViewController: UITableViewController {
 
     }
 
-    private let storage = WaitlistKeychainStore(feature: .windowsBrowser)
+    private let storage = WaitlistKeychainStore(waitlistIdentifier: WindowsBrowserWaitlistFeature().identifier)
 
     private var backgroundTaskExecutionDate: String?
 

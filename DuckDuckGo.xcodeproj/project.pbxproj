@@ -2491,9 +2491,9 @@
 			isa = PBXGroup;
 			children = (
 				37FCAAB529919CEB000E420A /* WindowsBrowserWaitlist.swift */,
-				4B6484E427FD1E340050A7A1 /* WindowsBrowserWaitlistDebugViewController.swift */,
 				37FCAAB129914232000E420A /* WindowsBrowserWaitlistView.swift */,
 				37FCAAB329914C77000E420A /* WindowsWaitlistViewController.swift */,
+				4B6484E427FD1E340050A7A1 /* WindowsBrowserWaitlistDebugViewController.swift */,
 			);
 			name = WindowsBrowser;
 			sourceTree = "<group>";

@@ -102,8 +102,8 @@ private final class MacWaitlistLinkMetadata: NSObject, UIActivityItemSource {
     
     fileprivate let metadata: LPLinkMetadata = {
         let metadata = LPLinkMetadata()
-        metadata.originalURL = AppUrls().macBrowserDownloadURL
-        metadata.url = metadata.originalURL
+        metadata.originalURL = MacBrowserWaitlist.downloadURL
+        metadata.url = MacBrowserWaitlist.downloadURL
         metadata.title = UserText.macWaitlistShareSheetTitle
         metadata.imageProvider = NSItemProvider(object: UIImage(named: "WaitlistShareSheetLogo")!)
 

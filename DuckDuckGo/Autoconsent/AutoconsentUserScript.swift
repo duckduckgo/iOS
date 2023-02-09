@@ -60,15 +60,17 @@ final class AutoconsentUserScript: NSObject, WKScriptMessageHandlerWithReply, Us
     public var messageNames: [String] { MessageName.allCases.map(\.rawValue) }
     let source: String
     private let config: PrivacyConfiguration
+    private let ignoreNonHTTPURLs: Bool
     weak var delegate: AutoconsentUserScriptDelegate?
 
-    init(config: PrivacyConfiguration, preferences: AutoconsentPreferences = AppUserDefaults()) {
+    init(config: PrivacyConfiguration, preferences: AutoconsentPreferences = AppUserDefaults(), ignoreNonHTTPURLs: Bool = true) {
         os_log("Initialising autoconsent userscript", log: .autoconsentLog, type: .debug)
         source = Self.loadJS("autoconsent-bundle", from: .main, withReplacements: [:])
         self.config = config
         self.preferences = preferences
+        self.ignoreNonHTTPURLs = ignoreNonHTTPURLs
     }
-
+    
     func userContentController(_ userContentController: WKUserContentController,
                                didReceive message: WKScriptMessage) {
         // this is never used because macOS <11 is not supported by autoconsent
@@ -219,12 +221,7 @@ extension AutoconsentUserScript {
             return
         }
 
-        if !url.isHttp && !url.isHttps
-            // bundled test page is served from file://
-// TODO: Fix missing AppDelegate.isRunningTests
-  //          && !(AppDelegate.isRunningTests && url.path.hasSuffix("/autoconsent-test-page.html"))
-        {
-
+        if ignoreNonHTTPURLs && !url.isHttp && !url.isHttps {
             // ignore special schemes
             os_log("Ignoring special URL scheme: %s", log: .autoconsentLog, type: .debug, messageData.url)
             replyHandler([ "type": "ok" ], nil) // this is just to prevent a Promise rejection

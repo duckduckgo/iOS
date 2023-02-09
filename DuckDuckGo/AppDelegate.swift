@@ -247,8 +247,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         BGTaskScheduler.shared.getPendingTaskRequests { tasks in
-            let hasMacBrowserWaitlistTask = tasks.contains { $0.identifier == WindowsBrowserWaitlist.backgroundRefreshTaskIdentifier }
-            if !hasMacBrowserWaitlistTask {
+            let hasWindowsBrowserWaitlistTask = tasks.contains { $0.identifier == WindowsBrowserWaitlist.backgroundRefreshTaskIdentifier }
+            if !hasWindowsBrowserWaitlistTask {
                 WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
             }
         }

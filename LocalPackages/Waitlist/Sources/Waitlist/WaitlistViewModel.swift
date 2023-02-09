@@ -82,7 +82,7 @@ public final class WaitlistViewModel: ObservableObject {
         }
 
         if waitlistStorage.getWaitlistTimestamp() != nil, waitlistStorage.getWaitlistInviteCode() == nil {
-             viewState = .joinedQueue(.notificationAllowed)
+             viewState = .joinedQueue(.notDetermined)
 
              Task {
                  await checkNotificationPermissions()
@@ -126,6 +126,7 @@ public final class WaitlistViewModel: ObservableObject {
             viewState = .joinedQueue(.notificationsDisabled)
         default:
             viewState = .joinedQueue(.notificationAllowed)
+            delegate?.waitlistViewModelDidJoinQueueWithNotificationsAllowed(self)
         }
     }
 

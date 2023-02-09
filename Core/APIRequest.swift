@@ -123,7 +123,7 @@ public class APIRequest {
         let task = session.dataTask(with: urlRequest) { (data, response, error) in
             
             let httpResponse = response as? HTTPURLResponse
-
+            
             os_log("Request for %s completed with response code: %s and headers %s",
                    log: generalLog,
                    type: .debug,

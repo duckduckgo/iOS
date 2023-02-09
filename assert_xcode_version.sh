@@ -12,8 +12,8 @@ verlt() {
 }
 
 if verlt "$current_xcode_version" "$required_xcode_version"; then
-	echo "error: You are using an oudated version of Xcode."
+	echo "error: You are using an outdated version of Xcode. Xcode ${required_xcode_version} is required."
 	exit 1
 elif [[ "$current_xcode_version" != "$required_xcode_version" ]]; then
-	echo "warning: You are using a newer version of Xcode. If it is stable enough please consider updating the .xcode-version file to enforce it on the team."
+	echo "warning: You are using a newer version of Xcode than required. If it is stable enough please consider updating the .xcode-version file to enforce it on the team."
 fi

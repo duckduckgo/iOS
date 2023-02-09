@@ -129,10 +129,6 @@ public extension Waitlist {
     }
 
     func registerBackgroundRefreshTaskHandler() {
-        guard isAvailable else {
-            return
-        }
-
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Self.backgroundRefreshTaskIdentifier, using: nil) { task in
             let waitlist = Self.shared
 

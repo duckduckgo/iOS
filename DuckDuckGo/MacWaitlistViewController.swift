@@ -95,7 +95,14 @@ extension MacWaitlistViewController: WaitlistViewModelDelegate {
         
         present(activityViewController, animated: true, completion: nil)
     }
-    
+
+    func waitlistViewModel(_ viewModel: WaitlistViewModel, didTriggerCustomAction action: WaitlistViewModel.ViewCustomAction) {
+        if action == .openWindowsBrowserWaitlist {
+            let windowsWaitlistViewController = WindowsWaitlistViewController(nibName: nil, bundle: nil)
+            navigationController?.popToRootViewController(animated: true)
+            navigationController?.pushViewController(windowsWaitlistViewController, animated: true)
+        }
+    }
 }
 
 private final class MacWaitlistLinkMetadata: NSObject, UIActivityItemSource {

@@ -25,6 +25,8 @@ public protocol WaitlistViewModelDelegate: AnyObject {
     func waitlistViewModelDidJoinQueueWithNotificationsAllowed(_ viewModel: WaitlistViewModel)
     func waitlistViewModelDidOpenInviteCodeShareSheet(_ viewModel: WaitlistViewModel, inviteCode: String, senderFrame: CGRect)
     func waitlistViewModelDidOpenDownloadURLShareSheet(_ viewModel: WaitlistViewModel, senderFrame: CGRect)
+
+    func waitlistViewModel(_ viewModel: WaitlistViewModel, didTriggerCustomAction action: WaitlistViewModel.ViewCustomAction)
 }
 
 @MainActor
@@ -45,6 +47,15 @@ public final class WaitlistViewModel: ObservableObject {
         case openShareSheet(CGRect)
         case copyDownloadURLToPasteboard
         case copyInviteCodeToPasteboard
+        case custom(ViewCustomAction)
+    }
+
+    public struct ViewCustomAction: Equatable {
+        public let identifier: String
+
+        public init(identifier: String) {
+            self.identifier = identifier
+        }
     }
 
     public enum NotificationPermissionState {
@@ -103,6 +114,7 @@ public final class WaitlistViewModel: ObservableObject {
         case .openShareSheet(let frame): openShareSheet(senderFrame: frame)
         case .copyDownloadURLToPasteboard: copyDownloadUrlToClipboard()
         case .copyInviteCodeToPasteboard: copyInviteCodeToClipboard()
+        case .custom(let action): delegate?.waitlistViewModel(self, didTriggerCustomAction: action)
         }
     }
 

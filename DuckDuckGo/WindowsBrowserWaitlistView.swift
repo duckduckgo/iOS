@@ -86,7 +86,7 @@ struct WindowsBrowserWaitlistSignUpView: View {
 
                     Button(
                         action: {
-
+                            action(.custom(.openMacBrowserWaitlist))
                         }, label: {
                             HStack {
                                 Image("WindowsWaitlistMac")

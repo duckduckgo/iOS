@@ -45,3 +45,7 @@ struct MacBrowserWaitlist: Waitlist {
         self.waitlistRequest = request
     }
 }
+
+extension WaitlistViewModel.ViewCustomAction {
+    static var openWindowsBrowserWaitlist = WaitlistViewModel.ViewCustomAction(identifier: "openWindowsBrowserWaitlist")
+}

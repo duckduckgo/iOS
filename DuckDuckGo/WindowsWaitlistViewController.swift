@@ -117,6 +117,14 @@ extension WindowsWaitlistViewController: WaitlistViewModelDelegate {
     func waitlistViewModelDidOpenDownloadURLShareSheet(_ viewModel: WaitlistViewModel, senderFrame: CGRect) {
         assertionFailure("Windows Waitlist is still active")
     }
+
+    func waitlistViewModel(_ viewModel: WaitlistViewModel, didTriggerCustomAction action: WaitlistViewModel.ViewCustomAction) {
+        if action == .openMacBrowserWaitlist {
+            let macWaitlistViewController = MacWaitlistViewController(nibName: nil, bundle: nil)
+            navigationController?.popToRootViewController(animated: true)
+            navigationController?.pushViewController(macWaitlistViewController, animated: true)
+        }
+    }
 }
 
 private final class WindowsWaitlistLinkMetadata: NSObject, UIActivityItemSource {

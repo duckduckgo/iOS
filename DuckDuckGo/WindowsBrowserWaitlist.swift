@@ -58,4 +58,9 @@ struct WindowsBrowserWaitlist: Waitlist {
         
         return UserText.windowsWaitlistBrowsePrivately
     }
+
+}
+
+extension WaitlistViewModel.ViewCustomAction {
+    static var openMacBrowserWaitlist = WaitlistViewModel.ViewCustomAction(identifier: "openMacBrowserWaitlist")
 }

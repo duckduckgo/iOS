@@ -66,7 +66,7 @@ public final class WaitlistViewModel: ObservableObject {
         case notificationsDisabled
     }
 
-    @Published public var viewState: ViewState
+    @Published public private(set) var viewState: ViewState
 
     public weak var delegate: WaitlistViewModelDelegate?
 
@@ -94,13 +94,9 @@ public final class WaitlistViewModel: ObservableObject {
          }
     }
 
-    public func updateViewState() {
+    public func updateViewState() async {
         if waitlistStorage.getWaitlistTimestamp() != nil, waitlistStorage.getWaitlistInviteCode() == nil {
-            self.viewState = .joinedQueue(.notificationAllowed)
-
-            Task {
-                await checkNotificationPermissions()
-            }
+            await checkNotificationPermissions()
         } else if let inviteCode = waitlistStorage.getWaitlistInviteCode() {
             self.viewState = .invited(inviteCode: inviteCode)
         } else {

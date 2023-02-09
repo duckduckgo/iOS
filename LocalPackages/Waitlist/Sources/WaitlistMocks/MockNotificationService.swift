@@ -23,8 +23,13 @@ import UserNotifications
 
 public struct MockNotificationService: NotificationService {
 
-    public var isAuthorized = true
-    public var authorizationStatus = UNAuthorizationStatus.authorized
+    public init(isAuthorized: Bool = true, authorizationStatus: UNAuthorizationStatus = .authorized) {
+        self.isAuthorized = isAuthorized
+        self.authorizationStatus = authorizationStatus
+    }
+
+    public var isAuthorized: Bool
+    public var authorizationStatus: UNAuthorizationStatus
 
     public func requestAuthorization(options: UNAuthorizationOptions) async throws -> Bool {
         isAuthorized

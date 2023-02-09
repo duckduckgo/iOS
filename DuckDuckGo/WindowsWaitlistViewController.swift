@@ -57,12 +57,16 @@ final class WindowsWaitlistViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.updateViewState()
+        Task {
+            await self.viewModel.updateViewState()
+        }
     }
 
     @objc
     private func updateViewState() {
-        viewModel.updateViewState()
+        Task {
+            await self.viewModel.updateViewState()
+        }
     }
 
     private func addHostingControllerToViewHierarchy() {

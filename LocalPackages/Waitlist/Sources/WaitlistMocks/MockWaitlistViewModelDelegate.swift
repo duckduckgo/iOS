@@ -18,7 +18,7 @@
 //
 
 import Foundation
-@testable import Waitlist
+import Waitlist
 
 public class MockWaitlistViewModelDelegate: WaitlistViewModelDelegate {
 

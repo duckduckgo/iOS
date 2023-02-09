@@ -26,6 +26,11 @@ public enum WaitlistResponse {
     public struct Join: Decodable {
         public let token: String
         public let timestamp: Int
+
+        public init(token: String, timestamp: Int) {
+            self.token = token
+            self.timestamp = timestamp
+        }
     }
 
     public enum JoinError: Error {
@@ -37,6 +42,10 @@ public enum WaitlistResponse {
 
     public struct Status: Decodable {
         public let timestamp: Int
+
+        public init(timestamp: Int) {
+            self.timestamp = timestamp
+        }
     }
 
     public enum StatusError: Error {
@@ -48,6 +57,10 @@ public enum WaitlistResponse {
 
     public struct InviteCode: Decodable {
         public let code: String
+
+        public init(code: String) {
+            self.code = code
+        }
     }
 
     public enum InviteCodeError: Error {

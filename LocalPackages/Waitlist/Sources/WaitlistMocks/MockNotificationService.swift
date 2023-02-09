@@ -19,7 +19,7 @@
 
 import Foundation
 import UserNotifications
-@testable import Waitlist
+import Waitlist
 
 public struct MockNotificationService: NotificationService {
 

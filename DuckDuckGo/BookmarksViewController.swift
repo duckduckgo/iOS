@@ -727,7 +727,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func dismiss() {
-        delegate?.bookmarksUpdated()
         dismiss(animated: true, completion: nil)
     }
     

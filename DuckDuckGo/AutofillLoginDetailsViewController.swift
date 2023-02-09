@@ -233,7 +233,9 @@ class AutofillLoginDetailsViewController: UIViewController {
 
     private func updateNavigationBarButtons() {
         switch authenticator.state {
-        case .loggedOut, .notAvailable:
+        case .loggedOut:
+            navigationItem.rightBarButtonItems?.forEach { $0.isEnabled = authenticationNotRequired }
+        case .notAvailable:
             navigationItem.rightBarButtonItems?.forEach { $0.isEnabled = false }
         case .loggedIn:
             navigationItem.rightBarButtonItems?.forEach { $0.isEnabled = true }

@@ -12,22 +12,16 @@
     <key>provisioningProfiles</key>
     <dict>
         <key>com.duckduckgo.mobile.ios</key>
-        <string>Ad Hoc - App</string>
+        <string>match AdHoc com.duckduckgo.mobile.ios</string>
 
         <key>com.duckduckgo.mobile.ios.ShareExtension</key>
-        <string>Ad Hoc - Share</string>
-
-        <key>com.duckduckgo.mobile.ios.BookmarksTodayExtension</key>
-        <string>Ad Hoc - Bookmarks</string>
-
-        <key>com.duckduckgo.mobile.ios.QuickActionsTodayExtension</key>
-        <string>Ad Hoc - Quick Actions</string>
+        <string>match AdHoc com.duckduckgo.mobile.ios.ShareExtension</string>
 
         <key>com.duckduckgo.mobile.ios.OpenAction2</key>
-        <string>Ad Hoc - Open Action</string>
+        <string>match AdHoc com.duckduckgo.mobile.ios.OpenAction2</string>
 
         <key>com.duckduckgo.mobile.ios.Widgets</key>
-        <string>Ad Hoc - Widgets</string>
+        <string>match AdHoc com.duckduckgo.mobile.ios.Widgets</string>
     </dict>
 
 </dict>

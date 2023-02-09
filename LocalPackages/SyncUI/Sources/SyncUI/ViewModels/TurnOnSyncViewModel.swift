@@ -1,5 +1,5 @@
 //
-//  SyncSetupViewModel.swift
+//  TurnOnSyncViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -19,11 +19,11 @@
 
 import Foundation
 
-public class SyncSetupViewModel: ObservableObject {
+public class TurnOnSyncViewModel: ObservableObject {
 
-    let finished: (SyncSetupViewModel) -> Void
+    let finished: (TurnOnSyncViewModel) -> Void
 
-    public init(finished: @escaping (SyncSetupViewModel) -> Void) {
+    public init(finished: @escaping (TurnOnSyncViewModel) -> Void) {
         self.finished = finished
     }
 

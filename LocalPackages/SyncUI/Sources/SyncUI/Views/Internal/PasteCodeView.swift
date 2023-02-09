@@ -1,5 +1,5 @@
 //
-//  SyncCodeManualEntryView.swift
+//  PasteCodeView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -20,9 +20,9 @@
 import SwiftUI
 import DuckUI
 
-struct SyncCodeManualEntryView: View {
+struct PasteCodeView: View {
 
-    @ObservedObject var model: SyncCodeCollectionViewModel
+    @ObservedObject var model: ScanOrPasteCodeViewModel
 
     @State var isEditingCode = false
 
@@ -107,7 +107,7 @@ struct SyncCodeManualEntryView: View {
         }
         .padding(.horizontal, 20)
         .navigationTitle("Manually Enter Code")
-        .modifier(SyncBackButtonModifier())
+        .modifier(BackButtonModifier())
         .ignoresSafeArea(.keyboard)
     }
 

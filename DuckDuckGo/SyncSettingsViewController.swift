@@ -1,5 +1,5 @@
 //
-//  SyncManagementViewController.swift
+//  SyncSettingsViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -22,19 +22,15 @@ import Combine
 import AVFoundation
 import SyncUI
 
-// Can this be re-used on macOS? 
-typealias HostingController = UIHostingController
-typealias Pasteboard = UIPasteboard
-
 @MainActor
-class SyncManagementViewController: HostingController<SyncManagementView> {
+class SyncSettingsViewController: UIHostingController<SyncSettingsScreenView> {
 
     let syncService: SyncService = FakeSyncService()
 
     lazy var authenticator = Authenticator()
 
     convenience init() {
-        self.init(rootView: SyncManagementView(model: SyncManagementViewModel()))
+        self.init(rootView: SyncSettingsScreenView(model: SyncSettingsScreenViewModel()))
 
         // For some reason, on iOS 14, the viewDidLoad wasn't getting called
         rootView.model.delegate = self
@@ -48,7 +44,7 @@ class SyncManagementViewController: HostingController<SyncManagementView> {
 
 }
 
-extension SyncManagementViewController: Themable {
+extension SyncSettingsViewController: Themable {
 
     func decorate(with theme: Theme) {
         view.backgroundColor = theme.backgroundColor
@@ -69,7 +65,7 @@ extension SyncManagementViewController: Themable {
 
 }
 
-extension SyncManagementViewController: SyncManagementViewModelDelegate {
+extension SyncSettingsViewController: SyncManagementViewModelDelegate {
 
     func createAccountAndStartSyncing() {
         Task { @MainActor in
@@ -80,13 +76,13 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
 
     func showSyncSetup() {
 
-        let model = SyncSetupViewModel { [weak self] model in
-            assert(self?.navigationController?.visibleViewController is DismissibleHostingController<SyncSetupView>)
+        let model = TurnOnSyncViewModel { [weak self] model in
+            assert(self?.navigationController?.visibleViewController is DismissibleHostingController<TurnOnSyncView>)
             self?.navigationController?.topViewController?.dismiss(animated: true)
             self?.rootView.model.setupFinished(model)
         }
 
-        let controller = DismissibleHostingController(rootView: SyncSetupView(model: model)) { [weak self] in
+        let controller = DismissibleHostingController(rootView: TurnOnSyncView(model: model)) { [weak self] in
             self?.rootView.model.setupFinished(model)
         }
 
@@ -117,7 +113,7 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
     }
 
     func showDeviceConnected() {
-        let controller = HostingController(rootView: SyncDeviceConnectedView {
+        let controller = UIHostingController(rootView: DeviceConnectedView {
             self.shareRecoveryPDF()
         })
         navigationController?.present(controller, animated: true) {
@@ -128,17 +124,17 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
     }
     
     func showRecoveryPDF() {
-        let controller = HostingController(rootView: SyncRecoveryPDFView {
+        let controller = UIHostingController(rootView: SaveRecoveryPDFView {
             self.shareRecoveryPDF()
         })
         navigationController?.present(controller, animated: true)
     }
 
     private func collectCode(canShowQRCode: Bool) {
-        let model = SyncCodeCollectionViewModel(canShowQRCode: canShowQRCode)
+        let model = ScanOrPasteCodeViewModel(canShowQRCode: canShowQRCode)
         model.delegate = self
 
-        let controller = DismissibleHostingController(rootView: SyncCodeCollectionView(model: model)) { [weak self] in
+        let controller = DismissibleHostingController(rootView: ScanOrPasteCodeView(model: model)) { [weak self] in
             self?.rootView.model.codeCollectionCancelled()
         }
 
@@ -153,7 +149,7 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
         }
     }
 
-    func checkCameraPermission(model: SyncCodeCollectionViewModel) {
+    func checkCameraPermission(model: ScanOrPasteCodeViewModel) {
         let status = AVCaptureDevice.authorizationStatus(for: .video)
         if status == .notDetermined {
             Task { @MainActor in
@@ -172,32 +168,32 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
 
 }
 
-extension SyncManagementViewController: SyncCodeCollectionViewModelDelegate {
+extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
 
     var pasteboardString: String? {
-        Pasteboard.general.string
+        UIPasteboard.general.string
     }
 
-    func startConnectMode(_ model: SyncCodeCollectionViewModel) async -> String? {
+    func startConnectMode() async -> String? {
         if await authenticator.authenticate(reason: "Generate QRCode to connect to other devices") {
             return await syncService.retrieveConnectCode()
         }
         return nil
     }
 
-    func handleCode(_ model: SyncCodeCollectionViewModel, code: String) -> Bool {
+    func syncCodeEntered(code: String) -> Bool {
         navigationController?.topViewController?.dismiss(animated: true)
         showDeviceConnected()
         return true
     }
 
-    func cancelled(_ model: SyncCodeCollectionViewModel) {
-        assert(navigationController?.visibleViewController is DismissibleHostingController<SyncCodeCollectionView>)
+    func cancelled() {
+        assert(navigationController?.visibleViewController is DismissibleHostingController<ScanOrPasteCodeView>)
         navigationController?.topViewController?.dismiss(animated: true)
         rootView.model.codeCollectionCancelled()
     }
 
-    func gotoSettings(_ model: SyncCodeCollectionViewModel) {
+    func gotoSettings() {
         if let appSettings = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
         }
@@ -205,7 +201,7 @@ extension SyncManagementViewController: SyncCodeCollectionViewModelDelegate {
 
 }
 
-private class DismissibleHostingController<Content: View>: HostingController<Content> {
+private class DismissibleHostingController<Content: View>: UIHostingController<Content> {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ThemeManager.shared.currentTheme.statusBarStyle

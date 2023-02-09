@@ -20,15 +20,15 @@
 import SwiftUI
 import DuckUI
 
-public struct SyncSetupView: View {
+public struct TurnOnSyncView: View {
 
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
     @State var turnOnSyncNavigation = false
 
-    @ObservedObject var model: SyncSetupViewModel
+    @ObservedObject var model: TurnOnSyncViewModel
 
-    public init(model: SyncSetupViewModel) {
+    public init(model: TurnOnSyncViewModel) {
         self.model = model
     }
 

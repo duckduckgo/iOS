@@ -1,5 +1,5 @@
 //
-//  SyncManagementView.swift
+//  SyncSettingsScreenView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -21,11 +21,11 @@ import SwiftUI
 
 // https://www.figma.com/proto/mpFLwzGJFlbsmyD1JkAwt2/Sync-6?page-id=3744%3A50448&node-id=4101%3A70169&viewport=546%2C933%2C0.11&scaling=scale-down
 
-public struct SyncManagementView: View {
+public struct SyncSettingsScreenView: View {
 
-    @ObservedObject public var model: SyncManagementViewModel
+    @ObservedObject public var model: SyncSettingsScreenViewModel
 
-    public init(model: SyncManagementViewModel) {
+    public init(model: SyncSettingsScreenViewModel) {
         self.model = model
     }
 

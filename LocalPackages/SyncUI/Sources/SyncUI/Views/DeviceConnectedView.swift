@@ -1,5 +1,5 @@
 //
-//  SyncDeviceConnectedView.swift
+//  DeviceConnectedView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -20,7 +20,7 @@
 import SwiftUI
 import DuckUI
 
-public struct SyncDeviceConnectedView: View {
+public struct DeviceConnectedView: View {
 
     let showRecoveryPDFAction: () -> Void
 
@@ -75,7 +75,7 @@ public struct SyncDeviceConnectedView: View {
     public var body: some View {
         Group {
             if showRecoveryPDF {
-                SyncRecoveryPDFView(showRecoveryPDFAction: showRecoveryPDFAction)
+                SaveRecoveryPDFView(showRecoveryPDFAction: showRecoveryPDFAction)
                     .transition(.move(edge: .trailing))
             } else {
                 deviceSyncedView()

@@ -1,5 +1,5 @@
 //
-//  ShowConnectModeView.swift
+//  ConnectModeView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -21,13 +21,13 @@ import SwiftUI
 
 /// We have to defer starting connect mode untl we're visible because otherwise SwiftUI might start it prematurely as a result of the NavigationLink.
 ///  In iOS 16 we use a value binding on the NavigationLink, but this better anyway as we can show progress.
-struct ShowConnectModeView: View {
+struct ConnectModeView: View {
 
-    @ObservedObject var model: SyncCodeCollectionViewModel
+    @ObservedObject var model: ScanOrPasteCodeViewModel
     @State var qrCodeModel = ShowQRCodeViewModel()
 
     var body: some View {
-        SyncQRCodeView(model: qrCodeModel)
+        QRCodeView(model: qrCodeModel)
             .onAppear {
                 self.qrCodeModel = model.startConnectMode()
             }

@@ -19,6 +19,7 @@
 
 import Foundation
 
+// This will be fleshed out/changed entirely when we start the backend work
 protocol SyncService {
 
     func retrieveConnectCode() async -> String?
@@ -29,6 +30,9 @@ protocol SyncService {
 class FakeSyncService: SyncService {
 
     func retrieveConnectCode() async -> String? {
+        if #available(iOS 16.0, *) {
+            try? await Task.sleep(for: .milliseconds(500))
+        }
         return "Fake Connect Code"
     }
 

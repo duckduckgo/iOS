@@ -1,5 +1,5 @@
 //
-//  SyncCodeCollectionViewModel.swift
+//  ScanOrPasteCodeViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -19,20 +19,20 @@
 
 import Foundation
 
-public protocol SyncCodeCollectionViewModelDelegate: AnyObject {
+public protocol ScanOrPasteCodeViewModelDelegate: AnyObject {
 
     var pasteboardString: String? { get }
 
-    func startConnectMode(_ model: SyncCodeCollectionViewModel) async -> String?
+    func startConnectMode() async -> String?
 
     /// Returns true if the code is valid format and should stop scanning
-    func handleCode(_ model: SyncCodeCollectionViewModel, code: String) -> Bool
-    func cancelled(_ model: SyncCodeCollectionViewModel)
-    func gotoSettings(_ model: SyncCodeCollectionViewModel)
+    func syncCodeEntered(code: String) -> Bool
+    func cancelled()
+    func gotoSettings()
 
 }
 
-public class SyncCodeCollectionViewModel: ObservableObject {
+public class ScanOrPasteCodeViewModel: ObservableObject {
 
     public enum VideoPermission {
         case unknown, authorised, denied
@@ -58,7 +58,7 @@ public class SyncCodeCollectionViewModel: ObservableObject {
         manuallyEnteredCode?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false
     }
 
-    public weak var delegate: SyncCodeCollectionViewModelDelegate?
+    public weak var delegate: ScanOrPasteCodeViewModelDelegate?
 
     var showQRCodeModel: ShowQRCodeViewModel?
 
@@ -69,7 +69,7 @@ public class SyncCodeCollectionViewModel: ObservableObject {
     }
 
     func codeScanned(_ code: String) -> Bool {
-        return delegate?.handleCode(self, code: code) ?? false
+        return delegate?.syncCodeEntered(code: code) ?? false
     }
 
     func cameraUnavailable() {
@@ -93,32 +93,32 @@ public class SyncCodeCollectionViewModel: ObservableObject {
                 codeError = "Invalid code"
             } else if let code = manuallyEnteredCode {
                 isValidating = false
-                _ = delegate?.handleCode(self, code: code)
+                _ = delegate?.syncCodeEntered(code: code)
             }
         }
 
     }
 
     func cancel() {
-        delegate?.cancelled(self)
+        delegate?.cancelled()
     }
 
     func submitAction() {
         // what to do here??
-        _ = delegate?.handleCode(self, code: manuallyEnteredCode ?? "")
+        _ = delegate?.syncCodeEntered(code: manuallyEnteredCode ?? "")
     }
 
     func startConnectMode() -> ShowQRCodeViewModel {
         let model = ShowQRCodeViewModel()
         showQRCodeModel = model
         Task { @MainActor in
-            showQRCodeModel?.code = await delegate?.startConnectMode(self)
+            showQRCodeModel?.code = await delegate?.startConnectMode()
         }
         return model
     }
 
     func gotoSettings() {
-        delegate?.gotoSettings(self)
+        delegate?.gotoSettings()
     }
 
 }

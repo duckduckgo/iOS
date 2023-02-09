@@ -1,5 +1,5 @@
 //
-//  SyncManagementViewModel.swift
+//  SyncSettingsScreenViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -31,7 +31,7 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
 
 }
 
-public class SyncManagementViewModel: ObservableObject {
+public class SyncSettingsScreenViewModel: ObservableObject {
 
     public struct Device: Identifiable, Hashable {
 
@@ -85,7 +85,7 @@ public class SyncManagementViewModel: ObservableObject {
         isSyncEnabled = false
     }
 
-    public func setupFinished(_ model: SyncSetupViewModel) {
+    public func setupFinished(_ model: TurnOnSyncViewModel) {
         switch model.state {
         case .turnOn:
             delegate?.createAccountAndStartSyncing()

@@ -231,7 +231,7 @@ class SettingsViewController: UITableViewController {
     }
 
     private func showSync(animated: Bool = true) {
-        let controller = SyncManagementViewController()
+        let controller = SyncSettingsViewController()
         navigationController?.pushViewController(controller, animated: animated)
     }
 

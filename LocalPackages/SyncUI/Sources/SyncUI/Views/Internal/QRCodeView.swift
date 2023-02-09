@@ -19,7 +19,7 @@
 
 import SwiftUI
 
-struct SyncQRCodeView: View {
+struct QRCodeView: View {
 
     @ObservedObject var model: ShowQRCodeViewModel
 
@@ -91,7 +91,7 @@ struct SyncQRCodeView: View {
             .frame(maxWidth: Constants.maxWidth, alignment: .center)
         }
         .navigationTitle("QR Code")
-        .modifier(SyncBackButtonModifier())
+        .modifier(BackButtonModifier())
     }
 
 }

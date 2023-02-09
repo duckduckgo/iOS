@@ -341,7 +341,7 @@
 		85F2FFCF2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2FFCE2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift */; };
 		85F2FFFD2215C020006BB258 /* findinpage.js in Resources */ = {isa = PBXBuildFile; fileRef = 85F2FFFC2215C020006BB258 /* findinpage.js */; };
 		85F45B2A1F875DFF00DB1978 /* ContentBlockerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F45B291F875DFF00DB1978 /* ContentBlockerRequest.swift */; };
-		85F98F92296F32BD00742F4A /* SyncManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F98F91296F32BD00742F4A /* SyncManagementViewController.swift */; };
+		85F98F92296F32BD00742F4A /* SyncSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F98F91296F32BD00742F4A /* SyncSettingsViewController.swift */; };
 		85F98F98296F4CB100742F4A /* SyncAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85F98F97296F4CB100742F4A /* SyncAssets.xcassets */; };
 		8C4724502217A14B004C9B2D /* TabViewControllerLongPressBookmarkExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C47244F2217A14B004C9B2D /* TabViewControllerLongPressBookmarkExtension.swift */; };
 		8C4838B5221C8F7F008A6739 /* GestureToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4838B4221C8F7F008A6739 /* GestureToolbarButton.swift */; };
@@ -1141,7 +1141,7 @@
 		85F2FFFC2215C020006BB258 /* findinpage.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = findinpage.js; path = "submodules/ios-js-support/src/findinpage.js"; sourceTree = SOURCE_ROOT; };
 		85F2FFFF2215C17B006BB258 /* FindInPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindInPage.swift; sourceTree = "<group>"; };
 		85F45B291F875DFF00DB1978 /* ContentBlockerRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerRequest.swift; sourceTree = "<group>"; };
-		85F98F91296F32BD00742F4A /* SyncManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncManagementViewController.swift; sourceTree = "<group>"; };
+		85F98F91296F32BD00742F4A /* SyncSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncSettingsViewController.swift; sourceTree = "<group>"; };
 		85F98F97296F4CB100742F4A /* SyncAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SyncAssets.xcassets; sourceTree = "<group>"; };
 		8C47244F2217A14B004C9B2D /* TabViewControllerLongPressBookmarkExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewControllerLongPressBookmarkExtension.swift; sourceTree = "<group>"; };
 		8C4838B4221C8F7F008A6739 /* GestureToolbarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureToolbarButton.swift; sourceTree = "<group>"; };
@@ -3023,7 +3023,7 @@
 		85DD44232976C7A8005CC388 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				85F98F91296F32BD00742F4A /* SyncManagementViewController.swift */,
+				85F98F91296F32BD00742F4A /* SyncSettingsViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -5133,7 +5133,7 @@
 				858566FB252E55D6007501B8 /* ImageCacheDebugViewController.swift in Sources */,
 				85C2971A248162CA0063A335 /* DaxOnboardingPadViewController.swift in Sources */,
 				F4F6DFB826EA9AA600ED7E12 /* BookmarksTextFieldCell.swift in Sources */,
-				85F98F92296F32BD00742F4A /* SyncManagementViewController.swift in Sources */,
+				85F98F92296F32BD00742F4A /* SyncSettingsViewController.swift in Sources */,
 				84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */,
 				4B6484ED27FD1E350050A7A1 /* MacBrowserWaitlist.swift in Sources */,
 				310D091D2799F57200DC0060 /* Download.swift in Sources */,

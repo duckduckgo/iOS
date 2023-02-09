@@ -1,5 +1,5 @@
 //
-//  SyncCodeCollectionView.swift
+//  ScanOrPasteCodeView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -19,11 +19,12 @@
 
 import SwiftUI
 
-public struct SyncCodeCollectionView: View {
+/// Handles scanning or pasting a code.
+public struct ScanOrPasteCodeView: View {
 
-    @ObservedObject var model: SyncCodeCollectionViewModel
+    @ObservedObject var model: ScanOrPasteCodeViewModel
 
-    public init(model: SyncCodeCollectionViewModel) {
+    public init(model: ScanOrPasteCodeViewModel) {
         self.model = model
     }
 
@@ -95,8 +96,8 @@ public struct SyncCodeCollectionView: View {
                 Image("SyncCameraUnavailable")
                     .padding(.top, 40)
                     .padding(.bottom, 20)
+                    // Remove this tap gesture before going live
                     .onTapGesture {
-                        #warning("remove this before going live")
                         _ = model.codeScanned("camera unavailable")
                     }
 
@@ -132,14 +133,14 @@ public struct SyncCodeCollectionView: View {
         Section {
             Group {
                 NavigationLink {
-                    SyncCodeManualEntryView(model: model)
+                    PasteCodeView(model: model)
                 } label: {
                     Label("Manually Enter Code", image: "SyncKeyboardIcon")
                 }
 
                 if model.canShowQRCode {
                     NavigationLink {
-                        ShowConnectModeView(model: model)
+                        ConnectModeView(model: model)
                     } label: {
                         Label("Show QR Code", image: "SyncQRCodeIcon")
                     }

@@ -1,5 +1,5 @@
 //
-//  SyncRecoveryPDFView.swift
+//  SaveRecoveryPDFView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -20,7 +20,7 @@
 import SwiftUI
 import DuckUI
 
-public struct SyncRecoveryPDFView: View {
+public struct SaveRecoveryPDFView: View {
 
     @Environment(\.presentationMode) var presentation
 

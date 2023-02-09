@@ -79,5 +79,5 @@ excluded:
   - DuckDuckGo/UserText.swift
   - fastlane/SnapshotHelper.swift
   - vendor
-  - LocalPackages/**/Package.swift
+  - LocalPackages/*/Package.swift
 

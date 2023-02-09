@@ -54,7 +54,7 @@ final class AutoconsentUserScript: NSObject, WKScriptMessageHandlerWithReply, Us
     weak var selfTestWebView: WKWebView?
     weak var selfTestFrameInfo: WKFrameInfo?
     var topUrl: URL?
-    var preferences: AutoconsentPreferences = AppUserDefaults()
+    var preferences: AutoconsentPreferences
     let management = AutoconsentManagement.shared
 
     public var messageNames: [String] { MessageName.allCases.map(\.rawValue) }
@@ -62,10 +62,11 @@ final class AutoconsentUserScript: NSObject, WKScriptMessageHandlerWithReply, Us
     private let config: PrivacyConfiguration
     weak var delegate: AutoconsentUserScriptDelegate?
 
-    init(config: PrivacyConfiguration) {
+    init(config: PrivacyConfiguration, preferences: AutoconsentPreferences = AppUserDefaults()) {
         os_log("Initialising autoconsent userscript", log: .autoconsentLog, type: .debug)
         source = Self.loadJS("autoconsent-bundle", from: .main, withReplacements: [:])
         self.config = config
+        self.preferences = preferences
     }
 
     func userContentController(_ userContentController: WKUserContentController,

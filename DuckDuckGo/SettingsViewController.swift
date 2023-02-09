@@ -219,7 +219,11 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configureWindowsBrowserWaitlistCell() {
-        windowsBrowserWaitlistCell.detailTextLabel?.text = WindowsBrowserWaitlist.shared.settingsSubtitle
+        windowsBrowserWaitlistCell.isHidden = !WindowsBrowserWaitlist.shared.isAvailable
+
+        if WindowsBrowserWaitlist.shared.isAvailable {
+            windowsBrowserWaitlistCell.detailTextLabel?.text = WindowsBrowserWaitlist.shared.settingsSubtitle
+        }
     }
 
     private func configureDebugCell() {

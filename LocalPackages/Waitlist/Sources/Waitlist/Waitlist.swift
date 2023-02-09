@@ -44,6 +44,8 @@ public protocol Waitlist: WaitlistConstants {
 
     static var shared: Self { get }
 
+    var isAvailable: Bool { get }
+
     var waitlistStorage: WaitlistStorage { get }
     var waitlistRequest: WaitlistRequest { get }
 

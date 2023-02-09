@@ -22,6 +22,9 @@ import Core
 import Waitlist
 
 struct MacBrowserWaitlist: Waitlist {
+
+    let isAvailable: Bool = true
+
     static let identifier: String = "mac"
     static let isWaitlistRemoved: Bool = true
     static let apiProductName: String = "macosbrowser"

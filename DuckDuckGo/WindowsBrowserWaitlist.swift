@@ -49,7 +49,7 @@ struct WindowsBrowserWaitlist: Waitlist {
         }
         
         if waitlistStorage.isInvited {
-            return UserText.waitlistAvailableForDownload
+            return UserText.waitlistDownloadAvailable
         }
         
         if waitlistStorage.isOnWaitlist {

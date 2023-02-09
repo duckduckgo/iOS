@@ -950,7 +950,7 @@
 "mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Get DuckDuckGo for Mac!";
 
 /* Title for the macOS waitlist button redirecting to Windows waitlist */
-"mac-waitlist.join-waitlist-screen.windows" = "Looking for the Windows Version?";
+"mac-waitlist.join-waitlist-screen.windows-waitlist" = "Looking for the Windows Version?";
 
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Browse privately with our app for Mac";
@@ -1214,7 +1214,7 @@ https://duckduckgo.com/mac";
 "waitlist.queue-screen.on-the-list" = "You’re on the list!";
 
 /* Title for the settings subtitle */
-"waitlist.settings.available-for-download" = "Available for download";
+"waitlist.settings.download-available" = "Download available";
 
 /* Title for the share sheet entry */
 "waitlist.share-sheet.title" = "You’re Invited!";
@@ -1243,32 +1243,29 @@ https://duckduckgo.com/mac";
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "A message from %@:";
 
-/* Label text for the Joined Waitlist state with notifications declined */
-"windows-browser.waitlist.joined.notifications-declined" = "Your invite to try DuckDuckGo for Windows will arrive here. Check back soon, or we can send you a notification when it’s your turn.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"windows-browser.waitlist.joined.notifications-enabled" = "We’ll send you a notification when your copy of DuckDuckGo for Windows is ready for download.";
-
-/* Summary text for the Windows browser waitlist */
-"windows-browser.waitlist.summary" = "DuckDuckGo for Windows comes with our default privacy protections, including private search, tracker blocking, forced encryption, and cookie pop-up blocker.";
-
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "DuckDuckGo for Windows is ready!";
 
 /* Description on the invite screen */
-"windows-waitlist.invite-screen.step-1.description" = "Visit this URL on your PC to download:";
+"windows-waitlist.invite-screen.step-1.description" = "Visit this URL on your Windows device to download:";
 
 /* Description on the invite screen */
-"windows-waitlist.invite-screen.step-2.description" = "Open the file to install, then enter your invite code to unlock.";
+"windows-waitlist.invite-screen.step-2.description" = "Open DuckDuckGo Installer in Downloads, select Install, then enter your invite code.";
 
 /* Subtitle for the Windows Waitlist Invite screen */
 "windows-waitlist.invite-screen.subtitle" = "Ready to use DuckDuckGo on Windows?";
 
 /* Title for the Windows waitlist button redirecting to Mac waitlist */
-"windows-waitlist.join-waitlist-screen.mac" = "Looking for the Mac Version?";
+"windows-waitlist.join-waitlist-screen.mac-waitlist" = "Looking for the Mac Version?";
 
 /* Title for the Join Windows Waitlist screen */
 "windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Get early access to try DuckDuckGo for Windows!";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"windows-waitlist.joined.notifications-declined" = "Your invite to try DuckDuckGo for Windows will arrive here. Check back soon, or we can send you a notification when it’s your turn.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"windows-waitlist.joined.notifications-enabled" = "We’ll send you a notification when your copy of DuckDuckGo for Windows is ready for download.";
 
 /* Title for the settings subtitle */
 "windows-waitlist.settings.browse-privately" = "Browse privately with our app for Windows";
@@ -1276,16 +1273,19 @@ https://duckduckgo.com/mac";
 /* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
 "windows-waitlist.share-sheet.message" = "You’re invited!
 
-Ready to start browsing privately on Windows?
+Ready to use DuckDuckGo on Windows?
 
 Step 1
-Visit this URL on your PC to download:
+Visit this URL on your Windows device to download:
 https://duckduckgo.com/windows
 
 Step 2
-Open the file to install, then enter your invite code to unlock.
+Open DuckDuckGo Installer in Downloads, select Install, then enter your invite code.
 
 Invite code: %@";
+
+/* Summary text for the Windows browser waitlist */
+"windows-waitlist.summary" = "DuckDuckGo for Windows comes with our default privacy protections, including private search, tracker blocking, forced encryption, and cookie pop-up blocker.";
 
 /* Title for the Windows Waitlist feature */
 "windows-waitlist.title" = "DuckDuckGo App for Windows";

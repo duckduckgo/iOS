@@ -167,7 +167,7 @@ public extension Waitlist {
         do {
             try BGTaskScheduler.shared.submit(task)
         } catch {
-            onBackgroundTaskSubmissionError?(eror)
+            onBackgroundTaskSubmissionError?(error)
         }
         #endif
     }

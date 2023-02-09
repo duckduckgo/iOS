@@ -437,7 +437,7 @@ public struct UserText {
 
     public static let waitlistYoureInvited = NSLocalizedString("waitlist.invite-screen.youre-invited", value: "You’re Invited!", comment: "Title for the invite code screen")
 
-    public static let waitlistAvailableForDownload = NSLocalizedString("waitlist.settings.available-for-download", value: "Available for download", comment: "Title for the settings subtitle")
+    public static let waitlistDownloadAvailable = NSLocalizedString("waitlist.settings.download-available", value: "Download available", comment: "Title for the settings subtitle")
 
     public static func waitlistInviteScreenStepTitle(step: Int) -> String {
         NSLocalizedString("waitlist.invite-screen.step.title", value: "Step %d", comment: "Step title on the invite screen").format(arguments: step)
@@ -455,7 +455,7 @@ public struct UserText {
 
     public static let macWaitlistOnYourMacGoTo = NSLocalizedString("mac-waitlist.join-waitlist-screen.on-your-mac-go-to", value: "On your Mac, go to:", comment: "Description text above the Share Link button")
 
-    public static let macWaitlistWindows = NSLocalizedString("mac-waitlist.join-waitlist-screen.windows", value: "Looking for the Windows Version?", comment: "Title for the macOS waitlist button redirecting to Windows waitlist")
+    public static let macWaitlistWindows = NSLocalizedString("mac-waitlist.join-waitlist-screen.windows-waitlist", value: "Looking for the Windows Version?", comment: "Title for the macOS waitlist button redirecting to Windows waitlist")
 
     public static let macWaitlistCopy = NSLocalizedString("mac-waitlist.copy", value: "Copy", comment: "Title for the copy action")
 
@@ -465,28 +465,28 @@ public struct UserText {
 
     public static let windowsWaitlistTitle = NSLocalizedString("windows-waitlist.title", value: "DuckDuckGo App for Windows", comment: "Title for the Windows Waitlist feature")
 
-    public static let windowsWaitlistSummary = NSLocalizedString("windows-browser.waitlist.summary", value: "DuckDuckGo for Windows comes with our default privacy protections, including private search, tracker blocking, forced encryption, and cookie pop-up blocker.", comment: "Summary text for the Windows browser waitlist")
+    public static let windowsWaitlistSummary = NSLocalizedString("windows-waitlist.summary", value: "DuckDuckGo for Windows comes with our default privacy protections, including private search, tracker blocking, forced encryption, and cookie pop-up blocker.", comment: "Summary text for the Windows browser waitlist")
 
     public static let windowsWaitlistTryDuckDuckGoForWindows = NSLocalizedString("windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows", value: "Get early access to try DuckDuckGo for Windows!", comment: "Title for the Join Windows Waitlist screen")
 
-    public static let windowsWaitlistMac = NSLocalizedString("windows-waitlist.join-waitlist-screen.mac", value: "Looking for the Mac Version?", comment: "Title for the Windows waitlist button redirecting to Mac waitlist")
+    public static let windowsWaitlistMac = NSLocalizedString("windows-waitlist.join-waitlist-screen.mac-waitlist", value: "Looking for the Mac Version?", comment: "Title for the Windows waitlist button redirecting to Mac waitlist")
 
     public static let windowsWaitlistBrowsePrivately = NSLocalizedString("windows-waitlist.settings.browse-privately", value: "Browse privately with our app for Windows", comment: "Title for the settings subtitle")
 
 
-    public static let windowsWaitlistJoinedWithNotifications = NSLocalizedString("windows-browser.waitlist.joined.notifications-enabled",
+    public static let windowsWaitlistJoinedWithNotifications = NSLocalizedString("windows-waitlist.joined.notifications-enabled",
                                                                                  value: "We’ll send you a notification when your copy of DuckDuckGo for Windows is ready for download.",
                                                                                  comment: "Label text for the Joined Waitlist state with notifications enabled")
 
-    public static let windowsWaitlistJoinedWithoutNotifications = NSLocalizedString("windows-browser.waitlist.joined.notifications-declined",
+    public static let windowsWaitlistJoinedWithoutNotifications = NSLocalizedString("windows-waitlist.joined.notifications-declined",
                                                                                     value: "Your invite to try DuckDuckGo for Windows will arrive here. Check back soon, or we can send you a notification when it’s your turn.",
                                                                                     comment: "Label text for the Joined Waitlist state with notifications declined")
 
     public static let windowsWaitlistInviteScreenSubtitle = NSLocalizedString("windows-waitlist.invite-screen.subtitle", value: "Ready to use DuckDuckGo on Windows?", comment: "Subtitle for the Windows Waitlist Invite screen")
 
-    public static let windowsWaitlistInviteScreenStep1Description = NSLocalizedString("windows-waitlist.invite-screen.step-1.description", value: "Visit this URL on your PC to download:", comment: "Description on the invite screen")
+    public static let windowsWaitlistInviteScreenStep1Description = NSLocalizedString("windows-waitlist.invite-screen.step-1.description", value: "Visit this URL on your Windows device to download:", comment: "Description on the invite screen")
 
-    public static let windowsWaitlistInviteScreenStep2Description = NSLocalizedString("windows-waitlist.invite-screen.step-2.description", value: "Open the file to install, then enter your invite code to unlock.", comment: "Description on the invite screen")
+    public static let windowsWaitlistInviteScreenStep2Description = NSLocalizedString("windows-waitlist.invite-screen.step-2.description", value: "Open DuckDuckGo Installer in Downloads, select Install, then enter your invite code.", comment: "Description on the invite screen")
 
     public static let windowsWaitlistAvailableNotificationTitle = NSLocalizedString("windows-waitlist.available.notification.title", value: "DuckDuckGo for Windows is ready!", comment: "Title for the Windows waitlist notification")
 
@@ -494,14 +494,14 @@ public struct UserText {
         let localized = NSLocalizedString("windows-waitlist.share-sheet.message", value: """
             You’re invited!
 
-            Ready to start browsing privately on Windows?
+            Ready to use DuckDuckGo on Windows?
 
             Step 1
-            Visit this URL on your PC to download:
+            Visit this URL on your Windows device to download:
             https://duckduckgo.com/windows
 
             Step 2
-            Open the file to install, then enter your invite code to unlock.
+            Open DuckDuckGo Installer in Downloads, select Install, then enter your invite code.
 
             Invite code: %@
             """, comment: "Message used when sharing to iMessage. Parameter is an eight digit invite code.")

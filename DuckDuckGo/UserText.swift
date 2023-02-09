@@ -423,6 +423,10 @@ public struct UserText {
 
     public static let waitlistNotifyMe = NSLocalizedString("waitlist.joined.no-notification.get-notification", value: "Notify Me", comment: "Notification text for the waitlist")
 
+    public static let waitlistNotifyMeConfirmationTitle = NSLocalizedString("waitlist.joined.no-notification.get-notification-confirmation-title", value: "Get a notification when it’s your turn?", comment: "Title for the alert to confirm enabling notifications")
+
+    public static let waitlistNoThanks = NSLocalizedString("waitlist.joined.no-notification.no-thanks", value: "No Thanks", comment: "Cancel button in the alert to confirm enabling notifications")
+
     public static let waitlistNotificationDisabled = NSLocalizedString("waitlist.notification.disabled", value: "We can notify you when it’s your turn, but notifications are currently disabled for DuckDuckGo.", comment: "Text used for the Notifications Disabled state")
 
     public static let waitlistJoin = NSLocalizedString("waitlist.join-waitlist-screen.join", value: "Join the Private Waitlist", comment: "Title for the Join Waitlist screen")
@@ -481,6 +485,8 @@ public struct UserText {
     public static let windowsWaitlistJoinedWithoutNotifications = NSLocalizedString("windows-waitlist.joined.notifications-declined",
                                                                                     value: "Your invite to try DuckDuckGo for Windows will arrive here. Check back soon, or we can send you a notification when it’s your turn.",
                                                                                     comment: "Label text for the Joined Waitlist state with notifications declined")
+
+    public static let windowsWaitlistNotifyMeConfirmationMessage = NSLocalizedString("windows-waitlist.joined.no-notification.get-notification-confirmation-message", value: "We’ll send you a notification when your copy of DuckDuckGo for Windows is ready for download. ", comment: "Message for the alert to confirm enabling notifications")
 
     public static let windowsWaitlistInviteScreenSubtitle = NSLocalizedString("windows-waitlist.invite-screen.subtitle", value: "Ready to use DuckDuckGo on Windows?", comment: "Subtitle for the Windows Waitlist Invite screen")
 

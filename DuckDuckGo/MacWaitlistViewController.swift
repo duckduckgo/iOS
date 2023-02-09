@@ -65,6 +65,11 @@ final class MacWaitlistViewController: UIViewController {
 }
 
 extension MacWaitlistViewController: WaitlistViewModelDelegate {
+    func waitlistViewModelDidAskToReceiveJoinedNotification(_ viewModel: WaitlistViewModel) async -> Bool {
+        assertionFailure("Mac Waitlist is removed")
+        return true
+    }
+
     func waitlistViewModelDidJoinQueueWithNotificationsAllowed(_ viewModel: WaitlistViewModel) {
         assertionFailure("Mac Waitlist is removed")
     }

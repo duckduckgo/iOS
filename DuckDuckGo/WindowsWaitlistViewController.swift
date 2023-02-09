@@ -87,6 +87,27 @@ final class WindowsWaitlistViewController: UIViewController {
 
 extension WindowsWaitlistViewController: WaitlistViewModelDelegate {
 
+    func waitlistViewModelDidAskToReceiveJoinedNotification(_ viewModel: WaitlistViewModel) async -> Bool {
+        return await withCheckedContinuation { continuation in
+            let alertController = UIAlertController(title: UserText.waitlistNotifyMeConfirmationTitle,
+                                                    message: UserText.windowsWaitlistNotifyMeConfirmationMessage,
+                                                    preferredStyle: .alert)
+            alertController.overrideUserInterfaceStyle()
+
+            alertController.addAction(title: UserText.waitlistNoThanks) {
+                continuation.resume(returning: false)
+            }
+            let notifyMeAction = UIAlertAction(title: UserText.waitlistNotifyMe, style: .default) { _ in
+                continuation.resume(returning: true)
+            }
+
+            alertController.addAction(notifyMeAction)
+            alertController.preferredAction = notifyMeAction
+
+            present(alertController, animated: true)
+        }
+    }
+
     func waitlistViewModelDidJoinQueueWithNotificationsAllowed(_ viewModel: WaitlistViewModel) {
         WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
     }

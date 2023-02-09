@@ -22,6 +22,7 @@ import SwiftUI
 import Combine
 
 public protocol WaitlistViewModelDelegate: AnyObject {
+    func waitlistViewModelDidAskToReceiveJoinedNotification(_ viewModel: WaitlistViewModel) async -> Bool
     func waitlistViewModelDidJoinQueueWithNotificationsAllowed(_ viewModel: WaitlistViewModel)
     func waitlistViewModelDidOpenInviteCodeShareSheet(_ viewModel: WaitlistViewModel, inviteCode: String, senderFrame: CGRect)
     func waitlistViewModelDidOpenDownloadURLShareSheet(_ viewModel: WaitlistViewModel, senderFrame: CGRect)
@@ -147,6 +148,17 @@ public final class WaitlistViewModel: ObservableObject {
     }
 
     private func promptForNotifications() async {
+        let shouldEnableNotifications: Bool = await {
+            if viewState == .joinedQueue(.notDetermined) {
+                return await delegate?.waitlistViewModelDidAskToReceiveJoinedNotification(self) == true
+            }
+            return true
+        }()
+
+        guard shouldEnableNotifications else {
+            return
+        }
+
         do {
             let permissionGranted = try await notificationService?.requestAuthorization(options: [.alert]) == true
 

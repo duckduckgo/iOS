@@ -23,9 +23,10 @@ import Waitlist
 struct MacBrowserWaitlistView: View {
 
     @EnvironmentObject var viewModel: WaitlistViewModel
+    let isWindowsWaitlistAvailable: Bool
     
     var body: some View {
-        MacBrowserWaitlistContentView { action in
+        MacBrowserWaitlistContentView(isWindowsWaitlistAvailable: isWindowsWaitlistAvailable) { action in
             Task { await viewModel.perform(action: action) }
         }
     }
@@ -42,7 +43,8 @@ struct MacBrowserWaitlistContentView: View {
     enum Constants {
         static let downloadURL = "duckduckgo.com/mac"
     }
-    
+
+    let isWindowsWaitlistAvailable: Bool
     let action: WaitlistViewActionHandler
     
     @State private var shareButtonFrame: CGRect = .zero
@@ -100,22 +102,35 @@ struct MacBrowserWaitlistContentView: View {
                     
                     Spacer(minLength: 24)
 
-                    Button(
-                        action: {
-                            action(.custom(.openWindowsBrowserWaitlist))
-                        }, label: {
-                            HStack {
-                                Image("MacWaitlistWindows")
-                                Text(UserText.macWaitlistWindows)
-                                    .font(.proximaNova(size: 17, weight: .bold))
-                                    .foregroundColor(.waitlistBlue)
-                                    .multilineTextAlignment(.center)
-                                    .lineSpacing(5)
+                    if isWindowsWaitlistAvailable {
+
+                        Button(
+                            action: {
+                                action(.custom(.openWindowsBrowserWaitlist))
+                            }, label: {
+                                HStack {
+                                    Image("MacWaitlistWindows")
+                                    Text(UserText.macWaitlistWindows)
+                                        .font(.proximaNova(size: 17, weight: .bold))
+                                        .foregroundColor(.waitlistBlue)
+                                        .multilineTextAlignment(.center)
+                                        .lineSpacing(5)
+                                }
                             }
-                        }
-                    )
-                    .padding(.bottom, 12)
-                    .fixedSize(horizontal: false, vertical: true)
+                        )
+                        .padding(.bottom, 12)
+                        .fixedSize(horizontal: false, vertical: true)
+
+                    } else {
+
+                        Text(UserText.macWaitlistWindowsComingSoon)
+                            .font(.proximaNova(size: 13, weight: .regular))
+                            .foregroundColor(.waitlistSubtitle)
+                            .multilineTextAlignment(.center)
+                            .lineSpacing(5)
+                            .padding(.bottom, 12)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                 }
                 .padding([.leading, .trailing], 24)
                 .frame(minHeight: proxy.size.height)
@@ -143,11 +158,11 @@ private struct MacBrowserWaitlistView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             PreviewView("Mac Browser Beta") {
-                MacBrowserWaitlistContentView { _ in }
+                MacBrowserWaitlistContentView(isWindowsWaitlistAvailable: true) { _ in }
             }
 
             if #available(iOS 15.0, *) {
-                MacBrowserWaitlistContentView { _ in }
+                MacBrowserWaitlistContentView(isWindowsWaitlistAvailable: true) { _ in }
                     .previewInterfaceOrientation(.landscapeLeft)
             }
         }

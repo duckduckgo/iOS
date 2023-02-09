@@ -1,5 +1,5 @@
 //
-//  MacBrowserWaitlistStorageTests.swift
+//  WaitlistStorageTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -18,33 +18,50 @@
 //
 
 import XCTest
-@testable import DuckDuckGo
-@testable import Core
+import WaitlistMocks
+@testable import Waitlist
 
-class MacBrowserWaitlistStorageTests: XCTestCase {
-    
+class WaitlistStorageTests: XCTestCase {
+
+    func testWaitlistKeychainServiceName() {
+        XCTAssertEqual(
+            WaitlistKeychainStore(waitlistIdentifier: "mac", keychainPrefix: "com.duckduckgo.test").keychainServiceName(for: .waitlistTimestamp),
+            "com.duckduckgo.test.waitlist.mac.timestamp"
+        )
+
+        XCTAssertEqual(
+            WaitlistKeychainStore(waitlistIdentifier: "windows", keychainPrefix: "com.duckduckgo.test").keychainServiceName(for: .inviteCode),
+            "com.duckduckgo.test.waitlist.windows.invite-code"
+        )
+
+        XCTAssertEqual(
+            WaitlistKeychainStore(waitlistIdentifier: "mac", keychainPrefix: "com.duckduckgo.test").keychainServiceName(for: .waitlistToken),
+            "com.duckduckgo.test.waitlist.mac.token"
+        )
+    }
+
     func testWhenCheckingIfUserIsOnWaitlist_AndUserHasNoTokenOrTimeStamp_ThenIsOnWaitlistIsFalse() {
         let storage = MockWaitlistStorage()
-        
+
         XCTAssertFalse(storage.isOnWaitlist)
         XCTAssertFalse(storage.isInvited)
     }
-    
+
     func testWhenCheckingIfUserIsOnWaitlist_AndUserHasTokenAndTimeStamp_ThenIsOnWaitlistIsTrue() {
         let storage = MockWaitlistStorage()
         storage.store(waitlistToken: "token")
         storage.store(waitlistTimestamp: 1)
-        
+
         XCTAssertTrue(storage.isOnWaitlist)
         XCTAssertFalse(storage.isInvited)
     }
-    
+
     func testWhenCheckingIfUserIsOnWaitlist_AndUserHasTokenAndTimeStamp_AndUserHasInviteCode_ThenIsOnWaitlistIsFalse_AndIsInvitedIsTrue() {
         let storage = MockWaitlistStorage()
         storage.store(waitlistToken: "token")
         storage.store(waitlistTimestamp: 1)
         storage.store(inviteCode: "INVITECODE")
-        
+
         XCTAssertFalse(storage.isOnWaitlist)
         XCTAssertTrue(storage.isInvited)
     }

@@ -18,15 +18,15 @@
 //
 
 import XCTest
-@testable import DuckDuckGo
-@testable import Core
+import WaitlistMocks
+@testable import Waitlist
 
 class WaitlistViewModelTests: XCTestCase {
 
     private let mockToken = "mock-token"
     private let oldTimestamp = 100
     private let newTimestamp = 20
-    
+
     @MainActor
     func testWhenOpenShareSheetActionIsPerformed_ThenShowShareSheetIsTrue() async {
         let inviteCode = "INVITECODE"
@@ -38,14 +38,14 @@ class WaitlistViewModelTests: XCTestCase {
             waitlistRequest: request,
             waitlistStorage: storage,
             notificationService: nil,
-            downloadURL: AppUrls().macBrowserDownloadURL
+            downloadURL: URL(string: "https://duckduckgo.com")!
         )
         let delegate = MockWaitlistViewModelDelegate()
         viewModel.delegate = delegate
-        
+
         await viewModel.perform(action: .openShareSheet(.zero))
-        
+
         XCTAssertTrue(delegate.didOpenDownloadURLShareSheetCalled)
     }
-    
+
 }

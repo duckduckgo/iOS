@@ -2,7 +2,7 @@
 //  WaitlistTests.swift
 //  DuckDuckGo
 //
-//  Copyright © 2023 DuckDuckGo. All rights reserved.
+//  Copyright © 2022 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -18,9 +18,63 @@
 //
 
 import XCTest
+import WaitlistMocks
 @testable import Waitlist
 
-final class WaitlistTests: XCTestCase {
-    func testExample() throws {
+class WaitlistTests: XCTestCase {
+
+    func testWhenFetchingInviteCode_AndUserIsNotOnWaitlist_ThenErrorIsReturned() async {
+        let store = MockWaitlistStorage()
+        let request = MockWaitlistRequest.failure()
+        let waitlist = TestWaitlist(store: store, request: request)
+
+        let error = await waitlist.fetchInviteCodeIfAvailable()
+
+        XCTAssertEqual(error, .notOnWaitlist)
     }
+
+    func testWhenFetchingInviteCode_AndUserIsAlreadyInvited_ThenErrorIsReturned() async {
+        let store = MockWaitlistStorage()
+        store.store(inviteCode: "code")
+
+        let request = MockWaitlistRequest.failure()
+        let waitlist = TestWaitlist(store: store, request: request)
+
+        let error = await waitlist.fetchInviteCodeIfAvailable()
+
+        XCTAssertEqual(error, .alreadyHasInviteCode)
+    }
+
+    func testWhenFetchingInviteCode_AndUserHasNotBeenInvited_ThenErrorIsReturned() async {
+        let store = MockWaitlistStorage()
+        store.store(waitlistToken: "token")
+        store.store(waitlistTimestamp: 10)
+
+        let request = MockWaitlistRequest(joinResult: .success(.init(token: "token", timestamp: 10)),
+                                          statusResult: .success(.init(timestamp: 0)),
+                                          inviteCodeResult: .failure(.noData))
+
+        let waitlist = TestWaitlist(store: store, request: request)
+        let error = await waitlist.fetchInviteCodeIfAvailable()
+
+        XCTAssertEqual(error, .noCodeAvailable)
+    }
+
+    func testWhenFetchingInviteCode_AndUserHasBeenInvited_ThenErrorIsReturned() async {
+        let store = MockWaitlistStorage()
+        store.store(waitlistToken: "token")
+        store.store(waitlistTimestamp: 10)
+
+        let request = MockWaitlistRequest(joinResult: .success(.init(token: "token", timestamp: 10)),
+                                          statusResult: .success(.init(timestamp: 20)),
+                                          inviteCodeResult: .success(.init(code: "INVITECODE")))
+
+        let waitlist = TestWaitlist(store: store, request: request)
+        let error = await waitlist.fetchInviteCodeIfAvailable()
+
+        XCTAssertNil(error)
+        XCTAssertTrue(store.isInvited)
+        XCTAssertEqual(store.getWaitlistInviteCode(), "INVITECODE")
+    }
+
 }

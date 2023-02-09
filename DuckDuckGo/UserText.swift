@@ -459,6 +459,8 @@ public struct UserText {
 
     public static let macWaitlistOnYourMacGoTo = NSLocalizedString("mac-waitlist.join-waitlist-screen.on-your-mac-go-to", value: "On your Mac, go to:", comment: "Description text above the Share Link button")
 
+    public static let macWaitlistWindowsComingSoon = NSLocalizedString("mac-waitlist.join-waitlist-screen.windows", value: "Windows coming soon!", comment: "Disclaimer for the Join Waitlist screen")
+
     public static let macWaitlistWindows = NSLocalizedString("mac-waitlist.join-waitlist-screen.windows-waitlist", value: "Looking for the Windows Version?", comment: "Title for the macOS waitlist button redirecting to Windows waitlist")
 
     public static let macWaitlistCopy = NSLocalizedString("mac-waitlist.copy", value: "Copy", comment: "Title for the copy action")

@@ -129,7 +129,7 @@ public class WaitlistKeychainStore: WaitlistStorage {
 
     // MARK: -
 
-    private func keychainServiceName(for field: WaitlistKeychainField) -> String {
+    internal func keychainServiceName(for field: WaitlistKeychainField) -> String {
         [keychainPrefix, "waitlist", waitlistIdentifier, field.rawValue].joined(separator: ".")
     }
 

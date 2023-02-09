@@ -21,6 +21,7 @@ import UIKit
 import SwiftUI
 import Combine
 
+// sourcery: AutoMockable
 public protocol WaitlistViewModelDelegate: AnyObject {
     func waitlistViewModelDidAskToReceiveJoinedNotification(_ viewModel: WaitlistViewModel) async -> Bool
     func waitlistViewModelDidJoinQueueWithNotificationsAllowed(_ viewModel: WaitlistViewModel)

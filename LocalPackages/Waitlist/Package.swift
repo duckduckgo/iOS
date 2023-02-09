@@ -12,15 +12,18 @@ let package = Package(
     products: [
         .library(
             name: "Waitlist",
-            targets: ["Waitlist"])
+            targets: ["Waitlist", "WaitlistMocks"])
     ],
     dependencies: [],
     targets: [
         .target(
             name: "Waitlist",
             dependencies: []),
+        .target(
+            name: "WaitlistMocks",
+            dependencies: ["Waitlist"]),
         .testTarget(
             name: "WaitlistTests",
-            dependencies: ["Waitlist"])
+            dependencies: ["Waitlist", "WaitlistMocks"])
     ]
 )

@@ -496,7 +496,7 @@ public struct UserText {
 
     public static let windowsWaitlistInviteScreenStep2Description = NSLocalizedString("windows-waitlist.invite-screen.step-2.description", value: "Open DuckDuckGo Installer in Downloads, select Install, then enter your invite code.", comment: "Description on the invite screen")
 
-    public static let windowsWaitlistAvailableNotificationTitle = NSLocalizedString("windows-waitlist.available.notification.title", value: "DuckDuckGo for Windows is ready!", comment: "Title for the Windows waitlist notification")
+    public static let windowsWaitlistAvailableNotificationTitle = NSLocalizedString("windows-waitlist.available.notification.title", value: "Try DuckDuckGo for Windows!", comment: "Title for the Windows waitlist notification")
 
     public static func windowsWaitlistShareSheetMessage(code: String) -> String {
         let localized = NSLocalizedString("windows-waitlist.share-sheet.message", value: """

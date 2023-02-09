@@ -63,6 +63,7 @@ public protocol Waitlist: WaitlistConstants {
 }
 
 public enum WaitlistInviteCodeFetchError: Error, Equatable {
+    case waitlistInactive
     case alreadyHasInviteCode
     case notOnWaitlist
     case noCodeAvailable
@@ -89,6 +90,10 @@ public extension Waitlist {
     }
 
     func fetchInviteCodeIfAvailable(completion: @escaping (WaitlistInviteCodeFetchError?) -> Void) {
+        guard isAvailable else {
+            completion(.waitlistInactive)
+            return
+        }
         guard waitlistStorage.getWaitlistInviteCode() == nil else {
             completion(.alreadyHasInviteCode)
             return
@@ -124,6 +129,10 @@ public extension Waitlist {
     }
 
     func registerBackgroundRefreshTaskHandler() {
+        guard isAvailable else {
+            return
+        }
+
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Self.backgroundRefreshTaskIdentifier, using: nil) { task in
             let waitlist = Self.shared
 
@@ -150,7 +159,7 @@ public extension Waitlist {
     }
 
     func scheduleBackgroundRefreshTask() {
-        guard waitlistStorage.isOnWaitlist else {
+        guard isAvailable, waitlistStorage.isOnWaitlist else {
             return
         }
 
@@ -175,6 +184,10 @@ public extension Waitlist {
     }
 
     func sendInviteCodeAvailableNotification() {
+        guard isAvailable else {
+            return
+        }
+
         let notificationContent = UNMutableNotificationContent()
 
         notificationContent.title = Self.inviteAvailableNotificationTitle

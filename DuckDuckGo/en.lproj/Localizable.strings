@@ -1253,7 +1253,7 @@ https://duckduckgo.com/mac";
 "webJSAlert.website-message.format" = "A message from %@:";
 
 /* Title for the Windows waitlist notification */
-"windows-waitlist.available.notification.title" = "DuckDuckGo for Windows is ready!";
+"windows-waitlist.available.notification.title" = "Try DuckDuckGo for Windows!";
 
 /* Description on the invite screen */
 "windows-waitlist.invite-screen.step-1.description" = "Visit this URL on your Windows device to download:";

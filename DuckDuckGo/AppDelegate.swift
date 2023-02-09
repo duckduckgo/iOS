@@ -245,7 +245,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             guard error == nil else { return }
             WindowsBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
         }
-        
+
         BGTaskScheduler.shared.getPendingTaskRequests { tasks in
             let hasMacBrowserWaitlistTask = tasks.contains { $0.identifier == WindowsBrowserWaitlist.backgroundRefreshTaskIdentifier }
             if !hasMacBrowserWaitlistTask {

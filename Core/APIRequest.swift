@@ -124,13 +124,12 @@ public class APIRequest {
             
             let httpResponse = response as? HTTPURLResponse
 
-            #warning("re-enable or discuss removing")
-//            os_log("Request for %s completed with response code: %s and headers %s",
-//                   log: generalLog,
-//                   type: .debug,
-//                   url.absoluteString,
-//                   String(describing: httpResponse?.statusCode),
-//                   String(describing: httpResponse?.allHeaderFields))
+            os_log("Request for %s completed with response code: %s and headers %s",
+                   log: generalLog,
+                   type: .debug,
+                   url.absoluteString,
+                   String(describing: httpResponse?.statusCode),
+                   String(describing: httpResponse?.allHeaderFields))
             
             if let error = error {
                 completion(nil, error)

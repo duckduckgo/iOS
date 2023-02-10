@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Autoconsent Test Banner</title>
+</head>
+<body>
+  <p>Tests for cosmetic hiding of cookie banners.</p>
+
+  <div id="privacy-test-page-cmp-test-banner">
+    This is a fake consent banner without a reject button.
+
+    <div id="privacy-test-page-cmp-test-prehide">This should be pre-hidden</div>
+  </div>
+  <script>
+    const acceptButton = document.createElement('button');
+    acceptButton.innerText = 'Accept all';
+    acceptButton.id = 'accept-all';
+    const banner = document.getElementById('privacy-test-page-cmp-test-banner');
+    banner.appendChild(acceptButton);
+    acceptButton.addEventListener('click', (ev) => {
+        ev.target.innerText = 'Accept was clicked!';
+        window.results.results.push('accept_button_clicked');
+    });
+
+    window.results = {
+        page: 'autoconsent-banner',
+        results: []
+    };
+  </script>
+</body>
+</html>

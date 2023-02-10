@@ -163,6 +163,15 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Uključeno";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Onemogućeno";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Omogućeno";
+
+/* No comment provided by engineer. */
+"autoconsent.info.header" = "Kada DuckDuckGo otkrije skočne prozore pristanka na kolačiće na web lokacijama koje posjećuješ, mi možemo pokušati automatski odrediti tvoje postavke kolačića kako bismo minimizirali kolačiće i maksimizirali privatnost, a zatim zatvorili skočne prozore. Neke web lokacije ne nude opciju upravljanja postavkama kolačića, tako da možemo sakriti samo ovakve skočne prozore.";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Sakrij lozinku";
 
@@ -449,6 +458,9 @@
 "brokensite.category.content" = "Nedostaje sadržaj";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "Nisu određena pravila za skočne prozore kolačića";
+
+/* Broken Site Category */
 "brokensite.category.images" = "Slike se nisu učitale";
 
 /* Broken Site Category */
@@ -483,6 +495,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Jučer";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Upravljanje skočnim prozorima kolačića";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "Ne, hvala";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Čini se da ova stranica ima skočni prozor za pristanak na kolačiće👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Da se ja pobrinem za to umjesto tebe? Mogu pokušati minimizirati kolačiće, maksimalno povećati privatnost i sakriti skočne prozore poput ovih.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Sakrij savjete zauvijek";
@@ -648,9 +672,6 @@
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Još nema dodanih knjižnih oznaka";
-
-/* Empty list state placholder */
-"empty.favorites" = "Još uvijek nema omiljenih stavki";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Nema pronađenih rezultata";
@@ -985,6 +1006,12 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
+/* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
+"omnibar.notification.cookies-managed" = "Upravlja se kolačićima";
+
+/* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
+"omnibar.notification.popup-hidden" = "Skočni prozor je sakriven";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Dodaj widget";
 
@@ -1153,10 +1180,6 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Zaštita privatnosti je omogućena za %@";
 
-<<<<<<< HEAD
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Došlo je do nepoznate pogreške.";
-
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Prijedlog za automatsko ispunjavanje";
 
@@ -1169,8 +1192,6 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Otvori web lokaciju";
 
-=======
->>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Postavke";
 

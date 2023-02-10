@@ -34,7 +34,7 @@ class ActionViewController: UIViewController {
                     provider.loadItem(forTypeIdentifier: kUTTypeText as String, options: nil) { text, _ in
                         guard let text = text as? String else { return }
                         guard let url = AppUrls().url(forQuery: text) else {
-                            os_log("Couldn‘t for URL for query “%s”", log: lifecycleLog, type: .error, text)
+                            os_log("Couldn‘t for URL for query “%s”", log: .lifecycleLog, type: .error, text)
                             return
                         }
                         self.launchBrowser(withUrl: url)

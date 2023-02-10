@@ -29,7 +29,7 @@ class WaitlistViewModelTests: XCTestCase {
     private let timestamp = 20
 
     @MainActor
-    func testWhenNotificationServiceIsNilThenStatIsWaitlistRemoved() async {
+    func testWhenNotificationServiceIsNilThenStateIsWaitlistRemoved() async {
         let viewModel = WaitlistViewModel(MockWaitlistRequest.failure(), MockWaitlistStorage())
 
         XCTAssertEqual(viewModel.viewState, .waitlistRemoved)

@@ -120,16 +120,6 @@ extension WindowsWaitlistViewController: WaitlistViewModelDelegate {
         let linkMetadata = WindowsWaitlistLinkMetadata(inviteCode: inviteCode)
         let activityViewController = UIActivityViewController(activityItems: [linkMetadata], applicationActivities: nil)
 
-        Pixel.fire(pixel: .windowsBrowserWaitlistDidPressShareButton)
-
-        activityViewController.completionWithItemsHandler = { _, completed, _, _ in
-            if completed {
-                Pixel.fire(pixel: .windowsBrowserWaitlistDidPressShareButtonShared)
-            } else {
-                Pixel.fire(pixel: .windowsBrowserWaitlistDidPressShareButtonDismiss)
-            }
-        }
-
         if UIDevice.current.userInterfaceIdiom == .pad {
             activityViewController.popoverPresentationController?.sourceView = UIApplication.shared.windows.first
             activityViewController.popoverPresentationController?.permittedArrowDirections = .right

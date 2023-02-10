@@ -256,24 +256,6 @@ extension Pixel {
         
         case serpRequerySame
         case serpRequeryNew
-        
-        // MARK: macOS browser waitlist pixels
-        
-        case macBrowserWaitlistDidPressShareButton
-        case macBrowserWaitlistDidPressShareButtonDismiss
-        case macBrowserWaitlistDidPressShareButtonShared
-        
-        case macBrowserWaitlistNotificationShown
-        case macBrowserWaitlistNotificationLaunched
-
-        // MARK: windows browser waitlist pixels
-
-        case windowsBrowserWaitlistDidPressShareButton
-        case windowsBrowserWaitlistDidPressShareButtonDismiss
-        case windowsBrowserWaitlistDidPressShareButtonShared
-
-        case windowsBrowserWaitlistNotificationShown
-        case windowsBrowserWaitlistNotificationLaunched
 
         // MARK: remote messaging pixels
 
@@ -634,24 +616,6 @@ extension Pixel.Event {
             
         case .serpRequerySame: return "rq_0"
         case .serpRequeryNew: return "rq_1"
-            
-        // MARK: macOS browser waitlist pixels
-            
-        case .macBrowserWaitlistDidPressShareButton: return "m_macos_waitlist_did_press_share_button"
-        case .macBrowserWaitlistDidPressShareButtonDismiss: return "m_macos_waitlist_did_press_share_button_dismiss"
-        case .macBrowserWaitlistDidPressShareButtonShared: return "m_macos_waitlist_did_press_share_button_shared"
-            
-        case .macBrowserWaitlistNotificationShown: return "m_notification_shown_mac_waitlist"
-        case .macBrowserWaitlistNotificationLaunched: return "m_notification_launch_mac_waitlist"
-
-        // MARK: macOS browser waitlist pixels
-
-        case .windowsBrowserWaitlistDidPressShareButton: return "m_windows_waitlist_did_press_share_button"
-        case .windowsBrowserWaitlistDidPressShareButtonDismiss: return "m_windows_waitlist_did_press_share_button_dismiss"
-        case .windowsBrowserWaitlistDidPressShareButtonShared: return "m_windows_waitlist_did_press_share_button_shared"
-
-        case .windowsBrowserWaitlistNotificationShown: return "m_notification_shown_windows_waitlist"
-        case .windowsBrowserWaitlistNotificationLaunched: return "m_notification_launch_windows_waitlist"
 
         // MARK: remote messaging pixels
 

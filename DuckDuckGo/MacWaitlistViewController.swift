@@ -82,16 +82,6 @@ extension MacWaitlistViewController: WaitlistViewModelDelegate {
         let linkMetadata = MacWaitlistLinkMetadata()
         let activityViewController = UIActivityViewController(activityItems: [linkMetadata], applicationActivities: nil)
         
-        Pixel.fire(pixel: .macBrowserWaitlistDidPressShareButton)
-        
-        activityViewController.completionWithItemsHandler = { _, completed, _, _ in
-            if completed {
-                Pixel.fire(pixel: .macBrowserWaitlistDidPressShareButtonShared)
-            } else {
-                Pixel.fire(pixel: .macBrowserWaitlistDidPressShareButtonDismiss)
-            }
-        }
-        
         if UIDevice.current.userInterfaceIdiom == .pad {
             activityViewController.popoverPresentationController?.sourceView = UIApplication.shared.windows.first
             activityViewController.popoverPresentationController?.permittedArrowDirections = .right

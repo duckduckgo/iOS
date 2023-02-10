@@ -537,10 +537,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        if notification.request.identifier == WindowsBrowserWaitlist.notificationIdentitier {
-            Pixel.fire(pixel: .windowsBrowserWaitlistNotificationShown)
-        }
-        
         completionHandler(.banner)
     }
 
@@ -549,7 +545,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
             if response.notification.request.identifier == WindowsBrowserWaitlist.notificationIdentitier {
-                Pixel.fire(pixel: .windowsBrowserWaitlistNotificationLaunched)
                 presentWindowsBrowserWaitlistSettingsModal()
             }
         }

@@ -1,4 +1,3 @@
-• Fix for fullscreen video on iPad
-• Additional bug fixes and improvements.
+• DuckDuckGo can now manage cookie consent pop-ups on websites you visit. We try to automatically set your cookie preferences to minimize cookies and maximize privacy, then close the pop-ups.
 
 Join our fully distributed team and help raise the standard of trust online — from anywhere! https://duckduckgo.com/hiring

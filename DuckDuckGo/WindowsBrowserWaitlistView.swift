@@ -260,6 +260,7 @@ struct WindowsBrowserWaitlistInvitedView: View {
                             .menuController(UserText.waitlistCopy) {
                                 action(.copyInviteCodeToPasteboard)
                             }
+                            .fixedSize()
                             .padding(.top, 28)
                     } else {
                         InviteCodeView(title: UserText.waitlistInviteCode, inviteCode: inviteCode)

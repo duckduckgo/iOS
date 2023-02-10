@@ -229,20 +229,13 @@ struct WindowsBrowserWaitlistInvitedView: View {
                         .foregroundColor(.waitlistText)
                         .lineSpacing(6)
 
-                    if #available(iOS 14.0, *) {
-                        Text(AppUrls().windowsBrowserDownloadURL.absoluteString.dropping(prefix: "https://"))
-                            .font(.proximaNova(size: 17, weight: .bold))
-                            .foregroundColor(.waitlistBlue)
-                            .menuController(UserText.waitlistCopy) {
-                                action(.copyDownloadURLToPasteboard)
-                            }
-                            .scaledToFit()
-                    } else {
-                        Text(AppUrls().windowsBrowserDownloadURL.absoluteString.dropping(prefix: "https://"))
-                            .font(.proximaNova(size: 17, weight: .bold))
-                            .foregroundColor(.waitlistBlue)
-                            .padding(.top, 6)
-                    }
+                    Text(AppUrls().windowsBrowserDownloadURL.absoluteString.dropping(prefix: "https://"))
+                        .font(.proximaNova(size: 17, weight: .bold))
+                        .foregroundColor(.waitlistBlue)
+                        .menuController(UserText.waitlistCopy) {
+                            action(.copyDownloadURLToPasteboard)
+                        }
+                        .scaledToFit()
 
                     Text(UserText.waitlistInviteScreenStepTitle(step: 2))
                         .font(.proximaNova(size: 17, weight: .bold))
@@ -255,18 +248,12 @@ struct WindowsBrowserWaitlistInvitedView: View {
                         .foregroundColor(.waitlistText)
                         .lineSpacing(6)
 
-                    if #available(iOS 14.0, *) {
-                        InviteCodeView(title: UserText.waitlistInviteCode, inviteCode: inviteCode)
-                            .menuController(UserText.waitlistCopy) {
-                                action(.copyInviteCodeToPasteboard)
-                            }
-                            .fixedSize()
-                            .padding(.top, 28)
-                    } else {
-                        InviteCodeView(title: UserText.waitlistInviteCode, inviteCode: inviteCode)
-                            .padding(.top, 28)
-                    }
-
+                    InviteCodeView(title: UserText.waitlistInviteCode, inviteCode: inviteCode)
+                        .menuController(UserText.waitlistCopy) {
+                            action(.copyInviteCodeToPasteboard)
+                        }
+                        .fixedSize()
+                        .padding(.top, 28)
 
                     Spacer(minLength: 24)
 
@@ -311,35 +298,31 @@ struct WindowsBrowserWaitlistInvitedView: View {
 private struct WindowsBrowserWaitlistView_Previews: PreviewProvider {
 
     static var previews: some View {
-        if #available(iOS 14.0, *) {
-            Group {
-                PreviewView("Sign Up") {
-                    WindowsBrowserWaitlistSignUpView(requestInFlight: false) { _ in }
-                }
-
-                PreviewView("Sign Up (API Request In Progress)") {
-                    WindowsBrowserWaitlistSignUpView(requestInFlight: true) { _ in }
-                }
-
-                PreviewView("Joined Waitlist (Notifications Allowed)") {
-                    WindowsBrowserWaitlistJoinedWaitlistView(notificationState: .notificationAllowed) { _ in }
-                }
-
-                PreviewView("Joined Waitlist (Notifications Not Allowed)") {
-                    WindowsBrowserWaitlistJoinedWaitlistView(notificationState: .notificationsDisabled) { _ in }
-                }
-
-                PreviewView("Invite Screen With Code") {
-                    WindowsBrowserWaitlistInvitedView(inviteCode: "T3STC0DE") { _ in }
-                }
-
-                if #available(iOS 15.0, *) {
-                    WindowsBrowserWaitlistInvitedView(inviteCode: "T3STC0DE") { _ in }
-                    .previewInterfaceOrientation(.landscapeLeft)
-                }
+        Group {
+            PreviewView("Sign Up") {
+                WindowsBrowserWaitlistSignUpView(requestInFlight: false) { _ in }
             }
-        } else {
-            Text("Use iOS 14+ simulator")
+
+            PreviewView("Sign Up (API Request In Progress)") {
+                WindowsBrowserWaitlistSignUpView(requestInFlight: true) { _ in }
+            }
+
+            PreviewView("Joined Waitlist (Notifications Allowed)") {
+                WindowsBrowserWaitlistJoinedWaitlistView(notificationState: .notificationAllowed) { _ in }
+            }
+
+            PreviewView("Joined Waitlist (Notifications Not Allowed)") {
+                WindowsBrowserWaitlistJoinedWaitlistView(notificationState: .notificationsDisabled) { _ in }
+            }
+
+            PreviewView("Invite Screen With Code") {
+                WindowsBrowserWaitlistInvitedView(inviteCode: "T3STC0DE") { _ in }
+            }
+
+            if #available(iOS 15.0, *) {
+                WindowsBrowserWaitlistInvitedView(inviteCode: "T3STC0DE") { _ in }
+                    .previewInterfaceOrientation(.landscapeLeft)
+            }
         }
     }
 
@@ -354,15 +337,10 @@ private struct WindowsBrowserWaitlistView_Previews: PreviewProvider {
 
         var body: some View {
             NavigationView {
-                if #available(iOS 14.0, *) {
-                    content()
-                        .navigationTitle("DuckDuckGo Desktop App")
-                        .navigationBarTitleDisplayMode(.inline)
-                        .overlay(Divider(), alignment: .top)
-                } else {
-                    content()
-                }
-
+                content()
+                    .navigationTitle("DuckDuckGo Desktop App")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .overlay(Divider(), alignment: .top)
             }
             .previewDisplayName(title)
         }

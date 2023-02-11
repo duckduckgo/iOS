@@ -91,7 +91,7 @@ public class WebCacheManager {
                 
                 if cookieStorage.cookies.count > 0 {
                     os_log("Error removing cookies: %d cookies left in legacy CookieStorage",
-                           log: generalLog, type: .debug, cookieStorage.cookies.count)
+                           log: .generalLog, type: .debug, cookieStorage.cookies.count)
                     
                     Pixel.fire(pixel: .legacyCookieCleanupError, withAdditionalParameters: [
                         PixelParameters.count: "\(cookieStorage.cookies.count)"
@@ -220,7 +220,7 @@ public class WebCacheManager {
                 
                 if cookieStoreDiff + cookieStorageDiff > 0 {
                     os_log("Error removing cookies: %d cookies left in WKHTTPCookieStore, %d cookies left in HTTPCookieStorage",
-                           log: generalLog, type: .debug, cookieStoreDiff, cookieStorageDiff)
+                           log: .generalLog, type: .debug, cookieStoreDiff, cookieStorageDiff)
                     
                     var parameters = summary.makeDictionaryRepresentation()
                     

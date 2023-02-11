@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Autoconsent Test</title>
+
+  <script src='./autoconsent-test.js' defer></script>
+</head>
+<body>
+<p><a href="/index.html">[Home]</a></p>
+  
+<p>Tests for automatic consent popup clicking.</P>
+
+<p id="privacy-test-page-cmp-test">
+  This is a fake consent popup:
+</p>
+
+<p>Real sites to test on:</p>
+<details id="test-sites">
+</details>
+
+<template id="test-cmp-row">
+  <li>
+    <span class="cmp-name"></span>
+    <ul class="cmp-sites"></ul>
+  </li>
+</template>
+<template id="test-site-row">
+  <li><a href="" target="_blank" rel="noreferrer noopener"></a></li>
+</template>
+  
+</body>
+</html>

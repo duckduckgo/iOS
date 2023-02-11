@@ -160,6 +160,15 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "On";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Disabled";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Enabled";
+
+/* No comment provided by engineer. */
+"autoconsent.info.header" = "When DuckDuckGo detects cookie consent pop-ups on sites you visit, we can try to automatically set your cookie preferences to minimize cookies and maximize privacy, then close the pop-ups. Some sites don't provide an option to manage cookie preferences, so we can only hide pop-ups like these.";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Hide Password";
 
@@ -446,6 +455,9 @@
 "brokensite.category.content" = "Content is missing";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "Cookie pop-up wasn't managed";
+
+/* Broken Site Category */
 "brokensite.category.images" = "Images didn’t load";
 
 /* Broken Site Category */
@@ -480,6 +492,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Yesterday";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Manage Cookie Pop-ups";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "No Thanks";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Looks like this site has a cookie consent pop-up👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Want me to handle these for you? I can try to minimize cookies, maximize privacy, and hide pop-ups like these.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Hide Tips Forever";
@@ -981,6 +1005,12 @@ https://duckduckgo.com/mac";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
+"omnibar.notification.cookies-managed" = "Cookies Managed";
+
+/* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
+"omnibar.notification.popup-hidden" = "Pop-up Hidden";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Add Widget";

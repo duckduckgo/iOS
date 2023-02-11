@@ -50,6 +50,10 @@ extension Pixel {
         case settingsDoNotSellOn
         case settingsDoNotSellOff
         
+        case settingsAutoconsentShown
+        case settingsAutoconsentOn
+        case settingsAutoconsentOff
+        
         case browsingMenuOpened
         case browsingMenuRefresh
         case browsingMenuNewTab
@@ -134,6 +138,9 @@ extension Pixel {
         case daxDialogsFireEducationShown
         case daxDialogsFireEducationConfirmed
         case daxDialogsFireEducationCancelled
+        case daxDialogsAutoconsentShown
+        case daxDialogsAutoconsentConfirmed
+        case daxDialogsAutoconsentCancelled
         
         case widgetFavoriteLaunch
         case widgetNewSearch
@@ -236,6 +243,8 @@ extension Pixel {
         case autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate
         
         case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
+        
+        case autoconsentCookiePopupManaged
 
         case secureVaultInitError
         case secureVaultError
@@ -403,6 +412,10 @@ extension Pixel.Event {
         case .settingsDoNotSellShown: return "ms_dns"
         case .settingsDoNotSellOn: return "ms_dns_on"
         case .settingsDoNotSellOff: return "ms_dns_off"
+        
+        case .settingsAutoconsentShown: return "m_settings_autoconsent_shown"
+        case .settingsAutoconsentOn: return "m_settings_autoconsent_on"
+        case .settingsAutoconsentOff: return "m_settings_autoconsent_off"
             
         case .browsingMenuOpened: return "mb"
         case .browsingMenuRefresh: return "mb_rf"
@@ -488,6 +501,9 @@ extension Pixel.Event {
         case .daxDialogsFireEducationShown: return "m_dx_fe_s"
         case .daxDialogsFireEducationConfirmed: return "m_dx_fe_co"
         case .daxDialogsFireEducationCancelled: return "m_dx_fe_ca"
+        case .daxDialogsAutoconsentShown: return "m_dax_dialog_autoconsent_shown"
+        case .daxDialogsAutoconsentConfirmed: return "m_dax_dialog_autoconsent_confirmed"
+        case .daxDialogsAutoconsentCancelled: return "m_dax_dialog_autoconsent_cancelled"
             
         case .widgetFavoriteLaunch: return "m_w_fl"
         case .widgetNewSearch: return "m_w_ns"
@@ -598,6 +614,8 @@ extension Pixel.Event {
             
         case .autofillJSPixelFired(let pixel):
             return "m_ios_\(pixel.pixelName)"
+            
+        case .autoconsentCookiePopupManaged: return "m_autoconsent_cookie_popup_managed"
             
         case .secureVaultInitError: return "m_secure_vault_init_error"
         case .secureVaultError: return "m_secure_vault_error"

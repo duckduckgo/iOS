@@ -502,7 +502,7 @@ class TabViewController: UIViewController {
             title = webView.title
 
         default:
-            os_log("Unhandled keyPath %s", log: generalLog, type: .debug, keyPath)
+            os_log("Unhandled keyPath %s", log: .generalLog, type: .debug, keyPath)
         }
     }
     
@@ -904,7 +904,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func onWebpageDidStartLoading(httpsForced: Bool) {
-        os_log("webpageLoading started", log: generalLog, type: .debug)
+        os_log("webpageLoading started", log: .generalLog, type: .debug)
 
         // Only fire when on the same page that the without trackers Dax Dialog was shown
         self.fireWoFollowUp = false
@@ -1034,7 +1034,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func onWebpageDidFinishLoading() {
-        os_log("webpageLoading finished", log: generalLog, type: .debug)
+        os_log("webpageLoading finished", log: .generalLog, type: .debug)
                 
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
@@ -1127,7 +1127,7 @@ extension TabViewController: WKNavigationDelegate {
     }
 
     private func webpageDidFailToLoad() {
-        os_log("webpageLoading failed", log: generalLog, type: .debug)
+        os_log("webpageLoading failed", log: .generalLog, type: .debug)
         if isError {
             showBars(animated: true)
             privacyInfo = nil
@@ -1983,6 +1983,7 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.printingUserScript.delegate = self
         userScripts.textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
         userScripts.loginFormDetectionScript?.delegate = self
+        userScripts.autoconsentUserScript.delegate = self
 
         adClickAttributionLogic.onRulesChanged(latestRules: ContentBlocking.shared.contentBlockingManager.currentRules)
 
@@ -2064,6 +2065,42 @@ extension TabViewController: PrintingUserScriptDelegate {
         controller.present(animated: true, completionHandler: nil)
     }
 
+}
+
+// MARK: - AutoconsentUserScriptDelegate
+extension TabViewController: AutoconsentUserScriptDelegate {
+    
+    func autoconsentUserScript(_ script: AutoconsentUserScript, didUpdateCookieConsentStatus cookieConsentStatus: PrivacyDashboard.CookieConsentInfo) {
+        privacyInfo?.cookieConsentManaged = cookieConsentStatus
+    }
+    
+    func autoconsentUserScript(_ script: AutoconsentUserScript, didRequestAskingUserForConsent completion: @escaping (Bool) -> Void) {
+        guard Locale.current.isRegionInEurope,
+              !isShowingFullScreenDaxDialog else { return }
+        
+        let viewModel = CookieConsentDaxDialogViewModel(okAction: {
+            completion(true)
+            Pixel.fire(pixel: .daxDialogsAutoconsentConfirmed)
+            self.dismiss(animated: true)
+        }, noAction: {
+            completion(false)
+            Pixel.fire(pixel: .daxDialogsAutoconsentCancelled)
+            self.dismiss(animated: true)
+        })
+        
+        Pixel.fire(pixel: .daxDialogsAutoconsentShown)
+        
+        showCustomDaxDialog(viewModel: viewModel)
+    }
+    
+    private func showCustomDaxDialog(viewModel: CustomDaxDialogViewModel) {
+        let daxDialog = UIHostingController(rootView: CustomDaxDialog(viewModel: viewModel), ignoreSafeArea: true)
+        daxDialog.modalPresentationStyle = .overFullScreen
+        daxDialog.modalTransitionStyle = .crossDissolve
+        daxDialog.view.backgroundColor = .clear
+
+        present(daxDialog, animated: true)
+    }
 }
 
 // MARK: - AdClickAttributionLogicDelegate

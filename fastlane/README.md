@@ -21,6 +21,22 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Fetches and updates certificates and provisioning profiles for App Store distribution
 
+### sync_signing_adhoc
+
+```sh
+[bundle exec] fastlane sync_signing_adhoc
+```
+
+Fetches and updates certificates and provisioning profiles for Ad-Hoc distribution
+
+### adhoc
+
+```sh
+[bundle exec] fastlane adhoc
+```
+
+Makes Ad-Hoc build with a specified name in a given directory
+
 ### release_appstore
 
 ```sh

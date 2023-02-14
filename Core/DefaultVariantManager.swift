@@ -93,17 +93,17 @@ public class DefaultVariantManager: VariantManager {
     
     public func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> Void) {
         guard !storage.hasInstallStatistics else {
-            os_log("no new variant needed for existing user", log: generalLog, type: .debug)
+            os_log("no new variant needed for existing user", log: .generalLog, type: .debug)
             return
         }
         
         if let variant = currentVariant {
-            os_log("already assigned variant: %s", log: generalLog, type: .debug, String(describing: variant))
+            os_log("already assigned variant: %s", log: .generalLog, type: .debug, String(describing: variant))
             return
         }
         
         guard let variant = selectVariant() else {
-            os_log("Failed to assign variant", log: generalLog, type: .debug)
+            os_log("Failed to assign variant", log: .generalLog, type: .debug)
             
             // it's possible this failed because there are none to assign, we should still let new install logic execute
             _ = newInstallCompletion(self)

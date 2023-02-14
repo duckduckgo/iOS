@@ -41,6 +41,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var rememberLoginsAccessoryText: UILabel!
     @IBOutlet weak var doNotSellCell: UITableViewCell!
     @IBOutlet weak var doNotSellAccessoryText: UILabel!
+    @IBOutlet weak var autoconsentCell: UITableViewCell!
+    @IBOutlet weak var autoconsentAccessoryText: UILabel!
     @IBOutlet weak var emailProtectionCell: UITableViewCell!
     @IBOutlet weak var emailProtectionAccessoryText: UILabel!
     @IBOutlet weak var macBrowserWaitlistCell: UITableViewCell!
@@ -111,6 +113,7 @@ class SettingsViewController: UITableViewController {
         configureAutoClearCellAccessory()
         configureRememberLogins()
         configureDoNotSell()
+        configureAutoconsent()
         configureIconViews()
         configureEmailProtectionAccessoryText()
         configureMacBrowserWaitlistCell()
@@ -119,10 +122,13 @@ class SettingsViewController: UITableViewController {
         tableView.setNeedsLayout()
         tableView.layoutIfNeeded()
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is DoNotSellSettingsViewController {
             Pixel.fire(pixel: .settingsDoNotSellShown)
+            return
+        } else if segue.destination is AutoconsentSettingsViewController {
+            Pixel.fire(pixel: .settingsAutoconsentShown)
             return
         } else if let textSizeSettings = segue.destination as? TextSizeSettingsViewController {
             Pixel.fire(pixel: .textSizeSettingsShown)
@@ -136,7 +142,7 @@ class SettingsViewController: UITableViewController {
             }
         }
     }
-
+    
     private func configureAutofillCell() {
         autofillCell.isHidden = !shouldShowAutofillCell
     }
@@ -193,6 +199,10 @@ class SettingsViewController: UITableViewController {
     private func configureDoNotSell() {
         doNotSellAccessoryText.text = appSettings.sendDoNotSell ? UserText.doNotSellEnabled : UserText.doNotSellDisabled
     }
+    
+    private func configureAutoconsent() {
+        autoconsentAccessoryText.text = appSettings.autoconsentEnabled ? UserText.autoconsentEnabled : UserText.autoconsentDisabled
+    }
      
     private func configureRememberLogins() {
         rememberLoginsAccessoryText.text = PreserveLogins.shared.allowedDomains.isEmpty ? "" : "\(PreserveLogins.shared.allowedDomains.count)"
@@ -248,7 +258,11 @@ class SettingsViewController: UITableViewController {
     private func showDesktopBrowserWaitlistViewController() {
         navigationController?.pushViewController(MacWaitlistViewController(nibName: nil, bundle: nil), animated: true)
     }
-
+    
+    func showCookiePopupManagement(animated: Bool = true) {
+        navigationController?.pushViewController(AutoconsentSettingsViewController.loadFromStoryboard(), animated: animated)
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 

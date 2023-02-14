@@ -229,7 +229,7 @@ class TabSwitcherViewController: UIViewController {
             ActionMessageView.present(message: UserText.bookmarkAllTabsSaved)
         } else {
             let failedToSaveCount = openTabsCount - results.newCount - results.existingCount
-            os_log("Failed to save %d tabs", log: generalLog, type: .debug, failedToSaveCount)
+            os_log("Failed to save %d tabs", log: .generalLog, type: .debug, failedToSaveCount)
             ActionMessageView.present(message: UserText.bookmarkAllTabsFailedToSave)
         }
     }

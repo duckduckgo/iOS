@@ -84,6 +84,9 @@ public struct UserDefaultsWrapper<T> {
         case featureFlaggingDidVerifyInternalUser = "com.duckduckgo.app.featureFlaggingDidVerifyInternalUser"
         
         case voiceSearchEnabled = "com.duckduckgo.app.voiceSearchEnabled"
+        
+        case autoconsentPromptSeen = "com.duckduckgo.ios.autoconsentPromptSeen"
+        case autoconsentEnabled = "com.duckduckgo.ios.autoconsentEnabled"
     }
 
     private let key: Key

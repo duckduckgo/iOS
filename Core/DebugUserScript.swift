@@ -56,7 +56,7 @@ public class DebugUserScript: NSObject, UserScript {
     }
     
     private func handleLog(message: WKScriptMessage) {
-        os_log("%s", log: generalLog, type: .debug, String(describing: message.body))
+        os_log("%s", log: .generalLog, type: .debug, String(describing: message.body))
     }
     
     private func handleSignpost(message: WKScriptMessage) {

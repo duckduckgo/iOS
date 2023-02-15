@@ -53,13 +53,17 @@ final class OmniBarNotificationAnimator: NSObject {
                     omniBar.textField.alpha = 1
                     omniBar.privacyInfoContainer.alpha = 1
                 }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2 * fadeDuration) {
+                    omniBar.notificationContainer.removePreviousNotification()
+                }
             }
         }
     }
     
     func cancelAnimations(in omniBar: OmniBar) {
         omniBar.privacyInfoContainer.alpha = 0
-        omniBar.notificationContainer.stopAnimation()
+        omniBar.notificationContainer.removePreviousNotification()
         omniBar.textField.alpha = 1
         omniBar.privacyInfoContainer.alpha = 1
     }

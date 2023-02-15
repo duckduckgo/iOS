@@ -108,14 +108,11 @@ struct MacBrowserWaitlistContentView: View {
                             action: {
                                 action(.custom(.openWindowsBrowserWaitlist))
                             }, label: {
-                                HStack {
-                                    Image("MacWaitlistWindows")
-                                    Text(UserText.macWaitlistWindows)
-                                        .font(.proximaNova(size: 17, weight: .bold))
-                                        .foregroundColor(.waitlistBlue)
-                                        .multilineTextAlignment(.center)
-                                        .lineSpacing(5)
-                                }
+                                Text(UserText.macWaitlistWindows.appending(UserText.macWaitlistWindows))
+                                    .font(.proximaNova(size: 17, weight: .bold))
+                                    .foregroundColor(.waitlistBlue)
+                                    .multilineTextAlignment(.center)
+                                    .lineSpacing(5)
                             }
                         )
                         .padding(.bottom, 12)

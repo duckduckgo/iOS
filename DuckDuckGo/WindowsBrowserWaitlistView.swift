@@ -88,14 +88,11 @@ struct WindowsBrowserWaitlistSignUpView: View {
                         action: {
                             action(.custom(.openMacBrowserWaitlist))
                         }, label: {
-                            HStack {
-                                Image("WindowsWaitlistMac")
-                                Text(UserText.windowsWaitlistMac)
-                                    .font(.proximaNova(size: 17, weight: .bold))
-                                    .foregroundColor(.waitlistBlue)
-                                    .multilineTextAlignment(.center)
-                                    .lineSpacing(5)
-                            }
+                            Text(UserText.windowsWaitlistMac)
+                                .font(.proximaNova(size: 17, weight: .bold))
+                                .foregroundColor(.waitlistBlue)
+                                .multilineTextAlignment(.center)
+                                .lineSpacing(5)
                         }
                     )
                     .padding(.bottom, 12)

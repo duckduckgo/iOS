@@ -223,6 +223,12 @@
 		4B04ABBC27FFD92800945B5D /* MacBrowserWaitlistStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B04ABBB27FFD92800945B5D /* MacBrowserWaitlistStorageTests.swift */; };
 		4B04ABBE27FFD96900945B5D /* MacBrowserWaitlistMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B04ABBD27FFD96900945B5D /* MacBrowserWaitlistMocks.swift */; };
 		4B470ED6299C49800086EBDC /* AppTrackingProtectionDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B470ED5299C49800086EBDC /* AppTrackingProtectionDatabase.swift */; };
+		4B470ED9299C4AED0086EBDC /* AppTrackingProtectionModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4B470ED7299C4AED0086EBDC /* AppTrackingProtectionModel.xcdatamodeld */; };
+		4B470EDB299C4FB20086EBDC /* AppTrackingProtectionListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B470EDA299C4FB20086EBDC /* AppTrackingProtectionListModel.swift */; };
+		4B470EDD299C53FD0086EBDC /* TemporaryAppTrackingProtectionDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B470EDC299C53FD0086EBDC /* TemporaryAppTrackingProtectionDatabase.swift */; };
+		4B470EDF299C67270086EBDC /* AppTrackerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B470EDE299C67270086EBDC /* AppTrackerEntity.swift */; };
+		4B470EE3299C6DD10086EBDC /* AppTrackingProtectionStoringModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B470EE2299C6DD10086EBDC /* AppTrackingProtectionStoringModel.swift */; };
+		4B470EE4299C6DFB0086EBDC /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F143C2E41E4A4CD400CFDE3A /* Core.framework */; };
 		4B5167422824B492004C67BA /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 4B5167412824B492004C67BA /* Lottie */; };
 		4B52648B25F9613B00CB4C24 /* trackerData.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B52648A25F9613B00CB4C24 /* trackerData.json */; };
 		4B53648A26718D0E001AA041 /* EmailWaitlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B53648926718D0E001AA041 /* EmailWaitlist.swift */; };
@@ -797,6 +803,13 @@
 			remoteGlobalIDString = 84E341911E2F7EFB00BDBA6F;
 			remoteInfo = DuckDuckGo;
 		};
+		4B470EE6299C6DFB0086EBDC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F143C2E31E4A4CD400CFDE3A;
+			remoteInfo = Core;
+		};
 		8390447420BDCE10006461CD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
@@ -1121,6 +1134,11 @@
 		4B04ABBB27FFD92800945B5D /* MacBrowserWaitlistStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistStorageTests.swift; sourceTree = "<group>"; };
 		4B04ABBD27FFD96900945B5D /* MacBrowserWaitlistMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistMocks.swift; sourceTree = "<group>"; };
 		4B470ED5299C49800086EBDC /* AppTrackingProtectionDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionDatabase.swift; sourceTree = "<group>"; };
+		4B470ED8299C4AED0086EBDC /* AppTrackingProtectionModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AppTrackingProtectionModel.xcdatamodel; sourceTree = "<group>"; };
+		4B470EDA299C4FB20086EBDC /* AppTrackingProtectionListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionListModel.swift; sourceTree = "<group>"; };
+		4B470EDC299C53FD0086EBDC /* TemporaryAppTrackingProtectionDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryAppTrackingProtectionDatabase.swift; sourceTree = "<group>"; };
+		4B470EDE299C67270086EBDC /* AppTrackerEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackerEntity.swift; sourceTree = "<group>"; };
+		4B470EE2299C6DD10086EBDC /* AppTrackingProtectionStoringModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionStoringModel.swift; sourceTree = "<group>"; };
 		4B52648A25F9613B00CB4C24 /* trackerData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trackerData.json; sourceTree = "<group>"; };
 		4B53648926718D0E001AA041 /* EmailWaitlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailWaitlist.swift; sourceTree = "<group>"; };
 		4B60AC96252EC07B00E8D219 /* fullscreenvideo.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = fullscreenvideo.js; sourceTree = "<group>"; };
@@ -2288,6 +2306,7 @@
 				0202569029881ECA00E694E7 /* CocoaAsyncSocket in Frameworks */,
 				02025664298818B200E694E7 /* NetworkExtension.framework in Frameworks */,
 				02025AF6298825AA00E694E7 /* Resolver in Frameworks */,
+				4B470EE4299C6DFB0086EBDC /* Core.framework in Frameworks */,
 				02025AF1298824E600E694E7 /* tun2socks in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2393,6 +2412,7 @@
 		02025665298818B200E694E7 /* PacketTunnelProvider */ = {
 			isa = PBXGroup;
 			children = (
+				4B470EE2299C6DD10086EBDC /* AppTrackingProtectionStoringModel.swift */,
 				02025670298818CB00E694E7 /* ProxyServer */,
 				02025666298818B200E694E7 /* PacketTunnelProvider.swift */,
 				02025B1429884EA500E694E7 /* DDGObserverFactory.swift */,
@@ -2929,6 +2949,10 @@
 			isa = PBXGroup;
 			children = (
 				4B470ED5299C49800086EBDC /* AppTrackingProtectionDatabase.swift */,
+				4B470ED7299C4AED0086EBDC /* AppTrackingProtectionModel.xcdatamodeld */,
+				4B470EDA299C4FB20086EBDC /* AppTrackingProtectionListModel.swift */,
+				4B470EDC299C53FD0086EBDC /* TemporaryAppTrackingProtectionDatabase.swift */,
+				4B470EDE299C67270086EBDC /* AppTrackerEntity.swift */,
 			);
 			name = AppTrackingProtection;
 			sourceTree = "<group>";
@@ -4647,6 +4671,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				4B470EE7299C6DFB0086EBDC /* PBXTargetDependency */,
 			);
 			name = PacketTunnelProvider;
 			packageProductDependencies = (
@@ -5362,6 +5387,7 @@
 				02025AA22988229800E694E7 /* DNSEnums.swift in Sources */,
 				02025AA32988229800E694E7 /* PacketProtocolParser.swift in Sources */,
 				02025AA42988229800E694E7 /* IPPacket.swift in Sources */,
+				4B470EE3299C6DD10086EBDC /* AppTrackingProtectionStoringModel.swift in Sources */,
 				02025AA72988229800E694E7 /* ConnectSession.swift in Sources */,
 				02025AA82988229800E694E7 /* HTTPHeader.swift in Sources */,
 				02025AA92988229800E694E7 /* ProxyServer.swift in Sources */,
@@ -5949,6 +5975,7 @@
 				83004E802193BB8200DA013C /* WKNavigationExtension.swift in Sources */,
 				853A717620F62FE800FE60BC /* Pixel.swift in Sources */,
 				F4A96BDC284518E70025C8E0 /* FeatureFlagger.swift in Sources */,
+				4B470EDB299C4FB20086EBDC /* AppTrackingProtectionListModel.swift in Sources */,
 				F41C2DA526C1975E00F9A760 /* BookmarksCoreDataStorage.swift in Sources */,
 				9876B75E2232B36900D81D9F /* TabInstrumentation.swift in Sources */,
 				026DABA428242BC80089E0B5 /* MockUserAgent.swift in Sources */,
@@ -5980,6 +6007,7 @@
 				4B60ACA1252EC0B100E8D219 /* FullScreenVideoUserScript.swift in Sources */,
 				F1A886781F29394E0096251E /* WebCacheManager.swift in Sources */,
 				C14882DA27F2011C00D59F0C /* BookmarksExporter.swift in Sources */,
+				4B470ED9299C4AED0086EBDC /* AppTrackingProtectionModel.xcdatamodeld in Sources */,
 				854858E32937BC550063610B /* CollectionExtension.swift in Sources */,
 				8331AEDE20AA37560024962B /* APIHeaders.swift in Sources */,
 				98F6EA472863124100720957 /* ContentBlockerRulesLists.swift in Sources */,
@@ -5999,6 +6027,7 @@
 				836A941D247F23C600BF8EF5 /* UserAgentManager.swift in Sources */,
 				85CA53A824BB343700A6288C /* Favicons.swift in Sources */,
 				F143C3181E4A99D200CFDE3A /* Link.swift in Sources */,
+				4B470EDF299C67270086EBDC /* AppTrackerEntity.swift in Sources */,
 				1E61BC2A27074BED00B2854D /* TextSizeUserScript.swift in Sources */,
 				CB2A7EF128410DF700885F67 /* PixelEvent.swift in Sources */,
 				85D2187624BF6164004373D2 /* FaviconSourcesProvider.swift in Sources */,
@@ -6017,6 +6046,7 @@
 				B652DF0D287C2A6300C12A9C /* PrivacyFeatures.swift in Sources */,
 				F10E522D1E946F8800CE1253 /* NSAttributedStringExtension.swift in Sources */,
 				988971A222C2DB95009DC1D6 /* StorageCacheProvider.swift in Sources */,
+				4B470EDD299C53FD0086EBDC /* TemporaryAppTrackingProtectionDatabase.swift in Sources */,
 				9887DC252354D2AA005C85F5 /* Database.swift in Sources */,
 				F143C3171E4A99D200CFDE3A /* AppUrls.swift in Sources */,
 				C1963863283794A000298D4D /* BookmarksCachingSearch.swift in Sources */,
@@ -6035,6 +6065,11 @@
 			isa = PBXTargetDependency;
 			target = 84E341911E2F7EFB00BDBA6F /* DuckDuckGo */;
 			targetProxy = 025CCFE72582601C001CD5BB /* PBXContainerItemProxy */;
+		};
+		4B470EE7299C6DFB0086EBDC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F143C2E31E4A4CD400CFDE3A /* Core */;
+			targetProxy = 4B470EE6299C6DFB0086EBDC /* PBXContainerItemProxy */;
 		};
 		8390447520BDCE10006461CD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -8367,6 +8402,16 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
+		4B470ED7299C4AED0086EBDC /* AppTrackingProtectionModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4B470ED8299C4AED0086EBDC /* AppTrackingProtectionModel.xcdatamodel */,
+			);
+			currentVersion = 4B470ED8299C4AED0086EBDC /* AppTrackingProtectionModel.xcdatamodel */;
+			path = AppTrackingProtectionModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 		8528AE7F212F15D600D0BD74 /* AppRatingPrompt.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (

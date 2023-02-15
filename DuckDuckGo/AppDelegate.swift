@@ -49,6 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private lazy var privacyStore = PrivacyUserDefaults()
     private var bookmarksDatabase: CoreDataDatabase = BookmarksDatabase.make()
+    private var appTrackingProtectionDatabase: TemporaryAppTrackingProtectionDatabase = AppTrackingProtectionDatabase.make() // Make read-only later
     private var autoClear: AutoClear?
     private var showKeyboardIfSettingOn = true
     private var lastBackgroundDate: Date?
@@ -143,6 +144,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             legacyStorage?.removeStore()
             WidgetCenter.shared.reloadAllTimelines()
         }
+
+        appTrackingProtectionDatabase.loadStore { context, error in
+            guard let context = context else {
+                // TODO: Fire pixel here, then sleep for 1 second to allow it to send
+                Thread.sleep(forTimeInterval: 1)
+
+                fatalError("Could not create Bookmarks database stack: \(error?.localizedDescription ?? "err")")
+            }
+        }
         
         Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
             WidgetCenter.shared.reloadAllTimelines()
@@ -161,7 +171,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         
         guard let main = storyboard.instantiateInitialViewController(creator: { coder in
-            MainViewController(coder: coder, bookmarksDatabase: self.bookmarksDatabase)
+            MainViewController(coder: coder,
+                               bookmarksDatabase: self.bookmarksDatabase,
+                               appTrackingProtectionDatabase: self.appTrackingProtectionDatabase)
         }) else {
             fatalError("Could not load MainViewController")
         }

@@ -25,31 +25,33 @@ import os
 public class AppTrackingProtectionDatabase {
 
     public enum Constants {
-        public static let bookmarksGroupID = "\(Global.groupIdPrefix).apptp"
+        public static let groupID = "\(Global.groupIdPrefix).apptp"
     }
 
     private init() { }
 
     public static var defaultDBLocation: URL = {
-        guard let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.bookmarksGroupID) else {
-            os_log("AppTrackingProtectionDatabase.make - OUT, failed to get location %{public}s", Constants.bookmarksGroupID)
+        guard let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.groupID) else {
+            os_log("AppTrackingProtectionDatabase.make - OUT, failed to get location %{public}s", Constants.groupID)
             fatalError("Failed to get location")
         }
 
         return url
     }()
 
-    public static func make(location: URL = defaultDBLocation, readOnly: Bool = false) -> CoreDataDatabase {
+    public static func make(location: URL = defaultDBLocation, readOnly: Bool = false) -> TemporaryAppTrackingProtectionDatabase {
         os_log("AppTrackingProtectionDatabase.make - IN - %@", location as CVarArg)
-        guard let model = CoreDataDatabase.loadModel(from: Bundle.main, named: "AppTrackingProtectionModel") else {
+        let bundle = Bundle(for: AppTrackingProtectionDatabase.self)
+        guard let model = TemporaryAppTrackingProtectionDatabase.loadModel(from: bundle, named: "AppTrackingProtectionModel") else {
             os_log("AppTrackingProtectionDatabase.make - OUT, failed to loadModel")
             fatalError("Failed to load model")
         }
 
-        let db = CoreDataDatabase(name: "Bookmarks",
-                                  containerLocation: location,
-                                  model: model,
-                                  readOnly: readOnly)
+        let db = TemporaryAppTrackingProtectionDatabase(name: "AppTrackingProtection",
+                                                        containerLocation: location,
+                                                        model: model,
+                                                        readOnly: readOnly)
+
         os_log("AppTrackingProtectionDatabase.make - OUT")
 
         return db

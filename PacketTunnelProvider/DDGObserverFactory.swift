@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 import os.log
 
 struct BlockedReason: Error {
@@ -29,21 +30,27 @@ struct BlockedReason: Error {
 class DDGObserverFactory: ObserverFactory {
     
     var trackerData: TrackerDataParser?
+    private let appTrackingProtectionDatabase: TemporaryAppTrackingProtectionDatabase
+    private let appTrackingProtectionStoringModel: AppTrackingProtectionStoringModel
     
     override func getObserverForProxySocket(_ socket: ProxySocket) -> Observer<ProxySocketEvent>? {
-        return DDGProxySocketObserver(trackerData: trackerData)
+        return DDGProxySocketObserver(trackerData: trackerData, appTrackingProtectionStoringModel: appTrackingProtectionStoringModel)
     }
     
     override init() {
         trackerData = TrackerDataParser()
+        appTrackingProtectionDatabase = AppTrackingProtectionDatabase.make()
+        appTrackingProtectionStoringModel = AppTrackingProtectionStoringModel(appTrackingProtectionDatabase: appTrackingProtectionDatabase)
     }
     
     class DDGProxySocketObserver: Observer<ProxySocketEvent> {
         
         var trackerData: TrackerDataParser?
+        private let appTrackingProtectionStoringModel: AppTrackingProtectionStoringModel
         
-        init(trackerData: TrackerDataParser? = nil) {
+        init(trackerData: TrackerDataParser? = nil, appTrackingProtectionStoringModel: AppTrackingProtectionStoringModel) {
             self.trackerData = trackerData
+            self.appTrackingProtectionStoringModel = appTrackingProtectionStoringModel
         }
         
         /// Main listener. This is called whenever a request is made that matches the domains passed to the proxy
@@ -54,8 +61,8 @@ class DDGObserverFactory: ObserverFactory {
                 
                 // Check firewall status
                 if let trackerData = trackerData, trackerData.shouldBlock(domain: session.host) {
-                    os_log("[AppTP][BLOCKED] %{public}s on blocklist", log: generalLog,
-                           type: .error, session.host)
+                    os_log("[AppTP][BLOCKED] %{public}s on blocklist", log: generalLog, type: .error, session.host)
+                    appTrackingProtectionStoringModel.storeBlockedTracker(domain: session.host)
                     socket.forceDisconnect(becauseOf: BlockedReason())
                 }
                 

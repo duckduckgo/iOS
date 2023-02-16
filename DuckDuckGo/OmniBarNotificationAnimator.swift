@@ -33,6 +33,7 @@ final class OmniBarNotificationAnimator: NSObject {
         omniBar.textField.alpha = 0
         
         let fadeDuration = Constants.Duration.fade
+        let animationStartOffset = 2 * fadeDuration
         
         UIView.animate(withDuration: fadeDuration) {
             omniBar.privacyInfoContainer.alpha = 0
@@ -42,7 +43,7 @@ final class OmniBarNotificationAnimator: NSObject {
             omniBar.notificationContainer.alpha = 1
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2 * fadeDuration) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + animationStartOffset) {
             
             omniBar.notificationContainer.startAnimation {
                 UIView.animate(withDuration: fadeDuration) {

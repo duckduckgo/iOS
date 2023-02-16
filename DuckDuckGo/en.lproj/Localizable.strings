@@ -1327,7 +1327,7 @@ Open DuckDuckGo Installer in Downloads, select Install, then enter your invite c
 Invite code: %@";
 
 /* Summary text for the Windows browser waitlist */
-"windows-waitlist.summary" = "DuckDuckGo for Windows comes with our default privacy protections, including private search, tracker blocking, forced encryption, and cookie pop-up blocker.";
+"windows-waitlist.summary" = "DuckDuckGo for Windows has what you need to browse with more privacy — private search, tracker blocking, forced encryption, and cookie pop-up blocking, plus more best-in-class protections on the way.";
 
 /* Title for the Windows Waitlist feature */
 "windows-waitlist.title" = "DuckDuckGo App for Windows";

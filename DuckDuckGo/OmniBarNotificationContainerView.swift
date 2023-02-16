@@ -30,7 +30,7 @@ final class OmniBarNotificationContainerView: UIView {
     var currentNotificationController: UIHostingController<OmniBarNotification>?
     
     func prepareAnimation(_ type: OmniBarNotificationType) {
-        cleanUpPreviousNotification()
+        removePreviousNotification()
         
         let viewModel = makeNotificationViewModel(for: type)
         let notificationViewController = UIHostingController(rootView: OmniBarNotification(viewModel: viewModel),
@@ -46,16 +46,11 @@ final class OmniBarNotificationContainerView: UIView {
     
     func startAnimation(completion: @escaping () -> Void) {
         currentNotificationController?.rootView.viewModel.showNotification(completion: { [weak self] in
-            self?.cleanUpPreviousNotification()
             completion()
         })
     }
-    
-    func stopAnimation() {
-        cleanUpPreviousNotification()
-    }
-    
-    private func cleanUpPreviousNotification() {
+
+    func removePreviousNotification() {
         guard let currentNotificationController = currentNotificationController else { return }
         
         currentNotificationController.willMove(toParent: nil)

@@ -25,7 +25,9 @@ extension MainViewController {
         
         let alwaysAvailable = [
             UIKeyCommand(title: "", action: #selector(keyboardFire), input: UIKeyCommand.inputBackspace,
-                         modifierFlags: [ .control, .alternate ], discoverabilityTitle: UserText.keyCommandFire)
+                         modifierFlags: [ .control, .alternate ], discoverabilityTitle: UserText.keyCommandFire),
+            UIKeyCommand(title: "", action: #selector(keyboardSettings), input: ",", modifierFlags: [ .command ],
+                         discoverabilityTitle: UserText.keyCommandSettings)
         ]
         
         guard tabSwitcherController == nil else {
@@ -145,7 +147,11 @@ extension MainViewController {
     @objc func keyboardFire() {
         onQuickFirePressed()
     }
-    
+
+    @objc func keyboardSettings() {
+        launchSettings()
+    }
+
     @objc func keyboardFind() {
         currentTab?.requestFindInPage()
     }

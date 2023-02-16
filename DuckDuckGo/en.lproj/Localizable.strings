@@ -950,6 +950,9 @@
 "keyCommandSelect" = "Select";
 
 /* No comment provided by engineer. */
+"keyCommandSettings" = "Settings";
+
+/* No comment provided by engineer. */
 "keyCommandShowAllTabs" = "Show All Tabs";
 
 /* Please preserve newline character */

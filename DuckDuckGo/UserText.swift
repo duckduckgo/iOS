@@ -173,6 +173,7 @@ public struct UserText {
     public static let keyCommandFind = NSLocalizedString("keyCommandFind", value: "Find in Page", comment: "")
     public static let keyCommandLocation = NSLocalizedString("keyCommandLocation", value: "Search or Enter Address", comment: "")
     public static let keyCommandFire = NSLocalizedString("keyCommandFire", value: "Clear All Tabs and Data", comment: "")
+    public static let keyCommandSettings = NSLocalizedString("keyCommandSettings", value: "Settings", comment: "")
     public static let keyCommandClose = NSLocalizedString("keyCommandClose", value: "Close", comment: "")
     public static let keyCommandSelect = NSLocalizedString("keyCommandSelect", value: "Select", comment: "")
     public static let keyCommandFindNext = NSLocalizedString("keyCommandFindNext", value: "Find Next", comment: "")

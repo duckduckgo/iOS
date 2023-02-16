@@ -23,7 +23,7 @@ import DuckUI
 final class FireButtonExperiment {
     
     private static func fireButtonFillColor(for theme: Theme) -> UIColor {
-        theme.currentImageSet == .light ? .redBase : .red30
+        theme.currentImageSet == .light ? .redBase : .red40
     }
     
     public static func decorateFireButton(fireButton: UIBarButtonItem, for theme: Theme) {

@@ -57,13 +57,13 @@ struct MacBrowserWaitlistContentView: View {
                     
                     Text(UserText.macWaitlistSummary)
                         .font(.proximaNova(size: 16, weight: .regular))
-                        .foregroundColor(.waitlistText)
+                        .foregroundColor(.waitlistTextSecondary)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
                     
                     Text(UserText.macWaitlistOnYourMacGoTo)
                         .font(.proximaNova(size: 16, weight: .regular))
-                        .foregroundColor(.waitlistText)
+                        .foregroundColor(.waitlistTextSecondary)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
                         .padding(.top, 18)
@@ -108,7 +108,7 @@ struct MacBrowserWaitlistContentView: View {
                             action: {
                                 action(.custom(.openWindowsBrowserWaitlist))
                             }, label: {
-                                Text(UserText.macWaitlistWindows.appending(UserText.macWaitlistWindows))
+                                Text(UserText.macWaitlistWindows)
                                     .font(.proximaNova(size: 17, weight: .bold))
                                     .foregroundColor(.waitlistBlue)
                                     .multilineTextAlignment(.center)
@@ -122,7 +122,7 @@ struct MacBrowserWaitlistContentView: View {
 
                         Text(UserText.macWaitlistWindowsComingSoon)
                             .font(.proximaNova(size: 13, weight: .regular))
-                            .foregroundColor(.waitlistSubtitle)
+                            .foregroundColor(.waitlistTextSecondary)
                             .multilineTextAlignment(.center)
                             .lineSpacing(5)
                             .padding(.bottom, 12)
@@ -140,7 +140,7 @@ struct MacBrowserWaitlistContentView: View {
         Button(action: {
             action(.openShareSheet(shareButtonFrame))
         }, label: {
-            Image("Share").foregroundColor(.waitlistText)
+            Image("Share").foregroundColor(.waitlistTextSecondary)
         })
         .frame(width: 44, height: 44)
         

@@ -35,6 +35,7 @@ public struct HeaderView: View {
 
             Text(title)
                 .font(.proximaNova(size: 22, weight: .bold))
+                .foregroundColor(.waitlistTextPrimary)
                 .lineSpacing(6)
                 .multilineTextAlignment(.center)
                 .fixMultilineScrollableText()

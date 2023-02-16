@@ -21,12 +21,16 @@ import SwiftUI
 
 public extension Color {
 
-    static var waitlistText: Color {
-        Color("WaitlistTextColor")
+    static var waitlistTextPrimary: Color {
+        Color("WaitlistTextPrimary")
     }
 
-    static var waitlistSubtitle: Color {
-        Color("WaitlistSubtitleColor")
+    static var waitlistTextSecondary: Color {
+        Color("WaitlistTextSecondary")
+    }
+
+    static var waitlistButtonText: Color {
+        Color("WaitlistButtonText")
     }
 
     static var waitlistGreen: Color {

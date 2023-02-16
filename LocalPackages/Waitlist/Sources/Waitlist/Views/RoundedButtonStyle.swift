@@ -33,7 +33,7 @@ public struct RoundedButtonStyle: ButtonStyle {
             .frame(maxWidth: .infinity)
             .padding([.top, .bottom], 16)
             .background(enabled ? Color.waitlistBlue : Color.waitlistBlue.opacity(0.2))
-            .foregroundColor(.white)
+            .foregroundColor(.waitlistButtonText)
             .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 

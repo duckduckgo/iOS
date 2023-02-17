@@ -23,15 +23,11 @@ import Common
 
 extension SecureVaultModels.WebsiteAccount {
 
-    func name(tld: TLD) -> String {
+    func name() -> String {
         if let title = self.title, !title.isEmpty {
             return title
         } else {
-            if let domain = tld.eTLDplus1(self.domain) {
-                return domain
-            } else {
-                return self.domain.droppingWwwPrefix()
-            }
+            return domain
         }
     }
 }

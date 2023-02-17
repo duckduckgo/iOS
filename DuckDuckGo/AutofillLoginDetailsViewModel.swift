@@ -117,9 +117,9 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         self.account = account
         username = account.username
         address = account.domain
-        title = account.name(tld: tld)
+        title =  account.title ?? ""
         notes = account.notes ?? ""
-        headerViewModel.updateData(with: account, tld: tld)
+        headerViewModel.updateData(with: account)
         setupPassword(with: account)
     }
     
@@ -270,8 +270,8 @@ final class AutofillLoginDetailsHeaderViewModel: ObservableObject {
     @Published var subtitle: String = ""
     @Published var domain: String = ""
     
-    func updateData(with account: SecureVaultModels.WebsiteAccount, tld: TLD) {
-        self.title = account.name(tld: tld)
+    func updateData(with account: SecureVaultModels.WebsiteAccount) {
+        self.title = account.name()
         self.subtitle = UserText.autofillLoginDetailsLastUpdated(for: (dateFormatter.string(from: account.lastUpdated)))
         self.domain = account.domain
     }

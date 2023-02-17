@@ -7339,15 +7339,15 @@
 			repositoryURL = "https://github.com/duckduckgo/TrackerRadarKit.git";
 			requirement = {
 				kind = exactVersion;
-				version = 1.1.1;
+				version = 1.2.1;
 			};
 		};
 		98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "dominik/windows-waitlist";
-				kind = branch;
+				kind = exactVersion;
+				version = 46.2.0;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

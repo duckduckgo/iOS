@@ -1463,6 +1463,8 @@ extension MainViewController: TabDelegate {
         newTab.openingTab = tab
         
         newTabAnimation {
+            guard self.tabManager.model.tabs.contains(newTab.tabModel) else { return }
+
             self.dismissOmniBar()
             self.addToView(tab: newTab)
             self.refreshOmniBar()

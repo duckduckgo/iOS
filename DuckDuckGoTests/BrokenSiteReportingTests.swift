@@ -80,9 +80,7 @@ final class BrokenSiteReportingTests: XCTestCase {
                                             systemVersion: test.os ?? "",
                                             gpc: test.gpcEnabled)
         
-        
-        let expectation = XCTestExpectation()
-        
+
         stub(condition: isHost(host)) { request -> HTTPStubsResponse in
             
             guard let requestURL = request.url else {
@@ -91,9 +89,8 @@ final class BrokenSiteReportingTests: XCTestCase {
             }
 
             let absoluteURL = requestURL.absoluteString
-                .replacingOccurrences(of: "%2C", with: ",")
                 .replacingOccurrences(of: "%20", with: " ")
-            
+
             if test.expectReportURLPrefix.count > 0 {
                 XCTAssertTrue(requestURL.absoluteString.contains(test.expectReportURLPrefix), "Prefix [\(test.expectReportURLPrefix)] not found")
             }

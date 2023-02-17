@@ -138,6 +138,7 @@ public class Pixel {
     public static func fire(pixel: Pixel.Event,
                             forDeviceType deviceType: UIUserInterfaceIdiom? = UIDevice.current.userInterfaceIdiom,
                             withAdditionalParameters params: [String: String] = [:],
+                            allowedQueryReservedCharacters: CharacterSet? = nil,
                             withHeaders headers: HTTPHeaders = APIHeaders().defaultHeaders,
                             includedParameters: [QueryParameters] = [.atb, .appVersion],
                             onComplete: @escaping (Error?) -> Void = { _ in }) {
@@ -163,7 +164,11 @@ public class Pixel {
             url = appUrls.pixelUrl(forPixelNamed: pixel.name, includeATB: includedParameters.contains(.atb) )
         }
         
-        APIRequest.request(url: url, parameters: newParams, headers: headers, callBackOnMainThread: true) { (_, error) in
+        APIRequest.request(url: url,
+                           parameters: newParams,
+                           allowedQueryReservedCharacters: allowedQueryReservedCharacters,
+                           headers: headers,
+                           callBackOnMainThread: true) { (_, error) in
             
             os_log("Pixel fired %s %s", log: .generalLog, type: .debug, pixel.name, "\(params)")
             onComplete(error)

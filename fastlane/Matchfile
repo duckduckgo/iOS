@@ -8,12 +8,6 @@ app_identifier ["com.duckduckgo.mobile.ios", "com.duckduckgo.mobile.ios.ShareExt
 generate_apple_certs false
 template_name "Default Web Browser iOS (Dist)"
 
-for_lane :sync_signing_adhoc do
+for_lane [:sync_signing_adhoc, :adhoc] do
     type "adhoc"
-    force_for_new_devices true
-end
-
-for_lane :adhoc do
-    type "adhoc"
-    force_for_new_devices true
 end

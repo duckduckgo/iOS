@@ -36,6 +36,10 @@ lane :adhoc do |options|
     scheme: "DuckDuckGo",
     export_options: "adhocExportOptions.plist"
   )
+
+  Dir.chdir("..") do
+    sh("open", "#{options[:output]}") unless is_ci
+  end
 end
 
 desc 'Makes App Store release build and uploads it to App Store Connect'

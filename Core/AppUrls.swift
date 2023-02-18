@@ -284,7 +284,11 @@ public struct AppUrls {
     public var macBrowserDownloadURL: URL {
         return URL(string: "https://duckduckgo.com/mac")!
     }
-    
+
+    public var windowsBrowserDownloadURL: URL {
+        return URL(string: "https://duckduckgo.com/windows")!
+    }
+
     public var appStoreURL: URL {
         return URL(string: Url.appStore)!
     }

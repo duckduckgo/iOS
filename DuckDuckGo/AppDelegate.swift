@@ -180,7 +180,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
-        MacBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
+        WindowsBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
         RemoteMessaging.registerBackgroundRefreshTaskHandler(bookmarksDatabase: bookmarksDatabase)
 
         UNUserNotificationCenter.current().delegate = self
@@ -241,15 +241,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        MacBrowserWaitlist.shared.fetchInviteCodeIfAvailable { error in
+        WindowsBrowserWaitlist.shared.fetchInviteCodeIfAvailable { error in
             guard error == nil else { return }
-            MacBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
+            WindowsBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
         }
-        
+
         BGTaskScheduler.shared.getPendingTaskRequests { tasks in
-            let hasMacBrowserWaitlistTask = tasks.contains { $0.identifier == MacBrowserWaitlist.Constants.backgroundRefreshTaskIdentifier }
-            if !hasMacBrowserWaitlistTask {
-                MacBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
+            let hasWindowsBrowserWaitlistTask = tasks.contains { $0.identifier == WindowsBrowserWaitlist.backgroundRefreshTaskIdentifier }
+            if !hasWindowsBrowserWaitlistTask {
+                WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
             }
         }
     }
@@ -537,10 +537,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        if notification.request.identifier == MacBrowserWaitlist.Constants.notificationIdentitier {
-            Pixel.fire(pixel: .macBrowserWaitlistNotificationShown)
-        }
-        
         completionHandler(.banner)
     }
 
@@ -548,17 +544,16 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
-            if response.notification.request.identifier == MacBrowserWaitlist.Constants.notificationIdentitier {
-                Pixel.fire(pixel: .macBrowserWaitlistNotificationLaunched)
-                presentMacBrowserWaitlistSettingsModal()
+            if response.notification.request.identifier == WindowsBrowserWaitlist.notificationIdentitier {
+                presentWindowsBrowserWaitlistSettingsModal()
             }
         }
 
         completionHandler()
     }
     
-    private func presentMacBrowserWaitlistSettingsModal() {
-        let waitlistViewController = MacWaitlistViewController(nibName: nil, bundle: nil)
+    private func presentWindowsBrowserWaitlistSettingsModal() {
+        let waitlistViewController = WindowsWaitlistViewController(nibName: nil, bundle: nil)
         presentSettings(with: waitlistViewController)
     }
     

@@ -21,7 +21,9 @@ import Foundation
 import Core
 
 public struct BrokenSiteInfo {
-    
+
+    static let allowedQueryReservedCharacters =  CharacterSet(charactersIn: ",")
+
     private struct Keys {
         static let url = "siteUrl"
         static let category = "category"
@@ -98,7 +100,9 @@ public struct BrokenSiteInfo {
                           Keys.ampUrl: ampUrl ?? "",
                           Keys.urlParametersRemoved: urlParametersRemoved ? "true" : "false"]
         
-        Pixel.fire(pixel: .brokenSiteReport, withAdditionalParameters: parameters)
+        Pixel.fire(pixel: .brokenSiteReport,
+                   withAdditionalParameters: parameters,
+                   allowedQueryReservedCharacters: BrokenSiteInfo.allowedQueryReservedCharacters)
     }
     
     private func normalize(_ url: URL?) -> String {

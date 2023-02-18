@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1676042223159,
+    "version": 1676669300686,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -223,6 +223,10 @@
                         "reason": "https://github.com/duckduckgo/privacy-configuration/issues/602"
                     },
                     {
+                        "domain": "tiktok.com",
+                        "reason": "https://github.com/duckduckgo/privacy-configuration/issues/667"
+                    },
+                    {
                         "domain": "cvs.com",
                         "reason": "Navigation section at the top of the main page renders as text."
                     },
@@ -251,7 +255,7 @@
             },
             "exceptions": [],
             "state": "enabled",
-            "hash": "e08e662d37f31acafe58b21067ae8705"
+            "hash": "dd7522021a54a9797445b5d570e2ec38"
         },
         "duckPlayer": {
             "exceptions": [],
@@ -516,6 +520,8 @@
                         "type": "hide-empty"
                     }
                 ],
+                "useStrictHideStyleTag": true,
+                "styleTagExceptions": [],
                 "adLabelStrings": [
                     "advertisement",
                     "advertisment",
@@ -1146,7 +1152,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "3bf687283e5ce5d96b49c28efdd1eb40"
+            "hash": "d719a498422990f19674a5a450d300b4"
         },
         "fingerprintingAudio": {
             "state": "disabled",
@@ -1362,6 +1368,33 @@
                 "windowInMs": 0
             },
             "hash": "9439c856372a09f0cfdc9e2e0fd086fd"
+        },
+        "runtimeChecks": {
+            "state": "disabled",
+            "exceptions": [],
+            "settings": {
+                "taintCheck": "enabled",
+                "matchAllDomains": "disabled",
+                "matchAllStackDomains": "enabled",
+                "overloadInstanceOf": "enabled",
+                "elementRemovalTimeout": 1000,
+                "domains": [
+                    {
+                        "domain": "preactjs.com"
+                    },
+                    {
+                        "domain": "reactjs.org"
+                    },
+                    {
+                        "domain": "browserbench.org"
+                    },
+                    {
+                        "domain": "good.third-party.site"
+                    }
+                ],
+                "stackDomains": []
+            },
+            "hash": "32be9e17c1e346de2f37bed896eb0231"
         },
         "serviceworkerInitiatedRequests": {
             "exceptions": [],
@@ -1880,6 +1913,7 @@
                             {
                                 "rule": "cdn.dynamicyield.com/api/",
                                 "domains": [
+                                    "brooklinen.com",
                                     "seatosummit.com"
                                 ],
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/535"
@@ -2141,6 +2175,13 @@
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/475"
                             },
                             {
+                                "rule": "google.com/cse/cse.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/475"
+                            },
+                            {
                                 "rule": "www.google.com/cse/static/",
                                 "domains": [
                                     "<all>"
@@ -2375,6 +2416,17 @@
                             }
                         ]
                     },
+                    "loggly.com": {
+                        "rules": [
+                            {
+                                "rule": "cloudfront.loggly.com/js/loggly.tracker-2.1.min.js",
+                                "domains": [
+                                    "rte.ie"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/681"
+                            }
+                        ]
+                    },
                     "lpsnmedia.net": {
                         "rules": [
                             {
@@ -2406,6 +2458,17 @@
                                     "medicare.gov"
                                 ],
                                 "reason": "Navigation bar at top of site does not display, preventing easy access to e.g., site login. Note that this CNAMEs to iservprod.medicare.gov.edgekey.net at time of mitiagtion."
+                            }
+                        ]
+                    },
+                    "nextdoor.com": {
+                        "rules": [
+                            {
+                                "rule": "nextdoor.com",
+                                "domains": [
+                                    "nextdoor.co.uk"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/460"
                             }
                         ]
                     },
@@ -4767,7 +4830,7 @@
                 }
             },
             "exceptions": [],
-            "hash": "0326c2feb919e24885f0bc723c8d5fe2"
+            "hash": "8f2a757b06e74e4866530fa0e6281e47"
         },
         "trackingCookies1p": {
             "settings": {
@@ -5139,8 +5202,8 @@
         },
         "windowsWaitlist": {
             "exceptions": [],
-            "state": "enabled",
-            "hash": "52857469413a66e8b0c7b00de5589162"
+            "state": "disabled",
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
         }
     },
     "unprotectedTemporary": []

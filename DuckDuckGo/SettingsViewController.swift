@@ -47,6 +47,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var emailProtectionAccessoryText: UILabel!
     @IBOutlet weak var macBrowserWaitlistCell: UITableViewCell!
     @IBOutlet weak var macBrowserWaitlistAccessoryText: UILabel!
+    @IBOutlet weak var windowsBrowserWaitlistCell: UITableViewCell!
+    @IBOutlet weak var windowsBrowserWaitlistAccessoryText: UILabel!
     @IBOutlet weak var longPressCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
     @IBOutlet weak var textSizeCell: UITableViewCell!
@@ -117,6 +119,7 @@ class SettingsViewController: UITableViewController {
         configureIconViews()
         configureEmailProtectionAccessoryText()
         configureMacBrowserWaitlistCell()
+        configureWindowsBrowserWaitlistCell()
         
         // Make sure muliline labels are correctly presented
         tableView.setNeedsLayout()
@@ -222,9 +225,17 @@ class SettingsViewController: UITableViewController {
     }
     
     private func configureMacBrowserWaitlistCell() {
-        macBrowserWaitlistCell.detailTextLabel?.text = MacBrowserWaitlist.shared.settingsSubtitle()
+        macBrowserWaitlistCell.detailTextLabel?.text = MacBrowserWaitlist.shared.settingsSubtitle
     }
-    
+
+    private func configureWindowsBrowserWaitlistCell() {
+        windowsBrowserWaitlistCell.isHidden = !WindowsBrowserWaitlist.shared.isAvailable
+
+        if WindowsBrowserWaitlist.shared.isAvailable {
+            windowsBrowserWaitlistCell.detailTextLabel?.text = WindowsBrowserWaitlist.shared.settingsSubtitle
+        }
+    }
+
     private func configureDebugCell() {
         debugCell.isHidden = !shouldShowDebugCell
     }
@@ -255,10 +266,14 @@ class SettingsViewController: UITableViewController {
         UIApplication.shared.open(AppUrls().emailProtectionQuickLink, options: [:], completionHandler: nil)
     }
 
-    private func showDesktopBrowserWaitlistViewController() {
+    private func showMacBrowserWaitlistViewController() {
         navigationController?.pushViewController(MacWaitlistViewController(nibName: nil, bundle: nil), animated: true)
     }
-    
+
+    private func showWindowsBrowserWaitlistViewController() {
+        navigationController?.pushViewController(WindowsWaitlistViewController(nibName: nil, bundle: nil), animated: true)
+    }
+
     func showCookiePopupManagement(animated: Bool = true) {
         navigationController?.pushViewController(AutoconsentSettingsViewController.loadFromStoryboard(), animated: animated)
     }
@@ -279,7 +294,10 @@ class SettingsViewController: UITableViewController {
             showEmailWebDashboard()
             
         case macBrowserWaitlistCell:
-            showDesktopBrowserWaitlistViewController()
+            showMacBrowserWaitlistViewController()
+
+        case windowsBrowserWaitlistCell:
+            showWindowsBrowserWaitlistViewController()
 
         case autofillCell:
             showAutofill()

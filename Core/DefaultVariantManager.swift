@@ -41,6 +41,17 @@ public struct VariantIOS: Variant {
             }
             return false
         }
+        
+        static let onlyFirstDayOfExperiment = {
+            var dateComponents = DateComponents()
+            dateComponents.year = 2023
+            dateComponents.month = 2
+            dateComponents.day = 21
+            
+            guard let secondDayOfExperiment = Calendar.current.date(from: dateComponents) else { return false }
+            
+            return Date() < secondDayOfExperiment
+        }
     }
     
     static let doNotAllocate = 0
@@ -49,7 +60,7 @@ public struct VariantIOS: Variant {
     public static let defaultVariants: [Variant] = [
         
         VariantIOS(name: "mc", weight: 1, isIncluded: When.always, features: []),
-        VariantIOS(name: "mf", weight: 1, isIncluded: When.always, features: [.fireButtonWithColorFill]),
+        VariantIOS(name: "mf", weight: 1, isIncluded: When.onlyFirstDayOfExperiment, features: [.fireButtonWithColorFill]),
 
         // SERP testing
         VariantIOS(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),

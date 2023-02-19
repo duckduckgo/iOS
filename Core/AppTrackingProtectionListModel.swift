@@ -21,8 +21,11 @@ import Foundation
 import Combine
 import CoreData
 import Persistence
+import os.log
 
-public class AppTrackingProtectionListModel: ObservableObject {
+public class AppTrackingProtectionListModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
+
+    @Published var sections: [NSFetchedResultsSectionInfo] = []
 
     private let context: NSManagedObjectContext
 
@@ -32,14 +35,41 @@ public class AppTrackingProtectionListModel: ObservableObject {
         return queue
     }()
 
+    fileprivate lazy var fetchedResultsController: NSFetchedResultsController<AppTrackerEntity> = {
+        let fetchRequest: NSFetchRequest<AppTrackerEntity> = AppTrackerEntity.fetchRequest()
+
+        let sortDescriptor = NSSortDescriptor(key: "timestamp", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                                                  managedObjectContext: self.context,
+                                                                  sectionNameKeyPath: "bucket",
+                                                                  cacheName: nil)
+
+        return fetchedResultsController
+    }()
+
+    @UserDefaultsWrapper(key: .lastAppTrackingProtectionHistoryFetchTimestamp, defaultValue: Date.distantPast)
+    private var lastTrackerHistoryFetchTimestamp: Date
+
     public init(appTrackingProtectionDatabase: TemporaryAppTrackingProtectionDatabase) {
         self.context = appTrackingProtectionDatabase.makeContext(concurrencyType: .privateQueueConcurrencyType)
 
+        super.init()
+
+        setupFetchedResultsController()
         registerForRemoteChangeNotifications()
+    }
+
+    private func setupFetchedResultsController() {
+        fetchedResultsController.delegate = self
+        try? fetchedResultsController.performFetch()
+        self.sections = fetchedResultsController.sections ?? []
     }
 
     private func registerForRemoteChangeNotifications() {
         guard let coordinator = context.persistentStoreCoordinator else {
+            assertionFailure("Failed to get AppTP persistent store coordinator")
             return
         }
 
@@ -58,10 +88,79 @@ public class AppTrackingProtectionListModel: ObservableObject {
     @objc private func processPersistentHistory() {
         context.performAndWait {
             do {
-                print("DEBUG: Processing history")
+                try merge()
+                try removeTransactions(before: lastTrackerHistoryFetchTimestamp)
             } catch {
                 print("Persistent History Tracking failed with error \(error)")
             }
         }
     }
+
+    func merge() throws {
+        let fetcher = PersistentHistoryFetcher(context: context, fromDate: lastTrackerHistoryFetchTimestamp)
+        let newTransactions = try fetcher.fetch()
+
+        guard !newTransactions.isEmpty else {
+            return
+        }
+
+        newTransactions.merge(into: context)
+
+        guard let lastTimestamp = newTransactions.last?.timestamp else { return }
+        lastTrackerHistoryFetchTimestamp = lastTimestamp
+    }
+
+    func removeTransactions(before date: Date) throws {
+        let deleteHistoryRequest = NSPersistentHistoryChangeRequest.deleteHistory(before: lastTrackerHistoryFetchTimestamp)
+        try context.execute(deleteHistoryRequest)
+    }
+
+    public func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.sections = controller.sections ?? []
+    }
+}
+
+extension Collection where Element == NSPersistentHistoryTransaction {
+
+    func merge(into context: NSManagedObjectContext) {
+        forEach { transaction in
+            guard let userInfo = transaction.objectIDNotification().userInfo else { return }
+            NSManagedObjectContext.mergeChanges(fromRemoteContextSave: userInfo, into: [context])
+        }
+    }
+
+}
+
+struct PersistentHistoryFetcher {
+
+    enum Error: Swift.Error {
+        case historyTransactionConversionFailed
+    }
+
+    let context: NSManagedObjectContext
+    let fromDate: Date
+
+    func fetch() throws -> [NSPersistentHistoryTransaction] {
+        let fetchRequest = createFetchRequest()
+
+        guard let historyResult = try context.execute(fetchRequest) as? NSPersistentHistoryResult,
+              let history = historyResult.result as? [NSPersistentHistoryTransaction] else {
+            throw Error.historyTransactionConversionFailed
+        }
+
+        return history
+    }
+
+    func createFetchRequest() -> NSPersistentHistoryChangeRequest {
+        let historyFetchRequest = NSPersistentHistoryChangeRequest.fetchHistory(after: fromDate)
+
+        if let fetchRequest = NSPersistentHistoryTransaction.fetchRequest {
+            historyFetchRequest.fetchRequest = fetchRequest
+        } else {
+            assertionFailure("Failed to create AppTP persistent history fetch request")
+        }
+
+        return historyFetchRequest
+    }
+
 }

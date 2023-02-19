@@ -32,7 +32,6 @@ public class AppTrackingProtectionDatabase {
 
     public static var defaultDBLocation: URL = {
         guard let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.groupID) else {
-            os_log("AppTrackingProtectionDatabase.make - OUT, failed to get location %{public}s", Constants.groupID)
             fatalError("Failed to get location")
         }
 
@@ -40,10 +39,8 @@ public class AppTrackingProtectionDatabase {
     }()
 
     public static func make(location: URL = defaultDBLocation, readOnly: Bool = false) -> TemporaryAppTrackingProtectionDatabase {
-        os_log("AppTrackingProtectionDatabase.make - IN - %@", location as CVarArg)
         let bundle = Bundle(for: AppTrackingProtectionDatabase.self)
         guard let model = TemporaryAppTrackingProtectionDatabase.loadModel(from: bundle, named: "AppTrackingProtectionModel") else {
-            os_log("AppTrackingProtectionDatabase.make - OUT, failed to loadModel")
             fatalError("Failed to load model")
         }
 
@@ -51,8 +48,6 @@ public class AppTrackingProtectionDatabase {
                                                         containerLocation: location,
                                                         model: model,
                                                         readOnly: readOnly)
-
-        os_log("AppTrackingProtectionDatabase.make - OUT")
 
         return db
     }

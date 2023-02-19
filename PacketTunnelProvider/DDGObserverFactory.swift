@@ -40,6 +40,12 @@ class DDGObserverFactory: ObserverFactory {
     override init() {
         trackerData = TrackerDataParser()
         appTrackingProtectionDatabase = AppTrackingProtectionDatabase.make()
+        appTrackingProtectionDatabase.loadStore { context, error in
+            guard context != nil else {
+                fatalError("Could not create AppTP database stack: \(error?.localizedDescription ?? "err")")
+            }
+        }
+
         appTrackingProtectionStoringModel = AppTrackingProtectionStoringModel(appTrackingProtectionDatabase: appTrackingProtectionDatabase)
     }
     
@@ -57,11 +63,10 @@ class DDGObserverFactory: ObserverFactory {
         override func signal(_ event: ProxySocketEvent) {
             switch event {
             case .receivedRequest(let session, let socket):
-                // Check for allowlisted trackers
-                
-                // Check firewall status
                 if let trackerData = trackerData, trackerData.shouldBlock(domain: session.host) {
-                    os_log("[AppTP][BLOCKED] %{public}s on blocklist", log: generalLog, type: .error, session.host)
+                    // TODO: Test this out
+                    // let tracker = trackerData.trackerOwner(forDomain: session.host)
+
                     appTrackingProtectionStoringModel.storeBlockedTracker(domain: session.host)
                     socket.forceDisconnect(becauseOf: BlockedReason())
                 }

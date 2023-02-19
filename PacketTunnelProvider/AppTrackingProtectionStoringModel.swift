@@ -25,24 +25,40 @@ import os
 public class AppTrackingProtectionStoringModel: ObservableObject {
 
     private let context: NSManagedObjectContext
+    private let dateFormatter: DateFormatter
 
     public init(appTrackingProtectionDatabase: TemporaryAppTrackingProtectionDatabase) {
         self.context = appTrackingProtectionDatabase.makeContext(concurrencyType: .privateQueueConcurrencyType)
+        self.dateFormatter = DateFormatter()
+        self.dateFormatter.dateFormat = "dd-MM-yyyy"
     }
 
     public func storeBlockedTracker(domain: String) {
-        let tracker = AppTrackerEntity.makeTracker(domain: domain,
-                                                   context: context)
+        let blockedDate = Date()
+        let bucket = dateFormatter.string(from: blockedDate)
 
-        save()
+        context.performAndWait {
+            do {
+                let existingTrackersFetchRequest = AppTrackerEntity.fetchRequest(domain: domain, bucket: bucket)
 
-        os_log("[AppTP][DATABASE] Wrote tracker to database with domain %{public}s", log: generalLog, type: .error, domain)
+                if let existingTracker = try context.fetch(existingTrackersFetchRequest).first {
+                    existingTracker.count += 1
+                } else {
+                    _ = AppTrackerEntity.makeTracker(domain: domain, date: blockedDate, bucket: bucket, context: context)
+                }
+
+                save()
+            } catch {
+                context.rollback()
+            }
+        }
     }
 
     private func save() {
         do {
             try context.save()
         } catch {
+            os_log("[AppTP] Failed to save tracker to database", log: generalLog, type: .error)
             context.rollback()
         }
     }

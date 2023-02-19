@@ -103,6 +103,7 @@ class MainViewController: UIViewController {
     
     private let bookmarksDatabase: CoreDataDatabase
     private let appTrackingProtectionDatabase: TemporaryAppTrackingProtectionDatabase
+    private let appTrackingProtectionListModel: AppTrackingProtectionListModel
     private let favoritesViewModel: FavoritesListInteracting
     
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase)
@@ -138,6 +139,7 @@ class MainViewController: UIViewController {
                    appTrackingProtectionDatabase: TemporaryAppTrackingProtectionDatabase) {
         self.bookmarksDatabase = bookmarksDatabase
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
+        self.appTrackingProtectionListModel = AppTrackingProtectionListModel(appTrackingProtectionDatabase: appTrackingProtectionDatabase)
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         super.init(coder: coder)

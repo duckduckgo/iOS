@@ -27,20 +27,30 @@ public class AppTrackerEntity: NSManagedObject {
         return NSFetchRequest<AppTrackerEntity>(entityName: "AppTrackerEntity")
     }
 
-    public static func makeTracker(
-        domain: String,
-        context: NSManagedObjectContext
-    ) -> AppTrackerEntity {
+    @nonobjc public class func fetchRequest(domain: String, bucket: String) -> NSFetchRequest<AppTrackerEntity> {
+        let request = NSFetchRequest<AppTrackerEntity>(entityName: "AppTrackerEntity")
+        request.predicate = NSPredicate(format: "%K == %@ AND %K == %@",
+                                        #keyPath(AppTrackerEntity.domain), domain,
+                                        #keyPath(AppTrackerEntity.bucket), bucket)
+        return request
+    }
+
+    public static func makeTracker(domain: String, date: Date, bucket: String, context: NSManagedObjectContext) -> AppTrackerEntity {
         let object = AppTrackerEntity(context: context)
+        object.uuid = UUID().uuidString
         object.domain = domain
-        object.timestamp = Date()
+        object.count = 1
+        object.timestamp = date
+        object.bucket = bucket
 
         return object
     }
 
     @NSManaged public var uuid: String
     @NSManaged public var domain: String
+    @NSManaged public var bucket: String
     @NSManaged public var timestamp: Date
+    @NSManaged public var count: Int
 
 }
 

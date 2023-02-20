@@ -19,20 +19,22 @@
 
 import Core
 import os
+import Configuration
+import Core
 
 /// Only intended for use via Debug screens.
 class DebugEtagStorage {
 
     lazy var defaults = UserDefaults(suiteName: "com.duckduckgo.blocker-list.etags")
 
-    func etag(for list: String) -> String? {
-        let etag = defaults?.string(forKey: list)
-        os_log("stored etag for %s %s", log: .generalLog, type: .debug, list, etag ?? "nil")
+    func loadEtag(for rawValue: String) -> String? {
+        let etag = defaults?.string(forKey: rawValue)
+        os_log("stored etag for %s %s", log: .generalLog, type: .debug, rawValue, etag ?? "nil")
         return etag
     }
 
     func resetAll() {
-        ContentBlockerRequest.Configuration.allCases.forEach {
+        Configuration.allCases.forEach {
             defaults?.removeObject(forKey: $0.rawValue)
         }
     }

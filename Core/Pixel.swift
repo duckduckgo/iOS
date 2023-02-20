@@ -20,6 +20,7 @@
 import Foundation
 import os.log
 import BrowserServicesKit
+import Common
 
 // swiftlint:enable type_body_length
 

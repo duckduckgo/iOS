@@ -28,7 +28,7 @@ protocol DependencyProvider {
     var featureFlaggerInternalUserDecider: FeatureFlaggerInternalUserDecider { get }
     var remoteMessagingStore: RemoteMessagingStore { get }
     var homePageConfiguration: HomePageConfiguration { get }
-    var storageCache: StorageCacheProvider { get }
+    var storageCache: StorageCache { get }
     var voiceSearchHelper: VoiceSearchHelperProtocol { get }
     var downloadManager: DownloadManager { get }
     var autofillLoginSession: AutofillLoginSession { get }
@@ -53,7 +53,7 @@ class AppDependencyProvider: DependencyProvider {
     let remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore()
     lazy var homePageConfiguration: HomePageConfiguration = HomePageConfiguration(variantManager: variantManager,
                                                                                   remoteMessagingStore: remoteMessagingStore)
-    let storageCache = StorageCacheProvider()
+    let storageCache = StorageCache()
     let voiceSearchHelper: VoiceSearchHelperProtocol = VoiceSearchHelper()
     let downloadManager = DownloadManager()
     let autofillLoginSession = AutofillLoginSession()

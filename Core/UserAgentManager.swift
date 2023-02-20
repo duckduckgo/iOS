@@ -20,6 +20,7 @@
 import Foundation
 import WebKit
 import BrowserServicesKit
+import Common
 
 public protocol UserAgentManager {
 

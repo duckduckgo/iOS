@@ -22,6 +22,7 @@ import BackgroundTasks
 import Core
 import os.log
 import BrowserServicesKit
+import Configuration
 
 public typealias AppConfigurationCompletion = (Bool) -> Void
 
@@ -186,14 +187,15 @@ class AppConfigurationFetch {
         self.markFetchStarted(isBackground: isBackground)
 
         var newData = false
-        let semaphore = DispatchSemaphore(value: 0)
-
-        AppDependencyProvider.shared.storageCache.update(progress: updateFetchProgress) { newCache in
-            newData = newData || (newCache != nil)
-            semaphore.signal()
-        }
-
-        semaphore.wait()
+        // TODO!
+//        let semaphore = DispatchSemaphore(value: 0)
+//
+//        AppDependencyProvider.shared.storageCache.update(progress: updateFetchProgress) { newCache in
+//            newData = newData || (newCache != nil)
+//            semaphore.signal()
+//        }
+//
+//        semaphore.wait()
 
         self.markFetchCompleted(isBackground: isBackground, hasNewData: newData)
         return newData
@@ -209,14 +211,15 @@ class AppConfigurationFetch {
         }
     }
 
-    private func updateFetchProgress(configuration: ContentBlockerRequest.Configuration) {
+    private func updateFetchProgress(configuration: Configuration) {
         switch configuration {
-        case .httpsBloomFilter: downloadedHTTPSBloomFilterCount += 1
-        case .httpsBloomFilterSpec: downloadedHTTPSBloomFilterSpecCount += 1
-        case .httpsExcludedDomains: downloadedHTTPSExcludedDomainsCount += 1
+        case .bloomFilterBinary: downloadedHTTPSBloomFilterCount += 1
+        case .bloomFilterSpec: downloadedHTTPSBloomFilterSpecCount += 1
+        case .bloomFilterExcludedDomains: downloadedHTTPSExcludedDomainsCount += 1
         case .surrogates: downloadedSurrogatesCount += 1
         case .trackerDataSet: downloadedTrackerDataSetCount += 1
         case .privacyConfiguration: downloadedPrivacyConfigurationCount += 1
+        case .FBConfig: fatalError("This feature is not supported on iOS")
         }
     }
     

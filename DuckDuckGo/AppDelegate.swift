@@ -213,10 +213,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
-        
-        Task {
-            await ConfigurationManager.doSomething()
-        }
 
         if !(overlayWindow?.rootViewController is AuthenticationViewController) {
             removeOverlay()

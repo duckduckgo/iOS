@@ -82,7 +82,7 @@ class TabViewController: UIViewController {
     private weak var privacyDashboard: PrivacyDashboardViewController?
     
     private(set) lazy var appUrls: AppUrls = AppUrls()
-    private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
+    private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
 
     internal lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
@@ -94,7 +94,7 @@ class TabViewController: UIViewController {
     
     private let requeryLogic = RequeryLogic()
 
-    private static let tld = AppDependencyProvider.shared.storageCache.current.tld
+    private static let tld = AppDependencyProvider.shared.storageCache.tld
     private let adClickAttributionDetection = ContentBlocking.shared.makeAdClickAttributionDetection(tld: tld)
     let adClickAttributionLogic = ContentBlocking.shared.makeAdClickAttributionLogic(tld: tld)
 
@@ -223,7 +223,7 @@ class TabViewController: UIViewController {
     private lazy var referrerTrimming: ReferrerTrimming = {
         ReferrerTrimming(privacyManager: ContentBlocking.shared.privacyConfigurationManager,
                          contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
-                         tld: AppDependencyProvider.shared.storageCache.current.tld)
+                         tld: AppDependencyProvider.shared.storageCache.tld)
     }()
         
     private var canDisplayJavaScriptAlert: Bool {

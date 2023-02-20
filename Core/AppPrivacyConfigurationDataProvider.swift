@@ -20,18 +20,18 @@
 import Foundation
 import BrowserServicesKit
 
-final class AppPrivacyConfigurationDataProvider: EmbeddedDataProvider {
+final public class AppPrivacyConfigurationDataProvider: EmbeddedDataProvider {
 
     public struct Constants {
         public static let embeddedDataETag = "\"d35a0bd465aee8b38d962ed993f5791c\""
         public static let embeddedDataSHA = "abfdff3b7cc97beaf7232a6770bd9ae80af5547fb3326c07b8be1c192c183636"
     }
 
-    var embeddedDataEtag: String {
+    public var embeddedDataEtag: String {
         return Constants.embeddedDataETag
     }
 
-    var embeddedData: Data {
+    public var embeddedData: Data {
         return Self.loadEmbeddedAsData()
     }
 

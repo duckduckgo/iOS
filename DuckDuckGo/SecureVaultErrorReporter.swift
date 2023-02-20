@@ -20,6 +20,7 @@
 import Foundation
 import BrowserServicesKit
 import Core
+import Common
 
 final class SecureVaultErrorReporter: SecureVaultErrorReporting {
     static let shared = SecureVaultErrorReporter()

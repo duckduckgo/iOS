@@ -319,7 +319,7 @@ extension AutoconsentUserScript {
         os_log("Prompting user about autoconsent", log: .autoconsentLog, type: .debug)
 
         // if it's the first time, prompt the user and trigger opt-out
-        if let window = message.webView?.window {
+        if message.webView?.window != nil {
             ensurePrompt(callback: { shouldProceed in
                 if shouldProceed {
                     Task {

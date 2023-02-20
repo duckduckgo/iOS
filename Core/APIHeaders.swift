@@ -32,11 +32,11 @@ public class APIHeaders {
         public static let ifNoneMatch = "If-None-Match"
     }
 
-    private let appVersion: AppVersion
+//    private let appVersion: AppVersion
 
-    public init(appVersion: AppVersion = AppVersion.shared) {
-        self.appVersion = appVersion
-    }
+    public init() {}//appVersion: AppVersion = AppVersion.shared) {
+//        self.appVersion = appVersion
+//    }
 
     public var defaultHeaders: HTTPHeaders {
         let acceptEncoding = "gzip;q=1.0, compress;q=0.5"
@@ -55,7 +55,8 @@ public class APIHeaders {
 
     public var userAgent: String {
         let osVersion = UIDevice.current.systemVersion
-        return "ddg_ios/\(appVersion.versionAndBuildNumber) (\(appVersion.identifier); iOS \(osVersion))"
+        return "whatevah"
+//        return "ddg_ios/\(appVersion.versionAndBuildNumber) ; iOS \(osVersion))"
     }
 
     public func defaultHeaders(with etag: String?) -> HTTPHeaders {

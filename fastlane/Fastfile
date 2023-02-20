@@ -104,6 +104,7 @@ private_lane :build_release do |options|
   build_app(
     export_method: "app-store",
     scheme: "DuckDuckGo",
+    derived_data_path: "DerivedData",
     export_options: "appStoreExportOptions.plist"
   )
 end

@@ -57,16 +57,21 @@ jobs:
     - name: Select Xcode
       run: sudo xcode-select -s /Applications/Xcode_$(<.xcode-version).app/Contents/Developer
 
+    - name: Install xcbeautify
+      continue-on-error: true
+      run: brew install xcbeautify
+
     - name: Build and test
       run: |
         set -o pipefail && xcodebuild test \
           -scheme "DuckDuckGo" \
           -derivedDataPath "DerivedData" \
           -destination "platform=iOS Simulator,name=iPhone 8" \
-          | xcpretty -r junit -o unittests.xml
+          | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml
 
     - name: Publish unit tests report
       uses: mikepenz/action-junit-report@v3
+      if: always() # always run even if the previous step fails
       with:
         report_paths: unittests.xml
 

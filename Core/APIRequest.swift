@@ -102,6 +102,7 @@ public class APIRequest {
     public static func request<C: Collection>(url: URL,
                                               method: HTTPMethod = .get,
                                               parameters: C,
+                                              allowedQueryReservedCharacters: CharacterSet? = nil,
                                               headers: HTTPHeaders = APIHeaders().defaultHeaders,
                                               httpBody: Data? = nil,
                                               timeoutInterval: TimeInterval = 60.0,
@@ -109,11 +110,12 @@ public class APIRequest {
                                               completion: @escaping APIRequestCompletion) -> URLSessionDataTask
     where C.Element == (key: String, value: String) {
 
-        os_log("Requesting %s", log: generalLog, type: .debug, url.absoluteString)
+        os_log("Requesting %s", log: .generalLog, type: .debug, url.absoluteString)
 
         let urlRequest = urlRequestFor(url: url,
                                        method: method,
                                        parameters: parameters,
+                                       allowedQueryReservedCharacters: allowedQueryReservedCharacters,
                                        headers: headers,
                                        httpBody: httpBody,
                                        timeoutInterval: timeoutInterval)
@@ -125,7 +127,7 @@ public class APIRequest {
             let httpResponse = response as? HTTPURLResponse
             
             os_log("Request for %s completed with response code: %s and headers %s",
-                   log: generalLog,
+                   log: .generalLog,
                    type: .debug,
                    url.absoluteString,
                    String(describing: httpResponse?.statusCode),
@@ -163,12 +165,13 @@ public class APIRequest {
     private static func urlRequestFor<C: Collection>(url: URL,
                                                      method: HTTPMethod,
                                                      parameters: C,
+                                                     allowedQueryReservedCharacters: CharacterSet? = nil,
                                                      headers: HTTPHeaders,
                                                      httpBody: Data?,
                                                      timeoutInterval: TimeInterval) -> URLRequest
     where C.Element == (key: String, value: String) {
 
-        let url = url.appendingParameters(parameters)
+        let url = url.appendingParameters(parameters, allowedReservedCharacters: allowedQueryReservedCharacters)
         var urlRequest = URLRequest.developerInitiated(url)
         urlRequest.allHTTPHeaderFields = headers
         urlRequest.httpMethod = method.rawValue

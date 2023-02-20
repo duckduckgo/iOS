@@ -50,6 +50,10 @@ extension Pixel {
         case settingsDoNotSellOn
         case settingsDoNotSellOff
         
+        case settingsAutoconsentShown
+        case settingsAutoconsentOn
+        case settingsAutoconsentOff
+        
         case browsingMenuOpened
         case browsingMenuRefresh
         case browsingMenuNewTab
@@ -134,6 +138,9 @@ extension Pixel {
         case daxDialogsFireEducationShown
         case daxDialogsFireEducationConfirmed
         case daxDialogsFireEducationCancelled
+        case daxDialogsAutoconsentShown
+        case daxDialogsAutoconsentConfirmed
+        case daxDialogsAutoconsentCancelled
         
         case widgetFavoriteLaunch
         case widgetNewSearch
@@ -236,6 +243,8 @@ extension Pixel {
         case autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate
         
         case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
+        
+        case autoconsentCookiePopupManaged
 
         case secureVaultInitError
         case secureVaultError
@@ -256,15 +265,6 @@ extension Pixel {
         
         case serpRequerySame
         case serpRequeryNew
-        
-        // MARK: macOS browser waitlist pixels
-        
-        case macBrowserWaitlistDidPressShareButton
-        case macBrowserWaitlistDidPressShareButtonDismiss
-        case macBrowserWaitlistDidPressShareButtonShared
-        
-        case macBrowserWaitlistNotificationShown
-        case macBrowserWaitlistNotificationLaunched
 
         // MARK: remote messaging pixels
 
@@ -412,6 +412,10 @@ extension Pixel.Event {
         case .settingsDoNotSellShown: return "ms_dns"
         case .settingsDoNotSellOn: return "ms_dns_on"
         case .settingsDoNotSellOff: return "ms_dns_off"
+        
+        case .settingsAutoconsentShown: return "m_settings_autoconsent_shown"
+        case .settingsAutoconsentOn: return "m_settings_autoconsent_on"
+        case .settingsAutoconsentOff: return "m_settings_autoconsent_off"
             
         case .browsingMenuOpened: return "mb"
         case .browsingMenuRefresh: return "mb_rf"
@@ -497,6 +501,9 @@ extension Pixel.Event {
         case .daxDialogsFireEducationShown: return "m_dx_fe_s"
         case .daxDialogsFireEducationConfirmed: return "m_dx_fe_co"
         case .daxDialogsFireEducationCancelled: return "m_dx_fe_ca"
+        case .daxDialogsAutoconsentShown: return "m_dax_dialog_autoconsent_shown"
+        case .daxDialogsAutoconsentConfirmed: return "m_dax_dialog_autoconsent_confirmed"
+        case .daxDialogsAutoconsentCancelled: return "m_dax_dialog_autoconsent_cancelled"
             
         case .widgetFavoriteLaunch: return "m_w_fl"
         case .widgetNewSearch: return "m_w_ns"
@@ -608,6 +615,8 @@ extension Pixel.Event {
         case .autofillJSPixelFired(let pixel):
             return "m_ios_\(pixel.pixelName)"
             
+        case .autoconsentCookiePopupManaged: return "m_autoconsent_cookie_popup_managed"
+            
         case .secureVaultInitError: return "m_secure_vault_init_error"
         case .secureVaultError: return "m_secure_vault_error"
             
@@ -625,15 +634,6 @@ extension Pixel.Event {
             
         case .serpRequerySame: return "rq_0"
         case .serpRequeryNew: return "rq_1"
-            
-        // MARK: macOS browser waitlist pixels
-            
-        case .macBrowserWaitlistDidPressShareButton: return "m_macos_waitlist_did_press_share_button"
-        case .macBrowserWaitlistDidPressShareButtonDismiss: return "m_macos_waitlist_did_press_share_button_dismiss"
-        case .macBrowserWaitlistDidPressShareButtonShared: return "m_macos_waitlist_did_press_share_button_shared"
-            
-        case .macBrowserWaitlistNotificationShown: return "m_notification_shown_mac_waitlist"
-        case .macBrowserWaitlistNotificationLaunched: return "m_notification_launch_mac_waitlist"
 
         // MARK: remote messaging pixels
 

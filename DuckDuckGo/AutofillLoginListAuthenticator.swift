@@ -71,7 +71,7 @@ final class AutofillLoginListAuthenticator {
                         self.state = .loggedIn
                         completion?(nil)
                     } else {
-                        os_log("Failed to authenticate: %s", log: generalLog, type: .debug, error?.localizedDescription ?? "nil error")
+                        os_log("Failed to authenticate: %s", log: .generalLog, type: .debug, error?.localizedDescription ?? "nil error")
                         AppDependencyProvider.shared.autofillLoginSession.endSession()
                         completion?(.failedToAuthenticate)
                     }

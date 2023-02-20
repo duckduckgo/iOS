@@ -86,7 +86,7 @@ class WebContainerViewController: UIViewController {
             progress = Float(webView?.estimatedProgress ?? 0.0)
 
         default:
-            os_log("Unhandled keyPath %s", log: generalLog, type: .debug, keyPath)
+            os_log("Unhandled keyPath %s", log: .generalLog, type: .debug, keyPath)
         }
     }
 

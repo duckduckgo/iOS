@@ -84,7 +84,6 @@ class TabsBarViewController: UIViewController {
         configureGestures()
         
         enableInteractionsWithPointer()
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -281,6 +280,8 @@ extension TabsBarViewController: Themable {
         collectionView.backgroundColor = theme.tabsBarBackgroundColor
         buttonsBackground.backgroundColor = theme.tabsBarBackgroundColor
         tabSwitcherButton.decorate(with: theme)
+        
+        FireButtonExperiment.decorateFireButton(fireButton: fireButton, for: theme)
         
         collectionView.reloadData()
     }

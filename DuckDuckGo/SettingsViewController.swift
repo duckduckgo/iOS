@@ -41,10 +41,14 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var rememberLoginsAccessoryText: UILabel!
     @IBOutlet weak var doNotSellCell: UITableViewCell!
     @IBOutlet weak var doNotSellAccessoryText: UILabel!
+    @IBOutlet weak var autoconsentCell: UITableViewCell!
+    @IBOutlet weak var autoconsentAccessoryText: UILabel!
     @IBOutlet weak var emailProtectionCell: UITableViewCell!
     @IBOutlet weak var emailProtectionAccessoryText: UILabel!
     @IBOutlet weak var macBrowserWaitlistCell: UITableViewCell!
     @IBOutlet weak var macBrowserWaitlistAccessoryText: UILabel!
+    @IBOutlet weak var windowsBrowserWaitlistCell: UITableViewCell!
+    @IBOutlet weak var windowsBrowserWaitlistAccessoryText: UILabel!
     @IBOutlet weak var longPressCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
     @IBOutlet weak var textSizeCell: UITableViewCell!
@@ -111,18 +115,23 @@ class SettingsViewController: UITableViewController {
         configureAutoClearCellAccessory()
         configureRememberLogins()
         configureDoNotSell()
+        configureAutoconsent()
         configureIconViews()
         configureEmailProtectionAccessoryText()
         configureMacBrowserWaitlistCell()
+        configureWindowsBrowserWaitlistCell()
         
         // Make sure muliline labels are correctly presented
         tableView.setNeedsLayout()
         tableView.layoutIfNeeded()
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is DoNotSellSettingsViewController {
             Pixel.fire(pixel: .settingsDoNotSellShown)
+            return
+        } else if segue.destination is AutoconsentSettingsViewController {
+            Pixel.fire(pixel: .settingsAutoconsentShown)
             return
         } else if let textSizeSettings = segue.destination as? TextSizeSettingsViewController {
             Pixel.fire(pixel: .textSizeSettingsShown)
@@ -136,7 +145,7 @@ class SettingsViewController: UITableViewController {
             }
         }
     }
-
+    
     private func configureAutofillCell() {
         autofillCell.isHidden = !shouldShowAutofillCell
     }
@@ -193,6 +202,10 @@ class SettingsViewController: UITableViewController {
     private func configureDoNotSell() {
         doNotSellAccessoryText.text = appSettings.sendDoNotSell ? UserText.doNotSellEnabled : UserText.doNotSellDisabled
     }
+    
+    private func configureAutoconsent() {
+        autoconsentAccessoryText.text = appSettings.autoconsentEnabled ? UserText.autoconsentEnabled : UserText.autoconsentDisabled
+    }
      
     private func configureRememberLogins() {
         rememberLoginsAccessoryText.text = PreserveLogins.shared.allowedDomains.isEmpty ? "" : "\(PreserveLogins.shared.allowedDomains.count)"
@@ -212,9 +225,17 @@ class SettingsViewController: UITableViewController {
     }
     
     private func configureMacBrowserWaitlistCell() {
-        macBrowserWaitlistCell.detailTextLabel?.text = MacBrowserWaitlist.shared.settingsSubtitle()
+        macBrowserWaitlistCell.detailTextLabel?.text = MacBrowserWaitlist.shared.settingsSubtitle
     }
-    
+
+    private func configureWindowsBrowserWaitlistCell() {
+        windowsBrowserWaitlistCell.isHidden = !WindowsBrowserWaitlist.shared.isAvailable
+
+        if WindowsBrowserWaitlist.shared.isAvailable {
+            windowsBrowserWaitlistCell.detailTextLabel?.text = WindowsBrowserWaitlist.shared.settingsSubtitle
+        }
+    }
+
     private func configureDebugCell() {
         debugCell.isHidden = !shouldShowDebugCell
     }
@@ -245,10 +266,18 @@ class SettingsViewController: UITableViewController {
         UIApplication.shared.open(AppUrls().emailProtectionQuickLink, options: [:], completionHandler: nil)
     }
 
-    private func showDesktopBrowserWaitlistViewController() {
+    private func showMacBrowserWaitlistViewController() {
         navigationController?.pushViewController(MacWaitlistViewController(nibName: nil, bundle: nil), animated: true)
     }
 
+    private func showWindowsBrowserWaitlistViewController() {
+        navigationController?.pushViewController(WindowsWaitlistViewController(nibName: nil, bundle: nil), animated: true)
+    }
+
+    func showCookiePopupManagement(animated: Bool = true) {
+        navigationController?.pushViewController(AutoconsentSettingsViewController.loadFromStoryboard(), animated: animated)
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
@@ -265,7 +294,10 @@ class SettingsViewController: UITableViewController {
             showEmailWebDashboard()
             
         case macBrowserWaitlistCell:
-            showDesktopBrowserWaitlistViewController()
+            showMacBrowserWaitlistViewController()
+
+        case windowsBrowserWaitlistCell:
+            showWindowsBrowserWaitlistViewController()
 
         case autofillCell:
             showAutofill()

@@ -100,6 +100,7 @@ public struct UserText {
     static let brokenSiteCategoryContent = NSLocalizedString("brokensite.category.content", value: "Content is missing", comment: "Broken Site Category")
     static let brokenSiteCategoryLogin = NSLocalizedString("brokensite.category.login", value: "I can’t sign in", comment: "Broken Site Category")
     static let brokenSiteCategoryUnsupported = NSLocalizedString("brokensite.category.unsupported", value: "The browser is incompatible", comment: "Broken Site Category")
+    static let brokenSiteCategoryCookiePrompt = NSLocalizedString("brokensite.category.cookieprompt", value: "Cookie pop-up wasn't managed", comment: "Broken Site Category")
     static let brokenSiteCategoryOther = NSLocalizedString("brokensite.category.other", value: "Something else", comment: "Broken Site Category")
         
     public static let homeRowReminderTitle = NSLocalizedString("home.row.reminder.title", value: "Take DuckDuckGo home", comment: "Home is this context is the bottom home row (dock)")
@@ -299,6 +300,10 @@ public struct UserText {
     public static let doNotSellEnabled = NSLocalizedString("donotsell.enabled", value: "Enabled", comment: "GPC Setting state")
     public static let doNotSellDisabled = NSLocalizedString("donotsell.disabled", value: "Disabled", comment: "GPC Setting state")
     
+    public static let autoconsentEnabled = NSLocalizedString("autoconsent.enabled", value: "Enabled", comment: "Autoconsent for Cookie Management Setting state")
+    public static let autoconsentDisabled = NSLocalizedString("autoconsent.disabled", value: "Disabled", comment: "Autoconsent for Cookie Management Setting state")
+    public static let autoconsentInfoText = NSLocalizedString("autoconsent.info.header", value: "When DuckDuckGo detects cookie consent pop-ups on sites you visit, we can try to automatically set your cookie preferences to minimize cookies and maximize privacy, then close the pop-ups. Some sites don't provide an option to manage cookie preferences, so we can only hide pop-ups like these.", comment: "")
+    
     public static let emailBrowsingMenuUseNewDuckAddress = NSLocalizedString("email.browsingMenu.useNewDuckAddress", value: "Generate Private Duck Address", comment: "Email option title in the browsing menu")
     public static let emailBrowsingMenuAlert = NSLocalizedString("email.browsingMenu.alert", value: "New address copied to your clipboard", comment: "Title for the email copy browsing menu alert")
     public static let emailAliasAlertTitle = NSLocalizedString("email.aliasAlert.title", value: "Block email trackers with a Duck Address", comment: "Title for the email alias selection alert")
@@ -409,46 +414,97 @@ public struct UserText {
 
     public static let actionAutofillLogins = NSLocalizedString("action.title.autofill.logins", value: "Autofill Logins", comment: "Autofill Logins menu item opening the login list")
 
+    // MARK: - Waitlist
+
+    public static let waitlistPrivacyDisclaimer = NSLocalizedString("waitlist.privacy-disclaimer",
+                                                                value: "You won’t need to share any personal information to join the waitlist. You’ll secure your place in line with a timestamp that exists solely on your device so we can notify you when it’s your turn.",
+                                                                comment: "Privacy disclaimer for the Waitlist feature")
+    public static let waitlistInviteCode = NSLocalizedString("waitlist.invite-code", value: "Invite Code", comment: "Label text for the invite code")
+    public static let waitlistShareLink = NSLocalizedString("waitlist.join-waitlist-screen.share-link", value: "Share Link", comment: "Title for the Share Link button")
+    public static let waitlistCopy = NSLocalizedString("waitlist.copy", value: "Copy", comment: "Title for the copy action")
+    public static let waitlistNotifyMe = NSLocalizedString("waitlist.joined.no-notification.get-notification", value: "Notify Me", comment: "Notification text for the waitlist")
+    public static let waitlistNotifyMeConfirmationTitle = NSLocalizedString("waitlist.joined.no-notification.get-notification-confirmation-title", value: "Get a notification when it’s your turn?", comment: "Title for the alert to confirm enabling notifications")
+    public static let waitlistNoThanks = NSLocalizedString("waitlist.joined.no-notification.no-thanks", value: "No Thanks", comment: "Cancel button in the alert to confirm enabling notifications")
+    public static let waitlistNotificationDisabled = NSLocalizedString("waitlist.notification.disabled", value: "We can notify you when it’s your turn, but notifications are currently disabled for DuckDuckGo.", comment: "Text used for the Notifications Disabled state")
+    public static let waitlistJoin = NSLocalizedString("waitlist.join-waitlist-screen.join", value: "Join the Private Waitlist", comment: "Title for the Join Waitlist screen")
+    public static let waitlistJoining = NSLocalizedString("waitlist.join-waitlist-screen.joining", value: "Joining Waitlist...", comment: "Temporary status text for the Join Waitlist screen")
+    public static let waitlistAllowNotifications = NSLocalizedString("waitlist.allow-notifications", value: "Allow Notifications", comment: "Title for the button to enable push notifications in system settings")
+    public static let waitlistAvailableNotificationBody = NSLocalizedString("waitlist.available.notification.body", value: "Open your invite", comment: "Body text for the waitlist notification")
+    public static let waitlistOnTheList = NSLocalizedString("waitlist.queue-screen.on-the-list", value: "You’re on the list!", comment: "Title for the queue screen")
+    public static let waitlistYoureInvited = NSLocalizedString("waitlist.invite-screen.youre-invited", value: "You’re Invited!", comment: "Title for the invite code screen")
+    public static let waitlistDownloadAvailable = NSLocalizedString("waitlist.settings.download-available", value: "Download available", comment: "Title for the settings subtitle")
+    public static func waitlistInviteScreenStepTitle(step: Int) -> String {
+        NSLocalizedString("waitlist.invite-screen.step.title", value: "Step %d", comment: "Step title on the invite screen").format(arguments: step)
+    }
+    public static let waitlistShareSheetTitle = NSLocalizedString("waitlist.share-sheet.title", value: "You’re Invited!", comment: "Title for the share sheet entry")
+
     // MARK: - Mac Waitlist
-    
-    public static let macBrowserTitle = NSLocalizedString("mac-waitlist.title", value: "DuckDuckGo Desktop App", comment: "Title for the Mac Waitlist feature")
-    
+
+    public static let macBrowserTitle = NSLocalizedString("mac-waitlist.title", value: "DuckDuckGo App for Mac", comment: "Title for the Mac Waitlist feature")
     public static let macWaitlistSummary = NSLocalizedString("mac-browser.waitlist.summary", value: "DuckDuckGo for Mac has the speed you need, the browsing features you expect, and comes packed with our best-in-class privacy essentials.", comment: "Summary text for the macOS browser waitlist")
-    
     public static let macWaitlistTryDuckDuckGoForMac = NSLocalizedString("mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac", value: "Get DuckDuckGo for Mac!", comment: "Title for the Join Waitlist screen")
-    
     public static let macWaitlistOnYourMacGoTo = NSLocalizedString("mac-waitlist.join-waitlist-screen.on-your-mac-go-to", value: "On your Mac, go to:", comment: "Description text above the Share Link button")
-    
-    public static let macWaitlistShareLink = NSLocalizedString("mac-waitlist.join-waitlist-screen.share-link", value: "Share Link", comment: "Title for the Share Link button")
-    
+    public static let macWaitlistWindowsComingSoon = NSLocalizedString("mac-waitlist.join-waitlist-screen.windows", value: "Windows coming soon!", comment: "Disclaimer for the Join Waitlist screen")
+    public static let macWaitlistWindows = NSLocalizedString("mac-waitlist.join-waitlist-screen.windows-waitlist", value: "Looking for the Windows Version?", comment: "Title for the macOS waitlist button redirecting to Windows waitlist")
     public static let macWaitlistCopy = NSLocalizedString("mac-waitlist.copy", value: "Copy", comment: "Title for the copy action")
-    
-    public static let macWaitlistWindows = NSLocalizedString("mac-waitlist.join-waitlist-screen.windows", value: "Windows coming soon!", comment: "Disclaimer for the Join Waitlist screen")
-    
+    public static let macWaitlistShareLink = NSLocalizedString("mac-waitlist.join-waitlist-screen.share-link", value: "Share Link", comment: "Title for the Share Link button")
+
+    // MARK: - Windows Waitlist
+
+    public static let windowsWaitlistTitle = NSLocalizedString("windows-waitlist.title", value: "DuckDuckGo App for Windows", comment: "Title for the Windows Waitlist feature")
+    public static let windowsWaitlistSummary = NSLocalizedString("windows-waitlist.summary", value: "DuckDuckGo for Windows has what you need to browse with more privacy — private search, tracker blocking, forced encryption, and cookie pop-up blocking, plus more best-in-class protections on the way.", comment: "Summary text for the Windows browser waitlist")
+    public static let windowsWaitlistTryDuckDuckGoForWindows = NSLocalizedString("windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows", value: "Get early access to try DuckDuckGo for Windows!", comment: "Title for the Join Windows Waitlist screen")
+    public static let windowsWaitlistMac = NSLocalizedString("windows-waitlist.join-waitlist-screen.mac-waitlist", value: "Looking for the Mac Version?", comment: "Title for the Windows waitlist button redirecting to Mac waitlist")
+    public static let windowsWaitlistBrowsePrivately = NSLocalizedString("windows-waitlist.settings.browse-privately", value: "Browse privately with our app for Windows", comment: "Title for the settings subtitle")
+
+    public static let windowsWaitlistJoinedWithNotifications = NSLocalizedString("windows-waitlist.joined.notifications-enabled",
+                                                                                 value: "We’ll send you a notification when your copy of DuckDuckGo for Windows is ready for download.",
+                                                                                 comment: "Label text for the Joined Waitlist state with notifications enabled")
+    public static let windowsWaitlistJoinedWithoutNotifications = NSLocalizedString("windows-waitlist.joined.notifications-declined",
+                                                                                    value: "Your invite to try DuckDuckGo for Windows will arrive here. Check back soon, or we can send you a notification when it’s your turn.",
+                                                                                    comment: "Label text for the Joined Waitlist state with notifications declined")
+    public static let windowsWaitlistNotifyMeConfirmationMessage = NSLocalizedString("windows-waitlist.joined.no-notification.get-notification-confirmation-message", value: "We’ll send you a notification when your copy of DuckDuckGo for Windows is ready for download. ", comment: "Message for the alert to confirm enabling notifications")
+    public static let windowsWaitlistInviteScreenSubtitle = NSLocalizedString("windows-waitlist.invite-screen.subtitle", value: "Ready to use DuckDuckGo on Windows?", comment: "Subtitle for the Windows Waitlist Invite screen")
+    public static let windowsWaitlistInviteScreenStep1Description = NSLocalizedString("windows-waitlist.invite-screen.step-1.description", value: "Visit this URL on your Windows device to download:", comment: "Description on the invite screen")
+    public static let windowsWaitlistInviteScreenStep2Description = NSLocalizedString("windows-waitlist.invite-screen.step-2.description", value: "Open DuckDuckGo Installer in Downloads, select Install, then enter your invite code.", comment: "Description on the invite screen")
+    public static let windowsWaitlistAvailableNotificationTitle = NSLocalizedString("windows-waitlist.available.notification.title", value: "Try DuckDuckGo for Windows!", comment: "Title for the Windows waitlist notification")
+    public static func windowsWaitlistShareSheetMessage(code: String) -> String {
+        let localized = NSLocalizedString("windows-waitlist.share-sheet.message", value: """
+            You’re invited!
+
+            Ready to use DuckDuckGo on Windows?
+
+            Step 1
+            Visit this URL on your Windows device to download:
+            https://duckduckgo.com/windows
+
+            Step 2
+            Open DuckDuckGo Installer in Downloads, select Install, then enter your invite code.
+
+            Invite code: %@
+            """, comment: "Message used when sharing to iMessage. Parameter is an eight digit invite code.")
+
+        return localized.format(arguments: code)
+    }
+
     // MARK: Notifications
     
     public static let macWaitlistAvailableNotificationTitle = NSLocalizedString("mac-waitlist.available.notification.title", value: "DuckDuckGo for Mac is ready!", comment: "Title for the macOS waitlist notification")
     
-    public static let macWaitlistAvailableNotificationBody = NSLocalizedString("mac-waitlist.available.notification.body", value: "Open your invite", comment: "Body text for the macOS waitlist notification")
-    
     // MARK: Settings Screen
     
     public static let emailSettingsSubtitle = NSLocalizedString("email.settings.subtitle", value: "Block email trackers and hide your address", comment: "Subtitle for the email settings cell")
-    
     public static let macWaitlistBrowsePrivately = NSLocalizedString("mac-waitlist.settings.browse-privately", value: "Browse privately with our app for Mac", comment: "Title for the settings subtitle")
     
     // MARK: Share Sheet
     
     public static let macWaitlistShareSheetTitle = NSLocalizedString("mac-waitlist.share-sheet.title", value: "DuckDuckGo for Mac", comment: "Title for the share sheet entry")
-    
-    public static func macWaitlistShareSheetMessage() -> String {
-        return NSLocalizedString("mac-waitlist.share-sheet.message", value: """
+    public static let macWaitlistShareSheetMessage = NSLocalizedString("mac-waitlist.share-sheet.message", value: """
         Ready to start browsing privately on Mac?
         
         Visit this URL on your Mac to download:
         https://duckduckgo.com/mac
         """, comment: "Message used when sharing to iMessage")
-    }
 
     public static let autofillLoginDetailsLoginName = NSLocalizedString("autofill.logins.details.login-name", value:"Login Title", comment: "Login name label for login details on autofill")
     public static let autofillLoginDetailsUsername = NSLocalizedString("autofill.logins.details.username", value:"Username", comment: "Username label for login details on autofill")
@@ -517,4 +573,13 @@ public struct UserText {
     public static let autofillLoginDetailsSaveDuplicateLoginAlertAction = NSLocalizedString("autofill.logins.details.save-duplicate-alert.action", value:"OK", comment: "Action text for alert when attempting to save a duplicate login")
 
     public static let autofillNavigationButtonItemTitleClose = NSLocalizedString("autofill.logins.list.close-title", value:"Close", comment: "Title for close navigation button")
+    
+    public static let omnibarNotificationCookiesManaged = NSLocalizedString("omnibar.notification.cookies-managed", value:"Cookies Managed", comment: "Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it")
+    public static let omnibarNotificationPopupHidden = NSLocalizedString("omnibar.notification.popup-hidden", value:"Pop-up Hidden", comment: "Text displayed on notification appearing in the address bar when the browser  hides a cookie popup")
+    
+    public static let daxDialogCookieConsentFirst = NSLocalizedString("dax.cookie-consent.first", value:"Looks like this site has a cookie consent pop-up👇", comment: "First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature")
+    public static let daxDialogCookieConsentSecond = NSLocalizedString("dax.cookie-consent.second", value:"Want me to handle these for you? I can try to minimize cookies, maximize privacy, and hide pop-ups like these.", comment: "Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature")
+    
+    public static let daxDialogCookieConsentAcceptButton = NSLocalizedString("dax.cookie-consent.button.accept", value:"Manage Cookie Pop-ups", comment: "Button title accepting to enable feature to automatically manage cookie popups")
+    public static let daxDialogCookieConsentRejectButton = NSLocalizedString("dax.cookie-consent.button.reject", value:"No Thanks", comment: "Button title rejecting to enable feature to automatically manage cookie popups")
 }

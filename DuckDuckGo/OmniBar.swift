@@ -35,6 +35,7 @@ class OmniBar: UIView {
     @IBOutlet weak var searchStackContainer: UIStackView!
     @IBOutlet weak var searchFieldContainer: SearchFieldContainerView!
     @IBOutlet weak var privacyInfoContainer: PrivacyInfoContainerView!
+    @IBOutlet weak var notificationContainer: OmniBarNotificationContainerView!
     @IBOutlet weak var textField: TextFieldWithInsets!
     @IBOutlet weak var editingBackground: RoundedRectangleView!
     @IBOutlet weak var clearButton: UIButton!
@@ -67,6 +68,7 @@ class OmniBar: UIView {
     private var safeAreaInsetsObservation: NSKeyValueObservation?
     
     private var privacyIconAndTrackersAnimator = PrivacyIconAndTrackersAnimator()
+    private var notificationAnimator = OmniBarNotificationAnimator()
     
     
     static func loadFromXib() -> OmniBar {
@@ -201,7 +203,7 @@ class OmniBar: UIView {
     }
     
     public func resetPrivacyIcon(for url: URL?) {
-        privacyIconAndTrackersAnimator.cancelAnimations(in: self)
+        cancelAllAnimations()
         privacyInfoContainer.privacyIcon.isHidden = false
         
         let icon = PrivacyIconLogic.privacyIcon(for: url)
@@ -224,32 +226,48 @@ class OmniBar: UIView {
         guard state.allowsTrackersAnimation, !privacyInfoContainer.isAnimationPlaying else { return }
         
         privacyIconAndTrackersAnimator.configure(privacyInfoContainer, with: privacyInfo)
-        
+
         if TrackerAnimationLogic.shouldAnimateTrackers(for: privacyInfo.trackerInfo) {
             if forDaxDialog {
                 privacyIconAndTrackersAnimator.startAnimationForDaxDialog(in: self, with: privacyInfo)
             } else {
                 privacyIconAndTrackersAnimator.startAnimating(in: self, with: privacyInfo)
             }
+        } else {
+            privacyIconAndTrackersAnimator.completeForNoAnimation()
         }
     }
     
     public func cancelAllAnimations() {
         privacyIconAndTrackersAnimator.cancelAnimations(in: self)
+        notificationAnimator.cancelAnimations(in: self)
     }
     
     public func completeAnimationForDaxDialog() {
         privacyIconAndTrackersAnimator.completeAnimationForDaxDialog(in: self)
     }
 
+    func showOrScheduleCookiesManagedNotification(isCosmetic: Bool) {
+        let type: OmniBarNotificationType = isCosmetic ? .cookiePopupHidden : .cookiePopupManaged
+        
+        if privacyIconAndTrackersAnimator.state == .completed {
+            notificationAnimator.showNotification(type, in: self)
+        } else {
+            privacyIconAndTrackersAnimator.onAnimationCompletion = { [weak self] in
+                guard let self = self else { return }
+                self.notificationAnimator.showNotification(type, in: self)
+            }
+        }
+    }
+
     fileprivate func refreshState(_ newState: OmniBarState) {
         if state.name != newState.name {
-            os_log("OmniBar entering %s from %s", log: generalLog, type: .debug, newState.name, state.name)
+            os_log("OmniBar entering %s from %s", log: .generalLog, type: .debug, newState.name, state.name)
             if newState.clearTextOnStart {
                 clear()
             }
             state = newState
-            privacyIconAndTrackersAnimator.cancelAnimations(in: self)
+            cancelAllAnimations()
         }
         
         searchFieldContainer.adjustTextFieldOffset(for: state)
@@ -405,7 +423,7 @@ class OmniBar: UIView {
     }
 
     @IBAction func onTrackersViewPressed(_ sender: Any) {
-        privacyIconAndTrackersAnimator.cancelAnimations(in: self)
+        cancelAllAnimations()
         textField.becomeFirstResponder()
     }
 
@@ -419,7 +437,7 @@ class OmniBar: UIView {
     
     @IBAction func onRefreshPressed(_ sender: Any) {
         Pixel.fire(pixel: .refreshPressed)
-        privacyIconAndTrackersAnimator.cancelAnimations(in: self)
+        cancelAllAnimations()
         omniDelegate?.onRefreshPressed()
     }
     

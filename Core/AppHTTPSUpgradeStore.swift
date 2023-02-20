@@ -88,7 +88,7 @@ public final class AppHTTPSUpgradeStore: HTTPSUpgradeStore {
     }
     
     @discardableResult func persistBloomFilter(specification: HTTPSBloomFilterSpecification, data: Data) -> Bool {
-        os_log("HTTPS Bloom Filter %s", log: generalLog, type: .debug, Resource.bloomFilter.absoluteString)
+        os_log("HTTPS Bloom Filter %s", log: .generalLog, type: .debug, Resource.bloomFilter.absoluteString)
         guard data.sha256 == specification.sha256 else { return false }
         guard persistBloomFilter(data: data) else { return false }
         persistBloomFilterSpecification(specification)

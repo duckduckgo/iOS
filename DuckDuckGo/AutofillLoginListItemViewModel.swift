@@ -30,9 +30,9 @@ final class AutofillLoginListItemViewModel: Identifiable, Hashable {
     let subtitle: String
     let id = UUID()
 
-    internal init(account: SecureVaultModels.WebsiteAccount, tld: TLD) {
+    internal init(account: SecureVaultModels.WebsiteAccount, tld: TLD, autofillDomainNameUrlMatcher: AutofillDomainNameUrlMatcher) {
         self.account = account
-        self.title = account.name(tld: tld)
+        self.title = account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
         self.subtitle = account.username
         
         fetchImage()

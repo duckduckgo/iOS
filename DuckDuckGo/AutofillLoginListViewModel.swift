@@ -198,18 +198,15 @@ final class AutofillLoginListViewModel: ObservableObject {
     }
 
     private func fetchSuggestedAccounts() -> [SecureVaultModels.WebsiteAccount] {
-        guard let url = currentTabUrl,
-              let host = url.host,
-              let secureVault = secureVault else {
+        guard let currentUrl = currentTabUrl else {
             return []
         }
 
-        do {
-            return try secureVault.accountsFor(domain: host)
-        } catch {
-            os_log("Failed to fetch suggested accounts")
-            return []
+        let suggestedAccounts = accounts.filter { account in
+            return autofillDomainNameUrlMatcher.isMatchingForAutofill(currentSite: currentUrl.absoluteString, savedSite: account.domain, tld: tld)
         }
+
+        return suggestedAccounts
     }
 
     private func makeSections(with accounts: [SecureVaultModels.WebsiteAccount]) -> [AutofillLoginListSectionType] {
@@ -284,7 +281,7 @@ final class AutofillLoginListViewModel: ObservableObject {
 
         return (sectionsToDelete: sectionsToDelete, rowsToDelete: rowsToDelete)
     }
-    
+
     @discardableResult
     func delete(_ account: SecureVaultModels.WebsiteAccount) -> Bool {
         guard let secureVault = secureVault,

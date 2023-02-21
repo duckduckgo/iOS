@@ -249,21 +249,23 @@ class AppConfigurationFetch {
 
         let backgroundFetchType = Keys.bgFetchTypeBackgroundTasks
 
-        let parameters = [Keys.bgFetchStart: String(store.backgroundStartCount),
-                          Keys.bgFetchNoData: String(store.backgroundNoDataCount),
-                          Keys.bgFetchWithData: String(store.backgroundNewDataCount),
-                          Keys.fgFetchStart: String(store.foregroundStartCount),
-                          Keys.fgFetchNoData: String(store.foregroundNoDataCount),
-                          Keys.fgFetchWithData: String(store.foregroundNewDataCount),
-                          Keys.bgFetchType: backgroundFetchType,
-                          Keys.bgFetchTaskExpiration: String(store.backgroundFetchTaskExpirationCount),
-                          Keys.bgFetchTaskDuration: String(Self.backgroundFetchTaskDuration),
-                          Keys.fetchHTTPSBloomFilterSpec: String(downloadedHTTPSBloomFilterSpecCount),
-                          Keys.fetchHTTPSBloomFilter: String(downloadedHTTPSBloomFilterCount),
-                          Keys.fetchHTTPSExcludedDomainsCount: String(downloadedHTTPSExcludedDomainsCount),
-                          Keys.fetchSurrogatesCount: String(downloadedSurrogatesCount),
-                          Keys.fetchTrackerDataSetCount: String(downloadedTrackerDataSetCount),
-                          Keys.fetchPrivacyConfigurationCount: String(downloadedPrivacyConfigurationCount)]
+        let parameters: [String: String] = [
+            Keys.bgFetchStart: String(store.backgroundStartCount),
+            Keys.bgFetchNoData: String(store.backgroundNoDataCount),
+            Keys.bgFetchWithData: String(store.backgroundNewDataCount),
+            Keys.fgFetchStart: String(store.foregroundStartCount),
+            Keys.fgFetchNoData: String(store.foregroundNoDataCount),
+            Keys.fgFetchWithData: String(store.foregroundNewDataCount),
+            Keys.bgFetchType: backgroundFetchType,
+            Keys.bgFetchTaskExpiration: String(store.backgroundFetchTaskExpirationCount),
+            Keys.bgFetchTaskDuration: String(Self.backgroundFetchTaskDuration),
+            Keys.fetchHTTPSBloomFilterSpec: String(downloadedHTTPSBloomFilterSpecCount),
+            Keys.fetchHTTPSBloomFilter: String(downloadedHTTPSBloomFilterCount),
+            Keys.fetchHTTPSExcludedDomainsCount: String(downloadedHTTPSExcludedDomainsCount),
+            Keys.fetchSurrogatesCount: String(downloadedSurrogatesCount),
+            Keys.fetchTrackerDataSetCount: String(downloadedTrackerDataSetCount),
+            Keys.fetchPrivacyConfigurationCount: String(downloadedPrivacyConfigurationCount)
+        ]
         
         let semaphore = DispatchSemaphore(value: 0)
         

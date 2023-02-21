@@ -35,10 +35,15 @@ public class AppTrackerEntity: NSManagedObject {
         return request
     }
 
-    public static func makeTracker(domain: String, date: Date, bucket: String, context: NSManagedObjectContext) -> AppTrackerEntity {
+    public static func makeTracker(domain: String,
+                                   trackerOwner: String,
+                                   date: Date,
+                                   bucket: String,
+                                   context: NSManagedObjectContext) -> AppTrackerEntity {
         let object = AppTrackerEntity(context: context)
         object.uuid = UUID().uuidString
         object.domain = domain
+        object.trackerOwner = trackerOwner
         object.count = 1
         object.timestamp = date
         object.bucket = bucket
@@ -48,6 +53,7 @@ public class AppTrackerEntity: NSManagedObject {
 
     @NSManaged public var uuid: String
     @NSManaged public var domain: String
+    @NSManaged public var trackerOwner: String
     @NSManaged public var bucket: String
     @NSManaged public var timestamp: Date
     @NSManaged public var count: Int

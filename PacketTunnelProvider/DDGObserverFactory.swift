@@ -64,10 +64,10 @@ class DDGObserverFactory: ObserverFactory {
             switch event {
             case .receivedRequest(let session, let socket):
                 if let trackerData = trackerData, trackerData.shouldBlock(domain: session.host) {
-                    // TODO: Test this out
-                    // let tracker = trackerData.trackerOwner(forDomain: session.host)
+                    let trackerOwner = trackerData.trackerOwner(forDomain: session.host)
+                    let ownerName = trackerOwner?.name ?? "Unknown Owner"
 
-                    appTrackingProtectionStoringModel.storeBlockedTracker(domain: session.host)
+                    appTrackingProtectionStoringModel.storeBlockedTracker(domain: session.host, trackerOwner: ownerName)
                     socket.forceDisconnect(becauseOf: BlockedReason())
                 }
                 

@@ -74,18 +74,19 @@ class TrackerDataParser {
         return domainList
     }
     
-    func trackerOwner(forDomain domain: String) -> String {
+    func trackerOwner(forDomain domain: String) -> AppTrackerOwner? {
         var check = domain
+
         while check.contains(".") {
             // return true if part of domain in list and action is block
             if let tracker = blocklist?.trackers[check] {
-                return tracker.owner.displayName
+                return tracker.owner
             }
             
             let parts = domain.split(separator: ".").dropFirst()
             check = parts.joined(separator: ".")
         }
         
-        return "Unknown Owner"
+        return nil
     }
 }

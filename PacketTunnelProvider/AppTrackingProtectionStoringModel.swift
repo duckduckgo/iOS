@@ -33,7 +33,7 @@ public class AppTrackingProtectionStoringModel: ObservableObject {
         self.dateFormatter.dateFormat = "dd-MM-yyyy"
     }
 
-    public func storeBlockedTracker(domain: String) {
+    public func storeBlockedTracker(domain: String, trackerOwner: String) {
         let blockedDate = Date()
         let bucket = dateFormatter.string(from: blockedDate)
 
@@ -44,7 +44,11 @@ public class AppTrackingProtectionStoringModel: ObservableObject {
                 if let existingTracker = try context.fetch(existingTrackersFetchRequest).first {
                     existingTracker.count += 1
                 } else {
-                    _ = AppTrackerEntity.makeTracker(domain: domain, date: blockedDate, bucket: bucket, context: context)
+                    _ = AppTrackerEntity.makeTracker(domain: domain,
+                                                     trackerOwner: trackerOwner,
+                                                     date: blockedDate,
+                                                     bucket: bucket,
+                                                     context: context)
                 }
 
                 save()

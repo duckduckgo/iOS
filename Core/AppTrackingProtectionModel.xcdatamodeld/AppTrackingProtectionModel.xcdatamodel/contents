@@ -4,7 +4,7 @@
         <attribute name="bucket" attributeType="String"/>
         <attribute name="count" attributeType="Integer 32" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="domain" attributeType="String"/>
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="trackerOwner" attributeType="String"/>
         <attribute name="uuid" attributeType="String"/>
     </entity>

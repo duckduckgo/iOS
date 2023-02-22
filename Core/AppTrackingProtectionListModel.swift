@@ -25,9 +25,9 @@ import os.log
 
 public class AppTrackingProtectionListModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
 
-    @Published var sections: [NSFetchedResultsSectionInfo] = []
+    @Published public var sections: [NSFetchedResultsSectionInfo] = []
 
-    private let context: NSManagedObjectContext
+    public let context: NSManagedObjectContext
 
     private lazy var trackerProcessingQueue: OperationQueue = {
         let queue = OperationQueue()

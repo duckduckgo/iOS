@@ -45,6 +45,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var emailProtectionAccessoryText: UILabel!
     @IBOutlet weak var macBrowserWaitlistCell: UITableViewCell!
     @IBOutlet weak var macBrowserWaitlistAccessoryText: UILabel!
+    @IBOutlet weak var appTPCell: UITableViewCell!
     @IBOutlet weak var longPressCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
     @IBOutlet weak var textSizeCell: UITableViewCell!
@@ -57,6 +58,8 @@ class SettingsViewController: UITableViewController {
     
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
+    
+    public var appTPDatabase: TemporaryAppTrackingProtectionDatabase!
     
     private let autofillSectionIndex = 1
     private let debugSectionIndex = 7
@@ -248,6 +251,13 @@ class SettingsViewController: UITableViewController {
     private func showDesktopBrowserWaitlistViewController() {
         navigationController?.pushViewController(MacWaitlistViewController(nibName: nil, bundle: nil), animated: true)
     }
+    
+    private func showAppTP() {
+        navigationController?.pushViewController(
+            AppTPActivityHostingViewController(appTrackingProtectionDatabase: appTPDatabase),
+            animated: true
+        )
+    }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -269,6 +279,9 @@ class SettingsViewController: UITableViewController {
 
         case autofillCell:
             showAutofill()
+            
+        case appTPCell:
+            showAppTP()
             
         default: break
         }

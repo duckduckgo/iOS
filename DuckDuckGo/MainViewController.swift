@@ -340,13 +340,16 @@ class MainViewController: UIViewController {
             return
         }
         
-        if let navController = segue.destination as? UINavigationController,
-            let brokenSiteScreen = navController.topViewController as? ReportBrokenSiteViewController {
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                segue.destination.modalPresentationStyle = .formSheet
+        if let navController = segue.destination as? UINavigationController {
+            if let brokenSiteScreen = navController.topViewController as? ReportBrokenSiteViewController {
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    segue.destination.modalPresentationStyle = .formSheet
+                }
+                
+                brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
+            } else if let settingsScreen = navController.topViewController as? SettingsViewController {
+                settingsScreen.appTPDatabase = self.appTrackingProtectionDatabase
             }
-            
-            brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
         }
 
         if var onboarding = segue.destination as? Onboarding {

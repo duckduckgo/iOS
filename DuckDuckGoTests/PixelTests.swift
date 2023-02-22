@@ -20,6 +20,7 @@
 import XCTest
 import OHHTTPStubs
 import OHHTTPStubsSwift
+import API
 @testable import Core
 
 class PixelTests: XCTestCase {

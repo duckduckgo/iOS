@@ -29,10 +29,11 @@ class MockDependencyProvider: DependencyProvider {
     var featureFlaggerInternalUserDecider: FeatureFlaggerInternalUserDecider
     var remoteMessagingStore: RemoteMessagingStore
     var homePageConfiguration: HomePageConfiguration
-    var storageCache: StorageCacheProvider
+    var storageCache: StorageCache
     var voiceSearchHelper: VoiceSearchHelperProtocol
     var downloadManager: DownloadManager
     var autofillLoginSession: AutofillLoginSession
+    var configurationManager: ConfigurationManager
 
     init() {
         let defaultProvider = AppDependencyProvider()
@@ -46,5 +47,6 @@ class MockDependencyProvider: DependencyProvider {
         voiceSearchHelper = defaultProvider.voiceSearchHelper
         downloadManager = defaultProvider.downloadManager
         autofillLoginSession = defaultProvider.autofillLoginSession
+        configurationManager = defaultProvider.configurationManager
     }
 }

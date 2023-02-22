@@ -70,7 +70,7 @@ public class FileStore {
         FileManager.default.fileExists(atPath: persistenceLocation(for: configuration).path)
     }
 
-    private func persistenceLocation(for configuration: Configuration) -> URL {
+    func persistenceLocation(for configuration: Configuration) -> URL {
         let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier)
         return path!.appendingPathComponent(configuration.rawValue)
     }

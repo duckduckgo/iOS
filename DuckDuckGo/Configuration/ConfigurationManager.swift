@@ -25,55 +25,54 @@ import BrowserServicesKit
 
 struct ConfigurationManager {
     
-    public static let didUpdateStorageCacheNotification = NSNotification.Name(rawValue: "com.duckduckgo.storageCacheProvider.notifications.didUpdate")
+    enum Error: Swift.Error {
+        
+        case bloomFilterSpecNotFound
+        case bloomFilterBinaryNotFound
+        case bloomFilterExcludedDomainsNotFound
+        
+    }
+    
+    public static let didUpdateTrackerDependencies = NSNotification.Name(rawValue: "com.duckduckgo.configurationManager.didUpdateTrackerDependencies")
     private static let updateQueue = DispatchQueue(label: "StorageCache update queue", qos: .utility)
     
-    private let lock = NSLock()
     private let store = ConfigurationStore()
     private let httpsUpgradeStore: AppHTTPSUpgradeStore = PrivacyFeatures.httpsUpgradeStore
 
-    func update() async {
-        
+    func update(onDidUpdate: @escaping (Configuration) -> Void) async -> Bool {
+        var didUpdateData = false
         let fetcher = ConfigurationFetcher(store: ConfigurationStore())
         do {
             try await fetcher.fetch([.trackerDataSet, .surrogates, .privacyConfiguration]) {
-                updateTrackerBlockingDependencies()
+                updateTrackerBlockingDependencies(onDidUpdate: onDidUpdate)
+                didUpdateData = true
             }
         } catch {
-//            os_log("Failed to apply update to %d", log: .generalLog, type: .debug, self.newData.count)
+            os_log("Failed to apply update to tracker blocking dependencies %@", log: .generalLog, type: .debug, error.localizedDescription)
         }
         
         do {
             try await fetcher.fetch([.bloomFilterBinary, .bloomFilterSpec]) {
-                try updateBloomFilter()
+                try updateBloomFilter(onDidUpdate: onDidUpdate)
+                didUpdateData = true
             }
         } catch {
-//            os_log("Failed to apply update to %d", log: .generalLog, type: .debug, self.newData.count)
+            os_log("Failed to apply update to bloom filter %@", log: .generalLog, type: .debug, error.localizedDescription)
         }
         
         do {
             try await fetcher.fetch([.bloomFilterExcludedDomains]) {
-                try updateBloomFilterExclusions()
+                try updateBloomFilterExclusions(onDidUpdate: onDidUpdate)
+                didUpdateData = true
             }
         } catch {
-//            os_log("Failed to apply update to %d", log: .generalLog, type: .debug, self.newData.count)
+            os_log("Failed to apply update to bloom filter exclusions %@", log: .generalLog, type: .debug, error.localizedDescription)
         }
-        
-//        Self.updateQueue.async {
-//            let currentCache = self.current
-//            let newCache = StorageCache(tld: currentCache.tld)
-//            loader.applyUpdate(to: newCache)
-//
-//            self.current = newCache
-//
-//            NotificationCenter.default.post(name: StorageCacheProvider.didUpdateStorageCacheNotification,
-//                                            object: self)
-//
-//            completion(newCache)
-//        }
+
+        return didUpdateData
     }
     
-    private func updateTrackerBlockingDependencies() {
+    private func updateTrackerBlockingDependencies(onDidUpdate: (Configuration) -> Void) {
         let configEtag = store.loadEtag(for: .privacyConfiguration)
         let configData = store.loadData(for: .privacyConfiguration)
         if ContentBlocking.shared.privacyConfigurationManager.reload(etag: configEtag, data: configData) != .downloaded {
@@ -85,35 +84,42 @@ struct ConfigurationManager {
         if ContentBlocking.shared.trackerDataManager.reload(etag: tdsEtag, data: tdsData) != .downloaded {
             Pixel.fire(pixel: .trackerDataReloadFailed)
         }
-        ContentBlocking.shared.contentBlockingManager.scheduleCompilation() // to do was it from mac on from ios?
+        
+        onDidUpdate(.privacyConfiguration)
+        onDidUpdate(.trackerDataSet)
+        
+        NotificationCenter.default.post(name: ConfigurationManager.didUpdateTrackerDependencies, object: self)
     }
     
-    private func updateBloomFilter() throws {
-        
+    private func updateBloomFilter(onDidUpdate: (Configuration) -> Void) throws {
         guard let specData = store.loadData(for: .bloomFilterSpec) else {
-//            throw Error.bloomFilterSpecNotFound
-            return
+            throw Error.bloomFilterSpecNotFound
         }
 
         guard let bloomFilterData = store.loadData(for: .bloomFilterBinary) else {
-//            throw Error.bloomFilterBinaryNotFound
-            return
+            throw Error.bloomFilterBinaryNotFound
         }
 
         let spec = try JSONDecoder().decode(HTTPSBloomFilterSpecification.self, from: specData)
         try httpsUpgradeStore.persistBloomFilter(specification: spec, data: bloomFilterData)
-//            throw Error.bloomFilterPersistenceFailed
+        
+        onDidUpdate(.bloomFilterSpec)
+        onDidUpdate(.bloomFilterBinary)
 
         PrivacyFeatures.httpsUpgrade.loadData()
     }
     
-    private func updateBloomFilterExclusions() throws {
+    private func updateBloomFilterExclusions(onDidUpdate: (Configuration) -> Void) throws {
         guard let excludedDomainsData = store.loadData(for: .bloomFilterExcludedDomains) else {
-            return // todo: throw
+            throw Error.bloomFilterExcludedDomainsNotFound
         }
         
         let excludedDomains = try HTTPSUpgradeParser.convertExcludedDomainsData(excludedDomainsData)
         try httpsUpgradeStore.persistExcludedDomains(excludedDomains)
+        
+        onDidUpdate(.bloomFilterExcludedDomains)
+        
+        PrivacyFeatures.httpsUpgrade.loadData()
     }
     
 }

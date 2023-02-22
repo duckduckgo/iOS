@@ -23,7 +23,6 @@ import Common
 
 public class StorageCache {
     
-    // Read only
     public let tld: TLD
     
     public init() {

@@ -127,22 +127,22 @@ class AppConfigurationFetch {
 
             return
         }
-
+        
         type(of: self).fetchQueue.async {
             let taskID = UIApplication.shared.beginBackgroundTask(withName: Constants.backgroundTaskName)
-            let fetchedNewData = self.fetchConfigurationFiles(isBackground: isBackgroundFetch)
-
-            if !isBackgroundFetch {
-                type(of: self).fetchQueue.async {
-                    self.sendStatistics {
-                        UIApplication.shared.endBackgroundTask(taskID)
+            self.fetchConfigurationFiles(isBackground: isBackgroundFetch) { fetchedNewData in
+                if !isBackgroundFetch {
+                    type(of: self).fetchQueue.async {
+                        self.sendStatistics {
+                            UIApplication.shared.endBackgroundTask(taskID)
+                        }
                     }
+                } else {
+                    UIApplication.shared.endBackgroundTask(taskID)
                 }
-            } else {
-                UIApplication.shared.endBackgroundTask(taskID)
+                
+                completion?(fetchedNewData)
             }
-
-            completion?(fetchedNewData)
         }
     }
 
@@ -182,23 +182,13 @@ class AppConfigurationFetch {
         #endif
     }
 
-    @discardableResult
-    private func fetchConfigurationFiles(isBackground: Bool) -> Bool {
+    private func fetchConfigurationFiles(isBackground: Bool, onDidComplete: @escaping (Bool) -> Void) {
         self.markFetchStarted(isBackground: isBackground)
-
-        var newData = false
-        // TODO!
-//        let semaphore = DispatchSemaphore(value: 0)
-//
-//        AppDependencyProvider.shared.storageCache.update(progress: updateFetchProgress) { newCache in
-//            newData = newData || (newCache != nil)
-//            semaphore.signal()
-//        }
-//
-//        semaphore.wait()
-
-        self.markFetchCompleted(isBackground: isBackground, hasNewData: newData)
-        return newData
+        Task {
+            let newData = await AppDependencyProvider.shared.configurationManager.update(onDidUpdate: updateFetchProgress(configuration:))
+            self.markFetchCompleted(isBackground: isBackground, hasNewData: newData)
+            onDidComplete(newData)
+        }
     }
     
     private func markFetchStarted(isBackground: Bool) {
@@ -330,17 +320,18 @@ extension AppConfigurationFetch {
                                                                               previousStatus: lastCompletionStatus)
             }
         }
-
+        
         queue.async {
-            let fetchedNewData = configurationFetcher.fetchConfigurationFiles(isBackground: true)
-            ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
-
-            DispatchQueue.main.async {
-                lastCompletionStatus = backgroundRefreshTaskCompletionHandler(store: store,
-                                                                              refreshStartDate: refreshStartDate,
-                                                                              task: task,
-                                                                              status: fetchedNewData ? .newData : .noData,
-                                                                              previousStatus: lastCompletionStatus)
+            configurationFetcher.fetchConfigurationFiles(isBackground: true) { fetchedNewData in
+                ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+                
+                DispatchQueue.main.async {
+                    lastCompletionStatus = backgroundRefreshTaskCompletionHandler(store: store,
+                                                                                  refreshStartDate: refreshStartDate,
+                                                                                  task: task,
+                                                                                  status: fetchedNewData ? .newData : .noData,
+                                                                                  previousStatus: lastCompletionStatus)
+                }
             }
         }
     }

@@ -20,7 +20,6 @@
 import Core
 import os
 import Configuration
-import Core
 
 /// Only intended for use via Debug screens.
 class DebugEtagStorage {

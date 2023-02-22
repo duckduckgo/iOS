@@ -32,6 +32,7 @@ protocol DependencyProvider {
     var voiceSearchHelper: VoiceSearchHelperProtocol { get }
     var downloadManager: DownloadManager { get }
     var autofillLoginSession: AutofillLoginSession { get }
+    var configurationManager: ConfigurationManager { get }
 }
 
 /// Provides dependencies for objects that are not directly instantiated
@@ -57,4 +58,5 @@ class AppDependencyProvider: DependencyProvider {
     let voiceSearchHelper: VoiceSearchHelperProtocol = VoiceSearchHelper()
     let downloadManager = DownloadManager()
     let autofillLoginSession = AutofillLoginSession()
+    let configurationManager = ConfigurationManager()
 }

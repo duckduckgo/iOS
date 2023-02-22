@@ -192,7 +192,6 @@
 		830381C01F850AAF00863075 /* WKWebViewConfigurationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830381BF1F850AAF00863075 /* WKWebViewConfigurationExtension.swift */; };
 		83134D7D20E2D725006CE65D /* FeedbackSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83134D7C20E2D725006CE65D /* FeedbackSender.swift */; };
 		8328AABE212AF70B00293140 /* HTTPSBloomFilterSpecification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8328AABD212AF70B00293140 /* HTTPSBloomFilterSpecification.swift */; };
-		8331AEDE20AA37560024962B /* APIHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8331AEDD20AA37560024962B /* APIHeaders.swift */; };
 		8341D807212D5E8D000514C2 /* HashExtensionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8341D804212D5DFB000514C2 /* HashExtensionTest.swift */; };
 		834DF992248FDE1A0075EA48 /* UserAgentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834DF990248FDDF60075EA48 /* UserAgentTests.swift */; };
 		836A941D247F23C600BF8EF5 /* UserAgentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836A941C247F23C600BF8EF5 /* UserAgentManager.swift */; };
@@ -290,7 +289,6 @@
 		8565419C224D304D00DF1FB2 /* proximanova-extrabold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8565419B224D304D00DF1FB2 /* proximanova-extrabold.otf */; };
 		8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A34A1FC8D96B00239327 /* LaunchTabNotification.swift */; };
 		8565A34D1FC8DFE400239327 /* LaunchTabNotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A34C1FC8DFE400239327 /* LaunchTabNotificationTests.swift */; };
-		857065701F6ABFA40044DCB1 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656F1F6ABFA40044DCB1 /* APIRequest.swift */; };
 		8577A1C5255D2C0D00D43FCD /* HitTestingToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8577A1C4255D2C0D00D43FCD /* HitTestingToolbar.swift */; };
 		857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */; };
 		858566E8252E4F56007501B8 /* Debug.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 858566E7252E4F56007501B8 /* Debug.storyboard */; };
@@ -1009,7 +1007,6 @@
 		830381BF1F850AAF00863075 /* WKWebViewConfigurationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewConfigurationExtension.swift; sourceTree = "<group>"; };
 		83134D7C20E2D725006CE65D /* FeedbackSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackSender.swift; sourceTree = "<group>"; };
 		8328AABD212AF70B00293140 /* HTTPSBloomFilterSpecification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSBloomFilterSpecification.swift; sourceTree = "<group>"; };
-		8331AEDD20AA37560024962B /* APIHeaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHeaders.swift; sourceTree = "<group>"; };
 		8341D804212D5DFB000514C2 /* HashExtensionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashExtensionTest.swift; sourceTree = "<group>"; };
 		834DF990248FDDF60075EA48 /* UserAgentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgentTests.swift; sourceTree = "<group>"; };
 		8353B0A325379A2C00B0F786 /* HTTPSUpgrade 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "HTTPSUpgrade 3.xcdatamodel"; sourceTree = "<group>"; };
@@ -1115,7 +1112,6 @@
 		8565419B224D304D00DF1FB2 /* proximanova-extrabold.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "proximanova-extrabold.otf"; sourceTree = "<group>"; };
 		8565A34A1FC8D96B00239327 /* LaunchTabNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTabNotification.swift; sourceTree = "<group>"; };
 		8565A34C1FC8DFE400239327 /* LaunchTabNotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTabNotificationTests.swift; sourceTree = "<group>"; };
-		8570656F1F6ABFA40044DCB1 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		8577A1C4255D2C0D00D43FCD /* HitTestingToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitTestingToolbar.swift; sourceTree = "<group>"; };
 		857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowInstructionsViewController.swift; sourceTree = "<group>"; };
 		858566E7252E4F56007501B8 /* Debug.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Debug.storyboard; sourceTree = "<group>"; };
@@ -3675,15 +3671,6 @@
 			name = Tutorials;
 			sourceTree = "<group>";
 		};
-		F11E23051ED33D8B00523BC9 /* API */ = {
-			isa = PBXGroup;
-			children = (
-				8570656F1F6ABFA40044DCB1 /* APIRequest.swift */,
-				8331AEDD20AA37560024962B /* APIHeaders.swift */,
-			);
-			name = API;
-			sourceTree = "<group>";
-		};
 		F12790DD1EBBDDF3001D3AEC /* Tutorials */ = {
 			isa = PBXGroup;
 			children = (
@@ -3816,7 +3803,6 @@
 		F143C2E51E4A4CD400CFDE3A /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				F11E23051ED33D8B00523BC9 /* API */,
 				CBAA195627BFDD9800A4BD49 /* SmarterEncryption */,
 				F1CE42A71ECA0A520074A8DF /* Bookmarks */,
 				837774491F8E1ECE00E17A29 /* ContentBlocker */,
@@ -5636,11 +5622,9 @@
 				F1A886781F29394E0096251E /* WebCacheManager.swift in Sources */,
 				C14882DA27F2011C00D59F0C /* BookmarksExporter.swift in Sources */,
 				854858E32937BC550063610B /* CollectionExtension.swift in Sources */,
-				8331AEDE20AA37560024962B /* APIHeaders.swift in Sources */,
 				1E6A4D692984208800A371D3 /* LocaleExtension.swift in Sources */,
 				98F6EA472863124100720957 /* ContentBlockerRulesLists.swift in Sources */,
 				F1134EB01F40AC6300B73467 /* AtbParser.swift in Sources */,
-				857065701F6ABFA40044DCB1 /* APIRequest.swift in Sources */,
 				B652DF10287C2C1600C12A9C /* ContentBlocking.swift in Sources */,
 				4BE2756827304F57006B20B0 /* URLRequestExtension.swift in Sources */,
 				85BA79911F6FF75000F59015 /* ContentBlockerStoreConstants.swift in Sources */,

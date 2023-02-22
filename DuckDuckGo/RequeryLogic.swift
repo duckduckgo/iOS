@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import API
 
 class RequeryLogic {
     
@@ -76,7 +77,7 @@ class RequeryLogic {
         }
         
         var headers = APIHeaders().defaultHeaders
-        headers[APIHeaders.Name.userAgent] = userAgentManager.userAgent(isDesktop: false)
+        headers[HTTPHeaderField.userAgent] = userAgentManager.userAgent(isDesktop: false)
         
         Pixel.fire(pixel: pixel, forDeviceType: nil, withHeaders: headers, onComplete: { _ in })
     }

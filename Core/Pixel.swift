@@ -21,6 +21,7 @@ import Foundation
 import os.log
 import BrowserServicesKit
 import Common
+import API
 
 // swiftlint:enable type_body_length
 
@@ -165,12 +166,12 @@ public class Pixel {
             url = appUrls.pixelUrl(forPixelNamed: pixel.name, includeATB: includedParameters.contains(.atb) )
         }
         
-        APIRequest.request(url: url,
-                           parameters: newParams,
-                           allowedQueryReservedCharacters: allowedQueryReservedCharacters,
-                           headers: headers,
-                           callBackOnMainThread: true) { (_, error) in
-            
+        let configuration = APIRequest.Configuration(url: url,
+                                                     queryParameters: newParams,
+                                                     allowedQueryReservedCharacters: allowedQueryReservedCharacters,
+                                                     headers: headers)
+        let request = APIRequest(configuration: configuration, urlSession: .makeSession(useMainThreadCallbackQueue: true))
+        request.fetch { _, error in
             os_log("Pixel fired %s %s", log: .generalLog, type: .debug, pixel.name, "\(params)")
             onComplete(error)
         }

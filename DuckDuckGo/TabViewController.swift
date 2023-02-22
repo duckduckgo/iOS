@@ -31,6 +31,7 @@ import PrivacyDashboard
 import UserScript
 import ContentBlocking
 import TrackerRadarKit
+import API
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -931,7 +932,7 @@ extension TabViewController: WKNavigationDelegate {
         let mimeType = MIMEType(from: navigationResponse.response.mimeType)
 
         let httpResponse = navigationResponse.response as? HTTPURLResponse
-        let isSuccessfulResponse = (httpResponse?.validateStatusCode(statusCode: 200..<300) == nil)
+        let isSuccessfulResponse = httpResponse?.isSuccessfulResponse ?? false
 
         let didMarkAsInternal = featureFlaggerInternalUserDecider.markUserAsInternalIfNeeded(forUrl: webView.url, response: httpResponse)
         if didMarkAsInternal {
@@ -2215,13 +2216,15 @@ extension TabViewController: EmailManagerRequestDelegate {
                       httpBody: Data?,
                       timeoutInterval: TimeInterval,
                       completion: @escaping (Data?, Error?) -> Void) {
-        APIRequest.request(url: url,
-                           method: APIRequest.HTTPMethod(rawValue: method) ?? .post,
-                           parameters: parameters ?? [:],
-                           headers: headers,
-                           httpBody: httpBody,
-                           timeoutInterval: timeoutInterval) { response, error in
-            
+        let method = HTTPMethod(rawValue: method) ?? .post
+        let configuration = APIRequest.Configuration(url: url,
+                                                     method: method,
+                                                     queryParameters: parameters ?? [:],
+                                                     headers: headers,
+                                                     body: httpBody,
+                                                     timeoutInterval: timeoutInterval)
+        let request = APIRequest(configuration: configuration, urlSession: .makeSession())
+        request.fetch { response, error in
             completion(response?.data, error)
         }
     }

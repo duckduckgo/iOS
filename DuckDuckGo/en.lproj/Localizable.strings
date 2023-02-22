@@ -136,6 +136,9 @@
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Unlock DuckDuckGo.";
 
+/* Title for the App Tracking Protection feature */
+"appTP.title" = "App Tracking Protection";
+
 /* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Sign In";
 

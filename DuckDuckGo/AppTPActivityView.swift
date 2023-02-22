@@ -59,7 +59,12 @@ struct AppTPActivityView: View {
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 0) {
-                // TODO: VPN toggle
+                Section {
+                    AppTPToggleView()
+                        .background(Color.cellBackground)
+                        .cornerRadius(12)
+                        .padding(.bottom)
+                }
                 
                 ForEach(viewModel.sections, id: \.name) { section in
                     Section(content: {
@@ -83,6 +88,7 @@ struct AppTPActivityView: View {
             }
             .padding()
         }
+        .navigationTitle(UserText.appTPNavTitle)
     }
 }
 

@@ -417,6 +417,8 @@
 		9865DFF922A8220D00D27829 /* FavoritesOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9865DFF822A8220D00D27829 /* FavoritesOverlay.swift */; };
 		9865DFFD22A84CF300D27829 /* FavoriteHomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9865DFFC22A84CF300D27829 /* FavoriteHomeCell.xib */; };
 		986B16C425E92DF0007D23E8 /* BrowsingMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B16C225E92DF0007D23E8 /* BrowsingMenuViewController.swift */; };
+		986B45CB299D5EF50089D2D7 /* BookmarksLookupPerformanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B45CA299D5EF50089D2D7 /* BookmarksLookupPerformanceTests.swift */; };
+		986B45D0299E30A50089D2D7 /* BookmarkEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B45CF299E30A50089D2D7 /* BookmarkEntityTests.swift */; };
 		986C7FA724171C6000A3557D /* BrokenSiteCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986C7FA624171C6000A3557D /* BrokenSiteCategories.swift */; };
 		986C7FA92417ADE700A3557D /* ReportBrokenSiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986C7FA82417ADE700A3557D /* ReportBrokenSiteViewController.swift */; };
 		986DA94A24884B18004A7E39 /* WebViewTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986DA94924884B18004A7E39 /* WebViewTransition.swift */; };
@@ -1751,6 +1753,8 @@
 		9866DE90251CBC8500612E3A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/OmniBar.strings; sourceTree = "<group>"; };
 		9866DE92251CBC8600612E3A /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/OmniBar.strings; sourceTree = "<group>"; };
 		986B16C225E92DF0007D23E8 /* BrowsingMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsingMenuViewController.swift; sourceTree = "<group>"; };
+		986B45CA299D5EF50089D2D7 /* BookmarksLookupPerformanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksLookupPerformanceTests.swift; sourceTree = "<group>"; };
+		986B45CF299E30A50089D2D7 /* BookmarkEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkEntityTests.swift; sourceTree = "<group>"; };
 		986C7FA624171C6000A3557D /* BrokenSiteCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokenSiteCategories.swift; sourceTree = "<group>"; };
 		986C7FA82417ADE700A3557D /* ReportBrokenSiteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBrokenSiteViewController.swift; sourceTree = "<group>"; };
 		986DA94924884B18004A7E39 /* WebViewTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewTransition.swift; sourceTree = "<group>"; };
@@ -3256,6 +3260,7 @@
 				98BFA910294A2086004EA636 /* bookmarks_3k.html */,
 				98D4B7E22949C4270068814D /* bookmarks_30k.html */,
 				9825F9DA293F2E8700F220F2 /* BookmarksTestData.swift */,
+				986B45CA299D5EF50089D2D7 /* BookmarksLookupPerformanceTests.swift */,
 				98D4B7D9294407AC0068814D /* BookmarksSearchPerformanceTests.swift */,
 				98D4B7E02949C3E80068814D /* BookmarksImportPerformanceTests.swift */,
 				98D4B7E42949EFCE0068814D /* BookmarksExportPerformanceTests.swift */,
@@ -3303,6 +3308,7 @@
 		987130BD294AAB8200AB05E0 /* BSK */ = {
 			isa = PBXGroup;
 			children = (
+				986B45CF299E30A50089D2D7 /* BookmarkEntityTests.swift */,
 				987130BF294AAB9E00AB05E0 /* BookmarkEditorViewModelTests.swift */,
 				987130C0294AAB9E00AB05E0 /* BookmarkListViewModelTests.swift */,
 				987130C3294AAB9E00AB05E0 /* BookmarkUtilsTests.swift */,
@@ -5418,6 +5424,7 @@
 				F11E23211ED3B7A600523BC9 /* MockBundle.swift in Sources */,
 				F13B4BF91F18CA0600814661 /* TabsModelTests.swift in Sources */,
 				98B31290218CCB2200E54DE1 /* MockDependencyProvider.swift in Sources */,
+				986B45D0299E30A50089D2D7 /* BookmarkEntityTests.swift in Sources */,
 				B6AD9E3828D4512E0019CDE9 /* EmbeddedTrackerDataTests.swift in Sources */,
 				1E722729292EB24D003B5F53 /* AppSettingsMock.swift in Sources */,
 				8536A1C8209AF2410050739E /* MockVariantManager.swift in Sources */,
@@ -5563,6 +5570,7 @@
 			files = (
 				98D4B7E52949EFCE0068814D /* BookmarksExportPerformanceTests.swift in Sources */,
 				98D4B7DA294407AC0068814D /* BookmarksSearchPerformanceTests.swift in Sources */,
+				986B45CB299D5EF50089D2D7 /* BookmarksLookupPerformanceTests.swift in Sources */,
 				98D4B7E12949C3E80068814D /* BookmarksImportPerformanceTests.swift in Sources */,
 				9825F9DB293F2E8700F220F2 /* BookmarksTestData.swift in Sources */,
 				98BFA913294A3DDC004EA636 /* BookmarksEditModelPerformanceTests.swift in Sources */,
@@ -7363,7 +7371,7 @@
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = exactVersion;
-				version = 46.2.0;
+				version = 47.0.0;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

@@ -23,19 +23,125 @@ import Core
 struct AppTPActivityView: View {
     @ObservedObject var viewModel: AppTrackingProtectionListModel
     
+    private let relativeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .none
+        formatter.dateStyle = .medium
+        formatter.doesRelativeDateFormatting = true
+        return formatter
+    }()
+    
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM dd"
+        return formatter
+    }()
+    
+    private let inputFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy"
+        return formatter
+    }()
+    
+    func formattedDate(_ sectionName: String) -> String {
+        guard let date = inputFormatter.date(from: sectionName) else {
+            return "Invalid Date"
+        }
+        
+        let relativeDate = relativeFormatter.string(from: date)
+        if relativeDate.rangeOfCharacter(from: .decimalDigits) != nil {
+            return dateFormatter.string(from: date)
+        }
+        
+        return relativeDate
+    }
+    
     var body: some View {
         ScrollView {
-            LazyVStack {
+            LazyVStack(alignment: .leading, spacing: 0) {
                 // TODO: VPN toggle
                 
                 ForEach(viewModel.sections, id: \.name) { section in
-                    Section(header: Text(section.name)) {
-                        ForEach(section.objects as? [AppTrackerEntity] ?? []) { tracker in
-                            Text(tracker.domain)
+                    Section(content: {
+                        LazyVStack(alignment: .leading, spacing: 0) {
+                            ForEach(section.objects as? [AppTrackerEntity] ?? []) { tracker in
+                                let showDivider = tracker != (section.objects?.last as? AppTrackerEntity)
+                                AppTPTrackerCell(tracker: tracker, showDivider: showDivider)
+                            }
                         }
-                    }
+                        .background(Color.cellBackground)
+                        .cornerRadius(12)
+                    }, header: {
+                        Text(formattedDate(section.name))
+                            .font(Font(uiFont: Const.Font.sectionHeader))
+                            .foregroundColor(Color.trackerDomain)
+                            .padding(.top)
+                            .padding(.leading, 16)
+                            .padding(.bottom, 6)
+                    })
                 }
+            }
+            .padding()
+        }
+    }
+}
+
+struct AppTPTrackerCell: View {
+    let tracker: AppTrackerEntity
+    let showDivider: Bool
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(alignment: .center) {
+                Image(systemName: "globe")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 25, height: 25)
+                
+                VStack(alignment: .leading) {
+                    Text(tracker.domain)
+                        .font(Font(uiFont: Const.Font.trackerDomain))
+                        .foregroundColor(.trackerDomain)
+                    
+                    Text("\(tracker.count) tracking attempts")
+                        .font(Font(uiFont: Const.Font.trackerCount))
+                        .foregroundColor(.trackerSize)
+                }
+            }
+            .padding(.horizontal)
+            .frame(height: Const.Size.rowHeight)
+            
+            if showDivider {
+                Divider()
             }
         }
     }
+}
+
+private enum Const {
+    enum Font {
+        static let sectionHeader = UIFont.semiBoldAppFont(ofSize: 15)
+        static let trackerDomain = UIFont.appFont(ofSize: 16)
+        static let trackerCount = UIFont.appFont(ofSize: 13)
+    }
+    
+    // TODO: Get proper sizing from figma
+    enum Spacing {
+        static let betweenLabels: CGFloat = 6
+        static let betweenLabelsAndShareButton: CGFloat = 20
+    }
+    
+    enum Size {
+        static let rowHeight: CGFloat = 60
+    }
+}
+
+private extension EdgeInsets {
+    static let rowInsets = EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
+}
+
+private extension Color {
+    static let trackerDomain = Color("DownloadsListFilenameColor")
+    static let trackerSize = Color("DownloadsListFileSizeColor")
+    static let cellBackground = Color("AppTPCellBackgroundColor")
 }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		020108A129A5610C00644F9D /* AppTPActivityHostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020108A029A5610C00644F9D /* AppTPActivityHostingViewController.swift */; };
 		020108A329A561C300644F9D /* AppTPActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020108A229A561C300644F9D /* AppTPActivityView.swift */; };
+		020108A529A681E300644F9D /* AppTP.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 020108A429A681E200644F9D /* AppTP.xcassets */; };
 		02025664298818B200E694E7 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02025663298818B100E694E7 /* NetworkExtension.framework */; };
 		0202566C298818B200E694E7 /* PacketTunnelProvider.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 02025662298818B100E694E7 /* PacketTunnelProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0202569029881ECA00E694E7 /* CocoaAsyncSocket in Frameworks */ = {isa = PBXBuildFile; productRef = 0202568F29881ECA00E694E7 /* CocoaAsyncSocket */; };
@@ -918,6 +919,7 @@
 /* Begin PBXFileReference section */
 		020108A029A5610C00644F9D /* AppTPActivityHostingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPActivityHostingViewController.swift; sourceTree = "<group>"; };
 		020108A229A561C300644F9D /* AppTPActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPActivityView.swift; sourceTree = "<group>"; };
+		020108A429A681E200644F9D /* AppTP.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppTP.xcassets; sourceTree = "<group>"; };
 		02025662298818B100E694E7 /* PacketTunnelProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PacketTunnelProvider.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		02025663298818B100E694E7 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		02025666298818B200E694E7 /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
@@ -2418,6 +2420,7 @@
 			children = (
 				020108A029A5610C00644F9D /* AppTPActivityHostingViewController.swift */,
 				020108A229A561C300644F9D /* AppTPActivityView.swift */,
+				020108A429A681E200644F9D /* AppTP.xcassets */,
 			);
 			name = AppTPActivityView;
 			sourceTree = "<group>";
@@ -5193,6 +5196,7 @@
 				85A9C37920E0E00C00073340 /* HomeRow.xcassets in Resources */,
 				B6BA95C528894A28004ABA20 /* BrowsingMenuViewController.storyboard in Resources */,
 				AA4D6AE623DE4D33007E8790 /* AppIconGreen60x60@3x.png in Resources */,
+				020108A529A681E300644F9D /* AppTP.xcassets in Resources */,
 				8565419C224D304D00DF1FB2 /* proximanova-extrabold.otf in Resources */,
 				AA4D6A9323DE49A5007E8790 /* AppIconBlack76x76@2x.png in Resources */,
 				F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */,

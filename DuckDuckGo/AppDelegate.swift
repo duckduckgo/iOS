@@ -28,6 +28,8 @@ import BrowserServicesKit
 import Bookmarks
 import Persistence
 import Crashes
+import Configuration
+import API
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -68,6 +70,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 .forEach { $0.perform(setHardwareLayout, with: nil) }
         }
         #endif
+        
+        APIHeaders.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
+        Configuration.setURLProvider(AppConfigurationURLProvider())
 
         CrashCollection.start {
             Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: $0, includedParameters: [.appVersion])

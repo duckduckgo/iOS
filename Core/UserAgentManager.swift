@@ -74,6 +74,12 @@ public class DefaultUserAgentManager: UserAgentManager {
             completion(agent)
         }
     }
+    
+    public static var duckDuckGoUserAgent: String {
+        let osVersion = UIDevice.current.systemVersion
+        return "ddg_ios/\(AppVersion.shared.versionAndBuildNumber) ; iOS \(osVersion))"
+    }
+    
 }
 
 struct UserAgent {
@@ -195,4 +201,5 @@ struct UserAgent {
         let suffix = (agent as NSString).substring(with: range)
         return "\(Constants.desktopPrefixComponent) \(suffix) \(versionComponent)"
     }
+    
 }

@@ -25,11 +25,22 @@ import BrowserServicesKit
 
 struct ConfigurationManager {
     
-    enum Error: Swift.Error {
+    enum Error: Swift.Error, LocalizedError {
         
         case bloomFilterSpecNotFound
         case bloomFilterBinaryNotFound
         case bloomFilterExcludedDomainsNotFound
+        
+        var errorDescription: String? {
+            switch self {
+            case .bloomFilterSpecNotFound:
+                return "Bloom filter spec not found."
+            case .bloomFilterBinaryNotFound:
+                return "Bloom filter binary not found."
+            case .bloomFilterExcludedDomainsNotFound:
+                return "Bloom filter excluded domains not found."
+            }
+        }
         
     }
     
@@ -40,36 +51,36 @@ struct ConfigurationManager {
     private let httpsUpgradeStore: AppHTTPSUpgradeStore = PrivacyFeatures.httpsUpgradeStore
 
     func update(onDidUpdate: @escaping (Configuration) -> Void) async -> Bool {
-        var didUpdateData = false
+        var didUpdateAnyData = false
         let fetcher = ConfigurationFetcher(store: ConfigurationStore())
         do {
             try await fetcher.fetch([.trackerDataSet, .surrogates, .privacyConfiguration]) {
                 updateTrackerBlockingDependencies(onDidUpdate: onDidUpdate)
-                didUpdateData = true
+                didUpdateAnyData = true
             }
         } catch {
-            os_log("Failed to apply update to tracker blocking dependencies %@", log: .generalLog, type: .debug, error.localizedDescription)
+            os_log("Failed to apply update to tracker blocking dependencies: %@", log: .generalLog, type: .debug, error.localizedDescription)
         }
         
         do {
             try await fetcher.fetch([.bloomFilterBinary, .bloomFilterSpec]) {
                 try updateBloomFilter(onDidUpdate: onDidUpdate)
-                didUpdateData = true
+                didUpdateAnyData = true
             }
         } catch {
-            os_log("Failed to apply update to bloom filter %@", log: .generalLog, type: .debug, error.localizedDescription)
+            os_log("Failed to apply update to bloom filter: %@", log: .generalLog, type: .debug, error.localizedDescription)
         }
         
         do {
             try await fetcher.fetch([.bloomFilterExcludedDomains]) {
                 try updateBloomFilterExclusions(onDidUpdate: onDidUpdate)
-                didUpdateData = true
+                didUpdateAnyData = true
             }
         } catch {
-            os_log("Failed to apply update to bloom filter exclusions %@", log: .generalLog, type: .debug, error.localizedDescription)
+            os_log("Failed to apply update to bloom filter exclusions: %@", log: .generalLog, type: .debug, error.localizedDescription)
         }
 
-        return didUpdateData
+        return didUpdateAnyData
     }
     
     private func updateTrackerBlockingDependencies(onDidUpdate: (Configuration) -> Void) {

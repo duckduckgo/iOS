@@ -32,6 +32,15 @@ public final class AppHTTPSUpgradeStore: HTTPSUpgradeStore {
         case specMismatch
         case saveError(Swift.Error)
         
+        public var errorDescription: String? {
+            switch self {
+            case .specMismatch:
+                return "The spec and the data do not match."
+            case .saveError(let error):
+                return "Error occurred while saving data: \(error.localizedDescription)"
+            }
+        }
+        
     }
     
     private struct Resource {

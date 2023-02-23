@@ -24,6 +24,8 @@ import SVGView
 struct AppTPActivityView: View {
     @ObservedObject var viewModel: AppTrackingProtectionListModel
     
+    @State var vpnOn: Bool = false
+    
     let imageCache = AppTrackerImageCache()
     
     private let relativeFormatter: DateFormatter = {
@@ -59,36 +61,69 @@ struct AppTPActivityView: View {
         return relativeDate
     }
     
+    func imageForState() -> Image {
+        return vpnOn ? Image("AppTPEmptyEnabled") : Image("AppTPEmptyDisabled")
+    }
+    
+    func textForState() -> String {
+        return vpnOn ? UserText.appTPEmptyEnabledInfo : UserText.appTPEmptyDisabledInfo
+    }
+    
+    var emptyState: some View {
+        VStack {
+            imageForState()
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 128, height: 96)
+                .padding(.bottom)
+            
+            Text(textForState())
+                .multilineTextAlignment(.center)
+                .font(Font(uiFont: Const.Font.trackerDomain))
+                .foregroundColor(.trackerDomain)
+        }
+        .padding()
+        .padding(.top)
+    }
+    
+    var listState: some View {
+        ForEach(viewModel.sections, id: \.name) { section in
+            Section(content: {
+                LazyVStack(alignment: .leading, spacing: 0) {
+                    ForEach(section.objects as? [AppTrackerEntity] ?? []) { tracker in
+                        let showDivider = tracker != (section.objects?.last as? AppTrackerEntity)
+                        AppTPTrackerCell(tracker: tracker,
+                                         imageCache: imageCache,
+                                         showDivider: showDivider)
+                    }
+                }
+                .background(Color.cellBackground)
+                .cornerRadius(12)
+            }, header: {
+                Text(formattedDate(section.name))
+                    .font(Font(uiFont: Const.Font.sectionHeader))
+                    .foregroundColor(Color.trackerDomain)
+                    .padding(.top)
+                    .padding(.leading, 16)
+                    .padding(.bottom, 6)
+            })
+        }
+    }
+    
     var body: some View {
         ScrollView {
-            LazyVStack(alignment: .leading, spacing: 0) {
+            LazyVStack(alignment: .center, spacing: 0) {
                 Section {
-                    AppTPToggleView()
+                    AppTPToggleView(vpnOn: $vpnOn)
                         .background(Color.cellBackground)
                         .cornerRadius(12)
                         .padding(.bottom)
                 }
                 
-                ForEach(viewModel.sections, id: \.name) { section in
-                    Section(content: {
-                        LazyVStack(alignment: .leading, spacing: 0) {
-                            ForEach(section.objects as? [AppTrackerEntity] ?? []) { tracker in
-                                let showDivider = tracker != (section.objects?.last as? AppTrackerEntity)
-                                AppTPTrackerCell(tracker: tracker,
-                                                 imageCache: imageCache,
-                                                 showDivider: showDivider)
-                            }
-                        }
-                        .background(Color.cellBackground)
-                        .cornerRadius(12)
-                    }, header: {
-                        Text(formattedDate(section.name))
-                            .font(Font(uiFont: Const.Font.sectionHeader))
-                            .foregroundColor(Color.trackerDomain)
-                            .padding(.top)
-                            .padding(.leading, 16)
-                            .padding(.bottom, 6)
-                    })
+                if viewModel.sections.count > 0 {
+                    listState
+                } else {
+                    emptyState
                 }
             }
             .padding()
@@ -115,7 +150,7 @@ struct AppTPTrackerCell: View {
                         .font(Font(uiFont: Const.Font.trackerDomain))
                         .foregroundColor(.trackerDomain)
                     
-                    Text("\(tracker.count) tracking attempts")
+                    Text(UserText.appTPTrackingAttempts(count: "\(tracker.count)"))
                         .font(Font(uiFont: Const.Font.trackerCount))
                         .foregroundColor(.trackerSize)
                 }

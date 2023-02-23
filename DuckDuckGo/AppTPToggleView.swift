@@ -22,7 +22,7 @@ import NetworkExtension
 import os.log
 
 struct AppTPToggleView: View {
-    @State var vpnOn = false
+    @Binding var vpnOn: Bool
     @State var isExternalChange = false
     @State var connectionStatus: NEVPNStatus = .disconnected
     @State var isLoading = false

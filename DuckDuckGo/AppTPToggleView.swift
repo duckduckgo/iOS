@@ -29,7 +29,6 @@ struct AppTPToggleView: View {
     
     func setup() async {
         let fwc = FirewallController.shared
-//        isExternalChange = true
         await fwc.refreshManager()
         connectionStatus = fwc.status()
         vpnOn = connectionStatus == .connected
@@ -85,18 +84,11 @@ private enum Const {
         static let toggleLabel = UIFont.appFont(ofSize: 16)
     }
     
-    // TODO: Get proper sizing from figma
-    enum Spacing {
-        static let betweenLabels: CGFloat = 6
-        static let betweenLabelsAndShareButton: CGFloat = 20
-    }
-    
     enum Size {
         static let rowHeight: CGFloat = 44
     }
 }
 
 private extension Color {
-    static let cellBackground = Color("AppTPCellBackgroundColor")
     static let toggleTint = Color("AppTPToggleColor")
 }

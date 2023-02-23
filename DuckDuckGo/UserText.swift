@@ -434,7 +434,7 @@ public struct UserText {
     public static let appTPEmptyEnabledInfo = NSLocalizedString("appTP.empty.enabled.info", value: "We're looking for trackers in your apps...", comment: "Info string informing the user we're looking for trackers in other apps.")
     
     public static func appTPTrackingAttempts(count: String) -> String {
-        let message = NSLocalizedString("appTP.trackingattempts", value: "'%@' tracking attempts", comment: "Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts")
+        let message = NSLocalizedString("appTP.trackingattempts", value: "%@ tracking attempts", comment: "Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts")
         return message.format(arguments: count)
     }
     

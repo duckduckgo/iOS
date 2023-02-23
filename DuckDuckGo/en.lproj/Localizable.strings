@@ -146,7 +146,7 @@
 "appTP.title" = "App Tracking Protection";
 
 /* Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts */
-"appTP.trackingattempts" = "'%@' tracking attempts";
+"appTP.trackingattempts" = "%@ tracking attempts";
 
 /* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Sign In";

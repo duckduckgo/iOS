@@ -2426,10 +2426,10 @@
 		0201089F29A560D400644F9D /* AppTPActivityView */ = {
 			isa = PBXGroup;
 			children = (
+				020108A429A681E200644F9D /* AppTP.xcassets */,
 				020108A029A5610C00644F9D /* AppTPActivityHostingViewController.swift */,
 				020108A229A561C300644F9D /* AppTPActivityView.swift */,
 				020108A629A6ABF600644F9D /* AppTPToggleView.swift */,
-				020108A429A681E200644F9D /* AppTP.xcassets */,
 				020108A829A7C1CD00644F9D /* AppTrackerImageCache.swift */,
 				020108AD29A7F91600644F9D /* AppTPTrackerCell.swift */,
 			);

@@ -99,12 +99,16 @@ struct AppTPActivityView: View {
                 .background(Color.cellBackground)
                 .cornerRadius(Const.Size.cornerRadius)
             }, header: {
-                Text(formattedDate(section.name))
-                    .font(Font(uiFont: Const.Font.sectionHeader))
-                    .foregroundColor(.infoText)
-                    .padding(.top)
-                    .padding(.leading, Const.Size.sectionIndentation)
-                    .padding(.bottom, Const.Size.sectionHeaderBottom)
+                HStack {
+                    Text(formattedDate(section.name))
+                        .font(Font(uiFont: Const.Font.sectionHeader))
+                        .foregroundColor(.infoText)
+                        .padding(.top)
+                        .padding(.leading, Const.Size.sectionIndentation)
+                        .padding(.bottom, Const.Size.sectionHeaderBottom)
+                    
+                    Spacer()
+                }
             })
         }
     }

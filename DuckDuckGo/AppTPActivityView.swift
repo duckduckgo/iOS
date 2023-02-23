@@ -19,9 +19,12 @@
 
 import SwiftUI
 import Core
+import SVGView
 
 struct AppTPActivityView: View {
     @ObservedObject var viewModel: AppTrackingProtectionListModel
+    
+    let imageCache = AppTrackerImageCache()
     
     private let relativeFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -71,7 +74,9 @@ struct AppTPActivityView: View {
                         LazyVStack(alignment: .leading, spacing: 0) {
                             ForEach(section.objects as? [AppTrackerEntity] ?? []) { tracker in
                                 let showDivider = tracker != (section.objects?.last as? AppTrackerEntity)
-                                AppTPTrackerCell(tracker: tracker, showDivider: showDivider)
+                                AppTPTrackerCell(tracker: tracker,
+                                                 imageCache: imageCache,
+                                                 showDivider: showDivider)
                             }
                         }
                         .background(Color.cellBackground)
@@ -95,13 +100,13 @@ struct AppTPActivityView: View {
 
 struct AppTPTrackerCell: View {
     let tracker: AppTrackerEntity
+    let imageCache: AppTrackerImageCache
     let showDivider: Bool
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .center) {
-                Image(systemName: "globe")
-                    .resizable()
+                SVGView(data: imageCache.loadTrackerImage(for: tracker.trackerOwner))
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 25, height: 25)
                 

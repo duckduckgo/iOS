@@ -13,6 +13,7 @@
 		020108A729A6ABF600644F9D /* AppTPToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020108A629A6ABF600644F9D /* AppTPToggleView.swift */; };
 		020108A929A7C1CD00644F9D /* AppTrackerImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020108A829A7C1CD00644F9D /* AppTrackerImageCache.swift */; };
 		020108AC29A7D7F800644F9D /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = 020108AB29A7D7F800644F9D /* SVGView */; };
+		020108AE29A7F91600644F9D /* AppTPTrackerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020108AD29A7F91600644F9D /* AppTPTrackerCell.swift */; };
 		02025664298818B200E694E7 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02025663298818B100E694E7 /* NetworkExtension.framework */; };
 		0202566C298818B200E694E7 /* PacketTunnelProvider.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 02025662298818B100E694E7 /* PacketTunnelProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0202569029881ECA00E694E7 /* CocoaAsyncSocket in Frameworks */ = {isa = PBXBuildFile; productRef = 0202568F29881ECA00E694E7 /* CocoaAsyncSocket */; };
@@ -925,6 +926,7 @@
 		020108A429A681E200644F9D /* AppTP.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppTP.xcassets; sourceTree = "<group>"; };
 		020108A629A6ABF600644F9D /* AppTPToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPToggleView.swift; sourceTree = "<group>"; };
 		020108A829A7C1CD00644F9D /* AppTrackerImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackerImageCache.swift; sourceTree = "<group>"; };
+		020108AD29A7F91600644F9D /* AppTPTrackerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPTrackerCell.swift; sourceTree = "<group>"; };
 		02025662298818B100E694E7 /* PacketTunnelProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PacketTunnelProvider.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		02025663298818B100E694E7 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		02025666298818B200E694E7 /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
@@ -2429,6 +2431,7 @@
 				020108A629A6ABF600644F9D /* AppTPToggleView.swift */,
 				020108A429A681E200644F9D /* AppTP.xcassets */,
 				020108A829A7C1CD00644F9D /* AppTrackerImageCache.swift */,
+				020108AD29A7F91600644F9D /* AppTPTrackerCell.swift */,
 			);
 			name = AppTPActivityView;
 			sourceTree = "<group>";
@@ -5757,6 +5760,7 @@
 				983EABB8236198F6003948D1 /* DatabaseMigration.swift in Sources */,
 				314C92B827C3DD660042EC96 /* QuickLookPreviewView.swift in Sources */,
 				F1AE54E81F0425FC00D9A700 /* AuthenticationViewController.swift in Sources */,
+				020108AE29A7F91600644F9D /* AppTPTrackerCell.swift in Sources */,
 				F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */,
 				4B6484F227FD1E350050A7A1 /* MacWaitlistViewModel.swift in Sources */,
 				85864FBC24D31EF300E756FF /* SuggestionTrayViewController.swift in Sources */,

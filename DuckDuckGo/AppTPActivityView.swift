@@ -19,7 +19,6 @@
 
 import SwiftUI
 import Core
-import SVGView
 
 struct AppTPActivityView: View {
     @ObservedObject var viewModel: AppTrackingProtectionListModel
@@ -79,8 +78,8 @@ struct AppTPActivityView: View {
             
             Text(textForState())
                 .multilineTextAlignment(.center)
-                .font(Font(uiFont: Const.Font.trackerDomain))
-                .foregroundColor(.trackerDomain)
+                .font(Font(uiFont: Const.Font.info))
+                .foregroundColor(.infoText)
         }
         .padding()
         .padding(.top)
@@ -98,14 +97,14 @@ struct AppTPActivityView: View {
                     }
                 }
                 .background(Color.cellBackground)
-                .cornerRadius(12)
+                .cornerRadius(Const.Size.cornerRadius)
             }, header: {
                 Text(formattedDate(section.name))
                     .font(Font(uiFont: Const.Font.sectionHeader))
-                    .foregroundColor(Color.trackerDomain)
+                    .foregroundColor(.infoText)
                     .padding(.top)
-                    .padding(.leading, 16)
-                    .padding(.bottom, 6)
+                    .padding(.leading, Const.Size.sectionIndentation)
+                    .padding(.bottom, Const.Size.sectionHeaderBottom)
             })
         }
     }
@@ -116,7 +115,7 @@ struct AppTPActivityView: View {
                 Section {
                     AppTPToggleView(vpnOn: $vpnOn)
                         .background(Color.cellBackground)
-                        .cornerRadius(12)
+                        .cornerRadius(Const.Size.cornerRadius)
                         .padding(.bottom)
                 }
                 
@@ -133,53 +132,21 @@ struct AppTPActivityView: View {
     }
 }
 
-struct AppTPTrackerCell: View {
-    let tracker: AppTrackerEntity
-    let imageCache: AppTrackerImageCache
-    let showDivider: Bool
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            HStack(alignment: .center) {
-                SVGView(data: imageCache.loadTrackerImage(for: tracker.trackerOwner))
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 25, height: 25)
-                
-                VStack(alignment: .leading) {
-                    Text(tracker.domain)
-                        .font(Font(uiFont: Const.Font.trackerDomain))
-                        .foregroundColor(.trackerDomain)
-                    
-                    Text(UserText.appTPTrackingAttempts(count: "\(tracker.count)"))
-                        .font(Font(uiFont: Const.Font.trackerCount))
-                        .foregroundColor(.trackerSize)
-                }
-            }
-            .padding(.horizontal)
-            .frame(height: Const.Size.rowHeight)
-            
-            if showDivider {
-                Divider()
-            }
-        }
-    }
-}
-
 private enum Const {
     enum Font {
         static let sectionHeader = UIFont.semiBoldAppFont(ofSize: 15)
-        static let trackerDomain = UIFont.appFont(ofSize: 16)
-        static let trackerCount = UIFont.appFont(ofSize: 13)
+        static let info = UIFont.appFont(ofSize: 16)
     }
     
     enum Size {
-        static let rowHeight: CGFloat = 60
+        static let cornerRadius: CGFloat = 12
+        static let sectionIndentation: CGFloat = 16
+        static let sectionHeaderBottom: CGFloat = 6
     }
 }
 
 private extension Color {
-    static let trackerDomain = Color("AppTPDomainColor")
-    static let trackerSize = Color("AppTPCountColor")
+    static let infoText = Color("AppTPDomainColor")
     static let cellBackground = Color("AppTPCellBackgroundColor")
     static let viewBackground = Color("AppTPViewBackgroundColor")
 }

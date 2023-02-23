@@ -23,7 +23,7 @@ extension MainViewController {
     
     override var keyCommands: [UIKeyCommand]? {
         
-        let alwaysAvailable = [
+        let alwaysAvailable: [UIKeyCommand] = [
             UIKeyCommand(title: "", action: #selector(keyboardFire), input: UIKeyCommand.inputBackspace,
                          modifierFlags: [ .control, .alternate ], discoverabilityTitle: UserText.keyCommandFire)
         ]
@@ -77,8 +77,8 @@ extension MainViewController {
                 UIKeyCommand(title: "", action: #selector(keyboardMoveSelectionDown), input: UIKeyCommand.inputDownArrow, modifierFlags: [])
             ]
         }
-        
-        return alwaysAvailable + browsingCommands + findInPageCommands + arrowKeys + [
+
+        let other: [UIKeyCommand] = [
             UIKeyCommand(title: "", action: #selector(keyboardCloseTab), input: "w", modifierFlags: .command,
                          discoverabilityTitle: UserText.keyCommandCloseTab),
             UIKeyCommand(title: "", action: #selector(keyboardNewTab), input: "t", modifierFlags: .command,
@@ -105,10 +105,12 @@ extension MainViewController {
                          discoverabilityTitle: UserText.keyCommandNextTab),
             UIKeyCommand(title: "", action: #selector(keyboardPreviousTab), input: UIKeyCommand.inputTab, modifierFlags: [.control, .shift],
                          discoverabilityTitle: UserText.keyCommandPreviousTab),
-            
+
             // No discoverability as these should be intuitive
             UIKeyCommand(title: "", action: #selector(keyboardEscape), input: UIKeyCommand.inputEscape, modifierFlags: [])
         ]
+
+        return [alwaysAvailable, browsingCommands, findInPageCommands, arrowKeys, other].flatMap { $0 }
     }
 
     @objc func keyboardMoveSelectionUp() {

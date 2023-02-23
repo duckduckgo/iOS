@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+// swiftlint:disable line_length
+
 import Foundation
 
 import XCTest
@@ -25,6 +27,81 @@ import XCTest
 @testable import BrowserServicesKit
 @testable import Common
 
+class AutofillLoginListViewModelTests: XCTestCase {
+
+    private let tld = TLD()
+    private let appSettings = AppUserDefaults()
+    private let vault = MockSecureVault()
+
+    func testWhenOneLoginDeletedWithNoSuggestionsThenAlphabeticalSectionIsDeleted() {
+        let accountIdToDelete = "1"
+        vault.storedAccounts = [
+            SecureVaultModels.WebsiteAccount(id: accountIdToDelete, title: nil, username: "", domain: "testsite.com", created: Date(), lastUpdated: Date())
+        ]
+
+        let model = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault)
+        let tableContentsToDelete = model.tableContentsToDelete(accountId: accountIdToDelete)
+        XCTAssertEqual(tableContentsToDelete.sectionsToDelete.count, 1)
+        XCTAssertEqual(tableContentsToDelete.rowsToDelete.count, 0)
+    }
+
+    func testWhenOneLoginDeletedWithNoSuggestionsThenAlphabeticalRowIsDeleted() {
+        let accountIdToDelete = "1"
+        vault.storedAccounts = [
+            SecureVaultModels.WebsiteAccount(id: accountIdToDelete, title: nil, username: "", domain: "testsite.com", created: Date(), lastUpdated: Date()),
+            SecureVaultModels.WebsiteAccount(id: "2", title: nil, username: "", domain: "testsite2.com", created: Date(), lastUpdated: Date()),
+            SecureVaultModels.WebsiteAccount(id: "3", title: nil, username: "", domain: "testsite3.com", created: Date(), lastUpdated: Date())
+        ]
+
+        let model = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault)
+        let tableContentsToDelete = model.tableContentsToDelete(accountId: accountIdToDelete)
+        XCTAssertEqual(tableContentsToDelete.sectionsToDelete.count, 0)
+        XCTAssertEqual(tableContentsToDelete.rowsToDelete.count, 1)
+    }
+
+    func testWhenOneSuggestionDeletedThenSuggestedSectionAndAlphabeticalSectionDeleted() {
+        let accountIdToDelete = "1"
+        let testDomain = "testsite.com"
+        vault.storedAccounts = [
+            SecureVaultModels.WebsiteAccount(id: accountIdToDelete, title: nil, username: "", domain: testDomain, created: Date(), lastUpdated: Date())
+        ]
+
+        let model = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, currentTabUrl: URL(string: "https://\(testDomain)"))
+        let tableContentsToDelete = model.tableContentsToDelete(accountId: accountIdToDelete)
+        XCTAssertEqual(tableContentsToDelete.sectionsToDelete.count, 2)
+        XCTAssertEqual(tableContentsToDelete.rowsToDelete.count, 0)
+    }
+
+    func testWhenOneSuggestionDeletedThenSuggestedSectionAndAlphabeticalRowDeleted() {
+        let accountIdToDelete = "1"
+        let testDomain = "testsite.com"
+        vault.storedAccounts = [
+            SecureVaultModels.WebsiteAccount(id: accountIdToDelete, title: nil, username: "", domain: testDomain, created: Date(), lastUpdated: Date()),
+            SecureVaultModels.WebsiteAccount(id: "2", title: nil, username: "", domain: "testsite2.com", created: Date(), lastUpdated: Date()),
+            SecureVaultModels.WebsiteAccount(id: "3", title: nil, username: "", domain: "testsite3.com", created: Date(), lastUpdated: Date())
+        ]
+
+        let model = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, currentTabUrl: URL(string: "https://\(testDomain)"))
+        let tableContentsToDelete = model.tableContentsToDelete(accountId: accountIdToDelete)
+        XCTAssertEqual(tableContentsToDelete.sectionsToDelete.count, 1)
+        XCTAssertEqual(tableContentsToDelete.rowsToDelete.count, 1)
+    }
+
+    func testWhenOneSuggestionDeletedThenSuggestionRowAndAlphabeticalRowDeleted() {
+        let accountIdToDelete = "1"
+        let testDomain = "testsite.com"
+        vault.storedAccounts = [
+            SecureVaultModels.WebsiteAccount(id: accountIdToDelete, title: nil, username: "a@b.com", domain: testDomain, created: Date(), lastUpdated: Date()),
+            SecureVaultModels.WebsiteAccount(id: "2", title: nil, username: "b@c.com", domain: testDomain, created: Date(), lastUpdated: Date()),
+            SecureVaultModels.WebsiteAccount(id: "3", title: nil, username: "", domain: "testsite3.com", created: Date(), lastUpdated: Date())
+        ]
+
+        let model = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, currentTabUrl: URL(string: "https://\(testDomain)"))
+        let tableContentsToDelete = model.tableContentsToDelete(accountId: accountIdToDelete)
+        XCTAssertEqual(tableContentsToDelete.sectionsToDelete.count, 0)
+        XCTAssertEqual(tableContentsToDelete.rowsToDelete.count, 2)
+    }
+}
 
 class AutofillLoginListSectionTypeTests: XCTestCase {
     

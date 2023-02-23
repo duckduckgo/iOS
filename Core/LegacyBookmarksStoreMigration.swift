@@ -167,7 +167,7 @@ public class LegacyBookmarksStoreMigration {
                                                        context: destination)
                 }
             }()
-            bookmark.addToFavorites(insertAtBeginning: true,
+            bookmark.addToFavorites(insertAt: 0,
                                     favoritesRoot: newFavoritesRoot)
         }
         

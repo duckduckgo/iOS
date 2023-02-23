@@ -76,7 +76,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         case .edit:
             return UserText.autofillLoginDetailsEditTitle
         case .view:
-            return title
+            return title.isEmpty ? address : title
         case .new:
             return UserText.autofillLoginDetailsNewTitle
         }

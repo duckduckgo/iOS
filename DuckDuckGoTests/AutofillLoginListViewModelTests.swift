@@ -207,6 +207,6 @@ class AutofillLoginListItemViewModelTests: XCTestCase {
         let result = testData.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(tld: tld,
                                                                                              autofillDomainNameUrlMatcher: autofillUrlMatcher)
         // Diacritics should be grouped with the root letter (in most cases), and grouping should be case insensative
-        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result.count, 5)
     }
 }

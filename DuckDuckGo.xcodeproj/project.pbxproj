@@ -7370,7 +7370,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "autofill/anya/subdomains-url-changes";
+				branch = "autofill/anya/subdomains-sorting";
 				kind = branch;
 			};
 		};

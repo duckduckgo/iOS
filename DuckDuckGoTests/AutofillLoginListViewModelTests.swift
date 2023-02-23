@@ -132,6 +132,7 @@ class AutofillLoginListItemViewModelTests: XCTestCase {
 
     let tld = TLD()
     let autofillUrlMatcher = AutofillDomainNameUrlMatcher()
+    let autofillDomainNameUrlSort = AutofillDomainNameUrlSort()
 
     func testWhenCreatingViewModelsThenDiacriticsGroupedCorrectly() {
         let domain = "whateverNotImportantForThisTest"
@@ -139,7 +140,8 @@ class AutofillLoginListItemViewModelTests: XCTestCase {
                         SecureVaultModels.WebsiteAccount(title: nil, username: "ç", domain: domain),
                         SecureVaultModels.WebsiteAccount(title: nil, username: "C", domain: domain)]
         let result = testData.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(tld: tld,
-                                                                                             autofillDomainNameUrlMatcher: autofillUrlMatcher)
+                                                                                             autofillDomainNameUrlMatcher: autofillUrlMatcher,
+                                                                                             autofillDomainNameUrlSort: autofillDomainNameUrlSort)
         // Diacritics should be grouped with the root letter (in most cases), and grouping should be case insensative
         XCTAssertEqual(result.count, 1)
     }
@@ -156,7 +158,8 @@ class AutofillLoginListItemViewModelTests: XCTestCase {
                         SecureVaultModels.WebsiteAccount(title: nil, username: "&%$£$%", domain: domain),
                         SecureVaultModels.WebsiteAccount(title: nil, username: "99999", domain: domain)]
         let result = testData.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(tld: tld,
-                                                                                             autofillDomainNameUrlMatcher: autofillUrlMatcher)
+                                                                                             autofillDomainNameUrlMatcher: autofillUrlMatcher,
+                                                                                             autofillDomainNameUrlSort: autofillDomainNameUrlSort)
         // All non letters should be grouped together
         XCTAssertEqual(result.count, 1)
     }
@@ -182,7 +185,8 @@ class AutofillLoginListItemViewModelTests: XCTestCase {
             AutofillLoginListItemViewModel(account: SecureVaultModels.WebsiteAccount(title: nil, username: "ezy", domain: domain),
                                            tld: tld,
                                            autofillDomainNameUrlMatcher: autofillUrlMatcher)]]
-        let result = testData.autofillLoginListSectionsForViewModelsSortedByTitle()
+        let result = testData.autofillLoginListSectionsForViewModelsSortedByTitle(autofillDomainNameUrlSort,
+                                                                                  tld: tld)
         if case .credentials(_, let viewModels) = result[0] {
             XCTAssertEqual(viewModels[0].title, "è")
             XCTAssertEqual(viewModels[1].title, "elephant")
@@ -205,7 +209,8 @@ class AutofillLoginListItemViewModelTests: XCTestCase {
                         SecureVaultModels.WebsiteAccount(title: nil, username: "test", domain: "https://www.auth.example.com"),
                         SecureVaultModels.WebsiteAccount(title: nil, username: "test", domain: "https://www.example.com")]
         let result = testData.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(tld: tld,
-                                                                                             autofillDomainNameUrlMatcher: autofillUrlMatcher)
+                                                                                             autofillDomainNameUrlMatcher: autofillUrlMatcher,
+                                                                                             autofillDomainNameUrlSort: autofillDomainNameUrlSort)
         // Diacritics should be grouped with the root letter (in most cases), and grouping should be case insensative
         XCTAssertEqual(result.count, 5)
     }

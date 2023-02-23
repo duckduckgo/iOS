@@ -69,7 +69,8 @@ final class AutofillLoginListViewModel: ObservableObject {
     private let secureVault: SecureVault?
     private var cachedDeletedCredentials: SecureVaultModels.WebsiteCredentials?
     private let autofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
-    
+    private let autofillDomainNameUrlSort = AutofillDomainNameUrlSort()
+
     @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
     @Published private(set) var sections = [AutofillLoginListSectionType]() {
         didSet {
@@ -226,8 +227,10 @@ final class AutofillLoginListViewModel: ObservableObject {
 
         let viewModelsGroupedByFirstLetter = accounts.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(
                 tld: tld,
-                autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
-        let accountSections = viewModelsGroupedByFirstLetter.autofillLoginListSectionsForViewModelsSortedByTitle()
+                autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher,
+                autofillDomainNameUrlSort: autofillDomainNameUrlSort)
+        let accountSections = viewModelsGroupedByFirstLetter.autofillLoginListSectionsForViewModelsSortedByTitle(autofillDomainNameUrlSort,
+                                                                                                                 tld: tld)
         
         newSections.append(contentsOf: accountSections)
         return newSections
@@ -325,14 +328,17 @@ extension AutofillLoginListItemViewModel: Comparable {
 
 internal extension Array where Element == SecureVaultModels.WebsiteAccount {
     
-    func autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(tld: TLD, autofillDomainNameUrlMatcher: AutofillDomainNameUrlMatcher) -> [String: [AutofillLoginListItemViewModel]] {
+    func autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(tld: TLD,
+                                                                        autofillDomainNameUrlMatcher: AutofillDomainNameUrlMatcher,
+                                                                        autofillDomainNameUrlSort: AutofillDomainNameUrlSort)
+            -> [String: [AutofillLoginListItemViewModel]] {
         reduce(into: [String: [AutofillLoginListItemViewModel]]()) { result, account in
             
             // Unfortunetly, folding doesn't produce perfect results despite respecting the system locale
             // E.g. Romainian should treat letters with diacritics as seperate letters, but folding doesn't
             // Apple's own apps (e.g. contacts) seem to suffer from the same problem
             let key: String
-            if let firstChar = account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher).first,
+            if let firstChar = autofillDomainNameUrlSort.firstCharForGrouping(account, tld: tld),
                let deDistinctionedChar = String(firstChar).folding(options: [.diacriticInsensitive, .caseInsensitive], locale: nil).first,
                deDistinctionedChar.isLetter {
                 
@@ -350,11 +356,11 @@ internal extension Array where Element == SecureVaultModels.WebsiteAccount {
 
 internal extension Dictionary where Key == String, Value == [AutofillLoginListItemViewModel] {
     
-    func autofillLoginListSectionsForViewModelsSortedByTitle() -> [AutofillLoginListSectionType] {
+    func autofillLoginListSectionsForViewModelsSortedByTitle(_ autofillDomainNameUrlSort: AutofillDomainNameUrlSort, tld: TLD) -> [AutofillLoginListSectionType] {
         map { dictionaryItem -> AutofillLoginListSectionType in
-            let sortedGroup = dictionaryItem.value.sorted { lhs, rhs in
-                lhs.title.localizedCaseInsensitiveCompare(rhs.title) == .orderedAscending
-            }
+            let sortedGroup = dictionaryItem.value.sorted(by: {
+                autofillDomainNameUrlSort.compareAccountsForSortingAutofill(lhs: $0.account, rhs: $1.account, tld: tld) == .orderedAscending
+            })
             return AutofillLoginListSectionType.credentials(title: dictionaryItem.key,
                                                             items: sortedGroup)
         }.sorted()

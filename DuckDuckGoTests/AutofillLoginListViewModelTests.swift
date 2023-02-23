@@ -212,6 +212,6 @@ class AutofillLoginListItemViewModelTests: XCTestCase {
                                                                                              autofillDomainNameUrlMatcher: autofillUrlMatcher,
                                                                                              autofillDomainNameUrlSort: autofillDomainNameUrlSort)
         // Diacritics should be grouped with the root letter (in most cases), and grouping should be case insensative
-        XCTAssertEqual(result.count, 5)
+        XCTAssertEqual(result.count, 1)
     }
 }

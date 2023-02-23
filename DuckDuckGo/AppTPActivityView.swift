@@ -88,6 +88,7 @@ struct AppTPActivityView: View {
             }
             .padding()
         }
+        .background(Color.viewBackground)
         .navigationTitle(UserText.appTPNavTitle)
     }
 }
@@ -131,23 +132,14 @@ private enum Const {
         static let trackerCount = UIFont.appFont(ofSize: 13)
     }
     
-    // TODO: Get proper sizing from figma
-    enum Spacing {
-        static let betweenLabels: CGFloat = 6
-        static let betweenLabelsAndShareButton: CGFloat = 20
-    }
-    
     enum Size {
         static let rowHeight: CGFloat = 60
     }
 }
 
-private extension EdgeInsets {
-    static let rowInsets = EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
-}
-
 private extension Color {
-    static let trackerDomain = Color("DownloadsListFilenameColor")
-    static let trackerSize = Color("DownloadsListFileSizeColor")
+    static let trackerDomain = Color("AppTPDomainColor")
+    static let trackerSize = Color("AppTPCountColor")
     static let cellBackground = Color("AppTPCellBackgroundColor")
+    static let viewBackground = Color("AppTPViewBackgroundColor")
 }

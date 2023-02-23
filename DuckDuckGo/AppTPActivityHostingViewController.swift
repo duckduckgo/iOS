@@ -33,9 +33,8 @@ class AppTPActivityHostingViewController: UIHostingController<AppTPActivityView>
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupTableViewAppearance() {
-        // Required due to lack of SwiftUI API for changing the background color of List
-        let appearance = UITableView.appearance(whenContainedInInstancesOf: [DownloadsListHostingController.self])
-        appearance.backgroundColor = UIColor(named: "DownloadsListBackgroundColor")
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = UIColor(named: "AppTPViewBackgroundColor")
     }
 }

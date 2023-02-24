@@ -950,6 +950,7 @@ extension TabViewController: WKNavigationDelegate {
 
         let didMarkAsInternal = featureFlaggerInternalUserDecider.markUserAsInternalIfNeeded(forUrl: webView.url, response: httpResponse)
         if didMarkAsInternal {
+            Pixel.fire(pixel: .featureFlaggingInternalUserAuthenticated)
             NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.didVerifyInternalUser))
         }
 

@@ -151,7 +151,7 @@ class AutofillLoginDetailsViewController: UIViewController {
 
         let isIPhoneLandscape = traitCollection.containsTraits(in: UITraitCollection(verticalSizeClass: .compact))
         if isIPhoneLandscape {
-            lockedViewBottomConstraint.constant = (view.frame.height / 2 - max(lockedView.frame.height, 120.0) / 2)
+            lockedViewBottomConstraint.constant = (view.frame.height / 2.0 - max(lockedView.frame.height, 120.0) / 2.0)
         } else {
             lockedViewBottomConstraint.constant = view.frame.height * 0.15
         }

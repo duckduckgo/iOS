@@ -176,6 +176,7 @@ class MainViewController: UIViewController {
         applyWidth()
         
         registerForApplicationEvents()
+        registerForCookiesManagedNotification()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -574,7 +575,7 @@ class MainViewController: UIViewController {
     func loadQueryInNewTab(_ query: String, reuseExisting: Bool = false) {
         dismissOmniBar()
         guard let url = appUrls.url(forQuery: query) else {
-            os_log("Couldn‘t form URL for query “%s”", log: lifecycleLog, type: .error, query)
+            os_log("Couldn‘t form URL for query “%s”", log: .lifecycleLog, type: .error, query)
             return
         }
         loadUrlInNewTab(url, reuseExisting: reuseExisting, inheritedAttribution: nil)
@@ -609,7 +610,7 @@ class MainViewController: UIViewController {
     fileprivate func loadQuery(_ query: String) {
         guard let url = appUrls.url(forQuery: query, queryContext: currentTab?.url) else {
             os_log("Couldn‘t form URL for query “%s” with context “%s”",
-                   log: lifecycleLog,
+                   log: .lifecycleLog,
                    type: .error,
                    query,
                    currentTab?.url?.absoluteString ?? "<nil>")
@@ -858,7 +859,7 @@ class MainViewController: UIViewController {
         suggestionTrayController?.didHide()
     }
     
-    func launchReportBrokenSite() {
+    fileprivate func launchReportBrokenSite() {
         performSegue(withIdentifier: "ReportBrokenSite", sender: self)
     }
     
@@ -886,8 +887,18 @@ class MainViewController: UIViewController {
         dismiss(animated: true)
     }
     
-    fileprivate func launchSettings() {
+    func launchSettings() {
         performSegue(withIdentifier: "Settings", sender: self)
+    }
+    
+    func launchCookiePopupManagementSettings() {
+        if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
+           let settingsController = navController.topViewController as? SettingsViewController {
+            settingsController.loadViewIfNeeded()
+            
+            settingsController.showCookiePopupManagement(animated: false)
+            self.present(navController, animated: true)
+        }
     }
 
     fileprivate func launchInstructions() {
@@ -1348,7 +1359,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
         } else if let url = appUrls.searchUrl(text: suggestion.suggestion) {
             loadUrl(url)
         } else {
-            os_log("Couldn‘t form URL for suggestion “%s”", log: lifecycleLog, type: .error, suggestion.suggestion)
+            os_log("Couldn‘t form URL for suggestion “%s”", log: .lifecycleLog, type: .error, suggestion.suggestion)
             return
         }
         showHomeRowReminder()
@@ -1452,6 +1463,8 @@ extension MainViewController: TabDelegate {
         newTab.openingTab = tab
         
         newTabAnimation {
+            guard self.tabManager.model.tabs.contains(newTab.tabModel) else { return }
+
             self.dismissOmniBar()
             self.addToView(tab: newTab)
             self.refreshOmniBar()
@@ -1770,6 +1783,8 @@ extension MainViewController: AutoClearWorker {
         WebCacheManager.shared.clear(tabCountInfo: tabCountInfo) {
             pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
         }
+        
+        AutoconsentManagement.shared.clearCache()
     }
     
     func stopAllOngoingDownloads() {
@@ -1861,6 +1876,8 @@ extension MainViewController: Themable {
         findInPageView.decorate(with: theme)
         
         logoText.tintColor = theme.ddgTextTintColor
+        
+        FireButtonExperiment.decorateFireButton(fireButton: fireButton, for: theme)
     }
     
 }

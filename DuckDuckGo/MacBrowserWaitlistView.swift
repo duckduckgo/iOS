@@ -18,15 +18,15 @@
 //
 
 import SwiftUI
-
-typealias ViewActionHandler = (MacWaitlistViewModel.ViewAction) -> Void
+import Waitlist
 
 struct MacBrowserWaitlistView: View {
 
-    @EnvironmentObject var viewModel: MacWaitlistViewModel
+    @EnvironmentObject var viewModel: WaitlistViewModel
+    let isWindowsWaitlistAvailable: Bool
     
     var body: some View {
-        MacBrowserWaitlistContentView { action in
+        MacBrowserWaitlistContentView(isWindowsWaitlistAvailable: isWindowsWaitlistAvailable) { action in
             Task { await viewModel.perform(action: action) }
         }
     }
@@ -43,8 +43,9 @@ struct MacBrowserWaitlistContentView: View {
     enum Constants {
         static let downloadURL = "duckduckgo.com/mac"
     }
-    
-    let action: ViewActionHandler
+
+    let isWindowsWaitlistAvailable: Bool
+    let action: WaitlistViewActionHandler
     
     @State private var shareButtonFrame: CGRect = .zero
 
@@ -56,20 +57,20 @@ struct MacBrowserWaitlistContentView: View {
                     
                     Text(UserText.macWaitlistSummary)
                         .font(.proximaNova(size: 16, weight: .regular))
-                        .foregroundColor(.macWaitlistText)
+                        .foregroundColor(.waitlistTextSecondary)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
                     
                     Text(UserText.macWaitlistOnYourMacGoTo)
                         .font(.proximaNova(size: 16, weight: .regular))
-                        .foregroundColor(.macWaitlistText)
+                        .foregroundColor(.waitlistTextSecondary)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
                         .padding(.top, 18)
 
                     Text(Constants.downloadURL)
-                        .font(.proximaNovaBold17)
-                        .foregroundColor(.blue)
+                        .font(.proximaNova(size: 17, weight: .bold))
+                        .foregroundColor(.waitlistBlue)
                         .menuController(UserText.macWaitlistCopy) {
                             action(.copyDownloadURLToPasteboard)
                         }
@@ -100,14 +101,33 @@ struct MacBrowserWaitlistContentView: View {
                     }
                     
                     Spacer(minLength: 24)
-                    
-                    Text(UserText.macWaitlistWindows)
-                        .font(.proximaNova(size: 13, weight: .regular))
-                        .foregroundColor(.macWaitlistSubtitle)
-                        .multilineTextAlignment(.center)
-                        .lineSpacing(5)
+
+                    if isWindowsWaitlistAvailable {
+
+                        Button(
+                            action: {
+                                action(.custom(.openWindowsBrowserWaitlist))
+                            }, label: {
+                                Text(UserText.macWaitlistWindows)
+                                    .font(.proximaNova(size: 17, weight: .bold))
+                                    .foregroundColor(.waitlistBlue)
+                                    .multilineTextAlignment(.center)
+                                    .lineSpacing(5)
+                            }
+                        )
                         .padding(.bottom, 12)
                         .fixedSize(horizontal: false, vertical: true)
+
+                    } else {
+
+                        Text(UserText.macWaitlistWindowsComingSoon)
+                            .font(.proximaNova(size: 13, weight: .regular))
+                            .foregroundColor(.waitlistTextSecondary)
+                            .multilineTextAlignment(.center)
+                            .lineSpacing(5)
+                            .padding(.bottom, 12)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                 }
                 .padding([.leading, .trailing], 24)
                 .frame(minHeight: proxy.size.height)
@@ -120,47 +140,10 @@ struct MacBrowserWaitlistContentView: View {
         Button(action: {
             action(.openShareSheet(shareButtonFrame))
         }, label: {
-            Image("Share")
-                .foregroundColor(.macWaitlistText)
+            Image("Share").foregroundColor(.waitlistTextSecondary)
         })
         .frame(width: 44, height: 44)
         
-    }
-
-}
-
-// MARK: - Generic Views
- 
-private struct HeaderView: View {
-    
-    let imageName: String
-    let title: String
-    
-    var body: some View {
-        VStack(spacing: 18) {
-            Image(imageName)
-            
-            Text(title)
-                .font(.proximaNova(size: 22, weight: .bold))
-        }
-        .padding(.top, 24)
-        .padding(.bottom, 12)
-    }
-    
-}
-
-private struct RoundedButtonStyle: ButtonStyle {
-
-    let enabled: Bool
-
-    func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .font(.proximaNovaBold17)
-            .frame(maxWidth: .infinity)
-            .padding([.top, .bottom], 12)
-            .background(enabled ? Color.macWaitlistBlue : Color.macWaitlistBlue.opacity(0.2))
-            .foregroundColor(.white)
-            .clipShape(Capsule())
     }
 
 }
@@ -172,11 +155,11 @@ private struct MacBrowserWaitlistView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             PreviewView("Mac Browser Beta") {
-                MacBrowserWaitlistContentView { _ in }
+                MacBrowserWaitlistContentView(isWindowsWaitlistAvailable: true) { _ in }
             }
 
             if #available(iOS 15.0, *) {
-                MacBrowserWaitlistContentView { _ in }
+                MacBrowserWaitlistContentView(isWindowsWaitlistAvailable: true) { _ in }
                     .previewInterfaceOrientation(.landscapeLeft)
             }
         }
@@ -201,36 +184,4 @@ private struct MacBrowserWaitlistView_Previews: PreviewProvider {
             .previewDisplayName(title)
         }
     }
-}
-
-// MARK: - Extensions
-
-private extension Color {
-    
-    static var macWaitlistText: Color {
-        Color("MacWaitlistTextColor")
-    }
-
-    static var macWaitlistSubtitle: Color {
-        Color("MacWaitlistSubtitleColor")
-    }
-    
-    static var macWaitlistBlue: Color {
-        Color("MacWaitlistBlue")
-    }
-    
-}
-
-private extension Font {
-    
-    static var proximaNovaRegular17: Self {
-        let fontName = "proximanova-\(Font.ProximaNovaWeight.regular.rawValue)"
-        return .custom(fontName, size: 17)
-    }
-    
-    static var proximaNovaBold17: Self {
-        let fontName = "proximanova-\(Font.ProximaNovaWeight.bold.rawValue)"
-        return .custom(fontName, size: 17)
-    }
-    
 }

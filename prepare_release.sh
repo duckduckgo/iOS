@@ -22,6 +22,26 @@ assert_ios_directory() {
 	fi
 }
 
+assert_fastlane_installed() {
+	if ! command -v bundle &> /dev/null; then
+		die "💥 Error: Bundle is not installed. See: https://app.asana.com/0/1202500774821704/1203766784006610/f"
+	fi
+
+	if ! bundle show fastlane &> /dev/null; then
+		die "💥 Error: Fastlane is not installed. See: https://app.asana.com/0/1202500774821704/1203766784006610/f"
+	fi
+}
+
+assert_gh_installed_and_authenticated() {
+	if ! command -v gh &> /dev/null; then
+		die "💥 Error: GitHub CLI is not installed. See: https://app.asana.com/0/1202500774821704/1203791243007683/f"
+	fi
+
+	if ! gh auth status 2>&1 | grep -q "✓ Logged in to github.com"; then
+		echo "💥 Error: GitHub CLI is not authenticated. See: https://app.asana.com/0/1202500774821704/1203791243007683/f"
+	fi
+}
+
 print_usage_and_exit() {
 	local reason=$1
 
@@ -31,8 +51,8 @@ print_usage_and_exit() {
 	  Current version: $(cut -d' ' -f3 < Configuration/Version.xcconfig)
 
 	Options:
-	  -h  Make hotfix release
-	  -v  Enable verbose mode
+	  -h         Make hotfix release
+	  -v         Enable verbose mode
 
 	EOF
 
@@ -76,10 +96,10 @@ stash() {
 
 assert_clean_state() {
 	if git show-ref --quiet "refs/heads/${release_branch}"; then
-		die "💥 Error: Branch ${release_branch} already exists."
+		die "💥 Error: Branch ${release_branch} already exists"
 	fi
 	if git show-ref --quiet "refs/heads/${changes_branch}"; then
-		die "💥 Error: Branch ${changes_branch} already exists."
+		die "💥 Error: Branch ${changes_branch} already exists"
 	fi
 }
 
@@ -112,8 +132,12 @@ update_build_version() {
 	username="$(git config user.email 2>&1)"
 	bundle exec fastlane increment_build_number_for_version version:"${version}" username:"$username"
 	git add DuckDuckGo.xcodeproj/project.pbxproj
-	eval git commit -m \"Update build number\" "$mute"
-	echo "Setting build version ... ✅"
+	if [[ "$(git diff --cached)" ]]; then
+		eval git commit -m \"Update build number\" "$mute"
+		echo "Setting build version ... ✅"
+	else
+		printf "\nNo changes to build number ✅\n"
+	fi
 }
 
 update_embedded_files() {
@@ -123,8 +147,26 @@ update_embedded_files() {
 		Core/trackerData.json \
 		Core/AppPrivacyConfigurationDataProvider.swift \
 		Core/ios-config.json
-	eval git commit -m \"Update embedded files\" "$mute" || printf "\n✅ No changes to embedded files\n"
-	echo "✅"
+	if [[ "$(git diff --cached)" ]]; then
+		eval git commit -m \"Update embedded files\" "$mute"
+		echo "✅"
+	else
+		printf "\nNo changes to embedded files ✅\n"
+	fi
+}
+
+update_release_notes() {
+	local release_notes_path="fastlane/metadata/default/release_notes.txt"
+	echo "Please update release notes and save the file."
+	eval open -a TextEdit "${release_notes_path}" "$mute"
+	read -r -p "Press \`Enter\` when you're done to continue ..."
+	git add "${release_notes_path}"
+	if [[ "$(git diff --cached)" ]]; then
+		eval git commit -m \"Update release notes\" "$mute"
+		echo "Release notes updated ✅"
+	else
+		echo "No changes to release notes ✅"
+	fi
 }
 
 create_pull_request() {
@@ -138,6 +180,8 @@ create_pull_request() {
 
 main() {
 	assert_ios_directory
+	assert_fastlane_installed
+	assert_gh_installed_and_authenticated
 	read_command_line_arguments "$@"
 	stash
 	assert_clean_state
@@ -145,6 +189,7 @@ main() {
 	update_marketing_version
 	update_build_version
 	update_embedded_files
+	update_release_notes
 	create_pull_request
 }
 

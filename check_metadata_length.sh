@@ -8,8 +8,6 @@ else
 	METADATA_PATH="$1"
 fi
 
-echo "Metadata path: $METADATA_PATH"
-
 for FILEPATH in `find $METADATA_PATH -type f -name "*.txt"`
 do
 	FILENAME=`basename $FILEPATH`
@@ -55,9 +53,9 @@ do
 done
 
 if [ ${#ALL_ERRORS[@]} -eq 0 ]; then
-    echo "🎉 All strings fit, hooray!"
+    echo "✅ All strings fit, hooray!"
 else
-    echo "😬 Oops, some fields are too long:"
+    echo "💥 Error: Oops, some fields are too long:"
 
     for ERROR in "${ALL_ERRORS[@]}"; do
 		echo "$ERROR"

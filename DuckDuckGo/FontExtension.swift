@@ -30,7 +30,7 @@ extension Font {
         case extraBold = "extrabold"
     }
     
-    static func proximaNova(size: CGFloat, weight: ProximaNovaWeight) -> Self {
+    static func proximaNova(size: CGFloat, weight: ProximaNovaWeight = .regular) -> Self {
         let fontName = "proximanova-\(weight.rawValue)"
         return .custom(fontName, size: size)
     }

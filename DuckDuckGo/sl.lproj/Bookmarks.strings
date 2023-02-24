@@ -1,3 +1,6 @@
+/* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "1tO-s1-k2W"; */
+"1tO-s1-k2W.placeholder" = "Iskanje";
+
 /* Class = "UILabel"; text = "Label"; ObjectID = "7VM-DV-W3e"; */
 "7VM-DV-W3e.text" = "Oznaka";
 
@@ -6,6 +9,12 @@
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "cV4-pj-JNb"; */
 "cV4-pj-JNb.text" = "Oznaka";
+
+/* Class = "UILabel"; text = "No matches found"; ObjectID = "hqG-b3-Fq3"; */
+"hqG-b3-Fq3.text" = "Ni zadetkov";
+
+/* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "jdA-wE-Hkh"; */
+"jdA-wE-Hkh.text" = "Zaznamki še niso dodani";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "K2O-E5-pyF"; */
 "K2O-E5-pyF.text" = "Oznaka";
@@ -42,9 +51,6 @@
 
 /* Class = "UIBarButtonItem"; title = "Done"; ObjectID = "RuZ-zV-tu8"; */
 "RuZ-zV-tu8.title" = "Končano";
-
-/* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "SrQ-51-yie"; */
-"SrQ-51-yie.text" = "Zaznamki še niso dodani";
 
 /* Class = "UILabel"; text = "No favorites added yet"; ObjectID = "y8y-oO-xBm"; */
 "y8y-oO-xBm.text" = "Priljubljeni še niso dodani";

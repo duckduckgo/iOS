@@ -98,6 +98,7 @@ struct ConfigurationManager {
         
         onDidUpdate(.privacyConfiguration)
         onDidUpdate(.trackerDataSet)
+        onDidUpdate(.surrogates)
         
         NotificationCenter.default.post(name: ConfigurationManager.didUpdateTrackerDependencies, object: self)
     }

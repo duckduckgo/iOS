@@ -43,6 +43,7 @@ public class AppTrackingProtectionStoringModel: ObservableObject {
 
                 if let existingTracker = try context.fetch(existingTrackersFetchRequest).first {
                     existingTracker.count += 1
+                    existingTracker.timestamp = Date()
                 } else {
                     _ = AppTrackerEntity.makeTracker(domain: domain,
                                                      trackerOwner: trackerOwner,

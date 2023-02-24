@@ -1,0 +1,53 @@
+name: Create PR with Hello World
+
+on:
+  schedule:
+    - cron: '0 9 * * 4' # Run every Thursday at 9:00am
+  workflow_dispatch:
+
+jobs:
+  create_pr:
+
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Fetch and update metadata
+        id: faum
+        continue-on-error: true
+        run: |
+          source "update_metadata.sh"
+          output=$( { main 2>&1; } | tee /dev/tty )
+          retval=$?
+          if [[ $retval -eq 0 ]]; then
+            url=$(echo "$output" | tail -1)
+            echo "{asana-task-url}={url}" >> $GITHUB_OUTPUT
+          else
+            echo "{error}={$output}" >> $GITHUB_OUTPUT
+            return 1
+          fi
+
+      - name: Update Asana task with an error
+        if: failure()
+        run: |
+          source "scripts/helpers/asana.sh"
+          asana_update_task "An error occurred: ${{ steps.faum.outputs.error }}" true
+
+      - name: Create Pull Request
+        if: success()
+        id: cpr
+        uses: peter-evans/create-pull-request@v4
+        with:
+          title: Update app metadata
+          body: "Task/Issue URL: ${{ steps.faum.outputs.asana-task-url }}"
+          branch: update-metadata
+          delete-branch: true
+          base: develop
+      
+      - name: Update Asana task
+        if: success()
+        run: |
+          source "scripts/helpers/asana.sh"
+          asana_update_task ${{ steps.cpr.outputs.pull-request-url }} false

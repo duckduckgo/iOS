@@ -102,6 +102,7 @@ public class APIRequest {
     public static func request<C: Collection>(url: URL,
                                               method: HTTPMethod = .get,
                                               parameters: C,
+                                              allowedQueryReservedCharacters: CharacterSet? = nil,
                                               headers: HTTPHeaders = APIHeaders().defaultHeaders,
                                               httpBody: Data? = nil,
                                               timeoutInterval: TimeInterval = 60.0,
@@ -114,6 +115,7 @@ public class APIRequest {
         let urlRequest = urlRequestFor(url: url,
                                        method: method,
                                        parameters: parameters,
+                                       allowedQueryReservedCharacters: allowedQueryReservedCharacters,
                                        headers: headers,
                                        httpBody: httpBody,
                                        timeoutInterval: timeoutInterval)
@@ -163,12 +165,13 @@ public class APIRequest {
     private static func urlRequestFor<C: Collection>(url: URL,
                                                      method: HTTPMethod,
                                                      parameters: C,
+                                                     allowedQueryReservedCharacters: CharacterSet? = nil,
                                                      headers: HTTPHeaders,
                                                      httpBody: Data?,
                                                      timeoutInterval: TimeInterval) -> URLRequest
     where C.Element == (key: String, value: String) {
 
-        let url = url.appendingParameters(parameters)
+        let url = url.appendingParameters(parameters, allowedReservedCharacters: allowedQueryReservedCharacters)
         var urlRequest = URLRequest.developerInitiated(url)
         urlRequest.allHTTPHeaderFields = headers
         urlRequest.httpMethod = method.rawValue

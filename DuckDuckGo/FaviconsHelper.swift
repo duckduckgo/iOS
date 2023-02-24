@@ -111,8 +111,8 @@ struct FaviconsHelper {
             label.text = String(domain.droppingWwwPrefix().prefix(1).uppercased())
             label.sizeToFit()
              
-            context.translateBy(x: (imageRect.width - label.bounds.width) / 2,
-                                y: (imageRect.height - label.font.ascender) / 2 - (label.font.ascender - label.font.capHeight) / 2)
+            context.translateBy(x: (imageRect.width - label.bounds.width) / 2.0,
+                                y: (imageRect.height - label.font.ascender) / 2.0 - (label.font.ascender - label.font.capHeight) / 2.0)
              
             label.layer.draw(in: context)
         }

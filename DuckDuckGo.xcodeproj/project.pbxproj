@@ -2898,7 +2898,6 @@
 			isa = PBXGroup;
 			children = (
 				1E908BED29827C480008C8F3 /* Autoconsent */,
-				3157B43627F4C8380042D3D7 /* Favicons */,
 				AA4D6A8023DE4973007E8790 /* AppIcon */,
 				F1C5ECF31E37812900C599A4 /* Application */,
 				9817C9C121EF58BA00884F65 /* AutoClear */,
@@ -4247,7 +4246,6 @@
 				859872221F5743AF00041CB8 /* FireAnimation */,
 				980891A122369ADB00313A70 /* FeedbackUserText.swift */,
 				985AAE4424899369007A43EC /* HomeScreenTransition.swift */,
-				1EF24234273BB9D200DE3D02 /* IntervalSlider.swift */,
 				F1D934021E610DCE00A6F0D6 /* Point.swift */,
 				985892512260B1B200EEB31B /* ProgressView.swift */,
 				F143C32B1E4A9A4800CFDE3A /* RoundedRectangleView.swift */,
@@ -4264,7 +4262,6 @@
 				980891A82238504B00313A70 /* UILabelExtension.swift */,
 				9820FF4F2244FECC008D4782 /* UIScrollViewExtension.swift */,
 				982C87C32255559A00919035 /* UITableViewCellExtension.swift */,
-				319A37162829C8AD0079FBCE /* UITableViewExtension.swift */,
 				F143C32C1E4A9A4800CFDE3A /* UIViewControllerExtension.swift */,
 				F1DE78591E5CD2A70058895A /* UIViewExtension.swift */,
 				F1F5337B1F26A9EF00D80D4F /* UserText.swift */,
@@ -6830,7 +6827,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "";
@@ -6842,7 +6839,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc com.duckduckgo.mobile.ios";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Development - App";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -7433,7 +7430,7 @@
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = exactVersion;
-				version = 47.1.0;
+				version = 47.0.0;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

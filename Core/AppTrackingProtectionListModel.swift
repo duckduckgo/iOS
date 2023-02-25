@@ -52,7 +52,7 @@ public class AppTrackingProtectionListModel: NSObject, ObservableObject, NSFetch
     @UserDefaultsWrapper(key: .lastAppTrackingProtectionHistoryFetchTimestamp, defaultValue: Date.distantPast)
     private var lastTrackerHistoryFetchTimestamp: Date
 
-    public init(appTrackingProtectionDatabase: TemporaryAppTrackingProtectionDatabase) {
+    public init(appTrackingProtectionDatabase: CoreDataDatabase) {
         self.context = appTrackingProtectionDatabase.makeContext(concurrencyType: .mainQueueConcurrencyType)
 
         super.init()

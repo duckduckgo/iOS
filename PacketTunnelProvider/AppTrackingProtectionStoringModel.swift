@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Persistence
 import CoreData
 import Core
 import os
@@ -27,7 +28,7 @@ public class AppTrackingProtectionStoringModel: ObservableObject {
     private let context: NSManagedObjectContext
     private let dateFormatter: DateFormatter
 
-    public init(appTrackingProtectionDatabase: TemporaryAppTrackingProtectionDatabase) {
+    public init(appTrackingProtectionDatabase: CoreDataDatabase) {
         self.context = appTrackingProtectionDatabase.makeContext(concurrencyType: .privateQueueConcurrencyType)
         self.dateFormatter = DateFormatter()
         self.dateFormatter.dateFormat = "dd-MM-yyyy"

@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Persistence
 import Core
 import os.log
 
@@ -30,7 +31,7 @@ struct BlockedReason: Error {
 class DDGObserverFactory: ObserverFactory {
     
     var trackerData: TrackerDataParser?
-    private let appTrackingProtectionDatabase: TemporaryAppTrackingProtectionDatabase
+    private let appTrackingProtectionDatabase: CoreDataDatabase
     private let appTrackingProtectionStoringModel: AppTrackingProtectionStoringModel
     
     override func getObserverForProxySocket(_ socket: ProxySocket) -> Observer<ProxySocketEvent>? {

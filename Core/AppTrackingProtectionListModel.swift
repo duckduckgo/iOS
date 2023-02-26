@@ -25,6 +25,10 @@ import os.log
 
 public class AppTrackingProtectionListModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
 
+    enum Error: Swift.Error {
+        case historyTransactionConversionFailed
+    }
+
     @Published var sections: [NSFetchedResultsSectionInfo] = []
 
     private let context: NSManagedObjectContext
@@ -88,17 +92,41 @@ public class AppTrackingProtectionListModel: NSObject, ObservableObject, NSFetch
     @objc private func processPersistentHistory() {
         context.performAndWait {
             do {
-                try merge()
-                try removeTransactions(before: lastTrackerHistoryFetchTimestamp)
+                try mergeNewTransactions()
+                try removeTransactions(olderThan: lastTrackerHistoryFetchTimestamp)
             } catch {
                 print("Persistent History Tracking failed with error \(error)")
             }
         }
     }
 
-    func merge() throws {
-        let fetcher = PersistentHistoryFetcher(context: context, fromDate: lastTrackerHistoryFetchTimestamp)
-        let newTransactions = try fetcher.fetch()
+    // MARK: - Persistent History Tracking
+
+    private func createPersistentHistoryFetchRequest(after date: Date) -> NSPersistentHistoryChangeRequest {
+        let historyFetchRequest = NSPersistentHistoryChangeRequest.fetchHistory(after: date)
+
+        if let fetchRequest = NSPersistentHistoryTransaction.fetchRequest {
+            historyFetchRequest.fetchRequest = fetchRequest
+        } else {
+            assertionFailure("Failed to create AppTP persistent history fetch request")
+        }
+
+        return historyFetchRequest
+    }
+
+    private func fetchNewTransactions() throws -> [NSPersistentHistoryTransaction] {
+        let fetchRequest = createPersistentHistoryFetchRequest(after: self.lastTrackerHistoryFetchTimestamp)
+
+        guard let historyResult = try context.execute(fetchRequest) as? NSPersistentHistoryResult,
+              let history = historyResult.result as? [NSPersistentHistoryTransaction] else {
+            throw Error.historyTransactionConversionFailed
+        }
+
+        return history
+    }
+
+    private func mergeNewTransactions() throws {
+        let newTransactions = try fetchNewTransactions()
 
         guard !newTransactions.isEmpty else {
             return
@@ -110,14 +138,17 @@ public class AppTrackingProtectionListModel: NSObject, ObservableObject, NSFetch
         lastTrackerHistoryFetchTimestamp = lastTimestamp
     }
 
-    func removeTransactions(before date: Date) throws {
+    private func removeTransactions(olderThan date: Date) throws {
         let deleteHistoryRequest = NSPersistentHistoryChangeRequest.deleteHistory(before: lastTrackerHistoryFetchTimestamp)
         try context.execute(deleteHistoryRequest)
     }
 
+    // MARK: - NSFetchedResultsController
+
     public func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.sections = controller.sections ?? []
     }
+
 }
 
 extension Collection where Element == NSPersistentHistoryTransaction {
@@ -127,40 +158,6 @@ extension Collection where Element == NSPersistentHistoryTransaction {
             guard let userInfo = transaction.objectIDNotification().userInfo else { return }
             NSManagedObjectContext.mergeChanges(fromRemoteContextSave: userInfo, into: [context])
         }
-    }
-
-}
-
-struct PersistentHistoryFetcher {
-
-    enum Error: Swift.Error {
-        case historyTransactionConversionFailed
-    }
-
-    let context: NSManagedObjectContext
-    let fromDate: Date
-
-    func fetch() throws -> [NSPersistentHistoryTransaction] {
-        let fetchRequest = createFetchRequest()
-
-        guard let historyResult = try context.execute(fetchRequest) as? NSPersistentHistoryResult,
-              let history = historyResult.result as? [NSPersistentHistoryTransaction] else {
-            throw Error.historyTransactionConversionFailed
-        }
-
-        return history
-    }
-
-    func createFetchRequest() -> NSPersistentHistoryChangeRequest {
-        let historyFetchRequest = NSPersistentHistoryChangeRequest.fetchHistory(after: fromDate)
-
-        if let fetchRequest = NSPersistentHistoryTransaction.fetchRequest {
-            historyFetchRequest.fetchRequest = fetchRequest
-        } else {
-            assertionFailure("Failed to create AppTP persistent history fetch request")
-        }
-
-        return historyFetchRequest
     }
 
 }

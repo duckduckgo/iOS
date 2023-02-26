@@ -20,7 +20,6 @@
 import Foundation
 import Persistence
 import CoreData
-import Core
 import os
 
 public class AppTrackingProtectionStoringModel: ObservableObject {

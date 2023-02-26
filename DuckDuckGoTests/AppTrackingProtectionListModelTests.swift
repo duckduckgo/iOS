@@ -60,7 +60,9 @@ class AppTrackingProtectionListModelTests: XCTestCase {
 
         XCTAssertEqual(listModel.sections.count, 3)
         XCTAssertEqual(listModel.sections.first?.name, "03-01-2023")
+        XCTAssertEqual(listModel.sections.first?.objects?.count, 1)
         XCTAssertEqual(listModel.sections.last?.name, "01-01-2023")
+        XCTAssertEqual(listModel.sections.last?.objects?.count, 1)
     }
 
     func saveTracker(domain: String, owner: String, date: Date) {

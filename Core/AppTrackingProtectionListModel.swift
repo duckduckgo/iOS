@@ -89,6 +89,8 @@ public class AppTrackingProtectionListModel: NSObject, ObservableObject, NSFetch
         }
     }
 
+    // AppTP's database uses persistent history tracking. This is currently not necessary as the changes are only going one way, but this may not
+    // always be the case (eventually the app process may begin making changes to the store), so this change is in place for future proofing.
     @objc private func processPersistentHistory() {
         context.performAndWait {
             do {

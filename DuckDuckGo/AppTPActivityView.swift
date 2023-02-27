@@ -37,7 +37,7 @@ struct AppTPActivityView: View {
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMM dd"
+        formatter.dateFormat = "MMMM dd"
         return formatter
     }()
     

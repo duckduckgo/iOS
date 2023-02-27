@@ -62,6 +62,7 @@ public class AppTrackingProtectionListModel: NSObject, ObservableObject, NSFetch
         super.init()
 
         setupFetchedResultsController()
+        registerForLifecycleEvents()
         registerForRemoteChangeNotifications()
     }
 
@@ -69,6 +70,15 @@ public class AppTrackingProtectionListModel: NSObject, ObservableObject, NSFetch
         fetchedResultsController.delegate = self
         try? fetchedResultsController.performFetch()
         self.sections = fetchedResultsController.sections ?? []
+    }
+
+    // MARK: - Notifications
+
+    private func registerForLifecycleEvents() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didBecomeActive),
+                                               name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
     }
 
     private func registerForRemoteChangeNotifications() {
@@ -83,15 +93,27 @@ public class AppTrackingProtectionListModel: NSObject, ObservableObject, NSFetch
                                                object: coordinator)
     }
 
+    @objc private func didBecomeActive(_ notification: Notification) {
+        trackerProcessingQueue.addOperation { [weak self] in
+            self?.processPersistentHistory()
+        }
+    }
+
     @objc private func processStoreRemoteChanges(_ notification: Notification) {
         trackerProcessingQueue.addOperation { [weak self] in
             self?.processPersistentHistory()
         }
     }
 
-    // AppTP's database uses persistent history tracking. This is currently not necessary as the changes are only going one way, but this may not
+    // MARK: - Persistent History Tracking
+
+    private func processPersistentHistory() {
+        mergeNewPersistentHistoryTransactions()
+    }
+
+    // AppTP's database uses persistent history tracking. This is currently not necessary, as the changes are only going one way, but this may not
     // always be the case (eventually the app process may begin making changes to the store), so this change is in place for future proofing.
-    @objc private func processPersistentHistory() {
+    @objc private func mergeNewPersistentHistoryTransactions() {
         context.performAndWait {
             do {
                 try mergeNewTransactions()
@@ -101,8 +123,6 @@ public class AppTrackingProtectionListModel: NSObject, ObservableObject, NSFetch
             }
         }
     }
-
-    // MARK: - Persistent History Tracking
 
     private func createPersistentHistoryFetchRequest(after date: Date) -> NSPersistentHistoryChangeRequest {
         let historyFetchRequest = NSPersistentHistoryChangeRequest.fetchHistory(after: date)

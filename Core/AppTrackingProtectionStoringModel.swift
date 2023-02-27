@@ -18,8 +18,8 @@
 //
 
 import Foundation
+import Persistence
 import CoreData
-import Core
 import os
 
 public class AppTrackingProtectionStoringModel: ObservableObject {
@@ -27,15 +27,14 @@ public class AppTrackingProtectionStoringModel: ObservableObject {
     private let context: NSManagedObjectContext
     private let dateFormatter: DateFormatter
 
-    public init(appTrackingProtectionDatabase: TemporaryAppTrackingProtectionDatabase) {
+    public init(appTrackingProtectionDatabase: CoreDataDatabase) {
         self.context = appTrackingProtectionDatabase.makeContext(concurrencyType: .privateQueueConcurrencyType)
         self.dateFormatter = DateFormatter()
         self.dateFormatter.dateFormat = "dd-MM-yyyy"
     }
 
-    public func storeBlockedTracker(domain: String, trackerOwner: String) {
-        let blockedDate = Date()
-        let bucket = dateFormatter.string(from: blockedDate)
+    public func storeBlockedTracker(domain: String, trackerOwner: String, date: Date = Date()) {
+        let bucket = dateFormatter.string(from: date)
 
         context.performAndWait {
             do {
@@ -43,10 +42,11 @@ public class AppTrackingProtectionStoringModel: ObservableObject {
 
                 if let existingTracker = try context.fetch(existingTrackersFetchRequest).first {
                     existingTracker.count += 1
+                    existingTracker.timestamp = Date()
                 } else {
                     _ = AppTrackerEntity.makeTracker(domain: domain,
                                                      trackerOwner: trackerOwner,
-                                                     date: blockedDate,
+                                                     date: date,
                                                      bucket: bucket,
                                                      context: context)
                 }

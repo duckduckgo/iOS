@@ -102,7 +102,7 @@ class MainViewController: UIViewController {
     private var launchTabObserver: LaunchTabNotification.Observer?
     
     private let bookmarksDatabase: CoreDataDatabase
-    private let appTrackingProtectionDatabase: TemporaryAppTrackingProtectionDatabase
+    private let appTrackingProtectionDatabase: CoreDataDatabase
     private let appTrackingProtectionListModel: AppTrackingProtectionListModel
     private let favoritesViewModel: FavoritesListInteracting
     
@@ -136,7 +136,7 @@ class MainViewController: UIViewController {
     
     required init?(coder: NSCoder,
                    bookmarksDatabase: CoreDataDatabase,
-                   appTrackingProtectionDatabase: TemporaryAppTrackingProtectionDatabase) {
+                   appTrackingProtectionDatabase: CoreDataDatabase) {
         self.bookmarksDatabase = bookmarksDatabase
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
         self.appTrackingProtectionListModel = AppTrackingProtectionListModel(appTrackingProtectionDatabase: appTrackingProtectionDatabase)

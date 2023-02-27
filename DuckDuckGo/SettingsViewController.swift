@@ -21,6 +21,7 @@ import UIKit
 import MessageUI
 import Core
 import BrowserServicesKit
+import Persistence
 import SwiftUI
 
 // swiftlint:disable file_length type_body_length
@@ -59,7 +60,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
     
-    public var appTPDatabase: TemporaryAppTrackingProtectionDatabase!
+    public var appTPDatabase: CoreDataDatabase!
     
     private let autofillSectionIndex = 1
     private let debugSectionIndex = 7

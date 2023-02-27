@@ -38,16 +38,17 @@ public class AppTrackingProtectionDatabase {
         return url
     }()
 
-    public static func make(location: URL = defaultDBLocation, readOnly: Bool = false) -> TemporaryAppTrackingProtectionDatabase {
+    public static func make(location: URL = defaultDBLocation, readOnly: Bool = false) -> CoreDataDatabase {
         let bundle = Bundle(for: AppTrackingProtectionDatabase.self)
-        guard let model = TemporaryAppTrackingProtectionDatabase.loadModel(from: bundle, named: "AppTrackingProtectionModel") else {
+        guard let model = CoreDataDatabase.loadModel(from: bundle, named: "AppTrackingProtectionModel") else {
             fatalError("Failed to load model")
         }
 
-        let db = TemporaryAppTrackingProtectionDatabase(name: "AppTrackingProtection",
-                                                        containerLocation: location,
-                                                        model: model,
-                                                        readOnly: readOnly)
+        let db = CoreDataDatabase(name: "AppTrackingProtection",
+                                  containerLocation: location,
+                                  model: model,
+                                  readOnly: readOnly,
+                                  enablePersistentHistoryTracking: true)
 
         return db
     }

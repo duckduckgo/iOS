@@ -18,10 +18,11 @@
 //
 
 import SwiftUI
+import Persistence
 import Core
 
 class AppTPActivityHostingViewController: UIHostingController<AppTPActivityView> {
-    init(appTrackingProtectionDatabase: TemporaryAppTrackingProtectionDatabase) {
+    init(appTrackingProtectionDatabase: CoreDataDatabase) {
         let viewModel = AppTrackingProtectionListModel(appTrackingProtectionDatabase: appTrackingProtectionDatabase)
         
         let root = AppTPActivityView(viewModel: viewModel)

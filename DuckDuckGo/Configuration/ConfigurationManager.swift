@@ -50,26 +50,43 @@ struct ConfigurationManager {
     private let store = ConfigurationStore()
     private let httpsUpgradeStore: AppHTTPSUpgradeStore = PrivacyFeatures.httpsUpgradeStore
 
-    func update(onDidUpdate: @escaping (Configuration) -> Void) async -> Bool {
+    func update(onDidUpdate: @escaping (Configuration) -> Void) -> Bool {
         var didUpdateAnyData = false
         let fetcher = ConfigurationFetcher(store: ConfigurationStore())
-        do {
-            try await fetcher.fetch([.trackerDataSet, .surrogates, .privacyConfiguration]) {
-                updateTrackerBlockingDependencies(onDidUpdate: onDidUpdate)
-                didUpdateAnyData = true
+        
+        
+        let tdsFetchTask = Task { try fetcher.fetch(.trackerDataSet) }
+        let surrogatesFetchTask = Task { try fetcher.fetch(.surrogates) }
+        let privacyConfigurationFetchTask = Task { try fetcher.fetch(.privacyConfiguration) }
+        updateTrackerBlockingDependencies(onDidUpdate: onDidUpdate)
+        
+        let bloomFilterBinaryFetchTask = Task { try fetcher.fetch(.bloomFilterBinary) }
+        
+        let bloomFilterTask = Task {
+            fetcher.fetch([.bloomFilterBinary, .bloomFilterSpec]) {
+                try updateBloomFilter(onDidUpdate: onDidUpdate)
             }
-        } catch {
-            os_log("Failed to apply update to tracker blocking dependencies: %@", log: .generalLog, type: .debug, error.localizedDescription)
         }
         
+        await (tdsFetchTask.value, surrogatesFetchTask.value, privacyConfigurationFetchTask.value)
+        await bloomFilterBinaryFetchTask.value
+        try updateBloomFilterExclusions(onDidUpdate: onDidUpdate)
+        
+        
         do {
-            try await fetcher.fetch([.bloomFilterBinary, .bloomFilterSpec]) {
-                try updateBloomFilter(onDidUpdate: onDidUpdate)
-                didUpdateAnyData = true
-            }
+            try async let = fetcher.fetch([.bloomFilterBinary, .bloomFilterSpec])
+            try updateBloomFilter(onDidUpdate: onDidUpdate)
+            didUpdateAnyData = true
         } catch {
             os_log("Failed to apply update to bloom filter: %@", log: .generalLog, type: .debug, error.localizedDescription)
         }
+        
+        
+        
+
+                updateTrackerBlockingDependencies(onDidUpdate: onDidUpdate)
+            os_log("Failed to apply update to tracker blocking dependencies: %@", log: .generalLog, type: .debug, error.localizedDescription)
+
         
         do {
             try await fetcher.fetch([.bloomFilterExcludedDomains]) {

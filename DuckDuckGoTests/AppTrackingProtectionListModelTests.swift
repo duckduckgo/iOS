@@ -19,6 +19,8 @@
 
 import XCTest
 import Persistence
+import CoreData
+import Combine
 @testable import Core
 
 class AppTrackingProtectionListModelTests: XCTestCase {
@@ -31,7 +33,10 @@ class AppTrackingProtectionListModelTests: XCTestCase {
         let bundle = Bundle(for: AppTrackingProtectionListModel.self)
         let model = CoreDataDatabase.loadModel(from: bundle, named: "AppTrackingProtectionModel")!
 
-        database = CoreDataDatabase(name: "AppTrackingProtectionListModelTests", containerLocation: tempDBDir(), model: model)
+        database = CoreDataDatabase(name: "AppTrackingProtectionListModelTests",
+                                    containerLocation: tempDBDir(),
+                                    model: model,
+                                    enablePersistentHistoryTracking: true)
         database.loadStore()
     }
 
@@ -63,6 +68,28 @@ class AppTrackingProtectionListModelTests: XCTestCase {
         XCTAssertEqual(listModel.sections.first?.objects?.count, 1)
         XCTAssertEqual(listModel.sections.last?.name, "01-01-2023")
         XCTAssertEqual(listModel.sections.last?.objects?.count, 1)
+    }
+
+    func testWhenNewChangesAreWrittenToTheDatabase_ThenTheSectionsPropertyIsUpdated() {
+        let listModel = AppTrackingProtectionListModel(appTrackingProtectionDatabase: database)
+        XCTAssertEqual(listModel.sections.count, 0)
+
+        let expectation = self.expectation(description: "Fetched new sections expectation")
+        var fetchedSections: [NSFetchedResultsSectionInfo]?
+
+        let sectionsCancellable = listModel.$sections.dropFirst().sink { sections in
+            fetchedSections = sections
+            expectation.fulfill()
+        }
+
+        saveTracker(domain: "domain.com", owner: "Owner", date: Date())
+
+        wait(for: [expectation], timeout: 1.0)
+
+        XCTAssertEqual(fetchedSections?.count, 1)
+        XCTAssertEqual((fetchedSections?.first?.objects?.first as? AppTrackerEntity)?.domain, "domain.com")
+
+        sectionsCancellable.cancel()
     }
 
     func saveTracker(domain: String, owner: String, date: Date) {

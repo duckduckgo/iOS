@@ -21,13 +21,14 @@ import UIKit
 import SwiftUI
 import LinkPresentation
 import Core
+import Waitlist
 
 final class MacWaitlistViewController: UIViewController {
     
-    private let viewModel: MacWaitlistViewModel
+    private let viewModel: WaitlistViewModel
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        self.viewModel = MacWaitlistViewModel()
+        self.viewModel = WaitlistViewModel(waitlist: MacBrowserWaitlist.shared)
         super.init(nibName: nil, bundle: nil)
         self.viewModel.delegate = self
     }
@@ -44,9 +45,9 @@ final class MacWaitlistViewController: UIViewController {
     }
     
     private func addHostingControllerToViewHierarchy() {
-        let waitlistView = MacBrowserWaitlistView().environmentObject(viewModel)
+        let waitlistView = MacBrowserWaitlistView(isWindowsWaitlistAvailable: WindowsBrowserWaitlist.shared.isAvailable).environmentObject(viewModel)
         let waitlistViewController = UIHostingController(rootView: waitlistView)
-        waitlistViewController.view.backgroundColor = UIColor(named: "MacWaitlistBackgroundColor")!
+        waitlistViewController.view.backgroundColor = UIColor(named: "WaitlistBackgroundColor")!
         
         addChild(waitlistViewController)
         waitlistViewController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -63,21 +64,23 @@ final class MacWaitlistViewController: UIViewController {
     
 }
 
-extension MacWaitlistViewController: MacWaitlistViewModelDelegate {
+extension MacWaitlistViewController: WaitlistViewModelDelegate {
+    func waitlistViewModelDidAskToReceiveJoinedNotification(_ viewModel: WaitlistViewModel) async -> Bool {
+        assertionFailure("Mac Waitlist is removed")
+        return true
+    }
 
-    func macWaitlistViewModelDidOpenShareSheet(_ viewModel: MacWaitlistViewModel, senderFrame: CGRect) {
+    func waitlistViewModelDidJoinQueueWithNotificationsAllowed(_ viewModel: WaitlistViewModel) {
+        assertionFailure("Mac Waitlist is removed")
+    }
+
+    func waitlistViewModelDidOpenInviteCodeShareSheet(_ viewModel: WaitlistViewModel, inviteCode: String, senderFrame: CGRect) {
+        assertionFailure("Mac Waitlist is removed")
+    }
+
+    func waitlistViewModelDidOpenDownloadURLShareSheet(_ viewModel: WaitlistViewModel, senderFrame: CGRect) {
         let linkMetadata = MacWaitlistLinkMetadata()
         let activityViewController = UIActivityViewController(activityItems: [linkMetadata], applicationActivities: nil)
-        
-        Pixel.fire(pixel: .macBrowserWaitlistDidPressShareButton)
-        
-        activityViewController.completionWithItemsHandler = { _, completed, _, _ in
-            if completed {
-                Pixel.fire(pixel: .macBrowserWaitlistDidPressShareButtonShared)
-            } else {
-                Pixel.fire(pixel: .macBrowserWaitlistDidPressShareButtonDismiss)
-            }
-        }
         
         if UIDevice.current.userInterfaceIdiom == .pad {
             activityViewController.popoverPresentationController?.sourceView = UIApplication.shared.windows.first
@@ -87,17 +90,24 @@ extension MacWaitlistViewController: MacWaitlistViewModelDelegate {
         
         present(activityViewController, animated: true, completion: nil)
     }
-    
+
+    func waitlistViewModel(_ viewModel: WaitlistViewModel, didTriggerCustomAction action: WaitlistViewModel.ViewCustomAction) {
+        if action == .openWindowsBrowserWaitlist {
+            let windowsWaitlistViewController = WindowsWaitlistViewController(nibName: nil, bundle: nil)
+            navigationController?.popToRootViewController(animated: true)
+            navigationController?.pushViewController(windowsWaitlistViewController, animated: true)
+        }
+    }
 }
 
 private final class MacWaitlistLinkMetadata: NSObject, UIActivityItemSource {
     
     fileprivate let metadata: LPLinkMetadata = {
         let metadata = LPLinkMetadata()
-        metadata.originalURL = AppUrls().macBrowserDownloadURL
-        metadata.url = metadata.originalURL
+        metadata.originalURL = MacBrowserWaitlist.downloadURL
+        metadata.url = MacBrowserWaitlist.downloadURL
         metadata.title = UserText.macWaitlistShareSheetTitle
-        metadata.imageProvider = NSItemProvider(object: UIImage(named: "MacWaitlistShareSheetLogo")!)
+        metadata.imageProvider = NSItemProvider(object: UIImage(named: "WaitlistShareSheetLogo")!)
 
         return metadata
     }()
@@ -116,7 +126,7 @@ private final class MacWaitlistLinkMetadata: NSObject, UIActivityItemSource {
         }
 
         switch type {
-        case .message, .mail: return UserText.macWaitlistShareSheetMessage()
+        case .message, .mail: return UserText.macWaitlistShareSheetMessage
         default: return self.metadata.originalURL as Any
         }
     }

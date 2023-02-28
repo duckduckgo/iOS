@@ -29,7 +29,7 @@ public class AppTrackingProtectionListModel: NSObject, ObservableObject, NSFetch
         case historyTransactionConversionFailed
     }
 
-    @Published var sections: [NSFetchedResultsSectionInfo] = []
+    @Published public var sections: [NSFetchedResultsSectionInfo] = []
 
     private let context: NSManagedObjectContext
 

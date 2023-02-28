@@ -119,7 +119,7 @@ public struct ScanOrPasteCodeView: View {
     @ViewBuilder
     func instructions() -> some View {
 
-        Text("Go to Settings > Sync in the **DuckDuckGo App** on a different device and scan supplied code to connect instantly.")
+        Text("Go to Settings > Sync in the DuckDuckGo App on a different device and scan the QR code to sync.")
             .lineLimit(nil)
             .multilineTextAlignment(.center)
             .font(.system(size: 16, weight: .regular))

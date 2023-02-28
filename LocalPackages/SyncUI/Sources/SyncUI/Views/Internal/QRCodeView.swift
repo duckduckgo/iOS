@@ -58,7 +58,7 @@ struct QRCodeView: View {
     func instructions() -> some View {
 
         if model.code != nil {
-            Text("Go to Settings > Sync in the **DuckDuckGo App** on a different device and scan the image above to connect instantly.")
+            Text("Go to Settings > Sync in the DuckDuckGo App on a different device and scan this QR code to sync.")
                 .lineLimit(nil)
                 .multilineTextAlignment(.center)
         }

@@ -90,7 +90,7 @@ struct PasteCodeView: View {
 
     @ViewBuilder
     func instructions() -> some View {
-        Text("Enter the code on your recovery PDF, or connected device, above to recover your synced data.")
+        Text("Copy the code from the Settings > Sync page in the DuckDuckGo App on another synced device and paste it here to sync this device.")
             .lineLimit(nil)
             .multilineTextAlignment(.center)
             .foregroundColor(.white.opacity(0.6))
@@ -146,7 +146,7 @@ private extension String {
 struct PasteButtonStyle: ButtonStyle {
 
     private var backgroundColor: Color {
-        .deprecatedBlue
+        .blue30
     }
 
     private var foregroundColor: Color {

@@ -24,7 +24,7 @@ struct UserText {
 
     static let syncTurnOnMessage = "This will save an encrypted backup of your bookmarks on DuckDuckGo’s servers, which can be synced with your other devices.\n\nThe decryption key is stored on your device and cannot be read by DuckDuckGo."
 
-    static let syncWithAnotherDeviceMessage = "Your bookmarks are backed up! Would you like to sync with a second device now?"
+    static let syncWithAnotherDeviceMessage = "Your bookmarks will be backed up! Would you like to sync another device now?\n\nIf you’ve already set up Sync on another device, this will allow you to combine bookmarks from both devices into a single backup."
 
     static let syncRecoveryPDFMessage = "If you lose access to your devices, you will need a code to recover your synced data. You can save this code to your device as a PDF.\n\nAnyone with access to this code can access your synced data, so please keep it in a safe place."
 

@@ -30,7 +30,7 @@ public struct PrimaryButtonStyle: ButtonStyle {
     }
     
     public func makeBody(configuration: Configuration) -> some View {
-        let standardBackgroundColor = configuration.isPressed ? Color.deprecatedBlue.opacity(Consts.pressedOpacity) : Color.deprecatedBlue.opacity(1)
+        let standardBackgroundColor = Color.blueBase.opacity(configuration.isPressed ? Consts.pressedOpacity : 1)
         let disabledBackgroundColor = Color.gray50
         let backgroundColor = disabled ? disabledBackgroundColor : standardBackgroundColor
 
@@ -54,7 +54,7 @@ public struct SecondaryButtonStyle: ButtonStyle {
         colorScheme == .light ? Color.white : .gray70
     }
     private var foregroundColor: Color {
-        colorScheme == .light ? .deprecatedBlue : .white
+        colorScheme == .light ? .blueBase : .white
     }
     
     public func makeBody(configuration: Configuration) -> some View {
@@ -72,7 +72,7 @@ public struct GhostButtonStyle: ButtonStyle {
 
     public init() {}
     private var foregroundColor: Color {
-        colorScheme == .light ? .deprecatedBlue : .white
+        colorScheme == .light ? .blueBase : .white
     }
     
     public func makeBody(configuration: Configuration) -> some View {

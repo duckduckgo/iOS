@@ -42,11 +42,11 @@ public struct TurnOnSyncView: View {
                 EmptyView()
             }
 
-            SheetView(imageName: "SyncTurnOnSyncHero",
+            CTAView(imageName: "SyncTurnOnSyncHero",
                       title: "Turn on Sync?",
                       message: UserText.syncTurnOnMessage,
-                      primaryButton: "Turn on Sync",
-                      secondaryButton: "Recover Data") {
+                      primaryButtonLabel: "Turn on Sync",
+                      secondaryButtonLabel: "Recover Your Synced Data") {
 
                 model.turnOnSyncAction()
                 turnOnSyncNavigation = true
@@ -59,11 +59,11 @@ public struct TurnOnSyncView: View {
 
     @ViewBuilder
     func syncWithAnotherDeviceView() -> some View {
-        SheetView(imageName: "SyncWithAnotherDeviceHero",
-                  title: "Sync with Another Device?",
+        CTAView(imageName: "SyncWithAnotherDeviceHero",
+                  title: "Sync Another Device?",
                   message: UserText.syncWithAnotherDeviceMessage,
-                  primaryButton: "Sync with Another Device",
-                  secondaryButton: "Not Now") {
+                  primaryButtonLabel: "Sync Another Device",
+                  secondaryButtonLabel: "Not Now") {
             model.syncWithAnotherDeviceAction()
         } secondaryAction: {
             model.notNowAction()
@@ -89,15 +89,15 @@ public struct TurnOnSyncView: View {
 
 }
 
-private struct SheetView: View {
+private struct CTAView: View {
 
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
     let imageName: String
     let title: String
     let message: String
-    let primaryButton: String
-    let secondaryButton: String
+    let primaryButtonLabel: String
+    let secondaryButtonLabel: String
     let primaryAction: () -> Void
     let secondaryAction: () -> Void
 
@@ -111,24 +111,27 @@ private struct SheetView: View {
 
             Text(title)
                 .font(.system(size: 28, weight: .bold))
+                .padding(.horizontal, 55)
 
             Text(text)
+                .font(.system(size: 16, weight: .light))
+                .lineSpacing(3)
+                .padding(.horizontal, 30)
         }
         .multilineTextAlignment(.center)
         .padding(.top, verticalSizeClass == .compact ? 0 : 20)
-        .padding(.horizontal, 30)
     }
 
     @ViewBuilder
-    func buttons(primaryText: String,
-                 secondaryText: String,
+    func buttons(primaryLabel: String,
+                 secondaryLabel: String,
                  primaryAction: @escaping () -> Void,
                  secondaryAction: @escaping () -> Void) -> some View {
         VStack(spacing: verticalSizeClass == .compact ? 4 : 8) {
-            Button(primaryText, action: primaryAction)
+            Button(primaryLabel, action: primaryAction)
                 .buttonStyle(DuckUI.PrimaryButtonStyle())
 
-            Button(secondaryText, action: secondaryAction)
+            Button(secondaryLabel, action: secondaryAction)
                 .buttonStyle(DuckUI.SecondaryButtonStyle())
         }
         .frame(maxWidth: 360)
@@ -151,14 +154,13 @@ private struct SheetView: View {
                 Spacer()
 
                 VStack(spacing: verticalSizeClass == .compact ? 4 : 8) {
-                    buttons(primaryText: primaryButton,
-                            secondaryText: secondaryButton,
+                    buttons(primaryLabel: primaryButtonLabel,
+                            secondaryLabel: secondaryButtonLabel,
                             primaryAction: primaryAction,
                             secondaryAction: secondaryAction)
                 }
                 .ignoresSafeArea(.container)
                 .frame(maxWidth: .infinity)
-                .padding(.top, 8)
                 .applyBackgroundOnPhone(isCompact: verticalSizeClass == .compact)
             }
         }

@@ -105,8 +105,7 @@ public extension UIColor {
     static let gray10 = UIColor(.gray10)
     static let gray0 =  UIColor(.gray0)
     static let white =  UIColor(.white)
-
-    static let deprecatedBlue =  UIColor(.deprecatedBlue)
+    
 }
 
 private extension Color {

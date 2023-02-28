@@ -42,12 +42,14 @@ public class AppTrackingProtectionListModel: NSObject, ObservableObject, NSFetch
     fileprivate lazy var fetchedResultsController: NSFetchedResultsController<AppTrackerEntity> = {
         let fetchRequest: NSFetchRequest<AppTrackerEntity> = AppTrackerEntity.fetchRequest()
 
-        let sortDescriptor = NSSortDescriptor(key: "count", ascending: false)
-        fetchRequest.sortDescriptors = [sortDescriptor]
+        let bucketSortDescriptor = NSSortDescriptor(key: #keyPath(AppTrackerEntity.bucket), ascending: false)
+        let countSortDescriptor = NSSortDescriptor(key: #keyPath(AppTrackerEntity.count), ascending: false)
+        let domainSortDescriptor = NSSortDescriptor(key: #keyPath(AppTrackerEntity.domain), ascending: true)
+        fetchRequest.sortDescriptors = [bucketSortDescriptor, countSortDescriptor, domainSortDescriptor]
 
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
                                                                   managedObjectContext: self.context,
-                                                                  sectionNameKeyPath: "bucket",
+                                                                  sectionNameKeyPath: #keyPath(AppTrackerEntity.bucket),
                                                                   cacheName: nil)
 
         return fetchedResultsController

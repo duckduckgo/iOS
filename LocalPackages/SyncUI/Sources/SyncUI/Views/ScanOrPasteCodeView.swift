@@ -39,7 +39,8 @@ public struct ScanOrPasteCodeView: View {
                 }
             } else {
                 Rectangle()
-                    .fill(.black)
+                    // White so that the blur / transparent doesn't become too dark
+                    .fill(.white)
             }
         }
         .ignoresSafeArea()
@@ -62,11 +63,11 @@ public struct ScanOrPasteCodeView: View {
                     .padding(.top, 40)
                     .padding(.bottom, 20)
 
-                Text("Camera Permission is Required")
+                Text(UserText.cameraPermissionRequired)
                     .font(.system(size: 20, weight: .bold))
                     .padding(.bottom, 8)
 
-                Text("Please go to your device's settings and grant permission for this app to access your camera.")
+                Text(UserText.cameraPermissionInstructions)
                     .lineLimit(nil)
                     .multilineTextAlignment(.center)
                     .font(.system(size: 16, weight: .regular))
@@ -78,7 +79,7 @@ public struct ScanOrPasteCodeView: View {
                 } label: {
                     HStack {
                         Image("SyncGotoButton")
-                        Text("Go to Settings")
+                        Text(UserText.goToSettingsButton)
                     }
                 }
                 .buttonStyle(SyncLabelButtonStyle())
@@ -101,11 +102,11 @@ public struct ScanOrPasteCodeView: View {
                         _ = model.codeScanned("camera unavailable")
                     }
 
-                Text("Camera is Unavailable")
+                Text(UserText.cameraIsUnavailableTitle)
                     .font(.system(size: 20, weight: .bold))
                     .padding(.bottom, 8)
 
-                Text("There may be a problem with your device's camera.")
+                Text(UserText.cameraIsUnavailableMessage)
                     .lineLimit(nil)
                     .multilineTextAlignment(.center)
                     .font(.system(size: 16, weight: .regular))
@@ -119,7 +120,7 @@ public struct ScanOrPasteCodeView: View {
     @ViewBuilder
     func instructions() -> some View {
 
-        Text("Go to Settings > Sync in the DuckDuckGo App on a different device and scan the QR code to sync.")
+        Text(model.isInRecoveryMode ? UserText.recoveryModeInstructions : UserText.connectDeviceInstructions)
             .lineLimit(nil)
             .multilineTextAlignment(.center)
             .font(.system(size: 16, weight: .regular))
@@ -135,14 +136,14 @@ public struct ScanOrPasteCodeView: View {
                 NavigationLink {
                     PasteCodeView(model: model)
                 } label: {
-                    Label("Manually Enter Code", image: "SyncKeyboardIcon")
+                    Label(UserText.manuallyEnterCodeLabel, image: "SyncKeyboardIcon")
                 }
 
-                if model.canShowQRCode {
+                if !model.isInRecoveryMode {
                     NavigationLink {
                         ConnectModeView(model: model)
                     } label: {
-                        Label("Show QR Code", image: "SyncQRCodeIcon")
+                        Label(UserText.showQRCodeLabel, image: "SyncQRCodeIcon")
                     }
                 }
             }
@@ -187,6 +188,9 @@ public struct ScanOrPasteCodeView: View {
                         .regularMaterialBackground()
 
                     ZStack {
+                        // Background in case fullscreen camera view doesn't work
+                        Rectangle().fill(Color.black)
+
                         cameraViewPort()
                             .frame(width: g.size.width, height: g.size.width)
                             .frame(maxHeight: g.size.height - Constants.maxCameraHeight)

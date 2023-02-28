@@ -43,10 +43,10 @@ public struct TurnOnSyncView: View {
             }
 
             CTAView(imageName: "SyncTurnOnSyncHero",
-                      title: "Turn on Sync?",
-                      message: UserText.syncTurnOnMessage,
-                      primaryButtonLabel: "Turn on Sync",
-                      secondaryButtonLabel: "Recover Your Synced Data") {
+                    title: UserText.turnOnTitle,
+                    message: UserText.turnOnMessage,
+                    primaryButtonLabel: UserText.turnOnButton,
+                    secondaryButtonLabel: UserText.recoverDataButton) {
 
                 model.turnOnSyncAction()
                 turnOnSyncNavigation = true
@@ -60,10 +60,10 @@ public struct TurnOnSyncView: View {
     @ViewBuilder
     func syncWithAnotherDeviceView() -> some View {
         CTAView(imageName: "SyncWithAnotherDeviceHero",
-                  title: "Sync Another Device?",
-                  message: UserText.syncWithAnotherDeviceMessage,
-                  primaryButtonLabel: "Sync Another Device",
-                  secondaryButtonLabel: "Not Now") {
+                title: UserText.syncWithAnotherDeviceTitle,
+                message: UserText.syncWithAnotherDeviceMessage,
+                primaryButtonLabel: UserText.syncWithAnotherDeviceButton,
+                secondaryButtonLabel: UserText.notNowButton) {
             model.syncWithAnotherDeviceAction()
         } secondaryAction: {
             model.notNowAction()
@@ -79,7 +79,7 @@ public struct TurnOnSyncView: View {
                         Button {
                             model.cancelAction()
                         } label: {
-                            Text("Cancel")
+                            Text(UserText.cancelButton)
                         }
                     }
                 }

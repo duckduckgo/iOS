@@ -90,11 +90,11 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
 
     func showSyncWithAnotherDevice() {
-        collectCode(canShowQRCode: true)
+        collectCode(isInRecoveryMode: false)
     }
 
     func showRecoverData() {
-        collectCode(canShowQRCode: false)
+        collectCode(isInRecoveryMode: true)
     }
 
     func shareRecoveryPDF() {
@@ -130,8 +130,8 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         navigationController?.present(controller, animated: true)
     }
 
-    private func collectCode(canShowQRCode: Bool) {
-        let model = ScanOrPasteCodeViewModel(canShowQRCode: canShowQRCode)
+    private func collectCode(isInRecoveryMode: Bool) {
+        let model = ScanOrPasteCodeViewModel(isInRecoveryMode: isInRecoveryMode)
         model.delegate = self
 
         let controller = DismissibleHostingController(rootView: ScanOrPasteCodeView(model: model)) { [weak self] in

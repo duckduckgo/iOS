@@ -29,7 +29,7 @@ struct PasteCodeView: View {
     @ViewBuilder
     func pasteButton() -> some View {
         Button(action: model.pasteCode) {
-            Label("Paste", image: "SyncPaste")
+            Label(UserText.pasteLabel, image: "SyncPaste")
         }
     }
 
@@ -41,7 +41,7 @@ struct PasteCodeView: View {
                 Spacer()
             }
 
-            RoundedRectangle(cornerRadius: 8).foregroundColor(.white.opacity(0.09))
+            RoundedRectangle(cornerRadius: 8).foregroundColor(.white.opacity(0.12))
 
             VStack(spacing: 0) {
                 Spacer()
@@ -61,14 +61,14 @@ struct PasteCodeView: View {
                 if model.isValidating {
                     HStack(spacing: 4) {
                         SwiftUI.ProgressView()
-                        Text("Validating code")
+                        Text(UserText.validatingCode)
                             .foregroundColor(.white.opacity(0.36))
                     }
                 } else if let error = model.codeError {
                     HStack {
                         Image("SyncAlert")
 
-                        Text("\(error)")
+                        Text(error)
                             .foregroundColor(.white.opacity(0.36))
                     }
                 } else {
@@ -90,7 +90,7 @@ struct PasteCodeView: View {
 
     @ViewBuilder
     func instructions() -> some View {
-        Text("Copy the code from the Settings > Sync page in the DuckDuckGo App on another synced device and paste it here to sync this device.")
+        Text(UserText.pasteCodeInstructions)
             .lineLimit(nil)
             .multilineTextAlignment(.center)
             .foregroundColor(.white.opacity(0.6))

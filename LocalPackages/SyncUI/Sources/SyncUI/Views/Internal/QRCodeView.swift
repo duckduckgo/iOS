@@ -46,7 +46,7 @@ struct QRCodeView: View {
                 Button {
                     model.copy()
                 } label: {
-                    Label("Copy Code", image: "SyncCopy")
+                    Label(UserText.copyCodeLabel, image: "SyncCopy")
                 }
                 .buttonStyle(SyncLabelButtonStyle())
                 .padding(.bottom, 20)
@@ -58,7 +58,7 @@ struct QRCodeView: View {
     func instructions() -> some View {
 
         if model.code != nil {
-            Text("Go to Settings > Sync in the DuckDuckGo App on a different device and scan this QR code to sync.")
+            Text(UserText.viewQRCodeInstructions)
                 .lineLimit(nil)
                 .multilineTextAlignment(.center)
         }
@@ -72,7 +72,7 @@ struct QRCodeView: View {
                 HStack { Spacer() }
                 Spacer()
             }
-            RoundedRectangle(cornerRadius: 8).foregroundColor(.white.opacity(0.09))
+            RoundedRectangle(cornerRadius: 8).foregroundColor(.white.opacity(0.12))
             progressView()
             qrCodeView()
         }

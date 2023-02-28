@@ -62,10 +62,10 @@ public class ScanOrPasteCodeViewModel: ObservableObject {
 
     var showQRCodeModel: ShowQRCodeViewModel?
 
-    let canShowQRCode: Bool
+    let isInRecoveryMode: Bool
 
-    public init(canShowQRCode: Bool) {
-        self.canShowQRCode = canShowQRCode
+    public init(isInRecoveryMode: Bool) {
+        self.isInRecoveryMode = isInRecoveryMode
     }
 
     func codeScanned(_ code: String) -> Bool {

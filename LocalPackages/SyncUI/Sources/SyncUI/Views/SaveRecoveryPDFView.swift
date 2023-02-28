@@ -20,6 +20,7 @@
 import SwiftUI
 import DuckUI
 
+// Screen to be re-done in this merge
 public struct SaveRecoveryPDFView: View {
 
     @Environment(\.presentationMode) var presentation
@@ -35,11 +36,11 @@ public struct SaveRecoveryPDFView: View {
             Image("SyncDownloadRecoveryCode")
                 .padding(.bottom, 20)
 
-            Text("Save Recovery PDF?")
+            Text(UserText.saveRecoveryTitle)
                 .font(.system(size: 28, weight: .bold))
                 .padding(.bottom, 24)
 
-            Text(UserText.syncRecoveryPDFMessage)
+            Text(UserText.recoveryPDFMessage)
                 .lineLimit(nil)
                 .multilineTextAlignment(.center)
 
@@ -48,14 +49,14 @@ public struct SaveRecoveryPDFView: View {
             Button {
                 showRecoveryPDFAction()
             } label: {
-                Text("Save Recovery PDF")
+                Text(UserText.saveRecoveryButton)
             }
             .buttonStyle(PrimaryButtonStyle())
 
             Button {
                 presentation.wrappedValue.dismiss()
             } label: {
-                Text("Not Now")
+                Text(UserText.notNowButton)
             }
             .buttonStyle(SecondaryButtonStyle())
         }

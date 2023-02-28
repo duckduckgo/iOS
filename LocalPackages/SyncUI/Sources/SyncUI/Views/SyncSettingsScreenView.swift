@@ -33,7 +33,7 @@ public struct SyncSettingsScreenView: View {
     func syncToggle() -> some View {
         Section {
             HStack {
-                Text("Sync")
+                Text(UserText.syncTitle)
                 Spacer()
 
                 if model.isBusy {
@@ -51,7 +51,7 @@ public struct SyncSettingsScreenView: View {
                 }
             }
         } footer: {
-            Text("Sync your bookmarks across your devices and save an encrypted backup on DuckDuckGo’s servers.")
+            Text(UserText.syncSettingsInfo)
         }
     }
 
@@ -64,14 +64,14 @@ public struct SyncSettingsScreenView: View {
                         Text(device.name)
                         Spacer()
                         if device.isThisDevice {
-                            Text("This Device")
+                            Text(UserText.thisDevice)
                                 .foregroundColor(.secondary)
                         }
                     }
                 }
             }
         } header: {
-            Text("Synced Devices")
+            Text(UserText.connectedDevicesTitle)
         }
     }
 

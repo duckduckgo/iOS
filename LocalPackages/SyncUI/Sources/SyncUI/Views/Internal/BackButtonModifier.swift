@@ -33,7 +33,7 @@ struct BackButtonModifier: ViewModifier {
                     } label: {
                         HStack(spacing: 4) {
                             Image(systemName: "chevron.left")
-                            Text("Back")
+                            Text(UserText.backButtonTitle)
                         }
                     }
                     .foregroundColor(Color.white)

@@ -36,7 +36,7 @@ public struct DeviceConnectedView: View {
             Image("SyncSuccess")
                 .padding(.bottom, 20)
 
-            Text("Device Synced!")
+            Text(UserText.deviceSyncedTitle)
                 .font(.system(size: 28, weight: .bold))
                 .padding(.bottom, 24)
 
@@ -47,7 +47,7 @@ public struct DeviceConnectedView: View {
                 HStack(spacing: 0) {
                     Image(systemName: "checkmark.circle")
                         .padding(.horizontal, 18)
-                    Text("Another Device")
+                    Text("WIP: Another Device")
                     Spacer()
                 }
             }
@@ -55,7 +55,7 @@ public struct DeviceConnectedView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 20)
 
-            Text("Your bookmarks are now syncing with this device.")
+            Text(UserText.deviceSyncedMessage)
                 .lineLimit(nil)
                 .multilineTextAlignment(.center)
 
@@ -66,7 +66,7 @@ public struct DeviceConnectedView: View {
                     self.showRecoveryPDF = true
                 }
             } label: {
-                Text("Next")
+                Text(UserText.nextButtonTitle)
             }
             .buttonStyle(PrimaryButtonStyle())
         }

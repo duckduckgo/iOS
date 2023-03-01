@@ -84,6 +84,8 @@ public struct UserDefaultsWrapper<T> {
         case featureFlaggingDidVerifyInternalUser = "com.duckduckgo.app.featureFlaggingDidVerifyInternalUser"
         
         case voiceSearchEnabled = "com.duckduckgo.app.voiceSearchEnabled"
+
+        case lastAppTrackingProtectionHistoryFetchTimestamp = "com.duckduckgo.ios.appTrackingProtection.lastTrackerHistoryFetchTimestamp"
     }
 
     private let key: Key

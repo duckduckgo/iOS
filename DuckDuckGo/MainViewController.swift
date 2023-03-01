@@ -102,6 +102,8 @@ class MainViewController: UIViewController {
     private var launchTabObserver: LaunchTabNotification.Observer?
     
     private let bookmarksDatabase: CoreDataDatabase
+    private let appTrackingProtectionDatabase: CoreDataDatabase
+    private let appTrackingProtectionListModel: AppTrackingProtectionListModel
     private let favoritesViewModel: FavoritesListInteracting
     
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase)
@@ -133,8 +135,11 @@ class MainViewController: UIViewController {
     private var skipSERPFlow = true
     
     required init?(coder: NSCoder,
-                   bookmarksDatabase: CoreDataDatabase) {
+                   bookmarksDatabase: CoreDataDatabase,
+                   appTrackingProtectionDatabase: CoreDataDatabase) {
         self.bookmarksDatabase = bookmarksDatabase
+        self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
+        self.appTrackingProtectionListModel = AppTrackingProtectionListModel(appTrackingProtectionDatabase: appTrackingProtectionDatabase)
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         super.init(coder: coder)

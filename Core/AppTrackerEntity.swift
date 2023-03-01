@@ -35,6 +35,12 @@ public class AppTrackerEntity: NSManagedObject {
         return request
     }
 
+    @nonobjc public class func fetchRequest(trackersMoreRecentThan date: Date) -> NSFetchRequest<AppTrackerEntity> {
+        let request = NSFetchRequest<AppTrackerEntity>(entityName: "AppTrackerEntity")
+        request.predicate = NSPredicate(format: "%K > %@", #keyPath(AppTrackerEntity.timestamp), date as NSDate)
+        return request
+    }
+
     public static func makeTracker(domain: String,
                                    trackerOwner: String,
                                    date: Date,
@@ -56,7 +62,7 @@ public class AppTrackerEntity: NSManagedObject {
     @NSManaged public var trackerOwner: String
     @NSManaged public var bucket: String
     @NSManaged public var timestamp: Date
-    @NSManaged public var count: Int
+    @NSManaged public var count: Int32
 
 }
 

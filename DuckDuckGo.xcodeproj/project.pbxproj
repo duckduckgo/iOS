@@ -258,6 +258,8 @@
 		4B83396C29AC0701003F7EA9 /* AppTrackingProtectionStoringModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B470EE2299C6DD10086EBDC /* AppTrackingProtectionStoringModel.swift */; };
 		4B83396F29AC1437003F7EA9 /* AppTrackingProtectionListModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B83396E29AC1437003F7EA9 /* AppTrackingProtectionListModelTests.swift */; };
 		4B83397129AC18C9003F7EA9 /* AppTrackingProtectionStoringModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B83397029AC18C9003F7EA9 /* AppTrackingProtectionStoringModelTests.swift */; };
+		4B83397329AFB8D2003F7EA9 /* AppTrackingProtectionFeedbackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B83397229AFB8D2003F7EA9 /* AppTrackingProtectionFeedbackModel.swift */; };
+		4B83397529AFBCE6003F7EA9 /* AppTrackingProtectionFeedbackModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B83397429AFBCE6003F7EA9 /* AppTrackingProtectionFeedbackModelTests.swift */; };
 		4BC21A2F27238B7500229F0E /* RunLoopExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC21A2C272388BD00229F0E /* RunLoopExtensionTests.swift */; };
 		4BE2756827304F57006B20B0 /* URLRequestExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE27566272F878F006B20B0 /* URLRequestExtension.swift */; };
 		4BEF65692989C2FC00B650CB /* AdapterSocketEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021D307A2989C0C400918636 /* AdapterSocketEvent.swift */; };
@@ -1174,6 +1176,8 @@
 		4B75EA9126A266CB00018634 /* PrintingUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintingUserScript.swift; sourceTree = "<group>"; };
 		4B83396E29AC1437003F7EA9 /* AppTrackingProtectionListModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionListModelTests.swift; sourceTree = "<group>"; };
 		4B83397029AC18C9003F7EA9 /* AppTrackingProtectionStoringModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionStoringModelTests.swift; sourceTree = "<group>"; };
+		4B83397229AFB8D2003F7EA9 /* AppTrackingProtectionFeedbackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionFeedbackModel.swift; sourceTree = "<group>"; };
+		4B83397429AFBCE6003F7EA9 /* AppTrackingProtectionFeedbackModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionFeedbackModelTests.swift; sourceTree = "<group>"; };
 		4BC21A2C272388BD00229F0E /* RunLoopExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunLoopExtensionTests.swift; sourceTree = "<group>"; };
 		4BE27566272F878F006B20B0 /* URLRequestExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URLRequestExtension.swift; path = ../DuckDuckGo/URLRequestExtension.swift; sourceTree = "<group>"; };
 		6AC6DAB228804F97002723C0 /* BarsAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsAnimator.swift; sourceTree = "<group>"; };
@@ -2990,6 +2994,7 @@
 			children = (
 				4B470EDE299C67270086EBDC /* AppTrackerEntity.swift */,
 				4B470ED5299C49800086EBDC /* AppTrackingProtectionDatabase.swift */,
+				4B83397229AFB8D2003F7EA9 /* AppTrackingProtectionFeedbackModel.swift */,
 				4B470EDA299C4FB20086EBDC /* AppTrackingProtectionListModel.swift */,
 				4B470EE2299C6DD10086EBDC /* AppTrackingProtectionStoringModel.swift */,
 				4B470ED7299C4AED0086EBDC /* AppTrackingProtectionModel.xcdatamodeld */,
@@ -3029,6 +3034,7 @@
 			children = (
 				4B83396E29AC1437003F7EA9 /* AppTrackingProtectionListModelTests.swift */,
 				4B83397029AC18C9003F7EA9 /* AppTrackingProtectionStoringModelTests.swift */,
+				4B83397429AFBCE6003F7EA9 /* AppTrackingProtectionFeedbackModelTests.swift */,
 			);
 			name = AppTrackingProtection;
 			sourceTree = "<group>";
@@ -5945,6 +5951,7 @@
 				6AC98419288055C1005FA9CA /* BarsAnimatorTests.swift in Sources */,
 				4B83396F29AC1437003F7EA9 /* AppTrackingProtectionListModelTests.swift in Sources */,
 				8536A1CA209AF6490050739E /* HomeRowReminderTests.swift in Sources */,
+				4B83397529AFBCE6003F7EA9 /* AppTrackingProtectionFeedbackModelTests.swift in Sources */,
 				851DFD8A212C5EE800D95F20 /* TabSwitcherButtonTests.swift in Sources */,
 				98983096255B5019003339A2 /* BookmarksCachingSearchTests.swift in Sources */,
 				85480CB429226B3B007E8F13 /* CrashCollectionExtensionTests.swift in Sources */,
@@ -6086,6 +6093,7 @@
 				F41C2DA326C1925700F9A760 /* BookmarksAndFolders.xcdatamodeld in Sources */,
 				F4F6DFBA26EFF28A00ED7E12 /* BookmarkObjects.swift in Sources */,
 				836A941D247F23C600BF8EF5 /* UserAgentManager.swift in Sources */,
+				4B83397329AFB8D2003F7EA9 /* AppTrackingProtectionFeedbackModel.swift in Sources */,
 				85CA53A824BB343700A6288C /* Favicons.swift in Sources */,
 				F143C3181E4A99D200CFDE3A /* Link.swift in Sources */,
 				4B470EDF299C67270086EBDC /* AppTrackerEntity.swift in Sources */,

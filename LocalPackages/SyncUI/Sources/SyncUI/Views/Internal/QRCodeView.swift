@@ -98,8 +98,6 @@ struct QRCodeView: View {
 
 private struct QRCode: View {
 
-    @Environment(\.displayScale) var displayScale
-
     let context = CIContext()
 
     let string: String

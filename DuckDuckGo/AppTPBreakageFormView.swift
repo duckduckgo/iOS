@@ -42,12 +42,29 @@ private enum BreakageCategory: String, CaseIterable, Identifiable {
 }
 
 struct AppTPBreakageFormView: View {
+    @Environment(\.presentationMode) var presentation
+    
     @State private var appName: String = ""
     @State private var category: BreakageCategory = .somethingElse
     @State private var description: String = ""
     
+    @State private var showError = false
+    
     func sendReport() {
+        if appName.isEmpty {
+            showError = true
+            return
+        }
         
+        let parameters = [
+            "appName": appName,
+            "category": category.rawValue,
+            "description": description
+        ]
+        
+        Pixel.fire(pixel: .appTPBreakageReport, withAdditionalParameters: parameters)
+        
+        self.presentation.wrappedValue.dismiss()
     }
     
     var body: some View {
@@ -74,7 +91,7 @@ struct AppTPBreakageFormView: View {
             
             Section {
                 Button(action: {
-                    
+                    sendReport()
                 }, label: {
                     Text("Submit Breakage Report")
                         .frame(maxWidth: .infinity, alignment: .center)
@@ -83,5 +100,12 @@ struct AppTPBreakageFormView: View {
             }
         }
         .navigationTitle("Breakage Report")
+        .alert(isPresented: $showError) {
+            Alert(
+                title: Text("Error"),
+                message: Text("Please enter which app on your device is broken."),
+                dismissButton: .default(Text("Ok"))
+            )
+        }
     }
 }

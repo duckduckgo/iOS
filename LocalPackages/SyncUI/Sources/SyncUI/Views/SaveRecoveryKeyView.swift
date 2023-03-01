@@ -22,14 +22,12 @@ import DuckUI
 
 public struct SaveRecoveryKeyView: View {
 
-    let fakeCode = "eyJyZWNvdmVyeSI6eyJ1c2ViNjgwRDQ1QjUtNUU2RS00MzQ3jZGQkU4MEZDNEE3IiwicHJpbWFyeV9rZXkiOiJBUBUUVCQVFFQkFRRUJBUUVCBUUVCQVFFPSJ9fQ=="
-
     @Environment(\.presentationMode) var presentation
 
-    let showRecoveryPDFAction: () -> Void
+    let model: SaveRecoveryKeyViewModel
 
-    public init(showRecoveryPDFAction: @escaping () -> Void) {
-        self.showRecoveryPDFAction = showRecoveryPDFAction
+    public init(model: SaveRecoveryKeyViewModel) {
+        self.model = model
     }
 
     @ViewBuilder
@@ -37,9 +35,9 @@ public struct SaveRecoveryKeyView: View {
         ZStack {
             VStack(spacing: 26) {
                 HStack(spacing: 16) {
-                    QRCodeView(string: fakeCode, size: 94, style: .dark)
+                    QRCodeView(string: model.key, size: 94, style: .dark)
 
-                    Text(fakeCode)
+                    Text(model.key)
                         .fontWeight(.light)
                         .lineSpacing(1.6)
                         .lineLimit(3)
@@ -51,12 +49,12 @@ public struct SaveRecoveryKeyView: View {
 
                 GridWithHStackFallback {
                     Button("Save as PDF") {
-                        showRecoveryPDFAction()
+                        model.showRecoveryPDFAction()
                     }
                     .buttonStyle(PrimaryButtonStyle(compact: true))
 
                     Button("Copy Key") {
-                        UIPasteboard.general.string = fakeCode
+                        model.copyKey()
                     }
                     .buttonStyle(PrimaryButtonStyle(compact: true))
                 }

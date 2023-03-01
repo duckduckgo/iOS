@@ -22,12 +22,12 @@ import DuckUI
 
 public struct DeviceConnectedView: View {
 
-    let showRecoveryPDFAction: () -> Void
-
     @State var showRecoveryPDF = false
 
-    public init(showRecoveryPDFAction: @escaping () -> Void) {
-        self.showRecoveryPDFAction = showRecoveryPDFAction
+    let saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel
+
+    public init(saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel) {
+        self.saveRecoveryKeyViewModel = saveRecoveryKeyViewModel
     }
 
     @ViewBuilder
@@ -76,7 +76,7 @@ public struct DeviceConnectedView: View {
 
     public var body: some View {
         if showRecoveryPDF {
-            SaveRecoveryKeyView(showRecoveryPDFAction: showRecoveryPDFAction)
+            SaveRecoveryKeyView(model: saveRecoveryKeyViewModel)
                 .transition(.move(edge: .trailing))
         } else {
             deviceSyncedView()

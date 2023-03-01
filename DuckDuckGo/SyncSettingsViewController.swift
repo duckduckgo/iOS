@@ -114,9 +114,10 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
 
     func showDeviceConnected() {
-        let controller = UIHostingController(rootView: DeviceConnectedView {
-            self.shareRecoveryPDF()
-        })
+        let model = SaveRecoveryKeyViewModel { [weak self] in
+            self?.shareRecoveryPDF()
+        }
+        let controller = UIHostingController(rootView: DeviceConnectedView(saveRecoveryKeyViewModel: model))
         navigationController?.present(controller, animated: true) {
             self.rootView.model.showDevices()
             self.rootView.model.appendDevice(.init(id: UUID().uuidString, name: "Another Device", isThisDevice: false))
@@ -125,9 +126,10 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
     
     func showRecoveryPDF() {
-        let controller = UIHostingController(rootView: SaveRecoveryKeyView {
-            self.shareRecoveryPDF()
-        })
+        let model = SaveRecoveryKeyViewModel { [weak self] in
+            self?.shareRecoveryPDF()
+        }
+        let controller = UIHostingController(rootView: SaveRecoveryKeyView(model: model))
         navigationController?.present(controller, animated: true)
     }
 

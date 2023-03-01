@@ -112,6 +112,7 @@
 		02C57C4B2514FEFB009E5129 /* DoNotSellSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C57C4A2514FEFB009E5129 /* DoNotSellSettingsViewController.swift */; };
 		02CA904924F6BFE700D41DDF /* navigatorsharepatch.js in Resources */ = {isa = PBXBuildFile; fileRef = 02CA904824F6BFE700D41DDF /* navigatorsharepatch.js */; };
 		02CA904B24F6C11A00D41DDF /* NavigatorSharePatchUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CA904A24F6C11A00D41DDF /* NavigatorSharePatchUserScript.swift */; };
+		02EC02C429AFA33000557F1A /* AppTPBreakageFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EC02C329AFA33000557F1A /* AppTPBreakageFormView.swift */; };
 		0A6CC0EF23904D5400E4F627 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0A6CC0EE23904D5400E4F627 /* Settings.bundle */; };
 		1CB7B82123CEA1F800AA24EA /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82023CEA1F800AA24EA /* DateExtension.swift */; };
 		1CB7B82323CEA28300AA24EA /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */; };
@@ -1034,6 +1035,7 @@
 		02CA904824F6BFE700D41DDF /* navigatorsharepatch.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = navigatorsharepatch.js; sourceTree = "<group>"; };
 		02CA904A24F6C11A00D41DDF /* NavigatorSharePatchUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorSharePatchUserScript.swift; sourceTree = "<group>"; };
 		02CA904C24FD2DB000D41DDF /* ContentBlockingRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockingRulesTests.swift; sourceTree = "<group>"; };
+		02EC02C329AFA33000557F1A /* AppTPBreakageFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPBreakageFormView.swift; sourceTree = "<group>"; };
 		0A6CC0EE23904D5400E4F627 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		1CB7B82023CEA1F800AA24EA /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
@@ -2428,6 +2430,7 @@
 		0201089F29A560D400644F9D /* AppTPActivityView */ = {
 			isa = PBXGroup;
 			children = (
+				02EC02C229AFA31900557F1A /* AppTPBreakageForm */,
 				020108A429A681E200644F9D /* AppTP.xcassets */,
 				020108A029A5610C00644F9D /* AppTPActivityHostingViewController.swift */,
 				020108A229A561C300644F9D /* AppTPActivityView.swift */,
@@ -2697,6 +2700,14 @@
 				02BA15B026A89ECA00472DD7 /* ios-config.json */,
 			);
 			name = PrivacyConfiguration;
+			sourceTree = "<group>";
+		};
+		02EC02C229AFA31900557F1A /* AppTPBreakageForm */ = {
+			isa = PBXGroup;
+			children = (
+				02EC02C329AFA33000557F1A /* AppTPBreakageFormView.swift */,
+			);
+			name = AppTPBreakageForm;
 			sourceTree = "<group>";
 		};
 		1E4DCF4227B6A29D00961E25 /* View */ = {
@@ -5779,6 +5790,7 @@
 				4B6484EE27FD1E350050A7A1 /* MacBrowserWaitlistDebugViewController.swift in Sources */,
 				F1D796EE1E7AF2EB0019D451 /* UIViewControllerExtension.swift in Sources */,
 				1EE411F12857C3640003FE64 /* TrackerAnimationImageProvider.swift in Sources */,
+				02EC02C429AFA33000557F1A /* AppTPBreakageFormView.swift in Sources */,
 				F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */,
 				98728E822417E3300033960E /* BrokenSiteInfo.swift in Sources */,
 				31EF52E1281B3BDC0034796E /* AutofillLoginListItemViewModel.swift in Sources */,

@@ -117,10 +117,21 @@ struct AppTPActivityView: View {
         ScrollView {
             LazyVStack(alignment: .center, spacing: 0) {
                 Section {
-                    AppTPToggleView(vpnOn: $vpnOn)
-                        .background(Color.cellBackground)
-                        .cornerRadius(Const.Size.cornerRadius)
-                        .padding(.bottom)
+                    VStack {
+                        AppTPToggleView(vpnOn: $vpnOn)
+                            .background(Color.cellBackground)
+                            .cornerRadius(Const.Size.cornerRadius)
+                        
+//                        Divider()
+                        
+                        NavigationLink(destination: AppTPBreakageFormView()) {
+                            Text("Something not working?")
+                                .font(Font(uiFont: Const.Font.sectionHeader))
+                                .foregroundColor(Color("AppTPToggleColor"))
+                                .frame(height: 44)
+                        }
+                    }
+                    .padding(.bottom)
                 }
                 
                 if viewModel.sections.count > 0 {

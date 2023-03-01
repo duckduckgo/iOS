@@ -106,6 +106,9 @@ public struct PixelParameters {
     public static let emailKeychainKeychainOperation = "keychain_operation"
 
     public static let bookmarkErrorOrphanedFolderCount = "bookmark_error_orphaned_count"
+    
+    // AppTP
+    public static let appTPBreakageReport = "apptp_breakage_report"
 
     public static let ctaShown = "cta"
 }

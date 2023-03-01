@@ -35,7 +35,7 @@ struct PasteCodeView: View {
 
     @ViewBuilder
     func codeEntrySection() -> some View {
-        ZStack {    
+        ZStack {
             RoundedRectangle(cornerRadius: 8).foregroundColor(.white.opacity(0.12))
 
             VStack(spacing: 0) {

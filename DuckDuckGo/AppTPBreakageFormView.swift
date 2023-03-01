@@ -71,6 +71,8 @@ struct AppTPBreakageFormView: View {
                     Text("Which app is broken?")
                         .font(Font(uiFont: Const.Font.sectionHeader))
                         .foregroundColor(.infoText)
+                        .padding(.leading, Const.Size.sectionIndentation)
+                        .padding(.bottom, Const.Size.sectionHeaderBottom)
                 }
                 .textCase(nil)
                 
@@ -82,16 +84,30 @@ struct AppTPBreakageFormView: View {
                     }
                 }
                 
-                if category == .somethingElse {
-                    Section {
+                Section {
+                    if category == .somethingElse {
                         TextEditor(text: $description)
-                    } header: {
+                    }
+                } header: {
+                    if category == .somethingElse {
                         Text("Please describe what's happening, what you expected to happen, and steps that led to the issue.")
                             .font(Font(uiFont: Const.Font.sectionHeader))
                             .foregroundColor(.infoText)
+                            .padding(.leading, Const.Size.sectionIndentation)
+                            .padding(.bottom, Const.Size.sectionHeaderBottom)
                     }
-                    .textCase(nil)
+                } footer: {
+                    Text("""
+In addition to the details entered into this form, your app issue report will contain:
+- A list of trackers blocked in the last 10 minutes
+- Whether App Tracking Protection is enabled
+- Aggregate DuckDuckGo app diagnostics
+""")
+                    .font(Font(uiFont: Const.Font.footer))
+                    .foregroundColor(.infoText)
+                    .padding(.leading, Const.Size.sectionIndentation)
                 }
+                .textCase(nil)
                 
                 Section {
                     Button(action: {
@@ -100,8 +116,9 @@ struct AppTPBreakageFormView: View {
                         Text("Submit")
                             .font(Font(uiFont: Const.Font.button))
                             .frame(maxWidth: .infinity, alignment: .center)
-                            .foregroundColor(Color("AppTPToggleColor"))
+                            .foregroundColor(.white)
                     })
+                    .listRowBackground(Color.buttonColor)
                 }
             }
             .navigationTitle("Breakage Report")
@@ -120,6 +137,12 @@ private enum Const {
     enum Font {
         static let sectionHeader = UIFont.semiBoldAppFont(ofSize: 15)
         static let button = UIFont.semiBoldAppFont(ofSize: 17)
+        static let footer = UIFont.appFont(ofSize: 15)
+    }
+    
+    enum Size {
+        static let sectionIndentation: CGFloat = -6
+        static let sectionHeaderBottom: CGFloat = 6
     }
 }
 
@@ -127,4 +150,5 @@ private extension Color {
     static let infoText = Color("AppTPDomainColor")
     static let cellBackground = Color("AppTPCellBackgroundColor")
     static let viewBackground = Color("AppTPViewBackgroundColor")
+    static let buttonColor = Color("AppTPToggleColor")
 }

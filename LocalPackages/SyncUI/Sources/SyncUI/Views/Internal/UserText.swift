@@ -34,7 +34,7 @@ struct UserText {
 
     static let syncWithAnotherDeviceButton = "Sync Another Device"
 
-    static let recoveryPDFMessage = "If you lose access to your devices, you will need a code to recover your synced data. You can save this code to your device as a PDF.\n\nAnyone with access to this code can access your synced data, so please keep it in a safe place."
+    static let recoveryMessage = "If you lose access to your devices, you will need this key to recover your data. This key provides full access your synced data, so keep it somwhere safe, like a password manager."
 
     static let connectDeviceInstructions = "Go to Settings > Sync in the DuckDuckGo App on a different device and scan the QR code to sync."
 

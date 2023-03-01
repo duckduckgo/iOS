@@ -125,7 +125,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
     
     func showRecoveryPDF() {
-        let controller = UIHostingController(rootView: SaveRecoveryPDFView {
+        let controller = UIHostingController(rootView: SaveRecoveryKeyView {
             self.shareRecoveryPDF()
         })
         navigationController?.present(controller, animated: true)

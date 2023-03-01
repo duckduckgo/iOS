@@ -27,7 +27,7 @@ struct ConnectModeView: View {
     @State var qrCodeModel = ShowQRCodeViewModel()
 
     var body: some View {
-        QRCodeView(model: qrCodeModel)
+        QRCodeCopierView(model: qrCodeModel)
             .onAppear {
                 self.qrCodeModel = model.startConnectMode()
             }

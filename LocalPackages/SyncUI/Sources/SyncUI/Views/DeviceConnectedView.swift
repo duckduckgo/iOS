@@ -76,7 +76,7 @@ public struct DeviceConnectedView: View {
 
     public var body: some View {
         if showRecoveryPDF {
-            SaveRecoveryPDFView(showRecoveryPDFAction: showRecoveryPDFAction)
+            SaveRecoveryKeyView(showRecoveryPDFAction: showRecoveryPDFAction)
                 .transition(.move(edge: .trailing))
         } else {
             deviceSyncedView()

@@ -108,19 +108,6 @@ struct PasteCodeView: View {
 
 }
 
-private extension View {
-
-    @ViewBuilder
-    func monospaceSystemFont(ofSize size: Double) -> some View {
-        if #available(iOS 15.0, *) {
-            font(.system(size: size).monospaced())
-        } else {
-            font(.system(size: size))
-        }
-    }
-
-}
-
 private extension String {
     
     func chunks(ofSize: Int) -> [String] {

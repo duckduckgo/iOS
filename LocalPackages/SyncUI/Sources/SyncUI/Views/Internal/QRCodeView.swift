@@ -17,96 +17,35 @@
 //  limitations under the License.
 //
 
+import Foundation
+import UIKit
 import SwiftUI
 
 struct QRCodeView: View {
 
-    @ObservedObject var model: ShowQRCodeViewModel
+    enum Style {
 
-    @ViewBuilder
-    func progressView() -> some View {
-        if model.code == nil {
-            ZStack {
-                SwiftUI.ProgressView()
-            }.frame(width: 200, height: 200)
-        }
-    }
-
-    @ViewBuilder
-    func qrCodeView() -> some View {
-        if let code = model.code {
-            VStack(spacing: 20) {
-                Spacer()
-
-                QRCode(string: code)
-                    .padding()
-
-                Spacer()
-
-                Button {
-                    model.copy()
-                } label: {
-                    Label(UserText.copyCodeLabel, image: "SyncCopy")
-                }
-                .buttonStyle(SyncLabelButtonStyle())
-                .padding(.bottom, 20)
-            }
-        }
-    }
-
-    @ViewBuilder
-    func instructions() -> some View {
-
-        if model.code != nil {
-            Text(UserText.viewQRCodeInstructions)
-                .lineLimit(nil)
-                .multilineTextAlignment(.center)
-        }
+        case light, dark
 
     }
-
-    @ViewBuilder
-    func qrCodeSection() -> some View {
-        ZStack {
-            VStack {
-                HStack { Spacer() }
-                Spacer()
-            }
-            RoundedRectangle(cornerRadius: 8).foregroundColor(.white.opacity(0.12))
-            progressView()
-            qrCodeView()
-        }
-        .frame(maxWidth: 350, maxHeight: 350)
-        .padding()
-    }
-
-    var body: some View {
-        ZStack(alignment: .top) {
-            VStack(spacing: 20) {
-                qrCodeSection()
-                instructions()
-                Spacer()
-            }
-            .padding(.horizontal, 20)
-            .frame(maxWidth: Constants.maxWidth, alignment: .center)
-        }
-        .navigationTitle("QR Code")
-        .modifier(BackButtonModifier())
-    }
-
-}
-
-private struct QRCode: View {
 
     let context = CIContext()
 
     let string: String
+    let size: CGFloat
+    let style: Style
+
+    init(string: String, size: CGFloat, style: Style = .light) {
+        self.string = string
+        self.size = size
+        self.style = style
+    }
 
     var body: some View {
-        Image(uiImage: generateQRCode(from: string, scale: 200))
+        Image(uiImage: generateQRCode(from: string, scale: size))
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .frame(maxHeight: 200)
+            .frame(maxHeight: size)
     }
 
     func generateQRCode(from text: String, scale: CGFloat) -> UIImage {
@@ -122,7 +61,7 @@ private struct QRCode: View {
         }
 
         let colorParameters: [String: Any] = [
-            "inputColor0": CIColor(color: .white),
+            "inputColor0": CIColor(color: style == .light ? .white : .black),
             "inputColor1": CIColor(color: .clear)
         ]
         let coloredImage = outputImage.applyingFilter("CIFalseColor", parameters: colorParameters)

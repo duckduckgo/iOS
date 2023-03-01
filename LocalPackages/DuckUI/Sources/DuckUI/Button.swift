@@ -35,11 +35,10 @@ public struct PrimaryButtonStyle: ButtonStyle {
         let backgroundColor = disabled ? disabledBackgroundColor : standardBackgroundColor
 
         configuration.label
-            .font(Font(UIFont.boldAppFont(ofSize: Consts.fontSize)))
+            .font(Font(UIFont.boldAppFont(ofSize: compact ? Consts.fontSize - 1 : Consts.fontSize)))
             .foregroundColor(configuration.isPressed ? .white.opacity(Consts.pressedOpacity) : .white.opacity(1))
             .padding()
-            .frame(minWidth: 0, maxWidth: .infinity, maxHeight: compact ? Consts.height - 10
-                   : Consts.height)
+            .frame(minWidth: 0, maxWidth: .infinity, maxHeight: compact ? Consts.height - 10 : Consts.height)
             .background(backgroundColor)
             .cornerRadius(Consts.cornerRadius)
     }

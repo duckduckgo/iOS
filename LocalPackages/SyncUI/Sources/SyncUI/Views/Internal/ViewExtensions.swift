@@ -48,5 +48,23 @@ extension View {
             self.background(Rectangle().foregroundColor(.black.opacity(0.9)))
         }
     }
-    
+
+    @ViewBuilder
+    func monospaceSystemFont(ofSize size: Double) -> some View {
+        if #available(iOS 15.0, *) {
+            font(.system(size: size).monospaced())
+        } else {
+            font(.system(size: size))
+        }
+    }
+
+    @ViewBuilder
+    func applyKerning(_ kerning: CGFloat) -> some View {
+        if #available(iOS 16.0, *) {
+            self.kerning(kerning)
+        } else {
+            self
+        }
+    }
+
 }

@@ -27,7 +27,7 @@ public protocol ScanOrPasteCodeViewModelDelegate: AnyObject {
 
     /// Returns true if the code is valid format and should stop scanning
     func syncCodeEntered(code: String) -> Bool
-    func cancelled()
+    func codeCollectionCancelled()
     func gotoSettings()
 
 }
@@ -100,7 +100,7 @@ public class ScanOrPasteCodeViewModel: ObservableObject {
     }
 
     func cancel() {
-        delegate?.cancelled()
+        delegate?.codeCollectionCancelled()
     }
 
     func submitAction() {

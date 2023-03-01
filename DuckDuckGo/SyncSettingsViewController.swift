@@ -71,6 +71,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         Task { @MainActor in
             await syncService.createAccount()
             rootView.model.showDevices()
+            self.showRecoveryPDF()
         }
     }
 
@@ -187,7 +188,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
         return true
     }
 
-    func cancelled() {
+    func codeCollectionCancelled() {
         assert(navigationController?.visibleViewController is DismissibleHostingController<ScanOrPasteCodeView>)
         navigationController?.topViewController?.dismiss(animated: true)
         rootView.model.codeCollectionCancelled()

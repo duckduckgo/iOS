@@ -60,6 +60,8 @@ public class SyncSettingsScreenViewModel: ObservableObject {
     @Published var isBusy = false
     @Published var devices = [Device]()
 
+    var setupFinishedState: TurnOnSyncViewModel.Result?
+
     public weak var delegate: SyncManagementViewModelDelegate?
 
     public init() { }
@@ -86,6 +88,7 @@ public class SyncSettingsScreenViewModel: ObservableObject {
     }
 
     public func setupFinished(_ model: TurnOnSyncViewModel) {
+        setupFinishedState = model.state
         switch model.state {
         case .turnOn:
             delegate?.createAccountAndStartSyncing()
@@ -102,8 +105,12 @@ public class SyncSettingsScreenViewModel: ObservableObject {
     }
 
     public func codeCollectionCancelled() {
-        isBusy = false
-        isSyncEnabled = false
+        if setupFinishedState == .syncWithAnotherDevice {
+            delegate?.createAccountAndStartSyncing()
+        } else {
+            isBusy = false
+            isSyncEnabled = false
+        }
     }
 
 }

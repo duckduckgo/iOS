@@ -62,7 +62,6 @@ public struct SaveRecoveryPDFView: View {
         }
         .padding(.top, 56)
         .padding(.horizontal)
-        .padding(.bottom)
     }
 
 }

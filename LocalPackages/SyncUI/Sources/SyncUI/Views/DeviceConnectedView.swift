@@ -72,7 +72,6 @@ public struct DeviceConnectedView: View {
         }
         .padding(.top, 56)
         .padding(.horizontal)
-        .padding(.bottom)
     }
 
     public var body: some View {

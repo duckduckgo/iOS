@@ -45,9 +45,12 @@ public class Authenticator {
 
     public func authenticate(reason: String) async -> Bool {
         let context = LAContext()
-        let success = try? await context.evaluatePolicy(policy, localizedReason: reason)
-        #warning("Pixel for error?")
-        return success ?? false
+        do {
+            return try await context.evaluatePolicy(policy, localizedReason: reason)
+        } catch {
+            Pixel.fire(pixel: .dbLocalAuthenticationError, error: error)
+        }
+        return false
     }
 
 }

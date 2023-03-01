@@ -47,7 +47,7 @@ struct AppTPBreakageFormView: View {
     @ObservedObject var feedbackModel: AppTrackingProtectionFeedbackModel
     
     @State private var appName: String = ""
-    @State private var category: BreakageCategory = .somethingElse
+    @State private var category: BreakageCategory = .appFreeze
     @State private var description: String = ""
     
     @State private var showError = false
@@ -63,44 +63,68 @@ struct AppTPBreakageFormView: View {
     }
     
     var body: some View {
-        Form {
-            Section {
-                TextField("App Name", text: $appName)
-            } header: {
-                Text("Which app is broken?")
-            }
-            
-            Section {
-                Picker("Breakage Category", selection: $category) {
-                    ForEach(BreakageCategory.allCases) { cat in
-                        Text(cat.rawValue)
+        ZStack {
+            Form {
+                Section {
+                    TextField("App Name", text: $appName)
+                } header: {
+                    Text("Which app is broken?")
+                        .font(Font(uiFont: Const.Font.sectionHeader))
+                        .foregroundColor(.infoText)
+                }
+                .textCase(nil)
+                
+                Section {
+                    Picker("What's happening?", selection: $category) {
+                        ForEach(BreakageCategory.allCases) { cat in
+                            Text(cat.rawValue)
+                        }
                     }
                 }
+                
+                if category == .somethingElse {
+                    Section {
+                        TextEditor(text: $description)
+                    } header: {
+                        Text("Please describe what's happening, what you expected to happen, and steps that led to the issue.")
+                            .font(Font(uiFont: Const.Font.sectionHeader))
+                            .foregroundColor(.infoText)
+                    }
+                    .textCase(nil)
+                }
+                
+                Section {
+                    Button(action: {
+                        sendReport()
+                    }, label: {
+                        Text("Submit")
+                            .font(Font(uiFont: Const.Font.button))
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .foregroundColor(Color("AppTPToggleColor"))
+                    })
+                }
             }
-            
-            Section {
-                TextEditor(text: $description)
-            } header: {
-                Text("What went wrong?")
+            .navigationTitle("Breakage Report")
+            .alert(isPresented: $showError) {
+                Alert(
+                    title: Text("Error"),
+                    message: Text("Please enter which app on your device is broken."),
+                    dismissButton: .default(Text("Ok"))
+                )
             }
-            
-            Section {
-                Button(action: {
-                    sendReport()
-                }, label: {
-                    Text("Submit Breakage Report")
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .foregroundColor(Color("AppTPToggleColor"))
-                })
-            }
-        }
-        .navigationTitle("Breakage Report")
-        .alert(isPresented: $showError) {
-            Alert(
-                title: Text("Error"),
-                message: Text("Please enter which app on your device is broken."),
-                dismissButton: .default(Text("Ok"))
-            )
         }
     }
+}
+
+private enum Const {
+    enum Font {
+        static let sectionHeader = UIFont.semiBoldAppFont(ofSize: 15)
+        static let button = UIFont.semiBoldAppFont(ofSize: 17)
+    }
+}
+
+private extension Color {
+    static let infoText = Color("AppTPDomainColor")
+    static let cellBackground = Color("AppTPCellBackgroundColor")
+    static let viewBackground = Color("AppTPViewBackgroundColor")
 }

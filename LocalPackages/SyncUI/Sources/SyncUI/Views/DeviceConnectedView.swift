@@ -70,22 +70,19 @@ public struct DeviceConnectedView: View {
             }
             .buttonStyle(PrimaryButtonStyle())
         }
-    }
-
-    public var body: some View {
-        Group {
-            if showRecoveryPDF {
-                SaveRecoveryPDFView(showRecoveryPDFAction: showRecoveryPDFAction)
-                    .transition(.move(edge: .trailing))
-            } else {
-                deviceSyncedView()
-                    .transition(.move(edge: .leading))
-            }
-        }
-        /// Should use no-title navigation view instead?
         .padding(.top, 56)
         .padding(.horizontal)
         .padding(.bottom)
+    }
+
+    public var body: some View {
+        if showRecoveryPDF {
+            SaveRecoveryPDFView(showRecoveryPDFAction: showRecoveryPDFAction)
+                .transition(.move(edge: .trailing))
+        } else {
+            deviceSyncedView()
+                .transition(.move(edge: .leading))
+        }
     }
 
 }

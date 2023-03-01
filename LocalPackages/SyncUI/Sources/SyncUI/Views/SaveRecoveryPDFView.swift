@@ -60,7 +60,9 @@ public struct SaveRecoveryPDFView: View {
             }
             .buttonStyle(SecondaryButtonStyle())
         }
-
+        .padding(.top, 56)
+        .padding(.horizontal)
+        .padding(.bottom)
     }
 
 }

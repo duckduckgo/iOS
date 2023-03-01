@@ -22,6 +22,7 @@ import Core
 
 struct AppTPActivityView: View {
     @ObservedObject var viewModel: AppTrackingProtectionListModel
+    @ObservedObject var feedbackModel: AppTrackingProtectionFeedbackModel
     
     @State var vpnOn: Bool = false
     
@@ -122,9 +123,7 @@ struct AppTPActivityView: View {
                             .background(Color.cellBackground)
                             .cornerRadius(Const.Size.cornerRadius)
                         
-//                        Divider()
-                        
-                        NavigationLink(destination: AppTPBreakageFormView()) {
+                        NavigationLink(destination: AppTPBreakageFormView(feedbackModel: feedbackModel)) {
                             Text("Something not working?")
                                 .font(Font(uiFont: Const.Font.sectionHeader))
                                 .foregroundColor(Color("AppTPToggleColor"))

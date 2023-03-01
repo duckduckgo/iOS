@@ -24,8 +24,9 @@ import Core
 class AppTPActivityHostingViewController: UIHostingController<AppTPActivityView> {
     init(appTrackingProtectionDatabase: CoreDataDatabase) {
         let viewModel = AppTrackingProtectionListModel(appTrackingProtectionDatabase: appTrackingProtectionDatabase)
+        let feedbackModel = AppTrackingProtectionFeedbackModel(appTrackingProtectionDatabase: appTrackingProtectionDatabase)
         
-        let root = AppTPActivityView(viewModel: viewModel)
+        let root = AppTPActivityView(viewModel: viewModel, feedbackModel: feedbackModel)
         
         super.init(rootView: root)
     }

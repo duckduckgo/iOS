@@ -44,6 +44,8 @@ private enum BreakageCategory: String, CaseIterable, Identifiable {
 struct AppTPBreakageFormView: View {
     @Environment(\.presentationMode) var presentation
     
+    @ObservedObject var feedbackModel: AppTrackingProtectionFeedbackModel
+    
     @State private var appName: String = ""
     @State private var category: BreakageCategory = .somethingElse
     @State private var description: String = ""
@@ -56,14 +58,7 @@ struct AppTPBreakageFormView: View {
             return
         }
         
-        let parameters = [
-            "appName": appName,
-            "category": category.rawValue,
-            "description": description
-        ]
-        
-        Pixel.fire(pixel: .appTPBreakageReport, withAdditionalParameters: parameters)
-        
+        feedbackModel.sendReport(appName: appName, category: category.rawValue, description: description)
         self.presentation.wrappedValue.dismiss()
     }
     

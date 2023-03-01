@@ -44,7 +44,7 @@ class AppTrackingProtectionFeedbackModelTests: XCTestCase {
         try database.tearDown(deleteStores: true)
     }
 
-    func testWhenFetchingTrackers_ThenOnlyTrackersBeforeTheSpecifiedDateAreReturned() {
+    func testWhenFetchingTrackers_ThenOnlyTrackersMoreRecentThanTheSpecifiedDateAreReturned() {
         let includedDate = createDate(year: 2023, month: 1, day: 3, hour: 1, minute: 5)
         let thresholdDate = createDate(year: 2023, month: 1, day: 3, hour: 1, minute: 0) // Use a date that is older than the trackers we want to get
 

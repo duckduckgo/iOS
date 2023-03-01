@@ -101,4 +101,5 @@ class AppTrackingProtectionStoringModelTests: XCTestCase {
         request.returnsObjectsAsFaults = false
         return (try? context.fetch(request)) ?? []
     }
+
 }

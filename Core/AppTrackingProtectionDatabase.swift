@@ -20,7 +20,6 @@
 import Foundation
 import CoreData
 import Persistence
-import os
 
 public class AppTrackingProtectionDatabase {
 

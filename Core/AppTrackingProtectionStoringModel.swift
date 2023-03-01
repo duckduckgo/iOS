@@ -30,7 +30,7 @@ public class AppTrackingProtectionStoringModel: ObservableObject {
     public init(appTrackingProtectionDatabase: CoreDataDatabase) {
         self.context = appTrackingProtectionDatabase.makeContext(concurrencyType: .privateQueueConcurrencyType)
         self.dateFormatter = DateFormatter()
-        self.dateFormatter.dateFormat = "dd-MM-yyyy"
+        self.dateFormatter.dateFormat = "yyyy-MM-dd"
     }
 
     public func storeBlockedTracker(domain: String, trackerOwner: String, date: Date = Date()) {

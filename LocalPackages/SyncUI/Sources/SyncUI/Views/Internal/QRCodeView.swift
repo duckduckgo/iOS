@@ -98,31 +98,41 @@ struct QRCodeView: View {
 
 private struct QRCode: View {
 
+    @Environment(\.displayScale) var displayScale
+
     let context = CIContext()
 
     let string: String
 
     var body: some View {
-        Image(uiImage: generateQRCode(from: string))
+        Image(uiImage: generateQRCode(from: string, scale: 200))
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(maxHeight: 200)
     }
 
-    func generateQRCode(from text: String) -> UIImage {
+    func generateQRCode(from text: String, scale: CGFloat) -> UIImage {
         var qrImage = UIImage(systemName: "xmark.circle") ?? UIImage()
         let data = Data(text.utf8)
-        let filter = CIFilter.qrCodeGenerator()
-        filter.setValue(data, forKey: "inputMessage")
+        let qrCodeFilter: CIFilter = CIFilter.init(name: "CIQRCodeGenerator")!
+        qrCodeFilter.setValue(data, forKey: "inputMessage")
+        qrCodeFilter.setValue("H", forKey: "inputCorrectionLevel")
 
-        let transform = CGAffineTransform(scaleX: 20, y: 20)
-        if let outputImage = filter.outputImage?.transformed(by: transform) {
-            if let image = context.createCGImage(
-                outputImage,
-                from: outputImage.extent) {
-                qrImage = UIImage(cgImage: image)
-            }
+        let transform = CGAffineTransform(scaleX: scale, y: scale)
+        guard let outputImage = qrCodeFilter.outputImage?.transformed(by: transform) else {
+            return qrImage
         }
+
+        let colorParameters: [String: Any] = [
+            "inputColor0": CIColor(color: .white),
+            "inputColor1": CIColor(color: .clear)
+        ]
+        let coloredImage = outputImage.applyingFilter("CIFalseColor", parameters: colorParameters)
+
+        if let image = context.createCGImage(coloredImage, from: outputImage.extent) {
+            qrImage = UIImage(cgImage: image)
+        }
+
         return qrImage
     }
 

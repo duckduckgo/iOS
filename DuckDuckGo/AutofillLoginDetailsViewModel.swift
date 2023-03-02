@@ -77,7 +77,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         case .edit:
             return UserText.autofillLoginDetailsEditTitle
         case .view:
-            return title
+            return title.isEmpty ? address : title
         case .new:
             return UserText.autofillLoginDetailsNewTitle
         }
@@ -118,7 +118,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         self.account = account
         username = account.username
         address = account.domain
-        title = account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
+        title = account.title ?? ""
         notes = account.notes ?? ""
         headerViewModel.updateData(with: account, tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
         setupPassword(with: account)

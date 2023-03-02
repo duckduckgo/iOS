@@ -30,4 +30,8 @@ extension SecureVaultModels.WebsiteAccount {
             return autofillDomainNameUrlMatcher.cleanRawUrl(domain)
         }
     }
+
+    func faviconLetter(tld: TLD, autofillDomainNameUrlSort: AutofillDomainNameUrlSort) -> String? {
+        return autofillDomainNameUrlSort.firstCharForGrouping(self, tld: tld)?.uppercased()
+    }
 }

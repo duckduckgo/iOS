@@ -219,7 +219,8 @@ final class AutofillLoginListViewModel: ObservableObject {
             if !accountsToSuggest.isEmpty {
                 let accountItems = accountsToSuggest.map { AutofillLoginListItemViewModel(account: $0,
                                                                                           tld: tld,
-                                                                                          autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
+                                                                                          autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher,
+                                                                                          autofillDomainNameUrlSort: autofillDomainNameUrlSort)
                 }
                 newSections.append(.credentials(title: UserText.autofillLoginListSuggested, items: accountItems))
             }
@@ -349,7 +350,8 @@ internal extension Array where Element == SecureVaultModels.WebsiteAccount {
             
             return result[key, default: []].append(AutofillLoginListItemViewModel(account: account,
                                                                                   tld: tld,
-                                                                                  autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher))
+                                                                                  autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher,
+                                                                                  autofillDomainNameUrlSort: autofillDomainNameUrlSort))
         }
     }
 }

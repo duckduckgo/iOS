@@ -103,7 +103,8 @@ class TabViewController: UIViewController {
     private var lastError: Error?
     private var shouldReloadOnError = false
     private var failingUrls = Set<String>()
-        
+    private var urlProvidedBasicAuthCredential: (credential: URLCredential, url: URL)?
+
     private var detectedLoginURL: URL?
     private var preserveLoginsWorker: PreserveLoginsWorker?
 
@@ -242,7 +243,6 @@ class TabViewController: UIViewController {
         }
     }
 
-    private var rulesCompiledCondition: RunLoop.ResumeCondition? = RunLoop.ResumeCondition()
     private let rulesCompilationMonitor = RulesCompilationMonitor.shared
 
     static func loadFromStoryboard(model: Tab, bookmarksDatabase: CoreDataDatabase) -> TabViewController {
@@ -436,7 +436,13 @@ class TabViewController: UIViewController {
             lastUpgradedURL = nil
             privacyInfo?.connectionUpgradedTo = nil
         }
-        
+
+        var url = url
+        if let credential = url.basicAuthCredential {
+            url = url.removingBasicAuthCredential()
+            self.urlProvidedBasicAuthCredential = (credential, url)
+        }
+
         if !url.isBookmarklet() {
             self.url = url
         }
@@ -851,7 +857,7 @@ class TabViewController: UIViewController {
     deinit {
         temporaryDownloadForPreviewedFile?.cancel()
         removeObservers()
-        RulesCompilationMonitor.shared.tabWillClose(self)
+        rulesCompilationMonitor.tabWillClose(self)
     }
 
 }
@@ -880,6 +886,14 @@ extension TabViewController: WKNavigationDelegate {
     
     func performBasicHTTPAuthentication(protectionSpace: URLProtectionSpace,
                                         completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        if let urlProvidedBasicAuthCredential,
+           urlProvidedBasicAuthCredential.url.matches(protectionSpace) {
+
+            completionHandler(.useCredential, urlProvidedBasicAuthCredential.credential)
+            self.urlProvidedBasicAuthCredential = nil
+            return
+        }
+
         let isHttps = protectionSpace.protocol == "https"
         let alert = BasicAuthenticationAlert(host: protectionSpace.host,
                                              isEncrypted: isHttps,
@@ -1008,6 +1022,7 @@ extension TabViewController: WKNavigationDelegate {
         updatePreview()
         linkProtection.setMainFrameUrl(nil)
         referrerTrimming.onFinishNavigation()
+        urlProvidedBasicAuthCredential = nil
     }
     
     func preparePreview(completion: @escaping (UIImage?) -> Void) {
@@ -1142,6 +1157,7 @@ extension TabViewController: WKNavigationDelegate {
         hideProgressIndicator()
         linkProtection.setMainFrameUrl(nil)
         referrerTrimming.onFailedNavigation()
+        urlProvidedBasicAuthCredential = nil
         lastError = error
         let error = error as NSError
 
@@ -1300,15 +1316,15 @@ extension TabViewController: WKNavigationDelegate {
         if userContentController.contentBlockingAssetsInstalled
             || !ContentBlocking.shared.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) {
 
-            RulesCompilationMonitor.shared.reportNavigationDidNotWaitForRules()
+            rulesCompilationMonitor.reportNavigationDidNotWaitForRules()
             return false
         }
 
         Task {
-            RulesCompilationMonitor.shared.tabWillWaitForRulesCompilation(self)
+            rulesCompilationMonitor.tabWillWaitForRulesCompilation(self)
             showProgressIndicator()
             await userContentController.awaitContentBlockingAssetsInstalled()
-            RulesCompilationMonitor.shared.reportTabFinishedWaitingForRules(self)
+            rulesCompilationMonitor.reportTabFinishedWaitingForRules(self)
 
             await MainActor.run(body: completion)
         }
@@ -1335,7 +1351,7 @@ extension TabViewController: WKNavigationDelegate {
             completion(allowPolicy)
             return
         }
-        
+
         if navigationAction.isTargetingMainFrame(), navigationAction.navigationType == .backForward {
             adClickAttributionLogic.onBackForwardNavigation(mainFrameURL: webView.url)
         }
@@ -1370,6 +1386,21 @@ extension TabViewController: WKNavigationDelegate {
                                       navigationAction: WKNavigationAction,
                                       allowPolicy: WKNavigationActionPolicy,
                                       completion: @escaping (WKNavigationActionPolicy) -> Void) {
+
+        // when navigating to a request with basic auth username/password, cache it and redirect to a trimmed URL
+        if navigationAction.isTargetingMainFrame(),
+           let credential = url.basicAuthCredential {
+            var newRequest = navigationAction.request
+            newRequest.url = url.removingBasicAuthCredential()
+            self.urlProvidedBasicAuthCredential = (credential, newRequest.url!)
+
+            completion(.cancel)
+            self.load(urlRequest: newRequest)
+
+        } else if let urlProvidedBasicAuthCredential,
+                  url != urlProvidedBasicAuthCredential.url {
+            self.urlProvidedBasicAuthCredential = nil
+        }
 
         if shouldReissueSearch(for: url) {
             reissueSearchWithRequiredParams(for: url)
@@ -1430,12 +1461,12 @@ extension TabViewController: WKNavigationDelegate {
     private func prepareForContentBlocking() async {
         // Ensure Content Blocking Assets (WKContentRuleList&UserScripts) are installed
         if !userContentController.contentBlockingAssetsInstalled {
-            RulesCompilationMonitor.shared.tabWillWaitForRulesCompilation(self)
+            rulesCompilationMonitor.tabWillWaitForRulesCompilation(self)
             showProgressIndicator()
             await userContentController.awaitContentBlockingAssetsInstalled()
-            RulesCompilationMonitor.shared.reportTabFinishedWaitingForRules(self)
+            rulesCompilationMonitor.reportTabFinishedWaitingForRules(self)
         } else {
-            RulesCompilationMonitor.shared.reportNavigationDidNotWaitForRules()
+            rulesCompilationMonitor.reportNavigationDidNotWaitForRules()
         }
     }
 

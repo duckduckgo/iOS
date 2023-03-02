@@ -24,7 +24,7 @@ struct AppTPToggleViewModel {
     
     let firewallManager: FirewallManaging
     
-    init(firewallManager: FirewallManaging = FirewallController()) {
+    init(firewallManager: FirewallManaging = FirewallManager()) {
         self.firewallManager = firewallManager
     }
     

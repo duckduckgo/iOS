@@ -25,9 +25,8 @@ struct AppTPToggleView: View {
     @Binding var vpnOn: Bool
     @State var isExternalChange = false
     @State var connectionStatus: NEVPNStatus = .disconnected
-    @State var isLoading = false
     
-    let viewModel: AppTPToggleViewModel
+    @ObservedObject var viewModel: AppTPToggleViewModel
     
     func setup() async {
         await viewModel.refreshManager()
@@ -36,16 +35,11 @@ struct AppTPToggleView: View {
     }
     
     func setFirewall(_ status: Bool) async {
-        withAnimation(.easeInOut) {
-            isLoading = true
-        }
-        
         // On first load of the view we sync the status of the toggle
         // to the firewall. Setting vpnOn will trigger `onChange` of the toggle
         // We use `isExternalChange` to prevent setting the firewall status multiple times
         if isExternalChange {
             isExternalChange = false
-            isLoading = false
             return
         }
         
@@ -60,18 +54,30 @@ struct AppTPToggleView: View {
         }
     }
     
+    func isLoading() -> Bool {
+        return viewModel.firewallStatus != .connected && viewModel.firewallStatus != .disconnected && viewModel.firewallStatus != .invalid
+    }
+    
     var body: some View {
-        Toggle(isOn: $vpnOn, label: {
-            Text(UserText.appTPNavTitle)
-        })
-        .toggleStyle(SwitchToggleStyle(tint: Color.toggleTint))
-        .padding()
-        .frame(height: Const.Size.rowHeight)
-        .onChange(of: vpnOn) { value in
-            Task {
-                await setFirewall(value)
+        HStack {
+            Toggle(isOn: $vpnOn, label: {
+                Text(UserText.appTPNavTitle)
+            })
+            .toggleStyle(SwitchToggleStyle(tint: Color.toggleTint))
+            .disabled(isLoading())
+            .onChange(of: vpnOn) { value in
+                Task {
+                    await setFirewall(value)
+                }
+            }
+            
+            if isLoading() {
+                SwiftUI.ProgressView()
+                    .padding(.leading)
             }
         }
+        .padding()
+        .frame(height: Const.Size.rowHeight)
         .onAppear() {
             Task {
                 await setup()

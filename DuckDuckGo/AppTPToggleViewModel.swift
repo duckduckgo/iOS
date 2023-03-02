@@ -20,12 +20,15 @@
 import Foundation
 import NetworkExtension
 
-struct AppTPToggleViewModel {
+class AppTPToggleViewModel: ObservableObject {
     
-    let firewallManager: FirewallManaging
+    var firewallManager: FirewallManaging
+    
+    @Published var firewallStatus: NEVPNStatus = .disconnected
     
     init(firewallManager: FirewallManaging = FirewallController()) {
         self.firewallManager = firewallManager
+        self.firewallManager.delegate = self
     }
     
     func status() -> NEVPNStatus {
@@ -38,5 +41,11 @@ struct AppTPToggleViewModel {
     
     func setStatus(to status: Bool) async throws {
         try await firewallManager.setState(to: status)
+    }
+}
+
+extension AppTPToggleViewModel: FirewallDelegate {
+    func statusDidChange(newStatus: NEVPNStatus) {
+        firewallStatus = newStatus
     }
 }

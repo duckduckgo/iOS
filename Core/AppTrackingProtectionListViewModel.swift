@@ -1,5 +1,5 @@
 //
-//  AppTrackingProtectionListModel.swift
+//  AppTrackingProtectionListViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -23,7 +23,7 @@ import CoreData
 import Persistence
 import os.log
 
-public class AppTrackingProtectionListModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
+public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
 
     enum Error: Swift.Error {
         case historyTransactionConversionFailed
@@ -31,13 +31,46 @@ public class AppTrackingProtectionListModel: NSObject, ObservableObject, NSFetch
 
     @Published public var sections: [NSFetchedResultsSectionInfo] = []
 
-    public let context: NSManagedObjectContext
+    private let context: NSManagedObjectContext
 
     private lazy var trackerProcessingQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 1
         return queue
     }()
+    
+    private let relativeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .none
+        formatter.dateStyle = .medium
+        formatter.doesRelativeDateFormatting = true
+        return formatter
+    }()
+    
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM dd"
+        return formatter
+    }()
+    
+    private let inputFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter
+    }()
+    
+    public func formattedDate(_ sectionName: String) -> String {
+        guard let date = inputFormatter.date(from: sectionName) else {
+            return "Invalid Date"
+        }
+        
+        let relativeDate = relativeFormatter.string(from: date)
+        if relativeDate.rangeOfCharacter(from: .decimalDigits) != nil {
+            return dateFormatter.string(from: date)
+        }
+        
+        return relativeDate
+    }
 
     fileprivate lazy var fetchedResultsController: NSFetchedResultsController<AppTrackerEntity> = {
         let fetchRequest: NSFetchRequest<AppTrackerEntity> = AppTrackerEntity.fetchRequest()

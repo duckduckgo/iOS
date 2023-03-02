@@ -231,7 +231,7 @@
 		4B04ABBE27FFD96900945B5D /* MacBrowserWaitlistMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B04ABBD27FFD96900945B5D /* MacBrowserWaitlistMocks.swift */; };
 		4B470ED6299C49800086EBDC /* AppTrackingProtectionDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B470ED5299C49800086EBDC /* AppTrackingProtectionDatabase.swift */; };
 		4B470ED9299C4AED0086EBDC /* AppTrackingProtectionModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4B470ED7299C4AED0086EBDC /* AppTrackingProtectionModel.xcdatamodeld */; };
-		4B470EDB299C4FB20086EBDC /* AppTrackingProtectionListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B470EDA299C4FB20086EBDC /* AppTrackingProtectionListModel.swift */; };
+		4B470EDB299C4FB20086EBDC /* AppTrackingProtectionListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B470EDA299C4FB20086EBDC /* AppTrackingProtectionListViewModel.swift */; };
 		4B470EDF299C67270086EBDC /* AppTrackerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B470EDE299C67270086EBDC /* AppTrackerEntity.swift */; };
 		4B470EE4299C6DFB0086EBDC /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F143C2E41E4A4CD400CFDE3A /* Core.framework */; };
 		4B5167422824B492004C67BA /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 4B5167412824B492004C67BA /* Lottie */; };
@@ -1149,7 +1149,7 @@
 		4B04ABBD27FFD96900945B5D /* MacBrowserWaitlistMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistMocks.swift; sourceTree = "<group>"; };
 		4B470ED5299C49800086EBDC /* AppTrackingProtectionDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionDatabase.swift; sourceTree = "<group>"; };
 		4B470ED8299C4AED0086EBDC /* AppTrackingProtectionModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AppTrackingProtectionModel.xcdatamodel; sourceTree = "<group>"; };
-		4B470EDA299C4FB20086EBDC /* AppTrackingProtectionListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionListModel.swift; sourceTree = "<group>"; };
+		4B470EDA299C4FB20086EBDC /* AppTrackingProtectionListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionListViewModel.swift; sourceTree = "<group>"; };
 		4B470EDE299C67270086EBDC /* AppTrackerEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackerEntity.swift; sourceTree = "<group>"; };
 		4B470EE2299C6DD10086EBDC /* AppTrackingProtectionStoringModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionStoringModel.swift; sourceTree = "<group>"; };
 		4B52648A25F9613B00CB4C24 /* trackerData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trackerData.json; sourceTree = "<group>"; };
@@ -2979,7 +2979,7 @@
 			children = (
 				4B470EDE299C67270086EBDC /* AppTrackerEntity.swift */,
 				4B470ED5299C49800086EBDC /* AppTrackingProtectionDatabase.swift */,
-				4B470EDA299C4FB20086EBDC /* AppTrackingProtectionListModel.swift */,
+				4B470EDA299C4FB20086EBDC /* AppTrackingProtectionListViewModel.swift */,
 				4B470EE2299C6DD10086EBDC /* AppTrackingProtectionStoringModel.swift */,
 				4B470ED7299C4AED0086EBDC /* AppTrackingProtectionModel.xcdatamodeld */,
 			);
@@ -6023,7 +6023,7 @@
 				83004E802193BB8200DA013C /* WKNavigationExtension.swift in Sources */,
 				853A717620F62FE800FE60BC /* Pixel.swift in Sources */,
 				F4A96BDC284518E70025C8E0 /* FeatureFlagger.swift in Sources */,
-				4B470EDB299C4FB20086EBDC /* AppTrackingProtectionListModel.swift in Sources */,
+				4B470EDB299C4FB20086EBDC /* AppTrackingProtectionListViewModel.swift in Sources */,
 				F41C2DA526C1975E00F9A760 /* BookmarksCoreDataStorage.swift in Sources */,
 				9876B75E2232B36900D81D9F /* TabInstrumentation.swift in Sources */,
 				026DABA428242BC80089E0B5 /* MockUserAgent.swift in Sources */,

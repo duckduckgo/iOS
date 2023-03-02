@@ -72,9 +72,9 @@ struct QRCodeScannerView: UIViewRepresentable {
             metadataOutput.setMetadataObjectsDelegate(self, queue: .main)
 
             let previewLayer = AVCaptureVideoPreviewLayer(session: session)
-            previewLayer.frame = uiView.frame
-            previewLayer.videoGravity = .resizeAspectFill
             uiView.layer.addSublayer(previewLayer)
+            previewLayer.frame = uiView.bounds
+            previewLayer.videoGravity = .resizeAspectFill
 
             DispatchQueue.global().async {
                 self.session.startRunning()
@@ -106,13 +106,31 @@ struct QRCodeScannerView: UIViewRepresentable {
 
 }
 
-class AutoResizeLayersView: UIView {
+private class AutoResizeLayersView: UIView {
 
     override var frame: CGRect {
         didSet {
             layer.sublayers?.forEach {
-                $0.frame = self.frame
+                $0.frame = self.bounds
+                if let preview = $0 as? AVCaptureVideoPreviewLayer {
+                    preview.connection?.videoOrientation = UIDevice.current.orientation.avCapture
+                }
             }
+        }
+    }
+
+}
+
+private extension UIDeviceOrientation {
+
+    var avCapture: AVCaptureVideoOrientation {
+        switch self {
+        // For some reason if the device orientenation is landscape left, the video needs to be landscape right and visa-versa
+        case .landscapeLeft: return .landscapeRight
+        case .landscapeRight: return .landscapeLeft
+        case .portraitUpsideDown: return .portraitUpsideDown
+        case .portrait: return .portrait
+        default: return .portrait
         }
     }
 

@@ -298,13 +298,15 @@ extension TabViewController {
             Pixel.fire(pixel: .emailUserCreatedAlias, withAdditionalParameters: pixelParameters, includedParameters: [])
 
             emailManager.getAliasIfNeededAndConsume { alias, _ in
-                guard let alias = alias else {
-                    // we may want to communicate this failure to the user in the future
-                    return
+                Task { @MainActor
+                    guard let alias = alias else {
+                        // we may want to communicate this failure to the user in the future
+                        return
+                    }
+                    let pasteBoard = UIPasteboard.general
+                    pasteBoard.string = emailManager.emailAddressFor(alias)
+                    ActionMessageView.present(message: UserText.emailBrowsingMenuAlert)
                 }
-                let pasteBoard = UIPasteboard.general
-                pasteBoard.string = emailManager.emailAddressFor(alias)
-                ActionMessageView.present(message: UserText.emailBrowsingMenuAlert)
             }
         }
     }

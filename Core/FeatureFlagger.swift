@@ -22,6 +22,7 @@ import Foundation
 public enum Feature: String {
     case debugMenu
     case autofill
+    case sync
 }
 
 public protocol FeatureFlagger {
@@ -44,12 +45,12 @@ public class DefaultFeatureFlagger: FeatureFlagger {
         switch feature {
         case .debugMenu:
             return isInternalUser
+
         case .autofill:
-            if isInternalUser {
-                return true
-            } else {
-                return false
-            }
+            return isInternalUser
+
+        case .sync:
+            return isInternalUser
         }
     }
     

@@ -189,8 +189,10 @@ public struct ScanOrPasteCodeView: View {
 
                     ZStack {
                         // Background in case fullscreen camera view doesn't work
-                        Rectangle().fill(Color.black)
-
+                        if !model.showCamera {
+                            Rectangle().fill(Color.black)
+                        }
+                        
                         cameraViewPort()
                             .frame(width: g.size.width, height: g.size.width)
                             .frame(maxHeight: g.size.height - Constants.maxCameraHeight)

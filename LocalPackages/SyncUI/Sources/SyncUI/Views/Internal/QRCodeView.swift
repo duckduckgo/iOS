@@ -62,7 +62,7 @@ struct QRCodeView: View {
 
         let colorParameters: [String: Any] = [
             "inputColor0": CIColor(color: style == .light ? .white : .black),
-            "inputColor1": CIColor(color: .clear)
+            "inputColor1": CIColor(color: style == .light ? .black : .white)
         ]
         let coloredImage = outputImage.applyingFilter("CIFalseColor", parameters: colorParameters)
 
@@ -71,16 +71,6 @@ struct QRCodeView: View {
         }
 
         return qrImage
-    }
-
-}
-
-private extension CIFilter {
-
-    static func qrCodeGenerator() -> CIFilter {
-        CIFilter(name: "CIQRCodeGenerator", parameters: [
-            "inputCorrectionLevel": "H"
-        ])!
     }
 
 }

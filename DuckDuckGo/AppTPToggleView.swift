@@ -50,7 +50,7 @@ struct AppTPToggleView: View {
             await viewModel.refreshManager()
             // In the hack days I tried to animate the state change here
         } catch {
-            os_log("Unable to set firewall", log: FirewallController.apptpLog, type: .error)
+            os_log("Unable to set firewall", log: FirewallManager.apptpLog, type: .error)
         }
     }
     

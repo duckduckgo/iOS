@@ -26,7 +26,7 @@ class AppTPToggleViewModel: ObservableObject {
     
     @Published var firewallStatus: NEVPNStatus = .disconnected
     
-    init(firewallManager: FirewallManaging = FirewallController()) {
+    init(firewallManager: FirewallManaging = FirewallManager()) {
         self.firewallManager = firewallManager
         self.firewallManager.delegate = self
     }

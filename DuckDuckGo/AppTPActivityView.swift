@@ -22,6 +22,7 @@ import Core
 
 struct AppTPActivityView: View {
     @ObservedObject var viewModel: AppTrackingProtectionListViewModel
+    @ObservedObject var feedbackModel: AppTrackingProtectionFeedbackModel
     
     @State var vpnOn: Bool = false
     
@@ -84,13 +85,22 @@ struct AppTPActivityView: View {
         ScrollView {
             LazyVStack(alignment: .center, spacing: 0) {
                 Section {
-                    AppTPToggleView(
-                        vpnOn: $vpnOn,
-                        viewModel: AppTPToggleViewModel()
-                    )
-                        .background(Color.cellBackground)
-                        .cornerRadius(Const.Size.cornerRadius)
-                        .padding(.bottom)
+                    VStack {
+                        AppTPToggleView(
+                            vpnOn: $vpnOn,
+                            viewModel: AppTPToggleViewModel()
+                        )
+                            .background(Color.cellBackground)
+                            .cornerRadius(Const.Size.cornerRadius)
+                        
+                        NavigationLink(destination: AppTPBreakageFormView(feedbackModel: feedbackModel)) {
+                            Text("Something not working?")
+                                .font(Font(uiFont: Const.Font.sectionHeader))
+                                .foregroundColor(Color("AppTPToggleColor"))
+                                .frame(height: 44)
+                        }
+                    }
+                    .padding(.bottom)
                 }
                 
                 if viewModel.sections.count > 0 {

@@ -92,7 +92,7 @@ class AppTrackingProtectionListModelTests: XCTestCase {
         sectionsCancellable.cancel()
     }
 
-    func saveTracker(domain: String, owner: String, date: Date) {
+    private func saveTracker(domain: String, owner: String, date: Date) {
         let storingModel = AppTrackingProtectionStoringModel(appTrackingProtectionDatabase: database)
         storingModel.storeBlockedTracker(domain: domain, trackerOwner: owner, date: date)
     }

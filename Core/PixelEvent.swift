@@ -265,6 +265,9 @@ extension Pixel {
         
         case macBrowserWaitlistNotificationShown
         case macBrowserWaitlistNotificationLaunched
+        
+        // MARK: AppTP
+        case appTPBreakageReport
 
         // MARK: remote messaging pixels
 
@@ -634,6 +637,10 @@ extension Pixel.Event {
             
         case .macBrowserWaitlistNotificationShown: return "m_notification_shown_mac_waitlist"
         case .macBrowserWaitlistNotificationLaunched: return "m_notification_launch_mac_waitlist"
+            
+        // MARK: AppTP pixels
+            
+        case .appTPBreakageReport: return "m_apptp_breakage_report"
 
         // MARK: remote messaging pixels
 

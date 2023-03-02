@@ -42,21 +42,29 @@ struct QRCodeView: View {
     }
 
     var body: some View {
-        Image(uiImage: generateQRCode(from: string, scale: size))
+        Image(uiImage: generateQRCode(from: string, size: size))
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(maxHeight: size)
     }
 
-    func generateQRCode(from text: String, scale: CGFloat) -> UIImage {
+    func generateQRCode(from text: String, size: CGFloat) -> UIImage {
         var qrImage = UIImage(systemName: "xmark.circle") ?? UIImage()
         let data = Data(text.utf8)
         let qrCodeFilter: CIFilter = CIFilter.init(name: "CIQRCodeGenerator")!
         qrCodeFilter.setValue(data, forKey: "inputMessage")
         qrCodeFilter.setValue("H", forKey: "inputCorrectionLevel")
 
+        guard let naturalSize = qrCodeFilter.outputImage?.extent.width else {
+            assertionFailure("Failed to generate qr code")
+            return qrImage
+        }
+
+        let scale = size / naturalSize
+
         let transform = CGAffineTransform(scaleX: scale, y: scale)
         guard let outputImage = qrCodeFilter.outputImage?.transformed(by: transform) else {
+            assertionFailure("transformation failed")
             return qrImage
         }
 

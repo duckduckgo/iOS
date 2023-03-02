@@ -27,10 +27,11 @@ struct AppTPToggleView: View {
     @State var connectionStatus: NEVPNStatus = .disconnected
     @State var isLoading = false
     
+    let viewModel: AppTPToggleViewModel
+    
     func setup() async {
-        let fwc = FirewallController.shared
-        await fwc.refreshManager()
-        connectionStatus = fwc.status()
+        await viewModel.refreshManager()
+        connectionStatus = viewModel.status()
         vpnOn = connectionStatus == .connected
     }
     
@@ -49,10 +50,10 @@ struct AppTPToggleView: View {
         }
         
         do {
-            try await FirewallController.shared.setState(to: status)
+            try await viewModel.setStatus(to: status)
             // Give time to connect (0.5s)
             try await Task.sleep(nanoseconds: 5_000_000)
-            await FirewallController.shared.refreshManager()
+            await viewModel.refreshManager()
             // In the hack days I tried to animate the state change here
         } catch {
             os_log("Unable to set firewall", log: FirewallController.apptpLog, type: .error)

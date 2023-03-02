@@ -21,45 +21,12 @@ import SwiftUI
 import Core
 
 struct AppTPActivityView: View {
-    @ObservedObject var viewModel: AppTrackingProtectionListModel
+    @ObservedObject var viewModel: AppTrackingProtectionListViewModel
     @ObservedObject var feedbackModel: AppTrackingProtectionFeedbackModel
     
     @State var vpnOn: Bool = false
     
     let imageCache = AppTrackerImageCache()
-    
-    private let relativeFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .none
-        formatter.dateStyle = .medium
-        formatter.doesRelativeDateFormatting = true
-        return formatter
-    }()
-    
-    private let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM dd"
-        return formatter
-    }()
-    
-    private let inputFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        return formatter
-    }()
-    
-    func formattedDate(_ sectionName: String) -> String {
-        guard let date = inputFormatter.date(from: sectionName) else {
-            return "Invalid Date"
-        }
-        
-        let relativeDate = relativeFormatter.string(from: date)
-        if relativeDate.rangeOfCharacter(from: .decimalDigits) != nil {
-            return dateFormatter.string(from: date)
-        }
-        
-        return relativeDate
-    }
     
     func imageForState() -> Image {
         return vpnOn ? Image("AppTPEmptyEnabled") : Image("AppTPEmptyDisabled")
@@ -101,7 +68,7 @@ struct AppTPActivityView: View {
                 .cornerRadius(Const.Size.cornerRadius)
             }, header: {
                 HStack {
-                    Text(formattedDate(section.name))
+                    Text(viewModel.formattedDate(section.name))
                         .font(Font(uiFont: Const.Font.sectionHeader))
                         .foregroundColor(.infoText)
                         .padding(.top)
@@ -119,7 +86,10 @@ struct AppTPActivityView: View {
             LazyVStack(alignment: .center, spacing: 0) {
                 Section {
                     VStack {
-                        AppTPToggleView(vpnOn: $vpnOn)
+                        AppTPToggleView(
+                            vpnOn: $vpnOn,
+                            viewModel: AppTPToggleViewModel()
+                        )
                             .background(Color.cellBackground)
                             .cornerRadius(Const.Size.cornerRadius)
                         

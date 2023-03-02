@@ -23,8 +23,13 @@ import Core
 import os.log
 import BrowserServicesKit
 
-class FirewallController {
-    static let shared = FirewallController()
+protocol FirewallManaging {
+    func status() -> NEVPNStatus
+    func refreshManager() async
+    func setState(to enabled: Bool) async throws
+}
+
+class FirewallController: FirewallManaging {
     
     static let apptpLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier, category: "AppTP")
     

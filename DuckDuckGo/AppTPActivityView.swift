@@ -84,7 +84,10 @@ struct AppTPActivityView: View {
         ScrollView {
             LazyVStack(alignment: .center, spacing: 0) {
                 Section {
-                    AppTPToggleView(vpnOn: $vpnOn)
+                    AppTPToggleView(
+                        vpnOn: $vpnOn,
+                        viewModel: AppTPToggleViewModel()
+                    )
                         .background(Color.cellBackground)
                         .cornerRadius(Const.Size.cornerRadius)
                         .padding(.bottom)

@@ -298,7 +298,7 @@ extension TabViewController {
             Pixel.fire(pixel: .emailUserCreatedAlias, withAdditionalParameters: pixelParameters, includedParameters: [])
 
             emailManager.getAliasIfNeededAndConsume { alias, _ in
-                Task { @MainActor
+                Task { @MainActor in
                     guard let alias = alias else {
                         // we may want to communicate this failure to the user in the future
                         return

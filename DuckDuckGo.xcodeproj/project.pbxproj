@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		020108A129A5610C00644F9D /* AppTPActivityHostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020108A029A5610C00644F9D /* AppTPActivityHostingViewController.swift */; };
+		020108A329A561C300644F9D /* AppTPActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020108A229A561C300644F9D /* AppTPActivityView.swift */; };
+		020108A529A681E300644F9D /* AppTP.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 020108A429A681E200644F9D /* AppTP.xcassets */; };
+		020108A729A6ABF600644F9D /* AppTPToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020108A629A6ABF600644F9D /* AppTPToggleView.swift */; };
+		020108A929A7C1CD00644F9D /* AppTrackerImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020108A829A7C1CD00644F9D /* AppTrackerImageCache.swift */; };
+		020108AC29A7D7F800644F9D /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = 020108AB29A7D7F800644F9D /* SVGView */; };
+		020108AE29A7F91600644F9D /* AppTPTrackerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020108AD29A7F91600644F9D /* AppTPTrackerCell.swift */; };
 		02025664298818B200E694E7 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02025663298818B100E694E7 /* NetworkExtension.framework */; };
 		0202566C298818B200E694E7 /* PacketTunnelProvider.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 02025662298818B100E694E7 /* PacketTunnelProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0202569029881ECA00E694E7 /* CocoaAsyncSocket in Frameworks */ = {isa = PBXBuildFile; productRef = 0202568F29881ECA00E694E7 /* CocoaAsyncSocket */; };
@@ -101,6 +108,7 @@
 		021D30762989C04200918636 /* ObserverFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021D306E2989C04200918636 /* ObserverFactory.swift */; };
 		025CD01025826035001CD5BB /* FingerprintUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025CCF75257EAFAF001CD5BB /* FingerprintUITest.swift */; };
 		026DABA428242BC80089E0B5 /* MockUserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026DABA328242BC80089E0B5 /* MockUserAgent.swift */; };
+		02A4EACA29B0F464009BE006 /* AppTPToggleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A4EAC929B0F464009BE006 /* AppTPToggleViewModel.swift */; };
 		02BA15B126A89ECA00472DD7 /* ios-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 02BA15B026A89ECA00472DD7 /* ios-config.json */; };
 		02C57C4B2514FEFB009E5129 /* DoNotSellSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C57C4A2514FEFB009E5129 /* DoNotSellSettingsViewController.swift */; };
 		02CA904924F6BFE700D41DDF /* navigatorsharepatch.js in Resources */ = {isa = PBXBuildFile; fileRef = 02CA904824F6BFE700D41DDF /* navigatorsharepatch.js */; };
@@ -224,7 +232,7 @@
 		4B04ABBE27FFD96900945B5D /* MacBrowserWaitlistMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B04ABBD27FFD96900945B5D /* MacBrowserWaitlistMocks.swift */; };
 		4B470ED6299C49800086EBDC /* AppTrackingProtectionDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B470ED5299C49800086EBDC /* AppTrackingProtectionDatabase.swift */; };
 		4B470ED9299C4AED0086EBDC /* AppTrackingProtectionModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4B470ED7299C4AED0086EBDC /* AppTrackingProtectionModel.xcdatamodeld */; };
-		4B470EDB299C4FB20086EBDC /* AppTrackingProtectionListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B470EDA299C4FB20086EBDC /* AppTrackingProtectionListModel.swift */; };
+		4B470EDB299C4FB20086EBDC /* AppTrackingProtectionListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B470EDA299C4FB20086EBDC /* AppTrackingProtectionListViewModel.swift */; };
 		4B470EDF299C67270086EBDC /* AppTrackerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B470EDE299C67270086EBDC /* AppTrackerEntity.swift */; };
 		4B470EE4299C6DFB0086EBDC /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F143C2E41E4A4CD400CFDE3A /* Core.framework */; };
 		4B5167422824B492004C67BA /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 4B5167412824B492004C67BA /* Lottie */; };
@@ -915,6 +923,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		020108A029A5610C00644F9D /* AppTPActivityHostingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPActivityHostingViewController.swift; sourceTree = "<group>"; };
+		020108A229A561C300644F9D /* AppTPActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPActivityView.swift; sourceTree = "<group>"; };
+		020108A429A681E200644F9D /* AppTP.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppTP.xcassets; sourceTree = "<group>"; };
+		020108A629A6ABF600644F9D /* AppTPToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPToggleView.swift; sourceTree = "<group>"; };
+		020108A829A7C1CD00644F9D /* AppTrackerImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackerImageCache.swift; sourceTree = "<group>"; };
+		020108AD29A7F91600644F9D /* AppTPTrackerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPTrackerCell.swift; sourceTree = "<group>"; };
 		02025662298818B100E694E7 /* PacketTunnelProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PacketTunnelProvider.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		02025663298818B100E694E7 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		02025666298818B200E694E7 /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
@@ -1015,6 +1029,7 @@
 		025CCFE22582601C001CD5BB /* FingerprintingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FingerprintingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		025CCFE62582601C001CD5BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		026DABA328242BC80089E0B5 /* MockUserAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserAgent.swift; sourceTree = "<group>"; };
+		02A4EAC929B0F464009BE006 /* AppTPToggleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPToggleViewModel.swift; sourceTree = "<group>"; };
 		02BA15B026A89ECA00472DD7 /* ios-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "ios-config.json"; sourceTree = "<group>"; };
 		02C4BC3127C3F9B600C40026 /* AppPrivacyConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPrivacyConfigurationTests.swift; sourceTree = "<group>"; };
 		02C57C4A2514FEFB009E5129 /* DoNotSellSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoNotSellSettingsViewController.swift; sourceTree = "<group>"; };
@@ -1136,7 +1151,7 @@
 		4B04ABBD27FFD96900945B5D /* MacBrowserWaitlistMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistMocks.swift; sourceTree = "<group>"; };
 		4B470ED5299C49800086EBDC /* AppTrackingProtectionDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionDatabase.swift; sourceTree = "<group>"; };
 		4B470ED8299C4AED0086EBDC /* AppTrackingProtectionModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AppTrackingProtectionModel.xcdatamodel; sourceTree = "<group>"; };
-		4B470EDA299C4FB20086EBDC /* AppTrackingProtectionListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionListModel.swift; sourceTree = "<group>"; };
+		4B470EDA299C4FB20086EBDC /* AppTrackingProtectionListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionListViewModel.swift; sourceTree = "<group>"; };
 		4B470EDE299C67270086EBDC /* AppTrackerEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackerEntity.swift; sourceTree = "<group>"; };
 		4B470EE2299C6DD10086EBDC /* AppTrackingProtectionStoringModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionStoringModel.swift; sourceTree = "<group>"; };
 		4B52648A25F9613B00CB4C24 /* trackerData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trackerData.json; sourceTree = "<group>"; };
@@ -2332,6 +2347,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				020108AC29A7D7F800644F9D /* SVGView in Frameworks */,
 				853273B624FFE0BB00E3C778 /* WidgetKit.framework in Frameworks */,
 				F143C2EB1E4A4CD400CFDE3A /* Core.framework in Frameworks */,
 				31E69A63280F4CB600478327 /* DuckUI in Frameworks */,
@@ -2411,6 +2427,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0201089F29A560D400644F9D /* AppTPActivityView */ = {
+			isa = PBXGroup;
+			children = (
+				020108A429A681E200644F9D /* AppTP.xcassets */,
+				020108A029A5610C00644F9D /* AppTPActivityHostingViewController.swift */,
+				02A4EACB29B0F89C009BE006 /* ViewModel */,
+				02A4EACC29B0F8B3009BE006 /* View */,
+			);
+			name = AppTPActivityView;
+			sourceTree = "<group>";
+		};
 		02025665298818B200E694E7 /* PacketTunnelProvider */ = {
 			isa = PBXGroup;
 			children = (
@@ -2623,6 +2650,7 @@
 		02025B0A29884CF300E694E7 /* AppTrackingProtection */ = {
 			isa = PBXGroup;
 			children = (
+				0201089F29A560D400644F9D /* AppTPActivityView */,
 				02025B1129884E7000E694E7 /* blocklist.json */,
 				02025B0B29884D2C00E694E7 /* AppTrackerData.swift */,
 				02025B0E29884DC500E694E7 /* AppTrackerDataParser.swift */,
@@ -2661,6 +2689,25 @@
 				025CCFE62582601C001CD5BB /* Info.plist */,
 			);
 			path = FingerprintingUITests;
+			sourceTree = "<group>";
+		};
+		02A4EACB29B0F89C009BE006 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				020108A829A7C1CD00644F9D /* AppTrackerImageCache.swift */,
+				02A4EAC929B0F464009BE006 /* AppTPToggleViewModel.swift */,
+			);
+			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		02A4EACC29B0F8B3009BE006 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				020108A229A561C300644F9D /* AppTPActivityView.swift */,
+				020108A629A6ABF600644F9D /* AppTPToggleView.swift */,
+				020108AD29A7F91600644F9D /* AppTPTrackerCell.swift */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		02BA15AD26A89DE100472DD7 /* PrivacyConfiguration */ = {
@@ -2951,7 +2998,7 @@
 			children = (
 				4B470EDE299C67270086EBDC /* AppTrackerEntity.swift */,
 				4B470ED5299C49800086EBDC /* AppTrackingProtectionDatabase.swift */,
-				4B470EDA299C4FB20086EBDC /* AppTrackingProtectionListModel.swift */,
+				4B470EDA299C4FB20086EBDC /* AppTrackingProtectionListViewModel.swift */,
 				4B470EE2299C6DD10086EBDC /* AppTrackingProtectionStoringModel.swift */,
 				4B470ED7299C4AED0086EBDC /* AppTrackingProtectionModel.xcdatamodeld */,
 			);
@@ -4759,6 +4806,7 @@
 				31E69A62280F4CB600478327 /* DuckUI */,
 				4B5167412824B492004C67BA /* Lottie */,
 				85D598862927F84C00FA3B1B /* Crashes */,
+				020108AB29A7D7F800644F9D /* SVGView */,
 			);
 			productName = DuckDuckGo;
 			productReference = 84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */;
@@ -5044,6 +5092,7 @@
 				0202568C29881E4300E694E7 /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */,
 				02025AED2988248000E694E7 /* XCRemoteSwiftPackageReference "tun2socks" */,
 				02025AF22988257900E694E7 /* XCRemoteSwiftPackageReference "Resolver" */,
+				020108AA29A7D7F800644F9D /* XCRemoteSwiftPackageReference "SVGView" */,
 			);
 			productRefGroup = 84E341931E2F7EFB00BDBA6F /* Products */;
 			projectDirPath = "";
@@ -5190,6 +5239,7 @@
 				85A9C37920E0E00C00073340 /* HomeRow.xcassets in Resources */,
 				B6BA95C528894A28004ABA20 /* BrowsingMenuViewController.storyboard in Resources */,
 				AA4D6AE623DE4D33007E8790 /* AppIconGreen60x60@3x.png in Resources */,
+				020108A529A681E300644F9D /* AppTP.xcassets in Resources */,
 				8565419C224D304D00DF1FB2 /* proximanova-extrabold.otf in Resources */,
 				AA4D6A9323DE49A5007E8790 /* AppIconBlack76x76@2x.png in Resources */,
 				F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */,
@@ -5547,10 +5597,12 @@
 				CB9B873C278C8FEA001F4906 /* WidgetEducationView.swift in Sources */,
 				85F200002215C17B006BB258 /* FindInPage.swift in Sources */,
 				F1386BA41E6846C40062FC3C /* TabDelegate.swift in Sources */,
+				020108A929A7C1CD00644F9D /* AppTrackerImageCache.swift in Sources */,
 				3132FA2A27A0788F00DD7A12 /* QuickLookPreviewHelper.swift in Sources */,
 				C1D21E2D293A5965006E5A05 /* AutofillLoginSession.swift in Sources */,
 				4B53648A26718D0E001AA041 /* EmailWaitlist.swift in Sources */,
 				8524CC98246D66E100E59D45 /* String+Markdown.swift in Sources */,
+				020108A329A561C300644F9D /* AppTPActivityView.swift in Sources */,
 				C1B7B529289420830098FD6A /* RemoteMessaging.xcdatamodeld in Sources */,
 				986B16C425E92DF0007D23E8 /* BrowsingMenuViewController.swift in Sources */,
 				988AC355257E47C100793C64 /* RequeryLogic.swift in Sources */,
@@ -5690,6 +5742,7 @@
 				310C4B47281B60E300BA79A9 /* AutofillLoginDetailsViewModel.swift in Sources */,
 				85EE7F572246685B000FE757 /* WebContainerViewController.swift in Sources */,
 				1E4DCF4E27B6A69600961E25 /* DownloadsListHostingController.swift in Sources */,
+				020108A129A5610C00644F9D /* AppTPActivityHostingViewController.swift in Sources */,
 				02025B0F29884DC500E694E7 /* AppTrackerDataParser.swift in Sources */,
 				311BD1B12836C0CA00AEF6C1 /* AutofillLoginListAuthenticator.swift in Sources */,
 				B652DF13287C373A00C12A9C /* ScriptSourceProviding.swift in Sources */,
@@ -5718,6 +5771,7 @@
 				8540BBA22440857A00017FE4 /* PreserveLoginsWorker.swift in Sources */,
 				85DFEDF924CF3D0E00973FE7 /* TabsBarCell.swift in Sources */,
 				F17922DB1E717C8D006E3D97 /* Suggestion.swift in Sources */,
+				020108A729A6ABF600644F9D /* AppTPToggleView.swift in Sources */,
 				F1617C191E573EA800DEDCAF /* TabSwitcherDelegate.swift in Sources */,
 				310742A62848CD780012660B /* BackForwardMenuHistoryItem.swift in Sources */,
 				858566FB252E55D6007501B8 /* ImageCacheDebugViewController.swift in Sources */,
@@ -5735,10 +5789,12 @@
 				983EABB8236198F6003948D1 /* DatabaseMigration.swift in Sources */,
 				314C92B827C3DD660042EC96 /* QuickLookPreviewView.swift in Sources */,
 				F1AE54E81F0425FC00D9A700 /* AuthenticationViewController.swift in Sources */,
+				020108AE29A7F91600644F9D /* AppTPTrackerCell.swift in Sources */,
 				F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */,
 				4B6484F227FD1E350050A7A1 /* MacWaitlistViewModel.swift in Sources */,
 				85864FBC24D31EF300E756FF /* SuggestionTrayViewController.swift in Sources */,
 				1EF24235273BB9D200DE3D02 /* IntervalSlider.swift in Sources */,
+				02A4EACA29B0F464009BE006 /* AppTPToggleViewModel.swift in Sources */,
 				853273B224FF114700E3C778 /* DeepLinks.swift in Sources */,
 				4B6484EE27FD1E350050A7A1 /* MacBrowserWaitlistDebugViewController.swift in Sources */,
 				F1D796EE1E7AF2EB0019D451 /* UIViewControllerExtension.swift in Sources */,
@@ -5987,7 +6043,7 @@
 				83004E802193BB8200DA013C /* WKNavigationExtension.swift in Sources */,
 				853A717620F62FE800FE60BC /* Pixel.swift in Sources */,
 				F4A96BDC284518E70025C8E0 /* FeatureFlagger.swift in Sources */,
-				4B470EDB299C4FB20086EBDC /* AppTrackingProtectionListModel.swift in Sources */,
+				4B470EDB299C4FB20086EBDC /* AppTrackingProtectionListViewModel.swift in Sources */,
 				F41C2DA526C1975E00F9A760 /* BookmarksCoreDataStorage.swift in Sources */,
 				9876B75E2232B36900D81D9F /* TabInstrumentation.swift in Sources */,
 				026DABA428242BC80089E0B5 /* MockUserAgent.swift in Sources */,
@@ -8239,6 +8295,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		020108AA29A7D7F800644F9D /* XCRemoteSwiftPackageReference "SVGView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/SVGView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		0202568C29881E4300E694E7 /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/robbiehanson/CocoaAsyncSocket";
@@ -8322,6 +8386,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		020108AB29A7D7F800644F9D /* SVGView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 020108AA29A7D7F800644F9D /* XCRemoteSwiftPackageReference "SVGView" */;
+			productName = SVGView;
+		};
 		0202568F29881ECA00E694E7 /* CocoaAsyncSocket */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0202568C29881E4300E694E7 /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */;

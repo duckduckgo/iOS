@@ -72,8 +72,6 @@ extension TabViewController {
         
         let linkEntries = buildLinkEntries(with: bookmarksInterface)
         entries.append(contentsOf: linkEntries)
-        
-        entries.append(buildAppTPEntry())
             
         if let domain = self.privacyInfo?.domain {
             entries.append(self.buildToggleProtectionEntry(forDomain: domain))
@@ -109,36 +107,6 @@ extension TabViewController {
         }))
 
         return entries
-    }
-    
-    private func buildAppTPEntry() -> BrowsingMenuEntry {
-        if FirewallController.shared.status() == .connected {
-            return BrowsingMenuEntry.regular(name: "Disable AppTP",
-                                                     image: UIImage(named: "MenuRemoveFireproof")!,
-                                                     action: {
-                Task {
-                    do {
-                        try await FirewallController.shared.setState(to: false)
-                    } catch {
-                        os_log("[Error] Could not disable AppTP: %s", log: FirewallController.apptpLog,
-                               type: .error, error.localizedDescription)
-                    }
-                }
-            })
-        } else {
-            return BrowsingMenuEntry.regular(name: "Enable AppTP",
-                                                     image: UIImage(named: "MenuFireproof")!,
-                                                     action: {
-                Task {
-                    do {
-                        try await FirewallController.shared.setState(to: true)
-                    } catch {
-                        os_log("[Error] Could not enable AppTP: %s", log: FirewallController.apptpLog,
-                               type: .error, error.localizedDescription)
-                    }
-                }
-            })
-        }
     }
 
     private func buildLinkEntries(with bookmarksInterface: MenuBookmarksInteracting) -> [BrowsingMenuEntry] {

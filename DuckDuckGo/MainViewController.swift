@@ -103,7 +103,6 @@ class MainViewController: UIViewController {
     
     private let bookmarksDatabase: CoreDataDatabase
     private let appTrackingProtectionDatabase: CoreDataDatabase
-    private let appTrackingProtectionListModel: AppTrackingProtectionListModel
     private let favoritesViewModel: FavoritesListInteracting
     
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase)
@@ -139,7 +138,6 @@ class MainViewController: UIViewController {
                    appTrackingProtectionDatabase: CoreDataDatabase) {
         self.bookmarksDatabase = bookmarksDatabase
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
-        self.appTrackingProtectionListModel = AppTrackingProtectionListModel(appTrackingProtectionDatabase: appTrackingProtectionDatabase)
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         super.init(coder: coder)
@@ -340,13 +338,16 @@ class MainViewController: UIViewController {
             return
         }
         
-        if let navController = segue.destination as? UINavigationController,
-            let brokenSiteScreen = navController.topViewController as? ReportBrokenSiteViewController {
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                segue.destination.modalPresentationStyle = .formSheet
+        if let navController = segue.destination as? UINavigationController {
+            if let brokenSiteScreen = navController.topViewController as? ReportBrokenSiteViewController {
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    segue.destination.modalPresentationStyle = .formSheet
+                }
+                
+                brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
+            } else if let settingsScreen = navController.topViewController as? SettingsViewController {
+                settingsScreen.appTPDatabase = self.appTrackingProtectionDatabase
             }
-            
-            brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
         }
 
         if var onboarding = segue.destination as? Onboarding {

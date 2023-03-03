@@ -58,7 +58,7 @@ extension URL {
             return nil
         }
 
-        guard url.host?.isValidHost == true, url.user == nil else { return nil }
+        guard url.host?.isValidHost == true else { return nil }
 
         return url
     }

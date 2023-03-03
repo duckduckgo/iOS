@@ -40,7 +40,7 @@ public struct SaveRecoveryKeyView: View {
                     Text(model.key)
                         .fontWeight(.light)
                         .lineSpacing(1.6)
-                        .lineLimit(3)
+                        .lineLimit(5)
                         .applyKerning(2)
                         .truncationMode(.tail)
                         .monospaceSystemFont(ofSize: 16)

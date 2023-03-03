@@ -119,7 +119,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
 
         let format = UIGraphicsPDFRendererFormat()
         format.documentInfo = [
-            kCGPDFContextTitle as String: "DuckDuckGo Sync Recovery Key"
+            kCGPDFContextTitle as String: "DuckDuckGo Sync Recovery Code"
         ]
 
         let renderer = UIGraphicsPDFRenderer(bounds: pdfRect, format: format)
@@ -139,7 +139,9 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 .kern: 2
             ])
         }
-        navigationController?.visibleViewController?.presentShareSheet(withItems: [data],
+
+        let pdf = RecoveryCodeItem(data: data)
+        navigationController?.visibleViewController?.presentShareSheet(withItems: [pdf],
                                                                        fromView: view) { [weak self] _, success, _, _ in
             guard success else { return }
             self?.navigationController?.visibleViewController?.dismiss(animated: true)
@@ -147,7 +149,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
 
     func showDeviceConnected() {
-        let model = SaveRecoveryKeyViewModel { [weak self] in
+        let model = SaveRecoveryKeyViewModel(key: Self.fakeCode) { [weak self] in
             self?.shareRecoveryPDF()
         }
         let controller = UIHostingController(rootView: DeviceConnectedView(saveRecoveryKeyViewModel: model))
@@ -155,11 +157,10 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             self.rootView.model.showDevices()
             self.rootView.model.appendDevice(.init(id: UUID().uuidString, name: "Another Device", isThisDevice: false))
         }
-
     }
     
     func showRecoveryPDF() {
-        let model = SaveRecoveryKeyViewModel { [weak self] in
+        let model = SaveRecoveryKeyViewModel(key: Self.fakeCode) { [weak self] in
             self?.shareRecoveryPDF()
         }
         let controller = UIHostingController(rootView: SaveRecoveryKeyView(model: model))
@@ -264,6 +265,25 @@ private class PortraitNavigationController: UINavigationController {
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         [.portrait, .portraitUpsideDown]
+    }
+
+}
+
+private class RecoveryCodeItem: NSObject, UIActivityItemSource {
+
+    let data: Data
+
+    init(data: Data) {
+        self.data = data
+        super.init()
+    }
+
+    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        return URL(fileURLWithPath: "DuckDuckGo Sync Recovery Code.pdf")
+    }
+
+    func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+        data
     }
 
 }

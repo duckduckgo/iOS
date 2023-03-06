@@ -28,8 +28,9 @@ jobs:
           -destination "platform=iOS Simulator,name=iPhone 12" \
           -derivedDataPath ~/DerivedData
 
-    - name: Run tests
+    - name: Release tests
       uses: mobile-dev-inc/action-maestro-cloud@v1.2.3
       with:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
         app-file: /Users/runner/DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
+        workspace: .maestro/release_tests

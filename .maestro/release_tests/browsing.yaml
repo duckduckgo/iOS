@@ -10,7 +10,7 @@ appId: com.duckduckgo.mobile.ios
       visible: 
         text: "Let’s Do It!"
         index: 0
-    file: ../shared/onboarding.yaml
+    file: ./shared/onboarding.yaml
 
 # Load Site
 - assertVisible:
@@ -19,4 +19,7 @@ appId: com.duckduckgo.mobile.ios
     id: "searchEntry"
 - inputText: "https://privacy-test-pages.glitch.me"
 - pressKey: Enter
+- tapOn: 
+    optional: true 
+    text: "Got it"
 - assertVisible: ".*Privacy Test Pages.*"

@@ -94,7 +94,8 @@ struct AutofillLoginPromptView: View {
             .minimumScaleFactor(0.5)
             .foregroundColor(Const.Colors.PrimaryTextColor)
             .padding()
-            .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight)
+            .lineLimit(1)
+            .frame(minWidth: 0, maxWidth: .infinity)
             .foregroundColor(.primary)
             .cornerRadius(Const.Size.CTAButtonCornerRadius)
     }

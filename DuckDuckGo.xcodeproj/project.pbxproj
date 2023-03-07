@@ -4246,7 +4246,6 @@
 				859872221F5743AF00041CB8 /* FireAnimation */,
 				980891A122369ADB00313A70 /* FeedbackUserText.swift */,
 				985AAE4424899369007A43EC /* HomeScreenTransition.swift */,
-				1EF24234273BB9D200DE3D02 /* IntervalSlider.swift */,
 				F1D934021E610DCE00A6F0D6 /* Point.swift */,
 				985892512260B1B200EEB31B /* ProgressView.swift */,
 				F143C32B1E4A9A4800CFDE3A /* RoundedRectangleView.swift */,
@@ -4263,7 +4262,6 @@
 				980891A82238504B00313A70 /* UILabelExtension.swift */,
 				9820FF4F2244FECC008D4782 /* UIScrollViewExtension.swift */,
 				982C87C32255559A00919035 /* UITableViewCellExtension.swift */,
-				319A37162829C8AD0079FBCE /* UITableViewExtension.swift */,
 				F143C32C1E4A9A4800CFDE3A /* UIViewControllerExtension.swift */,
 				F1DE78591E5CD2A70058895A /* UIViewExtension.swift */,
 				F1F5337B1F26A9EF00D80D4F /* UserText.swift */,
@@ -7431,8 +7429,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = exactVersion;
-				version = 47.2.0;
+				branch = "brindy/remove-major-tracker-network";
+				kind = branch;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

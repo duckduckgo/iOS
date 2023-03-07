@@ -26,19 +26,19 @@ import Networking
 class APIHeadersTests: XCTestCase {
 
     func testWhenHeadersRequestedThenHeadersContainUserAgent() {
-        APIHeaders.setUserAgent(DefaultUserAgentManager.duckduckGoUserAgent(for: makeAppVersion()))
-        let testee = APIHeaders()
+        APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckduckGoUserAgent(for: makeAppVersion()))
+        let testee = APIRequest.Headers()
         let expected = "ddg_ios/7.0.4.5 (com.duckduckgo.mobile.ios; iOS \(UIDevice.current.systemVersion))"
-        let actual = testee.defaultHeaders[HTTPHeaderField.userAgent]
+        let actual = testee.default[APIRequest.HTTPHeaderField.userAgent]
         XCTAssertEqual(expected, actual)
     }
 
     func testWhenProvidingEtagThenHeadersContainsIfNoneMatchHeader() {
-        APIHeaders.setUserAgent(DefaultUserAgentManager.duckduckGoUserAgent(for: makeAppVersion()))
-        let testee = APIHeaders()
+        APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckduckGoUserAgent(for: makeAppVersion()))
+        let testee = APIRequest.Headers()
         let expected = "etag"
-        let headers = testee.defaultHeaders(with: expected)
-        XCTAssertEqual(expected, headers[HTTPHeaderField.ifNoneMatch])
+        let headers = testee.default(with: expected)
+        XCTAssertEqual(expected, headers[APIRequest.HTTPHeaderField.ifNoneMatch])
     }
 
     func makeAppVersion() -> AppVersion {

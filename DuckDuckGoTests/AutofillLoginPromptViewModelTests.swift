@@ -21,6 +21,7 @@ import XCTest
 @testable import DuckDuckGo
 @testable import BrowserServicesKit
 
+// swiftlint:disable type_body_length
 final class AutofillLoginPromptViewModelTests: XCTestCase {
 
     func testWhenOnePerfectMatchAndNoPartialMatchesThenOnePerfectMatchShownAndMoreOptionsNotShown() {
@@ -79,7 +80,9 @@ final class AutofillLoginPromptViewModelTests: XCTestCase {
 
     func testWhenOnePerfectMatchAndOnePartialMatchThenOnePerfectMatchAndMoreOptionsShown() {
         let accountMatches = AccountMatches(perfectMatches: [websiteAccountFor(domain: "example.com", username: "dax@duck.com")],
-                                            partialMatches: ["sub.example.com": [websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")]])
+                                            partialMatches: ["sub.example.com": [
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")]
+                                            ])
         let autofillLoginPromptViewModel = AutofillLoginPromptViewModel(accounts: accountMatches,
                                                                                       domain: "example.com",
                                                                                       isExpanded: false)
@@ -92,7 +95,9 @@ final class AutofillLoginPromptViewModelTests: XCTestCase {
     func testWhenTwoPerfectMatchesAndOnePartialMatchThenTwoPerfectMatchesAndMoreOptionsShown() {
         let accountMatches = AccountMatches(perfectMatches: [websiteAccountFor(domain: "example.com", username: "dax@duck.com"),
                                                              websiteAccountFor(domain: "example.com", username: "dax1@duck.com")],
-                                            partialMatches: ["sub.example.com": [websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")]])
+                                            partialMatches: ["sub.example.com": [
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")]
+                                            ])
         let autofillLoginPromptViewModel = AutofillLoginPromptViewModel(accounts: accountMatches,
                                                                                       domain: "example.com",
                                                                                       isExpanded: false)
@@ -106,7 +111,9 @@ final class AutofillLoginPromptViewModelTests: XCTestCase {
         let accountMatches = AccountMatches(perfectMatches: [websiteAccountFor(domain: "example.com", username: "dax@duck.com"),
                                                              websiteAccountFor(domain: "example.com", username: "dax1@duck.com"),
                                                              websiteAccountFor(domain: "example.com", username: "dax2@duck.com")],
-                                            partialMatches: ["sub.example.com": [websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")]])
+                                            partialMatches: ["sub.example.com": [
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")]
+                                            ])
         let autofillLoginPromptViewModel = AutofillLoginPromptViewModel(accounts: accountMatches,
                                                                                       domain: "example.com",
                                                                                       isExpanded: false)
@@ -121,7 +128,9 @@ final class AutofillLoginPromptViewModelTests: XCTestCase {
                                                              websiteAccountFor(domain: "example.com", username: "dax1@duck.com"),
                                                              websiteAccountFor(domain: "example.com", username: "dax2@duck.com"),
                                                              websiteAccountFor(domain: "example.com", username: "dax3@duck.com")],
-                                            partialMatches: ["sub.example.com": [websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")]])
+                                            partialMatches: ["sub.example.com": [
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")]
+                                            ])
         let autofillLoginPromptViewModel = AutofillLoginPromptViewModel(accounts: accountMatches,
                                                                                       domain: "example.com",
                                                                                       isExpanded: false)
@@ -133,8 +142,12 @@ final class AutofillLoginPromptViewModelTests: XCTestCase {
 
     func testWhenOnePerfectMatchAndTwoPartialMatchesThenOnePerfectMatchAndMoreOptionsShown() {
         let accountMatches = AccountMatches(perfectMatches: [websiteAccountFor(domain: "example.com", username: "dax@duck.com")],
-                                            partialMatches: ["sub.example.com": [websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")],
-                                                             "sub2.example.com": [websiteAccountFor(domain: "sub2.example.com", username: "dax@duck.com")]])
+                                            partialMatches: ["sub.example.com": [
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")
+                                            ],
+                                                             "sub2.example.com": [
+                                                                 websiteAccountFor(domain: "sub2.example.com", username: "dax@duck.com")]
+                                            ])
         let autofillLoginPromptViewModel = AutofillLoginPromptViewModel(accounts: accountMatches,
                                                                         domain: "example.com",
                                                                         isExpanded: false)
@@ -147,8 +160,12 @@ final class AutofillLoginPromptViewModelTests: XCTestCase {
     func testWhenTwoPerfectMatchesAndTwoPartialMatchesThenTwoPerfectMatchesAndMoreOptionsShown() {
         let accountMatches = AccountMatches(perfectMatches: [websiteAccountFor(domain: "example.com", username: "dax@duck.com"),
                                                              websiteAccountFor(domain: "example.com", username: "dax2@duck.com")],
-                                            partialMatches: ["sub.example.com": [websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")],
-                                                             "sub2.example.com": [websiteAccountFor(domain: "sub2.example.com", username: "dax@duck.com")]])
+                                            partialMatches: ["sub.example.com": [
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")
+                                            ],
+                                                             "sub2.example.com": [
+                                                                 websiteAccountFor(domain: "sub2.example.com", username: "dax@duck.com")]
+                                            ])
         let autofillLoginPromptViewModel = AutofillLoginPromptViewModel(accounts: accountMatches,
                                                                         domain: "example.com",
                                                                         isExpanded: false)
@@ -162,8 +179,12 @@ final class AutofillLoginPromptViewModelTests: XCTestCase {
         let accountMatches = AccountMatches(perfectMatches: [websiteAccountFor(domain: "example.com", username: "dax@duck.com"),
                                                              websiteAccountFor(domain: "example.com", username: "dax2@duck.com"),
                                                              websiteAccountFor(domain: "example.com", username: "dax3@duck.com")],
-                                            partialMatches: ["sub.example.com": [websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")],
-                                                             "sub2.example.com": [websiteAccountFor(domain: "sub2.example.com", username: "dax@duck.com")]])
+                                            partialMatches: ["sub.example.com": [
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")
+                                            ],
+                                                             "sub2.example.com": [
+                                                                 websiteAccountFor(domain: "sub2.example.com", username: "dax@duck.com")]
+                                            ])
         let autofillLoginPromptViewModel = AutofillLoginPromptViewModel(accounts: accountMatches,
                                                                         domain: "example.com",
                                                                         isExpanded: false)
@@ -175,7 +196,9 @@ final class AutofillLoginPromptViewModelTests: XCTestCase {
 
     func testWhenNoPerfectMatchAndOnePartialMatchThenPartialMatchShownAndMoreOptionsNotShown() {
         let accountMatches = AccountMatches(perfectMatches: [],
-                                            partialMatches: ["sub.example.com": [websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")]])
+                                            partialMatches: ["sub.example.com": [
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")]
+                                            ])
         let autofillLoginPromptViewModel = AutofillLoginPromptViewModel(accounts: accountMatches,
                                                                         domain: "example.com",
                                                                         isExpanded: false)
@@ -187,8 +210,10 @@ final class AutofillLoginPromptViewModelTests: XCTestCase {
 
     func testWhenNoPerfectMatchAndTwoPartialMatchesForSameSubdomainThenTwoPartialMatchesShownAndMoreOptionsNotShown() {
         let accountMatches = AccountMatches(perfectMatches: [],
-                                            partialMatches: ["sub.example.com": [websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com"),
-                                                                                 websiteAccountFor(domain: "sub.example.com", username: "dax2@duck.com")]])
+                                            partialMatches: ["sub.example.com": [
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com"),
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax2@duck.com")]
+                                            ])
         let autofillLoginPromptViewModel = AutofillLoginPromptViewModel(accounts: accountMatches,
                                                                         domain: "example.com",
                                                                         isExpanded: false)
@@ -200,9 +225,11 @@ final class AutofillLoginPromptViewModelTests: XCTestCase {
 
     func testWhenNoPerfectMatchAndThreePartialMatchesForSameSubdomainThenThreePartialMatchesShownAndMoreOptionsNotShown() {
         let accountMatches = AccountMatches(perfectMatches: [],
-                                            partialMatches: ["sub.example.com": [websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com"),
-                                                                                 websiteAccountFor(domain: "sub.example.com", username: "dax2@duck.com"),
-                                                                                 websiteAccountFor(domain: "sub.example.com", username: "dax3@duck.com")]])
+                                            partialMatches: ["sub.example.com": [
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com"),
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax2@duck.com"),
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax3@duck.com")]
+                                            ])
         let autofillLoginPromptViewModel = AutofillLoginPromptViewModel(accounts: accountMatches,
                                                                         domain: "example.com",
                                                                         isExpanded: false)
@@ -214,10 +241,12 @@ final class AutofillLoginPromptViewModelTests: XCTestCase {
 
     func testWhenNoPerfectMatchAndFourPartialMatchesForSameSubdomainThenTwoPartialMatchesAndMoreOptionsShown() {
         let accountMatches = AccountMatches(perfectMatches: [],
-                                            partialMatches: ["sub.example.com": [websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com"),
-                                                                                 websiteAccountFor(domain: "sub.example.com", username: "dax2@duck.com"),
-                                                                                 websiteAccountFor(domain: "sub.example.com", username: "dax3@duck.com"),
-                                                                                 websiteAccountFor(domain: "sub.example.com", username: "dax4@duck.com")]])
+                                            partialMatches: ["sub.example.com": [
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com"),
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax2@duck.com"),
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax3@duck.com"),
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax4@duck.com")]
+                                            ])
         let autofillLoginPromptViewModel = AutofillLoginPromptViewModel(accounts: accountMatches,
                                                                         domain: "example.com",
                                                                         isExpanded: false)
@@ -229,8 +258,11 @@ final class AutofillLoginPromptViewModelTests: XCTestCase {
 
     func testWhenNoPerfectMatchAndOnePartialMatchAndOnePartialMatchForDifferentSubdomainThenFirstPartialMatchAndMoreOptionsShown() {
         let accountMatches = AccountMatches(perfectMatches: [],
-                                            partialMatches: ["sub.example.com": [websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")],
-                                                             "sub2.example.com": [websiteAccountFor(domain: "sub2.example.com", username: "dax@duck.com")]])
+                                            partialMatches: ["sub.example.com": [
+                                                                websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")
+                                                            ], "sub2.example.com": [
+                                                                 websiteAccountFor(domain: "sub2.example.com", username: "dax@duck.com")]
+                                            ])
         let autofillLoginPromptViewModel = AutofillLoginPromptViewModel(accounts: accountMatches,
                                                                         domain: "example.com",
                                                                         isExpanded: false)
@@ -242,9 +274,12 @@ final class AutofillLoginPromptViewModelTests: XCTestCase {
 
     func testWhenNoPerfectMatchAndTwoPartialMatchesAndOnePartialMatchForDifferentSubdomainThenFirstTwoPartialMatchesAndMoreOptionsShown() {
         let accountMatches = AccountMatches(perfectMatches: [],
-                                            partialMatches: ["sub.example.com": [websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com"),
-                                                                                 websiteAccountFor(domain: "sub.example.com", username: "dax2@duck.com")],
-                                                             "sub2.example.com": [websiteAccountFor(domain: "sub2.example.com", username: "dax@duck.com")]])
+                                            partialMatches: ["sub.example.com": [
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com"),
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax2@duck.com")
+                                            ], "sub2.example.com": [
+                                                websiteAccountFor(domain: "sub2.example.com", username: "dax@duck.com")]
+                                            ])
         let autofillLoginPromptViewModel = AutofillLoginPromptViewModel(accounts: accountMatches,
                                                                         domain: "example.com",
                                                                         isExpanded: false)
@@ -256,10 +291,13 @@ final class AutofillLoginPromptViewModelTests: XCTestCase {
 
     func testWhenNoPerfectMatchAndThreePartialMatchesAndOnePartialMatchForDifferentSubdomainThenFirstTwoPartialMatchesAndMoreOptionsShown() {
         let accountMatches = AccountMatches(perfectMatches: [],
-                                            partialMatches: ["sub.example.com": [websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com"),
-                                                                                 websiteAccountFor(domain: "sub.example.com", username: "dax2@duck.com"),
-                                                                                 websiteAccountFor(domain: "sub.example.com", username: "dax3@duck.com")],
-                                                             "sub2.example.com": [websiteAccountFor(domain: "sub2.example.com", username: "dax@duck.com")]])
+                                            partialMatches: ["sub.example.com": [
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com"),
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax2@duck.com"),
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax3@duck.com")
+                                            ], "sub2.example.com": [
+                                                websiteAccountFor(domain: "sub2.example.com", username: "dax@duck.com")]
+                                            ])
         let autofillLoginPromptViewModel = AutofillLoginPromptViewModel(accounts: accountMatches,
                                                                         domain: "example.com",
                                                                         isExpanded: false)
@@ -271,9 +309,12 @@ final class AutofillLoginPromptViewModelTests: XCTestCase {
 
     func testWhenNoPerfectMatchAndOnePartialMatchAndTwoPartialMatchesForDifferentSubdomainThenFirstPartialMatchAndMoreOptionsShown() {
         let accountMatches = AccountMatches(perfectMatches: [],
-                                            partialMatches: ["sub.example.com": [websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")],
-                                                             "sub2.example.com": [websiteAccountFor(domain: "sub2.example.com", username: "dax@duck.com"),
-                                                                                  websiteAccountFor(domain: "sub2.example.com", username: "dax2@duck.com")]])
+                                            partialMatches: ["sub.example.com": [
+                                                websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")
+                                            ], "sub2.example.com": [
+                                                websiteAccountFor(domain: "sub2.example.com", username: "dax@duck.com"),
+                                                websiteAccountFor(domain: "sub2.example.com", username: "dax2@duck.com")]
+                                            ])
         let autofillLoginPromptViewModel = AutofillLoginPromptViewModel(accounts: accountMatches,
                                                                         domain: "example.com",
                                                                         isExpanded: false)

@@ -7028,7 +7028,6 @@
 				INFOPLIST_FILE = PacketTunnelProvider/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PacketTunnelProvider;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 DuckDuckGo. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -7064,7 +7063,6 @@
 				INFOPLIST_FILE = PacketTunnelProvider/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PacketTunnelProvider;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 DuckDuckGo. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -7456,7 +7454,6 @@
 				INFOPLIST_FILE = PacketTunnelProvider/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PacketTunnelProvider;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 DuckDuckGo. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -7897,7 +7894,6 @@
 				INFOPLIST_FILE = PacketTunnelProvider/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PacketTunnelProvider;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 DuckDuckGo. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

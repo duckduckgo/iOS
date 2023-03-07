@@ -84,7 +84,7 @@ class PrivacyIconLogicTests: XCTestCase {
         XCTAssertEqual(icon, .shieldWithDot)
     }
     
-    func testPrivacyIconIsShieldWithDotForMajorTrackerNetwork() {
+    func testPrivacyIconIsShieldWithoutDotForMajorTrackerNetwork() {
         let url = PrivacyIconLogicTests.pageURL
         let entity = Entity(displayName: "E", domains: [], prevalence: TrackerInfo.Constants.majorNetworkPrevalence + 1.0)
         let protectionStatus = ProtectionStatus(unprotectedTemporary: false, enabledFeatures: [], allowlisted: false, denylisted: false)
@@ -95,7 +95,7 @@ class PrivacyIconLogicTests: XCTestCase {
         XCTAssertTrue(url.isHttps)
         XCTAssertTrue(privacyInfo.https)
         XCTAssertTrue(privacyInfo.isMajorTrackerNetwork)
-        XCTAssertEqual(icon, .shieldWithDot)
+        XCTAssertEqual(icon, .shield)
     }
 
 }

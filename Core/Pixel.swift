@@ -170,7 +170,7 @@ public class Pixel {
                                                      queryParameters: newParams,
                                                      allowedQueryReservedCharacters: allowedQueryReservedCharacters,
                                                      headers: headers)
-        let request = APIRequest(configuration: configuration, urlSession: .makeSession(useMainThreadCallbackQueue: true))
+        let request = APIRequest(configuration: configuration, urlSession: .session(useMainThreadCallbackQueue: true))
         request.fetch { _, error in
             os_log("Pixel fired %s %s", log: .generalLog, type: .debug, pixel.name, "\(params)")
             onComplete(error)

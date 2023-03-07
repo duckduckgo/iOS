@@ -91,7 +91,7 @@ struct FeedbackSubmitter: FeedbackSender {
         ]
         
         let configuration = APIRequest.Configuration(url: AppUrls().feedback, method: .post, queryParameters: parameters)
-        let request = APIRequest(configuration: configuration, urlSession: .makeSession())
+        let request = APIRequest(configuration: configuration, urlSession: .session())
         
         request.fetch { _, error in
             if let error = error {

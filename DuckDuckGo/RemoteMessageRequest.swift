@@ -37,7 +37,7 @@ public struct RemoteMessageRequest {
 
     public func getRemoteMessage(completionHandler: @escaping (Result<RemoteMessageResponse.JsonRemoteMessagingConfig, RemoteMessageResponse.StatusError>) -> Void) {
         let configuration = APIRequest.Configuration(url: endpoint)
-        let request = APIRequest(configuration: configuration, urlSession: .makeSession())
+        let request = APIRequest(configuration: configuration, urlSession: .session())
         
         request.fetch { response, error in
             guard let data = response?.data, error == nil else {

@@ -2223,7 +2223,7 @@ extension TabViewController: EmailManagerRequestDelegate {
                                                      headers: headers,
                                                      body: httpBody,
                                                      timeoutInterval: timeoutInterval)
-        let request = APIRequest(configuration: configuration, urlSession: .makeSession())
+        let request = APIRequest(configuration: configuration, urlSession: .session())
         request.fetch { response, error in
             completion(response?.data, error)
         }

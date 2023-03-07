@@ -47,7 +47,7 @@ public class StatisticsLoader {
     
     private func requestInstallStatistics(completion: @escaping Completion = {}) {
         let configuration = APIRequest.Configuration(url: appUrls.initialAtb)
-        let request = APIRequest(configuration: configuration, urlSession: .makeSession())
+        let request = APIRequest(configuration: configuration, urlSession: .session())
         
         request.fetch { response, error in
             if let error = error {
@@ -69,7 +69,7 @@ public class StatisticsLoader {
         let url = appUrls.exti(forAtb: installAtb)
         
         let configuration = APIRequest.Configuration(url: url)
-        let request = APIRequest(configuration: configuration, urlSession: .makeSession())
+        let request = APIRequest(configuration: configuration, urlSession: .session())
         
         request.fetch { _, error in
             if let error = error {
@@ -91,7 +91,7 @@ public class StatisticsLoader {
         }
         
         let configuration = APIRequest.Configuration(url: url)
-        let request = APIRequest(configuration: configuration, urlSession: .makeSession())
+        let request = APIRequest(configuration: configuration, urlSession: .session())
         
         request.fetch { response, error in
             if let error = error {
@@ -115,7 +115,7 @@ public class StatisticsLoader {
         }
         
         let configuration = APIRequest.Configuration(url: url)
-        let request = APIRequest(configuration: configuration, urlSession: .makeSession())
+        let request = APIRequest(configuration: configuration, urlSession: .session())
         
         request.fetch { response, error in
             if let error = error {

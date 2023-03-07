@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 
 class TrackerDataParser {
     
@@ -36,6 +37,7 @@ class TrackerDataParser {
             blocklist = try JSONDecoder().decode(AppTrackerList.self, from: data)
         } catch {
             print("[ERROR] Error decoding blocklist: \(error)")
+            Pixel.fire(pixel: .appTPBlocklistParseFailed)
         }
     }
     

@@ -31,6 +31,7 @@ public class AppTrackingProtectionDatabase {
 
     public static var defaultDBLocation: URL = {
         guard let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.groupID) else {
+            Pixel.fire(pixel: .appTPDBLocationFailed)
             fatalError("Failed to get location")
         }
 
@@ -40,6 +41,7 @@ public class AppTrackingProtectionDatabase {
     public static func make(location: URL = defaultDBLocation, readOnly: Bool = false) -> CoreDataDatabase {
         let bundle = Bundle(for: AppTrackingProtectionDatabase.self)
         guard let model = CoreDataDatabase.loadModel(from: bundle, named: "AppTrackingProtectionModel") else {
+            Pixel.fire(pixel: .appTPDBStoreLoadFailure)
             fatalError("Failed to load model")
         }
 

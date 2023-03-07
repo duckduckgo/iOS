@@ -19,7 +19,7 @@
 
 import Foundation
 import Core
-import API
+import Networking
 
 class AutocompleteRequest {
     
@@ -42,7 +42,7 @@ class AutocompleteRequest {
 
     func execute(completion: @escaping Completion) {
         var request = URLRequest.developerInitiated(url)
-        request.allHTTPHeaderFields = APIHeaders().defaultHeaders
+        request.allHTTPHeaderFields = APIRequest.Headers().default
 
         task = AutocompleteRequest.session.dataTask(with: request) { [weak self] (data, _, error) -> Void in
             guard let weakSelf = self else { return }

@@ -153,7 +153,7 @@ class DiagnosticReportDataSource: UIActivityItemProvider {
 
     func configurationReport() -> String {
         let etagStorage = DebugEtagStorage()
-        let configs = Configuration.allCases.map { $0.rawValue + ": " + (etagStorage.loadEtag(for: $0.rawValue) ?? "<none>") }
+        let configs = Configuration.allCases.map { $0.rawValue + ": " + (etagStorage.loadEtag(for: $0.storeKey) ?? "<none>") }
         let lastRefreshDate = "Last refresh date: \(lastRefreshDate == .distantPast ? "Never" : String(describing: lastRefreshDate))"
         return (["## Configuration Report"] + [lastRefreshDate] + configs).joined(separator: "\n")
     }

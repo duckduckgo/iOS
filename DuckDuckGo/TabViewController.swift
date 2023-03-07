@@ -31,7 +31,7 @@ import PrivacyDashboard
 import UserScript
 import ContentBlocking
 import TrackerRadarKit
-import API
+import Networking
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -2216,7 +2216,7 @@ extension TabViewController: EmailManagerRequestDelegate {
                       httpBody: Data?,
                       timeoutInterval: TimeInterval,
                       completion: @escaping (Data?, Error?) -> Void) {
-        let method = HTTPMethod(rawValue: method) ?? .post
+        let method = APIRequest.HTTPMethod(rawValue: method) ?? .post
         let configuration = APIRequest.Configuration(url: url,
                                                      method: method,
                                                      queryParameters: parameters ?? [:],

@@ -22,6 +22,8 @@ import Configuration
 import Core
 
 struct ConfigurationStore: ConfigurationStoring {
+
+    static let shared = ConfigurationStore()
     
     private let etagStorage: BlockerListETagStorage
     private let fileStore: FileStore

@@ -43,111 +43,98 @@ struct ConfigurationManager {
         }
         
     }
-    
+
     public static let didUpdateTrackerDependencies = NSNotification.Name(rawValue: "com.duckduckgo.configurationManager.didUpdateTrackerDependencies")
-    private static let updateQueue = DispatchQueue(label: "StorageCache update queue", qos: .utility)
-    
-    private let store = ConfigurationStore()
-    private let httpsUpgradeStore: AppHTTPSUpgradeStore = PrivacyFeatures.httpsUpgradeStore
 
-    func update(onDidUpdate: @escaping (Configuration) -> Void) -> Bool {
-        var didUpdateAnyData = false
-        let fetcher = ConfigurationFetcher(store: ConfigurationStore())
-        
-        
-        let tdsFetchTask = Task { try fetcher.fetch(.trackerDataSet) }
-        let surrogatesFetchTask = Task { try fetcher.fetch(.surrogates) }
-        let privacyConfigurationFetchTask = Task { try fetcher.fetch(.privacyConfiguration) }
-        updateTrackerBlockingDependencies(onDidUpdate: onDidUpdate)
-        
-        let bloomFilterBinaryFetchTask = Task { try fetcher.fetch(.bloomFilterBinary) }
-        
-        let bloomFilterTask = Task {
-            fetcher.fetch([.bloomFilterBinary, .bloomFilterSpec]) {
-                try updateBloomFilter(onDidUpdate: onDidUpdate)
+    func update() async -> Bool {
+        async let didFetchAnyTrackerBlockingDependencies = fetchAndUpdateTrackerBlockingDependencies()
+        async let didFetchExcludedDomains = fetchAndUpdateBloomFilterExcludedDomains()
+        async let didFetchBloomFilter = fetchAndUpdateBloomFilter()
+
+        let results = await (didFetchAnyTrackerBlockingDependencies, didFetchExcludedDomains, didFetchBloomFilter)
+        return results.0 || results.1 || results.2
+    }
+
+    @discardableResult
+    func fetchAndUpdateTrackerBlockingDependencies() async -> Bool {
+        let didFetchAnyTrackerBlockingDependencies = await fetchTrackerBlockingDependencies()
+        if didFetchAnyTrackerBlockingDependencies {
+            updateTrackerBlockingDependencies()
+        }
+        return didFetchAnyTrackerBlockingDependencies
+    }
+
+    private func fetchTrackerBlockingDependencies() async -> Bool {
+        var didFetchAnyTrackerBlockingDependencies = false
+        let fetcher = ConfigurationFetcher(store: ConfigurationStore.shared, log: .configurationLog)
+
+        var tasks = [Configuration: Task<(), Swift.Error>]()
+        tasks[.trackerDataSet] = Task { try await fetcher.fetch(.trackerDataSet) }
+        tasks[.surrogates] = Task { try await fetcher.fetch(.surrogates) }
+        tasks[.privacyConfiguration] = Task { try await fetcher.fetch(.privacyConfiguration) }
+
+        for (configuration, task) in tasks {
+            do {
+                try await task.value
+                didFetchAnyTrackerBlockingDependencies = true
+            } catch {
+                os_log("Failed to apply update to %@: %@", log: .generalLog, type: .debug, configuration.rawValue, error.localizedDescription)
             }
         }
-        
-        await (tdsFetchTask.value, surrogatesFetchTask.value, privacyConfigurationFetchTask.value)
-        await bloomFilterBinaryFetchTask.value
-        try updateBloomFilterExclusions(onDidUpdate: onDidUpdate)
-        
-        
-        do {
-            try async let = fetcher.fetch([.bloomFilterBinary, .bloomFilterSpec])
-            try updateBloomFilter(onDidUpdate: onDidUpdate)
-            didUpdateAnyData = true
-        } catch {
-            os_log("Failed to apply update to bloom filter: %@", log: .generalLog, type: .debug, error.localizedDescription)
-        }
-        
-        
-        
 
-                updateTrackerBlockingDependencies(onDidUpdate: onDidUpdate)
-            os_log("Failed to apply update to tracker blocking dependencies: %@", log: .generalLog, type: .debug, error.localizedDescription)
-
-        
-        do {
-            try await fetcher.fetch([.bloomFilterExcludedDomains]) {
-                try updateBloomFilterExclusions(onDidUpdate: onDidUpdate)
-                didUpdateAnyData = true
-            }
-        } catch {
-            os_log("Failed to apply update to bloom filter exclusions: %@", log: .generalLog, type: .debug, error.localizedDescription)
-        }
-
-        return didUpdateAnyData
+        return didFetchAnyTrackerBlockingDependencies
     }
     
-    private func updateTrackerBlockingDependencies(onDidUpdate: (Configuration) -> Void) {
-        let configEtag = store.loadEtag(for: .privacyConfiguration)
-        let configData = store.loadData(for: .privacyConfiguration)
-        if ContentBlocking.shared.privacyConfigurationManager.reload(etag: configEtag, data: configData) != .downloaded {
-            Pixel.fire(pixel: .privacyConfigurationReloadFailed)
-        }
-        
-        let tdsEtag = store.loadEtag(for: .trackerDataSet)
-        let tdsData = store.loadData(for: .trackerDataSet)
-        if ContentBlocking.shared.trackerDataManager.reload(etag: tdsEtag, data: tdsData) != .downloaded {
-            Pixel.fire(pixel: .trackerDataReloadFailed)
-        }
-        
-        onDidUpdate(.privacyConfiguration)
-        onDidUpdate(.trackerDataSet)
-        onDidUpdate(.surrogates)
-        
+    private func updateTrackerBlockingDependencies() {
+        ContentBlocking.shared.privacyConfigurationManager.reload(etag: ConfigurationStore.shared.loadEtag(for: .privacyConfiguration),
+                                                                  data: ConfigurationStore.shared.loadData(for: .privacyConfiguration))
+        ContentBlocking.shared.trackerDataManager.reload(etag: ConfigurationStore.shared.loadEtag(for: .trackerDataSet),
+                                                         data: ConfigurationStore.shared.loadData(for: .trackerDataSet))
         NotificationCenter.default.post(name: ConfigurationManager.didUpdateTrackerDependencies, object: self)
     }
+
+    @discardableResult
+    func fetchAndUpdateBloomFilterExcludedDomains() async -> Bool {
+        do {
+            try await ConfigurationFetcher(store: ConfigurationStore.shared, log: .configurationLog).fetch(.bloomFilterExcludedDomains)
+            try updateBloomFilterExclusions()
+            return true
+        } catch {
+            os_log("Failed to apply update to bloom filter exclusions: %@", log: .generalLog, type: .debug, error.localizedDescription)
+            return false
+        }
+    }
+
+    @discardableResult
+    func fetchAndUpdateBloomFilter() async -> Bool {
+        do {
+            try await ConfigurationFetcher(store: ConfigurationStore.shared, log: .configurationLog).fetch(all: [.bloomFilterBinary, .bloomFilterSpec])
+            try updateBloomFilter()
+            return true
+        } catch {
+            os_log("Failed to apply update to bloom filter: %@", log: .generalLog, type: .debug, error.localizedDescription)
+            return false
+        }
+    }
     
-    private func updateBloomFilter(onDidUpdate: (Configuration) -> Void) throws {
-        guard let specData = store.loadData(for: .bloomFilterSpec) else {
+    private func updateBloomFilter() throws {
+        guard let specData = ConfigurationStore.shared.loadData(for: .bloomFilterSpec) else {
             throw Error.bloomFilterSpecNotFound
         }
-
-        guard let bloomFilterData = store.loadData(for: .bloomFilterBinary) else {
+        guard let bloomFilterData = ConfigurationStore.shared.loadData(for: .bloomFilterBinary) else {
             throw Error.bloomFilterBinaryNotFound
         }
-
-        let spec = try JSONDecoder().decode(HTTPSBloomFilterSpecification.self, from: specData)
-        try httpsUpgradeStore.persistBloomFilter(specification: spec, data: bloomFilterData)
-        
-        onDidUpdate(.bloomFilterSpec)
-        onDidUpdate(.bloomFilterBinary)
-
+        let specification = try JSONDecoder().decode(HTTPSBloomFilterSpecification.self, from: specData)
+        try PrivacyFeatures.httpsUpgradeStore.persistBloomFilter(specification: specification, data: bloomFilterData)
         PrivacyFeatures.httpsUpgrade.loadData()
     }
     
-    private func updateBloomFilterExclusions(onDidUpdate: (Configuration) -> Void) throws {
-        guard let excludedDomainsData = store.loadData(for: .bloomFilterExcludedDomains) else {
+    private func updateBloomFilterExclusions() throws {
+        guard let excludedDomainsData = ConfigurationStore.shared.loadData(for: .bloomFilterExcludedDomains) else {
             throw Error.bloomFilterExcludedDomainsNotFound
         }
-        
         let excludedDomains = try HTTPSUpgradeParser.convertExcludedDomainsData(excludedDomainsData)
-        try httpsUpgradeStore.persistExcludedDomains(excludedDomains)
-        
-        onDidUpdate(.bloomFilterExcludedDomains)
-        
+        try PrivacyFeatures.httpsUpgradeStore.persistExcludedDomains(excludedDomains)
         PrivacyFeatures.httpsUpgrade.loadData()
     }
     

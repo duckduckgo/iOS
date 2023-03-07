@@ -20,7 +20,7 @@
 import Foundation
 import os.log
 import BrowserServicesKit
-import API
+import Networking
 
 public class StatisticsLoader {
     

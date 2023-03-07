@@ -21,7 +21,7 @@ import Core
 import UIKit
 import WebKit
 import os.log
-import API
+import Networking
 
 /// Use title property to set the displayed title
 class WebContainerViewController: UIViewController {
@@ -68,7 +68,7 @@ class WebContainerViewController: UIViewController {
 
     private func load(url: URL) {
         var request = URLRequest.userInitiated(url)
-        request.addValue(DefaultUserAgentManager.duckDuckGoUserAgent, forHTTPHeaderField: HTTPHeaderField.userAgent)
+        request.addValue(DefaultUserAgentManager.duckDuckGoUserAgent, forHTTPHeaderField: "User-Agent")
         webView?.load(request)
     }
 

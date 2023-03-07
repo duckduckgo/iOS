@@ -21,7 +21,7 @@ import Foundation
 import Configuration
 import Core
 
-struct AppConfigurationURLProvider: ConfigurationURLProvider {
+struct AppConfigurationURLProvider: ConfigurationURLProviding {
 
     func url(for configuration: Configuration) -> URL {
         let appUrls = AppUrls()

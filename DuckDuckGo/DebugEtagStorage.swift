@@ -26,15 +26,15 @@ class DebugEtagStorage {
 
     lazy var defaults = UserDefaults(suiteName: "com.duckduckgo.blocker-list.etags")
 
-    func loadEtag(for rawValue: String) -> String? {
-        let etag = defaults?.string(forKey: rawValue)
-        os_log("stored etag for %s %s", log: .generalLog, type: .debug, rawValue, etag ?? "nil")
+    func loadEtag(for storeKey: String) -> String? {
+        let etag = defaults?.string(forKey: storeKey)
+        os_log("stored etag for %s %s", log: .generalLog, type: .debug, storeKey, etag ?? "nil")
         return etag
     }
 
     func resetAll() {
         Configuration.allCases.forEach {
-            defaults?.removeObject(forKey: $0.rawValue)
+            defaults?.removeObject(forKey: $0.storeKey)
         }
     }
 

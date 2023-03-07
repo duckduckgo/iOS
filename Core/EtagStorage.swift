@@ -35,13 +35,13 @@ public struct UserDefaultsETagStorage: BlockerListETagStorage {
     public init() { }
     
     public func loadEtag(for configuration: Configuration) -> String? {
-        let etag = defaults?.string(forKey: configuration.rawValue)
-        os_log("stored etag for %s %s", log: .generalLog, type: .debug, configuration.rawValue, etag ?? "nil")
+        let etag = defaults?.string(forKey: configuration.storeKey)
+        os_log("stored etag for %s %s", log: .generalLog, type: .debug, configuration.storeKey, etag ?? "nil")
         return etag
     }
     
     public func saveEtag(_ etag: String, for configuration: Configuration) {
-        defaults?.set(etag, forKey: configuration.rawValue)
+        defaults?.set(etag, forKey: configuration.storeKey)
     }
     
 }

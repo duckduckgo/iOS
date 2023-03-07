@@ -21,7 +21,7 @@ import Foundation
 import os.log
 import BrowserServicesKit
 import Common
-import API
+import Networking
 
 // swiftlint:enable type_body_length
 
@@ -141,7 +141,7 @@ public class Pixel {
                             forDeviceType deviceType: UIUserInterfaceIdiom? = UIDevice.current.userInterfaceIdiom,
                             withAdditionalParameters params: [String: String] = [:],
                             allowedQueryReservedCharacters: CharacterSet? = nil,
-                            withHeaders headers: HTTPHeaders = APIHeaders().defaultHeaders,
+                            withHeaders headers: HTTPHeaders = APIRequest.Headers().default,
                             includedParameters: [QueryParameters] = [.atb, .appVersion],
                             onComplete: @escaping (Error?) -> Void = { _ in }) {
         

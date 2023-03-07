@@ -19,7 +19,7 @@
 
 import Foundation
 import XCTest
-import API
+import Networking
 @testable import Common
 @testable import Core
 

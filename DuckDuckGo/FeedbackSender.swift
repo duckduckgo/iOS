@@ -22,7 +22,7 @@ import Core
 import os.log
 import BrowserServicesKit
 import Common
-import API
+import Networking
 
 /// Represents single component that is being sent to the server.
 /// Feedback as a whole can consist of multiple components. These components are included both in

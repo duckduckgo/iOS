@@ -22,7 +22,7 @@ import Configuration
 
 public extension Configuration {
 
-    var rawValue: String {
+    var storeKey: String {
         switch self {
         case .bloomFilterBinary: return "httpsBloomFilter"
         case .bloomFilterSpec: return "httpsBloomFilterSpec"

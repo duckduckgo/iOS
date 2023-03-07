@@ -21,7 +21,7 @@
 import Foundation
 import BrowserServicesKit
 import Core
-import API
+import Networking
 
 public struct RemoteMessageRequest {
 

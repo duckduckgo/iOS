@@ -29,7 +29,7 @@ import Bookmarks
 import Persistence
 import Crashes
 import Configuration
-import API
+import Networking
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -71,7 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         #endif
         
-        APIHeaders.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
+        APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
         Configuration.setURLProvider(AppConfigurationURLProvider())
 
         CrashCollection.start {

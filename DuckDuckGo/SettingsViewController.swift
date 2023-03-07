@@ -55,6 +55,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var textSizeCell: UITableViewCell!
     @IBOutlet weak var textSizeAccessoryText: UILabel!
     @IBOutlet weak var widgetEducationCell: UITableViewCell!
+    @IBOutlet weak var syncCell: UITableViewCell!
     @IBOutlet weak var autofillCell: UITableViewCell!
     @IBOutlet weak var debugCell: UITableViewCell!
     @IBOutlet weak var voiceSearchCell: UITableViewCell!
@@ -63,7 +64,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
     
-    private let autofillSectionIndex = 1
+    private let syncSectionIndex = 1
+    private let autofillSectionIndex = 2
     private let debugSectionIndex = 7
 
     private lazy var emailManager = EmailManager()
@@ -85,7 +87,11 @@ class SettingsViewController: UITableViewController {
     private lazy var shouldShowAutofillCell: Bool = {
         return featureFlagger.isFeatureOn(.autofill)
     }()
-    
+
+    private lazy var shouldShowSyncCell: Bool = {
+        return featureFlagger.isFeatureOn(.sync)
+    }()
+
     static func loadFromStoryboard() -> UIViewController {
         return UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()!
     }
@@ -94,6 +100,7 @@ class SettingsViewController: UITableViewController {
         super.viewDidLoad()
 
         configureAutofillCell()
+        configureSyncCell()
         configureThemeCellAccessory()
         configureFireButtonAnimationCellAccessory()
         configureTextSizeCell()
@@ -150,7 +157,11 @@ class SettingsViewController: UITableViewController {
     private func configureAutofillCell() {
         autofillCell.isHidden = !shouldShowAutofillCell
     }
-    
+
+    private func configureSyncCell() {
+        syncCell.isHidden = !shouldShowSyncCell
+    }
+
     private func configureVoiceSearchCell() {
         voiceSearchCell.isHidden = !shouldShowVoiceSearchCell
         voiceSearchToggle.isOn = appSettings.voiceSearchEnabled
@@ -240,7 +251,12 @@ class SettingsViewController: UITableViewController {
     private func configureDebugCell() {
         debugCell.isHidden = !shouldShowDebugCell
     }
-    
+
+    private func showSync(animated: Bool = true) {
+        let controller = SyncSettingsViewController()
+        navigationController?.pushViewController(controller, animated: animated)
+    }
+
     private func showAutofill(animated: Bool = true) {
         let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
         autofillController.delegate = self
@@ -302,7 +318,10 @@ class SettingsViewController: UITableViewController {
 
         case autofillCell:
             showAutofill()
-            
+
+        case syncCell:
+            showSync()
+
         default: break
         }
         
@@ -346,7 +365,9 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if autofillSectionIndex == section && !shouldShowAutofillCell {
+        if syncSectionIndex == section && !shouldShowSyncCell {
+            return CGFloat.leastNonzeroMagnitude
+        } else if autofillSectionIndex == section && !shouldShowAutofillCell {
             return CGFloat.leastNonzeroMagnitude
         } else if debugSectionIndex == section && !shouldShowDebugCell {
             return CGFloat.leastNonzeroMagnitude
@@ -356,7 +377,9 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if autofillSectionIndex == section && !shouldShowAutofillCell {
+        if syncSectionIndex == section && !shouldShowSyncCell {
+            return CGFloat.leastNonzeroMagnitude
+        } else if autofillSectionIndex == section && !shouldShowAutofillCell {
             return CGFloat.leastNonzeroMagnitude
         } else if debugSectionIndex == section && !shouldShowDebugCell {
             return CGFloat.leastNonzeroMagnitude

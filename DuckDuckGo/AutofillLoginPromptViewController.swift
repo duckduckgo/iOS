@@ -33,14 +33,17 @@ class AutofillLoginPromptViewController: UIViewController {
     
     typealias AutofillLoginPromptViewControllerCompletion = ((SecureVaultModels.WebsiteAccount?) -> Void)
     let completion: AutofillLoginPromptViewControllerCompletion?
-    
-    private let accounts: [SecureVaultModels.WebsiteAccount]
+
+    private let accounts: AccountMatches
+    private let domain: String
     private let trigger: AutofillUserScript.GetTriggerType
     
-    internal init(accounts: [SecureVaultModels.WebsiteAccount],
+    internal init(accounts: AccountMatches,
+                  domain: String,
                   trigger: AutofillUserScript.GetTriggerType,
                   completion: AutofillLoginPromptViewControllerCompletion? = nil) {
         self.accounts = accounts
+        self.domain = domain
         self.trigger = trigger
         self.completion = completion
         super.init(nibName: nil, bundle: nil)
@@ -58,11 +61,7 @@ class AutofillLoginPromptViewController: UIViewController {
     private func setupView() {
         view.backgroundColor = UIColor(named: "AutofillPromptLargeBackground")
         
-        let viewModel = AutofillLoginPromptViewModel(accounts: accounts, isExpanded: isExpanded)
-        guard let viewModel = viewModel else {
-            return
-        }
-        
+        let viewModel = AutofillLoginPromptViewModel(accounts: accounts, domain: domain, isExpanded: isExpanded)
         viewModel.delegate = self
         expansionResponseDelegate = viewModel
         

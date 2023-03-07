@@ -88,6 +88,10 @@ class TabViewController: UIViewController {
     internal lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var featureFlaggerInternalUserDecider = AppDependencyProvider.shared.featureFlaggerInternalUserDecider
 
+    private lazy var autofillUrlMatcher: AutofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
+    private lazy var autofillWebsiteAccountMatcher = AutofillWebsiteAccountMatcher(autofillUrlMatcher: autofillUrlMatcher,
+                                                                                   tld: TabViewController.tld)
+
     private(set) var tabModel: Tab
     private(set) var privacyInfo: PrivacyInfo?
     private var previousPrivacyInfosByURL: [URL: PrivacyInfo] = [:]
@@ -197,7 +201,8 @@ class TabViewController: UIViewController {
     }()
     
     lazy var vaultManager: SecureVaultManager = {
-        let manager = SecureVaultManager()
+        let manager = SecureVaultManager(includePartialAccountMatches: true,
+                                         tld: AppDependencyProvider.shared.storageCache.current.tld)
         manager.delegate = self
         return manager
     }()
@@ -2346,14 +2351,17 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
 
         if accounts.count > 0 {
-            
-            let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accounts, trigger: trigger) { account in
+            let accountMatches = autofillWebsiteAccountMatcher.findMatches(accounts: accounts, for: domain)
+
+            let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accountMatches,
+                                                                                 domain: domain,
+                                                                                 trigger: trigger) { account in
                 completionHandler(account)
             }
             
             if #available(iOS 15.0, *) {
                 if let presentationController = autofillPromptViewController.presentationController as? UISheetPresentationController {
-                    presentationController.detents = accounts.count > 3 ? [.medium(), .large()] : [.medium()]
+                    presentationController.detents = AutofillLoginPromptHelper.showMoreOptions(accountMatches) ? [.medium(), .large()] : [.medium()]
                 }
             }
             self.present(autofillPromptViewController, animated: true, completion: nil)

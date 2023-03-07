@@ -19,6 +19,7 @@
 
 import SwiftUI
 
+// Will externalise strings once we work out how to share this with macOS
 public struct RecoveryKeyPDFView: View {
 
     let code: String
@@ -58,12 +59,14 @@ public struct RecoveryKeyPDFView: View {
 
     @ViewBuilder
     func information() -> some View {
+        // swiftlint:disable line_length
         Text("The Recovery Code allows you to sync your bookmarks across multiple devices and recover your synced data if you lose access to a device.")
             .font(.system(size: 12))
             .lineSpacing(1.167)
             .lineLimit(2)
             .multilineTextAlignment(.center)
             .padding(.horizontal, 54)
+        // swiftlint:enable line_length
     }
 
     @ViewBuilder

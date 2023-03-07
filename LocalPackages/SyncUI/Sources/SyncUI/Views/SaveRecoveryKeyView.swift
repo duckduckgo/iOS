@@ -107,26 +107,10 @@ public struct SaveRecoveryKeyView: View {
     }
 
     public var body: some View {
-        ZStack {
-            ScrollView {
-                VStack {
-                    mainContent()
-                    Spacer()
-                    ZStack {
-                        EmptyView()
-                    }
-                        .frame(minHeight: 170)
-                }
-            }
-
-            VStack {
-                Spacer()
-                buttons()
-                    .padding(.top, isCompact ? 8 : 0)
-                    .ignoresSafeArea(.container)
-                    .frame(maxWidth: .infinity)
-                    .applyUnderflowBackgroundOnPhone(isCompact: isCompact)
-            }
+        UnderflowContainer {
+            mainContent()
+        } foreground: {
+            buttons()
         }
     }
 

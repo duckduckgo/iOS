@@ -146,29 +146,15 @@ private struct CTAView: View {
     }
 
     var body: some View {
-        ZStack {
-            ScrollView {
-                VStack {
-                    hero(imageName: imageName,
-                         title: title,
-                         text: message)
-
-                    Spacer()
-                }
-            }
-
-            VStack {
-                Spacer()
-
-                buttons(primaryLabel: primaryButtonLabel,
-                        secondaryLabel: secondaryButtonLabel,
-                        primaryAction: primaryAction,
-                        secondaryAction: secondaryAction)
-                .padding(.top, isCompact ? 8 : 0)
-                .ignoresSafeArea(.container)
-                .frame(maxWidth: .infinity)
-                .applyUnderflowBackgroundOnPhone(isCompact: isCompact)
-            }
+        UnderflowContainer {
+            hero(imageName: imageName,
+                 title: title,
+                 text: message)
+        } foreground: {
+            buttons(primaryLabel: primaryButtonLabel,
+                    secondaryLabel: secondaryButtonLabel,
+                    primaryAction: primaryAction,
+                    secondaryAction: secondaryAction)
         }
     }
 

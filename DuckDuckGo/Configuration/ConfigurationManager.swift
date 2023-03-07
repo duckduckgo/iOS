@@ -108,7 +108,8 @@ struct ConfigurationManager {
     @discardableResult
     func fetchAndUpdateBloomFilter() async -> Bool {
         do {
-            try await ConfigurationFetcher(store: ConfigurationStore.shared, log: .configurationLog).fetch(all: [.bloomFilterBinary, .bloomFilterSpec])
+            try await ConfigurationFetcher(store: ConfigurationStore.shared, log: .configurationLog).fetch(all: [.bloomFilterBinary,
+                                                                                                                 .bloomFilterSpec])
             try updateBloomFilter()
             return true
         } catch {

@@ -24,6 +24,10 @@ public struct TurnOnSyncView: View {
 
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
+    var isCompact: Bool {
+        verticalSizeClass == .compact
+    }
+
     @State var turnOnSyncNavigation = false
 
     @ObservedObject var model: TurnOnSyncViewModel
@@ -93,6 +97,10 @@ private struct CTAView: View {
 
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
+    var isCompact: Bool {
+        verticalSizeClass == .compact
+    }
+
     let imageName: String
     let title: String
     let message: String
@@ -127,18 +135,17 @@ private struct CTAView: View {
                  secondaryLabel: String,
                  primaryAction: @escaping () -> Void,
                  secondaryAction: @escaping () -> Void) -> some View {
-        VStack(spacing: verticalSizeClass == .compact ? 4 : 8) {
+        VStack(spacing: isCompact ? 4 : 8) {
             Button(primaryLabel, action: primaryAction)
-                .buttonStyle(DuckUI.PrimaryButtonStyle())
+                .buttonStyle(PrimaryButtonStyle(compact: isCompact))
 
             Button(secondaryLabel, action: secondaryAction)
-                .buttonStyle(DuckUI.SecondaryButtonStyle())
+                .buttonStyle(SecondaryButtonStyle(compact: isCompact))
         }
         .frame(maxWidth: 360)
     }
 
     var body: some View {
-
         ZStack {
             ScrollView {
                 VStack {
@@ -153,30 +160,15 @@ private struct CTAView: View {
             VStack {
                 Spacer()
 
-                VStack(spacing: verticalSizeClass == .compact ? 4 : 8) {
-                    buttons(primaryLabel: primaryButtonLabel,
-                            secondaryLabel: secondaryButtonLabel,
-                            primaryAction: primaryAction,
-                            secondaryAction: secondaryAction)
-                }
+                buttons(primaryLabel: primaryButtonLabel,
+                        secondaryLabel: secondaryButtonLabel,
+                        primaryAction: primaryAction,
+                        secondaryAction: secondaryAction)
+                .padding(.top, isCompact ? 8 : 0)
                 .ignoresSafeArea(.container)
                 .frame(maxWidth: .infinity)
-                .applyBackgroundOnPhone(isCompact: verticalSizeClass == .compact)
+                .applyUnderflowBackgroundOnPhone(isCompact: isCompact)
             }
-        }
-
-    }
-
-}
-
-private extension View {
-
-    @ViewBuilder
-    func applyBackgroundOnPhone(isCompact: Bool) -> some View {
-        if UIDevice.current.userInterfaceIdiom == .phone && isCompact {
-            self.regularMaterialBackground()
-        } else {
-            self
         }
     }
 

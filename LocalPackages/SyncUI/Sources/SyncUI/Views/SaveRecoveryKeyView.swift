@@ -23,6 +23,11 @@ import DuckUI
 public struct SaveRecoveryKeyView: View {
 
     @Environment(\.presentationMode) var presentation
+    @Environment(\.verticalSizeClass) var verticalSizeClass
+
+    var isCompact: Bool {
+        verticalSizeClass == .compact
+    }
 
     let model: SaveRecoveryKeyViewModel
 
@@ -46,18 +51,6 @@ public struct SaveRecoveryKeyView: View {
                         .monospaceSystemFont(ofSize: 16)
                         .frame(maxWidth: .infinity)
                 }
-
-                GridWithHStackFallback {
-                    Button("Save as PDF") {
-                        model.showRecoveryPDFAction()
-                    }
-                    .buttonStyle(PrimaryButtonStyle(compact: true))
-
-                    Button("Copy Key") {
-                        model.copyKey()
-                    }
-                    .buttonStyle(PrimaryButtonStyle(compact: true))
-                }
             }
             .padding(.top, 20)
             .padding(.horizontal, 20)
@@ -66,7 +59,32 @@ public struct SaveRecoveryKeyView: View {
         .background(RoundedRectangle(cornerRadius: 10).foregroundColor(.black.opacity(0.12)))
     }
 
-    public var body: some View {
+    @ViewBuilder
+    func buttons() -> some View {
+        VStack(spacing: isCompact ? 4 : 8) {
+            Button("Save as PDF") {
+                model.showRecoveryPDFAction()
+            }
+            .buttonStyle(PrimaryButtonStyle(compact: isCompact))
+
+            Button("Copy Key") {
+                model.copyKey()
+            }
+            .buttonStyle(SecondaryButtonStyle(compact: isCompact))
+
+            Button {
+                presentation.wrappedValue.dismiss()
+            } label: {
+                Text(UserText.notNowButton)
+            }
+            .buttonStyle(SecondaryButtonStyle(compact: isCompact))
+        }
+        .frame(maxWidth: 360)
+        .padding(.horizontal, 30)
+    }
+
+    @ViewBuilder
+    func mainContent() -> some View {
         VStack(spacing: 0) {
             Image("SyncDownloadRecoveryCode")
                 .padding(.bottom, 24)
@@ -83,37 +101,32 @@ public struct SaveRecoveryKeyView: View {
                 .padding(.bottom, 20)
 
             recoveryInfo()
-
-            Spacer()
-
-            Button {
-                presentation.wrappedValue.dismiss()
-            } label: {
-                Text(UserText.notNowButton)
-            }
-            .buttonStyle(SecondaryButtonStyle())
         }
-        .padding(.top, 56)
+        .padding(.top, isCompact ? 0 : 56)
         .padding(.horizontal, 30)
     }
 
-}
-
-struct GridWithHStackFallback<Content: View>: View {
-
-    let content: () -> Content
-
-    init(@ViewBuilder content: @escaping () -> Content) {
-        self.content = content
-    }
-
-    var body: some View {
-        if #available(iOS 16.0, *) {
-            Grid {
-                GridRow(content: content)
+    public var body: some View {
+        ZStack {
+            ScrollView {
+                VStack {
+                    mainContent()
+                    Spacer()
+                    ZStack {
+                        EmptyView()
+                    }
+                        .frame(minHeight: 170)
+                }
             }
-        } else {
-            HStack(content: content)
+
+            VStack {
+                Spacer()
+                buttons()
+                    .padding(.top, isCompact ? 8 : 0)
+                    .ignoresSafeArea(.container)
+                    .frame(maxWidth: .infinity)
+                    .applyUnderflowBackgroundOnPhone(isCompact: isCompact)
+            }
         }
     }
 

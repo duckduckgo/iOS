@@ -45,9 +45,9 @@ final class OmniBarNotificationContainerView: UIView {
     }
     
     func startAnimation(completion: @escaping () -> Void) {
-        currentNotificationController?.rootView.viewModel.showNotification(completion: { [weak self] in
+        currentNotificationController?.rootView.viewModel.showNotification {
             completion()
-        })
+        }
     }
 
     func removePreviousNotification() {

@@ -31,6 +31,7 @@ import PrivacyDashboard
 import UserScript
 import ContentBlocking
 import TrackerRadarKit
+import Networking
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -82,7 +83,7 @@ class TabViewController: UIViewController {
     private weak var privacyDashboard: PrivacyDashboardViewController?
     
     private(set) lazy var appUrls: AppUrls = AppUrls()
-    private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
+    private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
 
     internal lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
@@ -94,7 +95,7 @@ class TabViewController: UIViewController {
     
     private let requeryLogic = RequeryLogic()
 
-    private static let tld = AppDependencyProvider.shared.storageCache.current.tld
+    private static let tld = AppDependencyProvider.shared.storageCache.tld
     private let adClickAttributionDetection = ContentBlocking.shared.makeAdClickAttributionDetection(tld: tld)
     let adClickAttributionLogic = ContentBlocking.shared.makeAdClickAttributionLogic(tld: tld)
 
@@ -223,7 +224,7 @@ class TabViewController: UIViewController {
     private lazy var referrerTrimming: ReferrerTrimming = {
         ReferrerTrimming(privacyManager: ContentBlocking.shared.privacyConfigurationManager,
                          contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
-                         tld: AppDependencyProvider.shared.storageCache.current.tld)
+                         tld: AppDependencyProvider.shared.storageCache.tld)
     }()
         
     private var canDisplayJavaScriptAlert: Bool {
@@ -931,7 +932,7 @@ extension TabViewController: WKNavigationDelegate {
         let mimeType = MIMEType(from: navigationResponse.response.mimeType)
 
         let httpResponse = navigationResponse.response as? HTTPURLResponse
-        let isSuccessfulResponse = (httpResponse?.validateStatusCode(statusCode: 200..<300) == nil)
+        let isSuccessfulResponse = httpResponse?.isSuccessfulResponse ?? false
 
         let didMarkAsInternal = featureFlaggerInternalUserDecider.markUserAsInternalIfNeeded(forUrl: webView.url, response: httpResponse)
         if didMarkAsInternal {
@@ -2215,13 +2216,15 @@ extension TabViewController: EmailManagerRequestDelegate {
                       httpBody: Data?,
                       timeoutInterval: TimeInterval,
                       completion: @escaping (Data?, Error?) -> Void) {
-        APIRequest.request(url: url,
-                           method: APIRequest.HTTPMethod(rawValue: method) ?? .post,
-                           parameters: parameters ?? [:],
-                           headers: headers,
-                           httpBody: httpBody,
-                           timeoutInterval: timeoutInterval) { response, error in
-            
+        let method = APIRequest.HTTPMethod(rawValue: method) ?? .post
+        let configuration = APIRequest.Configuration(url: url,
+                                                     method: method,
+                                                     queryParameters: parameters ?? [:],
+                                                     headers: headers,
+                                                     body: httpBody,
+                                                     timeoutInterval: timeoutInterval)
+        let request = APIRequest(configuration: configuration, urlSession: .session())
+        request.fetch { response, error in
             completion(response?.data, error)
         }
     }

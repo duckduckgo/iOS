@@ -27,6 +27,22 @@ extension HTTPSExcludedDomain: Managed {}
 
 public final class AppHTTPSUpgradeStore: HTTPSUpgradeStore {
     
+    public enum Error: Swift.Error {
+        
+        case specMismatch
+        case saveError(Swift.Error)
+        
+        public var errorDescription: String? {
+            switch self {
+            case .specMismatch:
+                return "The spec and the data do not match."
+            case .saveError(let error):
+                return "Error occurred while saving data: \(error.localizedDescription)"
+            }
+        }
+        
+    }
+    
     private struct Resource {
         static var bloomFilter: URL {
             let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContentBlockerStoreConstants.groupName)
@@ -82,37 +98,31 @@ public final class AppHTTPSUpgradeStore: HTTPSUpgradeStore {
         else {
             return nil
         }
-        persistBloomFilter(specification: specification, data: bloomData)
-        persistExcludedDomains(excludedDomains.data)
+        try? persistBloomFilter(specification: specification, data: bloomData)
+        try? persistExcludedDomains(excludedDomains.data)
         return EmbeddedBloomData(specification: specification, bloomFilter: bloomData, excludedDomains: excludedDomains.data)
     }
     
-    @discardableResult func persistBloomFilter(specification: HTTPSBloomFilterSpecification, data: Data) -> Bool {
+    public func persistBloomFilter(specification: HTTPSBloomFilterSpecification, data: Data) throws {
         os_log("HTTPS Bloom Filter %s", log: .generalLog, type: .debug, Resource.bloomFilter.absoluteString)
-        guard data.sha256 == specification.sha256 else { return false }
-        guard persistBloomFilter(data: data) else { return false }
-        persistBloomFilterSpecification(specification)
-        return true
+        guard data.sha256 == specification.sha256 else { throw Error.specMismatch }
+        try persistBloomFilter(data: data)
+        try persistBloomFilterSpecification(specification)
     }
     
-    private func persistBloomFilter(data: Data) -> Bool {
-        do {
-            try data.write(to: Resource.bloomFilter, options: .atomic)
-            return true
-        } catch _ {
-            return false
-        }
+    private func persistBloomFilter(data: Data) throws {
+        try data.write(to: Resource.bloomFilter, options: .atomic)
     }
     
     private func deleteBloomFilter() {
         try? FileManager.default.removeItem(at: Resource.bloomFilter)
     }
     
-    func persistBloomFilterSpecification(_ specification: HTTPSBloomFilterSpecification) {
-        
+    func persistBloomFilterSpecification(_ specification: HTTPSBloomFilterSpecification) throws {
+        var saveError: Swift.Error?
         context.performAndWait {
             deleteBloomFilterSpecification()
-                        
+            
             let storedEntity: HTTPSStoredBloomFilterSpecification = context.insertObject()
             storedEntity.bitCount = Int64(specification.bitCount)
             storedEntity.totalEntries = Int64(specification.totalEntries)
@@ -123,7 +133,11 @@ public final class AppHTTPSUpgradeStore: HTTPSUpgradeStore {
                 try context.save()
             } catch {
                 Pixel.fire(pixel: .dbSaveBloomFilterError, error: error)
+                saveError = error
             }
+        }
+        if let saveError = saveError {
+            throw Error.saveError(saveError)
         }
     }
     
@@ -144,8 +158,8 @@ public final class AppHTTPSUpgradeStore: HTTPSUpgradeStore {
         return result
     }
     
-    @discardableResult func persistExcludedDomains(_ domains: [String]) -> Bool {
-        var result = true
+    public func persistExcludedDomains(_ domains: [String]) throws {
+        var saveError: Swift.Error?
         context.performAndWait {
             deleteExcludedDomains()
             
@@ -157,10 +171,12 @@ public final class AppHTTPSUpgradeStore: HTTPSUpgradeStore {
                 try context.save()
             } catch {
                 Pixel.fire(pixel: .dbSaveExcludedHTTPSDomainsError, error: error)
-                result = false
+                saveError = error
             }
         }
-        return result
+        if let saveError = saveError {
+            throw Error.saveError(saveError)
+        }
     }
     
     private func deleteExcludedDomains() {
@@ -174,4 +190,5 @@ public final class AppHTTPSUpgradeStore: HTTPSUpgradeStore {
         deleteBloomFilter()
         deleteExcludedDomains()
     }
+    
 }

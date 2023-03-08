@@ -240,6 +240,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             showKeyboardOnLaunch()
         }
 
+        if AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch {
+            ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+            AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch = false
+        }
+
         AppConfigurationFetch().start { newData in
             if newData {
                 ContentBlocking.shared.contentBlockingManager.scheduleCompilation()

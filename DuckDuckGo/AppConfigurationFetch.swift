@@ -79,6 +79,9 @@ class AppConfigurationFetch {
     @UserDefaultsWrapper(key: .backgroundFetchTaskDuration, defaultValue: 0)
     static private var backgroundFetchTaskDuration: Int
 
+    @UserDefaultsWrapper(key: .shouldScheduleRulesCompilationOnAppLaunch, defaultValue: false)
+    static var shouldScheduleRulesCompilationOnAppLaunch: Bool
+
     static private var shouldRefresh: Bool {
         return Date().timeIntervalSince(Self.lastConfigurationRefreshDate) > Constants.minimumConfigurationRefreshInterval
     }
@@ -281,7 +284,7 @@ extension AppConfigurationFetch {
         
         queue.async {
             configurationFetcher.fetchConfigurationFiles(isBackground: true) { fetchedNewData in
-                ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+                Self.shouldScheduleRulesCompilationOnAppLaunch = true
                 
                 DispatchQueue.main.async {
                     lastCompletionStatus = backgroundRefreshTaskCompletionHandler(store: store,

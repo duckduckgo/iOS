@@ -87,6 +87,9 @@ public struct UserDefaultsWrapper<T> {
         
         case autoconsentPromptSeen = "com.duckduckgo.ios.autoconsentPromptSeen"
         case autoconsentEnabled = "com.duckduckgo.ios.autoconsentEnabled"
+
+        case shouldScheduleRulesCompilationOnAppLaunch = "com.duckduckgo.ios.shouldScheduleRulesCompilationOnAppLaunch"
+
     }
 
     private let key: Key

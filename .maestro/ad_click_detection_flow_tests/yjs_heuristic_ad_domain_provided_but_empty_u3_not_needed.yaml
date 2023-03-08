@@ -74,3 +74,4 @@ appId: com.duckduckgo.mobile.ios
 - assertVisible:
     text: "convert.ad-company.site"
 
+

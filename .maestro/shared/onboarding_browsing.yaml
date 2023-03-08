@@ -9,3 +9,4 @@ appId: com.duckduckgo.mobile.ios
 - tapOn:
     text: "Got It"
     index: 0
+

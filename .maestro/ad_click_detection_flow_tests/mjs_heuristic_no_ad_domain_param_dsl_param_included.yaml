@@ -63,3 +63,4 @@ appId: com.duckduckgo.mobile.ios
     text: "We did not identify any requests from third-party domains."
 - assertVisible:
     text: "About our Web Tracking Protections"
+

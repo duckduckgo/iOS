@@ -13,6 +13,35 @@ lane :sync_signing do |options|
   do_sync_signing(options)
 end
 
+desc 'Fetches and updates certificates and provisioning profiles for Ad-Hoc distribution'
+lane :sync_signing_adhoc do |options|
+  do_sync_signing(options)
+end
+
+desc 'Makes Ad-Hoc build with a specified name in a given directory'
+lane :adhoc do |options|
+  sync_signing_adhoc(options)
+
+  suffix = ""
+  if options[:suffix]
+    suffix = "#{options[:suffix]}-"
+  end
+
+  timestamp = Time.now.strftime("%Y-%m-%d-%H-%M")
+
+  build_app(
+    output_directory: options[:output],
+    output_name: "DuckDuckGo-#{suffix}#{timestamp}",
+    export_method: "ad-hoc",
+    scheme: "DuckDuckGo",
+    export_options: "adhocExportOptions.plist"
+  )
+
+  Dir.chdir("..") do
+    sh("open", "#{options[:output]}") unless is_ci
+  end
+end
+
 desc 'Makes App Store release build and uploads it to App Store Connect'
 lane :release_appstore do |options|
   build_release(options)
@@ -60,7 +89,7 @@ lane :increment_build_number_for_version do |options|
         version: options[:version],
         app_identifier: "com.duckduckgo.mobile.ios", 
         initial_build_number: -1,
-        username: options[:username]) + 1,
+        username: get_username(options)) + 1,
     skip_info_plist: "true"
   })
 end
@@ -98,10 +127,23 @@ private_lane :get_api_key do
   end
 end
 
+private_lane :get_username do |options|
+  if options[:username]
+    options[:username]
+  elsif is_ci
+    nil # don't make assumptions in CI
+  else
+    git_user_email = Action.sh("git", "config", "user.email").chomp
+    if git_user_email.end_with? "@duckduckgo.com"
+      git_user_email
+    end
+  end
+end
+
 private_lane :do_sync_signing do |options|
   sync_code_signing(
     api_key: get_api_key,
-    username: options[:username],
+    username: get_username(options),
     readonly: is_ci
   )
 end

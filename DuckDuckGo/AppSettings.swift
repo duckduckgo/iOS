@@ -41,4 +41,7 @@ protocol AppSettings: AnyObject {
     var voiceSearchEnabled: Bool { get set }
 
     func isWidgetInstalled() async -> Bool
+    
+    var autoconsentPromptSeen: Bool { get set }
+    var autoconsentEnabled: Bool { get set }
 }

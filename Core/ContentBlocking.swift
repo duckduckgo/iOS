@@ -1,5 +1,6 @@
 //
 //  ContentBlocking.swift
+//  Core
 //
 //  Copyright © 2021 DuckDuckGo. All rights reserved.
 //
@@ -37,15 +38,15 @@ public final class ContentBlocking {
 
     private init(privacyConfigurationManager: PrivacyConfigurationManaging? = nil) {
         let privacyConfigurationManager = privacyConfigurationManager
-            ?? PrivacyConfigurationManager(fetchedETag: UserDefaultsETagStorage().etag(for: .privacyConfiguration),
-                                           fetchedData: FileStore().loadAsData(forConfiguration: .privacyConfiguration),
+            ?? PrivacyConfigurationManager(fetchedETag: UserDefaultsETagStorage().loadEtag(for: .privacyConfiguration),
+                                           fetchedData: FileStore().loadAsData(for: .privacyConfiguration),
                                            embeddedDataProvider: AppPrivacyConfigurationDataProvider(),
                                            localProtection: DomainsProtectionUserDefaultsStore(),
                                            errorReporting: Self.debugEvents)
         self.privacyConfigurationManager = privacyConfigurationManager
 
-        trackerDataManager = TrackerDataManager(etag: UserDefaultsETagStorage().etag(for: .trackerDataSet),
-                                                data: FileStore().loadAsData(forConfiguration: .trackerDataSet),
+        trackerDataManager = TrackerDataManager(etag: UserDefaultsETagStorage().loadEtag(for: .trackerDataSet),
+                                                data: FileStore().loadAsData(for: .trackerDataSet),
                                                 embeddedDataProvider: AppTrackerDataSetProvider(),
                                                 errorReporting: Self.debugEvents)
 
@@ -60,7 +61,7 @@ public final class ContentBlocking {
                                                             exceptionsSource: exceptionsSource,
                                                             lastCompiledRulesStore: lastCompiledRulesStore,
                                                             errorReporting: Self.debugEvents,
-                                                            logger: contentBlockingLog)
+                                                            logger: .contentBlockingLog)
 
         adClickAttributionRulesProvider = AdClickAttributionRulesProvider(config: adClickAttribution,
                                                                           compiledRulesSource: contentBlockingManager,
@@ -130,7 +131,7 @@ public final class ContentBlocking {
                                     tld: tld,
                                     eventReporting: attributionEvents,
                                     errorReporting: attributionDebugEvents,
-                                    log: adAttributionLog)
+                                    log: .adAttributionLog)
     }
     
     public func makeAdClickAttributionLogic(tld: TLD) -> AdClickAttributionLogic {
@@ -139,7 +140,7 @@ public final class ContentBlocking {
                                 tld: tld,
                                 eventReporting: attributionEvents,
                                 errorReporting: attributionDebugEvents,
-                                log: adAttributionLog)
+                                log: .adAttributionLog)
     }
     
     private let attributionEvents = EventMapping<AdClickAttributionEvents> { event, _, parameters, _ in

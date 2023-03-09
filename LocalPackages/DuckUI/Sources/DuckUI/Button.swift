@@ -20,38 +20,62 @@
 import SwiftUI
 
 public struct PrimaryButtonStyle: ButtonStyle {
-    public init() {}
+
+    let disabled: Bool
+    let compact: Bool
+
+    public init(disabled: Bool = false, compact: Bool = false) {
+        self.disabled = disabled
+        self.compact = compact
+    }
     
     public func makeBody(configuration: Configuration) -> some View {
+        let standardBackgroundColor = Color.blueBase.opacity(configuration.isPressed ? Consts.pressedOpacity : 1)
+        let disabledBackgroundColor = Color.gray50
+        let backgroundColor = disabled ? disabledBackgroundColor : standardBackgroundColor
+
         configuration.label
-            .font(Font(UIFont.boldAppFont(ofSize: Consts.fontSize)))
+            .font(Font(UIFont.boldAppFont(ofSize: compact ? Consts.fontSize - 1 : Consts.fontSize)))
             .foregroundColor(configuration.isPressed ? .white.opacity(Consts.pressedOpacity) : .white.opacity(1))
             .padding()
-            .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Consts.height)
-            .background(configuration.isPressed ? Color.deprecatedBlue.opacity(Consts.pressedOpacity) : Color.deprecatedBlue.opacity(1))
+            .frame(minWidth: 0, maxWidth: .infinity, maxHeight: compact ? Consts.height - 10 : Consts.height)
+            .background(backgroundColor)
             .cornerRadius(Consts.cornerRadius)
     }
 }
 
 public struct SecondaryButtonStyle: ButtonStyle {
     @Environment(\.colorScheme) private var colorScheme
-    
-    public init() {}
+
+    let compact: Bool
+
+    public init(compact: Bool = false) {
+        self.compact = compact
+    }
     
     private var backgoundColor: Color {
         colorScheme == .light ? Color.white : .gray70
     }
+
     private var foregroundColor: Color {
-        colorScheme == .light ? .deprecatedBlue : .white
+        colorScheme == .light ? .blueBase : .white
     }
-    
+
+    @ViewBuilder
+    func compactPadding(view: some View) -> some View {
+        if compact {
+            view
+        } else {
+            view.padding()
+        }
+    }
+
     public func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .font(Font(UIFont.boldAppFont(ofSize: Consts.fontSize)))
+        compactPadding(view: configuration.label)
+            .font(Font(UIFont.boldAppFont(ofSize: compact ? Consts.fontSize - 1 : Consts.fontSize)))
             .foregroundColor(configuration.isPressed ? foregroundColor.opacity(Consts.pressedOpacity) : foregroundColor.opacity(1))
             .padding()
-            .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Consts.height)
-            .background(configuration.isPressed ? backgoundColor.opacity(Consts.pressedOpacity) : backgoundColor.opacity(1))
+            .frame(minWidth: 0, maxWidth: .infinity, maxHeight: compact ? Consts.height - 10 : Consts.height)
             .cornerRadius(Consts.cornerRadius)
     }
 }
@@ -61,7 +85,7 @@ public struct GhostButtonStyle: ButtonStyle {
 
     public init() {}
     private var foregroundColor: Color {
-        colorScheme == .light ? .deprecatedBlue : .white
+        colorScheme == .light ? .blueBase : .white
     }
     
     public func makeBody(configuration: Configuration) -> some View {

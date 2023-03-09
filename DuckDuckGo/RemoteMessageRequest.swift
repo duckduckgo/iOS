@@ -21,6 +21,7 @@
 import Foundation
 import BrowserServicesKit
 import Core
+import Networking
 
 public struct RemoteMessageRequest {
 
@@ -35,7 +36,10 @@ public struct RemoteMessageRequest {
     public init() { }
 
     public func getRemoteMessage(completionHandler: @escaping (Result<RemoteMessageResponse.JsonRemoteMessagingConfig, RemoteMessageResponse.StatusError>) -> Void) {
-        APIRequest.request(url: endpoint, method: .get) { response, error in
+        let configuration = APIRequest.Configuration(url: endpoint)
+        let request = APIRequest(configuration: configuration, urlSession: .session())
+        
+        request.fetch { response, error in
             guard let data = response?.data, error == nil else {
                 completionHandler(.failure(.noData))
                 return

@@ -21,7 +21,9 @@ import Foundation
 import Core
 
 public struct BrokenSiteInfo {
-    
+
+    static let allowedQueryReservedCharacters =  CharacterSet(charactersIn: ",")
+
     private struct Keys {
         static let url = "siteUrl"
         static let category = "category"
@@ -61,7 +63,6 @@ public struct BrokenSiteInfo {
                 manufacturer: String = "Apple",
                 systemVersion: String = UIDevice.current.systemVersion,
                 gpc: Bool? = nil) {
-        
         self.url = url
         self.httpsUpgrade = httpsUpgrade
         self.blockedTrackerDomains = blockedTrackerDomains
@@ -70,6 +71,7 @@ public struct BrokenSiteInfo {
         self.tdsETag = tdsETag
         self.ampUrl = ampUrl
         self.urlParametersRemoved = urlParametersRemoved
+
         self.model = model
         self.manufacturer = manufacturer
         self.systemVersion = systemVersion
@@ -98,11 +100,13 @@ public struct BrokenSiteInfo {
                           Keys.ampUrl: ampUrl ?? "",
                           Keys.urlParametersRemoved: urlParametersRemoved ? "true" : "false"]
         
-        Pixel.fire(pixel: .brokenSiteReport, withAdditionalParameters: parameters)
+        Pixel.fire(pixel: .brokenSiteReport,
+                   withAdditionalParameters: parameters,
+                   allowedQueryReservedCharacters: BrokenSiteInfo.allowedQueryReservedCharacters)
     }
     
     private func normalize(_ url: URL?) -> String {
         return url?.normalized()?.absoluteString ?? ""
     }
-    
+
 }

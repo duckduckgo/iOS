@@ -33,6 +33,7 @@ class BlankSnapshotViewController: UIViewController {
     
     @IBOutlet weak var customNavigationBar: UIView!
     @IBOutlet weak var tabsButton: UIBarButtonItem!
+    @IBOutlet weak var fireButton: UIBarButtonItem!
     let menuButton = MenuButton()
     @IBOutlet weak var lastButton: UIBarButtonItem!
     @IBOutlet weak var toolbar: UIToolbar!
@@ -186,6 +187,8 @@ extension BlankSnapshotViewController: Themable {
         tabsButton.tintColor = theme.barTintColor
         
         menuButton.decorate(with: theme)
+        
+        FireButtonExperiment.decorateFireButton(fireButton: fireButton, for: theme)
     }
     
 }

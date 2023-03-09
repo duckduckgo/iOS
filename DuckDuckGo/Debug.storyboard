@@ -86,7 +86,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="383.5" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Mac Browser Waitlist" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BB0-31-2eq">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Windows Browser Waitlist" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BB0-31-2eq">
                                                     <rect key="frame" x="20" y="0.0" width="355.5" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -139,17 +139,26 @@
                                             <segue destination="y6f-vj-yUU" kind="show" id="YPt-Qg-AVV"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" tag="666" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="iau-ES-Bnx">
+                                    <tableViewCell clipsSubviews="YES" tag="665" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="iau-ES-Bnx">
                                         <rect key="frame" x="0.0" y="311" width="414" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iau-ES-Bnx" id="DHw-no-bUr">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <listContentConfiguration key="contentConfiguration" text="Reset Autoconsent Settings"/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" tag="666" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Lqc-aq-UoJ">
+                                        <rect key="frame" x="0.0" y="355.5" width="414" height="44.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Lqc-aq-UoJ" id="SOZ-8q-BYe">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
                                         <listContentConfiguration key="contentConfiguration" text="Crash (fatal error)"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" tag="667" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="roW-Eb-6hF">
-                                        <rect key="frame" x="0.0" y="355.5" width="414" height="44.5"/>
+                                        <rect key="frame" x="0.0" y="400" width="414" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="roW-Eb-6hF" id="1IO-6X-jOv">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
@@ -435,10 +444,10 @@
             </objects>
             <point key="canvasLocation" x="1800" y="968"/>
         </scene>
-        <!--Mac Browser Waitlist-->
+        <!--Windows Browser Waitlist-->
         <scene sceneID="bFl-oT-BQw">
             <objects>
-                <tableViewController id="LFy-OG-fNH" userLabel="Mac Browser Waitlist" customClass="MacBrowserWaitlistDebugViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="LFy-OG-fNH" userLabel="Windows Browser Waitlist" customClass="WindowsBrowserWaitlistDebugViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="42Y-l8-7la">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -492,7 +501,7 @@
                             <outlet property="delegate" destination="LFy-OG-fNH" id="PpK-e7-XfH"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Mac Browser Waitlist" id="7SL-yp-ltR"/>
+                    <navigationItem key="navigationItem" title="Windows Browser Waitlist" id="7SL-yp-ltR"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8FE-q0-LZA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

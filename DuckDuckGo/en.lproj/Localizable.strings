@@ -160,6 +160,15 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "On";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Disabled";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Enabled";
+
+/* No comment provided by engineer. */
+"autoconsent.info.header" = "When DuckDuckGo detects cookie consent pop-ups on sites you visit, we can try to automatically set your cookie preferences to minimize cookies and maximize privacy, then close the pop-ups. Some sites don't provide an option to manage cookie preferences, so we can only hide pop-ups like these.";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Hide Password";
 
@@ -446,6 +455,9 @@
 "brokensite.category.content" = "Content is missing";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "Cookie pop-up wasn't managed";
+
+/* Broken Site Category */
 "brokensite.category.images" = "Images didn’t load";
 
 /* Broken Site Category */
@@ -480,6 +492,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Yesterday";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Manage Cookie Pop-ups";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "No Thanks";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Looks like this site has a cookie consent pop-up👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Want me to handle these for you? I can try to minimize cookies, maximize privacy, and hide pop-ups like these.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Hide Tips Forever";
@@ -934,9 +958,6 @@
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo for Mac has the speed you need, the browsing features you expect, and comes packed with our best-in-class privacy essentials.";
 
-/* Body text for the macOS waitlist notification */
-"mac-waitlist.available.notification.body" = "Open your invite";
-
 /* Title for the macOS waitlist notification */
 "mac-waitlist.available.notification.title" = "DuckDuckGo for Mac is ready!";
 
@@ -955,6 +976,9 @@
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Windows coming soon!";
 
+/* Title for the macOS waitlist button redirecting to Windows waitlist */
+"mac-waitlist.join-waitlist-screen.windows-waitlist" = "Looking for the Windows Version?";
+
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Browse privately with our app for Mac";
 
@@ -968,7 +992,7 @@ https://duckduckgo.com/mac";
 "mac-waitlist.share-sheet.title" = "DuckDuckGo for Mac";
 
 /* Title for the Mac Waitlist feature */
-"mac-waitlist.title" = "DuckDuckGo Desktop App";
+"mac-waitlist.title" = "DuckDuckGo App for Mac";
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Browsing Menu";
@@ -981,6 +1005,12 @@ https://duckduckgo.com/mac";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
+"omnibar.notification.cookies-managed" = "Cookies Managed";
+
+/* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
+"omnibar.notification.popup-hidden" = "Pop-up Hidden";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Add Widget";
@@ -1177,6 +1207,57 @@ https://duckduckgo.com/mac";
 /* Voice-search footer note with on-device privacy warning */
 "voiceSearch.footer.note" = "Audio is processed on-device. It's not stored or shared with anyone, including DuckDuckGo.";
 
+/* Title for the button to enable push notifications in system settings */
+"waitlist.allow-notifications" = "Allow Notifications";
+
+/* Body text for the waitlist notification */
+"waitlist.available.notification.body" = "Open your invite";
+
+/* Title for the copy action */
+"waitlist.copy" = "Copy";
+
+/* Label text for the invite code */
+"waitlist.invite-code" = "Invite Code";
+
+/* Step title on the invite screen */
+"waitlist.invite-screen.step.title" = "Step %d";
+
+/* Title for the invite code screen */
+"waitlist.invite-screen.youre-invited" = "You’re Invited!";
+
+/* Title for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.join" = "Join the Private Waitlist";
+
+/* Temporary status text for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.joining" = "Joining Waitlist...";
+
+/* Title for the Share Link button */
+"waitlist.join-waitlist-screen.share-link" = "Share Link";
+
+/* Notification text for the waitlist */
+"waitlist.joined.no-notification.get-notification" = "Notify Me";
+
+/* Title for the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.get-notification-confirmation-title" = "Get a notification when it’s your turn?";
+
+/* Cancel button in the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.no-thanks" = "No Thanks";
+
+/* Text used for the Notifications Disabled state */
+"waitlist.notification.disabled" = "We can notify you when it’s your turn, but notifications are currently disabled for DuckDuckGo.";
+
+/* Privacy disclaimer for the Waitlist feature */
+"waitlist.privacy-disclaimer" = "You won’t need to share any personal information to join the waitlist. You’ll secure your place in line with a timestamp that exists solely on your device so we can notify you when it’s your turn.";
+
+/* Title for the queue screen */
+"waitlist.queue-screen.on-the-list" = "You’re on the list!";
+
+/* Title for the settings subtitle */
+"waitlist.settings.download-available" = "Download available";
+
+/* Title for the share sheet entry */
+"waitlist.share-sheet.title" = "You’re Invited!";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favorite removed";
 
@@ -1200,4 +1281,54 @@ https://duckduckgo.com/mac";
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "A message from %@:";
+
+/* Title for the Windows waitlist notification */
+"windows-waitlist.available.notification.title" = "Try DuckDuckGo for Windows!";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-1.description" = "Visit this URL on your Windows device to download:";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-2.description" = "Open DuckDuckGo Installer in Downloads, select Install, then enter your invite code.";
+
+/* Subtitle for the Windows Waitlist Invite screen */
+"windows-waitlist.invite-screen.subtitle" = "Ready to use DuckDuckGo on Windows?";
+
+/* Title for the Windows waitlist button redirecting to Mac waitlist */
+"windows-waitlist.join-waitlist-screen.mac-waitlist" = "Looking for the Mac Version?";
+
+/* Title for the Join Windows Waitlist screen */
+"windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Get early access to try DuckDuckGo for Windows!";
+
+/* Message for the alert to confirm enabling notifications */
+"windows-waitlist.joined.no-notification.get-notification-confirmation-message" = "We’ll send you a notification when your copy of DuckDuckGo for Windows is ready for download. ";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"windows-waitlist.joined.notifications-declined" = "Your invite to try DuckDuckGo for Windows will arrive here. Check back soon, or we can send you a notification when it’s your turn.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"windows-waitlist.joined.notifications-enabled" = "We’ll send you a notification when your copy of DuckDuckGo for Windows is ready for download.";
+
+/* Title for the settings subtitle */
+"windows-waitlist.settings.browse-privately" = "Browse privately with our app for Windows";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"windows-waitlist.share-sheet.message" = "You’re invited!
+
+Ready to use DuckDuckGo on Windows?
+
+Step 1
+Visit this URL on your Windows device to download:
+https://duckduckgo.com/windows
+
+Step 2
+Open DuckDuckGo Installer in Downloads, select Install, then enter your invite code.
+
+Invite code: %@";
+
+/* Summary text for the Windows browser waitlist */
+"windows-waitlist.summary" = "DuckDuckGo for Windows has what you need to browse with more privacy — private search, tracker blocking, forced encryption, and cookie pop-up blocking, plus more best-in-class protections on the way.";
+
+/* Title for the Windows Waitlist feature */
+"windows-waitlist.title" = "DuckDuckGo App for Windows";
 

@@ -61,7 +61,6 @@ final class AutofillLoginListAuthenticator {
         let reason = UserText.autofillLoginListAuthenticationReason
         context.localizedReason = reason
         
-        var error: NSError?
         if canAuthenticate() {
             let reason = reason
             context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason ) { success, error in
@@ -71,7 +70,7 @@ final class AutofillLoginListAuthenticator {
                         self.state = .loggedIn
                         completion?(nil)
                     } else {
-                        os_log("Failed to authenticate: %s", log: generalLog, type: .debug, error?.localizedDescription ?? "nil error")
+                        os_log("Failed to authenticate: %s", log: .generalLog, type: .debug, error?.localizedDescription ?? "nil error")
                         AppDependencyProvider.shared.autofillLoginSession.endSession()
                         completion?(.failedToAuthenticate)
                     }

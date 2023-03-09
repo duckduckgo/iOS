@@ -1,5 +1,6 @@
 //
 //  AppPrivacyConfigurationDataProvider.swift
+//  Core
 //
 //  Copyright © 2021 DuckDuckGo. All rights reserved.
 //
@@ -19,18 +20,18 @@
 import Foundation
 import BrowserServicesKit
 
-final class AppPrivacyConfigurationDataProvider: EmbeddedDataProvider {
+final public class AppPrivacyConfigurationDataProvider: EmbeddedDataProvider {
 
     public struct Constants {
-        public static let embeddedDataETag = "\"a81e2a6ba091aaf64d31239fe94cb097\""
-        public static let embeddedDataSHA = "845a12002a3e2b783232418de3b5f6a20f1e456304ef8f0436b98aa5551144c2"
+        public static let embeddedDataETag = "\"2b2f457d72afdaf34729350642ff5b8b\""
+        public static let embeddedDataSHA = "c9ecd8fd4a8358f3d147a73da7ddf359ee89fdc45573ce27dfd98bbf500c0071"
     }
 
-    var embeddedDataEtag: String {
+    public var embeddedDataEtag: String {
         return Constants.embeddedDataETag
     }
 
-    var embeddedData: Data {
+    public var embeddedData: Data {
         return Self.loadEmbeddedAsData()
     }
 

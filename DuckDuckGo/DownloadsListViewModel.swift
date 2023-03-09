@@ -31,14 +31,14 @@ class DownloadsListViewModel: ObservableObject {
     private var subscribers: Set<AnyCancellable> = []
     
     init(dataSource: DownloadsListDataSource) {
-        os_log("DownloadsListViewModel init", log: generalLog, type: .debug)
+        os_log("DownloadsListViewModel init", log: .generalLog, type: .debug)
         
         self.dataSource = dataSource
         
         dataSource.$model
             .sink { [weak self] in
                 os_log("DownloadsListViewModel changed - ongoing:%d complete:%d",
-                       log: generalLog,
+                       log: .generalLog,
                        type: .debug,
                        $0.ongoingDownloads.count,
                        $0.completeDownloads.count)
@@ -49,7 +49,7 @@ class DownloadsListViewModel: ObservableObject {
     }
     
     deinit {
-        os_log("DownloadsListViewModel deinit", log: generalLog, type: .debug)
+        os_log("DownloadsListViewModel deinit", log: .generalLog, type: .debug)
     }
     
     // MARK: - Intents
@@ -72,7 +72,7 @@ class DownloadsListViewModel: ObservableObject {
                 presentDeleteConfirmation(message: message,
                                           undoHandler: undoHandler)
             case .failure(let error):
-                os_log("Error deleting a download %s", log: generalLog, type: .debug, error.localizedDescription)
+                os_log("Error deleting a download %s", log: .generalLog, type: .debug, error.localizedDescription)
             }
         }
     }
@@ -85,7 +85,7 @@ class DownloadsListViewModel: ObservableObject {
                 presentDeleteConfirmation(message: UserText.messageAllFilesDeleted,
                                           undoHandler: undoHandler)
             case .failure(let error):
-                os_log("Error deleting all downloads %s", log: generalLog, type: .debug, error.localizedDescription)
+                os_log("Error deleting all downloads %s", log: .generalLog, type: .debug, error.localizedDescription)
             }
         }
     }

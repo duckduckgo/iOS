@@ -39,7 +39,7 @@ public class CookieStorage {
                 })
 
                 if let cookie = HTTPCookie(properties: properties) {
-                    os_log("read cookie %s %s %s", log: generalLog, type: .debug, cookie.domain, cookie.name, cookie.value)
+                    os_log("read cookie %s %s %s", log: .generalLog, type: .debug, cookie.domain, cookie.name, cookie.value)
                     storedCookies.append(cookie)
                 }
             }
@@ -54,7 +54,7 @@ public class CookieStorage {
 
     func clear() {
         userDefaults.removeObject(forKey: Constants.key)
-        os_log("cleared cookies", log: generalLog, type: .debug)
+        os_log("cleared cookies", log: .generalLog, type: .debug)
     }
 
 }

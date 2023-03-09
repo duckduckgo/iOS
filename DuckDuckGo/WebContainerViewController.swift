@@ -21,6 +21,7 @@ import Core
 import UIKit
 import WebKit
 import os.log
+import Networking
 
 /// Use title property to set the displayed title
 class WebContainerViewController: UIViewController {
@@ -67,7 +68,7 @@ class WebContainerViewController: UIViewController {
 
     private func load(url: URL) {
         var request = URLRequest.userInitiated(url)
-        APIHeaders().addHeaders(to: &request)
+        request.addValue(DefaultUserAgentManager.duckDuckGoUserAgent, forHTTPHeaderField: "User-Agent")
         webView?.load(request)
     }
 
@@ -86,7 +87,7 @@ class WebContainerViewController: UIViewController {
             progress = Float(webView?.estimatedProgress ?? 0.0)
 
         default:
-            os_log("Unhandled keyPath %s", log: generalLog, type: .debug, keyPath)
+            os_log("Unhandled keyPath %s", log: .generalLog, type: .debug, keyPath)
         }
     }
 

@@ -23,6 +23,8 @@ import Core
 import Kingfisher
 import WebKit
 import BrowserServicesKit
+import Common
+import Configuration
 
 class RootDebugViewController: UITableViewController {
 
@@ -35,6 +37,13 @@ class RootDebugViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if tableView.cellForRow(at: indexPath)?.tag == 665 {
+            AppUserDefaults().autoconsentPromptSeen = false
+            AppUserDefaults().autoconsentEnabled = false
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
+        
         if tableView.cellForRow(at: indexPath)?.tag == 666 {
             fatalError(#function)
         }
@@ -144,7 +153,7 @@ class DiagnosticReportDataSource: UIActivityItemProvider {
 
     func configurationReport() -> String {
         let etagStorage = DebugEtagStorage()
-        let configs = ContentBlockerRequest.Configuration.allCases.map { $0.rawValue + ": " + (etagStorage.etag(for: $0.rawValue) ?? "<none>") }
+        let configs = Configuration.allCases.map { $0.rawValue + ": " + (etagStorage.loadEtag(for: $0.storeKey) ?? "<none>") }
         let lastRefreshDate = "Last refresh date: \(lastRefreshDate == .distantPast ? "Never" : String(describing: lastRefreshDate))"
         return (["## Configuration Report"] + [lastRefreshDate] + configs).joined(separator: "\n")
     }

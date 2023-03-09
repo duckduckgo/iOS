@@ -69,6 +69,16 @@
                ReferencedContainer = "container:DuckDuckGo.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "WaitlistTests"
+               BuildableName = "WaitlistTests"
+               BlueprintName = "WaitlistTests"
+               ReferencedContainer = "container:LocalPackages/Waitlist">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

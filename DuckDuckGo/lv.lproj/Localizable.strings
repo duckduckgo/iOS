@@ -163,6 +163,15 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Ieslēgts";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Atspējota";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Iespējota";
+
+/* No comment provided by engineer. */
+"autoconsent.info.header" = "Ja DuckDuckGo tevis apmeklētajās vietnēs atklāj sīkfailu piekrišanas uznirstošos logus, mēs varam automātiski iestatīt tavas sīkfailu preferences, lai samazinātu sīkfailus un stiprinātu privātumu, un pēc tam aizvērt šos uznirstošos logus. Dažās vietnēs nav iespējas pārvaldīt sīkfailu preferences, tāpēc mēs varam tikai paslēpt šādus uznirstošos logus.";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Paslēpt paroli";
 
@@ -449,6 +458,9 @@
 "brokensite.category.content" = "Trūkst satura";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "Sīkfailu uznirstošais logs netika pārvaldīts";
+
+/* Broken Site Category */
 "brokensite.category.images" = "Attēli netika ielādēti";
 
 /* Broken Site Category */
@@ -483,6 +495,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Vakar";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Pārvaldīt sīkfailu uznirstošos logus";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "Nē, paldies";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Izskatās, ka šajā vietnē ir sīkfailu piekrišanas uznirstošais logs👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Vai vēlies, lai es tos apstrādāju tavā vietā? Es varu mēģināt samazināt sīkfailus, maksimāli pastiprināt privātumu un paslēpt šādus uznirstošos logus.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Paslēpt padomus uz visiem laikiem";
@@ -648,9 +672,6 @@
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Vēl nav pievienota neviena grāmatzīme";
-
-/* Empty list state placholder */
-"empty.favorites" = "Vēl nav pievienota neviena izlase";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Sakritības nav atrastas";
@@ -985,6 +1006,12 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
+/* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
+"omnibar.notification.cookies-managed" = "Pārvaldītie sīkfaili";
+
+/* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
+"omnibar.notification.popup-hidden" = "Uznirstošais logs paslēpts";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Pievienot logrīku";
 
@@ -1153,10 +1180,6 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "%@ ir iespējota privātuma aizsardzība";
 
-<<<<<<< HEAD
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Radās nezināma kļūda.";
-
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Automātiski pabeigt ieteikumu";
 
@@ -1169,8 +1192,6 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Atvērt tīmekļa vietni";
 
-=======
->>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Iestatījumi";
 

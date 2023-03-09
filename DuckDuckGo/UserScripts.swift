@@ -30,6 +30,7 @@ final class UserScripts: UserScriptsProvider {
     let autofillUserScript: AutofillUserScript
     let loginFormDetectionScript: LoginFormDetectionUserScript?
     let contentScopeUserScript: ContentScopeUserScript
+    let autoconsentUserScript: AutoconsentUserScript
 
     private(set) var faviconScript = FaviconUserScript()
     private(set) var navigatorPatchScript = NavigatorSharePatchUserScript()
@@ -47,11 +48,13 @@ final class UserScripts: UserScriptsProvider {
         loginFormDetectionScript = sourceProvider.loginDetectionEnabled ? LoginFormDetectionUserScript() : nil
         contentScopeUserScript = ContentScopeUserScript(sourceProvider.privacyConfigurationManager,
                                                         properties: sourceProvider.contentScopeProperties)
+        autoconsentUserScript = AutoconsentUserScript(config: sourceProvider.privacyConfigurationManager.privacyConfig)
     }
 
     lazy var userScripts: [UserScript] = [
         debugScript,
         textSizeUserScript,
+        autoconsentUserScript,
         findInPageScript,
         navigatorPatchScript,
         surrogatesScript,

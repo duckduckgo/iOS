@@ -41,17 +41,31 @@ public struct VariantIOS: Variant {
             }
             return false
         }
+        
+        static let onlyFirstDayOfExperiment = {
+            var dateComponents = DateComponents()
+            dateComponents.year = 2023
+            dateComponents.month = 2
+            dateComponents.day = 21
+            
+            guard let secondDayOfExperiment = Calendar.current.date(from: dateComponents) else { return false }
+            
+            return Date() < secondDayOfExperiment
+        }
     }
     
     static let doNotAllocate = 0
     
     // Note: Variants with `doNotAllocate` weight, should always be included so that previous installations are unaffected
     public static let defaultVariants: [Variant] = [
+        
+        VariantIOS(name: "mc", weight: 1, isIncluded: When.onlyFirstDayOfExperiment, features: []),
+        VariantIOS(name: "mf", weight: 1, isIncluded: When.onlyFirstDayOfExperiment, features: [.fireButtonWithColorFill]),
 
         // SERP testing
-        VariantIOS(name: "sc", weight: 1, isIncluded: When.always, features: []),
+        VariantIOS(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
-        VariantIOS(name: "se", weight: 1, isIncluded: When.always, features: [])
+        VariantIOS(name: "se", weight: doNotAllocate, isIncluded: When.always, features: [])
         
     ]
     
@@ -93,17 +107,17 @@ public class DefaultVariantManager: VariantManager {
     
     public func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> Void) {
         guard !storage.hasInstallStatistics else {
-            os_log("no new variant needed for existing user", log: generalLog, type: .debug)
+            os_log("no new variant needed for existing user", log: .generalLog, type: .debug)
             return
         }
         
         if let variant = currentVariant {
-            os_log("already assigned variant: %s", log: generalLog, type: .debug, String(describing: variant))
+            os_log("already assigned variant: %s", log: .generalLog, type: .debug, String(describing: variant))
             return
         }
         
         guard let variant = selectVariant() else {
-            os_log("Failed to assign variant", log: generalLog, type: .debug)
+            os_log("Failed to assign variant", log: .generalLog, type: .debug)
             
             // it's possible this failed because there are none to assign, we should still let new install logic execute
             _ = newInstallCompletion(self)

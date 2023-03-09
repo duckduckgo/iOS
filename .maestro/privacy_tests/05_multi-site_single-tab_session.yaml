@@ -72,6 +72,9 @@ appId: com.duckduckgo.mobile.ios
     text: "Publisher site"
 - tapOn:
     text: "Publisher site"
+- tapOn: 
+    text: "High five!"
+    optional: true
 - assertVisible:
     text: "Green T-shirt"
 - tapOn:

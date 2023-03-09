@@ -115,6 +115,9 @@ appId: com.duckduckgo.mobile.ios
     text: "Pay"
 - tapOn:
     text: "Pay"
+- tapOn: 
+    text: "High five!"
+    optional: true
 - assertVisible:
     text: ".*Order complete.*"
 - tapOn: 

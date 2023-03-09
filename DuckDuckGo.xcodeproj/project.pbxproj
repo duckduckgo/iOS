@@ -7176,8 +7176,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/duckduckgo/ios-js-support";
 			requirement = {
-				branch = "elle/spm-support";
-				kind = branch;
+				kind = exactVersion;
+				version = 2.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

@@ -35,7 +35,7 @@ class FavoriteHomeCell: UICollectionViewCell {
     @IBOutlet weak var iconSize: NSLayoutConstraint!
     @IBOutlet weak var deleteButton: UIButton!
 
-    static let appUrls = AppUrls()
+    static let appURLs = AppURLs()
 
     var isEditing = false {
         didSet {
@@ -116,7 +116,7 @@ class FavoriteHomeCell: UICollectionViewCell {
                 return
             }
 
-            let useBorder = Self.appUrls.isDuckDuckGo(domain: domain) || image.size.width < Constants.largeFaviconSize
+            let useBorder = Self.appURLs.isDuckDuckGo(domain: domain) || image.size.width < Constants.largeFaviconSize
             self.useImageBorder(useBorder)
             self.applyFavicon(image)
         }

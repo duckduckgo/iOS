@@ -28,7 +28,7 @@ class TrackerRadarIntegrationTests: XCTestCase {
 
     func test() throws {
 
-        let url = AppUrls(statisticsStore: MockStatisticsStore()).trackerDataSet
+        let url = AppURLs(statisticsStore: MockStatisticsStore()).trackerDataSet
         let data = try Data(contentsOf: url)
         let dataManager = TrackerDataManager(etag: UUID().uuidString,
                                              data: data,

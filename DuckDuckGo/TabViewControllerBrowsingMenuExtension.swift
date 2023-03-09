@@ -147,7 +147,7 @@ extension TabViewController {
     }
     
     private func buildKeepSignInEntry(forLink link: Link) -> BrowsingMenuEntry? {
-        guard let domain = link.url.host, !appUrls.isDuckDuckGo(url: link.url) else { return nil }
+        guard let domain = link.url.host, !appURLs.isDuckDuckGo(url: link.url) else { return nil }
         let isFireproofed = PreserveLogins.shared.isAllowed(cookieDomain: domain)
         
         if isFireproofed {

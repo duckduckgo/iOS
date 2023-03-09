@@ -25,7 +25,7 @@ extension UIImageView {
     
     struct UIImageViewConstants {
         
-        static let appUrls = AppUrls()
+        static let appURLs = AppURLs()
         
     }
 

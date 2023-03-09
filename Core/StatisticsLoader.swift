@@ -29,12 +29,12 @@ public class StatisticsLoader {
     public static let shared = StatisticsLoader()
     
     private let statisticsStore: StatisticsStore
-    private let appUrls: AppUrls
+    private let appURLs: AppURLs
     private let parser = AtbParser()
     
     init(statisticsStore: StatisticsStore = StatisticsUserDefaults()) {
         self.statisticsStore = statisticsStore
-        self.appUrls = AppUrls(statisticsStore: statisticsStore)
+        self.appURLs = AppURLs(statisticsStore: statisticsStore)
     }
     
     public func load(completion: @escaping Completion = {}) {
@@ -46,7 +46,7 @@ public class StatisticsLoader {
     }
     
     private func requestInstallStatistics(completion: @escaping Completion = {}) {
-        let configuration = APIRequest.Configuration(url: appUrls.initialAtb)
+        let configuration = APIRequest.Configuration(url: appURLs.initialAtb)
         let request = APIRequest(configuration: configuration, urlSession: .session())
         
         request.fetch { response, error in
@@ -66,7 +66,7 @@ public class StatisticsLoader {
     
     private func requestExti(atb: Atb, completion: @escaping Completion = {}) {
         let installAtb = atb.version + (statisticsStore.variant ?? "")
-        let url = appUrls.exti(forAtb: installAtb)
+        let url = appURLs.exti(forAtb: installAtb)
         
         let configuration = APIRequest.Configuration(url: url)
         let request = APIRequest(configuration: configuration, urlSession: .session())
@@ -85,7 +85,7 @@ public class StatisticsLoader {
     
     public func refreshSearchRetentionAtb(completion: @escaping Completion = {}) {
         
-        guard let url = appUrls.searchAtb else {
+        guard let url = appURLs.searchAtb else {
             requestInstallStatistics(completion: completion)
             return
         }
@@ -109,7 +109,7 @@ public class StatisticsLoader {
     
     public func refreshAppRetentionAtb(completion: @escaping Completion = {}) {
         
-        guard let url = appUrls.appAtb else {
+        guard let url = appURLs.appAtb else {
             requestInstallStatistics(completion: completion)
             return
         }

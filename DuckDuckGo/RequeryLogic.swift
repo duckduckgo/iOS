@@ -34,11 +34,11 @@ class RequeryLogic {
     }
 
     private let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
-    private let appUrls = AppUrls()
+    private let appURLs = AppURLs()
     private var serpState: SerpState = .notLoaded
 
     func onNewNavigation(url: URL) {
-        guard let query = appUrls.searchQuery(fromUrl: url) else {
+        guard let query = appURLs.searchQuery(from: url) else {
             serpState = .notLoaded
             return
         }

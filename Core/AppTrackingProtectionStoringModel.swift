@@ -47,13 +47,18 @@ public class AppTrackingProtectionStoringModel: ObservableObject {
 
                 if let existingTracker = try context.fetch(existingTrackersFetchRequest).first {
                     existingTracker.count += 1
-                    existingTracker.timestamp = Date()
+                    existingTracker.timestamp = date
                 } else {
                     _ = AppTrackerEntity.makeTracker(domain: domain,
                                                      trackerOwner: trackerOwner,
                                                      date: date,
                                                      bucket: bucket,
                                                      context: context)
+                }
+
+                if let sevenDaysAgo = Calendar.current.date(byAdding: .day, value: -7, to: date) {
+                    let staleTrackersFetchRequest = AppTrackerEntity.fetchRequest(trackersOlderThan: sevenDaysAgo)
+                    context.deleteAll(matching: staleTrackersFetchRequest)
                 }
 
                 save()

@@ -30,7 +30,7 @@ class AppTrackingProtectionListModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        let bundle = Bundle(for: AppTrackingProtectionListModel.self)
+        let bundle = Bundle(for: AppTrackingProtectionListViewModel.self)
         let model = CoreDataDatabase.loadModel(from: bundle, named: "AppTrackingProtectionModel")!
 
         database = CoreDataDatabase(name: "AppTrackingProtectionListModelTests",
@@ -50,7 +50,7 @@ class AppTrackingProtectionListModelTests: XCTestCase {
         saveTracker(domain: "test2.com", owner: "Test 2", date: createDate(year: 2023, month: 1, day: 1))
         saveTracker(domain: "test3.com", owner: "Test 3", date: createDate(year: 2023, month: 1, day: 1))
 
-        let listModel = AppTrackingProtectionListModel(appTrackingProtectionDatabase: database)
+        let listModel = AppTrackingProtectionListViewModel(appTrackingProtectionDatabase: database)
 
         XCTAssertEqual(listModel.sections.count, 1)
         XCTAssertEqual(listModel.sections.first?.objects?.count, 3)
@@ -61,17 +61,17 @@ class AppTrackingProtectionListModelTests: XCTestCase {
         saveTracker(domain: "test.com", owner: "Test", date: createDate(year: 2023, month: 1, day: 2))
         saveTracker(domain: "test.com", owner: "Test", date: createDate(year: 2023, month: 1, day: 3))
 
-        let listModel = AppTrackingProtectionListModel(appTrackingProtectionDatabase: database)
+        let listModel = AppTrackingProtectionListViewModel(appTrackingProtectionDatabase: database)
 
         XCTAssertEqual(listModel.sections.count, 3)
-        XCTAssertEqual(listModel.sections.first?.name, "03-01-2023")
+        XCTAssertEqual(listModel.sections.first?.name, "2023-01-03")
         XCTAssertEqual(listModel.sections.first?.objects?.count, 1)
-        XCTAssertEqual(listModel.sections.last?.name, "01-01-2023")
+        XCTAssertEqual(listModel.sections.last?.name, "2023-01-01")
         XCTAssertEqual(listModel.sections.last?.objects?.count, 1)
     }
 
     func testWhenNewChangesAreWrittenToTheDatabase_ThenTheSectionsPropertyIsUpdated() {
-        let listModel = AppTrackingProtectionListModel(appTrackingProtectionDatabase: database)
+        let listModel = AppTrackingProtectionListViewModel(appTrackingProtectionDatabase: database)
         XCTAssertEqual(listModel.sections.count, 0)
 
         let expectation = self.expectation(description: "Fetched new sections expectation")

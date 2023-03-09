@@ -32,12 +32,19 @@ public class AppTrackerEntity: NSManagedObject {
         request.predicate = NSPredicate(format: "%K == %@ AND %K == %@",
                                         #keyPath(AppTrackerEntity.domain), domain,
                                         #keyPath(AppTrackerEntity.bucket), bucket)
+        request.fetchLimit = 1
         return request
     }
 
     @nonobjc public class func fetchRequest(trackersMoreRecentThan date: Date) -> NSFetchRequest<AppTrackerEntity> {
         let request = NSFetchRequest<AppTrackerEntity>(entityName: "AppTrackerEntity")
         request.predicate = NSPredicate(format: "%K > %@", #keyPath(AppTrackerEntity.timestamp), date as NSDate)
+        return request
+    }
+
+    @nonobjc public class func fetchRequest(trackersOlderThan date: Date) -> NSFetchRequest<AppTrackerEntity> {
+        let request = NSFetchRequest<AppTrackerEntity>(entityName: "AppTrackerEntity")
+        request.predicate = NSPredicate(format: "%K < %@", #keyPath(AppTrackerEntity.timestamp), date as NSDate)
         return request
     }
 

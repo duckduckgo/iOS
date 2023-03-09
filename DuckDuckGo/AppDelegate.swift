@@ -295,6 +295,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
         }
+        
+        let fwm = FirewallManager()
+        if fwm.status() == .connected {
+            Pixel.fire(pixel: .appTPActiveUser)
+        }
     }
     
     private func shouldShowKeyboardOnLaunch() -> Bool {

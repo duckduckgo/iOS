@@ -270,6 +270,7 @@ extension Pixel {
         case appTPBreakageReport
         case appTPVPNCrash
         case appTPBlocklistParseFailed
+        case appTPActiveUser
         
         case appTPDBLocationFailed
         case appTPDBStoreLoadFailure
@@ -653,6 +654,7 @@ extension Pixel.Event {
         case .appTPBreakageReport: return "m_apptp_breakage_report"
         case .appTPVPNCrash: return "m_apptp_vpn_crash"
         case .appTPBlocklistParseFailed: return "m_apptp_blocklist_parse_failed"
+        case .appTPActiveUser: return "m_apptp_active_user"
         case .appTPDBLocationFailed: return "m_apptp_db_location_not_found"
         case .appTPDBStoreLoadFailure: return "m_apptp_db_store_load_failure"
         case .appTPDBPersistentStoreLoadFailure: return "m_apptp_db_persistent_store_load_failure"

@@ -108,6 +108,7 @@
 		021D30762989C04200918636 /* ObserverFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021D306E2989C04200918636 /* ObserverFactory.swift */; };
 		025CD01025826035001CD5BB /* FingerprintUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025CCF75257EAFAF001CD5BB /* FingerprintUITest.swift */; };
 		026DABA428242BC80089E0B5 /* MockUserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026DABA328242BC80089E0B5 /* MockUserAgent.swift */; };
+		026F08B829B7DC480079B9DF /* EmbeddedAppTPDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026F08B729B7DC480079B9DF /* EmbeddedAppTPDataTests.swift */; };
 		02A4EACA29B0F464009BE006 /* AppTPToggleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A4EAC929B0F464009BE006 /* AppTPToggleViewModel.swift */; };
 		02BA15B126A89ECA00472DD7 /* ios-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 02BA15B026A89ECA00472DD7 /* ios-config.json */; };
 		02C57C4B2514FEFB009E5129 /* DoNotSellSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C57C4A2514FEFB009E5129 /* DoNotSellSettingsViewController.swift */; };
@@ -1032,6 +1033,7 @@
 		025CCFE22582601C001CD5BB /* FingerprintingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FingerprintingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		025CCFE62582601C001CD5BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		026DABA328242BC80089E0B5 /* MockUserAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserAgent.swift; sourceTree = "<group>"; };
+		026F08B729B7DC480079B9DF /* EmbeddedAppTPDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedAppTPDataTests.swift; sourceTree = "<group>"; };
 		02A4EAC929B0F464009BE006 /* AppTPToggleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPToggleViewModel.swift; sourceTree = "<group>"; };
 		02BA15B026A89ECA00472DD7 /* ios-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "ios-config.json"; sourceTree = "<group>"; };
 		02C4BC3127C3F9B600C40026 /* AppPrivacyConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPrivacyConfigurationTests.swift; sourceTree = "<group>"; };
@@ -2698,6 +2700,14 @@
 			path = FingerprintingUITests;
 			sourceTree = "<group>";
 		};
+		026F08B629B7DC130079B9DF /* AppTrackingProtection */ = {
+			isa = PBXGroup;
+			children = (
+				026F08B729B7DC480079B9DF /* EmbeddedAppTPDataTests.swift */,
+			);
+			name = AppTrackingProtection;
+			sourceTree = "<group>";
+		};
 		02A4EACB29B0F89C009BE006 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -4066,6 +4076,7 @@
 			isa = PBXGroup;
 			children = (
 				F17669A21E411D63003D3222 /* Application */,
+				026F08B629B7DC130079B9DF /* AppTrackingProtection */,
 				981FED7222045FFA008488D7 /* AutoClear */,
 				85E5602D26541D0900F4DC44 /* AutoComplete */,
 				F40F843228C92B1C0081AE75 /* Autofill */,
@@ -5916,6 +5927,7 @@
 				85D2187224BF24F2004373D2 /* NotFoundCachingDownloaderTests.swift in Sources */,
 				C111B26927F579EF006558B1 /* BookmarkOrFolderTests.swift in Sources */,
 				F4A96BE328479DE30025C8E0 /* FeatureFlaggingTests.swift in Sources */,
+				026F08B829B7DC480079B9DF /* EmbeddedAppTPDataTests.swift in Sources */,
 				851CD674244D7E6000331B98 /* UserDefaultsExtension.swift in Sources */,
 				850559D223CF710C0055C0D5 /* WebCacheManagerTests.swift in Sources */,
 				987130C5294AAB9F00AB05E0 /* BookmarkEditorViewModelTests.swift in Sources */,

@@ -29,7 +29,7 @@ class AppTrackingProtectionStoringModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        let bundle = Bundle(for: AppTrackingProtectionListModel.self)
+        let bundle = Bundle(for: AppTrackingProtectionListViewModel.self)
         let model = CoreDataDatabase.loadModel(from: bundle, named: "AppTrackingProtectionModel")!
 
         database = CoreDataDatabase(name: "AppTrackingProtectionStoringModelTests", containerLocation: tempDBDir(), model: model)

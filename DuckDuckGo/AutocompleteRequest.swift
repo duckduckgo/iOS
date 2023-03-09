@@ -19,12 +19,19 @@
 
 import Foundation
 import Core
+import Networking
 
 class AutocompleteRequest {
+    
+    enum Error: Swift.Error {
+        
+        case noData
+        
+    }
 
     private static let session = URLSession(configuration: .ephemeral)
     
-    typealias Completion = ([Suggestion]?, Error?) -> Void
+    typealias Completion = ([Suggestion]?, Swift.Error?) -> Void
 
     private let url: URL
     private var task: URLSessionDataTask?
@@ -35,7 +42,7 @@ class AutocompleteRequest {
 
     func execute(completion: @escaping Completion) {
         var request = URLRequest.developerInitiated(url)
-        request.allHTTPHeaderFields = APIHeaders().defaultHeaders
+        request.allHTTPHeaderFields = APIRequest.Headers().default
 
         task = AutocompleteRequest.session.dataTask(with: request) { [weak self] (data, _, error) -> Void in
             guard let weakSelf = self else { return }
@@ -49,9 +56,9 @@ class AutocompleteRequest {
         task?.resume()
     }
 
-    private func processResult(data: Data?, error: Error?) throws -> [Suggestion] {
+    private func processResult(data: Data?, error: Swift.Error?) throws -> [Suggestion] {
         if let error = error { throw error }
-        guard let data = data else { throw ApiRequestError.noData }
+        guard let data = data else { throw Error.noData }
         let entries = try JSONDecoder().decode([AutocompleteEntry].self, from: data)
 
         return entries.compactMap {
@@ -76,7 +83,7 @@ class AutocompleteRequest {
         }
     }
 
-    private func complete(_ completion: @escaping Completion, withError error: Error) {
+    private func complete(_ completion: @escaping Completion, withError error: Swift.Error) {
         DispatchQueue.main.async {
             completion(nil, error)
         }

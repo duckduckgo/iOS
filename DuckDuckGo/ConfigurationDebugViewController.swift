@@ -132,7 +132,7 @@ class ConfigurationDebugViewController: UITableViewController {
             let row = ETagRows.allCases[indexPath.row]
             cell.textLabel?.text = row.rawValue
 
-            if let etag = etagStorage.etag(for: row.rawValue) {
+            if let etag = etagStorage.loadEtag(for: row.rawValue) {
                 cell.detailTextLabel?.text = etag
             } else {
                 cell.detailTextLabel?.text = row.showDetail ? "None" : nil

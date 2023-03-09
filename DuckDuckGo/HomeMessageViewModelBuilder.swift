@@ -92,7 +92,7 @@ struct HomeMessageViewModelBuilder {
             }
         case .appStore:
             return {
-                let url = AppURLs().appStoreURL
+                let url = AppURLs().appStore
                 if UIApplication.shared.canOpenURL(url as URL) {
                     UIApplication.shared.open(url)
                 }

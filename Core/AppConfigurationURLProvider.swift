@@ -27,9 +27,9 @@ struct AppConfigurationURLProvider: ConfigurationURLProviding {
         let appURLs = AppURLs()
         
         switch configuration {
-        case .bloomFilterSpec: return appURLs.httpsBloomFilterSpec
-        case .bloomFilterBinary: return appURLs.httpsBloomFilter
-        case .bloomFilterExcludedDomains: return appURLs.httpsExcludedDomains
+        case .bloomFilterSpec: return appURLs.bloomFilterSpec
+        case .bloomFilterBinary: return appURLs.bloomFilter
+        case .bloomFilterExcludedDomains: return appURLs.bloomFilterExcludedDomains
         case .privacyConfiguration: return appURLs.privacyConfig
         case .trackerDataSet: return appURLs.trackerDataSet
         case .surrogates: return appURLs.surrogates

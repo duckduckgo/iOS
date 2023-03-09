@@ -20,9 +20,10 @@
 import Foundation
 import BrowserServicesKit
 
-fileprivate extension URL {
+private extension URL {
 
     static let base: String = ProcessInfo.processInfo.environment["BASE_URL", default: "https://duckduckgo.com"]
+    static let pixelBase: String = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
     static let staticBase: String = "https://staticcdn.duckduckgo.com"
 
     static let ddg = URL(string: URL.base)!
@@ -42,9 +43,6 @@ fileprivate extension URL {
     static let atb = URL(string: "\(base)/atb.js\(devMode)")!
     static let exti = URL(string: "\(base)/exti/\(devMode)")!
     static let feedback = URL(string: "\(base)/feedback.js?type=app-feedback")!
-
-    private static let pixelBase = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
-    static let pixel = URL(string: "\(pixelBase)/t/%@")!
 
     static let appStore = URL(string: "https://apps.apple.com/app/duckduckgo-privacy-browser/id663592361")!
 
@@ -152,7 +150,7 @@ public struct AppURLs {
     public let appStore = URL.appStore
 
     public func makePixel(withName pixelName: String, formFactor: String? = nil, includeATB: Bool = true) -> URL {
-        var urlString = URL.pixel.absoluteString.format(arguments: pixelName)
+        var urlString = "\(URL.pixelBase)/t/\(pixelName)"
         if let formFactor = formFactor {
             urlString.append("_ios_\(formFactor)")
         }

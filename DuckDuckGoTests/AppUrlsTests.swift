@@ -46,15 +46,6 @@ class AppURLsTests: XCTestCase {
         appConfig = AppPrivacyConfiguration(data: privacyData, identifier: "", localProtection: localProtection)
     }
 
-    func testWhenCanDetectBlogUrl() {
-        let testee = AppURLs(statisticsStore: mockStatisticsStore)
-
-        XCTAssertTrue(testee.isBlog(url: URL(string: "https://www.spreadprivacy.com/introducing-email-protection-beta")!))
-        XCTAssertTrue(testee.isBlog(url: URL(string: "https://spreadprivacy.com")!))
-        XCTAssertFalse(testee.isBlog(url: URL(string: "https://notspreadprivacy.com")!))
-
-    }
-
     func testWhenRemoveInternalSearchParametersFromSearchUrlThenUrlIsChanged() throws {
         let testee = AppURLs(statisticsStore: mockStatisticsStore)
 
@@ -86,7 +77,7 @@ class AppURLsTests: XCTestCase {
 
     func testBaseUrlDoesNotHaveSubDomain() {
         let testee = AppURLs(statisticsStore: mockStatisticsStore)
-        XCTAssertEqual(testee.base, URL(string: "https://duckduckgo.com"))
+        XCTAssertEqual(testee.ddg, URL(string: "https://duckduckgo.com"))
     }
 
     func testWhenMobileStatsParamsAreAppliedThenTheyReturnAnUpdatedUrl() throws {

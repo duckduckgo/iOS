@@ -103,7 +103,7 @@ class TabsBarCell: UICollectionViewCell {
     private func applyModel(_ model: Tab) {
         
         if model.link == nil {
-            faviconImage.loadFavicon(forDomain: Self.appURLs.base.host, usingCache: .tabs)
+            faviconImage.loadFavicon(forDomain: Self.appURLs.ddg.host, usingCache: .tabs)
             label.text = UserText.homeTabTitle
             label.accessibilityLabel = UserText.openHomeTab
             removeButton.accessibilityLabel = UserText.closeHomeTab

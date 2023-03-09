@@ -22,6 +22,12 @@ import DuckUI
 
 public struct DeviceConnectedView: View {
 
+    @Environment(\.verticalSizeClass) var verticalSizeClass
+
+    var isCompact: Bool {
+        verticalSizeClass == .compact
+    }
+
     @State var showRecoveryPDF = false
 
     let saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel
@@ -32,35 +38,37 @@ public struct DeviceConnectedView: View {
 
     @ViewBuilder
     func deviceSyncedView() -> some View {
-        VStack(spacing: 0) {
-            Image("SyncSuccess")
+        UnderflowContainer {
+            VStack(spacing: 0) {
+                Image("SyncSuccess")
+                    .padding(.bottom, 20)
+
+                Text(UserText.deviceSyncedTitle)
+                    .font(.system(size: 28, weight: .bold))
+                    .padding(.bottom, 24)
+
+                ZStack {
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(.black.opacity(0.14))
+
+                    HStack(spacing: 0) {
+                        Image(systemName: "checkmark.circle")
+                            .padding(.horizontal, 18)
+                        Text("WIP: Another Device")
+                        Spacer()
+                    }
+                }
+                .frame(height: 44)
+                .padding(.horizontal, 20)
                 .padding(.bottom, 20)
 
-            Text(UserText.deviceSyncedTitle)
-                .font(.system(size: 28, weight: .bold))
-                .padding(.bottom, 24)
+                Text(UserText.deviceSyncedMessage)
+                    .lineLimit(nil)
+                    .multilineTextAlignment(.center)
 
-            ZStack {
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(.black.opacity(0.14))
-
-                HStack(spacing: 0) {
-                    Image(systemName: "checkmark.circle")
-                        .padding(.horizontal, 18)
-                    Text("WIP: Another Device")
-                    Spacer()
-                }
+                Spacer()
             }
-            .frame(height: 44)
-            .padding(.horizontal, 20)
-            .padding(.bottom, 20)
-
-            Text(UserText.deviceSyncedMessage)
-                .lineLimit(nil)
-                .multilineTextAlignment(.center)
-
-            Spacer()
-
+        } foreground: {
             Button {
                 withAnimation {
                     self.showRecoveryPDF = true
@@ -69,9 +77,10 @@ public struct DeviceConnectedView: View {
                 Text(UserText.nextButtonTitle)
             }
             .buttonStyle(PrimaryButtonStyle())
+            .frame(maxWidth: 360)
+            .padding(.horizontal, 30)
         }
-        .padding(.top, 56)
-        .padding(.horizontal)
+        .padding(.top, isCompact ? 0 : 56)
         .padding(.bottom)
     }
 
@@ -80,6 +89,7 @@ public struct DeviceConnectedView: View {
             SaveRecoveryKeyView(model: saveRecoveryKeyViewModel)
                 .transition(.move(edge: .trailing))
         } else {
+            // TODO apply underflow
             deviceSyncedView()
                 .transition(.move(edge: .leading))
         }

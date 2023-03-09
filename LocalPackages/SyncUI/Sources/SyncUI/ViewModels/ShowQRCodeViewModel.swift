@@ -1,8 +1,8 @@
 //
-//  ApiRequestError.swift
+//  ShowQRCodeViewModel.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2023 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -18,7 +18,16 @@
 //
 
 import Foundation
+import UIKit
 
-public enum ApiRequestError: Error {
-    case noData
+class ShowQRCodeViewModel: ObservableObject {
+
+    @Published var code: String?
+
+    func copy() {
+        guard let code = code else { return }
+        // When this code is real we probably won't have to do this base64 encoding here
+        UIPasteboard.general.string = code.data(using: .ascii)!.base64EncodedString()
+    }
+
 }

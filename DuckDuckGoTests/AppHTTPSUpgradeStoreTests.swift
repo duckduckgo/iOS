@@ -66,7 +66,7 @@ final class AppHTTPSUpgradeStoreTests: XCTestCase {
         let data = "Hello World!".data(using: .utf8)!
         let sha = "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069"
         let specification = HTTPSBloomFilterSpecification(bitCount: 100, errorRate: 0.01, totalEntries: 100, sha256: sha)
-        XCTAssertTrue(testee.persistBloomFilter(specification: specification, data: data))
+        XCTAssertNoThrow(try testee.persistBloomFilter(specification: specification, data: data))
         XCTAssertEqual(specification, testee.bloomFilterSpecification)
     }
     
@@ -74,29 +74,29 @@ final class AppHTTPSUpgradeStoreTests: XCTestCase {
         let data = "Hello World!".data(using: .utf8)!
         let sha = "wrong sha"
         let specification = HTTPSBloomFilterSpecification(bitCount: 100, errorRate: 0.01, totalEntries: 100, sha256: sha)
-        XCTAssertFalse(testee.persistBloomFilter(specification: specification, data: data))
+        XCTAssertThrowsError(try testee.persistBloomFilter(specification: specification, data: data))
         XCTAssertNotEqual(specification, testee.bloomFilterSpecification)
     }
 
-    func testWhenBloomFilterSpecificationIsPersistedThenSpecificationIsRetrieved() {
+    func testWhenBloomFilterSpecificationIsPersistedThenSpecificationIsRetrieved() throws {
         let specification = HTTPSBloomFilterSpecification(bitCount: 100, errorRate: 0.01, totalEntries: 100, sha256: "abc")
-        testee.persistBloomFilterSpecification(specification)
+        try testee.persistBloomFilterSpecification(specification)
         XCTAssertEqual(specification, testee.bloomFilterSpecification)
     }
     
-    func testWhenBloomFilterSpecificationIsPersistedThenOldSpecificationIsReplaced() {
+    func testWhenBloomFilterSpecificationIsPersistedThenOldSpecificationIsReplaced() throws {
         let originalSpecification =  HTTPSBloomFilterSpecification(bitCount: 100, errorRate: 0.01, totalEntries: 100, sha256: "abc")
-        testee.persistBloomFilterSpecification(originalSpecification)
+        try testee.persistBloomFilterSpecification(originalSpecification)
 
         let newSpecification = HTTPSBloomFilterSpecification(bitCount: 101, errorRate: 0.01, totalEntries: 101, sha256: "abc")
-        testee.persistBloomFilterSpecification(newSpecification)
+        try testee.persistBloomFilterSpecification(newSpecification)
 
         let storedSpecification = testee.bloomFilterSpecification
         XCTAssertEqual(newSpecification, storedSpecification)
     }
     
-    func testWhenExcludedDomainsPersistedThenExcludedDomainIsTrue() {
-        testee.persistExcludedDomains([ "www.example.com", "apple.com" ])
+    func testWhenExcludedDomainsPersistedThenExcludedDomainIsTrue() throws {
+        try testee.persistExcludedDomains([ "www.example.com", "apple.com" ])
         XCTAssertTrue(testee.hasExcludedDomain("www.example.com"))
         XCTAssertTrue(testee.hasExcludedDomain("apple.com"))
     }
@@ -106,9 +106,9 @@ final class AppHTTPSUpgradeStoreTests: XCTestCase {
         XCTAssertFalse(testee.hasExcludedDomain("apple.com"))
     }
     
-    func testWhenExcludedDomainsPersistedThenOldDomainsAreDeleted() {
-        testee.persistExcludedDomains([ "www.old.com", "otherold.com" ])
-        testee.persistExcludedDomains([ "www.new.com", "othernew.com" ])
+    func testWhenExcludedDomainsPersistedThenOldDomainsAreDeleted() throws {
+        try testee.persistExcludedDomains([ "www.old.com", "otherold.com" ])
+        try testee.persistExcludedDomains([ "www.new.com", "othernew.com" ])
         XCTAssertFalse(testee.hasExcludedDomain("www.old.com"))
         XCTAssertFalse(testee.hasExcludedDomain("otherold.com"))
         XCTAssertTrue(testee.hasExcludedDomain("www.new.com"))

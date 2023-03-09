@@ -241,7 +241,7 @@ class ContentBlockingUpdatingTests: XCTestCase {
         withExtendedLifetime(c) {
             waitForExpectations(timeout: 1, handler: nil)
             e2 = expectation(description: "should rebuild user scripts")
-            NotificationCenter.default.post(name: StorageCacheProvider.didUpdateStorageCacheNotification, object: nil)
+            NotificationCenter.default.post(name: ConfigurationManager.didUpdateTrackerDependencies, object: nil)
             waitForExpectations(timeout: 1, handler: nil)
         }
     }

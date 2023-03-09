@@ -87,14 +87,14 @@ struct DefaultScriptSourceProvider: ScriptSourceProviding {
         return DefaultContentBlockerUserScriptConfig(privacyConfiguration: privacyConfig,
                                                      trackerData: currentMainRules?.trackerData,
                                                      ctlTrackerData: nil,
-                                                     tld: AppDependencyProvider.shared.storageCache.current.tld,
+                                                     tld: AppDependencyProvider.shared.storageCache.tld,
                                                      trackerDataManager: ContentBlocking.shared.trackerDataManager)
     }
 
     private static func buildSurrogatesConfig(contentBlockingManager: ContentBlockerRulesManagerProtocol,
                                               privacyConfigurationManager: PrivacyConfigurationManaging) -> SurrogatesUserScriptConfig {
 
-        let surrogates = FileStore().loadAsString(forConfiguration: .surrogates) ?? ""
+        let surrogates = FileStore().loadAsString(for: .surrogates) ?? ""
         let currentMainRules = contentBlockingManager.currentMainRules
 
         let surrogatesConfig = DefaultSurrogatesUserScriptConfig(privacyConfig: privacyConfigurationManager.privacyConfig,
@@ -102,7 +102,7 @@ struct DefaultScriptSourceProvider: ScriptSourceProviding {
                                                                  trackerData: currentMainRules?.trackerData,
                                                                  encodedSurrogateTrackerData: currentMainRules?.encodedTrackerData,
                                                                  trackerDataManager: ContentBlocking.shared.trackerDataManager,
-                                                                 tld: AppDependencyProvider.shared.storageCache.current.tld,
+                                                                 tld: AppDependencyProvider.shared.storageCache.tld,
                                                                  isDebugBuild: isDebugBuild)
 
         return surrogatesConfig

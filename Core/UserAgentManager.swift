@@ -20,6 +20,7 @@
 import Foundation
 import WebKit
 import BrowserServicesKit
+import Common
 
 public protocol UserAgentManager {
 
@@ -73,6 +74,14 @@ public class DefaultUserAgentManager: UserAgentManager {
             completion(agent)
         }
     }
+    
+    public static var duckDuckGoUserAgent: String { duckduckGoUserAgent(for: AppVersion.shared) }
+    
+    public static func duckduckGoUserAgent(for appVersion: AppVersion) -> String {
+        let osVersion = UIDevice.current.systemVersion
+        return "ddg_ios/\(appVersion.versionAndBuildNumber) (\(appVersion.identifier); iOS \(osVersion))"
+    }
+    
 }
 
 struct UserAgent {
@@ -194,4 +203,5 @@ struct UserAgent {
         let suffix = (agent as NSString).substring(with: range)
         return "\(Constants.desktopPrefixComponent) \(suffix) \(versionComponent)"
     }
+    
 }

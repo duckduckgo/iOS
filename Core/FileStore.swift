@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Configuration
 
 public class FileStore {
     
@@ -25,14 +26,12 @@ public class FileStore {
 
     public init() { }
     
-    func persist(_ data: Data?, forConfiguration config: ContentBlockerRequest.Configuration) -> Bool {
-        guard let data = data else { return false }
+    public func persist(_ data: Data, for configuration: Configuration) throws {
         do {
-            try data.write(to: persistenceLocation(forConfiguration: config), options: .atomic)
-            return true
+            try data.write(to: persistenceLocation(for: configuration), options: .atomic)
         } catch {
-            Pixel.fire(pixel: .fileStoreWriteFailed, error: error, withAdditionalParameters: ["config": config.rawValue ])
-            return false
+            Pixel.fire(pixel: .fileStoreWriteFailed, error: error, withAdditionalParameters: ["config": configuration.rawValue])
+            throw error
         }
     }
     
@@ -51,21 +50,13 @@ public class FileStore {
         return true
     }
     
-    public func loadAsString(forConfiguration config: ContentBlockerRequest.Configuration) -> String? {
-        return try? String(contentsOf: persistenceLocation(forConfiguration: config))
+    public func loadAsString(for configuration: Configuration) -> String? {
+        try? String(contentsOf: persistenceLocation(for: configuration))
     }
     
-    func loadAsArray(forConfiguration config: ContentBlockerRequest.Configuration) -> [String] {
-        if let fileStr = try? String(contentsOf: persistenceLocation(forConfiguration: config)) {
-            return fileStr.components(separatedBy: "\n")
-        }
-        
-        return []
-    }
-    
-    func loadAsData(forConfiguration config: ContentBlockerRequest.Configuration) -> Data? {
+    public func loadAsData(for configuration: Configuration) -> Data? {
         do {
-            return try Data(contentsOf: persistenceLocation(forConfiguration: config))
+            return try Data(contentsOf: persistenceLocation(for: configuration))
         } catch {
             let nserror = error as NSError
             if nserror.domain != NSCocoaErrorDomain || nserror.code != NSFileReadNoSuchFileError {
@@ -75,13 +66,13 @@ public class FileStore {
         }
     }
     
-    func hasData(forConfiguration config: ContentBlockerRequest.Configuration) -> Bool {
-        return FileManager.default.fileExists(atPath: persistenceLocation(forConfiguration: config).path)
+    func hasData(for configuration: Configuration) -> Bool {
+        FileManager.default.fileExists(atPath: persistenceLocation(for: configuration).path)
     }
 
-    func persistenceLocation(forConfiguration config: ContentBlockerRequest.Configuration) -> URL {
+    func persistenceLocation(for configuration: Configuration) -> URL {
         let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier)
-        return path!.appendingPathComponent(config.rawValue)
+        return path!.appendingPathComponent(configuration.storeKey)
     }
 
 }

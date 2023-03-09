@@ -1,8 +1,8 @@
 //
-//  ApiRequestError.swift
+//  Configuration.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2023 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -18,7 +18,20 @@
 //
 
 import Foundation
+import Configuration
 
-public enum ApiRequestError: Error {
-    case noData
+public extension Configuration {
+
+    var storeKey: String {
+        switch self {
+        case .bloomFilterBinary: return "httpsBloomFilter"
+        case .bloomFilterSpec: return "httpsBloomFilterSpec"
+        case .bloomFilterExcludedDomains: return "httpsExcludedDomains"
+        case .privacyConfiguration: return "privacyConfiguration"
+        case .surrogates: return "surrogates"
+        case .trackerDataSet: return "trackerDataSet"
+        case .FBConfig: return "FBConfig"
+        }
+    }
+    
 }

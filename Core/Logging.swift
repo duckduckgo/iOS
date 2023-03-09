@@ -20,6 +20,7 @@
 import Foundation
 import os.log
 import BrowserServicesKit
+import Common
 
 public extension OSLog {
     
@@ -42,9 +43,15 @@ public extension OSLog {
     static var autoconsentLog: OSLog {
         Logging.autoconsentLoggingEnabled ? Logging.autoconsentLog : .disabled
     }
+
+    static var configurationLog: OSLog {
+        Logging.configurationLoggingEnabled ? Logging.configurationLog : .disabled
+    }
+
 }
 
 struct Logging {
+
     fileprivate static let generalLoggingEnabled = true
     fileprivate static let generalLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier,
                                                      category: "DDG General")
@@ -64,4 +71,9 @@ struct Logging {
     fileprivate static let autoconsentLoggingEnabled = false
     fileprivate static let autoconsentLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier,
                                                          category: "DDG Autoconsent")
+
+    fileprivate static let configurationLoggingEnabled = true
+    fileprivate static let configurationLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier,
+                                                           category: "DDG Configuration")
+
 }

@@ -25,9 +25,7 @@ public class SaveRecoveryKeyViewModel: ObservableObject {
     let key: String
     let showRecoveryPDFAction: () -> Void
 
-    public init(key: String = "eyJyZWNvdmVyeSI6eyJ1c2ViNjgwRDQ1QjUtNUU2RS00MzQ3jZGQkU4MEZDNEE3IiwicHJpbWFyeV9rZXkiOiJBUBUUVCQVFFQkFRRUJBUUVCBUUVCQVFFPSJ9fQ==",
-
-                showRecoveryPDFAction: @escaping () -> Void) {
+    public init(key: String, showRecoveryPDFAction: @escaping () -> Void) {
         self.key = key
         self.showRecoveryPDFAction = showRecoveryPDFAction
     }

@@ -19,27 +19,29 @@
 
 import Foundation
 import os.log
+import Configuration
 
-protocol BlockerListETagStorage {
+public protocol BlockerListETagStorage {
     
-    func set(etag: String?, for list: ContentBlockerRequest.Configuration)
-    
-    func etag(for list: ContentBlockerRequest.Configuration) -> String?
+    func saveEtag(_ etag: String, for configuration: Configuration)
+    func loadEtag(for configuration: Configuration) -> String?
     
 }
 
-class UserDefaultsETagStorage: BlockerListETagStorage {
+public struct UserDefaultsETagStorage: BlockerListETagStorage {
     
-    lazy var defaults = UserDefaults(suiteName: "com.duckduckgo.blocker-list.etags")
+    private let defaults = UserDefaults(suiteName: "com.duckduckgo.blocker-list.etags")
     
-    func etag(for list: ContentBlockerRequest.Configuration) -> String? {
-        let etag = defaults?.string(forKey: list.rawValue)
-        os_log("stored etag for %s %s", log: .generalLog, type: .debug, list.rawValue, etag ?? "nil")
+    public init() { }
+    
+    public func loadEtag(for configuration: Configuration) -> String? {
+        let etag = defaults?.string(forKey: configuration.storeKey)
+        os_log("stored etag for %s %s", log: .generalLog, type: .debug, configuration.storeKey, etag ?? "nil")
         return etag
     }
     
-    func set(etag: String?, for list: ContentBlockerRequest.Configuration) {
-        defaults?.set(etag, forKey: list.rawValue)
+    public func saveEtag(_ etag: String, for configuration: Configuration) {
+        defaults?.set(etag, forKey: configuration.storeKey)
     }
     
 }

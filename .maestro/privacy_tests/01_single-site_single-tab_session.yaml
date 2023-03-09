@@ -31,7 +31,7 @@ appId: com.duckduckgo.mobile.ios
 
 - assertVisible: "Search engine"
 
-# Test SERP Ad
+# Test
 - scroll
 - assertVisible: "[Ad 5] SERP Ad (heuristic)"
 - tapOn: "[Ad 5] SERP Ad (heuristic)"

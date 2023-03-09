@@ -25,23 +25,26 @@ import Core
 import SVGView
 
 struct AppTPTrackerCell: View {
-    let tracker: AppTrackerEntity
+    let trackerDomain: String
+    let trackerOwner: String
+    let trackerCount: Int32
+
     let imageCache: AppTrackerImageCache
     let showDivider: Bool
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .center) {
-                SVGView(data: imageCache.loadTrackerImage(for: tracker.trackerOwner))
+                SVGView(data: imageCache.loadTrackerImage(for: trackerOwner))
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 25, height: 25)
                 
                 VStack(alignment: .leading) {
-                    Text(tracker.domain)
+                    Text(trackerDomain)
                         .font(Font(uiFont: Const.Font.trackerDomain))
                         .foregroundColor(.trackerDomain)
                     
-                    Text(UserText.appTPTrackingAttempts(count: "\(tracker.count)"))
+                    Text(UserText.appTPTrackingAttempts(count: "\(trackerCount)"))
                         .font(Font(uiFont: Const.Font.trackerCount))
                         .foregroundColor(.trackerSize)
                 }

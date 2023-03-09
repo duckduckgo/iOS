@@ -21,9 +21,7 @@ import UIKit
 import Core
 
 class TabsBarCell: UICollectionViewCell {
-    
-    static let appURLs = AppURLs()
-    
+
     @IBOutlet weak var label: FadeOutLabel!
     @IBOutlet weak var removeButton: UIButton!
     @IBOutlet weak var faviconImage: UIImageView!
@@ -103,7 +101,7 @@ class TabsBarCell: UICollectionViewCell {
     private func applyModel(_ model: Tab) {
         
         if model.link == nil {
-            faviconImage.loadFavicon(forDomain: Self.appURLs.ddg.host, usingCache: .tabs)
+            faviconImage.loadFavicon(forDomain: AppURLs.shared.ddg.host, usingCache: .tabs)
             label.text = UserText.homeTabTitle
             label.accessibilityLabel = UserText.openHomeTab
             removeButton.accessibilityLabel = UserText.closeHomeTab

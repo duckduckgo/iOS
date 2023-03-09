@@ -29,12 +29,10 @@ public class StatisticsLoader {
     public static let shared = StatisticsLoader()
     
     private let statisticsStore: StatisticsStore
-    private let appURLs: AppURLs
     private let parser = AtbParser()
     
     init(statisticsStore: StatisticsStore = StatisticsUserDefaults()) {
         self.statisticsStore = statisticsStore
-        self.appURLs = AppURLs(statisticsStore: statisticsStore)
     }
     
     public func load(completion: @escaping Completion = {}) {
@@ -46,7 +44,7 @@ public class StatisticsLoader {
     }
     
     private func requestInstallStatistics(completion: @escaping Completion = {}) {
-        let configuration = APIRequest.Configuration(url: appURLs.initialAtb)
+        let configuration = APIRequest.Configuration(url: AppURLs.shared.initialAtb)
         let request = APIRequest(configuration: configuration, urlSession: .session())
         
         request.fetch { response, error in
@@ -66,7 +64,7 @@ public class StatisticsLoader {
     
     private func requestExti(atb: Atb, completion: @escaping Completion = {}) {
         let installAtb = atb.version + (statisticsStore.variant ?? "")
-        let url = appURLs.exti(forAtb: installAtb)
+        let url = AppURLs.shared.exti(forAtb: installAtb)
         
         let configuration = APIRequest.Configuration(url: url)
         let request = APIRequest(configuration: configuration, urlSession: .session())
@@ -84,8 +82,7 @@ public class StatisticsLoader {
     }
     
     public func refreshSearchRetentionAtb(completion: @escaping Completion = {}) {
-        
-        guard let url = appURLs.searchAtb else {
+        guard let url = AppURLs.shared.makeSearchAtb(statisticsStore: statisticsStore) else {
             requestInstallStatistics(completion: completion)
             return
         }
@@ -99,7 +96,7 @@ public class StatisticsLoader {
                 completion()
                 return
             }
-            if let data = response?.data, let atb  = try? self.parser.convert(fromJsonData: data) {
+            if let data = response?.data, let atb = try? self.parser.convert(fromJsonData: data) {
                 self.statisticsStore.searchRetentionAtb = atb.version
                 self.storeUpdateVersionIfPresent(atb)
             }
@@ -108,8 +105,7 @@ public class StatisticsLoader {
     }
     
     public func refreshAppRetentionAtb(completion: @escaping Completion = {}) {
-        
-        guard let url = appURLs.appAtb else {
+        guard let url = AppURLs.shared.makeAppAtb(statisticsStore: statisticsStore) else {
             requestInstallStatistics(completion: completion)
             return
         }

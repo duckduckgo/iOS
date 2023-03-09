@@ -82,14 +82,7 @@ public struct AppURLs {
 
     }
 
-    let statisticsStore: StatisticsStore
-    public let variantManager: VariantManager
-
-    public init(statisticsStore: StatisticsStore = StatisticsUserDefaults(),
-                variantManager: VariantManager = DefaultVariantManager()) {
-        self.statisticsStore = statisticsStore
-        self.variantManager = variantManager
-    }
+    public static let shared = AppURLs()
 
     public let ddg = URL.ddg
 
@@ -121,7 +114,7 @@ public struct AppURLs {
         return url.getParameter(named: Param.search)
     }
 
-    public func make(forQuery query: String, queryContext: URL? = nil) -> URL? {
+    public func make(forQuery query: String, queryContext: URL? = nil, statisticsStore: StatisticsStore = StatisticsUserDefaults()) -> URL? {
         if let url = URL.webUrl(from: query) {
             return url
         }
@@ -136,7 +129,7 @@ public struct AppURLs {
             parameters[Param.verticalRewrite] = vertical
         }
         
-        return makeSearch(for: query, additionalParameters: parameters)
+        return makeSearch(for: query, additionalParameters: parameters, statisticsStore: statisticsStore)
     }
     
     public func isDuckDuckGoStatic(url: URL) -> Bool {
@@ -149,7 +142,10 @@ public struct AppURLs {
     public let windowsBrowserDownload = URL.windows
     public let appStore = URL.appStore
 
-    public func makePixel(withName pixelName: String, formFactor: String? = nil, includeATB: Bool = true) -> URL {
+    public func makePixel(withName pixelName: String,
+                          formFactor: String? = nil,
+                          includeATB: Bool = true,
+                          statisticsStore: StatisticsStore = StatisticsUserDefaults()) -> URL {
         var urlString = "\(URL.pixelBase)/t/\(pixelName)"
         if let formFactor = formFactor {
             urlString.append("_ios_\(formFactor)")
@@ -173,7 +169,7 @@ public struct AppURLs {
     public let initialAtb = URL.atb
     public func exti(forAtb atb: String) -> URL { URL.exti.appendingParameter(name: Param.atb, value: atb) }
 
-    public var searchAtb: URL? {
+    public func makeSearchAtb(statisticsStore: StatisticsStore = StatisticsUserDefaults()) -> URL? {
         guard let atbWithVariant = statisticsStore.atbWithVariant, let setAtb = statisticsStore.searchRetentionAtb else {
             return nil
         }
@@ -184,7 +180,7 @@ public struct AppURLs {
         ])
     }
 
-    public var appAtb: URL? {
+    public func makeAppAtb(statisticsStore: StatisticsStore = StatisticsUserDefaults()) -> URL? {
         guard let atbWithVariant = statisticsStore.atbWithVariant, let setAtb = statisticsStore.appRetentionAtb else {
             return nil
         }
@@ -196,7 +192,7 @@ public struct AppURLs {
         ])
     }
 
-    public func applyingStatsParams(for url: URL) -> URL {
+    public func applyingStatsParams(for url: URL, statisticsStore: StatisticsStore = StatisticsUserDefaults()) -> URL {
         var searchURL = url.removingParameters(named: [Param.source, Param.atb])
             .appendingParameter(name: Param.source,
                                 value: ParamValue.source)
@@ -207,7 +203,7 @@ public struct AppURLs {
         return searchURL
     }
 
-    public func hasCorrectMobileStatsParams(url: URL) -> Bool {
+    public func hasCorrectMobileStatsParams(url: URL, statisticsStore: StatisticsStore = StatisticsUserDefaults()) -> Bool {
         guard let source = url.getParameter(named: Param.source),
               source == ParamValue.source
         else { return false }
@@ -237,15 +233,18 @@ public struct AppURLs {
      Generates a search url with the source (t) https://duck.co/help/privacy/t
      and cohort (atb) https://duck.co/help/privacy/atb
      */
-    private func makeSearch<C: Collection>(for text: String, additionalParameters: C) -> URL where C.Element == (key: String, value: String) {
+    private func makeSearch<C: Collection>(for text: String,
+                                           additionalParameters: C,
+                                           statisticsStore: StatisticsStore = StatisticsUserDefaults()) -> URL
+    where C.Element == (key: String, value: String) {
         let searchURL = ddg
             .appendingParameter(name: Param.search, value: text)
             .appendingParameters(additionalParameters)
-        return applyingStatsParams(for: searchURL)
+        return applyingStatsParams(for: searchURL, statisticsStore: statisticsStore)
     }
 
-    public func makeSearch(for text: String) -> URL? {
-        return makeSearch(for: text, additionalParameters: [])
+    public func makeSearch(for text: String, statisticsStore: StatisticsStore = StatisticsUserDefaults()) -> URL? {
+        makeSearch(for: text, additionalParameters: [], statisticsStore: statisticsStore)
     }
 
     public func isDuckDuckGoSearch(url: URL) -> Bool {

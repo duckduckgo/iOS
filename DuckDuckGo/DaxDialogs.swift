@@ -158,7 +158,6 @@ final class DaxDialogs {
 
     public static let shared = DaxDialogs(entityProviding: ContentBlocking.shared.contentBlockingManager)
 
-    private let appURLs = AppURLs()
     private var settings: DaxDialogsSettings
     private var entityProviding: EntityProviding
     private let variantManager: VariantManager
@@ -263,7 +262,7 @@ final class DaxDialogs {
         guard isEnabled, nextHomeScreenMessageOverride == nil else { return nil }
         guard let host = privacyInfo.domain else { return nil }
         
-        if appURLs.isDuckDuckGoSearch(url: privacyInfo.url) {
+        if AppURLs.shared.isDuckDuckGoSearch(url: privacyInfo.url) {
             return searchMessage()
         }
         

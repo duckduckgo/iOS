@@ -280,7 +280,7 @@ class SettingsViewController: UITableViewController {
     }
 
     private func showEmailWebDashboard() {
-        UIApplication.shared.open(AppURLs().emailProtectionQuickLink, options: [:], completionHandler: nil)
+        UIApplication.shared.open(AppURLs.shared.emailProtectionQuickLink, options: [:], completionHandler: nil)
     }
 
     private func showMacBrowserWaitlistViewController() {

@@ -31,8 +31,6 @@ public class Link: NSObject, NSCoding {
         static let localPath = "localPath"
     }
     
-    static let appURLs = AppURLs()
-
     public let title: String?
     public let url: URL
     public let localFileURL: URL?
@@ -42,7 +40,7 @@ public class Link: NSObject, NSCoding {
 
         var displayTitle = (title?.isEmpty ?? true) ? host : title
 
-        if Self.appURLs.isDuckDuckGo(url: url),
+        if AppURLs.shared.isDuckDuckGo(url: url),
             let title = displayTitle, title.hasSuffix(Constants.ddgSuffix) {
             displayTitle = String(title.dropLast(Constants.ddgSuffix.count))
         }

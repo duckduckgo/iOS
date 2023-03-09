@@ -52,7 +52,7 @@ class PrivacyIconLogicTests: XCTestCase {
         let url = PrivacyIconLogicTests.ddgSearchURL
         let icon = PrivacyIconLogic.privacyIcon(for: url)
         
-        XCTAssertTrue(AppURLs().isDuckDuckGoSearch(url: url))
+        XCTAssertTrue(AppURLs.shared.isDuckDuckGoSearch(url: url))
         XCTAssertEqual(icon, .daxLogo)
     }
     

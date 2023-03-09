@@ -64,7 +64,6 @@ class OmniBar: UIView {
 
     weak var omniDelegate: OmniBarDelegate?
     fileprivate var state: OmniBarState = SmallOmniBarState.HomeNonEditingState()
-    private lazy var appURLs: AppURLs = AppURLs()
     private var safeAreaInsetsObservation: NSKeyValueObservation?
     
     private var privacyIconAndTrackersAnimator = PrivacyIconAndTrackersAnimator()
@@ -351,7 +350,7 @@ class OmniBar: UIView {
             return
         }
 
-        if let query = appURLs.searchQuery(from: url) {
+        if let query = AppURLs.shared.searchQuery(from: url) {
             textField.text = query
         } else {
             textField.attributedText = OmniBar.demphasisePath(forUrl: url)

@@ -226,7 +226,7 @@ struct WindowsBrowserWaitlistInvitedView: View {
                         .foregroundColor(.waitlistTextSecondary)
                         .lineSpacing(6)
 
-                    Text(AppURLs().windowsBrowserDownload.absoluteString.dropping(prefix: "https://"))
+                    Text(AppURLs.shared.windowsBrowserDownload.absoluteString.dropping(prefix: "https://"))
                         .font(.proximaNova(size: 17, weight: .bold))
                         .foregroundColor(.waitlistBlue)
                         .menuController(UserText.waitlistCopy) {

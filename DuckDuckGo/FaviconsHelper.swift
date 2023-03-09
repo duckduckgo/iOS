@@ -41,7 +41,7 @@ struct FaviconsHelper {
             completion?(resultImage, fake)
         }
         
-        if AppURLs().isDuckDuckGo(domain: domain) {
+        if AppURLs.shared.isDuckDuckGo(domain: domain) {
             complete(UIImage(named: "Logo"))
             return
         }

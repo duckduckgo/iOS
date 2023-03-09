@@ -94,8 +94,6 @@ class MainViewController: UIViewController {
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
 
-    private lazy var appURLs: AppURLs = AppURLs()
-
     var tabManager: TabManager!
     private let previewsSource = TabPreviewsSource()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
@@ -574,7 +572,7 @@ class MainViewController: UIViewController {
 
     func loadQueryInNewTab(_ query: String, reuseExisting: Bool = false) {
         dismissOmniBar()
-        guard let url = appURLs.make(forQuery: query) else {
+        guard let url = AppURLs.shared.make(forQuery: query) else {
             os_log("Couldn‘t form URL for query “%s”", log: .lifecycleLog, type: .error, query)
             return
         }
@@ -608,7 +606,7 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func loadQuery(_ query: String) {
-        guard let url = appURLs.make(forQuery: query, queryContext: currentTab?.url) else {
+        guard let url = AppURLs.shared.make(forQuery: query, queryContext: currentTab?.url) else {
             os_log("Couldn‘t form URL for query “%s” with context “%s”",
                    log: .lifecycleLog,
                    type: .error,
@@ -1278,8 +1276,7 @@ extension MainViewController: OmniBarDelegate {
     
     private var isSERPPresented: Bool {
         guard let tabURL = currentTab?.url else { return false }
-            
-        return appURLs.isDuckDuckGoSearch(url: tabURL)
+        return AppURLs.shared.isDuckDuckGoSearch(url: tabURL)
     }
     
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
@@ -1356,7 +1353,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             } else {
                 loadUrl(url)
             }
-        } else if let url = appURLs.makeSearch(for: suggestion.suggestion) {
+        } else if let url = AppURLs.shared.makeSearch(for: suggestion.suggestion) {
             loadUrl(url)
         } else {
             os_log("Couldn‘t form URL for suggestion “%s”", log: .lifecycleLog, type: .error, suggestion.suggestion)
@@ -1367,7 +1364,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 
     func autocomplete(pressedPlusButtonForSuggestion suggestion: Suggestion) {
         if let url = suggestion.url {
-            if appURLs.isDuckDuckGoSearch(url: url) {
+            if AppURLs.shared.isDuckDuckGoSearch(url: url) {
                 omniBar.textField.text = suggestion.suggestion
             } else if !url.isBookmarklet() {
                 omniBar.textField.text = url.absoluteString

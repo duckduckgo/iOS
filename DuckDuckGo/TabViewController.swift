@@ -82,7 +82,6 @@ class TabViewController: UIViewController {
     private lazy var appRatingPrompt: AppRatingPrompt = AppRatingPrompt()
     private weak var privacyDashboard: PrivacyDashboardViewController?
     
-    private(set) lazy var appURLs: AppURLs = AppURLs()
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
 
@@ -533,21 +532,21 @@ class TabViewController: UIViewController {
     }
     
     private func shouldReissueDDGStaticNavigation(for url: URL) -> Bool {
-        guard appURLs.isDuckDuckGoStatic(url: url) else { return false }
-        return  !appURLs.hasCorrectSearchHeaderParams(url: url)
+        guard AppURLs.shared.isDuckDuckGoStatic(url: url) else { return false }
+        return  !AppURLs.shared.hasCorrectSearchHeaderParams(url: url)
     }
     
     private func reissueNavigationWithSearchHeaderParams(for url: URL) {
-        load(url: appURLs.applyingSearchHeaderParams(for: url))
+        load(url: AppURLs.shared.applyingSearchHeaderParams(for: url))
     }
     
     private func shouldReissueSearch(for url: URL) -> Bool {
-        guard appURLs.isDuckDuckGoSearch(url: url) else { return false }
-        return !appURLs.hasCorrectMobileStatsParams(url: url) || !appURLs.hasCorrectSearchHeaderParams(url: url)
+        guard AppURLs.shared.isDuckDuckGoSearch(url: url) else { return false }
+        return !AppURLs.shared.hasCorrectMobileStatsParams(url: url) || !AppURLs.shared.hasCorrectSearchHeaderParams(url: url)
     }
     
     private func reissueSearchWithRequiredParams(for url: URL) {
-        let mobileSearch = appURLs.applyingStatsParams(for: url)
+        let mobileSearch = AppURLs.shared.applyingStatsParams(for: url)
         reissueNavigationWithSearchHeaderParams(for: mobileSearch)
     }
     
@@ -607,7 +606,7 @@ class TabViewController: UIViewController {
 
     private func isDuckDuckGoUrl() -> Bool {
         guard let url = url else { return false }
-        return appURLs.isDuckDuckGo(url: url)
+        return AppURLs.shared.isDuckDuckGo(url: url)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -670,7 +669,7 @@ class TabViewController: UIViewController {
 
     @objc func onDuckDuckGoEmailSignOut(_ notification: Notification) {
         guard let url = webView.url else { return }
-        if AppURLs().isDuckDuckGoEmailProtectionURL(url) {
+        if AppURLs.shared.isDuckDuckGoEmailProtectionURL(url) {
             webView.evaluateJavaScript("window.postMessage({ emailProtectionSignedOut: true }, window.origin);")
         }
     }
@@ -835,8 +834,8 @@ class TabViewController: UIViewController {
     
     func onCopyAction(forUrl url: URL) {
         let copyText: String
-        if appURLs.isDuckDuckGo(url: url) {
-            let cleanURL = appURLs.removingInternalSearchParameters(from: url)
+        if AppURLs.shared.isDuckDuckGo(url: url) {
+            let cleanURL = AppURLs.shared.removingInternalSearchParameters(from: url)
             copyText = cleanURL.absoluteString
         } else {
             copyText = url.absoluteString
@@ -1058,7 +1057,7 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
-        if let url = link?.url, AppURLs().isDuckDuckGoEmailProtectionURL(url) {
+        if let url = link?.url, AppURLs.shared.isDuckDuckGoEmailProtectionURL(url) {
             scheduleTrackerNetworksAnimation(collapsing: true)
             return
         }
@@ -1200,7 +1199,7 @@ extension TabViewController: WKNavigationDelegate {
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
 
         if let url = navigationAction.request.url,
-           !appURLs.isDuckDuckGoSearch(url: url),
+           !AppURLs.shared.isDuckDuckGoSearch(url: url),
            true == shouldWaitUntilContentBlockingIsLoaded({ [weak self, webView /* decision handler must be called */] in
                guard let self = self else {
                    decisionHandler(.cancel)
@@ -1284,7 +1283,7 @@ extension TabViewController: WKNavigationDelegate {
                let url = navigationAction.request.url,
                decision != .cancel,
                navigationAction.isTargetingMainFrame() {
-                if self.appURLs.isDuckDuckGoSearch(url: url) {
+                if AppURLs.shared.isDuckDuckGoSearch(url: url) {
                     StatisticsLoader.shared.refreshSearchRetentionAtb()
                 }
 

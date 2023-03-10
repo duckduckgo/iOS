@@ -26,7 +26,6 @@ final class EmbeddedAppTPDataTests: XCTestCase {
     func testWhenEmbeddedDataIsUpdatedThenUpdateSHAAndEtag() throws {
         
         let hash = try Data(contentsOf: TrackerDataParser().blocklistUrl).sha256
-        print(hash)
         XCTAssertEqual(hash, TrackerDataParser.Constants.blocklistHash, "Error: please update SHA and ETag when changing embedded TDS")
     }
 

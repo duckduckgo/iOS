@@ -72,7 +72,7 @@ struct AppTPToggleView: View {
                 await setFirewall(value)
             }
         }
-        .onAppear() {
+        .onAppear {
             Task {
                 await setup()
             }

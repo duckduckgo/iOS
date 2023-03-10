@@ -27,10 +27,15 @@ public class AppTrackingProtectionStoringModel: ObservableObject {
     private let context: NSManagedObjectContext
     private let dateFormatter: DateFormatter
 
+    private var timer: DispatchSourceTimer?
+
     public init(appTrackingProtectionDatabase: CoreDataDatabase) {
         self.context = appTrackingProtectionDatabase.makeContext(concurrencyType: .privateQueueConcurrencyType)
         self.dateFormatter = DateFormatter()
         self.dateFormatter.dateFormat = "yyyy-MM-dd"
+
+        // Uncomment this to start a timer that saves a fake tracker to the database every 3 seconds
+        // startFakeTrackerTimer()
     }
 
     public func storeBlockedTracker(domain: String, trackerOwner: String, date: Date = Date()) {
@@ -42,13 +47,18 @@ public class AppTrackingProtectionStoringModel: ObservableObject {
 
                 if let existingTracker = try context.fetch(existingTrackersFetchRequest).first {
                     existingTracker.count += 1
-                    existingTracker.timestamp = Date()
+                    existingTracker.timestamp = date
                 } else {
                     _ = AppTrackerEntity.makeTracker(domain: domain,
                                                      trackerOwner: trackerOwner,
                                                      date: date,
                                                      bucket: bucket,
                                                      context: context)
+                }
+
+                if let sevenDaysAgo = Calendar.current.date(byAdding: .day, value: -7, to: date) {
+                    let staleTrackersFetchRequest = AppTrackerEntity.fetchRequest(trackersOlderThan: sevenDaysAgo)
+                    context.deleteAll(matching: staleTrackersFetchRequest)
                 }
 
                 save()
@@ -66,6 +76,32 @@ public class AppTrackingProtectionStoringModel: ObservableObject {
             os_log("[AppTP] Failed to save tracker to database", log: generalLog, type: .error)
             context.rollback()
         }
+    }
+
+}
+
+// MARK: - Debugging
+
+extension AppTrackingProtectionStoringModel {
+
+    fileprivate func startFakeTrackerTimer() {
+        self.timer = DispatchSource.timer(interval: .seconds(3)) { [weak self] in
+            self?.storeBlockedTracker(domain: "fakedomain.com", trackerOwner: "Fake Tracker")
+        }
+    }
+
+}
+
+extension DispatchSource {
+
+    class func timer(interval: DispatchTimeInterval, leeway: DispatchTimeInterval = .nanoseconds(0), handler: @escaping () -> Void) -> DispatchSourceTimer {
+        let result = DispatchSource.makeTimerSource(queue: DispatchQueue.global())
+
+        result.setEventHandler(handler: handler)
+        result.schedule(deadline: DispatchTime.now() + interval, repeating: interval, leeway: leeway)
+        result.resume()
+
+        return result
     }
 
 }

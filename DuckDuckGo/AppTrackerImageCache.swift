@@ -82,7 +82,7 @@ final class AppTrackerImageCache {
         return dataFromBundle(for: entityName, subdir: .letters)
     }
     
-    // swiftlint:disable cyclomatic_complexity function_body_length
+    // swiftlint:disable cyclomatic_complexity
     private func loadTrackerLogoImage(for entityName: String) -> Data? {
         switch entityName {
         case "Adjust GmbH": return dataFromBundle(for: "adjust", subdir: .logos)

@@ -93,6 +93,7 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
 
     public init(appTrackingProtectionDatabase: CoreDataDatabase) {
         self.context = appTrackingProtectionDatabase.makeContext(concurrencyType: .mainQueueConcurrencyType)
+        self.context.stalenessInterval = 0
 
         super.init()
 

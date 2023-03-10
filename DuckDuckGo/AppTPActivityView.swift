@@ -59,7 +59,9 @@ struct AppTPActivityView: View {
                 LazyVStack(alignment: .leading, spacing: 0) {
                     ForEach(section.objects as? [AppTrackerEntity] ?? []) { tracker in
                         let showDivider = tracker != (section.objects?.last as? AppTrackerEntity)
-                        AppTPTrackerCell(tracker: tracker,
+                        AppTPTrackerCell(trackerDomain: tracker.domain,
+                                         trackerOwner: tracker.trackerOwner,
+                                         trackerCount: tracker.count,
                                          imageCache: imageCache,
                                          showDivider: showDivider)
                     }

@@ -1,0 +1,137 @@
+//
+//  QRCodeScannerView.swift
+//  DuckDuckGo
+//
+//  Copyright © 2023 DuckDuckGo. All rights reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
+
+import SwiftUI
+import AVFoundation
+
+struct QRCodeScannerView: UIViewRepresentable {
+
+    var onQRCodeScanned: (String) -> Bool
+    var onCameraUnavailable: () -> Void
+
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(self)
+    }
+
+    func makeUIView(context: Context) -> UIView {
+        let view = AutoResizeLayersView()
+        context.coordinator.start(view)
+        return view
+    }
+
+    func updateUIView(_ uiView: UIView, context: Context) {
+    }
+
+    static func dismantleUIView(_ uiView: UIView, coordinator: Coordinator) {
+        coordinator.stop()
+    }
+
+    class Coordinator: NSObject, AVCaptureMetadataOutputObjectsDelegate {
+
+        let session: AVCaptureSession
+        let metadataOutput = AVCaptureMetadataOutput()
+        let cameraView: QRCodeScannerView
+
+        init(_ cameraView: QRCodeScannerView) {
+            self.cameraView = cameraView
+            self.session = AVCaptureSession()
+            super.init()
+        }
+
+        func start(_ uiView: UIView) {
+            session.sessionPreset = .high
+
+            guard let backCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back),
+                  let input = try? AVCaptureDeviceInput(device: backCamera) else {
+
+                // This updates the view so needs to be done in a separate UI cycle
+                DispatchQueue.main.async {
+                    self.cameraView.onCameraUnavailable()
+                }
+                return
+            }
+            session.addInput(input)
+            session.addOutput(metadataOutput)
+            metadataOutput.metadataObjectTypes = [.qr]
+            metadataOutput.setMetadataObjectsDelegate(self, queue: .main)
+
+            let previewLayer = AVCaptureVideoPreviewLayer(session: session)
+            uiView.layer.addSublayer(previewLayer)
+            previewLayer.frame = uiView.bounds
+            previewLayer.videoGravity = .resizeAspectFill
+
+            DispatchQueue.global().async {
+                self.session.startRunning()
+            }
+        }
+
+        func stop() {
+            DispatchQueue.global().async {
+                self.session.stopRunning()
+            }
+        }
+
+        // This gets get called on the main queue
+        func metadataOutput(_ output: AVCaptureMetadataOutput,
+                            didOutput metadataObjects: [AVMetadataObject],
+                            from connection: AVCaptureConnection) {
+
+            assert(Thread.isMainThread)
+
+            guard metadataObjects.count == 1,
+                  let codeObject = metadataObjects[0] as? AVMetadataMachineReadableCodeObject,
+                  let code = codeObject.stringValue else { return }
+
+            if cameraView.onQRCodeScanned(code) {
+                stop()
+            }
+        }
+    }
+
+}
+
+private class AutoResizeLayersView: UIView {
+
+    override var frame: CGRect {
+        didSet {
+            layer.sublayers?.forEach {
+                $0.frame = self.bounds
+                if let preview = $0 as? AVCaptureVideoPreviewLayer {
+                    preview.connection?.videoOrientation = UIDevice.current.orientation.avCapture
+                }
+            }
+        }
+    }
+
+}
+
+private extension UIDeviceOrientation {
+
+    var avCapture: AVCaptureVideoOrientation {
+        switch self {
+        // For some reason if the device orientenation is landscape left, the video needs to be landscape right and visa-versa
+        case .landscapeLeft: return .landscapeRight
+        case .landscapeRight: return .landscapeLeft
+        case .portraitUpsideDown: return .portraitUpsideDown
+        case .portrait: return .portrait
+        default: return .portrait
+        }
+    }
+
+}

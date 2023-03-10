@@ -291,6 +291,7 @@ extension Pixel {
         case dbRemoteMessagingUpdateMessageShownError
         case dbRemoteMessagingUpdateMessageStatusError
         case dbRemoteMessagingDeleteScheduledMessageError
+        case dbLocalAuthenticationError
 
         case configurationFetchInfo
         
@@ -660,6 +661,7 @@ extension Pixel.Event {
         case .dbRemoteMessagingUpdateMessageShownError: return "m_d_db_rm_update_message_shown"
         case .dbRemoteMessagingUpdateMessageStatusError: return "m_d_db_rm_update_message_status"
         case .dbRemoteMessagingDeleteScheduledMessageError: return "m_d_db_rm_delete_scheduled_message"
+        case .dbLocalAuthenticationError: return "m_d_local_auth_error"
 
         case .configurationFetchInfo: return "m_d_cfgfetch"
             

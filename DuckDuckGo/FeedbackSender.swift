@@ -21,6 +21,8 @@ import Foundation
 import Core
 import os.log
 import BrowserServicesKit
+import Common
+import Networking
 
 /// Represents single component that is being sent to the server.
 /// Feedback as a whole can consist of multiple components. These components are included both in
@@ -87,8 +89,11 @@ struct FeedbackSubmitter: FeedbackSender {
             "v": versionProvider.versionAndBuildNumber,
             "atb": statisticsStore.atbWithVariant ?? ""
         ]
-
-        APIRequest.request(url: AppUrls().feedback, method: .post, parameters: parameters) { _, error in
+        
+        let configuration = APIRequest.Configuration(url: AppUrls().feedback, method: .post, queryParameters: parameters)
+        let request = APIRequest(configuration: configuration, urlSession: .session())
+        
+        request.fetch { _, error in
             if let error = error {
                 os_log("Feedback request failed, %s", log: .generalLog, type: .debug, error.localizedDescription)
             } else {

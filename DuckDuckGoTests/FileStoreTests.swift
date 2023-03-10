@@ -24,30 +24,30 @@ class FileStoreTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .surrogates))
-        try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .privacyConfiguration))
+        try? FileManager.default.removeItem(at: FileStore().persistenceLocation(for: .surrogates))
+        try? FileManager.default.removeItem(at: FileStore().persistenceLocation(for: .privacyConfiguration))
     }
 
     func testWhenFileExistsThenHasDataReturnsTrue() {
         let store = FileStore()
-        XCTAssertFalse(store.hasData(forConfiguration: .surrogates))
+        XCTAssertFalse(store.hasData(for: .surrogates))
         
-        XCTAssertTrue(store.persist(Data(), forConfiguration: .surrogates))
-        XCTAssertTrue(store.hasData(forConfiguration: .surrogates))
+        XCTAssertNoThrow(try store.persist(Data(), for: .surrogates))
+        XCTAssertTrue(store.hasData(for: .surrogates))
     }
     
     func testWhenNewThenStorageIsEmptyForConfiguration() {
         let store = FileStore()
-        XCTAssertNil(store.loadAsString(forConfiguration: .surrogates))
+        XCTAssertNil(store.loadAsString(for: .surrogates))
     }
     
     func testWhenDataSavedForConfigurationItCanBeLoadedAsAString() {
         let uuid = UUID().uuidString
-        let data = uuid.data(using: .utf8)
+        let data = uuid.data(using: .utf8)!
         let store = FileStore()
-        XCTAssertTrue(store.persist(data, forConfiguration: .surrogates))
-        XCTAssertEqual(uuid, store.loadAsString(forConfiguration: .surrogates))
-        XCTAssertNil(store.loadAsData(forConfiguration: .privacyConfiguration))
+        XCTAssertNoThrow(try store.persist(data, for: .surrogates))
+        XCTAssertEqual(uuid, store.loadAsString(for: .surrogates))
+        XCTAssertNil(store.loadAsData(for: .privacyConfiguration))
     }
 
     private func assertDeleted(_ url: URL, file: StaticString = #filePath, line: UInt = #line) {

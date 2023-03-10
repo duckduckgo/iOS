@@ -59,26 +59,27 @@ struct AppTPToggleView: View {
     }
     
     var body: some View {
-        HStack {
-            Toggle(isOn: $vpnOn, label: {
+        Toggle(isOn: $vpnOn, label: {
+            HStack {
                 Text(UserText.appTPNavTitle)
-            })
-            .toggleStyle(SwitchToggleStyle(tint: Color.toggleTint))
-            .disabled(isLoading())
-            .onChange(of: vpnOn) { value in
-                Task {
-                    await setFirewall(value)
+
+                Spacer()
+                
+                if isLoading() {
+                    SwiftUI.ProgressView()
                 }
             }
-            
-            if isLoading() {
-                SwiftUI.ProgressView()
-                    .padding(.leading)
+        })
+        .toggleStyle(SwitchToggleStyle(tint: Color.toggleTint))
+        .disabled(isLoading())
+        .onChange(of: vpnOn) { value in
+            Task {
+                await setFirewall(value)
             }
         }
         .padding()
         .frame(height: Const.Size.rowHeight)
-        .onAppear() {
+        .onAppear {
             Task {
                 await setup()
             }

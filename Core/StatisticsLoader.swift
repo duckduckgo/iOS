@@ -82,7 +82,7 @@ public class StatisticsLoader {
     }
     
     public func refreshSearchRetentionAtb(completion: @escaping Completion = {}) {
-        guard let url = URL.StatisticsDependent(statisticsStore: statisticsStore).searchAtb else {
+        guard let url = StatisticsDependentURL(statisticsStore: statisticsStore).searchAtb else {
             requestInstallStatistics(completion: completion)
             return
         }
@@ -105,7 +105,7 @@ public class StatisticsLoader {
     }
     
     public func refreshAppRetentionAtb(completion: @escaping Completion = {}) {
-        guard let url = URL.StatisticsDependent(statisticsStore: statisticsStore).appAtb else {
+        guard let url = StatisticsDependentURL(statisticsStore: statisticsStore).appAtb else {
             requestInstallStatistics(completion: completion)
             return
         }

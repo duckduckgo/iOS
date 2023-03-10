@@ -18,17 +18,26 @@
 //
 
 import Foundation
+import Core
 
 class TrackerDataParser {
+    
+    struct Constants {
+        static let blocklistHash = "a8402a2a06f17d79e8b359d051fd398dd304e20cd6632c28f5247b35e487dd75"
+    }
     
     var blocklist: AppTrackerList?
     
     init() {
-        loadTrackers(filename: "blocklist")
+        loadTrackers()
     }
     
-    func loadTrackers(filename: String) {
-        guard let data = try? Data(contentsOf: Bundle.main.url(forResource: filename, withExtension: "json")!) else {
+    var blocklistUrl: URL {
+        return Bundle.main.url(forResource: "blocklist", withExtension: "json")!
+    }
+    
+    func loadTrackers() {
+        guard let data = try? Data(contentsOf: blocklistUrl) else {
             return
         }
         
@@ -36,6 +45,7 @@ class TrackerDataParser {
             blocklist = try JSONDecoder().decode(AppTrackerList.self, from: data)
         } catch {
             print("[ERROR] Error decoding blocklist: \(error)")
+            Pixel.fire(pixel: .appTPBlocklistParseFailed)
         }
     }
     

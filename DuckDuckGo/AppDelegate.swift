@@ -295,6 +295,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
         }
+        
+        let fwm = FirewallManager()
+        Task {
+            await fwm.refreshManager()
+            let date = Date()
+            let key = "appTPActivePixelFired"
+            
+            // Make sure we don't fire this pixel multiple times a day
+            let dayStart = Calendar.current.startOfDay(for: date)
+            let fireDate = UserDefaults.standard.object(forKey: key) as? Date
+            if fireDate == nil || fireDate! < dayStart,
+               fwm.status() == .connected {
+                Pixel.fire(pixel: .appTPActiveUser)
+                UserDefaults.standard.set(date, forKey: key)
+            }
+        }
     }
     
     private func shouldShowKeyboardOnLaunch() -> Bool {

@@ -72,6 +72,7 @@ public class AppTrackingProtectionStoringModel: ObservableObject {
         do {
             try context.save()
         } catch {
+            Pixel.fire(pixel: .appTPDBTrackerStoreFailure)
             os_log("[AppTP] Failed to save tracker to database", log: generalLog, type: .error)
             context.rollback()
         }

@@ -87,7 +87,7 @@ class TabViewController: UIViewController {
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
 
     internal lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
-    private lazy var featureFlaggerInternalUserDecider = AppDependencyProvider.shared.featureFlaggerInternalUserDecider
+    private lazy var internalUserDecider = AppDependencyProvider.shared.internalUserDecider
 
     private(set) var tabModel: Tab
     private(set) var privacyInfo: PrivacyInfo?
@@ -948,7 +948,7 @@ extension TabViewController: WKNavigationDelegate {
         let httpResponse = navigationResponse.response as? HTTPURLResponse
         let isSuccessfulResponse = httpResponse?.isSuccessfulResponse ?? false
 
-        let didMarkAsInternal = featureFlaggerInternalUserDecider.markUserAsInternalIfNeeded(forUrl: webView.url, response: httpResponse)
+        let didMarkAsInternal = internalUserDecider.markUserAsInternalIfNeeded(forUrl: webView.url, response: httpResponse)
         if didMarkAsInternal {
             Pixel.fire(pixel: .featureFlaggingInternalUserAuthenticated)
             NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.didVerifyInternalUser))

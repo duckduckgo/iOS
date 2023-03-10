@@ -25,7 +25,7 @@ protocol DependencyProvider {
     var appSettings: AppSettings { get }
     var variantManager: VariantManager { get }
     var featureFlagger: FeatureFlagger { get }
-    var featureFlaggerInternalUserDecider: FeatureFlaggerInternalUserDecider { get }
+    var internalUserDecider: InternalUserDecider { get }
     var remoteMessagingStore: RemoteMessagingStore { get }
     var homePageConfiguration: HomePageConfiguration { get }
     var storageCache: StorageCache { get }
@@ -47,7 +47,7 @@ class AppDependencyProvider: DependencyProvider {
     var featureFlagger: FeatureFlagger {
         return defaultFeatureFlagger
     }
-    var featureFlaggerInternalUserDecider: FeatureFlaggerInternalUserDecider {
+    var internalUserDecider: InternalUserDecider {
         return defaultFeatureFlagger
     }
 

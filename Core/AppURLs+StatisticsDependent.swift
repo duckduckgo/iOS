@@ -40,17 +40,17 @@ public extension URL {
 
         private let statisticsStore: StatisticsStore
 
-        public init(statisticsStore: StatisticsStore = StatisticsUserDefaults()) {
+        init(statisticsStore: StatisticsStore = StatisticsUserDefaults()) {
             self.statisticsStore = statisticsStore
         }
 
         // MARK: - Search
 
-        public func makeSearch(for text: String) -> URL? {
+        func makeSearch(for text: String) -> URL? {
             makeSearch(for: text, additionalParameters: [])
         }
 
-        public func makeSearch(forQuery query: String, queryContext: URL? = nil) -> URL? {
+        func makeSearch(forQuery query: String, queryContext: URL? = nil) -> URL? {
             if let url = URL.webUrl(from: query) {
                 return url
             }
@@ -80,7 +80,7 @@ public extension URL {
             return applyingStatsParams(for: searchURL)
         }
 
-        public func applyingStatsParams(for url: URL) -> URL {
+        func applyingStatsParams(for url: URL) -> URL {
             var searchURL = url.removingParameters(named: [Param.source, Param.atb])
                 .appendingParameter(name: Param.source,
                                     value: ParamValue.source)
@@ -93,7 +93,7 @@ public extension URL {
 
         // MARK: - ATB
 
-        public var searchAtb: URL? {
+        var searchAtb: URL? {
             guard let atbWithVariant = statisticsStore.atbWithVariant, let setAtb = statisticsStore.searchRetentionAtb else {
                 return nil
             }
@@ -104,7 +104,7 @@ public extension URL {
             ])
         }
 
-        public var appAtb: URL? {
+        var appAtb: URL? {
             guard let atbWithVariant = statisticsStore.atbWithVariant, let setAtb = statisticsStore.appRetentionAtb else {
                 return nil
             }
@@ -116,7 +116,7 @@ public extension URL {
             ])
         }
 
-        public func hasCorrectMobileStatsParams(url: URL) -> Bool {
+        func hasCorrectMobileStatsParams(url: URL) -> Bool {
             guard let source = url.getParameter(named: Param.source),
                   source == ParamValue.source
             else { return false }
@@ -129,7 +129,7 @@ public extension URL {
         // MARK: - Pixel
 
         private static let pixelBase: String = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
-        public func makePixel(withName pixelName: String,
+        func makePixel(withName pixelName: String,
                               formFactor: String? = nil,
                               includeATB: Bool = true) -> URL {
             var urlString = "\(Self.pixelBase)/t/\(pixelName)"

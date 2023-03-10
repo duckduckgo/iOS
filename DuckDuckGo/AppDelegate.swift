@@ -297,8 +297,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         let fwm = FirewallManager()
-        if fwm.status() == .connected {
-            Pixel.fire(pixel: .appTPActiveUser)
+        Task {
+            await fwm.refreshManager()
+            if fwm.status() == .connected {
+                Pixel.fire(pixel: .appTPActiveUser)
+            }
         }
     }
     

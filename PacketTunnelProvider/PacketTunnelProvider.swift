@@ -19,7 +19,6 @@
 
 import NetworkExtension
 import os.log
-import Core
 
 public let generalLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? "DDG AppTP", category: "DDG AppTP")
 
@@ -28,10 +27,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     let proxyServerPort: UInt16 = 9090
     let proxyServerAddress = "127.0.0.1"
     var proxyServer: GCDHTTPProxyServer!
-    
-    func crashHandler() {
-        Pixel.fire(pixel: .appTPVPNCrash)
-    }
     
     override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
         os_log("[AppTP] Starting tunnel...", log: generalLog, type: .debug)

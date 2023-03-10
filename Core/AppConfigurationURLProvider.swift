@@ -25,12 +25,12 @@ struct AppConfigurationURLProvider: ConfigurationURLProviding {
 
     func url(for configuration: Configuration) -> URL {
         switch configuration {
-        case .bloomFilterSpec: return AppURLs.shared.bloomFilterSpec
-        case .bloomFilterBinary: return AppURLs.shared.bloomFilter
-        case .bloomFilterExcludedDomains: return AppURLs.shared.bloomFilterExcludedDomains
-        case .privacyConfiguration: return AppURLs.shared.privacyConfig
-        case .trackerDataSet: return AppURLs.shared.trackerDataSet
-        case .surrogates: return AppURLs.shared.surrogates
+        case .bloomFilterSpec: return URL.bloomFilterSpec
+        case .bloomFilterBinary: return URL.bloomFilter
+        case .bloomFilterExcludedDomains: return URL.bloomFilterExcludedDomains
+        case .privacyConfiguration: return URL.privacyConfig
+        case .trackerDataSet: return URL.trackerDataSet
+        case .surrogates: return URL.surrogates
         case .FBConfig: fatalError("This feature is not supported on iOS")
         }
     }

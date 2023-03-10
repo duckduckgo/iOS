@@ -412,7 +412,7 @@ public class Favicons {
             return nil
         }
 
-        if AppURLs.shared.isDuckDuckGo(domain: domain) {
+        if URL.isDuckDuckGo(domain: domain) {
             return nil
         }
 

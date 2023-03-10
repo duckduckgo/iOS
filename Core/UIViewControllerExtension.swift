@@ -89,13 +89,13 @@ extension Core.Bookmark {
         guard let url = url else {
             return ""
         }
-        return AppURLs.shared.removingInternalSearchParameters(from: url)
+        return url.removingInternalSearchParameters()
     }
 
     public func activityViewController(_ activityViewController: UIActivityViewController,
                                        itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
         guard let url = url else { return nil }
-        return AppURLs.shared.removingInternalSearchParameters(from: url)
+        return url.removingInternalSearchParameters()
     }
 
     public func activityViewController(_ activityViewController: UIActivityViewController,
@@ -132,7 +132,7 @@ extension Core.Link: UIActivityItemSource {
         if let localFileURL = localFileURL {
             return localFileURL
         }
-        return AppURLs.shared.removingInternalSearchParameters(from: url)
+        return url.removingInternalSearchParameters()
     }
 
     public func activityViewController(_ activityViewController: UIActivityViewController,
@@ -145,7 +145,7 @@ extension Core.Link: UIActivityItemSource {
         
             return localFileURL
         }
-        return AppURLs.shared.removingInternalSearchParameters(from: url)
+        return url.removingInternalSearchParameters()
     }
 
     public func activityViewController(_ activityViewController: UIActivityViewController,

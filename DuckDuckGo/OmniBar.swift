@@ -350,7 +350,7 @@ class OmniBar: UIView {
             return
         }
 
-        if let query = AppURLs.shared.searchQuery(from: url) {
+        if let query = url.searchQuery {
             textField.text = query
         } else {
             textField.attributedText = OmniBar.demphasisePath(forUrl: url)

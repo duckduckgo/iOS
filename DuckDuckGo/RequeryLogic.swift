@@ -37,7 +37,7 @@ class RequeryLogic {
     private var serpState: SerpState = .notLoaded
 
     func onNewNavigation(url: URL) {
-        guard let query = AppURLs.shared.searchQuery(from: url) else {
+        guard let query = url.searchQuery else {
             serpState = .notLoaded
             return
         }

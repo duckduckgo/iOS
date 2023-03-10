@@ -44,7 +44,7 @@ public class StatisticsLoader {
     }
     
     private func requestInstallStatistics(completion: @escaping Completion = {}) {
-        let configuration = APIRequest.Configuration(url: AppURLs.shared.initialAtb)
+        let configuration = APIRequest.Configuration(url: .atb)
         let request = APIRequest(configuration: configuration, urlSession: .session())
         
         request.fetch { response, error in
@@ -64,7 +64,7 @@ public class StatisticsLoader {
     
     private func requestExti(atb: Atb, completion: @escaping Completion = {}) {
         let installAtb = atb.version + (statisticsStore.variant ?? "")
-        let url = AppURLs.shared.exti(forAtb: installAtb)
+        let url = URL.exti(forAtb: installAtb)
         
         let configuration = APIRequest.Configuration(url: url)
         let request = APIRequest(configuration: configuration, urlSession: .session())
@@ -82,7 +82,7 @@ public class StatisticsLoader {
     }
     
     public func refreshSearchRetentionAtb(completion: @escaping Completion = {}) {
-        guard let url = AppURLs.shared.makeSearchAtb(statisticsStore: statisticsStore) else {
+        guard let url = URL.StatisticsDependent(statisticsStore: statisticsStore).searchAtb else {
             requestInstallStatistics(completion: completion)
             return
         }
@@ -105,7 +105,7 @@ public class StatisticsLoader {
     }
     
     public func refreshAppRetentionAtb(completion: @escaping Completion = {}) {
-        guard let url = AppURLs.shared.makeAppAtb(statisticsStore: statisticsStore) else {
+        guard let url = URL.StatisticsDependent(statisticsStore: statisticsStore).appAtb else {
             requestInstallStatistics(completion: completion)
             return
         }

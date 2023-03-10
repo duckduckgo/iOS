@@ -114,7 +114,7 @@ class FavoriteHomeCell: UICollectionViewCell {
                 return
             }
 
-            let useBorder = AppURLs.shared.isDuckDuckGo(domain: domain) || image.size.width < Constants.largeFaviconSize
+            let useBorder = URL.isDuckDuckGo(domain: domain) || image.size.width < Constants.largeFaviconSize
             self.useImageBorder(useBorder)
             self.applyFavicon(image)
         }

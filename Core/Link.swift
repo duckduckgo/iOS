@@ -40,7 +40,7 @@ public class Link: NSObject, NSCoding {
 
         var displayTitle = (title?.isEmpty ?? true) ? host : title
 
-        if AppURLs.shared.isDuckDuckGo(url: url),
+        if url.isDuckDuckGo,
             let title = displayTitle, title.hasSuffix(Constants.ddgSuffix) {
             displayTitle = String(title.dropLast(Constants.ddgSuffix.count))
         }

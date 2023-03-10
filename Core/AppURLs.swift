@@ -20,17 +20,16 @@
 import Foundation
 import BrowserServicesKit
 
-private extension URL {
+public extension URL {
 
-    static let base: String = ProcessInfo.processInfo.environment["BASE_URL", default: "https://duckduckgo.com"]
-    static let pixelBase: String = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
-    static let staticBase: String = "https://staticcdn.duckduckgo.com"
+    private static let base: String = ProcessInfo.processInfo.environment["BASE_URL", default: "https://duckduckgo.com"]
+    private static let staticBase: String = "https://staticcdn.duckduckgo.com"
 
     static let ddg = URL(string: URL.base)!
 
     static let autocomplete = URL(string: "\(base)/ac/")!
-    static var emailProtection = URL(string: "\(base)/email")!
-    static var emailProtectionQuickLink = URL(string: "ddgQuickLink://\(base)/email")!
+    static let emailProtection = URL(string: "\(base)/email")!
+    static let emailProtectionQuickLink = URL(string: "ddgQuickLink://\(base)/email")!
 
     static let surrogates = URL(string: "\(staticBase)/surrogates.txt")!
     static let privacyConfig = URL(string: "\(staticBase)/trackerblocking/config/v2/ios-config.json")!
@@ -49,11 +48,41 @@ private extension URL {
     static let mac = URL(string: "\(base)/mac")!
     static let windows = URL(string: "\(base)/windows")!
 
-}
+    static func exti(forAtb atb: String) -> URL { URL.exti.appendingParameter(name: Param.atb, value: atb) }
 
-public struct AppURLs {
+    static func makeAutocomplete(for text: String) throws -> URL {
+        URL.autocomplete.appendingParameters([
+            Param.search: text,
+            Param.enableNavSuggestions: ParamValue.enableNavSuggestions
+        ])
+    }
 
-    private enum Param {
+    static func isDuckDuckGo(domain: String?) -> Bool {
+        guard let domain = domain, let url = URL(string: "https://\(domain)") else { return false }
+        return url.isDuckDuckGo
+    }
+
+    var isDuckDuckGo: Bool { isPart(ofDomain: URL.ddg.host!) }
+
+    var isDuckDuckGoStatic: Bool {
+        let staticPaths = ["/settings", "/params"]
+        guard isDuckDuckGo, staticPaths.contains(path) else { return false }
+        return true
+    }
+
+    var isDuckDuckGoSearch: Bool {
+        guard isDuckDuckGo, getParameter(named: Param.search) != nil else { return false }
+        return true
+    }
+
+    var isDuckDuckGoEmailProtection: Bool { absoluteString.starts(with: URL.emailProtection.absoluteString) }
+
+    var searchQuery: String? {
+        guard isDuckDuckGo else { return nil }
+        return getParameter(named: Param.search)
+    }
+
+    enum Param {
 
         static let search = "q"
         static let source = "t"
@@ -70,7 +99,7 @@ public struct AppURLs {
 
     }
 
-    private enum ParamValue {
+    enum ParamValue {
 
         static let source = "ddg_ios"
         static let appUsage = "app_use"
@@ -82,174 +111,18 @@ public struct AppURLs {
 
     }
 
-    public static let shared = AppURLs()
-
-    public let ddg = URL.ddg
-
-    public let surrogates = URL.surrogates
-    public let trackerDataSet = URL.trackerDataSet
-    public let privacyConfig = URL.privacyConfig
-    public let bloomFilter = URL.bloomFilter
-    public let bloomFilterSpec = URL.bloomFilterSpec
-    public let bloomFilterExcludedDomains = URL.bloomFilterExcludedDomains
-
-    public let feedback = URL.feedback
-
-    public func makeAutocomplete(for text: String) throws -> URL {
-        URL.autocomplete.appendingParameters([
-            Param.search: text,
-            Param.enableNavSuggestions: ParamValue.enableNavSuggestions
-        ])
+    func applyingSearchHeaderParams() -> URL {
+        removingParameters(named: [Param.searchHeader]).appendingParameter(name: Param.searchHeader, value: ParamValue.searchHeader)
     }
 
-    public func isDuckDuckGo(domain: String?) -> Bool {
-        guard let domain = domain, let url = URL(string: "https://\(domain)") else { return false }
-        return isDuckDuckGo(url: url)
-    }
-    
-    public func isDuckDuckGo(url: URL) -> Bool { url.isPart(ofDomain: ddg.host!) }
-
-    public func searchQuery(from url: URL) -> String? {
-        guard isDuckDuckGo(url: url) else { return nil }
-        return url.getParameter(named: Param.search)
-    }
-
-    public func make(forQuery query: String, queryContext: URL? = nil, statisticsStore: StatisticsStore = StatisticsUserDefaults()) -> URL? {
-        if let url = URL.webUrl(from: query) {
-            return url
-        }
-        
-        var parameters = [String: String]()
-        if let queryContext = queryContext,
-           isDuckDuckGoSearch(url: queryContext),
-           queryContext.getParameter(named: Param.verticalMaps) == nil,
-           let vertical = queryContext.getParameter(named: Param.vertical),
-           ParamValue.majorVerticals.contains(vertical) {
-
-            parameters[Param.verticalRewrite] = vertical
-        }
-        
-        return makeSearch(for: query, additionalParameters: parameters, statisticsStore: statisticsStore)
-    }
-    
-    public func isDuckDuckGoStatic(url: URL) -> Bool {
-        let staticPaths = ["/settings", "/params"]
-        guard isDuckDuckGo(url: url), staticPaths.contains(url.path) else { return false }
-        return true
-    }
-
-    public let macBrowserDownload = URL.mac
-    public let windowsBrowserDownload = URL.windows
-    public let appStore = URL.appStore
-
-    public func makePixel(withName pixelName: String,
-                          formFactor: String? = nil,
-                          includeATB: Bool = true,
-                          statisticsStore: StatisticsStore = StatisticsUserDefaults()) -> URL {
-        var urlString = "\(URL.pixelBase)/t/\(pixelName)"
-        if let formFactor = formFactor {
-            urlString.append("_ios_\(formFactor)")
-        }
-        var url = URL(string: urlString)!
-
-        if includeATB {
-            url = url.appendingParameter(name: Param.atb, value: statisticsStore.atbWithVariant ?? "")
-        }
-
-        return url
-    }
-
-    // MARK: - Email protection
-
-    public let emailProtectionQuickLink = URL.emailProtectionQuickLink
-    public func isDuckDuckGoEmailProtectionURL(_ url: URL) -> Bool { url.absoluteString.starts(with: URL.emailProtection.absoluteString) }
-
-    // MARK: - atb
-
-    public let initialAtb = URL.atb
-    public func exti(forAtb atb: String) -> URL { URL.exti.appendingParameter(name: Param.atb, value: atb) }
-
-    public func makeSearchAtb(statisticsStore: StatisticsStore = StatisticsUserDefaults()) -> URL? {
-        guard let atbWithVariant = statisticsStore.atbWithVariant, let setAtb = statisticsStore.searchRetentionAtb else {
-            return nil
-        }
-        return URL.atb.appendingParameters([
-            Param.atb: atbWithVariant,
-            Param.setAtb: setAtb,
-            Param.email: EmailManager().isSignedIn ? ParamValue.emailEnabled : ParamValue.emailDisabled
-        ])
-    }
-
-    public func makeAppAtb(statisticsStore: StatisticsStore = StatisticsUserDefaults()) -> URL? {
-        guard let atbWithVariant = statisticsStore.atbWithVariant, let setAtb = statisticsStore.appRetentionAtb else {
-            return nil
-        }
-        return URL.atb.appendingParameters([
-            Param.activityType: ParamValue.appUsage,
-            Param.atb: atbWithVariant,
-            Param.setAtb: setAtb,
-            Param.email: EmailManager().isSignedIn ? ParamValue.emailEnabled : ParamValue.emailDisabled
-        ])
-    }
-
-    public func applyingStatsParams(for url: URL, statisticsStore: StatisticsStore = StatisticsUserDefaults()) -> URL {
-        var searchURL = url.removingParameters(named: [Param.source, Param.atb])
-            .appendingParameter(name: Param.source,
-                                value: ParamValue.source)
-
-        if let atbWithVariant = statisticsStore.atbWithVariant {
-            searchURL = searchURL.appendingParameter(name: Param.atb, value: atbWithVariant)
-        }
-        return searchURL
-    }
-
-    public func hasCorrectMobileStatsParams(url: URL, statisticsStore: StatisticsStore = StatisticsUserDefaults()) -> Bool {
-        guard let source = url.getParameter(named: Param.source),
-              source == ParamValue.source
-        else { return false }
-        if let atbWithVariant = statisticsStore.atbWithVariant {
-            return atbWithVariant == url.getParameter(named: Param.atb)
-        }
-        return true
-    }
-
-    // MARK: - Search
-
-    public func applyingSearchHeaderParams(for url: URL) -> URL {
-        url.removingParameters(named: [Param.searchHeader]).appendingParameter(name: Param.searchHeader, value: ParamValue.searchHeader)
-    }
-
-    public func hasCorrectSearchHeaderParams(url: URL) -> Bool {
-        guard let header = url.getParameter(named: Param.searchHeader) else { return false }
+    var hasCorrectSearchHeaderParams: Bool {
+        guard let header = getParameter(named: Param.searchHeader) else { return false }
         return header == ParamValue.searchHeader
     }
 
-    public func removingInternalSearchParameters(from url: URL) -> URL {
-        guard isDuckDuckGoSearch(url: url) else { return url }
-        return url.removingParameters(named: [Param.atb, Param.source, Param.searchHeader])
-    }
-
-    /**
-     Generates a search url with the source (t) https://duck.co/help/privacy/t
-     and cohort (atb) https://duck.co/help/privacy/atb
-     */
-    private func makeSearch<C: Collection>(for text: String,
-                                           additionalParameters: C,
-                                           statisticsStore: StatisticsStore = StatisticsUserDefaults()) -> URL
-    where C.Element == (key: String, value: String) {
-        let searchURL = ddg
-            .appendingParameter(name: Param.search, value: text)
-            .appendingParameters(additionalParameters)
-        return applyingStatsParams(for: searchURL, statisticsStore: statisticsStore)
-    }
-
-    public func makeSearch(for text: String, statisticsStore: StatisticsStore = StatisticsUserDefaults()) -> URL? {
-        makeSearch(for: text, additionalParameters: [], statisticsStore: statisticsStore)
-    }
-
-    public func isDuckDuckGoSearch(url: URL) -> Bool {
-        guard isDuckDuckGo(url: url), url.getParameter(named: Param.search) != nil else { return false }
-        return true
+    func removingInternalSearchParameters() -> URL {
+        guard isDuckDuckGoSearch else { return self }
+        return removingParameters(named: [Param.atb, Param.source, Param.searchHeader])
     }
 
 }

@@ -262,7 +262,7 @@ final class DaxDialogs {
         guard isEnabled, nextHomeScreenMessageOverride == nil else { return nil }
         guard let host = privacyInfo.domain else { return nil }
         
-        if AppURLs.shared.isDuckDuckGoSearch(url: privacyInfo.url) {
+        if privacyInfo.url.isDuckDuckGoSearch {
             return searchMessage()
         }
         

@@ -492,10 +492,7 @@ extension TabSwitcherViewController: Themable {
         
         toolbar.barTintColor = theme.barBackgroundColor
         toolbar.tintColor = theme.barTintColor
-        
-        FireButtonExperiment.decorateFireButton(fireButton: fireButton, for: theme)
-        FireButtonExperiment.decorateFireButton(fireButton: topFireButton, for: theme)
-        
+                
         collectionView.reloadData()
     }
 }

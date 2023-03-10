@@ -84,26 +84,13 @@ class FireBarButtonItem: UIBarButtonItem {
 
 class FireButton: UIButton {
 
-    public private(set) var snapshotView: UIImageView?
-    private var animationView: AnimationView? = AnimationView(name: "flame")
+    private var animationView = AnimationView(name: "flame")
     
     convenience init() {
         self.init(type: .system)
         setImage(UIImage(named: "Fire"), for: .normal)
-        add(animationView!, into: self)
+        add(animationView, into: self)
     }
-
-//    public var animationName: String? {
-//        didSet {
-//            self.animationView?.removeFromSuperview()
-//            self.animationView = AnimationView(name: animationName ?? "")
-//
-//            if let animationView = self.animationView {
-////                self.add(animationView)
-//                self.add(animationView, into: self)
-//            }
-//        }
-//    }
 
     private func add(_ animationView: AnimationView, into view: UIView) {
         animationView.clipsToBounds = false
@@ -137,66 +124,27 @@ class FireButton: UIButton {
     public func playAnimation(withInitialStateImage initialStateImage: UIImage,
                               andFinalStateImage finalStateImage: UIImage) {
         
-        if snapshotView == nil {
-            snapshotView = UIImageView(image: UIImage(named: "Fire"))
-            snapshotView?.frame = imageView!.frame
-            
-            addSubview(snapshotView!)
-        }
-        
-        
-        
-//        let snapshot = snapshotView(afterScreenUpdates: true)
-//        addSubview(snapshot!)
-//        snapshot?.alpha = 0.0
-        
         let blankImage = self.blankImage(for: initialStateImage)
         self.setImage(blankImage, for: .normal)
-
-
-        snapshotView?.alpha = 0
-        snapshotView?.isHidden = false
         
-        animationView?.alpha = 1
-        animationView?.isHidden = false
-        
-//        UIView.animate(withDuration: 3.5, delay: 0) {
-//            snapshot?.alpha = 0
-//            self.animationView?.alpha = 1.0
-//        }
-
-//        self.animationView?.play(completion: { completed in
-//            self.setImage(finalStateImage, for: .normal)
-//            self.animationView?.isHidden = true
-//            self.animationView?.pause()
-//            self.animationView?.currentProgress = 0
-//        })
-        
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
-//            snapshot?.removeFromSuperview()
+        animationView.alpha = 1
+        animationView.isHidden = false
+                    
+        self.animationView.play(completion: { _ in
             
-            self.animationView?.play(completion: { _ in
+            UIView.transition(with: self.imageView!,
+                              duration: 2.0,
+                              options: .transitionCrossDissolve,
+                              animations: {
                 
-                UIView.animate(withDuration: 0.3, delay: 0) {
-                    self.snapshotView?.alpha = 1.0
-                    self.animationView?.alpha = 0.0
-                }
+                self.setImage(finalStateImage, for: .normal)
+                self.animationView.alpha = 0.0
                 
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    
-                    self.setImage(finalStateImage, for: .normal)
-                    self.snapshotView?.isHidden = true
-                    self.animationView?.isHidden = true
-                    self.animationView?.pause()
-                    self.animationView?.currentProgress = 0
-                    
-                    
-                }
-                
-                
+            }, completion: { _ in
+                self.animationView.stop()
             })
-//        }
+        })
+        
     }
 
     open func playAnimation() {

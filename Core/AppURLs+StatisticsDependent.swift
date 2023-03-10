@@ -22,9 +22,18 @@ import BrowserServicesKit
 
 public extension URL {
 
-    // todo:
-    static func makeSearch(for text: String) -> URL? {
-        URL.StatisticsDependent().makeSearch(for: text)
+    private static let defaultStatisticsDependent = StatisticsDependent()
+
+    static func makeSearch(for text: String) -> URL? { defaultStatisticsDependent.makeSearch(for: text) }
+    static func makeSearch(forQuery query: String, queryContext: URL? = nil) -> URL? {
+        defaultStatisticsDependent.makeSearch(forQuery: query, queryContext: queryContext)
+    }
+    static func applyingStatsParams(for url: URL) -> URL { defaultStatisticsDependent.applyingStatsParams(for: url) }
+    static var searchAtb: URL? { defaultStatisticsDependent.searchAtb }
+    static var appAtb: URL? { defaultStatisticsDependent.appAtb }
+    static func hasCorrectMobileStatsParams(url: URL) -> Bool { defaultStatisticsDependent.hasCorrectMobileStatsParams(url: url) }
+    static func makePixel(withName pixelName: String, formFactor: String? = nil, includeATB: Bool = true) -> URL {
+        defaultStatisticsDependent.makePixel(withName: pixelName, formFactor: formFactor, includeATB: includeATB)
     }
 
     struct StatisticsDependent {

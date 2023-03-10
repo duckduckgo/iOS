@@ -47,7 +47,7 @@ final class AppURLsTests: XCTestCase {
     }
 
     func testWhenRemoveInternalSearchParametersFromSearchUrlThenUrlIsChanged() throws {
-        let searchUrl = URL.StatisticsDependent().makeSearch(for: "example")!
+        let searchUrl = URL.makeSearch(for: "example")!
         let searchUrlWithSearchHeader = searchUrl.applyingSearchHeaderParams()
         let result = searchUrl.removingInternalSearchParameters()
 
@@ -197,7 +197,7 @@ final class AppURLsTests: XCTestCase {
     }
 
     func testSearchUrlCreatesUrlWithQueryParam() throws {
-        let url = URL.StatisticsDependent().makeSearch(for: "query")!
+        let url = URL.makeSearch(for: "query")!
         XCTAssertEqual(url.getParameter(named: "q"), "query")
     }
 

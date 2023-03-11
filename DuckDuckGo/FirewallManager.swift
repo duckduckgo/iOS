@@ -23,10 +23,15 @@ import Core
 import os.log
 import BrowserServicesKit
 
+protocol FirewallDelegate: AnyObject {
+    func statusDidChange(newStatus: NEVPNStatus)
+}
+
 protocol FirewallManaging {
     func status() -> NEVPNStatus
     func refreshManager() async
     func setState(to enabled: Bool) async throws
+    var delegate: FirewallDelegate? { get set }
 }
 
 class FirewallManager: FirewallManaging {
@@ -34,6 +39,16 @@ class FirewallManager: FirewallManaging {
     static let apptpLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier, category: "AppTP")
     
     var manager: NETunnelProviderManager?
+    var delegate: FirewallDelegate?
+    
+    init() {
+        NotificationCenter.default.addObserver(self, selector: #selector(statusDidChange),
+                                               name: .NEVPNStatusDidChange, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .NEVPNStatusDidChange, object: nil)
+    }
     
     /**
      * Calling a request will help force the VPN to enable. We can use an invalid dummy URL to make things simple.
@@ -58,6 +73,10 @@ class FirewallManager: FirewallManaging {
         }
 
         return manager.connection.status
+    }
+    
+    @objc func statusDidChange() {
+        delegate?.statusDidChange(newStatus: status())
     }
     
     func refreshManager() async {

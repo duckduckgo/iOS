@@ -36,6 +36,7 @@ public class AppTrackingProtectionFeedbackModel: ObservableObject {
             let results = try context.fetch(fetchRequest)
             return results
         } catch {
+            Pixel.fire(pixel: .appTPDBFeedbackTrackerFetchFailed)
             assertionFailure("Failed to fetch trackers, with error: \(error.localizedDescription)")
             return []
         }

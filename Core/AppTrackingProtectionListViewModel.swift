@@ -93,6 +93,7 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
 
     public init(appTrackingProtectionDatabase: CoreDataDatabase) {
         self.context = appTrackingProtectionDatabase.makeContext(concurrencyType: .mainQueueConcurrencyType)
+        self.context.stalenessInterval = 0
 
         super.init()
 
@@ -118,6 +119,7 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
 
     private func registerForRemoteChangeNotifications() {
         guard let coordinator = context.persistentStoreCoordinator else {
+            Pixel.fire(pixel: .appTPDBPersistentStoreLoadFailure)
             assertionFailure("Failed to get AppTP persistent store coordinator")
             return
         }
@@ -154,6 +156,7 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
                 try mergeNewTransactions()
                 try removeTransactions(olderThan: lastTrackerHistoryFetchTimestamp)
             } catch {
+                Pixel.fire(pixel: .appTPDBHistoryFailure)
                 print("Persistent History Tracking failed with error \(error)")
             }
         }
@@ -165,6 +168,7 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
         if let fetchRequest = NSPersistentHistoryTransaction.fetchRequest {
             historyFetchRequest.fetchRequest = fetchRequest
         } else {
+            Pixel.fire(pixel: .appTPDBHistoryFetchFailure)
             assertionFailure("Failed to create AppTP persistent history fetch request")
         }
 

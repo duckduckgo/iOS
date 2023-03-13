@@ -46,7 +46,7 @@ class TabSwitcherViewController: UIViewController {
     @IBOutlet weak var displayModeButton: UIButton!
     @IBOutlet weak var bookmarkAllButton: UIButton!
     
-    @IBOutlet weak var fireButton: UIBarButtonItem!
+    @IBOutlet weak var fireButton: FireBarButtonItem!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var plusButton: UIBarButtonItem!
     

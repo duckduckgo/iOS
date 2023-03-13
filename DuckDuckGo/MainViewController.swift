@@ -48,7 +48,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var suggestionTrayContainer: UIView!
     @IBOutlet weak var customNavigationBar: UIView!
     @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var fireButton: UIBarButtonItem!
+    @IBOutlet weak var fireButton: FireBarButtonItem!
     @IBOutlet weak var lastToolbarButton: UIBarButtonItem!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!

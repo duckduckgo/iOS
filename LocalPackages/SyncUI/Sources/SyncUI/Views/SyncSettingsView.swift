@@ -21,9 +21,9 @@ import SwiftUI
 
 public struct SyncSettingsView: View {
 
-    @ObservedObject public var model: SyncSettingsScreenViewModel
+    @ObservedObject public var model: SyncSettingsViewModel
 
-    public init(model: SyncSettingsScreenViewModel) {
+    public init(model: SyncSettingsViewModel) {
         self.model = model
     }
 
@@ -54,11 +54,18 @@ public struct SyncSettingsView: View {
     }
 
     @ViewBuilder
+    func deviceTypeImage(_ device: SyncSettingsViewModel.Device) -> Image {
+        let image = UIImage(named: "SyncDeviceType_\(device.type)") ?? UIImage(named: "SyncDeviceType_phone")!
+        Image(uiImage: image)
+    }
+
+    @ViewBuilder
     func devices() -> some View {
         Section {
             ForEach(model.devices) { device in
                 NavigationLink(destination: Text("WIP: \(device.name)")) {
                     HStack {
+                        deviceTypeImage(device)
                         Text(device.name)
                         Spacer()
                         if device.isThisDevice {
@@ -77,9 +84,10 @@ public struct SyncSettingsView: View {
         List {
             syncToggle()
 
-            if !model.devices.isEmpty {
+            if model.isSyncEnabled {
                 devices()
             }
+            
         }
         .listStyle(.insetGrouped)
         .navigationTitle("Sync")

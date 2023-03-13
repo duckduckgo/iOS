@@ -1,5 +1,5 @@
 //
-//  SyncSettingsScreenViewModel.swift
+//  SyncSettingsViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -31,7 +31,7 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
 
 }
 
-public class SyncSettingsScreenViewModel: ObservableObject {
+public class SyncSettingsViewModel: ObservableObject {
 
     public struct Device: Identifiable, Hashable {
 
@@ -41,11 +41,13 @@ public class SyncSettingsScreenViewModel: ObservableObject {
 
         public let id: String
         let name: String
+        let type: String
         let isThisDevice: Bool
 
-        public init(id: String, name: String, isThisDevice: Bool) {
+        public init(id: String, name: String, type: String, isThisDevice: Bool) {
             self.id = id
             self.name = name
+            self.type = type
             self.isThisDevice = isThisDevice
         }
 
@@ -70,7 +72,7 @@ public class SyncSettingsScreenViewModel: ObservableObject {
         isBusy = false
         isSyncEnabled = true
         devices = [
-            Device(id: UUID().uuidString, name: UIDevice.current.name, isThisDevice: true)
+            Device(id: UUID().uuidString, name: UIDevice.current.name, type: "phone", isThisDevice: true)
         ]
     }
 

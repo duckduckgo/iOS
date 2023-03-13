@@ -25,8 +25,8 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
 
     fileprivate var monitor = Monitor<SyncManagementViewModelDelegate>()
 
-    lazy var model: SyncSettingsScreenViewModel = {
-        let model = SyncSettingsScreenViewModel()
+    lazy var model: SyncSettingsViewModel = {
+        let model = SyncSettingsViewModel()
         model.delegate = self
         return model
     }()

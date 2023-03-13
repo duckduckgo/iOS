@@ -34,7 +34,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     "REV5TXpRMU5qYzRPVEF4TWpNME5UWTNPRGt3TVRJPSIgfSB9"
 
     convenience init() {
-        self.init(rootView: SyncSettingsScreenView(model: SyncSettingsScreenViewModel()))
+        self.init(rootView: SyncSettingsView(model: SyncSettingsViewModel()))
 
         // For some reason, on iOS 14, the viewDidLoad wasn't getting called
         rootView.model.delegate = self
@@ -155,7 +155,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         let controller = UIHostingController(rootView: DeviceConnectedView(saveRecoveryKeyViewModel: model))
         navigationController?.present(controller, animated: true) {
             self.rootView.model.showDevices()
-            self.rootView.model.appendDevice(.init(id: UUID().uuidString, name: "Another Device", isThisDevice: false))
+            self.rootView.model.appendDevice(.init(id: UUID().uuidString, name: "Another Device", type: "desktop", isThisDevice: false))
         }
     }
     

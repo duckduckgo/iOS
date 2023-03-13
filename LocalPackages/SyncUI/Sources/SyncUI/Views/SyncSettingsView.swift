@@ -83,9 +83,12 @@ public struct SyncSettingsView: View {
     @ViewBuilder
     func syncNewDevice() -> some View {
         Section {
+
+            // Appears off center because the list is padding the trailing to make space for the accessory
             VStack(spacing: 0) {
                 QRCodeView(string: UUID().uuidString, size: 192, style: .dark)
                     .padding(.bottom, 32)
+                    .padding(.leading, 20)
 
                 Text("Go to Settings > Sync in the DuckDuckGo App on a different device and scan to connect instantly")
                     .font(.system(size: 15))
@@ -93,13 +96,13 @@ public struct SyncSettingsView: View {
                     .lineSpacing(1.2)
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 16)
+                    .padding(.leading, 20)
+            }
 
-                HStack {
-                    Button("Show Text Code") {
-                        print("***")
-                    }
-                    Spacer()
-                }
+            // Designs show this in the same navigation item as the QR Code, but then the whole thing becomes a giant button
+            //  which I don't think is intended
+            Button("Show Text Code") {
+                print("***")
             }
 
             Button("Scan QR Code") {
@@ -122,10 +125,10 @@ public struct SyncSettingsView: View {
     }
 
     @ViewBuilder
-    func disconnect() -> some View {
+    func deleteAllData() -> some View {
         Section {
             Button("Turn Off and Delete Server Data...") {
-                print("***")
+                model.deleteAllData()
             }
         }
     }
@@ -141,7 +144,7 @@ public struct SyncSettingsView: View {
 
                 saveRecoveryPDF()
 
-                disconnect()
+                deleteAllData()
             }
             
         }

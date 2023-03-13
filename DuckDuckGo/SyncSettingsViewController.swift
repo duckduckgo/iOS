@@ -203,6 +203,36 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         }
     }
 
+    func confirmDisableSync() async -> Bool {
+        return await withCheckedContinuation { continuation in
+            let alert = UIAlertController(title: UserText.syncTurnOffConfirmTitle,
+                                          message: UserText.syncTurnOffConfirmMessage,
+                                          preferredStyle: .alert)
+            alert.addAction(title: UserText.actionCancel) {
+                continuation.resume(returning: false)
+            }
+            alert.addAction(title: UserText.syncTurnOffConfirmAction, style: .destructive) {
+                continuation.resume(returning: true)
+            }
+            self.present(alert, animated: true)
+        }
+    }
+
+    func confirmDeleteAllData() async -> Bool {
+        return await withCheckedContinuation { continuation in
+            let alert = UIAlertController(title: UserText.syncDeleteAllConfirmTitle,
+                                          message: UserText.syncDeleteAllConfirmMessage,
+                                          preferredStyle: .alert)
+            alert.addAction(title: UserText.actionCancel) {
+                continuation.resume(returning: false)
+            }
+            alert.addAction(title: UserText.syncDeleteAllConfirmAction, style: .destructive) {
+                continuation.resume(returning: true)
+            }
+            self.present(alert, animated: true)
+        }
+    }
+
 }
 
 extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {

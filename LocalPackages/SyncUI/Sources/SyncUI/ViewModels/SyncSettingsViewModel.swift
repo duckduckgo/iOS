@@ -28,6 +28,8 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
     func showDeviceConnected()
     func showRecoveryPDF()
     func createAccountAndStartSyncing()
+    func confirmDisableSync() async -> Bool
+    func confirmDeleteAllData() async -> Bool
 
 }
 
@@ -86,7 +88,23 @@ public class SyncSettingsViewModel: ObservableObject {
     }
 
     func disableSync() {
-        isSyncEnabled = false
+        isBusy = true
+        Task { @MainActor in
+            if await delegate!.confirmDisableSync() {
+                isSyncEnabled = false
+            }
+            isBusy = false
+        }
+    }
+
+    func deleteAllData() {
+        isBusy = true
+        Task { @MainActor in
+            if await delegate!.confirmDeleteAllData() {
+                isSyncEnabled = false
+            }
+            isBusy = false
+        }
     }
 
     public func setupFinished(_ model: TurnOnSyncViewModel) {

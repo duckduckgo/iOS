@@ -61,7 +61,6 @@ final class AutofillLoginListAuthenticator {
         let reason = UserText.autofillLoginListAuthenticationReason
         context.localizedReason = reason
         
-        var error: NSError?
         if canAuthenticate() {
             let reason = reason
             context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason ) { success, error in

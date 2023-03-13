@@ -22,6 +22,7 @@ import MessageUI
 import Core
 import BrowserServicesKit
 import SwiftUI
+import Common
 
 // swiftlint:disable file_length type_body_length
 class SettingsViewController: UITableViewController {

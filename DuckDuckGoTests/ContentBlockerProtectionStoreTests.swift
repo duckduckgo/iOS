@@ -24,7 +24,7 @@ import BrowserServicesKit
 
 class ContentBlockerProtectionStoreTests: XCTestCase {
 
-    func testWhenCheckingDomainsAreProtected_ThenUsesPersistedUnprotectedDomainList() {
+    func testWhenCheckingDomainsAreProtected_ThenUsesPersistedUnprotectedDomainList() throws {
         let configFile =
         """
         {
@@ -36,7 +36,7 @@ class ContentBlockerProtectionStoreTests: XCTestCase {
             ]
         }
         """.data(using: .utf8)!
-        _ = FileStore().persist(configFile, forConfiguration: .privacyConfiguration)
+        try FileStore().persist(configFile, for: .privacyConfiguration)
         // swiftlint:disable:next force_cast
         let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager as! PrivacyConfigurationManager
         XCTAssertEqual(privacyConfigurationManager.embeddedConfigData.etag,

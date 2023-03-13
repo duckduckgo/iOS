@@ -46,22 +46,36 @@ public struct PrimaryButtonStyle: ButtonStyle {
 
 public struct SecondaryButtonStyle: ButtonStyle {
     @Environment(\.colorScheme) private var colorScheme
-    
-    public init() {}
+
+    let compact: Bool
+
+    public init(compact: Bool = false) {
+        self.compact = compact
+    }
     
     private var backgoundColor: Color {
         colorScheme == .light ? Color.white : .gray70
     }
+
     private var foregroundColor: Color {
         colorScheme == .light ? .blueBase : .white
     }
-    
+
+    @ViewBuilder
+    func compactPadding(view: some View) -> some View {
+        if compact {
+            view
+        } else {
+            view.padding()
+        }
+    }
+
     public func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .font(Font(UIFont.boldAppFont(ofSize: Consts.fontSize)))
+        compactPadding(view: configuration.label)
+            .font(Font(UIFont.boldAppFont(ofSize: compact ? Consts.fontSize - 1 : Consts.fontSize)))
             .foregroundColor(configuration.isPressed ? foregroundColor.opacity(Consts.pressedOpacity) : foregroundColor.opacity(1))
             .padding()
-            .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Consts.height)
+            .frame(minWidth: 0, maxWidth: .infinity, maxHeight: compact ? Consts.height - 10 : Consts.height)
             .cornerRadius(Consts.cornerRadius)
     }
 }

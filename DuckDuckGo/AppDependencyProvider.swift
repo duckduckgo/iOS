@@ -44,7 +44,7 @@ class AppDependencyProvider: DependencyProvider {
     let appSettings: AppSettings = AppUserDefaults()
     let variantManager: VariantManager = DefaultVariantManager()
     
-    private let defaultFeatureFlagger = DefaultFeatureFlagger()
+    private let defaultFeatureFlagger = DefaultInternalUserDecider()
     var featureFlagger: FeatureFlagger {
         return defaultFeatureFlagger
     }

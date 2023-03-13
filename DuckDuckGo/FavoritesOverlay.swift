@@ -23,7 +23,6 @@ import Bookmarks
 import Persistence
 
 protocol FavoritesOverlayDelegate: AnyObject {
-    
     func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: BookmarkEntity)
 }
 
@@ -43,7 +42,7 @@ class FavoritesOverlay: UIViewController {
     weak var delegate: FavoritesOverlayDelegate?
     
     init(viewModel: FavoritesListInteracting) {
-        renderer = FavoritesHomeViewSectionRenderer(allowsEditing: false,
+        renderer = FavoritesHomeViewSectionRenderer(allowsEditing: true,
                                                     viewModel: viewModel)
         super.init(nibName: nil, bundle: nil)
     }
@@ -60,6 +59,8 @@ class FavoritesOverlay: UIViewController {
         collectionView.register(UINib(nibName: "FavoriteHomeCell", bundle: nil), forCellWithReuseIdentifier: "favorite")
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.dragDelegate = self
+        collectionView.dropDelegate = self
         collectionView.backgroundColor = .clear
 
         view.addSubview(collectionView)
@@ -113,48 +114,77 @@ class FavoritesOverlay: UIViewController {
 }
 
 extension FavoritesOverlay: FavoritesHomeViewSectionRendererDelegate {
-    
+   
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect favorite: BookmarkEntity) {
         delegate?.favoritesOverlay(self, didSelect: favorite)
     }
-    
+
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didRequestEdit favorite: BookmarkEntity) {
-        // currently can't edit favorites from overlay
+        delegate?.favoritesOverlay(self, didSelect: favorite)
     }
 
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, favoriteDeleted favorite: BookmarkEntity) {
-        // currently can't delete favorites from overlay
     }
-    
+
 }
 
 extension FavoritesOverlay: UICollectionViewDelegate {
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         renderer.collectionView(collectionView, didSelectItemAt: indexPath)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize(width: 1, height: Constants.footerPadding)
     }
-    
+
+}
+
+extension FavoritesOverlay: UICollectionViewDragDelegate, UICollectionViewDropDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        return renderer.collectionView(collectionView, itemsForBeginning: session, at: indexPath)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+        renderer.collectionView(collectionView, performDropWith: coordinator)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+        return renderer.collectionView(collectionView, dropSessionDidUpdate: session, withDestinationIndexPath: destinationIndexPath)
+    }
+
 }
 
 extension FavoritesOverlay: UICollectionViewDataSource {
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return renderer.collectionView(collectionView, numberOfItemsInSection: section)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = renderer.collectionView(collectionView, cellForItemAt: indexPath)
-        if let themable = cell as? Themable {
+        if let themable = cell as? Themable,
+            let theme = theme {
             themable.decorate(with: theme)
         }
         return cell
     }
+
+    func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        return renderer.collectionView(collectionView, previewForHighlightingContextMenuWithConfiguration: configuration)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        return renderer.collectionView(collectionView, previewForHighlightingContextMenuWithConfiguration: configuration)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        return renderer.collectionView(collectionView, contextMenuConfigurationForItemAt: indexPath, point: point)
+    }
+
 }
 
 extension FavoritesOverlay: UICollectionViewDelegateFlowLayout {
@@ -162,12 +192,12 @@ extension FavoritesOverlay: UICollectionViewDelegateFlowLayout {
         -> CGSize {
             return renderer.collectionView(collectionView, layout: collectionViewLayout, sizeForItemAt: indexPath)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int)
         -> UIEdgeInsets {
-            
+
             var insets = renderer.collectionView(collectionView, layout: collectionViewLayout, insetForSectionAt: section) ?? UIEdgeInsets.zero
-            
+
             insets.top += Constants.margin
             return insets
     }

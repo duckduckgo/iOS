@@ -22,64 +22,30 @@ import Lottie
 
 class FireBarButtonItem: UIBarButtonItem {
     
-    var lottieButton: FireButton?
+    private var fireButton: FireButton?
     
     required init?(coder: NSCoder) {
-        
         super.init(coder: coder)
         
         setupAnimation()
     }
     
     private func setupAnimation() {
+        fireButton = FireButton()
+        fireButton?.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
         
-//        let fireAnimationView = AnimationView(name: "flame")
-//        fireAnimationView.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-//        fireAnimationView.loopMode = .loop
-//        fireAnimationView.backgroundBehavior = .pauseAndRestore
-        
-//        let lb = LottieButton()
-//        lb.setImage(UIImage(named: "Fire"), for: .normal)
-//        lb.animationName = "flame"
-//
-//        lottieButton = lb
-        
-        print(" -- image size: \(image?.size)")
-        print(" -- custom view size: \(customView?.frame)")
-        
-//        let v = UIView()
-//        v.backgroundColor = .magenta
-//        v.frame = CGRect(x: 0, y: 0, width: image?.size.width ?? 0, height: image?.size.height ?? 0)
-//        customView = v
-        
-//        let v = AnimatedButton(animation: Animation.named("flame")!)
-        
-//        let v = FireButton(type: .system)
-        let v = FireButton()
-//        v.setImage(UIImage(named: "Fire"), for: .normal)
-//        v.animationName = "flame"
-        
-        v.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
-        
-        customView = v
-        
-        
-        
-    
-        print(" -- custom view size: \(customView?.frame)")
-        print(" -- inserted view size: \(v.frame)")
-        
+        customView = fireButton
     }
     
     @IBAction func onButtonPressed(_ sender: Any) {
-        print(" -- pressed!")
+        guard let target = target, let action = action else { return }
         
-        if let lottieButton = sender as? FireButton {
-            lottieButton.playAnimation()
-        }
-        
+        UIApplication.shared.sendAction(action, to: target, from: nil, for: nil)
     }
     
+    public func playAnimation() {
+        fireButton?.playAnimation()
+    }
 }
 
 class FireButton: UIButton {
@@ -107,48 +73,34 @@ class FireButton: UIButton {
         animationView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         animationView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
-//        animationView.animationSpeed = 0.3
-//        animationView.currentProgress = 1.0
-//        animationView.alpha = 0.8
-        
         animationView.isHidden = true
     }
-
-    private func blankImage(for image: UIImage?) -> UIImage? {
-        UIGraphicsBeginImageContext(image?.size ?? .zero)
-        let blankImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        return blankImage
-    }
-
-    public func playAnimation(withInitialStateImage initialStateImage: UIImage,
-                              andFinalStateImage finalStateImage: UIImage) {
+    
+    public func playAnimation() {
+        guard !animationView.isAnimationPlaying,
+              let image = self.image(for: .normal) else { return }
         
-        let blankImage = self.blankImage(for: initialStateImage)
-        self.setImage(blankImage, for: .normal)
+        let blankImage = blankImage(for: image.size)
+        setImage(blankImage, for: .normal)
         
         animationView.alpha = 1
         animationView.isHidden = false
-                    
+        
         self.animationView.play(completion: { _ in
+            self.setImage(image, for: .normal)
             
-            UIView.transition(with: self.imageView!,
-                              duration: 2.0,
-                              options: .transitionCrossDissolve,
-                              animations: {
-                
-                self.setImage(finalStateImage, for: .normal)
+            UIView.animate(withDuration: 0.35, animations: {
                 self.animationView.alpha = 0.0
-                
             }, completion: { _ in
                 self.animationView.stop()
             })
         })
-        
     }
-
-    open func playAnimation() {
-        guard let image = self.image(for: .normal) else { return }
-        self.playAnimation(withInitialStateImage: image, andFinalStateImage: image)
+    
+    private func blankImage(for size: CGSize) -> UIImage? {
+        UIGraphicsBeginImageContext(size)
+        let blankImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return blankImage
     }
 }

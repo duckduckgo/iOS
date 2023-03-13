@@ -43,7 +43,7 @@ class AppUrlsTests: XCTestCase {
                                                    unprotectedTemporary: [],
                                                    trackerAllowlist: [:])
         let localProtection = MockDomainsProtectionStore()
-        appConfig = AppPrivacyConfiguration(data: privacyData, identifier: "", localProtection: localProtection)
+        appConfig = AppPrivacyConfiguration(data: privacyData, identifier: "", localProtection: localProtection, internalUserDecider: DefaultInternalUserDecider())
     }
 
     func testWhenCanDetectBlogUrl() {

@@ -24,7 +24,6 @@ import BrowserServicesKit
 protocol DependencyProvider {
     var appSettings: AppSettings { get }
     var variantManager: VariantManager { get }
-    var featureFlagger: FeatureFlagger { get }
     var internalUserDecider: InternalUserDecider { get }
     var remoteMessagingStore: RemoteMessagingStore { get }
     var homePageConfiguration: HomePageConfiguration { get }
@@ -44,13 +43,7 @@ class AppDependencyProvider: DependencyProvider {
     let appSettings: AppSettings = AppUserDefaults()
     let variantManager: VariantManager = DefaultVariantManager()
     
-    private let defaultFeatureFlagger = DefaultInternalUserDecider()
-    var featureFlagger: FeatureFlagger {
-        return defaultFeatureFlagger
-    }
-    var internalUserDecider: InternalUserDecider {
-        return defaultFeatureFlagger
-    }
+    var internalUserDecider: InternalUserDecider = DefaultInternalUserDecider()
 
     let remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore()
     lazy var homePageConfiguration: HomePageConfiguration = HomePageConfiguration(variantManager: variantManager,

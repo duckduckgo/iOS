@@ -30,6 +30,7 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
     func createAccountAndStartSyncing()
     func confirmDisableSync() async -> Bool
     func confirmDeleteAllData() async -> Bool
+    func copyCode()
 
 }
 
@@ -63,24 +64,13 @@ public class SyncSettingsViewModel: ObservableObject {
     @Published var isSyncEnabled = false
     @Published var isBusy = false
     @Published var devices = [Device]()
+    @Published var recoveryCode = ""
 
     var setupFinishedState: TurnOnSyncViewModel.Result?
 
     public weak var delegate: SyncManagementViewModelDelegate?
 
     public init() { }
-
-    public func showDevices() {
-        isBusy = false
-        isSyncEnabled = true
-        devices = [
-            Device(id: UUID().uuidString, name: UIDevice.current.name, type: "phone", isThisDevice: true)
-        ]
-    }
-
-    public func appendDevice(_ device: Device) {
-        devices.append(device)
-    }
 
     func enableSync() {
         isBusy = true
@@ -105,6 +95,25 @@ public class SyncSettingsViewModel: ObservableObject {
             }
             isBusy = false
         }
+    }
+
+    func copyCode() {
+        delegate?.copyCode()
+    }
+
+    // MARK: Called by the view controller
+
+    public func syncEnabled(recoveryCode: String) {
+        isBusy = false
+        isSyncEnabled = true
+        self.recoveryCode = recoveryCode
+        devices = [
+            Device(id: UUID().uuidString, name: UIDevice.current.name, type: "phone", isThisDevice: true)
+        ]
+    }
+
+    public func appendDevice(_ device: Device) {
+        devices.append(device)
     }
 
     public func setupFinished(_ model: TurnOnSyncViewModel) {

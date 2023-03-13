@@ -29,10 +29,6 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
     lazy var authenticator = Authenticator()
 
-    static let fakeCode = "eyAicmVjb3ZlcnkiOiB7ICJ1c2VyX2lkIjogIjY4RTc4OTlBLTQ5OTQtNEUzMi04MERDLT" +
-    "gyNzNFMDc1MUExMSIsICJwcmltYXJ5X2tleSI6ICJNVEl6TkRVMk56ZzVN" +
-    "REV5TXpRMU5qYzRPVEF4TWpNME5UWTNPRGt3TVRJPSIgfSB9"
-
     convenience init() {
         self.init(rootView: SyncSettingsView(model: SyncSettingsViewModel()))
 
@@ -74,7 +70,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     func createAccountAndStartSyncing() {
         Task { @MainActor in
             await syncService.createAccount()
-            rootView.model.showDevices()
+            rootView.model.syncEnabled(recoveryCode: syncService.recoveryCode)
             self.showRecoveryPDF()
         }
     }
@@ -103,7 +99,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
 
     func shareRecoveryPDF() {
-        let pdfController = UIHostingController(rootView: RecoveryKeyPDFView(code: Self.fakeCode))
+        let pdfController = UIHostingController(rootView: RecoveryKeyPDFView(code: syncService.recoveryCode))
         pdfController.loadView()
 
         let pdfRect = CGRect(x: 0, y: 0, width: 612, height: 792)
@@ -131,7 +127,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineHeightMultiple = 1.55
 
-            let code = Self.fakeCode
+            let code = syncService.recoveryCode
             code.draw(in: CGRect(x: 240, y: 380, width: 294, height: 1000), withAttributes: [
                 .font: UIFont.monospacedSystemFont(ofSize: 13, weight: .regular),
                 .foregroundColor: UIColor.black,
@@ -149,18 +145,18 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
 
     func showDeviceConnected() {
-        let model = SaveRecoveryKeyViewModel(key: Self.fakeCode) { [weak self] in
+        let model = SaveRecoveryKeyViewModel(key: syncService.recoveryCode) { [weak self] in
             self?.shareRecoveryPDF()
         }
         let controller = UIHostingController(rootView: DeviceConnectedView(saveRecoveryKeyViewModel: model))
-        navigationController?.present(controller, animated: true) {
-            self.rootView.model.showDevices()
-            self.rootView.model.appendDevice(.init(id: UUID().uuidString, name: "Another Device", type: "desktop", isThisDevice: false))
+        navigationController?.present(controller, animated: true) { [weak self] in
+            self?.rootView.model.syncEnabled(recoveryCode: self!.syncService.recoveryCode)
+            self?.rootView.model.appendDevice(.init(id: UUID().uuidString, name: "Another Device", type: "desktop", isThisDevice: false))
         }
     }
     
     func showRecoveryPDF() {
-        let model = SaveRecoveryKeyViewModel(key: Self.fakeCode) { [weak self] in
+        let model = SaveRecoveryKeyViewModel(key: syncService.recoveryCode) { [weak self] in
             self?.shareRecoveryPDF()
         }
         let controller = UIHostingController(rootView: SaveRecoveryKeyView(model: model))
@@ -231,6 +227,10 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             }
             self.present(alert, animated: true)
         }
+    }
+
+    func copyCode() {
+        UIPasteboard.general.string = syncService.recoveryCode
     }
 
 }

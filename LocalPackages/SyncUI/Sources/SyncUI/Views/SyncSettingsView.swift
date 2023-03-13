@@ -86,9 +86,8 @@ public struct SyncSettingsView: View {
 
             // Appears off center because the list is padding the trailing to make space for the accessory
             VStack(spacing: 0) {
-                QRCodeView(string: UUID().uuidString, size: 192, style: .dark)
+                QRCodeView(string: model.recoveryCode, size: 192, style: .dark)
                     .padding(.bottom, 32)
-                    .padding(.leading, 20)
 
                 Text("Go to Settings > Sync in the DuckDuckGo App on a different device and scan to connect instantly")
                     .font(.system(size: 15))
@@ -96,13 +95,12 @@ public struct SyncSettingsView: View {
                     .lineSpacing(1.2)
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 16)
-                    .padding(.leading, 20)
             }
 
             // Designs show this in the same navigation item as the QR Code, but then the whole thing becomes a giant button
             //  which I don't think is intended
-            Button("Show Text Code") {
-                print("***")
+            NavigationLink("Show Text Code") {
+                ShowCodeView(code: model.recoveryCode, copyCode: model.copyCode)
             }
 
             Button("Scan QR Code") {
@@ -148,8 +146,8 @@ public struct SyncSettingsView: View {
             }
             
         }
-        .listStyle(.insetGrouped)
         .navigationTitle("Sync")
+        .listStyle(.insetGrouped)
         .hideScrollContentBackground()
         .environmentObject(model)
     }

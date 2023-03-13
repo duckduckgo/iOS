@@ -1,5 +1,5 @@
 //
-//  SyncSettingsScreenView.swift
+//  SyncSettingsView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -19,7 +19,7 @@
 
 import SwiftUI
 
-public struct SyncSettingsScreenView: View {
+public struct SyncSettingsView: View {
 
     @ObservedObject public var model: SyncSettingsScreenViewModel
 

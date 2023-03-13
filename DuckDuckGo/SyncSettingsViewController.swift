@@ -23,7 +23,7 @@ import AVFoundation
 import SyncUI
 
 @MainActor
-class SyncSettingsViewController: UIHostingController<SyncSettingsScreenView> {
+class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
     let syncService: SyncService = FakeSyncService()
 

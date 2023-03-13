@@ -53,7 +53,7 @@ final class AutofillFeatureConfiguration {
     }
 }
 
-fileprivate enum AutofillFeature: String {
+private enum AutofillFeature: String {
     case emailProtection
     case credentialsAutofill
     case credentialsSaving

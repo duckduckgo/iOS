@@ -1,3 +1,4 @@
+• We’ve moved the warning indicator for major tracking networks inside of the privacy dashboard instead of badging the shield in the address bar.
 • Bug fixes and other improvements.
 
 Join our fully distributed team and help raise the standard of trust online! https://duckduckgo.com/hiring

@@ -184,7 +184,21 @@
                 }
             ],
             "state": "enabled",
-            "hash": "59c4bd9b8cee343c81da98bfe5d77928"
+            "hash": "59c4bd9b8cee343c81da98bfe5d77928",
+            "features": {
+                "emailProtection": {
+                    "state":"enabled",
+                    "minSupportedVersion" : 0
+                 },
+                "credentialsAutofill": {
+                    "state":"internal",
+                    "minSupportedVersion" : 0
+                 },
+                "credentialsSaving": {
+                    "state":"internal",
+                    "minSupportedVersion" : 0
+                 }
+            }
         },
         "clickToLoad": {
             "exceptions": [],

@@ -80,12 +80,68 @@ public struct SyncSettingsView: View {
         }
     }
 
+    @ViewBuilder
+    func syncNewDevice() -> some View {
+        Section {
+            VStack(spacing: 0) {
+                QRCodeView(string: UUID().uuidString, size: 192, style: .dark)
+                    .padding(.bottom, 32)
+
+                Text("Go to Settings > Sync in the DuckDuckGo App on a different device and scan to connect instantly")
+                    .font(.system(size: 15))
+                    .lineLimit(nil)
+                    .lineSpacing(1.2)
+                    .multilineTextAlignment(.center)
+                    .padding(.bottom, 16)
+
+                HStack {
+                    Button("Show Text Code") {
+                        print("***")
+                    }
+                    Spacer()
+                }
+            }
+
+            Button("Scan QR Code") {
+                print("***")
+            }
+        } header: {
+            Text("Sync New Device")
+        }
+    }
+
+    @ViewBuilder
+    func saveRecoveryPDF() -> some View {
+        Section {
+            Button("Save Recovery PDF") {
+                print("***")
+            }
+        } footer: {
+            Text("If you lose your device, you will need this recovery code to restore your synced data.")
+        }
+    }
+
+    @ViewBuilder
+    func disconnect() -> some View {
+        Section {
+            Button("Turn Off and Delete Server Data...") {
+                print("***")
+            }
+        }
+    }
+
     public var body: some View {
         List {
             syncToggle()
 
             if model.isSyncEnabled {
                 devices()
+
+                syncNewDevice()
+
+                saveRecoveryPDF()
+
+                disconnect()
             }
             
         }

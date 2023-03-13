@@ -151,7 +151,9 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         let controller = UIHostingController(rootView: DeviceConnectedView(saveRecoveryKeyViewModel: model))
         navigationController?.present(controller, animated: true) { [weak self] in
             self?.rootView.model.syncEnabled(recoveryCode: self!.syncService.recoveryCode)
-            self?.rootView.model.appendDevice(.init(id: UUID().uuidString, name: "Another Device", type: "desktop", isThisDevice: false))
+            self?.rootView.model.appendDevice(.init(id: UUID().uuidString, name: "My MacBook Pro", type: "desktop", isThisDevice: false))
+            self?.rootView.model.appendDevice(.init(id: UUID().uuidString, name: "My iPad", type: "tablet", isThisDevice: false))
+            self?.rootView.model.appendDevice(.init(id: UUID().uuidString, name: "Unknown type", type: "linux", isThisDevice: false))
         }
     }
     

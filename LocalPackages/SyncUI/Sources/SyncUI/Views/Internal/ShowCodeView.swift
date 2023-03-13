@@ -38,7 +38,7 @@ struct ShowCodeView: View {
             }
         }
         .navigationTitle("Code")
-        .listStyle(.insetGrouped)
+        .applyListStyle()
     }
 
 }

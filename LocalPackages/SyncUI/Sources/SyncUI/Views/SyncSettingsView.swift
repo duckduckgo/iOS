@@ -147,9 +147,9 @@ public struct SyncSettingsView: View {
             
         }
         .navigationTitle("Sync")
-        .listStyle(.insetGrouped)
-        .hideScrollContentBackground()
+        .applyListStyle()
         .environmentObject(model)
+
     }
 
 }

@@ -74,11 +74,11 @@ class SettingsViewController: UITableViewController {
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
     fileprivate lazy var appSettings = AppDependencyProvider.shared.appSettings
     fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager
-    fileprivate lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
+    fileprivate lazy var internalUserDecider = AppDependencyProvider.shared.internalUserDecider
     fileprivate lazy var autofillFeatureConfig = AppDependencyProvider.shared.autofillFeatureConfig
 
     private var shouldShowDebugCell: Bool {
-        return featureFlagger.isFeatureOn(.debugMenu)
+        return internalUserDecider.isInternalUser
     }
     
     private var shouldShowVoiceSearchCell: Bool {

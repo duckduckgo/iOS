@@ -104,7 +104,7 @@ public struct SyncSettingsView: View {
             }
 
             Button("Scan QR Code") {
-                print("***")
+                model.scanQRCode()
             }
         } header: {
             Text("Sync New Device")
@@ -115,7 +115,7 @@ public struct SyncSettingsView: View {
     func saveRecoveryPDF() -> some View {
         Section {
             Button("Save Recovery PDF") {
-                print("***")
+                model.saveRecoveryPDF()
             }
         } footer: {
             Text("If you lose your device, you will need this recovery code to restore your synced data.")

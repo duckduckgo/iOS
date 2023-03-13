@@ -28,8 +28,7 @@ struct ShowCodeView: View {
 
         List {
             Text(code)
-                .monospaceSystemFont(ofSize: 14)
-                .lineSpacing(1.8)
+                .monospaceSystemFont(ofSize: 16)
 
             Button {
                 copyCode()
@@ -37,6 +36,7 @@ struct ShowCodeView: View {
                 Label("Copy Code", image: "SyncCopy")
             }
         }
+        .lineSpacing(1.47)
         .navigationTitle("Code")
         .applyListStyle()
     }

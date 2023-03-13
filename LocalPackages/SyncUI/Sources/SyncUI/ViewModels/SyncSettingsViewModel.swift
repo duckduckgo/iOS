@@ -101,6 +101,14 @@ public class SyncSettingsViewModel: ObservableObject {
         delegate?.copyCode()
     }
 
+    func saveRecoveryPDF() {
+        delegate?.showRecoveryPDF()
+    }
+
+    func scanQRCode() {
+        delegate?.showSyncWithAnotherDevice()
+    }
+
     // MARK: Called by the view controller
 
     public func syncEnabled(recoveryCode: String) {
@@ -114,6 +122,7 @@ public class SyncSettingsViewModel: ObservableObject {
 
     public func appendDevice(_ device: Device) {
         devices.append(device)
+        objectWillChange.send()
     }
 
     public func setupFinished(_ model: TurnOnSyncViewModel) {

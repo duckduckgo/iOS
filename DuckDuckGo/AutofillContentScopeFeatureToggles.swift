@@ -42,7 +42,7 @@ final class AutofillFeatureConfiguration {
     }
     
     var supportedFeaturesOniOS: ContentScopeFeatureToggles {
-        ContentScopeFeatureToggles(emailProtection: true,
+        ContentScopeFeatureToggles(emailProtection: privacyConfig.isEnabled(subfeature: AutofillFeature.emailProtection.rawValue, for: .autofill),
                                    credentialsAutofill: isCredentialsAutofillEnabled,
                                    identitiesAutofill: false,
                                    creditCardsAutofill: false,

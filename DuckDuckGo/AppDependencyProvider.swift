@@ -32,6 +32,7 @@ protocol DependencyProvider {
     var voiceSearchHelper: VoiceSearchHelperProtocol { get }
     var downloadManager: DownloadManager { get }
     var autofillLoginSession: AutofillLoginSession { get }
+    var autofillFeatureConfig: AutofillFeatureConfiguration { get }
     var configurationManager: ConfigurationManager { get }
 }
 
@@ -58,5 +59,7 @@ class AppDependencyProvider: DependencyProvider {
     let voiceSearchHelper: VoiceSearchHelperProtocol = VoiceSearchHelper()
     let downloadManager = DownloadManager()
     let autofillLoginSession = AutofillLoginSession()
+    lazy var autofillFeatureConfig = AutofillFeatureConfiguration(appSettings: appSettings,
+                                                                  privacyConfig: ContentBlocking.shared.privacyConfigurationManager.privacyConfig)
     let configurationManager = ConfigurationManager()
 }

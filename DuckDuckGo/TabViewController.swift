@@ -88,6 +88,7 @@ class TabViewController: UIViewController {
 
     internal lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var internalUserDecider = AppDependencyProvider.shared.internalUserDecider
+    internal lazy var autofillFeatureConfig = AppDependencyProvider.shared.autofillFeatureConfig
 
     private(set) var tabModel: Tab
     private(set) var privacyInfo: PrivacyInfo?
@@ -257,11 +258,7 @@ class TabViewController: UIViewController {
     }
     
     private var isAutofillEnabled: Bool {
-        let context = LAContext()
-        var error: NSError?
-        let canAuthenticate = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
-
-        return appSettings.autofillCredentialsEnabled && featureFlagger.isFeatureOn(.autofill) && canAuthenticate
+        return autofillFeatureConfig.isCredentialsAutofillEnabled
     }
 
     private var userContentController: UserContentController {
@@ -2344,7 +2341,7 @@ extension TabViewController: SecureVaultManagerDelegate {
     }
     
     func secureVaultManagerIsEnabledStatus(_: SecureVaultManager) -> Bool {
-        let isEnabled = featureFlagger.isFeatureOn(.autofill)
+        let isEnabled = autofillFeatureConfig.isCredentialsAutofillFeatureFlagEnabled
         let isBackgrounded = UIApplication.shared.applicationState == .background
         if isEnabled && isBackgrounded {
             Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded,

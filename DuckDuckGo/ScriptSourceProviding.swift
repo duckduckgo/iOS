@@ -63,9 +63,10 @@ struct DefaultScriptSourceProvider: ScriptSourceProviding {
         surrogatesConfig = Self.buildSurrogatesConfig(contentBlockingManager: contentBlockingManager,
                                                       privacyConfigurationManager: privacyConfigurationManager)
         sessionKey = Self.generateSessionKey()
+        let autofillFeatureConfig = AutofillFeatureConfiguration(appSettings: appSettings, privacyConfig: privacyConfigurationManager.privacyConfig)
         contentScopeProperties = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell,
                                                         sessionKey: sessionKey,
-                                                        featureToggles: ContentScopeFeatureToggles.supportedFeaturesOniOS)
+                                                        featureToggles: autofillFeatureConfig.supportedFeaturesOniOS)
         autofillSourceProvider = Self.makeAutofillSource(privacyConfigurationManager: privacyConfigurationManager,
                                                          properties: contentScopeProperties)
     }

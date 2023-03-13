@@ -75,6 +75,7 @@ class SettingsViewController: UITableViewController {
     fileprivate lazy var appSettings = AppDependencyProvider.shared.appSettings
     fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager
     fileprivate lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
+    fileprivate lazy var autofillFeatureConfig = AppDependencyProvider.shared.autofillFeatureConfig
 
     private var shouldShowDebugCell: Bool {
         return featureFlagger.isFeatureOn(.debugMenu)
@@ -85,7 +86,7 @@ class SettingsViewController: UITableViewController {
     }
 
     private lazy var shouldShowAutofillCell: Bool = {
-        return featureFlagger.isFeatureOn(.autofill)
+        return autofillFeatureConfig.isCredentialsAutofillFeatureFlagEnabled
     }()
 
     private lazy var shouldShowSyncCell: Bool = {

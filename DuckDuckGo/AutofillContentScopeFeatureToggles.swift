@@ -21,19 +21,27 @@ import Foundation
 import LocalAuthentication
 import BrowserServicesKit
 
-extension ContentScopeFeatureToggles {
+final class AutofillFeatureConfiguration {
+    private let privacyConfig: PrivacyConfiguration
+    private let appSettings: AppSettings
+
+    init(appSettings: AppSettings, privacyConfig: PrivacyConfiguration) {
+        self.appSettings = appSettings
+        self.privacyConfig = privacyConfig
+    }
+
+    var isCredentialsAutofillFeatureFlagEnabled: Bool {
+        privacyConfig.isEnabled(subfeature: AutofillFeature.credentialsAutofill.rawValue, for: .autofill)
+    }
     
-    static let featureFlagger = AppDependencyProvider.shared.featureFlagger
-    static let appSettings = AppDependencyProvider.shared.appSettings
-    
-    static var isCredentialsAutofillEnabled: Bool {
+    var isCredentialsAutofillEnabled: Bool {
         let context = LAContext()
         var error: NSError?
         let canAuthenticate = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
-        return featureFlagger.isFeatureOn(.autofill) && appSettings.autofillCredentialsEnabled && canAuthenticate
+        return isCredentialsAutofillFeatureFlagEnabled && appSettings.autofillCredentialsEnabled && canAuthenticate
     }
     
-    static var supportedFeaturesOniOS: ContentScopeFeatureToggles {
+    var supportedFeaturesOniOS: ContentScopeFeatureToggles {
         ContentScopeFeatureToggles(emailProtection: true,
                                    credentialsAutofill: isCredentialsAutofillEnabled,
                                    identitiesAutofill: false,
@@ -43,4 +51,10 @@ extension ContentScopeFeatureToggles {
                                    inlineIconCredentials: isCredentialsAutofillEnabled,
                                    thirdPartyCredentialsProvider: false)
     }
+}
+
+fileprivate enum AutofillFeature: String {
+    case emailProtection
+    case credentialsAutofill
+    case credentialsSaving
 }

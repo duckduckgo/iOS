@@ -119,6 +119,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="d6z-g6-mo7"/>
+                                    <barButtonItem width="5" style="plain" systemItem="fixedSpace" id="ejn-fM-k0R"/>
                                     <barButtonItem title="Tab Switcher" image="NewTab" id="K7o-WL-SC5" userLabel="Tabs Button">
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Tabs"/>

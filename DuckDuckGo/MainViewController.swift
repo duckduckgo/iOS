@@ -1876,8 +1876,6 @@ extension MainViewController: Themable {
         findInPageView.decorate(with: theme)
         
         logoText.tintColor = theme.ddgTextTintColor
-        
-        FireButtonExperiment.decorateFireButton(fireButton: fireButton, for: theme)
     }
     
 }

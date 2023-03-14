@@ -7532,15 +7532,15 @@
 			package = C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */;
 			productName = SwiftSoup;
 		};
-		F45681F9298DA4B8003DC976 /* FindInPageIOSJSSupport */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F4D7F632298C00C3006C3AE9 /* XCRemoteSwiftPackageReference "ios-js-support" */;
-			productName = FindInPageIOSJSSupport;
-		};
 		CBC83E3329B631780008E19C /* Configuration */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = Configuration;
+		};
+		F45681F9298DA4B8003DC976 /* FindInPageIOSJSSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F4D7F632298C00C3006C3AE9 /* XCRemoteSwiftPackageReference "ios-js-support" */;
+			productName = FindInPageIOSJSSupport;
 		};
 		F486D31C2506980E002D07D7 /* Swifter */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -23,26 +23,6 @@ import Core
 
 final class FireButtonExperiment {
     
-    private static var shouldUseFillColor: Bool {
-        AppDependencyProvider.shared.variantManager.isSupported(feature: .fireButtonWithColorFill)
-    }
-    
-    private static func fireButtonFillColor(for theme: Theme) -> UIColor {
-        theme.currentImageSet == .light ? .redBase : .red40
-    }
-    
-    public static func decorateFireButton(fireButton: UIBarButtonItem, for theme: Theme) {
-        guard shouldUseFillColor else { return }
-        
-        fireButton.tintColor = fireButtonFillColor(for: theme)
-    }
-    
-    public static func decorateFireButton(fireButton: UIButton, for theme: Theme) {
-        guard shouldUseFillColor else { return }
-        
-        fireButton.tintColor = fireButtonFillColor(for: theme)
-    }
-    
     private static var shouldPlayFireButtonAnimation: Bool {
         true
 //        AppDependencyProvider.shared.variantManager.isSupported(feature: .fireButtonWithColorFill)

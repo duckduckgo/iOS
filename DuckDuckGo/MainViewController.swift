@@ -1865,6 +1865,7 @@ extension MainViewController: Themable {
         toolbar?.barTintColor = theme.barBackgroundColor
         toolbar?.tintColor = theme.barTintColor
         
+        fireButton.decorate(with: theme)
         tabSwitcherButton.decorate(with: theme)
         gestureBookmarksButton.decorate(with: theme)
         tabsButton.tintColor = theme.barTintColor

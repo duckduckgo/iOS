@@ -52,7 +52,7 @@ class FireBarButtonItem: UIBarButtonItem {
 
 class FireButton: UIButton {
 
-    private var animationView = AnimationView(name: "flame")
+    private var animationView = AnimationView(name: "flame_dark")
     
     convenience init() {
         self.init(type: .system)
@@ -104,5 +104,25 @@ class FireButton: UIButton {
         let blankImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         return blankImage
+    }
+}
+
+
+extension FireBarButtonItem: Themable {
+
+    func decorate(with theme: Theme) {
+        fireButton?.decorate(with: theme)
+    }
+}
+
+extension FireButton: Themable {
+    
+    func decorate(with theme: Theme) {
+        switch theme.currentImageSet {
+        case .light:
+            animationView.animation = Animation.named("flame")
+        case .dark:
+            animationView.animation = Animation.named("flame_dark")
+        }
     }
 }

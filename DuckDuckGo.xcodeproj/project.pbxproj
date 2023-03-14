@@ -18,6 +18,7 @@
 		1CB7B82323CEA28300AA24EA /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */; };
 		1E016AB42949FEB500F21625 /* OmniBarNotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E016AB32949FEB500F21625 /* OmniBarNotificationViewModel.swift */; };
 		1E016AB6294A5EB100F21625 /* CustomDaxDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E016AB5294A5EB100F21625 /* CustomDaxDialog.swift */; };
+		1E05D1D429C0E52600BF9A1F /* flame_dark.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E05D1D329C0E52600BF9A1F /* flame_dark.json */; };
 		1E0A75EA27A2FBD000A2BFB6 /* Downloads.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E0A75E927A2FBD000A2BFB6 /* Downloads.storyboard */; };
 		1E16260229683C650004127F /* CustomDaxDialog.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E16260129683C650004127F /* CustomDaxDialog.xcassets */; };
 		1E162605296840D80004127F /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E162604296840D80004127F /* Triangle.swift */; };
@@ -848,6 +849,7 @@
 		1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
 		1E016AB32949FEB500F21625 /* OmniBarNotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmniBarNotificationViewModel.swift; sourceTree = "<group>"; };
 		1E016AB5294A5EB100F21625 /* CustomDaxDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDaxDialog.swift; sourceTree = "<group>"; };
+		1E05D1D329C0E52600BF9A1F /* flame_dark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = flame_dark.json; sourceTree = "<group>"; };
 		1E0A75E927A2FBD000A2BFB6 /* Downloads.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Downloads.storyboard; sourceTree = "<group>"; };
 		1E16260129683C650004127F /* CustomDaxDialog.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = CustomDaxDialog.xcassets; sourceTree = "<group>"; };
 		1E162604296840D80004127F /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
@@ -4180,6 +4182,7 @@
 				851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */,
 				9880722925FA497B0039EF4B /* MenuButton.swift */,
 				1EC5FE5E29B0F8E8004C13F5 /* flame.json */,
+				1E05D1D329C0E52600BF9A1F /* flame_dark.json */,
 				1EC5FE5C29B0F081004C13F5 /* FireBarButtonItem.swift */,
 				310742A52848CD780012660B /* BackForwardMenuHistoryItem.swift */,
 				85864FBB24D31EF300E756FF /* SuggestionTrayViewController.swift */,
@@ -4840,6 +4843,7 @@
 				98B001B3251EABB40090EC07 /* InfoPlist.strings in Resources */,
 				AA4D6ACE23DE4D27007E8790 /* AppIconPurple60x60@3x.png in Resources */,
 				F1E4A4451EE89460006F2EAE /* Bookmarks.storyboard in Resources */,
+				1E05D1D429C0E52600BF9A1F /* flame_dark.json in Resources */,
 				AA4D6ABB23DE4D15007E8790 /* AppIconYellow40x40@2x.png in Resources */,
 				84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */,
 				98D16973250CE707009513CC /* OmniBar.xib in Resources */,

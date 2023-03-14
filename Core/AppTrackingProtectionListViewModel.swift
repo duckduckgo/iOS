@@ -29,7 +29,20 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
         case historyTransactionConversionFailed
     }
 
+    public enum TrackerSorting {
+        case count
+        case timestamp
+    }
+
     @Published public var sections: [NSFetchedResultsSectionInfo] = []
+
+    @Published public var trackerSortingOption: TrackerSorting = .count {
+        didSet {
+            setupFetchedResultsController()
+        }
+    }
+
+    @Published public var debugModeEnabled = false
 
     private let context: NSManagedObjectContext
 
@@ -52,6 +65,13 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
         formatter.dateFormat = "MMMM dd"
         return formatter
     }()
+
+    private let listViewDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .medium
+        return formatter
+    }()
     
     private let inputFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -72,13 +92,22 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
         return relativeDate
     }
 
-    fileprivate lazy var fetchedResultsController: NSFetchedResultsController<AppTrackerEntity> = {
+    fileprivate var fetchedResultsController: NSFetchedResultsController<AppTrackerEntity>!
+
+    private func createFetchedResultsController(sortedBy sortingOption: TrackerSorting) -> NSFetchedResultsController<AppTrackerEntity> {
         let fetchRequest: NSFetchRequest<AppTrackerEntity> = AppTrackerEntity.fetchRequest()
 
         let bucketSortDescriptor = NSSortDescriptor(key: #keyPath(AppTrackerEntity.bucket), ascending: false)
-        let countSortDescriptor = NSSortDescriptor(key: #keyPath(AppTrackerEntity.count), ascending: false)
         let domainSortDescriptor = NSSortDescriptor(key: #keyPath(AppTrackerEntity.domain), ascending: true)
-        fetchRequest.sortDescriptors = [bucketSortDescriptor, countSortDescriptor, domainSortDescriptor]
+
+        switch sortingOption {
+        case .count:
+            let countSortDescriptor = NSSortDescriptor(key: #keyPath(AppTrackerEntity.count), ascending: false)
+            fetchRequest.sortDescriptors = [bucketSortDescriptor, countSortDescriptor, domainSortDescriptor]
+        case .timestamp:
+            let timestampSortDescriptor = NSSortDescriptor(key: #keyPath(AppTrackerEntity.timestamp), ascending: false)
+            fetchRequest.sortDescriptors = [bucketSortDescriptor, timestampSortDescriptor, domainSortDescriptor]
+        }
 
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
                                                                   managedObjectContext: self.context,
@@ -86,7 +115,7 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
                                                                   cacheName: nil)
 
         return fetchedResultsController
-    }()
+    }
 
     @UserDefaultsWrapper(key: .lastAppTrackingProtectionHistoryFetchTimestamp, defaultValue: Date.distantPast)
     private var lastTrackerHistoryFetchTimestamp: Date
@@ -103,9 +132,15 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
     }
 
     private func setupFetchedResultsController() {
-        fetchedResultsController.delegate = self
-        try? fetchedResultsController.performFetch()
-        self.sections = fetchedResultsController.sections ?? []
+        self.fetchedResultsController = createFetchedResultsController(sortedBy: self.trackerSortingOption)
+
+        self.fetchedResultsController.delegate = self
+        try? self.fetchedResultsController.performFetch()
+        self.sections = self.fetchedResultsController.sections ?? []
+    }
+
+    public func format(date: Date) -> String {
+        return listViewDateFormatter.string(from: date)
     }
 
     // MARK: - Notifications

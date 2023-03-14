@@ -62,6 +62,9 @@ struct AppTPActivityView: View {
                         AppTPTrackerCell(trackerDomain: tracker.domain,
                                          trackerOwner: tracker.trackerOwner,
                                          trackerCount: tracker.count,
+                                         trackerTimestamp: viewModel.format(date: tracker.timestamp),
+                                         trackerBucket: tracker.bucket,
+                                         debugMode: viewModel.debugModeEnabled,
                                          imageCache: imageCache,
                                          showDivider: showDivider)
                     }
@@ -94,7 +97,7 @@ struct AppTPActivityView: View {
                         )
                             .background(Color.cellBackground)
                             .cornerRadius(Const.Size.cornerRadius)
-                        
+
                         NavigationLink(destination: AppTPBreakageFormView(feedbackModel: feedbackModel)) {
                             Text("Something not working?")
                                 .font(Font(uiFont: Const.Font.sectionHeader))
@@ -104,12 +107,23 @@ struct AppTPActivityView: View {
                     }
                     .padding(.bottom)
                 }
-                
+
+                Picker("Tracker Sorting", selection: $viewModel.trackerSortingOption) {
+                    Text("Sort By Count").tag(AppTrackingProtectionListViewModel.TrackerSorting.count)
+                    Text("Sort By Date").tag(AppTrackingProtectionListViewModel.TrackerSorting.timestamp)
+                }
+                .pickerStyle(.segmented)
+
                 if viewModel.sections.count > 0 {
                     listState
                 } else {
                     emptyState
                 }
+
+                Toggle(isOn: $viewModel.debugModeEnabled, label: {
+                    Text("Show Additional Tracker Information")
+                })
+                .padding(.top, 8)
             }
             .padding()
         }

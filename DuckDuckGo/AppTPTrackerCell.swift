@@ -29,6 +29,10 @@ struct AppTPTrackerCell: View {
     let trackerOwner: String
     let trackerCount: Int32
 
+    let trackerTimestamp: String
+    let trackerBucket: String
+    let debugMode: Bool
+
     let imageCache: AppTrackerImageCache
     let showDivider: Bool
     
@@ -39,7 +43,7 @@ struct AppTPTrackerCell: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 25, height: 25)
                 
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text(trackerDomain)
                         .font(Font(uiFont: Const.Font.trackerDomain))
                         .foregroundColor(.trackerDomain)
@@ -47,6 +51,12 @@ struct AppTPTrackerCell: View {
                     Text(UserText.appTPTrackingAttempts(count: "\(trackerCount)"))
                         .font(Font(uiFont: Const.Font.trackerCount))
                         .foregroundColor(.trackerSize)
+
+                    if debugMode {
+                        Text("\(trackerTimestamp), bucket: \(trackerBucket)")
+                            .font(Font(uiFont: Const.Font.trackerCount))
+                            .foregroundColor(.trackerSize)
+                    }
                 }
             }
             .padding(.horizontal)

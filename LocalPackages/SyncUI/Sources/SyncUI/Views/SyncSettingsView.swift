@@ -63,7 +63,7 @@ public struct SyncSettingsView: View {
     func devices() -> some View {
         Section {
             ForEach(model.devices) { device in
-                NavigationLink(destination: Text("WIP: \(device.name)")) {
+                NavigationLink(destination: EditDeviceView(model: model.createEditDeviceModel(device))) {
                     HStack {
                         deviceTypeImage(device)
                         Text(device.name)
@@ -88,6 +88,7 @@ public struct SyncSettingsView: View {
             VStack(spacing: 0) {
                 QRCodeView(string: model.recoveryCode, size: 192, style: .dark)
                     .padding(.bottom, 32)
+                    .padding(.top, 16)
 
                 Text("Go to Settings > Sync in the DuckDuckGo App on a different device and scan to connect instantly")
                     .font(.system(size: 15))
@@ -97,8 +98,6 @@ public struct SyncSettingsView: View {
                     .padding(.bottom, 16)
             }
 
-            // Designs show this in the same navigation item as the QR Code, but then the whole thing becomes a giant button
-            //  which I don't think is intended
             NavigationLink("Show Text Code") {
                 ShowCodeView(code: model.recoveryCode, copyCode: model.copyCode)
             }

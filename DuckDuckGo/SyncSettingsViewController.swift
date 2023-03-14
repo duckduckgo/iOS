@@ -235,6 +235,21 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         UIPasteboard.general.string = syncService.recoveryCode
     }
 
+    func confirmRemoveDevice(_ device: SyncSettingsViewModel.Device) async -> Bool {
+        return await withCheckedContinuation { continuation in
+            let alert = UIAlertController(title: UserText.syncRemoveDeviceTitle,
+                                          message: UserText.syncRemoveDeviceMessage(device.name),
+                                          preferredStyle: .alert)
+            alert.addAction(title: UserText.actionCancel) {
+                continuation.resume(returning: false)
+            }
+            alert.addAction(title: UserText.syncRemoveDeviceConfirmAction, style: .destructive) {
+                continuation.resume(returning: true)
+            }
+            self.present(alert, animated: true)
+        }
+    }
+
 }
 
 extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {

@@ -31,6 +31,7 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
     func confirmDisableSync() async -> Bool
     func confirmDeleteAllData() async -> Bool
     func copyCode()
+    func confirmRemoveDevice(_ device: SyncSettingsViewModel.Device) async -> Bool
 
 }
 
@@ -43,9 +44,9 @@ public class SyncSettingsViewModel: ObservableObject {
         }
 
         public let id: String
-        let name: String
-        let type: String
-        let isThisDevice: Bool
+        public let name: String
+        public let type: String
+        public let isThisDevice: Bool
 
         public init(id: String, name: String, type: String, isThisDevice: Bool) {
             self.id = id
@@ -107,6 +108,25 @@ public class SyncSettingsViewModel: ObservableObject {
 
     func scanQRCode() {
         delegate?.showSyncWithAnotherDevice()
+    }
+
+    func createEditDeviceModel(_ device: Device) -> EditDeviceViewModel {
+        return EditDeviceViewModel(device: device) { newValue in
+
+            self.devices = self.devices.map {
+                if $0.id == newValue.id {
+                    return newValue
+                }
+                return $0
+            }
+
+        } remove: { @MainActor in
+            if await self.delegate?.confirmRemoveDevice(device) == true {
+                self.devices = self.devices.filter { $0.id != device.id }
+                return true
+            }
+            return false
+        }
     }
 
     // MARK: Called by the view controller

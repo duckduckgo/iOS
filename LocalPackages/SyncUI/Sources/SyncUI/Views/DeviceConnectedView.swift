@@ -59,7 +59,6 @@ public struct DeviceConnectedView: View {
                     }
                 }
                 .frame(height: 44)
-                .padding(.horizontal, 20)
                 .padding(.bottom, 20)
 
                 Text(UserText.deviceSyncedMessage)
@@ -68,6 +67,7 @@ public struct DeviceConnectedView: View {
 
                 Spacer()
             }
+            .padding(.horizontal, 20)
         } foreground: {
             Button {
                 withAnimation {

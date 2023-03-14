@@ -80,3 +80,5 @@ excluded:
   - fastlane/SnapshotHelper.swift
   - vendor
   - LocalPackages/*/Package.swift
+  - LocalPackages/DuckUI/Package.swift
+  - PacketTunnelProvider/ProxyServer

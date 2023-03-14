@@ -42,4 +42,15 @@ final class FireButtonExperiment {
         
         fireButton.tintColor = fireButtonFillColor(for: theme)
     }
+    
+    private static var shouldPlayFireButtonAnimation: Bool {
+        true
+//        AppDependencyProvider.shared.variantManager.isSupported(feature: .fireButtonWithColorFill)
+    }
+    
+    public static func playFireButton(fireButton: FireBarButtonItem, delay: TimeInterval) {
+        guard shouldPlayFireButtonAnimation else { return }
+        
+        fireButton.playAnimation(delay: delay)
+    }
 }

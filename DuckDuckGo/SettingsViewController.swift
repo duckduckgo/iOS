@@ -90,7 +90,7 @@ class SettingsViewController: UITableViewController {
     }()
 
     private lazy var shouldShowSyncCell: Bool = {
-        return featureFlagger.isFeatureOn(.sync)
+        return internalUserDecider.isInternalUser
     }()
 
     static func loadFromStoryboard() -> UIViewController {

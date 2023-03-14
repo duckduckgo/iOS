@@ -43,8 +43,10 @@ class FireBarButtonItem: UIBarButtonItem {
         UIApplication.shared.sendAction(action, to: target, from: nil, for: nil)
     }
     
-    public func playAnimation() {
-        fireButton?.playAnimation()
+    public func playAnimation(delay: TimeInterval = 0) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delay) {
+            self.fireButton?.playAnimation()
+        }
     }
 }
 

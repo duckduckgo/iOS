@@ -203,7 +203,7 @@ class TabViewController: UIViewController {
     
     lazy var vaultManager: SecureVaultManager = {
         let manager = SecureVaultManager(includePartialAccountMatches: true,
-                                         tld: AppDependencyProvider.shared.storageCache.current.tld)
+                                         tld: AppDependencyProvider.shared.storageCache.tld)
         manager.delegate = self
         return manager
     }()

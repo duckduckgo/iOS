@@ -90,7 +90,7 @@ public struct SyncSettingsView: View {
                     .padding(.bottom, 32)
                     .padding(.top, 16)
 
-                Text("Go to Settings > Sync in the DuckDuckGo App on a different device and scan to connect instantly")
+                Text(UserText.settingsNewDeviceInstructions)
                     .font(.system(size: 15))
                     .lineLimit(nil)
                     .lineSpacing(1.2)
@@ -98,11 +98,11 @@ public struct SyncSettingsView: View {
                     .padding(.bottom, 16)
             }
 
-            NavigationLink("Show Text Code") {
+            NavigationLink(UserText.settingsShowCodeButton) {
                 ShowCodeView(code: model.recoveryCode, copyCode: model.copyCode)
             }
 
-            Button("Scan QR Code") {
+            Button(UserText.settingsScanQRCodeButton) {
                 model.scanQRCode()
             }
         } header: {
@@ -113,18 +113,18 @@ public struct SyncSettingsView: View {
     @ViewBuilder
     func saveRecoveryPDF() -> some View {
         Section {
-            Button("Save Recovery PDF") {
+            Button(UserText.settingsSaveRecoveryPDFButton) {
                 model.saveRecoveryPDF()
             }
         } footer: {
-            Text("If you lose your device, you will need this recovery code to restore your synced data.")
+            Text(UserText.settingsRecoveryPDFWarning)
         }
     }
 
     @ViewBuilder
     func deleteAllData() -> some View {
         Section {
-            Button("Turn Off and Delete Server Data...") {
+            Button(UserText.settingsDeleteAllButton) {
                 model.deleteAllData()
             }
         }
@@ -145,7 +145,7 @@ public struct SyncSettingsView: View {
             }
             
         }
-        .navigationTitle("Sync")
+        .navigationTitle(UserText.syncTitle)
         .applyListStyle()
         .environmentObject(model)
 

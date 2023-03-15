@@ -33,7 +33,7 @@ struct EditDeviceView: View {
 
             if !model.device.isThisDevice {
                 Section {
-                    Button("Remove") {
+                    Button(UserText.removeButton) {
                         Task { @MainActor in
                             if await model.remove() {
                                 presentation.wrappedValue.dismiss()
@@ -43,7 +43,7 @@ struct EditDeviceView: View {
                 }
             }
         }
-        .navigationTitle("Edit \(model.device.name)")
+        .navigationTitle(UserText.editDevice(named: model.name))
         .applyListStyle()
         .onDisappear {
             model.onDisappear()

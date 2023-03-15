@@ -74,7 +74,7 @@ public struct DeviceConnectedView: View {
                     self.showRecoveryPDF = true
                 }
             } label: {
-                Text(UserText.nextButtonTitle)
+                Text(UserText.nextButton)
             }
             .buttonStyle(PrimaryButtonStyle())
             .frame(maxWidth: 360)
@@ -89,7 +89,6 @@ public struct DeviceConnectedView: View {
             SaveRecoveryKeyView(model: saveRecoveryKeyViewModel)
                 .transition(.move(edge: .trailing))
         } else {
-            // TODO apply underflow
             deviceSyncedView()
                 .transition(.move(edge: .leading))
         }

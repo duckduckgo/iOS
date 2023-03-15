@@ -101,7 +101,7 @@ struct PasteCodeView: View {
             .frame(maxWidth: Constants.maxWidth, alignment: .center)
         }
         .padding(.horizontal, 20)
-        .navigationTitle("Manually Enter Code")
+        .navigationTitle(UserText.manuallyEnterCodeTitle)
         .modifier(BackButtonModifier())
         .ignoresSafeArea(.keyboard)
     }

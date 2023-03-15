@@ -52,7 +52,7 @@ class FireBarButtonItem: UIBarButtonItem {
 
 class FireButton: UIButton {
 
-    private var animationView = AnimationView(name: "flame_dark")
+    private var animationView = AnimationView(name: "flame")
     
     convenience init() {
         self.init(type: .system)

@@ -2360,7 +2360,9 @@ extension TabViewController: SecureVaultManagerDelegate {
             
             if #available(iOS 15.0, *) {
                 if let presentationController = autofillPromptViewController.presentationController as? UISheetPresentationController {
-                    presentationController.detents = AutofillLoginPromptHelper.shouldShowMoreOptions(accountMatches) ? [.medium(), .large()] : [.medium()]
+                    presentationController.detents = AutofillLoginPromptHelper.shouldShowMoreOptions(accountMatches)
+                                                        ? [.medium(), .large()]
+                                                        : [.medium()]
                 }
             }
             self.present(autofillPromptViewController, animated: true, completion: nil)

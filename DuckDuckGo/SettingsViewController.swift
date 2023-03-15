@@ -68,8 +68,10 @@ class SettingsViewController: UITableViewController {
     
     private let syncSectionIndex = 1
     private let autofillSectionIndex = 2
-    public var appTPDatabase: CoreDataDatabase!
+    private let moreFromDDGSectionIndex = 6
     private let debugSectionIndex = 7
+    
+    public var appTPDatabase: CoreDataDatabase!
 
     private lazy var emailManager = EmailManager()
     
@@ -94,6 +96,10 @@ class SettingsViewController: UITableViewController {
     private lazy var shouldShowSyncCell: Bool = {
         return featureFlagger.isFeatureOn(.sync)
     }()
+    
+    private lazy var shouldShowAppTPCell: Bool = {
+        return featureFlagger.isFeatureOn(.appTP)
+    }()
 
     static func loadFromStoryboard() -> UIViewController {
         return UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()!
@@ -104,6 +110,7 @@ class SettingsViewController: UITableViewController {
 
         configureAutofillCell()
         configureSyncCell()
+        configureAutofillCell()
         configureThemeCellAccessory()
         configureFireButtonAnimationCellAccessory()
         configureTextSizeCell()
@@ -250,6 +257,10 @@ class SettingsViewController: UITableViewController {
             windowsBrowserWaitlistCell.detailTextLabel?.text = WindowsBrowserWaitlist.shared.settingsSubtitle
         }
     }
+    
+    private func configureAppTPCell() {
+        appTPCell.isHidden = !shouldShowAppTPCell
+    }
 
     private func configureDebugCell() {
         debugCell.isHidden = !shouldShowDebugCell
@@ -374,6 +385,13 @@ class SettingsViewController: UITableViewController {
         return cell.isHidden ? 0 : UITableView.automaticDimension
     }
     
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == moreFromDDGSectionIndex {
+            return shouldShowAppTPCell ? 4 : 3
+        }
+        return super.tableView(tableView, numberOfRowsInSection: section)
+    }
+    
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
@@ -397,6 +415,8 @@ class SettingsViewController: UITableViewController {
             return CGFloat.leastNonzeroMagnitude
         } else if debugSectionIndex == section && !shouldShowDebugCell {
             return CGFloat.leastNonzeroMagnitude
+        } else if moreFromDDGSectionIndex == section && !shouldShowAppTPCell {
+            return 55 // Standard footer height
         } else {
             return super.tableView(tableView, heightForFooterInSection: section)
         }

@@ -68,6 +68,25 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
         monitor.incrementCalls(function: #function.cleaningFunctionName())
     }
 
+    func confirmDisableSync() async -> Bool {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+        return true
+    }
+
+    func confirmDeleteAllData() async -> Bool {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+        return true
+    }
+
+    func copyCode() {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+    }
+
+    func confirmRemoveDevice(_ device: SyncUI.SyncSettingsViewModel.Device) async -> Bool {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+        return true
+    }
+
 }
 
 // MARK: An idea... can be made more public if works out

@@ -20,6 +20,7 @@
 import Foundation
 import os.log
 import BrowserServicesKit
+import Networking
 
 public class StatisticsLoader {
     
@@ -45,7 +46,10 @@ public class StatisticsLoader {
     }
     
     private func requestInstallStatistics(completion: @escaping Completion = {}) {
-        APIRequest.request(url: appUrls.initialAtb) { response, error in
+        let configuration = APIRequest.Configuration(url: appUrls.initialAtb)
+        let request = APIRequest(configuration: configuration, urlSession: .session())
+        
+        request.fetch { response, error in
             if let error = error {
                 os_log("Initial atb request failed with error %s", log: .generalLog, type: .debug, error.localizedDescription)
                 completion()
@@ -61,9 +65,13 @@ public class StatisticsLoader {
     }
     
     private func requestExti(atb: Atb, completion: @escaping Completion = {}) {
-        
         let installAtb = atb.version + (statisticsStore.variant ?? "")
-        APIRequest.request(url: appUrls.exti(forAtb: installAtb)) { _, error in
+        let url = appUrls.exti(forAtb: installAtb)
+        
+        let configuration = APIRequest.Configuration(url: url)
+        let request = APIRequest(configuration: configuration, urlSession: .session())
+        
+        request.fetch { _, error in
             if let error = error {
                 os_log("Exti request failed with error %s", log: .generalLog, type: .debug, error.localizedDescription)
                 completion()
@@ -82,7 +90,10 @@ public class StatisticsLoader {
             return
         }
         
-        APIRequest.request(url: url) { response, error in
+        let configuration = APIRequest.Configuration(url: url)
+        let request = APIRequest(configuration: configuration, urlSession: .session())
+        
+        request.fetch { response, error in
             if let error = error {
                 os_log("Search atb request failed with error %s", log: .generalLog, type: .debug, error.localizedDescription)
                 completion()
@@ -103,7 +114,10 @@ public class StatisticsLoader {
             return
         }
         
-        APIRequest.request(url: url) { response, error in
+        let configuration = APIRequest.Configuration(url: url)
+        let request = APIRequest(configuration: configuration, urlSession: .session())
+        
+        request.fetch { response, error in
             if let error = error {
                 os_log("App atb request failed with error %s", log: .generalLog, type: .debug, error.localizedDescription)
                 completion()

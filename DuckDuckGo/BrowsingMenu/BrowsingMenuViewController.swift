@@ -217,7 +217,7 @@ final class BrowsingMenuViewController: UIViewController {
         bottomConstraintIPad.isActive = isIPad
 
         // Make it go above WebView in Landscape
-        topConstraint.constant = frame.minY + (isIPhoneLandscape ? -10 : 10)
+        topConstraint.constant = frame.minY + (isIPhoneLandscape ? -10 : 5)
         // Move menu up in Landscape, as bottom toolbar shrinks
         bottomConstraint.constant = windowBounds.maxY - frame.maxY - (isIPhoneLandscape ? 2 : 10)
         rightConstraint.constant = isIPad ? 67 : 10

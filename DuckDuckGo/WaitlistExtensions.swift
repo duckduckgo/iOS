@@ -21,6 +21,7 @@ import Foundation
 import Core
 import UserNotifications
 import Waitlist
+import Networking
 
 extension Waitlist {
 
@@ -57,12 +58,16 @@ extension ProductWaitlistRequest {
     convenience init(productName: String) {
         let makeHTTPRequest: ProductWaitlistMakeHTTPRequest = { url, method, body, completion in
             guard let httpMethod = APIRequest.HTTPMethod(rawValue: method) else {
-                completion(nil, APIRequest.APIRequestError.noResponseOrError)
-                return
+                fatalError("The HTTP method is invalid")
             }
-            APIRequest.request(url: url, method: httpMethod, httpBody: body, completion: { response, error in
+            
+            let configuration = APIRequest.Configuration(url: url,
+                                                         method: httpMethod,
+                                                         body: body)
+            let request = APIRequest(configuration: configuration)
+            request.fetch { response, error in
                 completion(response?.data, error)
-            })
+            }
         }
         self.init(productName: productName, makeHTTPRequest: makeHTTPRequest)
     }

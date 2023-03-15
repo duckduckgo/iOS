@@ -50,6 +50,15 @@ extension View {
     }
 
     @ViewBuilder
+    func thinMaterialBackground() -> some View {
+        if #available(iOS 15.0, *) {
+            self.background(.ultraThinMaterial)
+        } else {
+            self.background(Rectangle().foregroundColor(.black.opacity(0.9)))
+        }
+    }
+
+    @ViewBuilder
     func monospaceSystemFont(ofSize size: Double) -> some View {
         if #available(iOS 15.0, *) {
             font(.system(size: size).monospaced())
@@ -67,4 +76,12 @@ extension View {
         }
     }
 
+    @ViewBuilder
+    func applyUnderflowBackgroundOnPhone(isCompact: Bool) -> some View {
+        if UIDevice.current.userInterfaceIdiom == .phone && isCompact {
+            self.thinMaterialBackground()
+        } else {
+            self
+        }
+    }
 }

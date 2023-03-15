@@ -19,30 +19,33 @@
 
 import Foundation
 import XCTest
+import Networking
+@testable import Common
 @testable import Core
-@testable import BrowserServicesKit
 
 class APIHeadersTests: XCTestCase {
 
     func testWhenHeadersRequestedThenHeadersContainUserAgent() {
-        let testee = APIHeaders(appVersion: appVersion())
+        APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckduckGoUserAgent(for: makeAppVersion()))
+        let testee = APIRequest.Headers()
         let expected = "ddg_ios/7.0.4.5 (com.duckduckgo.mobile.ios; iOS \(UIDevice.current.systemVersion))"
-        let actual = testee.defaultHeaders[APIHeaders.Name.userAgent]
+        let actual = testee.default[APIRequest.HTTPHeaderField.userAgent]
         XCTAssertEqual(expected, actual)
     }
 
     func testWhenProvidingEtagThenHeadersContainsIfNoneMatchHeader() {
-        let testee = APIHeaders(appVersion: appVersion())
+        APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckduckGoUserAgent(for: makeAppVersion()))
+        let testee = APIRequest.Headers()
         let expected = "etag"
-        let headers = testee.defaultHeaders(with: expected)
-        XCTAssertEqual(expected, headers[APIHeaders.Name.ifNoneMatch])
+        let headers = testee.default(with: expected)
+        XCTAssertEqual(expected, headers[APIRequest.HTTPHeaderField.ifNoneMatch])
     }
 
-    func appVersion() -> AppVersion {
+    func makeAppVersion() -> AppVersion {
         let mockBundle = MockBundle()
-        mockBundle.add(name: AppVersion.Keys.identifier, value: "com.duckduckgo.mobile.ios")
-        mockBundle.add(name: AppVersion.Keys.versionNumber, value: "7.0.4")
-        mockBundle.add(name: AppVersion.Keys.buildNumber, value: "5")
+        mockBundle.add(name: Bundle.Key.identifier, value: "com.duckduckgo.mobile.ios")
+        mockBundle.add(name: Bundle.Key.versionNumber, value: "7.0.4")
+        mockBundle.add(name: Bundle.Key.buildNumber, value: "5")
         return AppVersion(bundle: mockBundle)
     }
 

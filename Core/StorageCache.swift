@@ -21,74 +21,16 @@ import Foundation
 import BrowserServicesKit
 import Common
 
-protocol StorageCacheUpdating {
+public class StorageCache {
     
-    func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any, etag: String?) -> Bool
-}
-
-public class StorageCache: StorageCacheUpdating {
-    
-    public let fileStore = FileStore()
-    public let httpsUpgradeStore: AppHTTPSUpgradeStore = PrivacyFeatures.httpsUpgradeStore
-    
-    // Read only
     public let tld: TLD
     
     public init() {
         tld = TLD()
-        
-        // Remove legacy data
-        _ = fileStore.removeData(forFile: "temporaryUnprotectedSites")
     }
     
     public init(tld: TLD) {
         self.tld = tld
-        
-        // Remove legacy data
-        _ = fileStore.removeData(forFile: "temporaryUnprotectedSites")
     }
-    
-    // swiftlint:disable:next cyclomatic_complexity
-    func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any, etag: String?) -> Bool {
-        switch configuration {
-        case .httpsExcludedDomains:
-            guard let excludedDomains = data as? [String] else { return false }
-            return httpsUpgradeStore.persistExcludedDomains(excludedDomains)
-            
-        case .httpsBloomFilter:
-            guard let bloomFilter = data as? (spec: HTTPSBloomFilterSpecification, data: Data) else { return false }
-            let result = httpsUpgradeStore.persistBloomFilter(specification: bloomFilter.spec, data: bloomFilter.data)
-            PrivacyFeatures.httpsUpgrade.loadData()
-            return result
-            
-        case .surrogates:
-            return fileStore.persist(data as? Data, forConfiguration: configuration)
-            
-        case .trackerDataSet:
-            if let data = data as? Data,
-                fileStore.persist(data, forConfiguration: configuration) {
-                if ContentBlocking.shared.trackerDataManager.reload(etag: etag, data: data) != .downloaded {
-                    Pixel.fire(pixel: .trackerDataReloadFailed)
-                    return false
-                }
-                return true
-            }
-            return false
-            
-        case .privacyConfiguration:
-            if let data = data as? Data,
-               fileStore.persist(data, forConfiguration: configuration) {
-                if ContentBlocking.shared.privacyConfigurationManager.reload(etag: etag, data: data) != .downloaded {
-                    Pixel.fire(pixel: .privacyConfigurationReloadFailed)
-                    return false
-                }
-                return true
-            }
-            return false
-
-        case .httpsBloomFilterSpec:
-            return false
-            
-        }
-    }
+  
 }

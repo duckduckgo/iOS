@@ -150,10 +150,6 @@ class TabSwitcherViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if tabsModel.count > 1 {
-            FireButtonExperiment.playFireButton(fireButton: fireButton, delay: 0.5)
-        }
-        
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             DaxDialogs.shared.fireButtonPulseStarted()
             guard let window = view.window else { return }
@@ -170,6 +166,8 @@ class TabSwitcherViewController: UIViewController {
                 ViewHighlighter.hideAll()
                 ViewHighlighter.showIn(window, focussedOnView: view)
             }
+        } else if tabsModel.count > 1 {
+            FireButtonExperiment.playFireButton(fireButton: fireButton, delay: 0.5)
         }
     }
     

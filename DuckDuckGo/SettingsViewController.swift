@@ -110,7 +110,7 @@ class SettingsViewController: UITableViewController {
 
         configureAutofillCell()
         configureSyncCell()
-        configureAutofillCell()
+        configureAppTPCell()
         configureThemeCellAccessory()
         configureFireButtonAnimationCellAccessory()
         configureTextSizeCell()
@@ -383,13 +383,6 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         return cell.isHidden ? 0 : UITableView.automaticDimension
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == moreFromDDGSectionIndex {
-            return shouldShowAppTPCell ? 4 : 3
-        }
-        return super.tableView(tableView, numberOfRowsInSection: section)
     }
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {

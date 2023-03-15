@@ -24,16 +24,16 @@ public extension URL {
 
     private static let defaultStatisticsDependentURL = StatisticsDependentURL()
 
-    static func makeSearch(for text: String) -> URL? { defaultStatisticsDependentURL.makeSearch(for: text) }
-    static func makeSearch(forQuery query: String, queryContext: URL? = nil) -> URL? {
-        defaultStatisticsDependentURL.makeSearch(forQuery: query, queryContext: queryContext)
+    static func make(forSearchWithText text: String) -> URL? { defaultStatisticsDependentURL.make(forSearchWithText: text) }
+    static func make(forSearchWithQuery query: String, queryContext: URL? = nil) -> URL? {
+        defaultStatisticsDependentURL.make(forSearchWithQuery: query, queryContext: queryContext)
     }
     static func applyingStatsParams(for url: URL) -> URL { defaultStatisticsDependentURL.applyingStatsParams(for: url) }
     static var searchAtb: URL? { defaultStatisticsDependentURL.searchAtb }
     static var appAtb: URL? { defaultStatisticsDependentURL.appAtb }
     static func hasCorrectMobileStatsParams(url: URL) -> Bool { defaultStatisticsDependentURL.hasCorrectMobileStatsParams(url: url) }
-    static func makePixel(withName pixelName: String, formFactor: String? = nil, includeATB: Bool = true) -> URL {
-        defaultStatisticsDependentURL.makePixel(withName: pixelName, formFactor: formFactor, includeATB: includeATB)
+    static func make(forPixelWithName pixelName: String, formFactor: String? = nil, includeATB: Bool = true) -> URL {
+        defaultStatisticsDependentURL.make(forPixelWithName: pixelName, formFactor: formFactor, includeATB: includeATB)
     }
 
 }
@@ -48,11 +48,11 @@ public final class StatisticsDependentURL {
 
     // MARK: - Search
 
-    func makeSearch(for text: String) -> URL? {
+    func make(forSearchWithText text: String) -> URL? {
         makeSearch(for: text, additionalParameters: [])
     }
 
-    func makeSearch(forQuery query: String, queryContext: URL? = nil) -> URL? {
+    func make(forSearchWithQuery query: String, queryContext: URL? = nil) -> URL? {
         if let url = URL.webUrl(from: query) {
             return url
         }
@@ -131,7 +131,7 @@ public final class StatisticsDependentURL {
     // MARK: - Pixel
 
     private static let pixelBase: String = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
-    func makePixel(withName pixelName: String, formFactor: String? = nil, includeATB: Bool = true) -> URL {
+    func make(forPixelWithName pixelName: String, formFactor: String? = nil, includeATB: Bool = true) -> URL {
         var urlString = "\(Self.pixelBase)/t/\(pixelName)"
         if let formFactor = formFactor {
             urlString.append("_ios_\(formFactor)")

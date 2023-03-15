@@ -572,7 +572,7 @@ class MainViewController: UIViewController {
 
     func loadQueryInNewTab(_ query: String, reuseExisting: Bool = false) {
         dismissOmniBar()
-        guard let url = URL.makeSearch(forQuery: query) else {
+        guard let url = URL.make(forSearchWithQuery: query) else {
             os_log("Couldn‘t form URL for query “%s”", log: .lifecycleLog, type: .error, query)
             return
         }
@@ -606,7 +606,7 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func loadQuery(_ query: String) {
-        guard let url = URL.makeSearch(forQuery: query, queryContext: currentTab?.url) else {
+        guard let url = URL.make(forSearchWithQuery: query, queryContext: currentTab?.url) else {
             os_log("Couldn‘t form URL for query “%s” with context “%s”",
                    log: .lifecycleLog,
                    type: .error,
@@ -1353,7 +1353,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             } else {
                 loadUrl(url)
             }
-        } else if let url = URL.makeSearch(for: suggestion.suggestion) {
+        } else if let url = URL.make(forSearchWithText: suggestion.suggestion) {
             loadUrl(url)
         } else {
             os_log("Couldn‘t form URL for suggestion “%s”", log: .lifecycleLog, type: .error, suggestion.suggestion)

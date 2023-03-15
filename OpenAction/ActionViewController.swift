@@ -33,7 +33,7 @@ class ActionViewController: UIViewController {
                 if provider.hasItemConformingToTypeIdentifier(kUTTypeText as String) {
                     provider.loadItem(forTypeIdentifier: kUTTypeText as String, options: nil) { text, _ in
                         guard let text = text as? String else { return }
-                        guard let url = URL.makeSearch(forQuery: text) else {
+                        guard let url = URL.make(forSearchWithQuery: text) else {
                             os_log("Couldn‘t for URL for query “%s”", log: .lifecycleLog, type: .error, text)
                             return
                         }

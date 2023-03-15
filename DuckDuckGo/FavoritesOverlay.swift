@@ -43,9 +43,9 @@ class FavoritesOverlay: UIViewController {
     
     weak var delegate: FavoritesOverlayDelegate?
     
-    init(viewModel: FavoritesListInteracting) {
-        renderer = FavoritesHomeViewSectionRenderer(allowsEditing: false,
-                                                    viewModel: viewModel)
+    init(favoritesViewModel: FavoritesListInteracting) {
+        renderer = FavoritesHomeViewSectionRenderer(allowsEditing: true,
+                                                    viewModel: favoritesViewModel)
         super.init(nibName: nil, bundle: nil)
     }
     

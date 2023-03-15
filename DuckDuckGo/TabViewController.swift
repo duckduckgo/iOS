@@ -88,8 +88,7 @@ class TabViewController: UIViewController {
     internal lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var featureFlaggerInternalUserDecider = AppDependencyProvider.shared.featureFlaggerInternalUserDecider
 
-    private lazy var autofillUrlMatcher: AutofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
-    private lazy var autofillWebsiteAccountMatcher = AutofillWebsiteAccountMatcher(autofillUrlMatcher: autofillUrlMatcher,
+    private lazy var autofillWebsiteAccountMatcher = AutofillWebsiteAccountMatcher(autofillUrlMatcher: AutofillDomainNameUrlMatcher(),
                                                                                    tld: TabViewController.tld)
 
     private(set) var tabModel: Tab
@@ -2361,7 +2360,7 @@ extension TabViewController: SecureVaultManagerDelegate {
             
             if #available(iOS 15.0, *) {
                 if let presentationController = autofillPromptViewController.presentationController as? UISheetPresentationController {
-                    presentationController.detents = AutofillLoginPromptHelper.showMoreOptions(accountMatches) ? [.medium(), .large()] : [.medium()]
+                    presentationController.detents = AutofillLoginPromptHelper.shouldShowMoreOptions(accountMatches) ? [.medium(), .large()] : [.medium()]
                 }
             }
             self.present(autofillPromptViewController, animated: true, completion: nil)

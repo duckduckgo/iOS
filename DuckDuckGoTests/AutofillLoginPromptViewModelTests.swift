@@ -28,8 +28,8 @@ final class AutofillLoginPromptViewModelTests: XCTestCase {
         let accountMatches = AccountMatches(perfectMatches: [websiteAccountFor(domain: "example.com")],
                                             partialMatches: [:])
         let autofillLoginPromptViewModel = AutofillLoginPromptViewModel(accounts: accountMatches,
-                                                                                      domain: "example.com",
-                                                                                      isExpanded: false)
+                                                                        domain: "example.com",
+                                                                        isExpanded: false)
         XCTAssertEqual(autofillLoginPromptViewModel.accountMatchesViewModels.count, 1)
         XCTAssertTrue(autofillLoginPromptViewModel.accountMatchesViewModels[0].isPerfectMatch)
         XCTAssertEqual(autofillLoginPromptViewModel.accountMatchesViewModels[0].accounts.count, 1)
@@ -55,8 +55,8 @@ final class AutofillLoginPromptViewModelTests: XCTestCase {
                                                              websiteAccountFor(domain: "example.com", username: "dax3@duck.com")],
                                             partialMatches: [:])
         let autofillLoginPromptViewModel = AutofillLoginPromptViewModel(accounts: accountMatches,
-                                                                                      domain: "example.com",
-                                                                                      isExpanded: false)
+                                                                        domain: "example.com",
+                                                                        isExpanded: false)
         XCTAssertEqual(autofillLoginPromptViewModel.accountMatchesViewModels.count, 1)
         XCTAssertTrue(autofillLoginPromptViewModel.accountMatchesViewModels[0].isPerfectMatch)
         XCTAssertEqual(autofillLoginPromptViewModel.accountMatchesViewModels[0].accounts.count, 3)
@@ -70,8 +70,8 @@ final class AutofillLoginPromptViewModelTests: XCTestCase {
                                                              websiteAccountFor(domain: "example.com", username: "dax4@duck.com")],
                                             partialMatches: [:])
         let autofillLoginPromptViewModel = AutofillLoginPromptViewModel(accounts: accountMatches,
-                                                                                      domain: "example.com",
-                                                                                      isExpanded: false)
+                                                                        domain: "example.com",
+                                                                        isExpanded: false)
         XCTAssertEqual(autofillLoginPromptViewModel.accountMatchesViewModels.count, 1)
         XCTAssertTrue(autofillLoginPromptViewModel.accountMatchesViewModels[0].isPerfectMatch)
         XCTAssertEqual(autofillLoginPromptViewModel.accountMatchesViewModels[0].accounts.count, 2)
@@ -84,8 +84,8 @@ final class AutofillLoginPromptViewModelTests: XCTestCase {
                                                 websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")]
                                             ])
         let autofillLoginPromptViewModel = AutofillLoginPromptViewModel(accounts: accountMatches,
-                                                                                      domain: "example.com",
-                                                                                      isExpanded: false)
+                                                                        domain: "example.com",
+                                                                        isExpanded: false)
         XCTAssertEqual(autofillLoginPromptViewModel.accountMatchesViewModels.count, 1)
         XCTAssertTrue(autofillLoginPromptViewModel.accountMatchesViewModels[0].isPerfectMatch)
         XCTAssertEqual(autofillLoginPromptViewModel.accountMatchesViewModels[0].accounts.count, 1)
@@ -99,8 +99,8 @@ final class AutofillLoginPromptViewModelTests: XCTestCase {
                                                 websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")]
                                             ])
         let autofillLoginPromptViewModel = AutofillLoginPromptViewModel(accounts: accountMatches,
-                                                                                      domain: "example.com",
-                                                                                      isExpanded: false)
+                                                                        domain: "example.com",
+                                                                        isExpanded: false)
         XCTAssertEqual(autofillLoginPromptViewModel.accountMatchesViewModels.count, 1)
         XCTAssertTrue(autofillLoginPromptViewModel.accountMatchesViewModels[0].isPerfectMatch)
         XCTAssertEqual(autofillLoginPromptViewModel.accountMatchesViewModels[0].accounts.count, 2)
@@ -115,8 +115,8 @@ final class AutofillLoginPromptViewModelTests: XCTestCase {
                                                 websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")]
                                             ])
         let autofillLoginPromptViewModel = AutofillLoginPromptViewModel(accounts: accountMatches,
-                                                                                      domain: "example.com",
-                                                                                      isExpanded: false)
+                                                                        domain: "example.com",
+                                                                        isExpanded: false)
         XCTAssertEqual(autofillLoginPromptViewModel.accountMatchesViewModels.count, 1)
         XCTAssertTrue(autofillLoginPromptViewModel.accountMatchesViewModels[0].isPerfectMatch)
         XCTAssertEqual(autofillLoginPromptViewModel.accountMatchesViewModels[0].accounts.count, 2)
@@ -132,8 +132,8 @@ final class AutofillLoginPromptViewModelTests: XCTestCase {
                                                 websiteAccountFor(domain: "sub.example.com", username: "dax@duck.com")]
                                             ])
         let autofillLoginPromptViewModel = AutofillLoginPromptViewModel(accounts: accountMatches,
-                                                                                      domain: "example.com",
-                                                                                      isExpanded: false)
+                                                                        domain: "example.com",
+                                                                        isExpanded: false)
         XCTAssertEqual(autofillLoginPromptViewModel.accountMatchesViewModels.count, 1)
         XCTAssertTrue(autofillLoginPromptViewModel.accountMatchesViewModels[0].isPerfectMatch)
         XCTAssertEqual(autofillLoginPromptViewModel.accountMatchesViewModels[0].accounts.count, 2)

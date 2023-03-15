@@ -41,24 +41,27 @@ final class AppHTTPSUpgradeStoreTests: XCTestCase {
     func testWhenBloomNotPersistedThenEmbeddedSpecificationReturned() {
         let sha = "d72a358afca8f70fd1447009efd9e5e42aa7a4e6a01f593da226dbabef0a0052"
         let specification = HTTPSBloomFilterSpecification(bitCount: 12153347, errorRate: 0.000001, totalEntries: 422649, sha256: sha)
-        XCTAssertEqual(specification, testee.bloomFilterSpecification)
+        XCTAssertEqual(specification, testee.loadBloomFilter()?.specification)
     }
     
     /// This may fail after embedded data is updated, fix accordingly
     func testWhenBloomNotPersistedThenEmbeddedBloomUsedAndBloomContainsKnownUpgradableSite() {
-        XCTAssertNotNil(testee.bloomFilter)
-        XCTAssertTrue(testee.bloomFilter!.contains("facebook.com"))
+        let bloomFilter = testee.loadBloomFilter()?.wrapper
+        XCTAssertNotNil(bloomFilter)
+        XCTAssertTrue(bloomFilter!.contains("facebook.com"))
     }
     
     /// This may fail after embedded data is updated, fix accordingly
     func testWhenBloomNotPersistedThenEmbeddedBloomUsedAndBloomDoesNotContainAnUnknownSite() {
-        XCTAssertNotNil(testee.bloomFilter)
-        XCTAssertFalse(testee.bloomFilter!.contains("anUnkonwnSiteThatIsNotInOurUpgradeList.com"))
+        let bloomFilter = testee.loadBloomFilter()?.wrapper
+        XCTAssertNotNil(bloomFilter)
+        XCTAssertFalse(bloomFilter!.contains("anUnkonwnSiteThatIsNotInOurUpgradeList.com"))
     }
     
     /// This may fail after embedded data is updated, fix accordingly
     func testWhenBloomNotPersistedThenEmbeddedBloomUsedAndEmbeddedExcludedDomainIsTrue() {
-        XCTAssertNotNil(testee.bloomFilter)
+        let bloomFilter = testee.loadBloomFilter()?.wrapper
+        XCTAssertNotNil(bloomFilter)
         XCTAssertTrue(testee.hasExcludedDomain("www.dppps.sc.gov"))
     }
         
@@ -67,21 +70,25 @@ final class AppHTTPSUpgradeStoreTests: XCTestCase {
         let sha = "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069"
         let specification = HTTPSBloomFilterSpecification(bitCount: 100, errorRate: 0.01, totalEntries: 100, sha256: sha)
         XCTAssertNoThrow(try testee.persistBloomFilter(specification: specification, data: data))
-        XCTAssertEqual(specification, testee.bloomFilterSpecification)
+        XCTAssertEqual(specification, testee.loadBloomFilter()?.specification)
     }
     
     func testWhenNewBloomFilterDoesNotMatchShaInSpecThenSpecAndDataNotPersisted() {
         let data = "Hello World!".data(using: .utf8)!
         let sha = "wrong sha"
         let specification = HTTPSBloomFilterSpecification(bitCount: 100, errorRate: 0.01, totalEntries: 100, sha256: sha)
+
+        customAssertionFailure = { _, _, _ in }
+        defer { customAssertionFailure = nil }
         XCTAssertThrowsError(try testee.persistBloomFilter(specification: specification, data: data))
-        XCTAssertNotEqual(specification, testee.bloomFilterSpecification)
+        XCTAssertNotEqual(specification, testee.loadBloomFilter()?.specification)
     }
 
     func testWhenBloomFilterSpecificationIsPersistedThenSpecificationIsRetrieved() throws {
         let specification = HTTPSBloomFilterSpecification(bitCount: 100, errorRate: 0.01, totalEntries: 100, sha256: "abc")
         try testee.persistBloomFilterSpecification(specification)
-        XCTAssertEqual(specification, testee.bloomFilterSpecification)
+        let storedSpecification = testee.loadStoredBloomFilterSpecification()
+        XCTAssertEqual(specification, storedSpecification)
     }
     
     func testWhenBloomFilterSpecificationIsPersistedThenOldSpecificationIsReplaced() throws {
@@ -91,7 +98,7 @@ final class AppHTTPSUpgradeStoreTests: XCTestCase {
         let newSpecification = HTTPSBloomFilterSpecification(bitCount: 101, errorRate: 0.01, totalEntries: 101, sha256: "abc")
         try testee.persistBloomFilterSpecification(newSpecification)
 
-        let storedSpecification = testee.bloomFilterSpecification
+        let storedSpecification = testee.loadStoredBloomFilterSpecification()
         XCTAssertEqual(newSpecification, storedSpecification)
     }
     

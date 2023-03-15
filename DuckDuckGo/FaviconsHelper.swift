@@ -23,8 +23,6 @@ import Kingfisher
 
 struct FaviconsHelper {
 
-    private static let tld = AppDependencyProvider.shared.storageCache.current.tld
-
     static func loadFaviconSync(forDomain domain: String?,
                                 usingCache cacheType: Favicons.CacheType,
                                 useFakeFavicon: Bool,

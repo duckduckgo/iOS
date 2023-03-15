@@ -132,6 +132,28 @@ class MainViewController: UIViewController {
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
     
+    private enum Constants {
+                
+        // Environment Keys/Values
+        static let environmentOnboardingKey = "ONBOARDING"
+        static let environmentOnboardingKeytrue = "true"
+        static let environmentOnboardingKeyfalse = "false"
+        
+        static let onboardingFlow = "DaxOnboarding"
+        static let bookmarksImage = "Bookmarks"
+        
+        // Segue Identifiers
+        static let bookmarksSegue = "Bookmarks"
+        static let bookmarksEditSegue = "BookmarksEdit"
+        static let bookmarksEditCurrentSegue = "BookmarksEditCurrent"
+        static let instructionsSegue = "instructions"
+        static let downloadsSegue = "Downloads"
+        static let reportBrokenSiteSegue = "ReportBrokenSite"
+        static let actionSheetDaxDialogSegue = "ActionSheetDaxDialog"
+        static let settingsSegue = "Settings"
+        static let showTabsSegue = "ShowTabs"
+    }
+    
     required init?(coder: NSCoder,
                    bookmarksDatabase: CoreDataDatabase) {
         self.bookmarksDatabase = bookmarksDatabase
@@ -199,7 +221,7 @@ class MainViewController: UIViewController {
     
     func startOnboardingFlowIfNotSeenBefore() {
         
-        guard ProcessInfo.processInfo.environment["ONBOARDING"] != "false" else {
+        guard ProcessInfo.processInfo.environment[Constants.environmentOnboardingKey] != Constants.environmentOnboardingKeyfalse else {
             // explicitly skip onboarding, e.g. for integration tests
             return
         }
@@ -207,10 +229,10 @@ class MainViewController: UIViewController {
         let settings = DefaultTutorialSettings()
         let showOnboarding = !settings.hasSeenOnboarding ||
             // explicitly show onboarding, can be set in the scheme > Run > Environment Variables
-            ProcessInfo.processInfo.environment["ONBOARDING"] == "true"
+        ProcessInfo.processInfo.environment[Constants.environmentOnboardingKey] == Constants.environmentOnboardingKeyfalse
         guard showOnboarding else { return }
 
-        let onboardingFlow = "DaxOnboarding"
+        let onboardingFlow = Constants.onboardingFlow
 
         performSegue(withIdentifier: onboardingFlow, sender: self)
     }
@@ -304,7 +326,7 @@ class MainViewController: UIViewController {
         omniBar.bookmarksButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
                                                                                   action: #selector(quickSaveBookmarkLongPress(gesture:))))
         gestureBookmarksButton.delegate = self
-        gestureBookmarksButton.image = UIImage(named: "Bookmarks")
+        gestureBookmarksButton.image = UIImage(named: Constants.bookmarksImage)
     }
     
     @objc func quickSaveBookmarkLongPress(gesture: UILongPressGestureRecognizer) {
@@ -383,11 +405,11 @@ class MainViewController: UIViewController {
         }
         controller.delegate = self
         
-        if segueIdentifier == "BookmarksEditCurrent",
+        if segueIdentifier == Constants.bookmarksEditCurrentSegue,
             let link = currentTab?.link,
             let bookmark = menuBookmarksViewModel.favorite(for: link.url) ?? menuBookmarksViewModel.bookmark(for: link.url) {
             controller.openEditFormWhenPresented(bookmark: bookmark)
-        } else if segueIdentifier == "BookmarksEdit",
+        } else if segueIdentifier == Constants.bookmarksEditSegue,
                   let bookmark = sender as? BookmarkEntity {
             controller.openEditFormWhenPresented(bookmark: bookmark)
         }
@@ -529,7 +551,7 @@ class MainViewController: UIViewController {
         wakeLazyFireButtonAnimator()
         
         if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
-            performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
+            performSegue(withIdentifier: Constants.actionSheetDaxDialogSegue, sender: spec)
         } else {
             let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
                 self?.forgetAllWithAnimation {}
@@ -860,11 +882,11 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func launchReportBrokenSite() {
-        performSegue(withIdentifier: "ReportBrokenSite", sender: self)
+        performSegue(withIdentifier: Constants.reportBrokenSiteSegue, sender: self)
     }
     
     fileprivate func launchDownloads() {
-        performSegue(withIdentifier: "Downloads", sender: self)
+        performSegue(withIdentifier: Constants.downloadsSegue, sender: self)
     }
     
     fileprivate func launchAutofillLogins(with currentTabUrl: URL? = nil) {
@@ -888,7 +910,7 @@ class MainViewController: UIViewController {
     }
     
     func launchSettings() {
-        performSegue(withIdentifier: "Settings", sender: self)
+        performSegue(withIdentifier: Constants.settingsSegue, sender: self)
     }
     
     func launchCookiePopupManagementSettings() {
@@ -902,7 +924,7 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func launchInstructions() {
-        performSegue(withIdentifier: "instructions", sender: self)
+        performSegue(withIdentifier: Constants.instructionsSegue, sender: self)
     }
 
     override func viewDidLayoutSubviews() {
@@ -1251,13 +1273,13 @@ extension MainViewController: OmniBarDelegate {
             ViewHighlighter.hideAll()
         }
         hideSuggestionTray()
-        performSegue(withIdentifier: "Bookmarks", sender: self)
+        performSegue(withIdentifier: Constants.bookmarksSegue, sender: self)
     }
     
     func onBookmarkEdit() {
         ViewHighlighter.hideAll()
         hideSuggestionTray()
-        performSegue(withIdentifier: "BookmarksEditCurrent", sender: self)
+        performSegue(withIdentifier: Constants.bookmarksEditSegue, sender: self)
     }
     
     func onEnterPressed() {
@@ -1353,7 +1375,7 @@ extension MainViewController: FavoritesOverlayDelegate {
     }
     
     func favoritesOverlay(_ controller: FavoritesOverlay, didRequestEditFavorite favorite: BookmarkEntity) {
-        performSegue(withIdentifier: "BookmarksEdit", sender: favorite)
+        performSegue(withIdentifier: Constants.bookmarksEditSegue, sender: favorite)
     }
 }
 
@@ -1426,7 +1448,7 @@ extension MainViewController: HomeControllerDelegate {
     }
     
     func home(_ home: HomeViewController, didRequestEdit favorite: BookmarkEntity) {
-        performSegue(withIdentifier: "BookmarksEdit", sender: favorite)
+        performSegue(withIdentifier: Constants.bookmarksEditSegue, sender: favorite)
     }
     
     func home(_ home: HomeViewController, didRequestContentOverflow shouldOverflow: Bool) -> CGFloat {
@@ -1731,7 +1753,7 @@ extension MainViewController: TabSwitcherButtonDelegate {
                     
                 }
                 ViewHighlighter.hideAll()
-                self.performSegue(withIdentifier: "ShowTabs", sender: self)
+                self.performSegue(withIdentifier: Constants.showTabsSegue, sender: self)
             })
         }
     }

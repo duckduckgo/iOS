@@ -48,6 +48,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     var account: SecureVaultModels.WebsiteAccount?
     private let tld: TLD
     private let autofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
+    private let autofillDomainNameUrlSort = AutofillDomainNameUrlSort()
 
     @ObservedObject var headerViewModel: AutofillLoginDetailsHeaderViewModel
     @Published var isPasswordHidden = true
@@ -120,7 +121,10 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         address = account.domain
         title = account.title ?? ""
         notes = account.notes ?? ""
-        headerViewModel.updateData(with: account, tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
+        headerViewModel.updateData(with: account,
+                                   tld: tld,
+                                   autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher,
+                                   autofillDomainNameUrlSort: autofillDomainNameUrlSort)
         setupPassword(with: account)
     }
     
@@ -271,11 +275,13 @@ final class AutofillLoginDetailsHeaderViewModel: ObservableObject {
     @Published var title: String = ""
     @Published var subtitle: String = ""
     @Published var domain: String = ""
+    @Published var preferredFakeFaviconLetter: String?
     
-    func updateData(with account: SecureVaultModels.WebsiteAccount, tld: TLD, autofillDomainNameUrlMatcher: AutofillDomainNameUrlMatcher) {
+    func updateData(with account: SecureVaultModels.WebsiteAccount, tld: TLD, autofillDomainNameUrlMatcher: AutofillDomainNameUrlMatcher, autofillDomainNameUrlSort: AutofillDomainNameUrlSort) {
         self.title = account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
         self.subtitle = UserText.autofillLoginDetailsLastUpdated(for: (dateFormatter.string(from: account.lastUpdated)))
         self.domain = account.domain
+        self.preferredFakeFaviconLetter = account.faviconLetter(tld: tld, autofillDomainNameUrlSort: autofillDomainNameUrlSort)
     }
 
 }

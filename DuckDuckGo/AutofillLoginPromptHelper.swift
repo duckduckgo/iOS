@@ -24,7 +24,7 @@ struct AutofillLoginPromptHelper {
 
     static let moreOptionsLimit = 3
 
-    static func showMoreOptions(_ accountMatches: AccountMatches, limit: Int = Self.moreOptionsLimit) -> Bool {
+    static func shouldShowMoreOptions(_ accountMatches: AccountMatches, limit: Int = Self.moreOptionsLimit) -> Bool {
         if accountMatches.perfectMatches.count > limit {
             return true
         } else if accountMatches.perfectMatches.count > 0 && accountMatches.partialMatches.count > 0 {

@@ -108,7 +108,7 @@ class AutofillLoginPromptViewModel: ObservableObject {
             }
         } else {
             let limit = AutofillLoginPromptHelper.moreOptionsLimit
-            showMoreOptions = AutofillLoginPromptHelper.showMoreOptions(accounts, limit: limit)
+            showMoreOptions = AutofillLoginPromptHelper.shouldShowMoreOptions(accounts, limit: limit)
 
             if !accounts.perfectMatches.isEmpty {
                 if accounts.perfectMatches.count > limit || (showMoreOptions && accounts.perfectMatches.count == limit) {

@@ -25,6 +25,7 @@ import Persistence
 protocol FavoritesOverlayDelegate: AnyObject {
     
     func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: BookmarkEntity)
+    func favoritesOverlay(_ controller: FavoritesOverlay, didRequestEditFavorite: BookmarkEntity)
 }
 
 class FavoritesOverlay: UIViewController {
@@ -119,7 +120,7 @@ extension FavoritesOverlay: FavoritesHomeViewSectionRendererDelegate {
     }
     
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didRequestEdit favorite: BookmarkEntity) {
-        // currently can't edit favorites from overlay
+        delegate?.favoritesOverlay(self, didRequestEditFavorite: favorite)
     }
 
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, favoriteDeleted favorite: BookmarkEntity) {
@@ -155,6 +156,19 @@ extension FavoritesOverlay: UICollectionViewDataSource {
         }
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        return renderer.collectionView(collectionView, previewForHighlightingContextMenuWithConfiguration: configuration)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        return renderer.collectionView(collectionView, previewForHighlightingContextMenuWithConfiguration: configuration)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        return renderer.collectionView(collectionView, contextMenuConfigurationForItemAt: indexPath, point: point)
+    }
+    
 }
 
 extension FavoritesOverlay: UICollectionViewDelegateFlowLayout {

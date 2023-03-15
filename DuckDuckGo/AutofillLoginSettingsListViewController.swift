@@ -43,7 +43,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private let lockedView = AutofillItemsLockedView()
     private let emptySearchView = AutofillEmptySearchView()
     private let noAuthAvailableView = AutofillNoAuthAvailableView()
-    private let tld: TLD = TLD()
+    private let tld: TLD = AppDependencyProvider.shared.storageCache.tld
 
     private lazy var addBarButtonItem: UIBarButtonItem = {
         UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))

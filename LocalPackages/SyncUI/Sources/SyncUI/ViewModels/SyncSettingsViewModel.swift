@@ -167,7 +167,6 @@ public class SyncSettingsViewModel: ObservableObject {
             delegate?.createAccountAndStartSyncing()
         } else {
             isBusy = false
-            isSyncEnabled = false
         }
     }
 

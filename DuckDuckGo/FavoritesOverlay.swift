@@ -123,9 +123,7 @@ extension FavoritesOverlay: FavoritesHomeViewSectionRendererDelegate {
         delegate?.favoritesOverlay(self, didRequestEditFavorite: favorite)
     }
 
-    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, favoriteDeleted favorite: BookmarkEntity) {
-        // currently can't delete favorites from overlay
-    }
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, favoriteDeleted favorite: BookmarkEntity) {}
     
 }
 

@@ -54,35 +54,48 @@ struct AppTPActivityView: View {
     }
     
     var listState: some View {
-        ForEach(viewModel.sections, id: \.name) { section in
-            Section(content: {
-                LazyVStack(alignment: .leading, spacing: 0) {
-                    ForEach(section.objects as? [AppTrackerEntity] ?? []) { tracker in
-                        let showDivider = tracker != (section.objects?.last as? AppTrackerEntity)
-                        AppTPTrackerCell(trackerDomain: tracker.domain,
-                                         trackerOwner: tracker.trackerOwner,
-                                         trackerCount: tracker.count,
-                                         trackerTimestamp: viewModel.format(date: tracker.timestamp),
-                                         trackerBucket: tracker.bucket,
-                                         debugMode: viewModel.debugModeEnabled,
-                                         imageCache: imageCache,
-                                         showDivider: showDivider)
+        VStack {
+            Picker("Tracker Sorting", selection: $viewModel.trackerSortingOption) {
+                Text("Sort By Count").tag(AppTrackingProtectionListViewModel.TrackerSorting.count)
+                Text("Sort By Date").tag(AppTrackingProtectionListViewModel.TrackerSorting.timestamp)
+            }
+            .pickerStyle(.segmented)
+            
+            ForEach(viewModel.sections, id: \.name) { section in
+                Section(content: {
+                    LazyVStack(alignment: .leading, spacing: 0) {
+                        ForEach(section.objects as? [AppTrackerEntity] ?? []) { tracker in
+                            let showDivider = tracker != (section.objects?.last as? AppTrackerEntity)
+                            AppTPTrackerCell(trackerDomain: tracker.domain,
+                                             trackerOwner: tracker.trackerOwner,
+                                             trackerCount: tracker.count,
+                                             trackerTimestamp: viewModel.format(date: tracker.timestamp),
+                                             trackerBucket: tracker.bucket,
+                                             debugMode: viewModel.debugModeEnabled,
+                                             imageCache: imageCache,
+                                             showDivider: showDivider)
+                        }
                     }
-                }
-                .background(Color.cellBackground)
-                .cornerRadius(Const.Size.cornerRadius)
-            }, header: {
-                HStack {
-                    Text(viewModel.formattedDate(section.name))
-                        .font(Font(uiFont: Const.Font.sectionHeader))
-                        .foregroundColor(.infoText)
-                        .padding(.top)
-                        .padding(.leading, Const.Size.sectionIndentation)
-                        .padding(.bottom, Const.Size.sectionHeaderBottom)
-                    
-                    Spacer()
-                }
+                    .background(Color.cellBackground)
+                    .cornerRadius(Const.Size.cornerRadius)
+                }, header: {
+                    HStack {
+                        Text(viewModel.formattedDate(section.name))
+                            .font(Font(uiFont: Const.Font.sectionHeader))
+                            .foregroundColor(.infoText)
+                            .padding(.top)
+                            .padding(.leading, Const.Size.sectionIndentation)
+                            .padding(.bottom, Const.Size.sectionHeaderBottom)
+                        
+                        Spacer()
+                    }
+                })
+            }
+            
+            Toggle(isOn: $viewModel.debugModeEnabled, label: {
+                Text("Show Additional Tracker Information")
             })
+            .padding(.top, 8)
         }
     }
     
@@ -108,22 +121,11 @@ struct AppTPActivityView: View {
                     .padding(.bottom)
                 }
 
-                Picker("Tracker Sorting", selection: $viewModel.trackerSortingOption) {
-                    Text("Sort By Count").tag(AppTrackingProtectionListViewModel.TrackerSorting.count)
-                    Text("Sort By Date").tag(AppTrackingProtectionListViewModel.TrackerSorting.timestamp)
-                }
-                .pickerStyle(.segmented)
-
                 if viewModel.sections.count > 0 {
                     listState
                 } else {
                     emptyState
                 }
-
-                Toggle(isOn: $viewModel.debugModeEnabled, label: {
-                    Text("Show Additional Tracker Information")
-                })
-                .padding(.top, 8)
             }
             .padding()
         }

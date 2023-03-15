@@ -1054,6 +1054,14 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters, includedParameters: [.atb])
     }
     
+    private func installFavoritesOverlay() {
+        let favoritesOverlay = FavoritesOverlay(favoritesViewModel: favoritesViewModel)
+        favoritesOverlay.delegate = self
+        addChild(favoritesOverlay)
+        favoritesOverlay.view.frame = containerView.bounds
+        containerView.addSubview(favoritesOverlay.view)
+    }
+    
 }
 
 extension MainViewController: FindInPageDelegate {
@@ -1343,6 +1351,11 @@ extension MainViewController: FavoritesOverlayDelegate {
         }
         showHomeRowReminder()
     }
+    
+    func favoritesOverlay(_ controller: FavoritesOverlay, didRequestEditFavorite favorite: BookmarkEntity) {
+        performSegue(withIdentifier: "BookmarksEdit", sender: favorite)
+    }
+    
 }
 
 extension MainViewController: AutocompleteViewControllerDelegate {

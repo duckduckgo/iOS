@@ -24,6 +24,7 @@ import Persistence
 
 protocol FavoritesOverlayDelegate: AnyObject {
     func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: BookmarkEntity)
+    func favoritesOverlay(_ controller: FavoritesOverlay, didRequestEditFavorite: BookmarkEntity)
 }
 
 class FavoritesOverlay: UIViewController {
@@ -41,9 +42,9 @@ class FavoritesOverlay: UIViewController {
     
     weak var delegate: FavoritesOverlayDelegate?
     
-    init(viewModel: FavoritesListInteracting) {
+    init(favoritesViewModel: FavoritesListInteracting) {
         renderer = FavoritesHomeViewSectionRenderer(allowsEditing: true,
-                                                    viewModel: viewModel)
+                                                    viewModel: favoritesViewModel)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -59,8 +60,6 @@ class FavoritesOverlay: UIViewController {
         collectionView.register(UINib(nibName: "FavoriteHomeCell", bundle: nil), forCellWithReuseIdentifier: "favorite")
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.dragDelegate = self
-        collectionView.dropDelegate = self
         collectionView.backgroundColor = .clear
 
         view.addSubview(collectionView)
@@ -120,7 +119,7 @@ extension FavoritesOverlay: FavoritesHomeViewSectionRendererDelegate {
     }
 
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didRequestEdit favorite: BookmarkEntity) {
-        delegate?.favoritesOverlay(self, didSelect: favorite)
+        delegate?.favoritesOverlay(self, didRequestEditFavorite: favorite)
     }
 
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, favoriteDeleted favorite: BookmarkEntity) {
@@ -138,22 +137,6 @@ extension FavoritesOverlay: UICollectionViewDelegate {
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize(width: 1, height: Constants.footerPadding)
-    }
-
-}
-
-extension FavoritesOverlay: UICollectionViewDragDelegate, UICollectionViewDropDelegate {
-
-    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        return renderer.collectionView(collectionView, itemsForBeginning: session, at: indexPath)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
-        renderer.collectionView(collectionView, performDropWith: coordinator)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
-        return renderer.collectionView(collectionView, dropSessionDidUpdate: session, withDestinationIndexPath: destinationIndexPath)
     }
 
 }

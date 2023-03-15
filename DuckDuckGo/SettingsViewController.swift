@@ -21,6 +21,7 @@ import UIKit
 import MessageUI
 import Core
 import BrowserServicesKit
+import Persistence
 import SwiftUI
 import Common
 
@@ -50,6 +51,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var macBrowserWaitlistAccessoryText: UILabel!
     @IBOutlet weak var windowsBrowserWaitlistCell: UITableViewCell!
     @IBOutlet weak var windowsBrowserWaitlistAccessoryText: UILabel!
+    @IBOutlet weak var appTPCell: UITableViewCell!
     @IBOutlet weak var longPressCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
     @IBOutlet weak var textSizeCell: UITableViewCell!
@@ -66,6 +68,7 @@ class SettingsViewController: UITableViewController {
     
     private let syncSectionIndex = 1
     private let autofillSectionIndex = 2
+    public var appTPDatabase: CoreDataDatabase!
     private let debugSectionIndex = 7
 
     private lazy var emailManager = EmailManager()
@@ -286,6 +289,13 @@ class SettingsViewController: UITableViewController {
     private func showMacBrowserWaitlistViewController() {
         navigationController?.pushViewController(MacWaitlistViewController(nibName: nil, bundle: nil), animated: true)
     }
+    
+    private func showAppTP() {
+        navigationController?.pushViewController(
+            AppTPActivityHostingViewController(appTrackingProtectionDatabase: appTPDatabase),
+            animated: true
+        )
+    }
 
     private func showWindowsBrowserWaitlistViewController() {
         navigationController?.pushViewController(WindowsWaitlistViewController(nibName: nil, bundle: nil), animated: true)
@@ -322,6 +332,10 @@ class SettingsViewController: UITableViewController {
         case syncCell:
             showSync()
 
+            
+        case appTPCell:
+            showAppTP()
+            
         default: break
         }
         

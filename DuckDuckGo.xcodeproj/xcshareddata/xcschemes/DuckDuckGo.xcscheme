@@ -149,7 +149,7 @@
       buildConfiguration = "Debug">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Release"
+      buildConfiguration = "AppTP Release"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

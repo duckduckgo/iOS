@@ -265,6 +265,20 @@ extension Pixel {
         
         case serpRequerySame
         case serpRequeryNew
+        
+        // MARK: AppTP
+        case appTPBreakageReport
+        case appTPVPNCrash
+        case appTPBlocklistParseFailed
+        case appTPActiveUser
+        
+        case appTPDBLocationFailed
+        case appTPDBStoreLoadFailure
+        case appTPDBPersistentStoreLoadFailure
+        case appTPDBHistoryFailure
+        case appTPDBHistoryFetchFailure
+        case appTPDBFeedbackTrackerFetchFailed
+        case appTPDBTrackerStoreFailure
 
         // MARK: remote messaging pixels
 
@@ -635,6 +649,20 @@ extension Pixel.Event {
             
         case .serpRequerySame: return "rq_0"
         case .serpRequeryNew: return "rq_1"
+            
+        // MARK: AppTP pixels
+            
+        case .appTPBreakageReport: return "m_apptp_breakage_report"
+        case .appTPVPNCrash: return "m_apptp_vpn_crash"
+        case .appTPBlocklistParseFailed: return "m_apptp_blocklist_parse_failed"
+        case .appTPActiveUser: return "m_apptp_active_user"
+        case .appTPDBLocationFailed: return "m_apptp_db_location_not_found"
+        case .appTPDBStoreLoadFailure: return "m_apptp_db_store_load_failure"
+        case .appTPDBPersistentStoreLoadFailure: return "m_apptp_db_persistent_store_load_failure"
+        case .appTPDBHistoryFailure: return "m_apptp_db_history_failure"
+        case .appTPDBHistoryFetchFailure: return "m_apptp_db_history_fetch_failure"
+        case .appTPDBFeedbackTrackerFetchFailed: return "m_apptp_db_feedback_tracker_fetch_failed"
+        case .appTPDBTrackerStoreFailure: return "m_apptp_db_tracker_store_failure"
 
         // MARK: remote messaging pixels
 

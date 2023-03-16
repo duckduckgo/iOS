@@ -20,6 +20,7 @@
 import Foundation
 
 // swiftlint:disable line_length
+// Localise these later, when feature is closer to exernal release
 struct UserText {
 
     static let turnOnTitle = "Turn on Sync?"

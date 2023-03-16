@@ -53,7 +53,6 @@ struct UserText {
     static let cameraPermissionRequired = "Camera Permission is Required"
     static let cameraPermissionInstructions = "Please go to your device's settings and grant permission for this app to access your camera."
     static let cameraIsUnavailableTitle = "Camera is Unavailable"
-    static let cameraIsUnavailableMessage = "There may be a problem with your device's camera."
 
     static let goToSettingsButton = "Go to Settings"
 

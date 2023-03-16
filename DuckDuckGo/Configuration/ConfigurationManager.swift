@@ -97,7 +97,7 @@ struct ConfigurationManager {
     func fetchAndUpdateBloomFilterExcludedDomains() async -> Bool {
         do {
             try await ConfigurationFetcher(store: ConfigurationStore.shared, log: .configurationLog).fetch(.bloomFilterExcludedDomains)
-            try updateBloomFilterExclusions()
+            try await updateBloomFilterExclusions()
             return true
         } catch {
             os_log("Failed to apply update to bloom filter exclusions: %@", log: .generalLog, type: .debug, error.localizedDescription)
@@ -110,7 +110,7 @@ struct ConfigurationManager {
         do {
             try await ConfigurationFetcher(store: ConfigurationStore.shared, log: .configurationLog).fetch(all: [.bloomFilterBinary,
                                                                                                                  .bloomFilterSpec])
-            try updateBloomFilter()
+            try await updateBloomFilter()
             return true
         } catch {
             os_log("Failed to apply update to bloom filter: %@", log: .generalLog, type: .debug, error.localizedDescription)
@@ -118,7 +118,7 @@ struct ConfigurationManager {
         }
     }
     
-    private func updateBloomFilter() throws {
+    private func updateBloomFilter() async throws {
         guard let specData = ConfigurationStore.shared.loadData(for: .bloomFilterSpec) else {
             throw Error.bloomFilterSpecNotFound
         }
@@ -127,16 +127,16 @@ struct ConfigurationManager {
         }
         let specification = try JSONDecoder().decode(HTTPSBloomFilterSpecification.self, from: specData)
         try PrivacyFeatures.httpsUpgradeStore.persistBloomFilter(specification: specification, data: bloomFilterData)
-        PrivacyFeatures.httpsUpgrade.loadData()
+        await PrivacyFeatures.httpsUpgrade.loadData()
     }
     
-    private func updateBloomFilterExclusions() throws {
+    private func updateBloomFilterExclusions() async throws {
         guard let excludedDomainsData = ConfigurationStore.shared.loadData(for: .bloomFilterExcludedDomains) else {
             throw Error.bloomFilterExcludedDomainsNotFound
         }
         let excludedDomains = try HTTPSUpgradeParser.convertExcludedDomainsData(excludedDomainsData)
         try PrivacyFeatures.httpsUpgradeStore.persistExcludedDomains(excludedDomains)
-        PrivacyFeatures.httpsUpgrade.loadData()
+        await PrivacyFeatures.httpsUpgrade.loadData()
     }
     
 }

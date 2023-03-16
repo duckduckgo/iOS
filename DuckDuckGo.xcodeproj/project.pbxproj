@@ -29,7 +29,6 @@
 		02025AA72988229800E694E7 /* ConnectSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259CC298820F100E694E7 /* ConnectSession.swift */; };
 		02025AA82988229800E694E7 /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259CD298820F100E694E7 /* HTTPHeader.swift */; };
 		02025AA92988229800E694E7 /* ProxyServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258E9298820EC00E694E7 /* ProxyServer.swift */; };
-		02025AAA2988229800E694E7 /* GCDProxyServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258EA298820EC00E694E7 /* GCDProxyServer.swift */; };
 		02025AAC2988229800E694E7 /* GCDHTTPProxyServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258EC298820EC00E694E7 /* GCDHTTPProxyServer.swift */; };
 		02025AAD2988229800E694E7 /* NWUDPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025997298820EF00E694E7 /* NWUDPSocket.swift */; };
 		02025AAE2988229800E694E7 /* RawTCPSocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025998298820EF00E694E7 /* RawTCPSocketProtocol.swift */; };
@@ -959,7 +958,6 @@
 		02025668298818B200E694E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		02025669298818B200E694E7 /* PacketTunnelProvider.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PacketTunnelProvider.entitlements; sourceTree = "<group>"; };
 		020258E9298820EC00E694E7 /* ProxyServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProxyServer.swift; sourceTree = "<group>"; };
-		020258EA298820EC00E694E7 /* GCDProxyServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDProxyServer.swift; sourceTree = "<group>"; };
 		020258EC298820EC00E694E7 /* GCDHTTPProxyServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDHTTPProxyServer.swift; sourceTree = "<group>"; };
 		020258EF298820EC00E694E7 /* TUNInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TUNInterface.swift; sourceTree = "<group>"; };
 		020258F0298820EC00E694E7 /* IPStackProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPStackProtocol.swift; sourceTree = "<group>"; };
@@ -2524,7 +2522,6 @@
 			isa = PBXGroup;
 			children = (
 				020258E9298820EC00E694E7 /* ProxyServer.swift */,
-				020258EA298820EC00E694E7 /* GCDProxyServer.swift */,
 				020258EC298820EC00E694E7 /* GCDHTTPProxyServer.swift */,
 			);
 			path = ProxyServer;
@@ -5687,7 +5684,6 @@
 				02025AA82988229800E694E7 /* HTTPHeader.swift in Sources */,
 				02025AA92988229800E694E7 /* ProxyServer.swift in Sources */,
 				4BEF656D2989C2FC00B650CB /* EventType.swift in Sources */,
-				02025AAA2988229800E694E7 /* GCDProxyServer.swift in Sources */,
 				02025AAC2988229800E694E7 /* GCDHTTPProxyServer.swift in Sources */,
 				02025AAD2988229800E694E7 /* NWUDPSocket.swift in Sources */,
 				02025AAE2988229800E694E7 /* RawTCPSocketProtocol.swift in Sources */,

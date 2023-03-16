@@ -1,4 +1,5 @@
 import Foundation
+import os
 
 open class HTTPHeader {
     public enum HTTPHeaderError: Error {
@@ -19,7 +20,9 @@ open class HTTPHeader {
     open var headers: [(String, String)] = []
     open var rawHeader: Data?
 
-    public init(headerString: String) throws {
+    private init(headerString: String) throws {
+        os_log(.error, log: appTPLog, "Creating new HTTP header: %{public}s", headerString)
+
         let lines = headerString.components(separatedBy: "\r\n")
         guard lines.count >= 3 else {
             throw HTTPHeaderError.malformedHeader
@@ -123,6 +126,7 @@ open class HTTPHeader {
 
     public convenience init(headerData: Data) throws {
         guard let headerString = String(data: headerData, encoding: .utf8) else {
+            os_log(.error, log: appTPLog, "Could not create HTTP header string")
             throw HTTPHeaderError.illegalEncoding
         }
 

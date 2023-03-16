@@ -1,5 +1,6 @@
 import Foundation
 import CocoaAsyncSocket
+import os
 
 /// The TCP socket build upon `GCDAsyncSocket`.
 ///
@@ -16,9 +17,11 @@ open class GCDTCPSocket: NSObject, GCDAsyncSocketDelegate, RawTCPSocketProtocol 
      */
     public init(socket: GCDAsyncSocket? = nil) {
         if let socket = socket {
+            os_log("Initializing new GCDTCPSocket (which was provided via init)", log: appTPLog, type: .error)
             self.socket = socket
             self.socket.setDelegate(nil, delegateQueue: QueueFactory.getQueue())
         } else {
+            os_log("Initializing new GCDTCPSocket", log: appTPLog, type: .error)
             self.socket = GCDAsyncSocket(delegate: nil, delegateQueue: QueueFactory.getQueue(), socketQueue: QueueFactory.getQueue())
         }
         

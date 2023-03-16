@@ -166,8 +166,10 @@ class TabSwitcherViewController: UIViewController {
                 ViewHighlighter.hideAll()
                 ViewHighlighter.showIn(window, focussedOnView: view)
             }
-        } else if tabsModel.count > 1 {
-            FireButtonExperiment.playFireButton(fireButton: fireButton, delay: 0.5)
+        } else {
+            FireButtonExperiment.playFireButtonAnimationOnTabSwitcher(fireButton: fireButton,
+                                                                      tabCount: tabsModel.count,
+                                                                      delay: 0.5)
         }
     }
     

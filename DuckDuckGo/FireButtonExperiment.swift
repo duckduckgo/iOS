@@ -28,13 +28,16 @@ final class FireButtonExperiment {
 //        AppDependencyProvider.shared.variantManager.isSupported(feature: .fireButtonWithColorFill)
     }
 
-    public static func playFireButtonAnimationOnTabSwitcher(fireButton: FireBarButtonItem, tabCount: Int, delay: TimeInterval) {
+    public static func playFireButtonAnimationOnTabSwitcher(fireButton: FireBarButtonItem,
+                                                            tabCount: Int,
+                                                            delay: TimeInterval = 0) {
         guard shouldPlayFireButtonAnimation, tabCount > 1 else { return }
         
         fireButton.playAnimation(delay: delay)
     }
     
-    public static func playFireButton(fireButton: FireBarButtonItem, delay: TimeInterval) {
+    public static func playFireButtonForOnboarding(fireButton: FireButton,
+                                                   delay: TimeInterval = 0) {
         guard shouldPlayFireButtonAnimation else { return }
         
         fireButton.playAnimation(delay: delay)

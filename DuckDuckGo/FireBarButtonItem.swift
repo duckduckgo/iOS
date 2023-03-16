@@ -78,6 +78,12 @@ class FireButton: UIButton {
         animationView.isHidden = true
     }
     
+    public func playAnimation(delay: TimeInterval = 0) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delay) {
+            self.playAnimation()
+        }
+    }
+    
     public func playAnimation() {
         guard !animationView.isAnimationPlaying,
               let image = self.image(for: .normal) else { return }

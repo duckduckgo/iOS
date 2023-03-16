@@ -165,6 +165,10 @@ class TabSwitcherViewController: UIViewController {
             if !ViewHighlighter.highlightedViews.contains(where: { $0.view == view }) {
                 ViewHighlighter.hideAll()
                 ViewHighlighter.showIn(window, focussedOnView: view)
+                
+                if let fireButton = view as? FireButton {
+                    FireButtonExperiment.playFireButtonForOnboarding(fireButton: fireButton)
+                }
             }
         } else {
             FireButtonExperiment.playFireButtonAnimationOnTabSwitcher(fireButton: fireButton,

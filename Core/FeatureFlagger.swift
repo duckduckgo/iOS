@@ -54,7 +54,11 @@ public class DefaultFeatureFlagger: FeatureFlagger {
             return isInternalUser
         
         case .appTP:
+        #if APPTP_ADHOC_BUILD
+            return true
+        #else
             return isInternalUser
+        #endif
         }
     }
     

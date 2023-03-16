@@ -23,6 +23,7 @@ public enum Feature: String {
     case debugMenu
     case autofill
     case sync
+    case appTP
 }
 
 public protocol FeatureFlagger {
@@ -51,6 +52,13 @@ public class DefaultFeatureFlagger: FeatureFlagger {
 
         case .sync:
             return isInternalUser
+        
+        case .appTP:
+        #if APPTP_ADHOC_BUILD
+            return true
+        #else
+            return isInternalUser
+        #endif
         }
     }
     

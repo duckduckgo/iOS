@@ -24,9 +24,9 @@ public extension URL {
 
     private static let defaultStatisticsDependentURL = StatisticsDependentURL()
 
-    static func make(forSearchWithText text: String) -> URL? { defaultStatisticsDependentURL.make(forSearchWithText: text) }
-    static func make(forSearchWithQuery query: String, queryContext: URL? = nil) -> URL? {
-        defaultStatisticsDependentURL.make(forSearchWithQuery: query, queryContext: queryContext)
+    static func makeSearchURL(text: String) -> URL? { defaultStatisticsDependentURL.makeSearchURL(text: text) }
+    static func makeSearchURL(query: String, queryContext: URL? = nil) -> URL? {
+        defaultStatisticsDependentURL.makeSearchURL(query: query, queryContext: queryContext)
     }
     static func applyingStatsParams(for url: URL) -> URL { defaultStatisticsDependentURL.applyingStatsParams(for: url) }
     static var searchAtb: URL? { defaultStatisticsDependentURL.searchAtb }
@@ -48,11 +48,11 @@ public final class StatisticsDependentURL {
 
     // MARK: - Search
 
-    func make(forSearchWithText text: String) -> URL? {
-        makeSearch(for: text, additionalParameters: [])
+    func makeSearchURL(text: String) -> URL? {
+        makeSearchURL(text: text, additionalParameters: [])
     }
 
-    func make(forSearchWithQuery query: String, queryContext: URL? = nil) -> URL? {
+    func makeSearchURL(query: String, queryContext: URL? = nil) -> URL? {
         if let url = URL.webUrl(from: query) {
             return url
         }
@@ -67,14 +67,14 @@ public final class StatisticsDependentURL {
             parameters[URL.Param.verticalRewrite] = vertical
         }
 
-        return makeSearch(for: query, additionalParameters: parameters)
+        return makeSearchURL(text: query, additionalParameters: parameters)
     }
 
     /**
      Generates a search url with the source (t) https://duck.co/help/privacy/t
      and cohort (atb) https://duck.co/help/privacy/atb
      */
-    private func makeSearch<C: Collection>(for text: String, additionalParameters: C) -> URL
+    private func makeSearchURL<C: Collection>(text: String, additionalParameters: C) -> URL
     where C.Element == (key: String, value: String) {
         let searchURL = URL.ddg
             .appendingParameter(name: URL.Param.search, value: text)

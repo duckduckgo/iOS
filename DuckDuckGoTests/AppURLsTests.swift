@@ -47,7 +47,7 @@ final class AppURLsTests: XCTestCase {
     }
 
     func testWhenRemoveInternalSearchParametersFromSearchUrlThenUrlIsChanged() throws {
-        let searchUrl = URL.make(forSearchWithText: "example")!
+        let searchUrl = URL.makeSearchURL(text: "example")!
         let searchUrlWithSearchHeader = searchUrl.applyingSearchHeaderParams()
         let result = searchUrlWithSearchHeader.removingInternalSearchParameters()
 
@@ -155,7 +155,7 @@ final class AppURLsTests: XCTestCase {
     }
     
     func testAutocompleteUrlCreatesCorrectUrlWithParams() throws {
-        let actual = try URL.makeAutocomplete(for: "a term")
+        let actual = try URL.makeAutocompleteURL(for: "a term")
         XCTAssertTrue(actual.isDuckDuckGo)
         XCTAssertEqual("/ac", actual.path)
         XCTAssertEqual("a term", actual.getParameter(named: "q"))
@@ -197,7 +197,7 @@ final class AppURLsTests: XCTestCase {
     }
 
     func testSearchUrlCreatesUrlWithQueryParam() throws {
-        let url = URL.make(forSearchWithText: "query")!
+        let url = URL.makeSearchURL(text: "query")!
         XCTAssertEqual(url.getParameter(named: "q"), "query")
     }
 
@@ -207,14 +207,14 @@ final class AppURLsTests: XCTestCase {
     }
 
     func testSearchUrlCreatesUrlWithSourceParam() throws {
-        let url = StatisticsDependentURL(statisticsStore: mockStatisticsStore).make(forSearchWithText: "query")!
+        let url = StatisticsDependentURL(statisticsStore: mockStatisticsStore).makeSearchURL(text: "query")!
         XCTAssertEqual(url.getParameter(named: "t"), "ddg_ios")
     }
     
     func testWhenExistingQueryUsesVerticalThenItIsAppliedToNewOne() throws {
         let contextURL = URL(string: "https://duckduckgo.com/?q=query&iar=images&ko=-1&ia=images")!
         let url = StatisticsDependentURL(statisticsStore: mockStatisticsStore)
-            .make(forSearchWithQuery: "query", queryContext: contextURL)!
+            .makeSearchURL(query: "query", queryContext: contextURL)!
         
         XCTAssertEqual(url.getParameter(named: "t"), "ddg_ios")
         XCTAssertEqual(url.getParameter(named: "iar"), "images")
@@ -223,7 +223,7 @@ final class AppURLsTests: XCTestCase {
     func testWhenExistingQueryUsesVerticalWithMapsThenTheseAreIgnored() throws {
         let contextURL = URL(string: "https://duckduckgo.com/?q=query&iar=images&ko=-1&ia=images&iaxm=maps")!
         let url = StatisticsDependentURL(statisticsStore: mockStatisticsStore)
-            .make(forSearchWithQuery: "query", queryContext: contextURL)!
+            .makeSearchURL(query: "query", queryContext: contextURL)!
         
         XCTAssertEqual(url.getParameter(named: "t"), "ddg_ios")
         XCTAssertNil(url.getParameter(named: "ia"))
@@ -234,7 +234,7 @@ final class AppURLsTests: XCTestCase {
     func testWhenExistingQueryHasNoVerticalThenItIsAbsentInNewOne() throws {
         let contextURL = URL(string: "https://example.com")!
         let url = StatisticsDependentURL(statisticsStore: mockStatisticsStore)
-            .make(forSearchWithQuery: "query", queryContext: contextURL)!
+            .makeSearchURL(query: "query", queryContext: contextURL)!
         
         XCTAssertEqual(url.getParameter(named: "t"), "ddg_ios")
         XCTAssertNil(url.getParameter(named: "iar"))
@@ -242,12 +242,12 @@ final class AppURLsTests: XCTestCase {
 
     func testWhenAtbValuesExistInStatisticsStoreThenSearchUrlCreatesUrlWithAtb() throws {
         mockStatisticsStore.atb = "x"
-        let urlWithAtb = StatisticsDependentURL(statisticsStore: mockStatisticsStore).make(forSearchWithText: "query")!
+        let urlWithAtb = StatisticsDependentURL(statisticsStore: mockStatisticsStore).makeSearchURL(text: "query")!
         XCTAssertEqual(urlWithAtb.getParameter(named: "atb"), "x")
     }
 
     func testWhenAtbIsAbsentFromStatisticsStoreThenSearchUrlCreatesUrlWithoutAtb() throws {
-        let url = StatisticsDependentURL(statisticsStore: mockStatisticsStore).make(forSearchWithText: "query")!
+        let url = StatisticsDependentURL(statisticsStore: mockStatisticsStore).makeSearchURL(text: "query")!
         XCTAssertNil(url.getParameter(named: "atb"))
     }
 

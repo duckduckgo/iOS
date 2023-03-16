@@ -50,7 +50,7 @@ public extension URL {
 
     static func exti(forAtb atb: String) -> URL { URL.exti.appendingParameter(name: Param.atb, value: atb) }
 
-    static func makeAutocomplete(for text: String) throws -> URL {
+    static func makeAutocompleteURL(for text: String) throws -> URL {
         URL.autocomplete.appendingParameters([
             Param.search: text,
             Param.enableNavSuggestions: ParamValue.enableNavSuggestions

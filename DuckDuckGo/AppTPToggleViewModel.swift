@@ -19,7 +19,6 @@
 
 import Foundation
 import NetworkExtension
-
 class AppTPToggleViewModel: ObservableObject {
     
     var firewallManager: FirewallManaging

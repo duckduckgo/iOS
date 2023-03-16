@@ -24,14 +24,11 @@ import os.log
 struct AppTPToggleView: View {
     @Binding var vpnOn: Bool
     @State var isExternalChange = false
-    @State var connectionStatus: NEVPNStatus = .disconnected
     
     @ObservedObject var viewModel: AppTPToggleViewModel
     
     func setup() async {
         await viewModel.refreshManager()
-        connectionStatus = viewModel.status()
-        vpnOn = connectionStatus == .connected
     }
     
     func setFirewall(_ status: Bool) async {
@@ -75,6 +72,14 @@ struct AppTPToggleView: View {
         .onChange(of: vpnOn) { value in
             Task {
                 await setFirewall(value)
+            }
+        }
+        .onChange(of: viewModel.firewallStatus) { value in
+            if value == .connected || value == .disconnected {
+                // Set isExternalChange to indicate this change was not initiated by the user
+                // This will prevent the change of vpnOn from causing a loop enabling/disabling the VPN.
+                isExternalChange = true
+                vpnOn = value == .connected
             }
         }
         .padding()

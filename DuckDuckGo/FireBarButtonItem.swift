@@ -88,15 +88,31 @@ class FireButton: UIButton {
         animationView.alpha = 1
         animationView.isHidden = false
         
+        // test of looped animation
         self.animationView.play(completion: { _ in
-            self.setImage(image, for: .normal)
             
-            UIView.animate(withDuration: 0.35, animations: {
-                self.animationView.alpha = 0.0
-            }, completion: { _ in
-                self.animationView.stop()
+            self.animationView.play(fromProgress: 0.15, toProgress: 1.0, loopMode: .loop, completion: { _ in
+                self.setImage(image, for: .normal)
+                
+                UIView.animate(withDuration: 0.35, animations: {
+                    self.animationView.alpha = 0.0
+                }, completion: { _ in
+                    self.animationView.stop()
+                })
             })
+            
         })
+        
+        // old style animation
+//        self.animationView.play(completion: { _ in
+//            self.setImage(image, for: .normal)
+//
+//            UIView.animate(withDuration: 0.35, animations: {
+//                self.animationView.alpha = 0.0
+//            }, completion: { _ in
+//                self.animationView.stop()
+//            })
+//        })
     }
     
     private func blankImage(for size: CGSize) -> UIImage? {

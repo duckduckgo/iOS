@@ -221,7 +221,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             let alert = UIAlertController(title: UserText.syncDeleteAllConfirmTitle,
                                           message: UserText.syncDeleteAllConfirmMessage,
                                           preferredStyle: .alert)
-            alert.addAction(title: UserText.actionCancel) {
+            alert.addAction(title: UserText.actionCancel, style: .cancel) {
                 continuation.resume(returning: false)
             }
             alert.addAction(title: UserText.syncDeleteAllConfirmAction, style: .destructive) {

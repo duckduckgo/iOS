@@ -23,10 +23,8 @@
 		02025A942988229800E694E7 /* CryptoEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259A2298820EF00E694E7 /* CryptoEnum.swift */; };
 		02025A952988229800E694E7 /* StreamCryptoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259A3298820EF00E694E7 /* StreamCryptoProtocol.swift */; };
 		02025A962988229800E694E7 /* CCCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259A4298820EF00E694E7 /* CCCrypto.swift */; };
-		02025A992988229800E694E7 /* TCPStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258EE298820EC00E694E7 /* TCPStack.swift */; };
 		02025A9A2988229800E694E7 /* TUNInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258EF298820EC00E694E7 /* TUNInterface.swift */; };
 		02025A9B2988229800E694E7 /* IPStackProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258F0298820EC00E694E7 /* IPStackProtocol.swift */; };
-		02025A9C2988229800E694E7 /* UDPDirectStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258F1298820EC00E694E7 /* UDPDirectStack.swift */; };
 		02025A9E2988229800E694E7 /* DNSMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258F4298820EC00E694E7 /* DNSMessage.swift */; };
 		02025A9F2988229800E694E7 /* DNSSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258F5298820EC00E694E7 /* DNSSession.swift */; };
 		02025AA02988229800E694E7 /* DNSServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258F6298820EC00E694E7 /* DNSServer.swift */; };
@@ -42,11 +40,9 @@
 		02025AAD2988229800E694E7 /* NWUDPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025997298820EF00E694E7 /* NWUDPSocket.swift */; };
 		02025AAE2988229800E694E7 /* RawTCPSocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025998298820EF00E694E7 /* RawTCPSocketProtocol.swift */; };
 		02025AAF2988229800E694E7 /* NWTCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025999298820EF00E694E7 /* NWTCPSocket.swift */; };
-		02025AB02988229800E694E7 /* TUNTCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202599A298820EF00E694E7 /* TUNTCPSocket.swift */; };
 		02025AB12988229800E694E7 /* RawSocketFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202599B298820EF00E694E7 /* RawSocketFactory.swift */; };
 		02025AB22988229800E694E7 /* GCDTCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202599C298820EF00E694E7 /* GCDTCPSocket.swift */; };
 		02025AB32988229800E694E7 /* DomainListRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202598C298820EF00E694E7 /* DomainListRule.swift */; };
-		02025AB42988229800E694E7 /* CountryRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202598D298820EF00E694E7 /* CountryRule.swift */; };
 		02025AB52988229800E694E7 /* DNSSessionMatchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202598E298820EF00E694E7 /* DNSSessionMatchType.swift */; };
 		02025AB62988229800E694E7 /* DNSFailRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202598F298820EF00E694E7 /* DNSFailRule.swift */; };
 		02025AB72988229800E694E7 /* AllRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025990298820EF00E694E7 /* AllRule.swift */; };
@@ -55,22 +51,15 @@
 		02025ABA2988229800E694E7 /* DirectRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025993298820EF00E694E7 /* DirectRule.swift */; };
 		02025ABB2988229800E694E7 /* RuleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025994298820EF00E694E7 /* RuleManager.swift */; };
 		02025ABC2988229800E694E7 /* IPRangeListRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025995298820EF00E694E7 /* IPRangeListRule.swift */; };
-		02025ABD2988229800E694E7 /* HTTPAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259A8298820F000E694E7 /* HTTPAdapter.swift */; };
-		02025ABE2988229800E694E7 /* SecureHTTPAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259A9298820F000E694E7 /* SecureHTTPAdapter.swift */; };
-		02025ABF2988229800E694E7 /* SpeedAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259AA298820F000E694E7 /* SpeedAdapter.swift */; };
 		02025AC02988229800E694E7 /* AdapterSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259AB298820F000E694E7 /* AdapterSocket.swift */; };
 		02025AC12988229800E694E7 /* DirectAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259AC298820F000E694E7 /* DirectAdapter.swift */; };
 		02025AC32988229800E694E7 /* RejectAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259AE298820F000E694E7 /* RejectAdapter.swift */; };
-		02025AC42988229800E694E7 /* SpeedAdapterFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259B0298820F000E694E7 /* SpeedAdapterFactory.swift */; };
 		02025AC62988229800E694E7 /* AuthenticationServerAdapterFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259B2298820F000E694E7 /* AuthenticationServerAdapterFactory.swift */; };
 		02025AC72988229800E694E7 /* RejectAdapterFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259B3298820F000E694E7 /* RejectAdapterFactory.swift */; };
 		02025AC82988229800E694E7 /* AdapterFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259B4298820F000E694E7 /* AdapterFactory.swift */; };
-		02025ACA2988229800E694E7 /* SecureHTTPAdapterFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259B6298820F000E694E7 /* SecureHTTPAdapterFactory.swift */; };
 		02025ACB2988229800E694E7 /* ServerAdapterFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259B7298820F000E694E7 /* ServerAdapterFactory.swift */; };
 		02025ACC2988229800E694E7 /* AdapterFactoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259B8298820F000E694E7 /* AdapterFactoryManager.swift */; };
-		02025ACD2988229800E694E7 /* HTTPAdapterFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259B9298820F000E694E7 /* HTTPAdapterFactory.swift */; };
 		02025AD22988229800E694E7 /* HTTPProxySocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259C0298820F000E694E7 /* HTTPProxySocket.swift */; };
-		02025AD32988229800E694E7 /* DirectProxySocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259C1298820F000E694E7 /* DirectProxySocket.swift */; };
 		02025AD42988229800E694E7 /* ProxySocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259C2298820F000E694E7 /* ProxySocket.swift */; };
 		02025AD62988229800E694E7 /* SocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259C4298820F000E694E7 /* SocketProtocol.swift */; };
 		02025AD82988229800E694E7 /* Tunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025901298820ED00E694E7 /* Tunnel.swift */; };
@@ -94,7 +83,6 @@
 		02025AEA2988229800E694E7 /* QueueFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258FE298820ED00E694E7 /* QueueFactory.swift */; };
 		02025AEB2988229800E694E7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259CA298820F100E694E7 /* Utils.swift */; };
 		02025AEC2988229800E694E7 /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025666298818B200E694E7 /* PacketTunnelProvider.swift */; };
-		02025AF1298824E600E694E7 /* tun2socks in Frameworks */ = {isa = PBXBuildFile; productRef = 02025AF0298824E600E694E7 /* tun2socks */; };
 		02025AF6298825AA00E694E7 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 02025AF5298825AA00E694E7 /* Resolver */; };
 		02025B0C29884D2C00E694E7 /* AppTrackerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025B0B29884D2C00E694E7 /* AppTrackerData.swift */; };
 		02025B0D29884D2C00E694E7 /* AppTrackerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025B0B29884D2C00E694E7 /* AppTrackerData.swift */; };
@@ -979,10 +967,8 @@
 		020258E9298820EC00E694E7 /* ProxyServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProxyServer.swift; sourceTree = "<group>"; };
 		020258EA298820EC00E694E7 /* GCDProxyServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDProxyServer.swift; sourceTree = "<group>"; };
 		020258EC298820EC00E694E7 /* GCDHTTPProxyServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDHTTPProxyServer.swift; sourceTree = "<group>"; };
-		020258EE298820EC00E694E7 /* TCPStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TCPStack.swift; sourceTree = "<group>"; };
 		020258EF298820EC00E694E7 /* TUNInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TUNInterface.swift; sourceTree = "<group>"; };
 		020258F0298820EC00E694E7 /* IPStackProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPStackProtocol.swift; sourceTree = "<group>"; };
-		020258F1298820EC00E694E7 /* UDPDirectStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UDPDirectStack.swift; sourceTree = "<group>"; };
 		020258F4298820EC00E694E7 /* DNSMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSMessage.swift; sourceTree = "<group>"; };
 		020258F5298820EC00E694E7 /* DNSSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSSession.swift; sourceTree = "<group>"; };
 		020258F6298820EC00E694E7 /* DNSServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSServer.swift; sourceTree = "<group>"; };
@@ -1009,7 +995,6 @@
 		02025989298820EF00E694E7 /* HTTPAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPAuthentication.swift; sourceTree = "<group>"; };
 		0202598A298820EF00E694E7 /* StreamScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamScanner.swift; sourceTree = "<group>"; };
 		0202598C298820EF00E694E7 /* DomainListRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainListRule.swift; sourceTree = "<group>"; };
-		0202598D298820EF00E694E7 /* CountryRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryRule.swift; sourceTree = "<group>"; };
 		0202598E298820EF00E694E7 /* DNSSessionMatchType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSSessionMatchType.swift; sourceTree = "<group>"; };
 		0202598F298820EF00E694E7 /* DNSFailRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSFailRule.swift; sourceTree = "<group>"; };
 		02025990298820EF00E694E7 /* AllRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllRule.swift; sourceTree = "<group>"; };
@@ -1021,7 +1006,6 @@
 		02025997298820EF00E694E7 /* NWUDPSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NWUDPSocket.swift; sourceTree = "<group>"; };
 		02025998298820EF00E694E7 /* RawTCPSocketProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawTCPSocketProtocol.swift; sourceTree = "<group>"; };
 		02025999298820EF00E694E7 /* NWTCPSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NWTCPSocket.swift; sourceTree = "<group>"; };
-		0202599A298820EF00E694E7 /* TUNTCPSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TUNTCPSocket.swift; sourceTree = "<group>"; };
 		0202599B298820EF00E694E7 /* RawSocketFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawSocketFactory.swift; sourceTree = "<group>"; };
 		0202599C298820EF00E694E7 /* GCDTCPSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDTCPSocket.swift; sourceTree = "<group>"; };
 		0202599E298820EF00E694E7 /* HMAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMAC.swift; sourceTree = "<group>"; };
@@ -1030,22 +1014,15 @@
 		020259A2298820EF00E694E7 /* CryptoEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoEnum.swift; sourceTree = "<group>"; };
 		020259A3298820EF00E694E7 /* StreamCryptoProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamCryptoProtocol.swift; sourceTree = "<group>"; };
 		020259A4298820EF00E694E7 /* CCCrypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CCCrypto.swift; sourceTree = "<group>"; };
-		020259A8298820F000E694E7 /* HTTPAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPAdapter.swift; sourceTree = "<group>"; };
-		020259A9298820F000E694E7 /* SecureHTTPAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureHTTPAdapter.swift; sourceTree = "<group>"; };
-		020259AA298820F000E694E7 /* SpeedAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeedAdapter.swift; sourceTree = "<group>"; };
 		020259AB298820F000E694E7 /* AdapterSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterSocket.swift; sourceTree = "<group>"; };
 		020259AC298820F000E694E7 /* DirectAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectAdapter.swift; sourceTree = "<group>"; };
 		020259AE298820F000E694E7 /* RejectAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RejectAdapter.swift; sourceTree = "<group>"; };
-		020259B0298820F000E694E7 /* SpeedAdapterFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeedAdapterFactory.swift; sourceTree = "<group>"; };
 		020259B2298820F000E694E7 /* AuthenticationServerAdapterFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationServerAdapterFactory.swift; sourceTree = "<group>"; };
 		020259B3298820F000E694E7 /* RejectAdapterFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RejectAdapterFactory.swift; sourceTree = "<group>"; };
 		020259B4298820F000E694E7 /* AdapterFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterFactory.swift; sourceTree = "<group>"; };
-		020259B6298820F000E694E7 /* SecureHTTPAdapterFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureHTTPAdapterFactory.swift; sourceTree = "<group>"; };
 		020259B7298820F000E694E7 /* ServerAdapterFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerAdapterFactory.swift; sourceTree = "<group>"; };
 		020259B8298820F000E694E7 /* AdapterFactoryManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterFactoryManager.swift; sourceTree = "<group>"; };
-		020259B9298820F000E694E7 /* HTTPAdapterFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPAdapterFactory.swift; sourceTree = "<group>"; };
 		020259C0298820F000E694E7 /* HTTPProxySocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPProxySocket.swift; sourceTree = "<group>"; };
-		020259C1298820F000E694E7 /* DirectProxySocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectProxySocket.swift; sourceTree = "<group>"; };
 		020259C2298820F000E694E7 /* ProxySocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProxySocket.swift; sourceTree = "<group>"; };
 		020259C4298820F000E694E7 /* SocketProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketProtocol.swift; sourceTree = "<group>"; };
 		020259C5298820F000E694E7 /* GlobalIntializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalIntializer.swift; sourceTree = "<group>"; };
@@ -2402,7 +2379,6 @@
 				02025664298818B200E694E7 /* NetworkExtension.framework in Frameworks */,
 				02025AF6298825AA00E694E7 /* Resolver in Frameworks */,
 				4B470EE4299C6DFB0086EBDC /* Core.framework in Frameworks */,
-				02025AF1298824E600E694E7 /* tun2socks in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2570,10 +2546,8 @@
 		020258ED298820EC00E694E7 /* IPStack */ = {
 			isa = PBXGroup;
 			children = (
-				020258EE298820EC00E694E7 /* TCPStack.swift */,
 				020258EF298820EC00E694E7 /* TUNInterface.swift */,
 				020258F0298820EC00E694E7 /* IPStackProtocol.swift */,
-				020258F1298820EC00E694E7 /* UDPDirectStack.swift */,
 				020258F3298820EC00E694E7 /* DNS */,
 				020258F9298820EC00E694E7 /* Packet */,
 			);
@@ -2635,7 +2609,6 @@
 			isa = PBXGroup;
 			children = (
 				0202598C298820EF00E694E7 /* DomainListRule.swift */,
-				0202598D298820EF00E694E7 /* CountryRule.swift */,
 				0202598E298820EF00E694E7 /* DNSSessionMatchType.swift */,
 				0202598F298820EF00E694E7 /* DNSFailRule.swift */,
 				02025990298820EF00E694E7 /* AllRule.swift */,
@@ -2654,7 +2627,6 @@
 				02025997298820EF00E694E7 /* NWUDPSocket.swift */,
 				02025998298820EF00E694E7 /* RawTCPSocketProtocol.swift */,
 				02025999298820EF00E694E7 /* NWTCPSocket.swift */,
-				0202599A298820EF00E694E7 /* TUNTCPSocket.swift */,
 				0202599B298820EF00E694E7 /* RawSocketFactory.swift */,
 				0202599C298820EF00E694E7 /* GCDTCPSocket.swift */,
 			);
@@ -2687,9 +2659,6 @@
 		020259A7298820F000E694E7 /* AdapterSocket */ = {
 			isa = PBXGroup;
 			children = (
-				020259A8298820F000E694E7 /* HTTPAdapter.swift */,
-				020259A9298820F000E694E7 /* SecureHTTPAdapter.swift */,
-				020259AA298820F000E694E7 /* SpeedAdapter.swift */,
 				020259AB298820F000E694E7 /* AdapterSocket.swift */,
 				020259AC298820F000E694E7 /* DirectAdapter.swift */,
 				020259AE298820F000E694E7 /* RejectAdapter.swift */,
@@ -2701,14 +2670,11 @@
 		020259AF298820F000E694E7 /* Factory */ = {
 			isa = PBXGroup;
 			children = (
-				020259B0298820F000E694E7 /* SpeedAdapterFactory.swift */,
 				020259B2298820F000E694E7 /* AuthenticationServerAdapterFactory.swift */,
 				020259B3298820F000E694E7 /* RejectAdapterFactory.swift */,
 				020259B4298820F000E694E7 /* AdapterFactory.swift */,
-				020259B6298820F000E694E7 /* SecureHTTPAdapterFactory.swift */,
 				020259B7298820F000E694E7 /* ServerAdapterFactory.swift */,
 				020259B8298820F000E694E7 /* AdapterFactoryManager.swift */,
-				020259B9298820F000E694E7 /* HTTPAdapterFactory.swift */,
 			);
 			path = Factory;
 			sourceTree = "<group>";
@@ -2717,7 +2683,6 @@
 			isa = PBXGroup;
 			children = (
 				020259C0298820F000E694E7 /* HTTPProxySocket.swift */,
-				020259C1298820F000E694E7 /* DirectProxySocket.swift */,
 				020259C2298820F000E694E7 /* ProxySocket.swift */,
 			);
 			path = ProxySocket;
@@ -2813,6 +2778,14 @@
 			name = PrivacyConfiguration;
 			sourceTree = "<group>";
 		};
+		02EC02C229AFA31900557F1A /* AppTPBreakageForm */ = {
+			isa = PBXGroup;
+			children = (
+				02EC02C329AFA33000557F1A /* AppTPBreakageFormView.swift */,
+			);
+			name = AppTPBreakageForm;
+			sourceTree = "<group>";
+		};
 		1E16260029683B4D0004127F /* CustomDaxDialog */ = {
 			isa = PBXGroup;
 			children = (
@@ -2884,14 +2857,6 @@
 			children = (
 			);
 			name = Experiments;
-			sourceTree = "<group>";
-		};
-		02EC02C229AFA31900557F1A /* AppTPBreakageForm */ = {
-			isa = PBXGroup;
-			children = (
-				02EC02C329AFA33000557F1A /* AppTPBreakageFormView.swift */,
-			);
-			name = AppTPBreakageForm;
 			sourceTree = "<group>";
 		};
 		1E4DCF4227B6A29D00961E25 /* View */ = {
@@ -3203,19 +3168,6 @@
 			path = LocalPackages;
 			sourceTree = "<group>";
 		};
-		4B470ED4299C484B0086EBDC /* AppTrackingProtection */ = {
-			isa = PBXGroup;
-			children = (
-				4B470EDE299C67270086EBDC /* AppTrackerEntity.swift */,
-				4B470ED5299C49800086EBDC /* AppTrackingProtectionDatabase.swift */,
-				4B83397229AFB8D2003F7EA9 /* AppTrackingProtectionFeedbackModel.swift */,
-				4B470EDA299C4FB20086EBDC /* AppTrackingProtectionListViewModel.swift */,
-				4B470EE2299C6DD10086EBDC /* AppTrackingProtectionStoringModel.swift */,
-				4B470ED7299C4AED0086EBDC /* AppTrackingProtectionModel.xcdatamodeld */,
-			);
-			name = AppTrackingProtection;
-			sourceTree = "<group>";
-		};
 		37FCAAA0299117F9000E420A /* MacBrowser */ = {
 			isa = PBXGroup;
 			children = (
@@ -3235,6 +3187,19 @@
 				4B6484E427FD1E340050A7A1 /* WindowsBrowserWaitlistDebugViewController.swift */,
 			);
 			name = WindowsBrowser;
+			sourceTree = "<group>";
+		};
+		4B470ED4299C484B0086EBDC /* AppTrackingProtection */ = {
+			isa = PBXGroup;
+			children = (
+				4B470EDE299C67270086EBDC /* AppTrackerEntity.swift */,
+				4B470ED5299C49800086EBDC /* AppTrackingProtectionDatabase.swift */,
+				4B83397229AFB8D2003F7EA9 /* AppTrackingProtectionFeedbackModel.swift */,
+				4B470EDA299C4FB20086EBDC /* AppTrackingProtectionListViewModel.swift */,
+				4B470EE2299C6DD10086EBDC /* AppTrackingProtectionStoringModel.swift */,
+				4B470ED7299C4AED0086EBDC /* AppTrackingProtectionModel.xcdatamodeld */,
+			);
+			name = AppTrackingProtection;
 			sourceTree = "<group>";
 		};
 		4B6484F427FD1E390050A7A1 /* Waitlist */ = {
@@ -4426,7 +4391,6 @@
 			isa = PBXGroup;
 			children = (
 				4B470ED4299C484B0086EBDC /* AppTrackingProtection */,
-				F11E23051ED33D8B00523BC9 /* API */,
 				CBAA195627BFDD9800A4BD49 /* SmarterEncryption */,
 				F1CE42A71ECA0A520074A8DF /* Bookmarks */,
 				837774491F8E1ECE00E17A29 /* ContentBlocker */,
@@ -5001,7 +4965,6 @@
 			name = PacketTunnelProvider;
 			packageProductDependencies = (
 				0202568F29881ECA00E694E7 /* CocoaAsyncSocket */,
-				02025AF0298824E600E694E7 /* tun2socks */,
 				02025AF5298825AA00E694E7 /* Resolver */,
 			);
 			productName = PacketTunnelProvider;
@@ -5366,7 +5329,6 @@
 				4B5167402824B492004C67BA /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */,
 				0202568C29881E4300E694E7 /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */,
-				02025AED2988248000E694E7 /* XCRemoteSwiftPackageReference "tun2socks" */,
 				02025AF22988257900E694E7 /* XCRemoteSwiftPackageReference "Resolver" */,
 				0238E44D29C0FAA100615E30 /* XCRemoteSwiftPackageReference "ios-js-support" */,
 				020108AA29A7D7F800644F9D /* XCRemoteSwiftPackageReference "SVGView" */,
@@ -5743,11 +5705,9 @@
 				02025A942988229800E694E7 /* CryptoEnum.swift in Sources */,
 				02025A952988229800E694E7 /* StreamCryptoProtocol.swift in Sources */,
 				02025A962988229800E694E7 /* CCCrypto.swift in Sources */,
-				02025A992988229800E694E7 /* TCPStack.swift in Sources */,
 				4BEF656C2989C2FC00B650CB /* TunnelEvent.swift in Sources */,
 				02025A9A2988229800E694E7 /* TUNInterface.swift in Sources */,
 				02025A9B2988229800E694E7 /* IPStackProtocol.swift in Sources */,
-				02025A9C2988229800E694E7 /* UDPDirectStack.swift in Sources */,
 				02025A9E2988229800E694E7 /* DNSMessage.swift in Sources */,
 				02025A9F2988229800E694E7 /* DNSSession.swift in Sources */,
 				02025AA02988229800E694E7 /* DNSServer.swift in Sources */,
@@ -5764,11 +5724,9 @@
 				02025AAD2988229800E694E7 /* NWUDPSocket.swift in Sources */,
 				02025AAE2988229800E694E7 /* RawTCPSocketProtocol.swift in Sources */,
 				02025AAF2988229800E694E7 /* NWTCPSocket.swift in Sources */,
-				02025AB02988229800E694E7 /* TUNTCPSocket.swift in Sources */,
 				02025AB12988229800E694E7 /* RawSocketFactory.swift in Sources */,
 				02025AB22988229800E694E7 /* GCDTCPSocket.swift in Sources */,
 				02025AB32988229800E694E7 /* DomainListRule.swift in Sources */,
-				02025AB42988229800E694E7 /* CountryRule.swift in Sources */,
 				02025AB52988229800E694E7 /* DNSSessionMatchType.swift in Sources */,
 				02025AB62988229800E694E7 /* DNSFailRule.swift in Sources */,
 				02025AB72988229800E694E7 /* AllRule.swift in Sources */,
@@ -5777,23 +5735,16 @@
 				02025ABA2988229800E694E7 /* DirectRule.swift in Sources */,
 				02025ABB2988229800E694E7 /* RuleManager.swift in Sources */,
 				02025ABC2988229800E694E7 /* IPRangeListRule.swift in Sources */,
-				02025ABD2988229800E694E7 /* HTTPAdapter.swift in Sources */,
-				02025ABE2988229800E694E7 /* SecureHTTPAdapter.swift in Sources */,
-				02025ABF2988229800E694E7 /* SpeedAdapter.swift in Sources */,
 				02025AC02988229800E694E7 /* AdapterSocket.swift in Sources */,
 				02025AC12988229800E694E7 /* DirectAdapter.swift in Sources */,
 				02025AC32988229800E694E7 /* RejectAdapter.swift in Sources */,
-				02025AC42988229800E694E7 /* SpeedAdapterFactory.swift in Sources */,
 				02025AC62988229800E694E7 /* AuthenticationServerAdapterFactory.swift in Sources */,
 				02025AC72988229800E694E7 /* RejectAdapterFactory.swift in Sources */,
 				02025AC82988229800E694E7 /* AdapterFactory.swift in Sources */,
 				4BEF656E2989C2FC00B650CB /* ProxySocketEvent.swift in Sources */,
-				02025ACA2988229800E694E7 /* SecureHTTPAdapterFactory.swift in Sources */,
 				02025ACB2988229800E694E7 /* ServerAdapterFactory.swift in Sources */,
 				02025ACC2988229800E694E7 /* AdapterFactoryManager.swift in Sources */,
-				02025ACD2988229800E694E7 /* HTTPAdapterFactory.swift in Sources */,
 				02025AD22988229800E694E7 /* HTTPProxySocket.swift in Sources */,
-				02025AD32988229800E694E7 /* DirectProxySocket.swift in Sources */,
 				02025AD42988229800E694E7 /* ProxySocket.swift in Sources */,
 				02025AD62988229800E694E7 /* SocketProtocol.swift in Sources */,
 				02025AD82988229800E694E7 /* Tunnel.swift in Sources */,
@@ -9036,14 +8987,6 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		02025AED2988248000E694E7 /* XCRemoteSwiftPackageReference "tun2socks" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/zhuhaow/tun2socks";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.8.0;
-			};
-		};
 		02025AF22988257900E694E7 /* XCRemoteSwiftPackageReference "Resolver" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/zhuhaow/Resolver";
@@ -9136,11 +9079,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0202568C29881E4300E694E7 /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */;
 			productName = CocoaAsyncSocket;
-		};
-		02025AF0298824E600E694E7 /* tun2socks */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 02025AED2988248000E694E7 /* XCRemoteSwiftPackageReference "tun2socks" */;
-			productName = tun2socks;
 		};
 		02025AF5298825AA00E694E7 /* Resolver */ = {
 			isa = XCSwiftPackageProductDependency;

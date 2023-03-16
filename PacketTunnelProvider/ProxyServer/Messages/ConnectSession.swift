@@ -65,16 +65,7 @@ public final class ConnectSession {
             return session.realIP?.presentation ?? ""
         }
         }()
-    
-    /// The location of the host.
-    public lazy var country: String = {
-        [unowned self] in
-        guard let c = Utils.GeoIPLookup.Lookup(self.ipAddress) else {
-            return ""
-        }
-        return c
-        }()
-    
+
     public init?(host: String, port: Int, fakeIPEnabled: Bool = true) {
         self.requestedHost = host
         self.port = port
@@ -128,9 +119,6 @@ public final class ConnectSession {
         ipAddress = session.realIP?.presentation ?? ""
         matchedRule = session.matchedRule
         
-        if session.countryCode != nil {
-            country = session.countryCode!
-        }
         return true
     }
     

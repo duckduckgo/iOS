@@ -1,6 +1,6 @@
 import Foundation
 import NetworkExtension
- 
+import os
 
 /// A DNS server designed as an `IPStackProtocol` implementation which works with TUN interface.
 ///
@@ -9,7 +9,15 @@ open class DNSServer: DNSResolverDelegate, IPStackProtocol {
     /// Current DNS server.
     ///
     /// - warning: There is at most one DNS server running at the same time. If a DNS server is registered to `TUNInterface` then it must also be set here.
-    public static var currentServer: DNSServer?
+    public static var currentServer: DNSServer? {
+        didSet {
+            if let currentServer {
+                os_log(.error, log: appTPLog, "Set new DNS server to valid value")
+            } else {
+                os_log(.error, log: appTPLog, "Set new DNS server to nil")
+            }
+        }
+    }
 
     /// The address of DNS server.
     let serverAddress: IPAddress

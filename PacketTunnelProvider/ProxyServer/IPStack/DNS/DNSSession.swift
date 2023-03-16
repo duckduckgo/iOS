@@ -1,5 +1,5 @@
 import Foundation
- 
+import os
 
 open class DNSSession {
     public let requestMessage: DNSMessage
@@ -12,13 +12,6 @@ open class DNSSession {
     open var matchResult: DNSSessionMatchResult?
     var indexToMatch = 0
     var expireAt: Date?
-    lazy var countryCode: String? = {
-        [unowned self] in
-        guard self.realIP != nil else {
-            return nil
-        }
-        return Utils.GeoIPLookup.Lookup(self.realIP!.presentation)
-    }()
 
     init?(message: DNSMessage) {
         guard message.messageType == .query else {
@@ -33,6 +26,7 @@ open class DNSSession {
     }
 
     convenience init?(packet: IPPacket) {
+        os_log(.error, log: appTPLog, "Creating new DNSSession, packet: %{public}s", packet.destinationAddress.presentation)
         guard let message = DNSMessage(payload: packet.protocolParser.payload) else {
             return nil
         }

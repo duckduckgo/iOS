@@ -32,8 +32,8 @@ public extension URL {
     static var searchAtb: URL? { defaultStatisticsDependentURL.searchAtb }
     static var appAtb: URL? { defaultStatisticsDependentURL.appAtb }
     static func hasCorrectMobileStatsParams(url: URL) -> Bool { defaultStatisticsDependentURL.hasCorrectMobileStatsParams(url: url) }
-    static func make(forPixelWithName pixelName: String, formFactor: String? = nil, includeATB: Bool = true) -> URL {
-        defaultStatisticsDependentURL.make(forPixelWithName: pixelName, formFactor: formFactor, includeATB: includeATB)
+    static func makePixelURL(pixelName: String, formFactor: String? = nil, includeATB: Bool = true) -> URL {
+        defaultStatisticsDependentURL.makePixelURL(pixelName: pixelName, formFactor: formFactor, includeATB: includeATB)
     }
 
 }
@@ -131,7 +131,7 @@ public final class StatisticsDependentURL {
     // MARK: - Pixel
 
     private static let pixelBase: String = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
-    func make(forPixelWithName pixelName: String, formFactor: String? = nil, includeATB: Bool = true) -> URL {
+    func makePixelURL(pixelName: String, formFactor: String? = nil, includeATB: Bool = true) -> URL {
         var urlString = "\(Self.pixelBase)/t/\(pixelName)"
         if let formFactor = formFactor {
             urlString.append("_ios_\(formFactor)")

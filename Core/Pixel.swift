@@ -157,11 +157,11 @@ public class Pixel {
         let url: URL
         if let deviceType = deviceType {
             let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
-            url = URL.make(forPixelWithName: pixel.name,
-                           formFactor: formFactor,
-                           includeATB: includedParameters.contains(.atb))
+            url = URL.makePixelURL(pixelName: pixel.name,
+                                   formFactor: formFactor,
+                                   includeATB: includedParameters.contains(.atb))
         } else {
-            url = URL.make(forPixelWithName: pixel.name, includeATB: includedParameters.contains(.atb) )
+            url = URL.makePixelURL(pixelName: pixel.name, includeATB: includedParameters.contains(.atb) )
         }
         
         let configuration = APIRequest.Configuration(url: url,

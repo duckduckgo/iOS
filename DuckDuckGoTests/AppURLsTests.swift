@@ -65,7 +65,7 @@ final class AppURLsTests: XCTestCase {
     func testWhenPixelUrlRequestThenCorrectURLIsReturned() throws {
         mockStatisticsStore.atb = "x"
         let pixelUrl = StatisticsDependentURL(statisticsStore: mockStatisticsStore)
-            .make(forPixelWithName: "ml", formFactor: "formfactor")
+            .makePixelURL(pixelName: "ml", formFactor: "formfactor")
         
         XCTAssertEqual("improving.duckduckgo.com", pixelUrl.host)
         XCTAssertEqual("/t/ml_ios_formfactor", pixelUrl.path)

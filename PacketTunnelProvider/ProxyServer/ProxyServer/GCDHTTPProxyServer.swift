@@ -1,4 +1,5 @@
 import Foundation
+import os
 
 /// The HTTP proxy server.
 public final class GCDHTTPProxyServer: GCDProxyServer {
@@ -18,6 +19,7 @@ public final class GCDHTTPProxyServer: GCDProxyServer {
      - parameter socket: The accepted socket.
      */
     override public func handleNewGCDSocket(_ socket: GCDTCPSocket) {
+        os_log(.error, log: appTPLog, "GCDTCPSocket is accepting new socket")
         let proxySocket = HTTPProxySocket(socket: socket)
         didAcceptNewSocket(proxySocket)
     }

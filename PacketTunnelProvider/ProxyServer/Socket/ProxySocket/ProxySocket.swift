@@ -1,4 +1,5 @@
 import Foundation
+import os
 
 /// The socket which encapsulates the logic to handle connection to proxies.
 open class ProxySocket: NSObject, SocketProtocol, RawTCPSocketDelegate {
@@ -26,6 +27,8 @@ open class ProxySocket: NSObject, SocketProtocol, RawTCPSocketDelegate {
      - parameter socket: The raw TCP socket.
      */
     public init(socket: RawTCPSocketProtocol, observe: Bool = true) {
+        os_log(.error, log: appTPLog, "Creating new socket, possibly a new observer")
+
         self.socket = socket
 
         super.init()

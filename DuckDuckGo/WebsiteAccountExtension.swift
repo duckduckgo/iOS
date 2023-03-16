@@ -27,11 +27,11 @@ extension SecureVaultModels.WebsiteAccount {
         if let title = self.title, !title.isEmpty {
             return title
         } else {
-            return autofillDomainNameUrlMatcher.cleanRawUrl(domain)
+            return autofillDomainNameUrlMatcher.normalizeUrlForWeb(domain)
         }
     }
 
     func faviconLetter(tld: TLD, autofillDomainNameUrlSort: AutofillDomainNameUrlSort) -> String? {
-        return autofillDomainNameUrlSort.firstCharForGrouping(self, tld: tld)?.uppercased()
+        return autofillDomainNameUrlSort.firstCharacterForGrouping(self, tld: tld)?.uppercased()
     }
 }

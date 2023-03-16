@@ -339,7 +339,7 @@ internal extension Array where Element == SecureVaultModels.WebsiteAccount {
             // E.g. Romainian should treat letters with diacritics as seperate letters, but folding doesn't
             // Apple's own apps (e.g. contacts) seem to suffer from the same problem
             let key: String
-            if let firstChar = autofillDomainNameUrlSort.firstCharForGrouping(account, tld: tld),
+            if let firstChar = autofillDomainNameUrlSort.firstCharacterForGrouping(account, tld: tld),
                let deDistinctionedChar = String(firstChar).folding(options: [.diacriticInsensitive, .caseInsensitive], locale: nil).first,
                deDistinctionedChar.isLetter {
                 

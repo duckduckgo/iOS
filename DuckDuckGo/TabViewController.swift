@@ -2384,7 +2384,7 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
 
         if accounts.count > 0 {
-            let accountMatches = autofillWebsiteAccountMatcher.findMatches(accounts: accounts, for: domain)
+            let accountMatches = autofillWebsiteAccountMatcher.findMatchesSortedByLastUpdated(accounts: accounts, for: domain)
 
             let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accountMatches,
                                                                                  domain: domain,

@@ -202,7 +202,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                    var credential = try vault.websiteCredentialsFor(accountId: accountIdInt) {
                     credential.account.username = username
                     credential.account.title = title
-                    credential.account.domain = autofillDomainNameUrlMatcher.cleanRawUrl(address)
+                    credential.account.domain = autofillDomainNameUrlMatcher.normalizeUrlForWeb(address)
                     credential.account.notes = notes
                     credential.password = passwordData
                     
@@ -221,7 +221,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         case .view:
             break
         case .new:
-            let cleanAddress = autofillDomainNameUrlMatcher.cleanRawUrl(address)
+            let cleanAddress = autofillDomainNameUrlMatcher.normalizeUrlForWeb(address)
             let account = SecureVaultModels.WebsiteAccount(title: title, username: username, domain: cleanAddress, notes: notes)
             let credentials = SecureVaultModels.WebsiteCredentials(account: account, password: passwordData)
 

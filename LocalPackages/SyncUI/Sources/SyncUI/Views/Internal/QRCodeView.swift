@@ -45,7 +45,7 @@ struct QRCodeView: View {
         Image(uiImage: generateQRCode(from: string, size: size))
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .frame(maxHeight: size)
+            .frame(height: size)
     }
 
     func generateQRCode(from text: String, size: CGFloat) -> UIImage {

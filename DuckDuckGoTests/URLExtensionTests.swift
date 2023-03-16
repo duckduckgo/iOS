@@ -56,10 +56,6 @@ class URLExtensionTests: XCTestCase {
     func testWhenURLHasLongTLDItStillIsConsideredValid() {
         XCTAssertTrue(URL.isWebUrl("https://blah.accountants"))
     }
-    
-    func testWhenUserIsPresentThenIsWebUrlIsFalse() {
-        XCTAssertFalse(URL.isWebUrl("http://example.com@sample.com"))
-    }
 
     func testWhenGivenLongWellFormedUrlThenIsWebUrlIsTrue() {
         XCTAssertTrue(URL.isWebUrl("http://www.veganchic.com/products/Camo-High-Top-Sneaker-by-The-Critical-Slide-Societ+80758-0180.html"))

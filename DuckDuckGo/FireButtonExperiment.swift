@@ -27,6 +27,10 @@ final class FireButtonExperiment {
         true
 //        AppDependencyProvider.shared.variantManager.isSupported(feature: .fireButtonWithColorFill)
     }
+    
+    public static func restartFireButtonEducation() {
+        DefaultDaxDialogsSettings().fireButtonEducationShownOrExpired = false
+    }
 
     public static func playFireButtonAnimationOnTabSwitcher(fireButton: FireBarButtonItem,
                                                             tabCount: Int,

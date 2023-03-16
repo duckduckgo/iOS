@@ -325,6 +325,9 @@ class TabSwitcherViewController: UIViewController {
             } else {
                 self.present(controller: alert, fromView: toolbar)
             }
+            
+            #warning("remove this later")
+            FireButtonExperiment.restartFireButtonEducation()
         }
     }
 

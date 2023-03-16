@@ -21,28 +21,20 @@ import Foundation
 import LocalAuthentication
 import BrowserServicesKit
 
-final class AutofillFeatureConfiguration {
-    private let privacyConfig: PrivacyConfiguration
-    private let appSettings: AppSettings
-
-    init(appSettings: AppSettings, privacyConfig: PrivacyConfiguration) {
-        self.appSettings = appSettings
-        self.privacyConfig = privacyConfig
-    }
-
-    var isCredentialsAutofillFeatureFlagEnabled: Bool {
-        privacyConfig.isEnabled(subfeature: AutofillFeature.credentialsAutofill.rawValue, for: .autofill)
-    }
+extension ContentScopeFeatureToggles {
     
-    var isCredentialsAutofillEnabled: Bool {
+    static let featureFlagger = AppDependencyProvider.shared.featureFlagger
+    static let appSettings = AppDependencyProvider.shared.appSettings
+    
+    static var isCredentialsAutofillEnabled: Bool {
         let context = LAContext()
         var error: NSError?
         let canAuthenticate = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
-        return isCredentialsAutofillFeatureFlagEnabled && appSettings.autofillCredentialsEnabled && canAuthenticate
+        return featureFlagger.isFeatureOn(.autofillCredentials) && appSettings.autofillCredentialsEnabled && canAuthenticate
     }
     
-    var supportedFeaturesOniOS: ContentScopeFeatureToggles {
-        ContentScopeFeatureToggles(emailProtection: privacyConfig.isEnabled(subfeature: AutofillFeature.emailProtection.rawValue, for: .autofill),
+    static var supportedFeaturesOniOS: ContentScopeFeatureToggles {
+        ContentScopeFeatureToggles(emailProtection: true,
                                    credentialsAutofill: isCredentialsAutofillEnabled,
                                    identitiesAutofill: false,
                                    creditCardsAutofill: false,
@@ -51,10 +43,4 @@ final class AutofillFeatureConfiguration {
                                    inlineIconCredentials: isCredentialsAutofillEnabled,
                                    thirdPartyCredentialsProvider: false)
     }
-}
-
-private enum AutofillFeature: String {
-    case emailProtection
-    case credentialsAutofill
-    case credentialsSaving
 }

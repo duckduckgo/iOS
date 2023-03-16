@@ -25,13 +25,13 @@ protocol DependencyProvider {
     var appSettings: AppSettings { get }
     var variantManager: VariantManager { get }
     var internalUserDecider: InternalUserDecider { get }
+    var featureFlagger: FeatureFlagger { get }
     var remoteMessagingStore: RemoteMessagingStore { get }
     var homePageConfiguration: HomePageConfiguration { get }
     var storageCache: StorageCache { get }
     var voiceSearchHelper: VoiceSearchHelperProtocol { get }
     var downloadManager: DownloadManager { get }
     var autofillLoginSession: AutofillLoginSession { get }
-    var autofillFeatureConfig: AutofillFeatureConfiguration { get }
     var configurationManager: ConfigurationManager { get }
 }
 
@@ -43,7 +43,8 @@ class AppDependencyProvider: DependencyProvider {
     let appSettings: AppSettings = AppUserDefaults()
     let variantManager: VariantManager = DefaultVariantManager()
     
-    var internalUserDecider: InternalUserDecider = DefaultInternalUserDecider()
+    let internalUserDecider: InternalUserDecider = DefaultInternalUserDecider()
+    lazy var featureFlagger: FeatureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider, privacyConfig: ContentBlocking.shared.privacyConfigurationManager.privacyConfig)
 
     let remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore()
     lazy var homePageConfiguration: HomePageConfiguration = HomePageConfiguration(variantManager: variantManager,
@@ -52,7 +53,6 @@ class AppDependencyProvider: DependencyProvider {
     let voiceSearchHelper: VoiceSearchHelperProtocol = VoiceSearchHelper()
     let downloadManager = DownloadManager()
     let autofillLoginSession = AutofillLoginSession()
-    lazy var autofillFeatureConfig = AutofillFeatureConfiguration(appSettings: appSettings,
-                                                                  privacyConfig: ContentBlocking.shared.privacyConfigurationManager.privacyConfig)
+
     let configurationManager = ConfigurationManager()
 }

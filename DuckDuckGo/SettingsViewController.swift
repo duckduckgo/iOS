@@ -74,11 +74,10 @@ class SettingsViewController: UITableViewController {
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
     fileprivate lazy var appSettings = AppDependencyProvider.shared.appSettings
     fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager
-    fileprivate lazy var internalUserDecider = AppDependencyProvider.shared.internalUserDecider
-    fileprivate lazy var autofillFeatureConfig = AppDependencyProvider.shared.autofillFeatureConfig
+    fileprivate lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
 
     private var shouldShowDebugCell: Bool {
-        return internalUserDecider.isInternalUser
+        return featureFlagger.isFeatureOn(.debugMenu)
     }
     
     private var shouldShowVoiceSearchCell: Bool {
@@ -86,11 +85,11 @@ class SettingsViewController: UITableViewController {
     }
 
     private lazy var shouldShowAutofillCell: Bool = {
-        return autofillFeatureConfig.isCredentialsAutofillFeatureFlagEnabled
+        return featureFlagger.isFeatureOn(.autofillCredentials)
     }()
 
     private lazy var shouldShowSyncCell: Bool = {
-        return internalUserDecider.isInternalUser
+        return featureFlagger.isFeatureOn(.sync)
     }()
 
     static func loadFromStoryboard() -> UIViewController {

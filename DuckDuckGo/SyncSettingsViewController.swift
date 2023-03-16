@@ -206,7 +206,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             let alert = UIAlertController(title: UserText.syncTurnOffConfirmTitle,
                                           message: UserText.syncTurnOffConfirmMessage,
                                           preferredStyle: .alert)
-            alert.addAction(title: UserText.actionCancel) {
+            alert.addAction(title: UserText.actionCancel, style: .cancel) {
                 continuation.resume(returning: false)
             }
             alert.addAction(title: UserText.syncTurnOffConfirmAction, style: .destructive) {

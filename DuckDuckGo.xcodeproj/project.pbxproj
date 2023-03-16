@@ -17,12 +17,6 @@
 		02025664298818B200E694E7 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02025663298818B100E694E7 /* NetworkExtension.framework */; };
 		0202566C298818B200E694E7 /* PacketTunnelProvider.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 02025662298818B100E694E7 /* PacketTunnelProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0202569029881ECA00E694E7 /* CocoaAsyncSocket in Frameworks */ = {isa = PBXBuildFile; productRef = 0202568F29881ECA00E694E7 /* CocoaAsyncSocket */; };
-		02025A902988229800E694E7 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202599E298820EF00E694E7 /* HMAC.swift */; };
-		02025A912988229800E694E7 /* MD5Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202599F298820EF00E694E7 /* MD5Hash.swift */; };
-		02025A922988229800E694E7 /* CryptoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259A0298820EF00E694E7 /* CryptoHelper.swift */; };
-		02025A942988229800E694E7 /* CryptoEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259A2298820EF00E694E7 /* CryptoEnum.swift */; };
-		02025A952988229800E694E7 /* StreamCryptoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259A3298820EF00E694E7 /* StreamCryptoProtocol.swift */; };
-		02025A962988229800E694E7 /* CCCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259A4298820EF00E694E7 /* CCCrypto.swift */; };
 		02025A9A2988229800E694E7 /* TUNInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258EF298820EC00E694E7 /* TUNInterface.swift */; };
 		02025A9B2988229800E694E7 /* IPStackProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258F0298820EC00E694E7 /* IPStackProtocol.swift */; };
 		02025A9E2988229800E694E7 /* DNSMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258F4298820EC00E694E7 /* DNSMessage.swift */; };
@@ -1008,12 +1002,6 @@
 		02025999298820EF00E694E7 /* NWTCPSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NWTCPSocket.swift; sourceTree = "<group>"; };
 		0202599B298820EF00E694E7 /* RawSocketFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawSocketFactory.swift; sourceTree = "<group>"; };
 		0202599C298820EF00E694E7 /* GCDTCPSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDTCPSocket.swift; sourceTree = "<group>"; };
-		0202599E298820EF00E694E7 /* HMAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMAC.swift; sourceTree = "<group>"; };
-		0202599F298820EF00E694E7 /* MD5Hash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MD5Hash.swift; sourceTree = "<group>"; };
-		020259A0298820EF00E694E7 /* CryptoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoHelper.swift; sourceTree = "<group>"; };
-		020259A2298820EF00E694E7 /* CryptoEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoEnum.swift; sourceTree = "<group>"; };
-		020259A3298820EF00E694E7 /* StreamCryptoProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamCryptoProtocol.swift; sourceTree = "<group>"; };
-		020259A4298820EF00E694E7 /* CCCrypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CCCrypto.swift; sourceTree = "<group>"; };
 		020259AB298820F000E694E7 /* AdapterSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterSocket.swift; sourceTree = "<group>"; };
 		020259AC298820F000E694E7 /* DirectAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectAdapter.swift; sourceTree = "<group>"; };
 		020259AE298820F000E694E7 /* RejectAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RejectAdapter.swift; sourceTree = "<group>"; };
@@ -2515,7 +2503,6 @@
 		02025670298818CB00E694E7 /* ProxyServer */ = {
 			isa = PBXGroup;
 			children = (
-				0202599D298820EF00E694E7 /* Crypto */,
 				021D30772989C0C000918636 /* Observer */,
 				020258ED298820EC00E694E7 /* IPStack */,
 				020259CB298820F100E694E7 /* Messages */,
@@ -2631,19 +2618,6 @@
 				0202599C298820EF00E694E7 /* GCDTCPSocket.swift */,
 			);
 			path = RawSocket;
-			sourceTree = "<group>";
-		};
-		0202599D298820EF00E694E7 /* Crypto */ = {
-			isa = PBXGroup;
-			children = (
-				0202599E298820EF00E694E7 /* HMAC.swift */,
-				0202599F298820EF00E694E7 /* MD5Hash.swift */,
-				020259A0298820EF00E694E7 /* CryptoHelper.swift */,
-				020259A2298820EF00E694E7 /* CryptoEnum.swift */,
-				020259A3298820EF00E694E7 /* StreamCryptoProtocol.swift */,
-				020259A4298820EF00E694E7 /* CCCrypto.swift */,
-			);
-			path = Crypto;
 			sourceTree = "<group>";
 		};
 		020259A6298820F000E694E7 /* Socket */ = {
@@ -5699,12 +5673,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				02025B0D29884D2C00E694E7 /* AppTrackerData.swift in Sources */,
-				02025A902988229800E694E7 /* HMAC.swift in Sources */,
-				02025A912988229800E694E7 /* MD5Hash.swift in Sources */,
-				02025A922988229800E694E7 /* CryptoHelper.swift in Sources */,
-				02025A942988229800E694E7 /* CryptoEnum.swift in Sources */,
-				02025A952988229800E694E7 /* StreamCryptoProtocol.swift in Sources */,
-				02025A962988229800E694E7 /* CCCrypto.swift in Sources */,
 				4BEF656C2989C2FC00B650CB /* TunnelEvent.swift in Sources */,
 				02025A9A2988229800E694E7 /* TUNInterface.swift in Sources */,
 				02025A9B2988229800E694E7 /* IPStackProtocol.swift in Sources */,

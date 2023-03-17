@@ -46,6 +46,8 @@ class AppTPToggleViewModel: ObservableObject {
 
 extension AppTPToggleViewModel: FirewallDelegate {
     func statusDidChange(newStatus: NEVPNStatus) {
-        firewallStatus = newStatus
+        Task { @MainActor in
+            firewallStatus = newStatus
+        }
     }
 }

@@ -93,6 +93,7 @@ class FirewallManager: FirewallManaging {
                 
                 self.manager = nil
                 self.manager = manager
+                statusDidChange()
             }
         } catch {
             os_log("[ERROR] Could not load managers", log: FirewallManager.apptpLog, type: .error)

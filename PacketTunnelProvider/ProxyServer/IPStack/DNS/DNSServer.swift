@@ -44,6 +44,7 @@ open class DNSServer: DNSResolverDelegate, IPStackProtocol {
      - parameter fakeIPPool: The pool of fake IP addresses. Set to nil if no fake IP is needed.
      */
     public init(address: IPAddress, port: Port, fakeIPPool: IPPool? = nil) {
+        os_log(.error, log: appTPLog, "Initializing new DNS server")
         serverAddress = address
         serverPort = port
         pool = fakeIPPool

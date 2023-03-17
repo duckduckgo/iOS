@@ -1,4 +1,5 @@
 import Foundation
+import os.log
 
 /// Representing all the information in one connect session.
 public final class ConnectSession {
@@ -43,10 +44,12 @@ public final class ConnectSession {
             let ip = Utils.DNS.resolve(self.host)
             
             guard self.fakeIPEnabled else {
+                os_log(.error, log: appTPLog, "GCDProxyServer: self.fakeIPEnabled")
                 return ip
             }
             
             guard let dnsServer = DNSServer.currentServer else {
+                os_log(.error, log: appTPLog, "GCDProxyServer: DNSServer.currentServer")
                 return ip
             }
             

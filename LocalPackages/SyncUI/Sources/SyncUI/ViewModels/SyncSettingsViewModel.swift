@@ -1,5 +1,5 @@
 //
-//  SyncSettingsScreenViewModel.swift
+//  SyncSettingsViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -28,10 +28,14 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
     func showDeviceConnected()
     func showRecoveryPDF()
     func createAccountAndStartSyncing()
+    func confirmDisableSync() async -> Bool
+    func confirmDeleteAllData() async -> Bool
+    func copyCode()
+    func confirmRemoveDevice(_ device: SyncSettingsViewModel.Device) async -> Bool
 
 }
 
-public class SyncSettingsScreenViewModel: ObservableObject {
+public class SyncSettingsViewModel: ObservableObject {
 
     public struct Device: Identifiable, Hashable {
 
@@ -40,12 +44,14 @@ public class SyncSettingsScreenViewModel: ObservableObject {
         }
 
         public let id: String
-        let name: String
-        let isThisDevice: Bool
+        public let name: String
+        public let type: String
+        public let isThisDevice: Bool
 
-        public init(id: String, name: String, isThisDevice: Bool) {
+        public init(id: String, name: String, type: String, isThisDevice: Bool) {
             self.id = id
             self.name = name
+            self.type = type
             self.isThisDevice = isThisDevice
         }
 
@@ -59,6 +65,7 @@ public class SyncSettingsScreenViewModel: ObservableObject {
     @Published var isSyncEnabled = false
     @Published var isBusy = false
     @Published var devices = [Device]()
+    @Published var recoveryCode = ""
 
     var setupFinishedState: TurnOnSyncViewModel.Result?
 
@@ -66,25 +73,76 @@ public class SyncSettingsScreenViewModel: ObservableObject {
 
     public init() { }
 
-    public func showDevices() {
-        isBusy = false
-        isSyncEnabled = true
-        devices = [
-            Device(id: UUID().uuidString, name: UIDevice.current.name, isThisDevice: true)
-        ]
-    }
-
-    public func appendDevice(_ device: Device) {
-        devices.append(device)
-    }
-
     func enableSync() {
         isBusy = true
         delegate!.showSyncSetup()
     }
 
     func disableSync() {
-        isSyncEnabled = false
+        isBusy = true
+        Task { @MainActor in
+            if await delegate!.confirmDisableSync() {
+                isSyncEnabled = false
+            }
+            isBusy = false
+        }
+    }
+
+    func deleteAllData() {
+        isBusy = true
+        Task { @MainActor in
+            if await delegate!.confirmDeleteAllData() {
+                isSyncEnabled = false
+            }
+            isBusy = false
+        }
+    }
+
+    func copyCode() {
+        delegate?.copyCode()
+    }
+
+    func saveRecoveryPDF() {
+        delegate?.showRecoveryPDF()
+    }
+
+    func scanQRCode() {
+        delegate?.showSyncWithAnotherDevice()
+    }
+
+    func createEditDeviceModel(_ device: Device) -> EditDeviceViewModel {
+        return EditDeviceViewModel(device: device) { newValue in
+
+            self.devices = self.devices.map {
+                if $0.id == newValue.id {
+                    return newValue
+                }
+                return $0
+            }
+
+        } remove: { @MainActor in
+            if await self.delegate?.confirmRemoveDevice(device) == true {
+                self.devices = self.devices.filter { $0.id != device.id }
+                return true
+            }
+            return false
+        }
+    }
+
+    // MARK: Called by the view controller
+
+    public func syncEnabled(recoveryCode: String) {
+        isBusy = false
+        isSyncEnabled = true
+        self.recoveryCode = recoveryCode
+        devices = [
+            Device(id: UUID().uuidString, name: UIDevice.current.name, type: "phone", isThisDevice: true)
+        ]
+    }
+
+    public func appendDevice(_ device: Device) {
+        devices.append(device)
+        objectWillChange.send()
     }
 
     public func setupFinished(_ model: TurnOnSyncViewModel) {
@@ -109,7 +167,6 @@ public class SyncSettingsScreenViewModel: ObservableObject {
             delegate?.createAccountAndStartSyncing()
         } else {
             isBusy = false
-            isSyncEnabled = false
         }
     }
 

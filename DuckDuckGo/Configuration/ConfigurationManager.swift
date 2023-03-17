@@ -22,6 +22,7 @@ import Core
 import Configuration
 import os.log
 import BrowserServicesKit
+import Common
 
 struct ConfigurationManager {
     
@@ -45,6 +46,21 @@ struct ConfigurationManager {
     }
 
     public static let didUpdateTrackerDependencies = NSNotification.Name(rawValue: "com.duckduckgo.configurationManager.didUpdateTrackerDependencies")
+    private let fetcher = ConfigurationFetcher(store: ConfigurationStore.shared, log: .configurationLog, eventMapping: Self.configurationDebugEvents)
+
+    private static let configurationDebugEvents = EventMapping<ConfigurationDebugEvents> { event, error, _, _ in
+        let domainEvent: Pixel.Event
+        switch event {
+        case .invalidPayload(let configuration):
+            domainEvent = .invalidPayload(configuration)
+        }
+
+        if let error = error {
+            Pixel.fire(pixel: domainEvent, error: error)
+        } else {
+            Pixel.fire(pixel: domainEvent)
+        }
+    }
 
     func update() async -> Bool {
         async let didFetchAnyTrackerBlockingDependencies = fetchAndUpdateTrackerBlockingDependencies()
@@ -66,7 +82,6 @@ struct ConfigurationManager {
 
     private func fetchTrackerBlockingDependencies() async -> Bool {
         var didFetchAnyTrackerBlockingDependencies = false
-        let fetcher = ConfigurationFetcher(store: ConfigurationStore.shared, log: .configurationLog)
 
         var tasks = [Configuration: Task<(), Swift.Error>]()
         tasks[.trackerDataSet] = Task { try await fetcher.fetch(.trackerDataSet) }
@@ -96,8 +111,8 @@ struct ConfigurationManager {
     @discardableResult
     func fetchAndUpdateBloomFilterExcludedDomains() async -> Bool {
         do {
-            try await ConfigurationFetcher(store: ConfigurationStore.shared, log: .configurationLog).fetch(.bloomFilterExcludedDomains)
-            try updateBloomFilterExclusions()
+            try await fetcher.fetch(.bloomFilterExcludedDomains)
+            try await updateBloomFilterExclusions()
             return true
         } catch {
             os_log("Failed to apply update to bloom filter exclusions: %@", log: .generalLog, type: .debug, error.localizedDescription)
@@ -108,9 +123,8 @@ struct ConfigurationManager {
     @discardableResult
     func fetchAndUpdateBloomFilter() async -> Bool {
         do {
-            try await ConfigurationFetcher(store: ConfigurationStore.shared, log: .configurationLog).fetch(all: [.bloomFilterBinary,
-                                                                                                                 .bloomFilterSpec])
-            try updateBloomFilter()
+            try await fetcher.fetch(all: [.bloomFilterBinary, .bloomFilterSpec])
+            try await updateBloomFilter()
             return true
         } catch {
             os_log("Failed to apply update to bloom filter: %@", log: .generalLog, type: .debug, error.localizedDescription)
@@ -118,7 +132,7 @@ struct ConfigurationManager {
         }
     }
     
-    private func updateBloomFilter() throws {
+    private func updateBloomFilter() async throws {
         guard let specData = ConfigurationStore.shared.loadData(for: .bloomFilterSpec) else {
             throw Error.bloomFilterSpecNotFound
         }
@@ -127,16 +141,16 @@ struct ConfigurationManager {
         }
         let specification = try JSONDecoder().decode(HTTPSBloomFilterSpecification.self, from: specData)
         try PrivacyFeatures.httpsUpgradeStore.persistBloomFilter(specification: specification, data: bloomFilterData)
-        PrivacyFeatures.httpsUpgrade.loadData()
+        await PrivacyFeatures.httpsUpgrade.loadData()
     }
     
-    private func updateBloomFilterExclusions() throws {
+    private func updateBloomFilterExclusions() async throws {
         guard let excludedDomainsData = ConfigurationStore.shared.loadData(for: .bloomFilterExcludedDomains) else {
             throw Error.bloomFilterExcludedDomainsNotFound
         }
         let excludedDomains = try HTTPSUpgradeParser.convertExcludedDomainsData(excludedDomainsData)
         try PrivacyFeatures.httpsUpgradeStore.persistExcludedDomains(excludedDomains)
-        PrivacyFeatures.httpsUpgrade.loadData()
+        await PrivacyFeatures.httpsUpgrade.loadData()
     }
     
 }

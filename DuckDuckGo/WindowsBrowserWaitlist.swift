@@ -27,7 +27,7 @@ final class WindowsBrowserWaitlist: Waitlist {
     static let identifier: String = "windows"
     static let isWaitlistRemoved: Bool = false
     static let apiProductName: String = "windowsbrowser"
-    static let downloadURL: URL = AppUrls().windowsBrowserDownloadURL
+    static let downloadURL: URL = URL.windows
 
     static let shared: WindowsBrowserWaitlist = .init()
 

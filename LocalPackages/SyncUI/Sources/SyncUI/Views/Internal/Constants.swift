@@ -21,10 +21,8 @@ import Foundation
 
 struct Constants {
 
-    static let maxWidth = 640.0
-    static let maxCameraHeight = 300.0
-    static let hPad = 20.0
-    static let codeFontSize = 18.0
-    static let codeLines = 10
+    /// When showing UI full screen (rather than as sheets or popovers) limit the width to this size to prevent
+    /// ugly automatic scaling up
+    static let maxFullScreenWidth = 640.0
 
 }

@@ -1135,6 +1135,9 @@ https://duckduckgo.com/mac";
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Which website is broken?";
 
+/* No comment provided by engineer. */
+"sync.remove-device.message" = "\"%@\" will no longer be able to access your synced data.";
+
 /* Accessibility label on remove button */
 "tab.close.home" = "Close home tab";
 

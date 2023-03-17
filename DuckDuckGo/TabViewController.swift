@@ -548,11 +548,11 @@ class TabViewController: UIViewController {
     
     private func shouldReissueSearch(for url: URL) -> Bool {
         guard url.isDuckDuckGoSearch else { return false }
-        return !URL.hasCorrectMobileStatsParams(url: url) || !url.hasCorrectSearchHeaderParams
+        return !url.hasCorrectMobileStatsParams || !url.hasCorrectSearchHeaderParams
     }
     
     private func reissueSearchWithRequiredParams(for url: URL) {
-        let mobileSearch = URL.applyingStatsParams(for: url)
+        let mobileSearch = url.applyingStatsParams()
         reissueNavigationWithSearchHeaderParams(for: mobileSearch)
     }
     

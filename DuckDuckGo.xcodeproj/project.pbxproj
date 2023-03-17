@@ -587,7 +587,6 @@
 		CB9B8739278C8E72001F4906 /* WidgetEducationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9B8738278C8E72001F4906 /* WidgetEducationViewController.swift */; };
 		CB9B873C278C8FEA001F4906 /* WidgetEducationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9B873B278C8FEA001F4906 /* WidgetEducationView.swift */; };
 		CB9B873E278C93C2001F4906 /* HomeMessage.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB9B873D278C93C2001F4906 /* HomeMessage.xcassets */; };
-		CB9E040B29BB54A900C7C402 /* AppURLs+StatisticsDependent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9E040A29BB54A900C7C402 /* AppURLs+StatisticsDependent.swift */; };
 		CBAA195A27BFE15600A4BD49 /* NSManagedObjectContextExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAA195927BFE15600A4BD49 /* NSManagedObjectContextExtension.swift */; };
 		CBB435C827C64F8C00104842 /* HTTPSBloomFilterSpecificationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB435C727C64F8C00104842 /* HTTPSBloomFilterSpecificationTest.swift */; };
 		CBC83E3429B631780008E19C /* Configuration in Frameworks */ = {isa = PBXBuildFile; productRef = CBC83E3329B631780008E19C /* Configuration */; };
@@ -2007,7 +2006,6 @@
 		CB9B8738278C8E72001F4906 /* WidgetEducationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetEducationViewController.swift; sourceTree = "<group>"; };
 		CB9B873B278C8FEA001F4906 /* WidgetEducationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetEducationView.swift; sourceTree = "<group>"; };
 		CB9B873D278C93C2001F4906 /* HomeMessage.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HomeMessage.xcassets; sourceTree = "<group>"; };
-		CB9E040A29BB54A900C7C402 /* AppURLs+StatisticsDependent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppURLs+StatisticsDependent.swift"; sourceTree = "<group>"; };
 		CBAA195927BFE15600A4BD49 /* NSManagedObjectContextExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObjectContextExtension.swift; sourceTree = "<group>"; };
 		CBAA195B27C3982A00A4BD49 /* PrivacyFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyFeatures.swift; sourceTree = "<group>"; };
 		CBB435C727C64F8C00104842 /* HTTPSBloomFilterSpecificationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPSBloomFilterSpecificationTest.swift; sourceTree = "<group>"; };
@@ -3868,7 +3866,6 @@
 			isa = PBXGroup;
 			children = (
 				F143C3151E4A99D200CFDE3A /* AppURLs.swift */,
-				CB9E040A29BB54A900C7C402 /* AppURLs+StatisticsDependent.swift */,
 				F17D723B1E8BB374003E8B0E /* AppDeepLinks.swift */,
 				F143C3161E4A99D200CFDE3A /* Link.swift */,
 			);
@@ -5678,7 +5675,6 @@
 				F1134EB01F40AC6300B73467 /* AtbParser.swift in Sources */,
 				B652DF10287C2C1600C12A9C /* ContentBlocking.swift in Sources */,
 				4BE2756827304F57006B20B0 /* URLRequestExtension.swift in Sources */,
-				CB9E040B29BB54A900C7C402 /* AppURLs+StatisticsDependent.swift in Sources */,
 				85BA79911F6FF75000F59015 /* ContentBlockerStoreConstants.swift in Sources */,
 				85BDC3142434D8F80053DB07 /* DebugUserScript.swift in Sources */,
 				85011867290028C400BDEE27 /* BookmarksDatabase.swift in Sources */,

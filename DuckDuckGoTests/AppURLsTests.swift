@@ -64,7 +64,7 @@ final class AppURLsTests: XCTestCase {
     
     func testWhenPixelUrlRequestThenCorrectURLIsReturned() throws {
         mockStatisticsStore.atb = "x"
-        let pixelUrl = StatisticsDependentURL(statisticsStore: mockStatisticsStore)
+        let pixelUrl = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore)
             .makePixelURL(pixelName: "ml", formFactor: "formfactor")
         
         XCTAssertEqual("improving.duckduckgo.com", pixelUrl.host)
@@ -78,43 +78,43 @@ final class AppURLsTests: XCTestCase {
 
     func testWhenMobileStatsParamsAreAppliedThenTheyReturnAnUpdatedUrl() throws {
         mockStatisticsStore.atb = "x"
-        let actual = StatisticsDependentURL(statisticsStore: mockStatisticsStore)
-            .applyingStatsParams(for: URL(string: "http://duckduckgo.com?atb=wrong&t=wrong")!)
+        let actual = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore)
+            .applyingStatsParams(to: URL(string: "http://duckduckgo.com?atb=wrong&t=wrong")!)
         XCTAssertEqual(actual.getParameter(named: "atb"), "x")
         XCTAssertEqual(actual.getParameter(named: "t"), "ddg_ios")
     }
 
     func testWhenAtbMatchesThenHasMobileStatsParamsIsTrue() {
         mockStatisticsStore.atb = "x"
-        let result = StatisticsDependentURL(statisticsStore: mockStatisticsStore)
+        let result = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore)
             .hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=x&t=ddg_ios")!)
         XCTAssertTrue(result)
     }
 
     func testWhenAtbIsMismatchedThenHasMobileStatsParamsIsFalse() {
         mockStatisticsStore.atb = "y"
-        let result = StatisticsDependentURL(statisticsStore: mockStatisticsStore)
+        let result = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore)
             .hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=x&t=ddg_ios")!)
         XCTAssertFalse(result)
     }
 
     func testWhenAtbIsMissingThenHasMobileStatsParamsIsFalse() {
         mockStatisticsStore.atb = "x"
-        let result = StatisticsDependentURL(statisticsStore: mockStatisticsStore)
+        let result = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore)
             .hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?t=ddg_ios")!)
         XCTAssertFalse(result)
     }
 
     func testWhenSourceIsMismatchedThenHasMobileStatsParamsIsFalse() {
         mockStatisticsStore.atb = "x"
-        let result = StatisticsDependentURL(statisticsStore: mockStatisticsStore)
+        let result = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore)
             .hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=x&t=ddg_desktop")!)
         XCTAssertFalse(result)
     }
 
     func testWhenSourceIsMissingThenHasMobileStatsParamsIsFalse() {
         mockStatisticsStore.atb = "x"
-        let result = StatisticsDependentURL(statisticsStore: mockStatisticsStore)
+        let result = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore)
             .hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=y")!)
         XCTAssertFalse(result)
     }
@@ -169,13 +169,13 @@ final class AppURLsTests: XCTestCase {
     }
 
     func testWhenAtbNotPersistsedThenSearchRetentionAtbUrlIsNil() {
-        XCTAssertNil(StatisticsDependentURL(statisticsStore: mockStatisticsStore).searchAtb)
+        XCTAssertNil(StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore).searchAtb)
     }
 
     func testWhenAtbPersistsedThenSearchRetentionUrlHasCorrectParams() throws {
         mockStatisticsStore.atb = "x"
         mockStatisticsStore.searchRetentionAtb = "y"
-        let url = StatisticsDependentURL(statisticsStore: mockStatisticsStore).searchAtb
+        let url = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore).searchAtb
         XCTAssertNotNil(url)
         XCTAssertEqual(url!.getParameter(named: "atb"), "x")
         XCTAssertEqual(url!.getParameter(named: "set_atb"), "y")
@@ -183,13 +183,13 @@ final class AppURLsTests: XCTestCase {
     }
     
     func testWhenAtbNotPersistsedThenAppRetentionAtbUrlIsNil() {
-        XCTAssertNil(StatisticsDependentURL(statisticsStore: mockStatisticsStore).appAtb)
+        XCTAssertNil(StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore).appAtb)
     }
     
     func testWhenAtbPersistsedThenAppRetentionUrlHasCorrectParams() throws {
         mockStatisticsStore.atb = "x"
         mockStatisticsStore.appRetentionAtb = "y"
-        let url = StatisticsDependentURL(statisticsStore: mockStatisticsStore).appAtb
+        let url = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore).appAtb
         XCTAssertNotNil(url)
         XCTAssertEqual(url!.getParameter(named: "atb"), "x")
         XCTAssertEqual(url!.getParameter(named: "set_atb"), "y")
@@ -207,13 +207,13 @@ final class AppURLsTests: XCTestCase {
     }
 
     func testSearchUrlCreatesUrlWithSourceParam() throws {
-        let url = StatisticsDependentURL(statisticsStore: mockStatisticsStore).makeSearchURL(text: "query")!
+        let url = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore).makeSearchURL(text: "query")!
         XCTAssertEqual(url.getParameter(named: "t"), "ddg_ios")
     }
     
     func testWhenExistingQueryUsesVerticalThenItIsAppliedToNewOne() throws {
         let contextURL = URL(string: "https://duckduckgo.com/?q=query&iar=images&ko=-1&ia=images")!
-        let url = StatisticsDependentURL(statisticsStore: mockStatisticsStore)
+        let url = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore)
             .makeSearchURL(query: "query", queryContext: contextURL)!
         
         XCTAssertEqual(url.getParameter(named: "t"), "ddg_ios")
@@ -222,7 +222,7 @@ final class AppURLsTests: XCTestCase {
     
     func testWhenExistingQueryUsesVerticalWithMapsThenTheseAreIgnored() throws {
         let contextURL = URL(string: "https://duckduckgo.com/?q=query&iar=images&ko=-1&ia=images&iaxm=maps")!
-        let url = StatisticsDependentURL(statisticsStore: mockStatisticsStore)
+        let url = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore)
             .makeSearchURL(query: "query", queryContext: contextURL)!
         
         XCTAssertEqual(url.getParameter(named: "t"), "ddg_ios")
@@ -233,7 +233,7 @@ final class AppURLsTests: XCTestCase {
     
     func testWhenExistingQueryHasNoVerticalThenItIsAbsentInNewOne() throws {
         let contextURL = URL(string: "https://example.com")!
-        let url = StatisticsDependentURL(statisticsStore: mockStatisticsStore)
+        let url = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore)
             .makeSearchURL(query: "query", queryContext: contextURL)!
         
         XCTAssertEqual(url.getParameter(named: "t"), "ddg_ios")
@@ -242,12 +242,12 @@ final class AppURLsTests: XCTestCase {
 
     func testWhenAtbValuesExistInStatisticsStoreThenSearchUrlCreatesUrlWithAtb() throws {
         mockStatisticsStore.atb = "x"
-        let urlWithAtb = StatisticsDependentURL(statisticsStore: mockStatisticsStore).makeSearchURL(text: "query")!
+        let urlWithAtb = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore).makeSearchURL(text: "query")!
         XCTAssertEqual(urlWithAtb.getParameter(named: "atb"), "x")
     }
 
     func testWhenAtbIsAbsentFromStatisticsStoreThenSearchUrlCreatesUrlWithoutAtb() throws {
-        let url = StatisticsDependentURL(statisticsStore: mockStatisticsStore).makeSearchURL(text: "query")!
+        let url = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore).makeSearchURL(text: "query")!
         XCTAssertNil(url.getParameter(named: "atb"))
     }
 

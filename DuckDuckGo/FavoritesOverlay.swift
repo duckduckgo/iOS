@@ -43,6 +43,9 @@ class FavoritesOverlay: UIViewController {
     
     weak var delegate: FavoritesOverlayDelegate?
     
+    private lazy var collectionViewReorderingGesture =
+        UILongPressGestureRecognizer(target: self, action: #selector(self.collectionViewReorderingGestureHandler(gesture:)))
+    
     init(favoritesViewModel: FavoritesListInteracting) {
         renderer = FavoritesHomeViewSectionRenderer(allowsEditing: true,
                                                     viewModel: favoritesViewModel)
@@ -55,20 +58,9 @@ class FavoritesOverlay: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
-        
-        collectionView.register(UINib(nibName: "FavoriteHomeCell", bundle: nil), forCellWithReuseIdentifier: "favorite")
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.backgroundColor = .clear
-
-        view.addSubview(collectionView)
-        
+        setupCollectionView()
         renderer.install(into: self)
-        
         registerForKeyboardNotifications()
-        
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
@@ -83,6 +75,22 @@ class FavoritesOverlay: UIViewController {
         
         collectionView.frame = view.bounds
         collectionView.reloadData()
+    }
+    
+    private func setupCollectionView() {
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
+        
+        collectionView.register(UINib(nibName: "FavoriteHomeCell", bundle: nil), forCellWithReuseIdentifier: "favorite")
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.backgroundColor = .clear
+        view.addSubview(collectionView)
+        
+        collectionView.dropDelegate = self
+        collectionView.dragDelegate = self
+        collectionViewReorderingGesture.delegate = self
+        collectionView.addGestureRecognizer(collectionViewReorderingGesture)
+        
     }
     
     private func registerForKeyboardNotifications() {
@@ -111,6 +119,28 @@ class FavoritesOverlay: UIViewController {
         collectionView.contentInset = contentInsets
         collectionView.scrollIndicatorInsets = contentInsets
     }
+    
+    @objc func collectionViewReorderingGestureHandler(gesture: UILongPressGestureRecognizer) {
+        switch gesture.state {
+        case .began:
+            if let indexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) {
+                UISelectionFeedbackGenerator().selectionChanged()
+                UIMenuController.shared.hideMenu()
+                collectionView.beginInteractiveMovementForItem(at: indexPath)
+            }
+            
+        case .changed:
+            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
+            
+        case .ended:
+            renderer.endReordering()
+            collectionView.endInteractiveMovement()
+            UIImpactFeedbackGenerator().impactOccurred()
+
+        default:
+            collectionView.cancelInteractiveMovement()
+        }
+    }
 }
 
 extension FavoritesOverlay: FavoritesHomeViewSectionRendererDelegate {
@@ -138,7 +168,6 @@ extension FavoritesOverlay: UICollectionViewDelegate {
                         referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize(width: 1, height: Constants.footerPadding)
     }
-    
 }
 
 extension FavoritesOverlay: UICollectionViewDataSource {
@@ -185,10 +214,33 @@ extension FavoritesOverlay: UICollectionViewDelegateFlowLayout {
     }
 }
 
+extension FavoritesOverlay: UICollectionViewDropDelegate, UICollectionViewDragDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        return renderer.collectionView(collectionView, itemsForBeginning: session, at: indexPath)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+        renderer.collectionView(collectionView, performDropWith: coordinator)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+        return renderer.collectionView(collectionView, dropSessionDidUpdate: session, withDestinationIndexPath: destinationIndexPath)
+    }
+    
+}
+
 extension FavoritesOverlay: Themable {
     
     func decorate(with theme: Theme) {
         self.theme = theme
         view.backgroundColor = AppWidthObserver.shared.isLargeWidth ? .clear : theme.backgroundColor
+    }
+}
+
+extension FavoritesOverlay: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        gestureRecognizer == collectionViewReorderingGesture ? gestureRecognizerShouldBegin(gestureRecognizer) : false
     }
 }

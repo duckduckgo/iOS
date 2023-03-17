@@ -128,6 +128,11 @@
             "default": "block",
             "rules": [
                 {
+                    "rule": "2mdn\\.net\\/instream\\/html5\\/ima3\\.js",
+                    "action": "ignore",
+                    "comment": "Allow to load, but all other protections apply, including cookie protection"
+                },
+                {
                     "rule": "2mdn\\.net\\/instream\\/video\\/client\\.js",
                     "exceptions": {
                         "domains": [
@@ -135,11 +140,6 @@
                             "surfline.com"
                         ]
                     }
-                },
-                {
-                    "rule": "2mdn\\.net\\/instream\\/html5\\/ima3\\.js",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
                 }
             ]
         },
@@ -2406,26 +2406,6 @@
             ],
             "default": "ignore",
             "rules": [
-                {
-                    "rule": "payments-de\\.amazon\\.com",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                },
-                {
-                    "rule": "payments-uk\\.amazon\\.com",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                },
-                {
-                    "rule": "apay-us\\.amazon\\.com",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                },
-                {
-                    "rule": "payments\\.amazon\\.com",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                },
                 {
                     "rule": "amazon\\.com\\/kp\\/card",
                     "fingerprinting": 3,
@@ -5819,6 +5799,51 @@
             "cookies": 0.0000506,
             "categories": [],
             "default": "block"
+        },
+        "cloudflare.com": {
+            "domain": "cloudflare.com",
+            "owner": {
+                "name": "Cloudflare, Inc.",
+                "displayName": "Cloudflare",
+                "privacyPolicy": "https://www.cloudflare.com/privacypolicy/",
+                "url": "http://cloudflare.com"
+            },
+            "prevalence": 0.144,
+            "fingerprinting": 3,
+            "cookies": 0.00569,
+            "categories": [
+                "Analytics",
+                "Content Delivery",
+                "Embedded Content"
+            ],
+            "default": "ignore",
+            "rules": [
+                {
+                    "rule": "cloudflare\\.com\\/api\\/beacon",
+                    "fingerprinting": 0,
+                    "cookies": 0.00047
+                },
+                {
+                    "rule": "cloudflare\\.com\\/ajax\\/libs\\/fingerprintjs2\\/.*\\/fingerprint2\\.min\\.js",
+                    "fingerprinting": 3,
+                    "cookies": 0
+                },
+                {
+                    "rule": "cloudflare\\.com\\/cdn-cgi\\/scripts\\/7089c43e\\/cloudflare-static\\/rocket-loader\\.min\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0
+                },
+                {
+                    "rule": "cloudflare\\.com\\/cdn-cgi\\/scripts\\/7d0fa10a\\/cloudflare-static\\/rocket-loader\\.min\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0
+                },
+                {
+                    "rule": "cloudflare\\.com\\/cdn-cgi\\/scripts\\/1672531200\\/cloudflare-static\\/rocket-loader\\.min\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.0000145
+                }
+            ]
         },
         "cloudflareinsights.com": {
             "domain": "cloudflareinsights.com",
@@ -9281,6 +9306,15 @@
                     "surrogate": "gpt.js"
                 },
                 {
+                    "rule": "securepubads\\.g\\.doubleclick\\.net\\/tag\\/js\\/gpt\\.js",
+                    "exceptions": {
+                        "domains": [
+                            "weather.com"
+                        ]
+                    },
+                    "surrogate": "gpt.js"
+                },
+                {
                     "rule": "doubleclick\\.net\\/tag\\/js\\/gpt\\.js",
                     "surrogate": "gpt.js"
                 },
@@ -11914,12 +11948,12 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "lib\\.getshogun\\.com",
+                    "rule": "cdn\\.getshogun\\.com",
                     "action": "ignore",
                     "comment": "Allow to load, but all other protections apply, including cookie protection"
                 },
                 {
-                    "rule": "cdn\\.getshogun\\.com",
+                    "rule": "lib\\.getshogun\\.com",
                     "action": "ignore",
                     "comment": "Allow to load, but all other protections apply, including cookie protection"
                 }
@@ -13099,19 +13133,7 @@
             "fingerprinting": 1,
             "cookies": 0.0000867,
             "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "hlserve\\.com\\/Delivery\\/ClientPaths\\/Library\\/hook\\.js",
-                    "fingerprinting": 1,
-                    "cookies": 0.0000506,
-                    "exceptions": {
-                        "domains": [
-                            "bjs.com"
-                        ]
-                    }
-                }
-            ]
+            "default": "ignore"
         },
         "hocgeese.com": {
             "domain": "hocgeese.com",
@@ -13308,11 +13330,6 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "hubspot\\.com\\/meetings",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                },
-                {
                     "rule": "forms\\.hubspot\\.com",
                     "exceptions": {
                         "types": [
@@ -13327,6 +13344,11 @@
                             "script"
                         ]
                     }
+                },
+                {
+                    "rule": "hubspot\\.com\\/meetings",
+                    "action": "ignore",
+                    "comment": "Allow to load, but all other protections apply, including cookie protection"
                 }
             ]
         },
@@ -20310,18 +20332,6 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "tt\\.omtrdc\\.net\\/cdn\\/target\\.js",
-                    "exceptions": {
-                        "domains": [
-                            "delltechnologiesworld.com",
-                            "disneyvacationclub.disney.go.com"
-                        ],
-                        "types": [
-                            "script"
-                        ]
-                    }
-                },
-                {
                     "rule": "omtrdc\\.net\\/b\\/ss",
                     "exceptions": {
                         "domains": [
@@ -20330,6 +20340,18 @@
                         ],
                         "types": [
                             "image"
+                        ]
+                    }
+                },
+                {
+                    "rule": "tt\\.omtrdc\\.net\\/cdn\\/target\\.js",
+                    "exceptions": {
+                        "domains": [
+                            "delltechnologiesworld.com",
+                            "disneyvacationclub.disney.go.com"
+                        ],
+                        "types": [
+                            "script"
                         ]
                     }
                 },
@@ -20542,11 +20564,6 @@
             "categories": [],
             "default": "ignore",
             "rules": [
-                {
-                    "rule": "player\\.ooyala\\.com",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                },
                 {
                     "rule": "ooyala\\.com\\/static\\/v4\\/stable\\/4\\.13\\.5\\/core\\.min\\.js",
                     "fingerprinting": 1,
@@ -23830,11 +23847,6 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "oauth\\.reddit\\.com",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                },
-                {
                     "rule": "reddit\\.com\\/r",
                     "exceptions": {
                         "types": [
@@ -23869,6 +23881,11 @@
                             "xmlhttprequest"
                         ]
                     }
+                },
+                {
+                    "rule": "oauth\\.reddit\\.com",
+                    "action": "ignore",
+                    "comment": "Allow to load, but all other protections apply, including cookie protection"
                 }
             ]
         },
@@ -32036,21 +32053,6 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "pay\\.yandex\\.ru",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                },
-                {
-                    "rule": "money\\.yandex\\.ru",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                },
-                {
-                    "rule": "geocode-maps\\.yandex\\.ru",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                },
-                {
                     "rule": "frontend\\.vh\\.yandex\\.ru\\/player",
                     "action": "ignore",
                     "comment": "Allow to load, but all other protections apply, including cookie protection"
@@ -32086,6 +32088,21 @@
                             "image"
                         ]
                     }
+                },
+                {
+                    "rule": "geocode-maps\\.yandex\\.ru",
+                    "action": "ignore",
+                    "comment": "Allow to load, but all other protections apply, including cookie protection"
+                },
+                {
+                    "rule": "money\\.yandex\\.ru",
+                    "action": "ignore",
+                    "comment": "Allow to load, but all other protections apply, including cookie protection"
+                },
+                {
+                    "rule": "pay\\.yandex\\.ru",
+                    "action": "ignore",
+                    "comment": "Allow to load, but all other protections apply, including cookie protection"
                 },
                 {
                     "rule": "img-fotki\\.yandex\\.ru",

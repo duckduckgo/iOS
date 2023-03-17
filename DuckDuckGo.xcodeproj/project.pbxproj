@@ -50,7 +50,6 @@
 		02025AD42988229800E694E7 /* ProxySocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259C2298820F000E694E7 /* ProxySocket.swift */; };
 		02025AD62988229800E694E7 /* SocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259C4298820F000E694E7 /* SocketProtocol.swift */; };
 		02025AD82988229800E694E7 /* Tunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025901298820ED00E694E7 /* Tunnel.swift */; };
-		02025AD92988229800E694E7 /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202597C298820EE00E694E7 /* Buffer.swift */; };
 		02025ADA2988229800E694E7 /* Port.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202597D298820EE00E694E7 /* Port.swift */; };
 		02025ADB2988229800E694E7 /* HTTPStreamScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202597E298820EE00E694E7 /* HTTPStreamScanner.swift */; };
 		02025ADC2988229800E694E7 /* UInt128.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202597F298820EF00E694E7 /* UInt128.swift */; };
@@ -965,7 +964,6 @@
 		020258FE298820ED00E694E7 /* QueueFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueFactory.swift; sourceTree = "<group>"; };
 		02025901298820ED00E694E7 /* Tunnel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tunnel.swift; sourceTree = "<group>"; };
 		02025904298820ED00E694E7 /* Opt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Opt.swift; sourceTree = "<group>"; };
-		0202597C298820EE00E694E7 /* Buffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Buffer.swift; sourceTree = "<group>"; };
 		0202597D298820EE00E694E7 /* Port.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Port.swift; sourceTree = "<group>"; };
 		0202597E298820EE00E694E7 /* HTTPStreamScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPStreamScanner.swift; sourceTree = "<group>"; };
 		0202597F298820EF00E694E7 /* UInt128.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UInt128.swift; sourceTree = "<group>"; };
@@ -2558,7 +2556,6 @@
 		0202597B298820EE00E694E7 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				0202597C298820EE00E694E7 /* Buffer.swift */,
 				0202597D298820EE00E694E7 /* Port.swift */,
 				0202597E298820EE00E694E7 /* HTTPStreamScanner.swift */,
 				0202597F298820EF00E694E7 /* UInt128.swift */,
@@ -5688,7 +5685,6 @@
 				02025AD42988229800E694E7 /* ProxySocket.swift in Sources */,
 				02025AD62988229800E694E7 /* SocketProtocol.swift in Sources */,
 				02025AD82988229800E694E7 /* Tunnel.swift in Sources */,
-				02025AD92988229800E694E7 /* Buffer.swift in Sources */,
 				02025ADA2988229800E694E7 /* Port.swift in Sources */,
 				02025ADB2988229800E694E7 /* HTTPStreamScanner.swift in Sources */,
 				02025ADC2988229800E694E7 /* UInt128.swift in Sources */,

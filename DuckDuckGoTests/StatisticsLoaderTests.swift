@@ -25,7 +25,6 @@ import OHHTTPStubsSwift
 
 class StatisticsLoaderTests: XCTestCase {
 
-    let appUrls = AppUrls()
     var mockStatisticsStore: StatisticsStore!
     var testee: StatisticsLoader!
 
@@ -181,35 +180,35 @@ class StatisticsLoaderTests: XCTestCase {
     }
 
     func loadSuccessfulAtbStub() {
-        stub(condition: isHost(appUrls.initialAtb.host!)) { _ in
+        stub(condition: isHost(URL.atb.host!)) { _ in
             let path = OHPathForFile("MockFiles/atb.json", type(of: self))!
             return fixture(filePath: path, status: 200, headers: nil)
         }
     }
 
     func loadSuccessfulUpdateAtbStub() {
-        stub(condition: isHost(appUrls.initialAtb.host!)) { _ in
+        stub(condition: isHost(URL.atb.host!)) { _ in
             let path = OHPathForFile("MockFiles/atb-with-update.json", type(of: self))!
             return fixture(filePath: path, status: 200, headers: nil)
         }
     }
 
     func loadUnsuccessfulAtbStub() {
-        stub(condition: isHost(appUrls.initialAtb.host!)) { _ in
+        stub(condition: isHost(URL.atb.host!)) { _ in
             let path = OHPathForFile("MockFiles/invalid.json", type(of: self))!
             return fixture(filePath: path, status: 400, headers: nil)
         }
     }
 
     func loadSuccessfulExiStub() {
-        stub(condition: isPath(appUrls.exti(forAtb: "").path)) { _ -> HTTPStubsResponse in
+        stub(condition: isPath(URL.makeExtiURL(atb: "").path)) { _ -> HTTPStubsResponse in
             let path = OHPathForFile("MockFiles/empty", type(of: self))!
             return fixture(filePath: path, status: 200, headers: nil)
         }
     }
 
     func loadUnsuccessfulExiStub() {
-        stub(condition: isPath(appUrls.exti(forAtb: "").path)) { _ -> HTTPStubsResponse in
+        stub(condition: isPath(URL.makeExtiURL(atb: "").path)) { _ -> HTTPStubsResponse in
             let path = OHPathForFile("MockFiles/empty", type(of: self))!
             return fixture(filePath: path, status: 400, headers: nil)
         }

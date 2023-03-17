@@ -22,6 +22,9 @@ import DuckUI
 
 struct PasteCodeView: View {
 
+    static let codeFontSize = 18.0
+    static let codeLines = 10
+
     @ObservedObject var model: ScanOrPasteCodeViewModel
 
     @State var isEditingCode = false
@@ -45,8 +48,8 @@ struct PasteCodeView: View {
 
                     Text(code)
                         .kerning(3)
-                        .lineLimit(Constants.codeLines)
-                        .monospaceSystemFont(ofSize: Constants.codeFontSize)
+                        .lineLimit(Self.codeLines)
+                        .monospaceSystemFont(ofSize: Self.codeFontSize)
                         .padding()
 
                     Spacer()
@@ -98,10 +101,10 @@ struct PasteCodeView: View {
                 codeEntrySection()
                 Spacer()
             }
-            .frame(maxWidth: Constants.maxWidth, alignment: .center)
+            .frame(maxWidth: Constants.maxFullScreenWidth, alignment: .center)
         }
         .padding(.horizontal, 20)
-        .navigationTitle("Manually Enter Code")
+        .navigationTitle(UserText.manuallyEnterCodeTitle)
         .modifier(BackButtonModifier())
         .ignoresSafeArea(.keyboard)
     }

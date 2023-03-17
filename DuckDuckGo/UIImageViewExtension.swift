@@ -23,12 +23,6 @@ import Kingfisher
 
 extension UIImageView {
     
-    struct UIImageViewConstants {
-        
-        static let appUrls = AppUrls()
-        
-    }
-
     /// Load a favicon from the cache in to this uiview.  This will not load the favicon from the network.
     func loadFavicon(forDomain domain: String?,
                      usingCache cacheType: Favicons.CacheType,

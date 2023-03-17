@@ -22,6 +22,7 @@ import Core
 import Configuration
 import os.log
 import BrowserServicesKit
+import Common
 
 struct ConfigurationManager {
     
@@ -45,6 +46,21 @@ struct ConfigurationManager {
     }
 
     public static let didUpdateTrackerDependencies = NSNotification.Name(rawValue: "com.duckduckgo.configurationManager.didUpdateTrackerDependencies")
+    private let fetcher = ConfigurationFetcher(store: ConfigurationStore.shared, log: .configurationLog, eventMapping: Self.configurationDebugEvents)
+
+    private static let configurationDebugEvents = EventMapping<ConfigurationDebugEvents> { event, error, _, _ in
+        let domainEvent: Pixel.Event
+        switch event {
+        case .invalidPayload(let configuration):
+            domainEvent = .invalidPayload(configuration)
+        }
+
+        if let error = error {
+            Pixel.fire(pixel: domainEvent, error: error)
+        } else {
+            Pixel.fire(pixel: domainEvent)
+        }
+    }
 
     func update() async -> Bool {
         async let didFetchAnyTrackerBlockingDependencies = fetchAndUpdateTrackerBlockingDependencies()
@@ -66,7 +82,6 @@ struct ConfigurationManager {
 
     private func fetchTrackerBlockingDependencies() async -> Bool {
         var didFetchAnyTrackerBlockingDependencies = false
-        let fetcher = ConfigurationFetcher(store: ConfigurationStore.shared, log: .configurationLog)
 
         var tasks = [Configuration: Task<(), Swift.Error>]()
         tasks[.trackerDataSet] = Task { try await fetcher.fetch(.trackerDataSet) }
@@ -96,7 +111,7 @@ struct ConfigurationManager {
     @discardableResult
     func fetchAndUpdateBloomFilterExcludedDomains() async -> Bool {
         do {
-            try await ConfigurationFetcher(store: ConfigurationStore.shared, log: .configurationLog).fetch(.bloomFilterExcludedDomains)
+            try await fetcher.fetch(.bloomFilterExcludedDomains)
             try await updateBloomFilterExclusions()
             return true
         } catch {
@@ -108,8 +123,7 @@ struct ConfigurationManager {
     @discardableResult
     func fetchAndUpdateBloomFilter() async -> Bool {
         do {
-            try await ConfigurationFetcher(store: ConfigurationStore.shared, log: .configurationLog).fetch(all: [.bloomFilterBinary,
-                                                                                                                 .bloomFilterSpec])
+            try await fetcher.fetch(all: [.bloomFilterBinary, .bloomFilterSpec])
             try await updateBloomFilter()
             return true
         } catch {

@@ -38,13 +38,13 @@ public final class DailyPixel {
         
     }
     
-    private enum Constants {
+    private enum Constant {
         
         static let dailyPixelStorageIdentifier = "com.duckduckgo.daily.pixel.storage"
         
     }
 
-    private static let storage: UserDefaults? = UserDefaults(suiteName: Constants.dailyPixelStorageIdentifier)
+    private static let storage: UserDefaults? = UserDefaults(suiteName: Constant.dailyPixelStorageIdentifier)
     
     public static func fire(pixel: Pixel.Event,
                             withAdditionalParameters params: [String: String] = [:],
@@ -56,7 +56,7 @@ public final class DailyPixel {
             return
         }
         
-        if !pixel.hasPixelBeenFiredToday(dailyPixelStorage: storage) {
+        if !pixel.hasBeenFiredToday(dailyPixelStorage: storage) {
             Pixel.fire(pixel: pixel, withAdditionalParameters: params, onComplete: onComplete)
             updatePixelLastFireDate(pixel: pixel, dailyPixelStorage: storage)
         } else {
@@ -72,11 +72,11 @@ public final class DailyPixel {
 
 private extension Pixel.Event {
     
-    func hasPixelBeenFiredToday(dailyPixelStorage: UserDefaults) -> Bool {
+    func hasBeenFiredToday(dailyPixelStorage: UserDefaults) -> Bool {
         if let lastFireDate = dailyPixelStorage.object(forKey: name) as? Date {
             return Date().isSameDay(lastFireDate)
         }
-        
         return false
     }
+    
 }

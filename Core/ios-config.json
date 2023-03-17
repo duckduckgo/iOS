@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1678453000620,
+    "version": 1679013655841,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -162,6 +162,14 @@
                 {
                     "domain": "kicker.de",
                     "reason": "https://github.com/duckduckgo/autoconsent/issues/66"
+                },
+                {
+                    "domain": "epojisteni.cz",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/326"
+                },
+                {
+                    "domain": "nhm.ac.uk",
+                    "reason": "https://github.com/duckduckgo/autoconsent/issues/113"
                 }
             ],
             "settings": {
@@ -170,7 +178,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "6ea9018a3de48904dd25d191c3640db4"
+            "hash": "7124270027903938073b33add92ef464"
         },
         "autofill": {
             "exceptions": [
@@ -599,8 +607,8 @@
                         "type": "hide-empty"
                     }
                 ],
-                "useStrictHideStyleTag": true,
                 "styleTagExceptions": [],
+                "mediaAndFormSelectors": "video,canvas,embed,object,audio,map,form,input,textarea,select,option,button",
                 "adLabelStrings": [
                     "advertisement",
                     "advertisment",
@@ -1366,7 +1374,8 @@
                 ]
             },
             "state": "enabled",
-            "hash": "b3064aa04646e0cb11ab1e9d183f0194"
+            "useStrictHideStyleTag": false,
+            "hash": "f96aa6c5c59e98c1c927e45e6c56c807"
         },
         "fingerprintingAudio": {
             "state": "disabled",
@@ -1426,10 +1435,14 @@
                 {
                     "domain": "walgreens.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/499"
+                },
+                {
+                    "domain": "godaddy.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/499"
                 }
             ],
             "state": "enabled",
-            "hash": "d748016ca8d0cfcb1b86ff428b4e4e46"
+            "hash": "06756b6634deaeb0f50c9cbbdb591b3c"
         },
         "fingerprintingHardware": {
             "settings": {
@@ -1617,121 +1630,108 @@
                         "domain": "browserbench.org"
                     },
                     {
-                        "domain": "good.third-party.site"
+                        "domain": "xnxx.com"
+                    },
+                    {
+                        "domain": "wikipedia.org"
+                    },
+                    {
+                        "domain": "xvideos.com"
+                    },
+                    {
+                        "domain": "pornhub.com"
+                    },
+                    {
+                        "domain": "reddit.com"
+                    },
+                    {
+                        "domain": "amazon.com"
+                    },
+                    {
+                        "domain": "youtube.com"
+                    },
+                    {
+                        "domain": "facebook.com"
+                    },
+                    {
+                        "domain": "youtube.com"
+                    },
+                    {
+                        "domain": "stackoverflow.com"
+                    },
+                    {
+                        "domain": "xhamster.com"
                     }
                 ],
                 "stackDomains": [
                     {
-                        "domain": "6b34f18ccd.com"
+                        "domain": "clean.gg"
                     },
                     {
-                        "domain": "ad-delivery.net"
+                        "domain": "googlevideo.com"
                     },
                     {
-                        "domain": "adobe.com"
+                        "domain": "nexac.com"
                     },
                     {
-                        "domain": "afcdn.net"
+                        "domain": "associates-amazon.com"
                     },
                     {
-                        "domain": "akamaihd.net"
+                        "domain": "redd.it"
                     },
                     {
-                        "domain": "amazonaws.com"
+                        "domain": "amazonbusiness.com"
                     },
                     {
-                        "domain": "beemray.com"
+                        "domain": "indeed.com"
+                    },
+                    {
+                        "domain": "stackexchange.com"
+                    },
+                    {
+                        "domain": "bangassets.com"
+                    },
+                    {
+                        "domain": "fontawesome.com"
+                    },
+                    {
+                        "domain": "live-video.net"
                     },
                     {
                         "domain": "behave.com"
                     },
                     {
-                        "domain": "bookmsg.com"
+                        "domain": "imasdk.googleapis.com"
                     },
                     {
-                        "domain": "boomtrain.com"
+                        "domain": "appcast.io"
                     },
                     {
-                        "domain": "bouncex.net"
+                        "domain": "d3b16pg7hqg2cy.cloudfront.net"
                     },
                     {
-                        "domain": "cdnbasket.net"
+                        "domain": "d7qzviu3xw2xc.cloudfront.net"
                     },
                     {
-                        "domain": "chartbeat.net"
-                    },
-                    {
-                        "domain": "clean.gg"
-                    },
-                    {
-                        "domain": "co5n3nerm6arapo7ny.com"
-                    },
-                    {
-                        "domain": "consensu.org"
-                    },
-                    {
-                        "domain": "consumertrack.com"
-                    },
-                    {
-                        "domain": "cookielaw.org"
-                    },
-                    {
-                        "domain": "d1xfq2052q7thw.cloudfront.net"
-                    },
-                    {
-                        "domain": "d20kffh39acpue.cloudfront.net"
-                    },
-                    {
-                        "dont_check_domain": "d2uap9jskdzp2.cloudfront.net",
-                        "reason": "stack breakage due to prototype pollution (https://app.asana.com/0/0/1204129430483496/f)"
-                    },
-                    {
-                        "domain": "d3h2kq7so8dggb.cloudfront.net"
-                    },
-                    {
-                        "domain": "d9esmwyn3ffr1.cloudfront.net"
-                    },
-                    {
-                        "domain": "dianomi.com"
+                        "domain": "brightspot.cloud"
                     },
                     {
                         "domain": "dogvlw4b46a0r.cloudfront.net"
                     },
                     {
-                        "domain": "ed0066af9c.com"
+                        "domain": "d1at2uq7yy5k1j.cloudfront.net"
                     },
                     {
-                        "domain": "edigitalsurvey.com"
+                        "domain": "d2uap9jskdzp2.cloudfront.net"
                     },
                     {
-                        "domain": "effectivemeasure.net"
+                        "domain": "consumertrack.com"
                     },
                     {
-                        "domain": "eu-1-id5-sync.com"
+                        "domain": "strpst.com"
                     },
                     {
-                        "domain": "fonts.googleapis.com"
-                    },
-                    {
-                        "domain": "gobankingrates.com"
-                    },
-                    {
-                        "domain": "gscontxt.net"
-                    },
-                    {
-                        "domain": "hotjar.io"
-                    },
-                    {
-                        "domain": "imasdk.googleapis.com"
-                    },
-                    {
-                        "domain": "iperceptions.com"
-                    },
-                    {
-                        "domain": "ixiaa.com"
-                    },
-                    {
-                        "domain": "keywee.co"
+                        "domain": "d9esmwyn3ffr1.cloudfront.net"
                     },
                     {
                         "domain": "mapbox.com"
@@ -1740,88 +1740,355 @@
                         "domain": "mobtrakk.com"
                     },
                     {
-                        "domain": "navdmp.com"
+                        "domain": "d1qze0i78vhibv.cloudfront.net"
                     },
                     {
-                        "domain": "nawpush.com"
+                        "domain": "trustarc.com"
                     },
                     {
-                        "domain": "nereserv.com"
+                        "domain": "wikimedia.org"
                     },
                     {
-                        "domain": "nexac.com"
+                        "domain": "phncdn.com"
                     },
                     {
-                        "domain": "ngtv.io"
+                        "domain": "vfthr.com"
                     },
                     {
-                        "domain": "onaudience.com"
+                        "domain": "aws.dev"
                     },
                     {
-                        "domain": "optimizely.com"
+                        "domain": "mediawiki.org"
                     },
                     {
-                        "domain": "outbrainimg.com"
+                        "domain": "ds69ljjohz9sr.cloudfront.net"
                     },
                     {
-                        "domain": "outturner.com"
-                    },
-                    {
-                        "domain": "quantcount.com"
-                    },
-                    {
-                        "domain": "revjet.com"
-                    },
-                    {
-                        "domain": "schwab.com"
-                    },
-                    {
-                        "domain": "summerhamster.com"
-                    },
-                    {
-                        "domain": "trustx.org"
-                    },
-                    {
-                        "domain": "tubecup.net"
-                    },
-                    {
-                        "domain": "turner.com"
-                    },
-                    {
-                        "domain": "ugdturner.com"
-                    },
-                    {
-                        "domain": "usbrowserspeed.com"
-                    },
-                    {
-                        "domain": "vercel-analytics.com"
-                    },
-                    {
-                        "domain": "vercel-insights.com"
-                    },
-                    {
-                        "domain": "w.org"
-                    },
-                    {
-                        "domain": "warnermediacdn.com"
-                    },
-                    {
-                        "domain": "webstats1.com"
-                    },
-                    {
-                        "domain": "wmcdp.io"
-                    },
-                    {
-                        "domain": "wp.com"
+                        "domain": "ad-delivery.net"
                     },
                     {
                         "domain": "wunderkind.co"
                     },
                     {
+                        "domain": "d2in0p32vp1pij.cloudfront.net"
+                    },
+                    {
+                        "domain": "trustx.org"
+                    },
+                    {
+                        "domain": "bouncex.net"
+                    },
+                    {
+                        "domain": "ngtv.io"
+                    },
+                    {
+                        "domain": "ds6yc8t7pnx74.cloudfront.net"
+                    },
+                    {
+                        "domain": "d3216uwaav9lg7.cloudfront.net"
+                    },
+                    {
+                        "domain": "veryinterestvids.xyz"
+                    },
+                    {
+                        "domain": "vfgte.com"
+                    },
+                    {
+                        "domain": "schwab.com"
+                    },
+                    {
+                        "domain": "imgur.com"
+                    },
+                    {
+                        "domain": "persprovath.xyz"
+                    },
+                    {
+                        "domain": "outbrainimg.com"
+                    },
+                    {
+                        "domain": "ajax.googleapis.com"
+                    },
+                    {
+                        "domain": "w.org"
+                    },
+                    {
+                        "domain": "fonts.googleapis.com"
+                    },
+                    {
+                        "domain": "turner.com"
+                    },
+                    {
+                        "domain": "googleusercontent.com"
+                    },
+                    {
+                        "domain": "d8aa01cdolqj7.cloudfront.net"
+                    },
+                    {
+                        "domain": "navdmp.com"
+                    },
+                    {
+                        "domain": "xhcdn.com"
+                    },
+                    {
+                        "domain": "imglnke.com"
+                    },
+                    {
+                        "domain": "usbrowserspeed.com"
+                    },
+                    {
+                        "domain": "warnermediacdn.com"
+                    },
+                    {
+                        "domain": "d1xfq2052q7thw.cloudfront.net"
+                    },
+                    {
+                        "domain": "bangcreatives.com"
+                    },
+                    {
+                        "domain": "hotjar.io"
+                    },
+                    {
+                        "domain": "amazonaws.com"
+                    },
+                    {
+                        "domain": "vercel-analytics.com"
+                    },
+                    {
+                        "domain": "boomtrain.com"
+                    },
+                    {
+                        "domain": "cdnbasket.net"
+                    },
+                    {
+                        "domain": "awsstatic.com"
+                    },
+                    {
+                        "domain": "fbcdn.net"
+                    },
+                    {
+                        "domain": "dianomi.com"
+                    },
+                    {
+                        "domain": "amazon.co.uk"
+                    },
+                    {
+                        "domain": "dwrl96u0lgux5.cloudfront.net"
+                    },
+                    {
+                        "domain": "d39dwei46hk6jd.cloudfront.net"
+                    },
+                    {
+                        "domain": "bbci.co.uk"
+                    },
+                    {
+                        "domain": "bbcimg.co.uk"
+                    },
+                    {
+                        "domain": "edigitalsurvey.com"
+                    },
+                    {
+                        "domain": "gscontxt.net"
+                    },
+                    {
+                        "domain": "afcdn.net"
+                    },
+                    {
+                        "domain": "iperceptions.com"
+                    },
+                    {
+                        "domain": "cookielaw.org"
+                    },
+                    {
+                        "domain": "vscdns.com"
+                    },
+                    {
+                        "domain": "vs3.com"
+                    },
+                    {
+                        "domain": "summerhamster.com"
+                    },
+                    {
+                        "domain": "d1x2hu8k357bsh.cloudfront.net"
+                    },
+                    {
+                        "domain": "d2ef20sk9hi1u3.cloudfront.net"
+                    },
+                    {
+                        "domain": "ggpht.com"
+                    },
+                    {
+                        "domain": "ds7igiccqury3.cloudfront.net"
+                    },
+                    {
+                        "domain": "xvideos.com"
+                    },
+                    {
+                        "domain": "redditmedia.com"
+                    },
+                    {
+                        "domain": "adobe.com"
+                    },
+                    {
+                        "domain": "jnn-pa.googleapis.com"
+                    },
+                    {
                         "domain": "zetaglobal.net"
                     },
                     {
+                        "domain": "gobankingrates.com"
+                    },
+                    {
+                        "domain": "chartbeat.net"
+                    },
+                    {
+                        "domain": "amzndevresources.com"
+                    },
+                    {
+                        "domain": "imdb.com"
+                    },
+                    {
+                        "domain": "wikidata.org"
+                    },
+                    {
+                        "domain": "etahub.com"
+                    },
+                    {
+                        "domain": "revjet.com"
+                    },
+                    {
+                        "domain": "ixiaa.com"
+                    },
+                    {
+                        "domain": "trustedbanana.com"
+                    },
+                    {
+                        "domain": "fanagentmu.pics"
+                    },
+                    {
+                        "domain": "indeed.tech"
+                    },
+                    {
+                        "domain": "outturner.com"
+                    },
+                    {
+                        "domain": "trafficfactory.biz"
+                    },
+                    {
+                        "domain": "d2beun48pmgqbs.cloudfront.net"
+                    },
+                    {
+                        "domain": "wmcdp.io"
+                    },
+                    {
+                        "domain": "bbc.com"
+                    },
+                    {
+                        "domain": "d1uznvntk80v7s.cloudfront.net"
+                    },
+                    {
+                        "domain": "ytimg.com"
+                    },
+                    {
+                        "domain": "beemray.com"
+                    },
+                    {
+                        "domain": "siege-amazon.com"
+                    },
+                    {
+                        "domain": "trafficjunky.net"
+                    },
+                    {
+                        "domain": "consensu.org"
+                    },
+                    {
+                        "domain": "ugdturner.com"
+                    },
+                    {
+                        "domain": "dr3fr5q4g2ul9.cloudfront.net"
+                    },
+                    {
+                        "domain": "cnn.io"
+                    },
+                    {
+                        "domain": "cams.gratis"
+                    },
+                    {
+                        "domain": "d1t40axu4ik42k.cloudfront.net"
+                    },
+                    {
+                        "domain": "optimizely.com"
+                    },
+                    {
+                        "domain": "media-amazon.com"
+                    },
+                    {
+                        "domain": "amazondelivers.jobs"
+                    },
+                    {
+                        "domain": "keywee.co"
+                    },
+                    {
                         "domain": "zqtk.net"
+                    },
+                    {
+                        "domain": "d23tl967axkois.cloudfront.net"
+                    },
+                    {
+                        "domain": "d3h2kq7so8dggb.cloudfront.net"
+                    },
+                    {
+                        "domain": "bangkazza.com"
+                    },
+                    {
+                        "domain": "effectivemeasure.net"
+                    },
+                    {
+                        "domain": "gravatar.com"
+                    },
+                    {
+                        "domain": "sstatic.net"
+                    },
+                    {
+                        "domain": "d2u4zldaqlyj2w.cloudfront.net"
+                    },
+                    {
+                        "domain": "akamaihd.net"
+                    },
+                    {
+                        "domain": "onaudience.com"
+                    },
+                    {
+                        "domain": "xhpingcdn.com"
+                    },
+                    {
+                        "domain": "eu-1-id5-sync.com"
+                    },
+                    {
+                        "domain": "xvideos-cdn.com"
+                    },
+                    {
+                        "domain": "wp.com"
+                    },
+                    {
+                        "domain": "quantcount.com"
+                    },
+                    {
+                        "domain": "vercel-insights.com"
+                    },
+                    {
+                        "domain": "jobsatamazon.co.uk"
+                    },
+                    {
+                        "domain": "flixcdn.com"
+                    },
+                    {
+                        "domain": "d2h1qfxg5j5pfv.cloudfront.net"
+                    },
+                    {
+                        "domain": "d20kffh39acpue.cloudfront.net"
+                    },
+                    {
+                        "domain": "d9sq4cz0q8up0.cloudfront.net"
                     }
                 ],
                 "tagModifiers": {
@@ -1839,7 +2106,7 @@
                     }
                 }
             },
-            "hash": "f053ef20a12888a423fe0771789f19d3"
+            "hash": "78f6838e2b4cc6b290f1d4daf18e1652"
         },
         "serviceworkerInitiatedRequests": {
             "exceptions": [],

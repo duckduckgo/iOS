@@ -19,11 +19,6 @@
 
 import Foundation
 
-public enum DailyPixelError: Error {
-    case storageError
-    case alreadyFired
-}
-
 /// A variant of pixel that is fired at most once per day.
 ///
 /// When fired it checks if the pixel was already fired on a given day:
@@ -34,42 +29,54 @@ public enum DailyPixelError: Error {
 /// The 'onComplete' closure is always called - even when no pixel is fired.
 /// In those scenarios a 'DailyPixelError' is returned denoting the reason.
 /// 
-public class DailyPixel {
+public final class DailyPixel {
     
-    private struct Constants {
+    public enum Error: Swift.Error {
+        
+        case storageError
+        case alreadyFired
+        
+    }
+    
+    private enum Constants {
+        
         static let dailyPixelStorageIdentifier = "com.duckduckgo.daily.pixel.storage"
+        
     }
 
-    private static var storage: UserDefaults? = UserDefaults(suiteName: Constants.dailyPixelStorageIdentifier)
+    private static let storage: UserDefaults? = UserDefaults(suiteName: Constants.dailyPixelStorageIdentifier)
     
     public static func fire(pixel: Pixel.Event,
                             withAdditionalParameters params: [String: String] = [:],
-                            onComplete: @escaping (Error?) -> Void = { _ in }) {
+                            onComplete: @escaping (Swift.Error?) -> Void = { _ in }) {
         
         guard let storage = storage else {
             Pixel.fire(pixel: .debugDailyPixelStorageError)
-            onComplete(DailyPixelError.storageError)
+            onComplete(Error.storageError)
             return
         }
         
-        if !hasPixelBeenFiredToday(pixel: pixel, dailyPixelStorage: storage) {
+        if !pixel.hasPixelBeenFiredToday(dailyPixelStorage: storage) {
             Pixel.fire(pixel: pixel, withAdditionalParameters: params, onComplete: onComplete)
             updatePixelLastFireDate(pixel: pixel, dailyPixelStorage: storage)
         } else {
-            onComplete(DailyPixelError.alreadyFired)
+            onComplete(Error.alreadyFired)
         }
-    }
-    
-    private static func hasPixelBeenFiredToday(pixel: Pixel.Event, dailyPixelStorage: UserDefaults) -> Bool {
-        if let lastFireDate = dailyPixelStorage.object(forKey: pixel.name) as? Date {
-            return Date().isSameDay(lastFireDate)
-        }
-        
-        return false
     }
     
     private static func updatePixelLastFireDate(pixel: Pixel.Event, dailyPixelStorage: UserDefaults) {
         dailyPixelStorage.set(Date(), forKey: pixel.name)
     }
     
+}
+
+private extension Pixel.Event {
+    
+    func hasPixelBeenFiredToday(dailyPixelStorage: UserDefaults) -> Bool {
+        if let lastFireDate = dailyPixelStorage.object(forKey: name) as? Date {
+            return Date().isSameDay(lastFireDate)
+        }
+        
+        return false
+    }
 }

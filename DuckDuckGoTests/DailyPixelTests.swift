@@ -69,7 +69,7 @@ final class DailyPixelTests: XCTestCase {
         
         DailyPixel.fire(pixel: .forgetAllPressedBrowsing) { error in
             XCTAssertNotNil(error)
-            XCTAssertEqual(error as? DailyPixelError, .alreadyFired)
+            XCTAssertEqual(error as? DailyPixel.Error, .alreadyFired)
             expectation.fulfill()
         }
         

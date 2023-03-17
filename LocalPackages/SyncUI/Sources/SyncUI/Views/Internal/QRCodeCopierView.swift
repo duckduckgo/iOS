@@ -88,9 +88,9 @@ struct QRCodeCopierView: View {
                 Spacer()
             }
             .padding(.horizontal, 20)
-            .frame(maxWidth: Constants.maxWidth, alignment: .center)
+            .frame(maxWidth: Constants.maxFullScreenWidth, alignment: .center)
         }
-        .navigationTitle("QR Code")
+        .navigationTitle(UserText.viewQRCodeTitle)
         .modifier(BackButtonModifier())
     }
 

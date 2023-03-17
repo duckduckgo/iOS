@@ -90,7 +90,7 @@ struct FeedbackSubmitter: FeedbackSender {
             "atb": statisticsStore.atbWithVariant ?? ""
         ]
         
-        let configuration = APIRequest.Configuration(url: AppUrls().feedback, method: .post, queryParameters: parameters)
+        let configuration = APIRequest.Configuration(url: URL.feedback, method: .post, queryParameters: parameters)
         let request = APIRequest(configuration: configuration, urlSession: .session())
         
         request.fetch { _, error in

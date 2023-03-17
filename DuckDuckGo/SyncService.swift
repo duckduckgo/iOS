@@ -25,9 +25,15 @@ protocol SyncService {
     func retrieveConnectCode() async -> String?
     func createAccount() async
 
+    var recoveryCode: String { get }
+
 }
 
 class FakeSyncService: SyncService {
+
+    let recoveryCode: String = "eyAicmVjb3ZlcnkiOiB7ICJ1c2VyX2lkIjogIjY4RTc4OTlBLTQ5OTQtNEUzMi04MERDLT" +
+    "gyNzNFMDc1MUExMSIsICJwcmltYXJ5X2tleSI6ICJNVEl6TkRVMk56ZzVN" +
+    "REV5TXpRMU5qYzRPVEF4TWpNME5UWTNPRGt3TVRJPSIgfSB9"
 
     func retrieveConnectCode() async -> String? {
         if #available(iOS 16.0, *) {

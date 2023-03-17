@@ -93,6 +93,7 @@ class TabsBarViewController: UIViewController {
     }
 
     @IBAction func onFireButtonPressed() {
+        DailyPixel.fire(pixel: .experimentDailyFireButtonTapped)
         
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             delegate?.tabsBarDidRequestFireEducationDialog(self)
@@ -261,8 +262,8 @@ extension TabsBarViewController: UICollectionViewDataSource {
         let isCurrent = indexPath.row == currentIndex
         let isNextCurrent = indexPath.row + 1 == currentIndex
         cell.update(model: model, isCurrent: isCurrent, isNextCurrent: isNextCurrent, withTheme: ThemeManager.shared.currentTheme)
-        cell.onRemove = { [weak self] in
-            guard let self = self,
+        cell.onRemove = { [weak self, weak model] in
+            guard let self = self, let model = model,
                 let tabIndex = self.tabsModel?.indexOf(tab: model)
                 else { return }
             self.delegate?.tabsBar(self, didRemoveTabAtIndex: tabIndex)

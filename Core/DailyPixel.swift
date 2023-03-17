@@ -33,7 +33,7 @@ public final class DailyPixel {
     
     public enum Error: Swift.Error {
         
-        case storageError
+        case missingStorage
         case alreadyFired
         
     }
@@ -51,8 +51,9 @@ public final class DailyPixel {
                             onComplete: @escaping (Swift.Error?) -> Void = { _ in }) {
         
         guard let storage = storage else {
+            assertionFailure("Trying to access the daily pixel storage but it is missing")
             Pixel.fire(pixel: .debugDailyPixelStorageError)
-            onComplete(Error.storageError)
+            onComplete(Error.missingStorage)
             return
         }
         

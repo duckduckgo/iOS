@@ -756,7 +756,7 @@ extension Pixel.Event {
         case .bookmarksMigrationCouldNotValidateDatabase: return "m_d_bookmarks_migration_could_not_validate_database"
         case .bookmarksMigrationCouldNotRemoveOldStore: return "m_d_bookmarks_migration_could_not_remove_old_store"
 
-        case .invalidPayload(let configuration): return "m_d_\(configuration.rawValue)_invalid_payload"
+        case .invalidPayload(let configuration): return "m_d_\(configuration.rawValue)_invalid_payload".lowercased()
         }
         
     }

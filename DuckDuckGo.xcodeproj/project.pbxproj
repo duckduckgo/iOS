@@ -20,6 +20,7 @@
 		1E016AB6294A5EB100F21625 /* CustomDaxDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E016AB5294A5EB100F21625 /* CustomDaxDialog.swift */; };
 		1E05D1D629C46EBB00BF9A1F /* DailyPixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E05D1D529C46EBB00BF9A1F /* DailyPixel.swift */; };
 		1E05D1D829C46EDA00BF9A1F /* TimedPixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E05D1D729C46EDA00BF9A1F /* TimedPixel.swift */; };
+		1E05D1DB29C47B3300BF9A1F /* DailyPixelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E05D1D929C47B2B00BF9A1F /* DailyPixelTests.swift */; };
 		1E0A75EA27A2FBD000A2BFB6 /* Downloads.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E0A75E927A2FBD000A2BFB6 /* Downloads.storyboard */; };
 		1E16260229683C650004127F /* CustomDaxDialog.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E16260129683C650004127F /* CustomDaxDialog.xcassets */; };
 		1E162605296840D80004127F /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E162604296840D80004127F /* Triangle.swift */; };
@@ -850,6 +851,7 @@
 		1E016AB5294A5EB100F21625 /* CustomDaxDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDaxDialog.swift; sourceTree = "<group>"; };
 		1E05D1D529C46EBB00BF9A1F /* DailyPixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPixel.swift; sourceTree = "<group>"; };
 		1E05D1D729C46EDA00BF9A1F /* TimedPixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimedPixel.swift; sourceTree = "<group>"; };
+		1E05D1D929C47B2B00BF9A1F /* DailyPixelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPixelTests.swift; sourceTree = "<group>"; };
 		1E0A75E927A2FBD000A2BFB6 /* Downloads.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Downloads.storyboard; sourceTree = "<group>"; };
 		1E16260129683C650004127F /* CustomDaxDialog.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = CustomDaxDialog.xcassets; sourceTree = "<group>"; };
 		1E162604296840D80004127F /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
@@ -3667,6 +3669,7 @@
 				851B1281221FE64E004781BC /* ImproveOnboardingExperiment1Tests.swift */,
 				F1134ECB1F40EA0300B73467 /* Parser */,
 				853A717720F645FB00FE60BC /* PixelTests.swift */,
+				1E05D1D929C47B2B00BF9A1F /* DailyPixelTests.swift */,
 				83EDCC3F1F86B895005CDFCD /* StatisticsLoaderTests.swift */,
 				F1134ED31F40F12B00B73467 /* Store */,
 				85C11E4020904BBE00BFFEB4 /* VariantManagerTests.swift */,
@@ -5521,6 +5524,7 @@
 				F40F843728C939760081AE75 /* AutofillLoginListViewModelTests.swift in Sources */,
 				C14882E827F20DAB00D59F0C /* TestDataLoader.swift in Sources */,
 				C14882EA27F20DD000D59F0C /* MockBookmarksCoreDataStorage.swift in Sources */,
+				1E05D1DB29C47B3300BF9A1F /* DailyPixelTests.swift in Sources */,
 				981FED7422046017008488D7 /* AutoClearTests.swift in Sources */,
 				98DDF9F322C4029D00DE38DB /* InitHelpers.swift in Sources */,
 				B6AD9E3628D4510A0019CDE9 /* ContentBlockerRulesManagerMock.swift in Sources */,

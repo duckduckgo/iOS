@@ -362,8 +362,6 @@ extension Pixel {
         
         case debugCantSaveBookmarkFix
         
-        case debugDailyPixelStorageError
-        
         // Errors from Bookmarks Module
         case bookmarkFolderExpected
         case bookmarksListIndexNotMatchingBookmark
@@ -725,8 +723,6 @@ extension Pixel.Event {
         case .debugMissingTopFolderFixHasFavorites: return "m_d_missing_top_folder_has_favorites"
             
         case .debugCantSaveBookmarkFix: return "m_d_cant_save_bookmark_fix"
-            
-        case .debugDailyPixelStorageError: return "m_d_daily_pixel_storage_error"
             
         
         // MARK: Ad Attribution

@@ -33,7 +33,6 @@ public final class DailyPixel {
     
     public enum Error: Swift.Error {
         
-        case missingStorage
         case alreadyFired
         
     }
@@ -44,29 +43,22 @@ public final class DailyPixel {
         
     }
 
-    private static let storage: UserDefaults? = UserDefaults(suiteName: Constant.dailyPixelStorageIdentifier)
+    private static let storage: UserDefaults = UserDefaults(suiteName: Constant.dailyPixelStorageIdentifier)!
     
     public static func fire(pixel: Pixel.Event,
                             withAdditionalParameters params: [String: String] = [:],
                             onComplete: @escaping (Swift.Error?) -> Void = { _ in }) {
-        
-        guard let storage = storage else {
-            assertionFailure("Trying to access the daily pixel storage but it is missing")
-            Pixel.fire(pixel: .debugDailyPixelStorageError)
-            onComplete(Error.missingStorage)
-            return
-        }
-        
+                
         if !pixel.hasBeenFiredToday(dailyPixelStorage: storage) {
             Pixel.fire(pixel: pixel, withAdditionalParameters: params, onComplete: onComplete)
-            updatePixelLastFireDate(pixel: pixel, dailyPixelStorage: storage)
+            updatePixelLastFireDate(pixel: pixel)
         } else {
             onComplete(Error.alreadyFired)
         }
     }
     
-    private static func updatePixelLastFireDate(pixel: Pixel.Event, dailyPixelStorage: UserDefaults) {
-        dailyPixelStorage.set(Date(), forKey: pixel.name)
+    private static func updatePixelLastFireDate(pixel: Pixel.Event) {
+        storage.set(Date(), forKey: pixel.name)
     }
     
 }

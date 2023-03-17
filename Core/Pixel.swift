@@ -118,8 +118,6 @@ public struct PixelValues {
 
 public class Pixel {
 
-    private static let appUrls = AppUrls()
-    
     private struct Constants {
         static let tablet = "tablet"
         static let phone = "phone"
@@ -159,11 +157,11 @@ public class Pixel {
         let url: URL
         if let deviceType = deviceType {
             let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
-            url = appUrls.pixelUrl(forPixelNamed: pixel.name,
+            url = URL.makePixelURL(pixelName: pixel.name,
                                    formFactor: formFactor,
                                    includeATB: includedParameters.contains(.atb))
         } else {
-            url = appUrls.pixelUrl(forPixelNamed: pixel.name, includeATB: includedParameters.contains(.atb) )
+            url = URL.makePixelURL(pixelName: pixel.name, includeATB: includedParameters.contains(.atb) )
         }
         
         let configuration = APIRequest.Configuration(url: url,

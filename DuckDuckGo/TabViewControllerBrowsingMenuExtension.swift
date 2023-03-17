@@ -147,7 +147,7 @@ extension TabViewController {
     }
     
     private func buildKeepSignInEntry(forLink link: Link) -> BrowsingMenuEntry? {
-        guard let domain = link.url.host, !appUrls.isDuckDuckGo(url: link.url) else { return nil }
+        guard let domain = link.url.host, !link.url.isDuckDuckGo else { return nil }
         let isFireproofed = PreserveLogins.shared.isAllowed(cookieDomain: domain)
         
         if isFireproofed {
@@ -179,8 +179,7 @@ extension TabViewController {
     
     private func buildBookmarkEntries(for link: Link,
                                       with bookmarksInterface: MenuBookmarksInteracting) -> (bookmark: BrowsingMenuEntry,
-                                                                                             favorite:
-                                                                                                BrowsingMenuEntry) {
+                                                                                             favorite: BrowsingMenuEntry) {
         let existingFavorite = bookmarksInterface.favorite(for: link.url)
         let existingBookmark = existingFavorite ?? bookmarksInterface.bookmark(for: link.url)
         

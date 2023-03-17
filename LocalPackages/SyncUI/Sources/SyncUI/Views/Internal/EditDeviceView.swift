@@ -1,5 +1,5 @@
 //
-//  BackButtonModifier.swift
+//  EditDeviceView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -19,26 +19,35 @@
 
 import SwiftUI
 
-struct BackButtonModifier: ViewModifier {
+struct EditDeviceView: View {
+
+    @ObservedObject var model: EditDeviceViewModel
 
     @Environment(\.presentationMode) var presentation
 
-    func body(content: Content) -> some View {
-        content
-            .navigationBarBackButtonHidden()
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        self.presentation.wrappedValue.dismiss()
-                    } label: {
-                        HStack(spacing: 4) {
-                            Image(systemName: "chevron.left")
-                            Text(UserText.backButton)
+    var body: some View {
+        List {
+            Section {
+                TextField("", text: $model.name)
+            }
+
+            if !model.device.isThisDevice {
+                Section {
+                    Button(UserText.removeButton) {
+                        Task { @MainActor in
+                            if await model.remove() {
+                                presentation.wrappedValue.dismiss()
+                            }
                         }
                     }
-                    .foregroundColor(Color.white)
                 }
             }
+        }
+        .navigationTitle(UserText.editDevice(named: model.name))
+        .applyListStyle()
+        .onDisappear {
+            model.onDisappear()
+        }
     }
 
 }

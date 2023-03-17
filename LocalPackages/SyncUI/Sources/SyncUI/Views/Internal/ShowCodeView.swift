@@ -1,5 +1,5 @@
 //
-//  Constants.swift
+//  ShowCodeView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -17,12 +17,28 @@
 //  limitations under the License.
 //
 
-import Foundation
+import SwiftUI
 
-struct Constants {
+struct ShowCodeView: View {
 
-    /// When showing UI full screen (rather than as sheets or popovers) limit the width to this size to prevent
-    /// ugly automatic scaling up
-    static let maxFullScreenWidth = 640.0
+    let code: String
+    let copyCode: () -> Void
+
+    var body: some View {
+
+        List {
+            Text(code)
+                .monospaceSystemFont(ofSize: 16)
+
+            Button {
+                copyCode()
+            } label: {
+                Label("Copy Code", image: "SyncCopy")
+            }
+        }
+        .lineSpacing(1.47)
+        .navigationTitle("Code")
+        .applyListStyle()
+    }
 
 }

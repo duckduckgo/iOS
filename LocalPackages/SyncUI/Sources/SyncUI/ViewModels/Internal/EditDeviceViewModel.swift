@@ -1,5 +1,5 @@
 //
-//  Constants.swift
+//  EditDeviceViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -19,10 +19,26 @@
 
 import Foundation
 
-struct Constants {
+class EditDeviceViewModel: ObservableObject {
 
-    /// When showing UI full screen (rather than as sheets or popovers) limit the width to this size to prevent
-    /// ugly automatic scaling up
-    static let maxFullScreenWidth = 640.0
+    let device: SyncSettingsViewModel.Device
+    let save: (SyncSettingsViewModel.Device) -> Void
+    let remove: () async -> Bool
 
+    @Published var name: String
+
+    init(device: SyncSettingsViewModel.Device,
+         save: @escaping (SyncSettingsViewModel.Device) -> Void,
+         remove: @escaping () async -> Bool) {
+        self.device = device
+        self.save = save
+        self.remove = remove
+
+        self.name = device.name
+    }
+
+    func onDisappear() {
+        save(.init(id: device.id, name: name, type: device.type, isThisDevice: device.isThisDevice))
+    }
+    
 }

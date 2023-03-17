@@ -38,7 +38,7 @@ class TabsBarCell: UICollectionViewCell {
     
     var onRemove: (() -> Void)?
 
-    private var model: Tab?
+    private weak var model: Tab?
     
     override func awakeFromNib() {
         super.awakeFromNib()

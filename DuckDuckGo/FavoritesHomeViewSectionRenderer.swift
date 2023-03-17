@@ -143,7 +143,8 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
             return cell
         }
 
-        cell.onRemove = { [weak self] in
+        cell.onRemove = { [weak self, weak collectionView, weak cell] in
+            guard let cell = cell, let collectionView = collectionView else { return }
             self?.removeFavorite(cell, collectionView)
         }
 

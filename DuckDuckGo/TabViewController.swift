@@ -855,6 +855,8 @@ class TabViewController: UIViewController {
     }
     
     deinit {
+        userContentController.removeAllUserScripts()
+        userContentController.removeAllContentRuleLists()
         temporaryDownloadForPreviewedFile?.cancel()
         removeObservers()
         rulesCompilationMonitor.tabWillClose(self)

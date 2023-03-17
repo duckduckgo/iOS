@@ -523,6 +523,7 @@ class MainViewController: UIViewController {
 
     @IBAction func onFirePressed() {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
+        DailyPixel.fire(pixel: .experimentDailyFireButtonTapped)
         
         wakeLazyFireButtonAnimator()
         
@@ -1791,6 +1792,7 @@ extension MainViewController: AutoClearWorker {
     func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil, showNextDaxDialog: Bool = false) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
+        DailyPixel.fire(pixel: .experimentDailyFireButtonDataCleared)
         
         self.tabCountInfo = tabManager.makeTabCountInfo()
         

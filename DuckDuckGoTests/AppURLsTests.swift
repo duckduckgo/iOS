@@ -169,13 +169,13 @@ final class AppURLsTests: XCTestCase {
     }
 
     func testWhenAtbNotPersistsedThenSearchRetentionAtbUrlIsNil() {
-        XCTAssertNil(StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore).searchAtb)
+        XCTAssertNil(StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore).makeSearchAtbURL())
     }
 
     func testWhenAtbPersistsedThenSearchRetentionUrlHasCorrectParams() throws {
         mockStatisticsStore.atb = "x"
         mockStatisticsStore.searchRetentionAtb = "y"
-        let url = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore).searchAtb
+        let url = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore).makeSearchAtbURL()
         XCTAssertNotNil(url)
         XCTAssertEqual(url!.getParameter(named: "atb"), "x")
         XCTAssertEqual(url!.getParameter(named: "set_atb"), "y")
@@ -183,13 +183,13 @@ final class AppURLsTests: XCTestCase {
     }
     
     func testWhenAtbNotPersistsedThenAppRetentionAtbUrlIsNil() {
-        XCTAssertNil(StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore).appAtb)
+        XCTAssertNil(StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore).makeAppAtbURL())
     }
     
     func testWhenAtbPersistsedThenAppRetentionUrlHasCorrectParams() throws {
         mockStatisticsStore.atb = "x"
         mockStatisticsStore.appRetentionAtb = "y"
-        let url = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore).appAtb
+        let url = StatisticsDependentURLFactory(statisticsStore: mockStatisticsStore).makeAppAtbURL()
         XCTAssertNotNil(url)
         XCTAssertEqual(url!.getParameter(named: "atb"), "x")
         XCTAssertEqual(url!.getParameter(named: "set_atb"), "y")
@@ -202,7 +202,7 @@ final class AppURLsTests: XCTestCase {
     }
 
     func testExtiUrlCreatesUrlWithAtbParam() throws {
-        let url = URL.exti(forAtb: "x")
+        let url = URL.makeExtiURL(atb: "x")
         XCTAssertEqual(url.getParameter(named: "atb"), "x")
     }
 

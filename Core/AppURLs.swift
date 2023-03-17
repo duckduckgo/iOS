@@ -48,7 +48,7 @@ public extension URL {
     static let mac = URL(string: "\(base)/mac")!
     static let windows = URL(string: "\(base)/windows")!
 
-    static func exti(forAtb atb: String) -> URL { URL.exti.appendingParameter(name: Param.atb, value: atb) }
+    static func makeExtiURL(atb: String) -> URL { URL.exti.appendingParameter(name: Param.atb, value: atb) }
 
     static func makeAutocompleteURL(for text: String) throws -> URL {
         URL.autocomplete.appendingParameters([
@@ -82,6 +82,20 @@ public extension URL {
         return getParameter(named: Param.search)
     }
 
+    func applyingSearchHeaderParams() -> URL {
+        removingParameters(named: [Param.searchHeader]).appendingParameter(name: Param.searchHeader, value: ParamValue.searchHeader)
+    }
+
+    var hasCorrectSearchHeaderParams: Bool {
+        guard let header = getParameter(named: Param.searchHeader) else { return false }
+        return header == ParamValue.searchHeader
+    }
+
+    func removingInternalSearchParameters() -> URL {
+        guard isDuckDuckGoSearch else { return self }
+        return removingParameters(named: [Param.atb, Param.source, Param.searchHeader])
+    }
+
     fileprivate enum Param {
 
         static let search = "q"
@@ -111,20 +125,6 @@ public extension URL {
 
     }
 
-    func applyingSearchHeaderParams() -> URL {
-        removingParameters(named: [Param.searchHeader]).appendingParameter(name: Param.searchHeader, value: ParamValue.searchHeader)
-    }
-
-    var hasCorrectSearchHeaderParams: Bool {
-        guard let header = getParameter(named: Param.searchHeader) else { return false }
-        return header == ParamValue.searchHeader
-    }
-
-    func removingInternalSearchParameters() -> URL {
-        guard isDuckDuckGoSearch else { return self }
-        return removingParameters(named: [Param.atb, Param.source, Param.searchHeader])
-    }
-
     // MARK: - StatisticsDependentURLs
 
     private static let defaultStatisticsDependentURLFactory = StatisticsDependentURLFactory()
@@ -137,9 +137,9 @@ public extension URL {
 
     func applyingStatsParams() -> URL { URL.defaultStatisticsDependentURLFactory.applyingStatsParams(to: self) }
 
-    static var searchAtb: URL? { defaultStatisticsDependentURLFactory.searchAtb }
+    static var searchAtb: URL? { defaultStatisticsDependentURLFactory.makeSearchAtbURL() }
 
-    static var appAtb: URL? { defaultStatisticsDependentURLFactory.appAtb }
+    static var appAtb: URL? { defaultStatisticsDependentURLFactory.makeAppAtbURL() }
 
     var hasCorrectMobileStatsParams: Bool { URL.defaultStatisticsDependentURLFactory.hasCorrectMobileStatsParams(url: self) }
 
@@ -206,7 +206,7 @@ public final class StatisticsDependentURLFactory {
 
     // MARK: ATB
 
-    var searchAtb: URL? {
+    func makeSearchAtbURL() -> URL? {
         guard let atbWithVariant = statisticsStore.atbWithVariant, let setAtb = statisticsStore.searchRetentionAtb else {
             return nil
         }
@@ -217,7 +217,7 @@ public final class StatisticsDependentURLFactory {
         ])
     }
 
-    var appAtb: URL? {
+    func makeAppAtbURL() -> URL? {
         guard let atbWithVariant = statisticsStore.atbWithVariant, let setAtb = statisticsStore.appRetentionAtb else {
             return nil
         }

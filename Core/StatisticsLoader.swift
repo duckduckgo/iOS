@@ -64,7 +64,7 @@ public class StatisticsLoader {
     
     private func requestExti(atb: Atb, completion: @escaping Completion = {}) {
         let installAtb = atb.version + (statisticsStore.variant ?? "")
-        let url = URL.exti(forAtb: installAtb)
+        let url = URL.makeExtiURL(atb: installAtb)
         
         let configuration = APIRequest.Configuration(url: url)
         let request = APIRequest(configuration: configuration, urlSession: .session())
@@ -82,7 +82,7 @@ public class StatisticsLoader {
     }
     
     public func refreshSearchRetentionAtb(completion: @escaping Completion = {}) {
-        guard let url = StatisticsDependentURLFactory(statisticsStore: statisticsStore).searchAtb else {
+        guard let url = StatisticsDependentURLFactory(statisticsStore: statisticsStore).makeSearchAtbURL() else {
             requestInstallStatistics(completion: completion)
             return
         }
@@ -105,7 +105,7 @@ public class StatisticsLoader {
     }
     
     public func refreshAppRetentionAtb(completion: @escaping Completion = {}) {
-        guard let url = StatisticsDependentURLFactory(statisticsStore: statisticsStore).appAtb else {
+        guard let url = StatisticsDependentURLFactory(statisticsStore: statisticsStore).makeAppAtbURL() else {
             requestInstallStatistics(completion: completion)
             return
         }

@@ -201,14 +201,14 @@ class StatisticsLoaderTests: XCTestCase {
     }
 
     func loadSuccessfulExiStub() {
-        stub(condition: isPath(URL.exti(forAtb: "").path)) { _ -> HTTPStubsResponse in
+        stub(condition: isPath(URL.makeExtiURL(atb: "").path)) { _ -> HTTPStubsResponse in
             let path = OHPathForFile("MockFiles/empty", type(of: self))!
             return fixture(filePath: path, status: 200, headers: nil)
         }
     }
 
     func loadUnsuccessfulExiStub() {
-        stub(condition: isPath(URL.exti(forAtb: "").path)) { _ -> HTTPStubsResponse in
+        stub(condition: isPath(URL.makeExtiURL(atb: "").path)) { _ -> HTTPStubsResponse in
             let path = OHPathForFile("MockFiles/empty", type(of: self))!
             return fixture(filePath: path, status: 400, headers: nil)
         }

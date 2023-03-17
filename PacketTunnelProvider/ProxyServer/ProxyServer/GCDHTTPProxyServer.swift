@@ -42,8 +42,11 @@ open class GCDProxyServer: ProxyServer, GCDAsyncSocketDelegate {
      - throws: The error occured when starting the proxy server.
      */
     override open func start() throws {
+        os_log(.error, log: appTPLog, "GCDProxyServer: start()")
+
         try QueueFactory.executeOnQueueSynchronizedly {
             listenSocket = GCDAsyncSocket(delegate: self, delegateQueue: QueueFactory.getQueue(), socketQueue: QueueFactory.getQueue())
+            os_log(.error, log: appTPLog, "GCDProxyServer: Accepting on listen socket")
             try listenSocket.accept(onInterface: address?.presentation, port: port.value)
             try super.start()
         }
@@ -53,6 +56,8 @@ open class GCDProxyServer: ProxyServer, GCDAsyncSocketDelegate {
      Stop the proxy server.
      */
     override open func stop() {
+        os_log(.error, log: appTPLog, "GCDProxyServer: stop()")
+
         QueueFactory.executeOnQueueSynchronizedly {
             listenSocket?.setDelegate(nil, delegateQueue: nil)
             listenSocket?.disconnect()

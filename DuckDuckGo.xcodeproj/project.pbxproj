@@ -35,7 +35,6 @@
 		02025AAF2988229800E694E7 /* NWTCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025999298820EF00E694E7 /* NWTCPSocket.swift */; };
 		02025AB12988229800E694E7 /* RawSocketFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202599B298820EF00E694E7 /* RawSocketFactory.swift */; };
 		02025AB22988229800E694E7 /* GCDTCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202599C298820EF00E694E7 /* GCDTCPSocket.swift */; };
-		02025AB32988229800E694E7 /* DomainListRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202598C298820EF00E694E7 /* DomainListRule.swift */; };
 		02025AB52988229800E694E7 /* DNSSessionMatchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202598E298820EF00E694E7 /* DNSSessionMatchType.swift */; };
 		02025AB62988229800E694E7 /* DNSFailRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202598F298820EF00E694E7 /* DNSFailRule.swift */; };
 		02025AB72988229800E694E7 /* AllRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025990298820EF00E694E7 /* AllRule.swift */; };
@@ -46,12 +45,7 @@
 		02025ABC2988229800E694E7 /* IPRangeListRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025995298820EF00E694E7 /* IPRangeListRule.swift */; };
 		02025AC02988229800E694E7 /* AdapterSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259AB298820F000E694E7 /* AdapterSocket.swift */; };
 		02025AC12988229800E694E7 /* DirectAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259AC298820F000E694E7 /* DirectAdapter.swift */; };
-		02025AC32988229800E694E7 /* RejectAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259AE298820F000E694E7 /* RejectAdapter.swift */; };
-		02025AC62988229800E694E7 /* AuthenticationServerAdapterFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259B2298820F000E694E7 /* AuthenticationServerAdapterFactory.swift */; };
-		02025AC72988229800E694E7 /* RejectAdapterFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259B3298820F000E694E7 /* RejectAdapterFactory.swift */; };
 		02025AC82988229800E694E7 /* AdapterFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259B4298820F000E694E7 /* AdapterFactory.swift */; };
-		02025ACB2988229800E694E7 /* ServerAdapterFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259B7298820F000E694E7 /* ServerAdapterFactory.swift */; };
-		02025ACC2988229800E694E7 /* AdapterFactoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259B8298820F000E694E7 /* AdapterFactoryManager.swift */; };
 		02025AD22988229800E694E7 /* HTTPProxySocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259C0298820F000E694E7 /* HTTPProxySocket.swift */; };
 		02025AD42988229800E694E7 /* ProxySocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259C2298820F000E694E7 /* ProxySocket.swift */; };
 		02025AD62988229800E694E7 /* SocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259C4298820F000E694E7 /* SocketProtocol.swift */; };
@@ -986,7 +980,6 @@
 		02025988298820EF00E694E7 /* HTTPURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPURL.swift; sourceTree = "<group>"; };
 		02025989298820EF00E694E7 /* HTTPAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPAuthentication.swift; sourceTree = "<group>"; };
 		0202598A298820EF00E694E7 /* StreamScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamScanner.swift; sourceTree = "<group>"; };
-		0202598C298820EF00E694E7 /* DomainListRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainListRule.swift; sourceTree = "<group>"; };
 		0202598E298820EF00E694E7 /* DNSSessionMatchType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSSessionMatchType.swift; sourceTree = "<group>"; };
 		0202598F298820EF00E694E7 /* DNSFailRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSFailRule.swift; sourceTree = "<group>"; };
 		02025990298820EF00E694E7 /* AllRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllRule.swift; sourceTree = "<group>"; };
@@ -1002,12 +995,7 @@
 		0202599C298820EF00E694E7 /* GCDTCPSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDTCPSocket.swift; sourceTree = "<group>"; };
 		020259AB298820F000E694E7 /* AdapterSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterSocket.swift; sourceTree = "<group>"; };
 		020259AC298820F000E694E7 /* DirectAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectAdapter.swift; sourceTree = "<group>"; };
-		020259AE298820F000E694E7 /* RejectAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RejectAdapter.swift; sourceTree = "<group>"; };
-		020259B2298820F000E694E7 /* AuthenticationServerAdapterFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationServerAdapterFactory.swift; sourceTree = "<group>"; };
-		020259B3298820F000E694E7 /* RejectAdapterFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RejectAdapterFactory.swift; sourceTree = "<group>"; };
 		020259B4298820F000E694E7 /* AdapterFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterFactory.swift; sourceTree = "<group>"; };
-		020259B7298820F000E694E7 /* ServerAdapterFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerAdapterFactory.swift; sourceTree = "<group>"; };
-		020259B8298820F000E694E7 /* AdapterFactoryManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterFactoryManager.swift; sourceTree = "<group>"; };
 		020259C0298820F000E694E7 /* HTTPProxySocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPProxySocket.swift; sourceTree = "<group>"; };
 		020259C2298820F000E694E7 /* ProxySocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProxySocket.swift; sourceTree = "<group>"; };
 		020259C4298820F000E694E7 /* SocketProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketProtocol.swift; sourceTree = "<group>"; };
@@ -2592,7 +2580,6 @@
 		0202598B298820EF00E694E7 /* Rule */ = {
 			isa = PBXGroup;
 			children = (
-				0202598C298820EF00E694E7 /* DomainListRule.swift */,
 				0202598E298820EF00E694E7 /* DNSSessionMatchType.swift */,
 				0202598F298820EF00E694E7 /* DNSFailRule.swift */,
 				02025990298820EF00E694E7 /* AllRule.swift */,
@@ -2632,7 +2619,6 @@
 			children = (
 				020259AB298820F000E694E7 /* AdapterSocket.swift */,
 				020259AC298820F000E694E7 /* DirectAdapter.swift */,
-				020259AE298820F000E694E7 /* RejectAdapter.swift */,
 				020259AF298820F000E694E7 /* Factory */,
 			);
 			path = AdapterSocket;
@@ -2641,11 +2627,7 @@
 		020259AF298820F000E694E7 /* Factory */ = {
 			isa = PBXGroup;
 			children = (
-				020259B2298820F000E694E7 /* AuthenticationServerAdapterFactory.swift */,
-				020259B3298820F000E694E7 /* RejectAdapterFactory.swift */,
 				020259B4298820F000E694E7 /* AdapterFactory.swift */,
-				020259B7298820F000E694E7 /* ServerAdapterFactory.swift */,
-				020259B8298820F000E694E7 /* AdapterFactoryManager.swift */,
 			);
 			path = Factory;
 			sourceTree = "<group>";
@@ -5690,7 +5672,6 @@
 				02025AAF2988229800E694E7 /* NWTCPSocket.swift in Sources */,
 				02025AB12988229800E694E7 /* RawSocketFactory.swift in Sources */,
 				02025AB22988229800E694E7 /* GCDTCPSocket.swift in Sources */,
-				02025AB32988229800E694E7 /* DomainListRule.swift in Sources */,
 				02025AB52988229800E694E7 /* DNSSessionMatchType.swift in Sources */,
 				02025AB62988229800E694E7 /* DNSFailRule.swift in Sources */,
 				02025AB72988229800E694E7 /* AllRule.swift in Sources */,
@@ -5701,13 +5682,8 @@
 				02025ABC2988229800E694E7 /* IPRangeListRule.swift in Sources */,
 				02025AC02988229800E694E7 /* AdapterSocket.swift in Sources */,
 				02025AC12988229800E694E7 /* DirectAdapter.swift in Sources */,
-				02025AC32988229800E694E7 /* RejectAdapter.swift in Sources */,
-				02025AC62988229800E694E7 /* AuthenticationServerAdapterFactory.swift in Sources */,
-				02025AC72988229800E694E7 /* RejectAdapterFactory.swift in Sources */,
 				02025AC82988229800E694E7 /* AdapterFactory.swift in Sources */,
 				4BEF656E2989C2FC00B650CB /* ProxySocketEvent.swift in Sources */,
-				02025ACB2988229800E694E7 /* ServerAdapterFactory.swift in Sources */,
-				02025ACC2988229800E694E7 /* AdapterFactoryManager.swift in Sources */,
 				02025AD22988229800E694E7 /* HTTPProxySocket.swift in Sources */,
 				02025AD42988229800E694E7 /* ProxySocket.swift in Sources */,
 				02025AD62988229800E694E7 /* SocketProtocol.swift in Sources */,

@@ -74,6 +74,7 @@ public class Tunnel: NSObject, SocketDelegate {
     }
     
     init(proxySocket: ProxySocket) {
+        
         self.proxySocket = proxySocket
         super.init()
         self.proxySocket.delegate = self

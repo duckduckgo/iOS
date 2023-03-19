@@ -21,8 +21,6 @@ open class HTTPHeader {
     open var rawHeader: Data?
 
     private init(headerString: String) throws {
-        os_log(.error, log: appTPLog, "Creating new HTTP header: %{public}s", headerString)
-
         let lines = headerString.components(separatedBy: "\r\n")
         guard lines.count >= 3 else {
             throw HTTPHeaderError.malformedHeader
@@ -126,7 +124,6 @@ open class HTTPHeader {
 
     public convenience init(headerData: Data) throws {
         guard let headerString = String(data: headerData, encoding: .utf8) else {
-            os_log(.error, log: appTPLog, "Could not create HTTP header string")
             throw HTTPHeaderError.illegalEncoding
         }
 

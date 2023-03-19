@@ -27,8 +27,6 @@ open class ProxySocket: NSObject, SocketProtocol, RawTCPSocketDelegate {
      - parameter socket: The raw TCP socket.
      */
     public init(socket: RawTCPSocketProtocol, observe: Bool = true) {
-        os_log(.error, log: appTPLog, "Creating new ProxySocket instance")
-
         self.socket = socket
 
         super.init()

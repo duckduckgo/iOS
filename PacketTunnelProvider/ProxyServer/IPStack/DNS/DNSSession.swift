@@ -26,7 +26,6 @@ open class DNSSession {
     }
 
     convenience init?(packet: IPPacket) {
-        os_log(.error, log: appTPLog, "Creating new DNSSession, packet: %{public}s", packet.destinationAddress.presentation)
         guard let message = DNSMessage(payload: packet.protocolParser.payload) else {
             return nil
         }

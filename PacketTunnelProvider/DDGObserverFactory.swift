@@ -22,8 +22,6 @@ import Persistence
 import Core
 import os.log
 
-public let appTPLog: OSLog = OSLog(subsystem: "com.duckduckgo.ios.apptp", category: "DDG AppTP")
-
 struct BlockedReason: Error {
     var description: String {
         return "Blocked"
@@ -37,12 +35,10 @@ class DDGObserverFactory: ObserverFactory {
     private let appTrackingProtectionStoringModel: AppTrackingProtectionStoringModel
     
     override func getObserverForProxySocket(_ socket: ProxySocket) -> Observer<ProxySocketEvent>? {
-        os_log(.error, log: appTPLog, "Creating new observer for proxy socket")
         return DDGProxySocketObserver(trackerData: trackerData, appTrackingProtectionStoringModel: appTrackingProtectionStoringModel)
     }
     
     override init() {
-        os_log(.error, log: appTPLog, "Creating new observer factory")
         trackerData = TrackerDataParser()
         appTrackingProtectionDatabase = AppTrackingProtectionDatabase.make()
         appTrackingProtectionDatabase.loadStore { context, error in
@@ -71,8 +67,6 @@ class DDGObserverFactory: ObserverFactory {
                 if let trackerData = trackerData, trackerData.shouldBlock(domain: session.host) {
                     let trackerOwner = trackerData.trackerOwner(forDomain: session.host)
                     let ownerName = trackerOwner?.name ?? "Unknown Owner"
-
-                    os_log(.error, log: appTPLog, "Blocking tracker with host: %{public}s", session.host)
 
                     appTrackingProtectionStoringModel.storeBlockedTracker(domain: session.host, trackerOwner: ownerName)
                     socket.forceDisconnect(becauseOf: BlockedReason())

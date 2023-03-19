@@ -9,15 +9,7 @@ open class DNSServer: DNSResolverDelegate, IPStackProtocol {
     /// Current DNS server.
     ///
     /// - warning: There is at most one DNS server running at the same time. If a DNS server is registered to `TUNInterface` then it must also be set here.
-    public static var currentServer: DNSServer? {
-        didSet {
-            if let currentServer {
-                os_log(.error, log: appTPLog, "Set new DNS server to valid value")
-            } else {
-                os_log(.error, log: appTPLog, "Set new DNS server to nil")
-            }
-        }
-    }
+    public static var currentServer: DNSServer?
 
     /// The address of DNS server.
     let serverAddress: IPAddress
@@ -44,7 +36,6 @@ open class DNSServer: DNSResolverDelegate, IPStackProtocol {
      - parameter fakeIPPool: The pool of fake IP addresses. Set to nil if no fake IP is needed.
      */
     public init(address: IPAddress, port: Port, fakeIPPool: IPPool? = nil) {
-        os_log(.error, log: appTPLog, "Initializing new DNS server")
         serverAddress = address
         serverPort = port
         pool = fakeIPPool

@@ -29,17 +29,13 @@ open class RawSocketFactory {
     public static func getRawSocket(_ type: SocketBaseType? = nil) -> RawTCPSocketProtocol {
         switch type {
         case .some(.nw):
-            os_log(.error, log: appTPLog, "RawSocketFactory: Creating new NWTCPSocket")
             return NWTCPSocket()
         case .some(.gcd):
-            os_log(.error, log: appTPLog, "RawSocketFactory: Creating new GCDTCPSocket")
             return GCDTCPSocket()
         case nil:
             if RawSocketFactory.TunnelProvider == nil {
-                os_log(.error, log: appTPLog, "RawSocketFactory: Creating new GCDTCPSocket as tunnel provider was nil")
                 return GCDTCPSocket()
             } else {
-                os_log(.error, log: appTPLog, "RawSocketFactory: Creating new NWTCPSocket as tunnel provider was not nil")
                 return NWTCPSocket()
             }
         }

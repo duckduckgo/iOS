@@ -39,37 +39,29 @@ public final class ConnectSession {
     public lazy var ipAddress: String = {
         [unowned self] in
         if self.isIP() {
-            os_log(.error, log: appTPLog, "GCDProxyServer: Returning host; no DNS lookup involved!")
             return self.host
         } else {
             let ip = Utils.DNS.resolve(self.host)
             
             guard self.fakeIPEnabled else {
-                os_log(.error, log: appTPLog, "GCDProxyServer: self.fakeIPEnabled")
                 return ip
             }
             
             guard let dnsServer = DNSServer.currentServer else {
-                os_log(.error, log: appTPLog, "GCDProxyServer: DNSServer.currentServer")
                 return ip
             }
             
             guard let address = IPAddress(fromString: ip) else {
-                os_log(.error, log: appTPLog, "GCDProxyServer: Got address")
                 return ip
             }
             
             guard dnsServer.isFakeIP(address) else {
-                os_log(.error, log: appTPLog, "GCDProxyServer: Is not fake IP")
                 return ip
             }
             
             guard let session = dnsServer.lookupFakeIP(address) else {
-                os_log(.error, log: appTPLog, "GCDProxyServer: Could not look up fake IP")
                 return ip
             }
-
-            os_log(.error, log: appTPLog, "GCDProxyServer: Returning real IP")
             
             return session.realIP?.presentation ?? ""
         }

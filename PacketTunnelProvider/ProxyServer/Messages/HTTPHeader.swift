@@ -1,5 +1,4 @@
 import Foundation
-import os
 
 open class HTTPHeader {
     public enum HTTPHeaderError: Error {

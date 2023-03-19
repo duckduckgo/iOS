@@ -1,6 +1,5 @@
 import Foundation
 import NetworkExtension
-import os
 
 /// A DNS server designed as an `IPStackProtocol` implementation which works with TUN interface.
 ///

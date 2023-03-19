@@ -1,6 +1,5 @@
 import Foundation
 import CocoaAsyncSocket
-import os
 
 /// The TCP socket build upon `GCDAsyncSocket`.
 ///

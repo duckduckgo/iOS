@@ -1,6 +1,5 @@
 import Foundation
 import NetworkExtension
-import os
 
 /**
  Represents the type of the socket.

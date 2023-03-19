@@ -1,5 +1,4 @@
 import Foundation
-import os
 
 /// The socket which encapsulates the logic to handle connection to proxies.
 open class ProxySocket: NSObject, SocketProtocol, RawTCPSocketDelegate {

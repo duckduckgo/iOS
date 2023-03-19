@@ -1,5 +1,4 @@
 import Foundation
-import os
 
 open class DNSSession {
     public let requestMessage: DNSMessage

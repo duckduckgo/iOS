@@ -1,5 +1,4 @@
 import Foundation
-import os.log
 
 /// Representing all the information in one connect session.
 public final class ConnectSession {

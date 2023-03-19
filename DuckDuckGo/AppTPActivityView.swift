@@ -23,6 +23,7 @@ import Core
 struct AppTPActivityView: View {
     @ObservedObject var viewModel: AppTrackingProtectionListViewModel
     @ObservedObject var feedbackModel: AppTrackingProtectionFeedbackModel
+    @ObservedObject var toggleViewModel = AppTPToggleViewModel()
     
     @State var vpnOn: Bool = false
     
@@ -106,7 +107,7 @@ struct AppTPActivityView: View {
                     VStack {
                         AppTPToggleView(
                             vpnOn: $vpnOn,
-                            viewModel: AppTPToggleViewModel()
+                            viewModel: toggleViewModel
                         )
                             .background(Color.cellBackground)
                             .cornerRadius(Const.Size.cornerRadius)

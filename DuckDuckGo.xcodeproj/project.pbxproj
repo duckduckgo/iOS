@@ -36,7 +36,6 @@
 		02025AB12988229800E694E7 /* RawSocketFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202599B298820EF00E694E7 /* RawSocketFactory.swift */; };
 		02025AB22988229800E694E7 /* GCDTCPSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202599C298820EF00E694E7 /* GCDTCPSocket.swift */; };
 		02025AB52988229800E694E7 /* DNSSessionMatchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202598E298820EF00E694E7 /* DNSSessionMatchType.swift */; };
-		02025AB62988229800E694E7 /* DNSFailRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202598F298820EF00E694E7 /* DNSFailRule.swift */; };
 		02025AB72988229800E694E7 /* AllRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025990298820EF00E694E7 /* AllRule.swift */; };
 		02025AB82988229800E694E7 /* DNSSessionMatchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025991298820EF00E694E7 /* DNSSessionMatchResult.swift */; };
 		02025AB92988229800E694E7 /* Rule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025992298820EF00E694E7 /* Rule.swift */; };
@@ -979,7 +978,6 @@
 		02025989298820EF00E694E7 /* HTTPAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPAuthentication.swift; sourceTree = "<group>"; };
 		0202598A298820EF00E694E7 /* StreamScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamScanner.swift; sourceTree = "<group>"; };
 		0202598E298820EF00E694E7 /* DNSSessionMatchType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSSessionMatchType.swift; sourceTree = "<group>"; };
-		0202598F298820EF00E694E7 /* DNSFailRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSFailRule.swift; sourceTree = "<group>"; };
 		02025990298820EF00E694E7 /* AllRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllRule.swift; sourceTree = "<group>"; };
 		02025991298820EF00E694E7 /* DNSSessionMatchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSSessionMatchResult.swift; sourceTree = "<group>"; };
 		02025992298820EF00E694E7 /* Rule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rule.swift; sourceTree = "<group>"; };
@@ -2578,7 +2576,6 @@
 			isa = PBXGroup;
 			children = (
 				0202598E298820EF00E694E7 /* DNSSessionMatchType.swift */,
-				0202598F298820EF00E694E7 /* DNSFailRule.swift */,
 				02025990298820EF00E694E7 /* AllRule.swift */,
 				02025991298820EF00E694E7 /* DNSSessionMatchResult.swift */,
 				02025992298820EF00E694E7 /* Rule.swift */,
@@ -5670,7 +5667,6 @@
 				02025AB12988229800E694E7 /* RawSocketFactory.swift in Sources */,
 				02025AB22988229800E694E7 /* GCDTCPSocket.swift in Sources */,
 				02025AB52988229800E694E7 /* DNSSessionMatchType.swift in Sources */,
-				02025AB62988229800E694E7 /* DNSFailRule.swift in Sources */,
 				02025AB72988229800E694E7 /* AllRule.swift in Sources */,
 				02025AB82988229800E694E7 /* DNSSessionMatchResult.swift in Sources */,
 				02025AB92988229800E694E7 /* Rule.swift in Sources */,

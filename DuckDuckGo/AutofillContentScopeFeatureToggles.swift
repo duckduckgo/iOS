@@ -30,17 +30,17 @@ extension ContentScopeFeatureToggles {
         let context = LAContext()
         var error: NSError?
         let canAuthenticate = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
-        return featureFlagger.isFeatureOn(.autofill) && appSettings.autofillCredentialsEnabled && canAuthenticate
+        return appSettings.autofillCredentialsEnabled && canAuthenticate
     }
     
     static var supportedFeaturesOniOS: ContentScopeFeatureToggles {
         ContentScopeFeatureToggles(emailProtection: true,
-                                   credentialsAutofill: isCredentialsAutofillEnabled,
+                                   credentialsAutofill: featureFlagger.isFeatureOn(.credentialsAutofill) && isCredentialsAutofillEnabled,
                                    identitiesAutofill: false,
                                    creditCardsAutofill: false,
-                                   credentialsSaving: isCredentialsAutofillEnabled,
+                                   credentialsSaving: featureFlagger.isFeatureOn(.credentialsSaving) && isCredentialsAutofillEnabled,
                                    passwordGeneration: false,
-                                   inlineIconCredentials: isCredentialsAutofillEnabled,
+                                   inlineIconCredentials: featureFlagger.isFeatureOn(.inlineIconCredentials) && isCredentialsAutofillEnabled,
                                    thirdPartyCredentialsProvider: false)
     }
 }

@@ -85,7 +85,7 @@ class SettingsViewController: UITableViewController {
     }
 
     private lazy var shouldShowAutofillCell: Bool = {
-        return featureFlagger.isFeatureOn(.autofill)
+        return featureFlagger.isFeatureOn(.accessCredentialManagement)
     }()
 
     private lazy var shouldShowSyncCell: Bool = {

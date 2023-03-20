@@ -124,7 +124,7 @@ public class Pixel {
     }
     
     private static var isInternalUser: Bool {
-        DefaultFeatureFlagger().isInternalUser
+        DefaultInternalUserDecider(store: InternalUserStore()).isInternalUser
     }
 
     public enum QueryParameters {

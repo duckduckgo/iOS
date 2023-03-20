@@ -38,7 +38,7 @@ public class Database {
               let remoteMessagingModel = CoreDataDatabase.loadModel(from: .main, named: "RemoteMessaging"),
               let managedObjectModel = NSManagedObjectModel(byMerging: [appRatingModel,
                                                                         remoteMessagingModel,
-                                                                        AppHTTPSUpgradeStore.managedObjectModel]) else {
+                                                                        HTTPSUpgrade.managedObjectModel]) else {
             fatalError("No DB scheme found")
         }
         

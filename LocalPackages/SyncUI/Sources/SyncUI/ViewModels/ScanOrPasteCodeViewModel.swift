@@ -83,18 +83,20 @@ public class ScanOrPasteCodeViewModel: ObservableObject {
 
         Task { @MainActor in
 
-            if #available(iOS 16.0, *) {
-                try await Task.sleep(for: .seconds(4))
-            }
+            // TODO validate the code
 
-            // Tidy this up when wiring up to the backend
-            if manuallyEnteredCode == "wrong" {
-                isValidating = false
-                codeError = "Invalid code"
-            } else if let code = manuallyEnteredCode {
-                isValidating = false
-                _ = delegate?.syncCodeEntered(code: code)
-            }
+//            if #available(iOS 16.0, *) {
+//                try await Task.sleep(for: .seconds(4))
+//            }
+//
+//            // Tidy this up when wiring up to the backend
+//            if manuallyEnteredCode == "wrong" {
+//                isValidating = false
+//                codeError = "Invalid code"
+//            } else if let code = manuallyEnteredCode {
+//                isValidating = false
+//                _ = delegate?.syncCodeEntered(code: code)
+//            }
         }
 
     }

@@ -38,6 +38,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         
         // Set up local proxy server to route requests that match the blocklist
         let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: proxyServerAddress)
+
+        // TODO: We'll need to change the MTU depending on whether NetP is involved
         settings.mtu = NSNumber(value: 1500)
         
         let proxySettings = NEProxySettings()

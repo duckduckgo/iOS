@@ -78,21 +78,6 @@ public struct Utils {
         }
     }
 
-    struct GeoIPLookup {
-
-        static func Lookup(_ ipAddress: String) -> String? {
-//            if Utils.IP.isIP(ipAddress) {
-//                guard let result = GeoIP.LookUp(ipAddress) else {
-//                    return "--"
-//                }
-//                return result.isoCode
-//            } else {
-//                return nil
-//            }
-            return nil
-        }
-    }
-
     static func toByteArray<T>(_ value: T) -> [UInt8] {
         var value = value
         return withUnsafeBytes(of: &value) {

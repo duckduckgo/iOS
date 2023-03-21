@@ -19,7 +19,7 @@ open class HTTPHeader {
     open var headers: [(String, String)] = []
     open var rawHeader: Data?
 
-    public init(headerString: String) throws {
+    private init(headerString: String) throws {
         let lines = headerString.components(separatedBy: "\r\n")
         guard lines.count >= 3 else {
             throw HTTPHeaderError.malformedHeader

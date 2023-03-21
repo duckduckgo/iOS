@@ -165,12 +165,14 @@ class ConfigurationDebugViewController: UITableViewController {
                 let location = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContentBlockerStoreConstants.groupName)
                 UIPasteboard.general.string = location?.path ?? ""
             case .forceRefresh:
-                AppConfigurationFetch().start { [weak tableView] newData in
-                    if newData {
+                AppConfigurationFetch().start { [weak tableView] didFetchAnyData, didFetchAnyTrackerBlockingDependencies in
+                    if didFetchAnyData {
                         DispatchQueue.main.async {
                             tableView?.reloadData()
                         }
-                        ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+                        if didFetchAnyTrackerBlockingDependencies {
+                            ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+                        }
                     }
                 }
             default: break

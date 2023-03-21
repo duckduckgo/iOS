@@ -24,7 +24,14 @@ import os.log
 import BrowserServicesKit
 import Configuration
 
-public typealias AppConfigurationCompletion = (Bool) -> Void
+/**
+ The completion block takes two boolean parameters:
+ - The first boolean indicates whether any data was fetched during the configuration fetch process.
+ - The second boolean indicates whether any dependencies related to tracker blocking were fetched during the configuration fetch process.
+
+ Both booleans are set to `true` if data or dependencies were fetched, and `false` otherwise.
+*/
+public typealias AppConfigurationCompletion = (Bool, Bool) -> Void
 
 protocol CompletableTask {
 
@@ -53,7 +60,7 @@ class AppConfigurationFetch {
         static let backgroundTaskName = "Fetch Configuration Task"
         static let backgroundProcessingTaskIdentifier = "com.duckduckgo.app.configurationRefresh"
         static let minimumConfigurationRefreshInterval: TimeInterval = 60 * 30
-        
+
     }
     
     private struct Keys {
@@ -105,7 +112,7 @@ class AppConfigurationFetch {
             // here in case a background refresh has happened recently.
             Self.fetchQueue.async {
                 self.sendStatistics {
-                    completion?(false)
+                    completion?(false, false)
                 }
             }
 
@@ -114,7 +121,7 @@ class AppConfigurationFetch {
         
         type(of: self).fetchQueue.async {
             let taskID = UIApplication.shared.beginBackgroundTask(withName: Constants.backgroundTaskName)
-            self.fetchConfigurationFiles(isBackground: isBackgroundFetch) { fetchedNewData in
+            self.fetchConfigurationFiles(isBackground: isBackgroundFetch) { didFetchAnyData, didFetchAnyTrackerBlockingDependencies in
                 if !isBackgroundFetch {
                     type(of: self).fetchQueue.async {
                         self.sendStatistics {
@@ -125,7 +132,7 @@ class AppConfigurationFetch {
                     UIApplication.shared.endBackgroundTask(taskID)
                 }
                 
-                completion?(fetchedNewData)
+                completion?(didFetchAnyData, didFetchAnyTrackerBlockingDependencies)
             }
         }
     }
@@ -166,12 +173,12 @@ class AppConfigurationFetch {
         #endif
     }
     
-    private func fetchConfigurationFiles(isBackground: Bool, onDidComplete: @escaping (Bool) -> Void) {
+    private func fetchConfigurationFiles(isBackground: Bool, onDidComplete: @escaping (Bool, Bool) -> Void) {
         Task {
             self.markFetchStarted(isBackground: isBackground)
-            let newData = await AppDependencyProvider.shared.configurationManager.update()
-            self.markFetchCompleted(isBackground: isBackground, hasNewData: newData)
-            onDidComplete(newData)
+            let (didFetchAnyData, didFetchAnyTrackerBlockingDependencies) = await AppDependencyProvider.shared.configurationManager.update()
+            self.markFetchCompleted(isBackground: isBackground, hasNewData: didFetchAnyData)
+            onDidComplete(didFetchAnyData, didFetchAnyTrackerBlockingDependencies)
         }
     }
     
@@ -283,14 +290,16 @@ extension AppConfigurationFetch {
         }
         
         queue.async {
-            configurationFetcher.fetchConfigurationFiles(isBackground: true) { fetchedNewData in
-                Self.shouldScheduleRulesCompilationOnAppLaunch = true
+            configurationFetcher.fetchConfigurationFiles(isBackground: true) { didFetchAnyData, didFetchAnyTrackerBlockingDependencies in
+                if didFetchAnyTrackerBlockingDependencies {
+                    Self.shouldScheduleRulesCompilationOnAppLaunch = true
+                }
                 
                 DispatchQueue.main.async {
                     lastCompletionStatus = backgroundRefreshTaskCompletionHandler(store: store,
                                                                                   refreshStartDate: refreshStartDate,
                                                                                   task: task,
-                                                                                  status: fetchedNewData ? .newData : .noData,
+                                                                                  status: didFetchAnyData ? .newData : .noData,
                                                                                   previousStatus: lastCompletionStatus)
                 }
             }

@@ -62,13 +62,13 @@ struct ConfigurationManager {
         }
     }
 
-    func update() async -> Bool {
+    func update() async -> (didFetchAnyData: Bool, didFetchAnyTrackerBlockingDependencies: Bool) {
         async let didFetchAnyTrackerBlockingDependencies = fetchAndUpdateTrackerBlockingDependencies()
         async let didFetchExcludedDomains = fetchAndUpdateBloomFilterExcludedDomains()
         async let didFetchBloomFilter = fetchAndUpdateBloomFilter()
 
         let results = await (didFetchAnyTrackerBlockingDependencies, didFetchExcludedDomains, didFetchBloomFilter)
-        return results.0 || results.1 || results.2
+        return (didFetchAnyData: results.0 || results.1 || results.2, didFetchAnyTrackerBlockingDependencies: results.0)
     }
 
     @discardableResult
@@ -93,7 +93,7 @@ struct ConfigurationManager {
                 try await task.value
                 didFetchAnyTrackerBlockingDependencies = true
             } catch {
-                os_log("Failed to apply update to %@: %@", log: .generalLog, type: .debug, configuration.rawValue, error.localizedDescription)
+                os_log("Did not apply update to %@: %@", log: .generalLog, type: .debug, configuration.rawValue, error.localizedDescription)
             }
         }
 

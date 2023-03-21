@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1679013655841,
+    "version": 1679346278203,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -345,6 +345,7 @@
                 }
             ],
             "settings": {
+                "useStrictHideStyleTag": false,
                 "rules": [
                     {
                         "selector": "[id*='gpt-']",
@@ -496,6 +497,10 @@
                     },
                     {
                         "selector": "#credential_picker_iframe",
+                        "type": "hide"
+                    },
+                    {
+                        "selector": "#google-one-tap-iframe",
                         "type": "hide"
                     },
                     {
@@ -1374,8 +1379,7 @@
                 ]
             },
             "state": "enabled",
-            "useStrictHideStyleTag": false,
-            "hash": "f96aa6c5c59e98c1c927e45e6c56c807"
+            "hash": "c13b227c89c72e4d75065edf9e8849b4"
         },
         "fingerprintingAudio": {
             "state": "disabled",

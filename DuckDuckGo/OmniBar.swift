@@ -332,6 +332,7 @@ class OmniBar: UIView {
     }
 
     @discardableResult override func resignFirstResponder() -> Bool {
+        refreshState(state.onEditingStoppedState)
         return textField.resignFirstResponder()
     }
 
@@ -432,6 +433,7 @@ class OmniBar: UIView {
     }
     
     @IBAction func onCancelPressed(_ sender: Any) {
+        refreshState(state.onEditingStoppedState)
         omniDelegate?.onCancelPressed()
     }
     
@@ -485,7 +487,7 @@ extension OmniBar: UITextFieldDelegate {
         omniDelegate?.onTextFieldWillBeginEditing(self)
         return true
     }
-
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         DispatchQueue.main.async {
             let highlightText = self.omniDelegate?.onTextFieldDidBeginEditing(self) ?? true
@@ -498,13 +500,11 @@ extension OmniBar: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        refreshState(state.onEditingStoppedState)
         omniDelegate?.onEnterPressed()
         return true
     }
-
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        refreshState(state.onEditingStoppedState)
-    }
+    
 }
 
 extension OmniBar: Themable {

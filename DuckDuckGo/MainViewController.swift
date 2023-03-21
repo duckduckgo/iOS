@@ -565,6 +565,7 @@ class MainViewController: UIViewController {
         
         self.forgetAllWithAnimation {}
         self.dismiss(animated: true)
+        dismissOmniBar()
         if KeyboardSettings().onAppLaunch {
             self.enterSearch()
         }
@@ -579,11 +580,13 @@ class MainViewController: UIViewController {
     @IBAction func onBackPressed() {
         Pixel.fire(pixel: .tabBarBackPressed)
         currentTab?.goBack()
+        dismissOmniBar()
         refreshOmniBar()
     }
 
     @IBAction func onForwardPressed() {
         Pixel.fire(pixel: .tabBarForwardPressed)
+        dismissOmniBar()
         currentTab?.goForward()
     }
     
@@ -1239,6 +1242,7 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onMenuPressed() {
+        dismissOmniBar()
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }

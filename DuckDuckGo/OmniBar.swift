@@ -503,7 +503,6 @@ extension OmniBar: UITextFieldDelegate {
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-        omniDelegate?.onDismissed()
         refreshState(state.onEditingStoppedState)
     }
 }

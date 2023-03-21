@@ -25,6 +25,11 @@ import BrowserServicesKit
 import Common
 
 struct ConfigurationManager {
+
+    enum UpdateResult {
+        case noData
+        case assetsUpdated(includesPrivacyProtectionChanges: Bool)
+    }
     
     enum Error: Swift.Error, LocalizedError {
         
@@ -62,13 +67,17 @@ struct ConfigurationManager {
         }
     }
 
-    func update() async -> (didFetchAnyData: Bool, didFetchAnyTrackerBlockingDependencies: Bool) {
+    func update() async -> UpdateResult {
         async let didFetchAnyTrackerBlockingDependencies = fetchAndUpdateTrackerBlockingDependencies()
         async let didFetchExcludedDomains = fetchAndUpdateBloomFilterExcludedDomains()
         async let didFetchBloomFilter = fetchAndUpdateBloomFilter()
 
         let results = await (didFetchAnyTrackerBlockingDependencies, didFetchExcludedDomains, didFetchBloomFilter)
-        return (didFetchAnyData: results.0 || results.1 || results.2, didFetchAnyTrackerBlockingDependencies: results.0)
+
+        if results.0 || results.1 || results.2 {
+            return .assetsUpdated(includesPrivacyProtectionChanges: results.0)
+        }
+        return .noData
     }
 
     @discardableResult

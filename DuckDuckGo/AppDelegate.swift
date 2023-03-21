@@ -245,8 +245,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch = false
         }
 
-        AppConfigurationFetch().start { _, didFetchAnyTrackerBlockingDependencies in
-            if didFetchAnyTrackerBlockingDependencies {
+        AppConfigurationFetch().start { result in
+            if case .assetsUpdated(let protectionsUpdated) = result, protectionsUpdated {
                 ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
             }
         }
@@ -385,8 +385,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         os_log(#function, log: .lifecycleLog, type: .debug)
 
-        AppConfigurationFetch().start(isBackgroundFetch: true) { didFetchAnyData, _ in
-            completionHandler(didFetchAnyData ? .newData : .noData)
+        AppConfigurationFetch().start(isBackgroundFetch: true) { result in
+            switch result {
+            case .noData:
+                completionHandler(.noData)
+            case .assetsUpdated:
+                completionHandler(.newData)
+            }
         }
     }
 

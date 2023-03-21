@@ -75,7 +75,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     }
     
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
-        DNSServer.currentServer = nil
         RawSocketFactory.TunnelProvider = nil
         ObserverFactory.currentFactory = nil
         proxyServer.stop()

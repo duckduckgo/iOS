@@ -19,23 +19,6 @@ open class AllRule: Rule {
     }
 
     /**
-     Match DNS session to this rule.
-
-     - parameter session: The DNS session to match.
-     - parameter type:    What kind of information is available.
-
-     - returns: The result of match.
-     */
-    override open func matchDNS(_ session: DNSSession, type: DNSSessionMatchType) -> DNSSessionMatchResult {
-        // only return real IP when we connect to remote directly
-        if let _ = adapterFactory as? DirectAdapterFactory {
-            return .real
-        } else {
-            return .fake
-        }
-    }
-
-    /**
      Match connect session to this rule.
 
      - parameter session: connect session to match.

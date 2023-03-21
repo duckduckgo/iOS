@@ -28,32 +28,6 @@ open class IPRangeListRule: Rule {
     }
 
     /**
-     Match DNS request to this rule.
-
-     - parameter session: The DNS session to match.
-     - parameter type:    What kind of information is available.
-
-     - returns: The result of match.
-     */
-    override open func matchDNS(_ session: DNSSession, type: DNSSessionMatchType) -> DNSSessionMatchResult {
-        guard type == .ip else {
-            return .unknown
-        }
-
-        // Probably we should match all answers?
-        guard let ip = session.realIP else {
-            return .pass
-        }
-
-        for range in ranges {
-            if range.contains(ip: ip) {
-                return .fake
-            }
-        }
-        return .pass
-    }
-
-    /**
      Match connect session to this rule.
 
      - parameter session: connect session to match.
@@ -61,15 +35,6 @@ open class IPRangeListRule: Rule {
      - returns: The configured adapter if matched, return `nil` if not matched.
      */
     override open func match(_ session: ConnectSession) -> AdapterFactory? {
-        guard let ip = IPAddress(fromString: session.ipAddress) else {
-            return nil
-        }
-
-        for range in ranges {
-            if range.contains(ip: ip) {
-                return adapterFactory
-            }
-        }
         return nil
     }
 }

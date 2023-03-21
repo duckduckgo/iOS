@@ -1,5 +1,4 @@
 import Foundation
-import Resolver
 
 protocol TunnelDelegate: class {
     func tunnelDidClose(_ tunnel: Tunnel)
@@ -149,21 +148,8 @@ public class Tunnel: NSObject, SocketDelegate {
         _status = .waitingToBeReady
         observer?.signal(.receivedRequest(session, from: from, on: self))
         
-        if !session.isIP() {
-            _ = Resolver.resolve(hostname: session.host, timeout: Opt.DNSTimeout) { [weak self] resolver, err in
-                QueueFactory.getQueue().async {
-                    if err != nil {
-                        session.ipAddress = ""
-                    } else {
-                        session.ipAddress = (resolver?.ipv4Result.first)!
-                    }
-                    self?.openAdapter(for: session)
-                }
-            }
-        } else {
-            session.ipAddress = session.host
-            openAdapter(for: session)
-        }
+        session.ipAddress = session.host
+        openAdapter(for: session)
     }
     
     fileprivate func openAdapter(for session: ConnectSession) {

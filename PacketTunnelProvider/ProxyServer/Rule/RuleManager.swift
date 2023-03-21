@@ -29,30 +29,6 @@ open class RuleManager {
     }
 
     /**
-     Match DNS request to all rules.
-
-     - parameter session: The DNS session to match.
-     - parameter type:    What kind of information is available.
-     */
-    func matchDNS(_ session: DNSSession, type: DNSSessionMatchType) {
-        for (i, rule) in rules[session.indexToMatch..<rules.count].enumerated() {
-            let result = rule.matchDNS(session, type: type)
-
-            observer?.signal(.dnsRuleMatched(session, rule: rule, type: type, result: result))
-
-            switch result {
-            case .fake, .real, .unknown:
-                session.matchedRule = rule
-                session.matchResult = result
-                session.indexToMatch = i + session.indexToMatch // add the offset
-                return
-            case .pass:
-                break
-            }
-        }
-    }
-
-    /**
      Match connect session to all rules.
 
      - parameter session: connect session to match.

@@ -31,40 +31,13 @@ public final class ConnectSession {
     public var errorSource: EventSourceEnum?
     
     public var disconnectedBy: EventSourceEnum?
-    
+
     /// The resolved IP address.
     ///
     /// - note: This will always be real IP address.
-    public lazy var ipAddress: String = {
-        [unowned self] in
-        if self.isIP() {
-            return self.host
-        } else {
-            let ip = Utils.DNS.resolve(self.host)
-            
-            guard self.fakeIPEnabled else {
-                return ip
-            }
-            
-            guard let dnsServer = DNSServer.currentServer else {
-                return ip
-            }
-            
-            guard let address = IPAddress(fromString: ip) else {
-                return ip
-            }
-            
-            guard dnsServer.isFakeIP(address) else {
-                return ip
-            }
-            
-            guard let session = dnsServer.lookupFakeIP(address) else {
-                return ip
-            }
-            
-            return session.realIP?.presentation ?? ""
-        }
-        }()
+    public lazy var ipAddress: String = { [unowned self] in
+        return self.host
+    }()
 
     public init?(host: String, port: Int, fakeIPEnabled: Bool = true) {
         self.requestedHost = host
@@ -73,11 +46,6 @@ public final class ConnectSession {
         self.fakeIPEnabled = fakeIPEnabled
         
         self.host = host
-        if fakeIPEnabled {
-            guard lookupRealIP() else {
-                return nil
-            }
-        }
     }
     
     public convenience init?(ipAddress: IPAddress, port: Port, fakeIPEnabled: Bool = true) {
@@ -92,34 +60,6 @@ public final class ConnectSession {
             }
             disconnectedBy = source
         }
-    }
-    
-    fileprivate func lookupRealIP() -> Bool {
-        /// If custom DNS server is set up.
-        guard let dnsServer = DNSServer.currentServer else {
-            return true
-        }
-        
-        // Only IPv4 is supported as of now.
-        guard isIPv4() else {
-            return true
-        }
-        
-        let address = IPAddress(fromString: requestedHost)!
-        guard dnsServer.isFakeIP(address) else {
-            return true
-        }
-        
-        // Look up fake IP reversely should never fail.
-        guard let session = dnsServer.lookupFakeIP(address) else {
-            return false
-        }
-        
-        host = session.requestMessage.queries[0].name
-        ipAddress = session.realIP?.presentation ?? ""
-        matchedRule = session.matchedRule
-        
-        return true
     }
     
     public func isIPv4() -> Bool {

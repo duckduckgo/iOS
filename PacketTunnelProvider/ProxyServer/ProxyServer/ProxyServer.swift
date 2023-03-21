@@ -1,6 +1,5 @@
 import Foundation
 import CocoaAsyncSocket
-import Resolver
 
 /**
  The base proxy server class.
@@ -55,7 +54,6 @@ open class ProxyServer: NSObject, TunnelDelegate {
      */
     open func start() throws {
         QueueFactory.executeOnQueueSynchronizedly {
-            GlobalIntializer.initalize()
             self.observer?.signal(.started(self))
         }
     }

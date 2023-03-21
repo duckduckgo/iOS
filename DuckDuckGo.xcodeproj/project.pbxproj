@@ -19,11 +19,6 @@
 		0202569029881ECA00E694E7 /* CocoaAsyncSocket in Frameworks */ = {isa = PBXBuildFile; productRef = 0202568F29881ECA00E694E7 /* CocoaAsyncSocket */; };
 		02025A9A2988229800E694E7 /* TUNInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258EF298820EC00E694E7 /* TUNInterface.swift */; };
 		02025A9B2988229800E694E7 /* IPStackProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258F0298820EC00E694E7 /* IPStackProtocol.swift */; };
-		02025A9E2988229800E694E7 /* DNSMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258F4298820EC00E694E7 /* DNSMessage.swift */; };
-		02025A9F2988229800E694E7 /* DNSSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258F5298820EC00E694E7 /* DNSSession.swift */; };
-		02025AA02988229800E694E7 /* DNSServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258F6298820EC00E694E7 /* DNSServer.swift */; };
-		02025AA12988229800E694E7 /* DNSResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258F7298820EC00E694E7 /* DNSResolver.swift */; };
-		02025AA22988229800E694E7 /* DNSEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258F8298820EC00E694E7 /* DNSEnums.swift */; };
 		02025AA32988229800E694E7 /* PacketProtocolParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258FA298820EC00E694E7 /* PacketProtocolParser.swift */; };
 		02025AA42988229800E694E7 /* IPPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258FB298820EC00E694E7 /* IPPacket.swift */; };
 		02025AA72988229800E694E7 /* ConnectSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259CC298820F100E694E7 /* ConnectSession.swift */; };
@@ -63,12 +58,10 @@
 		02025AE52988229800E694E7 /* HTTPURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025988298820EF00E694E7 /* HTTPURL.swift */; };
 		02025AE62988229800E694E7 /* HTTPAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025989298820EF00E694E7 /* HTTPAuthentication.swift */; };
 		02025AE72988229800E694E7 /* StreamScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202598A298820EF00E694E7 /* StreamScanner.swift */; };
-		02025AE82988229800E694E7 /* GlobalIntializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259C5298820F000E694E7 /* GlobalIntializer.swift */; };
 		02025AE92988229800E694E7 /* Opt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025904298820ED00E694E7 /* Opt.swift */; };
 		02025AEA2988229800E694E7 /* QueueFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258FE298820ED00E694E7 /* QueueFactory.swift */; };
 		02025AEB2988229800E694E7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259CA298820F100E694E7 /* Utils.swift */; };
 		02025AEC2988229800E694E7 /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025666298818B200E694E7 /* PacketTunnelProvider.swift */; };
-		02025AF6298825AA00E694E7 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 02025AF5298825AA00E694E7 /* Resolver */; };
 		02025B0C29884D2C00E694E7 /* AppTrackerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025B0B29884D2C00E694E7 /* AppTrackerData.swift */; };
 		02025B0D29884D2C00E694E7 /* AppTrackerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025B0B29884D2C00E694E7 /* AppTrackerData.swift */; };
 		02025B0F29884DC500E694E7 /* AppTrackerDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025B0E29884DC500E694E7 /* AppTrackerDataParser.swift */; };
@@ -953,11 +946,6 @@
 		020258EC298820EC00E694E7 /* GCDHTTPProxyServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDHTTPProxyServer.swift; sourceTree = "<group>"; };
 		020258EF298820EC00E694E7 /* TUNInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TUNInterface.swift; sourceTree = "<group>"; };
 		020258F0298820EC00E694E7 /* IPStackProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPStackProtocol.swift; sourceTree = "<group>"; };
-		020258F4298820EC00E694E7 /* DNSMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSMessage.swift; sourceTree = "<group>"; };
-		020258F5298820EC00E694E7 /* DNSSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSSession.swift; sourceTree = "<group>"; };
-		020258F6298820EC00E694E7 /* DNSServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSServer.swift; sourceTree = "<group>"; };
-		020258F7298820EC00E694E7 /* DNSResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSResolver.swift; sourceTree = "<group>"; };
-		020258F8298820EC00E694E7 /* DNSEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSEnums.swift; sourceTree = "<group>"; };
 		020258FA298820EC00E694E7 /* PacketProtocolParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PacketProtocolParser.swift; sourceTree = "<group>"; };
 		020258FB298820EC00E694E7 /* IPPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPPacket.swift; sourceTree = "<group>"; };
 		020258FE298820ED00E694E7 /* QueueFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueFactory.swift; sourceTree = "<group>"; };
@@ -995,7 +983,6 @@
 		020259C0298820F000E694E7 /* HTTPProxySocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPProxySocket.swift; sourceTree = "<group>"; };
 		020259C2298820F000E694E7 /* ProxySocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProxySocket.swift; sourceTree = "<group>"; };
 		020259C4298820F000E694E7 /* SocketProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketProtocol.swift; sourceTree = "<group>"; };
-		020259C5298820F000E694E7 /* GlobalIntializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalIntializer.swift; sourceTree = "<group>"; };
 		020259CA298820F100E694E7 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		020259CC298820F100E694E7 /* ConnectSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectSession.swift; sourceTree = "<group>"; };
 		020259CD298820F100E694E7 /* HTTPHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
@@ -2347,7 +2334,6 @@
 			files = (
 				0202569029881ECA00E694E7 /* CocoaAsyncSocket in Frameworks */,
 				02025664298818B200E694E7 /* NetworkExtension.framework in Frameworks */,
-				02025AF6298825AA00E694E7 /* Resolver in Frameworks */,
 				4B470EE4299C6DFB0086EBDC /* Core.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2494,7 +2480,6 @@
 				020259A6298820F000E694E7 /* Socket */,
 				020258FF298820ED00E694E7 /* Tunnel */,
 				0202597B298820EE00E694E7 /* Utils */,
-				020259C5298820F000E694E7 /* GlobalIntializer.swift */,
 				02025904298820ED00E694E7 /* Opt.swift */,
 				020258FE298820ED00E694E7 /* QueueFactory.swift */,
 				020259CA298820F100E694E7 /* Utils.swift */,
@@ -2516,22 +2501,9 @@
 			children = (
 				020258EF298820EC00E694E7 /* TUNInterface.swift */,
 				020258F0298820EC00E694E7 /* IPStackProtocol.swift */,
-				020258F3298820EC00E694E7 /* DNS */,
 				020258F9298820EC00E694E7 /* Packet */,
 			);
 			path = IPStack;
-			sourceTree = "<group>";
-		};
-		020258F3298820EC00E694E7 /* DNS */ = {
-			isa = PBXGroup;
-			children = (
-				020258F4298820EC00E694E7 /* DNSMessage.swift */,
-				020258F5298820EC00E694E7 /* DNSSession.swift */,
-				020258F6298820EC00E694E7 /* DNSServer.swift */,
-				020258F7298820EC00E694E7 /* DNSResolver.swift */,
-				020258F8298820EC00E694E7 /* DNSEnums.swift */,
-			);
-			path = DNS;
 			sourceTree = "<group>";
 		};
 		020258F9298820EC00E694E7 /* Packet */ = {
@@ -4912,7 +4884,6 @@
 			name = PacketTunnelProvider;
 			packageProductDependencies = (
 				0202568F29881ECA00E694E7 /* CocoaAsyncSocket */,
-				02025AF5298825AA00E694E7 /* Resolver */,
 			);
 			productName = PacketTunnelProvider;
 			productReference = 02025662298818B100E694E7 /* PacketTunnelProvider.appex */;
@@ -5276,7 +5247,6 @@
 				4B5167402824B492004C67BA /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */,
 				0202568C29881E4300E694E7 /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */,
-				02025AF22988257900E694E7 /* XCRemoteSwiftPackageReference "Resolver" */,
 				0238E44D29C0FAA100615E30 /* XCRemoteSwiftPackageReference "ios-js-support" */,
 				020108AA29A7D7F800644F9D /* XCRemoteSwiftPackageReference "SVGView" */,
 			);
@@ -5649,11 +5619,6 @@
 				4BEF656C2989C2FC00B650CB /* TunnelEvent.swift in Sources */,
 				02025A9A2988229800E694E7 /* TUNInterface.swift in Sources */,
 				02025A9B2988229800E694E7 /* IPStackProtocol.swift in Sources */,
-				02025A9E2988229800E694E7 /* DNSMessage.swift in Sources */,
-				02025A9F2988229800E694E7 /* DNSSession.swift in Sources */,
-				02025AA02988229800E694E7 /* DNSServer.swift in Sources */,
-				02025AA12988229800E694E7 /* DNSResolver.swift in Sources */,
-				02025AA22988229800E694E7 /* DNSEnums.swift in Sources */,
 				02025AA32988229800E694E7 /* PacketProtocolParser.swift in Sources */,
 				02025AA42988229800E694E7 /* IPPacket.swift in Sources */,
 				02025AA72988229800E694E7 /* ConnectSession.swift in Sources */,
@@ -5700,7 +5665,6 @@
 				02025AE52988229800E694E7 /* HTTPURL.swift in Sources */,
 				02025AE62988229800E694E7 /* HTTPAuthentication.swift in Sources */,
 				02025AE72988229800E694E7 /* StreamScanner.swift in Sources */,
-				02025AE82988229800E694E7 /* GlobalIntializer.swift in Sources */,
 				021D30762989C04200918636 /* ObserverFactory.swift in Sources */,
 				02025AE92988229800E694E7 /* Opt.swift in Sources */,
 				02025AEA2988229800E694E7 /* QueueFactory.swift in Sources */,
@@ -8919,14 +8883,6 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		02025AF22988257900E694E7 /* XCRemoteSwiftPackageReference "Resolver" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/zhuhaow/Resolver";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.3.0;
-			};
-		};
 		0238E44D29C0FAA100615E30 /* XCRemoteSwiftPackageReference "ios-js-support" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/duckduckgo/ios-js-support";
@@ -9011,11 +8967,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0202568C29881E4300E694E7 /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */;
 			productName = CocoaAsyncSocket;
-		};
-		02025AF5298825AA00E694E7 /* Resolver */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 02025AF22988257900E694E7 /* XCRemoteSwiftPackageReference "Resolver" */;
-			productName = Resolver;
 		};
 		0238E44E29C0FAA100615E30 /* FindInPageIOSJSSupport */ = {
 			isa = XCSwiftPackageProductDependency;

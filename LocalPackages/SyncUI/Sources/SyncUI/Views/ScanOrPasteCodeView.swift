@@ -98,10 +98,6 @@ public struct ScanOrPasteCodeView: View {
                 Image("SyncCameraUnavailable")
                     .padding(.top, 40)
                     .padding(.bottom, 20)
-                    // Remove this tap gesture before going live
-                    .onTapGesture {
-                        _ = model.codeScanned("camera unavailable")
-                    }
 
                 Text(UserText.cameraIsUnavailableTitle)
                     .font(.system(size: 20, weight: .bold))

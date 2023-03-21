@@ -22,7 +22,7 @@ import AVFoundation
 
 struct QRCodeScannerView: UIViewRepresentable {
 
-    var onQRCodeScanned: (String) -> Bool
+    var onQRCodeScanned: (String) -> Void
     var onCameraUnavailable: () -> Void
 
     func makeCoordinator() -> Coordinator {
@@ -98,9 +98,8 @@ struct QRCodeScannerView: UIViewRepresentable {
                   let codeObject = metadataObjects[0] as? AVMetadataMachineReadableCodeObject,
                   let code = codeObject.stringValue else { return }
 
-            if cameraView.onQRCodeScanned(code) {
-                stop()
-            }
+            // TODO check that calling this with a valid code ends camera entry - it should since it all should happen on the main thread
+            cameraView.onQRCodeScanned(code)
         }
     }
 

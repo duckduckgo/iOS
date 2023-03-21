@@ -62,13 +62,14 @@ struct PasteCodeView: View {
                         Text(UserText.validatingCode)
                             .foregroundColor(.white.opacity(0.36))
                     }
-                } else if let error = model.codeError {
+                    .padding(.horizontal)
+                } else if model.invalidCode {
                     HStack {
                         Image("SyncAlert")
-
-                        Text(error)
+                        Text(UserText.validatingCodeFailed)
                             .foregroundColor(.white.opacity(0.36))
                     }
+                    .padding(.horizontal)
                 } else {
 
                     instructions()

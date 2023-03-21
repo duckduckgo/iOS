@@ -39,6 +39,14 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         return code
     }
 
+    var deviceName: String {
+        UIDevice.current.name
+    }
+
+    var deviceType: String {
+        isPad ? "tablet" : "phone"
+    }
+
     convenience init() {
         self.init(rootView: SyncSettingsView(model: SyncSettingsViewModel()))
 
@@ -83,9 +91,8 @@ extension SyncSettingsViewController: Themable {
 extension SyncSettingsViewController: SyncManagementViewModelDelegate {
 
     func createAccountAndStartSyncing() {
+        print(#function)
         Task { @MainActor in
-            let deviceName = UIDevice.current.name
-            let deviceType = isPad ? "tablet" : "phone"
             try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
             rootView.model.syncEnabled(recoveryCode: recoveryCode)
             self.showRecoveryPDF()
@@ -93,11 +100,11 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
 
     func showSyncSetup() {
-
-        let model = TurnOnSyncViewModel { [weak self] model in
+        let model = TurnOnSyncViewModel { [weak self] in
             assert(self?.navigationController?.visibleViewController is DismissibleHostingController<TurnOnSyncView>)
             self?.navigationController?.topViewController?.dismiss(animated: true)
-            self?.rootView.model.setupFinished(model)
+            // Handle the finished logic in the closing of the view controller so that we also handle the
+            //  user dismissing it (cancel, swipe down, etc)
         }
 
         let controller = DismissibleHostingController(rootView: TurnOnSyncView(model: model)) { [weak self] in
@@ -286,10 +293,18 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
         return nil
     }
 
-    func syncCodeEntered(code: String) -> Bool {
-        navigationController?.topViewController?.dismiss(animated: true)
-        showDeviceConnected()
-        return true
+    func syncCodeEntered(code: String) async -> Bool {
+        do {
+            try await syncService.login(recoveryKey: code, deviceName: deviceName, deviceType: deviceType)
+            navigationController?.topViewController?.dismiss(animated: true)
+            showDeviceConnected()
+            return true
+        } catch {
+            if !(error is SyncError) {
+                assertionFailure(error.localizedDescription)
+            }
+        }
+        return false
     }
 
     func codeCollectionCancelled() {

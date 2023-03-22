@@ -69,10 +69,8 @@ public class ScanOrPasteCodeViewModel: ObservableObject {
         self.isInRecoveryMode = isInRecoveryMode
     }
 
-    func codeScanned(_ code: String) {
-        Task {
-            await delegate?.syncCodeEntered(code: code)
-        }
+    func codeScanned(_ code: String) async -> Bool {
+        return await delegate?.syncCodeEntered(code: code) == true
     }
 
     func cameraUnavailable() {

@@ -193,7 +193,8 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         model.delegate = self
 
         let controller = DismissibleHostingController(rootView: ScanOrPasteCodeView(model: model)) { [weak self] in
-            self?.rootView.model.codeCollectionCancelled()
+            assert(self?.navigationController?.visibleViewController is DismissibleHostingController<ScanOrPasteCodeView>)
+            self?.navigationController?.topViewController?.dismiss(animated: true)
         }
 
         let navController = UIDevice.current.userInterfaceIdiom == .phone
@@ -235,7 +236,11 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             alert.addAction(title: UserText.syncTurnOffConfirmAction, style: .destructive) {
                 Task { @MainActor in
                     // TODO handle error disconnecting
-                    try await self.syncService.disconnect()
+                    do {
+                        try await self.syncService.disconnect()
+                    } catch {
+                        print(error.localizedDescription)
+                    }
                     continuation.resume(returning: true)
                 }
             }
@@ -294,11 +299,20 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
     }
 
     func syncCodeEntered(code: String) async -> Bool {
+        print(#function, code)
         do {
-            try await syncService.login(recoveryKey: code, deviceName: deviceName, deviceType: deviceType)
-            navigationController?.topViewController?.dismiss(animated: true)
-            showDeviceConnected()
-            return true
+            guard let syncCode = try? SyncCode.decodeBase64String(code) else {
+                return false
+            }
+
+            if let recoveryKey = syncCode.recovery {
+                try await syncService.login(recoveryKey, deviceName: deviceName, deviceType: deviceType)
+                navigationController?.topViewController?.dismiss(animated: true)
+                showDeviceConnected()
+                return true
+            }
+
+            // TODO handle connect code
         } catch {
             if !(error is SyncError) {
                 assertionFailure(error.localizedDescription)

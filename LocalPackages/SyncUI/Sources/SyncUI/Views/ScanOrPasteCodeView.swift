@@ -33,7 +33,7 @@ public struct ScanOrPasteCodeView: View {
         Group {
             if model.showCamera {
                 QRCodeScannerView {
-                    model.codeScanned($0)
+                    return await model.codeScanned($0)
                 } onCameraUnavailable: {
                     model.cameraUnavailable()
                 }

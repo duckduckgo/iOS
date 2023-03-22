@@ -33,7 +33,6 @@ public class Favicons {
         static let requestModifier = FaviconRequestModifier()
         static let bookmarksCache = CacheType.bookmarks.create()
         static let tabsCache = CacheType.tabs.create()
-        static let appUrls = AppUrls()
         static let targetImageSizePoints: CGFloat = 64
         public static let maxFaviconSize: CGSize = CGSize(width: 192, height: 192)
         
@@ -413,7 +412,7 @@ public class Favicons {
             return nil
         }
 
-        if Constants.appUrls.isDuckDuckGo(domain: domain) {
+        if URL.isDuckDuckGo(domain: domain) {
             return nil
         }
 

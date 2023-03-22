@@ -262,6 +262,11 @@ extension WKWebsiteDataStore: WebCacheManagerDataStore {
         types.insert("_WKWebsiteDataTypeHSTSCache")
         types.insert("_WKWebsiteDataTypeMediaKeys")
         types.insert("_WKWebsiteDataTypeAlternativeServices")
+        types.insert("_WKWebsiteDataTypeSearchFieldRecentSearches")
+        types.insert("_WKWebsiteDataTypeResourceLoadStatistics")
+        types.insert("_WKWebsiteDataTypeCredentials")
+        types.insert("_WKWebsiteDataTypeAdClickAttributions")
+        types.insert("_WKWebsiteDataTypePrivateClickMeasurements")
 
         types.remove(WKWebsiteDataTypeCookies)
 

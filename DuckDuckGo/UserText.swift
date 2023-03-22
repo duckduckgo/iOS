@@ -581,4 +581,18 @@ public struct UserText {
 
     public static let daxDialogCookieConsentAcceptButton = NSLocalizedString("dax.cookie-consent.button.accept", value:"Manage Cookie Pop-ups", comment: "Button title accepting to enable feature to automatically manage cookie popups")
     public static let daxDialogCookieConsentRejectButton = NSLocalizedString("dax.cookie-consent.button.reject", value:"No Thanks", comment: "Button title rejecting to enable feature to automatically manage cookie popups")
+
+    public static let syncTurnOffConfirmTitle = "Turn Off Sync?"
+    public static let syncTurnOffConfirmMessage = "This Device will no longer be able to access your synced data."
+    public static let syncTurnOffConfirmAction = "Remove"
+    public static let syncDeleteAllConfirmTitle = "Delete Server Data?"
+    public static let syncDeleteAllConfirmMessage = "All devices will be disconnected and your synced data will be deleted from the server."
+    public static let syncDeleteAllConfirmAction = "Delete Server Data"
+    public static let syncRemoveDeviceTitle = "Remove Device?"
+    public static func syncRemoveDeviceMessage(_ deviceName: String) -> String {
+        let message = NSLocalizedString("sync.remove-device.message", value: "\"%@\" will no longer be able to access your synced data.", comment: "")
+        return message.format(arguments: deviceName)
+    }
+    public static let syncRemoveDeviceConfirmAction = "Remove"
+
 }

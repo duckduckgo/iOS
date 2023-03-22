@@ -122,7 +122,7 @@ private struct CTAView: View {
                 .padding(.horizontal, 55)
 
             Text(text)
-                .font(.system(size: 16, weight: .light))
+                .font(.system(size: 16, weight: .regular))
                 .lineSpacing(3)
                 .padding(.horizontal, 30)
         }

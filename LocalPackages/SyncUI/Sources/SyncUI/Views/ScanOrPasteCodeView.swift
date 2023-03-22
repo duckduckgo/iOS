@@ -57,7 +57,6 @@ public struct ScanOrPasteCodeView: View {
     func cameraPermissionDenied() -> some View {
         if model.videoPermission == .denied {
             VStack(spacing: 0) {
-                HStack { Spacer() }
 
                 Image("SyncCameraPermission")
                     .padding(.top, 40)
@@ -65,12 +64,14 @@ public struct ScanOrPasteCodeView: View {
 
                 Text(UserText.cameraPermissionRequired)
                     .font(.system(size: 20, weight: .bold))
+                    .lineSpacing(1.05)
                     .padding(.bottom, 8)
 
                 Text(UserText.cameraPermissionInstructions)
                     .lineLimit(nil)
                     .multilineTextAlignment(.center)
                     .font(.system(size: 16, weight: .regular))
+                    .lineSpacing(1.1)
 
                 Spacer()
 
@@ -85,7 +86,7 @@ public struct ScanOrPasteCodeView: View {
                 .buttonStyle(SyncLabelButtonStyle())
                 .padding(.bottom, 40)
             }
-            .padding(.horizontal, Constants.hPad)
+            .padding(.horizontal, 40)
         }
     }
 
@@ -104,16 +105,10 @@ public struct ScanOrPasteCodeView: View {
 
                 Text(UserText.cameraIsUnavailableTitle)
                     .font(.system(size: 20, weight: .bold))
-                    .padding(.bottom, 8)
+                    .lineSpacing(1.05)
 
-                Text(UserText.cameraIsUnavailableMessage)
-                    .lineLimit(nil)
-                    .multilineTextAlignment(.center)
-                    .font(.system(size: 16, weight: .regular))
-
-                Spacer()
             }
-            .padding(.horizontal, Constants.hPad)
+            .padding(.horizontal, 40)
         }
     }
 
@@ -195,7 +190,7 @@ public struct ScanOrPasteCodeView: View {
                         
                         cameraViewPort()
                             .frame(width: g.size.width, height: g.size.width)
-                            .frame(maxHeight: g.size.height - Constants.maxCameraHeight)
+                            .frame(maxHeight: g.size.height - 300)
 
                         Group {
                             cameraPermissionDenied()
@@ -211,7 +206,7 @@ public struct ScanOrPasteCodeView: View {
 
                         VStack {
                             instructions()
-                                .padding(.horizontal, Constants.hPad)
+                                .padding(.horizontal, 20)
 
                             List {
                                 buttons()
@@ -220,7 +215,7 @@ public struct ScanOrPasteCodeView: View {
                             .hideScrollContentBackground()
                             .disableScrolling()
                         }
-                        .frame(maxWidth: Constants.maxWidth)
+                        .frame(maxWidth: Constants.maxFullScreenWidth)
                     }
                 }
                 .ignoresSafeArea()

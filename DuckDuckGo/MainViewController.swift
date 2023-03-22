@@ -94,8 +94,6 @@ class MainViewController: UIViewController {
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
 
-    private lazy var appUrls: AppUrls = AppUrls()
-
     var tabManager: TabManager!
     private let previewsSource = TabPreviewsSource()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
@@ -525,6 +523,7 @@ class MainViewController: UIViewController {
 
     @IBAction func onFirePressed() {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
+        DailyPixel.fire(pixel: .experimentDailyFireButtonTapped)
         
         wakeLazyFireButtonAnimator()
         
@@ -574,7 +573,7 @@ class MainViewController: UIViewController {
 
     func loadQueryInNewTab(_ query: String, reuseExisting: Bool = false) {
         dismissOmniBar()
-        guard let url = appUrls.url(forQuery: query) else {
+        guard let url = URL.makeSearchURL(query: query) else {
             os_log("Couldn‘t form URL for query “%s”", log: .lifecycleLog, type: .error, query)
             return
         }
@@ -608,7 +607,7 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func loadQuery(_ query: String) {
-        guard let url = appUrls.url(forQuery: query, queryContext: currentTab?.url) else {
+        guard let url = URL.makeSearchURL(query: query, queryContext: currentTab?.url) else {
             os_log("Couldn‘t form URL for query “%s” with context “%s”",
                    log: .lifecycleLog,
                    type: .error,
@@ -1278,8 +1277,7 @@ extension MainViewController: OmniBarDelegate {
     
     private var isSERPPresented: Bool {
         guard let tabURL = currentTab?.url else { return false }
-            
-        return appUrls.isDuckDuckGoSearch(url: tabURL)
+        return tabURL.isDuckDuckGoSearch
     }
     
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
@@ -1356,7 +1354,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             } else {
                 loadUrl(url)
             }
-        } else if let url = appUrls.searchUrl(text: suggestion.suggestion) {
+        } else if let url = URL.makeSearchURL(text: suggestion.suggestion) {
             loadUrl(url)
         } else {
             os_log("Couldn‘t form URL for suggestion “%s”", log: .lifecycleLog, type: .error, suggestion.suggestion)
@@ -1367,7 +1365,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 
     func autocomplete(pressedPlusButtonForSuggestion suggestion: Suggestion) {
         if let url = suggestion.url {
-            if appUrls.isDuckDuckGoSearch(url: url) {
+            if url.isDuckDuckGoSearch {
                 omniBar.textField.text = suggestion.suggestion
             } else if !url.isBookmarklet() {
                 omniBar.textField.text = url.absoluteString
@@ -1794,6 +1792,7 @@ extension MainViewController: AutoClearWorker {
     func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil, showNextDaxDialog: Bool = false) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
+        DailyPixel.fire(pixel: .experimentDailyFireButtonDataCleared)
         
         self.tabCountInfo = tabManager.makeTabCountInfo()
         

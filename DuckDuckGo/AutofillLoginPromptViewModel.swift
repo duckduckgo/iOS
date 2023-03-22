@@ -160,12 +160,3 @@ internal extension AutofillLoginPromptViewModel {
         return AutofillLoginPromptViewModel(accounts: accountMatches, domain: domain, isExpanded: false)
     }
 }
-
-extension AutofillLoginPromptViewModel: AutofillLoginPromptViewControllerExpansionResponseDelegate {
-    func autofillLoginPromptViewController(_ viewController: AutofillLoginPromptViewController, isExpanded: Bool) {
-        if self.expanded {
-            return // Never collapse after expanding
-        }
-        self.expanded = isExpanded
-    }
-}

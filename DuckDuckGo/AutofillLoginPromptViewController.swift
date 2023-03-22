@@ -23,15 +23,9 @@ import LocalAuthentication
 import BrowserServicesKit
 import Core
 
-protocol AutofillLoginPromptViewControllerExpansionResponseDelegate: AnyObject {
-    func autofillLoginPromptViewController(_ viewController: AutofillLoginPromptViewController, isExpanded: Bool)
-}
-
 class AutofillLoginPromptViewController: UIViewController {
     
-    weak var expansionResponseDelegate: AutofillLoginPromptViewControllerExpansionResponseDelegate?
-    
-    typealias AutofillLoginPromptViewControllerCompletion = ((SecureVaultModels.WebsiteAccount?) -> Void)
+    typealias AutofillLoginPromptViewControllerCompletion = ((SecureVaultModels.WebsiteAccount?, Bool) -> Void)
     let completion: AutofillLoginPromptViewControllerCompletion?
 
     private let accounts: AccountMatches
@@ -63,8 +57,7 @@ class AutofillLoginPromptViewController: UIViewController {
         
         let viewModel = AutofillLoginPromptViewModel(accounts: accounts, domain: domain, isExpanded: isExpanded)
         viewModel.delegate = self
-        expansionResponseDelegate = viewModel
-        
+
         let view = AutofillLoginPromptView(viewModel: viewModel)
         let controller = UIHostingController(rootView: view)
         controller.view.backgroundColor = .clear
@@ -102,12 +95,7 @@ extension AutofillLoginPromptViewController: UISheetPresentationControllerDelega
         } else {
             Pixel.fire(pixel: .autofillLoginsFillLoginInlineManualDismissed)
         }
-        completion?(nil)
-    }
-    
-    @available(iOS 15.0, *)
-    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
-        expansionResponseDelegate?.autofillLoginPromptViewController(self, isExpanded: isExpanded)
+        completion?(nil, false)
     }
 }
 
@@ -122,7 +110,7 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
 
         if AppDependencyProvider.shared.autofillLoginSession.isValidSession {
             dismiss(animated: true, completion: nil)
-            completion?(account)
+            completion?(account, false)
             return
         }
 
@@ -143,7 +131,7 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
                     if success {
                         Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceAuthAuthenticated)
                         AppDependencyProvider.shared.autofillLoginSession.startSession()
-                        completion?(account)
+                        completion?(account, false)
                     } else {
                         if let error = error as? NSError, error.code == LAError.userCancel.rawValue {
                             Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceAuthCancelled)
@@ -152,7 +140,7 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
                         }
                         print(error?.localizedDescription ?? "Failed to authenticate but error nil")
                         AppDependencyProvider.shared.autofillLoginSession.endSession()
-                        completion?(nil)
+                        completion?(nil, false)
                     }
                 }
             }
@@ -163,7 +151,7 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
             Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceAuthUnavailable)
             AppDependencyProvider.shared.autofillLoginSession.endSession()
             dismiss(animated: true) {
-                self.completion?(nil)
+                self.completion?(nil, false)
             }
         }
     }
@@ -176,17 +164,14 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
                 Pixel.fire(pixel: .autofillLoginsFillLoginInlineManualDismissed)
             }
             
-            self.completion?(nil)
+            self.completion?(nil, false)
         }
     }
     
     func autofillLoginPromptViewModelDidRequestExpansion(_ viewModel: AutofillLoginPromptViewModel) {
         if #available(iOS 15.0, *) {
-            if let presentationController = presentationController as? UISheetPresentationController {
-                presentationController.animateChanges {
-                    presentationController.selectedDetentIdentifier = .large
-                }
-                expansionResponseDelegate?.autofillLoginPromptViewController(self, isExpanded: true)
+            dismiss(animated: true) {
+                self.completion?(nil, true)
             }
         }
     }

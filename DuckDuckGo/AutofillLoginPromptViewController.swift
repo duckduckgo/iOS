@@ -24,8 +24,9 @@ import BrowserServicesKit
 import Core
 
 class AutofillLoginPromptViewController: UIViewController {
-    
-    typealias AutofillLoginPromptViewControllerCompletion = ((SecureVaultModels.WebsiteAccount?, Bool) -> Void)
+
+    typealias AutofillLoginPromptViewControllerCompletion = (_ account: SecureVaultModels.WebsiteAccount?,
+                                                             _ showExpanded: Bool) -> Void
     let completion: AutofillLoginPromptViewControllerCompletion?
 
     private let accounts: AccountMatches

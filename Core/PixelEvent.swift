@@ -245,8 +245,6 @@ extension Pixel {
         
         case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
         
-        case autoconsentCookiePopupManaged
-
         case secureVaultInitError
         case secureVaultError
         
@@ -621,8 +619,6 @@ extension Pixel.Event {
             
         case .autofillJSPixelFired(let pixel):
             return "m_ios_\(pixel.pixelName)"
-            
-        case .autoconsentCookiePopupManaged: return "m_autoconsent_cookie_popup_managed"
             
         case .secureVaultInitError: return "m_secure_vault_init_error"
         case .secureVaultError: return "m_secure_vault_error"

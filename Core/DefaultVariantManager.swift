@@ -22,6 +22,9 @@ import os.log
 import Speech
 import BrowserServicesKit
 
+extension FeatureName {
+        
+}
 
 public struct VariantIOS: Variant {
     

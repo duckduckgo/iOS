@@ -52,7 +52,7 @@ class FireBarButtonItem: UIBarButtonItem {
 
 class FireButton: UIButton {
 
-    private var animationView = AnimationView(name: "flame")
+    private var animationView = AnimationView(name: "flame1-light")
     
     convenience init() {
         self.init(type: .system)
@@ -95,9 +95,9 @@ class FireButton: UIButton {
         animationView.isHidden = false
         
         // test of looped animation
-        self.animationView.play(completion: { _ in
+        self.animationView.play(fromFrame: 0, toFrame: 5, completion: { _ in
             
-            self.animationView.play(fromProgress: 0.15, toProgress: 1.0, loopMode: .loop, completion: { _ in
+            self.animationView.play(fromFrame: 5, toFrame: 25, loopMode: .loop, completion: { _ in
                 self.setImage(image, for: .normal)
                 
                 UIView.animate(withDuration: 0.35, animations: {
@@ -142,7 +142,7 @@ extension FireButton: Themable {
     func decorate(with theme: Theme) {
         switch theme.currentImageSet {
         case .light:
-            animationView.animation = Animation.named("flame")
+            animationView.animation = Animation.named("flame1-light")
         case .dark:
             animationView.animation = Animation.named("flame_dark")
         }

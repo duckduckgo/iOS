@@ -29,11 +29,7 @@ struct UnderflowContainer<BackgroundContent: View, ForegroundContent: View>: Vie
         verticalSizeClass == .compact
     }
 
-    @State var minHeight = 0.0 {
-        didSet {
-            print("***", minHeight)
-        }
-    }
+    @State var minHeight = 0.0
 
     let background: () -> BackgroundContent
     let foreground: () -> ForegroundContent
@@ -70,7 +66,6 @@ struct SizePreferenceKey: PreferenceKey {
     static var defaultValue: CGSize = .zero
 
     static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
-        print(#function, value)
         if value.height == 0 || value.width == 0 {
             value = nextValue()
         }

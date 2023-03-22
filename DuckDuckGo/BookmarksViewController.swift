@@ -52,6 +52,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     @IBOutlet var searchBar: UISearchBar!
 
     private let bookmarksDatabase: CoreDataDatabase
+    private let favicons: Favicons
 
     /// Creating left and right toolbar UIBarButtonItems with customView so that 'Edit' button is centered
     private lazy var addFolderButton: UIButton = {
@@ -104,10 +105,12 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     init?(coder: NSCoder,
           bookmarksDatabase: CoreDataDatabase,
           bookmarksSearch: BookmarksStringSearch,
-          parentID: NSManagedObjectID? = nil) {
+          parentID: NSManagedObjectID? = nil,
+          favicons: Favicons = Favicons.shared) {
         self.bookmarksDatabase = bookmarksDatabase
         self.searchDataSource = SearchBookmarksDataSource(searchEngine: bookmarksSearch)
         self.viewModel = BookmarkListViewModel(bookmarksDatabase: bookmarksDatabase, parentID: parentID)
+        self.favicons = favicons
         super.init(coder: coder)
     }
     
@@ -309,6 +312,11 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                                           _ completion: @escaping (Bool) -> Void) {
 
         func delete() {
+            if let domain = bookmark.urlObject?.host?.droppingWwwPrefix(),
+                viewModel.countBookmarksForDomain(domain) == 1 {
+                favicons.removeBookmarkFavicon(forDomain: domain)
+            }
+
             let oldCount = viewModel.bookmarks.count
             viewModel.deleteBookmark(bookmark)
             let newCount = viewModel.bookmarks.count

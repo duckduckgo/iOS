@@ -41,8 +41,8 @@ extension TabViewController {
         items.append(UIAction(title: UserText.actionShare,
                               image: UIImage(systemName: "square.and.arrow.up")) { [weak self] _ in
             guard let webView = self?.webView else { return }
-            let webViewCenter = Point(x: Int(webView.bounds.midX), y: Int(0))
-            self?.onShareAction(forUrl: url, atPoint: webViewCenter)
+            let shareSheetOrigin = Point(x: Int(webView.bounds.midX), y: Int(0))
+            self?.onShareAction(forUrl: url, atPoint: shareSheetOrigin)
         })
 
         return UIMenu(title: url.host?.droppingWwwPrefix() ?? "", children: items + providedElements)

@@ -27,5 +27,3 @@ public class InternalUserStore: InternalUserStoring {
     @UserDefaultsWrapper(key: .featureFlaggingDidVerifyInternalUser, defaultValue: false)
     public var isInternalUser: Bool
 }
-
-

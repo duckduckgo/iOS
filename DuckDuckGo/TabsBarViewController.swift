@@ -44,7 +44,7 @@ class TabsBarViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var buttonsStack: UIStackView!
-    @IBOutlet weak var fireButton: UIButton!
+    @IBOutlet weak var fireButton: FireButton!
     @IBOutlet weak var addTabButton: UIButton!
     @IBOutlet weak var tabSwitcherContainer: UIView!
     @IBOutlet weak var buttonsBackground: UIView!
@@ -94,6 +94,7 @@ class TabsBarViewController: UIViewController {
 
     @IBAction func onFireButtonPressed() {
         DailyPixel.fire(pixel: .experimentDailyFireButtonTapped)
+        fireButton.stopAnimation()
         
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             delegate?.tabsBarDidRequestFireEducationDialog(self)
@@ -281,6 +282,8 @@ extension TabsBarViewController: Themable {
         collectionView.backgroundColor = theme.tabsBarBackgroundColor
         buttonsBackground.backgroundColor = theme.tabsBarBackgroundColor
         tabSwitcherButton.decorate(with: theme)
+        
+        FireButtonExperiment.decorateFireButton(fireButton: fireButton, for: theme)
         
         collectionView.reloadData()
     }

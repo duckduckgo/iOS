@@ -22,11 +22,11 @@ import Lottie
 
 class FireBarButtonItem: UIBarButtonItem {
     
-    private var fireButton: FireButton?
+    private(set) var button: FireButton?
     
     override var tintColor: UIColor? {
         didSet {
-            fireButton?.tintColor = tintColor
+            button?.tintColor = tintColor
         }
     }
     
@@ -37,10 +37,12 @@ class FireBarButtonItem: UIBarButtonItem {
     }
     
     private func setupAnimation() {
-        fireButton = FireButton()
-        fireButton?.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
+        button = FireButton(type: .system)
         
-        customView = fireButton
+        button?.setImage(image, for: .normal)
+        button?.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
+        
+        customView = button
     }
     
     @IBAction func onButtonPressed(_ sender: Any) {
@@ -51,22 +53,33 @@ class FireBarButtonItem: UIBarButtonItem {
     
     public func playAnimation(delay: TimeInterval = 0) {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delay) {
-            self.fireButton?.playAnimation()
+            self.button?.playAnimation()
         }
     }
     
     public func stopAnimation() {
-        fireButton?.stopAnimation()
+        button?.stopAnimation()
     }
 }
 
 class FireButton: UIButton {
 
     private var animationView = AnimationView(name: "flame-light")
+    private var currentlyLoadedStyle: ThemeManager.ImageSet = .light
+    private var normalButtonImage: UIImage?
     
-    convenience init() {
-        self.init(type: .system)
-        setImage(UIImage(named: "Fire"), for: .normal)
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupImageAndAnimationView()
+    }
+
+    public required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupImageAndAnimationView()
+    }
+    
+    private func setupImageAndAnimationView() {
+//        setImage(UIImage(named: "Fire"), for: .normal)
         add(animationView, into: self)
     }
 
@@ -79,9 +92,11 @@ class FireButton: UIButton {
         
         animationView.contentMode = .scaleAspectFit
         
+        let isIPad = UIDevice.current.userInterfaceIdiom == .pad
+        
         animationView.isUserInteractionEnabled = false
-        animationView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -0.5).isActive = true
-        animationView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -0.5).isActive = true
+        animationView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: isIPad ? -4 : -0.5).isActive = true
+        animationView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: isIPad ? 4 : -0.5).isActive = true
         animationView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         animationView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
@@ -98,6 +113,10 @@ class FireButton: UIButton {
         print(" -- playAnimation()")
         guard !animationView.isAnimationPlaying,
               let image = self.image(for: .normal) else { return }
+        
+        if normalButtonImage == nil {
+            normalButtonImage = image
+        }
         
         let blankImage = blankImage(for: image.size)
         setImage(blankImage, for: .normal)
@@ -141,8 +160,11 @@ class FireButton: UIButton {
     public func stopAnimation() {
         print(" -- stopAnimation()")
         
+        guard animationView.isAnimationPlaying,
+              let image = normalButtonImage else { return }
+        
         //        self.animationView.play(fromFrame: 25, toFrame: 30, completion: { _ in
-        self.setImage(UIImage(named: "Fire"), for: .normal)
+        self.setImage(image, for: .normal)
         self.animationView.pause()
         
         UIView.animate(withDuration: 0.35, animations: {
@@ -165,18 +187,23 @@ class FireButton: UIButton {
 extension FireBarButtonItem: Themable {
 
     func decorate(with theme: Theme) {
-        fireButton?.decorate(with: theme)
+        button?.decorate(with: theme)
     }
 }
 
 extension FireButton: Themable {
     
     func decorate(with theme: Theme) {
-        switch theme.currentImageSet {
-        case .light:
-            animationView.animation = Animation.named("flame-light")
-        case .dark:
-            animationView.animation = Animation.named("flame-dark")
+        let newStyle = theme.currentImageSet
+        
+        if currentlyLoadedStyle != newStyle {
+            switch newStyle {
+            case .light:
+                animationView.animation = Animation.named("flame-light")
+            case .dark:
+                animationView.animation = Animation.named("flame-dark")
+            }
+            currentlyLoadedStyle = newStyle
         }
     }
 }

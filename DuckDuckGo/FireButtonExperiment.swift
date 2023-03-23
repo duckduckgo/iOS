@@ -36,7 +36,7 @@ final class FireButtonExperiment {
         DefaultDaxDialogsSettings().fireButtonPulseDateShown = nil
     }
 
-    public static func playFireButtonAnimationOnTabSwitcher(fireButton: FireBarButtonItem,
+    public static func playFireButtonAnimationOnTabSwitcher(fireButton: FireButton,
                                                             tabCount: Int,
                                                             delay: TimeInterval = 0) {
         guard shouldPlayFireButtonAnimation, tabCount > 1 else { return }

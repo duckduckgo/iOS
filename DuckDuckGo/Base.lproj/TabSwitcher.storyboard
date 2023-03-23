@@ -357,7 +357,7 @@
                                             <action selector="onNewTabPressed" destination="LNa-Pc-RyW" eventType="touchUpInside" id="rxt-3n-88f"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5nO-MZ-vSY">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5nO-MZ-vSY" customClass="FireButton" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="54" y="0.0" width="30" height="24"/>
                                         <accessibility key="accessibilityConfiguration" label="Close all tabs and clear data"/>
                                         <constraints>
@@ -553,7 +553,7 @@
                                             <action selector="onNewTabPressed" destination="LNa-Pc-RyW" eventType="touchUpInside" id="nKg-dF-UQL"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hcx-F2-HgO">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hcx-F2-HgO" customClass="FireButton" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="54" y="0.0" width="30" height="44"/>
                                         <accessibility key="accessibilityConfiguration" label="Clear tabs and data"/>
                                         <constraints>

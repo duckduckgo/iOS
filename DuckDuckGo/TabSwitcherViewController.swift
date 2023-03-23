@@ -50,7 +50,7 @@ class TabSwitcherViewController: UIViewController {
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var plusButton: UIBarButtonItem!
     
-    @IBOutlet weak var topFireButton: UIButton!
+    @IBOutlet weak var topFireButton: FireButton!
     @IBOutlet weak var topPlusButton: UIButton!
     @IBOutlet weak var topDoneButton: UIButton!
 
@@ -171,7 +171,9 @@ class TabSwitcherViewController: UIViewController {
                 }
             }
         } else {
-            FireButtonExperiment.playFireButtonAnimationOnTabSwitcher(fireButton: fireButton,
+            guard let button = !topFireButton.isHidden ? topFireButton : fireButton.button else { return }
+            
+            FireButtonExperiment.playFireButtonAnimationOnTabSwitcher(fireButton: button,
                                                                       tabCount: tabsModel.count)
         }
     }
@@ -312,6 +314,7 @@ class TabSwitcherViewController: UIViewController {
         Pixel.fire(pixel: .forgetAllPressedTabSwitching)
         DailyPixel.fire(pixel: .experimentDailyFireButtonTapped)
         fireButton.stopAnimation()
+        topFireButton.stopAnimation()
         
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             let spec = DaxDialogs.shared.fireButtonEducationMessage()

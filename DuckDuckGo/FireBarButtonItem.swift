@@ -68,6 +68,10 @@ class FireButton: UIButton {
     private var currentlyLoadedStyle: ThemeManager.ImageSet = .light
     private var normalButtonImage: UIImage?
     
+    public static func stopAllFireButtonAnimations() {
+        NotificationCenter.default.post(name: .stopFireButtonAnimation, object: nil)
+    }
+    
     public override init(frame: CGRect) {
         super.init(frame: frame)
         setupImageAndAnimationView()
@@ -101,6 +105,15 @@ class FireButton: UIButton {
         animationView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         animationView.isHidden = true
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(stopFireButtonAnimation(_:)),
+                                               name: .stopFireButtonAnimation,
+                                               object: nil)
+    }
+    
+    @objc private func stopFireButtonAnimation(_ notification: Notification) {
+        stopAnimation()
     }
     
     public func playAnimation(delay: TimeInterval = 0) {
@@ -206,4 +219,10 @@ extension FireButton: Themable {
             currentlyLoadedStyle = newStyle
         }
     }
+}
+
+extension NSNotification.Name {
+    
+    static let stopFireButtonAnimation: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.stop-fire-button-animation")
+    
 }

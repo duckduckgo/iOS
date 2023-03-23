@@ -524,7 +524,7 @@ class MainViewController: UIViewController {
     @IBAction func onFirePressed() {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
         DailyPixel.fire(pixel: .experimentDailyFireButtonTapped)
-        fireButton.stopAnimation()
+        FireButton.stopAllFireButtonAnimations()
         
         wakeLazyFireButtonAnimator()
         

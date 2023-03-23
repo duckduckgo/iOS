@@ -313,8 +313,7 @@ class TabSwitcherViewController: UIViewController {
     @IBAction func onFirePressed(sender: AnyObject) {
         Pixel.fire(pixel: .forgetAllPressedTabSwitching)
         DailyPixel.fire(pixel: .experimentDailyFireButtonTapped)
-        fireButton.stopAnimation()
-        topFireButton.stopAnimation()
+        FireButton.stopAllFireButtonAnimations()
         
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             let spec = DaxDialogs.shared.fireButtonEducationMessage()

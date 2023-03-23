@@ -24,6 +24,12 @@ class FireBarButtonItem: UIBarButtonItem {
     
     private var fireButton: FireButton?
     
+    override var tintColor: UIColor? {
+        didSet {
+            fireButton?.tintColor = tintColor
+        }
+    }
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         

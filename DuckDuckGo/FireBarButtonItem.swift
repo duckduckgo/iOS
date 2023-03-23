@@ -48,11 +48,15 @@ class FireBarButtonItem: UIBarButtonItem {
             self.fireButton?.playAnimation()
         }
     }
+    
+    public func stopAnimation() {
+        fireButton?.stopAnimation()
+    }
 }
 
 class FireButton: UIButton {
 
-    private var animationView = AnimationView(name: "flame1-light")
+    private var animationView = AnimationView(name: "flame-light")
     
     convenience init() {
         self.init(type: .system)
@@ -63,7 +67,7 @@ class FireButton: UIButton {
     private func add(_ animationView: AnimationView, into view: UIView) {
         animationView.clipsToBounds = false
         animationView.translatesAutoresizingMaskIntoConstraints = false
-        animationView.backgroundBehavior = .forceFinish
+        animationView.backgroundBehavior = .pauseAndRestore
         
         view.addSubview(animationView)
         
@@ -85,6 +89,7 @@ class FireButton: UIButton {
     }
     
     public func playAnimation() {
+        print(" -- playAnimation()")
         guard !animationView.isAnimationPlaying,
               let image = self.image(for: .normal) else { return }
         
@@ -93,21 +98,27 @@ class FireButton: UIButton {
         
         animationView.alpha = 1
         animationView.isHidden = false
+        animationView.animationSpeed = 1.0
         
         // test of looped animation
-        self.animationView.play(fromFrame: 0, toFrame: 5, completion: { _ in
+//        self.animationView.play(fromFrame: 0, toFrame: 5, completion: { completed in
+//            guard completed else { return }
             
-            self.animationView.play(fromFrame: 5, toFrame: 25, loopMode: .loop, completion: { _ in
-                self.setImage(image, for: .normal)
-                
-                UIView.animate(withDuration: 0.35, animations: {
-                    self.animationView.alpha = 0.0
-                }, completion: { _ in
-                    self.animationView.stop()
-                })
-            })
+            self.animationView.play(fromFrame: 5, toFrame: 25, loopMode: .loop)
             
-        })
+//            self.animationView.play(fromFrame: 5, toFrame: 25, loopMode: .playOnce, completion: { completed in
+//                guard completed else { return }
+//
+//                self.setImage(image, for: .normal)
+//
+//                UIView.animate(withDuration: 0.35, animations: {
+//                    self.animationView.alpha = 0.0
+//                }, completion: { _ in
+//                    self.animationView.stop()
+//                })
+//            })
+            
+//        })
         
         // old style animation
 //        self.animationView.play(completion: { _ in
@@ -118,6 +129,21 @@ class FireButton: UIButton {
 //            }, completion: { _ in
 //                self.animationView.stop()
 //            })
+//        })
+    }
+    
+    public func stopAnimation() {
+        print(" -- stopAnimation()")
+        
+        //        self.animationView.play(fromFrame: 25, toFrame: 30, completion: { _ in
+        self.setImage(UIImage(named: "Fire"), for: .normal)
+        self.animationView.pause()
+        
+        UIView.animate(withDuration: 0.35, animations: {
+            self.animationView.alpha = 0.0
+        }, completion: { _ in
+            self.animationView.stop()
+        })
 //        })
     }
     
@@ -142,9 +168,9 @@ extension FireButton: Themable {
     func decorate(with theme: Theme) {
         switch theme.currentImageSet {
         case .light:
-            animationView.animation = Animation.named("flame1-light")
+            animationView.animation = Animation.named("flame-light")
         case .dark:
-            animationView.animation = Animation.named("flame_dark")
+            animationView.animation = Animation.named("flame-dark")
         }
     }
 }

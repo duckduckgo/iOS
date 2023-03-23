@@ -524,6 +524,7 @@ class MainViewController: UIViewController {
     @IBAction func onFirePressed() {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
         DailyPixel.fire(pixel: .experimentDailyFireButtonTapped)
+        fireButton.stopAnimation()
         
         wakeLazyFireButtonAnimator()
         
@@ -568,6 +569,8 @@ class MainViewController: UIViewController {
         skipSERPFlow = true
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             showFireButtonPulse()
+            
+            tabSwitcherController?.viewDidAppear(false)
         }
     }
 

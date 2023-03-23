@@ -26,7 +26,8 @@ final class FireButtonExperiment {
     // MARK: - Experiment for adding fire animation
     
     private static var shouldPlayFireButtonAnimation: Bool {
-        true
+        #warning("Define and check feature availability for variant")
+        return true
 //        AppDependencyProvider.shared.variantManager.isSupported(feature: .fireButtonWithColorFill)
     }
     
@@ -53,7 +54,8 @@ final class FireButtonExperiment {
     // MARK: - Experiment for adding fire button color
     
     private static var shouldUseFillColor: Bool {
-        true
+        #warning("Define and check feature availability for variant")
+        return false
 //         AppDependencyProvider.shared.variantManager.isSupported(feature: .fireButtonWithColorFill)
      }
 

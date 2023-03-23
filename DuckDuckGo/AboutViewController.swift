@@ -30,6 +30,9 @@ class AboutViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        #warning("remove this before release!")
+        FireButtonExperiment.restartFireButtonEducation()
+        
         applyTheme(ThemeManager.shared.currentTheme)
     }
 

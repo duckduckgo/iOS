@@ -172,8 +172,7 @@ class TabSwitcherViewController: UIViewController {
             }
         } else {
             FireButtonExperiment.playFireButtonAnimationOnTabSwitcher(fireButton: fireButton,
-                                                                      tabCount: tabsModel.count,
-                                                                      delay: 0.5)
+                                                                      tabCount: tabsModel.count)
         }
     }
     
@@ -327,9 +326,6 @@ class TabSwitcherViewController: UIViewController {
             } else {
                 self.present(controller: alert, fromView: toolbar)
             }
-            
-            #warning("remove this later")
-            FireButtonExperiment.restartFireButtonEducation()
         }
     }
 

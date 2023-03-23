@@ -29,6 +29,7 @@ public class AppUserDefaults: AppSettings {
         public static let textSizeChange = Notification.Name("com.duckduckgo.app.TextSizeChange")
         public static let autofillEnabledChange = Notification.Name("com.duckduckgo.app.AutofillEnabledChange")
         public static let didVerifyInternalUser = Notification.Name("com.duckduckgo.app.DidVerifyInternalUser")
+        public static let inspectableWebViewsToggled = Notification.Name("com.duckduckgo.app.DidToggleInspectableWebViews")
     }
 
     private let groupName: String
@@ -61,11 +62,15 @@ public class AppUserDefaults: AppSettings {
         static let autofillCredentialsEnabled = "com.duckduckgo.ios.autofillCredentialsEnabled"
     }
 
+    private struct DebugKeys {
+        static let inspectableWebViewsEnabledKey = "com.duckduckgo.ios.debug.inspectableWebViewsEnabled"
+    }
+
     private var userDefaults: UserDefaults? {
         return UserDefaults(suiteName: groupName)
     }
 
-    init(groupName: String =  "group.com.duckduckgo.app") {
+    init(groupName: String = "group.com.duckduckgo.app") {
         self.groupName = groupName
     }
 
@@ -222,6 +227,20 @@ public class AppUserDefaults: AppSettings {
     
     @UserDefaultsWrapper(key: .autoconsentEnabled, defaultValue: false)
     var autoconsentEnabled: Bool
+
+    var inspectableWebViewEnabled: Bool {
+        get {
+            guard DefaultFeatureFlagger().isInternalUser else {
+                return false
+            }
+
+            return userDefaults?.object(forKey: DebugKeys.inspectableWebViewsEnabledKey) as? Bool ?? false
+        }
+
+        set {
+            userDefaults?.set(newValue, forKey: DebugKeys.inspectableWebViewsEnabledKey)
+        }
+    }
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {

@@ -288,6 +288,28 @@ class TabViewController: UIViewController {
         addTextSizeObserver()
         addDuckDuckGoEmailSignOutObserver()
         registerForDownloadsNotifications()
+
+        if #available(iOS 16.4, *) {
+            registerForInspectableWebViewNotifications()
+        }
+    }
+
+    @available(iOS 16.4, *)
+    private func registerForInspectableWebViewNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateWebViewInspectability),
+                                               name: AppUserDefaults.Notifications.inspectableWebViewsToggled,
+                                               object: nil)
+    }
+
+    @available(iOS 16.4, *) @objc
+    private func updateWebViewInspectability() {
+        guard DefaultFeatureFlagger().isInternalUser else {
+            assertionFailure("Tried to toggle webview inspectability outside of internal mode")
+            return
+        }
+
+        webView.isInspectable = AppUserDefaults().inspectableWebViewEnabled
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -357,6 +379,10 @@ class TabViewController: UIViewController {
         webViewContainer.addSubview(webView)
 
         updateContentMode()
+
+        if #available(iOS 16.4, *) {
+            updateWebViewInspectability()
+        }
 
         instrumentation.didPrepareWebView()
         

@@ -30,6 +30,7 @@ final class FireButtonExperiment {
     
     public static func restartFireButtonEducation() {
         DefaultDaxDialogsSettings().fireButtonEducationShownOrExpired = false
+        DefaultDaxDialogsSettings().fireButtonPulseDateShown = nil
     }
 
     public static func playFireButtonAnimationOnTabSwitcher(fireButton: FireBarButtonItem,

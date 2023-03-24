@@ -274,9 +274,6 @@
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "No logins saved yet";
 
-/* Title for view displayed when autofill is disabled and has no items */
-"autofill.logins.empty-view.title-disabled" = "Enable Autofill to start saving Logins";
-
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Cancel";
 

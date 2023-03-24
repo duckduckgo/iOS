@@ -600,7 +600,6 @@ extension AutofillLoginSettingsListViewController: EnableAutofillSettingsTableVi
 extension AutofillLoginSettingsListViewController: Themable {
 
     func decorate(with theme: Theme) {
-        lockedView.decorate(with: theme)
         emptyView.decorate(with: theme)
         emptySearchView.decorate(with: theme)
         noAuthAvailableView.decorate(with: theme)

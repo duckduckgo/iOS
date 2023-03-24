@@ -18,21 +18,8 @@
 //
 
 import UIKit
-import DuckUI
 
 class AutofillItemsLockedView: UIView {
-   
-    private lazy var title: UILabel = {
-        let label = UILabel(frame: CGRect.zero)
-
-        let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title3)
-        label.font = UIFont.systemFont(ofSize: descriptor.pointSize, weight: .semibold)
-        label.text = UserText.autofillLockedViewTitle
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.lineBreakMode = .byWordWrapping
-        return label
-    }()
 
     private lazy var imageView: UIImageView = {
         let image = UIImage(named: "AutofillLock")
@@ -41,14 +28,7 @@ class AutofillItemsLockedView: UIView {
         imageView.frame = CGRect(x: 0, y: 0, width: 128, height: 96)
         return imageView
     }()
-    
-    private lazy var stackContentView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [imageView, title])
-        stackView.axis = .vertical
-        stackView.spacing = 0
-        return stackView
-    }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         installSubviews()
@@ -60,24 +40,17 @@ class AutofillItemsLockedView: UIView {
     }
     
     private func installSubviews() {
-        addSubview(stackContentView)
+        addSubview(imageView)
     }
     
     private func installConstraints() {
-        stackContentView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            stackContentView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            stackContentView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            heightAnchor.constraint(equalTo: stackContentView.heightAnchor),
-            widthAnchor.constraint(equalTo: stackContentView.widthAnchor)
+            imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            heightAnchor.constraint(equalTo: imageView.heightAnchor),
+            widthAnchor.constraint(equalTo: imageView.widthAnchor)
         ])
-    }
-}
-
-extension AutofillItemsLockedView: Themable {
-    
-    func decorate(with theme: Theme) {
-        title.textColor = theme.autofillLockedViewTextColor
     }
 }

@@ -510,7 +510,6 @@ public struct UserText {
     
     public static let autofillLoginDetailsAddress = NSLocalizedString("autofill.logins.details.address", value:"Website URL", comment: "Address label for login details on autofill")
     public static let autofillLoginDetailsNotes = NSLocalizedString("autofill.logins.details.notes", value:"Notes", comment: "Notes label for login details on autofill")
-    public static let autofillLockedViewTitle = NSLocalizedString("autofill.logins.details.title", value:"Unlock Autofill", comment: "Title for view displayed when autofill is locked")
     public static let autofillEmptyViewTitleDisabled = NSLocalizedString("autofill.logins.empty-view.title-disabled", value:"Enable Autofill to start saving Logins", comment: "Title for view displayed when autofill is disabled and has no items")
     public static let autofillEmptyViewTitle = NSLocalizedString("autofill.logins.empty-view.title", value:"No logins saved yet", comment: "Title for view displayed when autofill has no items")
     public static let autofillEmptyViewSubtitle = NSLocalizedString("autofill.logins.empty-view.subtitle", value:"Logins are stored securely on this device only", comment: "Subtitle for view displayed when autofill has no items")

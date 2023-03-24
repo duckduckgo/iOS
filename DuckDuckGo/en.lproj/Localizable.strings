@@ -176,13 +176,13 @@
 "autofill.keep-enabled.alert.disable" = "Disable";
 
 /* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Keep Using";
+"autofill.keep-enabled.alert.keep-using" = "Keep Saving";
 
 /* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "You can disable Autofill at any time in Settings.";
+"autofill.keep-enabled.alert.message" = "You can disable this at any time in Settings.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Do you want to keep using Autofill?";
+"autofill.keep-enabled.alert.title" = "Do you want to keep saving Logins?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "View";
@@ -265,9 +265,6 @@
 /* Title for alert when attempting to save a duplicate login */
 "autofill.logins.details.save-duplicate-alert.title" = "Duplicated Login";
 
-/* Title for view displayed when autofill is locked */
-"autofill.logins.details.title" = "Unlock Autofill";
-
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Username";
 
@@ -284,7 +281,7 @@
 "autofill.logins.list.auth.cancel" = "Cancel";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Unlock To Use Saved Login";
+"autofill.logins.list.auth.reason" = "Unlock device to access saved Logins";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Close";
@@ -299,19 +296,19 @@
 "autofill.logins.list.login-deleted-message-no-title" = "Login deleted";
 
 /* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Search Logins";
+"autofill.logins.list.search-placeholder" = "Search logins";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Suggested";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Autofill Logins";
+"autofill.logins.list.title" = "Logins";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "A passcode is required to protect your Autofill details. Go to device Settings to set up a passcode.";
+"autofill.logins.no-auth.subtitle" = "A passcode is required to protect your Logins.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Set up your device passcode to use Autofill";
+"autofill.logins.no-auth.title" = "Secure your device to save Logins";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Cancel";
@@ -329,7 +326,7 @@
 "autofill.logins.prompt.partial.match.title" = "From %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Use a Saved Login?";
+"autofill.logins.prompt.title" = "Use a saved Login?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "for '%@'";
@@ -371,7 +368,7 @@
 "autofill.update-password.title" = "Update Password?";
 
 /* Title displayed on modal asking for the user to update the username */
-"autofill.update-usernamr.title" = "Update Username?";
+"autofill.update-usernamr.title" = "Update username?";
 
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Add Bookmark";

@@ -21,6 +21,7 @@ import UIKit
 import Core
 import Bookmarks
 import Persistence
+import Combine
 
 protocol FavoritesOverlayDelegate: AnyObject {
     
@@ -40,6 +41,8 @@ class FavoritesOverlay: UIViewController {
     private var renderer: FavoritesHomeViewSectionRenderer!
     
     private var theme: Theme!
+    
+    fileprivate var viewModelCancellable: AnyCancellable?
     
     weak var delegate: FavoritesOverlayDelegate?
     
@@ -62,11 +65,10 @@ class FavoritesOverlay: UIViewController {
         renderer.install(into: self)
         registerForKeyboardNotifications()
         applyTheme(ThemeManager.shared.currentTheme)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        collectionView.reloadData()
+        
+        viewModelCancellable = renderer.viewModel.externalUpdates.sink { [weak self] _ in
+            self?.collectionView.reloadData()
+        }
     }
     
     override func viewDidLayoutSubviews() {

@@ -64,6 +64,11 @@ class FavoritesOverlay: UIViewController {
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        collectionView.reloadData()
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         

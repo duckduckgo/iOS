@@ -41,26 +41,25 @@ class FireButton: UIButton {
     }
     
     private func setupImageAndAnimationView() {
-//        setImage(UIImage(named: "Fire"), for: .normal)
-        add(animationView, into: self)
+        setupAnimationView()
     }
 
-    private func add(_ animationView: AnimationView, into view: UIView) {
+    private func setupAnimationView() {
         animationView.clipsToBounds = false
         animationView.translatesAutoresizingMaskIntoConstraints = false
         animationView.backgroundBehavior = .pauseAndRestore
         
-        view.addSubview(animationView)
+        addSubview(animationView)
         
         animationView.contentMode = .scaleAspectFit
         
         let isIPad = UIDevice.current.userInterfaceIdiom == .pad
         
         animationView.isUserInteractionEnabled = false
-        animationView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: isIPad ? -4 : -0.5).isActive = true
-        animationView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: isIPad ? 4 : -0.5).isActive = true
-        animationView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        animationView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        animationView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: isIPad ? -4 : -0.5).isActive = true
+        animationView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: isIPad ? 4 : -0.5).isActive = true
+        animationView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        animationView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         
         animationView.isHidden = true
         
@@ -73,15 +72,8 @@ class FireButton: UIButton {
     @objc private func stopFireButtonAnimation(_ notification: Notification) {
         stopAnimation()
     }
-    
-    public func playAnimation(delay: TimeInterval = 0) {
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delay) {
-            self.playAnimation()
-        }
-    }
-    
+
     public func playAnimation() {
-        print(" -- playAnimation()")
         guard !animationView.isAnimationPlaying,
               let image = self.image(for: .normal) else { return }
         
@@ -96,46 +88,16 @@ class FireButton: UIButton {
         animationView.isHidden = false
         animationView.animationSpeed = 1.0
         
-        // test of looped animation
-//        self.animationView.play(fromFrame: 0, toFrame: 5, completion: { completed in
-//            guard completed else { return }
-            
-            self.animationView.play(fromFrame: 5, toFrame: 25, loopMode: .loop)
-            
-//            self.animationView.play(fromFrame: 5, toFrame: 25, loopMode: .playOnce, completion: { completed in
-//                guard completed else { return }
-//
-//                self.setImage(image, for: .normal)
-//
-//                UIView.animate(withDuration: 0.35, animations: {
-//                    self.animationView.alpha = 0.0
-//                }, completion: { _ in
-//                    self.animationView.stop()
-//                })
-//            })
-            
-//        })
-        
-        // old style animation
-//        self.animationView.play(completion: { _ in
-//            self.setImage(image, for: .normal)
-//
-//            UIView.animate(withDuration: 0.35, animations: {
-//                self.animationView.alpha = 0.0
-//            }, completion: { _ in
-//                self.animationView.stop()
-//            })
-//        })
+        animationView.play(fromFrame: 5, toFrame: 25, loopMode: .loop)
     }
     
     public func stopAnimation() {
-        print(" -- stopAnimation()")
         
         guard animationView.isAnimationPlaying,
               let image = normalButtonImage else { return }
         
-        //        self.animationView.play(fromFrame: 25, toFrame: 30, completion: { _ in
         self.setImage(image, for: .normal)
+        
         self.animationView.pause()
         
         UIView.animate(withDuration: 0.35, animations: {
@@ -143,7 +105,6 @@ class FireButton: UIButton {
         }, completion: { _ in
             self.animationView.stop()
         })
-//        })
     }
     
     private func blankImage(for size: CGSize) -> UIImage? {

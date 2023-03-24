@@ -23,7 +23,7 @@ import Core
 
 final class FireButtonExperiment {
     
-    // MARK: - Experiment for adding fire animation
+    // MARK: - Experiment #1 - adding fire button animation
     
     private static var shouldPlayFireButtonAnimation: Bool {
         #warning("Define and check feature availability for variant")
@@ -37,21 +37,21 @@ final class FireButtonExperiment {
     }
 
     public static func playFireButtonAnimationOnTabSwitcher(fireButton: FireButton,
-                                                            tabCount: Int,
-                                                            delay: TimeInterval = 0) {
+                                                            tabCount: Int) {
         guard shouldPlayFireButtonAnimation, tabCount > 1 else { return }
         
-        fireButton.playAnimation(delay: delay)
+        fireButton.playAnimation()
     }
     
-    public static func playFireButtonForOnboarding(fireButton: FireButton,
-                                                   delay: TimeInterval = 0) {
+    public static func playFireButtonForOnboarding(fireButton: FireButton) {
         guard shouldPlayFireButtonAnimation else { return }
         
-        fireButton.playAnimation(delay: delay)
+        fireButton.playAnimation()
     }
     
-    // MARK: - Experiment for adding fire button color
+    //
+    // MARK: - Experiment #2 - adding fire button color
+    //
     
     private static var shouldUseFillColor: Bool {
         #warning("Define and check feature availability for variant")

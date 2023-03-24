@@ -312,7 +312,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                                           _ completion: @escaping (Bool) -> Void) {
 
         func delete() {
-            if let domain = bookmark.urlObject?.host?.droppingWwwPrefix(),
+            if let domain = bookmark.urlObject?.host,
                 viewModel.countBookmarksForDomain(domain) == 1 {
                 favicons.removeBookmarkFavicon(forDomain: domain)
             }

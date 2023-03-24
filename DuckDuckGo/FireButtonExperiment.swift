@@ -39,6 +39,8 @@ final class FireButtonExperiment {
         else { return }
         
         fireButton.playAnimation()
+        
+        Pixel.fire(pixel: .experimentFireButtonAnimationTriggeredOnTabSwitcher)
     }
     
     public static func playFireButtonForOnboarding(fireButton: FireButton) {
@@ -60,12 +62,21 @@ final class FireButtonExperiment {
     }
     
     public static func restartFireButtonEducationIfNeeded() {
-        guard !wasFireButtonEverTapped,
+        guard !wasFireButtonEducationRestarted,
+              !wasFireButtonEverTapped,
               isAtLeastThreeDaysFromInstallation
         else { return }
               
         DefaultDaxDialogsSettings().fireButtonEducationShownOrExpired = false
         DefaultDaxDialogsSettings().fireButtonPulseDateShown = nil
+        
+        #warning("wasFireButtonEducationRestarted to true")
+        Pixel.fire(pixel: .experimentFireButtonEducationRestarted)
+    }
+    
+    private static var wasFireButtonEducationRestarted: Bool {
+        return false
+        #warning("check from user defaults")
     }
     
     private static var isAtLeastThreeDaysFromInstallation: Bool {
@@ -75,7 +86,7 @@ final class FireButtonExperiment {
 
         return true
         #warning("remove hardcoded condition")
-//        return daysSinceInstall >= 3        
+//        return daysSinceInstall >= 3
     }
     
     //

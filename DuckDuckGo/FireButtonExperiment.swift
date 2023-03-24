@@ -28,7 +28,8 @@ final class FireButtonExperiment {
     private static var shouldPlayFireButtonAnimation: Bool {
         #warning("Define and check feature availability for variant")
         return true
-//        AppDependencyProvider.shared.variantManager.isSupported(feature: .fireButtonWithColorFill)
+        
+        AppDependencyProvider.shared.variantManager.isSupported(feature: .fireButtonAnimation)
     }
     
     public static func restartFireButtonEducation() {
@@ -49,6 +50,7 @@ final class FireButtonExperiment {
         fireButton.playAnimation()
     }
     
+    
     //
     // MARK: - Experiment #2 - adding fire button color
     //
@@ -56,7 +58,8 @@ final class FireButtonExperiment {
     private static var shouldUseFillColor: Bool {
         #warning("Define and check feature availability for variant")
         return false
-//         AppDependencyProvider.shared.variantManager.isSupported(feature: .fireButtonWithColorFill)
+        
+         AppDependencyProvider.shared.variantManager.isSupported(feature: .fireButtonColor)
      }
 
      private static func fireButtonFillColor(for theme: Theme) -> UIColor {

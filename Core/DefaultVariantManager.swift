@@ -23,7 +23,10 @@ import Speech
 import BrowserServicesKit
 
 extension FeatureName {
-        
+    
+    public static let fireButtonAnimation = FeatureName(rawValue: "fireButtonAnimation")
+    public static let fireButtonColor = FeatureName(rawValue: "fireButtonColor")
+    
 }
 
 public struct VariantIOS: Variant {

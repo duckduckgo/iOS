@@ -31,7 +31,7 @@ class AboutViewController: UIViewController {
         super.viewDidLoad()
         
         #warning("remove this before release!")
-        FireButtonExperiment.restartFireButtonEducation()
+        FireButtonExperiment.restartFireButtonEducationIfNeeded()
         
         applyTheme(ThemeManager.shared.currentTheme)
     }

@@ -23,58 +23,94 @@ import Core
 
 final class FireButtonExperiment {
     
+    static let calendarUTC = {
+        var calendarUTC = Calendar(identifier: .gregorian)
+        calendarUTC.timeZone = TimeZone(identifier: "UTC")!
+        return calendarUTC
+    }()
+    
     // MARK: - Experiment #1 - adding fire button animation
-    
-    private static var shouldPlayFireButtonAnimation: Bool {
-        #warning("Define and check feature availability for variant")
-        return true
-        
-        AppDependencyProvider.shared.variantManager.isSupported(feature: .fireButtonAnimation)
-    }
-    
-    public static func restartFireButtonEducation() {
-        DefaultDaxDialogsSettings().fireButtonEducationShownOrExpired = false
-        DefaultDaxDialogsSettings().fireButtonPulseDateShown = nil
-    }
 
     public static func playFireButtonAnimationOnTabSwitcher(fireButton: FireButton,
                                                             tabCount: Int) {
-        guard shouldPlayFireButtonAnimation, tabCount > 1 else { return }
+        guard isFireButtonAnimationFeatureEnabled,
+              tabCount > 1,
+              !wasFireButtonEverTapped
+        else { return }
         
         fireButton.playAnimation()
     }
     
     public static func playFireButtonForOnboarding(fireButton: FireButton) {
-        guard shouldPlayFireButtonAnimation else { return }
+        guard isFireButtonAnimationFeatureEnabled else { return }
         
         fireButton.playAnimation()
     }
     
+    private static var isFireButtonAnimationFeatureEnabled: Bool {
+        #warning("Define and check feature availability for variant")
+        return true
+        
+//        AppDependencyProvider.shared.variantManager.isSupported(feature: .fireButtonAnimation)
+    }
+    
+    private static var wasFireButtonEverTapped: Bool {
+        return false
+        #warning("check from user defaults")
+    }
+    
+    public static func restartFireButtonEducationIfNeeded() {
+        guard !wasFireButtonEverTapped,
+              isAtLeastThreeDaysFromInstallation
+        else { return }
+              
+        DefaultDaxDialogsSettings().fireButtonEducationShownOrExpired = false
+        DefaultDaxDialogsSettings().fireButtonPulseDateShown = nil
+    }
+    
+    private static var isAtLeastThreeDaysFromInstallation: Bool {
+        guard let installDate = StatisticsUserDefaults().installDate,
+              let daysSinceInstall = calendarUTC.numberOfCalendarDaysBetween(installDate, and: Date())
+        else { return false }
+
+        return true
+        #warning("remove hardcoded condition")
+//        return daysSinceInstall >= 3        
+    }
     
     //
     // MARK: - Experiment #2 - adding fire button color
     //
     
-    private static var shouldUseFillColor: Bool {
-        #warning("Define and check feature availability for variant")
-        return false
-        
+     public static func decorateFireButton(fireButton: UIBarButtonItem, for theme: Theme) {
+         guard isFireButtonColorFeatureEnabled else { return }
+
+         fireButton.tintColor = fireButtonFillColor(for: theme)
+     }
+
+     public static func decorateFireButton(fireButton: UIButton, for theme: Theme) {
+         guard isFireButtonColorFeatureEnabled else { return }
+
+         fireButton.tintColor = fireButtonFillColor(for: theme)
+     }
+    
+    private static var isFireButtonColorFeatureEnabled: Bool {
          AppDependencyProvider.shared.variantManager.isSupported(feature: .fireButtonColor)
      }
 
      private static func fireButtonFillColor(for theme: Theme) -> UIColor {
          theme.currentImageSet == .light ? .redBase : .red40
      }
+}
 
-     public static func decorateFireButton(fireButton: UIBarButtonItem, for theme: Theme) {
-         guard shouldUseFillColor else { return }
-
-         fireButton.tintColor = fireButtonFillColor(for: theme)
-     }
-
-     public static func decorateFireButton(fireButton: UIButton, for theme: Theme) {
-         guard shouldUseFillColor else { return }
-
-         fireButton.tintColor = fireButtonFillColor(for: theme)
-     }
+extension Calendar {
+    
+    func numberOfCalendarDaysBetween(_ from: Date, and to: Date) -> Int? {
+        let fromDate = startOfDay(for: from)
+        let toDate = startOfDay(for: to)
+        let numberOfDays = dateComponents([.day], from: fromDate, to: toDate)
+        
+        return numberOfDays.day
+    }
+    
 }

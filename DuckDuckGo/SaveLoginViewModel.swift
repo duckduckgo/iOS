@@ -99,10 +99,6 @@ final class SaveLoginViewModel: ObservableObject {
             return .updatePassword
         }
 
-        if credentialManager.hasOtherCredentialsOnSameDomain {
-            return .saveAdditionalLogin
-        }
-
         return .saveLogin
     }()
     

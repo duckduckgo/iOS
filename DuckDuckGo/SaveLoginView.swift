@@ -26,7 +26,6 @@ struct SaveLoginView: View {
         case newUser
         case saveLogin
         case savePassword
-        case saveAdditionalLogin
         case updateUsername
         case updatePassword
     }
@@ -44,8 +43,6 @@ struct SaveLoginView: View {
         switch layoutType {
         case .newUser, .saveLogin:
             return UserText.autofillSaveLoginTitleNewUser
-        case .saveAdditionalLogin:
-            return UserText.autofillSaveLoginTitle
         case .savePassword:
             return UserText.autofillSavePasswordTitle
         case .updateUsername:
@@ -57,7 +54,7 @@ struct SaveLoginView: View {
     
     private var confirmButton: String {
         switch layoutType {
-        case .newUser, .saveLogin, .saveAdditionalLogin:
+        case .newUser, .saveLogin:
             return UserText.autofillSaveLoginSaveCTA
         case .savePassword:
             return UserText.autofillSavePasswordSaveCTA
@@ -212,8 +209,6 @@ struct SaveLoginView: View {
         switch layoutType {
         case .newUser, .saveLogin, .savePassword:
             newUserContentView
-        case .saveAdditionalLogin:
-            additionalLoginContentView
         case .updateUsername, .updatePassword:
             updateContentView
         }
@@ -233,15 +228,6 @@ struct SaveLoginView: View {
         Text(verbatim: layoutType == .updatePassword ? viewModel.hiddenPassword : viewModel.username)
             .font(Const.Fonts.userInfo)
             .lineLimit(1)
-            .frame(maxWidth: .infinity)
-            .multilineTextAlignment(.center)
-            .padding(.horizontal, isSmallFrame ? Const.Size.paddingSmallDevice : Const.Size.paddingDefault)
-    }
-    
-    private var additionalLoginContentView: some View {
-        Text(verbatim: UserText.autofillAdditionalLoginInfoMessage)
-            .font(Const.Fonts.subtitle)
-            .secondaryTextStyle()
             .frame(maxWidth: .infinity)
             .multilineTextAlignment(.center)
             .padding(.horizontal, isSmallFrame ? Const.Size.paddingSmallDevice : Const.Size.paddingDefault)
@@ -314,7 +300,7 @@ struct SaveLoginView_Previews: PreviewProvider {
             VStack {
                 let viewModelAdditionalLogin = SaveLoginViewModel(credentialManager: MockManager(),
                                                                   appSettings: AppDependencyProvider.shared.appSettings,
-                                                                  layoutType: .saveAdditionalLogin)
+                                                                  layoutType: .saveLogin)
                 SaveLoginView(viewModel: viewModelAdditionalLogin)
                 
                 let viewModelSavePassword = SaveLoginViewModel(credentialManager: MockManager(),

@@ -7429,7 +7429,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "graeme/feature-flagging-with-autofill-subfeatures";
+				branch = "graeme/support-internal-config-feature-state";
 				kind = branch;
 			};
 		};

@@ -1402,6 +1402,7 @@ extension TabViewController: WKNavigationDelegate {
 
             completion(.cancel)
             self.load(urlRequest: newRequest)
+            return
 
         } else if let urlProvidedBasicAuthCredential,
                   url != urlProvidedBasicAuthCredential.url {

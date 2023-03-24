@@ -154,6 +154,7 @@ class ConfigurationDebugViewController: UITableViewController {
         }
     }
 
+    // swiftlint:disable cyclomatic_complexity
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch Sections(rawValue: indexPath.section) {
         case .refreshInformation:
@@ -165,12 +166,17 @@ class ConfigurationDebugViewController: UITableViewController {
                 let location = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContentBlockerStoreConstants.groupName)
                 UIPasteboard.general.string = location?.path ?? ""
             case .forceRefresh:
-                AppConfigurationFetch().start { [weak tableView] newData in
-                    if newData {
+                AppConfigurationFetch().start { [weak tableView] result in
+                    switch result {
+                    case .assetsUpdated(let protectionsUpdated):
+                        if protectionsUpdated {
+                            ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+                        }
                         DispatchQueue.main.async {
                             tableView?.reloadData()
                         }
-                        ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+                    case .noData:
+                        break
                     }
                 }
             default: break

@@ -24,7 +24,7 @@ import os.log
 import BrowserServicesKit
 import Configuration
 
-public typealias AppConfigurationCompletion = (Bool) -> Void
+typealias AppConfigurationFetchCompletion = (ConfigurationManager.UpdateResult) -> Void
 
 protocol CompletableTask {
 
@@ -53,7 +53,7 @@ class AppConfigurationFetch {
         static let backgroundTaskName = "Fetch Configuration Task"
         static let backgroundProcessingTaskIdentifier = "com.duckduckgo.app.configurationRefresh"
         static let minimumConfigurationRefreshInterval: TimeInterval = 60 * 30
-        
+
     }
     
     private struct Keys {
@@ -99,13 +99,13 @@ class AppConfigurationFetch {
     }
     
     func start(isBackgroundFetch: Bool = false,
-               completion: AppConfigurationCompletion?) {
+               completion: AppConfigurationFetchCompletion?) {
         guard Self.shouldRefresh else {
             // Statistics are not sent after a successful background refresh in order to reduce the time spent in the background, so they are checked
             // here in case a background refresh has happened recently.
             Self.fetchQueue.async {
                 self.sendStatistics {
-                    completion?(false)
+                    completion?(.noData)
                 }
             }
 
@@ -114,7 +114,7 @@ class AppConfigurationFetch {
         
         type(of: self).fetchQueue.async {
             let taskID = UIApplication.shared.beginBackgroundTask(withName: Constants.backgroundTaskName)
-            self.fetchConfigurationFiles(isBackground: isBackgroundFetch) { fetchedNewData in
+            self.fetchConfigurationFiles(isBackground: isBackgroundFetch) { result in
                 if !isBackgroundFetch {
                     type(of: self).fetchQueue.async {
                         self.sendStatistics {
@@ -124,8 +124,8 @@ class AppConfigurationFetch {
                 } else {
                     UIApplication.shared.endBackgroundTask(taskID)
                 }
-                
-                completion?(fetchedNewData)
+
+                completion?(result)
             }
         }
     }
@@ -166,12 +166,19 @@ class AppConfigurationFetch {
         #endif
     }
     
-    private func fetchConfigurationFiles(isBackground: Bool, onDidComplete: @escaping (Bool) -> Void) {
+    private func fetchConfigurationFiles(isBackground: Bool, onDidComplete: @escaping AppConfigurationFetchCompletion) {
         Task {
             self.markFetchStarted(isBackground: isBackground)
-            let newData = await AppDependencyProvider.shared.configurationManager.update()
-            self.markFetchCompleted(isBackground: isBackground, hasNewData: newData)
-            onDidComplete(newData)
+            let result = await AppDependencyProvider.shared.configurationManager.update()
+
+            switch result {
+            case .noData:
+                self.markFetchCompleted(isBackground: isBackground, hasNewData: false)
+            case .assetsUpdated:
+                self.markFetchCompleted(isBackground: isBackground, hasNewData: true)
+            }
+
+            onDidComplete(result)
         }
     }
     
@@ -283,14 +290,25 @@ extension AppConfigurationFetch {
         }
         
         queue.async {
-            configurationFetcher.fetchConfigurationFiles(isBackground: true) { fetchedNewData in
-                Self.shouldScheduleRulesCompilationOnAppLaunch = true
+            configurationFetcher.fetchConfigurationFiles(isBackground: true) { result in
+
+                let status: BackgroundRefreshCompletionStatus
+                switch result {
+                case .noData:
+                    status = .noData
+                case .assetsUpdated(let protectionsUpdated):
+                    status = .newData
+
+                    if protectionsUpdated {
+                        Self.shouldScheduleRulesCompilationOnAppLaunch = true
+                    }
+                }
                 
                 DispatchQueue.main.async {
                     lastCompletionStatus = backgroundRefreshTaskCompletionHandler(store: store,
                                                                                   refreshStartDate: refreshStartDate,
                                                                                   task: task,
-                                                                                  status: fetchedNewData ? .newData : .noData,
+                                                                                  status: status,
                                                                                   previousStatus: lastCompletionStatus)
                 }
             }

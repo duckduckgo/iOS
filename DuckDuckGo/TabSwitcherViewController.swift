@@ -502,6 +502,7 @@ extension TabSwitcherViewController: Themable {
         topFireButton.tintColor = theme.barTintColor
         
         fireButton.decorate(with: theme)
+        topFireButton.decorate(with: theme)
         
         toolbar.barTintColor = theme.barBackgroundColor
         toolbar.tintColor = theme.barTintColor

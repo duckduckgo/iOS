@@ -210,12 +210,19 @@ extension FireButton: Themable {
         let newStyle = theme.currentImageSet
         
         if currentlyLoadedStyle != newStyle {
+            let shouldResumePlaying = animationView.isAnimationPlaying
+            
             switch newStyle {
             case .light:
                 animationView.animation = Animation.named("flame-light")
             case .dark:
                 animationView.animation = Animation.named("flame-dark")
             }
+            
+            if shouldResumePlaying {
+                playAnimation()
+            }
+            
             currentlyLoadedStyle = newStyle
         }
     }

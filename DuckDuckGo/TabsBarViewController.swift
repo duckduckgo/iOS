@@ -281,6 +281,7 @@ extension TabsBarViewController: Themable {
         view.tintColor = theme.barTintColor
         collectionView.backgroundColor = theme.tabsBarBackgroundColor
         buttonsBackground.backgroundColor = theme.tabsBarBackgroundColor
+        fireButton.decorate(with: theme)
         tabSwitcherButton.decorate(with: theme)
         
         FireButtonExperiment.decorateFireButton(fireButton: fireButton, for: theme)

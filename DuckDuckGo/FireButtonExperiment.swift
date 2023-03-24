@@ -50,19 +50,20 @@ final class FireButtonExperiment {
     }
     
     private static var isFireButtonAnimationFeatureEnabled: Bool {
-        #warning("Define and check feature availability for variant")
-        return true
-        
-//        AppDependencyProvider.shared.variantManager.isSupported(feature: .fireButtonAnimation)
+        AppDependencyProvider.shared.variantManager.isSupported(feature: .fireButtonAnimation)
     }
     
     private static var wasFireButtonEverTapped: Bool {
-        return false
-        #warning("check from user defaults")
+        AppUserDefaults().wasFireButtonEverTapped
+    }
+    
+    public static func storeThatFireButtonWasTapped() {
+        AppUserDefaults().wasFireButtonEverTapped = true
     }
     
     public static func restartFireButtonEducationIfNeeded() {
-        guard !wasFireButtonEducationRestarted,
+        guard isFireButtonAnimationFeatureEnabled,
+              !wasFireButtonEducationRestarted,
               !wasFireButtonEverTapped,
               isAtLeastThreeDaysFromInstallation
         else { return }
@@ -70,13 +71,16 @@ final class FireButtonExperiment {
         DefaultDaxDialogsSettings().fireButtonEducationShownOrExpired = false
         DefaultDaxDialogsSettings().fireButtonPulseDateShown = nil
         
-        #warning("wasFireButtonEducationRestarted to true")
+        storeThatFireButtonEducationWasRestarted()
         Pixel.fire(pixel: .experimentFireButtonEducationRestarted, includedParameters: [.atb])
     }
     
     private static var wasFireButtonEducationRestarted: Bool {
-        return false
-        #warning("check from user defaults")
+        AppUserDefaults().wasFireButtonEducationRestarted
+    }
+    
+    private static func storeThatFireButtonEducationWasRestarted() {
+        AppUserDefaults().wasFireButtonEducationRestarted = true
     }
     
     private static var isAtLeastThreeDaysFromInstallation: Bool {
@@ -84,9 +88,7 @@ final class FireButtonExperiment {
               let daysSinceInstall = calendarUTC.numberOfCalendarDaysBetween(installDate, and: Date())
         else { return false }
 
-        return true
-        #warning("remove hardcoded condition")
-//        return daysSinceInstall >= 3
+        return daysSinceInstall >= 3
     }
     
     //

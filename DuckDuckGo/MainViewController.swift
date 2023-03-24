@@ -526,6 +526,8 @@ class MainViewController: UIViewController {
         DailyPixel.fire(pixel: .experimentDailyFireButtonTapped)
         FireButton.stopAllFireButtonAnimations()
         
+        FireButtonExperiment.storeThatFireButtonWasTapped()
+        
         wakeLazyFireButtonAnimator()
         
         if let spec = DaxDialogs.shared.fireButtonEducationMessage() {

@@ -90,6 +90,9 @@ public struct UserDefaultsWrapper<T> {
 
         case shouldScheduleRulesCompilationOnAppLaunch = "com.duckduckgo.ios.shouldScheduleRulesCompilationOnAppLaunch"
 
+        case wasFireButtonEverTapped = "com.duckduckgo.ios.wasFireButtonEverTapped"
+        case wasFireButtonEducationRestarted = "com.duckduckgo.ios.wasFireButtonEducationRestarted"
+        
     }
 
     private let key: Key

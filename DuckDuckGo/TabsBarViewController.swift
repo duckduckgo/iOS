@@ -96,6 +96,8 @@ class TabsBarViewController: UIViewController {
         DailyPixel.fire(pixel: .experimentDailyFireButtonTapped)
         FireButton.stopAllFireButtonAnimations()
         
+        FireButtonExperiment.storeThatFireButtonWasTapped()
+        
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             delegate?.tabsBarDidRequestFireEducationDialog(self)
         } else {

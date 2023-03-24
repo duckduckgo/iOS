@@ -315,6 +315,8 @@ class TabSwitcherViewController: UIViewController {
         DailyPixel.fire(pixel: .experimentDailyFireButtonTapped)
         FireButton.stopAllFireButtonAnimations()
         
+        FireButtonExperiment.storeThatFireButtonWasTapped()
+        
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             let spec = DaxDialogs.shared.fireButtonEducationMessage()
             performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)

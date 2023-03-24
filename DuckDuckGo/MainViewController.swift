@@ -1287,8 +1287,7 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onEnterPressed() {
-        guard !suggestionTrayContainer.isHidden else { return }
-        
+        guard !suggestionTrayContainer.isHidden else { return }        
         suggestionTrayController?.willDismiss(with: omniBar.textField.text ?? "")
     }
 

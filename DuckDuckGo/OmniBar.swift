@@ -500,8 +500,9 @@ extension OmniBar: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        refreshState(state.onEditingStoppedState)
+        onQuerySubmitted()
         omniDelegate?.onEnterPressed()
+        refreshState(state.onEditingStoppedState)
         return true
     }
     

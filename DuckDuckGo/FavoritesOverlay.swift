@@ -42,7 +42,7 @@ class FavoritesOverlay: UIViewController {
     
     private var theme: Theme!
     
-    fileprivate var viewModelCancellable: AnyCancellable?
+    private var viewModelCancellable: AnyCancellable?
     
     weak var delegate: FavoritesOverlayDelegate?
     

@@ -38,7 +38,11 @@ struct SaveLoginView: View {
     var layoutType: LayoutType {
         viewModel.layoutType
     }
-    
+
+    private var usernameDisplayString: String {
+        AutofillInterfaceUsernameTruncator.truncateUsername(viewModel.username, maxLength: 50)
+    }
+
     private var title: String {
         switch layoutType {
         case .newUser, .saveLogin:
@@ -48,7 +52,7 @@ struct SaveLoginView: View {
         case .updateUsername:
             return UserText.autofillUpdateUsernameTitle
         case .updatePassword:
-            return UserText.autofillUpdatePasswordTitle
+            return UserText.autofillUpdatePassword(for: usernameDisplayString)
         }
     }
     
@@ -207,15 +211,15 @@ struct SaveLoginView: View {
     @ViewBuilder
     private var contentView: some View {
         switch layoutType {
-        case .newUser, .saveLogin, .savePassword:
-            newUserContentView
-        case .updateUsername, .updatePassword:
-            updateContentView
+        case .newUser, .saveLogin, .savePassword, .updatePassword:
+            defaultContentView
+        case .updateUsername:
+            updateUsernameContentView
         }
     }
     
-    private var newUserContentView: some View {
-        Text(UserText.autofillSaveLoginMessageNewUser)
+    private var defaultContentView: some View {
+        Text(layoutType == .updatePassword ? UserText.autoUpdatePasswordMessage : UserText.autofillSaveLoginMessageNewUser)
             .font(Const.Fonts.subtitle)
             .secondaryTextStyle()
             .multilineTextAlignment(.center)
@@ -224,8 +228,8 @@ struct SaveLoginView: View {
             .fixedSize(horizontal: false, vertical: true)
     }
     
-    private var updateContentView: some View {
-        Text(verbatim: layoutType == .updatePassword ? viewModel.hiddenPassword : viewModel.username)
+    private var updateUsernameContentView: some View {
+        Text(verbatim: viewModel.usernameTruncated)
             .font(Const.Fonts.userInfo)
             .lineLimit(1)
             .frame(maxWidth: .infinity)

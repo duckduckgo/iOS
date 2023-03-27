@@ -73,11 +73,15 @@ final class SaveLoginViewModel: ObservableObject {
     var hiddenPassword: String {
         PasswordHider(password: credentialManager.visiblePassword).hiddenPassword
     }
-    
+
     var username: String {
+        credentialManager.username
+    }
+
+    var usernameTruncated: String {
         AutofillInterfaceEmailTruncator.truncateEmail(credentialManager.username, maxLength: 36)
     }
-    
+
     lazy var layoutType: SaveLoginView.LayoutType = {
         if let attributedLayoutType = attributedLayoutType {
             return attributedLayoutType

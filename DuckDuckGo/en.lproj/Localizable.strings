@@ -358,11 +358,14 @@
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Update Login";
 
+/* Message displayed on modal asking for the user to update the password */
+"autofill.update-password.message" = "DuckDuckGo will update this stored Login on your device.";
+
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Update Password";
 
 /* Title displayed on modal asking for the user to update the password */
-"autofill.update-password.title" = "Update Password?";
+"autofill.update-password.title" = "Update password for\n%@?";
 
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "Update username?";

@@ -234,7 +234,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         }
     }
 
-    private func presentDeleteConfirmation(for title: String) {
+    private func presentDeleteConfirmation(for title: String, domain: String) {
         let message = title.isEmpty ? UserText.autofillLoginListLoginDeletedToastMessageNoTitle
                                     : UserText.autofillLoginListLoginDeletedToastMessage(for: title)
 
@@ -245,6 +245,9 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             self.viewModel.undoLastDelete()
         }, onDidDismiss: {
             self.viewModel.clearUndoCache()
+            NotificationCenter.default.post(name: BookmarkFaviconUpdater.deleteBookmarkFaviconNotification,
+                                            object: nil,
+                                            userInfo: [BookmarkFaviconUpdater.UserInfoKeys.faviconDomain: domain])
         })
     }
     
@@ -487,6 +490,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
         case .credentials(_, let items):
             if editingStyle == .delete {
                 let title = items[indexPath.row].title
+                let domain = items[indexPath.row].account.domain
                 let accountId = items[indexPath.row].account.id
 
                 let tableContentToDelete = viewModel.tableContentsToDelete(accountId: accountId)
@@ -503,7 +507,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
                     }
                     tableView.endUpdates()
 
-                    presentDeleteConfirmation(for: title)
+                    presentDeleteConfirmation(for: title, domain: domain)
                 }
             }
         default:
@@ -575,7 +579,7 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
         if deletedSuccessfully {
             viewModel.updateData()
             tableView.reloadData()
-            presentDeleteConfirmation(for: title)
+            presentDeleteConfirmation(for: title, domain: account.domain)
         }
     }
 }

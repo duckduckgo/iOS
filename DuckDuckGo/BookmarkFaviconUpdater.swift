@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+import BrowserServicesKit
 import Core
 import Persistence
 import Bookmarks
@@ -45,7 +46,14 @@ extension Favicons: FaviconProviding {
 
 class BookmarkFaviconUpdater: NSObject, FaviconUserScriptDelegate {
 
+    public static let deleteBookmarkFaviconNotification = Notification.Name("com.duckduckgo.app.BookmarkFaviconUpdaterDeleteBookmarkFavicon")
+
+    struct UserInfoKeys {
+        static let faviconDomain = "com.duckduckgo.com.userInfoKey.faviconDomain"
+    }
+
     let context: NSManagedObjectContext
+    let secureVault: SecureVault?
     let tab: TabNotifying
     let favicons: FaviconProviding
 
@@ -53,6 +61,17 @@ class BookmarkFaviconUpdater: NSObject, FaviconUserScriptDelegate {
         self.context = bookmarksDatabase.makeContext(concurrencyType: .mainQueueConcurrencyType)
         self.tab = tab
         self.favicons = favicons
+        secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
+
+        super.init()
+        registerForNotifications()
+    }
+
+    private func registerForNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(deleteBookmarkFavicon(_:)),
+                                               name: BookmarkFaviconUpdater.deleteBookmarkFaviconNotification,
+                                               object: nil)
     }
 
     func faviconUserScript(_ script: FaviconUserScript, didRequestUpdateFaviconForHost host: String, withUrl url: URL?) {
@@ -62,7 +81,7 @@ class BookmarkFaviconUpdater: NSObject, FaviconUserScriptDelegate {
             guard let self = self else { return }
             self.tab.didUpdateFavicon()
 
-            guard self.bookmarkExists(for: host),
+            guard self.bookmarkExists(for: host) || self.autofillLoginExists(for: host),
                   let image = image else { return }
 
             self.favicons.replaceBookmarksFavicon(forDomain: host, withImage: image)
@@ -90,4 +109,23 @@ class BookmarkFaviconUpdater: NSObject, FaviconUserScriptDelegate {
         return result
     }
 
+    private func autofillLoginExists(for domain: String) -> Bool {
+        guard let secureVault = secureVault else {
+            return false
+        }
+
+        do {
+            let accounts = try secureVault.accounts()
+            return accounts.contains(where: { $0.domain == domain })
+        } catch {
+            return false
+        }
+    }
+
+    @objc private func deleteBookmarkFavicon(_ notification: Notification) {
+        guard let domain = notification.userInfo?[UserInfoKeys.faviconDomain] as? String,
+              !bookmarkExists(for: domain) &&
+              !autofillLoginExists(for: domain) else { return }
+        Favicons.shared.removeBookmarkFavicon(forDomain: domain)
+    }
 }

@@ -567,6 +567,7 @@ public struct UserText {
         let message = NSLocalizedString("autofill.logins.list.login-deleted-message", value: "Login for %@ deleted", comment: "Toast message when a login item is deleted")
         return message.format(arguments: title)
     }
+    public static let autofillLoginListLoginDeletedToastMessageNoTitle = NSLocalizedString("autofill.logins.list.login-deleted-message-no-title", value: "Login deleted", comment: "Toast message when a login item without a title is deleted")
 
     public static let autofillLoginDetailsEditTitlePlaceholder = NSLocalizedString("autofill.logins.details.edit.title-placeholder", value:"Title", comment: "Placeholder for title field on autofill login details")
     public static let autofillLoginDetailsEditUsernamePlaceholder = NSLocalizedString("autofill.logins.details.edit.username-placeholder", value:"username@example.com", comment: "Placeholder for userbane field on autofill login details")

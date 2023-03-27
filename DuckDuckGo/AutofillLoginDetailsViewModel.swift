@@ -26,7 +26,7 @@ import Core
 protocol AutofillLoginDetailsViewModelDelegate: AnyObject {
     func autofillLoginDetailsViewModelDidSave()
     func autofillLoginDetailsViewModelDidAttemptToSaveDuplicateLogin()
-    func autofillLoginDetailsViewModelDelete(account: SecureVaultModels.WebsiteAccount)
+    func autofillLoginDetailsViewModelDelete(account: SecureVaultModels.WebsiteAccount, title: String)
     func autofillLoginDetailsViewModelDismiss()
 }
 
@@ -252,7 +252,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
             assertionFailure("Trying to delete account, but the account doesn't exist")
             return
         }
-        delegate?.autofillLoginDetailsViewModelDelete(account: account)
+        delegate?.autofillLoginDetailsViewModelDelete(account: account, title: headerViewModel.title)
     }
 
     func openUrl() {

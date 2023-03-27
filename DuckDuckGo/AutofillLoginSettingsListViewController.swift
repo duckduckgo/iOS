@@ -236,7 +236,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }
 
     private func presentDeleteConfirmation(for title: String) {
-        ActionMessageView.present(message: UserText.autofillLoginListLoginDeletedToastMessage(for: title),
+        ActionMessageView.present(message: title.isEmpty ? UserText.autofillLoginListLoginDeletedToastMessageNoTitle
+                                                         : UserText.autofillLoginListLoginDeletedToastMessage(for: title),
                                   actionTitle: UserText.actionGenericUndo,
                                   presentationLocation: .withoutBottomBar,
                                   onAction: {
@@ -567,8 +568,7 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
         }
     }
 
-    func autofillLoginDetailsViewControllerDelete(account: SecureVaultModels.WebsiteAccount) {
-        let title = account.title ?? ""
+    func autofillLoginDetailsViewControllerDelete(account: SecureVaultModels.WebsiteAccount, title: String) {
         let deletedSuccessfully = viewModel.delete(account)
 
         if deletedSuccessfully {

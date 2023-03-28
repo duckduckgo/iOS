@@ -28,8 +28,8 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
     func showDeviceConnected()
     func showRecoveryPDF()
     func createAccountAndStartSyncing()
-    func confirmDisableSync() async -> Bool
-    func confirmDeleteAllData() async -> Bool
+    func confirmAndDisableSync() async -> Bool
+    func confirmAndDeleteAllData() async -> Bool
     func copyCode()
     func confirmRemoveDevice(_ device: SyncSettingsViewModel.Device) async -> Bool
 
@@ -62,7 +62,7 @@ public class SyncSettingsViewModel: ObservableObject {
         case valid
     }
 
-    @Published var isSyncEnabled = false
+    @Published public var isSyncEnabled = false
     @Published var isBusy = false
     @Published var devices = [Device]()
     @Published var recoveryCode = ""
@@ -81,7 +81,7 @@ public class SyncSettingsViewModel: ObservableObject {
     func disableSync() {
         isBusy = true
         Task { @MainActor in
-            if await delegate!.confirmDisableSync() {
+            if await delegate!.confirmAndDisableSync() {
                 isSyncEnabled = false
             }
             isBusy = false
@@ -91,7 +91,7 @@ public class SyncSettingsViewModel: ObservableObject {
     func deleteAllData() {
         isBusy = true
         Task { @MainActor in
-            if await delegate!.confirmDeleteAllData() {
+            if await delegate!.confirmAndDeleteAllData() {
                 isSyncEnabled = false
             }
             isBusy = false

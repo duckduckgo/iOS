@@ -132,6 +132,8 @@ class TabViewController: UIViewController {
     let bookmarksDatabase: CoreDataDatabase
     lazy var faviconUpdater = BookmarkFaviconUpdater(bookmarksDatabase: bookmarksDatabase, tab: tabModel, favicons: Favicons.shared)
 
+    let id: String = UUID().uuidString
+
     public var url: URL? {
         willSet {
             if newValue != url {
@@ -859,7 +861,7 @@ class TabViewController: UIViewController {
         userContentController.removeAllContentRuleLists()
         temporaryDownloadForPreviewedFile?.cancel()
         removeObservers()
-        rulesCompilationMonitor.tabWillClose(self)
+        rulesCompilationMonitor.tabWillClose(id)
     }
 
 }
@@ -1323,10 +1325,10 @@ extension TabViewController: WKNavigationDelegate {
         }
 
         Task {
-            rulesCompilationMonitor.tabWillWaitForRulesCompilation(self)
+            rulesCompilationMonitor.tabWillWaitForRulesCompilation(id)
             showProgressIndicator()
             await userContentController.awaitContentBlockingAssetsInstalled()
-            rulesCompilationMonitor.reportTabFinishedWaitingForRules(self)
+            rulesCompilationMonitor.reportTabFinishedWaitingForRules(id)
 
             await MainActor.run(body: completion)
         }
@@ -1464,10 +1466,10 @@ extension TabViewController: WKNavigationDelegate {
     private func prepareForContentBlocking() async {
         // Ensure Content Blocking Assets (WKContentRuleList&UserScripts) are installed
         if !userContentController.contentBlockingAssetsInstalled {
-            rulesCompilationMonitor.tabWillWaitForRulesCompilation(self)
+            rulesCompilationMonitor.tabWillWaitForRulesCompilation(id)
             showProgressIndicator()
             await userContentController.awaitContentBlockingAssetsInstalled()
-            rulesCompilationMonitor.reportTabFinishedWaitingForRules(self)
+            rulesCompilationMonitor.reportTabFinishedWaitingForRules(id)
         } else {
             rulesCompilationMonitor.reportNavigationDidNotWaitForRules()
         }

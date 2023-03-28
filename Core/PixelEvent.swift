@@ -384,6 +384,9 @@ extension Pixel {
       
         case experimentDailyFireButtonTapped
         case experimentDailyFireButtonDataCleared
+        
+        case experimentFireButtonAnimationTriggeredOnTabSwitcher
+        case experimentFireButtonEducationRestarted
     }
     
 }
@@ -759,6 +762,9 @@ extension Pixel.Event {
             
         case .experimentDailyFireButtonTapped: return "m_d_experiment_daily_fire_button_tapped"
         case .experimentDailyFireButtonDataCleared: return "m_d_experiment_daily_fire_button_data_cleared"
+
+        case .experimentFireButtonAnimationTriggeredOnTabSwitcher: return "m_d_experiment_fire_button_animation_triggered_on_tab_switcher"
+        case .experimentFireButtonEducationRestarted: return "m_d_experiment_fire_button_education_restarted"
         }
         
     }

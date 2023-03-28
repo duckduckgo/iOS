@@ -187,6 +187,8 @@ extension BlankSnapshotViewController: Themable {
         tabsButton.tintColor = theme.barTintColor
         
         menuButton.decorate(with: theme)
+        
+        FireButtonExperiment.decorateFireButton(fireButton: fireButton, for: theme)
     }
     
 }

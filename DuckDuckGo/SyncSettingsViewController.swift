@@ -108,6 +108,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         }
 
         let controller = DismissibleHostingController(rootView: TurnOnSyncView(model: model)) { [weak self] in
+            assert(self?.navigationController?.visibleViewController is DismissibleHostingController<TurnOnSyncView>)
             self?.rootView.model.setupFinished(model)
         }
 
@@ -192,10 +193,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         let model = ScanOrPasteCodeViewModel(isInRecoveryMode: isInRecoveryMode)
         model.delegate = self
 
-        let controller = DismissibleHostingController(rootView: ScanOrPasteCodeView(model: model)) { [weak self] in
-            assert(self?.navigationController?.visibleViewController is DismissibleHostingController<ScanOrPasteCodeView>)
-            self?.navigationController?.topViewController?.dismiss(animated: true)
-        }
+        let controller = UIHostingController(rootView: ScanOrPasteCodeView(model: model))
 
         let navController = UIDevice.current.userInterfaceIdiom == .phone
             ? PortraitNavigationController(rootViewController: controller)
@@ -322,7 +320,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
     }
 
     func codeCollectionCancelled() {
-        assert(navigationController?.visibleViewController is DismissibleHostingController<ScanOrPasteCodeView>)
+        assert(navigationController?.visibleViewController is UIHostingController<ScanOrPasteCodeView>)
         navigationController?.topViewController?.dismiss(animated: true)
         rootView.model.codeCollectionCancelled()
     }

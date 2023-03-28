@@ -52,6 +52,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     @IBOutlet var searchBar: UISearchBar!
 
     private let bookmarksDatabase: CoreDataDatabase
+    private let favicons: Favicons
 
     /// Creating left and right toolbar UIBarButtonItems with customView so that 'Edit' button is centered
     private lazy var addFolderButton: UIButton = {
@@ -104,10 +105,12 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     init?(coder: NSCoder,
           bookmarksDatabase: CoreDataDatabase,
           bookmarksSearch: BookmarksStringSearch,
-          parentID: NSManagedObjectID? = nil) {
+          parentID: NSManagedObjectID? = nil,
+          favicons: Favicons = Favicons.shared) {
         self.bookmarksDatabase = bookmarksDatabase
         self.searchDataSource = SearchBookmarksDataSource(searchEngine: bookmarksSearch)
         self.viewModel = BookmarkListViewModel(bookmarksDatabase: bookmarksDatabase, parentID: parentID)
+        self.favicons = favicons
         super.init(coder: coder)
     }
     
@@ -304,11 +307,37 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     }
 
+    private func domainsInBookmarkTree(_ bookmark: BookmarkEntity) -> Set<String> {
+        func addDomains(_ bookmark: BookmarkEntity, domains: inout Set<String>) {
+            if let domain = bookmark.urlObject?.host {
+                domains.insert(domain)
+            } else {
+                bookmark.childrenArray.forEach {
+                    addDomains($0, domains: &domains)
+                }
+            }
+        }
+
+        var domains = Set<String>()
+        addDomains(bookmark, domains: &domains)
+        return domains
+    }
+
+    private func removeUnusedFaviconsForDomains(_ domains: Set<String>) {
+        domains
+            .filter { viewModel.countBookmarksForDomain($0) == 0 }
+            .forEach {
+                favicons.removeBookmarkFavicon(forDomain: $0)
+            }
+    }
+
     private func deleteBookmarkAfterSwipe(_ bookmark: BookmarkEntity,
                                           _ indexPath: IndexPath,
                                           _ completion: @escaping (Bool) -> Void) {
 
         func delete() {
+            let domains = domainsInBookmarkTree(bookmark)
+
             let oldCount = viewModel.bookmarks.count
             viewModel.deleteBookmark(bookmark)
             let newCount = viewModel.bookmarks.count
@@ -320,6 +349,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                 tableView.reloadSections([indexPath.section], with: .none)
             }
             refreshFooterView()
+
+            removeUnusedFaviconsForDomains(domains)
         }
 
         func countAllChildrenInFolder(_ folder: BookmarkEntity) -> Int {

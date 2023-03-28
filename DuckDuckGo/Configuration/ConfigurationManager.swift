@@ -25,6 +25,11 @@ import BrowserServicesKit
 import Common
 
 struct ConfigurationManager {
+
+    enum UpdateResult {
+        case noData
+        case assetsUpdated(includesPrivacyProtectionChanges: Bool)
+    }
     
     enum Error: Swift.Error, LocalizedError {
         
@@ -62,13 +67,17 @@ struct ConfigurationManager {
         }
     }
 
-    func update() async -> Bool {
+    func update() async -> UpdateResult {
         async let didFetchAnyTrackerBlockingDependencies = fetchAndUpdateTrackerBlockingDependencies()
         async let didFetchExcludedDomains = fetchAndUpdateBloomFilterExcludedDomains()
         async let didFetchBloomFilter = fetchAndUpdateBloomFilter()
 
         let results = await (didFetchAnyTrackerBlockingDependencies, didFetchExcludedDomains, didFetchBloomFilter)
-        return results.0 || results.1 || results.2
+
+        if results.0 || results.1 || results.2 {
+            return .assetsUpdated(includesPrivacyProtectionChanges: results.0)
+        }
+        return .noData
     }
 
     @discardableResult
@@ -93,7 +102,7 @@ struct ConfigurationManager {
                 try await task.value
                 didFetchAnyTrackerBlockingDependencies = true
             } catch {
-                os_log("Failed to apply update to %@: %@", log: .generalLog, type: .debug, configuration.rawValue, error.localizedDescription)
+                os_log("Did not apply update to %@: %@", log: .generalLog, type: .debug, configuration.rawValue, error.localizedDescription)
             }
         }
 

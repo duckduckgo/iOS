@@ -4473,6 +4473,7 @@
 				85F4D03A1F44A7BE0018BFD5 /* Install Fonts */,
 				84E341901E2F7EFB00BDBA6F /* Resources */,
 				F143C2F01E4A4CD400CFDE3A /* Embed Frameworks */,
+				37B4F3D329D2C84400758752 /* Copy GRDB framework */,
 				F10307651E7D5B2C0059FEC7 /* Copy Frameworks */,
 				83E282AC20BC1840005FBE88 /* Embed App Extensions */,
 			);
@@ -5056,6 +5057,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"$SOURCE_ROOT/check_version.sh\"\n";
+		};
+		37B4F3D329D2C84400758752 /* Copy GRDB framework */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 8;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy GRDB framework";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "grdb_source_dir=\"${BUILT_PRODUCTS_DIR}/GRDB.framework\"\ngrdb_install_dir=\"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRDB.framework\"\nrm -rf \"${grdb_install_dir}\"\nmkdir -p \"${grdb_install_dir}\"\ncp -f \"${grdb_source_dir}/GRDB\" \"${grdb_source_dir}/Info.plist\" \"${grdb_install_dir}\"\n\n/usr/bin/codesign \\\n    --force \\\n    --sign \"${EXPANDED_CODE_SIGN_IDENTITY}\" \\\n    --timestamp\\=none \\\n    --preserve-metadata\\=identifier,entitlements,flags \\\n    --generate-entitlement-der \"${grdb_install_dir}\"\n";
 		};
 		8558AA7D20EE3CB200A346E9 /* Swift Lint */ = {
 			isa = PBXShellScriptBuildPhase;

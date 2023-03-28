@@ -34,6 +34,7 @@ class FavoritesOverlay: UIViewController {
     struct Constants {
         static let margin: CGFloat = 28
         static let footerPadding: CGFloat = 50
+        static let collectionViewMaxWidth: CGFloat = 395
     }
     
     private let layout = UICollectionViewFlowLayout()
@@ -79,9 +80,8 @@ class FavoritesOverlay: UIViewController {
         } else {
             layout.minimumInteritemSpacing = 10
         }
-        
-        collectionView.frame = view.bounds
         collectionView.reloadData()
+        
     }
     
     private func setupCollectionView() {
@@ -97,6 +97,13 @@ class FavoritesOverlay: UIViewController {
         collectionView.dragDelegate = self
         collectionViewReorderingGesture.delegate = self
         collectionView.addGestureRecognizer(collectionViewReorderingGesture)
+
+        // Size constraints
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        let widthConstraint = collectionView.widthAnchor.constraint(lessThanOrEqualToConstant: Constants.collectionViewMaxWidth)
+        let heightConstraint = collectionView.heightAnchor.constraint(equalTo: view.heightAnchor)
+        let centerXConstraint = collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        NSLayoutConstraint.activate([widthConstraint, heightConstraint, centerXConstraint])
         
     }
     

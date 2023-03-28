@@ -222,6 +222,12 @@ public class AppUserDefaults: AppSettings {
     
     @UserDefaultsWrapper(key: .autoconsentEnabled, defaultValue: false)
     var autoconsentEnabled: Bool
+    
+    @UserDefaultsWrapper(key: .wasFireButtonEverTapped, defaultValue: false)
+    var wasFireButtonEverTapped: Bool
+    
+    @UserDefaultsWrapper(key: .wasFireButtonEducationRestarted, defaultValue: false)
+    var wasFireButtonEducationRestarted: Bool
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {

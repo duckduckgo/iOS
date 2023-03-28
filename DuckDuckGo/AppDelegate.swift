@@ -232,6 +232,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             appIsLaunching = false
             onApplicationLaunch(application)
         }
+        
+        FireButtonExperiment.restartFireButtonEducationIfNeeded()
 
         mainViewController?.showBars()
         mainViewController?.didReturnFromBackground()
@@ -245,8 +247,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch = false
         }
 
-        AppConfigurationFetch().start { newData in
-            if newData {
+        AppConfigurationFetch().start { result in
+            if case .assetsUpdated(let protectionsUpdated) = result, protectionsUpdated {
                 ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
             }
         }
@@ -385,8 +387,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         os_log(#function, log: .lifecycleLog, type: .debug)
 
-        AppConfigurationFetch().start(isBackgroundFetch: true) { newData in
-            completionHandler(newData ? .newData : .noData)
+        AppConfigurationFetch().start(isBackgroundFetch: true) { result in
+            switch result {
+            case .noData:
+                completionHandler(.noData)
+            case .assetsUpdated:
+                completionHandler(.newData)
+            }
         }
     }
 

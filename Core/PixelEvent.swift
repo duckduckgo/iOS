@@ -245,8 +245,6 @@ extension Pixel {
         
         case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
         
-        case autoconsentCookiePopupManaged
-
         case secureVaultInitError
         case secureVaultError
         
@@ -386,6 +384,9 @@ extension Pixel {
       
         case experimentDailyFireButtonTapped
         case experimentDailyFireButtonDataCleared
+        
+        case experimentFireButtonAnimationTriggeredOnTabSwitcher
+        case experimentFireButtonEducationRestarted
     }
     
 }
@@ -622,8 +623,6 @@ extension Pixel.Event {
         case .autofillJSPixelFired(let pixel):
             return "m_ios_\(pixel.pixelName)"
             
-        case .autoconsentCookiePopupManaged: return "m_autoconsent_cookie_popup_managed"
-            
         case .secureVaultInitError: return "m_secure_vault_init_error"
         case .secureVaultError: return "m_secure_vault_error"
             
@@ -763,6 +762,9 @@ extension Pixel.Event {
             
         case .experimentDailyFireButtonTapped: return "m_d_experiment_daily_fire_button_tapped"
         case .experimentDailyFireButtonDataCleared: return "m_d_experiment_daily_fire_button_data_cleared"
+
+        case .experimentFireButtonAnimationTriggeredOnTabSwitcher: return "m_d_experiment_fire_button_animation_triggered_on_tab_switcher"
+        case .experimentFireButtonEducationRestarted: return "m_d_experiment_fire_button_education_restarted"
         }
         
     }

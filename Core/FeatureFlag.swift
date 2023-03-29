@@ -23,16 +23,16 @@ import BrowserServicesKit
 public enum FeatureFlag: String {
     case debugMenu
     case sync
-    case credentialsAutofill
-    case credentialsSaving
-    case inlineIconCredentials
-    case accessCredentialManagement
+    case autofillCredentialInjecting
+    case autofillCredentialsSaving
+    case autofillInlineIconCredentials
+    case autofillAccessCredentialManagement
 }
 
 extension FeatureFlag: FeatureFlagSourceProviding {
     public var source: FeatureFlagSource {
         switch self {
-        case .debugMenu, .sync, .credentialsAutofill, .credentialsSaving, .inlineIconCredentials, .accessCredentialManagement:
+        case .debugMenu, .sync, .autofillCredentialInjecting, .autofillCredentialsSaving, .autofillInlineIconCredentials, .autofillAccessCredentialManagement:
             return .internalOnly
         }
     }

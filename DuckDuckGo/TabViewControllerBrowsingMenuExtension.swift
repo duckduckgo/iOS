@@ -84,7 +84,7 @@ extension TabViewController {
 
         entries.append(.separator)
 
-        if featureFlagger.isFeatureOn(.accessCredentialManagement) {
+        if featureFlagger.isFeatureOn(.autofillAccessCredentialManagement) {
             entries.append(BrowsingMenuEntry.regular(name: UserText.actionAutofillLogins,
                                                      image: UIImage(named: "MenuAutofill")!,
                                                      action: { [weak self] in

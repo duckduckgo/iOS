@@ -35,12 +35,12 @@ extension ContentScopeFeatureToggles {
     
     static var supportedFeaturesOniOS: ContentScopeFeatureToggles {
         ContentScopeFeatureToggles(emailProtection: true,
-                                   credentialsAutofill: featureFlagger.isFeatureOn(.credentialsAutofill) && isCredentialsAutofillEnabled,
+                                   credentialsAutofill: featureFlagger.isFeatureOn(.autofillCredentialInjecting) && isCredentialsAutofillEnabled,
                                    identitiesAutofill: false,
                                    creditCardsAutofill: false,
-                                   credentialsSaving: featureFlagger.isFeatureOn(.credentialsSaving) && isCredentialsAutofillEnabled,
+                                   credentialsSaving: featureFlagger.isFeatureOn(.autofillCredentialsSaving) && isCredentialsAutofillEnabled,
                                    passwordGeneration: false,
-                                   inlineIconCredentials: featureFlagger.isFeatureOn(.inlineIconCredentials) && isCredentialsAutofillEnabled,
+                                   inlineIconCredentials: featureFlagger.isFeatureOn(.autofillInlineIconCredentials) && isCredentialsAutofillEnabled,
                                    thirdPartyCredentialsProvider: false)
     }
 }

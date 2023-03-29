@@ -47,7 +47,6 @@ struct ConfigurationManager {
                 return "Bloom filter excluded domains not found."
             }
         }
-        
     }
 
     public static let didUpdateTrackerDependencies = NSNotification.Name(rawValue: "com.duckduckgo.configurationManager.didUpdateTrackerDependencies")

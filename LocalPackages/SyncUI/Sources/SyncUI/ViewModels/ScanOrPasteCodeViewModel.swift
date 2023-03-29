@@ -25,8 +25,9 @@ public protocol ScanOrPasteCodeViewModelDelegate: AnyObject {
 
     func startConnectMode() async -> String?
 
-    /// Returns true if the code is valid format and should stop scanning
-    func syncCodeEntered(code: String) -> Bool
+    /// Returns true if we were able to use the code. Either way, stop validating.
+    func syncCodeEntered(code: String) async -> Bool
+
     func codeCollectionCancelled()
     func gotoSettings()
 
@@ -52,7 +53,7 @@ public class ScanOrPasteCodeViewModel: ObservableObject {
     @Published var state = State.showScanner
     @Published var manuallyEnteredCode: String?
     @Published var isValidating = false
-    @Published var codeError: String?
+    @Published var invalidCode = false
 
     var canSubmitManualCode: Bool {
         manuallyEnteredCode?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false
@@ -68,8 +69,8 @@ public class ScanOrPasteCodeViewModel: ObservableObject {
         self.isInRecoveryMode = isInRecoveryMode
     }
 
-    func codeScanned(_ code: String) -> Bool {
-        return delegate?.syncCodeEntered(code: code) ?? false
+    func codeScanned(_ code: String) async -> Bool {
+        return await delegate?.syncCodeEntered(code: code) == true
     }
 
     func cameraUnavailable() {
@@ -77,23 +78,20 @@ public class ScanOrPasteCodeViewModel: ObservableObject {
     }
 
     func pasteCode() {
-        guard let string = delegate?.pasteboardString else { return }
+        guard let string = delegate?
+            .pasteboardString?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: "\n", with: "") else { return }
+        
         self.manuallyEnteredCode = string
+        invalidCode = false
         isValidating = true
 
         Task { @MainActor in
-
-            if #available(iOS 16.0, *) {
-                try await Task.sleep(for: .seconds(4))
-            }
-
-            // Tidy this up when wiring up to the backend
-            if manuallyEnteredCode == "wrong" {
-                isValidating = false
-                codeError = "Invalid code"
-            } else if let code = manuallyEnteredCode {
-                isValidating = false
-                _ = delegate?.syncCodeEntered(code: code)
+            let codeUsed = await delegate?.syncCodeEntered(code: string) == true
+            isValidating = false
+            if !codeUsed {
+                invalidCode = true
             }
         }
 
@@ -101,11 +99,6 @@ public class ScanOrPasteCodeViewModel: ObservableObject {
 
     func cancel() {
         delegate?.codeCollectionCancelled()
-    }
-
-    func submitAction() {
-        // what to do here??
-        _ = delegate?.syncCodeEntered(code: manuallyEnteredCode ?? "")
     }
 
     func startConnectMode() -> ShowQRCodeViewModel {

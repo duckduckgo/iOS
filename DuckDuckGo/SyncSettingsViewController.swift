@@ -310,6 +310,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                 return true
             } else if let connectKey = syncCode.connect {
                 try await syncService.transmitRecoveryKey(connectKey)
+                navigationController?.topViewController?.dismiss(animated: true)
                 return true
             }
 

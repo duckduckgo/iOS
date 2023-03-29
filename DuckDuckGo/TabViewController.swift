@@ -863,7 +863,7 @@ class TabViewController: UIViewController {
         userContentController.removeAllContentRuleLists()
         temporaryDownloadForPreviewedFile?.cancel()
         removeObservers()
-        rulesCompilationMonitor.tabWillClose(self)
+        rulesCompilationMonitor.tabWillClose(tabModel.uid)
     }
 
 }
@@ -1327,10 +1327,10 @@ extension TabViewController: WKNavigationDelegate {
         }
 
         Task {
-            rulesCompilationMonitor.tabWillWaitForRulesCompilation(self)
+            rulesCompilationMonitor.tabWillWaitForRulesCompilation(tabModel.uid)
             showProgressIndicator()
             await userContentController.awaitContentBlockingAssetsInstalled()
-            rulesCompilationMonitor.reportTabFinishedWaitingForRules(self)
+            rulesCompilationMonitor.reportTabFinishedWaitingForRules(tabModel.uid)
 
             await MainActor.run(body: completion)
         }
@@ -1461,19 +1461,6 @@ extension TabViewController: WKNavigationDelegate {
             case .failure:
                 completion(allowPolicy)
             }
-        }
-    }
-
-    @MainActor
-    private func prepareForContentBlocking() async {
-        // Ensure Content Blocking Assets (WKContentRuleList&UserScripts) are installed
-        if !userContentController.contentBlockingAssetsInstalled {
-            rulesCompilationMonitor.tabWillWaitForRulesCompilation(self)
-            showProgressIndicator()
-            await userContentController.awaitContentBlockingAssetsInstalled()
-            rulesCompilationMonitor.reportTabFinishedWaitingForRules(self)
-        } else {
-            rulesCompilationMonitor.reportNavigationDidNotWaitForRules()
         }
     }
 

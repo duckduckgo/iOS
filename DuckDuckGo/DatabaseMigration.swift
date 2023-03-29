@@ -74,7 +74,6 @@ class DatabaseMigration {
             }
         }
     }
-    // swiftlint:enable function_body_length
     
     static func migrate<T: NSManagedObject>(db name: String,
                                             to destination: NSManagedObjectContext,

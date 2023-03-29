@@ -24,8 +24,7 @@ import BrowserServicesKit
 import Common
 import os.log
 
-// swiftlint:disable file_length
-// swiftlint:disable type_body_length
+// swiftlint:disable file_length type_body_length
 
 protocol AutofillLoginSettingsListViewControllerDelegate: AnyObject {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController)
@@ -663,3 +662,4 @@ extension AutofillLoginSettingsListViewController {
         )
     }
 }
+// swiftlint:enable file_length type_body_length

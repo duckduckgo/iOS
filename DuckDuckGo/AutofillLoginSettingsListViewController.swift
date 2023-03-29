@@ -236,8 +236,10 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }
 
     private func presentDeleteConfirmation(for title: String) {
-        ActionMessageView.present(message: title.isEmpty ? UserText.autofillLoginListLoginDeletedToastMessageNoTitle
-                                                         : UserText.autofillLoginListLoginDeletedToastMessage(for: title),
+        let message = title.isEmpty ? UserText.autofillLoginListLoginDeletedToastMessageNoTitle
+                                    : UserText.autofillLoginListLoginDeletedToastMessage(for: title)
+
+        ActionMessageView.present(message: message,
                                   actionTitle: UserText.actionGenericUndo,
                                   presentationLocation: .withoutBottomBar,
                                   onAction: {

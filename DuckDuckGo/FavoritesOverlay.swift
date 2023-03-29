@@ -100,9 +100,14 @@ class FavoritesOverlay: UIViewController {
 
         // Size constraints
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        let widthConstraint = collectionView.widthAnchor.constraint(lessThanOrEqualToConstant: Constants.collectionViewMaxWidth)
+        var widthConstraint = collectionView.widthAnchor.constraint(lessThanOrEqualToConstant: Constants.collectionViewMaxWidth)
         let heightConstraint = collectionView.heightAnchor.constraint(equalTo: view.heightAnchor)
         let centerXConstraint = collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        
+        // Use the full-width on iPad
+        if traitCollection.horizontalSizeClass == .regular && traitCollection.verticalSizeClass == .regular {
+           widthConstraint = collectionView.widthAnchor.constraint(equalTo: view.widthAnchor)
+        }
         NSLayoutConstraint.activate([widthConstraint, heightConstraint, centerXConstraint])
         
     }

@@ -2388,23 +2388,41 @@ extension TabViewController: SecureVaultManagerDelegate {
         if accounts.count > 0 {
             let accountMatches = autofillWebsiteAccountMatcher.findMatchesSortedByLastUpdated(accounts: accounts, for: domain)
 
-            let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accountMatches,
-                                                                                 domain: domain,
-                                                                                 trigger: trigger) { account in
+            presentAutofillPromptViewController(accountMatches: accountMatches, domain: domain, trigger: trigger, useLargeDetent: false) { account in
                 completionHandler(account)
             }
-            
-            if #available(iOS 15.0, *) {
-                if let presentationController = autofillPromptViewController.presentationController as? UISheetPresentationController {
-                    presentationController.detents = AutofillLoginPromptHelper.shouldShowMoreOptions(accountMatches)
-                                                        ? [.medium(), .large()]
-                                                        : [.medium()]
-                }
-            }
-            self.present(autofillPromptViewController, animated: true, completion: nil)
         } else {
             completionHandler(nil)
         }
+    }
+
+    /// Using Bool for detent size parameter to be backward compatible with iOS 14
+    func presentAutofillPromptViewController(accountMatches: AccountMatches,
+                                             domain: String,
+                                             trigger: AutofillUserScript.GetTriggerType,
+                                             useLargeDetent: Bool,
+                                             completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
+        let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accountMatches,
+                                                                             domain: domain,
+                                                                             trigger: trigger) { account, showExpanded in
+            if showExpanded {
+                self.presentAutofillPromptViewController(accountMatches: accountMatches,
+                                                         domain: domain,
+                                                         trigger: trigger,
+                                                         useLargeDetent: showExpanded) { account in
+                    completionHandler(account)
+                }
+            } else {
+                completionHandler(account)
+            }
+        }
+
+        if #available(iOS 15.0, *) {
+            if let presentationController = autofillPromptViewController.presentationController as? UISheetPresentationController {
+                presentationController.detents = useLargeDetent ? [.large()] : [.medium()]
+            }
+        }
+        self.present(autofillPromptViewController, animated: true, completion: nil)
     }
 
     func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: String) {

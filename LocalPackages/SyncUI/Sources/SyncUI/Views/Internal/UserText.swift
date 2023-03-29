@@ -38,6 +38,7 @@ struct UserText {
     static let recoveryModeInstructions = "Scan the QR code on your Recovery PDF, or another synced device, to recover your synced data."
 
     static let validatingCode = "Validating code"
+    static let validatingCodeFailed = "That code does not appear to be valid.  Please try copying it again."
 
     static let pasteCodeInstructions = "Copy the code from the Settings > Sync page in the DuckDuckGo App on another synced device and paste it here to sync this device."
 

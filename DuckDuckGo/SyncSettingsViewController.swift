@@ -308,9 +308,11 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                 navigationController?.topViewController?.dismiss(animated: true)
                 showDeviceConnected()
                 return true
+            } else if let connectKey = syncCode.connect {
+                try await syncService.transmitRecoveryKey(connectKey)
+                return true
             }
 
-            // TODO handle connect code
         } catch {
             if !(error is SyncError) {
                 assertionFailure(error.localizedDescription)

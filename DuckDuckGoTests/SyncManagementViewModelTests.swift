@@ -68,12 +68,12 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
         monitor.incrementCalls(function: #function.cleaningFunctionName())
     }
 
-    func confirmDisableSync() async -> Bool {
+    func confirmAndDisableSync() async -> Bool {
         monitor.incrementCalls(function: #function.cleaningFunctionName())
         return true
     }
 
-    func confirmDeleteAllData() async -> Bool {
+    func confirmAndDeleteAllData() async -> Bool {
         monitor.incrementCalls(function: #function.cleaningFunctionName())
         return true
     }

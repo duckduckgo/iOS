@@ -29,6 +29,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     lazy var authenticator = Authenticator()
 
     let syncService: DDGSyncing! = (UIApplication.shared.delegate as? AppDelegate)!.syncService
+    var connector: RemoteConnecting?
 
     var recoveryCode: String {
         guard let code = syncService.account?.recoveryCode else {
@@ -65,6 +66,14 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         applyTheme(ThemeManager.shared.currentTheme)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        connector = nil
+    }
+
+    func dismissPresentedViewController() {
+        navigationController?.topViewController?.dismiss(animated: true)
+    }
 }
 
 extension SyncSettingsViewController: Themable {
@@ -102,7 +111,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     func showSyncSetup() {
         let model = TurnOnSyncViewModel { [weak self] in
             assert(self?.navigationController?.visibleViewController is DismissibleHostingController<TurnOnSyncView>)
-            self?.navigationController?.topViewController?.dismiss(animated: true)
+            self?.dismissPresentedViewController()
             // Handle the finished logic in the closing of the view controller so that we also handle the
             //  user dismissing it (cancel, swipe down, etc)
         }
@@ -288,10 +297,42 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
         UIPasteboard.general.string
     }
 
+    func endConnectMode() {
+        connector = nil
+    }
+
     func startConnectMode() async -> String? {
         if await authenticator.authenticate(reason: "Generate QRCode to connect to other devices") {
-            // return await syncService.retrieveConnectCode()
-            return nil
+            do {
+                self.connector = try syncService.remoteConnect()
+                Task { @MainActor in
+                    var running = true
+                    while running {
+                        if connector == nil {
+                            return
+                        }
+
+                        print("fetching")
+                        if let recoveryKey = try await self.connector?.fetchRecoveryKey() {
+                            try await syncService.login(recoveryKey, deviceName: deviceName, deviceType: deviceType)
+                            running = false
+                            print("connected")
+                            break
+                        }
+
+                        if running && connector != nil {
+                            print("sleeping")
+                            try await Task.sleep(nanoseconds: 5 * 1_000_000_000)
+                        }
+                    }
+                    dismissPresentedViewController()
+                    showDeviceConnected()
+                }
+                return self.connector?.code
+            } catch {
+                // TODO handle the error
+                return nil
+            }
         }
         return nil
     }
@@ -305,12 +346,12 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
 
             if let recoveryKey = syncCode.recovery {
                 try await syncService.login(recoveryKey, deviceName: deviceName, deviceType: deviceType)
-                navigationController?.topViewController?.dismiss(animated: true)
+                dismissPresentedViewController()
                 showDeviceConnected()
                 return true
             } else if let connectKey = syncCode.connect {
                 try await syncService.transmitRecoveryKey(connectKey)
-                navigationController?.topViewController?.dismiss(animated: true)
+                dismissPresentedViewController()
                 return true
             }
 
@@ -324,7 +365,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
 
     func codeCollectionCancelled() {
         assert(navigationController?.visibleViewController is UIHostingController<ScanOrPasteCodeView>)
-        navigationController?.topViewController?.dismiss(animated: true)
+        dismissPresentedViewController()
         rootView.model.codeCollectionCancelled()
     }
 

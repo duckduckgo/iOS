@@ -269,7 +269,10 @@ extension Pixel {
         
         // MARK: AppTP
         case appTPBreakageReport
+        
         case appTPVPNCrash
+        case appTPVPNDisconnect
+        
         case appTPBlocklistParseFailed
         case appTPActiveUser
         
@@ -660,6 +663,7 @@ extension Pixel.Event {
             
         case .appTPBreakageReport: return "m_apptp_breakage_report"
         case .appTPVPNCrash: return "m_apptp_vpn_crash"
+        case .appTPVPNDisconnect: return "m_apptp_vpn_disconnect"
         case .appTPBlocklistParseFailed: return "m_apptp_blocklist_parse_failed"
         case .appTPActiveUser: return "m_apptp_active_user"
         case .appTPDBLocationFailed: return "m_apptp_db_location_not_found"

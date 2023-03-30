@@ -19,6 +19,7 @@
 
 import NetworkExtension
 import os.log
+import Core
 
 public let generalLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? "DDG AppTP", category: "DDG AppTP")
 
@@ -75,6 +76,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     }
     
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
+        Pixel.fire(pixel: .appTPVPNDisconnect, withAdditionalParameters: ["reason": String(reason.rawValue)])
+        
         RawSocketFactory.TunnelProvider = nil
         ObserverFactory.currentFactory = nil
         proxyServer.stop()

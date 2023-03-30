@@ -100,7 +100,6 @@ extension SyncSettingsViewController: Themable {
 extension SyncSettingsViewController: SyncManagementViewModelDelegate {
 
     func createAccountAndStartSyncing() {
-        print(#function)
         Task { @MainActor in
             try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
             rootView.model.syncEnabled(recoveryCode: recoveryCode)
@@ -312,16 +311,13 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                             return
                         }
 
-                        print("fetching")
                         if let recoveryKey = try await self.connector?.fetchRecoveryKey() {
                             try await syncService.login(recoveryKey, deviceName: deviceName, deviceType: deviceType)
                             running = false
-                            print("connected")
                             break
                         }
 
                         if running && connector != nil {
-                            print("sleeping")
                             try await Task.sleep(nanoseconds: 5 * 1_000_000_000)
                         }
                     }
@@ -338,7 +334,6 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
     }
 
     func syncCodeEntered(code: String) async -> Bool {
-        print(#function, code)
         do {
             guard let syncCode = try? SyncCode.decodeBase64String(code) else {
                 return false

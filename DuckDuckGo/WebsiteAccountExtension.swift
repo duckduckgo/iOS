@@ -23,15 +23,15 @@ import Common
 
 extension SecureVaultModels.WebsiteAccount {
 
-    func name(tld: TLD) -> String {
+    func name(tld: TLD, autofillDomainNameUrlMatcher: AutofillDomainNameUrlMatcher) -> String {
         if let title = self.title, !title.isEmpty {
             return title
         } else {
-            if let domain = tld.eTLDplus1(self.domain) {
-                return domain
-            } else {
-                return self.domain.droppingWwwPrefix()
-            }
+            return autofillDomainNameUrlMatcher.normalizeUrlForWeb(domain)
         }
+    }
+
+    func faviconLetter(tld: TLD, autofillDomainNameUrlSort: AutofillDomainNameUrlSort) -> String? {
+        return autofillDomainNameUrlSort.firstCharacterForGrouping(self, tld: tld)?.uppercased()
     }
 }

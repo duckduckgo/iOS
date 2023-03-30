@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+import BrowserServicesKit
 import Foundation
 import CoreData
 import Persistence
@@ -33,15 +34,11 @@ public class Database {
     
     static func makeCoreDataDatabase() -> CoreDataDatabase {
         
-        let mainBundle = Bundle.main
-        let coreBundle = Bundle(identifier: "com.duckduckgo.mobile.ios.Core")!
-        
-        guard let appRatingModel = CoreDataDatabase.loadModel(from: mainBundle, named: "AppRatingPrompt"),
-              let remoteMessagingModel = CoreDataDatabase.loadModel(from: mainBundle, named: "RemoteMessaging"),
-              let smarterEncryptionModel = CoreDataDatabase.loadModel(from: coreBundle, named: "HTTPSUpgrade"),
+        guard let appRatingModel = CoreDataDatabase.loadModel(from: .main, named: "AppRatingPrompt"),
+              let remoteMessagingModel = CoreDataDatabase.loadModel(from: .main, named: "RemoteMessaging"),
               let managedObjectModel = NSManagedObjectModel(byMerging: [appRatingModel,
-                                                                       remoteMessagingModel,
-                                                                       smarterEncryptionModel]) else {
+                                                                        remoteMessagingModel,
+                                                                        HTTPSUpgrade.managedObjectModel]) else {
             fatalError("No DB scheme found")
         }
         

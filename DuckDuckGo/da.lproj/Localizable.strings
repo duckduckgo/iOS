@@ -319,11 +319,17 @@
 /* Reason for auth during login prompt */
 "autofill.logins.prompt.auth.reason" = "Lås op for at bruge gemte logins";
 
+/* Title for section of autofill logins that are an exact match to the current website */
+"autofill.logins.prompt.exact.match.title" = "Fra dette websted";
+
 /* Button title for autofill login prompt if more options are available */
 "autofill.logins.prompt.more-options" = "Flere muligheder";
 
+/* Title for section of autofill logins that are an approximate match to the current website */
+"autofill.logins.prompt.partial.match.title" = "Fra %@";
+
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Brug gemt login?";
+"autofill.logins.prompt.title" = "Brug et gemt login?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "for '%@'";
@@ -335,7 +341,7 @@
 "autofill.save-login.additional-login.message" = "Dette vil gemme et ekstra login for dette websted.";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo gemmer dette login sikkert på din enhed.";
+"autofill.save-login.new-user.message" = "DuckDuckGo gemmer dette login sikkert på din enhed. Du kan administrere gemte logins i Indstillinger.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Skal DuckDuckGo gemme dit login?";

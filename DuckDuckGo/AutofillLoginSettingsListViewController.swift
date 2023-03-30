@@ -24,8 +24,7 @@ import BrowserServicesKit
 import Common
 import os.log
 
-// swiftlint:disable file_length
-// swiftlint:disable type_body_length
+// swiftlint:disable file_length type_body_length
 
 protocol AutofillLoginSettingsListViewControllerDelegate: AnyObject {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController)
@@ -43,7 +42,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private let lockedView = AutofillItemsLockedView()
     private let emptySearchView = AutofillEmptySearchView()
     private let noAuthAvailableView = AutofillNoAuthAvailableView()
-    private let tld: TLD = TLD()
+    private let tld: TLD = AppDependencyProvider.shared.storageCache.tld
 
     private lazy var addBarButtonItem: UIBarButtonItem = {
         UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
@@ -236,7 +235,10 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }
 
     private func presentDeleteConfirmation(for title: String) {
-        ActionMessageView.present(message: UserText.autofillLoginListLoginDeletedToastMessage(for: title),
+        let message = title.isEmpty ? UserText.autofillLoginListLoginDeletedToastMessageNoTitle
+                                    : UserText.autofillLoginListLoginDeletedToastMessage(for: title)
+
+        ActionMessageView.present(message: message,
                                   actionTitle: UserText.actionGenericUndo,
                                   presentationLocation: .withoutBottomBar,
                                   onAction: {
@@ -567,8 +569,7 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
         }
     }
 
-    func autofillLoginDetailsViewControllerDelete(account: SecureVaultModels.WebsiteAccount) {
-        let title = account.title ?? ""
+    func autofillLoginDetailsViewControllerDelete(account: SecureVaultModels.WebsiteAccount, title: String) {
         let deletedSuccessfully = viewModel.delete(account)
 
         if deletedSuccessfully {
@@ -663,3 +664,4 @@ extension AutofillLoginSettingsListViewController {
         )
     }
 }
+// swiftlint:enable file_length type_body_length

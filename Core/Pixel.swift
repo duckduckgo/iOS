@@ -23,8 +23,6 @@ import BrowserServicesKit
 import Common
 import Networking
 
-// swiftlint:enable type_body_length
-
 public struct PixelParameters {
     public static let url = "url"
     public static let duration = "dur"
@@ -199,5 +197,3 @@ extension Pixel {
         fire(pixel: pixel, withAdditionalParameters: newParams, includedParameters: [], onComplete: onComplete)
     }
 }
-
-// swiftlint:enable file_length

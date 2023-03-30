@@ -76,7 +76,7 @@ class PrivacyIconView: UIView {
         willSet {
             guard newValue != icon else { return }
             updateShieldImageView(for: newValue)
-            updateAccessibilityLabels(for: icon)
+            updateAccessibilityLabels(for: newValue)
         }
     }
     

@@ -79,7 +79,6 @@ struct HomeMessageViewModelBuilder {
                                             onDidClose: onDidClose)
             }
     }
-    // swiftlint:enable function_body_length
 
     static func mapActionToViewModel(remoteAction: RemoteAction,
                                      buttonAction: HomeMessageViewModel.ButtonAction,

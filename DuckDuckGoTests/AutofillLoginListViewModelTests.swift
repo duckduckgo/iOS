@@ -17,8 +17,6 @@
 //  limitations under the License.
 //
 
-// swiftlint:disable line_length
-
 import Foundation
 
 import XCTest
@@ -27,6 +25,7 @@ import XCTest
 @testable import BrowserServicesKit
 @testable import Common
 
+// swiftlint:disable line_length
 class AutofillLoginListViewModelTests: XCTestCase {
 
     private let tld = TLD()
@@ -221,3 +220,4 @@ class AutofillLoginListItemViewModelTests: XCTestCase {
         XCTAssertEqual(result.count, 1)
     }
 }
+// swiftlint:enable line_length

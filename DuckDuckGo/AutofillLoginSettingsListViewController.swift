@@ -272,7 +272,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             noAuthAvailableView.isHidden = true
             emptySearchView.isHidden = true
         case .empty:
-            emptyView.viewState = viewModel.isAutofillEnabled ? .autofillEnabled : .autofillDisabled
+            emptyView.viewState = viewModel.isAutofillEnabledInSettings ? .autofillEnabled : .autofillDisabled
             emptyView.isHidden = false
             tableView.isHidden = false
             setEditing(false, animated: false)
@@ -303,7 +303,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             if tableView.isEditing {
                 navigationItem.rightBarButtonItems = [editButtonItem]
             } else {
-                if viewModel.isAutofillEnabled || (!viewModel.isAutofillEnabled && viewModel.hasAccountsSaved) {
+                if viewModel.isAutofillEnabledInSettings || (!viewModel.isAutofillEnabledInSettings && viewModel.hasAccountsSaved) {
                     navigationItem.rightBarButtonItems = [editButtonItem, addBarButtonItem]
                 } else {
                     navigationItem.rightBarButtonItems = [addBarButtonItem]
@@ -319,7 +319,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             addBarButtonItem.isEnabled = false
             editButtonItem.isEnabled = false
         case .empty:
-            if viewModel.isAutofillEnabled {
+            if viewModel.isAutofillEnabledInSettings {
                 navigationItem.rightBarButtonItems = [editButtonItem, addBarButtonItem]
                 editButtonItem.isEnabled = false
             } else {
@@ -405,7 +405,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private func enableAutofillCell(for tableView: UITableView, indexPath: IndexPath) -> EnableAutofillSettingsTableViewCell {
         let cell = tableView.dequeueCell(ofType: EnableAutofillSettingsTableViewCell.self, for: indexPath)
         cell.delegate = self
-        cell.isToggleOn = viewModel.isAutofillEnabled
+        cell.isToggleOn = viewModel.isAutofillEnabledInSettings
         cell.theme = ThemeManager.shared.currentTheme
         return cell
     }
@@ -590,7 +590,7 @@ extension AutofillLoginSettingsListViewController: EnableAutofillSettingsTableVi
             Pixel.fire(pixel: .autofillLoginsSettingsDisabled)
         }
         
-        viewModel.isAutofillEnabled = value
+        viewModel.isAutofillEnabledInSettings = value
         updateViewState()
     }
 }

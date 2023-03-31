@@ -56,12 +56,12 @@ final class TrackerImageCache {
             return blankTrackerImage
         }
     }
-    
+
     private func loadTrackerLogoImage(for entityName: String) -> CGImage? {
         // To support logo entityName must match asset name in Trackers.xcassets
         UIImage(named: entityName, in: nil, compatibleWith: trait)?.cgImage
     }
-    
+
     private func loadTrackerLetterImage(for character: Character) -> CGImage? {
         UIImage(named: String(character), in: nil, compatibleWith: trait)?.cgImage
     }

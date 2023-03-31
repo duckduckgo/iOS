@@ -20,8 +20,8 @@
 import Foundation
 import os.log
 import BrowserServicesKit
-
-// swiftlint:enable type_body_length
+import Common
+import Networking
 
 public struct PixelParameters {
     public static let url = "url"
@@ -116,8 +116,6 @@ public struct PixelValues {
 
 public class Pixel {
 
-    private static let appUrls = AppUrls()
-    
     private struct Constants {
         static let tablet = "tablet"
         static let phone = "phone"
@@ -139,7 +137,7 @@ public class Pixel {
                             forDeviceType deviceType: UIUserInterfaceIdiom? = UIDevice.current.userInterfaceIdiom,
                             withAdditionalParameters params: [String: String] = [:],
                             allowedQueryReservedCharacters: CharacterSet? = nil,
-                            withHeaders headers: HTTPHeaders = APIHeaders().defaultHeaders,
+                            withHeaders headers: HTTPHeaders = APIRequest.Headers().default,
                             includedParameters: [QueryParameters] = [.atb, .appVersion],
                             onComplete: @escaping (Error?) -> Void = { _ in }) {
         
@@ -157,19 +155,19 @@ public class Pixel {
         let url: URL
         if let deviceType = deviceType {
             let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
-            url = appUrls.pixelUrl(forPixelNamed: pixel.name,
+            url = URL.makePixelURL(pixelName: pixel.name,
                                    formFactor: formFactor,
                                    includeATB: includedParameters.contains(.atb))
         } else {
-            url = appUrls.pixelUrl(forPixelNamed: pixel.name, includeATB: includedParameters.contains(.atb) )
+            url = URL.makePixelURL(pixelName: pixel.name, includeATB: includedParameters.contains(.atb) )
         }
         
-        APIRequest.request(url: url,
-                           parameters: newParams,
-                           allowedQueryReservedCharacters: allowedQueryReservedCharacters,
-                           headers: headers,
-                           callBackOnMainThread: true) { (_, error) in
-            
+        let configuration = APIRequest.Configuration(url: url,
+                                                     queryParameters: newParams,
+                                                     allowedQueryReservedCharacters: allowedQueryReservedCharacters,
+                                                     headers: headers)
+        let request = APIRequest(configuration: configuration, urlSession: .session(useMainThreadCallbackQueue: true))
+        request.fetch { _, error in
             os_log("Pixel fired %s %s", log: .generalLog, type: .debug, pixel.name, "\(params)")
             onComplete(error)
         }
@@ -199,23 +197,3 @@ extension Pixel {
         fire(pixel: pixel, withAdditionalParameters: newParams, includedParameters: [], onComplete: onComplete)
     }
 }
-
-public class TimedPixel {
-    
-    let pixel: Pixel.Event
-    let date: Date
-    
-    public init(_ pixel: Pixel.Event, date: Date = Date()) {
-        self.pixel = pixel
-        self.date = date
-    }
-    
-    public func fire(_ fireDate: Date = Date(), withAdditionalParameters params: [String: String] = [:]) {
-        let duration = String(fireDate.timeIntervalSince(date))
-        var newParams = params
-        newParams[PixelParameters.duration] = duration
-        Pixel.fire(pixel: pixel, withAdditionalParameters: newParams)
-    }
-    
-}
-// swiftlint:enable file_length

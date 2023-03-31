@@ -147,7 +147,7 @@ extension TabViewController {
     }
     
     private func buildKeepSignInEntry(forLink link: Link) -> BrowsingMenuEntry? {
-        guard let domain = link.url.host, !appUrls.isDuckDuckGo(url: link.url) else { return nil }
+        guard let domain = link.url.host, !link.url.isDuckDuckGo else { return nil }
         let isFireproofed = PreserveLogins.shared.isAllowed(cookieDomain: domain)
         
         if isFireproofed {
@@ -179,8 +179,7 @@ extension TabViewController {
     
     private func buildBookmarkEntries(for link: Link,
                                       with bookmarksInterface: MenuBookmarksInteracting) -> (bookmark: BrowsingMenuEntry,
-                                                                                             favorite:
-                                                                                                BrowsingMenuEntry) {
+                                                                                             favorite: BrowsingMenuEntry) {
         let existingFavorite = bookmarksInterface.favorite(for: link.url)
         let existingBookmark = existingFavorite ?? bookmarksInterface.bookmark(for: link.url)
         
@@ -298,13 +297,15 @@ extension TabViewController {
             Pixel.fire(pixel: .emailUserCreatedAlias, withAdditionalParameters: pixelParameters, includedParameters: [])
 
             emailManager.getAliasIfNeededAndConsume { alias, _ in
-                guard let alias = alias else {
-                    // we may want to communicate this failure to the user in the future
-                    return
+                Task { @MainActor in
+                    guard let alias = alias else {
+                        // we may want to communicate this failure to the user in the future
+                        return
+                    }
+                    let pasteBoard = UIPasteboard.general
+                    pasteBoard.string = emailManager.emailAddressFor(alias)
+                    ActionMessageView.present(message: UserText.emailBrowsingMenuAlert)
                 }
-                let pasteBoard = UIPasteboard.general
-                pasteBoard.string = emailManager.emailAddressFor(alias)
-                ActionMessageView.present(message: UserText.emailBrowsingMenuAlert)
             }
         }
     }

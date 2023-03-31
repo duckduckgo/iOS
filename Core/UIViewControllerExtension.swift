@@ -42,16 +42,18 @@ extension UIViewController {
         }
     }
 
-    public func presentShareSheet(withItems activityItems: [Any], fromButtonItem buttonItem: UIBarButtonItem) {
+    public func presentShareSheet(withItems activityItems: [Any], fromButtonItem buttonItem: UIBarButtonItem, completion: UIActivityViewController.CompletionWithItemsHandler? = nil) {
         let activities = buildActivities()
         let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: activities)
+        shareController.completionWithItemsHandler = completion
         shareController.overrideUserInterfaceStyle()
         present(controller: shareController, fromButtonItem: buttonItem)
     }
 
-    public func presentShareSheet(withItems activityItems: [Any], fromView sourceView: UIView, atPoint point: Point? = nil) {
+    public func presentShareSheet(withItems activityItems: [Any], fromView sourceView: UIView, atPoint point: Point? = nil, completion: UIActivityViewController.CompletionWithItemsHandler? = nil) {
         let activities = buildActivities()
         let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: activities)
+        shareController.completionWithItemsHandler = completion
         shareController.overrideUserInterfaceStyle()
         shareController.excludedActivityTypes = [.markupAsPDF]
         present(controller: shareController, fromView: sourceView, atPoint: point)
@@ -87,13 +89,13 @@ extension Core.Bookmark {
         guard let url = url else {
             return ""
         }
-        return AppUrls().removingInternalSearchParameters(fromUrl: url)
+        return url.removingInternalSearchParameters()
     }
 
     public func activityViewController(_ activityViewController: UIActivityViewController,
                                        itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
         guard let url = url else { return nil }
-        return AppUrls().removingInternalSearchParameters(fromUrl: url)
+        return url.removingInternalSearchParameters()
     }
 
     public func activityViewController(_ activityViewController: UIActivityViewController,
@@ -130,7 +132,7 @@ extension Core.Link: UIActivityItemSource {
         if let localFileURL = localFileURL {
             return localFileURL
         }
-        return AppUrls().removingInternalSearchParameters(fromUrl: url)
+        return url.removingInternalSearchParameters()
     }
 
     public func activityViewController(_ activityViewController: UIActivityViewController,
@@ -143,7 +145,7 @@ extension Core.Link: UIActivityItemSource {
         
             return localFileURL
         }
-        return AppUrls().removingInternalSearchParameters(fromUrl: url)
+        return url.removingInternalSearchParameters()
     }
 
     public func activityViewController(_ activityViewController: UIActivityViewController,

@@ -24,7 +24,7 @@ import PrivacyDashboard
 final class PrivacyIconLogic {
     
     static func privacyIcon(for url: URL?) -> PrivacyIcon {
-        if let url = url, AppUrls().isDuckDuckGoSearch(url: url) {
+        if let url = url, url.isDuckDuckGoSearch {
             return .daxLogo
         } else {
             return .shield
@@ -32,13 +32,13 @@ final class PrivacyIconLogic {
     }
     
     static func privacyIcon(for privacyInfo: PrivacyInfo) -> PrivacyIcon {
-        if AppUrls().isDuckDuckGoSearch(url: privacyInfo.url) {
+        if privacyInfo.url.isDuckDuckGoSearch {
             return .daxLogo
         } else {
             let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
             let isUserUnprotected = config.isUserUnprotected(domain: privacyInfo.url.host)
  
-            let notFullyProtected = !privacyInfo.https || privacyInfo.isMajorTrackerNetwork || isUserUnprotected
+            let notFullyProtected = !privacyInfo.https || isUserUnprotected
             
             return notFullyProtected ? .shieldWithDot : .shield
         }

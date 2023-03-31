@@ -29,7 +29,7 @@ class AboutViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         applyTheme(ThemeManager.shared.currentTheme)
     }
 

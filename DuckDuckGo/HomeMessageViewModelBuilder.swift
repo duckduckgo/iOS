@@ -79,7 +79,6 @@ struct HomeMessageViewModelBuilder {
                                             onDidClose: onDidClose)
             }
     }
-    // swiftlint:enable function_body_length
 
     static func mapActionToViewModel(remoteAction: RemoteAction,
                                      buttonAction: HomeMessageViewModel.ButtonAction,
@@ -92,7 +91,7 @@ struct HomeMessageViewModelBuilder {
             }
         case .appStore:
             return {
-                let url = AppUrls().appStoreURL
+                let url = URL.appStore
                 if UIApplication.shared.canOpenURL(url as URL) {
                     UIApplication.shared.open(url)
                 }

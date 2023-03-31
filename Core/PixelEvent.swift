@@ -20,11 +20,12 @@
 import Foundation
 import BrowserServicesKit
 import Bookmarks
+import Configuration
 
 // swiftlint:disable file_length
-// swiftlint:disable type_body_length
 extension Pixel {
-    
+
+    // swiftlint:disable:next type_body_length
     public enum Event {
         
         case appLaunch
@@ -244,8 +245,6 @@ extension Pixel {
         
         case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
         
-        case autoconsentCookiePopupManaged
-
         case secureVaultInitError
         case secureVaultError
         
@@ -291,6 +290,7 @@ extension Pixel {
         case dbRemoteMessagingUpdateMessageShownError
         case dbRemoteMessagingUpdateMessageStatusError
         case dbRemoteMessagingDeleteScheduledMessageError
+        case dbLocalAuthenticationError
 
         case configurationFetchInfo
         
@@ -379,6 +379,14 @@ extension Pixel {
         case bookmarksMigrationCouldNotPrepareDatabaseOnFailedMigration
         case bookmarksMigrationCouldNotValidateDatabase
         case bookmarksMigrationCouldNotRemoveOldStore
+        
+        case invalidPayload(Configuration)
+      
+        case experimentDailyFireButtonTapped
+        case experimentDailyFireButtonDataCleared
+        
+        case experimentFireButtonAnimationTriggeredOnTabSwitcher
+        case experimentFireButtonEducationRestarted
     }
     
 }
@@ -615,8 +623,6 @@ extension Pixel.Event {
         case .autofillJSPixelFired(let pixel):
             return "m_ios_\(pixel.pixelName)"
             
-        case .autoconsentCookiePopupManaged: return "m_autoconsent_cookie_popup_managed"
-            
         case .secureVaultInitError: return "m_secure_vault_init_error"
         case .secureVaultError: return "m_secure_vault_error"
             
@@ -660,6 +666,7 @@ extension Pixel.Event {
         case .dbRemoteMessagingUpdateMessageShownError: return "m_d_db_rm_update_message_shown"
         case .dbRemoteMessagingUpdateMessageStatusError: return "m_d_db_rm_update_message_status"
         case .dbRemoteMessagingDeleteScheduledMessageError: return "m_d_db_rm_delete_scheduled_message"
+        case .dbLocalAuthenticationError: return "m_d_local_auth_error"
 
         case .configurationFetchInfo: return "m_d_cfgfetch"
             
@@ -722,7 +729,7 @@ extension Pixel.Event {
         case .adAttributionGlobalAttributedRulesDoNotExist: return "m_attribution_global_attributed_rules_do_not_exist"
         case .adAttributionCompilationFailedForAttributedRulesList: return "m_attribution_compilation_failed_for_attributed_rules_list"
             
-        case .adAttributionLogicUnexpectedStateOnInheritedAttribution: return "m_attribution_unexpected_state_on_inherited_attribution"
+        case .adAttributionLogicUnexpectedStateOnInheritedAttribution: return "m_attribution_unexpected_state_on_inherited_attribution_2"
         case .adAttributionLogicUnexpectedStateOnRulesCompiled: return "m_attribution_unexpected_state_on_rules_compiled"
         case .adAttributionLogicUnexpectedStateOnRulesCompilationFailed: return "m_attribution_unexpected_state_on_rules_compilation_failed"
         case .adAttributionDetectionInvalidDomainInParameter: return "m_attribution_invalid_domain_in_parameter"
@@ -750,6 +757,14 @@ extension Pixel.Event {
             return "m_d_bookmarks_migration_could_not_prepare_database_on_failed_migration"
         case .bookmarksMigrationCouldNotValidateDatabase: return "m_d_bookmarks_migration_could_not_validate_database"
         case .bookmarksMigrationCouldNotRemoveOldStore: return "m_d_bookmarks_migration_could_not_remove_old_store"
+
+        case .invalidPayload(let configuration): return "m_d_\(configuration.rawValue)_invalid_payload".lowercased()
+            
+        case .experimentDailyFireButtonTapped: return "m_d_experiment_daily_fire_button_tapped"
+        case .experimentDailyFireButtonDataCleared: return "m_d_experiment_daily_fire_button_data_cleared"
+
+        case .experimentFireButtonAnimationTriggeredOnTabSwitcher: return "m_d_experiment_fire_button_animation_triggered_on_tab_switcher"
+        case .experimentFireButtonEducationRestarted: return "m_d_experiment_fire_button_education_restarted"
         }
         
     }

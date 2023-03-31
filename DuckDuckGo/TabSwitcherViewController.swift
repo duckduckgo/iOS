@@ -46,11 +46,11 @@ class TabSwitcherViewController: UIViewController {
     @IBOutlet weak var displayModeButton: UIButton!
     @IBOutlet weak var bookmarkAllButton: UIButton!
     
-    @IBOutlet weak var fireButton: UIBarButtonItem!
+    @IBOutlet weak var fireButton: FireBarButtonItem!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var plusButton: UIBarButtonItem!
     
-    @IBOutlet weak var topFireButton: UIButton!
+    @IBOutlet weak var topFireButton: FireButton!
     @IBOutlet weak var topPlusButton: UIButton!
     @IBOutlet weak var topDoneButton: UIButton!
 
@@ -165,7 +165,16 @@ class TabSwitcherViewController: UIViewController {
             if !ViewHighlighter.highlightedViews.contains(where: { $0.view == view }) {
                 ViewHighlighter.hideAll()
                 ViewHighlighter.showIn(window, focussedOnView: view)
+                
+                if let fireButton = view as? FireButton {
+                    FireButtonExperiment.playFireButtonForOnboarding(fireButton: fireButton)
+                }
             }
+        } else {
+            guard let button = !topFireButton.isHidden ? topFireButton : fireButton.button else { return }
+            
+            FireButtonExperiment.playFireButtonAnimationOnTabSwitcher(fireButton: button,
+                                                                      tabCount: tabsModel.count)
         }
     }
     
@@ -303,6 +312,10 @@ class TabSwitcherViewController: UIViewController {
 
     @IBAction func onFirePressed(sender: AnyObject) {
         Pixel.fire(pixel: .forgetAllPressedTabSwitching)
+        DailyPixel.fire(pixel: .experimentDailyFireButtonTapped)
+        FireButton.stopAllFireButtonAnimations()
+        
+        FireButtonExperiment.storeThatFireButtonWasTapped()
         
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             let spec = DaxDialogs.shared.fireButtonEducationMessage()
@@ -490,12 +503,15 @@ extension TabSwitcherViewController: Themable {
         topPlusButton.tintColor = theme.barTintColor
         topFireButton.tintColor = theme.barTintColor
         
+        fireButton.decorate(with: theme)
+        topFireButton.decorate(with: theme)
+        
         toolbar.barTintColor = theme.barBackgroundColor
         toolbar.tintColor = theme.barTintColor
         
         FireButtonExperiment.decorateFireButton(fireButton: fireButton, for: theme)
         FireButtonExperiment.decorateFireButton(fireButton: topFireButton, for: theme)
-        
+                
         collectionView.reloadData()
     }
 }

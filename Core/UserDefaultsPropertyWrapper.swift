@@ -87,32 +87,56 @@ public struct UserDefaultsWrapper<T> {
         
         case autoconsentPromptSeen = "com.duckduckgo.ios.autoconsentPromptSeen"
         case autoconsentEnabled = "com.duckduckgo.ios.autoconsentEnabled"
+
+        case shouldScheduleRulesCompilationOnAppLaunch = "com.duckduckgo.ios.shouldScheduleRulesCompilationOnAppLaunch"
+
+        case wasFireButtonEverTapped = "com.duckduckgo.ios.wasFireButtonEverTapped"
+        case wasFireButtonEducationRestarted = "com.duckduckgo.ios.wasFireButtonEducationRestarted"
+        
     }
 
     private let key: Key
     private let defaultValue: T
     private let setIfEmpty: Bool
+    private let container: UserDefaults
 
-    public init(key: Key, defaultValue: T, setIfEmpty: Bool = false) {
+    public init(key: Key, defaultValue: T, setIfEmpty: Bool = false, container: UserDefaults = .app) {
         self.key = key
         self.defaultValue = defaultValue
         self.setIfEmpty = setIfEmpty
+        self.container = container
     }
 
     public var wrappedValue: T {
         get {
-            if let storedValue = UserDefaults.app.object(forKey: key.rawValue) as? T {
+            if let storedValue = container.object(forKey: key.rawValue) as? T {
                 return storedValue
             }
             
             if setIfEmpty {
-                UserDefaults.app.set(defaultValue, forKey: key.rawValue)
+                container.set(defaultValue, forKey: key.rawValue)
             }
             
             return defaultValue
         }
         set {
-            UserDefaults.app.set(newValue, forKey: key.rawValue)
+            if let optional = newValue as? AnyOptional, optional.isNil {
+                container.removeObject(forKey: key.rawValue)
+            } else {
+                container.setValue(newValue, forKey: key.rawValue)
+            }
         }
     }
+}
+
+private protocol AnyOptional {
+    
+    var isNil: Bool { get }
+    
+}
+
+extension Optional: AnyOptional {
+    
+    var isNil: Bool { self == nil }
+    
 }

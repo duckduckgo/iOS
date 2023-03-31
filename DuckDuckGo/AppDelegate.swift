@@ -28,6 +28,9 @@ import BrowserServicesKit
 import Bookmarks
 import Persistence
 import Crashes
+import Configuration
+import Networking
+import DDGSync
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -53,6 +56,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var showKeyboardIfSettingOn = true
     private var lastBackgroundDate: Date?
 
+    private(set) var syncService: DDGSyncing!
+    private(set) var syncPersistence: SyncDataPersistor!
+
     // MARK: lifecycle
 
     // swiftlint:disable function_body_length
@@ -68,6 +74,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 .forEach { $0.perform(setHardwareLayout, with: nil) }
         }
         #endif
+        
+        APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
+        Configuration.setURLProvider(AppConfigurationURLProvider())
 
         CrashCollection.start {
             Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: $0, includedParameters: [.appVersion])
@@ -188,6 +197,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.windowScene?.screenshotService?.delegate = self
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
+        // MARK: Sync initialisation
+        syncPersistence = SyncDataPersistor()
+        syncService = DDGSync(persistence: syncPersistence)
+
         appIsLaunching = true
         return true
     }
@@ -227,6 +240,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             appIsLaunching = false
             onApplicationLaunch(application)
         }
+        
+        FireButtonExperiment.restartFireButtonEducationIfNeeded()
 
         mainViewController?.showBars()
         mainViewController?.didReturnFromBackground()
@@ -235,8 +250,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             showKeyboardOnLaunch()
         }
 
-        AppConfigurationFetch().start { newData in
-            if newData {
+        if AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch {
+            ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+            AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch = false
+        }
+
+        AppConfigurationFetch().start { result in
+            if case .assetsUpdated(let protectionsUpdated) = result, protectionsUpdated {
                 ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
             }
         }
@@ -375,8 +395,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         os_log(#function, log: .lifecycleLog, type: .debug)
 
-        AppConfigurationFetch().start(isBackgroundFetch: true) { newData in
-            completionHandler(newData ? .newData : .noData)
+        AppConfigurationFetch().start(isBackgroundFetch: true) { result in
+            switch result {
+            case .noData:
+                completionHandler(.noData)
+            case .assetsUpdated:
+                completionHandler(.newData)
+            }
         }
     }
 

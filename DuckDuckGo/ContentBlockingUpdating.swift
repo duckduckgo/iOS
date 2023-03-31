@@ -85,7 +85,7 @@ public final class ContentBlockingUpdating {
             .combineLatest(onNotificationWithInitial(AppUserDefaults.Notifications.autofillEnabledChange), combine)
             .combineLatest(onNotificationWithInitial(AppUserDefaults.Notifications.textSizeChange), combine)
             .combineLatest(onNotificationWithInitial(AppUserDefaults.Notifications.didVerifyInternalUser), combine)
-            .combineLatest(onNotificationWithInitial(StorageCacheProvider.didUpdateStorageCacheNotification)
+            .combineLatest(onNotificationWithInitial(ConfigurationManager.didUpdateTrackerDependencies)
                 .receive(on: DispatchQueue.main), combine)
             // DefaultScriptSourceProvider instance should be created once per rules/config change and fed into UserScripts initialization
             .map(makeValue)

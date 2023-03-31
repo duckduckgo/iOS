@@ -217,7 +217,7 @@ final class BrowsingMenuViewController: UIViewController {
         bottomConstraintIPad.isActive = isIPad
 
         // Make it go above WebView in Landscape
-        topConstraint.constant = frame.minY + (isIPhoneLandscape ? -10 : 10)
+        topConstraint.constant = frame.minY + (isIPhoneLandscape ? -10 : 5)
         // Move menu up in Landscape, as bottom toolbar shrinks
         bottomConstraint.constant = windowBounds.maxY - frame.maxY - (isIPhoneLandscape ? 2 : 10)
         rightConstraint.constant = isIPad ? 67 : 10
@@ -261,7 +261,6 @@ extension BrowsingMenuViewController: UITableViewDelegate {
 
 }
 
-// swiftlint:disable line_length
 extension BrowsingMenuViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -274,14 +273,16 @@ extension BrowsingMenuViewController: UITableViewDataSource {
         
         switch menuEntries[indexPath.row] {
         case .regular(let name, let accessibilityLabel, let image, let showNotificationDot, _):
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "BrowsingMenuEntryViewCell", for: indexPath) as? BrowsingMenuEntryViewCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "BrowsingMenuEntryViewCell",
+                                                           for: indexPath) as? BrowsingMenuEntryViewCell else {
                 fatalError("Cell should be dequeued")
             }
             
             cell.configure(image: image, label: name, accessibilityLabel: accessibilityLabel, theme: theme, showNotificationDot: showNotificationDot)
             return cell
         case .separator:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "BrowsingMenuSeparatorViewCell", for: indexPath) as? BrowsingMenuSeparatorViewCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "BrowsingMenuSeparatorViewCell",
+                                                           for: indexPath) as? BrowsingMenuSeparatorViewCell else {
                 fatalError("Cell should be dequeued")
             }
             

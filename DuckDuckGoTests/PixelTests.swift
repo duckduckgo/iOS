@@ -20,6 +20,7 @@
 import XCTest
 import OHHTTPStubs
 import OHHTTPStubsSwift
+import Networking
 @testable import Core
 
 class PixelTests: XCTestCase {
@@ -66,7 +67,7 @@ class PixelTests: XCTestCase {
             return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
         }
         
-        var headers = APIHeaders().defaultHeaders
+        var headers = APIRequest.Headers().default
         headers[userAgentName] = testAgent
         Pixel.fire(pixel: .appLaunch, forDeviceType: .phone, withHeaders: headers)
         

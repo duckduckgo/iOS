@@ -22,8 +22,9 @@ import BackgroundTasks
 import Core
 import os.log
 import BrowserServicesKit
+import Configuration
 
-public typealias AppConfigurationCompletion = (Bool) -> Void
+typealias AppConfigurationFetchCompletion = (ConfigurationManager.UpdateResult) -> Void
 
 protocol CompletableTask {
 
@@ -48,12 +49,15 @@ protocol AppConfigurationFetchStatistics {
 class AppConfigurationFetch {
     
     struct Constants {
+        
         static let backgroundTaskName = "Fetch Configuration Task"
         static let backgroundProcessingTaskIdentifier = "com.duckduckgo.app.configurationRefresh"
         static let minimumConfigurationRefreshInterval: TimeInterval = 60 * 30
+
     }
     
     private struct Keys {
+        
         static let bgFetchType = "bgft"
         static let bgFetchTypeBackgroundTasks = "bgbt"
         static let bgFetchTaskExpiration = "bgte"
@@ -64,13 +68,7 @@ class AppConfigurationFetch {
         static let fgFetchStart = "fgfs"
         static let fgFetchNoData = "fgnd"
         static let fgFetchWithData = "fgwd"
-
-        static let fetchHTTPSBloomFilterSpec = "d1"
-        static let fetchHTTPSBloomFilter = "d2"
-        static let fetchHTTPSExcludedDomainsCount = "d3"
-        static let fetchSurrogatesCount = "d4"
-        static let fetchTrackerDataSetCount = "d5"
-        static let fetchPrivacyConfigurationCount = "d7"
+        
     }
     
     private static let fetchQueue = DispatchQueue(label: "Config Fetch queue", qos: .utility)
@@ -80,30 +78,16 @@ class AppConfigurationFetch {
 
     @UserDefaultsWrapper(key: .backgroundFetchTaskDuration, defaultValue: 0)
     static private var backgroundFetchTaskDuration: Int
-    
-    @UserDefaultsWrapper(key: .downloadedHTTPSBloomFilterSpecCount, defaultValue: 0)
-    private var downloadedHTTPSBloomFilterSpecCount: Int
-    
-    @UserDefaultsWrapper(key: .downloadedHTTPSBloomFilterCount, defaultValue: 0)
-    private var downloadedHTTPSBloomFilterCount: Int
 
-    @UserDefaultsWrapper(key: .downloadedHTTPSExcludedDomainsCount, defaultValue: 0)
-    private var downloadedHTTPSExcludedDomainsCount: Int
-
-    @UserDefaultsWrapper(key: .downloadedSurrogatesCount, defaultValue: 0)
-    private var downloadedSurrogatesCount: Int
-
-    @UserDefaultsWrapper(key: .downloadedTrackerDataSetCount, defaultValue: 0)
-    private var downloadedTrackerDataSetCount: Int
-    
-    @UserDefaultsWrapper(key: .downloadedPrivacyConfigurationCount, defaultValue: 0)
-    private var downloadedPrivacyConfigurationCount: Int
+    @UserDefaultsWrapper(key: .shouldScheduleRulesCompilationOnAppLaunch, defaultValue: false)
+    static var shouldScheduleRulesCompilationOnAppLaunch: Bool
 
     static private var shouldRefresh: Bool {
         return Date().timeIntervalSince(Self.lastConfigurationRefreshDate) > Constants.minimumConfigurationRefreshInterval
     }
 
     enum BackgroundRefreshCompletionStatus {
+        
         case expired
         case noData
         case newData
@@ -111,37 +95,38 @@ class AppConfigurationFetch {
         var success: Bool {
             self != .expired
         }
+        
     }
     
     func start(isBackgroundFetch: Bool = false,
-               completion: AppConfigurationCompletion?) {
+               completion: AppConfigurationFetchCompletion?) {
         guard Self.shouldRefresh else {
             // Statistics are not sent after a successful background refresh in order to reduce the time spent in the background, so they are checked
             // here in case a background refresh has happened recently.
             Self.fetchQueue.async {
                 self.sendStatistics {
-                    completion?(false)
+                    completion?(.noData)
                 }
             }
 
             return
         }
-
+        
         type(of: self).fetchQueue.async {
             let taskID = UIApplication.shared.beginBackgroundTask(withName: Constants.backgroundTaskName)
-            let fetchedNewData = self.fetchConfigurationFiles(isBackground: isBackgroundFetch)
-
-            if !isBackgroundFetch {
-                type(of: self).fetchQueue.async {
-                    self.sendStatistics {
-                        UIApplication.shared.endBackgroundTask(taskID)
+            self.fetchConfigurationFiles(isBackground: isBackgroundFetch) { result in
+                if !isBackgroundFetch {
+                    type(of: self).fetchQueue.async {
+                        self.sendStatistics {
+                            UIApplication.shared.endBackgroundTask(taskID)
+                        }
                     }
+                } else {
+                    UIApplication.shared.endBackgroundTask(taskID)
                 }
-            } else {
-                UIApplication.shared.endBackgroundTask(taskID)
-            }
 
-            completion?(fetchedNewData)
+                completion?(result)
+            }
         }
     }
 
@@ -180,23 +165,21 @@ class AppConfigurationFetch {
         }
         #endif
     }
+    
+    private func fetchConfigurationFiles(isBackground: Bool, onDidComplete: @escaping AppConfigurationFetchCompletion) {
+        Task {
+            self.markFetchStarted(isBackground: isBackground)
+            let result = await AppDependencyProvider.shared.configurationManager.update()
 
-    @discardableResult
-    private func fetchConfigurationFiles(isBackground: Bool) -> Bool {
-        self.markFetchStarted(isBackground: isBackground)
+            switch result {
+            case .noData:
+                self.markFetchCompleted(isBackground: isBackground, hasNewData: false)
+            case .assetsUpdated:
+                self.markFetchCompleted(isBackground: isBackground, hasNewData: true)
+            }
 
-        var newData = false
-        let semaphore = DispatchSemaphore(value: 0)
-
-        AppDependencyProvider.shared.storageCache.update(progress: updateFetchProgress) { newCache in
-            newData = newData || (newCache != nil)
-            semaphore.signal()
+            onDidComplete(result)
         }
-
-        semaphore.wait()
-
-        self.markFetchCompleted(isBackground: isBackground, hasNewData: newData)
-        return newData
     }
     
     private func markFetchStarted(isBackground: Bool) {
@@ -206,17 +189,6 @@ class AppConfigurationFetch {
             store.backgroundStartCount += 1
         } else {
             store.foregroundStartCount += 1
-        }
-    }
-
-    private func updateFetchProgress(configuration: ContentBlockerRequest.Configuration) {
-        switch configuration {
-        case .httpsBloomFilter: downloadedHTTPSBloomFilterCount += 1
-        case .httpsBloomFilterSpec: downloadedHTTPSBloomFilterSpecCount += 1
-        case .httpsExcludedDomains: downloadedHTTPSExcludedDomainsCount += 1
-        case .surrogates: downloadedSurrogatesCount += 1
-        case .trackerDataSet: downloadedTrackerDataSetCount += 1
-        case .privacyConfiguration: downloadedPrivacyConfigurationCount += 1
         }
     }
     
@@ -258,13 +230,7 @@ class AppConfigurationFetch {
             Keys.fgFetchWithData: String(store.foregroundNewDataCount),
             Keys.bgFetchType: backgroundFetchType,
             Keys.bgFetchTaskExpiration: String(store.backgroundFetchTaskExpirationCount),
-            Keys.bgFetchTaskDuration: String(Self.backgroundFetchTaskDuration),
-            Keys.fetchHTTPSBloomFilterSpec: String(downloadedHTTPSBloomFilterSpecCount),
-            Keys.fetchHTTPSBloomFilter: String(downloadedHTTPSBloomFilterCount),
-            Keys.fetchHTTPSExcludedDomainsCount: String(downloadedHTTPSExcludedDomainsCount),
-            Keys.fetchSurrogatesCount: String(downloadedSurrogatesCount),
-            Keys.fetchTrackerDataSetCount: String(downloadedTrackerDataSetCount),
-            Keys.fetchPrivacyConfigurationCount: String(downloadedPrivacyConfigurationCount)
+            Keys.bgFetchTaskDuration: String(Self.backgroundFetchTaskDuration)
         ]
         
         let semaphore = DispatchSemaphore(value: 0)
@@ -295,13 +261,6 @@ class AppConfigurationFetch {
         store.backgroundFetchTaskExpirationCount = 0
 
         Self.backgroundFetchTaskDuration = 0
-
-        downloadedHTTPSBloomFilterCount = 0
-        downloadedHTTPSBloomFilterSpecCount = 0
-        downloadedHTTPSExcludedDomainsCount = 0
-        downloadedSurrogatesCount = 0
-        downloadedTrackerDataSetCount = 0
-        downloadedPrivacyConfigurationCount = 0
     }
 }
 
@@ -329,17 +288,29 @@ extension AppConfigurationFetch {
                                                                               previousStatus: lastCompletionStatus)
             }
         }
-
+        
         queue.async {
-            let fetchedNewData = configurationFetcher.fetchConfigurationFiles(isBackground: true)
-            ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+            configurationFetcher.fetchConfigurationFiles(isBackground: true) { result in
 
-            DispatchQueue.main.async {
-                lastCompletionStatus = backgroundRefreshTaskCompletionHandler(store: store,
-                                                                              refreshStartDate: refreshStartDate,
-                                                                              task: task,
-                                                                              status: fetchedNewData ? .newData : .noData,
-                                                                              previousStatus: lastCompletionStatus)
+                let status: BackgroundRefreshCompletionStatus
+                switch result {
+                case .noData:
+                    status = .noData
+                case .assetsUpdated(let protectionsUpdated):
+                    status = .newData
+
+                    if protectionsUpdated {
+                        Self.shouldScheduleRulesCompilationOnAppLaunch = true
+                    }
+                }
+                
+                DispatchQueue.main.async {
+                    lastCompletionStatus = backgroundRefreshTaskCompletionHandler(store: store,
+                                                                                  refreshStartDate: refreshStartDate,
+                                                                                  task: task,
+                                                                                  status: status,
+                                                                                  previousStatus: lastCompletionStatus)
+                }
             }
         }
     }

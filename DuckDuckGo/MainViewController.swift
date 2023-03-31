@@ -48,7 +48,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var suggestionTrayContainer: UIView!
     @IBOutlet weak var customNavigationBar: UIView!
     @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var fireButton: UIBarButtonItem!
+    @IBOutlet weak var fireButton: FireBarButtonItem!
     @IBOutlet weak var lastToolbarButton: UIBarButtonItem!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
@@ -93,8 +93,6 @@ class MainViewController: UIViewController {
     var homeController: HomeViewController?
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
-
-    private lazy var appUrls: AppUrls = AppUrls()
 
     var tabManager: TabManager!
     private let previewsSource = TabPreviewsSource()
@@ -525,6 +523,10 @@ class MainViewController: UIViewController {
 
     @IBAction func onFirePressed() {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
+        DailyPixel.fire(pixel: .experimentDailyFireButtonTapped)
+        FireButton.stopAllFireButtonAnimations()
+        
+        FireButtonExperiment.storeThatFireButtonWasTapped()
         
         wakeLazyFireButtonAnimator()
         
@@ -569,12 +571,14 @@ class MainViewController: UIViewController {
         skipSERPFlow = true
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             showFireButtonPulse()
+            
+            tabSwitcherController?.viewDidAppear(false)
         }
     }
 
     func loadQueryInNewTab(_ query: String, reuseExisting: Bool = false) {
         dismissOmniBar()
-        guard let url = appUrls.url(forQuery: query) else {
+        guard let url = URL.makeSearchURL(query: query) else {
             os_log("Couldn‘t form URL for query “%s”", log: .lifecycleLog, type: .error, query)
             return
         }
@@ -608,7 +612,7 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func loadQuery(_ query: String) {
-        guard let url = appUrls.url(forQuery: query, queryContext: currentTab?.url) else {
+        guard let url = URL.makeSearchURL(query: query, queryContext: currentTab?.url) else {
             os_log("Couldn‘t form URL for query “%s” with context “%s”",
                    log: .lifecycleLog,
                    type: .error,
@@ -1278,8 +1282,7 @@ extension MainViewController: OmniBarDelegate {
     
     private var isSERPPresented: Bool {
         guard let tabURL = currentTab?.url else { return false }
-            
-        return appUrls.isDuckDuckGoSearch(url: tabURL)
+        return tabURL.isDuckDuckGoSearch
     }
     
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
@@ -1356,7 +1359,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
             } else {
                 loadUrl(url)
             }
-        } else if let url = appUrls.searchUrl(text: suggestion.suggestion) {
+        } else if let url = URL.makeSearchURL(text: suggestion.suggestion) {
             loadUrl(url)
         } else {
             os_log("Couldn‘t form URL for suggestion “%s”", log: .lifecycleLog, type: .error, suggestion.suggestion)
@@ -1367,7 +1370,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 
     func autocomplete(pressedPlusButtonForSuggestion suggestion: Suggestion) {
         if let url = suggestion.url {
-            if appUrls.isDuckDuckGoSearch(url: url) {
+            if url.isDuckDuckGoSearch {
                 omniBar.textField.text = suggestion.suggestion
             } else if !url.isBookmarklet() {
                 omniBar.textField.text = url.absoluteString
@@ -1794,6 +1797,7 @@ extension MainViewController: AutoClearWorker {
     func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil, showNextDaxDialog: Bool = false) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
+        DailyPixel.fire(pixel: .experimentDailyFireButtonDataCleared)
         
         self.tabCountInfo = tabManager.makeTabCountInfo()
         
@@ -1838,6 +1842,10 @@ extension MainViewController: AutoClearWorker {
         if !ViewHighlighter.highlightedViews.contains(where: { $0.view == view }) {
             ViewHighlighter.hideAll()
             ViewHighlighter.showIn(window, focussedOnView: view)
+            
+            if let fireButton = view as? FireButton {
+                FireButtonExperiment.playFireButtonForOnboarding(fireButton: fireButton)
+            }
         }
     }
     
@@ -1865,6 +1873,7 @@ extension MainViewController: Themable {
         toolbar?.barTintColor = theme.barBackgroundColor
         toolbar?.tintColor = theme.barTintColor
         
+        fireButton.decorate(with: theme)
         tabSwitcherButton.decorate(with: theme)
         gestureBookmarksButton.decorate(with: theme)
         tabsButton.tintColor = theme.barTintColor

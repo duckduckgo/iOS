@@ -28,10 +28,11 @@ protocol DependencyProvider {
     var featureFlaggerInternalUserDecider: FeatureFlaggerInternalUserDecider { get }
     var remoteMessagingStore: RemoteMessagingStore { get }
     var homePageConfiguration: HomePageConfiguration { get }
-    var storageCache: StorageCacheProvider { get }
+    var storageCache: StorageCache { get }
     var voiceSearchHelper: VoiceSearchHelperProtocol { get }
     var downloadManager: DownloadManager { get }
     var autofillLoginSession: AutofillLoginSession { get }
+    var configurationManager: ConfigurationManager { get }
 }
 
 /// Provides dependencies for objects that are not directly instantiated
@@ -53,8 +54,9 @@ class AppDependencyProvider: DependencyProvider {
     let remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore()
     lazy var homePageConfiguration: HomePageConfiguration = HomePageConfiguration(variantManager: variantManager,
                                                                                   remoteMessagingStore: remoteMessagingStore)
-    let storageCache = StorageCacheProvider()
+    let storageCache = StorageCache()
     let voiceSearchHelper: VoiceSearchHelperProtocol = VoiceSearchHelper()
     let downloadManager = DownloadManager()
     let autofillLoginSession = AutofillLoginSession()
+    let configurationManager = ConfigurationManager()
 }

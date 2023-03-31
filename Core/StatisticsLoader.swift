@@ -20,6 +20,7 @@
 import Foundation
 import os.log
 import BrowserServicesKit
+import Networking
 
 public class StatisticsLoader {
     
@@ -28,12 +29,10 @@ public class StatisticsLoader {
     public static let shared = StatisticsLoader()
     
     private let statisticsStore: StatisticsStore
-    private let appUrls: AppUrls
     private let parser = AtbParser()
     
     init(statisticsStore: StatisticsStore = StatisticsUserDefaults()) {
         self.statisticsStore = statisticsStore
-        self.appUrls = AppUrls(statisticsStore: statisticsStore)
     }
     
     public func load(completion: @escaping Completion = {}) {
@@ -45,7 +44,10 @@ public class StatisticsLoader {
     }
     
     private func requestInstallStatistics(completion: @escaping Completion = {}) {
-        APIRequest.request(url: appUrls.initialAtb) { response, error in
+        let configuration = APIRequest.Configuration(url: .atb)
+        let request = APIRequest(configuration: configuration, urlSession: .session())
+        
+        request.fetch { response, error in
             if let error = error {
                 os_log("Initial atb request failed with error %s", log: .generalLog, type: .debug, error.localizedDescription)
                 completion()
@@ -61,9 +63,13 @@ public class StatisticsLoader {
     }
     
     private func requestExti(atb: Atb, completion: @escaping Completion = {}) {
-        
         let installAtb = atb.version + (statisticsStore.variant ?? "")
-        APIRequest.request(url: appUrls.exti(forAtb: installAtb)) { _, error in
+        let url = URL.makeExtiURL(atb: installAtb)
+        
+        let configuration = APIRequest.Configuration(url: url)
+        let request = APIRequest(configuration: configuration, urlSession: .session())
+        
+        request.fetch { _, error in
             if let error = error {
                 os_log("Exti request failed with error %s", log: .generalLog, type: .debug, error.localizedDescription)
                 completion()
@@ -76,19 +82,21 @@ public class StatisticsLoader {
     }
     
     public func refreshSearchRetentionAtb(completion: @escaping Completion = {}) {
-        
-        guard let url = appUrls.searchAtb else {
+        guard let url = StatisticsDependentURLFactory(statisticsStore: statisticsStore).makeSearchAtbURL() else {
             requestInstallStatistics(completion: completion)
             return
         }
         
-        APIRequest.request(url: url) { response, error in
+        let configuration = APIRequest.Configuration(url: url)
+        let request = APIRequest(configuration: configuration, urlSession: .session())
+        
+        request.fetch { response, error in
             if let error = error {
                 os_log("Search atb request failed with error %s", log: .generalLog, type: .debug, error.localizedDescription)
                 completion()
                 return
             }
-            if let data = response?.data, let atb  = try? self.parser.convert(fromJsonData: data) {
+            if let data = response?.data, let atb = try? self.parser.convert(fromJsonData: data) {
                 self.statisticsStore.searchRetentionAtb = atb.version
                 self.storeUpdateVersionIfPresent(atb)
             }
@@ -97,13 +105,15 @@ public class StatisticsLoader {
     }
     
     public func refreshAppRetentionAtb(completion: @escaping Completion = {}) {
-        
-        guard let url = appUrls.appAtb else {
+        guard let url = StatisticsDependentURLFactory(statisticsStore: statisticsStore).makeAppAtbURL() else {
             requestInstallStatistics(completion: completion)
             return
         }
         
-        APIRequest.request(url: url) { response, error in
+        let configuration = APIRequest.Configuration(url: url)
+        let request = APIRequest(configuration: configuration, urlSession: .session())
+        
+        request.fetch { response, error in
             if let error = error {
                 os_log("App atb request failed with error %s", log: .generalLog, type: .debug, error.localizedDescription)
                 completion()

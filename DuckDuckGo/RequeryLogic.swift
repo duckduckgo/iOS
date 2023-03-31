@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import Networking
 
 class RequeryLogic {
     
@@ -33,11 +34,10 @@ class RequeryLogic {
     }
 
     private let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
-    private let appUrls = AppUrls()
     private var serpState: SerpState = .notLoaded
 
     func onNewNavigation(url: URL) {
-        guard let query = appUrls.searchQuery(fromUrl: url) else {
+        guard let query = url.searchQuery else {
             serpState = .notLoaded
             return
         }
@@ -75,8 +75,8 @@ class RequeryLogic {
             pixel = .serpRequeryNew
         }
         
-        var headers = APIHeaders().defaultHeaders
-        headers[APIHeaders.Name.userAgent] = userAgentManager.userAgent(isDesktop: false)
+        var headers = APIRequest.Headers().default
+        headers[APIRequest.HTTPHeaderField.userAgent] = userAgentManager.userAgent(isDesktop: false)
         
         Pixel.fire(pixel: pixel, forDeviceType: nil, withHeaders: headers, onComplete: { _ in })
     }

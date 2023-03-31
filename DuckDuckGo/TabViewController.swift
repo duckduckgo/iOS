@@ -31,6 +31,7 @@ import PrivacyDashboard
 import UserScript
 import ContentBlocking
 import TrackerRadarKit
+import Networking
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -81,12 +82,14 @@ class TabViewController: UIViewController {
     private lazy var appRatingPrompt: AppRatingPrompt = AppRatingPrompt()
     private weak var privacyDashboard: PrivacyDashboardViewController?
     
-    private(set) lazy var appUrls: AppUrls = AppUrls()
-    private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
+    private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
 
     internal lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var featureFlaggerInternalUserDecider = AppDependencyProvider.shared.featureFlaggerInternalUserDecider
+
+    private lazy var autofillWebsiteAccountMatcher = AutofillWebsiteAccountMatcher(autofillUrlMatcher: AutofillDomainNameUrlMatcher(),
+                                                                                   tld: TabViewController.tld)
 
     private(set) var tabModel: Tab
     private(set) var privacyInfo: PrivacyInfo?
@@ -94,7 +97,7 @@ class TabViewController: UIViewController {
     
     private let requeryLogic = RequeryLogic()
 
-    private static let tld = AppDependencyProvider.shared.storageCache.current.tld
+    private static let tld = AppDependencyProvider.shared.storageCache.tld
     private let adClickAttributionDetection = ContentBlocking.shared.makeAdClickAttributionDetection(tld: tld)
     let adClickAttributionLogic = ContentBlocking.shared.makeAdClickAttributionLogic(tld: tld)
 
@@ -103,7 +106,8 @@ class TabViewController: UIViewController {
     private var lastError: Error?
     private var shouldReloadOnError = false
     private var failingUrls = Set<String>()
-        
+    private var urlProvidedBasicAuthCredential: (credential: URLCredential, url: URL)?
+
     private var detectedLoginURL: URL?
     private var preserveLoginsWorker: PreserveLoginsWorker?
 
@@ -197,7 +201,8 @@ class TabViewController: UIViewController {
     }()
     
     lazy var vaultManager: SecureVaultManager = {
-        let manager = SecureVaultManager()
+        let manager = SecureVaultManager(includePartialAccountMatches: true,
+                                         tld: AppDependencyProvider.shared.storageCache.tld)
         manager.delegate = self
         return manager
     }()
@@ -223,7 +228,7 @@ class TabViewController: UIViewController {
     private lazy var referrerTrimming: ReferrerTrimming = {
         ReferrerTrimming(privacyManager: ContentBlocking.shared.privacyConfigurationManager,
                          contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
-                         tld: AppDependencyProvider.shared.storageCache.current.tld)
+                         tld: AppDependencyProvider.shared.storageCache.tld)
     }()
         
     private var canDisplayJavaScriptAlert: Bool {
@@ -242,7 +247,6 @@ class TabViewController: UIViewController {
         }
     }
 
-    private var rulesCompiledCondition: RunLoop.ResumeCondition? = RunLoop.ResumeCondition()
     private let rulesCompilationMonitor = RulesCompilationMonitor.shared
 
     static func loadFromStoryboard(model: Tab, bookmarksDatabase: CoreDataDatabase) -> TabViewController {
@@ -436,7 +440,13 @@ class TabViewController: UIViewController {
             lastUpgradedURL = nil
             privacyInfo?.connectionUpgradedTo = nil
         }
-        
+
+        var url = url
+        if let credential = url.basicAuthCredential {
+            url = url.removingBasicAuthCredential()
+            self.urlProvidedBasicAuthCredential = (credential, url)
+        }
+
         if !url.isBookmarklet() {
             self.url = url
         }
@@ -532,21 +542,21 @@ class TabViewController: UIViewController {
     }
     
     private func shouldReissueDDGStaticNavigation(for url: URL) -> Bool {
-        guard appUrls.isDuckDuckGoStatic(url: url) else { return false }
-        return  !appUrls.hasCorrectSearchHeaderParams(url: url)
+        guard url.isDuckDuckGoStatic else { return false }
+        return !url.hasCorrectSearchHeaderParams
     }
     
     private func reissueNavigationWithSearchHeaderParams(for url: URL) {
-        load(url: appUrls.applySearchHeaderParams(for: url))
+        load(url: url.applyingSearchHeaderParams())
     }
     
     private func shouldReissueSearch(for url: URL) -> Bool {
-        guard appUrls.isDuckDuckGoSearch(url: url) else { return false }
-        return !appUrls.hasCorrectMobileStatsParams(url: url) || !appUrls.hasCorrectSearchHeaderParams(url: url)
+        guard url.isDuckDuckGoSearch else { return false }
+        return !url.hasCorrectMobileStatsParams || !url.hasCorrectSearchHeaderParams
     }
     
     private func reissueSearchWithRequiredParams(for url: URL) {
-        let mobileSearch = appUrls.applyStatsParams(for: url)
+        let mobileSearch = url.applyingStatsParams()
         reissueNavigationWithSearchHeaderParams(for: mobileSearch)
     }
     
@@ -606,7 +616,7 @@ class TabViewController: UIViewController {
 
     private func isDuckDuckGoUrl() -> Bool {
         guard let url = url else { return false }
-        return appUrls.isDuckDuckGo(url: url)
+        return url.isDuckDuckGo
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -669,7 +679,7 @@ class TabViewController: UIViewController {
 
     @objc func onDuckDuckGoEmailSignOut(_ notification: Notification) {
         guard let url = webView.url else { return }
-        if AppUrls().isDuckDuckGoEmailProtection(url: url) {
+        if url.isDuckDuckGoEmailProtection {
             webView.evaluateJavaScript("window.postMessage({ emailProtectionSignedOut: true }, window.origin);")
         }
     }
@@ -834,8 +844,8 @@ class TabViewController: UIViewController {
     
     func onCopyAction(forUrl url: URL) {
         let copyText: String
-        if appUrls.isDuckDuckGo(url: url) {
-            let cleanURL = appUrls.removingInternalSearchParameters(fromUrl: url)
+        if url.isDuckDuckGo {
+            let cleanURL = url.removingInternalSearchParameters()
             copyText = cleanURL.absoluteString
         } else {
             copyText = url.absoluteString
@@ -849,9 +859,11 @@ class TabViewController: UIViewController {
     }
     
     deinit {
+        userContentController.removeAllUserScripts()
+        userContentController.removeAllContentRuleLists()
         temporaryDownloadForPreviewedFile?.cancel()
         removeObservers()
-        RulesCompilationMonitor.shared.tabWillClose(self)
+        rulesCompilationMonitor.tabWillClose(tabModel.uid)
     }
 
 }
@@ -880,6 +892,14 @@ extension TabViewController: WKNavigationDelegate {
     
     func performBasicHTTPAuthentication(protectionSpace: URLProtectionSpace,
                                         completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        if let urlProvidedBasicAuthCredential,
+           urlProvidedBasicAuthCredential.url.matches(protectionSpace) {
+
+            completionHandler(.useCredential, urlProvidedBasicAuthCredential.credential)
+            self.urlProvidedBasicAuthCredential = nil
+            return
+        }
+
         let isHttps = protectionSpace.protocol == "https"
         let alert = BasicAuthenticationAlert(host: protectionSpace.host,
                                              isEncrypted: isHttps,
@@ -931,7 +951,7 @@ extension TabViewController: WKNavigationDelegate {
         let mimeType = MIMEType(from: navigationResponse.response.mimeType)
 
         let httpResponse = navigationResponse.response as? HTTPURLResponse
-        let isSuccessfulResponse = (httpResponse?.validateStatusCode(statusCode: 200..<300) == nil)
+        let isSuccessfulResponse = httpResponse?.isSuccessfulResponse ?? false
 
         let didMarkAsInternal = featureFlaggerInternalUserDecider.markUserAsInternalIfNeeded(forUrl: webView.url, response: httpResponse)
         if didMarkAsInternal {
@@ -1008,6 +1028,7 @@ extension TabViewController: WKNavigationDelegate {
         updatePreview()
         linkProtection.setMainFrameUrl(nil)
         referrerTrimming.onFinishNavigation()
+        urlProvidedBasicAuthCredential = nil
     }
     
     func preparePreview(completion: @escaping (UIImage?) -> Void) {
@@ -1057,7 +1078,7 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
-        if let url = link?.url, AppUrls().isDuckDuckGoEmailProtection(url: url) {
+        if let url = link?.url, url.isDuckDuckGoEmailProtection {
             scheduleTrackerNetworksAnimation(collapsing: true)
             return
         }
@@ -1142,6 +1163,7 @@ extension TabViewController: WKNavigationDelegate {
         hideProgressIndicator()
         linkProtection.setMainFrameUrl(nil)
         referrerTrimming.onFailedNavigation()
+        urlProvidedBasicAuthCredential = nil
         lastError = error
         let error = error as NSError
 
@@ -1199,7 +1221,7 @@ extension TabViewController: WKNavigationDelegate {
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
 
         if let url = navigationAction.request.url,
-           !appUrls.isDuckDuckGoSearch(url: url),
+           !url.isDuckDuckGoSearch,
            true == shouldWaitUntilContentBlockingIsLoaded({ [weak self, webView /* decision handler must be called */] in
                guard let self = self else {
                    decisionHandler(.cancel)
@@ -1283,7 +1305,7 @@ extension TabViewController: WKNavigationDelegate {
                let url = navigationAction.request.url,
                decision != .cancel,
                navigationAction.isTargetingMainFrame() {
-                if self.appUrls.isDuckDuckGoSearch(url: url) {
+                if url.isDuckDuckGoSearch {
                     StatisticsLoader.shared.refreshSearchRetentionAtb()
                 }
 
@@ -1300,15 +1322,15 @@ extension TabViewController: WKNavigationDelegate {
         if userContentController.contentBlockingAssetsInstalled
             || !ContentBlocking.shared.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) {
 
-            RulesCompilationMonitor.shared.reportNavigationDidNotWaitForRules()
+            rulesCompilationMonitor.reportNavigationDidNotWaitForRules()
             return false
         }
 
         Task {
-            RulesCompilationMonitor.shared.tabWillWaitForRulesCompilation(self)
+            rulesCompilationMonitor.tabWillWaitForRulesCompilation(tabModel.uid)
             showProgressIndicator()
             await userContentController.awaitContentBlockingAssetsInstalled()
-            RulesCompilationMonitor.shared.reportTabFinishedWaitingForRules(self)
+            rulesCompilationMonitor.reportTabFinishedWaitingForRules(tabModel.uid)
 
             await MainActor.run(body: completion)
         }
@@ -1335,7 +1357,7 @@ extension TabViewController: WKNavigationDelegate {
             completion(allowPolicy)
             return
         }
-        
+
         if navigationAction.isTargetingMainFrame(), navigationAction.navigationType == .backForward {
             adClickAttributionLogic.onBackForwardNavigation(mainFrameURL: webView.url)
         }
@@ -1370,6 +1392,22 @@ extension TabViewController: WKNavigationDelegate {
                                       navigationAction: WKNavigationAction,
                                       allowPolicy: WKNavigationActionPolicy,
                                       completion: @escaping (WKNavigationActionPolicy) -> Void) {
+
+        // when navigating to a request with basic auth username/password, cache it and redirect to a trimmed URL
+        if navigationAction.isTargetingMainFrame(),
+           let credential = url.basicAuthCredential {
+            var newRequest = navigationAction.request
+            newRequest.url = url.removingBasicAuthCredential()
+            self.urlProvidedBasicAuthCredential = (credential, newRequest.url!)
+
+            completion(.cancel)
+            self.load(urlRequest: newRequest)
+            return
+
+        } else if let urlProvidedBasicAuthCredential,
+                  url != urlProvidedBasicAuthCredential.url {
+            self.urlProvidedBasicAuthCredential = nil
+        }
 
         if shouldReissueSearch(for: url) {
             reissueSearchWithRequiredParams(for: url)
@@ -1423,19 +1461,6 @@ extension TabViewController: WKNavigationDelegate {
             case .failure:
                 completion(allowPolicy)
             }
-        }
-    }
-
-    @MainActor
-    private func prepareForContentBlocking() async {
-        // Ensure Content Blocking Assets (WKContentRuleList&UserScripts) are installed
-        if !userContentController.contentBlockingAssetsInstalled {
-            RulesCompilationMonitor.shared.tabWillWaitForRulesCompilation(self)
-            showProgressIndicator()
-            await userContentController.awaitContentBlockingAssetsInstalled()
-            RulesCompilationMonitor.shared.reportTabFinishedWaitingForRules(self)
-        } else {
-            RulesCompilationMonitor.shared.reportNavigationDidNotWaitForRules()
         }
     }
 
@@ -2215,13 +2240,15 @@ extension TabViewController: EmailManagerRequestDelegate {
                       httpBody: Data?,
                       timeoutInterval: TimeInterval,
                       completion: @escaping (Data?, Error?) -> Void) {
-        APIRequest.request(url: url,
-                           method: APIRequest.HTTPMethod(rawValue: method) ?? .post,
-                           parameters: parameters ?? [:],
-                           headers: headers,
-                           httpBody: httpBody,
-                           timeoutInterval: timeoutInterval) { response, error in
-            
+        let method = APIRequest.HTTPMethod(rawValue: method) ?? .post
+        let configuration = APIRequest.Configuration(url: url,
+                                                     method: method,
+                                                     queryParameters: parameters ?? [:],
+                                                     headers: headers,
+                                                     body: httpBody,
+                                                     timeoutInterval: timeoutInterval)
+        let request = APIRequest(configuration: configuration, urlSession: .session())
+        request.fetch { response, error in
             completion(response?.data, error)
         }
     }
@@ -2346,20 +2373,43 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
 
         if accounts.count > 0 {
-            
-            let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accounts, trigger: trigger) { account in
+            let accountMatches = autofillWebsiteAccountMatcher.findMatchesSortedByLastUpdated(accounts: accounts, for: domain)
+
+            presentAutofillPromptViewController(accountMatches: accountMatches, domain: domain, trigger: trigger, useLargeDetent: false) { account in
                 completionHandler(account)
             }
-            
-            if #available(iOS 15.0, *) {
-                if let presentationController = autofillPromptViewController.presentationController as? UISheetPresentationController {
-                    presentationController.detents = accounts.count > 3 ? [.medium(), .large()] : [.medium()]
-                }
-            }
-            self.present(autofillPromptViewController, animated: true, completion: nil)
         } else {
             completionHandler(nil)
         }
+    }
+
+    /// Using Bool for detent size parameter to be backward compatible with iOS 14
+    func presentAutofillPromptViewController(accountMatches: AccountMatches,
+                                             domain: String,
+                                             trigger: AutofillUserScript.GetTriggerType,
+                                             useLargeDetent: Bool,
+                                             completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
+        let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accountMatches,
+                                                                             domain: domain,
+                                                                             trigger: trigger) { account, showExpanded in
+            if showExpanded {
+                self.presentAutofillPromptViewController(accountMatches: accountMatches,
+                                                         domain: domain,
+                                                         trigger: trigger,
+                                                         useLargeDetent: showExpanded) { account in
+                    completionHandler(account)
+                }
+            } else {
+                completionHandler(account)
+            }
+        }
+
+        if #available(iOS 15.0, *) {
+            if let presentationController = autofillPromptViewController.presentationController as? UISheetPresentationController {
+                presentationController.detents = useLargeDetent ? [.large()] : [.medium()]
+            }
+        }
+        self.present(autofillPromptViewController, animated: true, completion: nil)
     }
 
     func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: String) {

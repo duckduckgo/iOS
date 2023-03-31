@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1676042223159,
+    "version": 1679587503329,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -158,6 +158,18 @@
                 {
                     "domain": "corporatefinanceinstitute.com",
                     "reason": "CMP gets incorrectly handled / repeatedly opens tabs"
+                },
+                {
+                    "domain": "kicker.de",
+                    "reason": "https://github.com/duckduckgo/autoconsent/issues/66"
+                },
+                {
+                    "domain": "epojisteni.cz",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/326"
+                },
+                {
+                    "domain": "nhm.ac.uk",
+                    "reason": "https://github.com/duckduckgo/autoconsent/issues/113"
                 }
             ],
             "settings": {
@@ -166,17 +178,54 @@
                 ]
             },
             "state": "enabled",
-            "hash": "659eb19df598629f1eaecbe7fa2d7f00"
+            "hash": "7124270027903938073b33add92ef464"
         },
         "autofill": {
             "exceptions": [
                 {
                     "domain": "containerstore.com",
                     "reason": "Generally poor UX - no username saved on signup, prompts for Duck address on 'forgot password'."
+                },
+                {
+                    "domain": "roll20.net",
+                    "reason": "Performance issue for too many fields."
                 }
             ],
             "state": "enabled",
-            "hash": "cdb6aeccec0eb59ae554f3fd75d336cc"
+            "features": {
+                "credentialsSaving": {
+                    "state": "internal"
+                },
+                "credentialsAutofill": {
+                    "state": "internal"
+                },
+                "inlineIconCredentials": {
+                    "state": "internal"
+                },
+                "accessCredentialManagement": {
+                    "state": "internal"
+                }
+            },
+            "hash": "092a78ae602103940ea6a957cc9100b8"
+        },
+        "clickToLoad": {
+            "exceptions": [],
+            "settings": {
+                "Facebook, Inc.": {
+                    "ruleActions": [
+                        "block-ctl-fb"
+                    ],
+                    "state": "disabled"
+                },
+                "Youtube": {
+                    "ruleActions": [
+                        "block-ctl-yt"
+                    ],
+                    "state": "disabled"
+                }
+            },
+            "state": "disabled",
+            "hash": "be4a32a8303eb523dbc0efe89deaa34d"
         },
         "clickToPlay": {
             "exceptions": [],
@@ -223,6 +272,14 @@
                         "reason": "https://github.com/duckduckgo/privacy-configuration/issues/602"
                     },
                     {
+                        "domain": "sme.sk",
+                        "reason": "https://github.com/duckduckgo/privacy-configuration/issues/667"
+                    },
+                    {
+                        "domain": "tiktok.com",
+                        "reason": "https://github.com/duckduckgo/privacy-configuration/issues/667"
+                    },
+                    {
                         "domain": "cvs.com",
                         "reason": "Navigation section at the top of the main page renders as text."
                     },
@@ -251,7 +308,7 @@
             },
             "exceptions": [],
             "state": "enabled",
-            "hash": "e08e662d37f31acafe58b21067ae8705"
+            "hash": "34462d9ad75a5265487fb08a768784ae"
         },
         "duckPlayer": {
             "exceptions": [],
@@ -302,6 +359,7 @@
                 }
             ],
             "settings": {
+                "useStrictHideStyleTag": false,
                 "rules": [
                     {
                         "selector": "[id*='gpt-']",
@@ -313,6 +371,10 @@
                     },
                     {
                         "selector": "[class*='dfp-']",
+                        "type": "hide-empty"
+                    },
+                    {
+                        "selector": "[id*='dfp-']",
                         "type": "hide-empty"
                     },
                     {
@@ -333,10 +395,14 @@
                     },
                     {
                         "selector": "[id*='taboola-']",
-                        "type": "closest-empty"
+                        "type": "hide"
                     },
                     {
                         "selector": ".taboolaHeight",
+                        "type": "hide"
+                    },
+                    {
+                        "selector": ".taboola-placeholder",
                         "type": "hide"
                     },
                     {
@@ -356,7 +422,19 @@
                         "type": "closest-empty"
                     },
                     {
+                        "selector": ".column-ad",
+                        "type": "hide-empty"
+                    },
+                    {
+                        "selector": ".wide-ad",
+                        "type": "hide-empty"
+                    },
+                    {
                         "selector": ".ad",
+                        "type": "hide-empty"
+                    },
+                    {
+                        "selector": ".AD",
                         "type": "hide-empty"
                     },
                     {
@@ -368,6 +446,10 @@
                         "type": "hide-empty"
                     },
                     {
+                        "selector": "[class*='_ad-slot']",
+                        "type": "hide-empty"
+                    },
+                    {
                         "selector": ".ad-block",
                         "type": "hide-empty"
                     },
@@ -376,7 +458,7 @@
                         "type": "hide-empty"
                     },
                     {
-                        "selector": ".adunitContainer",
+                        "selector": "[class^='adunit']",
                         "type": "hide-empty"
                     },
                     {
@@ -400,6 +482,10 @@
                         "type": "hide-empty"
                     },
                     {
+                        "selector": ".banner-leaderboard",
+                        "type": "hide-empty"
+                    },
+                    {
                         "selector": ".ad-banner-container",
                         "type": "hide-empty"
                     },
@@ -409,6 +495,10 @@
                     },
                     {
                         "selector": ".banner-placeholder",
+                        "type": "hide-empty"
+                    },
+                    {
+                        "selector": ".header-ads",
                         "type": "hide-empty"
                     },
                     {
@@ -424,6 +514,10 @@
                         "type": "hide"
                     },
                     {
+                        "selector": "#google-one-tap-iframe",
+                        "type": "hide"
+                    },
+                    {
                         "selector": ".google-one-tap-modal-div",
                         "type": "hide"
                     },
@@ -436,7 +530,11 @@
                         "type": "closest-empty"
                     },
                     {
-                        "selector": ".ad-container",
+                        "selector": "[class^='ad-container']",
+                        "type": "hide-empty"
+                    },
+                    {
+                        "selector": "[class*='-ad-container']",
                         "type": "hide-empty"
                     },
                     {
@@ -458,6 +556,14 @@
                     {
                         "selector": "[id*='advert-']",
                         "type": "hide-empty"
+                    },
+                    {
+                        "selector": ".ads__inline",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": ".ads__native",
+                        "type": "closest-empty"
                     },
                     {
                         "selector": ".ad-slot",
@@ -508,6 +614,10 @@
                         "type": "closest-empty"
                     },
                     {
+                        "selector": ".bordeaux-anchored-container",
+                        "type": "hide-empty"
+                    },
+                    {
                         "selector": ".rightAd",
                         "type": "hide-empty"
                     },
@@ -516,6 +626,8 @@
                         "type": "hide-empty"
                     }
                 ],
+                "styleTagExceptions": [],
+                "mediaAndFormSelectors": "video,canvas,embed,object,audio,map,form,input,textarea,select,option,button",
                 "adLabelStrings": [
                     "advertisement",
                     "advertisment",
@@ -530,6 +642,7 @@
                     "advertising\nskip ad\nskip ad\nskip ad",
                     "ad feedback",
                     "anzeige",
+                    "close this ad",
                     "sponsored",
                     "sponsorisé",
                     "story continues below advertisement",
@@ -656,6 +769,15 @@
                         ]
                     },
                     {
+                        "domain": "dallasnews.com",
+                        "rules": [
+                            {
+                                "selector": "[data-targeting]",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "ebay.com",
                         "rules": [
                             {
@@ -687,6 +809,19 @@
                         "rules": [
                             {
                                 "selector": ".es-ad-space-container",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "express.co.uk",
+                        "rules": [
+                            {
+                                "selector": ".superbanner",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": "#ad-vip-article",
                                 "type": "hide-empty"
                             }
                         ]
@@ -731,6 +866,36 @@
                         "rules": [
                             {
                                 "selector": ".vendor-unit",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "ghacks.net",
+                        "rules": [
+                            {
+                                "selector": ".box-banner",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": "[id^='ghacks_ad_code']",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "hindustantimes.com",
+                        "rules": [
+                            {
+                                "selector": ".desktopAd",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": "[class^='adHeight']",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": "[class^='adMinHeight']",
                                 "type": "hide-empty"
                             }
                         ]
@@ -828,6 +993,19 @@
                         ]
                     },
                     {
+                        "domain": "nasdaq.com",
+                        "rules": [
+                            {
+                                "selector": "[class^='ads__midpage']",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": "[class^='ads__right-rail']",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "nbcsports.com",
                         "rules": [
                             {
@@ -836,6 +1014,15 @@
                             },
                             {
                                 "selector": "#nbcsports-leaderboard",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "newsmax.com",
+                        "rules": [
+                            {
+                                "selector": ".DFPad",
                                 "type": "hide-empty"
                             }
                         ]
@@ -878,6 +1065,15 @@
                         ]
                     },
                     {
+                        "domain": "observador.pt",
+                        "rules": [
+                            {
+                                "selector": ".obs-ad-placeholder",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "orange.fr",
                         "rules": [
                             {
@@ -914,10 +1110,43 @@
                         ]
                     },
                     {
+                        "domain": "rumble.com",
+                        "rules": [
+                            {
+                                "selector": "[id^='rumble-ad']",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "scmp.com",
                         "rules": [
                             {
                                 "selector": "[class*='ad-slot-container']",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".top-ad",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".advertisement--mobile",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".bottom-ad",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".article-list__inline-ad",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".page-container__mobile-native-ad",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".ad-area",
                                 "type": "hide-empty"
                             }
                         ]
@@ -954,6 +1183,15 @@
                         ]
                     },
                     {
+                        "domain": "target.com",
+                        "rules": [
+                            {
+                                "selector": "[class^='styles__PubAdWrapper']",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "thingiverse.com",
                         "rules": [
                             {
@@ -977,6 +1215,15 @@
                             {
                                 "selector": ".model-base-bnr",
                                 "type": "hide"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "wunderground.com",
+                        "rules": [
+                            {
+                                "selector": ".pane-wu-fullscreenweather-ad-box-atf",
+                                "type": "hide-empty"
                             }
                         ]
                     },
@@ -1117,7 +1364,7 @@
                                 "type": "closest-empty"
                             },
                             {
-                                "selector": ".ad-container",
+                                "selector": "[class^='ad-container']",
                                 "type": "override"
                             }
                         ]
@@ -1138,7 +1385,7 @@
                                 "type": "closest-empty"
                             },
                             {
-                                "selector": ".ad-container",
+                                "selector": "[class^='ad-container']",
                                 "type": "override"
                             }
                         ]
@@ -1146,7 +1393,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "3bf687283e5ce5d96b49c28efdd1eb40"
+            "hash": "c13b227c89c72e4d75065edf9e8849b4"
         },
         "fingerprintingAudio": {
             "state": "disabled",
@@ -1188,6 +1435,10 @@
                     "reason": "When creating an account, after filling out details and going to e-mail confirmation, there is an error 'Something went wrong', and the e-mail may not be received. Clicking 'Send new code' appears successful, but after entering the code there is often another account creation error."
                 },
                 {
+                    "domain": "manulife.ca",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/499"
+                },
+                {
                     "domain": "northernrailway.co.uk",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/350"
                 },
@@ -1202,10 +1453,14 @@
                 {
                     "domain": "walgreens.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/499"
+                },
+                {
+                    "domain": "godaddy.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/499"
                 }
             ],
             "state": "enabled",
-            "hash": "6c686d0cfa0451c69db18621438b1b0a"
+            "hash": "06756b6634deaeb0f50c9cbbdb591b3c"
         },
         "fingerprintingHardware": {
             "settings": {
@@ -1307,6 +1562,10 @@
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/644"
                 },
                 {
+                    "domain": "duluthtrading.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/700"
+                },
+                {
                     "domain": "web.whatsapp.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/620"
                 }
@@ -1320,7 +1579,7 @@
                     "privacy-test-pages.glitch.me"
                 ]
             },
-            "hash": "4d1b636f1a6bc56bdaf40e3d71ffd583"
+            "hash": "470c77b05c99b8f0986cc40422a59c91"
         },
         "https": {
             "state": "enabled",
@@ -1362,6 +1621,510 @@
                 "windowInMs": 0
             },
             "hash": "9439c856372a09f0cfdc9e2e0fd086fd"
+        },
+        "runtimeChecks": {
+            "state": "disabled",
+            "exceptions": [],
+            "settings": {
+                "taintCheck": "disabled",
+                "matchAllDomains": "disabled",
+                "matchAllStackDomains": "disabled",
+                "overloadInstanceOf": "enabled",
+                "elementRemovalTimeout": 1000,
+                "domains": [
+                    {
+                        "domain": "bbc.co.uk"
+                    },
+                    {
+                        "domain": "cnn.com"
+                    },
+                    {
+                        "domain": "preactjs.com"
+                    },
+                    {
+                        "domain": "reactjs.org"
+                    },
+                    {
+                        "domain": "browserbench.org"
+                    },
+                    {
+                        "domain": "xnxx.com"
+                    },
+                    {
+                        "domain": "wikipedia.org"
+                    },
+                    {
+                        "domain": "xvideos.com"
+                    },
+                    {
+                        "domain": "pornhub.com"
+                    },
+                    {
+                        "domain": "reddit.com"
+                    },
+                    {
+                        "domain": "amazon.com"
+                    },
+                    {
+                        "domain": "youtube.com"
+                    },
+                    {
+                        "domain": "facebook.com"
+                    },
+                    {
+                        "domain": "youtube.com"
+                    },
+                    {
+                        "domain": "stackoverflow.com"
+                    },
+                    {
+                        "domain": "xhamster.com"
+                    }
+                ],
+                "stackDomains": [
+                    {
+                        "domain": "clean.gg"
+                    },
+                    {
+                        "domain": "googlevideo.com"
+                    },
+                    {
+                        "domain": "nexac.com"
+                    },
+                    {
+                        "domain": "associates-amazon.com"
+                    },
+                    {
+                        "domain": "redd.it"
+                    },
+                    {
+                        "domain": "amazonbusiness.com"
+                    },
+                    {
+                        "domain": "indeed.com"
+                    },
+                    {
+                        "domain": "stackexchange.com"
+                    },
+                    {
+                        "domain": "bangassets.com"
+                    },
+                    {
+                        "domain": "fontawesome.com"
+                    },
+                    {
+                        "domain": "live-video.net"
+                    },
+                    {
+                        "domain": "behave.com"
+                    },
+                    {
+                        "domain": "imasdk.googleapis.com"
+                    },
+                    {
+                        "domain": "appcast.io"
+                    },
+                    {
+                        "domain": "d3b16pg7hqg2cy.cloudfront.net"
+                    },
+                    {
+                        "domain": "d7qzviu3xw2xc.cloudfront.net"
+                    },
+                    {
+                        "domain": "brightspot.cloud"
+                    },
+                    {
+                        "domain": "dogvlw4b46a0r.cloudfront.net"
+                    },
+                    {
+                        "domain": "d1at2uq7yy5k1j.cloudfront.net"
+                    },
+                    {
+                        "domain": "d2uap9jskdzp2.cloudfront.net"
+                    },
+                    {
+                        "domain": "consumertrack.com"
+                    },
+                    {
+                        "domain": "strpst.com"
+                    },
+                    {
+                        "domain": "d9esmwyn3ffr1.cloudfront.net"
+                    },
+                    {
+                        "domain": "mapbox.com"
+                    },
+                    {
+                        "domain": "mobtrakk.com"
+                    },
+                    {
+                        "domain": "d1qze0i78vhibv.cloudfront.net"
+                    },
+                    {
+                        "domain": "trustarc.com"
+                    },
+                    {
+                        "domain": "wikimedia.org"
+                    },
+                    {
+                        "domain": "phncdn.com"
+                    },
+                    {
+                        "domain": "vfthr.com"
+                    },
+                    {
+                        "domain": "aws.dev"
+                    },
+                    {
+                        "domain": "mediawiki.org"
+                    },
+                    {
+                        "domain": "ds69ljjohz9sr.cloudfront.net"
+                    },
+                    {
+                        "domain": "ad-delivery.net"
+                    },
+                    {
+                        "domain": "wunderkind.co"
+                    },
+                    {
+                        "domain": "d2in0p32vp1pij.cloudfront.net"
+                    },
+                    {
+                        "domain": "trustx.org"
+                    },
+                    {
+                        "domain": "bouncex.net"
+                    },
+                    {
+                        "domain": "ngtv.io"
+                    },
+                    {
+                        "domain": "ds6yc8t7pnx74.cloudfront.net"
+                    },
+                    {
+                        "domain": "d3216uwaav9lg7.cloudfront.net"
+                    },
+                    {
+                        "domain": "veryinterestvids.xyz"
+                    },
+                    {
+                        "domain": "vfgte.com"
+                    },
+                    {
+                        "domain": "schwab.com"
+                    },
+                    {
+                        "domain": "imgur.com"
+                    },
+                    {
+                        "domain": "persprovath.xyz"
+                    },
+                    {
+                        "domain": "outbrainimg.com"
+                    },
+                    {
+                        "domain": "ajax.googleapis.com"
+                    },
+                    {
+                        "domain": "w.org"
+                    },
+                    {
+                        "domain": "fonts.googleapis.com"
+                    },
+                    {
+                        "domain": "turner.com"
+                    },
+                    {
+                        "domain": "googleusercontent.com"
+                    },
+                    {
+                        "domain": "d8aa01cdolqj7.cloudfront.net"
+                    },
+                    {
+                        "domain": "navdmp.com"
+                    },
+                    {
+                        "domain": "xhcdn.com"
+                    },
+                    {
+                        "domain": "imglnke.com"
+                    },
+                    {
+                        "domain": "usbrowserspeed.com"
+                    },
+                    {
+                        "domain": "warnermediacdn.com"
+                    },
+                    {
+                        "domain": "d1xfq2052q7thw.cloudfront.net"
+                    },
+                    {
+                        "domain": "bangcreatives.com"
+                    },
+                    {
+                        "domain": "hotjar.io"
+                    },
+                    {
+                        "domain": "amazonaws.com"
+                    },
+                    {
+                        "domain": "vercel-analytics.com"
+                    },
+                    {
+                        "domain": "boomtrain.com"
+                    },
+                    {
+                        "domain": "cdnbasket.net"
+                    },
+                    {
+                        "domain": "awsstatic.com"
+                    },
+                    {
+                        "domain": "fbcdn.net"
+                    },
+                    {
+                        "domain": "dianomi.com"
+                    },
+                    {
+                        "domain": "amazon.co.uk"
+                    },
+                    {
+                        "domain": "dwrl96u0lgux5.cloudfront.net"
+                    },
+                    {
+                        "domain": "d39dwei46hk6jd.cloudfront.net"
+                    },
+                    {
+                        "domain": "bbci.co.uk"
+                    },
+                    {
+                        "domain": "bbcimg.co.uk"
+                    },
+                    {
+                        "domain": "edigitalsurvey.com"
+                    },
+                    {
+                        "domain": "gscontxt.net"
+                    },
+                    {
+                        "domain": "afcdn.net"
+                    },
+                    {
+                        "domain": "iperceptions.com"
+                    },
+                    {
+                        "disabled_domain": "cookielaw.org"
+                    },
+                    {
+                        "domain": "vscdns.com"
+                    },
+                    {
+                        "domain": "vs3.com"
+                    },
+                    {
+                        "domain": "summerhamster.com"
+                    },
+                    {
+                        "domain": "d1x2hu8k357bsh.cloudfront.net"
+                    },
+                    {
+                        "domain": "d2ef20sk9hi1u3.cloudfront.net"
+                    },
+                    {
+                        "domain": "ggpht.com"
+                    },
+                    {
+                        "domain": "ds7igiccqury3.cloudfront.net"
+                    },
+                    {
+                        "domain": "xvideos.com"
+                    },
+                    {
+                        "domain": "redditmedia.com"
+                    },
+                    {
+                        "domain": "adobe.com"
+                    },
+                    {
+                        "domain": "jnn-pa.googleapis.com"
+                    },
+                    {
+                        "domain": "zetaglobal.net"
+                    },
+                    {
+                        "domain": "gobankingrates.com"
+                    },
+                    {
+                        "domain": "chartbeat.net"
+                    },
+                    {
+                        "domain": "amzndevresources.com"
+                    },
+                    {
+                        "domain": "imdb.com"
+                    },
+                    {
+                        "domain": "wikidata.org"
+                    },
+                    {
+                        "domain": "etahub.com"
+                    },
+                    {
+                        "domain": "revjet.com"
+                    },
+                    {
+                        "domain": "ixiaa.com"
+                    },
+                    {
+                        "domain": "trustedbanana.com"
+                    },
+                    {
+                        "domain": "fanagentmu.pics"
+                    },
+                    {
+                        "domain": "indeed.tech"
+                    },
+                    {
+                        "domain": "outturner.com"
+                    },
+                    {
+                        "domain": "trafficfactory.biz"
+                    },
+                    {
+                        "domain": "d2beun48pmgqbs.cloudfront.net"
+                    },
+                    {
+                        "domain": "wmcdp.io"
+                    },
+                    {
+                        "domain": "bbc.com"
+                    },
+                    {
+                        "domain": "d1uznvntk80v7s.cloudfront.net"
+                    },
+                    {
+                        "domain": "ytimg.com"
+                    },
+                    {
+                        "domain": "beemray.com"
+                    },
+                    {
+                        "domain": "siege-amazon.com"
+                    },
+                    {
+                        "domain": "trafficjunky.net"
+                    },
+                    {
+                        "domain": "consensu.org"
+                    },
+                    {
+                        "domain": "ugdturner.com"
+                    },
+                    {
+                        "domain": "dr3fr5q4g2ul9.cloudfront.net"
+                    },
+                    {
+                        "domain": "cnn.io"
+                    },
+                    {
+                        "domain": "cams.gratis"
+                    },
+                    {
+                        "domain": "d1t40axu4ik42k.cloudfront.net"
+                    },
+                    {
+                        "domain": "optimizely.com"
+                    },
+                    {
+                        "domain": "media-amazon.com"
+                    },
+                    {
+                        "domain": "amazondelivers.jobs"
+                    },
+                    {
+                        "domain": "keywee.co"
+                    },
+                    {
+                        "domain": "zqtk.net"
+                    },
+                    {
+                        "domain": "d23tl967axkois.cloudfront.net"
+                    },
+                    {
+                        "domain": "d3h2kq7so8dggb.cloudfront.net"
+                    },
+                    {
+                        "domain": "bangkazza.com"
+                    },
+                    {
+                        "domain": "effectivemeasure.net"
+                    },
+                    {
+                        "domain": "gravatar.com"
+                    },
+                    {
+                        "domain": "sstatic.net"
+                    },
+                    {
+                        "domain": "d2u4zldaqlyj2w.cloudfront.net"
+                    },
+                    {
+                        "domain": "akamaihd.net"
+                    },
+                    {
+                        "domain": "onaudience.com"
+                    },
+                    {
+                        "domain": "xhpingcdn.com"
+                    },
+                    {
+                        "domain": "eu-1-id5-sync.com"
+                    },
+                    {
+                        "domain": "xvideos-cdn.com"
+                    },
+                    {
+                        "domain": "wp.com"
+                    },
+                    {
+                        "domain": "quantcount.com"
+                    },
+                    {
+                        "domain": "vercel-insights.com"
+                    },
+                    {
+                        "domain": "jobsatamazon.co.uk"
+                    },
+                    {
+                        "domain": "flixcdn.com"
+                    },
+                    {
+                        "domain": "d2h1qfxg5j5pfv.cloudfront.net"
+                    },
+                    {
+                        "domain": "d20kffh39acpue.cloudfront.net"
+                    },
+                    {
+                        "domain": "d9sq4cz0q8up0.cloudfront.net"
+                    }
+                ],
+                "tagModifiers": {
+                    "script": {
+                        "filters": {
+                            "property": [
+                                "blocking",
+                                "fetchPriority"
+                            ],
+                            "attribute": [
+                                "blocking",
+                                "fetchpriority"
+                            ]
+                        }
+                    }
+                }
+            },
+            "hash": "bc5b3d23f3018d3e126c1f3ee5eeda35"
         },
         "serviceworkerInitiatedRequests": {
             "exceptions": [],
@@ -1539,7 +2302,7 @@
                                 "reason": "CNAME ENTRY GENERATED FROM: alicdn.com.edgekey.net"
                             },
                             {
-                                "rule": "aeu.alicdn.com/",
+                                "rule": "aeproductsourcesite.alicdn.com/",
                                 "domains": [
                                     "aliexpress.com",
                                     "aliexpress.us"
@@ -1556,14 +2319,6 @@
                             },
                             {
                                 "rule": "is.alicdn.com/",
-                                "domains": [
-                                    "aliexpress.com",
-                                    "aliexpress.us"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: alicdn.com.edgekey.net"
-                            },
-                            {
-                                "rule": "time-ak.alicdn.com/",
                                 "domains": [
                                     "aliexpress.com",
                                     "aliexpress.us"
@@ -1733,6 +2488,20 @@
                                     "onlyfans.com"
                                 ],
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/440"
+                            },
+                            {
+                                "rule": "d3nn82uaxijpm6.cloudfront.net/",
+                                "domains": [
+                                    "strava.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/748"
+                            },
+                            {
+                                "rule": "d9k0w0y3delq8.cloudfront.net",
+                                "domains": [
+                                    "hoyolab.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/754"
                             }
                         ]
                     },
@@ -1872,6 +2641,13 @@
                                     "wunderground.com"
                                 ],
                                 "reason": "ah.nl - 'Bonus offer' elements do not render and are not clickable. wunderground.com - Video element does not display."
+                            },
+                            {
+                                "rule": "securepubads.g.doubleclick.net/pagead/ppub_config",
+                                "domains": [
+                                    "weather.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/415"
                             }
                         ]
                     },
@@ -1880,6 +2656,8 @@
                             {
                                 "rule": "cdn.dynamicyield.com/api/",
                                 "domains": [
+                                    "brooklinen.com",
+                                    "carters.com",
                                     "seatosummit.com"
                                 ],
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/535"
@@ -1909,6 +2687,30 @@
                                     "nintendo.com"
                                 ],
                                 "reason": "CNAME version of nintendo.com exception"
+                            }
+                        ]
+                    },
+                    "edgesuite.net": {
+                        "rules": [
+                            {
+                                "rule": "sky.com.edgesuite.net/assets/sky_common.js",
+                                "domains": [
+                                    "sky.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/342"
+                            },
+                            {
+                                "rule": "a.espncdn.com.stls.edgesuite.net/",
+                                "domains": [
+                                    "espn.com",
+                                    "espn.co.uk",
+                                    "espn.com.au",
+                                    "espn.com.br",
+                                    "espn.com.mx",
+                                    "espn.in",
+                                    "espnfc.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/750"
                             }
                         ]
                     },
@@ -2141,6 +2943,13 @@
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/475"
                             },
                             {
+                                "rule": "google.com/cse/cse.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/475"
+                            },
+                            {
                                 "rule": "www.google.com/cse/static/",
                                 "domains": [
                                     "<all>"
@@ -2250,6 +3059,17 @@
                                     "<all>"
                                 ],
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/669"
+                            }
+                        ]
+                    },
+                    "iheart.com": {
+                        "rules": [
+                            {
+                                "rule": "iheart.com",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/760"
                             }
                         ]
                     },
@@ -2375,6 +3195,17 @@
                             }
                         ]
                     },
+                    "loggly.com": {
+                        "rules": [
+                            {
+                                "rule": "cloudfront.loggly.com/js/loggly.tracker-2.1.min.js",
+                                "domains": [
+                                    "rte.ie"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/681"
+                            }
+                        ]
+                    },
                     "lpsnmedia.net": {
                         "rules": [
                             {
@@ -2406,6 +3237,17 @@
                                     "medicare.gov"
                                 ],
                                 "reason": "Navigation bar at top of site does not display, preventing easy access to e.g., site login. Note that this CNAMEs to iservprod.medicare.gov.edgekey.net at time of mitiagtion."
+                            }
+                        ]
+                    },
+                    "nextdoor.com": {
+                        "rules": [
+                            {
+                                "rule": "nextdoor.com",
+                                "domains": [
+                                    "nextdoor.co.uk"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/460"
                             }
                         ]
                     },
@@ -2781,14 +3623,14 @@
                             }
                         ]
                     },
-                    "sky.com": {
+                    "shortpixel.ai": {
                         "rules": [
                             {
-                                "rule": "accounts.sky.com/assets/sky_common.js",
+                                "rule": "cdn.shortpixel.ai/assets/js/bundles/spai-lib-bg",
                                 "domains": [
-                                    "sky.com"
+                                    "<all>"
                                 ],
-                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/342"
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/712"
                             }
                         ]
                     },
@@ -2875,12 +3717,11 @@
                     "twitter.com": {
                         "rules": [
                             {
-                                "rule": "platform.twitter.com/embed/embed.modules",
+                                "rule": "platform.twitter.com/embed/embed",
                                 "domains": [
-                                    "notthebee.com",
-                                    "upworthy.com"
+                                    "<all>"
                                 ],
-                                "reason": "notthebee.com - Tweets (as main article content) don't render - instead there are loading spinners for a while before errors are displayed. upworthy.com - Tweets (as main article content) don't render - instead there are loading spinners which overlap some text content."
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/717"
                             },
                             {
                                 "rule": "platform.twitter.com/widgets/tweet_button",
@@ -3101,6 +3942,28 @@
                             }
                         ]
                     },
+                    "hoyoverse.com": {
+                        "rules": [
+                            {
+                                "rule": "webstatic.hoyoverse.com",
+                                "domains": [
+                                    "hoyolab.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: d9k0w0y3delq8.cloudfront.net"
+                            }
+                        ]
+                    },
+                    "marksandspencer.com": {
+                        "rules": [
+                            {
+                                "rule": "asset1.marksandspencer.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
+                            }
+                        ]
+                    },
                     "bareminerals.com": {
                         "rules": [
                             {
@@ -3123,10 +3986,43 @@
                             }
                         ]
                     },
+                    "cox.com": {
+                        "rules": [
+                            {
+                                "rule": "assets.cox.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
+                            }
+                        ]
+                    },
+                    "deloitte.com": {
+                        "rules": [
+                            {
+                                "rule": "assets.deloitte.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
+                            }
+                        ]
+                    },
                     "hpe.com": {
                         "rules": [
                             {
                                 "rule": "assets.ext.hpe.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
+                            }
+                        ]
+                    },
+                    "hdsupplysolutions.com": {
+                        "rules": [
+                            {
+                                "rule": "assets.hdsupplysolutions.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -3156,17 +4052,6 @@
                             }
                         ]
                     },
-                    "orvis.com": {
-                        "rules": [
-                            {
-                                "rule": "assets.orvis.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
-                            }
-                        ]
-                    },
                     "spectrumenterprise.com": {
                         "rules": [
                             {
@@ -3178,10 +4063,10 @@
                             }
                         ]
                     },
-                    "torrid.com": {
+                    "microsoft.com": {
                         "rules": [
                             {
-                                "rule": "assets.torrid.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "rule": "cdn-dynmedia-1.microsoft.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -3189,10 +4074,10 @@
                             }
                         ]
                     },
-                    "microsoft.com": {
+                    "bajajfinserv.in": {
                         "rules": [
                             {
-                                "rule": "cdn-dynmedia-1.microsoft.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "rule": "cms-assets.bajajfinserv.in/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -3233,24 +4118,6 @@
                             }
                         ]
                     },
-                    "playstation.com": {
-                        "rules": [
-                            {
-                                "rule": "gmedia.playstation.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
-                            },
-                            {
-                                "rule": "media.direct.playstation.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
-                            }
-                        ]
-                    },
                     "assaabloy.com": {
                         "rules": [
                             {
@@ -3262,10 +4129,10 @@
                             }
                         ]
                     },
-                    "benq.com": {
+                    "acer.com": {
                         "rules": [
                             {
-                                "rule": "image.benq.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "rule": "images.acer.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -3277,6 +4144,28 @@
                         "rules": [
                             {
                                 "rule": "images.altrarunning.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
+                            }
+                        ]
+                    },
+                    "ansys.com": {
+                        "rules": [
+                            {
+                                "rule": "images.ansys.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
+                            }
+                        ]
+                    },
+                    "asics.com": {
+                        "rules": [
+                            {
+                                "rule": "images.asics.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -3306,10 +4195,10 @@
                             }
                         ]
                     },
-                    "dxl.com": {
+                    "heb.com": {
                         "rules": [
                             {
-                                "rule": "images.dxl.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "rule": "images.heb.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -3343,6 +4232,17 @@
                         "rules": [
                             {
                                 "rule": "images.keurig.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
+                            }
+                        ]
+                    },
+                    "kirklands.com": {
+                        "rules": [
+                            {
+                                "rule": "images.kirklands.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -3423,17 +4323,6 @@
                             }
                         ]
                     },
-                    "rosewoodhotels.com": {
-                        "rules": [
-                            {
-                                "rule": "images.rosewoodhotels.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
-                            }
-                        ]
-                    },
                     "selfridges.com": {
                         "rules": [
                             {
@@ -3460,6 +4349,17 @@
                         "rules": [
                             {
                                 "rule": "images.shophq.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
+                            }
+                        ]
+                    },
+                    "tervis.com": {
+                        "rules": [
+                            {
+                                "rule": "images.tervis.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -3522,17 +4422,6 @@
                             }
                         ]
                     },
-                    "wegmans.com": {
-                        "rules": [
-                            {
-                                "rule": "images.wegmans.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
-                            }
-                        ]
-                    },
                     "wrangler.com": {
                         "rules": [
                             {
@@ -3541,13 +4430,9 @@
                                     "<all>"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
-                            }
-                        ]
-                    },
-                    "zgallerie.com": {
-                        "rules": [
+                            },
                             {
-                                "rule": "images.zgallerie.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "rule": "imageseu.wrangler.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -3555,10 +4440,10 @@
                             }
                         ]
                     },
-                    "lakeshorelearning.com": {
+                    "uline.com": {
                         "rules": [
                             {
-                                "rule": "img.lakeshorelearning.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "rule": "img.uline.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -3599,6 +4484,28 @@
                             }
                         ]
                     },
+                    "playstation.com": {
+                        "rules": [
+                            {
+                                "rule": "media.direct.playstation.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
+                            }
+                        ]
+                    },
+                    "diy.com": {
+                        "rules": [
+                            {
+                                "rule": "media.diy.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
+                            }
+                        ]
+                    },
                     "guitarcenter.com": {
                         "rules": [
                             {
@@ -3614,28 +4521,6 @@
                         "rules": [
                             {
                                 "rule": "media.kohlsimg.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
-                            }
-                        ]
-                    },
-                    "musicarts.com": {
-                        "rules": [
-                            {
-                                "rule": "media.musicarts.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
-                            }
-                        ]
-                    },
-                    "musiciansfriend.com": {
-                        "rules": [
-                            {
-                                "rule": "media.musiciansfriend.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -3687,17 +4572,6 @@
                             }
                         ]
                     },
-                    "tractorsupply.com": {
-                        "rules": [
-                            {
-                                "rule": "media.tractorsupply.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
-                            }
-                        ]
-                    },
                     "bakerdist.com": {
                         "rules": [
                             {
@@ -3713,6 +4587,17 @@
                         "rules": [
                             {
                                 "rule": "resource.gemaire.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
+                            }
+                        ]
+                    },
+                    "armstrongceilings.com": {
+                        "rules": [
+                            {
+                                "rule": "s7-images.armstrongceilings.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -3753,6 +4638,17 @@
                             }
                         ]
                     },
+                    "hitachienergy.com": {
+                        "rules": [
+                            {
+                                "rule": "dynamic-assets.hitachienergy.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
+                            }
+                        ]
+                    },
                     "aliexpress.com": {
                         "rules": [
                             {
@@ -3777,6 +4673,34 @@
                             }
                         ]
                     },
+                    "sky.com": {
+                        "rules": [
+                            {
+                                "rule": "accounts.sky.com/assets/sky_common.js",
+                                "domains": [
+                                    "sky.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: sky.com.edgesuite.net"
+                            }
+                        ]
+                    },
+                    "espncdn.com": {
+                        "rules": [
+                            {
+                                "rule": "a.espncdn.com/",
+                                "domains": [
+                                    "espn.co.uk",
+                                    "espn.com",
+                                    "espn.com.au",
+                                    "espn.com.br",
+                                    "espn.com.mx",
+                                    "espn.in",
+                                    "espnfc.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: a.espncdn.com.stls.edgesuite.net"
+                            }
+                        ]
+                    },
                     "ticketmaster.ca": {
                         "rules": [
                             {
@@ -3795,30 +4719,6 @@
                         "rules": [
                             {
                                 "rule": "epsf.ticketmaster.com/eps-d",
-                                "domains": [
-                                    "ticketmaster.ca",
-                                    "ticketmaster.com",
-                                    "ticketmaster.com.au",
-                                    "ticketmaster.com.mx"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: ticketmaster4.map.fastly.net"
-                            }
-                        ]
-                    },
-                    "livenationinternational.com": {
-                        "rules": [
-                            {
-                                "rule": "dynamicmedia.livenationinternational.com/eps-d",
-                                "domains": [
-                                    "ticketmaster.ca",
-                                    "ticketmaster.com",
-                                    "ticketmaster.com.au",
-                                    "ticketmaster.com.mx"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: ticketmaster4.map.fastly.net"
-                            },
-                            {
-                                "rule": "staticmedia.livenationinternational.com/eps-d",
                                 "domains": [
                                     "ticketmaster.ca",
                                     "ticketmaster.com",
@@ -3893,31 +4793,6 @@
                             }
                         ]
                     },
-                    "bupa.com.au": {
-                        "rules": [
-                            {
-                                "rule": "lp-07.customermessaging.bupa.com.au",
-                                "domains": [
-                                    "virginmedia.com"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: liveperson.net"
-                            },
-                            {
-                                "rule": "lp-01.customermessaging.bupa.com.au",
-                                "domains": [
-                                    "virginmedia.com"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: lpsnmedia.net"
-                            },
-                            {
-                                "rule": "lpcdn.customermessaging.bupa.com.au",
-                                "domains": [
-                                    "virginmedia.com"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: lpsnmedia.net"
-                            }
-                        ]
-                    },
                     "optus.com.au": {
                         "rules": [
                             {
@@ -3933,13 +4808,6 @@
                                     "virginmedia.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: liveperson.net"
-                            },
-                            {
-                                "rule": "lp-01.messaging.optus.com.au",
-                                "domains": [
-                                    "virginmedia.com"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: lpsnmedia.net"
                             },
                             {
                                 "rule": "lpcdn.messaging.optus.com.au",
@@ -3983,6 +4851,24 @@
                             }
                         ]
                     },
+                    "bupa.com.au": {
+                        "rules": [
+                            {
+                                "rule": "lp-01.customermessaging.bupa.com.au",
+                                "domains": [
+                                    "virginmedia.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: lpsnmedia.net"
+                            },
+                            {
+                                "rule": "lpcdn.customermessaging.bupa.com.au",
+                                "domains": [
+                                    "virginmedia.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: lpsnmedia.net"
+                            }
+                        ]
+                    },
                     "citi.com": {
                         "rules": [
                             {
@@ -4016,10 +4902,10 @@
                             }
                         ]
                     },
-                    "jumpcloud.com": {
+                    "joindeleteme.com": {
                         "rules": [
                             {
-                                "rule": "cloud.jumpcloud.com/",
+                                "rule": "b2b.joindeleteme.com/",
                                 "domains": [
                                     "klove.com"
                                 ],
@@ -4027,10 +4913,10 @@
                             }
                         ]
                     },
-                    "johnsoncontrols.com": {
+                    "usgbc.org": {
                         "rules": [
                             {
-                                "rule": "connect.johnsoncontrols.com/",
+                                "rule": "build.usgbc.org/",
                                 "domains": [
                                     "klove.com"
                                 ],
@@ -4049,10 +4935,10 @@
                             }
                         ]
                     },
-                    "nielsen.com": {
+                    "president.jp": {
                         "rules": [
                             {
-                                "rule": "content.nielsen.com/",
+                                "rule": "corp.president.jp/",
                                 "domains": [
                                     "klove.com"
                                 ],
@@ -4115,10 +5001,10 @@
                             }
                         ]
                     },
-                    "freightos.com": {
+                    "acton.org": {
                         "rules": [
                             {
-                                "rule": "get.freightos.com/",
+                                "rule": "go.acton.org/",
                                 "domains": [
                                     "klove.com"
                                 ],
@@ -4137,10 +5023,10 @@
                             }
                         ]
                     },
-                    "advantech.com": {
+                    "adspipe.com": {
                         "rules": [
                             {
-                                "rule": "go.advantech.com/",
+                                "rule": "go.adspipe.com/",
                                 "domains": [
                                     "klove.com"
                                 ],
@@ -4174,6 +5060,17 @@
                         "rules": [
                             {
                                 "rule": "go.cdata.com/",
+                                "domains": [
+                                    "klove.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: go.pardot.com"
+                            }
+                        ]
+                    },
+                    "concernusa.org": {
+                        "rules": [
+                            {
+                                "rule": "go.concernusa.org/",
                                 "domains": [
                                     "klove.com"
                                 ],
@@ -4225,6 +5122,28 @@
                             }
                         ]
                     },
+                    "hustlerturf.com": {
+                        "rules": [
+                            {
+                                "rule": "go.hustlerturf.com/",
+                                "domains": [
+                                    "klove.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: go.pardot.com"
+                            }
+                        ]
+                    },
+                    "icontainers.com": {
+                        "rules": [
+                            {
+                                "rule": "go.icontainers.com/",
+                                "domains": [
+                                    "klove.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: go.pardot.com"
+                            }
+                        ]
+                    },
                     "iocdf.org": {
                         "rules": [
                             {
@@ -4258,10 +5177,10 @@
                             }
                         ]
                     },
-                    "ofx.com": {
+                    "mobilityworks.com": {
                         "rules": [
                             {
-                                "rule": "go.message.ofx.com/",
+                                "rule": "go.mobilityworks.com/",
                                 "domains": [
                                     "klove.com"
                                 ],
@@ -4280,10 +5199,10 @@
                             }
                         ]
                     },
-                    "newport.com": {
+                    "oru.edu": {
                         "rules": [
                             {
-                                "rule": "go.newport.com/",
+                                "rule": "go.oru.edu/",
                                 "domains": [
                                     "klove.com"
                                 ],
@@ -4295,17 +5214,6 @@
                         "rules": [
                             {
                                 "rule": "go.panasonic.biz/",
-                                "domains": [
-                                    "klove.com"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: go.pardot.com"
-                            }
-                        ]
-                    },
-                    "perkinscoie.com": {
-                        "rules": [
-                            {
-                                "rule": "go.perkinscoie.com/",
                                 "domains": [
                                     "klove.com"
                                 ],
@@ -4379,6 +5287,17 @@
                             }
                         ]
                     },
+                    "signalboosters.com": {
+                        "rules": [
+                            {
+                                "rule": "go2.signalboosters.com/",
+                                "domains": [
+                                    "klove.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: go.pardot.com"
+                            }
+                        ]
+                    },
                     "panasonic.jp": {
                         "rules": [
                             {
@@ -4423,10 +5342,32 @@
                             }
                         ]
                     },
+                    "ckeditor.com": {
+                        "rules": [
+                            {
+                                "rule": "info.ckeditor.com/",
+                                "domains": [
+                                    "klove.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: go.pardot.com"
+                            }
+                        ]
+                    },
                     "factsmgt.com": {
                         "rules": [
                             {
                                 "rule": "info.factsmgt.com/",
+                                "domains": [
+                                    "klove.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: go.pardot.com"
+                            }
+                        ]
+                    },
+                    "gci.com": {
+                        "rules": [
+                            {
+                                "rule": "info.gci.com/",
                                 "domains": [
                                     "klove.com"
                                 ],
@@ -4489,10 +5430,32 @@
                             }
                         ]
                     },
+                    "amazonappservices.com": {
+                        "rules": [
+                            {
+                                "rule": "m.amazonappservices.com/",
+                                "domains": [
+                                    "klove.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: go.pardot.com"
+                            }
+                        ]
+                    },
                     "epson.com.au": {
                         "rules": [
                             {
                                 "rule": "marketing-sf.epson.com.au/",
+                                "domains": [
+                                    "klove.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: go.pardot.com"
+                            }
+                        ]
+                    },
+                    "groupon.com": {
+                        "rules": [
+                            {
+                                "rule": "marketing.groupon.com/",
                                 "domains": [
                                     "klove.com"
                                 ],
@@ -4522,10 +5485,21 @@
                             }
                         ]
                     },
-                    "epson.co.in": {
+                    "schrott24.de": {
                         "rules": [
                             {
-                                "rule": "mkt.pd.epson.co.in/",
+                                "rule": "metal.schrott24.de/",
+                                "domains": [
+                                    "klove.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: go.pardot.com"
+                            }
+                        ]
+                    },
+                    "fujitsu.com": {
+                        "rules": [
+                            {
+                                "rule": "mkt-europe.global.fujitsu.com/",
                                 "domains": [
                                     "klove.com"
                                 ],
@@ -4548,17 +5522,6 @@
                         "rules": [
                             {
                                 "rule": "onechartmail.northside.com/",
-                                "domains": [
-                                    "klove.com"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: go.pardot.com"
-                            }
-                        ]
-                    },
-                    "doubleline.com": {
-                        "rules": [
-                            {
-                                "rule": "pardot.doubleline.com/",
                                 "domains": [
                                     "klove.com"
                                 ],
@@ -4643,32 +5606,10 @@
                             }
                         ]
                     },
-                    "chemeurope.com": {
-                        "rules": [
-                            {
-                                "rule": "t.chemeurope.com/",
-                                "domains": [
-                                    "klove.com"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: go.pardot.com"
-                            }
-                        ]
-                    },
                     "chemie.de": {
                         "rules": [
                             {
                                 "rule": "t.chemie.de/",
-                                "domains": [
-                                    "klove.com"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: go.pardot.com"
-                            }
-                        ]
-                    },
-                    "forgeglobal.com": {
-                        "rules": [
-                            {
-                                "rule": "ww2.forgeglobal.com/",
                                 "domains": [
                                     "klove.com"
                                 ],
@@ -4742,17 +5683,6 @@
                             }
                         ]
                     },
-                    "kidney.org": {
-                        "rules": [
-                            {
-                                "rule": "www3.kidney.org/",
-                                "domains": [
-                                    "klove.com"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: go.pardot.com"
-                            }
-                        ]
-                    },
                     "sma.de": {
                         "rules": [
                             {
@@ -4767,7 +5697,7 @@
                 }
             },
             "exceptions": [],
-            "hash": "0326c2feb919e24885f0bc723c8d5fe2"
+            "hash": "93547d31eb034495902bf370f7a8c6b6"
         },
         "trackingCookies1p": {
             "settings": {

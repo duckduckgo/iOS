@@ -297,6 +297,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
     }
 
     func endConnectMode() {
+        connector?.stopPolling()
         connector = nil
     }
 
@@ -305,21 +306,11 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
             do {
                 self.connector = try syncService.remoteConnect()
                 Task { @MainActor in
-                    var running = true
-                    while running {
-                        if connector == nil {
-                            return
-                        }
-
-                        if let recoveryKey = try await self.connector?.fetchRecoveryKey() {
-                            try await syncService.login(recoveryKey, deviceName: deviceName, deviceType: deviceType)
-                            running = false
-                            break
-                        }
-
-                        if running && connector != nil {
-                            try await Task.sleep(nanoseconds: 5 * 1_000_000_000)
-                        }
+                    if let recoveryKey = try await connector?.pollForRecoveryKey() {
+                        try await syncService.login(recoveryKey, deviceName: deviceName, deviceType: deviceType)
+                    } else {
+                        // Likely cancelled elsewhere
+                        return
                     }
                     dismissPresentedViewController()
                     showDeviceConnected()

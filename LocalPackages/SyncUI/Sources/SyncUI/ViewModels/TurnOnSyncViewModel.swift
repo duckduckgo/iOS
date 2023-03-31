@@ -21,9 +21,9 @@ import Foundation
 
 public class TurnOnSyncViewModel: ObservableObject {
 
-    let finished: (TurnOnSyncViewModel) -> Void
+    let finished: () -> Void
 
-    public init(finished: @escaping (TurnOnSyncViewModel) -> Void) {
+    public init(finished: @escaping () -> Void) {
         self.finished = finished
     }
 
@@ -41,21 +41,21 @@ public class TurnOnSyncViewModel: ObservableObject {
 
     func syncWithAnotherDeviceAction() {
         state = .syncWithAnotherDevice
-        finished(self)
+        finished()
     }
 
     func notNowAction() {
-        finished(self)
+        finished()
     }
 
     func recoverDataAction() {
         state = .recoverData
-        finished(self)
+        finished()
     }
 
     func cancelAction() {
         state = .doNothing
-        finished(self)
+        finished()
     }
     
 }

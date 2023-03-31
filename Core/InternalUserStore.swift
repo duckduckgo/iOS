@@ -1,8 +1,8 @@
 //
-//  WebsiteAccountExtension.swift
+//  InternalUserStore.swift
 //  DuckDuckGo
 //
-//  Copyright © 2022 DuckDuckGo. All rights reserved.
+//  Copyright © 2023 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -19,19 +19,11 @@
 
 import Foundation
 import BrowserServicesKit
-import Common
 
-extension SecureVaultModels.WebsiteAccount {
-
-    func name(tld: TLD, autofillDomainNameUrlMatcher: AutofillDomainNameUrlMatcher) -> String {
-        if let title = self.title, !title.isEmpty {
-            return title
-        } else {
-            return autofillDomainNameUrlMatcher.normalizeUrlForWeb(domain)
-        }
+public class InternalUserStore: InternalUserStoring {
+    public init() {
     }
-
-    func faviconLetter(tld: TLD, autofillDomainNameUrlSort: AutofillDomainNameUrlSort) -> String? {
-        return autofillDomainNameUrlSort.firstCharacterForGrouping(self, tld: tld)?.uppercased()
-    }
+    
+    @UserDefaultsWrapper(key: .featureFlaggingDidVerifyInternalUser, defaultValue: false)
+    public var isInternalUser: Bool
 }

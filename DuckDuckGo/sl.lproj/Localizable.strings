@@ -319,11 +319,17 @@
 /* Reason for auth during login prompt */
 "autofill.logins.prompt.auth.reason" = "Odklenite za uporabo shranjenih podatkov za prijavo";
 
+/* Title for section of autofill logins that are an exact match to the current website */
+"autofill.logins.prompt.exact.match.title" = "S tega spletnega mesta";
+
 /* Button title for autofill login prompt if more options are available */
 "autofill.logins.prompt.more-options" = "Več možnosti";
 
+/* Title for section of autofill logins that are an approximate match to the current website */
+"autofill.logins.prompt.partial.match.title" = "S spletnega mesta %@";
+
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Želite uporabiti shranjene prijavne podatke?";
+"autofill.logins.prompt.title" = "Želite uporabiti shranjene podatke za prijavo?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "za »%@«";
@@ -335,7 +341,7 @@
 "autofill.save-login.additional-login.message" = "To bo prihranilo dodatno prijavo za to spletno mesto.";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo bo te podatke za prijavo varno shranil v vaši napravi.";
+"autofill.save-login.new-user.message" = "DuckDuckGo bo te podatke za prijavo varno shranil v vaši napravi. Shranjene podatke za prijavo lahko upravljate v nastavitvah.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Ali želite, da DuckDuckGo shrani vašo prijavo?";

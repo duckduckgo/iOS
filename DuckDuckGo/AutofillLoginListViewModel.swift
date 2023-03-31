@@ -68,7 +68,9 @@ final class AutofillLoginListViewModel: ObservableObject {
     private var currentTabUrl: URL?
     private let secureVault: SecureVault?
     private var cachedDeletedCredentials: SecureVaultModels.WebsiteCredentials?
-    
+    private let autofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
+    private let autofillDomainNameUrlSort = AutofillDomainNameUrlSort()
+
     @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
     @Published private(set) var sections = [AutofillLoginListSectionType]() {
         didSet {
@@ -80,7 +82,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         return !accounts.isEmpty
     }
     
-    var isAutofillEnabled: Bool {
+    var isAutofillEnabledInSettings: Bool {
         get { appSettings.autofillCredentialsEnabled }
         set {
             appSettings.autofillCredentialsEnabled = newValue
@@ -169,7 +171,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         
         if let query = query, query.count > 0 {
             filteredAccounts = filteredAccounts.filter { account in
-                if !account.name(tld: tld).lowercased().contains(query.lowercased()) &&
+                if !account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher).lowercased().contains(query.lowercased()) &&
                     !account.domain.lowercased().contains(query.lowercased()) &&
                     !account.username.lowercased().contains(query.lowercased()) {
                     return false
@@ -197,18 +199,15 @@ final class AutofillLoginListViewModel: ObservableObject {
     }
 
     private func fetchSuggestedAccounts() -> [SecureVaultModels.WebsiteAccount] {
-        guard let url = currentTabUrl,
-              let host = url.host,
-              let secureVault = secureVault else {
+        guard let currentUrl = currentTabUrl else {
             return []
         }
 
-        do {
-            return try secureVault.accountsFor(domain: host)
-        } catch {
-            os_log("Failed to fetch suggested accounts")
-            return []
+        let suggestedAccounts = accounts.filter { account in
+            return autofillDomainNameUrlMatcher.isMatchingForAutofill(currentSite: currentUrl.absoluteString, savedSite: account.domain, tld: tld)
         }
+
+        return suggestedAccounts
     }
 
     private func makeSections(with accounts: [SecureVaultModels.WebsiteAccount]) -> [AutofillLoginListSectionType] {
@@ -218,13 +217,21 @@ final class AutofillLoginListViewModel: ObservableObject {
             newSections.append(.enableAutofill)
 
             if !accountsToSuggest.isEmpty {
-                let accountItems = accountsToSuggest.map { AutofillLoginListItemViewModel(account: $0, tld: tld) }
+                let accountItems = accountsToSuggest.map { AutofillLoginListItemViewModel(account: $0,
+                                                                                          tld: tld,
+                                                                                          autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher,
+                                                                                          autofillDomainNameUrlSort: autofillDomainNameUrlSort)
+                }
                 newSections.append(.credentials(title: UserText.autofillLoginListSuggested, items: accountItems))
             }
         }
 
-        let viewModelsGroupedByFirstLetter = accounts.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(tld: tld)
-        let accountSections = viewModelsGroupedByFirstLetter.autofillLoginListSectionsForViewModelsSortedByTitle()
+        let viewModelsGroupedByFirstLetter = accounts.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(
+                tld: tld,
+                autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher,
+                autofillDomainNameUrlSort: autofillDomainNameUrlSort)
+        let accountSections = viewModelsGroupedByFirstLetter.autofillLoginListSectionsForViewModelsSortedByTitle(autofillDomainNameUrlSort,
+                                                                                                                 tld: tld)
         
         newSections.append(contentsOf: accountSections)
         return newSections
@@ -278,7 +285,7 @@ final class AutofillLoginListViewModel: ObservableObject {
 
         return (sectionsToDelete: sectionsToDelete, rowsToDelete: rowsToDelete)
     }
-    
+
     @discardableResult
     func delete(_ account: SecureVaultModels.WebsiteAccount) -> Bool {
         guard let secureVault = secureVault,
@@ -322,14 +329,17 @@ extension AutofillLoginListItemViewModel: Comparable {
 
 internal extension Array where Element == SecureVaultModels.WebsiteAccount {
     
-    func autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(tld: TLD) -> [String: [AutofillLoginListItemViewModel]] {
+    func autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(tld: TLD,
+                                                                        autofillDomainNameUrlMatcher: AutofillDomainNameUrlMatcher,
+                                                                        autofillDomainNameUrlSort: AutofillDomainNameUrlSort)
+            -> [String: [AutofillLoginListItemViewModel]] {
         reduce(into: [String: [AutofillLoginListItemViewModel]]()) { result, account in
             
             // Unfortunetly, folding doesn't produce perfect results despite respecting the system locale
             // E.g. Romainian should treat letters with diacritics as seperate letters, but folding doesn't
             // Apple's own apps (e.g. contacts) seem to suffer from the same problem
             let key: String
-            if let firstChar = account.name(tld: tld).first,
+            if let firstChar = autofillDomainNameUrlSort.firstCharacterForGrouping(account, tld: tld),
                let deDistinctionedChar = String(firstChar).folding(options: [.diacriticInsensitive, .caseInsensitive], locale: nil).first,
                deDistinctionedChar.isLetter {
                 
@@ -338,18 +348,21 @@ internal extension Array where Element == SecureVaultModels.WebsiteAccount {
                 key = AutofillLoginListSectionType.miscSectionHeading
             }
             
-            return result[key, default: []].append(AutofillLoginListItemViewModel(account: account, tld: tld))
+            return result[key, default: []].append(AutofillLoginListItemViewModel(account: account,
+                                                                                  tld: tld,
+                                                                                  autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher,
+                                                                                  autofillDomainNameUrlSort: autofillDomainNameUrlSort))
         }
     }
 }
 
 internal extension Dictionary where Key == String, Value == [AutofillLoginListItemViewModel] {
     
-    func autofillLoginListSectionsForViewModelsSortedByTitle() -> [AutofillLoginListSectionType] {
+    func autofillLoginListSectionsForViewModelsSortedByTitle(_ autofillDomainNameUrlSort: AutofillDomainNameUrlSort, tld: TLD) -> [AutofillLoginListSectionType] {
         map { dictionaryItem -> AutofillLoginListSectionType in
-            let sortedGroup = dictionaryItem.value.sorted { lhs, rhs in
-                lhs.title.localizedCaseInsensitiveCompare(rhs.title) == .orderedAscending
-            }
+            let sortedGroup = dictionaryItem.value.sorted(by: {
+                autofillDomainNameUrlSort.compareAccountsForSortingAutofill(lhs: $0.account, rhs: $1.account, tld: tld) == .orderedAscending
+            })
             return AutofillLoginListSectionType.credentials(title: dictionaryItem.key,
                                                             items: sortedGroup)
         }.sorted()

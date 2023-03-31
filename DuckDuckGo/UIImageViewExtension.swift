@@ -27,12 +27,14 @@ extension UIImageView {
     func loadFavicon(forDomain domain: String?,
                      usingCache cacheType: Favicons.CacheType,
                      useFakeFavicon: Bool = true,
+                     preferredFakeFaviconLetter: String? = nil,
                      completion: ((UIImage?, Bool) -> Void)? = nil) {
 
         func load() {
             FaviconsHelper.loadFaviconSync(forDomain: domain,
                                            usingCache: cacheType,
-                                           useFakeFavicon: useFakeFavicon) { image, fake in
+                                           useFakeFavicon: useFakeFavicon,
+                                           preferredFakeFaviconLetter: preferredFakeFaviconLetter) { image, fake in
                 self.image = image
                 completion?(image, fake)
             }

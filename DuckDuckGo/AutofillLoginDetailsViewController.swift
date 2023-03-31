@@ -25,7 +25,7 @@ import Combine
 
 protocol AutofillLoginDetailsViewControllerDelegate: AnyObject {
     func autofillLoginDetailsViewControllerDidSave(_ controller: AutofillLoginDetailsViewController, account: SecureVaultModels.WebsiteAccount?)
-    func autofillLoginDetailsViewControllerDelete(account: SecureVaultModels.WebsiteAccount)
+    func autofillLoginDetailsViewControllerDelete(account: SecureVaultModels.WebsiteAccount, title: String)
 }
 
 class AutofillLoginDetailsViewController: UIViewController {
@@ -309,8 +309,8 @@ extension AutofillLoginDetailsViewController: AutofillLoginDetailsViewModelDeleg
         present(alert, animated: true)
     }
 
-    func autofillLoginDetailsViewModelDelete(account: SecureVaultModels.WebsiteAccount) {
-        delegate?.autofillLoginDetailsViewControllerDelete(account: account)
+    func autofillLoginDetailsViewModelDelete(account: SecureVaultModels.WebsiteAccount, title: String) {
+        delegate?.autofillLoginDetailsViewControllerDelete(account: account, title: title)
         navigationController?.popViewController(animated: true)
     }
 

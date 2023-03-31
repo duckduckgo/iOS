@@ -319,11 +319,17 @@
 /* Reason for auth during login prompt */
 "autofill.logins.prompt.auth.reason" = "Lås opp for å bruke lagrede pålogginger";
 
+/* Title for section of autofill logins that are an exact match to the current website */
+"autofill.logins.prompt.exact.match.title" = "Fra dette nettstedet";
+
 /* Button title for autofill login prompt if more options are available */
 "autofill.logins.prompt.more-options" = "Flere alternativer";
 
+/* Title for section of autofill logins that are an approximate match to the current website */
+"autofill.logins.prompt.partial.match.title" = "Fra %@";
+
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Vil du bruke lagret pålogging?";
+"autofill.logins.prompt.title" = "Vil du bruke en lagret pålogging?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "for «%@»";
@@ -335,7 +341,7 @@
 "autofill.save-login.additional-login.message" = "Dette lagrer en ekstra pålogging for dette nettstedet.";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo lagrer denne påloggingen på en sikker måte på enheten din.";
+"autofill.save-login.new-user.message" = "DuckDuckGo lagrer denne påloggingen på en sikker måte på enheten din. Du kan administrere lagrede pålogginger i innstillingene.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vil du at DuckDuckGo skal lagre påloggingen din?";

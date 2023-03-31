@@ -26,21 +26,25 @@ final class FaviconViewModel {
     private let domain: String
     private let useFakeFavicon: Bool
     private let cacheType: Favicons.CacheType
+    private let preferredFaviconLetter: String?
     
     internal init(domain: String,
                   useFakeFavicon: Bool = true,
-                  cacheType: Favicons.CacheType = .tabs) {
+                  cacheType: Favicons.CacheType = .tabs,
+                  preferredFakeFaviconLetter: String? = nil) {
         
         self.domain = domain
         self.useFakeFavicon = useFakeFavicon
         self.cacheType = cacheType
+        self.preferredFaviconLetter = preferredFakeFaviconLetter
         loadFavicon()
     }
     
     private func loadFavicon() {
         FaviconsHelper.loadFaviconSync(forDomain: domain,
                                        usingCache: cacheType,
-                                       useFakeFavicon: useFakeFavicon) { image, _ in
+                                       useFakeFavicon: useFakeFavicon,
+                                       preferredFakeFaviconLetter: preferredFaviconLetter) { image, _ in
             if let image = image {
                 self.image = image
             }

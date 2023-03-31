@@ -56,8 +56,8 @@ final class TrackerImageCache {
             return blankTrackerImage
         }
     }
-    
-    // swiftlint:disable cyclomatic_complexity
+
+    // swiftlint:disable:next cyclomatic_complexity
     private func loadTrackerLogoImage(for entityName: String) -> CGImage? {
         switch entityName {
         case "adform": return UIImage(named: "adform", in: nil, compatibleWith: trait)!.cgImage!
@@ -103,8 +103,8 @@ final class TrackerImageCache {
         default: return nil
         }
     }
-    
-    // swiftlint:disable cyclomatic_complexity
+
+    // swiftlint:disable:next cyclomatic_complexity
     private func loadTrackerLetterImage(for character: Character) -> CGImage? {
         switch character {
         case "a": return UIImage(named: "a", in: nil, compatibleWith: trait)!.cgImage!

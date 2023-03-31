@@ -66,7 +66,7 @@ class SettingsViewController: UITableViewController {
     
     private let syncSectionIndex = 1
     private let autofillSectionIndex = 2
-    private let debugSectionIndex = 7
+    private let debugSectionIndex = 8
 
     private lazy var emailManager = EmailManager()
     

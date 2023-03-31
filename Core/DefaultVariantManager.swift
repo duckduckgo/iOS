@@ -53,9 +53,9 @@ public struct VariantIOS: Variant {
     
     // Note: Variants with `doNotAllocate` weight, should always be included so that previous installations are unaffected
     public static let defaultVariants: [Variant] = [
-        VariantIOS(name: "mc", weight: 1, isIncluded: When.always, features: []),
-        VariantIOS(name: "ma", weight: 1, isIncluded: When.always, features: [.fireButtonAnimation]),
-        VariantIOS(name: "mf", weight: 1, isIncluded: When.always, features: [.fireButtonColor]),
+        VariantIOS(name: "mc", weight: doNotAllocate, isIncluded: When.always, features: []),
+        VariantIOS(name: "ma", weight: doNotAllocate, isIncluded: When.always, features: [.fireButtonAnimation]),
+        VariantIOS(name: "mf", weight: doNotAllocate, isIncluded: When.always, features: [.fireButtonColor]),
         
         // SERP testing
         VariantIOS(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),

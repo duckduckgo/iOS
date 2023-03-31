@@ -63,7 +63,7 @@ struct SaveLoginView: View {
         case .savePassword:
             return UserText.autofillSavePasswordSaveCTA
         case .updateUsername:
-            return UserText.autofillUpdateLoginSaveCTA
+            return UserText.autofillUpdateUsernameSaveCTA
         case .updatePassword:
             return UserText.autofillUpdatePasswordSaveCTA
         }

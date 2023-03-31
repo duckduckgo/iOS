@@ -32,9 +32,11 @@ public enum FeatureFlag: String {
 extension FeatureFlag: FeatureFlagSourceProviding {
     public var source: FeatureFlagSource {
         switch self {
+        // swiftlint:disable line_length
         case .debugMenu, .sync, .autofillCredentialInjecting, .autofillCredentialsSaving, .autofillInlineIconCredentials, .autofillAccessCredentialManagement:
             return .internalOnly
         }
+        // swiftlint:enable line_length
     }
 }
 

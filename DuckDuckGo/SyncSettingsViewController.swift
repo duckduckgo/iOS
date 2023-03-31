@@ -131,51 +131,6 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         collectCode(isInRecoveryMode: true)
     }
 
-    func shareRecoveryPDF() {
-        let pdfController = UIHostingController(rootView: RecoveryKeyPDFView(code: recoveryCode))
-        pdfController.loadView()
-
-        let pdfRect = CGRect(x: 0, y: 0, width: 612, height: 792)
-        pdfController.view.frame = CGRect(x: 0, y: 0, width: pdfRect.width, height: pdfRect.height + 100)
-        pdfController.view.insetsLayoutMarginsFromSafeArea = false
-
-        let rootVC = UIApplication.shared.windows.first?.rootViewController
-        rootVC?.addChild(pdfController)
-        rootVC?.view.insertSubview(pdfController.view, at: 0)
-        defer {
-            pdfController.view.removeFromSuperview()
-        }
-
-        let format = UIGraphicsPDFRendererFormat()
-        format.documentInfo = [
-            kCGPDFContextTitle as String: "DuckDuckGo Sync Recovery Code"
-        ]
-
-        let renderer = UIGraphicsPDFRenderer(bounds: pdfRect, format: format)
-        let data = renderer.pdfData { context in
-            context.beginPage()
-            context.cgContext.translateBy(x: 0, y: -100)
-            pdfController.view.layer.render(in: context.cgContext)
-
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.lineHeightMultiple = 1.55
-
-            recoveryCode.draw(in: CGRect(x: 240, y: 380, width: 294, height: 1000), withAttributes: [
-                .font: UIFont.monospacedSystemFont(ofSize: 13, weight: .regular),
-                .foregroundColor: UIColor.black,
-                .paragraphStyle: paragraphStyle,
-                .kern: 2
-            ])
-        }
-
-        let pdf = RecoveryCodeItem(data: data)
-        navigationController?.visibleViewController?.presentShareSheet(withItems: [pdf],
-                                                                       fromView: view) { [weak self] _, success, _, _ in
-            guard success else { return }
-            self?.navigationController?.visibleViewController?.dismiss(animated: true)
-        }
-    }
-
     func showDeviceConnected() {
         let model = SaveRecoveryKeyViewModel(key: recoveryCode) { [weak self] in
             self?.shareRecoveryPDF()
@@ -390,25 +345,6 @@ private class PortraitNavigationController: UINavigationController {
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         [.portrait, .portraitUpsideDown]
-    }
-
-}
-
-private class RecoveryCodeItem: NSObject, UIActivityItemSource {
-
-    let data: Data
-
-    init(data: Data) {
-        self.data = data
-        super.init()
-    }
-
-    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
-        return URL(fileURLWithPath: "DuckDuckGo Sync Recovery Code.pdf")
-    }
-
-    func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
-        data
     }
 
 }

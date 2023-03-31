@@ -2311,7 +2311,9 @@ extension NSError {
 extension TabViewController: SecureVaultManagerDelegate {
  
     private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials) {
-        guard isAutofillEnabledInSettings, featureFlagger.isFeatureOn(.autofillCredentialsSaving), let autofillUserScript = autofillUserScript else { return }
+        guard isAutofillEnabledInSettings,
+              featureFlagger.isFeatureOn(.autofillCredentialsSaving),
+              let autofillUserScript = autofillUserScript else { return }
 
         let manager = SaveAutofillLoginManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)
         manager.prepareData { [weak self] in

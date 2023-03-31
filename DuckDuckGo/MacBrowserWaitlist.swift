@@ -28,7 +28,7 @@ struct MacBrowserWaitlist: Waitlist {
     static let identifier: String = "mac"
     static let isWaitlistRemoved: Bool = true
     static let apiProductName: String = "macosbrowser"
-    static let downloadURL: URL = AppUrls().macBrowserDownloadURL
+    static let downloadURL: URL = URL.mac
 
     static let shared: MacBrowserWaitlist = .init()
 

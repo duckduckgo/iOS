@@ -30,6 +30,7 @@ import Persistence
 import Crashes
 import Configuration
 import Networking
+import DDGSync
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -54,6 +55,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var autoClear: AutoClear?
     private var showKeyboardIfSettingOn = true
     private var lastBackgroundDate: Date?
+
+    private(set) var syncService: DDGSyncing!
+    private(set) var syncPersistence: SyncDataPersistor!
 
     // MARK: lifecycle
 
@@ -193,6 +197,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.windowScene?.screenshotService?.delegate = self
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
+        // MARK: Sync initialisation
+        syncPersistence = SyncDataPersistor()
+        syncService = DDGSync(persistence: syncPersistence)
+
         appIsLaunching = true
         return true
     }
@@ -232,6 +240,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             appIsLaunching = false
             onApplicationLaunch(application)
         }
+        
+        FireButtonExperiment.restartFireButtonEducationIfNeeded()
 
         mainViewController?.showBars()
         mainViewController?.didReturnFromBackground()
@@ -245,8 +255,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             AppConfigurationFetch.shouldScheduleRulesCompilationOnAppLaunch = false
         }
 
-        AppConfigurationFetch().start { newData in
-            if newData {
+        AppConfigurationFetch().start { result in
+            if case .assetsUpdated(let protectionsUpdated) = result, protectionsUpdated {
                 ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
             }
         }
@@ -385,8 +395,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         os_log(#function, log: .lifecycleLog, type: .debug)
 
-        AppConfigurationFetch().start(isBackgroundFetch: true) { newData in
-            completionHandler(newData ? .newData : .noData)
+        AppConfigurationFetch().start(isBackgroundFetch: true) { result in
+            switch result {
+            case .noData:
+                completionHandler(.noData)
+            case .assetsUpdated:
+                completionHandler(.newData)
+            }
         }
     }
 

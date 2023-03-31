@@ -37,7 +37,7 @@ extension MainViewController {
         guard DaxDialogs.shared.isAddFavoriteFlow,
               let tab = currentTab, !tab.isError, let url = tab.url else { return false }
         
-        return !AppUrls().isDuckDuckGo(url: url)
+        return !url.isDuckDuckGo
     }
     
     func hideMenuHighlighter() {

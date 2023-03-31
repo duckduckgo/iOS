@@ -21,24 +21,43 @@ import SwiftUI
 import Combine
 import AVFoundation
 import SyncUI
+import DDGSync
 
 @MainActor
-class SyncSettingsViewController: UIHostingController<SyncSettingsScreenView> {
-
-    let syncService: SyncService = FakeSyncService()
+class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
     lazy var authenticator = Authenticator()
 
-    static let fakeCode = "eyAicmVjb3ZlcnkiOiB7ICJ1c2VyX2lkIjogIjY4RTc4OTlBLTQ5OTQtNEUzMi04MERDLT" +
-    "gyNzNFMDc1MUExMSIsICJwcmltYXJ5X2tleSI6ICJNVEl6TkRVMk56ZzVN" +
-    "REV5TXpRMU5qYzRPVEF4TWpNME5UWTNPRGt3TVRJPSIgfSB9"
+    let syncService: DDGSyncing! = (UIApplication.shared.delegate as? AppDelegate)!.syncService
+
+    var recoveryCode: String {
+        guard let code = syncService.account?.recoveryCode else {
+            assertionFailure("No recovery code")
+            return ""
+        }
+
+        return code
+    }
+
+    var deviceName: String {
+        UIDevice.current.name
+    }
+
+    var deviceType: String {
+        isPad ? "tablet" : "phone"
+    }
 
     convenience init() {
-        self.init(rootView: SyncSettingsScreenView(model: SyncSettingsScreenViewModel()))
+        self.init(rootView: SyncSettingsView(model: SyncSettingsViewModel()))
 
-        // For some reason, on iOS 14, the viewDidLoad wasn't getting called
+        // For some reason, on iOS 14, the viewDidLoad wasn't getting called so do some setup here
+        if syncService.isAuthenticated {
+            // TODO pass in the devices
+            rootView.model.syncEnabled(recoveryCode: recoveryCode)
+        }
+
         rootView.model.delegate = self
-        navigationItem.title = "Sync"
+        navigationItem.title = "Sync" // TODO externalise
     }
 
     override func viewDidLoad() {
@@ -72,22 +91,24 @@ extension SyncSettingsViewController: Themable {
 extension SyncSettingsViewController: SyncManagementViewModelDelegate {
 
     func createAccountAndStartSyncing() {
+        print(#function)
         Task { @MainActor in
-            await syncService.createAccount()
-            rootView.model.showDevices()
+            try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
+            rootView.model.syncEnabled(recoveryCode: recoveryCode)
             self.showRecoveryPDF()
         }
     }
 
     func showSyncSetup() {
-
-        let model = TurnOnSyncViewModel { [weak self] model in
+        let model = TurnOnSyncViewModel { [weak self] in
             assert(self?.navigationController?.visibleViewController is DismissibleHostingController<TurnOnSyncView>)
             self?.navigationController?.topViewController?.dismiss(animated: true)
-            self?.rootView.model.setupFinished(model)
+            // Handle the finished logic in the closing of the view controller so that we also handle the
+            //  user dismissing it (cancel, swipe down, etc)
         }
 
         let controller = DismissibleHostingController(rootView: TurnOnSyncView(model: model)) { [weak self] in
+            assert(self?.navigationController?.visibleViewController is DismissibleHostingController<TurnOnSyncView>)
             self?.rootView.model.setupFinished(model)
         }
 
@@ -103,7 +124,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
 
     func shareRecoveryPDF() {
-        let pdfController = UIHostingController(rootView: RecoveryKeyPDFView(code: Self.fakeCode))
+        let pdfController = UIHostingController(rootView: RecoveryKeyPDFView(code: recoveryCode))
         pdfController.loadView()
 
         let pdfRect = CGRect(x: 0, y: 0, width: 612, height: 792)
@@ -131,8 +152,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineHeightMultiple = 1.55
 
-            let code = Self.fakeCode
-            code.draw(in: CGRect(x: 240, y: 380, width: 294, height: 1000), withAttributes: [
+            recoveryCode.draw(in: CGRect(x: 240, y: 380, width: 294, height: 1000), withAttributes: [
                 .font: UIFont.monospacedSystemFont(ofSize: 13, weight: .regular),
                 .foregroundColor: UIColor.black,
                 .paragraphStyle: paragraphStyle,
@@ -149,18 +169,20 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
 
     func showDeviceConnected() {
-        let model = SaveRecoveryKeyViewModel(key: Self.fakeCode) { [weak self] in
+        let model = SaveRecoveryKeyViewModel(key: recoveryCode) { [weak self] in
             self?.shareRecoveryPDF()
         }
         let controller = UIHostingController(rootView: DeviceConnectedView(saveRecoveryKeyViewModel: model))
-        navigationController?.present(controller, animated: true) {
-            self.rootView.model.showDevices()
-            self.rootView.model.appendDevice(.init(id: UUID().uuidString, name: "Another Device", isThisDevice: false))
+        navigationController?.present(controller, animated: true) { [weak self] in
+            self?.rootView.model.syncEnabled(recoveryCode: self!.recoveryCode)
+            self?.rootView.model.appendDevice(.init(id: UUID().uuidString, name: "My MacBook Pro", type: "desktop", isThisDevice: false))
+            self?.rootView.model.appendDevice(.init(id: UUID().uuidString, name: "My iPad", type: "tablet", isThisDevice: false))
+            self?.rootView.model.appendDevice(.init(id: UUID().uuidString, name: "Unknown type", type: "linux", isThisDevice: false))
         }
     }
     
     func showRecoveryPDF() {
-        let model = SaveRecoveryKeyViewModel(key: Self.fakeCode) { [weak self] in
+        let model = SaveRecoveryKeyViewModel(key: recoveryCode) { [weak self] in
             self?.shareRecoveryPDF()
         }
         let controller = UIHostingController(rootView: SaveRecoveryKeyView(model: model))
@@ -171,9 +193,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         let model = ScanOrPasteCodeViewModel(isInRecoveryMode: isInRecoveryMode)
         model.delegate = self
 
-        let controller = DismissibleHostingController(rootView: ScanOrPasteCodeView(model: model)) { [weak self] in
-            self?.rootView.model.codeCollectionCancelled()
-        }
+        let controller = UIHostingController(rootView: ScanOrPasteCodeView(model: model))
 
         let navController = UIDevice.current.userInterfaceIdiom == .phone
             ? PortraitNavigationController(rootViewController: controller)
@@ -203,6 +223,63 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         }
     }
 
+    func confirmAndDisableSync() async -> Bool {
+        return await withCheckedContinuation { continuation in
+            let alert = UIAlertController(title: UserText.syncTurnOffConfirmTitle,
+                                          message: UserText.syncTurnOffConfirmMessage,
+                                          preferredStyle: .alert)
+            alert.addAction(title: UserText.actionCancel, style: .cancel) {
+                continuation.resume(returning: false)
+            }
+            alert.addAction(title: UserText.syncTurnOffConfirmAction, style: .destructive) {
+                Task { @MainActor in
+                    // TODO handle error disconnecting
+                    do {
+                        try await self.syncService.disconnect()
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                    continuation.resume(returning: true)
+                }
+            }
+            self.present(alert, animated: true)
+        }
+    }
+
+    func confirmAndDeleteAllData() async -> Bool {
+        return await withCheckedContinuation { continuation in
+            let alert = UIAlertController(title: UserText.syncDeleteAllConfirmTitle,
+                                          message: UserText.syncDeleteAllConfirmMessage,
+                                          preferredStyle: .alert)
+            alert.addAction(title: UserText.actionCancel, style: .cancel) {
+                continuation.resume(returning: false)
+            }
+            alert.addAction(title: UserText.syncDeleteAllConfirmAction, style: .destructive) {
+                continuation.resume(returning: true)
+            }
+            self.present(alert, animated: true)
+        }
+    }
+
+    func copyCode() {
+        UIPasteboard.general.string = recoveryCode
+    }
+
+    func confirmRemoveDevice(_ device: SyncSettingsViewModel.Device) async -> Bool {
+        return await withCheckedContinuation { continuation in
+            let alert = UIAlertController(title: UserText.syncRemoveDeviceTitle,
+                                          message: UserText.syncRemoveDeviceMessage(device.name),
+                                          preferredStyle: .alert)
+            alert.addAction(title: UserText.actionCancel) {
+                continuation.resume(returning: false)
+            }
+            alert.addAction(title: UserText.syncRemoveDeviceConfirmAction, style: .destructive) {
+                continuation.resume(returning: true)
+            }
+            self.present(alert, animated: true)
+        }
+    }
+
 }
 
 extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
@@ -213,19 +290,37 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
 
     func startConnectMode() async -> String? {
         if await authenticator.authenticate(reason: "Generate QRCode to connect to other devices") {
-            return await syncService.retrieveConnectCode()
+            // return await syncService.retrieveConnectCode()
+            return nil
         }
         return nil
     }
 
-    func syncCodeEntered(code: String) -> Bool {
-        navigationController?.topViewController?.dismiss(animated: true)
-        showDeviceConnected()
-        return true
+    func syncCodeEntered(code: String) async -> Bool {
+        print(#function, code)
+        do {
+            guard let syncCode = try? SyncCode.decodeBase64String(code) else {
+                return false
+            }
+
+            if let recoveryKey = syncCode.recovery {
+                try await syncService.login(recoveryKey, deviceName: deviceName, deviceType: deviceType)
+                navigationController?.topViewController?.dismiss(animated: true)
+                showDeviceConnected()
+                return true
+            }
+
+            // TODO handle connect code
+        } catch {
+            if !(error is SyncError) {
+                assertionFailure(error.localizedDescription)
+            }
+        }
+        return false
     }
 
     func codeCollectionCancelled() {
-        assert(navigationController?.visibleViewController is DismissibleHostingController<ScanOrPasteCodeView>)
+        assert(navigationController?.visibleViewController is UIHostingController<ScanOrPasteCodeView>)
         navigationController?.topViewController?.dismiss(animated: true)
         rootView.model.codeCollectionCancelled()
     }

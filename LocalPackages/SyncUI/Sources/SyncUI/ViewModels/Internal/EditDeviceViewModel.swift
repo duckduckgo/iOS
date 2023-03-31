@@ -1,5 +1,5 @@
 //
-//  SyncService.swift
+//  EditDeviceViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -19,27 +19,26 @@
 
 import Foundation
 
-// This will be fleshed out/changed entirely when we start the backend work
-protocol SyncService {
+class EditDeviceViewModel: ObservableObject {
 
-    func retrieveConnectCode() async -> String?
-    func createAccount() async
+    let device: SyncSettingsViewModel.Device
+    let save: (SyncSettingsViewModel.Device) -> Void
+    let remove: () async -> Bool
 
-}
+    @Published var name: String
 
-class FakeSyncService: SyncService {
+    init(device: SyncSettingsViewModel.Device,
+         save: @escaping (SyncSettingsViewModel.Device) -> Void,
+         remove: @escaping () async -> Bool) {
+        self.device = device
+        self.save = save
+        self.remove = remove
 
-    func retrieveConnectCode() async -> String? {
-        if #available(iOS 16.0, *) {
-            try? await Task.sleep(for: .milliseconds(500))
-        }
-        return "Fake Connect Code"
+        self.name = device.name
     }
 
-    func createAccount() async {
-        if #available(iOS 16.0, *) {
-            try? await Task.sleep(for: .seconds(2))
-        }
+    func onDisappear() {
+        save(.init(id: device.id, name: name, type: device.type, isThisDevice: device.isThisDevice))
     }
-
+    
 }

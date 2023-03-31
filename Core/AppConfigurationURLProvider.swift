@@ -24,15 +24,13 @@ import Core
 struct AppConfigurationURLProvider: ConfigurationURLProviding {
 
     func url(for configuration: Configuration) -> URL {
-        let appUrls = AppUrls()
-        
         switch configuration {
-        case .bloomFilterSpec: return appUrls.httpsBloomFilterSpec
-        case .bloomFilterBinary: return appUrls.httpsBloomFilter
-        case .bloomFilterExcludedDomains: return appUrls.httpsExcludedDomains
-        case .privacyConfiguration: return appUrls.privacyConfig
-        case .trackerDataSet: return appUrls.trackerDataSet
-        case .surrogates: return appUrls.surrogates
+        case .bloomFilterSpec: return URL.bloomFilterSpec
+        case .bloomFilterBinary: return URL.bloomFilter
+        case .bloomFilterExcludedDomains: return URL.bloomFilterExcludedDomains
+        case .privacyConfiguration: return URL.privacyConfig
+        case .trackerDataSet: return URL.trackerDataSet
+        case .surrogates: return URL.surrogates
         case .FBConfig: fatalError("This feature is not supported on iOS")
         }
     }

@@ -22,6 +22,12 @@ import os.log
 import Speech
 import BrowserServicesKit
 
+extension FeatureName {
+    
+    public static let fireButtonAnimation = FeatureName(rawValue: "fireButtonAnimation")
+    public static let fireButtonColor = FeatureName(rawValue: "fireButtonColor")
+    
+}
 
 public struct VariantIOS: Variant {
     
@@ -47,6 +53,10 @@ public struct VariantIOS: Variant {
     
     // Note: Variants with `doNotAllocate` weight, should always be included so that previous installations are unaffected
     public static let defaultVariants: [Variant] = [
+        VariantIOS(name: "mc", weight: doNotAllocate, isIncluded: When.always, features: []),
+        VariantIOS(name: "ma", weight: doNotAllocate, isIncluded: When.always, features: [.fireButtonAnimation]),
+        VariantIOS(name: "mf", weight: doNotAllocate, isIncluded: When.always, features: [.fireButtonColor]),
+        
         // SERP testing
         VariantIOS(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),

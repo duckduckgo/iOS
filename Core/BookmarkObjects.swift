@@ -44,7 +44,7 @@ public extension Bookmark {
         
         var displayTitle = (title?.isEmpty ?? true) ? host : title
         
-        if let url = url, AppUrls().isDuckDuckGo(url: url),
+        if let url = url, url.isDuckDuckGo,
             let title = displayTitle, title.hasSuffix(Constants.ddgSuffix) {
             displayTitle = String(title.dropLast(Constants.ddgSuffix.count))
         }

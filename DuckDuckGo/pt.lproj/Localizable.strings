@@ -319,11 +319,17 @@
 /* Reason for auth during login prompt */
 "autofill.logins.prompt.auth.reason" = "Desbloqueia para utilizares o início de sessão guardado";
 
+/* Title for section of autofill logins that are an exact match to the current website */
+"autofill.logins.prompt.exact.match.title" = "Deste site";
+
 /* Button title for autofill login prompt if more options are available */
 "autofill.logins.prompt.more-options" = "Mais opções";
 
+/* Title for section of autofill logins that are an approximate match to the current website */
+"autofill.logins.prompt.partial.match.title" = "Desde %@";
+
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Utilizar dados de início de sessão guardados?";
+"autofill.logins.prompt.title" = "Utilizar um início de sessão guardado?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "para \"%@\"";
@@ -335,7 +341,7 @@
 "autofill.save-login.additional-login.message" = "Isto irá guardar um início de sessão adicional neste site.";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "O DuckDuckGo vai armazenar este início de sessão em segurança no teu dispositivo.";
+"autofill.save-login.new-user.message" = "O DuckDuckGo vai armazenar este início de sessão em segurança no teu dispositivo. Podes gerir os inícios de sessão guardados nas Definições.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Queres que o DuckDuckGo guarde o teu início de sessão?";

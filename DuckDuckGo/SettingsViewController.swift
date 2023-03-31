@@ -66,7 +66,7 @@ class SettingsViewController: UITableViewController {
     
     private let syncSectionIndex = 1
     private let autofillSectionIndex = 2
-    private let debugSectionIndex = 7
+    private let debugSectionIndex = 8
 
     private lazy var emailManager = EmailManager()
     
@@ -85,7 +85,7 @@ class SettingsViewController: UITableViewController {
     }
 
     private lazy var shouldShowAutofillCell: Bool = {
-        return featureFlagger.isFeatureOn(.autofill)
+        return featureFlagger.isFeatureOn(.autofillAccessCredentialManagement)
     }()
 
     private lazy var shouldShowSyncCell: Bool = {
@@ -280,7 +280,7 @@ class SettingsViewController: UITableViewController {
     }
 
     private func showEmailWebDashboard() {
-        UIApplication.shared.open(AppUrls().emailProtectionQuickLink, options: [:], completionHandler: nil)
+        UIApplication.shared.open(URL.emailProtectionQuickLink, options: [:], completionHandler: nil)
     }
 
     private func showMacBrowserWaitlistViewController() {

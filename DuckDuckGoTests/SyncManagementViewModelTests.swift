@@ -25,8 +25,8 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
 
     fileprivate var monitor = Monitor<SyncManagementViewModelDelegate>()
 
-    lazy var model: SyncSettingsScreenViewModel = {
-        let model = SyncSettingsScreenViewModel()
+    lazy var model: SyncSettingsViewModel = {
+        let model = SyncSettingsViewModel()
         model.delegate = self
         return model
     }()
@@ -66,6 +66,25 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
 
     func createAccountAndStartSyncing() {
         monitor.incrementCalls(function: #function.cleaningFunctionName())
+    }
+
+    func confirmAndDisableSync() async -> Bool {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+        return true
+    }
+
+    func confirmAndDeleteAllData() async -> Bool {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+        return true
+    }
+
+    func copyCode() {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+    }
+
+    func confirmRemoveDevice(_ device: SyncUI.SyncSettingsViewModel.Device) async -> Bool {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+        return true
     }
 
 }

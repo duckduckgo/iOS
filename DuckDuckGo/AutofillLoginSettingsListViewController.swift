@@ -635,6 +635,7 @@ extension AutofillLoginSettingsListViewController: UISearchResultsUpdating {
         if let query = searchController.searchBar.text {
             viewModel.filterData(with: query)
             emptySearchView.query = query
+            tableView.reloadData()
         }
     }
 }

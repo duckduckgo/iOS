@@ -126,7 +126,7 @@ class AutofillListItemTableViewCell: UITableViewCell {
     private func setupContentView(with item: AutofillLoginListItemViewModel) {
         titleLabel.text = item.title
         subtitleLabel.text = item.subtitle
-        iconImageView.loadFavicon(forDomain: item.account.domain, usingCache: .tabs)
+        iconImageView.loadFavicon(forDomain: item.account.domain, usingCache: .tabs, preferredFakeFaviconLetter: item.preferredFaviconLetter)
     }
     
     override func layoutSubviews() {

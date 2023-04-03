@@ -319,11 +319,17 @@
 /* Reason for auth during login prompt */
 "autofill.logins.prompt.auth.reason" = "Lås upp för att använda sparad inloggning";
 
+/* Title for section of autofill logins that are an exact match to the current website */
+"autofill.logins.prompt.exact.match.title" = "Från den här webbplatsen";
+
 /* Button title for autofill login prompt if more options are available */
 "autofill.logins.prompt.more-options" = "Fler alternativ";
 
+/* Title for section of autofill logins that are an approximate match to the current website */
+"autofill.logins.prompt.partial.match.title" = "Från %@";
+
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Använd sparad inloggning?";
+"autofill.logins.prompt.title" = "Använd en sparad inloggning?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "för ”%@”";
@@ -335,7 +341,7 @@
 "autofill.save-login.additional-login.message" = "Ytterligare en inloggning kommer att sparas för den här webbplatsen.";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo lagrar denna inloggning säkert på din enhet.";
+"autofill.save-login.new-user.message" = "DuckDuckGo lagrar denna inloggning säkert på din enhet. Du kan hantera sparade inloggningar i Inställningar.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vill du att DuckDuckGo ska spara din inloggning?";

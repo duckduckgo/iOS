@@ -140,6 +140,9 @@ public struct ScanOrPasteCodeView: View {
             }
             .frame(height: 40)
             .foregroundColor(.primary)
+            .onAppear {
+                model.endConnectMode()
+            }
         }
 
     }

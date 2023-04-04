@@ -26,21 +26,21 @@ extension ContentScopeFeatureToggles {
     static let featureFlagger = AppDependencyProvider.shared.featureFlagger
     static let appSettings = AppDependencyProvider.shared.appSettings
     
-    static var isCredentialsAutofillEnabled: Bool {
+    static var isAutofillEnabledInSettings: Bool {
         let context = LAContext()
         var error: NSError?
         let canAuthenticate = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
-        return featureFlagger.isFeatureOn(.autofill) && appSettings.autofillCredentialsEnabled && canAuthenticate
+        return appSettings.autofillCredentialsEnabled && canAuthenticate
     }
     
     static var supportedFeaturesOniOS: ContentScopeFeatureToggles {
         ContentScopeFeatureToggles(emailProtection: true,
-                                   credentialsAutofill: isCredentialsAutofillEnabled,
+                                   credentialsAutofill: featureFlagger.isFeatureOn(.autofillCredentialInjecting) && isAutofillEnabledInSettings,
                                    identitiesAutofill: false,
                                    creditCardsAutofill: false,
-                                   credentialsSaving: isCredentialsAutofillEnabled,
+                                   credentialsSaving: featureFlagger.isFeatureOn(.autofillCredentialsSaving) && isAutofillEnabledInSettings,
                                    passwordGeneration: false,
-                                   inlineIconCredentials: isCredentialsAutofillEnabled,
+                                   inlineIconCredentials: featureFlagger.isFeatureOn(.autofillInlineIconCredentials) && isAutofillEnabledInSettings,
                                    thirdPartyCredentialsProvider: false)
     }
 }

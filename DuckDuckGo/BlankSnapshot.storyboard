@@ -43,6 +43,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="cdf-UJ-20k"/>
+                                    <barButtonItem width="5" style="plain" systemItem="fixedSpace" id="jJe-FR-bnV"/>
                                     <barButtonItem title="Tabs" id="yvy-9J-P6F" userLabel="Tabs Button">
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Tabs"/>

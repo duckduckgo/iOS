@@ -21,73 +21,80 @@ import Foundation
 import Core
 
 final class RulesCompilationMonitor {
-    
+
+    private enum Const {
+
+        static let waitTime = "waitTime"
+
+    }
+
     static let shared = RulesCompilationMonitor()
-    
+
+    private let isOnboarding = !DefaultTutorialSettings().hasSeenOnboarding
+
     private var didReport = false
     private var waitStart: TimeInterval?
-    private var waiters = NSMapTable<TabViewController, NSNumber>.init(keyOptions: .weakMemory, valueOptions: .strongMemory)
-    
+    private var waiters: Set<String> = []
+
     private init() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(applicationWillTerminate(_:)),
                                                name: UIApplication.willTerminateNotification,
                                                object: nil)
     }
-    
-    /// Called when a Tab is going  to wait for Content Blocking Rules compilation
-    func tabWillWaitForRulesCompilation(_ tab: TabViewController) {
-        guard !didReport else { return }
 
-        waiters.setObject(NSNumber(value: true), forKey: tab)
+    /// Called when a Tab is going  to wait for Content Blocking Rules compilation
+    func tabWillWaitForRulesCompilation(_ tabID: String) {
+        guard !didReport else { return }
+        waiters.insert(tabID)
         if waitStart == nil {
             waitStart = CACurrentMediaTime()
         }
     }
-    
+
     /// Called when Rules compilation finishes
-    func reportTabFinishedWaitingForRules(_ tab: TabViewController) {
-        defer { waiters.removeObject(forKey: tab) }
-        guard waiters.object(forKey: tab) != nil,
+    func reportTabFinishedWaitingForRules(_ tabID: String) {
+        defer { waiters.remove(tabID) }
+        guard waiters.contains(tabID),
               !didReport,
               let waitStart = waitStart
         else { return }
 
         reportWaitTime(CACurrentMediaTime() - waitStart, result: .success)
     }
-    
+
     func reportNavigationDidNotWaitForRules() {
         guard !didReport else { return }
         reportWaitTime(0, result: .success)
     }
-    
+
     /// If Tab is going to close while the rules are still being compiled: report wait time with Tab .closed argument
-    func tabWillClose(_ tab: TabViewController) {
-        defer { waiters.removeObject(forKey: tab) }
-        guard waiters.object(forKey: tab) != nil,
+    func tabWillClose(_ tabID: String) {
+        defer { waiters.remove(tabID) }
+        guard waiters.contains(tabID),
               !didReport,
               let waitStart = waitStart
         else { return }
 
         reportWaitTime(CACurrentMediaTime() - waitStart, result: .tabClosed)
     }
-    
+
     /// If App is going to close while the rules are still being compiled: report wait time with .quit argument
     @objc func applicationWillTerminate(_: Notification) {
         guard !didReport,
-              waiters.count > 0,
+              !waiters.isEmpty,
               let waitStart = waitStart
         else { return }
 
         reportWaitTime(CACurrentMediaTime() - waitStart, result: .appQuit)
     }
-    
+
     private func reportWaitTime(_ waitTime: TimeInterval, result: Pixel.Event.CompileRulesResult) {
         didReport = true
         Pixel.fire(pixel: .compilationResult(result: result,
                                              waitTime: Pixel.Event.CompileRulesWaitTime(waitTime: waitTime),
-                                             appState: .regular),
-                   withAdditionalParameters: ["waitTime": String(waitTime)])
+                                             appState: isOnboarding ? .onboarding : .regular),
+                   withAdditionalParameters: [Const.waitTime: String(waitTime)])
     }
-    
+
 }

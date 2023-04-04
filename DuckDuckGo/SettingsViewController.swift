@@ -69,7 +69,7 @@ class SettingsViewController: UITableViewController {
     private let syncSectionIndex = 1
     private let autofillSectionIndex = 2
     private let moreFromDDGSectionIndex = 6
-    private let debugSectionIndex = 7
+    private let debugSectionIndex = 8
     
     public var appTPDatabase: CoreDataDatabase!
 
@@ -90,7 +90,7 @@ class SettingsViewController: UITableViewController {
     }
 
     private lazy var shouldShowAutofillCell: Bool = {
-        return featureFlagger.isFeatureOn(.autofill)
+        return featureFlagger.isFeatureOn(.autofillAccessCredentialManagement)
     }()
 
     private lazy var shouldShowSyncCell: Bool = {
@@ -98,7 +98,7 @@ class SettingsViewController: UITableViewController {
     }()
     
     private lazy var shouldShowAppTPCell: Bool = {
-        return featureFlagger.isFeatureOn(.appTP)
+        return featureFlagger.isFeatureOn(.appTrackingProtection)
     }()
 
     static func loadFromStoryboard() -> UIViewController {

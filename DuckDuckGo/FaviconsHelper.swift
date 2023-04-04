@@ -22,10 +22,11 @@ import Core
 import Kingfisher
 
 struct FaviconsHelper {
-    
+
     static func loadFaviconSync(forDomain domain: String?,
                                 usingCache cacheType: Favicons.CacheType,
                                 useFakeFavicon: Bool,
+                                preferredFakeFaviconLetter: String? = nil,
                                 completion: ((UIImage?, Bool) -> Void)? = nil) {
    
         func complete(_ image: UIImage?) {
@@ -36,7 +37,8 @@ struct FaviconsHelper {
                 resultImage = image
             } else if useFakeFavicon, let domain = domain {
                 fake = true
-                resultImage = Self.createFakeFavicon(forDomain: domain)
+                resultImage = Self.createFakeFavicon(forDomain: domain,
+                                                     preferredFakeFaviconLetter: preferredFakeFaviconLetter)
             }
             completion?(resultImage, fake)
         }
@@ -89,8 +91,9 @@ struct FaviconsHelper {
     static func createFakeFavicon(forDomain domain: String,
                                   size: CGFloat = 192,
                                   backgroundColor: UIColor = UIColor.greyishBrown2,
-                                  bold: Bool = true) -> UIImage? {
-        
+                                  bold: Bool = true,
+                                  preferredFakeFaviconLetter: String? = nil) -> UIImage? {
+
         let cornerRadius = size * 0.125
         let fontSize = size * 0.76
         
@@ -108,7 +111,7 @@ struct FaviconsHelper {
             label.font = bold ? UIFont.boldAppFont(ofSize: fontSize) : UIFont.appFont(ofSize: fontSize)
             label.textColor = UIColor.white
             label.textAlignment = .center
-            label.text = String(domain.droppingWwwPrefix().prefix(1).uppercased())
+            label.text = preferredFakeFaviconLetter ?? String(domain.droppingWwwPrefix().prefix(1).uppercased())
             label.sizeToFit()
              
             context.translateBy(x: (imageRect.width - label.bounds.width) / 2.0,

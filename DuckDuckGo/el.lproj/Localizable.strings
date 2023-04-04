@@ -319,8 +319,14 @@
 /* Reason for auth during login prompt */
 "autofill.logins.prompt.auth.reason" = "Ξεκλειδώστε για να χρησιμοποιήσετε τα αποθηκευμένα στοιχεία σύνδεσης";
 
+/* Title for section of autofill logins that are an exact match to the current website */
+"autofill.logins.prompt.exact.match.title" = "Από αυτόν τον ιστότοπο";
+
 /* Button title for autofill login prompt if more options are available */
 "autofill.logins.prompt.more-options" = "Περισσότερες επιλογές";
+
+/* Title for section of autofill logins that are an approximate match to the current website */
+"autofill.logins.prompt.partial.match.title" = "Από %@";
 
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Χρήση αποθηκευμένων στοιχείων σύνδεσης;";
@@ -335,7 +341,7 @@
 "autofill.save-login.additional-login.message" = "Αυτό θα αποθηκεύσει μια πρόσθετη σύνδεση για τον συγκεκριμένο ιστότοπο.";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Το DuckDuckGo θα αποθηκεύσει με ασφάλεια αυτά τα στοιχεία σύνδεσης στη συσκευή σας.";
+"autofill.save-login.new-user.message" = "Το DuckDuckGo θα αποθηκεύσει με ασφάλεια αυτά τα στοιχεία σύνδεσης στη συσκευή σας. Μπορείτε να διαχειριστείτε τα αποθηκευμένα στοιχεία σύνδεσής σας από τις Ρυθμίσεις.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Θέλετε να αποθηκεύσει το DuckDuckGo τη σύνδεσή σας;";

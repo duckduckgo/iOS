@@ -1135,7 +1135,7 @@ extension TabViewController: WKNavigationDelegate {
     private func checkLoginDetectionAfterNavigation() {
         if preserveLoginsWorker?.handleLoginDetection(detectedURL: detectedLoginURL,
                                                       currentURL: url,
-                                                      isAutofillEnabled: isAutofillEnabled,
+                                                      isAutofillEnabled: isAutofillEnabledInSettings,
                                                       saveLoginPromptLastDismissed: saveLoginPromptLastDismissed)
            ?? false {
             detectedLoginURL = nil

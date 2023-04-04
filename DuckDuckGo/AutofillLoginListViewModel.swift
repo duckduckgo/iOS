@@ -82,7 +82,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         return !accounts.isEmpty
     }
     
-    var isAutofillEnabled: Bool {
+    var isAutofillEnabledInSettings: Bool {
         get { appSettings.autofillCredentialsEnabled }
         set {
             appSettings.autofillCredentialsEnabled = newValue

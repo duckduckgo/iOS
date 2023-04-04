@@ -4,7 +4,6 @@ disabled_rules:
   - orphaned_doc_comment
   - todo
   - unused_capture_list
-  - blanket_disable_command
 
 opt_in_rules:
   - closure_end_indentation

@@ -1,5 +1,5 @@
 //
-//  ShowQRCodeViewModel.swift
+//  InternalUserStore.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -18,15 +18,12 @@
 //
 
 import Foundation
-import UIKit
+import BrowserServicesKit
 
-class ShowQRCodeViewModel: ObservableObject {
-
-    @Published var code: String?
-
-    func copy() {
-        guard let code = code else { return }
-        UIPasteboard.general.string = code
+public class InternalUserStore: InternalUserStoring {
+    public init() {
     }
-
+    
+    @UserDefaultsWrapper(key: .featureFlaggingDidVerifyInternalUser, defaultValue: false)
+    public var isInternalUser: Bool
 }

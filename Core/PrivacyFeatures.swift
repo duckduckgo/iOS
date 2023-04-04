@@ -20,7 +20,6 @@
 import BrowserServicesKit
 import Common
 
-// swiftlint:disable line_length
 public final class PrivacyFeatures {
 
     private static var bloomFilterDataURL: URL {
@@ -48,7 +47,10 @@ public final class PrivacyFeatures {
         }
     }
     private static var httpsUpgradeStore: AppHTTPSUpgradeStore {
-        AppHTTPSUpgradeStore(database: Database.shared, bloomFilterDataURL: bloomFilterDataURL, embeddedResources: embeddedBloomFilterResources, errorEvents: httpsUpgradeDebugEvents)
+        AppHTTPSUpgradeStore(database: Database.shared,
+                             bloomFilterDataURL: bloomFilterDataURL,
+                             embeddedResources: embeddedBloomFilterResources,
+                             errorEvents: httpsUpgradeDebugEvents)
     }
 
     public static let httpsUpgrade = HTTPSUpgrade(store: httpsUpgradeStore, privacyManager: ContentBlocking.shared.privacyConfigurationManager)

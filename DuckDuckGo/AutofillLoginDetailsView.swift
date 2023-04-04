@@ -104,7 +104,7 @@ struct AutofillLoginDetailsView: View {
                              selectedCell: $viewModel.selectedCell,
                              actionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsUsername),
                              action: { viewModel.copyToPasteboard(.username) },
-                             buttonImageName: "Copy",
+                             buttonImageName: "Copy-16",
                              buttonAccessibilityLabel: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsUsername),
                              buttonAction: { viewModel.copyToPasteboard(.username) })
                 
@@ -116,7 +116,7 @@ struct AutofillLoginDetailsView: View {
                              action: { viewModel.isPasswordHidden.toggle() },
                              secondaryActionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
                              secondaryAction: { viewModel.copyToPasteboard(.password) },
-                             buttonImageName: "Copy",
+                             buttonImageName: "Copy-16",
                              buttonAccessibilityLabel: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
                              buttonAction: { viewModel.copyToPasteboard(.password) })
             }
@@ -240,7 +240,7 @@ struct ClearTextField: View {
             .label4Style(design: secure && text.count > 0 ? .monospaced : .default)
             
             Spacer()
-            Image("ClearTextField")
+            Image("Clear-16")
                 .opacity(closeButtonOpacity)
                 .onTapGesture { self.text = "" }
         }
@@ -295,7 +295,7 @@ private struct EditablePasswordCell: View {
 
                 if password.count > 0 {
                     if closeButtonVisible {
-                        Image("ClearTextField")
+                        Image("Clear-q6")
                             .onTapGesture {
                                 self.password = ""
                             }

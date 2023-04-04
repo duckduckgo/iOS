@@ -26,7 +26,7 @@ import Core
 protocol AutofillLoginDetailsViewModelDelegate: AnyObject {
     func autofillLoginDetailsViewModelDidSave()
     func autofillLoginDetailsViewModelDidAttemptToSaveDuplicateLogin()
-    func autofillLoginDetailsViewModelDelete(account: SecureVaultModels.WebsiteAccount)
+    func autofillLoginDetailsViewModelDelete(account: SecureVaultModels.WebsiteAccount, title: String)
     func autofillLoginDetailsViewModelDismiss()
 }
 
@@ -47,6 +47,8 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     weak var delegate: AutofillLoginDetailsViewModelDelegate?
     var account: SecureVaultModels.WebsiteAccount?
     private let tld: TLD
+    private let autofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
+    private let autofillDomainNameUrlSort = AutofillDomainNameUrlSort()
 
     @ObservedObject var headerViewModel: AutofillLoginDetailsHeaderViewModel
     @Published var isPasswordHidden = true
@@ -76,7 +78,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         case .edit:
             return UserText.autofillLoginDetailsEditTitle
         case .view:
-            return title
+            return title.isEmpty ? address : title
         case .new:
             return UserText.autofillLoginDetailsNewTitle
         }
@@ -117,9 +119,12 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         self.account = account
         username = account.username
         address = account.domain
-        title = account.name(tld: tld)
+        title = account.title ?? ""
         notes = account.notes ?? ""
-        headerViewModel.updateData(with: account, tld: tld)
+        headerViewModel.updateData(with: account,
+                                   tld: tld,
+                                   autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher,
+                                   autofillDomainNameUrlSort: autofillDomainNameUrlSort)
         setupPassword(with: account)
     }
     
@@ -197,7 +202,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                    var credential = try vault.websiteCredentialsFor(accountId: accountIdInt) {
                     credential.account.username = username
                     credential.account.title = title
-                    credential.account.domain = address
+                    credential.account.domain = autofillDomainNameUrlMatcher.normalizeUrlForWeb(address)
                     credential.account.notes = notes
                     credential.password = passwordData
                     
@@ -216,7 +221,8 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         case .view:
             break
         case .new:
-            let account = SecureVaultModels.WebsiteAccount(title: title, username: username, domain: address, notes: notes)
+            let cleanAddress = autofillDomainNameUrlMatcher.normalizeUrlForWeb(address)
+            let account = SecureVaultModels.WebsiteAccount(title: title, username: username, domain: cleanAddress, notes: notes)
             let credentials = SecureVaultModels.WebsiteCredentials(account: account, password: passwordData)
 
             do {
@@ -246,7 +252,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
             assertionFailure("Trying to delete account, but the account doesn't exist")
             return
         }
-        delegate?.autofillLoginDetailsViewModelDelete(account: account)
+        delegate?.autofillLoginDetailsViewModelDelete(account: account, title: headerViewModel.title)
     }
 
     func openUrl() {
@@ -269,11 +275,13 @@ final class AutofillLoginDetailsHeaderViewModel: ObservableObject {
     @Published var title: String = ""
     @Published var subtitle: String = ""
     @Published var domain: String = ""
+    @Published var preferredFakeFaviconLetter: String?
     
-    func updateData(with account: SecureVaultModels.WebsiteAccount, tld: TLD) {
-        self.title = account.name(tld: tld)
+    func updateData(with account: SecureVaultModels.WebsiteAccount, tld: TLD, autofillDomainNameUrlMatcher: AutofillDomainNameUrlMatcher, autofillDomainNameUrlSort: AutofillDomainNameUrlSort) {
+        self.title = account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
         self.subtitle = UserText.autofillLoginDetailsLastUpdated(for: (dateFormatter.string(from: account.lastUpdated)))
         self.domain = account.domain
+        self.preferredFakeFaviconLetter = account.faviconLetter(tld: tld, autofillDomainNameUrlSort: autofillDomainNameUrlSort)
     }
 
 }

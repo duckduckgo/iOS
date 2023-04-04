@@ -1,5 +1,5 @@
 //
-//  ShowQRCodeViewModel.swift
+//  SyncDataPersistor.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -18,15 +18,15 @@
 //
 
 import Foundation
-import UIKit
+import DDGSync
 
-class ShowQRCodeViewModel: ObservableObject {
+final class SyncDataPersistor: LocalDataPersisting {
+    private(set) var bookmarksLastModified: String?
 
-    @Published var code: String?
-
-    func copy() {
-        guard let code = code else { return }
-        UIPasteboard.general.string = code
+    func updateBookmarksLastModified(_ lastModified: String?) {
+        bookmarksLastModified = lastModified
     }
 
+    func persistEvents(_ events: [SyncEvent]) async throws {
+    }
 }

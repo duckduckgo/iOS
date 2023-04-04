@@ -319,8 +319,14 @@
 /* Reason for auth during login prompt */
 "autofill.logins.prompt.auth.reason" = "Ontgrendelen om opgeslagen aanmeldgegevens te gebruiken";
 
+/* Title for section of autofill logins that are an exact match to the current website */
+"autofill.logins.prompt.exact.match.title" = "Van deze website";
+
 /* Button title for autofill login prompt if more options are available */
 "autofill.logins.prompt.more-options" = "Meer opties";
+
+/* Title for section of autofill logins that are an approximate match to the current website */
+"autofill.logins.prompt.partial.match.title" = "Van %@";
 
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Opgeslagen aanmeldgegevens gebruiken?";
@@ -335,7 +341,7 @@
 "autofill.save-login.additional-login.message" = "Dit bespaart een extra login voor deze site.";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo slaat deze aanmeldgegevens veilig op je apparaat op.";
+"autofill.save-login.new-user.message" = "DuckDuckGo slaat deze aanmeldgegevens veilig op je apparaat op. Je kunt opgeslagen aanmeldgegevens beheren in Instellingen.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Wil je dat DuckDuckGo je login opslaat?";

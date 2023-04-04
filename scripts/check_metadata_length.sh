@@ -1,16 +1,20 @@
 #!/bin/sh
 
+# Get the directory where the script is stored
+script_dir=$(dirname "$(readlink -f "$0")")
+base_dir="${script_dir}/.."
+
 echo "Checking metadata length..."
 
 if [ -z "$1" ]; then
-   METADATA_PATH="fastlane/metadata"
+   METADATA_PATH="${base_dir}/fastlane/metadata"
 else 
 	METADATA_PATH="$1"
 fi
 
-for FILEPATH in `find $METADATA_PATH -type f -name "*.txt"`
+for FILEPATH in $(find "$METADATA_PATH" -type f -name "*.txt")
 do
-	FILENAME=`basename $FILEPATH`
+	FILENAME=$(basename "$FILEPATH")
 
 	case $FILENAME in
 		name.txt )
@@ -42,7 +46,7 @@ do
 		    ;;
 	esac
 
-	LENGTH=`LC_CTYPE=en_US.UTF-8 wc -m < $FILEPATH | xargs`
+	LENGTH=$(LC_CTYPE=en_US.UTF-8 wc -m < "$FILEPATH" | xargs)
 
 	# echo "Checking: $FILEPATH ($LENGTH/$ALLOWED_LENGTH)"
 

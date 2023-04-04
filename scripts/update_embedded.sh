@@ -6,6 +6,10 @@ TEMP_ETAG_FILENAME="embedded_new_etag"
 rm -f "$TEMP_FILENAME"
 rm -f "$TEMP_ETAG_FILENAME"
 
+# Get the directory where the script is stored
+script_dir=$(dirname "$(readlink -f "$0")")
+base_dir="${script_dir}/.."
+
 performUpdate() {
   if [ "$#" -ne 3 ]; then
     printf "Function expects 3 paramters: url, provider file path and data file path\n"
@@ -56,5 +60,5 @@ performUpdate() {
   rm -f "$TEMP_ETAG_FILENAME"
 }
 
-performUpdate 'https://staticcdn.duckduckgo.com/trackerblocking/v3/apple-tds.json' 'Core/AppTrackerDataSetProvider.swift' 'Core/trackerData.json'
-performUpdate 'https://staticcdn.duckduckgo.com/trackerblocking/config/v2/ios-config.json' 'Core/AppPrivacyConfigurationDataProvider.swift' 'Core/ios-config.json'
+performUpdate 'https://staticcdn.duckduckgo.com/trackerblocking/v3/apple-tds.json' "${base_dir}/Core/AppTrackerDataSetProvider.swift" "${base_dir}/Core/trackerData.json"
+performUpdate 'https://staticcdn.duckduckgo.com/trackerblocking/config/v2/ios-config.json' "${base_dir}/Core/AppPrivacyConfigurationDataProvider.swift" "${base_dir}/Core/ios-config.json"

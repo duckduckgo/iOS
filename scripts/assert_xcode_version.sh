@@ -1,6 +1,10 @@
 #!/bin/bash
 
-required_xcode_version=$(<.xcode-version)
+# Get the directory where the script is stored
+script_dir=$(dirname "$(readlink -f "$0")")
+base_dir="${script_dir}/.."
+
+required_xcode_version=$(<"${base_dir}"/.xcode-version)
 current_xcode_version=$(xcodebuild -version | grep 'Xcode' | cut -d\  -f2)
 
 verlte() { 

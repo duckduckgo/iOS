@@ -166,7 +166,7 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mUo-IX-WrZ">
                                                             <rect key="frame" x="287" y="0.0" width="24" height="24"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MenuFavoriteSolid" translatesAutoresizingMaskIntoConstraints="NO" id="1fK-xP-Cxw">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Favorite-Multicolor-16" translatesAutoresizingMaskIntoConstraints="NO" id="1fK-xP-Cxw">
                                                                     <rect key="frame" x="4" y="4" width="16" height="16"/>
                                                                     <color key="tintColor" name="BookmarksFolderColor"/>
                                                                     <constraints>
@@ -246,7 +246,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9wR-fm-8Rn">
                                                     <rect key="frame" x="16" y="10" width="292.5" height="24"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Folder" translatesAutoresizingMaskIntoConstraints="NO" id="Ggc-7C-ugZ">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Folder-24" translatesAutoresizingMaskIntoConstraints="NO" id="Ggc-7C-ugZ">
                                                             <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                                                             <color key="tintColor" name="BookmarksFolderColor"/>
                                                             <constraints>
@@ -454,7 +454,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="8R7-gf-yWn">
                                             <rect key="frame" x="16" y="10" width="311" height="24"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Folder" translatesAutoresizingMaskIntoConstraints="NO" id="8qY-sA-7P1">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Folder-24" translatesAutoresizingMaskIntoConstraints="NO" id="8qY-sA-7P1">
                                                     <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                                                     <color key="tintColor" name="BookmarksFolderColor"/>
                                                     <constraints>
@@ -588,7 +588,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="c3O-4F-9vA">
                                             <rect key="frame" x="16" y="10" width="311" height="24"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FolderWithPlus" translatesAutoresizingMaskIntoConstraints="NO" id="lwP-jU-PzJ">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Folder-Add-24" translatesAutoresizingMaskIntoConstraints="NO" id="lwP-jU-PzJ">
                                                     <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                                                     <color key="tintColor" name="BookmarksFolderColor"/>
                                                     <constraints>
@@ -630,7 +630,7 @@
                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0pM-zQ-xZT">
                                             <rect key="frame" x="278" y="6.5" width="51" height="31"/>
                                         </switch>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BookmarkFavoriteIcon" translatesAutoresizingMaskIntoConstraints="NO" id="bJP-Vc-uWK">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Favorite-24" translatesAutoresizingMaskIntoConstraints="NO" id="bJP-Vc-uWK">
                                             <rect key="frame" x="16" y="10" width="24" height="24"/>
                                             <color key="tintColor" name="BookmarksFolderColor"/>
                                             <constraints>
@@ -672,39 +672,39 @@
         <segue reference="Uhm-2I-Xo5"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="BookmarkFavoriteIcon" width="24" height="24"/>
         <image name="BookmarksEmpty" width="128" height="96"/>
+        <image name="Favorite-24" width="24" height="24"/>
+        <image name="Favorite-Multicolor-16" width="16" height="16"/>
         <image name="FavoritesEmpty" width="128" height="96"/>
-        <image name="Folder" width="24" height="24"/>
-        <image name="FolderWithPlus" width="24" height="24"/>
+        <image name="Folder-24" width="24" height="24"/>
+        <image name="Folder-Add-24" width="24" height="24"/>
         <image name="GlobeSmall" width="24" height="24"/>
-        <image name="MenuFavoriteSolid" width="16" height="16"/>
         <namedColor name="AlertButtonDestructiveTitleColor">
-            <color red="0.92549019607843142" green="0.21568627450980393" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.92500001192092896" green="0.21600000560283661" blue="0.14100000262260437" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="BookmarksCellColor">
-            <color red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.98000001907348633" green="0.98000001907348633" blue="0.98000001907348633" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="BookmarksCellLabelColor">
-            <color red="0.28627450980392155" green="0.28627450980392155" blue="0.28627450980392155" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.28600001335144043" green="0.28600001335144043" blue="0.28600001335144043" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="BookmarksCellSeperatorColor">
-            <color red="0.78431372549019607" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.7839999794960022" green="0.77999997138977051" blue="0.80000001192092896" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="BookmarksFolderColor">
-            <color red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="BookmarksNavBarBackgroundColor">
-            <color red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.97600001096725464" green="0.97600001096725464" blue="0.97600001096725464" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="BookmarksNavBarTitleColor">
-            <color red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="BookmarksTableViewBackgroundColor">
-            <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.96100002527236938" green="0.96100002527236938" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="TableCellAccessoryTextColor">
-            <color red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.53299999237060547" green="0.53299999237060547" blue="0.53299999237060547" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

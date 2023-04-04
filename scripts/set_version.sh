@@ -1,11 +1,15 @@
 #!/bin/sh
 
+# Get the directory where the script is stored
+script_dir=$(dirname "$(readlink -f "$0")")
+base_dir="${script_dir}/.."
+
 if [ -z "$1" ]; then
-   echo Usage: ./set_version.sh NUMBER
-   echo Example: ./set_version.sh 7.100.1
-   echo Current version: `cat Configuration/Version.xcconfig | cut -d' ' -f3`
+   echo 'Usage: ./set_version.sh <version>'
+   echo 'Example: ./set_version.sh 7.100.1'
+   echo Current version: "$(cut -d' ' -f3 < "${base_dir}"/Configuration/Version.xcconfig)"
    exit 1
 fi
 
-echo "MARKETING_VERSION = $1\n" > Configuration/Version.xcconfig
-/usr/libexec/PlistBuddy -c "Set :PreferenceSpecifiers:0:DefaultValue $1" DuckDuckGo/Settings.bundle/Root.plist
+printf "MARKETING_VERSION = %s\n" "$1" > "${base_dir}/Configuration/Version.xcconfig"
+/usr/libexec/PlistBuddy -c "Set :PreferenceSpecifiers:0:DefaultValue $1" "${base_dir}/DuckDuckGo/Settings.bundle/Root.plist"

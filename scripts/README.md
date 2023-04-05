@@ -1,17 +1,17 @@
 # Scripts
 
-* [assert_xcode_version.sh](#assert-xcode-version)
-* [check_metadata_length.sh](#check-metadata-length)
-* [check_version.sh](#check-version)
-* [decrypt_fonts.sh](#decrypt-fonts)
-* [loc_export.sh](#loc-export)
-* [loc_import.sh](#loc-import)
-* [loc_update.sh](#loc-update)
-* [set_version.sh](#set-version)
-* [prepare_release.sh](#prepare-release)
-* [update_embedded.sh](#update-embedded)
+* [assert_xcode_version.sh](#assert_xcode_versionsh-check-that-xcode-version-meets-minimum-requirement)
+* [check_metadata_length.sh](#check_metadata_lengthsh-check-length-of-metadata-strings-for-app-store-connect)
+* [check_version.sh](#check_versionsh-check-length-of-metadata-strings-for-app-store-connect)
+* [decrypt_fonts.sh](#decrypt_fontssh-decrypt-and-extract-fonts-for-release-build)
+* [loc_export.sh](#loc_exportsh-export-localizations-for-translation)
+* [loc_import.sh](#loc_importsh-import-localizations)
+* [loc_update.sh](#loc_updatesh-update-localization-strings-for-app-targets)
+* [prepare_release.sh](#prepare_releasesh-automates-app-release-preparation-with-versioning-and-embedded-files)
+* [set_version.sh](#set_versionsh-set-marketing-version-of-the-app)
+* [update_embedded.sh](#update_embeddedsh-update-embedded-tracker-data-set-and-privacy-config)
 
-## `assert_xcode_version.sh`: Check that Xcode version meets minimum requirement {#assert-xcode-version}
+## `assert_xcode_version.sh`: Check that Xcode version meets minimum requirement
 
 This script reads the minimum required Xcode version specified in the .xcode-version file and compares it with the version returned by the xcodebuild -version command. If the installed Xcode version is lower than the required version, the script prints an error message and exits with a non-zero status code. If the installed Xcode version is higher than the required version, the script prints a warning message suggesting to update the .xcode-version file.
 
@@ -23,7 +23,7 @@ The script uses xcodebuild to check the currently installed version of Xcode, so
 
 This script is intended to be added as a build phase in Xcode project. The script will be automatically executed before building the project, and if the Xcode version does not meet the minimum requirement, the build will fail with an error message.
 
-## `check_metadata_length.sh`: Check length of metadata strings for App Store Connect {#check-metadata-length}
+## `check_metadata_length.sh`: Check length of metadata strings for App Store Connect
 
 This script checks the length of metadata strings for App Store Connect before submitting an app to the App Store. It verifies that the length of the metadata strings does not exceed the allowed maximum length.
 
@@ -39,7 +39,7 @@ To check metadata correctness:
 
 This script is used by another script `prepare_release.sh`, which creates a new app release to ensure a successful submission.
 
-## `check_version.sh`: Check length of metadata strings for App Store Connect {#check-version}
+## `check_version.sh`: Check length of metadata strings for App Store Connect
 
 This script prevents the app version number from being overridden by any external factor, such as user input or a build system. It checks whether the `MARKETING_VERSION` field is present in the `project.pbxproj` file of the Xcode project and exits with an error message if it is found.
 
@@ -51,7 +51,7 @@ No 3rd party software is required to run the script. It uses built-in command li
 
 This script is intended to be used as a Build Phase in Xcode called "Prevent Version Override".
 
-## `decrypt_fonts.sh`: Decrypt and extract fonts for release build {#decrypt-fonts}
+## `decrypt_fonts.sh`: Decrypt and extract fonts for release build
 
 This script decrypts and extracts the fonts required for release build from an encrypted archive. It is used from inside the `prepare_release.sh` script as our fonts cannot be stored in a public repository due to licensing restrictions.
 
@@ -63,7 +63,7 @@ The script requires gpg and unzip to be installed on the system. It also require
 
 The script is not intended to be used independently. It is called from inside the `prepare_release.sh` script during release build.
 
-## `loc_export.sh`: Export localizations for translation {#loc-export}
+## `loc_export.sh`: Export localizations for translation
 
 This script exports localizations from the project's Xcode project file into an XLIFF file for translation. It also opens the generated XLIFF file in Xcode for review.
 
@@ -80,7 +80,7 @@ To export localizations:
 
 The script will update the localizations with `loc_update.sh` and then export them to an XLIFF file. After the XLIFF file has been generated, it will be opened in Xcode for review. See: https://app.asana.com/0/0/1195919669085072/f for more info.
 
-## `loc_import.sh`: Import localizations {#loc-import}
+## `loc_import.sh`: Import localizations
 
 This script imports translated localization files into the app.
 
@@ -98,7 +98,7 @@ To import localization files:
 
 See: https://app.asana.com/0/0/1195919669085073/f for more info.
 
-## `loc_update.sh`: Update localization strings for app targets {#loc-update}
+## `loc_update.sh`: Update localization strings for app targets
 
 This script updates localization strings for app targets by running `xcrun extractLocStrings` command on each Swift file in the specified target sub-directories. It then converts the extracted strings to UTF-8 format and moves them to the `en.lproj/Localizable.strings` file for each target.
 
@@ -116,7 +116,7 @@ To import localization files:
 
 See: https://app.asana.com/0/0/1195919669085073/f for more info.
 
-## `set_version.sh`: Set marketing version of the app {#set-version}
+## `set_version.sh`: Set marketing version of the app
 
 This script sets the marketing version of the app by modifying `Version.xcconfig` and `Root.plist` files. It takes one argument, which is the new marketing version of the app.
 
@@ -132,7 +132,7 @@ To set the marketing version of the app, run:
 
 This script is used by another script `prepare_release.sh`, which creates a new app release with correct version number.
 
-## `prepare_release.sh`: Automates app release preparation with versioning and embedded files. {#prepare-release}
+## `prepare_release.sh`: Automates app release preparation with versioning and embedded files
 
 This script prepares a new app release by creating a new release branch, updating the app version number, updating build number, updating embedded files, updating release notes, and creating a pull request for review.
 
@@ -164,7 +164,7 @@ Where:
 * `-h`: An optional flag that indicates that this is a hotfix release. If specified, the script creates a hotfix branch instead of a release branch.
 * `-v`: An optional flag that enables verbose mode.
 
-## `update_embedded.sh`: Update embedded Tracker Data Set and Privacy Config {#update-embedded}
+## `update_embedded.sh`: Update embedded Tracker Data Set and Privacy Config
 
 This script checks app's source code for ETag values of Tracker Data Set
 and Privacy Config files embedded in the app, downloads new versions of the

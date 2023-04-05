@@ -295,7 +295,7 @@ private struct EditablePasswordCell: View {
 
                 if password.count > 0 {
                     if closeButtonVisible {
-                        Image("Clear-q6")
+                        Image("Clear-16")
                             .onTapGesture {
                                 self.password = ""
                             }

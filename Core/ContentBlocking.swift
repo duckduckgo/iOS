@@ -61,7 +61,7 @@ public final class ContentBlocking {
                                                             exceptionsSource: exceptionsSource,
                                                             lastCompiledRulesStore: lastCompiledRulesStore,
                                                             errorReporting: Self.debugEvents,
-                                                            logger: .contentBlockingLog)
+                                                            log: .contentBlockingLog)
 
         adClickAttributionRulesProvider = AdClickAttributionRulesProvider(config: adClickAttribution,
                                                                           compiledRulesSource: contentBlockingManager,

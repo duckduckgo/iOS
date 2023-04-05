@@ -94,7 +94,8 @@ struct AutofillLoginPromptView: View {
             .minimumScaleFactor(0.5)
             .foregroundColor(Const.Colors.PrimaryTextColor)
             .padding()
-            .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight)
+            .lineLimit(1)
+            .frame(minWidth: 0, maxWidth: .infinity)
             .foregroundColor(.primary)
             .cornerRadius(Const.Size.CTAButtonCornerRadius)
     }
@@ -104,6 +105,12 @@ struct AutofillLoginPromptView: View {
             ScrollView(showsIndicators: viewModel.shouldUseScrollView) {
                 VStack {
                     accountButtons
+                    if viewModel.expanded {
+                        Spacer()
+                    } else {
+                        Spacer()
+                            .frame(height: 44)
+                    }
                 }
                 .frame(minHeight: geometry.size.height)
             }
@@ -114,16 +121,37 @@ struct AutofillLoginPromptView: View {
     
     var accountButtons: some View {
         Group {
-            ForEach(viewModel.accountsViewModels.indices, id: \.self) { index in
-                let accountViewModel = viewModel.accountsViewModels[index]
-                accountButton(for: accountViewModel, style: index == 0 ? .primary : .secondary)
+            ForEach(viewModel.accountMatchesViewModels.indices, id: \.self) { group in
+                VStack(spacing: 12) {
+                    buttonGroupTitle(for: viewModel.accountMatchesViewModels[group])
+                    ForEach(viewModel.accountMatchesViewModels[group].accounts.indices, id: \.self) { index in
+                        let accountViewModel = viewModel.accountMatchesViewModels[group].accounts[index]
+                        let isPerfectMatch = viewModel.accountMatchesViewModels[group].isPerfectMatch
+                        accountButton(for: accountViewModel,
+                                      style: index == 0 && isPerfectMatch ? .primary : .secondary)
+                    }
+                }
             }
             if viewModel.showMoreOptions {
                 moreOptionsButton
             }
         }
     }
-    
+
+    private func buttonGroupTitle(for accountViewModelGroup: AccountMatchesViewModel) -> some View {
+        VStack {
+            HStack(alignment: .bottom) {
+                Text(accountViewModelGroup.title)
+                        .font(Const.Fonts.titleCaption)
+                        .foregroundColor(Const.Colors.SecondaryTextColor)
+                        .truncationMode(.middle)
+                        .frame(width: Const.Size.contentWidth - 64)
+                        .lineLimit(1)
+            }
+        }
+        .padding(.top, viewModel.expanded ? 22 : 0)
+    }
+
     private enum AccountButtonStyle {
         case primary
         case secondary

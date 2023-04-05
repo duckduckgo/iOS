@@ -23,9 +23,9 @@ import Bookmarks
 import Configuration
 
 // swiftlint:disable file_length
-// swiftlint:disable type_body_length
 extension Pixel {
-    
+
+    // swiftlint:disable:next type_body_length
     public enum Event {
         
         case appLaunch

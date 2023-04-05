@@ -26,7 +26,7 @@ class MockDependencyProvider: DependencyProvider {
     var appSettings: AppSettings
     var variantManager: VariantManager
     var featureFlagger: FeatureFlagger
-    var featureFlaggerInternalUserDecider: FeatureFlaggerInternalUserDecider
+    var internalUserDecider: InternalUserDecider
     var remoteMessagingStore: RemoteMessagingStore
     var homePageConfiguration: HomePageConfiguration
     var storageCache: StorageCache
@@ -40,7 +40,7 @@ class MockDependencyProvider: DependencyProvider {
         appSettings = defaultProvider.appSettings
         variantManager = defaultProvider.variantManager
         featureFlagger = defaultProvider.featureFlagger
-        featureFlaggerInternalUserDecider = defaultProvider.featureFlaggerInternalUserDecider
+        internalUserDecider = defaultProvider.internalUserDecider
         remoteMessagingStore = defaultProvider.remoteMessagingStore
         homePageConfiguration = defaultProvider.homePageConfiguration
         storageCache = defaultProvider.storageCache

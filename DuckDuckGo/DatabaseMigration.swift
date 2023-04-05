@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+import BrowserServicesKit
 import Foundation
 import CoreData
 import Core
@@ -74,7 +75,6 @@ class DatabaseMigration {
             }
         }
     }
-    // swiftlint:enable function_body_length
     
     static func migrate<T: NSManagedObject>(db name: String,
                                             to destination: NSManagedObjectContext,

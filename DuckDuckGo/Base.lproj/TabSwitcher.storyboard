@@ -337,7 +337,7 @@
                                     <constraint firstAttribute="width" constant="34" id="6Q4-Ue-lyF"/>
                                     <constraint firstAttribute="height" constant="34" id="wQT-ue-7ys"/>
                                 </constraints>
-                                <state key="normal" image="AddBookmarks"/>
+                                <state key="normal" image="Bookmark-New-24"/>
                                 <connections>
                                     <action selector="onBookmarkAllOpenTabsPressed:" destination="G9p-Sf-e96" eventType="touchUpInside" id="VLs-tA-h7a"/>
                                 </connections>
@@ -618,7 +618,7 @@
     </scenes>
     <resources>
         <image name="Add" width="24" height="24"/>
-        <image name="AddBookmarks" width="24" height="24"/>
+        <image name="Bookmark-New-24" width="24" height="24"/>
         <image name="Fire" width="19" height="24"/>
         <image name="GlobeSmall" width="24" height="24"/>
         <image name="NewTab" width="24" height="24"/>

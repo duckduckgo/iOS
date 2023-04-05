@@ -119,7 +119,7 @@ extension TabViewController {
         entries.append(bookmarkEntries.favorite)
                 
         entries.append(BrowsingMenuEntry.regular(name: UserText.actionOpenBookmarks,
-                                                 image: UIImage(named: "Downloads-16")!,
+                                                 image: UIImage(named: "Library-16")!,
                                                  action: { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.delegate?.tabDidRequestBookmarks(tab: strongSelf)

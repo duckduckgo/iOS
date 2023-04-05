@@ -69,7 +69,7 @@
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="dropShadow" value="NO"/>
                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                    <integer key="value" value="20"/>
+                                    <real key="value" value="8"/>
                                 </userDefinedRuntimeAttribute>
                                 <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                     <color key="value" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

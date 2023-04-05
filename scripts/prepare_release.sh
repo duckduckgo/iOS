@@ -20,10 +20,9 @@ die() {
 }
 
 assert_ios_directory() {
-	cwd="$(dirname "${BASH_SOURCE[0]}")"
-	if [[ ${cwd} != "." ]]; then
-		die "💥 Error: Run the script from a top-level directory in the iOS project"
-	fi
+	if ! realpath "." | grep -q "/iOS"; then
+        die "💥 Error: Run the script from inside the iOS project"
+    fi
 }
 
 assert_fastlane_installed() {

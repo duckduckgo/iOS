@@ -201,7 +201,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App Icon" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKo-er-HNj">
-                                                    <rect key="frame" x="20" y="9.9999999999999982" width="311.66666666666669" height="24.333333333333329"/>
+                                                    <rect key="frame" x="20" y="9.9999999999999982" width="311.66666666666663" height="24.333333333333329"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="eGn-w9-fNN"/>
                                                     </constraints>
@@ -553,11 +553,11 @@
                                         <rect key="frame" x="0.0" y="968" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9RH-AW-rsk" id="s4N-yd-5mG">
-                                            <rect key="frame" x="0.0" y="0.0" width="395.66666666666669" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="383.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="Keyboard" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yoZ-jw-Cu3">
-                                                    <rect key="frame" x="8" y="0.0" width="379.66666666666669" height="44"/>
+                                                    <rect key="frame" x="20" y="0.0" width="355.66666666666669" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -730,11 +730,11 @@
                                         <rect key="frame" x="0.0" y="1280.3333282470703" width="414" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nAl-CW-4R7" id="eQZ-vi-vuJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="395.66666666666669" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="383.66666666666669" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="Email Protection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="azf-Nc-kvW">
-                                                    <rect key="frame" x="8.0000000000000071" y="10.333333333333336" width="116.66666666666667" height="16"/>
+                                                    <rect key="frame" x="20.000000000000007" y="10.333333333333336" width="116.66666666666667" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
@@ -744,7 +744,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" text="Block email trackers and hide your address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Y6Y-wA-n6Z">
-                                                    <rect key="frame" x="8.0000000000000142" y="29" width="245.33333333333334" height="13"/>
+                                                    <rect key="frame" x="20.000000000000014" y="29" width="245.33333333333334" height="13"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="13"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -758,14 +758,14 @@
                                         </accessibility>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Yz9-17-qnn" detailTextLabel="P0F-ts-ekd" rowHeight="55" style="IBUITableViewCellStyleSubtitle" id="WpO-kq-QM6">
-                                        <rect key="frame" x="0.0" y="1335.3333282470703" width="414" height="55"/>
+                                        <rect key="frame" x="0.0" y="1251.3333307902019" width="414" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WpO-kq-QM6" id="jdM-R6-KZO">
-                                            <rect key="frame" x="0.0" y="0.0" width="395.66666666666669" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="383.66666666666669" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="DuckDuckGo Mac App" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Yz9-17-qnn">
-                                                    <rect key="frame" x="8" y="10.333333333333336" width="162" height="16"/>
+                                                    <rect key="frame" x="20" y="10.333333333333336" width="162" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
@@ -775,7 +775,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" text="Browse privately with our app for Mac " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="P0F-ts-ekd">
-                                                    <rect key="frame" x="8" y="29" width="218" height="13"/>
+                                                    <rect key="frame" x="20" y="29" width="218" height="13"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="13"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -1785,7 +1785,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Unprotected Sites" id="OHV-qC-tL9">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="CxT-QK-iVn">
+                        <barButtonItem key="rightBarButtonItem" title="Add" image="Add-24" id="CxT-QK-iVn">
                             <connections>
                                 <action selector="onAddPressed" destination="UEu-y1-KbY" id="wOp-Gh-hyF"/>
                             </connections>
@@ -2177,7 +2177,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1qa-Ak-UMe">
-                                                    <rect key="frame" x="345" y="10.666666666666664" width="51" height="31"/>
+                                                    <rect key="frame" x="345" y="10.666666666666664" width="51" height="31.000000000000007"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="uvT-w5-yuK"/>
                                                     </constraints>
@@ -2378,6 +2378,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
         </scene>
     </scenes>
     <resources>
+        <image name="Add-24" width="24" height="24"/>
         <image name="GlobeSmall" width="24" height="24"/>
         <image name="HomeRowAppIcon" width="512" height="512"/>
         <image name="LogoLightText" width="160" height="128"/>

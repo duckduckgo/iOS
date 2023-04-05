@@ -45,7 +45,10 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private let tld: TLD = AppDependencyProvider.shared.storageCache.tld
 
     private lazy var addBarButtonItem: UIBarButtonItem = {
-        UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
+        UIBarButtonItem(image: UIImage(named: "Add-24"),
+                        style: .plain,
+                        target: self,
+                        action: #selector(addButtonPressed))
     }()
     
     private var cancellables: Set<AnyCancellable> = []

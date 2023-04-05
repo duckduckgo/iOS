@@ -22,7 +22,7 @@ jobs:
       run: |
         set -o pipefail && xcodebuild \
           -scheme "DuckDuckGo" \
-          -destination "platform=iOS Simulator,name=iPhone 12" \
+          -destination "platform=iOS Simulator,name=iPhone 14" \
           -derivedDataPath ~/DerivedData
 
     - name: Setup tests

@@ -1,7 +1,7 @@
 import Foundation
 
 /// The protocol defines an IP stack.
-public protocol IPStackProtocol: class {
+public protocol IPStackProtocol: AnyObject {
     /**
      Input a packet into the stack.
 

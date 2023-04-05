@@ -1,5 +1,5 @@
 //
-//  PacketTunnelProvider.swift
+//  AppTrackingProtectionPacketTunnelProvider.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -23,7 +23,7 @@ import Core
 
 public let generalLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? "DDG AppTP", category: "DDG AppTP")
 
-class PacketTunnelProvider: NEPacketTunnelProvider {
+class AppTrackingProtectionPacketTunnelProvider: NEPacketTunnelProvider {
 
     let proxyServerPort: UInt16 = 9090
     let proxyServerAddress = "127.0.0.1"

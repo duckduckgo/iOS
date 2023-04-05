@@ -3,7 +3,7 @@ import NetworkExtension
  
 
 /// The delegate protocol of `NWUDPSocket`.
-public protocol NWUDPSocketDelegate: class {
+public protocol NWUDPSocketDelegate: AnyObject {
     /**
      Socket did receive data from remote.
      

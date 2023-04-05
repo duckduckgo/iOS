@@ -70,7 +70,7 @@ public class CoreDataBookmarksSearchStore: BookmarksSearchStore {
                                           #keyPath(BookmarkEntity.objectID)]
         
         context.perform {
-            let result = try? context.fetch(fetchRequest) as? [[String: Any]]
+            let result = try? context.fetch(fetchRequest) as? [Dictionary<String, Any>]
             
             let bookmarksAndFavorites = result?.compactMap(BookmarksCachingSearch.ScoredBookmark.init) ?? []
 

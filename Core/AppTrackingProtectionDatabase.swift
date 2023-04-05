@@ -47,11 +47,16 @@ public class AppTrackingProtectionDatabase {
             fatalError("Failed to load model")
         }
 
+        let options = [
+            NSPersistentHistoryTrackingKey: true as NSNumber,
+            NSPersistentStoreRemoteChangeNotificationPostOptionKey: true as NSNumber
+        ]
+
         let db = CoreDataDatabase(name: "AppTrackingProtection",
                                   containerLocation: location,
                                   model: model,
                                   readOnly: readOnly,
-                                  enablePersistentHistoryTracking: true)
+                                  options: options)
 
         return db
     }

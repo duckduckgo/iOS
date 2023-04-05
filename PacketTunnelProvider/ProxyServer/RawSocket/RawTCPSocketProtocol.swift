@@ -5,7 +5,7 @@ import Foundation
 /// Any concrete implementation does not need to be thread-safe.
 ///
 /// - warning: It is expected that the instance is accessed on the specific queue only.
-public protocol RawTCPSocketProtocol: class {
+public protocol RawTCPSocketProtocol: AnyObject {
     /// The `RawTCPSocketDelegate` instance.
     var delegate: RawTCPSocketDelegate? { get set }
 
@@ -94,7 +94,7 @@ public protocol RawTCPSocketProtocol: class {
 }
 
 /// The delegate protocol to handle the events from a raw TCP socket.
-public protocol RawTCPSocketDelegate: class {
+public protocol RawTCPSocketDelegate: AnyObject {
     /**
      The socket did disconnect.
 

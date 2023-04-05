@@ -18,11 +18,6 @@ DEVELOPMENT_TEAM = HKE973VLUW
 
 // The app bundle identifier
 APP_ID = com.duckduckgo.mobile.ios
-APP_ID[config=AppTP][arch=*][sdk=*] = com.duckduckgo.mobile.ios.apptp
-APP_ID[config=AppTP Release][arch=*][sdk=*] = com.duckduckgo.mobile.ios.apptp
-
-// AppTP adhoc compiler flag
-SWIFT_ACTIVE_COMPILATIONCONDITIONS[config=AppTP Release][arch=*][sdk=*] = APPTP_ADHOC_BUILD
 
 // A prefix for group ids. Must start with "group.".
 GROUP_ID_PREFIX = group.com.duckduckgo

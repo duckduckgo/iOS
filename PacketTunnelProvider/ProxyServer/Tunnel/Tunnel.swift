@@ -1,6 +1,6 @@
 import Foundation
 
-protocol TunnelDelegate: class {
+protocol TunnelDelegate: AnyObject {
     func tunnelDidClose(_ tunnel: Tunnel)
 }
 

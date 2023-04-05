@@ -29,7 +29,7 @@ public enum SocketStatus {
 /// Protocol for socket with various functions.
 ///
 /// Any concrete implementation does not need to be thread-safe.
-public protocol SocketProtocol: class {
+public protocol SocketProtocol: AnyObject {
     /// The underlying TCP socket transmitting data.
     var socket: RawTCPSocketProtocol! { get }
 
@@ -98,7 +98,7 @@ extension SocketProtocol {
 }
 
 /// The delegate protocol to handle the events from a socket.
-public protocol SocketDelegate: class {
+public protocol SocketDelegate: AnyObject {
     /**
      The socket did connect to remote.
 

@@ -13,15 +13,15 @@
 
 ## `assert_xcode_version.sh`: Check that Xcode version meets minimum requirement
 
-This script reads the minimum required Xcode version specified in the .xcode-version file and compares it with the version returned by the xcodebuild -version command. If the installed Xcode version is lower than the required version, the script prints an error message and exits with a non-zero status code. If the installed Xcode version is higher than the required version, the script prints a warning message suggesting to update the .xcode-version file.
+This script reads the minimum required Xcode version specified in the `.xcode-version` file and compares it with the version returned by the `xcodebuild -version` command. If the installed Xcode version is lower than the required version, the script prints an error message and exits with a non-zero status code. If the installed Xcode version is higher than the required version, the script prints a warning message suggesting to update the `.xcode-version` file.
 
 ### Requirements
 
-The script uses xcodebuild to check the currently installed version of Xcode, so a valid installation of Xcode and xcodebuild are required to run the script.
+The script uses `xcodebuild` to check the currently installed version of Xcode, so a valid installation of Xcode and `xcodebuild` are required to run the script.
 
 ### Usage
 
-This script is intended to be added as a build phase in Xcode project. The script will be automatically executed before building the project, and if the Xcode version does not meet the minimum requirement, the build will fail with an error message.
+This script is intended to be used as a build phase in Xcode called "Assert Xcode version". The script will be automatically executed before building the project, and if the Xcode version does not meet the minimum requirement, the build will fail with an error message.
 
 ## `check_metadata_length.sh`: Check length of metadata strings for App Store Connect
 
@@ -57,7 +57,7 @@ This script decrypts and extracts the fonts required for release build from an e
 
 ### Requirements
 
-The script requires gpg and unzip to be installed on the system. It also requires the FONTS_ENCRYPTION_KEY environment variable to be set to the passphrase used to encrypt the archive.
+The script requires `gpg` and `unzip` to be installed on the system. It also requires the FONTS_ENCRYPTION_KEY environment variable to be set to the passphrase used to encrypt the archive.
 
 ### Usage
 

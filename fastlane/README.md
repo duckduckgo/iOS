@@ -69,6 +69,14 @@ Makes App Store release build and uploads it to TestFlight
 
 Increment build number based on version in App Store Connect
 
+### setup_e2e_tests
+
+```sh
+[bundle exec] fastlane setup_e2e_tests
+```
+
+Setup Maestro e2e tests
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.

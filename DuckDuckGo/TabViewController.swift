@@ -2426,6 +2426,14 @@ extension TabViewController: SecureVaultManagerDelegate {
         // We don't have auth yet
     }
 
+    public func secureVaultManager(_: SecureVaultManager, didRequestCreditCardsManagerForDomain domain: String) {
+        // No-op on iOS
+    }
+
+    public func secureVaultManager(_: SecureVaultManager, didRequestIdentitiesManagerForDomain domain: String) {
+        // No-op on iOS
+    }
+
     public func secureVaultManager(_: SecureVaultManager, didRequestPasswordManagerForDomain domain: String) {
         // No-op on iOS
     }

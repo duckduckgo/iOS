@@ -564,6 +564,7 @@
 		C14882E827F20DAB00D59F0C /* TestDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14882E627F20DAB00D59F0C /* TestDataLoader.swift */; };
 		C14882EA27F20DD000D59F0C /* MockBookmarksCoreDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14882E927F20DD000D59F0C /* MockBookmarksCoreDataStorage.swift */; };
 		C14882ED27F211A000D59F0C /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = C14882EC27F211A000D59F0C /* SwiftSoup */; };
+		C14E2F7729DE14EA002AC515 /* AutofillInterfaceUsernameTruncatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14E2F7629DE14EA002AC515 /* AutofillInterfaceUsernameTruncatorTests.swift */; };
 		C158AC7B297AB5DC0008723A /* MockSecureVault.swift in Sources */ = {isa = PBXBuildFile; fileRef = C158AC7A297AB5DC0008723A /* MockSecureVault.swift */; };
 		C160544129D6044D00B715A1 /* AutofillInterfaceUsernameTruncator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C160544029D6044D00B715A1 /* AutofillInterfaceUsernameTruncator.swift */; };
 		C1963863283794A000298D4D /* BookmarksCachingSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1963862283794A000298D4D /* BookmarksCachingSearch.swift */; };
@@ -1991,6 +1992,7 @@
 		C14882E527F20DAA00D59F0C /* HtmlTestDataLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HtmlTestDataLoader.swift; sourceTree = "<group>"; };
 		C14882E627F20DAB00D59F0C /* TestDataLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDataLoader.swift; sourceTree = "<group>"; };
 		C14882E927F20DD000D59F0C /* MockBookmarksCoreDataStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockBookmarksCoreDataStorage.swift; sourceTree = "<group>"; };
+		C14E2F7629DE14EA002AC515 /* AutofillInterfaceUsernameTruncatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillInterfaceUsernameTruncatorTests.swift; sourceTree = "<group>"; };
 		C158AC7A297AB5DC0008723A /* MockSecureVault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSecureVault.swift; sourceTree = "<group>"; };
 		C160544029D6044D00B715A1 /* AutofillInterfaceUsernameTruncator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillInterfaceUsernameTruncator.swift; sourceTree = "<group>"; };
 		C1963862283794A000298D4D /* BookmarksCachingSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksCachingSearch.swift; sourceTree = "<group>"; };
@@ -2596,6 +2598,7 @@
 			isa = PBXGroup;
 			children = (
 				317045BF2858C6B90016ED1F /* AutofillInterfaceEmailTruncatorTests.swift */,
+				C14E2F7629DE14EA002AC515 /* AutofillInterfaceUsernameTruncatorTests.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -5568,6 +5571,7 @@
 				C1BF0BA929B63E2200482B73 /* AutofillLoginPromptViewModelTests.swift in Sources */,
 				987130C8294AAB9F00AB05E0 /* BookmarksTestHelpers.swift in Sources */,
 				F198D7981E3A45D90088DA8A /* WKWebViewConfigurationExtensionTests.swift in Sources */,
+				C14E2F7729DE14EA002AC515 /* AutofillInterfaceUsernameTruncatorTests.swift in Sources */,
 				8521FDE6238D414B00A44CC3 /* FileStoreTests.swift in Sources */,
 				F14E491F1E391CE900DC037C /* URLExtensionTests.swift in Sources */,
 				85D2187424BF25CD004373D2 /* FaviconsTests.swift in Sources */,

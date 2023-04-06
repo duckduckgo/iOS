@@ -50,7 +50,8 @@ final class AutoconsentBackgroundTests: XCTestCase {
         let manager = PrivacyConfigurationManager(fetchedETag: nil,
                                                   fetchedData: nil,
                                                   embeddedDataProvider: mockEmbeddedData,
-                                                  localProtection: MockDomainsProtectionStore())
+                                                  localProtection: MockDomainsProtectionStore(),
+                                                  internalUserDecider: DefaultInternalUserDecider())
         return AutoconsentUserScript(config: manager.privacyConfig,
                                      preferences: MockAutoconsentPreferences(),
                                      ignoreNonHTTPURLs: false)

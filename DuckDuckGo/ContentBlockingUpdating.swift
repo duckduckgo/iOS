@@ -43,7 +43,7 @@ public final class ContentBlockingUpdating {
     struct NewContent: UserContentControllerNewContent {
         let rulesUpdate: ContentBlockerRulesManager.UpdateEvent
         let sourceProvider: ScriptSourceProviding
-        var makeUserScripts: (ScriptSourceProviding) -> UserScripts { return UserScripts.init(with:) }
+        var makeUserScripts: @MainActor (ScriptSourceProviding) -> UserScripts { return UserScripts.init(with:) }
     }
 
     @Published private var bufferedValue: NewContent?

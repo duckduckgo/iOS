@@ -152,7 +152,7 @@ struct DownloadsList: View {
             }
         }
         .environment(\.editMode, $editMode)
-        .listStyle(.grouped)
+        .listStyle(.insetGrouped)
     }
     
     @ViewBuilder

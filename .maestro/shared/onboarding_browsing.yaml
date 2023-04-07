@@ -1,0 +1,12 @@
+# onboarding_browsing.yaml
+
+appId: com.duckduckgo.mobile.ios
+---
+
+- assertVisible:
+    text: "Got It"
+    index: 0
+- tapOn:
+    text: "Got It"
+    index: 0
+

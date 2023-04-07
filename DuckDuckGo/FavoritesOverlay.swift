@@ -260,6 +260,6 @@ extension FavoritesOverlay: Themable {
 extension FavoritesOverlay: UIGestureRecognizerDelegate {
     
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        gestureRecognizer == collectionViewReorderingGesture ? gestureRecognizerShouldBegin(gestureRecognizer) : false
+        false
     }
 }

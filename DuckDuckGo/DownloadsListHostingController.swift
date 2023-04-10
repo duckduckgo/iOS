@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
 class DownloadsListHostingController: UIHostingController<DownloadsList> {
     required init?(coder aDecoder: NSCoder) {
@@ -37,7 +38,7 @@ class DownloadsListHostingController: UIHostingController<DownloadsList> {
     private func setupTableViewAppearance() {
         // Required due to lack of SwiftUI API for changing the background color of List
         let appearance = UITableView.appearance(whenContainedInInstancesOf: [DownloadsListHostingController.self])
-        appearance.backgroundColor = UIColor(named: "DownloadsListBackgroundColor")
+        appearance.backgroundColor = UIColor(designSystemColor: .background)
     }
     
     private func presentActivityView(for url: URL, from rect: CGRect) {

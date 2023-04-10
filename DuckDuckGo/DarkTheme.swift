@@ -29,7 +29,7 @@ struct DarkTheme: Theme {
     var tabsBarBackgroundColor = UIColor.nearlyBlack
     var tabsBarSeparatorColor = UIColor.darkGreyish
     
-    var backgroundColor = UIColor.nearlyBlack
+    var backgroundColor = UIColor(designSystemColor: .background)
     
     var barBackgroundColor = UIColor.nearlyBlackLight
     var barTintColor = UIColor.lightMercury

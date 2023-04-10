@@ -20,6 +20,7 @@
 import UIKit
 import Core
 import Bookmarks
+import DesignResourcesKit
 
 protocol BookmarkFoldersViewControllerDelegate: AnyObject {
 
@@ -39,6 +40,11 @@ class BookmarkFoldersViewController: UITableViewController {
     var locationCount: Int {
         guard let viewModel = viewModel else { return 0 }
         return viewModel.locations.count
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.backgroundColor = UIColor(designSystemColor: .background)
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

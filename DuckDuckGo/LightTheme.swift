@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 import UIKit
+import DesignResourcesKit
 
 struct LightTheme: Theme {
     var name = ThemeName.light
@@ -29,7 +30,7 @@ struct LightTheme: Theme {
     var tabsBarBackgroundColor = UIColor.lightGreyish
     var tabsBarSeparatorColor = UIColor.greyish
     
-    var backgroundColor = UIColor.gray10
+    var backgroundColor = UIColor(designSystemColor: .background)
     
     var barBackgroundColor = UIColor.nearlyWhiteLight
     var barTintColor = UIColor.nearlyBlackLight

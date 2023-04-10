@@ -694,6 +694,7 @@
 		F4147354283BF834004AA7A5 /* AutofillContentScopeFeatureToggles.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4147353283BF834004AA7A5 /* AutofillContentScopeFeatureToggles.swift */; };
 		F41C2DA326C1925700F9A760 /* BookmarksAndFolders.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F41C2DA126C1925600F9A760 /* BookmarksAndFolders.xcdatamodeld */; };
 		F41C2DA526C1975E00F9A760 /* BookmarksCoreDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41C2DA426C1975E00F9A760 /* BookmarksCoreDataStorage.swift */; };
+		F42D541D29DCA40B004C4FF1 /* DesignResourcesKit in Frameworks */ = {isa = PBXBuildFile; productRef = F42D541C29DCA40B004C4FF1 /* DesignResourcesKit */; };
 		F42EF9312614BABE00101FB9 /* ActionSheetDaxDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42EF9302614BABD00101FB9 /* ActionSheetDaxDialogViewController.swift */; };
 		F446B9B5251150AC00324016 /* HomeMessageViewSectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F446B9B4251150AC00324016 /* HomeMessageViewSectionRenderer.swift */; };
 		F44D279C27F331BB0037F371 /* AutofillLoginPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D279727F331BB0037F371 /* AutofillLoginPromptView.swift */; };
@@ -2178,6 +2179,7 @@
 				3760DFED299315EF0045A446 /* Waitlist in Frameworks */,
 				F143C2EB1E4A4CD400CFDE3A /* Core.framework in Frameworks */,
 				31E69A63280F4CB600478327 /* DuckUI in Frameworks */,
+				F42D541D29DCA40B004C4FF1 /* DesignResourcesKit in Frameworks */,
 				85875B6129912A9900115F05 /* SyncUI in Frameworks */,
 				4B5167422824B492004C67BA /* Lottie in Frameworks */,
 				F4D7F634298C00C3006C3AE9 /* FindInPageIOSJSSupport in Frameworks */,
@@ -4482,6 +4484,7 @@
 				F4D7F633298C00C3006C3AE9 /* FindInPageIOSJSSupport */,
 				85875B6029912A9900115F05 /* SyncUI */,
 				3760DFEC299315EF0045A446 /* Waitlist */,
+				F42D541C29DCA40B004C4FF1 /* DesignResourcesKit */,
 			);
 			productName = DuckDuckGo;
 			productReference = 84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */;
@@ -4766,6 +4769,7 @@
 				4B5167402824B492004C67BA /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */,
 				F4D7F632298C00C3006C3AE9 /* XCRemoteSwiftPackageReference "ios-js-support" */,
+				F42D541B29DCA40B004C4FF1 /* XCRemoteSwiftPackageReference "DesignResourcesKit" */,
 			);
 			productRefGroup = 84E341931E2F7EFB00BDBA6F /* Products */;
 			projectDirPath = "";
@@ -7437,6 +7441,14 @@
 				version = 2.4.2;
 			};
 		};
+		F42D541B29DCA40B004C4FF1 /* XCRemoteSwiftPackageReference "DesignResourcesKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/duckduckgo/DesignResourcesKit";
+			requirement = {
+				kind = revision;
+				revision = a6ba53699ec53b36d5649ec7772b16b2c7afdf8d;
+			};
+		};
 		F486D2EF25069482002D07D7 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -7553,6 +7565,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = Configuration;
+		};
+		F42D541C29DCA40B004C4FF1 /* DesignResourcesKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F42D541B29DCA40B004C4FF1 /* XCRemoteSwiftPackageReference "DesignResourcesKit" */;
+			productName = DesignResourcesKit;
 		};
 		F486D31C2506980E002D07D7 /* Swifter */ = {
 			isa = XCSwiftPackageProductDependency;

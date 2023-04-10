@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 import UIKit
+import DesignResourcesKit
 
 struct DarkTheme: Theme {
     var name = ThemeName.dark
@@ -41,7 +42,7 @@ struct DarkTheme: Theme {
     var searchBarBackgroundColor = UIColor.charcoalGrey
     var centeredSearchBarBackgroundColor = UIColor.nearlyBlackLight
     var searchBarTextColor = UIColor.white
-    var searchBarTextPlaceholderColor = UIColor.lightMercury
+    var searchBarTextPlaceholderColor = UIColor(designSystemColor: .textSecondary)
     var searchBarTextDeemphasisColor = UIColor.lightMercury
     var searchBarBorderColor = UIColor.darkGreyish
     var searchBarClearTextIconColor = UIColor.greyish2

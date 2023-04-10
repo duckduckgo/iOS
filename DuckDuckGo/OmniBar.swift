@@ -295,24 +295,11 @@ class OmniBar: UIView {
         }
         
         updateOmniBarPadding()
-        updateSearchBarBorder()
     }
 
     private func updateOmniBarPadding() {
         omniBarLeadingConstraint.constant = (state.hasLargeWidth ? 24 : 8) + safeAreaInsets.left
         omniBarTrailingConstraint.constant = (state.hasLargeWidth ? 24 : 14) + safeAreaInsets.right
-    }
-    
-    private func updateSearchBarBorder() {
-        let theme = ThemeManager.shared.currentTheme
-        if state.showBackground {
-            editingBackground?.backgroundColor = theme.searchBarBackgroundColor
-            editingBackground?.borderColor = theme.searchBarBackgroundColor
-        } else {
-            editingBackground.borderWidth = 1.5
-            editingBackground.borderColor = theme.searchBarBorderColor
-            editingBackground.backgroundColor = UIColor.clear
-        }
     }
 
     /*
@@ -534,8 +521,6 @@ extension OmniBar: Themable {
         
         searchLoupe.tintColor = theme.barTintColor
         cancelButton.setTitleColor(theme.barTintColor, for: .normal)
-        
-        updateSearchBarBorder()
     }
 }
 // swiftlint:enable file_length

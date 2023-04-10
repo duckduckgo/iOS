@@ -45,7 +45,6 @@ extension Themable where Self: UIViewController {
             appearance.backgroundColor = theme.backgroundColor
             appearance.titleTextAttributes = titleAttrs
 
-
             navigationController?.navigationBar.standardAppearance = appearance
             navigationController?.navigationBar.scrollEdgeAppearance = appearance
         }

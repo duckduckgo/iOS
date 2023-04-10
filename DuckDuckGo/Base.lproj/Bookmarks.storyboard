@@ -407,7 +407,7 @@
                                 </connections>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" name="BookmarksTableViewBackgroundColor"/>
+                        <color key="backgroundColor" name="background"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="63r-nO-tSp" secondAttribute="bottom" id="7uU-MI-iq3"/>
                             <constraint firstItem="63r-nO-tSp" firstAttribute="leading" secondItem="ZKl-y5-8OG" secondAttribute="leading" id="8qg-Gp-0cE"/>
@@ -443,6 +443,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="591"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="separatorColor" name="BookmarksCellSeperatorColor"/>
+                        <color key="sectionIndexBackgroundColor" name="background"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="BookmarkFolderCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkFolderCell" id="OPL-sH-Akf" userLabel="BookmarkFolderCell" customClass="BookmarkFolderCell" customModule="DuckDuckGo" customModuleProvider="target">
                                 <rect key="frame" x="16" y="55.5" width="343" height="43.5"/>
@@ -669,7 +670,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Uhm-2I-Xo5"/>
+        <segue reference="lPi-F9-wDg"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="BookmarksEmpty" width="128" height="96"/>
@@ -700,11 +701,11 @@
         <namedColor name="BookmarksNavBarTitleColor">
             <color red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="BookmarksTableViewBackgroundColor">
-            <color red="0.96100002527236938" green="0.96100002527236938" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="TableCellAccessoryTextColor">
             <color red="0.53299999237060547" green="0.53299999237060547" blue="0.53299999237060547" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="background">
+            <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

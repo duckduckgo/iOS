@@ -99,9 +99,7 @@ struct DownloadsList: View {
                 .background(Color.background)
                 .scrollContentBackground(.hidden)
         } else {
-            list.toolbar {
-                toolbarContent
-            }
+            list
         }
     }
     

@@ -59,6 +59,7 @@ public struct AppTrackingProtectionAllowlistModel {
             return
         }
         
+        // Read allowlist from file. Break the string into array then cast to a set.
         do {
             let strData = try String(contentsOf: allowlistUrl)
             let list = strData.trimmingWhitespace().components(separatedBy: "\n")

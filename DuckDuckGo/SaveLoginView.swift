@@ -20,6 +20,7 @@
 import SwiftUI
 import DuckUI
 import BrowserServicesKit
+import DesignResourcesKit
 
 struct SaveLoginView: View {
     enum LayoutType {
@@ -132,7 +133,7 @@ struct SaveLoginView: View {
                     .scaledToFit()
                     .frame(width: Const.Size.logoImage, height: Const.Size.logoImage)
                 Text(viewModel.accountDomain)
-                    .secondaryTextStyle()
+                    .foregroundColor(Color(designSystemColor: .textSecondary))
                     .font(Const.Fonts.titleCaption)
             }
 
@@ -222,7 +223,7 @@ struct SaveLoginView: View {
     private var newUserContentView: some View {
         Text(UserText.autofillSaveLoginMessageNewUser)
             .font(Const.Fonts.subtitle)
-            .secondaryTextStyle()
+            .foregroundColor(Color(designSystemColor: .textSecondary))
             .multilineTextAlignment(.center)
             .padding(.horizontal, isSmallFrame ? Const.Size.paddingSmallDevice : Const.Size.paddingDefault)
             .frame(width: isIPhonePortrait ? Const.Size.contentWidth : frame.width)
@@ -241,7 +242,7 @@ struct SaveLoginView: View {
     private var additionalLoginContentView: some View {
         Text(verbatim: UserText.autofillAdditionalLoginInfoMessage)
             .font(Const.Fonts.subtitle)
-            .secondaryTextStyle()
+            .foregroundColor(Color(designSystemColor: .textSecondary))
             .frame(maxWidth: .infinity)
             .multilineTextAlignment(.center)
             .padding(.horizontal, isSmallFrame ? Const.Size.paddingSmallDevice : Const.Size.paddingDefault)

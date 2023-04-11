@@ -31,10 +31,15 @@ class AppTrackingProtectionFeedbackModelTests: XCTestCase {
 
         let bundle = Bundle(for: AppTrackingProtectionFeedbackModel.self)
         let model = CoreDataDatabase.loadModel(from: bundle, named: "AppTrackingProtectionModel")!
+        let options = [
+            NSPersistentHistoryTrackingKey: true as NSNumber,
+            NSPersistentStoreRemoteChangeNotificationPostOptionKey: true as NSNumber
+        ]
 
         database = CoreDataDatabase(name: "AppTrackingProtectionFeedbackModelTests",
                                     containerLocation: tempDBDir(),
-                                    model: model)
+                                    model: model,
+                                    options: options)
         database.loadStore()
     }
 

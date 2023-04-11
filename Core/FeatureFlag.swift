@@ -33,11 +33,17 @@ public enum FeatureFlag: String {
 extension FeatureFlag: FeatureFlagSourceProviding {
     public var source: FeatureFlagSource {
         switch self {
-        // swiftlint:disable line_length
-        case .debugMenu, .sync, .autofillCredentialInjecting, .autofillCredentialsSaving, .autofillInlineIconCredentials, .autofillAccessCredentialManagement, .appTrackingProtection:
+        case .debugMenu, .sync, .appTrackingProtection:
             return .internalOnly
+        case .autofillCredentialInjecting:
+            return .remoteDevelopment(.subfeature(AutofillSubfeature.credentialsAutofill))
+        case .autofillCredentialsSaving:
+            return .remoteDevelopment(.subfeature(AutofillSubfeature.credentialsSaving))
+        case .autofillInlineIconCredentials:
+            return .remoteDevelopment(.subfeature(AutofillSubfeature.inlineIconCredentials))
+        case .autofillAccessCredentialManagement:
+            return .remoteDevelopment(.subfeature(AutofillSubfeature.accessCredentialManagement))
         }
-        // swiftlint:enable line_length
     }
 }
 

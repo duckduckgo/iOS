@@ -82,7 +82,7 @@ class SettingsViewController: UITableViewController {
     fileprivate lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
 
     private var shouldShowDebugCell: Bool {
-        return featureFlagger.isFeatureOn(.debugMenu)
+        return featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild
     }
     
     private var shouldShowVoiceSearchCell: Bool {

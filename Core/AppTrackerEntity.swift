@@ -48,8 +48,10 @@ public class AppTrackerEntity: NSManagedObject {
         return request
     }
 
+    // swiftlint:disable:next function_parameter_count
     public static func makeTracker(domain: String,
                                    trackerOwner: String,
+                                   blocked: Bool,
                                    date: Date,
                                    bucket: String,
                                    context: NSManagedObjectContext) -> AppTrackerEntity {
@@ -57,6 +59,7 @@ public class AppTrackerEntity: NSManagedObject {
         object.uuid = UUID().uuidString
         object.domain = domain
         object.trackerOwner = trackerOwner
+        object.blocked = blocked
         object.count = 1
         object.timestamp = date
         object.bucket = bucket
@@ -67,6 +70,7 @@ public class AppTrackerEntity: NSManagedObject {
     @NSManaged public var uuid: String
     @NSManaged public var domain: String
     @NSManaged public var trackerOwner: String
+    @NSManaged public var blocked: Bool
     @NSManaged public var bucket: String
     @NSManaged public var timestamp: Date
     @NSManaged public var count: Int32

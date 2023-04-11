@@ -34,8 +34,7 @@ class AppTrackingProtectionFeedbackModelTests: XCTestCase {
 
         database = CoreDataDatabase(name: "AppTrackingProtectionFeedbackModelTests",
                                     containerLocation: tempDBDir(),
-                                    model: model,
-                                    enablePersistentHistoryTracking: true)
+                                    model: model)
         database.loadStore()
     }
 
@@ -65,7 +64,7 @@ class AppTrackingProtectionFeedbackModelTests: XCTestCase {
 
     private func saveTracker(domain: String, owner: String, date: Date) {
         let storingModel = AppTrackingProtectionStoringModel(appTrackingProtectionDatabase: database)
-        storingModel.storeBlockedTracker(domain: domain, trackerOwner: owner, date: date)
+        storingModel.storeTracker(domain: domain, trackerOwner: owner, blocked: true, date: date)
     }
 
     private func createDate(year: Int, month: Int, day: Int, hour: Int = 9, minute: Int = 42) -> Date {

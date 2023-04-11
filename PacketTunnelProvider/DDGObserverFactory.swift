@@ -68,7 +68,7 @@ class DDGObserverFactory: ObserverFactory {
                     let trackerOwner = trackerData.trackerOwner(forDomain: session.host)
                     let ownerName = trackerOwner?.name ?? "Unknown Owner"
 
-                    appTrackingProtectionStoringModel.storeBlockedTracker(domain: session.host, trackerOwner: ownerName)
+                    appTrackingProtectionStoringModel.storeTracker(domain: session.host, trackerOwner: ownerName, blocked: true)
                     socket.forceDisconnect(becauseOf: BlockedReason())
                 }
                 

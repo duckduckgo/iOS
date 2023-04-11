@@ -104,21 +104,33 @@ struct AppTPActivityView: View {
         ScrollView {
             LazyVStack(alignment: .center, spacing: 0) {
                 Section {
+                    AppTPToggleView(
+                        vpnOn: $vpnOn,
+                        viewModel: toggleViewModel
+                    )
+                        .background(Color.cellBackground)
+                        .cornerRadius(Const.Size.cornerRadius)
+                        .padding(.bottom)
+                }
+                
+                Section {
                     VStack {
-                        AppTPToggleView(
-                            vpnOn: $vpnOn,
-                            viewModel: toggleViewModel
-                        )
-                            .background(Color.cellBackground)
-                            .cornerRadius(Const.Size.cornerRadius)
-
                         NavigationLink(destination: AppTPBreakageFormView(feedbackModel: feedbackModel)) {
-                            Text("Something not working?")
+                            Text("Manage Trackers") // TODO: Add to UserText
+                                .font(Font(uiFont: Const.Font.sectionHeader))
+                                .foregroundColor(Color("AppTPToggleColor"))
+                                .frame(height: 44)
+                        }
+                        
+                        NavigationLink(destination: AppTPBreakageFormView(feedbackModel: feedbackModel)) {
+                            Text("Report an issue with the app") // TODO: Add to UserText
                                 .font(Font(uiFont: Const.Font.sectionHeader))
                                 .foregroundColor(Color("AppTPToggleColor"))
                                 .frame(height: 44)
                         }
                     }
+                    .background(Color.cellBackground)
+                    .cornerRadius(Const.Size.cornerRadius)
                     .padding(.bottom)
                 }
 

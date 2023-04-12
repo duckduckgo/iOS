@@ -18,7 +18,6 @@
 //
 
 import UIKit
-import DuckUI
 import Core
 
 final class FireButtonExperiment {
@@ -91,29 +90,6 @@ final class FireButtonExperiment {
         return daysSinceInstall >= 3
     }
     
-    //
-    // MARK: - Experiment #2 - adding fire button color
-    //
-    
-     public static func decorateFireButton(fireButton: UIBarButtonItem, for theme: Theme) {
-         guard isFireButtonColorFeatureEnabled else { return }
-
-         fireButton.tintColor = fireButtonFillColor(for: theme)
-     }
-
-     public static func decorateFireButton(fireButton: UIButton, for theme: Theme) {
-         guard isFireButtonColorFeatureEnabled else { return }
-
-         fireButton.tintColor = fireButtonFillColor(for: theme)
-     }
-    
-    private static var isFireButtonColorFeatureEnabled: Bool {
-         AppDependencyProvider.shared.variantManager.isSupported(feature: .fireButtonColor)
-     }
-
-     private static func fireButtonFillColor(for theme: Theme) -> UIColor {
-         theme.currentImageSet == .light ? .redBase : .red40
-     }
 }
 
 extension Calendar {

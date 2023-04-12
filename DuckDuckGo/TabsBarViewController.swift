@@ -286,8 +286,6 @@ extension TabsBarViewController: Themable {
         fireButton.decorate(with: theme)
         tabSwitcherButton.decorate(with: theme)
         
-        FireButtonExperiment.decorateFireButton(fireButton: fireButton, for: theme)
-        
         collectionView.reloadData()
     }
 

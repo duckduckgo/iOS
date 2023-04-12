@@ -25,7 +25,6 @@ import BrowserServicesKit
 extension FeatureName {
     
     public static let fireButtonAnimation = FeatureName(rawValue: "fireButtonAnimation")
-    public static let fireButtonColor = FeatureName(rawValue: "fireButtonColor")
     
 }
 
@@ -55,7 +54,6 @@ public struct VariantIOS: Variant {
     public static let defaultVariants: [Variant] = [
         VariantIOS(name: "mc", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "ma", weight: doNotAllocate, isIncluded: When.always, features: [.fireButtonAnimation]),
-        VariantIOS(name: "mf", weight: doNotAllocate, isIncluded: When.always, features: [.fireButtonColor]),
         
         // SERP testing
         VariantIOS(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),

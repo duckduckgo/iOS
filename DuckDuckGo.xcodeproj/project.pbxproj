@@ -5039,7 +5039,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"$SOURCE_ROOT/check_version.sh\"\n";
+			shellScript = "\"$SOURCE_ROOT/scripts/check_version.sh\"\n";
 		};
 		0A991F5C239419BF00AA1F64 /* Prevent Version Override */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5058,7 +5058,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"$SOURCE_ROOT/check_version.sh\"\n";
+			shellScript = "\"$SOURCE_ROOT/scripts/check_version.sh\"\n";
 		};
 		37B4F3D329D2C84400758752 /* Copy GRDB framework */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5127,7 +5127,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ $ENABLE_PREVIEWS == \"YES\" ]\nthen\n  exit 0\nelse\n  \"$SOURCE_ROOT/loc_update.sh\"\nfi\n";
+			shellScript = "if [ $ENABLE_PREVIEWS == \"YES\" ]\nthen\n  exit 0\nelse\n  \"$SOURCE_ROOT/scripts/loc_update.sh\"\nfi\n";
 		};
 		CBCCF59B29940C3800C02DFE /* Assert Xcode version */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5146,7 +5146,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"$SOURCE_ROOT/assert_xcode_version.sh\"\n";
+			shellScript = "\"$SOURCE_ROOT/scripts/assert_xcode_version.sh\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

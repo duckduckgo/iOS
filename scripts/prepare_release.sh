@@ -7,6 +7,10 @@ version="$1"
 release_branch_parent="develop"
 hotfix_branch_parent="main"
 
+# Get the directory where the script is stored
+script_dir=$(dirname "$(readlink -f "$0")")
+base_dir="${script_dir}/.."
+
 #
 # Output passed arguments to stderr and exit.
 #
@@ -16,10 +20,9 @@ die() {
 }
 
 assert_ios_directory() {
-	cwd="$(dirname "${BASH_SOURCE[0]}")"
-	if [[ ${cwd} != "." ]]; then
-		die "💥 Error: Run the script from a top-level directory in the iOS project"
-	fi
+	if ! realpath "." | grep -q "/iOS"; then
+        die "💥 Error: Run the script from inside the iOS project"
+    fi
 }
 
 assert_fastlane_installed() {
@@ -48,7 +51,7 @@ print_usage_and_exit() {
 	cat <<- EOF
 	Usage:
 	  $ $(basename "$0") <version> [-h] [-v]
-	  Current version: $(cut -d' ' -f3 < Configuration/Version.xcconfig)
+	  Current version: $(cut -d' ' -f3 < "${base_dir}/Configuration/Version.xcconfig")
 
 	Options:
 	  -h         Make hotfix release
@@ -119,9 +122,9 @@ create_release_branch() {
 
 update_marketing_version() {
 	printf '%s' "Setting app version ... "
-	./set_version.sh "${version}"
-	git add Configuration/Version.xcconfig \
-		DuckDuckGo/Settings.bundle/Root.plist
+	"$script_dir/set_version.sh" "${version}"
+	git add "${base_dir}/Configuration/Version.xcconfig" \
+		"${base_dir}/DuckDuckGo/Settings.bundle/Root.plist"
 	eval git commit -m \"Update version number\" "$mute"
 	echo "✅"
 }
@@ -130,8 +133,8 @@ update_build_version() {
 	echo "Setting build version ..."
 	local username
 	username="$(git config user.email 2>&1)"
-	bundle exec fastlane increment_build_number_for_version version:"${version}" username:"$username"
-	git add DuckDuckGo.xcodeproj/project.pbxproj
+	(cd "$base_dir" && bundle exec fastlane increment_build_number_for_version version:"${version}" username:"$username")
+	git add "${base_dir}/DuckDuckGo.xcodeproj/project.pbxproj"
 	if [[ "$(git diff --cached)" ]]; then
 		eval git commit -m \"Update build number\" "$mute"
 		echo "Setting build version ... ✅"
@@ -142,11 +145,11 @@ update_build_version() {
 
 update_embedded_files() {
 	printf '%s' "Updating embedded files ... "
-	eval ./update_embedded.sh "$mute"
-	git add Core/AppTrackerDataSetProvider.swift \
-		Core/trackerData.json \
-		Core/AppPrivacyConfigurationDataProvider.swift \
-		Core/ios-config.json
+	eval "$script_dir/update_embedded.sh" "$mute"
+	git add "${base_dir}/Core/AppTrackerDataSetProvider.swift" \
+		"${base_dir}/Core/trackerData.json" \
+		"${base_dir}/Core/AppPrivacyConfigurationDataProvider.swift" \
+		"${base_dir}/Core/ios-config.json"
 	if [[ "$(git diff --cached)" ]]; then
 		eval git commit -m \"Update embedded files\" "$mute"
 		echo "✅"
@@ -156,7 +159,7 @@ update_embedded_files() {
 }
 
 update_release_notes() {
-	local release_notes_path="fastlane/metadata/default/release_notes.txt"
+	local release_notes_path="${base_dir}/fastlane/metadata/default/release_notes.txt"
 	echo "Please update release notes and save the file."
 	eval open -a TextEdit "${release_notes_path}" "$mute"
 	read -r -p "Press \`Enter\` when you're done to continue ..."
@@ -173,7 +176,7 @@ create_pull_request() {
 	printf '%s' "Creating PR ... "
 	eval git push origin "${release_branch}" "$mute"
 	eval git push origin "${changes_branch}" "$mute"
-	eval gh pr create --title \"Release "${version}"\" --base "${release_branch}" --assignee @me "$mute" --body-file "./scripts/assets/prepare-release-description"
+	eval gh pr create --title \"Release "${version}"\" --base "${release_branch}" --assignee @me "$mute" --body-file "${script_dir}/assets/prepare-release-description"
 	eval gh pr view --web "$mute"
 	echo "✅"
 }

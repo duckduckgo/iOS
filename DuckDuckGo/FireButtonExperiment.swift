@@ -41,10 +41,6 @@ final class FireButtonExperiment {
         Pixel.fire(pixel: .experimentFireButtonAnimationTriggeredOnTabSwitcher, includedParameters: [.atb])
     }
     
-    public static func playFireButtonForOnboarding(fireButton: FireButton) {
-        fireButton.playAnimation()
-    }
-    
     private static var wasFireButtonEverTapped: Bool {
         AppUserDefaults().wasFireButtonEverTapped
     }

@@ -1844,7 +1844,7 @@ extension MainViewController: AutoClearWorker {
             ViewHighlighter.showIn(window, focussedOnView: view)
             
             if let fireButton = view as? FireButton {
-                FireButtonExperiment.playFireButtonForOnboarding(fireButton: fireButton)
+                fireButton.playAnimation()
             }
         }
     }

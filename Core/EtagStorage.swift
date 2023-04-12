@@ -17,8 +17,8 @@
 //  limitations under the License.
 //
 
+import Common
 import Foundation
-import os.log
 import Configuration
 
 public protocol BlockerListETagStorage {

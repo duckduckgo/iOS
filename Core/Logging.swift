@@ -18,62 +18,48 @@
 //
 
 import Foundation
-import os.log
 import BrowserServicesKit
 import Common
 
 public extension OSLog {
-    
-    static var generalLog: OSLog {
-        Logging.generalLoggingEnabled ? Logging.generalLog : .disabled
-    }
-    
-    static var contentBlockingLog: OSLog {
-        Logging.contentBlockingLoggingEnabled ? Logging.contentBlockingLog : .disabled
+
+    enum AppCategories: String, CaseIterable {
+        case generalLog = "DDG General"
+        case contentBlockingLog = "DDG Content Blocking"
+        case adAttributionLog = "DDG AdAttribution"
+        case lifecycleLog = "DDG Lifecycle"
+        case autoconsentLog = "DDG Autoconsent"
+        case configurationLog = "DDG Configuration"
     }
 
-    static var adAttributionLog: OSLog {
-        Logging.adAttributionLoggingEnabled ? Logging.adAttributionLog : .disabled
-    }
-    
-    static var lifecycleLog: OSLog {
-        Logging.lifecycleLoggingEnabled ? Logging.lifecycleLog : .disabled
-    }
-    
-    static var autoconsentLog: OSLog {
-        Logging.autoconsentLoggingEnabled ? Logging.autoconsentLog : .disabled
-    }
+    @OSLogWrapper(.generalLog) static var generalLog
+    @OSLogWrapper(.contentBlockingLog) static var contentBlockingLog
+    @OSLogWrapper(.adAttributionLog) static var adAttributionLog
+    @OSLogWrapper(.lifecycleLog) static var lifecycleLog
+    @OSLogWrapper(.autoconsentLog) static var autoconsentLog
+    @OSLogWrapper(.configurationLog) static var configurationLog
 
-    static var configurationLog: OSLog {
-        Logging.configurationLoggingEnabled ? Logging.configurationLog : .disabled
-    }
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // To activate Logging Categories add categories here:
+    static var enabledCategories: Set<AppCategories> = [
+        .generalLog,
+        .contentBlockingLog,
+        .adAttributionLog,
+        .lifecycleLog,
+        .configurationLog
+    ]
 
 }
 
-struct Logging {
+public extension OSLog.OSLogWrapper {
 
-    fileprivate static let generalLoggingEnabled = true
-    fileprivate static let generalLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier,
-                                                     category: "DDG General")
-    
-    fileprivate static let contentBlockingLoggingEnabled = true
-    fileprivate static let contentBlockingLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier,
-                                                             category: "DDG Content Blocking")
-    
-    fileprivate static let adAttributionLoggingEnabled = true
-    fileprivate static let adAttributionLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier,
-                                                           category: "DDG AdAttribution")
-    
-    fileprivate static let lifecycleLoggingEnabled = true
-    fileprivate static let lifecycleLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier,
-                                                       category: "DDG Lifecycle")
-    
-    fileprivate static let autoconsentLoggingEnabled = false
-    fileprivate static let autoconsentLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier,
-                                                         category: "DDG Autoconsent")
+    private static let enableLoggingCategoriesOnce: Void = {
+        OSLog.enabledLoggingCategories = Set(OSLog.enabledCategories.map(\.rawValue))
+    }()
 
-    fileprivate static let configurationLoggingEnabled = true
-    fileprivate static let configurationLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier,
-                                                           category: "DDG Configuration")
+    init(_ category: OSLog.AppCategories) {
+        _=Self.enableLoggingCategoriesOnce
+        self.init(rawValue: category.rawValue)
+    }
 
 }

@@ -19,10 +19,10 @@
 
 import UIKit
 import WebKit
+import Common
 import Core
 import Lottie
 import Kingfisher
-import os.log
 import BrowserServicesKit
 import Bookmarks
 import Persistence

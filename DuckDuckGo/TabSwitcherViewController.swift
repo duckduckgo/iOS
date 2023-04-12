@@ -18,9 +18,9 @@
 //
 
 import UIKit
+import Common
 import Core
 import WebKit
-import os.log
 import Bookmarks
 import Persistence
 

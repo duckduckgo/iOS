@@ -18,7 +18,7 @@
 //
 
 import WebKit
-import os.log
+import Common
 import Core
 import BrowserServicesKit
 import UserScript

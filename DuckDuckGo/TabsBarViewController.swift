@@ -93,7 +93,6 @@ class TabsBarViewController: UIViewController {
     }
 
     @IBAction func onFireButtonPressed() {
-        DailyPixel.fire(pixel: .experimentDailyFireButtonTapped)
         FireButton.stopAllFireButtonAnimations()
         
         FireButtonExperiment.storeThatFireButtonWasTapped()

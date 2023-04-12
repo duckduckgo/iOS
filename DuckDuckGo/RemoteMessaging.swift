@@ -138,7 +138,7 @@ struct RemoteMessaging {
             let remoteMessagingConfigMatcher = RemoteMessagingConfigMatcher(
                     appAttributeMatcher: AppAttributeMatcher(statisticsStore: statisticsStore,
                                                              variantManager: variantManager,
-                                                             isInternalUser: DefaultFeatureFlagger().isInternalUser),
+                                                             isInternalUser: AppDependencyProvider.shared.internalUserDecider.isInternalUser),
                     userAttributeMatcher: UserAttributeMatcher(statisticsStore: statisticsStore,
                                                                variantManager: variantManager,
                                                                bookmarksCount: bookmarksCount,

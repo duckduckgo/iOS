@@ -24,6 +24,7 @@ public protocol ScanOrPasteCodeViewModelDelegate: AnyObject {
     var pasteboardString: String? { get }
 
     func startConnectMode() async -> String?
+    func endConnectMode()
 
     /// Returns true if we were able to use the code. Either way, stop validating.
     func syncCodeEntered(code: String) async -> Bool
@@ -108,6 +109,10 @@ public class ScanOrPasteCodeViewModel: ObservableObject {
             showQRCodeModel?.code = await delegate?.startConnectMode()
         }
         return model
+    }
+
+    func endConnectMode() {
+        self.delegate?.endConnectMode()
     }
 
     func gotoSettings() {

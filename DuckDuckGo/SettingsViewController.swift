@@ -66,7 +66,7 @@ class SettingsViewController: UITableViewController {
     
     private let syncSectionIndex = 1
     private let autofillSectionIndex = 2
-    private let debugSectionIndex = 7
+    private let debugSectionIndex = 8
 
     private lazy var emailManager = EmailManager()
     
@@ -77,7 +77,7 @@ class SettingsViewController: UITableViewController {
     fileprivate lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
 
     private var shouldShowDebugCell: Bool {
-        return featureFlagger.isFeatureOn(.debugMenu)
+        return featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild
     }
     
     private var shouldShowVoiceSearchCell: Bool {
@@ -85,7 +85,7 @@ class SettingsViewController: UITableViewController {
     }
 
     private lazy var shouldShowAutofillCell: Bool = {
-        return featureFlagger.isFeatureOn(.autofill)
+        return featureFlagger.isFeatureOn(.autofillAccessCredentialManagement)
     }()
 
     private lazy var shouldShowSyncCell: Bool = {

@@ -27,6 +27,20 @@ protocol AutofillLoginPromptViewModelDelegate: AnyObject {
     func autofillLoginPromptViewModelDidRequestExpansion(_ viewModel: AutofillLoginPromptViewModel)
 }
 
+struct AccountMatchesViewModel {
+    let accounts: [AccountViewModel]
+    let isPerfectMatch: Bool
+
+    var title: String {
+        if isPerfectMatch {
+            return UserText.autofillLoginPromptExactMatchTitle
+        } else {
+            let domain = accounts.first?.account.domain ?? ""
+            return UserText.autofillLoginPromptPartialMatchTitle(for: domain)
+        }
+    }
+}
+
 struct AccountViewModel: Hashable {
     
     let account: SecureVaultModels.WebsiteAccount
@@ -53,14 +67,14 @@ class AutofillLoginPromptViewModel: ObservableObject {
 
     weak var delegate: AutofillLoginPromptViewModelDelegate?
     
-    @Published var accountsViewModels: [AccountViewModel] = []
+    @Published var accountMatchesViewModels: [AccountMatchesViewModel] = []
     @Published var showMoreOptions = false
     @Published var shouldUseScrollView = false
     
     private(set) var domain: String
-    private var accounts: [SecureVaultModels.WebsiteAccount]
-    
-    private var expanded = false {
+    private var accounts: AccountMatches
+
+    private(set) var expanded = false {
         didSet {
             setUpAccountsViewModels(accounts: accounts)
         }
@@ -69,29 +83,62 @@ class AutofillLoginPromptViewModel: ObservableObject {
     let message = UserText.autofillLoginPromptTitle
     let moreOptionsButtonString = UserText.autofillLoginPromptMoreOptions
     
-    internal init?(accounts: [SecureVaultModels.WebsiteAccount], isExpanded: Bool) {
-        guard let firstAccount = accounts.first else {
-            return nil
-        }
-        self.domain = firstAccount.domain
-        self.expanded = isExpanded
+    internal init(accounts: AccountMatches, domain: String, isExpanded: Bool) {
         self.accounts = accounts
+        self.domain = domain
+        self.expanded = isExpanded
         setUpAccountsViewModels(accounts: accounts)
     }
     
-    private func setUpAccountsViewModels(accounts: [SecureVaultModels.WebsiteAccount]) {
-        let accountsToShow: [SecureVaultModels.WebsiteAccount]
+    private func setUpAccountsViewModels(accounts: AccountMatches) {
         shouldUseScrollView = expanded
-        if expanded || accounts.count <= 3 {
-            accountsToShow = accounts
+        accountMatchesViewModels = []
+
+        if expanded {
             showMoreOptions = false
+            if accounts.perfectMatches.count > 0 {
+                accountMatchesViewModels.append(AccountMatchesViewModel(accounts: accounts.perfectMatches.map { AccountViewModel(account: $0) },
+                                                                        isPerfectMatch: true))
+            }
+            for key in accounts.partialMatches.keys.sorted() {
+                if let partialMatch = accounts.partialMatches[key] {
+                    accountMatchesViewModels.append(AccountMatchesViewModel(accounts: partialMatch.map { AccountViewModel(account: $0) },
+                                                                            isPerfectMatch: false))
+                }
+            }
         } else {
-            accountsToShow = Array(accounts[0...1])
-            showMoreOptions = true
+            let limit = AutofillLoginPromptHelper.moreOptionsLimit
+            showMoreOptions = AutofillLoginPromptHelper.shouldShowMoreOptions(accounts, limit: limit)
+
+            if !accounts.perfectMatches.isEmpty {
+                if accounts.perfectMatches.count > limit || (showMoreOptions && accounts.perfectMatches.count == limit) {
+                    accountMatchesViewModels.append(AccountMatchesViewModel(accounts: subsetToDisplay(accounts.perfectMatches,
+                                                                                                      limit: limit - 1),
+                                                                            isPerfectMatch: true))
+                } else {
+                    accountMatchesViewModels.append(AccountMatchesViewModel(accounts: accounts.perfectMatches.map { AccountViewModel(account: $0) },
+                                                                            isPerfectMatch: true))
+                }
+            } else {
+                if let key = accounts.partialMatches.keys.sorted().first, let firstPartialMatch = accounts.partialMatches[key] {
+                    if firstPartialMatch.count > limit || accounts.partialMatches.count > 1 {
+                        let maxToDisplay = min(limit - 1, firstPartialMatch.count)
+                        accountMatchesViewModels.append(AccountMatchesViewModel(accounts: subsetToDisplay(firstPartialMatch,
+                                                                                                          limit: maxToDisplay),
+                                                                                isPerfectMatch: false))
+                    } else {
+                        accountMatchesViewModels.append(AccountMatchesViewModel(accounts: firstPartialMatch.map { AccountViewModel(account: $0) },
+                                                                                isPerfectMatch: false))
+                    }
+                }
+            }
         }
-        accountsViewModels = accountsToShow.map { AccountViewModel(account: $0) }
     }
-    
+
+    private func subsetToDisplay(_ accounts: [SecureVaultModels.WebsiteAccount], limit: Int) -> [AccountViewModel] {
+        return Array(accounts[0..<limit]).map { AccountViewModel(account: $0) }
+    }
+
     func dismissView() {
         delegate?.autofillLoginPromptViewModelDidCancel(self)
     }
@@ -107,16 +154,9 @@ class AutofillLoginPromptViewModel: ObservableObject {
 
 internal extension AutofillLoginPromptViewModel {
     static var preview: AutofillLoginPromptViewModel {
-        let account = SecureVaultModels.WebsiteAccount(title: "Title", username: "test@duck.com", domain: "example.com")
-        return AutofillLoginPromptViewModel(accounts: [account], isExpanded: false)!
-    }
-}
-
-extension AutofillLoginPromptViewModel: AutofillLoginPromptViewControllerExpansionResponseDelegate {
-    func autofillLoginPromptViewController(_ viewController: AutofillLoginPromptViewController, isExpanded: Bool) {
-        if self.expanded {
-            return // Never collapse after expanding
-        }
-        self.expanded = isExpanded
+        let domain = "example.com"
+        let account = SecureVaultModels.WebsiteAccount(title: "Title", username: "test@duck.com", domain: domain)
+        let accountMatches = AccountMatches(perfectMatches: [account], partialMatches: [:])
+        return AutofillLoginPromptViewModel(accounts: accountMatches, domain: domain, isExpanded: false)
     }
 }

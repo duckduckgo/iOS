@@ -88,10 +88,15 @@ class AppTrackingProtectionPacketTunnelProvider: NEPacketTunnelProvider {
     }
     
     override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)?) {
-        // Add code here to handle the message.
-        if let handler = completionHandler {
-            handler(messageData)
+        if let factory = ObserverFactory.currentFactory as? DDGObserverFactory {
+            factory.refreshAllowlist()
+            
+            if let handler = completionHandler {
+                handler(messageData)
+            }
         }
+        
+        completionHandler?(nil)
     }
     
     override func sleep(completionHandler: @escaping () -> Void) {

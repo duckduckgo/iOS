@@ -19,7 +19,7 @@
 
 import Foundation
 
-public struct AppTrackingProtectionAllowlistModel {
+public class AppTrackingProtectionAllowlistModel: NSObject {
     public enum Constants {
         public static let groupID = "\(Global.groupIdPrefix).apptp"
         public static let fileName = "appTPallowlist"
@@ -32,12 +32,14 @@ public struct AppTrackingProtectionAllowlistModel {
     
     var allowedDomains: Set<String>
     
-    public init() {
+    public override init() {
         allowedDomains = Set<String>()
+        super.init()
+        
         readFromFile()
     }
     
-    mutating func writeToFile() {
+    func writeToFile() {
         guard let allowlistUrl = allowlistUrl else {
             fatalError("Unable to get file location")
         }
@@ -46,12 +48,15 @@ public struct AppTrackingProtectionAllowlistModel {
         do {
             let string = allowedDomains.joined(separator: "\n")
             try string.write(to: allowlistUrl, atomically: true, encoding: .utf8)
+            Task {
+                await FirewallManager().notifyAllowlistChange()
+            }
         } catch {
             print(error.localizedDescription)
         }
     }
     
-    mutating func readFromFile() {
+    public func readFromFile() {
         guard let allowlistUrl = allowlistUrl else {
             fatalError("Unable to get file location")
         }
@@ -69,7 +74,7 @@ public struct AppTrackingProtectionAllowlistModel {
         }
     }
     
-    mutating public func allow(domain: String) {
+    public func allow(domain: String) {
         allowedDomains.insert(domain)
         writeToFile()
     }
@@ -87,12 +92,12 @@ public struct AppTrackingProtectionAllowlistModel {
         return false
     }
     
-    mutating public func remove(domain: String) {
+    public func remove(domain: String) {
         allowedDomains.remove(domain)
         writeToFile()
     }
     
-    mutating public func clearList() {
+    public func clearList() {
         allowedDomains.removeAll()
         writeToFile()
     }

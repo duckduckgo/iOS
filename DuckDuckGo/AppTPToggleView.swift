@@ -19,6 +19,7 @@
 
 import SwiftUI
 import NetworkExtension
+import Core
 import os.log
 
 struct AppTPToggleView: View {

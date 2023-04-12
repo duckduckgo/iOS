@@ -54,6 +54,10 @@ class DDGObserverFactory: ObserverFactory {
         appTrackingProtectionStoringModel = AppTrackingProtectionStoringModel(appTrackingProtectionDatabase: appTrackingProtectionDatabase)
     }
     
+    func refreshAllowlist() {
+        allowlist?.readFromFile()
+    }
+    
     class DDGProxySocketObserver: Observer<ProxySocketEvent> {
         
         private var trackerData: TrackerDataParser?

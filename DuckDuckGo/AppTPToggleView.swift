@@ -22,6 +22,7 @@ import NetworkExtension
 import os.log
 
 struct AppTPToggleView: View {
+    @Binding var appTPUsed: Bool
     @Binding var vpnOn: Bool
     @State var isExternalChange = false
     
@@ -80,6 +81,9 @@ struct AppTPToggleView: View {
                 // This will prevent the change of vpnOn from causing a loop enabling/disabling the VPN.
                 isExternalChange = true
                 vpnOn = value == .connected
+                if value == .connected {
+                    appTPUsed = true
+                }
             }
         }
         .padding()

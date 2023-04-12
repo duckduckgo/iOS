@@ -89,5 +89,11 @@ public struct AppTrackingProtectionAllowlistModel {
     
     mutating public func remove(domain: String) {
         allowedDomains.remove(domain)
+        writeToFile()
+    }
+    
+    mutating public func clearList() {
+        allowedDomains.removeAll()
+        writeToFile()
     }
 }

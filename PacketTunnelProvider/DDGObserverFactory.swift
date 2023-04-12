@@ -36,7 +36,9 @@ class DDGObserverFactory: ObserverFactory {
     private let appTrackingProtectionStoringModel: AppTrackingProtectionStoringModel
     
     override func getObserverForProxySocket(_ socket: ProxySocket) -> Observer<ProxySocketEvent>? {
-        return DDGProxySocketObserver(trackerData: trackerData, allowlist: allowlist, appTrackingProtectionStoringModel: appTrackingProtectionStoringModel)
+        return DDGProxySocketObserver(trackerData: trackerData,
+                                      allowlist: allowlist,
+                                      appTrackingProtectionStoringModel: appTrackingProtectionStoringModel)
     }
     
     override init() {

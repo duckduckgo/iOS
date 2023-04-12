@@ -25,6 +25,8 @@ struct AppTPActivityView: View {
     @ObservedObject var feedbackModel: AppTrackingProtectionFeedbackModel
     @ObservedObject var toggleViewModel = AppTPToggleViewModel()
     
+    // We only want to show "Manage Trackers" and "Report an issue" if the user has enabled AppTP at least once
+    @AppStorage("appTPUsed") var appTPUsed: Bool = false
     @State var vpnOn: Bool = false
     
     let imageCache = AppTrackerImageCache()
@@ -100,11 +102,48 @@ struct AppTPActivityView: View {
         }
     }
     
+    var manageSection: some View {
+        Section {
+            VStack(alignment: .leading, spacing: 0) {
+                NavigationLink(destination: AppTPManageTrackersView(viewModel: AppTPManageTrackersViewModel(),
+                                                                    imageCache: imageCache)) {
+                    HStack {
+                        Text("Manage Trackers") // TODO: Add to UserText
+                            .font(Font(uiFont: Const.Font.info))
+                            .foregroundColor(Color("AppTPToggleColor"))
+                            
+                        Spacer()
+                    }
+                    .padding(.horizontal)
+                    .frame(height: Const.Size.standardCellHeight)
+                }
+                
+                Divider()
+                
+                NavigationLink(destination: AppTPBreakageFormView(feedbackModel: feedbackModel)) {
+                    HStack {
+                        Text("Report an issue with an app") // TODO: Add to UserText
+                            .font(Font(uiFont: Const.Font.info))
+                            .foregroundColor(Color("AppTPToggleColor"))
+                        
+                        Spacer()
+                    }
+                    .padding(.horizontal)
+                    .frame(height: Const.Size.standardCellHeight)
+                }
+            }
+            .background(Color.cellBackground)
+            .cornerRadius(Const.Size.cornerRadius)
+            .padding(.bottom)
+        }
+    }
+    
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .center, spacing: 0) {
                 Section {
                     AppTPToggleView(
+                        appTPUsed: $appTPUsed,
                         vpnOn: $vpnOn,
                         viewModel: toggleViewModel
                     )
@@ -113,25 +152,8 @@ struct AppTPActivityView: View {
                         .padding(.bottom)
                 }
                 
-                Section {
-                    VStack {
-                        NavigationLink(destination: AppTPBreakageFormView(feedbackModel: feedbackModel)) {
-                            Text("Manage Trackers") // TODO: Add to UserText
-                                .font(Font(uiFont: Const.Font.sectionHeader))
-                                .foregroundColor(Color("AppTPToggleColor"))
-                                .frame(height: 44)
-                        }
-                        
-                        NavigationLink(destination: AppTPBreakageFormView(feedbackModel: feedbackModel)) {
-                            Text("Report an issue with the app") // TODO: Add to UserText
-                                .font(Font(uiFont: Const.Font.sectionHeader))
-                                .foregroundColor(Color("AppTPToggleColor"))
-                                .frame(height: 44)
-                        }
-                    }
-                    .background(Color.cellBackground)
-                    .cornerRadius(Const.Size.cornerRadius)
-                    .padding(.bottom)
+                if appTPUsed || viewModel.sections.count > 0 {
+                    manageSection
                 }
 
                 if viewModel.sections.count > 0 {
@@ -157,6 +179,7 @@ private enum Const {
         static let cornerRadius: CGFloat = 12
         static let sectionIndentation: CGFloat = 16
         static let sectionHeaderBottom: CGFloat = 6
+        static let standardCellHeight: CGFloat = 44
     }
 }
 

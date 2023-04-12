@@ -272,7 +272,7 @@ public class WebCacheManager {
                  }
              }
          } catch {
-             // TODO: Add pixel
+             Pixel.fire(pixel: .debugCannotClearObservationsDatabase, error: error)
          }
      }
 

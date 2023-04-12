@@ -359,6 +359,8 @@ extension Pixel {
         case debugMissingTopFolderFixHasBookmarks
         
         case debugCantSaveBookmarkFix
+
+        case debugCannotClearObservationsDatabase
         
         // Errors from Bookmarks Module
         case bookmarkFolderExpected
@@ -722,6 +724,8 @@ extension Pixel.Event {
         case .debugMissingTopFolderFixHasFavorites: return "m_d_missing_top_folder_has_favorites"
             
         case .debugCantSaveBookmarkFix: return "m_d_cant_save_bookmark_fix"
+
+        case .debugCannotClearObservationsDatabase: return "m_d_cannot_clear_observations_database"
             
         
         // MARK: Ad Attribution

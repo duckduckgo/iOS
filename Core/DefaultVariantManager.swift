@@ -23,9 +23,8 @@ import Speech
 import BrowserServicesKit
 
 extension FeatureName {
-    
-    public static let fireButtonAnimation = FeatureName(rawValue: "fireButtonAnimation")
-    
+    // Define your feature e.g.:
+    // public static let experimentalFeature = FeatureName(rawValue: "experimentalFeature")
 }
 
 public struct VariantIOS: Variant {
@@ -52,8 +51,6 @@ public struct VariantIOS: Variant {
     
     // Note: Variants with `doNotAllocate` weight, should always be included so that previous installations are unaffected
     public static let defaultVariants: [Variant] = [
-        VariantIOS(name: "mc", weight: doNotAllocate, isIncluded: When.always, features: []),
-        VariantIOS(name: "ma", weight: doNotAllocate, isIncluded: When.always, features: [.fireButtonAnimation]),
         
         // SERP testing
         VariantIOS(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),

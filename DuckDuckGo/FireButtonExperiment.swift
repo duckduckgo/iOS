@@ -32,8 +32,7 @@ final class FireButtonExperiment {
 
     public static func playFireButtonAnimationOnTabSwitcher(fireButton: FireButton,
                                                             tabCount: Int) {
-        guard isFireButtonAnimationFeatureEnabled,
-              tabCount > 1,
+        guard tabCount > 1,
               !wasFireButtonEverTapped
         else { return }
         
@@ -43,13 +42,7 @@ final class FireButtonExperiment {
     }
     
     public static func playFireButtonForOnboarding(fireButton: FireButton) {
-        guard isFireButtonAnimationFeatureEnabled else { return }
-        
         fireButton.playAnimation()
-    }
-    
-    private static var isFireButtonAnimationFeatureEnabled: Bool {
-        AppDependencyProvider.shared.variantManager.isSupported(feature: .fireButtonAnimation)
     }
     
     private static var wasFireButtonEverTapped: Bool {
@@ -61,8 +54,7 @@ final class FireButtonExperiment {
     }
     
     public static func restartFireButtonEducationIfNeeded() {
-        guard isFireButtonAnimationFeatureEnabled,
-              !wasFireButtonEducationRestarted,
+        guard !wasFireButtonEducationRestarted,
               !wasFireButtonEverTapped,
               isAtLeastThreeDaysFromInstallation
         else { return }

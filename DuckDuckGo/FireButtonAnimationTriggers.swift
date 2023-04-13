@@ -37,7 +37,7 @@ extension FireButton {
         return false
         
         guard let installDate = StatisticsUserDefaults().installDate,
-              let featureReleaseDate = calendarUTC.date(from: DateComponents(year: 2023, month: 3, day: 29))
+              let featureReleaseDate = calendarUTC.date(from: DateComponents(year: 2023, month: 4, day: 17))
         else { return false }
 
         let isInstallDateBeforeFeatureDate = installDate < featureReleaseDate

@@ -1,5 +1,5 @@
 //
-//  FireButtonExperiment.swift
+//  FireButtonAnimationTriggers.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -20,7 +20,7 @@
 import UIKit
 import Core
 
-final class FireButtonExperiment {
+extension FireButton {
     
     static let calendarUTC = {
         var calendarUTC = Calendar(identifier: .gregorian)

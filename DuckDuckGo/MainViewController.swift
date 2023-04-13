@@ -525,7 +525,7 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
         FireButton.stopAllFireButtonAnimations()
         
-        FireButtonExperiment.storeThatFireButtonWasTapped()
+        FireButton.storeThatFireButtonWasTapped()
         
         wakeLazyFireButtonAnimator()
         

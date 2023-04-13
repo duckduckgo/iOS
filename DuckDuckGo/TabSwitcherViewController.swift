@@ -173,7 +173,7 @@ class TabSwitcherViewController: UIViewController {
         } else {
             guard let fireButton = !topFireButton.isHidden ? topFireButton : fireButton.button,
                   tabsModel.count > 1,
-                  !FireButtonExperiment.wasFireButtonEverTapped
+                  !FireButton.wasFireButtonEverTapped
             else { return }
             
             fireButton.playAnimation()
@@ -316,7 +316,7 @@ class TabSwitcherViewController: UIViewController {
         Pixel.fire(pixel: .forgetAllPressedTabSwitching)
         FireButton.stopAllFireButtonAnimations()
         
-        FireButtonExperiment.storeThatFireButtonWasTapped()
+        FireButton.storeThatFireButtonWasTapped()
         
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             let spec = DaxDialogs.shared.fireButtonEducationMessage()

@@ -241,7 +241,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             onApplicationLaunch(application)
         }
         
-        FireButtonExperiment.restartFireButtonEducationIfNeeded()
+        FireButton.restartFireButtonEducationIfNeeded()
 
         mainViewController?.showBars()
         mainViewController?.didReturnFromBackground()

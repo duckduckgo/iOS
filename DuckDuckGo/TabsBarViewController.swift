@@ -95,7 +95,7 @@ class TabsBarViewController: UIViewController {
     @IBAction func onFireButtonPressed() {
         FireButton.stopAllFireButtonAnimations()
         
-        FireButtonExperiment.storeThatFireButtonWasTapped()
+        FireButton.storeThatFireButtonWasTapped()
         
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             delegate?.tabsBarDidRequestFireEducationDialog(self)

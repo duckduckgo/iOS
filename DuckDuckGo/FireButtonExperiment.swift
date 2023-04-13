@@ -28,18 +28,7 @@ final class FireButtonExperiment {
         return calendarUTC
     }()
     
-    // MARK: - Experiment #1 - adding fire button animation
-
-    public static func playFireButtonAnimationOnTabSwitcher(fireButton: FireButton,
-                                                            tabCount: Int) {
-        guard tabCount > 1,
-              !wasFireButtonEverTapped
-        else { return }
-        
-        fireButton.playAnimation()
-    }
-    
-    private static var wasFireButtonEverTapped: Bool {
+    public static var wasFireButtonEverTapped: Bool {
         AppUserDefaults().wasFireButtonEverTapped
     }
     

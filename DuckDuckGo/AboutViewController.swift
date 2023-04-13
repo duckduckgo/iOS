@@ -31,6 +31,10 @@ class AboutViewController: UIViewController {
         super.viewDidLoad()
                 
         applyTheme(ThemeManager.shared.currentTheme)
+        
+        #warning("only for testing - remove this")
+        AppUserDefaults().wasFireButtonEverTapped = false
+        AppUserDefaults().wasFireButtonEducationRestarted = false
     }
 
     @IBAction func onPrivacyLinkTapped(_ sender: UIButton) {

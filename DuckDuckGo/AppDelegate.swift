@@ -249,6 +249,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         StatisticsLoader.shared.load {
             StatisticsLoader.shared.refreshAppRetentionAtb()
             self.fireAppLaunchPixel()
+            self.fireAppTPActiveUserPixel()
         }
         
         if appIsLaunching {
@@ -318,18 +319,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
         }
+    }
+
+    private func fireAppTPActiveUserPixel() {
+        guard AppDependencyProvider.shared.featureFlagger.isFeatureOn(.appTrackingProtection) else {
+            return
+        }
         
-        let fwm = FirewallManager()
+        let manager = FirewallManager()
+
         Task {
-            await fwm.refreshManager()
+            await manager.refreshManager()
             let date = Date()
             let key = "appTPActivePixelFired"
-            
+
             // Make sure we don't fire this pixel multiple times a day
             let dayStart = Calendar.current.startOfDay(for: date)
             let fireDate = UserDefaults.standard.object(forKey: key) as? Date
-            if fireDate == nil || fireDate! < dayStart,
-               fwm.status() == .connected {
+            if fireDate == nil || fireDate! < dayStart, manager.status() == .connected {
                 Pixel.fire(pixel: .appTPActiveUser)
                 UserDefaults.standard.set(date, forKey: key)
             }

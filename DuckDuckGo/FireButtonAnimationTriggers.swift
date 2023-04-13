@@ -33,9 +33,6 @@ extension FireButton {
     }
     
     private static func canAssumeFireButtonWasUsedBasedOnInstallDate() -> Bool {
-        #warning("only for testing - remove this")
-        return false
-        
         guard let installDate = StatisticsUserDefaults().installDate,
               let featureReleaseDate = calendarUTC.date(from: DateComponents(year: 2023, month: 4, day: 17))
         else { return false }
@@ -66,9 +63,6 @@ extension FireButton {
     }
     
     private static var isAtLeastThreeDaysFromInstallation: Bool {
-        #warning("only for testing - remove this")
-        return true
-        
         guard let installDate = StatisticsUserDefaults().installDate,
               let daysSinceInstall = calendarUTC.numberOfCalendarDaysBetween(installDate, and: Date())
         else { return false }

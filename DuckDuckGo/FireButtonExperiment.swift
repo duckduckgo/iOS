@@ -37,7 +37,7 @@ final class FireButtonExperiment {
     }
     
     public static func restartFireButtonEducationIfNeeded() {
-        guard !wasFireButtonEducationRestarted,
+        guard !AppUserDefaults().wasFireButtonEducationRestarted,
               !wasFireButtonEverTapped,
               isAtLeastThreeDaysFromInstallation
         else { return }
@@ -45,14 +45,6 @@ final class FireButtonExperiment {
         DefaultDaxDialogsSettings().fireButtonEducationShownOrExpired = false
         DefaultDaxDialogsSettings().fireButtonPulseDateShown = nil
         
-        storeThatFireButtonEducationWasRestarted()
-    }
-    
-    private static var wasFireButtonEducationRestarted: Bool {
-        AppUserDefaults().wasFireButtonEducationRestarted
-    }
-    
-    private static func storeThatFireButtonEducationWasRestarted() {
         AppUserDefaults().wasFireButtonEducationRestarted = true
     }
     

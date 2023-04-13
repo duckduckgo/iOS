@@ -343,7 +343,6 @@ class SettingsViewController: UITableViewController {
         case syncCell:
             showSync()
 
-            
         case appTPCell:
             showAppTP()
             

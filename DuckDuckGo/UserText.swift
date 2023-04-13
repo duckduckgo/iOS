@@ -500,6 +500,18 @@ public struct UserText {
         return message.format(arguments: count)
     }
     
+    public static func appTPTrackerBlockedTimestamp(timeString: String) -> String {
+        let message = NSLocalizedString("appTP.trackerBlockedTimestamp", value: "Last attempt blocked %@", comment: "Text indicating when the tracker was last blocked. Example: Last attempt blocked (timeString)")
+        return message.format(arguments: timeString)
+    }
+    
+    public static func appTPTrackerAllowedTimestamp(timeString: String) -> String {
+        let message = NSLocalizedString("appTP.trackerAllowedTimestamp", value: "Last attempt allowed %@", comment: "Text indicating when the tracker was last allowed. Example: Last attempt allowed (timeString)")
+        return message.format(arguments: timeString)
+    }
+    
+    public static let appTPJustNow = NSLocalizedString("appTP.justNow", value: "just now", comment: "Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now'")
+    
     // MARK: Notifications
     
     public static let macWaitlistAvailableNotificationTitle = NSLocalizedString("mac-waitlist.available.notification.title", value: "DuckDuckGo for Mac is ready!", comment: "Title for the macOS waitlist notification")

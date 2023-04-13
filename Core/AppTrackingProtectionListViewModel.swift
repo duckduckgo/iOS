@@ -60,6 +60,12 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
         return formatter
     }()
     
+    private let relativeTimeFormatter: RelativeDateTimeFormatter = {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.unitsStyle = .short
+        return formatter
+    }()
+    
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM dd"
@@ -90,6 +96,19 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
         }
         
         return relativeDate
+    }
+    
+    public func format(timestamp: Date) -> String {
+        let date = Date()
+        let timestampInterval = timestamp.timeIntervalSinceReferenceDate
+        let dateInterval = date.timeIntervalSinceReferenceDate
+        if fabs(dateInterval - timestampInterval) < 1 {
+            // Can't access UserText from Core. To prevent handling the localized string "in 0 seconds"
+            // return "0" here and replace it with UserText on the view side.
+            return "0"
+        }
+        
+        return relativeTimeFormatter.localizedString(for: timestamp, relativeTo: Date())
     }
 
     fileprivate var fetchedResultsController: NSFetchedResultsController<AppTrackerEntity>!

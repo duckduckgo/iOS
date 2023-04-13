@@ -27,11 +27,12 @@ public class AppTrackerEntity: NSManagedObject {
         return NSFetchRequest<AppTrackerEntity>(entityName: "AppTrackerEntity")
     }
 
-    @nonobjc public class func fetchRequest(domain: String, bucket: String) -> NSFetchRequest<AppTrackerEntity> {
+    @nonobjc public class func fetchRequest(domain: String, bucket: String, blocked: Bool) -> NSFetchRequest<AppTrackerEntity> {
         let request = NSFetchRequest<AppTrackerEntity>(entityName: "AppTrackerEntity")
-        request.predicate = NSPredicate(format: "%K == %@ AND %K == %@",
+        request.predicate = NSPredicate(format: "%K == %@ AND %K == %@ AND %K == %@",
                                         #keyPath(AppTrackerEntity.domain), domain,
-                                        #keyPath(AppTrackerEntity.bucket), bucket)
+                                        #keyPath(AppTrackerEntity.bucket), bucket,
+                                        #keyPath(AppTrackerEntity.blocked), NSNumber(value: blocked))
         request.fetchLimit = 1
         return request
     }

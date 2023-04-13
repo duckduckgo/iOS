@@ -28,6 +28,7 @@ struct AppTPTrackerCell: View {
     let trackerDomain: String
     let trackerOwner: String
     let trackerCount: Int32
+    let trackerBlocked: Bool
 
     let trackerTimestamp: String
     let trackerBucket: String
@@ -36,12 +37,24 @@ struct AppTPTrackerCell: View {
     let imageCache: AppTrackerImageCache
     let showDivider: Bool
     
+    func stringForTrackerTimestamp() -> String {
+        var timeStr = trackerTimestamp
+        if timeStr == "0" {
+            timeStr = UserText.appTPJustNow
+        }
+        
+        if trackerBlocked {
+            return UserText.appTPTrackerBlockedTimestamp(timeString: timeStr)
+        } else {
+            return UserText.appTPTrackerAllowedTimestamp(timeString: timeStr)
+        }
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .center) {
-                SVGView(data: imageCache.loadTrackerImage(for: trackerOwner))
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 25, height: 25)
+                AppTPActivityIconView(trackerImage: imageCache.loadTrackerImage(for: trackerOwner),
+                                      blocked: trackerBlocked)
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(trackerDomain)
@@ -51,15 +64,19 @@ struct AppTPTrackerCell: View {
                     Text(UserText.appTPTrackingAttempts(count: "\(trackerCount)"))
                         .font(Font(uiFont: Const.Font.trackerCount))
                         .foregroundColor(.trackerSize)
+                    
+                    Text(stringForTrackerTimestamp())
+                        .font(Font(uiFont: Const.Font.trackerCount))
+                        .foregroundColor(.trackerSize)
 
                     if debugMode {
-                        Text("\(trackerTimestamp), bucket: \(trackerBucket)")
+                        Text("bucket: \(trackerBucket)")
                             .font(Font(uiFont: Const.Font.trackerCount))
                             .foregroundColor(.trackerSize)
                     }
                 }
             }
-            .padding(.horizontal)
+            .padding(.horizontal, 16)
             .frame(height: Const.Size.rowHeight)
             
             if showDivider {
@@ -76,7 +93,7 @@ private enum Const {
     }
     
     enum Size {
-        static let rowHeight: CGFloat = 60
+        static let rowHeight: CGFloat = 78
     }
 }
 

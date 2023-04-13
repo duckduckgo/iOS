@@ -43,7 +43,7 @@ public class AppTrackingProtectionStoringModel: ObservableObject {
 
         context.performAndWait {
             do {
-                let existingTrackersFetchRequest = AppTrackerEntity.fetchRequest(domain: domain, bucket: bucket)
+                let existingTrackersFetchRequest = AppTrackerEntity.fetchRequest(domain: domain, bucket: bucket, blocked: blocked)
 
                 if let existingTracker = try context.fetch(existingTrackersFetchRequest).first {
                     existingTracker.count += 1

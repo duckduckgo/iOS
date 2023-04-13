@@ -43,15 +43,15 @@ class AppTPManageTrackersViewModel: ObservableObject {
     private func buildTrackerList() {
         trackerList.removeAll()
         for blockedTracker in blocklist.flatDomainList() {
-            var tracker = ManagedTrackerRepresentable(
+            let tracker = ManagedTrackerRepresentable(
                 domain: blockedTracker,
                 trackerOwner: blocklist.trackerOwner(forDomain: blockedTracker)?.name ?? "Unknown",
                 blocking: !allowlist.contains(domain: blockedTracker)
             )
             trackerList.append(tracker)
         }
-        // Sort the list by Tracker Network
-        trackerList.sort(by: { $0.trackerOwner < $1.trackerOwner })
+        // Sort the list by Tracker Network then by domain
+        trackerList.sort(by: { ($0.trackerOwner, $0.domain) < ($1.trackerOwner, $1.domain) })
     }
     
     public func changeState(for trackerDomain: String, blocking: Bool) {

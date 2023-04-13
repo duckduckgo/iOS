@@ -142,8 +142,17 @@
 /* Info string informing the user we're looking for trackers in other apps. */
 "appTP.empty.enabled.info" = "We're looking for trackers in your apps...";
 
+/* Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now' */
+"appTP.justNow" = "just now";
+
 /* Title for the App Tracking Protection feature */
 "appTP.title" = "App Tracking Protection";
+
+/* Text indicating when the tracker was last allowed. Example: Last attempt allowed (timeString) */
+"appTP.trackerAllowedTimestamp" = "Last attempt allowed %@";
+
+/* Text indicating when the tracker was last blocked. Example: Last attempt blocked (timeString) */
+"appTP.trackerBlockedTimestamp" = "Last attempt blocked %@";
 
 /* Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts */
 "appTP.trackingattempts" = "%@ tracking attempts";

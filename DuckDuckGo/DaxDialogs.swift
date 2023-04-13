@@ -242,6 +242,7 @@ final class DaxDialogs {
             fireButtonPulseTimer = Timer(timeInterval: timerTime, repeats: false) { _ in
                 self.settings.fireButtonEducationShownOrExpired = true
                 ViewHighlighter.hideAll()
+                FireButton.stopAllFireButtonAnimations()
             }
             RunLoop.current.add(fireButtonPulseTimer!, forMode: RunLoop.Mode.common)
         }
@@ -249,6 +250,7 @@ final class DaxDialogs {
     
     func fireButtonPulseCancelled() {
         fireButtonPulseTimer?.invalidate()
+        fireButtonPulseTimer = nil
         settings.fireButtonEducationShownOrExpired = true
     }
     

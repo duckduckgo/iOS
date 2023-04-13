@@ -56,6 +56,8 @@ extension FireButton {
               isAtLeastThreeDaysFromInstallation
         else { return }
               
+        DaxDialogs.shared.fireButtonPulseCancelled()
+        
         DefaultDaxDialogsSettings().fireButtonEducationShownOrExpired = false
         DefaultDaxDialogsSettings().fireButtonPulseDateShown = nil
         

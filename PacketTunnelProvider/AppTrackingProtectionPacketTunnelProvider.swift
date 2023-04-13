@@ -40,7 +40,6 @@ class AppTrackingProtectionPacketTunnelProvider: NEPacketTunnelProvider {
         // Set up local proxy server to route requests that match the blocklist
         let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: proxyServerAddress)
 
-        // TODO: We'll need to change the MTU depending on whether NetP is involved
         settings.mtu = NSNumber(value: 1500)
         
         let proxySettings = NEProxySettings()
@@ -68,8 +67,7 @@ class AppTrackingProtectionPacketTunnelProvider: NEPacketTunnelProvider {
                 try self.proxyServer.start()
                 completionHandler(nil)
             } catch {
-                os_log("[ERROR] Error starting proxy server %s", log: generalLog,
-                       type: .error, error.localizedDescription)
+                os_log("[ERROR] Error starting proxy server %s", log: generalLog, type: .error, error.localizedDescription)
                 completionHandler(error)
             }
         }

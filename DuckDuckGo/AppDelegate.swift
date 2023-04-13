@@ -156,9 +156,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         appTrackingProtectionDatabase.loadStore { context, error in
             guard context != nil else {
-                // TODO: Fire pixel here, then sleep for 1 second to allow it to send
-                Thread.sleep(forTimeInterval: 1)
+                if let error = error {
+                    Pixel.fire(pixel: .appTPCouldNotLoadDatabase, error: error)
+                } else {
+                    Pixel.fire(pixel: .appTPCouldNotLoadDatabase)
+                }
 
+                Thread.sleep(forTimeInterval: 1)
                 fatalError("Could not create AppTP database stack: \(error?.localizedDescription ?? "err")")
             }
         }

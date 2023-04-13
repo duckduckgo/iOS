@@ -339,7 +339,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             let domains = domainsInBookmarkTree(bookmark)
 
             let oldCount = viewModel.bookmarks.count
-            viewModel.deleteBookmark(bookmark)
+            viewModel.softDeleteBookmark(bookmark)
             let newCount = viewModel.bookmarks.count
 
             // Make sure we are animating only single removal

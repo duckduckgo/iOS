@@ -29,7 +29,21 @@ final class FireButtonExperiment {
     }()
     
     public static var wasFireButtonEverTapped: Bool {
-        AppUserDefaults().wasFireButtonEverTapped
+        AppUserDefaults().wasFireButtonEverTapped ? true : canAssumeFireButtonWasUsedBasedOnInstallDate()
+    }
+    
+    private static func canAssumeFireButtonWasUsedBasedOnInstallDate() -> Bool {
+        guard let installDate = StatisticsUserDefaults().installDate,
+              let featureReleaseDate = calendarUTC.date(from: DateComponents(year: 2023, month: 3, day: 29))
+        else { return false }
+
+        let isInstallDateBeforeFeatureDate = installDate < featureReleaseDate
+        
+        if isInstallDateBeforeFeatureDate {
+            storeThatFireButtonWasTapped()
+        }
+        
+        return isInstallDateBeforeFeatureDate
     }
     
     public static func storeThatFireButtonWasTapped() {
@@ -55,7 +69,6 @@ final class FireButtonExperiment {
 
         return daysSinceInstall >= 3
     }
-    
 }
 
 extension Calendar {

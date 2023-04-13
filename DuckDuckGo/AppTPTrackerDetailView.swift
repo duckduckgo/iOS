@@ -18,10 +18,15 @@
 //
 
 import SwiftUI
+import Core
 
 struct AppTPTrackerDetailView: View {
     
     @StateObject var viewModel: AppTPTrackerDetailViewModel
+    @StateObject var feedbackModel: AppTrackingProtectionFeedbackModel
+    
+    @State var isBreakageLinkActive: Bool = false
+    @State var showReportAlert: Bool = false
     
     var body: some View {
         ZStack {
@@ -53,9 +58,25 @@ struct AppTPTrackerDetailView: View {
                 .padding()
             }
             .navigationTitle(viewModel.trackerDomain)
-            .onChange(of: viewModel.isBlocking) { _ in
+            .onChange(of: viewModel.isBlocking) { value in
                 viewModel.changeTrackerState()
+                if !value {
+                    showReportAlert = true
+                }
             }
+            
+            NavigationLink(destination: AppTPBreakageFormView(feedbackModel: feedbackModel), isActive: $isBreakageLinkActive) {
+                EmptyView()
+            }
+        }
+        .alert(isPresented: $showReportAlert) {
+            Alert(title: Text("Report an issue?"), // TODO: User Text
+                  message: Text("Please let us know if you don't want us to block this tracker because you experienced app issues."),
+                  primaryButton: .default(Text("Report Issue")) {
+                      isBreakageLinkActive = true
+                  },
+                  secondaryButton: .cancel(Text("Not Now"))
+            )
         }
     }
 }

@@ -71,7 +71,8 @@ struct AppTPActivityView: View {
                             let showDivider = tracker != (section.objects?.last as? AppTrackerEntity)
                             NavigationLink(
                                 destination: AppTPTrackerDetailView(
-                                    viewModel: AppTPTrackerDetailViewModel(trackerDomain: tracker.domain)
+                                    viewModel: AppTPTrackerDetailViewModel(trackerDomain: tracker.domain),
+                                    feedbackModel: feedbackModel
                                 )
                             ) {
                                 AppTPTrackerCell(trackerDomain: tracker.domain,

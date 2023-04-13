@@ -41,6 +41,24 @@ private enum BreakageCategory: String, CaseIterable, Identifiable {
     }
 }
 
+struct FontWithLineHeight: ViewModifier {
+    let font: UIFont
+    let lineHeight: CGFloat
+
+    func body(content: Content) -> some View {
+        content
+            .font(Font(font))
+            .lineSpacing(lineHeight - font.lineHeight)
+            .padding(.vertical, (lineHeight - font.lineHeight) / 2)
+    }
+}
+
+extension View {
+    func fontWithLineHeight(font: UIFont, lineHeight: CGFloat) -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: font, lineHeight: lineHeight))
+    }
+}
+
 struct AppTPBreakageFormView: View {
     @Environment(\.presentationMode) var presentation
     
@@ -60,6 +78,10 @@ struct AppTPBreakageFormView: View {
         }
         
         feedbackModel.sendReport(appName: appName, category: category.rawValue, description: description)
+        DispatchQueue.main.async {
+            ActionMessageView.present(message: "Thank you! Feedback submitted.",
+                                      presentationLocation: .withoutBottomBar)
+        }
         self.presentation.wrappedValue.dismiss()
     }
     
@@ -119,9 +141,10 @@ In addition to the details entered into this form, your app issue report will co
 - Whether App Tracking Protection is enabled
 - Aggregate DuckDuckGo app diagnostics
 """)
-                    .font(Font(uiFont: Const.Font.footer))
+                    .fontWithLineHeight(font: Const.Font.footer, lineHeight: Const.Size.lineHeight)
                     .foregroundColor(.infoText)
                     .padding(.leading, Const.Size.sectionIndentation)
+                    .padding(.top)
                 }
                 
                 Section {
@@ -159,6 +182,7 @@ private enum Const {
     enum Size {
         static let sectionIndentation: CGFloat = -6
         static let sectionHeaderBottom: CGFloat = 6
+        static let lineHeight: CGFloat = 18
     }
 }
 

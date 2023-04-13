@@ -81,6 +81,8 @@
 		0290472229E723260008FE3C /* AppTPManageTrackerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290472129E723260008FE3C /* AppTPManageTrackerCell.swift */; };
 		0290472329E737B40008FE3C /* FirewallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025B16298851D500E694E7 /* FirewallManager.swift */; };
 		0290472529E8496A0008FE3C /* AppTPActivityIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290472429E8496A0008FE3C /* AppTPActivityIconView.swift */; };
+		0290472829E861BE0008FE3C /* AppTPTrackerDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290472729E861BE0008FE3C /* AppTPTrackerDetailViewModel.swift */; };
+		0290472A29E867800008FE3C /* AppTPTrackerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290472929E867800008FE3C /* AppTPTrackerDetailView.swift */; };
 		02A4EACA29B0F464009BE006 /* AppTPToggleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A4EAC929B0F464009BE006 /* AppTPToggleViewModel.swift */; };
 		02BA15B126A89ECA00472DD7 /* ios-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 02BA15B026A89ECA00472DD7 /* ios-config.json */; };
 		02C57C4B2514FEFB009E5129 /* DoNotSellSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C57C4A2514FEFB009E5129 /* DoNotSellSettingsViewController.swift */; };
@@ -1023,6 +1025,8 @@
 		0290471F29E708B70008FE3C /* AppTPManageTrackersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPManageTrackersViewModel.swift; sourceTree = "<group>"; };
 		0290472129E723260008FE3C /* AppTPManageTrackerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPManageTrackerCell.swift; sourceTree = "<group>"; };
 		0290472429E8496A0008FE3C /* AppTPActivityIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPActivityIconView.swift; sourceTree = "<group>"; };
+		0290472729E861BE0008FE3C /* AppTPTrackerDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPTrackerDetailViewModel.swift; sourceTree = "<group>"; };
+		0290472929E867800008FE3C /* AppTPTrackerDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPTrackerDetailView.swift; sourceTree = "<group>"; };
 		02A4EAC929B0F464009BE006 /* AppTPToggleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPToggleViewModel.swift; sourceTree = "<group>"; };
 		02BA15B026A89ECA00472DD7 /* ios-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "ios-config.json"; sourceTree = "<group>"; };
 		02C4BC3127C3F9B600C40026 /* AppPrivacyConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPrivacyConfigurationTests.swift; sourceTree = "<group>"; };
@@ -2641,6 +2645,7 @@
 			isa = PBXGroup;
 			children = (
 				0290471C29E7085D0008FE3C /* AppTPManageTrackersView */,
+				0290472629E8619B0008FE3C /* AppTPTrackerDetailView */,
 				02EC02C229AFA31900557F1A /* AppTPBreakageForm */,
 				0201089F29A560D400644F9D /* AppTPActivityView */,
 				02025B0B29884D2C00E694E7 /* AppTrackerData.swift */,
@@ -2699,6 +2704,15 @@
 				0290472129E723260008FE3C /* AppTPManageTrackerCell.swift */,
 			);
 			name = AppTPManageTrackersView;
+			sourceTree = "<group>";
+		};
+		0290472629E8619B0008FE3C /* AppTPTrackerDetailView */ = {
+			isa = PBXGroup;
+			children = (
+				0290472729E861BE0008FE3C /* AppTPTrackerDetailViewModel.swift */,
+				0290472929E867800008FE3C /* AppTPTrackerDetailView.swift */,
+			);
+			name = AppTPTrackerDetailView;
 			sourceTree = "<group>";
 		};
 		02A4EACB29B0F89C009BE006 /* ViewModel */ = {
@@ -5909,6 +5923,7 @@
 				3151F0EE2735800800226F58 /* VoiceSearchFeedbackView.swift in Sources */,
 				857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */,
 				311BD1AF2836BB4200AEF6C1 /* AutofillItemsLockedView.swift in Sources */,
+				0290472A29E867800008FE3C /* AppTPTrackerDetailView.swift in Sources */,
 				F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */,
 				85449EF523FDA02800512AAF /* KeyboardSettingsViewController.swift in Sources */,
 				85C11E4C2090888C00BFFEB4 /* HomeRowReminder.swift in Sources */,
@@ -5976,6 +5991,7 @@
 				312E5746283BB04A00C18FA0 /* AutofillEmptySearchView.swift in Sources */,
 				F1A5683A1E70F98E0081082E /* AutocompleteRequest.swift in Sources */,
 				8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */,
+				0290472829E861BE0008FE3C /* AppTPTrackerDetailViewModel.swift in Sources */,
 				311BD1AD2836BB3900AEF6C1 /* AutofillItemsEmptyView.swift in Sources */,
 				316931D727BD10BB0095F5ED /* SaveToDownloadsAlert.swift in Sources */,
 				31C70B5B2804C61000FB6AD1 /* SaveAutofillLoginManager.swift in Sources */,

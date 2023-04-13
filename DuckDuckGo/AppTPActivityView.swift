@@ -69,15 +69,21 @@ struct AppTPActivityView: View {
                     LazyVStack(alignment: .leading, spacing: 0) {
                         ForEach(section.objects as? [AppTrackerEntity] ?? []) { tracker in
                             let showDivider = tracker != (section.objects?.last as? AppTrackerEntity)
-                            AppTPTrackerCell(trackerDomain: tracker.domain,
-                                             trackerOwner: tracker.trackerOwner,
-                                             trackerCount: tracker.count,
-                                             trackerBlocked: tracker.blocked,
-                                             trackerTimestamp: viewModel.format(timestamp: tracker.timestamp),
-                                             trackerBucket: tracker.bucket,
-                                             debugMode: viewModel.debugModeEnabled,
-                                             imageCache: imageCache,
-                                             showDivider: showDivider)
+                            NavigationLink(
+                                destination: AppTPTrackerDetailView(
+                                    viewModel: AppTPTrackerDetailViewModel(trackerDomain: tracker.domain)
+                                )
+                            ) {
+                                AppTPTrackerCell(trackerDomain: tracker.domain,
+                                                 trackerOwner: tracker.trackerOwner,
+                                                 trackerCount: tracker.count,
+                                                 trackerBlocked: tracker.blocked,
+                                                 trackerTimestamp: viewModel.format(timestamp: tracker.timestamp),
+                                                 trackerBucket: tracker.bucket,
+                                                 debugMode: viewModel.debugModeEnabled,
+                                                 imageCache: imageCache,
+                                                 showDivider: showDivider)
+                            }
                         }
                     }
                     .background(Color.cellBackground)

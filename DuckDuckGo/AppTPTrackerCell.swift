@@ -75,6 +75,13 @@ struct AppTPTrackerCell: View {
                             .foregroundColor(.trackerSize)
                     }
                 }
+                
+                Spacer()
+                
+                Image(systemName: "chevron.forward")
+                    .resizable()
+                    .frame(width: 7, height: 12)
+                    .foregroundColor(Color.disclosureColor)
             }
             .padding(.horizontal, 16)
             .frame(height: Const.Size.rowHeight)
@@ -101,4 +108,5 @@ private extension Color {
     static let trackerDomain = Color("AppTPDomainColor")
     static let trackerSize = Color("AppTPCountColor")
     static let cellBackground = Color("AppTPCellBackgroundColor")
+    static let disclosureColor = Color("AppTPDisclosureColor")
 }

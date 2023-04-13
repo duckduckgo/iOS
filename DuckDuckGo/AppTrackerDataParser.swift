@@ -50,8 +50,16 @@ class TrackerDataParser {
     }
     
     func shouldBlock(domain: String) -> Bool {
-        guard domain.contains(".") else {
+        guard let tracker = trackerFor(domain: domain) else {
             return false
+        }
+    
+        return tracker.defaultRule == "block"
+    }
+    
+    func trackerFor(domain: String) -> AppTracker? {
+        guard domain.contains(".") else {
+            return nil
         }
         
         // walk down domain hit testing the blocklist
@@ -59,14 +67,37 @@ class TrackerDataParser {
         while check.contains(".") {
             // return true if part of domain in list and action is block
             if let tracker = blocklist?.trackers[check] {
-                return tracker.defaultRule == "block"
+                return tracker
             }
             
             let parts = domain.split(separator: ".").dropFirst()
             check = parts.joined(separator: ".")
         }
         
-        return false
+        return nil
+    }
+    
+    /// Given a domain return the tracker domain matched on the blocklist
+    /// For example if `tracker.com` is on the blocklist calling this method with `company.tracker.com`
+    /// wiill return `tracker.com` or `nil` if the tracker is not found.
+    func matchingTracker(forDomain domain: String) -> String? {
+        guard domain.contains(".") else {
+            return nil
+        }
+        
+        // walk down domain hit testing the blocklist
+        var check = domain
+        while check.contains(".") {
+            // return true if part of domain in list and action is block
+            if let tracker = blocklist?.trackers[check] {
+                return check
+            }
+            
+            let parts = domain.split(separator: ".").dropFirst()
+            check = parts.joined(separator: ".")
+        }
+        
+        return nil
     }
     
     /// The tunnel proxy needs a flat domain list to match
@@ -85,18 +116,10 @@ class TrackerDataParser {
     }
     
     func trackerOwner(forDomain domain: String) -> AppTrackerOwner? {
-        var check = domain
-
-        while check.contains(".") {
-            // return true if part of domain in list and action is block
-            if let tracker = blocklist?.trackers[check] {
-                return tracker.owner
-            }
-            
-            let parts = domain.split(separator: ".").dropFirst()
-            check = parts.joined(separator: ".")
+        guard let tracker = trackerFor(domain: domain) else {
+            return nil
         }
         
-        return nil
+        return tracker.owner
     }
 }

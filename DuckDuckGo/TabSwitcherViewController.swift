@@ -171,12 +171,11 @@ class TabSwitcherViewController: UIViewController {
                 }
             }
         } else {
-            guard let fireButton = !topFireButton.isHidden ? topFireButton : fireButton.button,
-                  tabsModel.count > 1,
-                  !FireButton.wasFireButtonEverTapped
-            else { return }
-            
-            fireButton.playAnimation()
+            guard let fireButton = !topFireButton.isHidden ? topFireButton : fireButton.button else { return }
+           
+            if tabsModel.count > 1 && !FireButton.wasFireButtonEverTapped {
+                fireButton.playAnimation()
+            }
         }
     }
     

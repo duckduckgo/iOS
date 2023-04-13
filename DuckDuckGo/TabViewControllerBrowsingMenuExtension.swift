@@ -23,7 +23,6 @@ import BrowserServicesKit
 import Bookmarks
 import simd
 import WidgetKit
-import os.log
 
 // swiftlint:disable file_length
 extension TabViewController {

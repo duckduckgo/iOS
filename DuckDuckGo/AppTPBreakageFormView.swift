@@ -49,6 +49,7 @@ struct AppTPBreakageFormView: View {
     @State private var appName: String = ""
     @State private var category: BreakageCategory = .appFreeze
     @State private var description: String = ""
+    @State private var placeholderText: String = "Add any more details"
     
     @State private var showError = false
     
@@ -66,36 +67,51 @@ struct AppTPBreakageFormView: View {
         ZStack {
             Form {
                 Section {
-                    TextField("App Name", text: $appName)
-                } header: {
-                    Text("Which app is broken?")
-                        .font(Font(uiFont: Const.Font.sectionHeader))
-                        .foregroundColor(.infoText)
-                        .padding(.leading, Const.Size.sectionIndentation)
-                        .padding(.bottom, Const.Size.sectionHeaderBottom)
+                    VStack {
+                        AppTPBreakageFormHeaderView(text: "Which app is broken?")
+                        
+                        TextField("App Name", text: $appName)
+                    }
                 }
-                .textCase(nil)
                 
                 Section {
-                    Picker("What's happening?", selection: $category) {
-                        ForEach(BreakageCategory.allCases) { cat in
-                            Text(cat.rawValue)
+                    VStack {
+                        AppTPBreakageFormHeaderView(text: "What's happening?")
+                        
+                        HStack {
+                            Picker("", selection: $category) {
+                                ForEach(BreakageCategory.allCases) { cat in
+                                    Text(cat.rawValue)
+                                }
+                            }
+                            .labelsHidden()
+                            
+                            Spacer()
                         }
+                        .padding(.leading, -12)
                     }
                 }
                 
                 Section {
-                    if category == .somethingElse {
-                        TextEditor(text: $description)
+                    VStack {
+                        AppTPBreakageFormHeaderView(text: "Comment")
+                            .padding(.top, 8)
+                        
+                        ZStack {
+                            if self.description.isEmpty {
+                                TextEditor(text: $placeholderText)
+                                    .font(.body)
+                                    .foregroundColor(.gray)
+                                    .disabled(true)
+                            }
+                            
+                            TextEditor(text: $description)
+                                .font(.body)
+                                .opacity(self.description.isEmpty ? 0.25 : 1)
+                        }
+                        .padding(.leading, -4)
                     }
-                } header: {
-                    if category == .somethingElse {
-                        Text("Please describe what's happening, what you expected to happen, and steps that led to the issue.")
-                            .font(Font(uiFont: Const.Font.sectionHeader))
-                            .foregroundColor(.infoText)
-                            .padding(.leading, Const.Size.sectionIndentation)
-                            .padding(.bottom, Const.Size.sectionHeaderBottom)
-                    }
+                    .frame(minHeight: 60)
                 } footer: {
                     Text("""
 In addition to the details entered into this form, your app issue report will contain:
@@ -107,7 +123,6 @@ In addition to the details entered into this form, your app issue report will co
                     .foregroundColor(.infoText)
                     .padding(.leading, Const.Size.sectionIndentation)
                 }
-                .textCase(nil)
                 
                 Section {
                     Button(action: {
@@ -116,9 +131,10 @@ In addition to the details entered into this form, your app issue report will co
                         Text("Submit")
                             .font(Font(uiFont: Const.Font.button))
                             .frame(maxWidth: .infinity, alignment: .center)
-                            .foregroundColor(.white)
+                            .foregroundColor(appName.isEmpty ? Color.disabledButtonLabel : Color.buttonLabelColor)
                     })
-                    .listRowBackground(Color.buttonColor)
+                    .listRowBackground(appName.isEmpty ? Color.disabledButton : Color.buttonColor)
+                    .disabled(appName.isEmpty)
                 }
             }
             .navigationTitle("Breakage Report")
@@ -150,5 +166,8 @@ private extension Color {
     static let infoText = Color("AppTPDomainColor")
     static let cellBackground = Color("AppTPCellBackgroundColor")
     static let viewBackground = Color("AppTPViewBackgroundColor")
-    static let buttonColor = Color("AppTPToggleColor")
+    static let buttonColor = Color("AppTPBreakageButton")
+    static let buttonLabelColor = Color("AppTPBreakageButtonLabel")
+    static let disabledButton = Color("AppTPBreakageButtonDisabled")
+    static let disabledButtonLabel = Color("AppTPBreakageButtonLabelDisabled")
 }

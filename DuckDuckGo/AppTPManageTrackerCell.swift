@@ -51,6 +51,7 @@ struct AppTPManageTrackerCell: View {
                         .font(Font(uiFont: Const.Font.info))
                         .foregroundColor(.infoText)
                 }
+                .toggleStyle(SwitchToggleStyle(tint: .toggleTint))
                 .onChange(of: isBlocking) { value in
                     onToggleTracker(tracker.domain, value)
                 }
@@ -83,4 +84,5 @@ private extension Color {
     static let infoText = Color("AppTPDomainColor")
     static let cellBackground = Color("AppTPCellBackgroundColor")
     static let viewBackground = Color("AppTPViewBackgroundColor")
+    static let toggleTint = Color("AppTPToggleColor")
 }

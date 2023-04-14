@@ -32,7 +32,7 @@ struct LightTheme: Theme {
     
     var backgroundColor = UIColor(designSystemColor: .background)
     
-    var barBackgroundColor = UIColor.nearlyWhiteLight
+    var barBackgroundColor = UIColor(designSystemColor: .panel)
     var barTintColor = UIColor.nearlyBlackLight
     
     var navigationBarTitleColor = UIColor.nearlyBlackLight
@@ -51,7 +51,7 @@ struct LightTheme: Theme {
     
     var browsingMenuTextColor = UIColor.nearlyBlack
     var browsingMenuIconsColor = UIColor.nearlyBlackLight
-    var browsingMenuBackgroundColor = UIColor.white
+    var browsingMenuBackgroundColor = UIColor(designSystemColor: .surface)
     var browsingMenuSeparatorColor = UIColor.mercury
     var browsingMenuHighlightColor = UIColor.lightGreyish
     

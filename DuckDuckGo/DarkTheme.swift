@@ -31,7 +31,7 @@ struct DarkTheme: Theme {
     
     var backgroundColor = UIColor(designSystemColor: .background)
     
-    var barBackgroundColor = UIColor.nearlyBlackLight
+    var barBackgroundColor = UIColor(designSystemColor: .panel)
     var barTintColor = UIColor.lightMercury
     
     var navigationBarTitleColor = UIColor.white
@@ -50,7 +50,7 @@ struct DarkTheme: Theme {
     
     var browsingMenuTextColor = UIColor.white
     var browsingMenuIconsColor = UIColor.gray20
-    var browsingMenuBackgroundColor = UIColor.nearlyBlackLight
+    var browsingMenuBackgroundColor = UIColor(designSystemColor: .surface)
     var browsingMenuSeparatorColor = UIColor.charcoalGrey
     var browsingMenuHighlightColor = UIColor.darkGreyish
     

@@ -20,7 +20,6 @@
 import Foundation
 import NetworkExtension
 import Core
-import os.log
 import BrowserServicesKit
 import Common
 

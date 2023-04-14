@@ -19,7 +19,7 @@
 
 import SwiftUI
 import NetworkExtension
-import os.log
+import Common
 
 struct AppTPToggleView: View {
     @Binding var vpnOn: Bool

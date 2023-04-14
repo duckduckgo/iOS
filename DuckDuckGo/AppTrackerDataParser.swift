@@ -88,8 +88,8 @@ class TrackerDataParser {
         // walk down domain hit testing the blocklist
         var check = domain
         while check.contains(".") {
-            // return true if part of domain in list and action is block
-            if let tracker = blocklist?.trackers[check] {
+            // return the domain matched in the blocklist
+            if let _ = blocklist?.trackers[check] {
                 return check
             }
             

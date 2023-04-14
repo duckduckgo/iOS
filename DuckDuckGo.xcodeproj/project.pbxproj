@@ -84,6 +84,7 @@
 		0290472829E861BE0008FE3C /* AppTPTrackerDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290472729E861BE0008FE3C /* AppTPTrackerDetailViewModel.swift */; };
 		0290472A29E867800008FE3C /* AppTPTrackerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290472929E867800008FE3C /* AppTPTrackerDetailView.swift */; };
 		0290472C29E8821E0008FE3C /* AppTPBreakageFormHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290472B29E8821E0008FE3C /* AppTPBreakageFormHeaderView.swift */; };
+		0290472E29E99A2F0008FE3C /* GenericIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290472D29E99A2F0008FE3C /* GenericIconView.swift */; };
 		02A4EACA29B0F464009BE006 /* AppTPToggleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A4EAC929B0F464009BE006 /* AppTPToggleViewModel.swift */; };
 		02BA15B126A89ECA00472DD7 /* ios-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 02BA15B026A89ECA00472DD7 /* ios-config.json */; };
 		02C57C4B2514FEFB009E5129 /* DoNotSellSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C57C4A2514FEFB009E5129 /* DoNotSellSettingsViewController.swift */; };
@@ -1029,6 +1030,7 @@
 		0290472729E861BE0008FE3C /* AppTPTrackerDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPTrackerDetailViewModel.swift; sourceTree = "<group>"; };
 		0290472929E867800008FE3C /* AppTPTrackerDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPTrackerDetailView.swift; sourceTree = "<group>"; };
 		0290472B29E8821E0008FE3C /* AppTPBreakageFormHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPBreakageFormHeaderView.swift; sourceTree = "<group>"; };
+		0290472D29E99A2F0008FE3C /* GenericIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericIconView.swift; sourceTree = "<group>"; };
 		02A4EAC929B0F464009BE006 /* AppTPToggleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPToggleViewModel.swift; sourceTree = "<group>"; };
 		02BA15B026A89ECA00472DD7 /* ios-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "ios-config.json"; sourceTree = "<group>"; };
 		02C4BC3127C3F9B600C40026 /* AppPrivacyConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPrivacyConfigurationTests.swift; sourceTree = "<group>"; };
@@ -2733,6 +2735,7 @@
 				020108A629A6ABF600644F9D /* AppTPToggleView.swift */,
 				020108AD29A7F91600644F9D /* AppTPTrackerCell.swift */,
 				0290472429E8496A0008FE3C /* AppTPActivityIconView.swift */,
+				0290472D29E99A2F0008FE3C /* GenericIconView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -5851,7 +5854,6 @@
 				1E4F4A5A297193DE00625985 /* MainViewController+CookiesManaged.swift in Sources */,
 				8586A10D24CBA7070049720E /* FindInPageActivity.swift in Sources */,
 				1E1626072968413B0004127F /* ViewExtension.swift in Sources */,
-				02025B17298851D500E694E7 /* FirewallManager.swift in Sources */,
 				31A42566285A0A6300049386 /* FaviconViewModel.swift in Sources */,
 				8C4838B5221C8F7F008A6739 /* GestureToolbarButton.swift in Sources */,
 				986C7FA92417ADE700A3557D /* ReportBrokenSiteViewController.swift in Sources */,
@@ -6034,6 +6036,7 @@
 				F1617C191E573EA800DEDCAF /* TabSwitcherDelegate.swift in Sources */,
 				310742A62848CD780012660B /* BackForwardMenuHistoryItem.swift in Sources */,
 				858566FB252E55D6007501B8 /* ImageCacheDebugViewController.swift in Sources */,
+				0290472E29E99A2F0008FE3C /* GenericIconView.swift in Sources */,
 				1E7A71172934EB6400B7EA19 /* OmniBarNotificationAnimator.swift in Sources */,
 				85C2971A248162CA0063A335 /* DaxOnboardingPadViewController.swift in Sources */,
 				F4F6DFB826EA9AA600ED7E12 /* BookmarksTextFieldCell.swift in Sources */,

@@ -18,7 +18,13 @@
 //
 
 import UIKit
+import SwiftUI
 import PrivacyDashboardResources
+
+enum TrackerEntityRepresentable {
+    case svg(Data)
+    case view(any View)
+}
 
 final class AppTrackerImageCache {
     

@@ -21,8 +21,8 @@ die() {
 
 assert_ios_directory() {
 	if ! realpath "." | grep -q "/iOS"; then
-        die "💥 Error: Run the script from inside the iOS project"
-    fi
+		die "💥 Error: Run the script from inside the iOS project"
+	fi
 }
 
 assert_fastlane_installed() {

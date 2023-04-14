@@ -57,7 +57,7 @@ class MenuBookmarksViewModelTests: XCTestCase {
     }
     
     private func validateNewBookmark(_ bookmark: BookmarkEntity?) {
-        guard let bookmark = bookmark else { XCTFail("Missing bookmark"); return}
+        guard let bookmark = bookmark else { XCTFail("Missing bookmark"); return }
         XCTAssertNotNil(bookmark)
         XCTAssertFalse(bookmark.isFavorite)
         XCTAssertNil(bookmark.favoriteFolder)

@@ -854,13 +854,24 @@ class TabViewController: UIViewController {
     func onCopyAction(for text: String) {
         UIPasteboard.general.string = text
     }
-    
+
+    private func cleanUpBeforeClosing() {
+        let job = { [userContentController] in
+            userContentController.removeAllUserScripts()
+            userContentController.removeAllContentRuleLists()
+        }
+        guard Thread.isMainThread else {
+            DispatchQueue.main.async(execute: job)
+            return
+        }
+        job()
+    }
+
     deinit {
-        userContentController.removeAllUserScripts()
-        userContentController.removeAllContentRuleLists()
-        temporaryDownloadForPreviewedFile?.cancel()
-        removeObservers()
         rulesCompilationMonitor.tabWillClose(tabModel.uid)
+        removeObservers()
+        temporaryDownloadForPreviewedFile?.cancel()
+        cleanUpBeforeClosing()
     }
 
 }
@@ -2230,14 +2241,7 @@ extension TabViewController: EmailManagerAliasPermissionDelegate {
 extension TabViewController: EmailManagerRequestDelegate {
 
     // swiftlint:disable function_parameter_count
-    func emailManager(_ emailManager: EmailManager,
-                      requested url: URL,
-                      method: String,
-                      headers: [String: String],
-                      parameters: [String: String]?,
-                      httpBody: Data?,
-                      timeoutInterval: TimeInterval,
-                      completion: @escaping (Data?, Error?) -> Void) {
+    func emailManager(_ emailManager: EmailManager, requested url: URL, method: String, headers: [String: String], parameters: [String: String]?, httpBody: Data?, timeoutInterval: TimeInterval) async throws -> Data {
         let method = APIRequest.HTTPMethod(rawValue: method) ?? .post
         let configuration = APIRequest.Configuration(url: url,
                                                      method: method,
@@ -2246,9 +2250,7 @@ extension TabViewController: EmailManagerRequestDelegate {
                                                      body: httpBody,
                                                      timeoutInterval: timeoutInterval)
         let request = APIRequest(configuration: configuration, urlSession: .session())
-        request.fetch { response, error in
-            completion(response?.data, error)
-        }
+        return try await request.fetch().data ?? { throw AliasRequestError.noDataError }()
     }
     // swiftlint:enable function_parameter_count
     

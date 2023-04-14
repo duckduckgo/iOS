@@ -90,3 +90,4 @@ excluded:
   - fastlane/SnapshotHelper.swift
   - vendor
   - LocalPackages/*/Package.swift
+  - PacketTunnelProvider/ProxyServer

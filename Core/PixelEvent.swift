@@ -268,7 +268,11 @@ extension Pixel {
         // MARK: AppTP
 
         case appTPBreakageReport
-        
+
+        case appTPFailedToAccessPreferences
+        case appTPFailedToAccessPreferencesDuringSetup
+        case appTPFailedToStartTunnel
+
         case appTPVPNCrash
         case appTPVPNDisconnect
         
@@ -661,8 +665,11 @@ extension Pixel.Event {
         case .serpRequeryNew: return "rq_1"
             
         // MARK: AppTP pixels
-            
+
         case .appTPBreakageReport: return "m_apptp_breakage_report"
+        case .appTPFailedToAccessPreferences: return "m_apptp_failed_to_access_preferences"
+        case .appTPFailedToAccessPreferencesDuringSetup: return "m_apptp_failed_to_access_preferences_during_setup"
+        case .appTPFailedToStartTunnel: return "m_apptp_failed_to_start_tunnel"
         case .appTPVPNCrash: return "m_apptp_vpn_crash"
         case .appTPVPNDisconnect: return "m_apptp_vpn_disconnect"
         case .appTPBlocklistParseFailed: return "m_apptp_blocklist_parse_failed"

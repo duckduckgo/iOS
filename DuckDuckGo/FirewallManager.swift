@@ -95,6 +95,10 @@ class FirewallManager: FirewallManaging {
                 statusDidChange()
             }
         } catch {
+            #if !targetEnvironment(simulator)
+                Pixel.fire(pixel: .appTPFailedToAccessPreferences, error: error)
+            #endif
+
             os_log("[ERROR] Could not load managers", log: FirewallManager.apptpLog, type: .error)
         }
     }
@@ -123,6 +127,8 @@ class FirewallManager: FirewallManaging {
             try await manager?.loadFromPreferences() // Load again to avoid NEVPNError Code=1
             
         } catch {
+            Pixel.fire(pixel: .appTPFailedToAccessPreferencesDuringSetup, error: error)
+
             if let error = error as? NEVPNError {
                 os_log("[ERROR] Error setting VPN enabled to %s %s",
                        log: FirewallManager.apptpLog, type: .debug, String(enabled), error.localizedDescription)
@@ -145,6 +151,8 @@ class FirewallManager: FirewallManaging {
                     continuation.resume()
                     
                 } catch {
+                    Pixel.fire(pixel: .appTPFailedToStartTunnel, error: error)
+
                     os_log("[ERROR] Error starting VPN after saving prefs: %s",
                            log: FirewallManager.apptpLog, type: .error, error.localizedDescription)
                     continuation.resume(throwing: error)

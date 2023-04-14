@@ -223,5 +223,5 @@ private extension Color {
     static let emptyState = Color("DownloadsListEmptyStateColor")
     static let deleteAll = Color("DownloadsListDestructiveColor")
     static let background = Color(designSystemColor: .background)
-    static let rowBackground = Color("DownloadsListRowBackgroundColor")
+    static let rowBackground = Color(designSystemColor: .surface)
 }

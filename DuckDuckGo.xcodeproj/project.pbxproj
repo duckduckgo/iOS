@@ -3576,18 +3576,10 @@
 		CB258D1129A4F1BB00DEBA24 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				CB258D1829A4F44300DEBA24 /* Store */,
 				CB84C7C029A3F0280088A5B8 /* ConfigurationStore.swift */,
 				CB258D0F29A4D0FD00DEBA24 /* ConfigurationManager.swift */,
 			);
 			path = Configuration;
-			sourceTree = "<group>";
-		};
-		CB258D1829A4F44300DEBA24 /* Store */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Store;
 			sourceTree = "<group>";
 		};
 		CBAA195627BFDD9800A4BD49 /* SmarterEncryption */ = {
@@ -7459,8 +7451,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = revision;
-				revision = 816117dee143d482509b83e7d5ec4e1962f2778b;
+				kind = exactVersion;
+				version = 56.0.0;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

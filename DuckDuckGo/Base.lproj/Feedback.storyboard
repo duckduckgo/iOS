@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21208.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="h22-TC-N6i">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="h22-TC-N6i">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21191"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -381,11 +381,11 @@
                                 <rect key="frame" x="0.0" y="225.33333206176758" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="has-ek-M3V" id="ZVE-Ej-2Dt">
-                                    <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="383.66666666666669" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Vp9-Jz-mUC">
-                                            <rect key="frame" x="20" y="0.0" width="354.66666666666669" height="44"/>
+                                            <rect key="frame" x="20" y="0.0" width="355.66666666666669" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <attributedString key="attributedText">
                                                 <fragment content="Title">
@@ -673,7 +673,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BrokenSites" translatesAutoresizingMaskIntoConstraints="NO" id="RNo-8b-yyt">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Breakage-128" translatesAutoresizingMaskIntoConstraints="NO" id="RNo-8b-yyt">
                                             <rect key="frame" x="143" y="10" width="128" height="128"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="128" id="Tt9-NS-Q1e"/>
@@ -772,11 +772,11 @@
     </scenes>
     <designables>
         <designable name="TMj-NM-j3b">
-            <size key="intrinsicContentSize" width="163.66666666666666" height="15.666666666666666"/>
+            <size key="intrinsicContentSize" width="155.66666666666666" height="15.666666666666666"/>
         </designable>
     </designables>
     <resources>
-        <image name="BrokenSites" width="120" height="120"/>
+        <image name="Breakage-128" width="128" height="96"/>
         <image name="happyFace" width="48" height="48"/>
         <image name="sadFace" width="48" height="48"/>
         <systemColor name="groupTableViewBackgroundColor">

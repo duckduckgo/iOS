@@ -21,6 +21,7 @@ import UIKit
 import Core
 import os.log
 import PrivacyDashboard
+import DesignResourcesKit
 
 extension OmniBar: NibLoading {}
 
@@ -516,10 +517,11 @@ extension OmniBar: Themable {
         textField.textColor = theme.searchBarTextColor
         textField.tintColor = UIColor(designSystemColor: .accent)
         textField.keyboardAppearance = theme.keyboardAppearance
-        clearButton.tintColor = theme.searchBarClearTextIconColor
-        voiceSearchButton.tintColor = theme.searchBarVoiceSearchIconColor
+        clearButton.tintColor = UIColor(designSystemColor: .icons)
+        voiceSearchButton.tintColor = UIColor(designSystemColor: .icons)
         
-        searchLoupe.tintColor = theme.barTintColor
+        searchLoupe.tintColor = UIColor(designSystemColor: .icons)
+        searchLoupe.alpha = 0.5
         cancelButton.setTitleColor(theme.barTintColor, for: .normal)
     }
 }

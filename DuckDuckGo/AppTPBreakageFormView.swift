@@ -119,6 +119,9 @@ struct AppTPBreakageFormView: View {
                         AppTPBreakageFormHeaderView(text: UserText.appTPReportCommentLabel)
                             .padding(.top, Const.Size.commnetHeaderPadding)
                         
+                        // As of April 2023 SwiftUI STILL does not support placeholders for `TextEditor`
+                        // Until that time we have to use this hack to show a placeholder
+                        // https://stackoverflow.com/a/65406506
                         ZStack {
                             if self.description.isEmpty {
                                 TextEditor(text: $placeholderText)

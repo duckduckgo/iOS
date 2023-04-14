@@ -99,7 +99,8 @@ class AppTrackingProtectionStoringModelPerformanceTests: XCTestCase {
         let storingModel = AppTrackingProtectionStoringModel(appTrackingProtectionDatabase: database)
 
         measure {
-            storingModel.storeTracker(domain: "tracker1.com", trackerOwner: "Existing", blocked: true, date: createDate(year: 2023, month: 01, day: 07))
+            storingModel.storeTracker(domain: "tracker1.com", trackerOwner: "Existing",
+                                      blocked: true, date: createDate(year: 2023, month: 01, day: 07))
         }
     }
 

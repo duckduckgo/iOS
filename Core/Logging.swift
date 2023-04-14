@@ -41,6 +41,7 @@ public extension OSLog {
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // To activate Logging Categories add categories here:
+#if DEBUG
     static var enabledCategories: Set<AppCategories> = [
         .generalLog,
         .contentBlockingLog,
@@ -48,13 +49,16 @@ public extension OSLog {
         .lifecycleLog,
         .configurationLog
     ]
+#endif
 
 }
 
 public extension OSLog.OSLogWrapper {
 
     private static let enableLoggingCategoriesOnce: Void = {
+#if DEBUG
         OSLog.enabledLoggingCategories = Set(OSLog.enabledCategories.map(\.rawValue))
+#endif
     }()
 
     init(_ category: OSLog.AppCategories) {

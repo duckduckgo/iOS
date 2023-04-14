@@ -230,7 +230,7 @@ struct AutofillLoginDetailsView: View {
              })
              .foregroundColor(Color.red)
         }
-        .listRowBackground(Color("AutofillCellBackground"))
+        .listRowBackground(Color(designSystemColor: .surface))
     }
 }
 
@@ -490,7 +490,7 @@ private struct BackgroundColor {
         if isSelected {
             return Color("AutofillCellSelectedBackground")
         } else {
-            return Color("AutofillCellBackground")
+            return Color(designSystemColor: .surface)
         }
     }
 }

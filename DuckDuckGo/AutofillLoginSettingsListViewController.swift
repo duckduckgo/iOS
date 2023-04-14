@@ -22,6 +22,7 @@ import Combine
 import Core
 import BrowserServicesKit
 import Common
+import DesignResourcesKit
 import os.log
 
 // swiftlint:disable file_length type_body_length
@@ -402,6 +403,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         let cell = tableView.dequeueCell(ofType: AutofillListItemTableViewCell.self, for: indexPath)
         cell.viewModel = item
         cell.accessoryType = .disclosureIndicator
+        cell.backgroundColor = UIColor(designSystemColor: .surface)
         return cell
     }
     

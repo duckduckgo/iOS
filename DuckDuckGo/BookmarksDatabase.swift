@@ -58,5 +58,4 @@ public class BookmarksDatabase {
         globalReferenceForDebug = db
         return db
     }
-
 }

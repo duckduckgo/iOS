@@ -28,7 +28,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
     lazy var authenticator = Authenticator()
 
-    let syncService: DDGSyncing! = (UIApplication.shared.delegate as? AppDelegate)!.syncService
+    let syncService: DDGSyncing! = AppDependencyProvider.shared.syncService
     var connector: RemoteConnecting?
 
     var recoveryCode: String {

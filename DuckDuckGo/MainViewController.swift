@@ -19,6 +19,7 @@
 
 import UIKit
 import WebKit
+import Combine
 import Core
 import Lottie
 import Kingfisher
@@ -100,7 +101,9 @@ class MainViewController: UIViewController {
     private var launchTabObserver: LaunchTabNotification.Observer?
     
     private let bookmarksDatabase: CoreDataDatabase
+    private let bookmarksDatabaseCleaner: BookmarkDatabaseCleaner
     private let favoritesViewModel: FavoritesListInteracting
+    private var syncStateCancellable: AnyCancellable?
     
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase)
 
@@ -129,13 +132,24 @@ class MainViewController: UIViewController {
     
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
-    
+
     required init?(coder: NSCoder,
                    bookmarksDatabase: CoreDataDatabase) {
         self.bookmarksDatabase = bookmarksDatabase
+        self.bookmarksDatabaseCleaner = BookmarkDatabaseCleaner(bookmarkDatabase: bookmarksDatabase, errorEvents: BookmarksCleanupErrorHandling())
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         super.init(coder: coder)
+
+        syncStateCancellable = AppDependencyProvider.shared.syncService.isAuthenticatedPublisher
+            .sink(receiveValue: { [weak self] isEnabled in
+                if isEnabled {
+                    self?.bookmarksDatabaseCleaner.cancelCleaningSchedule()
+                } else {
+                    self?.bookmarksDatabaseCleaner.scheduleRegularCleaning()
+                    self?.bookmarksDatabaseCleaner.cleanUpDatabaseNow()
+                }
+            })
     }
     
     required init?(coder: NSCoder) {
@@ -1788,6 +1802,10 @@ extension MainViewController: AutoClearWorker {
         }
         
         AutoconsentManagement.shared.clearCache()
+
+        if !AppDependencyProvider.shared.syncService.isAuthenticated {
+            bookmarksDatabaseCleaner.cleanUpDatabaseNow()
+        }
     }
     
     func stopAllOngoingDownloads() {

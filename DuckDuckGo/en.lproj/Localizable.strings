@@ -136,6 +136,18 @@
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Unlock DuckDuckGo.";
 
+/* Info string informing the user what App Tracking Protection does. */
+"appTP.empty.disabled.info" = "Enable App Tracking Protection so we can block pesky trackers in other apps.";
+
+/* Info string informing the user we're looking for trackers in other apps. */
+"appTP.empty.enabled.info" = "We're looking for trackers in your apps...";
+
+/* Title for the App Tracking Protection feature */
+"appTP.title" = "App Tracking Protection";
+
+/* Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts */
+"appTP.trackingattempts" = "%@ tracking attempts";
+
 /* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Sign In";
 

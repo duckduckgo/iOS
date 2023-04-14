@@ -116,9 +116,9 @@ struct AppTPActivityView: View {
                 NavigationLink(destination: AppTPManageTrackersView(viewModel: AppTPManageTrackersViewModel(),
                                                                     imageCache: imageCache)) {
                     HStack {
-                        Text("Manage Trackers") // TODO: Add to UserText
+                        Text(UserText.appTPManageTrackers)
                             .font(Font(uiFont: Const.Font.info))
-                            .foregroundColor(Color("AppTPToggleColor"))
+                            .foregroundColor(Color.buttonColor)
                             
                         Spacer()
                     }
@@ -130,9 +130,9 @@ struct AppTPActivityView: View {
                 
                 NavigationLink(destination: AppTPBreakageFormView(feedbackModel: feedbackModel)) {
                     HStack {
-                        Text("Report an issue with an app") // TODO: Add to UserText
+                        Text(UserText.appTPReportIssueButton)
                             .font(Font(uiFont: Const.Font.info))
-                            .foregroundColor(Color("AppTPToggleColor"))
+                            .foregroundColor(Color.buttonColor)
                         
                         Spacer()
                     }
@@ -193,6 +193,7 @@ private enum Const {
 
 private extension Color {
     static let infoText = Color("AppTPDomainColor")
+    static let buttonColor = Color("AppTPToggleColor")
     static let cellBackground = Color("AppTPCellBackgroundColor")
     static let viewBackground = Color("AppTPViewBackgroundColor")
 }

@@ -511,6 +511,30 @@ public struct UserText {
     }
     
     public static let appTPJustNow = NSLocalizedString("appTP.justNow", value: "just now", comment: "Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now'")
+    public static let appTPRestoreDefaults = NSLocalizedString("appTP.restoreDefualts", value: "Restore Defaults", comment: "Button to restore the blocklist to its default state.")
+    public static let appTPManageTrackers = NSLocalizedString("appTP.manageTrackers", value: "Manage Trackers", comment: "View to manage trackers for AppTP. Allows the user to turn trackers on or off.")
+    public static let appTPBlockTracker = NSLocalizedString("appTP.blockTrackerText", value: "Block this tracker", comment: "Text label for switch that turns blocking on or off for a tracker")
+    
+    public static let appTPReportIssueButton = NSLocalizedString("appTP.activityView.reportIssue", value: "Report an issue with an app", comment: "Title for 'Report an Issue' button in the activity view.")
+    public static let appTPReportAlertTitle = NSLocalizedString("appTP.reportAlert.title", value: "Report an Issue?", comment: "Title for 'Report an Issue' alert.")
+    public static let appTPReportAlertMessage = NSLocalizedString("appTP.reportAlert.message", value: "Please let us know if you don't want us to block this tracker because you experienced app issues.", comment: "Message for 'Report an Issue' alert.")
+    public static let appTPReportAlertConfirm = NSLocalizedString("appTP.reportAlert.confirm", value: "Report Issue", comment: "Confirm button for 'Report an Issue' alert.")
+    public static let appTPReportAlertCancel = NSLocalizedString("appTP.reportAlert.cancel", value: "Not Now", comment: "Cancel button for 'Report an Issue' alert.")
+    
+    public static let appTPReportTitle = NSLocalizedString("appTP.report.title", value: "Breakage Report", comment: "Breakage report form title")
+    public static let appTPReportCommentPlaceholder = NSLocalizedString("appTP.report.commentPlaceholder", value: "Add any more details", comment: "Breakage report comment placeholder")
+    public static let appTPReportCommentLabel = NSLocalizedString("appTP.report.commentLabel", value: "Comment", comment: "Breakage report comment label")
+    public static let appTPReportToast = NSLocalizedString("appTP.report.toast", value: "Thank you! Feedback submitted.", comment: "Breakage report succcess message")
+    public static let appTPReportAppLabel = NSLocalizedString("appTP.report.appLabel", value: "Which app is broken?", comment: "Breakage report app name label")
+    public static let appTPReportAppPlaceholder = NSLocalizedString("appTP.report.appPlaceholder", value: "App Name", comment: "Breakage report app name placeholder")
+    public static let appTPReportCategoryLabel = NSLocalizedString("appTP.report.categoryLabel", value: "What's happening?", comment: "Breakage report category label")
+    public static let appTPReportFooter = NSLocalizedString("appTP.report.footer", value: """
+In addition to the details entered into this form, your app issue report will contain:
+• A list of trackers blocked in the last 10 minutes
+• Whether App Tracking Protection is enabled
+• Aggregate DuckDuckGo app diagnostics
+""", comment: "Breakage report footer explaining what is collected in the breakage report")
+    public static let appTPReportSubmit = NSLocalizedString("appTP.report.submit", value: "Submit", comment: "Breakage report submit button")
     
     // MARK: Notifications
     

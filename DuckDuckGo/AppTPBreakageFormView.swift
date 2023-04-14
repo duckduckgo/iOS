@@ -67,7 +67,7 @@ struct AppTPBreakageFormView: View {
     @State private var appName: String = ""
     @State private var category: BreakageCategory = .appFreeze
     @State private var description: String = ""
-    @State private var placeholderText: String = "Add any more details" // TODO: Localize
+    @State private var placeholderText: String = UserText.appTPReportCommentPlaceholder
     
     @State private var showError = false
     
@@ -79,7 +79,7 @@ struct AppTPBreakageFormView: View {
         
         feedbackModel.sendReport(appName: appName, category: category.rawValue, description: description)
         DispatchQueue.main.async {
-            ActionMessageView.present(message: "Thank you! Feedback submitted.", // TODO: Localize
+            ActionMessageView.present(message: UserText.appTPReportToast,
                                       presentationLocation: .withoutBottomBar)
         }
         self.presentation.wrappedValue.dismiss()
@@ -90,15 +90,15 @@ struct AppTPBreakageFormView: View {
             Form {
                 Section {
                     VStack {
-                        AppTPBreakageFormHeaderView(text: "Which app is broken?")
+                        AppTPBreakageFormHeaderView(text: UserText.appTPReportAppLabel)
                         
-                        TextField("App Name", text: $appName)
+                        TextField(UserText.appTPReportAppPlaceholder, text: $appName)
                     }
                 }
                 
                 Section {
                     VStack {
-                        AppTPBreakageFormHeaderView(text: "What's happening?")
+                        AppTPBreakageFormHeaderView(text: UserText.appTPReportCategoryLabel)
                         
                         HStack {
                             Picker("", selection: $category) {
@@ -116,7 +116,7 @@ struct AppTPBreakageFormView: View {
                 
                 Section {
                     VStack {
-                        AppTPBreakageFormHeaderView(text: "Comment")
+                        AppTPBreakageFormHeaderView(text: UserText.appTPReportCommentLabel)
                             .padding(.top, 8)
                         
                         ZStack {
@@ -135,12 +135,7 @@ struct AppTPBreakageFormView: View {
                     }
                     .frame(minHeight: 60)
                 } footer: {
-                    Text("""
-In addition to the details entered into this form, your app issue report will contain:
-- A list of trackers blocked in the last 10 minutes
-- Whether App Tracking Protection is enabled
-- Aggregate DuckDuckGo app diagnostics
-""") // TODO: Localize
+                    Text(UserText.appTPReportFooter)
                     .fontWithLineHeight(font: Const.Font.footer, lineHeight: Const.Size.lineHeight)
                     .foregroundColor(.infoText)
                     .padding(.leading, Const.Size.sectionIndentation)
@@ -151,7 +146,7 @@ In addition to the details entered into this form, your app issue report will co
                     Button(action: {
                         sendReport()
                     }, label: {
-                        Text("Submit")
+                        Text(UserText.appTPReportSubmit)
                             .font(Font(uiFont: Const.Font.button))
                             .frame(maxWidth: .infinity, alignment: .center)
                             .foregroundColor(appName.isEmpty ? Color.disabledButtonLabel : Color.buttonLabelColor)
@@ -160,7 +155,7 @@ In addition to the details entered into this form, your app issue report will co
                     .disabled(appName.isEmpty)
                 }
             }
-            .navigationTitle("Breakage Report")
+            .navigationTitle(UserText.appTPReportTitle)
             .alert(isPresented: $showError) {
                 Alert(
                     title: Text("Error"),

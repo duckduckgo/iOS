@@ -44,9 +44,9 @@ struct AppTPManageTrackersView: View {
                             HStack {
                                 Spacer()
                                 
-                                Text("Restore Defaults") // TODO: Add to UserText
+                                Text(UserText.appTPRestoreDefaults)
                                     .font(Font(uiFont: Const.Font.info))
-                                    .foregroundColor(Color("AppTPToggleColor"))
+                                    .foregroundColor(Color.buttonTextColor)
                                     
                                 Spacer()
                             }
@@ -72,7 +72,7 @@ struct AppTPManageTrackersView: View {
                 }
                 .padding()
             }
-            .navigationTitle("Manage Trackers") // TODO: Add to UserText
+            .navigationTitle(UserText.appTPManageTrackers) // TODO: Add to UserText
         }
     }
 }
@@ -95,4 +95,5 @@ private extension Color {
     static let infoText = Color("AppTPDomainColor")
     static let cellBackground = Color("AppTPCellBackgroundColor")
     static let viewBackground = Color("AppTPViewBackgroundColor")
+    static let buttonTextColor = Color("AppTPToggleColor")
 }

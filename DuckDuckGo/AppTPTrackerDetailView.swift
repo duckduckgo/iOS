@@ -41,7 +41,7 @@ struct AppTPTrackerDetailView: View {
                         .padding(.leading, 16)
                     
                     Toggle(isOn: $viewModel.isOn, label: {
-                        Text("Block this tracker")
+                        Text(UserText.appTPBlockTracker)
                             .font(Font(uiFont: Const.Font.info))
                             .foregroundColor(.infoText)
                     })
@@ -70,12 +70,12 @@ struct AppTPTrackerDetailView: View {
             }
         }
         .alert(isPresented: $showReportAlert) {
-            Alert(title: Text("Report an issue?"), // TODO: User Text
-                  message: Text("Please let us know if you don't want us to block this tracker because you experienced app issues."),
-                  primaryButton: .default(Text("Report Issue")) {
+            Alert(title: Text(UserText.appTPReportAlertTitle), // TODO: User Text
+                  message: Text(UserText.appTPReportAlertMessage),
+                  primaryButton: .default(Text(UserText.appTPReportAlertConfirm)) {
                       isBreakageLinkActive = true
                   },
-                  secondaryButton: .cancel(Text("Not Now"))
+                  secondaryButton: .cancel(Text(UserText.appTPReportAlertCancel))
             )
         }
     }

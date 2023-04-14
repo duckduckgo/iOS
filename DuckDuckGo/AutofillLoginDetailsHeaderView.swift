@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
 struct AutofillLoginDetailsHeaderView: View {
     @Environment(\.colorScheme) private var colorScheme
@@ -48,7 +49,7 @@ struct AutofillLoginDetailsHeaderView: View {
         .frame(minHeight: Constants.viewHeight)
         .frame(maxWidth: .infinity)
         .contentShape(Rectangle())
-        .listRowBackground(Color("AutofillCellBackground"))
+        .listRowBackground(Color(designSystemColor: .surface))
         .listRowInsets(Constants.insets)
     }
 }

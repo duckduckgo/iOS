@@ -31,7 +31,7 @@ struct DarkTheme: Theme {
     
     var backgroundColor = UIColor(designSystemColor: .background)
     
-    var barBackgroundColor = UIColor.nearlyBlackLight
+    var barBackgroundColor = UIColor(designSystemColor: .panel)
     var barTintColor = UIColor.lightMercury
     
     var navigationBarTitleColor = UIColor.white
@@ -50,7 +50,7 @@ struct DarkTheme: Theme {
     
     var browsingMenuTextColor = UIColor.white
     var browsingMenuIconsColor = UIColor.gray20
-    var browsingMenuBackgroundColor = UIColor.nearlyBlackLight
+    var browsingMenuBackgroundColor = UIColor(designSystemColor: .surface)
     var browsingMenuSeparatorColor = UIColor.charcoalGrey
     var browsingMenuHighlightColor = UIColor.darkGreyish
     
@@ -60,7 +60,7 @@ struct DarkTheme: Theme {
     var autocompleteSuggestionTextColor = UIColor.white
     var autocompleteCellAccessoryColor = UIColor.lightMercury
 
-    var tableCellBackgroundColor = UIColor.nearlyBlackLight
+    var tableCellBackgroundColor = UIColor(designSystemColor: .surface)
     var tableCellSelectedColor = UIColor.charcoalGrey
     var tableCellSeparatorColor = UIColor.charcoalGrey
     var tableCellTextColor = UIColor.lightGreyish
@@ -69,7 +69,7 @@ struct DarkTheme: Theme {
     var tableCellHighlightedBackgroundColor = UIColor.greyishBrown
     var tableHeaderTextColor = UIColor.greyish3
     
-    var tabSwitcherCellBackgroundColor = UIColor.nearlyBlackLight
+    var tabSwitcherCellBackgroundColor = UIColor(designSystemColor: .surface)
     var tabSwitcherCellBorderColor = UIColor.white
     var tabSwitcherCellTextColor = UIColor.white
     var tabSwitcherCellSecondaryTextColor = UIColor.lightMercury

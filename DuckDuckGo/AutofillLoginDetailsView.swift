@@ -121,7 +121,7 @@ struct AutofillLoginDetailsView: View {
                              selectedCell: $viewModel.selectedCell,
                              actionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsUsername),
                              action: { viewModel.copyToPasteboard(.username) },
-                             buttonImageName: "Copy-16",
+                             buttonImageName: "Copy-24",
                              buttonAccessibilityLabel: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsUsername),
                              buttonAction: { viewModel.copyToPasteboard(.username) })
                 
@@ -133,7 +133,7 @@ struct AutofillLoginDetailsView: View {
                              action: { viewModel.isPasswordHidden.toggle() },
                              secondaryActionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
                              secondaryAction: { viewModel.copyToPasteboard(.password) },
-                             buttonImageName: "Copy-16",
+                             buttonImageName: "Copy-24",
                              buttonAccessibilityLabel: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
                              buttonAction: { viewModel.copyToPasteboard(.password) })
             }
@@ -230,7 +230,7 @@ struct AutofillLoginDetailsView: View {
              })
              .foregroundColor(Color.red)
         }
-        .listRowBackground(Color("AutofillCellBackground"))
+        .listRowBackground(Color(designSystemColor: .surface))
     }
 }
 
@@ -490,7 +490,7 @@ private struct BackgroundColor {
         if isSelected {
             return Color("AutofillCellSelectedBackground")
         } else {
-            return Color("AutofillCellBackground")
+            return Color(designSystemColor: .surface)
         }
     }
 }

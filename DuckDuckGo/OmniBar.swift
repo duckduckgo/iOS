@@ -514,7 +514,7 @@ extension OmniBar: Themable {
             textField.attributedText = OmniBar.demphasisePath(forUrl: url)
         }
         textField.textColor = theme.searchBarTextColor
-        textField.tintColor = theme.searchBarTextColor
+        textField.tintColor = UIColor(designSystemColor: .accent)
         textField.keyboardAppearance = theme.keyboardAppearance
         clearButton.tintColor = theme.searchBarClearTextIconColor
         voiceSearchButton.tintColor = theme.searchBarVoiceSearchIconColor

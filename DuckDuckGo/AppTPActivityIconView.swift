@@ -32,7 +32,7 @@ struct AppTPActivityIconView: View {
                 case .svg(let data):
                     SVGView(data: data)
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 25, height: 25)
+                        .frame(width: Const.Size.iconWidth, height: Const.Size.iconWidth)
 
                 case .view(let iconData):
                     GenericIconView(trackerLetter: iconData.trackerLetter,
@@ -50,24 +50,24 @@ struct AppTPActivityIconView: View {
                     
                     Image(blocked ? "AppTPBlockedTracker" : "AppTPAllowedTracker")
                         .resizable()
-                        .frame(width: 18, height: 18)
+                        .frame(width: Const.Size.statusWidth, height: Const.Size.statusWidth)
                     
                     Spacer()
                 }
-                .padding(.top, 19)
+                .padding(.top, Const.Size.statusVerticalPaddig)
                 
                 Spacer()
             }
         }
-        .frame(width: 40)
+        .frame(width: Const.Size.viewWidth)
     }
 }
 
-struct AppTPActivityIconView_Previews: PreviewProvider {
-    static var previews: some View {
-        AppTPActivityIconView(
-            trackerImage: AppTrackerImageCache().loadTrackerImage(for: "Google LLC"),
-            blocked: true
-        )
+private enum Const {
+    enum Size {
+        static let iconWidth: CGFloat = 25
+        static let statusWidth: CGFloat = 18
+        static let statusVerticalPaddig: CGFloat = 19
+        static let viewWidth: CGFloat = 40
     }
 }

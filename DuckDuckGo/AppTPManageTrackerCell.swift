@@ -47,7 +47,7 @@ struct AppTPManageTrackerCell: View {
                 case .svg(let data):
                     SVGView(data: data)
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 25, height: 25)
+                        .frame(width: Const.Size.iconWidth, height: Const.Size.iconWidth)
 
                 case .view(let iconData):
                     GenericIconView(trackerLetter: iconData.trackerLetter,
@@ -77,21 +77,16 @@ struct AppTPManageTrackerCell: View {
 
 private enum Const {
     enum Font {
-        static let sectionHeader = UIFont.semiBoldAppFont(ofSize: 15)
         static let info = UIFont.appFont(ofSize: 16)
     }
     
     enum Size {
-        static let cornerRadius: CGFloat = 12
-        static let sectionIndentation: CGFloat = 16
-        static let sectionHeaderBottom: CGFloat = 6
         static let standardCellHeight: CGFloat = 44
+        static let iconWidth: CGFloat = 25
     }
 }
 
 private extension Color {
     static let infoText = Color("AppTPDomainColor")
-    static let cellBackground = Color("AppTPCellBackgroundColor")
-    static let viewBackground = Color("AppTPViewBackgroundColor")
     static let toggleTint = Color("AppTPToggleColor")
 }

@@ -38,7 +38,7 @@ struct AppTPTrackerDetailView: View {
                     Text(viewModel.trackerDomain)
                         .font(Font(uiFont: Const.Font.sectionHeader))
                         .foregroundColor(.infoText)
-                        .padding(.leading, 16)
+                        .padding(.leading, Const.Size.sectionHeaderPadding)
                     
                     Toggle(isOn: $viewModel.isOn, label: {
                         Text(UserText.appTPBlockTracker)
@@ -70,7 +70,7 @@ struct AppTPTrackerDetailView: View {
             }
         }
         .alert(isPresented: $showReportAlert) {
-            Alert(title: Text(UserText.appTPReportAlertTitle), // TODO: User Text
+            Alert(title: Text(UserText.appTPReportAlertTitle),
                   message: Text(UserText.appTPReportAlertMessage),
                   primaryButton: .default(Text(UserText.appTPReportAlertConfirm)) {
                       isBreakageLinkActive = true
@@ -89,9 +89,8 @@ private enum Const {
     
     enum Size {
         static let cornerRadius: CGFloat = 12
-        static let sectionIndentation: CGFloat = 16
-        static let sectionHeaderBottom: CGFloat = 6
         static let standardCellHeight: CGFloat = 44
+        static let sectionHeaderPadding: CGFloat = 16
     }
 }
 

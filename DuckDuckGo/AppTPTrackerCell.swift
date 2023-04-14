@@ -56,7 +56,7 @@ struct AppTPTrackerCell: View {
                 AppTPActivityIconView(trackerImage: imageCache.loadTrackerImage(for: trackerOwner),
                                       blocked: trackerBlocked)
 
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: Const.Size.rowSpacing) {
                     Text(trackerDomain)
                         .font(Font(uiFont: Const.Font.trackerDomain))
                         .foregroundColor(.trackerDomain)
@@ -83,7 +83,7 @@ struct AppTPTrackerCell: View {
                     .frame(width: 7, height: 12)
                     .foregroundColor(Color.disclosureColor)
             }
-            .padding(.horizontal, 16)
+            .padding(.horizontal, Const.Size.rowPadding)
             .frame(height: Const.Size.rowHeight)
             
             if showDivider {
@@ -101,6 +101,8 @@ private enum Const {
     
     enum Size {
         static let rowHeight: CGFloat = 78
+        static let rowPadding: CGFloat = 16
+        static let rowSpacing: CGFloat = 4
     }
 }
 

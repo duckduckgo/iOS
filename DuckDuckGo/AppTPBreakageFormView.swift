@@ -110,14 +110,14 @@ struct AppTPBreakageFormView: View {
                             
                             Spacer()
                         }
-                        .padding(.leading, -12)
+                        .padding(.leading, Const.Size.pickerPadding)
                     }
                 }
                 
                 Section {
                     VStack {
                         AppTPBreakageFormHeaderView(text: UserText.appTPReportCommentLabel)
-                            .padding(.top, 8)
+                            .padding(.top, Const.Size.commnetHeaderPadding)
                         
                         ZStack {
                             if self.description.isEmpty {
@@ -131,9 +131,9 @@ struct AppTPBreakageFormView: View {
                                 .font(.body)
                                 .opacity(self.description.isEmpty ? 0.25 : 1)
                         }
-                        .padding(.leading, -4)
+                        .padding(.leading, Const.Size.commentFieldPadding)
                     }
-                    .frame(minHeight: 60)
+                    .frame(minHeight: Const.Size.minCommentHeight)
                 } footer: {
                     Text(UserText.appTPReportFooter)
                     .fontWithLineHeight(font: Const.Font.footer, lineHeight: Const.Size.lineHeight)
@@ -169,22 +169,22 @@ struct AppTPBreakageFormView: View {
 
 private enum Const {
     enum Font {
-        static let sectionHeader = UIFont.semiBoldAppFont(ofSize: 15)
         static let button = UIFont.semiBoldAppFont(ofSize: 17)
         static let footer = UIFont.appFont(ofSize: 15)
     }
     
     enum Size {
         static let sectionIndentation: CGFloat = -6
-        static let sectionHeaderBottom: CGFloat = 6
         static let lineHeight: CGFloat = 18
+        static let minCommentHeight: CGFloat = 60
+        static let commentFieldPadding: CGFloat = -4
+        static let commnetHeaderPadding: CGFloat = 8
+        static let pickerPadding: CGFloat = -12
     }
 }
 
 private extension Color {
     static let infoText = Color("AppTPDomainColor")
-    static let cellBackground = Color("AppTPCellBackgroundColor")
-    static let viewBackground = Color("AppTPViewBackgroundColor")
     static let buttonColor = Color("AppTPBreakageButton")
     static let buttonLabelColor = Color("AppTPBreakageButtonLabel")
     static let disabledButton = Color("AppTPBreakageButtonDisabled")

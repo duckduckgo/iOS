@@ -20,7 +20,7 @@
 import Foundation
 import Persistence
 import Core
-import os.log
+import Common
 
 struct BlockedReason: Error {
     var description: String {

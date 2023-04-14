@@ -19,9 +19,9 @@
 
 import Foundation
 import Combine
+import Common
 import CoreData
 import Persistence
-import os.log
 
 public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
 

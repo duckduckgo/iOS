@@ -17,11 +17,11 @@
 //  limitations under the License.
 //
 
+import Common
 import Foundation
 import CoreData
 import Persistence
 import Bookmarks
-import os
 
 public class BookmarksDatabase {
 
@@ -43,7 +43,7 @@ public class BookmarksDatabase {
     }()
 
     public static func make(location: URL = defaultDBLocation, readOnly: Bool = false) -> CoreDataDatabase {
-        os_log("BookmarksDatabase.make - IN - %@", location as CVarArg)
+        os_log("BookmarksDatabase.make - IN - %s", location.absoluteString)
         let bundle = Bookmarks.bundle
         guard let model = CoreDataDatabase.loadModel(from: bundle, named: "BookmarksModel") else {
             os_log("BookmarksDatabase.make - OUT, failed to loadModel")

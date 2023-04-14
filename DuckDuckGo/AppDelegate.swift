@@ -18,9 +18,9 @@
 //
 
 import UIKit
+import Common
 import Core
 import UserNotifications
-import os.log
 import Kingfisher
 import WidgetKit
 import BackgroundTasks

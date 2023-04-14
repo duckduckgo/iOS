@@ -19,8 +19,8 @@
 
 import Foundation
 import BrowserServicesKit
+import Common
 import Core
-import os.log
 import Bookmarks
 
 final class HomePageConfiguration {

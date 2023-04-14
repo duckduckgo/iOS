@@ -22,7 +22,6 @@ import Combine
 import Core
 import BrowserServicesKit
 import Common
-import os.log
 
 // swiftlint:disable file_length type_body_length
 

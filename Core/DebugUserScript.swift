@@ -17,8 +17,8 @@
 //  limitations under the License.
 //
 
+import Common
 import WebKit
-import os
 import UserScript
 
 public class DebugUserScript: NSObject, UserScript {

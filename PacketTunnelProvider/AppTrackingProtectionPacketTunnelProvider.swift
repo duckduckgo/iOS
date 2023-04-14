@@ -18,7 +18,7 @@
 //
 
 import NetworkExtension
-import os.log
+import Common
 import Core
 
 public let generalLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? "DDG AppTP", category: "DDG AppTP")

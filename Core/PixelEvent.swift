@@ -404,9 +404,6 @@ extension Pixel {
         case bookmarksMigrationCouldNotRemoveOldStore
         
         case invalidPayload(Configuration)
-              
-        case experimentFireButtonAnimationTriggeredOnTabSwitcher
-        case experimentFireButtonEducationRestarted
     }
     
 }
@@ -798,9 +795,6 @@ extension Pixel.Event {
         case .bookmarksMigrationCouldNotRemoveOldStore: return "m_d_bookmarks_migration_could_not_remove_old_store"
 
         case .invalidPayload(let configuration): return "m_d_\(configuration.rawValue)_invalid_payload".lowercased()
-            
-        case .experimentFireButtonAnimationTriggeredOnTabSwitcher: return "m_d_experiment_fire_button_animation_triggered_on_tab_switcher"
-        case .experimentFireButtonEducationRestarted: return "m_d_experiment_fire_button_education_restarted"
         }
         
     }

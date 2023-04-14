@@ -317,7 +317,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="MHa-87-9H2"/>
-                                    <barButtonItem title="New Tab" image="NewTab" id="nYf-xs-PE7">
+                                    <barButtonItem title="New Tab" image="Add-24" id="nYf-xs-PE7">
                                         <inset key="imageInsets" minX="0.0" minY="0.0" maxX="2" maxY="0.0"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Add"/>
@@ -618,10 +618,10 @@
     </scenes>
     <resources>
         <image name="Add" width="24" height="24"/>
+        <image name="Add-24" width="24" height="24"/>
         <image name="Bookmark-New-24" width="24" height="24"/>
         <image name="Fire" width="19" height="24"/>
         <image name="GlobeSmall" width="24" height="24"/>
-        <image name="NewTab" width="24" height="24"/>
         <image name="Remove" width="24" height="24"/>
         <image name="TabUnread" width="24" height="24"/>
         <image name="TabsToggleGrid" width="43" height="16"/>

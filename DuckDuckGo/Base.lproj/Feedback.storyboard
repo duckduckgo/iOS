@@ -671,7 +671,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BrokenSites" translatesAutoresizingMaskIntoConstraints="NO" id="RNo-8b-yyt">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Breakage-128" translatesAutoresizingMaskIntoConstraints="NO" id="RNo-8b-yyt">
                                             <rect key="frame" x="143" y="10" width="128" height="128"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="128" id="Tt9-NS-Q1e"/>
@@ -770,11 +770,11 @@
     </scenes>
     <designables>
         <designable name="TMj-NM-j3b">
-            <size key="intrinsicContentSize" width="163.66666666666666" height="15.666666666666666"/>
+            <size key="intrinsicContentSize" width="155.66666666666666" height="15.666666666666666"/>
         </designable>
     </designables>
     <resources>
-        <image name="BrokenSites" width="120" height="120"/>
+        <image name="Breakage-128" width="128" height="96"/>
         <image name="happyFace" width="48" height="48"/>
         <image name="sadFace" width="48" height="48"/>
         <systemColor name="systemBackgroundColor">

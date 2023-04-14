@@ -67,7 +67,7 @@ struct AppTPBreakageFormView: View {
     @State private var appName: String = ""
     @State private var category: BreakageCategory = .appFreeze
     @State private var description: String = ""
-    @State private var placeholderText: String = "Add any more details"
+    @State private var placeholderText: String = "Add any more details" // TODO: Localize
     
     @State private var showError = false
     
@@ -79,7 +79,7 @@ struct AppTPBreakageFormView: View {
         
         feedbackModel.sendReport(appName: appName, category: category.rawValue, description: description)
         DispatchQueue.main.async {
-            ActionMessageView.present(message: "Thank you! Feedback submitted.",
+            ActionMessageView.present(message: "Thank you! Feedback submitted.", // TODO: Localize
                                       presentationLocation: .withoutBottomBar)
         }
         self.presentation.wrappedValue.dismiss()
@@ -140,7 +140,7 @@ In addition to the details entered into this form, your app issue report will co
 - A list of trackers blocked in the last 10 minutes
 - Whether App Tracking Protection is enabled
 - Aggregate DuckDuckGo app diagnostics
-""")
+""") // TODO: Localize
                     .fontWithLineHeight(font: Const.Font.footer, lineHeight: Const.Size.lineHeight)
                     .foregroundColor(.infoText)
                     .padding(.leading, Const.Size.sectionIndentation)

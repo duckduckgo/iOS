@@ -281,6 +281,7 @@ extension Pixel {
         case appTPDBHistoryFetchFailure
         case appTPDBFeedbackTrackerFetchFailed
         case appTPDBTrackerStoreFailure
+        case appTPCouldNotLoadDatabase
 
         // MARK: remote messaging pixels
 
@@ -672,6 +673,7 @@ extension Pixel.Event {
         case .appTPDBHistoryFetchFailure: return "m_apptp_db_history_fetch_failure"
         case .appTPDBFeedbackTrackerFetchFailed: return "m_apptp_db_feedback_tracker_fetch_failed"
         case .appTPDBTrackerStoreFailure: return "m_apptp_db_tracker_store_failure"
+        case .appTPCouldNotLoadDatabase: return "m_apptp_could_not_load_database"
 
         // MARK: remote messaging pixels
 

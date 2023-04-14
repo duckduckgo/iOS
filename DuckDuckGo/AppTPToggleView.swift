@@ -20,7 +20,7 @@
 import SwiftUI
 import NetworkExtension
 import Core
-import os.log
+import Common
 
 struct AppTPToggleView: View {
     @Binding var appTPUsed: Bool

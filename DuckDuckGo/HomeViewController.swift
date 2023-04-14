@@ -19,9 +19,9 @@
 
 import UIKit
 import Core
-import os.log
 import Bookmarks
 import Combine
+import Common
 
 class HomeViewController: UIViewController {
     

@@ -343,7 +343,6 @@ class SettingsViewController: UITableViewController {
         case syncCell:
             showSync()
 
-            
         case appTPCell:
             showAppTP()
             
@@ -409,7 +408,7 @@ class SettingsViewController: UITableViewController {
         } else if debugSectionIndex == section && !shouldShowDebugCell {
             return CGFloat.leastNonzeroMagnitude
         } else if moreFromDDGSectionIndex == section && !shouldShowAppTPCell {
-            return 55 // Standard footer height
+            return CGFloat.leastNonzeroMagnitude
         } else {
             return super.tableView(tableView, heightForFooterInSection: section)
         }

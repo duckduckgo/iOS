@@ -18,9 +18,9 @@
 //
 
 import UIKit
+import Common
 import Core
 import UserNotifications
-import os.log
 import Kingfisher
 import WidgetKit
 import BackgroundTasks
@@ -156,9 +156,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         appTrackingProtectionDatabase.loadStore { context, error in
             guard context != nil else {
-                // TODO: Fire pixel here, then sleep for 1 second to allow it to send
-                Thread.sleep(forTimeInterval: 1)
+                if let error = error {
+                    Pixel.fire(pixel: .appTPCouldNotLoadDatabase, error: error)
+                } else {
+                    Pixel.fire(pixel: .appTPCouldNotLoadDatabase)
+                }
 
+                Thread.sleep(forTimeInterval: 1)
                 fatalError("Could not create AppTP database stack: \(error?.localizedDescription ?? "err")")
             }
         }
@@ -245,6 +249,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         StatisticsLoader.shared.load {
             StatisticsLoader.shared.refreshAppRetentionAtb()
             self.fireAppLaunchPixel()
+            self.fireAppTPActiveUserPixel()
         }
         
         if appIsLaunching {
@@ -326,6 +331,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let fireDate = UserDefaults.standard.object(forKey: key) as? Date
             if fireDate == nil || fireDate! < dayStart,
                fwm.status() == .connected {
+                Pixel.fire(pixel: .appTPActiveUser)
+                UserDefaults.standard.set(date, forKey: key)
+            }
+        }
+    }
+
+    private func fireAppTPActiveUserPixel() {
+        guard AppDependencyProvider.shared.featureFlagger.isFeatureOn(.appTrackingProtection) else {
+            return
+        }
+        
+        let manager = FirewallManager()
+
+        Task {
+            await manager.refreshManager()
+            let date = Date()
+            let key = "appTPActivePixelFired"
+
+            // Make sure we don't fire this pixel multiple times a day
+            let dayStart = Calendar.current.startOfDay(for: date)
+            let fireDate = UserDefaults.standard.object(forKey: key) as? Date
+            if fireDate == nil || fireDate! < dayStart, manager.status() == .connected {
                 Pixel.fire(pixel: .appTPActiveUser)
                 UserDefaults.standard.set(date, forKey: key)
             }

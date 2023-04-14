@@ -19,7 +19,6 @@
 
 import Foundation
 import NetworkExtension
-import os.log
 import BrowserServicesKit
 import Common
 

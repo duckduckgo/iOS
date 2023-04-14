@@ -56,11 +56,12 @@ final class AutoconsentBackgroundTests: XCTestCase {
                                      preferences: MockAutoconsentPreferences(),
                                      ignoreNonHTTPURLs: false)
     }()
-    
+
+    @MainActor
     func testUserscriptIntegration() {
         let configuration = WKWebViewConfiguration()
 
-        configuration.userContentController.addUserScript(autoconsentUserScript.makeWKUserScript())
+        configuration.userContentController.addUserScript(autoconsentUserScript.makeWKUserScriptSync())
         
         for messageName in autoconsentUserScript.messageNames {
             let contentWorld: WKContentWorld = autoconsentUserScript.getContentWorld()
@@ -93,11 +94,12 @@ final class AutoconsentBackgroundTests: XCTestCase {
         }
         waitForExpectations(timeout: 4)
     }
-    
+
+    @MainActor
     func testCosmeticRule() {
         let configuration = WKWebViewConfiguration()
 
-        configuration.userContentController.addUserScript(autoconsentUserScript.makeWKUserScript())
+        configuration.userContentController.addUserScript(autoconsentUserScript.makeWKUserScriptSync())
         
         for messageName in autoconsentUserScript.messageNames {
             let contentWorld: WKContentWorld = autoconsentUserScript.getContentWorld()

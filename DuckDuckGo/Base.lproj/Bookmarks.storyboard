@@ -192,7 +192,7 @@
                                                 <constraint firstItem="PlS-RF-bTZ" firstAttribute="centerY" secondItem="2vh-lJ-WoO" secondAttribute="centerY" id="kCg-G1-s27"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" name="BookmarksCellColor"/>
+                                        <color key="backgroundColor" name="surface"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" button="YES"/>
                                         </accessibility>
@@ -228,7 +228,7 @@
                                                 <constraint firstItem="xfD-A4-SRJ" firstAttribute="leading" secondItem="e0A-ci-ZLj" secondAttribute="leadingMargin" id="fHt-IB-Glv"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" name="BookmarksCellColor"/>
+                                        <color key="backgroundColor" name="surface"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" button="YES"/>
                                         </accessibility>
@@ -276,7 +276,7 @@
                                                 <constraint firstItem="9wR-fm-8Rn" firstAttribute="centerY" secondItem="1hV-h5-0bK" secondAttribute="centerY" id="NVL-lH-uDP"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" name="BookmarksCellColor"/>
+                                        <color key="backgroundColor" name="surface"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" button="YES"/>
                                         </accessibility>
@@ -479,7 +479,7 @@
                                         <constraint firstAttribute="trailingMargin" secondItem="8R7-gf-yWn" secondAttribute="trailing" id="gns-zm-1ez"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" name="BookmarksCellColor"/>
+                                <color key="backgroundColor" name="surface"/>
                                 <connections>
                                     <outlet property="folderImageView" destination="8qY-sA-7P1" id="neJ-nR-FKK"/>
                                     <outlet property="leadingPaddingConstraint" destination="7fS-iW-BEh" id="uZ7-wF-WMV"/>
@@ -510,7 +510,7 @@
                                         <constraint firstItem="KiU-Wb-7jj" firstAttribute="leading" secondItem="MfZ-X5-f9l" secondAttribute="leading" constant="16" id="lbc-To-k5Z"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" name="BookmarksCellColor"/>
+                                <color key="backgroundColor" name="surface"/>
                                 <connections>
                                     <outlet property="textField" destination="KiU-Wb-7jj" id="hO7-0f-faW"/>
                                 </connections>
@@ -571,7 +571,7 @@
                                         <constraint firstItem="fVp-1a-TkJ" firstAttribute="centerY" secondItem="rT4-Yr-P8D" secondAttribute="bottom" id="xK7-H0-w8K"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" name="BookmarksCellColor"/>
+                                <color key="backgroundColor" name="surface"/>
                                 <connections>
                                     <outlet property="faviconImageView" destination="gf7-Lt-ftk" id="kIT-Vf-ZxY"/>
                                     <outlet property="seperatorViewHeight" destination="RDj-dx-Yf1" id="f1A-nY-fdp"/>
@@ -613,7 +613,7 @@
                                         <constraint firstItem="c3O-4F-9vA" firstAttribute="leading" secondItem="xfk-px-QiT" secondAttribute="leadingMargin" id="hdF-AL-e5p"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" name="BookmarksCellColor"/>
+                                <color key="backgroundColor" name="surface"/>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FavoriteCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="FavoriteCell" id="Uew-BN-bP6" userLabel="FavoriteFolderCell" customClass="FavoriteCell" customModule="DuckDuckGo" customModuleProvider="target">
                                 <rect key="frame" x="16" y="275.5" width="343" height="43.5"/>
@@ -651,7 +651,7 @@
                                         <constraint firstItem="mRK-XI-Rr8" firstAttribute="centerY" secondItem="Kwd-kN-eFx" secondAttribute="centerY" id="quc-na-xmf"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" name="BookmarksCellColor"/>
+                                <color key="backgroundColor" name="surface"/>
                                 <connections>
                                     <outlet property="favoriteToggle" destination="0pM-zQ-xZT" id="ZY7-CM-7Xu"/>
                                 </connections>
@@ -670,7 +670,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="lPi-F9-wDg"/>
+        <segue reference="Uhm-2I-Xo5"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="BookmarksEmpty" width="128" height="96"/>
@@ -706,6 +706,9 @@
         </namedColor>
         <namedColor name="background">
             <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="surface">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

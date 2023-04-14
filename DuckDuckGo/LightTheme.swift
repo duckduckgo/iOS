@@ -61,7 +61,7 @@ struct LightTheme: Theme {
     var autocompleteSuggestionTextColor = UIColor.black
     var autocompleteCellAccessoryColor = UIColor.darkGreyish
     
-    var tableCellBackgroundColor = UIColor.white
+    var tableCellBackgroundColor = UIColor(designSystemColor: .surface)
     var tableCellSelectedColor = UIColor.mercury
     var tableCellSeparatorColor = UIColor(white: 0, alpha: 0.09)
     var tableCellTextColor = UIColor.darkGreyish
@@ -70,7 +70,7 @@ struct LightTheme: Theme {
     var tableCellHighlightedBackgroundColor = UIColor.mercury
     var tableHeaderTextColor = UIColor.greyish3
     
-    var tabSwitcherCellBackgroundColor = UIColor.white
+    var tabSwitcherCellBackgroundColor = UIColor(designSystemColor: .surface)
     var tabSwitcherCellBorderColor = UIColor.nearlyBlackLight
     var tabSwitcherCellTextColor = UIColor.black
     var tabSwitcherCellSecondaryTextColor = UIColor.greyishBrown2

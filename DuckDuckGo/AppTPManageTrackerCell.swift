@@ -42,9 +42,18 @@ struct AppTPManageTrackerCell: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
-                SVGView(data: imageCache.loadTrackerImage(for: tracker.trackerOwner))
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 25, height: 25)
+                let trackerRep = imageCache.loadTrackerImage(for: tracker.trackerOwner)
+                switch trackerRep {
+                case .svg(let data):
+                    SVGView(data: data)
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 25, height: 25)
+
+                case .view(let iconData):
+                    GenericIconView(trackerLetter: iconData.trackerLetter,
+                                    trackerColor: iconData.trackerColor)
+                }
+                
                 
                 Toggle(isOn: $isBlocking) {
                     Text(tracker.domain)

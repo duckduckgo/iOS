@@ -22,14 +22,22 @@ import SVGView
 
 struct AppTPActivityIconView: View {
     
-    let trackerImage: Data
+    let trackerImage: TrackerEntityRepresentable
     let blocked: Bool
     
     var body: some View {
         ZStack {
             HStack {
-                SVGView(data: trackerImage)
-                    .frame(width: 24, height: 24)
+                switch trackerImage {
+                case .svg(let data):
+                    SVGView(data: data)
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 25, height: 25)
+
+                case .view(let iconData):
+                    GenericIconView(trackerLetter: iconData.trackerLetter,
+                                    trackerColor: iconData.trackerColor)
+                }
                 
                 Spacer()
             }

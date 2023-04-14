@@ -55,7 +55,7 @@ struct AppTPTrackerCell: View {
             HStack(alignment: .center) {
                 AppTPActivityIconView(trackerImage: imageCache.loadTrackerImage(for: trackerOwner),
                                       blocked: trackerBlocked)
-                
+
                 VStack(alignment: .leading, spacing: 4) {
                     Text(trackerDomain)
                         .font(Font(uiFont: Const.Font.trackerDomain))

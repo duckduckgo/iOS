@@ -23,13 +23,18 @@ import PrivacyDashboardResources
 
 enum TrackerEntityRepresentable {
     case svg(Data)
-    case view(any View)
+    case view(GenericIconData)
+}
+
+struct GenericIconData {
+    let trackerLetter: String
+    let trackerColor: Color
 }
 
 final class AppTrackerImageCache {
     
     private var blankTrackerImage: Data!
-    private var cachedTrackerImages: [String: Data]!
+    private var cachedTrackerImages: [String: TrackerEntityRepresentable]!
     
     private enum ImageDir: String {
         case letters
@@ -37,6 +42,25 @@ final class AppTrackerImageCache {
     }
     
     let bundleModule = Bundle.privacyDashboardResourcesBundle
+    
+    let colors: [Color] = [
+        Color("Blue"),
+        Color("DarkBlue"),
+        Color("GrayPurple"),
+        Color("Green"),
+        Color("GreenBlue"),
+        Color("LightBlue"),
+        Color("LightGreen"),
+        Color("LightGreenBlue"),
+        Color("LightPurple"),
+        Color("Mint"),
+        Color("Orange"),
+        Color("OrangeRed"),
+        Color("Purple"),
+        Color("Red"),
+        Color("Violet"),
+        Color("Yellow")
+    ]
     
     init() {
         resetCache()
@@ -63,7 +87,7 @@ final class AppTrackerImageCache {
         blankTrackerImage = dataFromBundle(for: "T", subdir: .letters)
     }
     
-    public func loadTrackerImage(for entityName: String) -> Data {
+    public func loadTrackerImage(for entityName: String) -> TrackerEntityRepresentable {
         if let cachedImage = cachedTrackerImages[entityName] {
             return cachedImage
         } else {
@@ -73,14 +97,14 @@ final class AppTrackerImageCache {
         }
     }
     
-    private func makeTrackerImage(for entityName: String) -> Data {
+    private func makeTrackerImage(for entityName: String) -> TrackerEntityRepresentable {
         if let image = loadTrackerLogoImage(for: entityName) {
-            return image
-        } else if let firstLetter = entityName.first,
-                  let letterImage = loadTrackerImage(for: String(firstLetter).uppercased()) {
-            return letterImage
+            return .svg(image)
+        } else if let firstLetter = entityName.first {
+            return .view(GenericIconData(trackerLetter: String(firstLetter),
+                                         trackerColor: colors.randomElement()!))
         } else {
-            return blankTrackerImage
+            return .svg(blankTrackerImage)
         }
     }
     

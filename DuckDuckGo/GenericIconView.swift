@@ -22,23 +22,19 @@ import SwiftUI
 struct GenericIconView: View {
     
     let trackerLetter: String
+    let trackerColor: Color
     
     var body: some View {
         ZStack {
             Circle()
-                .foregroundColor(Color.blue)
+                .foregroundColor(trackerColor)
             
             Text(trackerLetter)
                 .font(Font(uiFont: Const.Font.sectionHeader))
+                .foregroundColor(.white)
                 .padding(.top, 1)
         }
         .frame(width: 24)
-    }
-}
-
-struct GenericIconView_Previews: PreviewProvider {
-    static var previews: some View {
-        GenericIconView(trackerLetter: "B")
     }
 }
 

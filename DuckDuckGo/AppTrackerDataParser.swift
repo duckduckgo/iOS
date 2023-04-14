@@ -89,7 +89,7 @@ class TrackerDataParser {
         var check = domain
         while check.contains(".") {
             // return the domain matched in the blocklist
-            if let _ = blocklist?.trackers[check] {
+            if blocklist?.trackers[check] != nil {
                 return check
             }
             

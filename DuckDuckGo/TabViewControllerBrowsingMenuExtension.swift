@@ -152,14 +152,14 @@ extension TabViewController {
         
         if isFireproofed {
             return BrowsingMenuEntry.regular(name: UserText.disablePreservingLogins,
-                                             image: UIImage(named: "Fire-16")!,
+                                             image: UIImage(named: "MenuRemoveFireproof")!,
                                              action: { [weak self] in
                                                 self?.disableFireproofingForDomain(domain)
                                              })
         }
 
         return BrowsingMenuEntry.regular(name: UserText.enablePreservingLogins,
-                                         image: UIImage(named: "Fireproof-16")!,
+                                         image: UIImage(named: "MenuFireproof")!,
                                          action: { [weak self] in
                                             self?.enableFireproofingForDomain(domain)
                                          })

@@ -25,41 +25,9 @@ import DDGSync
 extension SyncSettingsViewController {
 
     func shareRecoveryPDF() {
-        let pdfController = UIHostingController(rootView: RecoveryKeyPDFView(code: recoveryCode))
-        pdfController.loadView()
 
-        let pdfRect = CGRect(x: 0, y: 0, width: 612, height: 792)
-        pdfController.view.frame = CGRect(x: 0, y: 0, width: pdfRect.width, height: pdfRect.height + 100)
-        pdfController.view.insetsLayoutMarginsFromSafeArea = false
-
-        let rootVC = UIApplication.shared.windows.first?.rootViewController
-        rootVC?.addChild(pdfController)
-        rootVC?.view.insertSubview(pdfController.view, at: 0)
-        defer {
-            pdfController.view.removeFromSuperview()
-        }
-
-        let format = UIGraphicsPDFRendererFormat()
-        format.documentInfo = [
-            kCGPDFContextTitle as String: "DuckDuckGo Sync Recovery Code"
-        ]
-
-        let renderer = UIGraphicsPDFRenderer(bounds: pdfRect, format: format)
-        let data = renderer.pdfData { context in
-            context.beginPage()
-            context.cgContext.translateBy(x: 0, y: -100)
-            pdfController.view.layer.render(in: context.cgContext)
-
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.lineHeightMultiple = 1.55
-
-            recoveryCode.draw(in: CGRect(x: 240, y: 380, width: 294, height: 1000), withAttributes: [
-                .font: UIFont.monospacedSystemFont(ofSize: 13, weight: .regular),
-                .foregroundColor: UIColor.black,
-                .paragraphStyle: paragraphStyle,
-                .kern: 2
-            ])
-        }
+        let data = RecoveryPDFGenerator
+            .generate(recoveryCode)
 
         let pdf = RecoveryCodeItem(data: data)
         navigationController?.visibleViewController?.presentShareSheet(withItems: [pdf],

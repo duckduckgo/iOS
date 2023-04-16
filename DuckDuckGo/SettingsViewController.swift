@@ -21,6 +21,7 @@ import UIKit
 import MessageUI
 import Core
 import BrowserServicesKit
+import Persistence
 import SwiftUI
 import Common
 
@@ -50,6 +51,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var macBrowserWaitlistAccessoryText: UILabel!
     @IBOutlet weak var windowsBrowserWaitlistCell: UITableViewCell!
     @IBOutlet weak var windowsBrowserWaitlistAccessoryText: UILabel!
+    @IBOutlet weak var appTPCell: UITableViewCell!
     @IBOutlet weak var longPressCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
     @IBOutlet weak var textSizeCell: UITableViewCell!
@@ -66,7 +68,10 @@ class SettingsViewController: UITableViewController {
     
     private let syncSectionIndex = 1
     private let autofillSectionIndex = 2
+    private let moreFromDDGSectionIndex = 6
     private let debugSectionIndex = 8
+    
+    public var appTPDatabase: CoreDataDatabase!
 
     private lazy var emailManager = EmailManager()
     
@@ -91,6 +96,10 @@ class SettingsViewController: UITableViewController {
     private lazy var shouldShowSyncCell: Bool = {
         return featureFlagger.isFeatureOn(.sync)
     }()
+    
+    private lazy var shouldShowAppTPCell: Bool = {
+        return featureFlagger.isFeatureOn(.appTrackingProtection)
+    }()
 
     static func loadFromStoryboard() -> UIViewController {
         return UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()!
@@ -101,6 +110,7 @@ class SettingsViewController: UITableViewController {
 
         configureAutofillCell()
         configureSyncCell()
+        configureAppTPCell()
         configureThemeCellAccessory()
         configureFireButtonAnimationCellAccessory()
         configureTextSizeCell()
@@ -247,6 +257,10 @@ class SettingsViewController: UITableViewController {
             windowsBrowserWaitlistCell.detailTextLabel?.text = WindowsBrowserWaitlist.shared.settingsSubtitle
         }
     }
+    
+    private func configureAppTPCell() {
+        appTPCell.isHidden = !shouldShowAppTPCell
+    }
 
     private func configureDebugCell() {
         debugCell.isHidden = !shouldShowDebugCell
@@ -286,6 +300,13 @@ class SettingsViewController: UITableViewController {
     private func showMacBrowserWaitlistViewController() {
         navigationController?.pushViewController(MacWaitlistViewController(nibName: nil, bundle: nil), animated: true)
     }
+    
+    private func showAppTP() {
+        navigationController?.pushViewController(
+            AppTPActivityHostingViewController(appTrackingProtectionDatabase: appTPDatabase),
+            animated: true
+        )
+    }
 
     private func showWindowsBrowserWaitlistViewController() {
         navigationController?.pushViewController(WindowsWaitlistViewController(nibName: nil, bundle: nil), animated: true)
@@ -322,6 +343,9 @@ class SettingsViewController: UITableViewController {
         case syncCell:
             showSync()
 
+        case appTPCell:
+            showAppTP()
+            
         default: break
         }
         
@@ -382,6 +406,8 @@ class SettingsViewController: UITableViewController {
         } else if autofillSectionIndex == section && !shouldShowAutofillCell {
             return CGFloat.leastNonzeroMagnitude
         } else if debugSectionIndex == section && !shouldShowDebugCell {
+            return CGFloat.leastNonzeroMagnitude
+        } else if moreFromDDGSectionIndex == section && !shouldShowAppTPCell {
             return CGFloat.leastNonzeroMagnitude
         } else {
             return super.tableView(tableView, heightForFooterInSection: section)

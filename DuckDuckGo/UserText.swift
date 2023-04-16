@@ -486,6 +486,20 @@ public struct UserText {
         return localized.format(arguments: code)
     }
 
+    
+    // MARK: App Tracking Protection
+    
+    public static let appTPNavTitle = NSLocalizedString("appTP.title", value: "App Tracking Protection", comment: "Title for the App Tracking Protection feature")
+    
+    public static let appTPEmptyDisabledInfo = NSLocalizedString("appTP.empty.disabled.info", value: "Enable App Tracking Protection so we can block pesky trackers in other apps.", comment: "Info string informing the user what App Tracking Protection does.")
+    
+    public static let appTPEmptyEnabledInfo = NSLocalizedString("appTP.empty.enabled.info", value: "We're looking for trackers in your apps...", comment: "Info string informing the user we're looking for trackers in other apps.")
+    
+    public static func appTPTrackingAttempts(count: String) -> String {
+        let message = NSLocalizedString("appTP.trackingattempts", value: "%@ tracking attempts", comment: "Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts")
+        return message.format(arguments: count)
+    }
+    
     // MARK: Notifications
     
     public static let macWaitlistAvailableNotificationTitle = NSLocalizedString("mac-waitlist.available.notification.title", value: "DuckDuckGo for Mac is ready!", comment: "Title for the macOS waitlist notification")

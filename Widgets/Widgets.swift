@@ -17,13 +17,13 @@
 //  limitations under the License.
 //
 
+import Common
 import WidgetKit
 import SwiftUI
 import Core
 import CoreData
 import Kingfisher
 import Bookmarks
-import os
 import Persistence
 
 struct Favorite {

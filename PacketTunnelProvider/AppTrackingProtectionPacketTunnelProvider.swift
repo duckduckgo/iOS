@@ -1,0 +1,103 @@
+//
+//  AppTrackingProtectionPacketTunnelProvider.swift
+//  DuckDuckGo
+//
+//  Copyright © 2023 DuckDuckGo. All rights reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
+
+import NetworkExtension
+import Common
+import Core
+
+public let generalLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? "DDG AppTP", category: "DDG AppTP")
+
+class AppTrackingProtectionPacketTunnelProvider: NEPacketTunnelProvider {
+
+    let proxyServerPort: UInt16 = 9090
+    let proxyServerAddress = "127.0.0.1"
+    var proxyServer: GCDHTTPProxyServer!
+    
+    override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
+        os_log("[AppTP] Starting tunnel...", log: generalLog, type: .debug)
+        
+        if proxyServer != nil {
+            proxyServer.stop()
+        }
+        proxyServer = nil
+        
+        // Set up local proxy server to route requests that match the blocklist
+        let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: proxyServerAddress)
+
+        settings.mtu = NSNumber(value: 1500)
+        
+        let proxySettings = NEProxySettings()
+        proxySettings.httpEnabled = true
+        proxySettings.httpServer = NEProxyServer(address: proxyServerAddress, port: Int(proxyServerPort))
+        proxySettings.httpsEnabled = true
+        proxySettings.httpsServer = NEProxyServer(address: proxyServerAddress, port: Int(proxyServerPort))
+        proxySettings.excludeSimpleHostnames = false
+        proxySettings.exceptionList = []
+        
+        // Get blocklist
+        os_log("[AppTP] Loading blocklist", log: generalLog, type: .debug)
+        let blocked = TrackerDataParser()
+        proxySettings.matchDomains = blocked.flatDomainList()
+        
+        settings.dnsSettings = NEDNSSettings(servers: [proxyServerAddress])
+        settings.proxySettings = proxySettings
+        RawSocketFactory.TunnelProvider = self
+        ObserverFactory.currentFactory = DDGObserverFactory()
+        
+        self.setTunnelNetworkSettings(settings) { error in
+            self.proxyServer = GCDHTTPProxyServer(address: IPAddress(fromString: self.proxyServerAddress),
+                                                  port: Port(port: self.proxyServerPort))
+            do {
+                try self.proxyServer.start()
+                completionHandler(nil)
+            } catch {
+                os_log("[ERROR] Error starting proxy server %s", log: generalLog, type: .error, error.localizedDescription)
+                completionHandler(error)
+            }
+        }
+    }
+    
+    override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
+        Pixel.fire(pixel: .appTPVPNDisconnect, withAdditionalParameters: ["reason": String(reason.rawValue)])
+        
+        RawSocketFactory.TunnelProvider = nil
+        ObserverFactory.currentFactory = nil
+        proxyServer.stop()
+        proxyServer = nil
+        
+        completionHandler()
+        exit(EXIT_SUCCESS)
+    }
+    
+    override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)?) {
+        // Add code here to handle the message.
+        if let handler = completionHandler {
+            handler(messageData)
+        }
+    }
+    
+    override func sleep(completionHandler: @escaping () -> Void) {
+        // Add code here to get ready to sleep.
+        completionHandler()
+    }
+    
+    override func wake() {
+        // Add code here to wake up.
+    }
+}

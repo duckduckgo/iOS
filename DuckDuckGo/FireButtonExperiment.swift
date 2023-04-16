@@ -39,8 +39,6 @@ final class FireButtonExperiment {
         else { return }
         
         fireButton.playAnimation()
-        
-        Pixel.fire(pixel: .experimentFireButtonAnimationTriggeredOnTabSwitcher, includedParameters: [.atb])
     }
     
     public static func playFireButtonForOnboarding(fireButton: FireButton) {
@@ -72,7 +70,6 @@ final class FireButtonExperiment {
         DefaultDaxDialogsSettings().fireButtonPulseDateShown = nil
         
         storeThatFireButtonEducationWasRestarted()
-        Pixel.fire(pixel: .experimentFireButtonEducationRestarted, includedParameters: [.atb])
     }
     
     private static var wasFireButtonEducationRestarted: Bool {

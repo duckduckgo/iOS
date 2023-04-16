@@ -17,10 +17,10 @@
 //  limitations under the License.
 //
 
+import Common
 import Core
 import UIKit
 import WebKit
-import os.log
 import Networking
 
 /// Use title property to set the displayed title

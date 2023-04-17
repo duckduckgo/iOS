@@ -26,7 +26,7 @@ extension SyncSettingsViewController {
 
     func shareRecoveryPDF() {
 
-        let data = RecoveryPDFGenerator
+        let data = RecoveryPDFGenerator()
             .generate(recoveryCode)
 
         let pdf = RecoveryCodeItem(data: data)

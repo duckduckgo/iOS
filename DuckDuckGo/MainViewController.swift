@@ -983,6 +983,7 @@ class MainViewController: UIViewController {
             ViewHighlighter.hideAll()
         }
         DaxDialogs.shared.fireButtonPulseCancelled()
+        FireButton.stopAllFireButtonAnimations()
         hideSuggestionTray()
         currentTab?.dismiss()
 

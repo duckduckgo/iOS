@@ -48,6 +48,7 @@ class DDGObserverFactory: ObserverFactory {
         }
 
         appTrackingProtectionStoringModel = AppTrackingProtectionStoringModel(appTrackingProtectionDatabase: appTrackingProtectionDatabase)
+        appTrackingProtectionStoringModel.removeStaleEntries()
     }
     
     class DDGProxySocketObserver: Observer<ProxySocketEvent> {

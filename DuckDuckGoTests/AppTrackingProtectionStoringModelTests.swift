@@ -99,6 +99,20 @@ class AppTrackingProtectionStoringModelTests: XCTestCase {
         XCTAssertEqual(updatedTrackers.count, 1)
     }
 
+    func testWhenRemovingStaleTrackers_ThenValidTrackersRemain() {
+        let store = AppTrackingProtectionStoringModel(appTrackingProtectionDatabase: database)
+        store.storeBlockedTracker(domain: "domain.com", trackerOwner: "Owner", date: createDate(year: 2023, month: 1, day: 1))
+
+        let context = database.makeContext(concurrencyType: .mainQueueConcurrencyType)
+        let initialTrackers = fetchTrackers(context)
+        XCTAssertEqual(initialTrackers.count, 1)
+
+        store.removeStaleEntries(currentDate: createDate(year: 2023, month: 2, day: 1))
+
+        let updatedTrackers = fetchTrackers(context)
+        XCTAssertEqual(updatedTrackers.count, 0)
+    }
+
     // MARK: - Utilities
 
     private func createDate(year: Int, month: Int, day: Int) -> Date {

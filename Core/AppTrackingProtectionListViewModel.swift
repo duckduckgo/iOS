@@ -98,14 +98,17 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
         return relativeDate
     }
     
-    public func format(timestamp: Date) -> String {
+    /// Returns a relative datestring for the given timestamp. e.g. "5 min. ago"
+    /// If the timestamp is within 1 second of the current time this function will return `nil`
+    /// A `nil` return value should be considered "just now".
+    public func format(timestamp: Date) -> String? {
         let date = Date()
         let timestampInterval = timestamp.timeIntervalSinceReferenceDate
         let dateInterval = date.timeIntervalSinceReferenceDate
         if fabs(dateInterval - timestampInterval) < 1 {
             // Can't access UserText from Core. To prevent handling the localized string "in 0 seconds"
-            // return "0" here and replace it with UserText on the view side.
-            return "0"
+            // return nil here and replace it with UserText on the view side.
+            return nil
         }
         
         return relativeTimeFormatter.localizedString(for: timestamp, relativeTo: Date())

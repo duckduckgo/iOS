@@ -30,7 +30,7 @@ struct AppTPTrackerCell: View {
     let trackerCount: Int32
     let trackerBlocked: Bool
 
-    let trackerTimestamp: String
+    let trackerTimestamp: String?
     let trackerBucket: String
     let debugMode: Bool
 
@@ -38,10 +38,7 @@ struct AppTPTrackerCell: View {
     let showDivider: Bool
     
     func stringForTrackerTimestamp() -> String {
-        var timeStr = trackerTimestamp
-        if timeStr == "0" {
-            timeStr = UserText.appTPJustNow
-        }
+        let timeStr = trackerTimestamp ?? UserText.appTPJustNow
         
         if trackerBlocked {
             return UserText.appTPTrackerBlockedTimestamp(timeString: timeStr)

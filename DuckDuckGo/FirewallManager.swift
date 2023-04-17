@@ -131,6 +131,11 @@ class FirewallManager: FirewallManaging {
         manager = nil
         if managers.count > 0 {
             manager = managers.first
+            
+            if manager?.isEnabled == enabled {
+                // Prevent unnecessarily modifying the VPN configuration
+                return
+            }
         } else {
             // create manager instance
             manager = NETunnelProviderManager()

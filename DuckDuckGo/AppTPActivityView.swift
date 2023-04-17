@@ -25,16 +25,14 @@ struct AppTPActivityView: View {
     @ObservedObject var feedbackModel: AppTrackingProtectionFeedbackModel
     @ObservedObject var toggleViewModel = AppTPToggleViewModel()
     
-    @State var vpnOn: Bool = false
-    
     let imageCache = AppTrackerImageCache()
     
     func imageForState() -> Image {
-        return vpnOn ? Image("AppTPEmptyEnabled") : Image("AppTPEmptyDisabled")
+        return toggleViewModel.isOn ? Image("AppTPEmptyEnabled") : Image("AppTPEmptyDisabled")
     }
     
     func textForState() -> String {
-        return vpnOn ? UserText.appTPEmptyEnabledInfo : UserText.appTPEmptyDisabledInfo
+        return toggleViewModel.isOn ? UserText.appTPEmptyEnabledInfo : UserText.appTPEmptyDisabledInfo
     }
     
     var emptyState: some View {
@@ -105,10 +103,7 @@ struct AppTPActivityView: View {
             LazyVStack(alignment: .center, spacing: 0) {
                 Section {
                     VStack {
-                        AppTPToggleView(
-                            vpnOn: $vpnOn,
-                            viewModel: toggleViewModel
-                        )
+                        AppTPToggleView(viewModel: toggleViewModel)
                             .background(Color.cellBackground)
                             .cornerRadius(Const.Size.cornerRadius)
 

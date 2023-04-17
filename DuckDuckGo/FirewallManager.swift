@@ -34,7 +34,32 @@ protocol FirewallManaging {
     var delegate: FirewallDelegate? { get set }
 }
 
+<<<<<<< Updated upstream
 class FirewallManager: FirewallManaging {
+=======
+extension NEVPNStatus {
+    var description: String {
+        switch self {
+        case .connected:
+            return "connected"
+        case .connecting:
+            return "connecting"
+        case .disconnected:
+            return "disconnected"
+        case .disconnecting:
+            return "disconnecting"
+        case .invalid:
+            return "invalid"
+        case .reasserting:
+            return "reasserting"
+        default:
+            return "unknown status"
+        }
+    }
+}
+
+public class FirewallManager: FirewallManaging {
+>>>>>>> Stashed changes
     
     static let apptpLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier, category: "AppTP")
     
@@ -76,6 +101,7 @@ class FirewallManager: FirewallManaging {
     }
     
     @objc func statusDidChange() {
+//        os_log("[INFO] VPN status changed: %s", log: FirewallManager.apptpLog, type: .debug, status().description)
         delegate?.statusDidChange(newStatus: status())
     }
     

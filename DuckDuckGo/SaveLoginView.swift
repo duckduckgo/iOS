@@ -26,7 +26,6 @@ struct SaveLoginView: View {
         case newUser
         case saveLogin
         case savePassword
-        case saveAdditionalLogin
         case updateUsername
         case updatePassword
     }
@@ -39,30 +38,32 @@ struct SaveLoginView: View {
     var layoutType: LayoutType {
         viewModel.layoutType
     }
-    
+
+    private var usernameDisplayString: String {
+        AutofillInterfaceUsernameTruncator.truncateUsername(viewModel.username, maxLength: 50)
+    }
+
     private var title: String {
         switch layoutType {
         case .newUser, .saveLogin:
             return UserText.autofillSaveLoginTitleNewUser
-        case .saveAdditionalLogin:
-            return UserText.autofillSaveLoginTitle
         case .savePassword:
             return UserText.autofillSavePasswordTitle
         case .updateUsername:
             return UserText.autofillUpdateUsernameTitle
         case .updatePassword:
-            return UserText.autofillUpdatePasswordTitle
+            return UserText.autofillUpdatePassword(for: usernameDisplayString)
         }
     }
     
     private var confirmButton: String {
         switch layoutType {
-        case .newUser, .saveLogin, .saveAdditionalLogin:
+        case .newUser, .saveLogin:
             return UserText.autofillSaveLoginSaveCTA
         case .savePassword:
             return UserText.autofillSavePasswordSaveCTA
         case .updateUsername:
-            return UserText.autofillUpdateLoginSaveCTA
+            return UserText.autofillUpdateUsernameSaveCTA
         case .updatePassword:
             return UserText.autofillUpdatePasswordSaveCTA
         }
@@ -210,17 +211,15 @@ struct SaveLoginView: View {
     @ViewBuilder
     private var contentView: some View {
         switch layoutType {
-        case .newUser, .saveLogin, .savePassword:
-            newUserContentView
-        case .saveAdditionalLogin:
-            additionalLoginContentView
-        case .updateUsername, .updatePassword:
-            updateContentView
+        case .newUser, .saveLogin, .savePassword, .updatePassword:
+            defaultContentView
+        case .updateUsername:
+            updateUsernameContentView
         }
     }
     
-    private var newUserContentView: some View {
-        Text(UserText.autofillSaveLoginMessageNewUser)
+    private var defaultContentView: some View {
+        Text(layoutType == .updatePassword ? UserText.autoUpdatePasswordMessage : UserText.autofillSaveLoginMessageNewUser)
             .font(Const.Fonts.subtitle)
             .secondaryTextStyle()
             .multilineTextAlignment(.center)
@@ -229,19 +228,10 @@ struct SaveLoginView: View {
             .fixedSize(horizontal: false, vertical: true)
     }
     
-    private var updateContentView: some View {
-        Text(verbatim: layoutType == .updatePassword ? viewModel.hiddenPassword : viewModel.username)
+    private var updateUsernameContentView: some View {
+        Text(verbatim: viewModel.usernameTruncated)
             .font(Const.Fonts.userInfo)
             .lineLimit(1)
-            .frame(maxWidth: .infinity)
-            .multilineTextAlignment(.center)
-            .padding(.horizontal, isSmallFrame ? Const.Size.paddingSmallDevice : Const.Size.paddingDefault)
-    }
-    
-    private var additionalLoginContentView: some View {
-        Text(verbatim: UserText.autofillAdditionalLoginInfoMessage)
-            .font(Const.Fonts.subtitle)
-            .secondaryTextStyle()
             .frame(maxWidth: .infinity)
             .multilineTextAlignment(.center)
             .padding(.horizontal, isSmallFrame ? Const.Size.paddingSmallDevice : Const.Size.paddingDefault)
@@ -314,7 +304,7 @@ struct SaveLoginView_Previews: PreviewProvider {
             VStack {
                 let viewModelAdditionalLogin = SaveLoginViewModel(credentialManager: MockManager(),
                                                                   appSettings: AppDependencyProvider.shared.appSettings,
-                                                                  layoutType: .saveAdditionalLogin)
+                                                                  layoutType: .saveLogin)
                 SaveLoginView(viewModel: viewModelAdditionalLogin)
                 
                 let viewModelSavePassword = SaveLoginViewModel(credentialManager: MockManager(),

@@ -267,7 +267,11 @@ extension Pixel {
         
         // MARK: AppTP
         case appTPBreakageReport
-        
+
+        case appTPFailedToAccessPreferences
+        case appTPFailedToAccessPreferencesDuringSetup
+        case appTPFailedToStartTunnel
+
         case appTPVPNCrash
         case appTPVPNDisconnect
         
@@ -399,12 +403,6 @@ extension Pixel {
         case bookmarksMigrationCouldNotRemoveOldStore
         
         case invalidPayload(Configuration)
-      
-        case experimentDailyFireButtonTapped
-        case experimentDailyFireButtonDataCleared
-        
-        case experimentFireButtonAnimationTriggeredOnTabSwitcher
-        case experimentFireButtonEducationRestarted
     }
     
 }
@@ -660,8 +658,11 @@ extension Pixel.Event {
         case .serpRequeryNew: return "rq_1"
             
         // MARK: AppTP pixels
-            
+
         case .appTPBreakageReport: return "m_apptp_breakage_report"
+        case .appTPFailedToAccessPreferences: return "m_apptp_failed_to_access_preferences"
+        case .appTPFailedToAccessPreferencesDuringSetup: return "m_apptp_failed_to_access_preferences_during_setup"
+        case .appTPFailedToStartTunnel: return "m_apptp_failed_to_start_tunnel"
         case .appTPVPNCrash: return "m_apptp_vpn_crash"
         case .appTPVPNDisconnect: return "m_apptp_vpn_disconnect"
         case .appTPBlocklistParseFailed: return "m_apptp_blocklist_parse_failed"
@@ -793,12 +794,6 @@ extension Pixel.Event {
         case .bookmarksMigrationCouldNotRemoveOldStore: return "m_d_bookmarks_migration_could_not_remove_old_store"
 
         case .invalidPayload(let configuration): return "m_d_\(configuration.rawValue)_invalid_payload".lowercased()
-            
-        case .experimentDailyFireButtonTapped: return "m_d_experiment_daily_fire_button_tapped"
-        case .experimentDailyFireButtonDataCleared: return "m_d_experiment_daily_fire_button_data_cleared"
-
-        case .experimentFireButtonAnimationTriggeredOnTabSwitcher: return "m_d_experiment_fire_button_animation_triggered_on_tab_switcher"
-        case .experimentFireButtonEducationRestarted: return "m_d_experiment_fire_button_education_restarted"
         }
         
     }

@@ -142,6 +142,12 @@
 /* Text label for switch that turns blocking on or off for a tracker */
 "appTP.blockTrackerText" = "Block this tracker";
 
+/* Detail string describing what AppTP is */
+"appTP.cell.detail" = "Block app trackers on your device";
+
+/* String indicating AppTP is disabled when viewed from the settings screen */
+"appTP.cell.disabled" = "Disabled";
+
 /* Info string informing the user what App Tracking Protection does. */
 "appTP.empty.disabled.info" = "Enable App Tracking Protection so we can block pesky trackers in other apps.";
 

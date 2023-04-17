@@ -114,6 +114,7 @@ class TabViewController: UIViewController {
     // Required to know when to disable autofill, see SaveLoginViewModel for details
     // Stored in memory on TabViewController for privacy reasons
     private var domainSaveLoginPromptLastShownOn: String?
+    private var saveLoginPromptLastDismissed: Date?
 
     // If no trackers dax dialog was shown recently in this tab, ie without the user navigating somewhere else, e.g. backgrounding or tab switcher
     private var woShownRecently = false
@@ -1141,8 +1142,13 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func checkLoginDetectionAfterNavigation() {
-        if preserveLoginsWorker?.handleLoginDetection(detectedURL: detectedLoginURL, currentURL: url) ?? false {
+        if preserveLoginsWorker?.handleLoginDetection(detectedURL: detectedLoginURL,
+                                                      currentURL: url,
+                                                      isAutofillEnabled: isAutofillEnabledInSettings,
+                                                      saveLoginPromptLastDismissed: saveLoginPromptLastDismissed)
+           ?? false {
             detectedLoginURL = nil
+            saveLoginPromptLastDismissed = nil
         }
     }
     
@@ -2440,6 +2446,8 @@ extension TabViewController: SecureVaultManagerDelegate {
 extension TabViewController: SaveLoginViewControllerDelegate {
 
     private func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, withSuccessMessage message: String) {
+        saveLoginPromptLastDismissed = Date()
+
         do {
             let credentialID = try SaveAutofillLoginManager.saveCredentials(credentials,
                                                                             with: SecureVaultFactory.default)
@@ -2472,6 +2480,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
     
     func saveLoginViewControllerDidCancel(_ viewController: SaveLoginViewController) {
         viewController.dismiss(animated: true)
+        saveLoginPromptLastDismissed = Date()
     }
     
     func saveLoginViewController(_ viewController: SaveLoginViewController,

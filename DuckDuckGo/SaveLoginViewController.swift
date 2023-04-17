@@ -80,8 +80,6 @@ class SaveLoginViewController: UIViewController {
             Pixel.fire(pixel: .autofillLoginsSaveLoginModalDismissed)
         case .savePassword:
             Pixel.fire(pixel: .autofillLoginsSavePasswordModalDismissed)
-        case .saveAdditionalLogin:
-            Pixel.fire(pixel: .autofillLoginsSaveLoginModalDismissed)
         case .updateUsername:
             Pixel.fire(pixel: .autofillLoginsUpdateUsernameModalDismissed)
         case .updatePassword:
@@ -108,8 +106,6 @@ class SaveLoginViewController: UIViewController {
             Pixel.fire(pixel: .autofillLoginsSaveLoginModalDisplayed)
         case .savePassword:
             Pixel.fire(pixel: .autofillLoginsSavePasswordModalDisplayed)
-        case .saveAdditionalLogin:
-            Pixel.fire(pixel: .autofillLoginsSaveLoginModalDisplayed)
         case .updateUsername:
             Pixel.fire(pixel: .autofillLoginsUpdateUsernameModalDisplayed)
         case .updatePassword:
@@ -121,7 +117,7 @@ class SaveLoginViewController: UIViewController {
 extension SaveLoginViewController: SaveLoginViewModelDelegate {
     func saveLoginViewModelDidSave(_ viewModel: SaveLoginViewModel) {
         switch viewModel.layoutType {
-        case .saveAdditionalLogin, .saveLogin, .savePassword, .newUser:
+        case .saveLogin, .savePassword, .newUser:
             if viewModel.layoutType == .savePassword {
                 Pixel.fire(pixel: .autofillLoginsSavePasswordModalConfirmed)
             } else {

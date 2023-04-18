@@ -33,7 +33,7 @@ struct LightTheme: Theme {
     var backgroundColor = UIColor(designSystemColor: .background)
     
     var barBackgroundColor = UIColor(designSystemColor: .panel)
-    var barTintColor = UIColor.nearlyBlackLight
+    var barTintColor = UIColor(designSystemColor: .icons)
     
     var navigationBarTitleColor = UIColor.nearlyBlackLight
     var navigationBarTintColor = UIColor.darkGreyish

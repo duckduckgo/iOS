@@ -98,6 +98,12 @@ class BookmarkFoldersViewController: UITableViewController {
             }
         }
     }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        let theme = ThemeManager.shared.currentTheme
+        cell.backgroundColor = UIColor(designSystemColor: .surface)
+    }
 
     func folderSelectorCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkFolderCell.reuseIdentifier) else {

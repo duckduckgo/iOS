@@ -43,6 +43,10 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
     }
 
     @Published public var debugModeEnabled = false
+    
+    // We only want to show "Manage Trackers" and "Report an issue" if the user has enabled AppTP at least once
+    @UserDefaultsWrapper(key: .appTPUsed, defaultValue: false)
+    public var appTPUsed
 
     private let context: NSManagedObjectContext
 

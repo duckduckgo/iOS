@@ -24,14 +24,7 @@ struct AppTPActivityView: View {
     @ObservedObject var viewModel: AppTrackingProtectionListViewModel
     @ObservedObject var feedbackModel: AppTrackingProtectionFeedbackModel
     @ObservedObject var toggleViewModel = AppTPToggleViewModel()
-    
-<<<<<<< HEAD
-    // We only want to show "Manage Trackers" and "Report an issue" if the user has enabled AppTP at least once
-    @AppStorage("appTPUsed") var appTPUsed: Bool = false
-    @State var vpnOn: Bool = false
-    
-=======
->>>>>>> develop
+
     let imageCache = AppTrackerImageCache()
     
     func imageForState() -> Image {
@@ -153,16 +146,13 @@ struct AppTPActivityView: View {
         ScrollView {
             LazyVStack(alignment: .center, spacing: 0) {
                 Section {
-                    AppTPToggleView(
-                        appTPUsed: $appTPUsed,
-                        viewModel: toggleViewModel
-                    )
+                    AppTPToggleView(viewModel: toggleViewModel)
                         .background(Color.cellBackground)
                         .cornerRadius(Const.Size.cornerRadius)
                         .padding(.bottom)
                 }
                 
-                if appTPUsed || viewModel.sections.count > 0 {
+                if viewModel.appTPUsed || viewModel.sections.count > 0 {
                     manageSection
                 }
 
@@ -173,6 +163,11 @@ struct AppTPActivityView: View {
                 }
             }
             .padding()
+            .onChange(of: toggleViewModel.firewallStatus) { value in
+                if value == .connected {
+                    viewModel.appTPUsed = true
+                }
+            }
         }
         .background(Color.viewBackground)
         .navigationTitle(UserText.appTPNavTitle)

@@ -18,12 +18,8 @@
 //
 
 import SwiftUI
-import NetworkExtension
-import Core
-import Common
 
 struct AppTPToggleView: View {
-    @Binding var appTPUsed: Bool
     
     @ObservedObject var viewModel: AppTPToggleViewModel
     

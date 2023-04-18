@@ -499,7 +499,7 @@ public struct UserText {
     
     public static let appTPEmptyDisabledInfo = NSLocalizedString("appTP.empty.disabled.info", value: "Enable App Tracking Protection so we can block pesky trackers in other apps.", comment: "Info string informing the user what App Tracking Protection does.")
     
-    public static let appTPEmptyEnabledInfo = NSLocalizedString("appTP.empty.enabled.info", value: "We're looking for trackers in your apps...", comment: "Info string informing the user we're looking for trackers in other apps.")
+    public static let appTPEmptyEnabledInfo = NSLocalizedString("appTP.empty.enabled.info", value: "We’re looking for trackers in your apps...", comment: "Info string informing the user we're looking for trackers in other apps.")
     
     public static func appTPTrackingAttempts(count: String) -> String {
         let message = NSLocalizedString("appTP.trackingattempts", value: "%@ tracking attempts", comment: "Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts")
@@ -523,7 +523,7 @@ public struct UserText {
     
     public static let appTPReportIssueButton = NSLocalizedString("appTP.activityView.reportIssue", value: "Report an issue with an app", comment: "Title for 'Report an Issue' button in the activity view.")
     public static let appTPReportAlertTitle = NSLocalizedString("appTP.reportAlert.title", value: "Report an Issue?", comment: "Title for 'Report an Issue' alert.")
-    public static let appTPReportAlertMessage = NSLocalizedString("appTP.reportAlert.message", value: "Please let us know if you don't want us to block this tracker because you experienced app issues.", comment: "Message for 'Report an Issue' alert.")
+    public static let appTPReportAlertMessage = NSLocalizedString("appTP.reportAlert.message", value: "Please let us know if you don’t want us to block this tracker because you experienced app issues.", comment: "Message for 'Report an Issue' alert.")
     public static let appTPReportAlertConfirm = NSLocalizedString("appTP.reportAlert.confirm", value: "Report Issue", comment: "Confirm button for 'Report an Issue' alert.")
     public static let appTPReportAlertCancel = NSLocalizedString("appTP.reportAlert.cancel", value: "Not Now", comment: "Cancel button for 'Report an Issue' alert.")
     
@@ -533,7 +533,7 @@ public struct UserText {
     public static let appTPReportToast = NSLocalizedString("appTP.report.toast", value: "Thank you! Feedback submitted.", comment: "Breakage report succcess message")
     public static let appTPReportAppLabel = NSLocalizedString("appTP.report.appLabel", value: "Which app is broken?", comment: "Breakage report app name label")
     public static let appTPReportAppPlaceholder = NSLocalizedString("appTP.report.appPlaceholder", value: "App Name", comment: "Breakage report app name placeholder")
-    public static let appTPReportCategoryLabel = NSLocalizedString("appTP.report.categoryLabel", value: "What's happening?", comment: "Breakage report category label")
+    public static let appTPReportCategoryLabel = NSLocalizedString("appTP.report.categoryLabel", value: "What’s happening?", comment: "Breakage report category label")
     public static let appTPReportFooter = NSLocalizedString("appTP.report.footer", value: """
 In addition to the details entered into this form, your app issue report will contain:
 • A list of trackers blocked in the last 10 minutes

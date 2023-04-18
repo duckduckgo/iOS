@@ -167,7 +167,7 @@
 "appTP.report.appPlaceholder" = "App Name";
 
 /* Breakage report category label */
-"appTP.report.categoryLabel" = "What's happening?";
+"appTP.report.categoryLabel" = "What’s happening?";
 
 /* Breakage report comment label */
 "appTP.report.commentLabel" = "Comment";
@@ -197,7 +197,7 @@
 "appTP.reportAlert.confirm" = "Report Issue";
 
 /* Message for 'Report an Issue' alert. */
-"appTP.reportAlert.message" = "Please let us know if you don't want us to block this tracker because you experienced app issues.";
+"appTP.reportAlert.message" = "Please let us know if you don’t want us to block this tracker because you experienced app issues.";
 
 /* Title for 'Report an Issue' alert. */
 "appTP.reportAlert.title" = "Report an Issue?";

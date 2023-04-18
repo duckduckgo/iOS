@@ -97,7 +97,15 @@ public class FirewallManager: FirewallManaging {
     
     @objc func statusDidChange() {
         // Uncomment this noisy line to debug status changes
-//        os_log("[INFO] VPN status changed: %s", log: FirewallManager.apptpLog, type: .debug, status().description)
+        os_log("[INFO] VPN status changed: %s", log: FirewallManager.apptpLog, type: .debug, status().description)
+        if status() == .disconnected || status() == .disconnecting {
+            if #available(iOSApplicationExtension 16.0, *) {
+                manager?.connection.fetchLastDisconnectError() { err in
+                    os_log("Last disconnect error: %s", log: FirewallManager.apptpLog, type: .error, err?.localizedDescription ?? "nil")
+                }
+            }
+        }
+        
         delegate?.statusDidChange(newStatus: status())
     }
     

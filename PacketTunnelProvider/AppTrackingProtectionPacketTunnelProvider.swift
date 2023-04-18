@@ -92,9 +92,9 @@ class AppTrackingProtectionPacketTunnelProvider: NEPacketTunnelProvider {
             if let handler = completionHandler {
                 handler(messageData)
             }
+        } else {
+            completionHandler?(nil)
         }
-        
-        completionHandler?(nil)
     }
     
     override func sleep(completionHandler: @escaping () -> Void) {

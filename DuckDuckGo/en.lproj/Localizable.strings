@@ -152,7 +152,7 @@
 "appTP.empty.disabled.info" = "Enable App Tracking Protection so we can block pesky trackers in other apps.";
 
 /* Info string informing the user we're looking for trackers in other apps. */
-"appTP.empty.enabled.info" = "We're looking for trackers in your apps...";
+"appTP.empty.enabled.info" = "We’re looking for trackers in your apps...";
 
 /* Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now' */
 "appTP.justNow" = "just now";

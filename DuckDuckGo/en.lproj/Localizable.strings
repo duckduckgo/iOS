@@ -334,6 +334,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "From %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Password for %@";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Use a saved Login?";
 

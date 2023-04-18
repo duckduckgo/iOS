@@ -550,6 +550,10 @@ public struct UserText {
         let message = NSLocalizedString("autofill.logins.prompt.partial.match.title", value: "From %@", comment: "Title for section of autofill logins that are an approximate match to the current website")
         return message.format(arguments: type)
     }
+    public static func autofillLoginPromptPasswordButtonTitle(for site: String) -> String {
+        let message = NSLocalizedString("autofill.logins.prompt.password.button.title", value: "Password for %@", comment: "Title of button for autofill login prompt to use a saved password for a website")
+        return message.format(arguments: site)
+    }
 
     public static let autofillLoginPromptMoreOptions = NSLocalizedString("autofill.logins.prompt.more-options", value:"More Options", comment: "Button title for autofill login prompt if more options are available")
 

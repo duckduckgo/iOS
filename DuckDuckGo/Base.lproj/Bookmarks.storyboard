@@ -495,7 +495,6 @@
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="KiU-Wb-7jj">
                                             <rect key="frame" x="16" y="0.0" width="315" height="44"/>
-                                            <color key="backgroundColor" name="BookmarksCellColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="XHp-zE-tVW"/>
                                             </constraints>
@@ -531,7 +530,6 @@
                                         </imageView>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="URL" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YqY-sP-hhb">
                                             <rect key="frame" x="88" y="44" width="243" height="44"/>
-                                            <color key="backgroundColor" name="BookmarksCellColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" priority="999" constant="44" id="tZz-vQ-lla"/>
                                             </constraints>
@@ -540,7 +538,6 @@
                                         </textField>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rT4-Yr-P8D">
                                             <rect key="frame" x="88" y="0.0" width="243" height="44"/>
-                                            <color key="backgroundColor" name="BookmarksCellColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="hfT-Mz-7EA"/>
                                             </constraints>
@@ -670,7 +667,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Uhm-2I-Xo5"/>
+        <segue reference="lPi-F9-wDg"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="BookmarksEmpty" width="128" height="96"/>
@@ -682,9 +679,6 @@
         <image name="GlobeSmall" width="24" height="24"/>
         <namedColor name="AlertButtonDestructiveTitleColor">
             <color red="0.92500001192092896" green="0.21600000560283661" blue="0.14100000262260437" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
-        <namedColor name="BookmarksCellColor">
-            <color red="0.98000001907348633" green="0.98000001907348633" blue="0.98000001907348633" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="BookmarksCellLabelColor">
             <color red="0.28600001335144043" green="0.28600001335144043" blue="0.28600001335144043" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

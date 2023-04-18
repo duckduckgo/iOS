@@ -305,7 +305,7 @@
 "autofill.logins.list.login-deleted-message-no-title" = "Login deleted";
 
 /* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Search logins";
+"autofill.logins.list.search-placeholder" = "Search Logins";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Suggested";

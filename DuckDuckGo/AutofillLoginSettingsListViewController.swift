@@ -448,7 +448,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
         case .empty:
             return max(tableView.bounds.height - tableView.contentSize.height, 250)
         case .showItems:
-            return viewModel.sections[section] == .enableAutofill ? 10 : 0
+            return 10
         default:
             return 0
         }

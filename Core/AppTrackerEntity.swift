@@ -48,6 +48,15 @@ public class AppTrackerEntity: NSManagedObject {
         return request
     }
 
+    public class func entity(in context: NSManagedObjectContext) -> NSEntityDescription {
+        return NSEntityDescription.entity(forEntityName: "AppTrackerEntity", in: context)!
+    }
+
+    public convenience init(context moc: NSManagedObjectContext) {
+        self.init(entity: AppTrackerEntity.entity(in: moc),
+                  insertInto: moc)
+    }
+
     public static func makeTracker(domain: String,
                                    trackerOwner: String,
                                    date: Date,

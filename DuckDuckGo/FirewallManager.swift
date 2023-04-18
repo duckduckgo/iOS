@@ -33,6 +33,27 @@ public protocol FirewallManaging {
     var delegate: FirewallDelegate? { get set }
 }
 
+extension NEVPNStatus {
+    var description: String {
+        switch self {
+        case .connected:
+            return "connected"
+        case .connecting:
+            return "connecting"
+        case .disconnected:
+            return "disconnected"
+        case .disconnecting:
+            return "disconnecting"
+        case .invalid:
+            return "invalid"
+        case .reasserting:
+            return "reasserting"
+        default:
+            return "unknown status"
+        }
+    }
+}
+
 public class FirewallManager: FirewallManaging {
     
     public static let apptpLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier, category: "AppTP")
@@ -75,6 +96,8 @@ public class FirewallManager: FirewallManaging {
     }
     
     @objc func statusDidChange() {
+        // Uncomment this noisy line to debug status changes
+//        os_log("[INFO] VPN status changed: %s", log: FirewallManager.apptpLog, type: .debug, status().description)
         delegate?.statusDidChange(newStatus: status())
     }
     
@@ -133,6 +156,11 @@ public class FirewallManager: FirewallManaging {
         manager = nil
         if managers.count > 0 {
             manager = managers.first
+            
+            if manager?.isEnabled == enabled {
+                // Prevent unnecessarily modifying the VPN configuration
+                return
+            }
         } else {
             // create manager instance
             manager = NETunnelProviderManager()

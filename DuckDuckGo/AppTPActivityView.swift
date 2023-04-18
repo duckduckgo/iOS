@@ -25,18 +25,21 @@ struct AppTPActivityView: View {
     @ObservedObject var feedbackModel: AppTrackingProtectionFeedbackModel
     @ObservedObject var toggleViewModel = AppTPToggleViewModel()
     
+<<<<<<< HEAD
     // We only want to show "Manage Trackers" and "Report an issue" if the user has enabled AppTP at least once
     @AppStorage("appTPUsed") var appTPUsed: Bool = false
     @State var vpnOn: Bool = false
     
+=======
+>>>>>>> develop
     let imageCache = AppTrackerImageCache()
     
     func imageForState() -> Image {
-        return vpnOn ? Image("AppTPEmptyEnabled") : Image("AppTPEmptyDisabled")
+        return toggleViewModel.isOn ? Image("AppTPEmptyEnabled") : Image("AppTPEmptyDisabled")
     }
     
     func textForState() -> String {
-        return vpnOn ? UserText.appTPEmptyEnabledInfo : UserText.appTPEmptyDisabledInfo
+        return toggleViewModel.isOn ? UserText.appTPEmptyEnabledInfo : UserText.appTPEmptyDisabledInfo
     }
     
     var emptyState: some View {
@@ -152,7 +155,6 @@ struct AppTPActivityView: View {
                 Section {
                     AppTPToggleView(
                         appTPUsed: $appTPUsed,
-                        vpnOn: $vpnOn,
                         viewModel: toggleViewModel
                     )
                         .background(Color.cellBackground)

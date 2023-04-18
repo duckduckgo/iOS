@@ -19,22 +19,24 @@
 
 import Foundation
 
-public class AppTrackingProtectionAllowlistModel: NSObject {
+public class AppTrackingProtectionAllowlistModel {
     public enum Constants {
         public static let groupID = "\(Global.groupIdPrefix).apptp"
         public static let fileName = "appTPallowlist"
     }
     
+    private let filename: String
+    
     lazy private var allowlistUrl: URL? = {
         let groupContainerUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.groupID)
-        return groupContainerUrl?.appendingPathComponent(Constants.fileName, conformingTo: .text)
+        return groupContainerUrl?.appendingPathComponent(self.filename, conformingTo: .text)
     }()
     
     var allowedDomains: Set<String>
     
-    public override init() {
-        allowedDomains = Set<String>()
-        super.init()
+    public init(filename: String = Constants.fileName) {
+        self.allowedDomains = Set<String>()
+        self.filename = filename
         
         readFromFile()
     }

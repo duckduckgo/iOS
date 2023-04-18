@@ -18,31 +18,48 @@
 //
 
 import XCTest
-import Core
+@testable import Core
 
 final class AppTrackingProtectionAllowlistModelTests: XCTestCase {
 
+    private struct Constants {
+        static let testFilename = "testsAllowlist"
+    }
+    
+    var allowlist: AppTrackingProtectionAllowlistModel!
+    
+    override func setUp() {
+        super.setUp()
+        allowlist = AppTrackingProtectionAllowlistModel(filename: Constants.testFilename)
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        let groupContainerUrl = FileManager.default.containerURL(
+            forSecurityApplicationGroupIdentifier: AppTrackingProtectionAllowlistModel.Constants.groupID
+        )
+        if let url = groupContainerUrl?.appendingPathComponent(Constants.testFilename, conformingTo: .text) {
+            try? FileManager.default.removeItem(at: url)
+        }
+    }
+    
     func testAllowlistInitSucceeds() {
-        let allowlist = AppTrackingProtectionAllowlistModel()
         XCTAssertNotNil(allowlist, "Allowlist not initialized")
     }
     
     func testAllowlistReturnsTrueForAllowedDomains() {
-        var allowlist = AppTrackingProtectionAllowlistModel()
         allowlist.allow(domain: "example.com")
         XCTAssert(allowlist.contains(domain: "example.com"), "example.com not contained in the allowlist")
     }
     
     func testAllowlistPersistsDomainsToFile() {
-        var allowlist = AppTrackingProtectionAllowlistModel()
         allowlist.allow(domain: "example.com")
         
-        let allowlist2 = AppTrackingProtectionAllowlistModel()
+        let allowlist2 = AppTrackingProtectionAllowlistModel(filename: Constants.testFilename)
         XCTAssert(allowlist2.contains(domain: "example.com"), "example.com not persisted in the allowlist file")
     }
     
     func testAllowlistRemovesDomainsFromSet() {
-        var allowlist = AppTrackingProtectionAllowlistModel()
         allowlist.allow(domain: "example.com")
         XCTAssert(allowlist.contains(domain: "example.com"), "example.com not contained in the allowlist")
         
@@ -51,7 +68,6 @@ final class AppTrackingProtectionAllowlistModelTests: XCTestCase {
     }
     
     func testAllowlistPersistsRemovedDomains() {
-        var allowlist = AppTrackingProtectionAllowlistModel()
         allowlist.allow(domain: "example.com")
         XCTAssert(allowlist.contains(domain: "example.com"), "example.com not contained in the allowlist")
         
@@ -62,7 +78,6 @@ final class AppTrackingProtectionAllowlistModelTests: XCTestCase {
     }
     
     func testAllowlistClearsAllDomains() {
-        var allowlist = AppTrackingProtectionAllowlistModel()
         allowlist.allow(domain: "example.com")
         allowlist.allow(domain: "example2.com")
         allowlist.allow(domain: "example3.com")

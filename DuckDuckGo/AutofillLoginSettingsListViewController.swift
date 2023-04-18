@@ -317,12 +317,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             addBarButtonItem.isEnabled = false
             editButtonItem.isEnabled = false
         case .empty:
-            if viewModel.isAutofillEnabledInSettings {
-                navigationItem.rightBarButtonItems = [editButtonItem, addBarButtonItem]
-                editButtonItem.isEnabled = false
-            } else {
-                navigationItem.rightBarButtonItems = [addBarButtonItem]
-            }
+            navigationItem.rightBarButtonItems = [addBarButtonItem]
             addBarButtonItem.isEnabled = true
         case .searching, .searchingNoResults:
             navigationItem.rightBarButtonItems = []

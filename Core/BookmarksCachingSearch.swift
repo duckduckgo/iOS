@@ -62,7 +62,11 @@ public class CoreDataBookmarksSearchStore: BookmarksSearchStore {
         let context = bookmarksStore.makeContext(concurrencyType: .privateQueueConcurrencyType)
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "BookmarkEntity")
-        fetchRequest.predicate = NSPredicate(format: "%K = false AND %K == NO", #keyPath(BookmarkEntity.isFolder), #keyPath(BookmarkEntity.isPendingDeletion))
+        fetchRequest.predicate = NSPredicate(
+            format: "%K = false AND %K == NO",
+            #keyPath(BookmarkEntity.isFolder),
+            #keyPath(BookmarkEntity.isPendingDeletion)
+        )
         fetchRequest.resultType = .dictionaryResultType
         fetchRequest.propertiesToFetch = [#keyPath(BookmarkEntity.title),
                                           #keyPath(BookmarkEntity.url),

@@ -1343,7 +1343,7 @@ extension MainViewController: FavoritesOverlayDelegate {
         Pixel.fire(pixel: .homeScreenFavouriteLaunched)
         homeController?.chromeDelegate = nil
         dismissOmniBar()
-        Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .bookmarks, fromCache: .tabs)
+        Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .fireproof, fromCache: .tabs)
         if url.isBookmarklet() {
             executeBookmarklet(url)
         } else {

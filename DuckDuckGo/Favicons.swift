@@ -31,13 +31,13 @@ public class Favicons {
         static let salt = "DDGSalt:"
         static let faviconsFolderName = "Favicons"
         static let requestModifier = FaviconRequestModifier()
-        static let bookmarksCache = CacheType.bookmarks.create()
+        static let fireproofCache = CacheType.fireproof.create()
         static let tabsCache = CacheType.tabs.create()
         static let targetImageSizePoints: CGFloat = 64
         public static let maxFaviconSize: CGSize = CGSize(width: 192, height: 192)
         
         public static let caches = [
-            CacheType.bookmarks: bookmarksCache,
+            CacheType.fireproof: fireproofCache,
             CacheType.tabs: tabsCache
         ]
 
@@ -46,7 +46,7 @@ public class Favicons {
     public enum CacheType: String {
 
         case tabs
-        case bookmarks
+        case fireproof
 
         func create() -> ImageCache {
             
@@ -85,7 +85,7 @@ public class Favicons {
 
         private func baseCacheURL() -> URL? {
             switch self {
-            case .bookmarks:
+            case .fireproof:
                 let groupName = BookmarksDatabase.Constants.bookmarksGroupID
                 return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupName)
                        
@@ -112,7 +112,7 @@ public class Favicons {
         self.downloader = downloader
 
         // Prevents the caches being cleaned up
-        NotificationCenter.default.removeObserver(Constants.bookmarksCache)
+        NotificationCenter.default.removeObserver(Constants.fireproofCache)
         NotificationCenter.default.removeObserver(Constants.tabsCache)
     }
 
@@ -120,7 +120,7 @@ public class Favicons {
         guard sizeNeedsMigration else { return }
 
         DispatchQueue.global(qos: .utility).async {
-            guard let files = try? FileManager.default.contentsOfDirectory(at: Constants.bookmarksCache.diskStorage.directoryURL,
+            guard let files = try? FileManager.default.contentsOfDirectory(at: Constants.fireproofCache.diskStorage.directoryURL,
                     includingPropertiesForKeys: nil) else {
                 return
             }
@@ -138,7 +138,7 @@ public class Favicons {
                 }
             }
 
-            Constants.bookmarksCache.clearMemoryCache()
+            Constants.fireproofCache.clearMemoryCache()
             self.sizeNeedsMigration = false
             afterMigrationHandler()
         }
@@ -165,16 +165,16 @@ public class Favicons {
         
         guard let domain = domain,
               let resource = defaultResource(forDomain: domain),
-              let options = kfOptions(forDomain: domain, usingCache: .bookmarks) else { return }
+              let options = kfOptions(forDomain: domain, usingCache: .fireproof) else { return }
 
         let faviconImage = scaleDownIfNeeded(image: image, toFit: Constants.maxFaviconSize)
 
         let replace = {
-            Constants.bookmarksCache.removeImage(forKey: resource.cacheKey)
-            Constants.bookmarksCache.store(faviconImage, forKey: resource.cacheKey, options: .init(options))
+            Constants.fireproofCache.removeImage(forKey: resource.cacheKey)
+            Constants.fireproofCache.store(faviconImage, forKey: resource.cacheKey, options: .init(options))
         }
         
-        Constants.bookmarksCache.retrieveImageInDiskCache(forKey: resource.cacheKey, options: [.onlyFromCache ]) { result in
+        Constants.fireproofCache.retrieveImageInDiskCache(forKey: resource.cacheKey, options: [.onlyFromCache ]) { result in
             switch result {
                 
             case .success(let cachedImage):
@@ -194,7 +194,7 @@ public class Favicons {
     }
 
     func isFaviconCachedForBookmarks(forDomain domain: String, resource: ImageResource) -> Bool {
-        return Constants.bookmarksCache.isCached(forKey: resource.cacheKey)
+        return Constants.fireproofCache.isCached(forKey: resource.cacheKey)
     }
 
     public func clearCache(_ cacheType: CacheType) {
@@ -209,12 +209,12 @@ public class Favicons {
     public func removeBookmarkFavicon(forDomain domain: String) {
 
         guard !PreserveLogins.shared.isAllowed(fireproofDomain: domain) else { return }
-        removeFavicon(forDomain: domain, fromCache: .bookmarks)
+        removeFavicon(forDomain: domain, fromCache: .fireproof)
 
     }
 
     public func removeFireproofFavicon(forDomain domain: String) {
-       removeFavicon(forDomain: domain, fromCache: .bookmarks)
+       removeFavicon(forDomain: domain, fromCache: .fireproof)
     }
     
     private func copyFavicon(forDomain domain: String, fromCache: CacheType, toCache: CacheType, completion: ((UIImage?) -> Void)? = nil) {

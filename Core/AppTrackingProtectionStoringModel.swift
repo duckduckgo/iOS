@@ -70,6 +70,7 @@ public class AppTrackingProtectionStoringModel: ObservableObject {
             if let sevenDaysAgo = Calendar.current.date(byAdding: .day, value: -7, to: currentDate) {
                 let staleTrackersFetchRequest = AppTrackerEntity.fetchRequest(trackersOlderThan: sevenDaysAgo)
                 context.deleteAll(matching: staleTrackersFetchRequest)
+                save()
             }
         }
     }

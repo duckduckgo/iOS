@@ -49,10 +49,6 @@ extension FeatureFlag: FeatureFlagSourceProviding {
 
 extension FeatureFlagger {
     public func isFeatureOn(_ featureFlag: FeatureFlag) -> Bool {
-        if isDebugBuild {
-            return true
-        }
-
         return isFeatureOn(forProvider: featureFlag)
     }
 }

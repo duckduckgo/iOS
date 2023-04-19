@@ -161,7 +161,7 @@ public class Favicons {
         }
     }
 
-    public func replaceBookmarksFavicon(forDomain domain: String?, withImage image: UIImage) {
+    public func replaceFireproofFavicon(forDomain domain: String?, withImage image: UIImage) {
         
         guard let domain = domain,
               let resource = defaultResource(forDomain: domain),
@@ -207,10 +207,8 @@ public class Favicons {
     }
 
     public func removeBookmarkFavicon(forDomain domain: String) {
-
         guard !PreserveLogins.shared.isAllowed(fireproofDomain: domain) else { return }
         removeFavicon(forDomain: domain, fromCache: .fireproof)
-
     }
 
     public func removeFireproofFavicon(forDomain domain: String) {

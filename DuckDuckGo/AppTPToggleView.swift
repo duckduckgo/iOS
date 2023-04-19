@@ -18,10 +18,9 @@
 //
 
 import SwiftUI
-import NetworkExtension
-import Common
 
 struct AppTPToggleView: View {
+    
     @ObservedObject var viewModel: AppTPToggleViewModel
     
     func setup() async {

@@ -30,16 +30,20 @@ struct BlockedReason: Error {
 
 class DDGObserverFactory: ObserverFactory {
     
-    var trackerData: TrackerDataParser?
+    private var trackerData: TrackerDataParser?
+    private var allowlist: AppTrackingProtectionAllowlistModel?
     private let appTrackingProtectionDatabase: CoreDataDatabase
     private let appTrackingProtectionStoringModel: AppTrackingProtectionStoringModel
     
     override func getObserverForProxySocket(_ socket: ProxySocket) -> Observer<ProxySocketEvent>? {
-        return DDGProxySocketObserver(trackerData: trackerData, appTrackingProtectionStoringModel: appTrackingProtectionStoringModel)
+        return DDGProxySocketObserver(trackerData: trackerData,
+                                      allowlist: allowlist,
+                                      appTrackingProtectionStoringModel: appTrackingProtectionStoringModel)
     }
     
     override init() {
         trackerData = TrackerDataParser()
+        allowlist = AppTrackingProtectionAllowlistModel()
         appTrackingProtectionDatabase = AppTrackingProtectionDatabase.make()
         appTrackingProtectionDatabase.loadStore { context, error in
             guard context != nil else {
@@ -51,13 +55,19 @@ class DDGObserverFactory: ObserverFactory {
         appTrackingProtectionStoringModel.removeStaleEntries()
     }
     
+    func refreshAllowlist() {
+        allowlist?.readFromFile()
+    }
+    
     class DDGProxySocketObserver: Observer<ProxySocketEvent> {
         
-        var trackerData: TrackerDataParser?
+        private var trackerData: TrackerDataParser?
+        private var allowlist: AppTrackingProtectionAllowlistModel?
         private let appTrackingProtectionStoringModel: AppTrackingProtectionStoringModel
         
-        init(trackerData: TrackerDataParser? = nil, appTrackingProtectionStoringModel: AppTrackingProtectionStoringModel) {
+        init(trackerData: TrackerDataParser? = nil, allowlist: AppTrackingProtectionAllowlistModel?, appTrackingProtectionStoringModel: AppTrackingProtectionStoringModel) {
             self.trackerData = trackerData
+            self.allowlist = allowlist
             self.appTrackingProtectionStoringModel = appTrackingProtectionStoringModel
         }
         
@@ -68,9 +78,16 @@ class DDGObserverFactory: ObserverFactory {
                 if let trackerData = trackerData, trackerData.shouldBlock(domain: session.host) {
                     let trackerOwner = trackerData.trackerOwner(forDomain: session.host)
                     let ownerName = trackerOwner?.name ?? "Unknown Owner"
+                    
+                    var blocked = true
+                    if allowlist?.contains(domain: session.host) ?? false {
+                        blocked = false
+                    }
 
-                    appTrackingProtectionStoringModel.storeBlockedTracker(domain: session.host, trackerOwner: ownerName)
-                    socket.forceDisconnect(becauseOf: BlockedReason())
+                    appTrackingProtectionStoringModel.storeTracker(domain: session.host, trackerOwner: ownerName, blocked: blocked)
+                    if blocked {
+                        socket.forceDisconnect(becauseOf: BlockedReason())
+                    }
                 }
                 
                 return

@@ -43,6 +43,10 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
     }
 
     @Published public var debugModeEnabled = false
+    
+    // We only want to show "Manage Trackers" and "Report an issue" if the user has enabled AppTP at least once
+    @UserDefaultsWrapper(key: .appTPUsed, defaultValue: false)
+    public var appTPUsed
 
     private let context: NSManagedObjectContext
 
@@ -57,6 +61,12 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
         formatter.timeStyle = .none
         formatter.dateStyle = .medium
         formatter.doesRelativeDateFormatting = true
+        return formatter
+    }()
+    
+    private let relativeTimeFormatter: RelativeDateTimeFormatter = {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.unitsStyle = .short
         return formatter
     }()
     
@@ -90,6 +100,22 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
         }
         
         return relativeDate
+    }
+    
+    /// Returns a relative datestring for the given timestamp. e.g. "5 min. ago"
+    /// If the timestamp is within 1 second of the current time this function will return `nil`
+    /// A `nil` return value should be considered "just now".
+    public func format(timestamp: Date) -> String? {
+        let date = Date()
+        let timestampInterval = timestamp.timeIntervalSinceReferenceDate
+        let dateInterval = date.timeIntervalSinceReferenceDate
+        if fabs(dateInterval - timestampInterval) < 1 {
+            // Can't access UserText from Core. To prevent handling the localized string "in 0 seconds"
+            // return nil here and replace it with UserText on the view side.
+            return nil
+        }
+        
+        return relativeTimeFormatter.localizedString(for: timestamp, relativeTo: Date())
     }
 
     fileprivate var fetchedResultsController: NSFetchedResultsController<AppTrackerEntity>!

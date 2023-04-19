@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 import NetworkExtension
 import Common
 

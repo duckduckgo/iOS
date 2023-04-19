@@ -38,12 +38,12 @@ public class AppTrackingProtectionStoringModel: ObservableObject {
         // startFakeTrackerTimer()
     }
 
-    public func storeBlockedTracker(domain: String, trackerOwner: String, date: Date = Date()) {
+    public func storeTracker(domain: String, trackerOwner: String, blocked: Bool, date: Date = Date()) {
         let bucket = dateFormatter.string(from: date)
 
         context.performAndWait {
             do {
-                let existingTrackersFetchRequest = AppTrackerEntity.fetchRequest(domain: domain, bucket: bucket)
+                let existingTrackersFetchRequest = AppTrackerEntity.fetchRequest(domain: domain, bucket: bucket, blocked: blocked)
 
                 if let existingTracker = try context.fetch(existingTrackersFetchRequest).first {
                     existingTracker.count += 1
@@ -51,6 +51,7 @@ public class AppTrackingProtectionStoringModel: ObservableObject {
                 } else {
                     _ = AppTrackerEntity.makeTracker(domain: domain,
                                                      trackerOwner: trackerOwner,
+                                                     blocked: blocked,
                                                      date: date,
                                                      bucket: bucket,
                                                      context: context)
@@ -93,7 +94,7 @@ extension AppTrackingProtectionStoringModel {
 
     fileprivate func startFakeTrackerTimer() {
         self.timer = DispatchSource.timer(interval: .seconds(3)) { [weak self] in
-            self?.storeBlockedTracker(domain: "fakedomain.com", trackerOwner: "Fake Tracker")
+            self?.storeTracker(domain: "fakedomain.com", trackerOwner: "Fake Tracker", blocked: true)
         }
     }
 

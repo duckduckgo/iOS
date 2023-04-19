@@ -266,7 +266,6 @@ extension Pixel {
         case serpRequeryNew
         
         // MARK: AppTP
-
         case appTPBreakageReport
 
         case appTPFailedToAccessPreferences

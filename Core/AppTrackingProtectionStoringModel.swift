@@ -56,14 +56,21 @@ public class AppTrackingProtectionStoringModel: ObservableObject {
                                                      context: context)
                 }
 
-                if let sevenDaysAgo = Calendar.current.date(byAdding: .day, value: -7, to: date) {
-                    let staleTrackersFetchRequest = AppTrackerEntity.fetchRequest(trackersOlderThan: sevenDaysAgo)
-                    context.deleteAll(matching: staleTrackersFetchRequest)
-                }
+                self.removeStaleEntries(currentDate: date)
 
                 save()
             } catch {
                 context.rollback()
+            }
+        }
+    }
+
+    public func removeStaleEntries(currentDate: Date = Date()) {
+        context.performAndWait {
+            if let sevenDaysAgo = Calendar.current.date(byAdding: .day, value: -7, to: currentDate) {
+                let staleTrackersFetchRequest = AppTrackerEntity.fetchRequest(trackersOlderThan: sevenDaysAgo)
+                context.deleteAll(matching: staleTrackersFetchRequest)
+                save()
             }
         }
     }

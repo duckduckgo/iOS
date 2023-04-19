@@ -193,10 +193,6 @@ public class Favicons {
         }
     }
 
-    func isFaviconCachedForBookmarks(forDomain domain: String, resource: ImageResource) -> Bool {
-        return Constants.fireproofCache.isCached(forKey: resource.cacheKey)
-    }
-
     public func clearCache(_ cacheType: CacheType) {
         Constants.caches[cacheType]?.clearDiskCache()
     }

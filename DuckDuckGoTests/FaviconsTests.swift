@@ -123,11 +123,8 @@ class FaviconsTests: XCTestCase {
             return
         }
 
-        XCTAssertFalse(favicons.isFaviconCachedForBookmarks(forDomain: Constants.exampleDomain, resource: resource))
-
         Favicons.Constants.fireproofCache.store(image, forKey: resource.cacheKey) { _ in
             XCTAssertTrue(Favicons.Constants.fireproofCache.isCached(forKey: resource.cacheKey))
-            XCTAssertTrue(self.favicons.isFaviconCachedForBookmarks(forDomain: Constants.exampleDomain, resource: resource))
             expectation.fulfill()
         }
 

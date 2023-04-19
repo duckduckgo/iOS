@@ -17,11 +17,11 @@
 //  limitations under the License.
 //
 
+import Common
 import Foundation
 import Core
 import BackgroundTasks
 import BrowserServicesKit
-import os.log
 import Persistence
 import Bookmarks
 

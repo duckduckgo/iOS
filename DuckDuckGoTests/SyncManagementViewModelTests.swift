@@ -87,6 +87,10 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
         return true
     }
 
+    func shareRecoveryPDF() {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+    }
+
 }
 
 // MARK: An idea... can be made more public if works out

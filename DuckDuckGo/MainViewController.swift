@@ -20,11 +20,11 @@
 import UIKit
 import WebKit
 import Combine
+import Common
 import Core
 import DDGSync
 import Lottie
 import Kingfisher
-import os.log
 import BrowserServicesKit
 import Bookmarks
 import Persistence
@@ -101,6 +101,7 @@ class MainViewController: UIViewController {
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private var launchTabObserver: LaunchTabNotification.Observer?
     
+    private let appTrackingProtectionDatabase: CoreDataDatabase
     private let bookmarksDatabase: CoreDataDatabase
     private let bookmarksDatabaseCleaner: BookmarkDatabaseCleaner
     private let favoritesViewModel: FavoritesListInteracting
@@ -137,7 +138,9 @@ class MainViewController: UIViewController {
 
     required init?(coder: NSCoder,
                    bookmarksDatabase: CoreDataDatabase,
+                   appTrackingProtectionDatabase: CoreDataDatabase,
                    syncService: DDGSyncing) {
+        self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = BookmarkDatabaseCleaner(bookmarkDatabase: bookmarksDatabase, errorEvents: BookmarksCleanupErrorHandling())
         self.syncService = syncService
@@ -352,13 +355,16 @@ class MainViewController: UIViewController {
             return
         }
         
-        if let navController = segue.destination as? UINavigationController,
-            let brokenSiteScreen = navController.topViewController as? ReportBrokenSiteViewController {
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                segue.destination.modalPresentationStyle = .formSheet
+        if let navController = segue.destination as? UINavigationController {
+            if let brokenSiteScreen = navController.topViewController as? ReportBrokenSiteViewController {
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    segue.destination.modalPresentationStyle = .formSheet
+                }
+                
+                brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
+            } else if let settingsScreen = navController.topViewController as? SettingsViewController {
+                settingsScreen.appTPDatabase = self.appTrackingProtectionDatabase
             }
-            
-            brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
         }
 
         if var onboarding = segue.destination as? Onboarding {
@@ -541,7 +547,6 @@ class MainViewController: UIViewController {
 
     @IBAction func onFirePressed() {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
-        DailyPixel.fire(pixel: .experimentDailyFireButtonTapped)
         FireButton.stopAllFireButtonAnimations()
         
         FireButtonExperiment.storeThatFireButtonWasTapped()
@@ -1820,7 +1825,6 @@ extension MainViewController: AutoClearWorker {
     func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil, showNextDaxDialog: Bool = false) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
-        DailyPixel.fire(pixel: .experimentDailyFireButtonDataCleared)
         
         self.tabCountInfo = tabManager.makeTabCountInfo()
         

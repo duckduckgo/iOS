@@ -101,7 +101,7 @@ class AppTrackingProtectionStoringModelTests: XCTestCase {
 
     func testWhenRemovingStaleTrackers_ThenValidTrackersRemain() {
         let store = AppTrackingProtectionStoringModel(appTrackingProtectionDatabase: database)
-        store.storeBlockedTracker(domain: "domain.com", trackerOwner: "Owner", date: createDate(year: 2023, month: 1, day: 1))
+        store.storeTracker(domain: "domain.com", trackerOwner: "Owner", blocked: true, date: createDate(year: 2023, month: 1, day: 1))
 
         let context = database.makeContext(concurrencyType: .mainQueueConcurrencyType)
         let initialTrackers = fetchTrackers(context)

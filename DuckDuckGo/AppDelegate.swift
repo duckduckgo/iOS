@@ -56,6 +56,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var showKeyboardIfSettingOn = true
     private var lastBackgroundDate: Date?
 
+    private(set) var syncService: DDGSyncing!
+    private(set) var syncPersistence: SyncDataPersistor!
+
     // MARK: lifecycle
 
     // swiftlint:disable function_body_length
@@ -165,10 +168,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DaxDialogs.shared.primeForUse()
         }
 
+        // MARK: Sync initialisation
+        syncPersistence = SyncDataPersistor()
+        syncService = DDGSync(persistence: syncPersistence)
+
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         
         guard let main = storyboard.instantiateInitialViewController(creator: { coder in
-            MainViewController(coder: coder, bookmarksDatabase: self.bookmarksDatabase)
+            MainViewController(coder: coder, bookmarksDatabase: self.bookmarksDatabase, syncService: self.syncService)
         }) else {
             fatalError("Could not load MainViewController")
         }

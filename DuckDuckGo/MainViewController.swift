@@ -21,6 +21,7 @@ import UIKit
 import WebKit
 import Combine
 import Core
+import DDGSync
 import Lottie
 import Kingfisher
 import os.log
@@ -103,6 +104,7 @@ class MainViewController: UIViewController {
     private let bookmarksDatabase: CoreDataDatabase
     private let bookmarksDatabaseCleaner: BookmarkDatabaseCleaner
     private let favoritesViewModel: FavoritesListInteracting
+    private let syncService: DDGSyncing
     private var syncStateCancellable: AnyCancellable?
     
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase)
@@ -134,14 +136,16 @@ class MainViewController: UIViewController {
     private var skipSERPFlow = true
 
     required init?(coder: NSCoder,
-                   bookmarksDatabase: CoreDataDatabase) {
+                   bookmarksDatabase: CoreDataDatabase,
+                   syncService: DDGSyncing) {
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = BookmarkDatabaseCleaner(bookmarkDatabase: bookmarksDatabase, errorEvents: BookmarksCleanupErrorHandling())
+        self.syncService = syncService
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         super.init(coder: coder)
 
-        syncStateCancellable = AppDependencyProvider.shared.syncService.isAuthenticatedPublisher
+        syncStateCancellable = syncService.isAuthenticatedPublisher
             .sink(receiveValue: { [weak self] isEnabled in
                 if isEnabled {
                     self?.bookmarksDatabaseCleaner.cancelCleaningSchedule()
@@ -1803,7 +1807,8 @@ extension MainViewController: AutoClearWorker {
         
         AutoconsentManagement.shared.clearCache()
 
-        if !AppDependencyProvider.shared.syncService.isAuthenticated {
+        let syncService = (UIApplication.shared.delegate as? AppDelegate)!.syncService
+        if syncService?.isAuthenticated != true {
             bookmarksDatabaseCleaner.cleanUpDatabaseNow()
         }
     }

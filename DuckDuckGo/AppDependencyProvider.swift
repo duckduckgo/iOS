@@ -35,8 +35,6 @@ protocol DependencyProvider {
     var downloadManager: DownloadManager { get }
     var autofillLoginSession: AutofillLoginSession { get }
     var configurationManager: ConfigurationManager { get }
-    var syncPersistence: LocalDataPersisting { get }
-    var syncService: DDGSyncing { get }
 }
 
 /// Provides dependencies for objects that are not directly instantiated
@@ -60,7 +58,4 @@ class AppDependencyProvider: DependencyProvider {
     let autofillLoginSession = AutofillLoginSession()
 
     let configurationManager = ConfigurationManager()
-
-    let syncPersistence: LocalDataPersisting = SyncDataPersistor()
-    private(set) lazy var syncService: DDGSyncing = DDGSync(persistence: syncPersistence)
 }

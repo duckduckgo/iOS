@@ -20,7 +20,6 @@
 import Common
 import WebKit
 import GRDB
-import os.log
 
 public protocol WebCacheManagerCookieStore {
     

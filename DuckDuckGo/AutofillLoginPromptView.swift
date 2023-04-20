@@ -129,9 +129,8 @@ struct AutofillLoginPromptView: View {
                     }
                     ForEach(viewModel.accountMatchesViewModels[group].accounts.indices, id: \.self) { index in
                         let accountViewModel = viewModel.accountMatchesViewModels[group].accounts[index]
-                        let isPerfectMatch = viewModel.accountMatchesViewModels[group].isPerfectMatch
                         accountButton(for: accountViewModel,
-                                      style: index == 0 && isPerfectMatch ? .primary : .secondary)
+                                      style: index == 0 && group == 0 ? .primary : .secondary)
                     }
                 }
             }

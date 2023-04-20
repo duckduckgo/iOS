@@ -112,6 +112,19 @@ extension SyncSettingsViewController: Themable {
 
 extension SyncSettingsViewController: SyncManagementViewModelDelegate {
 
+    func updateDeviceName(_ name: String) {
+        Task { @MainActor in
+            rootView.model.devices = []
+            let devices = try await syncService.updateDeviceName(name)
+            rootView.model.devices = devices.map {
+                .init(id: $0.id, name: $0.name, type: $0.type, isThisDevice: $0.id == syncService.account?.deviceId)
+            }.sorted(by: { lhs, _ in
+                lhs.isThisDevice
+            })
+        }
+    }
+
+
     func createAccountAndStartSyncing() {
         Task { @MainActor in
             try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)

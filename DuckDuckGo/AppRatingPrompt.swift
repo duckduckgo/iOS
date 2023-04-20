@@ -60,33 +60,33 @@ class AppRatingPromptCoreDataStorage: AppRatingPromptStorage {
     
     var lastAccess: Date? {
         get {
-            return entity().lastAccess
+            return ratingPromptEntity().lastAccess
         }
         
         set {
-            entity().lastAccess = newValue
+            ratingPromptEntity().lastAccess = newValue
             try? context.save()
         }
     }
     
     var uniqueAccessDays: Int {
         get {
-            return Int(entity().uniqueAccessDays)
+            return Int(ratingPromptEntity().uniqueAccessDays)
         }
         
         set {
-            entity().uniqueAccessDays = Int64(newValue)
+            ratingPromptEntity().uniqueAccessDays = Int64(newValue)
             try? context.save()
         }
     }
     
     var lastShown: Date? {
         get {
-            return entity().lastShown
+            return ratingPromptEntity().lastShown
         }
         
         set {
-            entity().lastShown = newValue
+            ratingPromptEntity().lastShown = newValue
             try? context.save()
         }
     }
@@ -95,14 +95,23 @@ class AppRatingPromptCoreDataStorage: AppRatingPromptStorage {
     
     public init() { }
     
-    func entity() -> AppRatingPromptEntity {
+    func ratingPromptEntity() -> AppRatingPromptEntity {
+
         let fetchRequest: NSFetchRequest<AppRatingPromptEntity> = AppRatingPromptEntity.fetchRequest()
         
         guard let results = try? context.fetch(fetchRequest) else {
             fatalError("Error fetching AppRatingPromptEntity")
         }
-        
-        return results.first ?? AppRatingPromptEntity(context: context)
+
+        if let result = results.first {
+            return result
+        } else {
+            let entityDescription = NSEntityDescription.entity(forEntityName: "AppRatingPromptEntity",
+                                                               in: context)!
+
+            return AppRatingPromptEntity(entity: entityDescription,
+                                         insertInto: context)
+        }
     }
     
 }

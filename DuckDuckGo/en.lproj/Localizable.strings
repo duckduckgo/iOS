@@ -136,14 +136,83 @@
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Unlock DuckDuckGo.";
 
+/* Title for 'Report an Issue' button in the activity view. */
+"appTP.activityView.reportIssue" = "Report an issue with an app";
+
+/* Text label for switch that turns blocking on or off for a tracker */
+"appTP.blockTrackerText" = "Block this tracker";
+
+/* Detail string describing what AppTP is */
+"appTP.cell.detail" = "Block app trackers on your device";
+
+/* String indicating AppTP is disabled when viewed from the settings screen */
+"appTP.cell.disabled" = "Disabled";
+
 /* Info string informing the user what App Tracking Protection does. */
 "appTP.empty.disabled.info" = "Enable App Tracking Protection so we can block pesky trackers in other apps.";
 
 /* Info string informing the user we're looking for trackers in other apps. */
-"appTP.empty.enabled.info" = "We're looking for trackers in your apps...";
+"appTP.empty.enabled.info" = "We’re looking for trackers in your apps...";
+
+/* Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now' */
+"appTP.justNow" = "just now";
+
+/* View to manage trackers for AppTP. Allows the user to turn trackers on or off. */
+"appTP.manageTrackers" = "Manage Trackers";
+
+/* Breakage report app name label */
+"appTP.report.appLabel" = "Which app is broken?";
+
+/* Breakage report app name placeholder */
+"appTP.report.appPlaceholder" = "App Name";
+
+/* Breakage report category label */
+"appTP.report.categoryLabel" = "What’s happening?";
+
+/* Breakage report comment label */
+"appTP.report.commentLabel" = "Comment";
+
+/* Breakage report comment placeholder */
+"appTP.report.commentPlaceholder" = "Add any more details";
+
+/* Breakage report footer explaining what is collected in the breakage report */
+"appTP.report.footer" = "In addition to the details entered into this form, your app issue report will contain:
+• A list of trackers blocked in the last 10 minutes
+• Whether App Tracking Protection is enabled
+• Aggregate DuckDuckGo app diagnostics";
+
+/* Breakage report submit button */
+"appTP.report.submit" = "Submit";
+
+/* Breakage report form title */
+"appTP.report.title" = "Breakage Report";
+
+/* Breakage report succcess message */
+"appTP.report.toast" = "Thank you! Feedback submitted.";
+
+/* Cancel button for 'Report an Issue' alert. */
+"appTP.reportAlert.cancel" = "Not Now";
+
+/* Confirm button for 'Report an Issue' alert. */
+"appTP.reportAlert.confirm" = "Report Issue";
+
+/* Message for 'Report an Issue' alert. */
+"appTP.reportAlert.message" = "Please let us know if you don’t want us to block this tracker because you experienced app issues.";
+
+/* Title for 'Report an Issue' alert. */
+"appTP.reportAlert.title" = "Report an Issue?";
+
+/* Button to restore the blocklist to its default state. */
+"appTP.restoreDefualts" = "Restore Defaults";
 
 /* Title for the App Tracking Protection feature */
 "appTP.title" = "App Tracking Protection";
+
+/* Text indicating when the tracker was last allowed. Example: Last attempt allowed (timeString) */
+"appTP.trackerAllowedTimestamp" = "Last attempt allowed %@";
+
+/* Text indicating when the tracker was last blocked. Example: Last attempt blocked (timeString) */
+"appTP.trackerBlockedTimestamp" = "Last attempt blocked %@";
 
 /* Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts */
 "appTP.trackingattempts" = "%@ tracking attempts";

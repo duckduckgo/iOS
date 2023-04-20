@@ -28,22 +28,32 @@ struct AppTPTrackerCell: View {
     let trackerDomain: String
     let trackerOwner: String
     let trackerCount: Int32
+    let trackerBlocked: Bool
 
-    let trackerTimestamp: String
+    let trackerTimestamp: String?
     let trackerBucket: String
     let debugMode: Bool
 
     let imageCache: AppTrackerImageCache
     let showDivider: Bool
     
+    func stringForTrackerTimestamp() -> String {
+        let timeStr = trackerTimestamp ?? UserText.appTPJustNow
+        
+        if trackerBlocked {
+            return UserText.appTPTrackerBlockedTimestamp(timeString: timeStr)
+        } else {
+            return UserText.appTPTrackerAllowedTimestamp(timeString: timeStr)
+        }
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .center) {
-                SVGView(data: imageCache.loadTrackerImage(for: trackerOwner))
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 25, height: 25)
-                
-                VStack(alignment: .leading, spacing: 4) {
+                AppTPActivityIconView(trackerImage: imageCache.loadTrackerImage(for: trackerOwner),
+                                      blocked: trackerBlocked)
+
+                VStack(alignment: .leading, spacing: Const.Size.rowSpacing) {
                     Text(trackerDomain)
                         .font(Font(uiFont: Const.Font.trackerDomain))
                         .foregroundColor(.trackerDomain)
@@ -51,15 +61,26 @@ struct AppTPTrackerCell: View {
                     Text(UserText.appTPTrackingAttempts(count: "\(trackerCount)"))
                         .font(Font(uiFont: Const.Font.trackerCount))
                         .foregroundColor(.trackerSize)
+                    
+                    Text(stringForTrackerTimestamp())
+                        .font(Font(uiFont: Const.Font.trackerCount))
+                        .foregroundColor(.trackerSize)
 
                     if debugMode {
-                        Text("\(trackerTimestamp), bucket: \(trackerBucket)")
+                        Text("bucket: \(trackerBucket)")
                             .font(Font(uiFont: Const.Font.trackerCount))
                             .foregroundColor(.trackerSize)
                     }
                 }
+                
+                Spacer()
+                
+                Image(systemName: "chevron.forward")
+                    .resizable()
+                    .frame(width: 7, height: 12)
+                    .foregroundColor(Color.disclosureColor)
             }
-            .padding(.horizontal)
+            .padding(.horizontal, Const.Size.rowPadding)
             .frame(height: Const.Size.rowHeight)
             
             if showDivider {
@@ -76,7 +97,9 @@ private enum Const {
     }
     
     enum Size {
-        static let rowHeight: CGFloat = 60
+        static let rowHeight: CGFloat = 78
+        static let rowPadding: CGFloat = 16
+        static let rowSpacing: CGFloat = 4
     }
 }
 
@@ -84,4 +107,5 @@ private extension Color {
     static let trackerDomain = Color("AppTPDomainColor")
     static let trackerSize = Color("AppTPCountColor")
     static let cellBackground = Color("AppTPCellBackgroundColor")
+    static let disclosureColor = Color("AppTPDisclosureColor")
 }

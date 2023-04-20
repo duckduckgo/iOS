@@ -82,7 +82,7 @@ class ImageCacheDebugViewController: UITableViewController {
         case .bookmarks:
             let bookmark = bookmarksAndFavorites[indexPath.row]
             cell.textLabel?.text = bookmark.urlObject?.host
-            cell.imageView?.loadFavicon(forDomain: bookmark.urlObject?.host, usingCache: .bookmarks) {
+            cell.imageView?.loadFavicon(forDomain: bookmark.urlObject?.host, usingCache: .fireproof) {
                 cell.imageView?.image = $1 ? self.imageNotFound : $0 ?? self.imageError
                 cell.detailTextLabel?.text = self.describe($1 ? nil : $0)
             }

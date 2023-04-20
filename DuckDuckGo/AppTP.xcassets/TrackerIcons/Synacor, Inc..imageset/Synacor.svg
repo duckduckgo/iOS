@@ -1,0 +1,12 @@
+<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g clip-path="url(#Synacor_svg__a)">
+    <path fill="#E7F3FE" d="M24 12c0 6.627-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0s12 5.373 12 12Z"/>
+    <path fill="#000" fill-opacity=".12" fill-rule="evenodd" d="M24 12c0 6.627-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0s12 5.373 12 12ZM12 23.5c6.351 0 11.5-5.149 11.5-11.5S18.351.5 12 .5.5 5.649.5 12 5.649 23.5 12 23.5Z" clip-rule="evenodd"/>
+    <path fill="#E72F27" d="M18.5 9.845h-4.333L18.5 5.5H9.833c-2.393 0-4.32 1.945-4.32 4.345v4.344h4.036c.103.013.194 0 .297 0V9.845h4.32v4.344H9.834L5.5 18.534h8.667a4.34 4.34 0 0 0 4.333-4.345V9.845Z"/>
+  </g>
+  <defs>
+    <clipPath id="Synacor_svg__a">
+      <path fill="#fff" d="M0 0h24v24H0z"/>
+    </clipPath>
+  </defs>
+</svg>

@@ -1,0 +1,12 @@
+<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g clip-path="url(#Facebook_svg__a)">
+    <path fill="#1877F2" d="M24 12c0 6.627-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0s12 5.373 12 12Z"/>
+    <path fill="#fff" fill-opacity=".12" fill-rule="evenodd" d="M24 12c0 6.627-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0s12 5.373 12 12ZM12 23.5c6.351 0 11.5-5.149 11.5-11.5S18.351.5 12 .5.5 5.649.5 12 5.649 23.5 12 23.5Z" clip-rule="evenodd"/>
+    <path fill="#fff" fill-rule="evenodd" d="M11.043 23.46V14H8.5v-2.897h2.543V8.898C11.043 6.388 12.54 5 14.829 5c1.095 0 2.242.196 2.242.196v2.465h-1.264c-1.245 0-1.633.772-1.633 1.565v1.878h2.778L16.507 14h-2.334v9.294a11.56 11.56 0 0 1-3.13.166Z" clip-rule="evenodd"/>
+  </g>
+  <defs>
+    <clipPath id="Facebook_svg__a">
+      <path fill="#fff" d="M0 0h24v24H0z"/>
+    </clipPath>
+  </defs>
+</svg>

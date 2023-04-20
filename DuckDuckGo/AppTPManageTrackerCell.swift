@@ -18,7 +18,6 @@
 //
 
 import SwiftUI
-import SVGView
 
 struct AppTPManageTrackerCell: View {
     
@@ -44,8 +43,8 @@ struct AppTPManageTrackerCell: View {
             HStack {
                 let trackerRep = imageCache.loadTrackerImage(for: tracker.trackerOwner)
                 switch trackerRep {
-                case .svg(let data):
-                    SVGView(data: data)
+                case .svg(let image):
+                    Image(uiImage: image)
                         .aspectRatio(contentMode: .fit)
                         .frame(width: Const.Size.iconWidth, height: Const.Size.iconWidth)
 

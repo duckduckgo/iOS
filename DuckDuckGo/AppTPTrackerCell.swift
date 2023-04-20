@@ -20,10 +20,6 @@
 import SwiftUI
 import Core
 
-// Temporarily we are including this package to display SVGs embedded in the Privacy Dashboard package
-// Once we have our own asset catalog of tracker network images we can remove this package.
-import SVGView
-
 struct AppTPTrackerCell: View {
     let trackerDomain: String
     let trackerOwner: String

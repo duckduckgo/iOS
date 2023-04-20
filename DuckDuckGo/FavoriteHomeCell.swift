@@ -108,7 +108,7 @@ class FavoriteHomeCell: UICollectionViewCell {
                                                            bold: false)
         iconImage?.image = fakeFavicon
 
-        iconImage?.loadFavicon(forDomain: domain, usingCache: .bookmarks, useFakeFavicon: false) { image, _ in
+        iconImage?.loadFavicon(forDomain: domain, usingCache: .fireproof, useFakeFavicon: false) { image, _ in
             guard let image = image else {
                 iconImage?.image = fakeFavicon
                 return

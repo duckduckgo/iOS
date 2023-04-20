@@ -48,9 +48,7 @@ struct AccountViewModel: Hashable {
         if account.username.count > 0 {
             return AutofillInterfaceEmailTruncator.truncateEmail(account.username, maxLength: 36)
         } else {
-            let urlString = URL(string: account.domain)?.absoluteString.droppingWwwPrefix()
-            let string = urlString ?? account.domain
-            return "Login for \(string)"
+            return UserText.autofillLoginPromptPasswordButtonTitle(for: account.domain)
         }
     }
     

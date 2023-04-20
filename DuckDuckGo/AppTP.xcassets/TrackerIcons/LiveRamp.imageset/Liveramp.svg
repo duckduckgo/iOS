@@ -1,0 +1,12 @@
+<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g clip-path="url(#LiveRamp_svg__a)">
+    <path fill="#73BF69" d="M24 12c0 6.627-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0s12 5.373 12 12Z"/>
+    <path fill="#000" fill-opacity=".12" fill-rule="evenodd" d="M24 12c0 6.627-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0s12 5.373 12 12ZM12 23.5c6.351 0 11.5-5.149 11.5-11.5S18.351.5 12 .5.5 5.649.5 12 5.649 23.5 12 23.5Z" clip-rule="evenodd"/>
+    <path fill="#fff" d="M8.533 14.621 5.798 17.5h3.54l-.805-2.879Zm.541-.088L9.9 17.5h7.301v-1.026l-8.128-1.94Zm.33-.485 7.787 1.875v-4.588l-7.787 2.713Zm.298-.673 7.49-2.614V5.5l-7.49 7.875Z"/>
+  </g>
+  <defs>
+    <clipPath id="LiveRamp_svg__a">
+      <path fill="#fff" d="M0 0h24v24H0z"/>
+    </clipPath>
+  </defs>
+</svg>

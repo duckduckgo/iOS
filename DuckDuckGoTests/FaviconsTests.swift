@@ -44,8 +44,8 @@ class FaviconsTests: XCTestCase {
 
         Favicons.Constants.tabsCache.clearDiskCache()
         Favicons.Constants.tabsCache.clearMemoryCache()
-        Favicons.Constants.bookmarksCache.clearDiskCache()
-        Favicons.Constants.bookmarksCache.clearMemoryCache()
+        Favicons.Constants.fireproofCache.clearDiskCache()
+        Favicons.Constants.fireproofCache.clearMemoryCache()
         
         _ = DefaultUserAgentManager.shared
     }
@@ -123,11 +123,8 @@ class FaviconsTests: XCTestCase {
             return
         }
 
-        XCTAssertFalse(favicons.isFaviconCachedForBookmarks(forDomain: Constants.exampleDomain, resource: resource))
-
-        Favicons.Constants.bookmarksCache.store(image, forKey: resource.cacheKey) { _ in
-            XCTAssertTrue(Favicons.Constants.bookmarksCache.isCached(forKey: resource.cacheKey))
-            XCTAssertTrue(self.favicons.isFaviconCachedForBookmarks(forDomain: Constants.exampleDomain, resource: resource))
+        Favicons.Constants.fireproofCache.store(image, forKey: resource.cacheKey) { _ in
+            XCTAssertTrue(Favicons.Constants.fireproofCache.isCached(forKey: resource.cacheKey))
             expectation.fulfill()
         }
 

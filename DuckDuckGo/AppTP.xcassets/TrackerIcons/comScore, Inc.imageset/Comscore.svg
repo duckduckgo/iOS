@@ -1,0 +1,13 @@
+<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g clip-path="url(#comScore_svg__a)">
+    <path fill="#FFA400" fill-rule="evenodd" d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12Z" clip-rule="evenodd"/>
+    <path fill="#fff" fill-opacity=".12" fill-rule="evenodd" d="M24 12c0 6.627-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0s12 5.373 12 12Zm-.5 0c0 6.351-5.149 11.5-11.5 11.5S.5 18.351.5 12 5.649.5 12 .5 23.5 5.649 23.5 12Z" clip-rule="evenodd"/>
+    <path fill="#fff" d="M16.262 9.44v4.265l-8.524.85v2.388L19.5 18.117V9.12l-3.238.32Z"/>
+    <path fill="#fff" d="M16.262 9.44V7.044L4.5 5.883v8.996l3.238-.323v-4.274l8.524-.841Z"/>
+  </g>
+  <defs>
+    <clipPath id="comScore_svg__a">
+      <path fill="#fff" d="M0 0h24v24H0z"/>
+    </clipPath>
+  </defs>
+</svg>

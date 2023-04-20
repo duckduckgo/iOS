@@ -81,7 +81,7 @@ jobs:
     - name: Upload dSYMs artifact
       uses: actions/upload-artifact@v3
       with:
-        name: DuckDuckGo-${{ steps.destination.outputs.destination.destination }}-dSYM-${{ env.app_version }}
+        name: DuckDuckGo-${{ steps.destination.outputs.destination }}-dSYM-${{ env.app_version }}
         path: ${{ env.dsyms_path }}
 
     - name: Get Asana Task ID

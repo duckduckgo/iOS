@@ -257,7 +257,7 @@ class TabSwitcherViewController: UIViewController {
             guard let link = tab.link else { return }
             if viewModel.bookmark(for: link.url) == nil {
                 viewModel.createBookmark(title: link.displayTitle, url: link.url)
-                favicons.loadFavicon(forDomain: link.url.host, intoCache: .bookmarks, fromCache: .tabs)
+                favicons.loadFavicon(forDomain: link.url.host, intoCache: .fireproof, fromCache: .tabs)
                 newCount += 1
             }
         }

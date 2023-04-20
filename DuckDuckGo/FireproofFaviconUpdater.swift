@@ -1,5 +1,5 @@
 //
-//  BookmarkFaviconUpdater.swift
+//  FireproofFaviconUpdater.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -31,7 +31,7 @@ extension Tab: TabNotifying {}
 protocol FaviconProviding {
 
     func loadFavicon(forDomain domain: String, fromURL url: URL?, intoCache cacheType: Favicons.CacheType, completion: ((UIImage?) -> Void)?)
-    func replaceBookmarksFavicon(forDomain domain: String?, withImage: UIImage)
+    func replaceFireproofFavicon(forDomain domain: String?, withImage: UIImage)
 
 }
 
@@ -43,7 +43,7 @@ extension Favicons: FaviconProviding {
 
 }
 
-class BookmarkFaviconUpdater: NSObject, FaviconUserScriptDelegate {
+class FireproofFaviconUpdater: NSObject, FaviconUserScriptDelegate {
 
     let context: NSManagedObjectContext
     let tab: TabNotifying
@@ -65,7 +65,7 @@ class BookmarkFaviconUpdater: NSObject, FaviconUserScriptDelegate {
             guard self.bookmarkExists(for: host),
                   let image = image else { return }
 
-            self.favicons.replaceBookmarksFavicon(forDomain: host, withImage: image)
+            self.favicons.replaceFireproofFavicon(forDomain: host, withImage: image)
         }
 
     }

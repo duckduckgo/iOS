@@ -18,9 +18,9 @@
 //
 
 import UIKit
+import Common
 import Core
 import WebKit
-import os.log
 import Bookmarks
 import Persistence
 
@@ -312,7 +312,6 @@ class TabSwitcherViewController: UIViewController {
 
     @IBAction func onFirePressed(sender: AnyObject) {
         Pixel.fire(pixel: .forgetAllPressedTabSwitching)
-        DailyPixel.fire(pixel: .experimentDailyFireButtonTapped)
         FireButton.stopAllFireButtonAnimations()
         
         FireButtonExperiment.storeThatFireButtonWasTapped()

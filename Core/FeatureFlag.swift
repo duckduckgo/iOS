@@ -27,27 +27,28 @@ public enum FeatureFlag: String {
     case autofillCredentialsSaving
     case autofillInlineIconCredentials
     case autofillAccessCredentialManagement
+    case appTrackingProtection
 }
 
 extension FeatureFlag: FeatureFlagSourceProviding {
     public var source: FeatureFlagSource {
         switch self {
-        case .debugMenu, .sync:
+        case .debugMenu, .sync, .appTrackingProtection:
             return .internalOnly
         case .autofillCredentialInjecting:
-            return .remoteDevelopment(.subfeature(AutofillSubfeature.credentialsAutofill))
+            return .remoteReleasable(.subfeature(AutofillSubfeature.credentialsAutofill))
         case .autofillCredentialsSaving:
-            return .remoteDevelopment(.subfeature(AutofillSubfeature.credentialsSaving))
+            return .remoteReleasable(.subfeature(AutofillSubfeature.credentialsSaving))
         case .autofillInlineIconCredentials:
-            return .remoteDevelopment(.subfeature(AutofillSubfeature.inlineIconCredentials))
+            return .remoteReleasable(.subfeature(AutofillSubfeature.inlineIconCredentials))
         case .autofillAccessCredentialManagement:
-            return .remoteDevelopment(.subfeature(AutofillSubfeature.accessCredentialManagement))
+            return .remoteReleasable(.subfeature(AutofillSubfeature.accessCredentialManagement))
         }
     }
 }
 
 extension FeatureFlagger {
     public func isFeatureOn(_ featureFlag: FeatureFlag) -> Bool {
-        isFeatureOn(forProvider: featureFlag)
+        return isFeatureOn(forProvider: featureFlag)
     }
 }

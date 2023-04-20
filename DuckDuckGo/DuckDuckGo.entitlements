@@ -4,12 +4,17 @@
 <dict>
 	<key>com.apple.developer.web-browser</key>
 	<true/>
+	<key>com.apple.developer.networking.networkextension</key>
+	<array>
+		<string>packet-tunnel-provider</string>
+	</array>
 	<key>com.apple.security.application-groups</key>
 	<array>
 		<string>$(GROUP_ID_PREFIX).bookmarks</string>
 		<string>$(GROUP_ID_PREFIX).contentblocker</string>
 		<string>$(GROUP_ID_PREFIX).statistics</string>
 		<string>$(GROUP_ID_PREFIX).database</string>
+		<string>$(GROUP_ID_PREFIX).apptp</string>
 	</array>
 </dict>
 </plist>

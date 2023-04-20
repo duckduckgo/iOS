@@ -17,9 +17,9 @@
 //  limitations under the License.
 //
 
+import Common
 import Foundation
 import LocalAuthentication
-import os.log
 import Core
 
 final class AutofillLoginListAuthenticator {

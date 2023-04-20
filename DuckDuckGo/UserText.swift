@@ -388,30 +388,34 @@ public struct UserText {
     
     public static let autofillSaveLoginTitleNewUser = NSLocalizedString("autofill.save-login.new-user.title", value: "Do you want DuckDuckGo to save your Login?", comment: "Title displayed on modal asking for the user to save the login for the first time")
     public static let autofillSaveLoginTitle = NSLocalizedString("autofill.save-login.title", value: "Save Login?", comment: "Title displayed on modal asking for the user to save the login")
-    public static let autofillUpdateUsernameTitle = NSLocalizedString("autofill.update-usernamr.title", value: "Update Username?", comment: "Title displayed on modal asking for the user to update the username")
+    public static let autofillUpdateUsernameTitle = NSLocalizedString("autofill.update-usernamr.title", value: "Update username?", comment: "Title displayed on modal asking for the user to update the username")
 
     public static let autofillSaveLoginMessageNewUser = NSLocalizedString("autofill.save-login.new-user.message", value: "DuckDuckGo will securely store this Login on your device. You can manage saved Logins in Settings.", comment: "Message displayed on modal asking for the user to save the login for the first time")
     public static let autofillSaveLoginNotNowCTA = NSLocalizedString("autofill.save-login.not-now.CTA", value: "Not Now", comment: "Cancel CTA displayed on modal asking for the user to save the login")
    
     public static let autofillSavePasswordTitle = NSLocalizedString("autofill.save-password.title", value: "Save Password?", comment: "Title displayed on modal asking for the user to save the password")
-    public static let autofillUpdatePasswordTitle = NSLocalizedString("autofill.update-password.title", value: "Update Password?", comment: "Title displayed on modal asking for the user to update the password")
+    public static func autofillUpdatePassword(for title: String) -> String {
+        let message = NSLocalizedString("autofill.update-password.title", value: "Update password for\n%@?", comment: "Title displayed on modal asking for the user to update the password")
+        return message.format(arguments: title)
+    }
+    public static let autoUpdatePasswordMessage = NSLocalizedString("autofill.update-password.message", value: "DuckDuckGo will update this stored Login on your device.", comment: "Message displayed on modal asking for the user to update the password")
+
     public static let autofillSaveLoginSaveCTA = NSLocalizedString("autofill.save-login.save.CTA", value: "Save Login", comment: "Confirm CTA displayed on modal asking for the user to save the login")
     public static let autofillSavePasswordSaveCTA = NSLocalizedString("autofill.save-password.save.CTA", value: "Save Password", comment: "Confirm CTA displayed on modal asking for the user to save the password")
     public static let autofillUpdatePasswordSaveCTA = NSLocalizedString("autofill.update-password.save.CTA", value: "Update Password", comment: "Confirm CTA displayed on modal asking for the user to update the password")
     public static let autofillShowPassword = NSLocalizedString("autofill.show-password", value: "Show Password", comment: "Accessibility title for a Show Password button displaying actial password instead of *****")
     public static let autofillHidePassword = NSLocalizedString("autofill.hide-password", value: "Hide Password", comment: "Accessibility title for a Hide Password button replacing displayed password with *****")
-    public static let autofillUpdateLoginSaveCTA = NSLocalizedString("autofill.update-login.save.CTA", value: "Update Login", comment: "Confirm CTA displayed on modal asking for the user to update the login")
-    public static let autofillAdditionalLoginInfoMessage = NSLocalizedString("autofill.save-login.additional-login.message", value: "This will save an additional Login for this site.", comment: "Message displayed on modal explaining that an additional login will be saved.")
+    public static let autofillUpdateUsernameSaveCTA = NSLocalizedString("autofill.update-username.save.CTA", value: "Update Username", comment: "Confirm CTA displayed on modal asking for the user to update the login")
     public static let autofillLoginSavedToastMessage = NSLocalizedString("autofill.login-saved.toast", value: "Login saved", comment: "Message displayed after saving an autofill login")
     public static let autofillLoginUpdatedToastMessage = NSLocalizedString("autofill.login-updated.toast", value: "Login updated", comment: "Message displayed after updating an autofill login")
     public static let autofillLoginSaveToastActionButton = NSLocalizedString("autofill.login-save-action-button.toast", value: "View", comment: "Button displayed after saving/updating an autofill login that takes the user to the saved login")
 
-    public static let autofillKeepEnabledAlertTitle = NSLocalizedString("autofill.keep-enabled.alert.title", value: "Do you want to keep using Autofill?", comment: "Title for alert when asking the user if they want to keep using autofill")
-    public static let autofillKeepEnabledAlertMessage = NSLocalizedString("autofill.keep-enabled.alert.message", value: "You can disable Autofill at any time in Settings.", comment: "Message for alert when asking the user if they want to keep using autofill")
-    public static let autofillKeepEnabledAlertKeepUsingAction = NSLocalizedString("autofill.keep-enabled.alert.keep-using", value: "Keep Using", comment: "Confirm action for alert when asking the user if they want to keep using autofill")
+    public static let autofillKeepEnabledAlertTitle = NSLocalizedString("autofill.keep-enabled.alert.title", value: "Do you want to keep saving Logins?", comment: "Title for alert when asking the user if they want to keep using autofill")
+    public static let autofillKeepEnabledAlertMessage = NSLocalizedString("autofill.keep-enabled.alert.message", value: "You can disable this at any time in Settings.", comment: "Message for alert when asking the user if they want to keep using autofill")
+    public static let autofillKeepEnabledAlertKeepUsingAction = NSLocalizedString("autofill.keep-enabled.alert.keep-using", value: "Keep Saving", comment: "Confirm action for alert when asking the user if they want to keep using autofill")
     public static let autofillKeepEnabledAlertDisableAction = NSLocalizedString("autofill.keep-enabled.alert.disable", value: "Disable", comment: "Disable action for alert when asking the user if they want to keep using autofill")
 
-    public static let actionAutofillLogins = NSLocalizedString("action.title.autofill.logins", value: "Autofill Logins", comment: "Autofill Logins menu item opening the login list")
+    public static let actionAutofillLogins = NSLocalizedString("action.title.autofill.logins", value: "Logins", comment: "Autofill Logins menu item opening the login list")
 
     // MARK: - Waitlist
 
@@ -486,6 +490,58 @@ public struct UserText {
         return localized.format(arguments: code)
     }
 
+    
+    // MARK: App Tracking Protection
+    
+    public static let appTPNavTitle = NSLocalizedString("appTP.title", value: "App Tracking Protection", comment: "Title for the App Tracking Protection feature")
+    public static let appTPCellDetail = NSLocalizedString("appTP.cell.detail", value: "Block app trackers on your device", comment: "Detail string describing what AppTP is")
+    public static let appTPCellDisabled = NSLocalizedString("appTP.cell.disabled", value: "Disabled", comment: "String indicating AppTP is disabled when viewed from the settings screen")
+    
+    public static let appTPEmptyDisabledInfo = NSLocalizedString("appTP.empty.disabled.info", value: "Enable App Tracking Protection so we can block pesky trackers in other apps.", comment: "Info string informing the user what App Tracking Protection does.")
+    
+    public static let appTPEmptyEnabledInfo = NSLocalizedString("appTP.empty.enabled.info", value: "We’re looking for trackers in your apps...", comment: "Info string informing the user we're looking for trackers in other apps.")
+    
+    public static func appTPTrackingAttempts(count: String) -> String {
+        let message = NSLocalizedString("appTP.trackingattempts", value: "%@ tracking attempts", comment: "Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts")
+        return message.format(arguments: count)
+    }
+    
+    public static func appTPTrackerBlockedTimestamp(timeString: String) -> String {
+        let message = NSLocalizedString("appTP.trackerBlockedTimestamp", value: "Last attempt blocked %@", comment: "Text indicating when the tracker was last blocked. Example: Last attempt blocked (timeString)")
+        return message.format(arguments: timeString)
+    }
+    
+    public static func appTPTrackerAllowedTimestamp(timeString: String) -> String {
+        let message = NSLocalizedString("appTP.trackerAllowedTimestamp", value: "Last attempt allowed %@", comment: "Text indicating when the tracker was last allowed. Example: Last attempt allowed (timeString)")
+        return message.format(arguments: timeString)
+    }
+    
+    public static let appTPJustNow = NSLocalizedString("appTP.justNow", value: "just now", comment: "Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now'")
+    public static let appTPRestoreDefaults = NSLocalizedString("appTP.restoreDefualts", value: "Restore Defaults", comment: "Button to restore the blocklist to its default state.")
+    public static let appTPManageTrackers = NSLocalizedString("appTP.manageTrackers", value: "Manage Trackers", comment: "View to manage trackers for AppTP. Allows the user to turn trackers on or off.")
+    public static let appTPBlockTracker = NSLocalizedString("appTP.blockTrackerText", value: "Block this tracker", comment: "Text label for switch that turns blocking on or off for a tracker")
+    
+    public static let appTPReportIssueButton = NSLocalizedString("appTP.activityView.reportIssue", value: "Report an issue with an app", comment: "Title for 'Report an Issue' button in the activity view.")
+    public static let appTPReportAlertTitle = NSLocalizedString("appTP.reportAlert.title", value: "Report an Issue?", comment: "Title for 'Report an Issue' alert.")
+    public static let appTPReportAlertMessage = NSLocalizedString("appTP.reportAlert.message", value: "Please let us know if you don’t want us to block this tracker because you experienced app issues.", comment: "Message for 'Report an Issue' alert.")
+    public static let appTPReportAlertConfirm = NSLocalizedString("appTP.reportAlert.confirm", value: "Report Issue", comment: "Confirm button for 'Report an Issue' alert.")
+    public static let appTPReportAlertCancel = NSLocalizedString("appTP.reportAlert.cancel", value: "Not Now", comment: "Cancel button for 'Report an Issue' alert.")
+    
+    public static let appTPReportTitle = NSLocalizedString("appTP.report.title", value: "Breakage Report", comment: "Breakage report form title")
+    public static let appTPReportCommentPlaceholder = NSLocalizedString("appTP.report.commentPlaceholder", value: "Add any more details", comment: "Breakage report comment placeholder")
+    public static let appTPReportCommentLabel = NSLocalizedString("appTP.report.commentLabel", value: "Comment", comment: "Breakage report comment label")
+    public static let appTPReportToast = NSLocalizedString("appTP.report.toast", value: "Thank you! Feedback submitted.", comment: "Breakage report succcess message")
+    public static let appTPReportAppLabel = NSLocalizedString("appTP.report.appLabel", value: "Which app is broken?", comment: "Breakage report app name label")
+    public static let appTPReportAppPlaceholder = NSLocalizedString("appTP.report.appPlaceholder", value: "App Name", comment: "Breakage report app name placeholder")
+    public static let appTPReportCategoryLabel = NSLocalizedString("appTP.report.categoryLabel", value: "What’s happening?", comment: "Breakage report category label")
+    public static let appTPReportFooter = NSLocalizedString("appTP.report.footer", value: """
+In addition to the details entered into this form, your app issue report will contain:
+• A list of trackers blocked in the last 10 minutes
+• Whether App Tracking Protection is enabled
+• Aggregate DuckDuckGo app diagnostics
+""", comment: "Breakage report footer explaining what is collected in the breakage report")
+    public static let appTPReportSubmit = NSLocalizedString("appTP.report.submit", value: "Submit", comment: "Breakage report submit button")
+    
     // MARK: Notifications
     
     public static let macWaitlistAvailableNotificationTitle = NSLocalizedString("mac-waitlist.available.notification.title", value: "DuckDuckGo for Mac is ready!", comment: "Title for the macOS waitlist notification")
@@ -511,10 +567,8 @@ public struct UserText {
     
     public static let autofillLoginDetailsAddress = NSLocalizedString("autofill.logins.details.address", value:"Website URL", comment: "Address label for login details on autofill")
     public static let autofillLoginDetailsNotes = NSLocalizedString("autofill.logins.details.notes", value:"Notes", comment: "Notes label for login details on autofill")
-    public static let autofillLockedViewTitle = NSLocalizedString("autofill.logins.details.title", value:"Unlock Autofill", comment: "Title for view displayed when autofill is locked")
-    public static let autofillEmptyViewTitleDisabled = NSLocalizedString("autofill.logins.empty-view.title-disabled", value:"Enable Autofill to start saving Logins", comment: "Title for view displayed when autofill is disabled and has no items")
     public static let autofillEmptyViewTitle = NSLocalizedString("autofill.logins.empty-view.title", value:"No logins saved yet", comment: "Title for view displayed when autofill has no items")
-    public static let autofillEmptyViewSubtitle = NSLocalizedString("autofill.logins.empty-view.subtitle", value:"Logins are stored securely on this device only", comment: "Subtitle for view displayed when autofill has no items")
+    public static let autofillEmptyViewSubtitle = NSLocalizedString("autofill.logins.empty-view.subtitle", value:"Logins are stored securely on this device only.", comment: "Subtitle for view displayed when autofill has no items")
     public static let autofillSearchNoResultTitle = NSLocalizedString("autofill.logins.search.no-results.title", value:"No Results", comment: "Title displayed when there are no results on Autofill search")
     public static func autofillSearchNoResultSubtitle(for query: String) -> String {
         let message = NSLocalizedString("autofill.logins.search.no-results.subtitle", value: "for '%@'", comment: "Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle)")
@@ -522,13 +576,13 @@ public struct UserText {
     }
     
     public static let autofillEnableSettings = NSLocalizedString("autofill.logins.list.enable", value:"Save and Autofill Logins", comment: "Title for a toggle that enables autofill")
-    public static let autofillLoginListTitle = NSLocalizedString("autofill.logins.list.title", value:"Autofill Logins", comment: "Title for screen listing autofill logins")
-    public static let autofillLoginListSearchPlaceholder = NSLocalizedString("autofill.logins.list.search-placeholder", value:"Search Logins", comment: "Placeholder for search field on autofill login listing")
+    public static let autofillLoginListTitle = NSLocalizedString("autofill.logins.list.title", value:"Logins", comment: "Title for screen listing autofill logins")
+    public static let autofillLoginListSearchPlaceholder = NSLocalizedString("autofill.logins.list.search-placeholder", value:"Search logins", comment: "Placeholder for search field on autofill login listing")
     public static let autofillLoginListSuggested = NSLocalizedString("autofill.logins.list.suggested", value:"Suggested", comment: "Section title for group of suggested saved logins")
 
     public static let autofillLoginPromptAuthenticationCancelButton = NSLocalizedString("autofill.logins.prompt.auth.cancel", value:"Cancel", comment: "Cancel button for auth during login prompt")
     public static let autofillLoginPromptAuthenticationReason = NSLocalizedString("autofill.logins.prompt.auth.reason", value:"Unlock To Use Saved Login", comment: "Reason for auth during login prompt")
-    public static let autofillLoginPromptTitle = NSLocalizedString("autofill.logins.prompt.title", value:"Use a Saved Login?", comment: "Title for autofill login prompt")
+    public static let autofillLoginPromptTitle = NSLocalizedString("autofill.logins.prompt.title", value:"Use a saved Login?", comment: "Title for autofill login prompt")
     public static let autofillLoginPromptExactMatchTitle = NSLocalizedString("autofill.logins.prompt.exact.match.title", value:"From This Website", comment: "Title for section of autofill logins that are an exact match to the current website")
     public static func autofillLoginPromptPartialMatchTitle(for type: String) -> String {
         let message = NSLocalizedString("autofill.logins.prompt.partial.match.title", value: "From %@", comment: "Title for section of autofill logins that are an approximate match to the current website")
@@ -537,8 +591,8 @@ public struct UserText {
 
     public static let autofillLoginPromptMoreOptions = NSLocalizedString("autofill.logins.prompt.more-options", value:"More Options", comment: "Button title for autofill login prompt if more options are available")
 
-    public static let autofillNoAuthViewTitle = NSLocalizedString("autofill.logins.no-auth.title", value:"Set up your device passcode to use Autofill", comment: "Title for view displayed when autofill is locked on devices where a passcode has not been set")
-    public static let autofillNoAuthViewSubtitle = NSLocalizedString("autofill.logins.no-auth.subtitle", value:"A passcode is required to protect your Autofill details. Go to device Settings to set up a passcode.", comment: "Title for view displayed when autofill is locked on devices where a passcode has not been set")
+    public static let autofillNoAuthViewTitle = NSLocalizedString("autofill.logins.no-auth.title", value:"Secure your device to save Logins", comment: "Title for view displayed when autofill is locked on devices where a passcode has not been set")
+    public static let autofillNoAuthViewSubtitle = NSLocalizedString("autofill.logins.no-auth.subtitle", value:"A passcode is required to protect your Logins.", comment: "Title for view displayed when autofill is locked on devices where a passcode has not been set")
 
     public static let autofillOpenWebsitePrompt = NSLocalizedString("autofill.logins.details.open-website-prompt.title", value:"Open Website", comment: "Menu item title for option to open website from selected url")
     public static func autofillCopyPrompt(for type: String) -> String {
@@ -555,7 +609,7 @@ public struct UserText {
         return message.format(arguments: date)
     }
     public static let autofillLoginListAuthenticationCancelButton = NSLocalizedString("autofill.logins.list.auth.cancel", value:"Cancel", comment: "Cancel button for auth when opening login list")
-    public static let autofillLoginListAuthenticationReason = NSLocalizedString("autofill.logins.list.auth.reason", value:"Unlock To Use Saved Login", comment: "Reason for auth when opening login list")
+    public static let autofillLoginListAuthenticationReason = NSLocalizedString("autofill.logins.list.auth.reason", value:"Unlock device to access saved Logins", comment: "Reason for auth when opening login list")
     public static let autofillLoginDetailsDefaultTitle = NSLocalizedString("autofill.logins.details.default-title", value:"Login", comment: "Title for autofill login details")
     public static let autofillLoginDetailsEditTitle = NSLocalizedString("autofill.logins.details.edit-title", value:"Edit Login", comment: "Title when editing autofill login details")
     public static let autofillLoginDetailsNewTitle = NSLocalizedString("autofill.logins.details.new-title", value:"Add Login", comment: "Title when adding new autofill login")

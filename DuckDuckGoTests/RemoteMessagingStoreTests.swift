@@ -20,7 +20,6 @@
 import XCTest
 import Foundation
 import CoreData
-import os.log
 @testable import DuckDuckGo
 @testable import Core
 @testable import BrowserServicesKit

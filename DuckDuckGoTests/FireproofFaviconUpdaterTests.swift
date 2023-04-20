@@ -1,5 +1,5 @@
 //
-//  BookmarkFaviconUpdaterTests.swift
+//  FireproofFaviconUpdaterTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -24,7 +24,7 @@ import Persistence
 import Core
 import Bookmarks
 
-class BookmarkFaviconUpdaterTests: XCTestCase, TabNotifying, FaviconProviding {
+class FireproofFaviconUpdaterTests: XCTestCase, TabNotifying, FaviconProviding {
 
     var db: CoreDataDatabase!
 
@@ -56,7 +56,7 @@ class BookmarkFaviconUpdaterTests: XCTestCase, TabNotifying, FaviconProviding {
     }
 
     func testWhenBookmarkDoesNotExist_ThenImageNotReplacement() {
-        let updater = BookmarkFaviconUpdater(bookmarksDatabase: db, tab: self, favicons: self)
+        let updater = FireproofFaviconUpdater(bookmarksDatabase: db, tab: self, favicons: self)
         updater.faviconUserScript(FaviconUserScript(), didRequestUpdateFaviconForHost: "example.com", withUrl: nil)
 
         XCTAssertEqual(loadFaviconDomain, "example.com")
@@ -70,7 +70,7 @@ class BookmarkFaviconUpdaterTests: XCTestCase, TabNotifying, FaviconProviding {
     func testWhenBookmarkExistsButNoImage_ThenImageNotReplacement() throws {
         try createBookmark()
 
-        let updater = BookmarkFaviconUpdater(bookmarksDatabase: db, tab: self, favicons: self)
+        let updater = FireproofFaviconUpdater(bookmarksDatabase: db, tab: self, favicons: self)
         updater.faviconUserScript(FaviconUserScript(), didRequestUpdateFaviconForHost: "example.com", withUrl: nil)
 
         XCTAssertEqual(loadFaviconDomain, "example.com")
@@ -87,7 +87,7 @@ class BookmarkFaviconUpdaterTests: XCTestCase, TabNotifying, FaviconProviding {
         image = UIImage()
         let url = URL(string: "https://example.com/favicon.ico")!
 
-        let updater = BookmarkFaviconUpdater(bookmarksDatabase: db, tab: self, favicons: self)
+        let updater = FireproofFaviconUpdater(bookmarksDatabase: db, tab: self, favicons: self)
         updater.faviconUserScript(FaviconUserScript(), didRequestUpdateFaviconForHost: "example.com", withUrl: url)
 
         XCTAssertEqual(loadFaviconDomain, "example.com")
@@ -104,7 +104,7 @@ class BookmarkFaviconUpdaterTests: XCTestCase, TabNotifying, FaviconProviding {
         image = UIImage()
         let url = URL(string: "https://example.com/favicon.ico")!
 
-        let updater = BookmarkFaviconUpdater(bookmarksDatabase: db, tab: self, favicons: self)
+        let updater = FireproofFaviconUpdater(bookmarksDatabase: db, tab: self, favicons: self)
         updater.faviconUserScript(FaviconUserScript(), didRequestUpdateFaviconForHost: "www.example.com", withUrl: url)
 
         XCTAssertEqual(loadFaviconDomain, "www.example.com")
@@ -126,7 +126,7 @@ class BookmarkFaviconUpdaterTests: XCTestCase, TabNotifying, FaviconProviding {
         completion?(image)
     }
 
-    func replaceBookmarksFavicon(forDomain domain: String?, withImage: UIImage) {
+    func replaceFireproofFavicon(forDomain domain: String?, withImage: UIImage) {
         replaceFaviconCalled = true
     }
 

@@ -353,7 +353,7 @@
 "autofill.logins.empty-view.subtitle" = "Logins are stored securely on this device only.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "No logins saved yet";
+"autofill.logins.empty-view.title" = "No Logins saved yet";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Cancel";
@@ -374,7 +374,7 @@
 "autofill.logins.list.login-deleted-message-no-title" = "Login deleted";
 
 /* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Search logins";
+"autofill.logins.list.search-placeholder" = "Search Logins";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Suggested";
@@ -395,13 +395,16 @@
 "autofill.logins.prompt.auth.reason" = "Unlock To Use Saved Login";
 
 /* Title for section of autofill logins that are an exact match to the current website */
-"autofill.logins.prompt.exact.match.title" = "From This Website";
+"autofill.logins.prompt.exact.match.title" = "From this website";
 
 /* Button title for autofill login prompt if more options are available */
 "autofill.logins.prompt.more-options" = "More Options";
 
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "From %@";
+
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Password for %@";
 
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Use a saved Login?";
@@ -413,7 +416,7 @@
 "autofill.logins.search.no-results.title" = "No Results";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo will securely store this Login on your device. You can manage saved Logins in Settings.";
+"autofill.save-login.new-user.message" = "Logins are stored securely on this device only, and can be managed from the Logins menu in Settings.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Do you want DuckDuckGo to save your Login?";

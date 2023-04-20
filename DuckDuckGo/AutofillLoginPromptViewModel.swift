@@ -70,7 +70,11 @@ class AutofillLoginPromptViewModel: ObservableObject {
     @Published var accountMatchesViewModels: [AccountMatchesViewModel] = []
     @Published var showMoreOptions = false
     @Published var shouldUseScrollView = false
-    
+
+    var containsPartialMatches: Bool {
+        return accounts.partialMatches.count > 0
+    }
+
     private(set) var domain: String
     private var accounts: AccountMatches
 

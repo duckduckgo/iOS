@@ -22,6 +22,7 @@ import Core
 import BrowserServicesKit
 import TrackerRadarKit
 import UserScript
+import WebKit
 
 final class UserScripts: UserScriptsProvider {
 
@@ -67,6 +68,21 @@ final class UserScripts: UserScriptsProvider {
         contentScopeUserScript
     ].compactMap({ $0 })
 
-    lazy var scripts = userScripts.map { $0.makeWKUserScript() }
+    @MainActor
+    func loadWKUserScripts() async -> [WKUserScript] {
+        return await withTaskGroup(of: WKUserScriptBox.self) { @MainActor group in
+            var wkUserScripts = [WKUserScript]()
+            userScripts.forEach { userScript in
+                group.addTask { @MainActor in
+                    await userScript.makeWKUserScript()
+                }
+            }
+            for await result in group {
+                wkUserScripts.append(result.wkUserScript)
+            }
+
+            return wkUserScripts
+        }
+    }
 
 }

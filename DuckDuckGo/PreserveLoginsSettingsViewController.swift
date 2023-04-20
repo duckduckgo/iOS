@@ -183,7 +183,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
             fatalError("Cell should be dequeued")
         }
         cell.label.textColor = theme.tableCellTextColor
-        cell.faviconImage.loadFavicon(forDomain: model[index], usingCache: .bookmarks)
+        cell.faviconImage.loadFavicon(forDomain: model[index], usingCache: .fireproof)
         cell.label?.text = model[index].droppingWwwPrefix()
         cell.decorate(with: theme)
         return cell

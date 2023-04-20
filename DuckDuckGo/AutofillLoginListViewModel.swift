@@ -22,7 +22,6 @@ import BrowserServicesKit
 import Common
 import UIKit
 import Combine
-import os.log
 import Core
 
 internal enum AutofillLoginListSectionType: Comparable {
@@ -207,7 +206,11 @@ final class AutofillLoginListViewModel: ObservableObject {
             return autofillDomainNameUrlMatcher.isMatchingForAutofill(currentSite: currentUrl.absoluteString, savedSite: account.domain, tld: tld)
         }
 
-        return suggestedAccounts
+        let sortedSuggestions = suggestedAccounts.sorted(by: {
+            autofillDomainNameUrlSort.compareAccountsForSortingAutofill(lhs: $0, rhs: $1, tld: tld) == .orderedAscending
+        })
+
+        return sortedSuggestions
     }
 
     private func makeSections(with accounts: [SecureVaultModels.WebsiteAccount]) -> [AutofillLoginListSectionType] {

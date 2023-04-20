@@ -19,9 +19,9 @@
 
 import UIKit
 import Core
-import os.log
 import Bookmarks
 import Combine
+import Common
 
 class HomeViewController: UIViewController {
     
@@ -269,7 +269,7 @@ extension HomeViewController: FavoritesHomeViewSectionRendererDelegate {
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect favorite: BookmarkEntity) {
         guard let url = favorite.urlObject else { return }
         Pixel.fire(pixel: .homeScreenFavouriteLaunched)
-        Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .bookmarks, fromCache: .tabs)
+        Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .fireproof, fromCache: .tabs)
         delegate?.home(self, didRequestUrl: url)
     }
     

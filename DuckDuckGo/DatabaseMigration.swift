@@ -18,10 +18,10 @@
 //
 
 import BrowserServicesKit
+import Common
 import Foundation
 import CoreData
 import Core
-import os.log
 
 class DatabaseMigration {
     

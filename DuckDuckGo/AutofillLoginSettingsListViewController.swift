@@ -22,7 +22,6 @@ import Combine
 import Core
 import BrowserServicesKit
 import Common
-import os.log
 
 // swiftlint:disable file_length type_body_length
 
@@ -69,7 +68,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         tableView.registerCell(ofType: AutofillListItemTableViewCell.self)
         tableView.registerCell(ofType: EnableAutofillSettingsTableViewCell.self)
         // Have to set tableHeaderView height otherwise tableView content will jump when adding / removing searchController due to tableView insetGrouped style
-        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 16))
+        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 24))
         return tableView
     }()
 
@@ -275,7 +274,6 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             noAuthAvailableView.isHidden = true
             emptySearchView.isHidden = true
         case .empty:
-            emptyView.viewState = viewModel.isAutofillEnabledInSettings ? .autofillEnabled : .autofillDisabled
             emptyView.isHidden = false
             tableView.isHidden = false
             setEditing(false, animated: false)
@@ -604,7 +602,6 @@ extension AutofillLoginSettingsListViewController: EnableAutofillSettingsTableVi
 extension AutofillLoginSettingsListViewController: Themable {
 
     func decorate(with theme: Theme) {
-        lockedView.decorate(with: theme)
         emptyView.decorate(with: theme)
         emptySearchView.decorate(with: theme)
         noAuthAvailableView.decorate(with: theme)

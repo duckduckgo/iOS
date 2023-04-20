@@ -152,6 +152,11 @@
             "default": "block",
             "rules": [
                 {
+                    "rule": "2mdn\\.net\\/instream\\/html5\\/ima3\\.js",
+                    "action": "ignore",
+                    "comment": "Allow to load, but all other protections apply, including cookie protection"
+                },
+                {
                     "rule": "2mdn\\.net\\/instream\\/video\\/client\\.js",
                     "exceptions": {
                         "domains": [
@@ -159,11 +164,6 @@
                             "surfline.com"
                         ]
                     }
-                },
-                {
-                    "rule": "2mdn\\.net\\/instream\\/html5\\/ima3\\.js",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
                 }
             ]
         },
@@ -190,13 +190,13 @@
                 {
                     "rule": "2o7\\.net",
                     "exceptions": {
+                        "types": [
+                            "image"
+                        ],
                         "domains": [
                             "dunesvillage.com",
                             "kiplinger.com",
                             "tennislink.usta.com"
-                        ],
-                        "types": [
-                            "image"
                         ]
                     }
                 }
@@ -1321,11 +1321,11 @@
                 {
                     "rule": "acdn\\.adnxs\\.com\\/video",
                     "exceptions": {
-                        "domains": [
-                            "thechive.com"
-                        ],
                         "types": [
                             "script"
+                        ],
+                        "domains": [
+                            "thechive.com"
                         ]
                     }
                 },
@@ -1341,11 +1341,11 @@
                 {
                     "rule": "adnxs\\.com\\/jpt",
                     "exceptions": {
-                        "domains": [
-                            "thechive.com"
-                        ],
                         "types": [
                             "script"
+                        ],
+                        "domains": [
+                            "thechive.com"
                         ]
                     }
                 }
@@ -2423,6 +2423,52 @@
             ],
             "default": "block"
         },
+        "alicdn.com": {
+            "domain": "alicdn.com",
+            "owner": {
+                "name": "Alibaba Group",
+                "displayName": "Alibaba"
+            },
+            "prevalence": 0.000657,
+            "fingerprinting": 3,
+            "cookies": 0.000115,
+            "categories": [
+                "Content Delivery"
+            ],
+            "default": "ignore",
+            "rules": [
+                {
+                    "rule": "alicdn\\.com\\/g\\/secdev\\/sufei_data\\/3\\.9\\.10\\/index\\.js",
+                    "fingerprinting": 3,
+                    "cookies": 0.0000203
+                },
+                {
+                    "rule": "alicdn\\.com\\/g",
+                    "fingerprinting": 3,
+                    "cookies": 0.0000271
+                },
+                {
+                    "rule": "alicdn\\.com\\/AWSC\\/uab\\/1\\.140\\.0\\/collina\\.js",
+                    "fingerprinting": 3,
+                    "cookies": 0
+                },
+                {
+                    "rule": "alicdn\\.com\\/AWSC\\/WebUMID\\/1\\.88\\.4\\/um\\.js",
+                    "fingerprinting": 3,
+                    "cookies": 0
+                },
+                {
+                    "rule": "alicdn\\.com\\/secdev\\/sufei_data\\/3\\.9\\.10\\/index\\.js",
+                    "fingerprinting": 3,
+                    "cookies": 0.0000271
+                },
+                {
+                    "rule": "alicdn\\.com\\/AWSC\\/WebUMID\\/1\\.93\\.0\\/um\\.js",
+                    "fingerprinting": 3,
+                    "cookies": 0
+                }
+            ]
+        },
         "alicdn.com.edgekey.net": {
             "domain": "alicdn.com.edgekey.net",
             "owner": {
@@ -2469,52 +2515,6 @@
                 },
                 {
                     "rule": "alicdn\\.com\\.edgekey\\.net\\/AWSC\\/WebUMID\\/1\\.73\\.2\\/um\\.js",
-                    "fingerprinting": 3,
-                    "cookies": 0
-                }
-            ]
-        },
-        "alicdn.com": {
-            "domain": "alicdn.com",
-            "owner": {
-                "name": "Alibaba Group",
-                "displayName": "Alibaba"
-            },
-            "prevalence": 0.000657,
-            "fingerprinting": 3,
-            "cookies": 0.000115,
-            "categories": [
-                "Content Delivery"
-            ],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "alicdn\\.com\\/g\\/secdev\\/sufei_data\\/3\\.9\\.10\\/index\\.js",
-                    "fingerprinting": 3,
-                    "cookies": 0.0000203
-                },
-                {
-                    "rule": "alicdn\\.com\\/g",
-                    "fingerprinting": 3,
-                    "cookies": 0.0000271
-                },
-                {
-                    "rule": "alicdn\\.com\\/AWSC\\/uab\\/1\\.140\\.0\\/collina\\.js",
-                    "fingerprinting": 3,
-                    "cookies": 0
-                },
-                {
-                    "rule": "alicdn\\.com\\/AWSC\\/WebUMID\\/1\\.88\\.4\\/um\\.js",
-                    "fingerprinting": 3,
-                    "cookies": 0
-                },
-                {
-                    "rule": "alicdn\\.com\\/secdev\\/sufei_data\\/3\\.9\\.10\\/index\\.js",
-                    "fingerprinting": 3,
-                    "cookies": 0.0000271
-                },
-                {
-                    "rule": "alicdn\\.com\\/AWSC\\/WebUMID\\/1\\.93\\.0\\/um\\.js",
                     "fingerprinting": 3,
                     "cookies": 0
                 }
@@ -4310,11 +4310,11 @@
                 {
                     "rule": "cdn\\.blueconic\\.net\\/salemmediagroup\\.js",
                     "exceptions": {
-                        "domains": [
-                            "biblestudytools.com"
-                        ],
                         "types": [
                             "script"
+                        ],
+                        "domains": [
+                            "biblestudytools.com"
                         ]
                     }
                 }
@@ -7359,11 +7359,11 @@
                 {
                     "rule": "ad\\.crwdcntrl\\.net\\/.*\\/callback=jsonp_callback",
                     "exceptions": {
-                        "domains": [
-                            "weather.com"
-                        ],
                         "types": [
                             "script"
+                        ],
+                        "domains": [
+                            "weather.com"
                         ]
                     }
                 }
@@ -9088,6 +9088,21 @@
                 }
             ]
         },
+        "dailymotion.com": {
+            "domain": "dailymotion.com",
+            "owner": {
+                "name": "Dailymotion SA",
+                "displayName": "Dailymotion"
+            },
+            "prevalence": 0.00167,
+            "fingerprinting": 2,
+            "cookies": 0.00156,
+            "categories": [
+                "Content Delivery",
+                "Embedded Content"
+            ],
+            "default": "ignore"
+        },
         "damdoor.com": {
             "domain": "damdoor.com",
             "owner": {
@@ -9824,24 +9839,24 @@
                 {
                     "rule": "pubads\\.g\\.doubleclick\\.net\\/gampad\\/ads",
                     "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ],
                         "domains": [
                             "dailywire.com",
                             "mlb.com",
                             "surfline.com"
-                        ],
-                        "types": [
-                            "xmlhttprequest"
                         ]
                     }
                 },
                 {
                     "rule": "pubads\\.g\\.doubleclick\\.net\\/ssai\\/event",
                     "exceptions": {
-                        "domains": [
-                            "cbsnews.com"
-                        ],
                         "types": [
                             "xmlhttprequest"
+                        ],
+                        "domains": [
+                            "cbsnews.com"
                         ]
                     }
                 },
@@ -12133,6 +12148,23 @@
                 }
             ]
         },
+        "fonts.net": {
+            "domain": "fonts.net",
+            "owner": {
+                "name": "Monotype Imaging Inc.",
+                "displayName": "Monotype Imaging",
+                "privacyPolicy": "https://www.monotype.com/legal/privacy-policy/",
+                "url": "http://monotype.com"
+            },
+            "prevalence": 0.00787,
+            "fingerprinting": 1,
+            "cookies": 0.00783,
+            "categories": [
+                "Action Pixels",
+                "Content Delivery"
+            ],
+            "default": "ignore"
+        },
         "foresee.com": {
             "domain": "foresee.com",
             "owner": {
@@ -12224,34 +12256,6 @@
             "categories": [],
             "default": "block"
         },
-        "fox.com.edgesuite.net": {
-            "domain": "fox.com.edgesuite.net",
-            "owner": {
-                "name": "Akamai Technologies",
-                "displayName": "Akamai",
-                "privacyPolicy": "https://www.akamai.com/us/en/privacy-policies/",
-                "url": "http://akamai.com"
-            },
-            "prevalence": 0.00023,
-            "fingerprinting": 2,
-            "cookies": 0.00023,
-            "categories": [
-                "Content Delivery"
-            ],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "fox\\.com\\.edgesuite\\.net\\/static\\/fts\\/display\\/ver\\/app\\.v101\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0.000108
-                },
-                {
-                    "rule": "fox\\.com\\.edgesuite\\.net\\/static\\/fts\\/display\\/libs\\/prebid\\.js",
-                    "fingerprinting": 1,
-                    "cookies": 0.000108
-                }
-            ]
-        },
         "fox.com": {
             "domain": "fox.com",
             "owner": {
@@ -12285,6 +12289,34 @@
                     "rule": "fox\\.com\\/static\\/outkick\\/display\\/libs\\/prebid\\.js",
                     "fingerprinting": 2,
                     "cookies": 0.0000135
+                }
+            ]
+        },
+        "fox.com.edgesuite.net": {
+            "domain": "fox.com.edgesuite.net",
+            "owner": {
+                "name": "Akamai Technologies",
+                "displayName": "Akamai",
+                "privacyPolicy": "https://www.akamai.com/us/en/privacy-policies/",
+                "url": "http://akamai.com"
+            },
+            "prevalence": 0.00023,
+            "fingerprinting": 2,
+            "cookies": 0.00023,
+            "categories": [
+                "Content Delivery"
+            ],
+            "default": "ignore",
+            "rules": [
+                {
+                    "rule": "fox\\.com\\.edgesuite\\.net\\/static\\/fts\\/display\\/ver\\/app\\.v101\\.js",
+                    "fingerprinting": 2,
+                    "cookies": 0.000108
+                },
+                {
+                    "rule": "fox\\.com\\.edgesuite\\.net\\/static\\/fts\\/display\\/libs\\/prebid\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.000108
                 }
             ]
         },
@@ -13034,38 +13066,6 @@
             "categories": [],
             "default": "ignore"
         },
-        "google.com.au": {
-            "domain": "google.com.au",
-            "owner": {
-                "name": "Google LLC",
-                "displayName": "Google",
-                "privacyPolicy": "https://policies.google.com/privacy?hl=en&gl=us",
-                "url": "http://google.com"
-            },
-            "prevalence": 0.0000542,
-            "fingerprinting": 1,
-            "cookies": 0.00000677,
-            "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "google\\.com\\.au\\/adsense\\/search\\/ads\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0.00000677
-                },
-                {
-                    "rule": "google\\.com\\.au\\/maps\\/api\\/js",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                },
-                {
-                    "rule": "google\\.com\\.au\\/afs\\/gen_204",
-                    "fingerprinting": 0,
-                    "cookies": 0.0000135,
-                    "comment": "pixel"
-                }
-            ]
-        },
         "google.com": {
             "domain": "google.com",
             "owner": {
@@ -13306,6 +13306,38 @@
                     "rule": "google\\.com\\/114526753849739041348",
                     "fingerprinting": 0,
                     "cookies": 0,
+                    "comment": "pixel"
+                }
+            ]
+        },
+        "google.com.au": {
+            "domain": "google.com.au",
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google",
+                "privacyPolicy": "https://policies.google.com/privacy?hl=en&gl=us",
+                "url": "http://google.com"
+            },
+            "prevalence": 0.0000542,
+            "fingerprinting": 1,
+            "cookies": 0.00000677,
+            "categories": [],
+            "default": "ignore",
+            "rules": [
+                {
+                    "rule": "google\\.com\\.au\\/adsense\\/search\\/ads\\.js",
+                    "fingerprinting": 2,
+                    "cookies": 0.00000677
+                },
+                {
+                    "rule": "google\\.com\\.au\\/maps\\/api\\/js",
+                    "fingerprinting": 2,
+                    "cookies": 0
+                },
+                {
+                    "rule": "google\\.com\\.au\\/afs\\/gen_204",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000135,
                     "comment": "pixel"
                 }
             ]
@@ -14201,6 +14233,23 @@
                     "comment": "pixel"
                 }
             ]
+        },
+        "highwebmedia.com": {
+            "domain": "highwebmedia.com",
+            "owner": {
+                "name": "Chaturbate, LLC",
+                "displayName": "Chaturbate",
+                "privacyPolicy": "https://chaturbate.com/privacy/",
+                "url": "http://chaturbate.com"
+            },
+            "prevalence": 0.000826,
+            "fingerprinting": 1,
+            "cookies": 0.000813,
+            "categories": [
+                "Content Delivery",
+                "Embedded Content"
+            ],
+            "default": "ignore"
         },
         "histats.com": {
             "domain": "histats.com",
@@ -15233,11 +15282,11 @@
                 {
                     "rule": "imrworldwide\\.com\\/v60\\.js",
                     "exceptions": {
-                        "domains": [
-                            "threenow.co.nz"
-                        ],
                         "types": [
                             "script"
+                        ],
+                        "domains": [
+                            "threenow.co.nz"
                         ]
                     }
                 }
@@ -22941,6 +22990,25 @@
             ],
             "default": "block"
         },
+        "pinimg.com": {
+            "domain": "pinimg.com",
+            "owner": {
+                "name": "Pinterest, Inc.",
+                "displayName": "Pinterest",
+                "privacyPolicy": "https://policy.pinterest.com/en/privacy-policy",
+                "url": "http://pinterest.com"
+            },
+            "prevalence": 0.0446,
+            "fingerprinting": 2,
+            "cookies": 0.0406,
+            "categories": [
+                "Social - Share",
+                "Content Delivery",
+                "Embedded Content",
+                "Social Network"
+            ],
+            "default": "ignore"
+        },
         "pippio.com": {
             "domain": "pippio.com",
             "owner": {
@@ -24519,25 +24587,25 @@
                 {
                     "rule": "palacesquare\\.rambler\\.ru",
                     "exceptions": {
-                        "domains": [
-                            "championat.com",
-                            "lenta.ru"
-                        ],
                         "types": [
                             "image",
                             "stylesheet"
+                        ],
+                        "domains": [
+                            "championat.com",
+                            "lenta.ru"
                         ]
                     }
                 },
                 {
                     "rule": "comments\\.rambler\\.ru",
                     "exceptions": {
+                        "types": [
+                            "script"
+                        ],
                         "domains": [
                             "championat.com",
                             "lenta.ru"
-                        ],
-                        "types": [
-                            "script"
                         ]
                     }
                 },
@@ -25577,11 +25645,11 @@
                 {
                     "rule": "ak\\.sail-horizon\\.com\\/spm\\/spm",
                     "exceptions": {
-                        "domains": [
-                            "watch.wwe.com"
-                        ],
                         "types": [
                             "script"
+                        ],
+                        "domains": [
+                            "watch.wwe.com"
                         ]
                     }
                 }
@@ -25865,27 +25933,6 @@
             "cookies": 0.01,
             "default": "block"
         },
-        "scene7.com.edgekey.net": {
-            "domain": "scene7.com.edgekey.net",
-            "owner": {
-                "name": "Akamai Technologies",
-                "displayName": "Akamai",
-                "privacyPolicy": "https://www.akamai.com/us/en/privacy-policies/",
-                "url": "http://akamai.com"
-            },
-            "prevalence": 0.00137,
-            "fingerprinting": 1,
-            "cookies": 0.0000271,
-            "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "scene7\\.com\\.edgekey\\.net\\/s7viewersdk\\/3\\.12\\/MixedMediaViewer\\/js\\/s7sdk\\/utils\\/Utils\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                }
-            ]
-        },
         "scene7.com": {
             "domain": "scene7.com",
             "owner": {
@@ -25954,6 +26001,27 @@
                     "fingerprinting": 0,
                     "cookies": 0,
                     "comment": "pixel"
+                }
+            ]
+        },
+        "scene7.com.edgekey.net": {
+            "domain": "scene7.com.edgekey.net",
+            "owner": {
+                "name": "Akamai Technologies",
+                "displayName": "Akamai",
+                "privacyPolicy": "https://www.akamai.com/us/en/privacy-policies/",
+                "url": "http://akamai.com"
+            },
+            "prevalence": 0.00137,
+            "fingerprinting": 1,
+            "cookies": 0.0000271,
+            "categories": [],
+            "default": "ignore",
+            "rules": [
+                {
+                    "rule": "scene7\\.com\\.edgekey\\.net\\/s7viewersdk\\/3\\.12\\/MixedMediaViewer\\/js\\/s7sdk\\/utils\\/Utils\\.js",
+                    "fingerprinting": 2,
+                    "cookies": 0
                 }
             ]
         },
@@ -31591,11 +31659,11 @@
                 {
                     "rule": "dev\\.visualwebsiteoptimizer\\.com",
                     "exceptions": {
-                        "domains": [
-                            "adoramapix.com"
-                        ],
                         "types": [
                             "script"
+                        ],
+                        "domains": [
+                            "adoramapix.com"
                         ]
                     }
                 }
@@ -31751,6 +31819,25 @@
                 }
             ]
         },
+        "vocento.com": {
+            "domain": "vocento.com",
+            "owner": {
+                "name": "vocento",
+                "displayName": "vocento"
+            },
+            "prevalence": 0.0000813,
+            "fingerprinting": 2,
+            "cookies": 0.0000677,
+            "categories": [],
+            "default": "ignore",
+            "rules": [
+                {
+                    "rule": "vocento\\.com\\/js\\/commento\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.0000339
+                }
+            ]
+        },
         "vocento.com.akamaized.net": {
             "domain": "vocento.com.akamaized.net",
             "owner": {
@@ -31771,25 +31858,6 @@
                     "rule": "vocento\\.com\\.akamaized\\.net\\/vocuser\\/v4\\/resources\\/js\\/ppll\\/loader\\/vocento-vocuser-preloader\\.js",
                     "fingerprinting": 3,
                     "cookies": 0.0000135
-                }
-            ]
-        },
-        "vocento.com": {
-            "domain": "vocento.com",
-            "owner": {
-                "name": "vocento",
-                "displayName": "vocento"
-            },
-            "prevalence": 0.0000813,
-            "fingerprinting": 2,
-            "cookies": 0.0000677,
-            "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "vocento\\.com\\/js\\/commento\\.js",
-                    "fingerprinting": 1,
-                    "cookies": 0.0000339
                 }
             ]
         },
@@ -33071,6 +33139,24 @@
                 }
             ]
         },
+        "yandex.net": {
+            "domain": "yandex.net",
+            "owner": {
+                "name": "Yandex LLC",
+                "displayName": "Yandex",
+                "privacyPolicy": "https://yandex.com/legal/privacy/",
+                "url": "http://yandex.com"
+            },
+            "prevalence": 0.00345,
+            "fingerprinting": 1,
+            "cookies": 0.000183,
+            "categories": [
+                "Content Delivery",
+                "Embedded Content",
+                "Session Replay"
+            ],
+            "default": "ignore"
+        },
         "yandex.ru": {
             "domain": "yandex.ru",
             "owner": {
@@ -33116,21 +33202,6 @@
                     "comment": "Allow to load, but all other protections apply, including cookie protection"
                 },
                 {
-                    "rule": "yandex\\.ru\\/system\\/video-ads-sdk\\/adsdk\\.js",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                },
-                {
-                    "rule": "yandex\\.ru\\/vod\\/vh-special-converted\\/vod-content",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                },
-                {
-                    "rule": "yandex\\.ru\\/log",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                },
-                {
                     "rule": "api-maps\\.yandex\\.ru",
                     "exceptions": {
                         "types": [
@@ -33154,8 +33225,43 @@
                             "image"
                         ]
                     }
+                },
+                {
+                    "rule": "yandex\\.ru\\/system\\/video-ads-sdk\\/adsdk\\.js",
+                    "action": "ignore",
+                    "comment": "Allow to load, but all other protections apply, including cookie protection"
+                },
+                {
+                    "rule": "yandex\\.ru\\/vod\\/vh-special-converted\\/vod-content",
+                    "action": "ignore",
+                    "comment": "Allow to load, but all other protections apply, including cookie protection"
+                },
+                {
+                    "rule": "yandex\\.ru\\/log",
+                    "action": "ignore",
+                    "comment": "Allow to load, but all other protections apply, including cookie protection"
                 }
             ]
+        },
+        "yastatic.net": {
+            "domain": "yastatic.net",
+            "owner": {
+                "name": "Yandex LLC",
+                "displayName": "Yandex",
+                "privacyPolicy": "https://yandex.com/legal/privacy/",
+                "url": "http://yandex.com"
+            },
+            "prevalence": 0.00592,
+            "fingerprinting": 3,
+            "cookies": 0.00445,
+            "categories": [
+                "Ad Motivated Tracking",
+                "Advertising",
+                "Social - Share",
+                "Content Delivery",
+                "Embedded Content"
+            ],
+            "default": "ignore"
         },
         "yellowblue.io": {
             "domain": "yellowblue.io",
@@ -57921,605 +58027,605 @@
         "broken.third-party.site": "Test Site for Tracker Blocking"
     },
     "cnames": {
-        "a.rohde-schwarz.com": "rohde-schwarz.com.ssl.sc.omtrdc.net",
-        "aa-metrics.beauty.hotpepper.jp": "beauty.hotpepper.jp.ssl.sc.omtrdc.net",
-        "aa-metrics.hotpepper.jp": "hotpepper.jp.ssl.sc.omtrdc.net",
-        "aa-metrics.jalan.net": "jalan.net.ssl.sc.omtrdc.net",
-        "aamt.msnbc.com": "msnbc.com.ssl.sc.omtrdc.net",
-        "aamt.nbcnews.com": "nbcnews.com.ssl.sc.omtrdc.net",
-        "aamt.newsapp.telemundo.com": "newsapp.telemundo.com.ssl.sc.omtrdc.net",
-        "aamt.today.com": "today.com.ssl.sc.omtrdc.net",
-        "aanalytics.adelaide.edu.au": "adelaide.edu.au.ssl.sc.omtrdc.net",
-        "acemetrics.aaa.com": "aaa.com.ssl.sc.omtrdc.net",
-        "adb-secured.kijk.nl": "kijk.nl.ssl.sc.omtrdc.net",
-        "adobe.aeonbank.co.jp": "aeonbank.co.jp.ssl.sc.omtrdc.net",
-        "adobeanalytics.bws.com.au": "bws.com.au.ssl.sc.omtrdc.net",
-        "adobeanalytics.danmurphys.com.au": "danmurphys.com.au.ssl.sc.omtrdc.net",
-        "adobes.pmi.org": "pmi.org.ssl.sc.omtrdc.net",
-        "adtarget.fcbarcelona.com": "futbolclubbarcelona.tt.omtrdc.net",
-        "adtarget.fcbarcelona.es": "futbolclubbarcelona.tt.omtrdc.net",
-        "al-smetrics.vizio.com": "vizio.com.ssl.sc.omtrdc.net",
-        "analytics.asml.com": "asml.com.ssl.sc.omtrdc.net",
-        "analytics.capitalgroup.com": "capitalgroup.com.ssl.sc.omtrdc.net",
-        "analytics.cibc.com": "cibc.com.ssl.d2.sc.omtrdc.net",
-        "analytics.navyfederal.org": "navyfederal.org.ssl.d1.sc.omtrdc.net",
-        "analytics.pnc.com": "pnc.com.ssl.sc.omtrdc.net",
-        "analytics.ubs.com": "ubs.com.ssl.sc.omtrdc.net",
-        "ans.mlb.com": "mlb.com.ssl.sc.omtrdc.net",
-        "as.autobild.de": "autobild.de.ssl.sc.omtrdc.net",
-        "as.bild.de": "bild.de.ssl.sc.omtrdc.net",
-        "as.bz-berlin.de": "bz-berlin.de.ssl.sc.omtrdc.net",
-        "as.computerbild.de": "computerbild.de.ssl.sc.omtrdc.net",
-        "as.fitbook.de": "fitbook.de.ssl.sc.omtrdc.net",
-        "as.metal-hammer.de": "metal-hammer.de.ssl.sc.omtrdc.net",
-        "as.musikexpress.de": "musikexpress.de.ssl.sc.omtrdc.net",
-        "as.myhomebook.de": "myhomebook.de.ssl.sc.omtrdc.net",
-        "as.rollingstone.de": "rollingstone.de.ssl.sc.omtrdc.net",
-        "as.stylebook.de": "stylebook.de.ssl.sc.omtrdc.net",
-        "as.techbook.de": "techbook.de.ssl.sc.omtrdc.net",
-        "as.travelbook.de": "travelbook.de.ssl.sc.omtrdc.net",
-        "as.welt.de": "welt.de.ssl.sc.omtrdc.net",
-        "assets2.aami.com.au": "suncorpmetwayltd.tt.omtrdc.net",
-        "assets2.shannons.com.au": "suncorpmetwayltd.tt.omtrdc.net",
-        "assets2.suncorp.com.au": "suncorpmetwayltd.tt.omtrdc.net",
-        "at.mclaren.com": "mclarenautomotivelim.tt.omtrdc.net",
-        "at.postbank.de": "deutschebankag.tt.omtrdc.net",
-        "at.swisscom.ch": "swisscomag.tt.omtrdc.net",
-        "at.vodafone.de": "atvodafone-fpssl.tt.omtrdc.net",
-        "atarget.adelaide.edu.au": "adelaideedu.tt.omtrdc.net",
-        "atarget.harley-davidson.com": "harleydavidson.tt.omtrdc.net",
-        "b.fox.com": "fox.com.ssl.d2.sc.omtrdc.net",
-        "b.foxsports.com": "foxsports.com.ssl.d2.sc.omtrdc.net",
-        "b.koodomobile.com": "koodomobile.com.ssl.sc.omtrdc.net",
-        "b.law.com": "law.com.ssl.sc.omtrdc.net",
-        "b.medtronic.com": "medtronic.com.ssl.sc.omtrdc.net",
-        "b.snow.com": "snow.com.ssl.d2.sc.omtrdc.net",
-        "b.telus.com": "telus.com.ssl.sc.omtrdc.net",
-        "ci.intuit.com": "intuit.com.sc.omtrdc.net",
-        "collection.saga.co.uk": "saga.co.uk.ssl.sc.omtrdc.net",
-        "digistats.westjet.com": "westjet.com.ssl.d1.sc.omtrdc.net",
-        "dm-target.fishersci.com": "thermofisherscientif.tt.omtrdc.net",
-        "emetrics.bose.com": "bose.com.ssl.sc.omtrdc.net",
-        "experience.asb.co.nz": "asbbankltd.tt.omtrdc.net",
-        "hub.firestonecompleteautocare.com": "firestonecompleteautocare.com.ssl.d1.sc.omtrdc.net",
-        "info.telstra.com.au": "telstra.com.au.sc.omtrdc.net",
-        "infos.anz.com.au": "anz.com.au.ssl.sc.omtrdc.net",
-        "infos.belong.com.au": "belong.com.au.ssl.sc.omtrdc.net",
-        "infos.telstra.com.au": "telstra.com.au.ssl.sc.omtrdc.net",
-        "maling.dn.no": "dn.no.ssl.sc.omtrdc.net",
-        "mbox.wegmans.com": "wegmans.tt.omtrdc.net",
-        "mcdmetrics2.aaa.com": "aaanortheast.tt.omtrdc.net",
-        "met2.hp.com": "hp.com.ssl.d1.sc.omtrdc.net",
-        "metrics-target.siriusxm.com": "siriusxmradio.tt.omtrdc.net",
-        "metrics.aa.com": "aa.com.d1.sc.omtrdc.net",
-        "metrics.armstrongceilings.com": "armstrongceilings.com.ssl.sc.omtrdc.net",
-        "metrics.asos.com": "asos.com.ssl.d3.sc.omtrdc.net",
-        "metrics.barclaycardus.com": "barclaycardus.com.ssl.sc.omtrdc.net",
-        "metrics.bestrecipes.com.au": "bestrecipes.com.au.ssl.sc.omtrdc.net",
-        "metrics.bodyandsoul.com.au": "bodyandsoul.com.au.ssl.sc.omtrdc.net",
-        "metrics.cancer.gov": "cancer.gov.ssl.sc.omtrdc.net",
-        "metrics.chapters.indigo.ca": "chapters.indigo.ca.ssl.d1.sc.omtrdc.net",
-        "metrics.couriermail.com.au": "couriermail.com.au.ssl.sc.omtrdc.net",
-        "metrics.crateandbarrel.com": "crateandbarrel.com.ssl.sc.omtrdc.net",
-        "metrics.dailytelegraph.com.au": "dailytelegraph.com.au.ssl.sc.omtrdc.net",
-        "metrics.duluthtrading.com": "duluthtrading.com.ssl.d2.sc.omtrdc.net",
-        "metrics.fortinet.com": "fortinet.com.ssl.sc.omtrdc.net",
-        "metrics.geelongadvertiser.com.au": "geelongadvertiser.com.au.ssl.sc.omtrdc.net",
-        "metrics.heraldsun.com.au": "heraldsun.com.au.ssl.sc.omtrdc.net",
-        "metrics.ionos.co.uk": "ionos.co.uk.ssl.sc.omtrdc.net",
-        "metrics.ionos.com": "ionos.com.ssl.sc.omtrdc.net",
-        "metrics.ionos.es": "ionos.es.ssl.sc.omtrdc.net",
-        "metrics.ionos.it": "ionos.it.ssl.sc.omtrdc.net",
-        "metrics.ionos.mx": "ionos.mx.ssl.sc.omtrdc.net",
-        "metrics.makemytrip.com": "makemytrip.com.ssl.d2.sc.omtrdc.net",
-        "metrics.news.com.au": "news.com.au.ssl.sc.omtrdc.net",
-        "metrics.nrma.com.au": "nrma.com.au.ssl.sc.omtrdc.net",
-        "metrics.ntnews.com.au": "ntnews.com.au.ssl.sc.omtrdc.net",
-        "metrics.postoffice.co.uk": "postoffice.co.uk.ssl.d1.sc.omtrdc.net",
-        "metrics.rewe.de": "rewe.de.ssl.d3.sc.omtrdc.net",
-        "metrics.ryanair.com": "ryanair.com.d3.sc.omtrdc.net",
-        "metrics.samsclub.com": "samsclub.com.ssl.d1.sc.omtrdc.net",
-        "metrics.siriusxm.com": "siriusxm.com.d1.sc.omtrdc.net",
-        "metrics.steelcase.com": "steelcase.com.ssl.sc.omtrdc.net",
-        "metrics.synopsys.com": "synopsys.com.sc.omtrdc.net",
-        "metrics.taste.com.au": "taste.com.au.ssl.sc.omtrdc.net",
-        "metrics.theaustralian.com.au": "theaustralian.com.au.ssl.sc.omtrdc.net",
-        "metrics.thelott.com": "thelott.com.ssl.sc.omtrdc.net",
-        "metrics.themercury.com.au": "themercury.com.au.ssl.sc.omtrdc.net",
-        "metrics.timewarnercable.com": "timewarnercable.com.ssl.sc.omtrdc.net",
-        "metrics.uhc.com": "uhc.com.d1.sc.omtrdc.net",
-        "metrics.victoriassecret.com": "victoriassecret.com.ssl.sc.omtrdc.net",
-        "metrics.vogue.com.au": "vogue.com.au.ssl.sc.omtrdc.net",
-        "metrics.yellowpages.com": "yellowpages.com.ssl.sc.omtrdc.net",
-        "metrics1.citi.com": "citi.com.ssl.sc.omtrdc.net",
-        "metrics1.citibankonline.com": "citibankonline.com.ssl.sc.omtrdc.net",
-        "metrics2.houselogic.com": "houselogic.com.ssl.sc.omtrdc.net",
-        "mtcs.nhk.or.jp": "nhk.or.jp.ssl.sc.omtrdc.net",
-        "om.familysearch.org": "familysearch.org.ssl.d1.sc.omtrdc.net",
-        "omnis.basspro.com": "basspro.com.ssl.sc.omtrdc.net",
-        "omniture-dc-sec.cadence.com": "cadence.com.ssl.d1.sc.omtrdc.net",
-        "omniture-ssl.direct.asda.com": "direct.asda.com.ssl.sc.omtrdc.net",
-        "omniture-ssl.walmart.ca": "walmart.ca.ssl.d1.sc.omtrdc.net",
-        "omniture-ssl.walmart.com": "walmart.com.ssl.d1.sc.omtrdc.net",
-        "omns.americanexpress.com": "americanexpress.com.ssl.d2.sc.omtrdc.net",
-        "oms.chatrwireless.com": "chatrwireless.com.ssl.sc.omtrdc.net",
-        "oms.dowjones.com": "dowjones.com.ssl.sc.omtrdc.net",
-        "oms.dowjoneson.com": "dowjoneson.com.ssl.sc.omtrdc.net",
-        "oms.expedia.com": "expedia.com.ssl.d1.sc.omtrdc.net",
-        "oms.neimanmarcus.com": "neimanmarcus.com.ssl.sc.omtrdc.net",
-        "oms.norton.com": "norton.com.ssl.sc.omtrdc.net",
-        "os.fandango.com": "fandango.com.ssl.d2.sc.omtrdc.net",
-        "os.shutterfly.com": "shutterfly.com.ssl.sc.omtrdc.net",
-        "osimg.nbcuni.com": "nbcuni.com.ssl.sc.omtrdc.net",
-        "otracks.workday.com": "workday.com.ssl.sc.omtrdc.net",
-        "owss.ihs.com": "ihs.com.ssl.sc.omtrdc.net",
-        "pdmsmrt.buick.com": "buick.com.ssl.sc.omtrdc.net",
-        "pdmsmrt.cadillac.com": "cadillac.com.ssl.sc.omtrdc.net",
-        "pdmsmrt.chevrolet.com": "chevrolet.com.ssl.sc.omtrdc.net",
-        "pdmsmrt.gmc.com": "gmc.com.ssl.sc.omtrdc.net",
-        "s.ameriprisestats.com": "ameriprisestats.com.ssl.sc.omtrdc.net",
-        "s.cadent.bloomberglaw.com": "cadent.bloomberglaw.com.ssl.sc.omtrdc.net",
-        "s.lenovo.com": "lenovo.com.ssl.d1.sc.omtrdc.net",
-        "s.lexusfinancial.com": "lexusfinancial.com.ssl.sc.omtrdc.net",
-        "s.metric.vodacom.co.za": "metric.vodacom.co.za.ssl.d2.sc.omtrdc.net",
-        "s.thestar.com": "thestar.com.ssl.sc.omtrdc.net",
-        "s.toyotafinancial.com": "toyotafinancial.com.ssl.sc.omtrdc.net",
-        "s1.subaru.com": "subaru.com.ssl.sc.omtrdc.net",
-        "saa.cbs.com": "cbs.com.ssl.sc.omtrdc.net",
-        "saa.cbsnews.com": "cbsnews.com.ssl.sc.omtrdc.net",
-        "saa.comicbook.com": "comicbook.com.ssl.sc.omtrdc.net",
-        "saa.drphil.com": "drphil.com.ssl.sc.omtrdc.net",
-        "saa.dyson.co.uk": "dyson.co.uk.ssl.sc.omtrdc.net",
-        "saa.dyson.com": "dyson.com.ssl.sc.omtrdc.net",
-        "saa.dyson.de": "dyson.de.ssl.sc.omtrdc.net",
-        "saa.dyson.fr": "dyson.fr.ssl.sc.omtrdc.net",
-        "saa.etonline.com": "etonline.com.ssl.sc.omtrdc.net",
-        "saa.globalspec.com": "globalspec.com.ssl.sc.omtrdc.net",
-        "saa.insideedition.com": "insideedition.com.ssl.sc.omtrdc.net",
-        "saa.last.fm": "last.fm.ssl.sc.omtrdc.net",
-        "saa.maxpreps.com": "maxpreps.com.ssl.sc.omtrdc.net",
-        "saa.popculture.com": "popculture.com.ssl.sc.omtrdc.net",
-        "saa.rachaelrayshow.com": "rachaelrayshow.com.ssl.sc.omtrdc.net",
-        "saa.sportsline.com": "sportsline.com.ssl.sc.omtrdc.net",
-        "saa.startrek.com": "startrek.com.ssl.sc.omtrdc.net",
-        "saa.thedrewbarrymoreshow.com": "thedrewbarrymoreshow.com.ssl.sc.omtrdc.net",
-        "saa.tvguide.com": "tvguide.com.ssl.sc.omtrdc.net",
-        "saa.wowma.jp": "wowma.jp.ssl.sc.omtrdc.net",
-        "saainfo.anz.co.nz": "anz.co.nz.ssl.sc.omtrdc.net",
-        "saam.gumtree.com.au": "gumtree.com.au.ssl.sc.omtrdc.net",
-        "saat.dow.com": "dow.com.ssl.sc.omtrdc.net",
-        "sadbmetrics.abc.es": "abc.es.ssl.sc.omtrdc.net",
-        "sadbmetrics.autocasion.com": "autocasion.com.ssl.sc.omtrdc.net",
-        "sadbmetrics.diariosur.es": "diariosur.es.ssl.sc.omtrdc.net",
-        "sadbmetrics.diariovasco.com": "diariovasco.com.ssl.sc.omtrdc.net",
-        "sadbmetrics.elcomercio.es": "elcomercio.es.ssl.sc.omtrdc.net",
-        "sadbmetrics.elcorreo.com": "elcorreo.com.ssl.sc.omtrdc.net",
-        "sadbmetrics.eldiariomontanes.es": "eldiariomontanes.es.ssl.sc.omtrdc.net",
-        "sadbmetrics.elnortedecastilla.es": "elnortedecastilla.es.ssl.sc.omtrdc.net",
-        "sadbmetrics.hoy.es": "hoy.es.ssl.sc.omtrdc.net",
-        "sadbmetrics.ideal.es": "ideal.es.ssl.sc.omtrdc.net",
-        "sadbmetrics.larioja.com": "larioja.com.ssl.sc.omtrdc.net",
-        "sadbmetrics.lasprovincias.es": "lasprovincias.es.ssl.sc.omtrdc.net",
-        "sadbmetrics.laverdad.es": "laverdad.es.ssl.sc.omtrdc.net",
-        "sadbmetrics.mujerhoy.com": "mujerhoy.com.ssl.sc.omtrdc.net",
-        "sadbmetrics.pisos.com": "pisos.com.ssl.sc.omtrdc.net",
-        "sadbmetrics.rtve.es": "rtve.es.ssl.sc.omtrdc.net",
-        "sadobe.falabella.com.co": "falabella.com.co.ssl.d2.sc.omtrdc.net",
-        "sadobeanalytics.geico.com": "geico.com.ssl.sc.omtrdc.net",
-        "sams.manager-magazin.de": "manager-magazin.de.ssl.sc.omtrdc.net",
-        "sams.spiegel.de": "spiegel.de.ssl.sc.omtrdc.net",
-        "sanalytics.box.com": "box.com.ssl.sc.omtrdc.net",
-        "sanalytics.disneyplus.com": "disneyplus.com.ssl.sc.omtrdc.net",
-        "sanalytics.enterprise.spectrum.com": "enterprise.spectrum.com.ssl.sc.omtrdc.net",
-        "sanalytics.hallmark.com": "hallmark.com.ssl.sc.omtrdc.net",
-        "sanalytics.hottopic.com": "hottopic.com.ssl.sc.omtrdc.net",
-        "sanalytics.skinny.co.nz": "skinny.co.nz.ssl.sc.omtrdc.net",
-        "sanalytics.spark.co.nz": "spark.co.nz.ssl.sc.omtrdc.net",
-        "sanalytics.verizon.com": "verizon.com.ssl.d1.sc.omtrdc.net",
-        "sanalytics.visible.com": "visible.com.ssl.sc.omtrdc.net",
-        "sanmet.originenergy.com.au": "originenergy.com.au.ssl.sc.omtrdc.net",
-        "sats.manager-magazin.de": "spiegelverlagrudolfa.tt.omtrdc.net",
-        "sats.spiegel.de": "spiegelverlagrudolfa.tt.omtrdc.net",
-        "sawap.equifax.com": "equifax.com.ssl.sc.omtrdc.net",
-        "sci.intuit.com": "intuit.com.ssl.sc.omtrdc.net",
-        "scnd.landsend.co.uk": "landsend.co.uk.ssl.sc.omtrdc.net",
-        "scnd.landsend.com": "landsend.com.ssl.sc.omtrdc.net",
-        "scnd.landsend.de": "landsend.de.ssl.sc.omtrdc.net",
-        "scs.arcteryx.com": "arcteryx.com.ssl.d2.sc.omtrdc.net",
-        "sdcs.felissimo.co.jp": "felissimo.co.jp.ssl.d1.sc.omtrdc.net",
-        "secu.hagerty.com": "hagerty.com.ssl.sc.omtrdc.net",
-        "secure.analytics.ihg.com": "analytics.ihg.com.ssl.d1.sc.omtrdc.net",
-        "securedata.unsw.edu.au": "unsw.edu.au.ssl.sc.omtrdc.net",
-        "securemetrics.blackrock.com": "blackrock.com.ssl.d2.sc.omtrdc.net",
-        "securetags.esri.com": "esri.com.ssl.sc.omtrdc.net",
-        "sig.ig.com": "ig.com.ssl.d2.sc.omtrdc.net",
-        "sitecats.troweprice.com": "troweprice.com.ssl.d2.sc.omtrdc.net",
-        "sjourney.aarp.org": "aarp.tt.omtrdc.net",
-        "sjourney.penfed.org": "penfed.tt.omtrdc.net",
-        "sm.dell.com": "dell.com.ssl.d1.sc.omtrdc.net",
-        "sm.stjude.org": "stjude.org.ssl.sc.omtrdc.net",
-        "smetric.betway.com": "betway.com.ssl.sc.omtrdc.net",
-        "smetric.hilton.com": "hilton.com.ssl.sc.omtrdc.net",
-        "smetric.malaysiaairlines.com": "malaysiaairlines.com.ssl.sc.omtrdc.net",
-        "smetric.schwab.com": "schwab.com.ssl.d1.sc.omtrdc.net",
-        "smetric.trulia.com": "trulia.com.ssl.d2.sc.omtrdc.net",
-        "smetrics-ieeexplore.ieee.org": "ieee.org.ssl.sc.omtrdc.net",
-        "smetrics.10play.com.au": "10play.com.au.ssl.sc.omtrdc.net",
-        "smetrics.1800contacts.com": "1800contacts.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.24hourfitness.com": "24hourfitness.com.ssl.sc.omtrdc.net",
-        "smetrics.3m.com": "3m.com.ssl.sc.omtrdc.net",
-        "smetrics.aa.com": "aa.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.aami.com.au": "aami.com.au.ssl.sc.omtrdc.net",
-        "smetrics.aarp.org": "aarp.org.ssl.sc.omtrdc.net",
-        "smetrics.activecommunities.com": "activecommunities.com.ssl.sc.omtrdc.net",
-        "smetrics.adage.com": "adage.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.aem.playstation.com": "aem.playstation.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.aetn.com": "aetn.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.aircanada.com": "aircanada.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.ajinomoto.co.jp": "ajinomoto.co.jp.ssl.sc.omtrdc.net",
-        "smetrics.allegion.com": "allegion.com.ssl.sc.omtrdc.net",
-        "smetrics.allstate.com": "allstate.com.ssl.sc.omtrdc.net",
-        "smetrics.ally.com": "ally.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.americancentury.com": "americancentury.com.ssl.sc.omtrdc.net",
-        "smetrics.amfam.com": "amfam.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.amica.com": "amica.com.ssl.sc.omtrdc.net",
-        "smetrics.ancestry.com": "ancestry.com.ssl.sc.omtrdc.net",
-        "smetrics.ansible.com": "ansible.com.ssl.sc.omtrdc.net",
-        "smetrics.anthem.com": "anthem.com.ssl.sc.omtrdc.net",
-        "smetrics.argenta.be": "argenta.be.ssl.sc.omtrdc.net",
-        "smetrics.atomic.com": "atomic.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.autotrader.com": "autotrader.com.ssl.sc.omtrdc.net",
-        "smetrics.avalara.com": "avalara.com.ssl.sc.omtrdc.net",
-        "smetrics.banamex.com": "banamex.com.ssl.sc.omtrdc.net",
-        "smetrics.bankatfirst.com": "bankatfirst.com.ssl.sc.omtrdc.net",
-        "smetrics.bbva.com.ar": "bbva.com.ar.ssl.sc.omtrdc.net",
-        "smetrics.bbva.es": "bbva.es.ssl.sc.omtrdc.net",
-        "smetrics.bbva.mx": "bbva.mx.ssl.sc.omtrdc.net",
-        "smetrics.bcbsnc.com": "bcbsnc.com.ssl.sc.omtrdc.net",
-        "smetrics.bedbathandbeyond.com": "bedbathandbeyond.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.beefeater.co.uk": "beefeater.co.uk.ssl.sc.omtrdc.net",
-        "smetrics.belk.com": "belk.com.ssl.sc.omtrdc.net",
-        "smetrics.bestbuy.com": "bestbuy.com.ssl.sc.omtrdc.net",
-        "smetrics.bet.com": "bet.com.ssl.sc.omtrdc.net",
-        "smetrics.blair.com": "blair.com.ssl.sc.omtrdc.net",
-        "smetrics.bloombergtax.com": "bloombergtax.com.ssl.sc.omtrdc.net",
-        "smetrics.bmc.com": "bmc.com.ssl.sc.omtrdc.net",
-        "smetrics.bmo.com": "bmo.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.bnymellon.com": "bnymellon.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.boozallen.com": "boozallen.com.ssl.sc.omtrdc.net",
-        "smetrics.boscovs.com": "boscovs.com.ssl.sc.omtrdc.net",
-        "smetrics.bostonglobe.com": "bostonglobe.com.ssl.sc.omtrdc.net",
-        "smetrics.britishgas.co.uk": "britishgas.co.uk.ssl.sc.omtrdc.net",
-        "smetrics.brookdale.com": "brookdale.com.ssl.sc.omtrdc.net",
-        "smetrics.bt.com": "bt.com.ssl.sc.omtrdc.net",
-        "smetrics.buffalotracedistillery.com": "buffalotracedistillery.com.ssl.sc.omtrdc.net",
-        "smetrics.builddirect.com": "builddirect.com.ssl.sc.omtrdc.net",
-        "smetrics.calvinklein.us": "calvinklein.us.ssl.sc.omtrdc.net",
-        "smetrics.capitalone.com": "capitalone.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.carfax.com": "carfax.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.carphonewarehouse.com": "carphonewarehouse.com.ssl.sc.omtrdc.net",
-        "smetrics.cars.com": "cars.com.ssl.sc.omtrdc.net",
-        "smetrics.cartersoshkosh.ca": "cartersoshkosh.ca.ssl.sc.omtrdc.net",
-        "smetrics.casio.com": "casio.com.ssl.sc.omtrdc.net",
-        "smetrics.cbn.com": "cbn.com.ssl.sc.omtrdc.net",
-        "smetrics.cdiscount.com": "cdiscount.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.cedars-sinai.org": "cedars-sinai.org.ssl.sc.omtrdc.net",
-        "smetrics.centurylink.com": "centurylink.com.ssl.sc.omtrdc.net",
-        "smetrics.chicagobusiness.com": "chicagobusiness.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.christies.com": "christies.com.ssl.sc.omtrdc.net",
-        "smetrics.cisco.com": "cisco.com.ssl.sc.omtrdc.net",
-        "smetrics.cit.com": "cit.com.ssl.sc.omtrdc.net",
-        "smetrics.citibank.com.au": "citibank.com.au.ssl.sc.omtrdc.net",
-        "smetrics.citizensbank.com": "citizensbank.com.ssl.sc.omtrdc.net",
-        "smetrics.claris.com": "claris.com.ssl.sc.omtrdc.net",
-        "smetrics.cloudera.com": "cloudera.com.ssl.sc.omtrdc.net",
-        "smetrics.cluballiance.aaa.com": "cluballiance.aaa.com.ssl.sc.omtrdc.net",
-        "smetrics.comenity.net": "comenity.net.ssl.d2.sc.omtrdc.net",
-        "smetrics.consumerreports.org": "consumerreports.org.ssl.d2.sc.omtrdc.net",
-        "smetrics.corus.ca": "corus.ca.ssl.sc.omtrdc.net",
-        "smetrics.costadelmar.com": "costadelmar.com.ssl.sc.omtrdc.net",
-        "smetrics.costco.com": "costco.com.ssl.sc.omtrdc.net",
-        "smetrics.countryfinancial.com": "countryfinancial.com.ssl.sc.omtrdc.net",
-        "smetrics.cox.com": "cox.com.ssl.sc.omtrdc.net",
-        "smetrics.crainsdetroit.com": "crainsdetroit.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.crystalski.co.uk": "crystalski.co.uk.ssl.sc.omtrdc.net",
-        "smetrics.deakin.edu.au": "deakin.edu.au.ssl.sc.omtrdc.net",
-        "smetrics.delta.com": "delta.com.ssl.sc.omtrdc.net",
-        "smetrics.demarini.com": "demarini.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.dickssportinggoods.com": "dickssportinggoods.com.ssl.sc.omtrdc.net",
-        "smetrics.discover.com": "discover.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.dish.com": "dish.com.ssl.sc.omtrdc.net",
-        "smetrics.dominos.com": "dominos.com.ssl.sc.omtrdc.net",
-        "smetrics.ee.co.uk": "ee.co.uk.ssl.d3.sc.omtrdc.net",
-        "smetrics.elal.com": "elal.com.ssl.sc.omtrdc.net",
-        "smetrics.elsevier.com": "elsevier.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.enterprise.com": "enterprise.com.ssl.sc.omtrdc.net",
-        "smetrics.etihad.com": "etihad.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.eurowings.com": "eurowings.com.ssl.sc.omtrdc.net",
-        "smetrics.eversource.com": "eversource.com.ssl.sc.omtrdc.net",
-        "smetrics.express.com": "express.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.fcacert.com": "fcacert.com.ssl.d3.sc.omtrdc.net",
-        "smetrics.fedex.com": "fedex.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.fieldandstreamshop.com": "fieldandstreamshop.com.ssl.sc.omtrdc.net",
-        "smetrics.flagstar.com": "flagstar.com.ssl.sc.omtrdc.net",
-        "smetrics.ford.com": "ford.com.ssl.sc.omtrdc.net",
-        "smetrics.foxbusiness.com": "foxbusiness.com.ssl.sc.omtrdc.net",
-        "smetrics.foxnews.com": "foxnews.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.fpl.com": "fpl.com.ssl.sc.omtrdc.net",
-        "smetrics.frontier.com": "frontier.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.gehealthcare.com": "gehealthcare.com.ssl.sc.omtrdc.net",
-        "smetrics.global.mandg.com": "global.mandg.com.ssl.sc.omtrdc.net",
-        "smetrics.global.nba.com": "global.nba.com.ssl.sc.omtrdc.net",
-        "smetrics.globaltv.com": "globaltv.com.ssl.sc.omtrdc.net",
-        "smetrics.golfgalaxy.com": "golfgalaxy.com.ssl.sc.omtrdc.net",
-        "smetrics.grainger.com": "grainger.com.ssl.sc.omtrdc.net",
-        "smetrics.grundfos.com": "grundfos.com.ssl.sc.omtrdc.net",
-        "smetrics.hbs.edu": "hbs.edu.ssl.sc.omtrdc.net",
-        "smetrics.healthengine.com.au": "healthengine.com.au.ssl.sc.omtrdc.net",
-        "smetrics.healthpartners.com": "healthpartners.com.ssl.sc.omtrdc.net",
-        "smetrics.hellobank.fr": "hellobank.fr.ssl.sc.omtrdc.net",
-        "smetrics.helvetia.com": "helvetia.com.ssl.d3.sc.omtrdc.net",
-        "smetrics.herbalife.com": "herbalife.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.hollandamerica.com": "hollandamerica.com.ssl.sc.omtrdc.net",
-        "smetrics.homeadvisor.com": "homeadvisor.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.hpe.com": "hpe.com.ssl.sc.omtrdc.net",
-        "smetrics.hrblock.com": "hrblock.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.huntington.com": "huntington.com.ssl.sc.omtrdc.net",
-        "smetrics.hyundaiusa.com": "hyundaiusa.com.ssl.sc.omtrdc.net",
-        "smetrics.illumina.com": "illumina.com.ssl.sc.omtrdc.net",
-        "smetrics.jcb.co.jp": "jcb.co.jp.ssl.sc.omtrdc.net",
-        "smetrics.jcpenney.com": "jcpenney.com.ssl.sc.omtrdc.net",
-        "smetrics.jcrew.com": "jcrew.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.jjill.com": "jjill.com.ssl.sc.omtrdc.net",
-        "smetrics.joefresh.com": "joefresh.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.johnfrieda.com": "johnfrieda.com.ssl.sc.omtrdc.net",
-        "smetrics.joules.com": "joules.com.ssl.sc.omtrdc.net",
-        "smetrics.kaiserpermanente.org": "kaiserpermanente.org.ssl.sc.omtrdc.net",
-        "smetrics.kao.co.jp": "kao.co.jp.ssl.sc.omtrdc.net",
-        "smetrics.kao.com": "kao.com.ssl.sc.omtrdc.net",
-        "smetrics.kayosports.com.au": "kayosports.com.au.ssl.sc.omtrdc.net",
-        "smetrics.kayoutlet.com": "kayoutlet.com.ssl.sc.omtrdc.net",
-        "smetrics.labaie.com": "labaie.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.lakeside.com": "lakeside.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.landolakes.com": "landolakes.com.ssl.sc.omtrdc.net",
-        "smetrics.lanebryant.com": "lanebryant.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.latrobe.edu.au": "latrobe.edu.au.ssl.sc.omtrdc.net",
-        "smetrics.libertymutual.com": "libertymutual.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.lifetime.life": "lifetime.life.ssl.sc.omtrdc.net",
-        "smetrics.loblaws.ca": "loblaws.ca.ssl.d1.sc.omtrdc.net",
-        "smetrics.lpl.com": "lpl.com.ssl.sc.omtrdc.net",
-        "smetrics.ltdcommodities.com": "ltdcommodities.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.manheim.com": "manheim.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.marksandspencer.com": "marksandspencer.com.ssl.d3.sc.omtrdc.net",
-        "smetrics.marriott.com": "marriott.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.marshalls.com": "marshalls.com.ssl.sc.omtrdc.net",
-        "smetrics.mathworks.com": "mathworks.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.maurices.com": "maurices.com.ssl.sc.omtrdc.net",
-        "smetrics.mcafee.com": "mcafee.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.mcdonalds.com": "mcdonalds.com.ssl.sc.omtrdc.net",
-        "smetrics.mercy.net": "mercy.net.ssl.sc.omtrdc.net",
-        "smetrics.mgmresorts.com": "mgmresorts.com.ssl.sc.omtrdc.net",
-        "smetrics.michaels.com": "michaels.com.ssl.sc.omtrdc.net",
-        "smetrics.misumi-ec.com": "misumi-ec.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.mitsubishi-motors.com.au": "mitsubishi-motors.com.au.ssl.sc.omtrdc.net",
-        "smetrics.morganstanley.com": "morganstanley.com.ssl.sc.omtrdc.net",
-        "smetrics.motortrend.com": "motortrend.com.ssl.sc.omtrdc.net",
-        "smetrics.mouse-jp.co.jp": "mouse-jp.co.jp.ssl.sc.omtrdc.net",
-        "smetrics.mrrooter.com": "mrrooter.com.ssl.sc.omtrdc.net",
-        "smetrics.msg.com": "msg.com.ssl.sc.omtrdc.net",
-        "smetrics.murata.com": "murata.com.ssl.sc.omtrdc.net",
-        "smetrics.myoccu.org": "myoccu.org.ssl.sc.omtrdc.net",
-        "smetrics.nab.com.au": "nab.com.au.ssl.d1.sc.omtrdc.net",
-        "smetrics.nabtrade.com.au": "nabtrade.com.au.ssl.sc.omtrdc.net",
-        "smetrics.napaonline.com": "napaonline.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.nationwide.co.uk": "nationwide.co.uk.ssl.d2.sc.omtrdc.net",
-        "smetrics.nesn.com": "nesn.com.ssl.sc.omtrdc.net",
-        "smetrics.newark.com": "newark.com.ssl.sc.omtrdc.net",
-        "smetrics.nfl.com": "nfl.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.ni.com": "ni.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.nofrills.ca": "nofrills.ca.ssl.sc.omtrdc.net",
-        "smetrics.nvidia.com": "nvidia.com.ssl.sc.omtrdc.net",
-        "smetrics.nyulangone.org": "nyulangone.org.ssl.sc.omtrdc.net",
-        "smetrics.oakley.com": "oakley.com.ssl.sc.omtrdc.net",
-        "smetrics.oakleysi.com": "oakleysi.com.ssl.sc.omtrdc.net",
-        "smetrics.officeworks.com.au": "officeworks.com.au.ssl.sc.omtrdc.net",
-        "smetrics.oliverpeoples.com": "oliverpeoples.com.ssl.sc.omtrdc.net",
-        "smetrics.openshift.com": "openshift.com.ssl.sc.omtrdc.net",
-        "smetrics.opensource.com": "opensource.com.ssl.sc.omtrdc.net",
-        "smetrics.opsm.com.au": "opsm.com.au.ssl.sc.omtrdc.net",
-        "smetrics.optimum.net": "optimum.net.ssl.d1.sc.omtrdc.net",
-        "smetrics.optum.com": "optum.com.ssl.sc.omtrdc.net",
-        "smetrics.pacsun.com": "pacsun.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.pandora.net": "pandora.net.ssl.sc.omtrdc.net",
-        "smetrics.pbteen.com": "pbteen.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.pcoptimum.ca": "pcoptimum.ca.ssl.sc.omtrdc.net",
-        "smetrics.penfed.org": "penfed.org.ssl.sc.omtrdc.net",
-        "smetrics.persol.com": "persol.com.ssl.sc.omtrdc.net",
-        "smetrics.petco.com": "petco.com.ssl.sc.omtrdc.net",
-        "smetrics.pionline.com": "pionline.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.politico.com": "politico.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.potterybarn.com": "potterybarn.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.potterybarnkids.com": "potterybarnkids.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.premera.com": "premera.com.ssl.sc.omtrdc.net",
-        "smetrics.princess.com": "princess.com.ssl.sc.omtrdc.net",
-        "smetrics.proximus.be": "proximus.be.ssl.sc.omtrdc.net",
-        "smetrics.quill.com": "quill.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.rac.co.uk": "rac.co.uk.ssl.sc.omtrdc.net",
-        "smetrics.rackroomshoes.com": "rackroomshoes.com.ssl.sc.omtrdc.net",
-        "smetrics.racv.com.au": "racv.com.au.ssl.sc.omtrdc.net",
-        "smetrics.ralphlauren.com": "ralphlauren.com.ssl.sc.omtrdc.net",
-        "smetrics.ray-ban.com": "ray-ban.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.rcsmetrics.it": "rcsmetrics.it.ssl.d3.sc.omtrdc.net",
-        "smetrics.realcanadiansuperstore.ca": "realcanadiansuperstore.ca.ssl.sc.omtrdc.net",
-        "smetrics.realestate.com.au": "realestate.com.au.ssl.sc.omtrdc.net",
-        "smetrics.realtor.com": "realtor.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.redcross.org": "redcross.org.ssl.sc.omtrdc.net",
-        "smetrics.regions.com": "regions.com.ssl.sc.omtrdc.net",
-        "smetrics.riteaid.com": "riteaid.com.ssl.sc.omtrdc.net",
-        "smetrics.rolex.com": "rolex.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.roomandboard.com": "roomandboard.com.ssl.sc.omtrdc.net",
-        "smetrics.royalcaribbean.com": "royalcaribbean.com.ssl.sc.omtrdc.net",
-        "smetrics.saksoff5th.com": "saksoff5th.com.ssl.sc.omtrdc.net",
-        "smetrics.salliemae.com": "salliemae.com.ssl.sc.omtrdc.net",
-        "smetrics.salomon.com": "salomon.com.ssl.sc.omtrdc.net",
-        "smetrics.samsung.com": "samsung.com.ssl.sc.omtrdc.net",
-        "smetrics.santander.co.uk": "santander.co.uk.ssl.d3.sc.omtrdc.net",
-        "smetrics.sasktel.com": "sasktel.com.ssl.sc.omtrdc.net",
-        "smetrics.savethechildren.org": "savethechildren.org.ssl.sc.omtrdc.net",
-        "smetrics.sazerac.com": "sazerac.com.ssl.sc.omtrdc.net",
-        "smetrics.scandichotels.com": "scandichotels.com.ssl.sc.omtrdc.net",
-        "smetrics.scandichotels.fi": "scandichotels.fi.ssl.sc.omtrdc.net",
-        "smetrics.scandichotels.se": "scandichotels.se.ssl.sc.omtrdc.net",
-        "smetrics.schwans.com": "schwans.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.sdcvisit.com": "sdcvisit.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.sephora.com": "sephora.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.sfr.fr": "sfr.fr.ssl.d2.sc.omtrdc.net",
-        "smetrics.shannons.com.au": "shannons.com.au.ssl.sc.omtrdc.net",
-        "smetrics.shopmyexchange.com": "shopmyexchange.com.ssl.sc.omtrdc.net",
-        "smetrics.siriusxm.com": "siriusxm.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.sky.com": "sky.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.sky.it": "sky.it.ssl.sc.omtrdc.net",
-        "smetrics.sling.com": "sling.com.ssl.sc.omtrdc.net",
-        "smetrics.solarwinds.com": "solarwinds.com.ssl.sc.omtrdc.net",
-        "smetrics.southwest.com": "southwest.com.ssl.sc.omtrdc.net",
-        "smetrics.staples.com": "staples.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.startribune.com": "startribune.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.statefarm.com": "statefarm.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.statnews.com": "statnews.com.ssl.sc.omtrdc.net",
-        "smetrics.suncorp.com.au": "suncorp.com.au.ssl.sc.omtrdc.net",
-        "smetrics.sunglasshut.com": "sunglasshut.com.ssl.sc.omtrdc.net",
-        "smetrics.sunlife.ca": "sunlife.ca.ssl.sc.omtrdc.net",
-        "smetrics.sunlife.com": "sunlife.com.ssl.sc.omtrdc.net",
-        "smetrics.swinburne.edu.au": "swinburne.edu.au.ssl.sc.omtrdc.net",
-        "smetrics.synopsys.com": "synopsys.com.ssl.sc.omtrdc.net",
-        "smetrics.t-mobile.com": "t-mobile.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.talbots.com": "talbots.com.ssl.sc.omtrdc.net",
-        "smetrics.te.com": "te.com.ssl.sc.omtrdc.net",
-        "smetrics.tedbaker.com": "tedbaker.com.ssl.sc.omtrdc.net",
-        "smetrics.telegraph.co.uk": "telegraph.co.uk.ssl.sc.omtrdc.net",
-        "smetrics.tesco.com": "tesco.com.ssl.sc.omtrdc.net",
-        "smetrics.textbooks.com": "textbooks.com.ssl.sc.omtrdc.net",
-        "smetrics.theathletesfoot.com.au": "theathletesfoot.com.au.ssl.sc.omtrdc.net",
-        "smetrics.thebay.com": "thebay.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.three.co.uk": "three.co.uk.ssl.d2.sc.omtrdc.net",
-        "smetrics.tiaa.org": "tiaa.org.ssl.sc.omtrdc.net",
-        "smetrics.time.com": "time.com.ssl.sc.omtrdc.net",
-        "smetrics.tmz.com": "tmz.com.ssl.sc.omtrdc.net",
-        "smetrics.tommy.com": "tommy.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.toofab.com": "toofab.com.ssl.sc.omtrdc.net",
-        "smetrics.toyota.com": "toyota.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.tudorwatch.com": "tudorwatch.com.ssl.sc.omtrdc.net",
-        "smetrics.uhc.com": "uhc.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.upc.ch": "upc.ch.sc.omtrdc.net",
-        "smetrics.usbank.com": "usbank.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.usopen.org": "usopen.org.ssl.sc.omtrdc.net",
-        "smetrics.virginatlantic.com": "virginatlantic.com.ssl.sc.omtrdc.net",
-        "smetrics.virginaustralia.com": "virginaustralia.com.ssl.sc.omtrdc.net",
-        "smetrics.visitsingapore.com": "visitsingapore.com.ssl.sc.omtrdc.net",
-        "smetrics.vitacost.com": "vitacost.com.ssl.sc.omtrdc.net",
-        "smetrics.vodafone.co.uk": "vodafone.co.uk.ssl.d2.sc.omtrdc.net",
-        "smetrics.vodafone.com.tr": "vodafone.com.tr.ssl.d2.sc.omtrdc.net",
-        "smetrics.vonage.com": "vonage.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.webex.com": "webex.com.ssl.sc.omtrdc.net",
-        "smetrics.westelm.com": "westelm.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.westernunion.com": "westernunion.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.westpac.com.au": "westpac.com.au.ssl.d2.sc.omtrdc.net",
-        "smetrics.wgu.edu": "wgu.edu.ssl.sc.omtrdc.net",
-        "smetrics.williams-sonoma.com": "williams-sonoma.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.wilson.com": "wilson.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.wmg.com": "wmg.com.ssl.sc.omtrdc.net",
-        "smetrics.worldmarket.com": "worldmarket.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.wyndhamhotels.com": "wyndhamhotels.com.ssl.sc.omtrdc.net",
-        "smetrics.yellowpages.com.au": "yellowpages.com.au.ssl.sc.omtrdc.net",
-        "smetrics.ziplyfiber.com": "ziplyfiber.com.ssl.sc.omtrdc.net",
-        "smetrics1.experian.com": "experian.com.ssl.sc.omtrdc.net",
-        "smodus.nike.com": "nike.com.ssl.sc.omtrdc.net",
-        "smon.congress.gov": "congress.gov.ssl.sc.omtrdc.net",
-        "smon.loc.gov": "loc.gov.ssl.sc.omtrdc.net",
-        "smtc.qantas.com": "qantas.com.ssl.sc.omtrdc.net",
-        "smtx.belfius.be": "belfius.be.ssl.sc.omtrdc.net",
-        "smy.iheart.com": "iheart.com.ssl.sc.omtrdc.net",
-        "so.swisscom.ch": "swisscom.ch.ssl.sc.omtrdc.net",
-        "som.athenahealth.com": "athenahealth.com.ssl.sc.omtrdc.net",
-        "som.hotwire.com": "hotwire.com.ssl.sc.omtrdc.net",
-        "som.sears.com": "sears.com.ssl.d1.sc.omtrdc.net",
-        "sometrics.netapp.com": "netapp.com.ssl.sc.omtrdc.net",
-        "somni.accenture.com": "accenture.com.ssl.sc.omtrdc.net",
-        "somni.alaskaair.com": "alaskaair.com.ssl.d1.sc.omtrdc.net",
-        "somni.bell.ca": "bellcanada.tt.omtrdc.net",
-        "somni.deere.com": "deere.com.ssl.sc.omtrdc.net",
-        "somni.dsw.com": "dsw.com.ssl.sc.omtrdc.net",
-        "somni.hardrockhotels.com": "hardrockhotels.com.ssl.sc.omtrdc.net",
-        "somni.home.saxo": "home.saxo.ssl.sc.omtrdc.net",
-        "somni.lightstream.com": "lightstream.com.ssl.sc.omtrdc.net",
-        "somni.nine.com.au": "nine.com.au.ssl.sc.omtrdc.net",
-        "somni.quickenloans.com": "quickenloans.com.ssl.d2.sc.omtrdc.net",
-        "somni.rei.com": "rei.com.ssl.d2.sc.omtrdc.net",
-        "somni.rockethomes.com": "rockethomes.com.ssl.sc.omtrdc.net",
-        "somni.rocketmortgage.com": "rocketmortgage.com.ssl.sc.omtrdc.net",
-        "somni.sky.de": "sky.de.ssl.d2.sc.omtrdc.net",
-        "somni.sundancecatalog.com": "sundancecatalog.com.ssl.sc.omtrdc.net",
-        "somni.thermofisher.com": "thermofisher.com.ssl.d2.sc.omtrdc.net",
-        "somnistats.jetblue.com": "jetblue.com.ssl.d1.sc.omtrdc.net",
-        "somniture.scotiabank.com": "scotiabank.com.ssl.sc.omtrdc.net",
-        "somt.honda.com": "honda.com.ssl.sc.omtrdc.net",
-        "soptimize.southwest.com": "southwestairlines.tt.omtrdc.net",
-        "sreport.mitsubishicars.com": "mitsubishicars.com.ssl.d1.sc.omtrdc.net",
-        "ssc.cc.com": "cc.com.ssl.sc.omtrdc.net",
-        "ssc.cmt.com": "cmt.com.ssl.sc.omtrdc.net",
-        "ssc.independent.co.uk": "independent.co.uk.ssl.sc.omtrdc.net",
-        "ssc.logotv.com": "logotv.com.ssl.sc.omtrdc.net",
-        "ssc.mtv.com": "mtv.com.ssl.sc.omtrdc.net",
-        "ssc.muji.net": "muji.net.ssl.d2.sc.omtrdc.net",
-        "ssc.nick.com": "nick.com.ssl.sc.omtrdc.net",
-        "ssc.nickjr.com": "nickjr.com.ssl.sc.omtrdc.net",
-        "ssc.paramountnetwork.com": "paramountnetwork.com.ssl.sc.omtrdc.net",
-        "ssc.vh1.com": "vh1.com.ssl.sc.omtrdc.net",
-        "ssitecat.eset.com": "eset.com.ssl.sc.omtrdc.net",
-        "ssl.o.auspost.com.au": "o.auspost.com.au.ssl.d2.sc.omtrdc.net",
-        "ssl.o.emedicinehealth.com": "o.emedicinehealth.com.ssl.sc.omtrdc.net",
-        "ssl.o.mdedge.com": "o.mdedge.com.ssl.sc.omtrdc.net",
-        "ssl.o.medhelp.org": "o.medhelp.org.ssl.sc.omtrdc.net",
-        "ssl.o.medicinenet.com": "o.medicinenet.com.ssl.sc.omtrdc.net",
-        "ssl.o.medscape.com": "o.medscape.com.ssl.sc.omtrdc.net",
-        "ssl.o.onhealth.com": "o.onhealth.com.ssl.sc.omtrdc.net",
-        "ssl.o.rxlist.com": "o.rxlist.com.ssl.sc.omtrdc.net",
-        "ssl.o.webmd.com": "o.webmd.com.ssl.d2.sc.omtrdc.net",
-        "sslstats.canadapost.ca": "canadapost.ca.ssl.d1.sc.omtrdc.net",
-        "ssmr.nuro.jp": "nuro.jp.ssl.d1.sc.omtrdc.net",
-        "sstats.americafirst.com": "americafirst.com.ssl.sc.omtrdc.net",
-        "sstats.asadventure.com": "asadventure.com.ssl.sc.omtrdc.net",
-        "sstats.bever.nl": "bever.nl.ssl.sc.omtrdc.net",
-        "sstats.bitdefender.com": "bitdefender.com.ssl.sc.omtrdc.net",
-        "sstats.bnpparibasfortis.be": "bnpparibasfortis.be.ssl.sc.omtrdc.net",
-        "sstats.cotswoldoutdoor.com": "cotswoldoutdoor.com.ssl.sc.omtrdc.net",
-        "sstats.deloitte.com": "deloitte.com.ssl.sc.omtrdc.net",
-        "sstats.fairmont.com": "fairmont.com.ssl.d1.sc.omtrdc.net",
-        "sstats.fishersci.co.uk": "fishersci.co.uk.ssl.sc.omtrdc.net",
-        "sstats.fishersci.com": "fishersci.com.ssl.d1.sc.omtrdc.net",
-        "sstats.investors.com": "investors.com.ssl.d1.sc.omtrdc.net",
-        "sstats.kroger.com": "kroger.com.ssl.sc.omtrdc.net",
-        "sstats.mt.com": "mt.com.ssl.sc.omtrdc.net",
-        "sstats.pitchfork.com": "pitchfork.com.ssl.sc.omtrdc.net",
-        "sstats.scholastic.com": "scholastic.com.ssl.sc.omtrdc.net",
-        "sstats.self.com": "self.com.ssl.sc.omtrdc.net",
-        "sstats.snowandrock.com": "snowandrock.com.ssl.sc.omtrdc.net",
-        "sstats.tdameritrade.com": "tdameritrade.com.ssl.sc.omtrdc.net",
-        "sstats.truist.com": "truist.com.ssl.sc.omtrdc.net",
-        "sstats.www.o2.cz": "www.o2.cz.ssl.d2.sc.omtrdc.net",
-        "starget.aircanada.com": "aircanada.tt.omtrdc.net",
-        "starget.airmiles.ca": "loyaltyone.tt.omtrdc.net",
-        "starget.bitdefender.com": "stargetbitdefender.tt.omtrdc.net",
-        "starget.collegeboard.org": "collegeboard.tt.omtrdc.net",
-        "starget.mathworks.com": "themathworksinc.tt.omtrdc.net",
-        "starget.morganstanley.com": "morganstanleyandco.tt.omtrdc.net",
-        "starget.nabtrade.com.au": "nabtrade.tt.omtrdc.net",
-        "starget.panerabread.com": "panera.tt.omtrdc.net",
-        "starget.westjet.com": "westjet.tt.omtrdc.net",
-        "stat-ssl.bushikaku.net": "bushikaku.net.ssl.sc.omtrdc.net",
-        "stat-ssl.webcg.net": "webcg.net.ssl.d1.sc.omtrdc.net",
-        "stats-ssl.mdanderson.org": "mdanderson.org.ssl.d2.sc.omtrdc.net",
-        "stats.agl.com.au": "agl.com.au.ssl.sc.omtrdc.net",
-        "stats.radio-canada.ca": "radio-canada.ca.ssl.sc.omtrdc.net"
+        "data-0142dcfbcf.yacht.de": "yachtde-relay.iocnt.net",
+        "data-01e876a345.tichyseinblick.de": "tichyein-relay.iocnt.net",
+        "data-02011e6008.dasoertliche.de": "dasoertl-relay.iocnt.net",
+        "data-02011e6008.golocal.de": "dasoertl-relay.iocnt.net",
+        "data-02d6c01d72.rga.de": "rgaonl-relay.iocnt.net",
+        "data-0331877d53.radsport-news.com": "radsport-relay.iocnt.net",
+        "data-044c671387.desired.de": "desired-relay.iocnt.net",
+        "data-051302072f.gabler.de": "gabler-relay.iocnt.net",
+        "data-05c346d0b0.gea.de": "gea-relay.iocnt.net",
+        "data-05f15c0145.runnersworld.de": "runworld-relay.iocnt.net",
+        "data-06d9d19ba0.filmdienst.de": "filmdien-relay.iocnt.net",
+        "data-08d52e2a42.handelsblatt.com": "handbl-relay.iocnt.net",
+        "data-0b2c5acddd.echtemamas.de": "echtmama-relay.iocnt.net",
+        "data-0cf18bcfe3.katholisch.de": "kathde-relay.iocnt.net",
+        "data-0d5230f0d5.tvmovie.de": "tvmovie-relay.iocnt.net",
+        "data-0dc128409f.watchtime.net": "watchtim-relay.iocnt.net",
+        "data-0f46564db8.nebenan.de": "nebenan-relay.iocnt.net",
+        "data-11c63b1cbc.mz.de": "mobsao-relay.iocnt.net",
+        "data-12b92dc35b.wetter.de": "wettede-relay.iocnt.net",
+        "data-1381d79962.mainpost.de": "mainpost-relay.iocnt.net",
+        "data-162d89b6ce.haufe.de": "haperson-relay.iocnt.net",
+        "data-16d7ec9a30.wn.de": "westnach-relay.iocnt.net",
+        "data-17c7ec5f16.giga.de": "giga-relay.iocnt.net",
+        "data-1818d50639.focus.de": "focus-relay.iocnt.net",
+        "data-1842699cc4.dastelefonbuch.de": "dastelef-relay.iocnt.net",
+        "data-1865901ce0.schoener-wohnen.de": "schowohn-relay.iocnt.net",
+        "data-191b2429e8.rtl.de": "rtl-relay.iocnt.net",
+        "data-19f62f6612.druckerchannel.de": "druckerc-relay.iocnt.net",
+        "data-1a8175bc05.presseportal.de": "presspor-relay.iocnt.net",
+        "data-1aec34a522.elle.de": "elle-relay.iocnt.net",
+        "data-1b32532ce1.freiepresse.de": "freipres-relay.iocnt.net",
+        "data-1b8b21e54b.speedweek.com": "speedwee-relay.iocnt.net",
+        "data-1c9505e4f1.digitalphoto.de": "digitalp-relay.iocnt.net",
+        "data-1e71eb44ba.caravaning.de": "caravani-relay.iocnt.net",
+        "data-1fbcf6d7f5.esslinger-zeitung.de": "mhsdigi-relay.iocnt.net",
+        "data-1fbcf6d7f5.frankenpost.de": "mhsdigi-relay.iocnt.net",
+        "data-1fbcf6d7f5.insuedthueringen.de": "mhsdigi-relay.iocnt.net",
+        "data-1fbcf6d7f5.schwarzwaelder-bote.de": "mhsdigi-relay.iocnt.net",
+        "data-1fbcf6d7f5.stuttgarter-nachrichten.de": "mhsdigi-relay.iocnt.net",
+        "data-1fbcf6d7f5.stuttgarter-zeitung.de": "mhsdigi-relay.iocnt.net",
+        "data-209f9bb45a.mopo.de": "mopo-relay.iocnt.net",
+        "data-232059cb53.vip.de": "vip-relay.iocnt.net",
+        "data-236c420b67.glamour.de": "glamour-relay.iocnt.net",
+        "data-2732fcab6f.flugrevue.de": "mobflugr-relay.iocnt.net",
+        "data-27f08504c8.capital.de": "capital-relay.iocnt.net",
+        "data-285d0c5451.spektrum.de": "spektrum-relay.iocnt.net",
+        "data-28e246ff03.esquire.de": "esquire-relay.iocnt.net",
+        "data-2a012df8d7.alpenverein.de": "alpenver-relay.iocnt.net",
+        "data-2af9963ee4.computerbild.de": "cbo-relay.iocnt.net",
+        "data-2af9963ee4.wieistmeineip.de": "cbo-relay.iocnt.net",
+        "data-2cfc77297e.tagesspiegel.de": "tagspieg-relay.iocnt.net",
+        "data-2d805a2d6c.leben-und-erziehen.de": "leberzie-relay.iocnt.net",
+        "data-2d86fd41e0.geo.de": "stern-relay.iocnt.net",
+        "data-2d86fd41e0.stern.de": "stern-relay.iocnt.net",
+        "data-2ee2564ecd.ariva.de": "ariva-relay.iocnt.net",
+        "data-2f2ec12966.chip.de": "chip-relay.iocnt.net",
+        "data-30826b1c29.agrarheute.com": "agrar-relay.iocnt.net",
+        "data-3698886e7b.manager-magazin.de": "managerm-relay.iocnt.net",
+        "data-36eb08aa0f.autozeitung.de": "autozeit-relay.iocnt.net",
+        "data-38132d333d.e-hausaufgaben.de": "ehausauf-relay.iocnt.net",
+        "data-3823552b7a.sport.de": "sport-relay.iocnt.net",
+        "data-382f03151d.harpersbazaar.de": "hbazaar-relay.iocnt.net",
+        "data-38a6e3d7f2.domradio.de": "domradio-relay.iocnt.net",
+        "data-3bd3168117.boerse.de": "boersely-relay.iocnt.net",
+        "data-3cd8fb3825.kicker.de": "mobkicke-relay.iocnt.net",
+        "data-3eff3aac07.kino-zeit.de": "kinozeit-relay.iocnt.net",
+        "data-407c1ec0f8.apotheken-umschau.de": "gesundhp-relay.iocnt.net",
+        "data-40a1d254c9.familie.de": "familie-relay.iocnt.net",
+        "data-40e0b9b7dd.chefkoch.de": "mobchefk-relay.iocnt.net",
+        "data-421b67c653.ka-news.de": "kanews-relay.iocnt.net",
+        "data-4494a61d21.chefkoch.de": "chefkoch-relay.iocnt.net",
+        "data-44a005f23c.bergfex.at": "bergfex-relay.iocnt.net",
+        "data-44a005f23c.bergfex.ch": "bergfex-relay.iocnt.net",
+        "data-44a005f23c.bergfex.com": "bergfex-relay.iocnt.net",
+        "data-44a005f23c.bergfex.de": "bergfex-relay.iocnt.net",
+        "data-44a005f23c.bergfex.it": "bergfex-relay.iocnt.net",
+        "data-44baecba13.digitalfernsehen.de": "digifern-relay.iocnt.net",
+        "data-452782981b.eltern.de": "eltern-relay.iocnt.net",
+        "data-452782981b.urbia.de": "eltern-relay.iocnt.net",
+        "data-452782981b.vorname.com": "eltern-relay.iocnt.net",
+        "data-45798f2697.rheinpfalz.de": "ron-relay.iocnt.net",
+        "data-4754325bf6.scinexx.de": "scinexx-relay.iocnt.net",
+        "data-48d3085f82.hildesheimer-allgemeine.de": "hialzeit-relay.iocnt.net",
+        "data-497ecca600.ga.de": "rponl-relay.iocnt.net",
+        "data-497ecca600.rp-online.de": "rponl-relay.iocnt.net",
+        "data-497ecca600.saarbruecker-zeitung.de": "rponl-relay.iocnt.net",
+        "data-497ecca600.sol.de": "rponl-relay.iocnt.net",
+        "data-497ecca600.tonight.de": "rponl-relay.iocnt.net",
+        "data-497ecca600.volksfreund.de": "rponl-relay.iocnt.net",
+        "data-4a575dad18.abendblatt.de": "abendbl-relay.iocnt.net",
+        "data-4ca65a8bdb.express.de": "express-relay.iocnt.net",
+        "data-4cd3a663da.all-in.de": "allin-relay.iocnt.net",
+        "data-4cf02e3b23.schlager.de": "schlager-relay.iocnt.net",
+        "data-4ede7e9c86.faz.net": "faz-relay.iocnt.net",
+        "data-4f2efe538c.einfachbacken.de": "einfaba-relay.iocnt.net",
+        "data-4fa18eb5e3.zvw.de": "zvw-relay.iocnt.net",
+        "data-501446ac98.einfachtierisch.de": "toi-relay.iocnt.net",
+        "data-501446ac98.t-online.de": "toi-relay.iocnt.net",
+        "data-50b219a31f.btc-echo.de": "btcecho-relay.iocnt.net",
+        "data-50de2f2b04.netmoms.de": "anetmoms-relay.iocnt.net",
+        "data-51c17cab74.aerztezeitung.de": "arztzeit-relay.iocnt.net",
+        "data-524af4397a.weltfussball.de": "weltfuss-relay.iocnt.net",
+        "data-524af4397a.worldfootball.net": "weltfuss-relay.iocnt.net",
+        "data-52a43bc433.gala.de": "gala-relay.iocnt.net",
+        "data-557fc65a33.womenshealth.de": "wohealth-relay.iocnt.net",
+        "data-56aa71f393.essen-und-trinken.de": "esundtri-relay.iocnt.net",
+        "data-56b1bc19e7.autobild.de": "autobild-relay.iocnt.net",
+        "data-56b1bc19e7.clever-tanken.de": "autobild-relay.iocnt.net",
+        "data-572c83e731.motorsport-total.com": "motorspo-relay.iocnt.net",
+        "data-589866a496.laut.de": "laut-relay.iocnt.net",
+        "data-59a3f7fb00.ksta.de": "koelnsta-relay.iocnt.net",
+        "data-5b771a2641.berliner-zeitung.de": "berlizei-relay.iocnt.net",
+        "data-5c62bbdb1e.maclife.de": "maclifed-relay.iocnt.net",
+        "data-5c8ddfc1d2.selbst.de": "selbst-relay.iocnt.net",
+        "data-5ce6ecf8d0.nn.de": "nordbay-relay.iocnt.net",
+        "data-5ce6ecf8d0.nordbayern.de": "nordbay-relay.iocnt.net",
+        "data-5d4a957104.focus-arztsuche.de": "lineexte-relay.iocnt.net",
+        "data-5dd8125a5b.gofeminin.de": "gofemini-relay.iocnt.net",
+        "data-5e5ac4ec65.menshealth.de": "mensh-relay.iocnt.net",
+        "data-605b7fe247.babyclub.de": "mobbaby-relay.iocnt.net",
+        "data-60d896f23d.dnn.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.goettinger-tageblatt.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.haz.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.kn-online.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.ln-online.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.lvz.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.maz-online.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.ostsee-zeitung.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.radio.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.radio.fr": "haz-relay.iocnt.net",
+        "data-60d896f23d.radio.net": "haz-relay.iocnt.net",
+        "data-60d896f23d.reisereporter.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.rnd.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.sportbuzzer.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.trauer-anzeigen.de": "haz-relay.iocnt.net",
+        "data-62e93c650b.hannover.de": "hannovin-relay.iocnt.net",
+        "data-6314dfb442.chip.de": "efahrer-relay.iocnt.net",
+        "data-6345746ba5.nwzonline.de": "nwz-relay.iocnt.net",
+        "data-6463194ae5.fitbook.de": "fitbook-relay.iocnt.net",
+        "data-6590696975.wunderweib.de": "wuweib-relay.iocnt.net",
+        "data-67f17c94f0.9monate.de": "lifeline-relay.iocnt.net",
+        "data-67f17c94f0.gesundheit.de": "lifeline-relay.iocnt.net",
+        "data-67f17c94f0.lifeline.de": "lifeline-relay.iocnt.net",
+        "data-67f17c94f0.onmeda.de": "lifeline-relay.iocnt.net",
+        "data-684c5faba8.ok-magazin.de": "okmaga-relay.iocnt.net",
+        "data-69f8b27f58.deutsche-handwerks-zeitung.de": "dhz-relay.iocnt.net",
+        "data-6e2d34ec1f.pnp.de": "mobpnp-relay.iocnt.net",
+        "data-6e57cba6aa.netmoms.de": "mobnetmo-relay.iocnt.net",
+        "data-7023b17a38.onetz.de": "oberpfal-relay.iocnt.net",
+        "data-707aff899d.myself.de": "funkelst-relay.iocnt.net",
+        "data-70f37c510a.suedkurier.de": "skol-relay.iocnt.net",
+        "data-71286c9319.svz.de": "svz-relay.iocnt.net",
+        "data-7294bdf136.focus.de": "mobfocus-relay.iocnt.net",
+        "data-7352c83f4a.cosmopolitan.de": "cosmopol-relay.iocnt.net",
+        "data-74131617db.achgut.com": "achgut-relay.iocnt.net",
+        "data-7462ea72ec.augsburger-allgemeine.de": "augsallg-relay.iocnt.net",
+        "data-7899267776.daskochrezept.de": "kochzept-relay.iocnt.net",
+        "data-79b61f918a.mittelbayerische.de": "mobmibay-relay.iocnt.net",
+        "data-7a534833b2.techbook.de": "techbook-relay.iocnt.net",
+        "data-7b4229ab74.idowa.de": "idowa-relay.iocnt.net",
+        "data-7b5c057fdb.emotion.de": "emotion-relay.iocnt.net",
+        "data-7c0fd2a117.pz-news.de": "pznewsde-relay.iocnt.net",
+        "data-7dd74630af.lecker.de": "leckerde-relay.iocnt.net",
+        "data-83380557db.nw.de": "nwnews-relay.iocnt.net",
+        "data-83d91ea519.mannheimer-morgen.de": "morgweb-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.ch": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.co.uk": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.com": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.com.br": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.com.tr": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.de": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.es": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.fr": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.it": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.nl": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.pl": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.us": "transfer-relay.iocnt.net",
+        "data-84bc7eaa45.vodafone.de": "vodafone-relay.iocnt.net",
+        "data-861bbf2127.bild.de": "mobbild-relay.iocnt.net",
+        "data-887ad996d8.berliner-woche.de": "morgpost-relay.iocnt.net",
+        "data-887ad996d8.morgenpost.de": "morgpost-relay.iocnt.net",
+        "data-89254d05a3.alpin.de": "mobalpin-relay.iocnt.net",
+        "data-8a60c76189.myhomebook.de": "myhomebo-relay.iocnt.net",
+        "data-8abe5cc617.badische-zeitung.de": "badzeit-relay.iocnt.net",
+        "data-8abe5cc617.bz-ticket.de": "badzeit-relay.iocnt.net",
+        "data-8abe5cc617.bztrauer.de": "badzeit-relay.iocnt.net",
+        "data-8ba5310956.spielaffe.de": "spielaff-relay.iocnt.net",
+        "data-8c0b0197a5.weser-kurier.de": "weserkur-relay.iocnt.net",
+        "data-8d3bec589f.schwaebische.de": "szon-relay.iocnt.net",
+        "data-8dfcf84b38.rundschau-online.de": "koelrund-relay.iocnt.net",
+        "data-8f03f9dd42.spiegel.de": "spiegel-relay.iocnt.net",
+        "data-9090cf2efa.impulse.de": "impulse-relay.iocnt.net",
+        "data-90cb6242e4.fuersie.de": "fuersie-relay.iocnt.net",
+        "data-91e02cd2b8.ip-insider.de": "network-relay.iocnt.net",
+        "data-927768f668.pharmazeutische-zeitung.de": "pharmaz-relay.iocnt.net",
+        "data-93158690b1.moviepilot.de": "moviepil-relay.iocnt.net",
+        "data-9336f0fb1d.news.de": "newsde-relay.iocnt.net",
+        "data-964f7f3f43.boerse-online.de": "boerseon-relay.iocnt.net",
+        "data-992bb00b0c.messen.de": "messende-relay.iocnt.net",
+        "data-99329e3cb2.metal-hammer.de": "welt-relay.iocnt.net",
+        "data-99329e3cb2.musikexpress.de": "welt-relay.iocnt.net",
+        "data-99329e3cb2.rollingstone.de": "welt-relay.iocnt.net",
+        "data-99329e3cb2.welt.de": "welt-relay.iocnt.net",
+        "data-9a1d790604.maennersache.de": "mannsach-relay.iocnt.net",
+        "data-9b3233a086.bunte.de": "bunteton-relay.iocnt.net",
+        "data-9b7927207a.outdoor-magazin.com": "outmag-relay.iocnt.net",
+        "data-9c9d7ad92f.tagblatt.de": "schwaetb-relay.iocnt.net",
+        "data-9d5ca866eb.baunetzwissen.de": "baunetz-relay.iocnt.net",
+        "data-9dc3fcd9b4.mylife.de": "netdok-relay.iocnt.net",
+        "data-9dc3fcd9b4.netdoktor.de": "netdok-relay.iocnt.net",
+        "data-9e4ff1c91f.wz.de": "wznews-relay.iocnt.net",
+        "data-9f47bd3ec3.volksstimme.de": "mobvolkm-relay.iocnt.net",
+        "data-9fc27eb430.cineplex.de": "cineplex-relay.iocnt.net",
+        "data-9fcd0b641d.falstaff.com": "falstaff-relay.iocnt.net",
+        "data-a01a8a1ba4.allgemeine-zeitung.de": "mainrhei-relay.iocnt.net",
+        "data-a01a8a1ba4.echo-online.de": "mainrhei-relay.iocnt.net",
+        "data-a01a8a1ba4.vrm-trauer.de": "mainrhei-relay.iocnt.net",
+        "data-a06056e0a7.lz.de": "moblippi-relay.iocnt.net",
+        "data-a0f0ae1310.gelbeseiten.de": "gelbseit-relay.iocnt.net",
+        "data-a0f0ae1310.goyellow.de": "gelbseit-relay.iocnt.net",
+        "data-a25b878079.deutsche-apotheker-zeitung.de": "deapze-relay.iocnt.net",
+        "data-a351401692.kachelmannwetter.com": "kachelma-relay.iocnt.net",
+        "data-a4e945dbeb.sz-trauer.de": "saechsde-relay.iocnt.net",
+        "data-a784464fa2.hallo-eltern.de": "halloelt-relay.iocnt.net",
+        "data-a7a0d7a6db.brigitte.de": "brigitte-relay.iocnt.net",
+        "data-a7deba18e8.evangelisch.de": "evangede-relay.iocnt.net",
+        "data-a98482617b.holidaycheck.de": "holidayc-relay.iocnt.net",
+        "data-a9dcbfdd12.noz.de": "neueoz-relay.iocnt.net",
+        "data-ac3d45df06.jetzt.de": "sueddeut-relay.iocnt.net",
+        "data-ac3d45df06.sueddeutsche.de": "sueddeut-relay.iocnt.net",
+        "data-ad8351f80c.outdoor-magazin.com": "moboutma-relay.iocnt.net",
+        "data-ae8875c8b8.nordkurier.de": "nordkuri-relay.iocnt.net",
+        "data-ae99031d75.mittelbayerische-trauer.de": "donaude-relay.iocnt.net",
+        "data-ae99031d75.mittelbayerische.de": "donaude-relay.iocnt.net",
+        "data-af9a061aaf.deraktionaer.de": "daktion-relay.iocnt.net",
+        "data-af9be266ee.tour-magazin.de": "tourmag-relay.iocnt.net",
+        "data-af9f3dfb33.zeit.de": "zeitonl-relay.iocnt.net",
+        "data-b0980db7ec.wiwo.de": "wirtwoch-relay.iocnt.net",
+        "data-b204b9f978.4players.de": "4playde-relay.iocnt.net",
+        "data-b4df3518e0.haustec.de": "haustec-relay.iocnt.net",
+        "data-b5689af0d0.aerotelegraph.com": "aerotele-relay.iocnt.net",
+        "data-b640a0ce46.connect.de": "connect-relay.iocnt.net",
+        "data-b784e2dbb0.echo24.de": "echo24-relay.iocnt.net",
+        "data-b80f3dd5d8.rnz.de": "rnzonl-relay.iocnt.net",
+        "data-b851447daf.praxisvita.de": "mobpraxv-relay.iocnt.net",
+        "data-b8587f1b76.stimme.de": "stimme-relay.iocnt.net",
+        "data-b8625c5378.lz.de": "lzonline-relay.iocnt.net",
+        "data-bab9a31794.shz.de": "shz-relay.iocnt.net",
+        "data-bb21a2f11b.bild.de": "bild-relay.iocnt.net",
+        "data-bb4ada6163.travelbook.de": "travelbo-relay.iocnt.net",
+        "data-be9b6161bf.aponet.de": "aponet-relay.iocnt.net",
+        "data-c061012ba4.bisafans.de": "bisafans-relay.iocnt.net",
+        "data-c0c484e9be.goldenekamera.de": "funkenex-relay.iocnt.net",
+        "data-c0c484e9be.hoerzu.de": "funkenex-relay.iocnt.net",
+        "data-c0c484e9be.tvdigital.de": "funkenex-relay.iocnt.net",
+        "data-c0c484e9be.werstreamt.es": "funkenex-relay.iocnt.net",
+        "data-c0cce5983f.business-wissen.de": "busiwiss-relay.iocnt.net",
+        "data-c14a6b9c37.1000ps.de": "motradon-relay.iocnt.net",
+        "data-c14a6b9c37.motorradonline.de": "motradon-relay.iocnt.net",
+        "data-c2b71254f2.finanzen100.de": "finan100-relay.iocnt.net",
+        "data-c2cfe04d43.formel1.de": "formel-relay.iocnt.net",
+        "data-c32add6b67.vital.de": "vital-relay.iocnt.net",
+        "data-c3391a3eb3.braunschweiger-zeitung.de": "newsclic-relay.iocnt.net",
+        "data-c3391a3eb3.news38.de": "newsclic-relay.iocnt.net",
+        "data-c33ac4a00e.tvnow.de": "tvnow-relay.iocnt.net",
+        "data-c53e1346fa.gamepro.de": "gastar-relay.iocnt.net",
+        "data-c53e1346fa.gamestar.de": "gastar-relay.iocnt.net",
+        "data-c53e1346fa.mein-mmo.de": "gastar-relay.iocnt.net",
+        "data-c5925d7d99.buffed.de": "gamworld-relay.iocnt.net",
+        "data-c5925d7d99.pcgames.de": "gamworld-relay.iocnt.net",
+        "data-c5925d7d99.pcgameshardware.de": "gamworld-relay.iocnt.net",
+        "data-c5b0f9d827.grazia-magazin.de": "graziaon-relay.iocnt.net",
+        "data-c5c818f755.zaubertopf.de": "zauberto-relay.iocnt.net",
+        "data-c76cebcfed.kino.de": "kino-relay.iocnt.net",
+        "data-c835a62a97.runnersworld.de": "mobrunwo-relay.iocnt.net",
+        "data-cd0b4bd19f.auto-motor-und-sport.de": "aumospo-relay.iocnt.net",
+        "data-cd9a346bd6.vox.de": "vox-relay.iocnt.net",
+        "data-cfe819bed5.playboy.de": "playboy-relay.iocnt.net",
+        "data-d03ddf25a3.wissenschaft.de": "wissens-relay.iocnt.net",
+        "data-d1cf1ee90a.bike-magazin.de": "bikemaga-relay.iocnt.net",
+        "data-d3b795e73c.instyle.de": "instyle-relay.iocnt.net",
+        "data-d4ecb517ab.cinema.de": "tvspielf-relay.iocnt.net",
+        "data-d4ecb517ab.tvspielfilm.de": "tvspielf-relay.iocnt.net",
+        "data-d4ecb517ab.tvtoday.de": "tvspielf-relay.iocnt.net",
+        "data-d8a16b307b.idowa.de": "mobidowa-relay.iocnt.net",
+        "data-d946a9c4a1.otz.de": "zgtonlin-relay.iocnt.net",
+        "data-d946a9c4a1.thueringer-allgemeine.de": "zgtonlin-relay.iocnt.net",
+        "data-da1d9cc48a.osthessen-news.de": "osthesse-relay.iocnt.net",
+        "data-daaad80bda.babelli.de": "babelli-relay.iocnt.net",
+        "data-db9f015784.pc-magazin.de": "pcmagzin-relay.iocnt.net",
+        "data-dc874fa9ed.koeln.de": "koelnde-relay.iocnt.net",
+        "data-dea12ffb25.prisma.de": "prisma-relay.iocnt.net",
+        "data-deb04a4388.westfalen-blatt.de": "westblat-relay.iocnt.net",
+        "data-df5a2bcc30.aerzteblatt.de": "aerztebl-relay.iocnt.net",
+        "data-df89bd769a.rund-ums-baby.de": "rundumsb-relay.iocnt.net",
+        "data-e0448d0e4a.herz-fuer-tiere.de": "herztier-relay.iocnt.net",
+        "data-e34440d805.jolie.de": "joliede-relay.iocnt.net",
+        "data-e3d4300b49.n-tv.de": "ntv-relay.iocnt.net",
+        "data-e4997adf31.metal-hammer.de": "mobwelt-relay.iocnt.net",
+        "data-e4dc2eea88.kochbar.de": "kochbar-relay.iocnt.net",
+        "data-e54efb31a3.aachener-zeitung.de": "azweb-relay.iocnt.net",
+        "data-e627e4d475.filmstarts.de": "fistart-relay.iocnt.net",
+        "data-e69b3d32a9.kicker.de": "kicker-relay.iocnt.net",
+        "data-e723f0d7d1.stylebook.de": "stylbook-relay.iocnt.net",
+        "data-e7308988a6.freundin.de": "freundin-relay.iocnt.net",
+        "data-e86b27e677.spieletipps.de": "spielet-relay.iocnt.net",
+        "data-e89c765eef.main-echo.de": "mainecho-relay.iocnt.net",
+        "data-e9439b5f81.ruhrnachrichten.de": "ruhrnari-relay.iocnt.net",
+        "data-ebb08b8040.bildderfrau.de": "bildfrau-relay.iocnt.net",
+        "data-ed1ee98a6c.medpertise.de": "fgs-relay.iocnt.net",
+        "data-ee807be806.derwesten.de": "westeins-relay.iocnt.net",
+        "data-ee807be806.lokalkompass.de": "westeins-relay.iocnt.net",
+        "data-ee807be806.nrz.de": "westeins-relay.iocnt.net",
+        "data-ee807be806.reviersport.de": "westeins-relay.iocnt.net",
+        "data-ee807be806.waz.de": "westeins-relay.iocnt.net",
+        "data-ee807be806.wp.de": "westeins-relay.iocnt.net",
+        "data-ef8760a9b2.infranken.de": "frtag-relay.iocnt.net",
+        "data-f06c8efc81.fitforfun.de": "fitforfu-relay.iocnt.net",
+        "data-f0a1fa7abc.cinestar.de": "cinestar-relay.iocnt.net",
+        "data-f10a591664.promobil.de": "promobil-relay.iocnt.net",
+        "data-f13c34cd1a.wissen.de": "wissende-relay.iocnt.net",
+        "data-f1c47705fc.rimondo.com": "topagrar-relay.iocnt.net",
+        "data-f1c47705fc.topagrar.com": "topagrar-relay.iocnt.net",
+        "data-f1e447fbcf.24hamburg.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.24rhein.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.buzzfeed.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.chiemgau24.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.come-on.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.fnp.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.fr.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.fuldaerzeitung.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.fupa.net": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.giessener-allgemeine.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.heidelberg24.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.hna.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.in-muenchen.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.ingame.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.kreiszeitung.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.mannheim24.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.merkur.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.op-online.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.ovb-online.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.rosenheim24.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.ruhr24.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.soester-anzeiger.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.tz.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.wa.de": "ippenmed-relay.iocnt.net",
+        "data-f3fe376ba8.allgaeuer-zeitung.de": "allgauze-relay.iocnt.net",
+        "data-f6d2ad6f1b.t3n.de": "t3n-relay.iocnt.net",
+        "data-f943e74ec9.bz-berlin.de": "bzberlin-relay.iocnt.net",
+        "data-fa3432c50a.donaukurier.de": "mobdokur-relay.iocnt.net",
+        "data-fd53e9bda6.urlaubsguru.de": "urlguru-relay.iocnt.net",
+        "data-fd9ab41e47.bravo.de": "bravo-relay.iocnt.net",
+        "data-fdb60ee122.hamburg.de": "hamburgd-relay.iocnt.net",
+        "data-fdbbf15b66.finanzen.at": "finaonl-relay.iocnt.net",
+        "data-fdbbf15b66.finanzen.ch": "finaonl-relay.iocnt.net",
+        "data-fdbbf15b66.finanzen.net": "finaonl-relay.iocnt.net",
+        "data-fe87994a5d.freenet.de": "freenet-relay.iocnt.net",
+        "data-ff5b197ecc.traceparts.com": "tracepar-relay.iocnt.net",
+        "activity.asce.org": "s1360.hs.eloqua.com",
+        "analytics.aba.com": "s1527.hs.eloqua.com",
+        "analytics.ferguson.com": "s1844742678.hs.eloqua.com",
+        "app.fightingillini.com": "s296651.hs.eloqua.com",
+        "app.godeacs.com": "s215151.hs.eloqua.com",
+        "campaigns.cm.be": "s225147923.hs.eloqua.com",
+        "clicks.tableau.com": "s840.hs.eloqua.com",
+        "connect.news.evergreenhealth.com": "s6704250.hs.eloqua.com",
+        "contactforms.53.com": "s1165.hs.eloqua.com",
+        "cookie.amerigas.com": "s177345.hs.eloqua.com",
+        "cookies.siemens-energy.com": "s1241071892.t.eloqua.com",
+        "cookies.siemens.com": "s2033604275.hs.eloqua.com",
+        "cyber-tracking.att.com": "s1086385399.hs.eloqua.com",
+        "ec.infosys.com": "s672742760.hs.eloqua.com",
+        "eloqua-trackings.unity.com": "s795651218.hs.eloqua.com",
+        "eloqua.pearsonvue.com": "s2049007180.hs.eloqua.com",
+        "elq.ansible.com": "s1795.hs.eloqua.com",
+        "elq.blackrock.com": "s161752090.hs.eloqua.com",
+        "elq.keysight.com": "s609785623.hs.eloqua.com",
+        "elq.macu.com": "s2213.hs.eloqua.com",
+        "elq.openshift.com": "s1795.hs.eloqua.com",
+        "elq.redhat.com": "s1795.hs.eloqua.com",
+        "elq.sonicwall.com": "s373.hs.eloqua.com",
+        "elqact.gartner.com": "s1849907385.hs.eloqua.com",
+        "elqapp.spectrum.com": "s1168626303.hs.eloqua.com",
+        "elqtrack.kubotausa.com": "s1194310.hs.eloqua.com",
+        "elqtracking.capella.edu": "s1738732214.hs.eloqua.com",
+        "elqtrk.intel.co.jp": "s334284386.hs.eloqua.com",
+        "elqtrk.intel.co.uk": "s334284386.hs.eloqua.com",
+        "elqtrk.intel.com": "s334284386.hs.eloqua.com",
+        "elqtrk.intel.de": "s334284386.hs.eloqua.com",
+        "elqtrk.intel.fr": "s334284386.hs.eloqua.com",
+        "elqtrk.intel.it": "s334284386.hs.eloqua.com",
+        "elqtrk.morningstar.com": "s1258972516.hs.eloqua.com",
+        "email-am.us.jll.com": "s65254455.t.eloqua.com",
+        "engage.3m.com.au": "s837031577.hs.eloqua.com",
+        "engage.uq.edu.au": "s661931745.hs.eloqua.com",
+        "engagemetrics.cisco.com": "s177775138.hs.eloqua.com",
+        "eroar.lionsclubs.org": "s94443966.hs.eloqua.com",
+        "etrack.ext.arubanetworks.com": "s704917861.hs.eloqua.com",
+        "etrack.ext.hpe.com": "s2048.hs.eloqua.com",
+        "experience.jcu.edu.au": "s1885735477.hs.eloqua.com",
+        "forms.bmc.com": "s1251203807.hs.eloqua.com",
+        "fpc.sage.com": "s1265708786.t.eloqua.com",
+        "fpcdallasstars.nhl.com": "s1929339847.hs.eloqua.com",
+        "info.boozallen.com": "s2082.hs.eloqua.com",
+        "info.onemedical.com": "s1492372420.hs.eloqua.com",
+        "lantern.fortinet.com": "s3049749.hs.eloqua.com",
+        "ma.hmhco.com": "s1145.hs.eloqua.com",
+        "map.rockwellautomation.com": "s1284661142.hs.eloqua.com",
+        "memelq.acs.org": "s341921710.hs.eloqua.com",
+        "oiat.dow.com": "s279295639.hs.eloqua.com",
+        "pages.canon.com.au": "s103126886.hs.eloqua.com",
+        "pubstr.acs.org": "s1913652004.hs.eloqua.com",
+        "s362693299.aon.com": "s362693299.hs.eloqua.com",
+        "securetracking.golfpride.com": "s146977739.hs.eloqua.com",
+        "seek.uwa.edu.au": "s1802092.hs.eloqua.com",
+        "stat.bdc.ca": "s1896.hs.eloqua.com",
+        "stat.prawo.pl": "s1364398973.hs.eloqua.com",
+        "study.vu.edu.au": "s756267526.hs.eloqua.com",
+        "t.12thman.com": "s1460333.t.eloqua.com",
+        "t.arizonawildcats.com": "s1181141.t.eloqua.com",
+        "t.arkansasrazorbacks.com": "s2767058.t.eloqua.com",
+        "t.auburntigers.com": "s4647128.t.eloqua.com",
+        "t.baylorbears.com": "s26832.t.eloqua.com",
+        "t.bceagles.com": "s3978542.t.eloqua.com",
+        "t.bucky.uwbadgers.com": "s2177364.t.eloqua.com",
+        "t.calbears.com": "s718390.t.eloqua.com",
+        "t.cofcsports.com": "s95425.t.eloqua.com",
+        "t.cubuffs.com": "s1674425.t.eloqua.com",
+        "t.ecupirates.com": "s2941439.t.eloqua.com",
+        "t.fightingillini.com": "s296651.t.eloqua.com",
+        "t.foxtheatre.org": "s70543.t.eloqua.com",
+        "t.friars.com": "s77283.t.eloqua.com",
+        "t.georgiadogs.com": "s716215.t.eloqua.com",
+        "t.goairforcefalcons.com": "s1583471.t.eloqua.com",
+        "t.goarmywestpoint.com": "s717488.t.eloqua.com",
+        "t.gobearcats.com": "s2394888.t.eloqua.com",
+        "t.godeacs.com": "s215151.t.eloqua.com",
+        "t.goduke.com": "s16863.t.eloqua.com",
+        "t.gofrogs.com": "s662344.t.eloqua.com",
+        "t.goheels.com": "s1107655.t.eloqua.com",
+        "t.gohuskies.com": "s1281471.t.eloqua.com",
+        "t.gojacks.com": "s4743215.t.eloqua.com",
+        "t.gopack.com": "s54006.t.eloqua.com",
+        "t.gophersports.com": "s2414213.t.eloqua.com",
+        "t.gopoly.com": "s5703865.t.eloqua.com",
+        "t.gopsusports.com": "s1457279.t.eloqua.com",
+        "t.gostanford.com": "s261098.t.eloqua.com",
+        "t.gotigersgo.com": "s1701209.t.eloqua.com",
+        "t.goxavier.com": "s1601981.t.eloqua.com",
+        "t.hailstate.com": "s42415.t.eloqua.com",
+        "t.hawaiiathletics.com": "s5628851.t.eloqua.com",
+        "t.hawkeyesports.com": "s1108752.t.eloqua.com",
+        "t.hokiesports.com": "s2977661.t.eloqua.com",
+        "t.huskers.com": "s20342.t.eloqua.com",
+        "t.iuhoosiers.com": "s36599.t.eloqua.com",
+        "t.jmusports.com": "s2334089.t.eloqua.com",
+        "t.kstatesports.com": "s22009.t.eloqua.com",
+        "t.lsusports.net": "s533626.t.eloqua.com",
+        "t.mgoblue.com": "s347007.t.eloqua.com",
+        "t.miamihurricanes.com": "s808240.t.eloqua.com",
+        "t.msuspartans.com": "s773600.t.eloqua.com",
+        "t.navysports.com": "s2234957.t.eloqua.com",
+        "t.nevadawolfpack.com": "s196666.t.eloqua.com",
+        "t.nhra.com": "s3690781.t.eloqua.com",
+        "t.nusports.com": "s12580078.t.eloqua.com",
+        "t.okstate.com": "s2200554.t.eloqua.com",
+        "t.olemisssports.com": "s2586496.t.eloqua.com",
+        "t.osubeavers.com": "s1151158.t.eloqua.com",
+        "t.pbr.com": "s1552085.t.eloqua.com",
+        "t.pittsburghpanthers.com": "s5520421.t.eloqua.com",
+        "t.playhousesquare.org": "s3192205.t.eloqua.com",
+        "t.purduesports.com": "s756589.t.eloqua.com",
+        "t.ramblinwreck.com": "s2661780.t.eloqua.com",
+        "t.richmondspiders.com": "s1771715.t.eloqua.com",
+        "t.rolltide.com": "s94142.t.eloqua.com",
+        "t.scarletknights.com": "s8100632.t.eloqua.com",
+        "t.seminoles.com": "s3921539.t.eloqua.com",
+        "t.soonersports.com": "s3327771.t.eloqua.com",
+        "t.southernmiss.com": "s384920.t.eloqua.com",
+        "t.texassports.com": "s4239565.t.eloqua.com",
+        "t.texastech.com": "s9011856.t.eloqua.com",
+        "t.tulanegreenwave.com": "s4209711.t.eloqua.com",
+        "t.ucirvinesports.com": "s1016221.t.eloqua.com",
+        "t.uclabruins.com": "s2425245.t.eloqua.com",
+        "t.uhcougars.com": "s697615.t.eloqua.com",
+        "t.umassathletics.com": "s2019595.t.eloqua.com",
+        "t.umterps.com": "s593281.t.eloqua.com",
+        "t.und.com": "s474024.t.eloqua.com",
+        "t.unlvrebels.com": "s5531012.t.eloqua.com",
+        "t.usctrojans.com": "s2119850.t.eloqua.com",
+        "t.villanova.com": "s215943.t.eloqua.com",
+        "t.vucommodores.com": "s1013753.t.eloqua.com",
+        "t.wsucougars.com": "s1455795.hs.eloqua.com",
+        "t.wvusports.com": "s2590381.t.eloqua.com",
+        "track.abrdn.com": "s2021.hs.eloqua.com",
+        "track.auckland.ac.nz": "s810866859.hs.eloqua.com",
+        "track.docusign.com": "s566810826.hs.eloqua.com",
+        "track.go.comres.emerson.com": "s1409029440.hs.eloqua.com",
+        "track.info.cancertherapyadvisor.com": "s2255121.hs.eloqua.com",
+        "track.info.clinicaladvisor.com": "s2255121.hs.eloqua.com",
+        "track.info.dermatologyadvisor.com": "s2255121.hs.eloqua.com",
+        "track.info.empr.com": "s2255121.hs.eloqua.com",
+        "track.info.psychiatryadvisor.com": "s2255121.hs.eloqua.com",
+        "track.info.renalandurologynews.com": "s2255121.hs.eloqua.com",
+        "track.simonton.com": "s1843060897.hs.eloqua.com",
+        "tracker.providence.org": "s1129361478.hs.eloqua.com",
+        "tracker.swedish.org": "s1129361478.hs.eloqua.com",
+        "tracking.adp.com": "s937.hs.eloqua.com",
+        "tracking.bankofoklahoma.com": "s1444088438.hs.eloqua.com",
+        "tracking.barcodesinc.com": "s365128.hs.eloqua.com",
+        "tracking.bradyid.com": "s2132.hs.eloqua.com",
+        "tracking.business.comcast.com": "s1887277791.hs.eloqua.com",
+        "tracking.cengage.com": "s2138.hs.eloqua.com",
+        "tracking.clarivate.com": "s786780033.hs.eloqua.com",
+        "tracking.columbiabank.com": "s856856423.hs.eloqua.com",
+        "tracking.eloq.soa.org": "s1672222.hs.eloqua.com",
+        "tracking.eloqua.modernize.com": "s97329354.hs.eloqua.com",
+        "tracking.evergy.com": "s1739717246.hs.eloqua.com",
+        "tracking.faucet.com": "s1844742678.hs.eloqua.com",
+        "tracking.faucetdirect.com": "s1844742678.hs.eloqua.com",
+        "tracking.go.onshape.com": "s1069047711.hs.eloqua.com",
+        "tracking.info.ivanti.com": "s1800677.hs.eloqua.com",
+        "tracking.info.methodisthealthsystem.org": "s619564847.hs.eloqua.com",
+        "tracking.insperity.com": "s998125501.hs.eloqua.com",
+        "tracking.lightingdirect.com": "s1844742678.hs.eloqua.com",
+        "tracking.mail.ti.com": "s881106.hs.eloqua.com",
+        "tracking.mathworks.com": "s646005169.t.eloqua.com",
+        "tracking.motorolasolutions.com": "s1013191099.hs.eloqua.com",
+        "tracking.pella.com": "s1920192983.hs.eloqua.com",
+        "tracking.protective.com": "s459519.hs.eloqua.com",
+        "tracking.ptc.com": "s2826.hs.eloqua.com",
+        "tracking.pullsdirect.com": "s1844742678.hs.eloqua.com",
+        "tracking.reply.dpacnc.com": "s1505979.hs.eloqua.com",
+        "tracking.tdk.com": "s1819762567.hs.eloqua.com",
+        "tracking.ti.com": "s441910513.hs.eloqua.com",
+        "tracking.trinet.com": "s1487871083.hs.eloqua.com",
+        "tracking.utas.edu.au": "s301091484.hs.eloqua.com",
+        "tracking.vertiv.com": "s157200592.hs.eloqua.com",
+        "tracking.visitdubai.com": "s1625795586.hs.eloqua.com",
+        "tracking2.labcorp.com": "s1472843.hs.eloqua.com",
+        "trackingmms.accenture.com": "s1122776361.hs.eloqua.com",
+        "trail.thomsonreuters.com": "s1575097598.t.eloqua.com",
+        "trk.aviationweek.com": "s966913078.hs.eloqua.com",
+        "trk.beefmagazine.com": "s46849916.hs.eloqua.com",
+        "trk.darkreading.com": "s2150.hs.eloqua.com",
+        "trk.designnews.com": "s949606000.hs.eloqua.com",
+        "trk.gamedeveloper.com": "s2150.hs.eloqua.com",
+        "trk.gdconf.com": "s2150.hs.eloqua.com",
+        "trk.metronet.com": "s668595.hs.eloqua.com",
+        "trk.wealthmanagement.com": "s1346786309.hs.eloqua.com",
+        "trk.wellsfargocenterphilly.com": "s1983452.t.eloqua.com",
+        "visit.hypertherm.com": "s2307.hs.eloqua.com",
+        "visit.lifeblood.com.au": "s1824193043.hs.eloqua.com",
+        "web.care.eehealth.org": "s434397.hs.eloqua.com",
+        "web.care.wakemed.org": "s124923.hs.eloqua.com",
+        "web.health.childrenswi.org": "s2287589.hs.eloqua.com",
+        "web.northwestern.nm.org": "s220745253.hs.eloqua.com",
+        "agnes.9monate.de": "ghs.googlehosted.com",
+        "agnes.gesundheit.de": "ghs.googlehosted.com",
+        "agnes.hoerzu.de": "ghs.googlehosted.com",
+        "agnes.lifeline.de": "ghs.googlehosted.com",
+        "agnes.myself.de": "ghs.googlehosted.com",
+        "agnes.onmeda.de": "ghs.googlehosted.com",
+        "agnes.tvdigital.de": "ghs.googlehosted.com",
+        "agnes.werstreamt.es": "ghs.googlehosted.com",
+        "analytics.bayut.com": "ghs.googlehosted.com",
+        "analytics.corepoweryoga.com": "ghs.googlehosted.com",
+        "analytics.coretecfloors.com": "ghs.googlehosted.com",
+        "analytics.iprima.cz": "ghs.googlehosted.com",
+        "analytics.mehilainen.fi": "ghs.googlehosted.com",
+        "analytics.shaklee.com": "ghs.googlehosted.com",
+        "analytics.shawfloors.com": "ghs.googlehosted.com",
+        "analytics.sportisimo.cz": "ghs.googlehosted.com",
+        "analyticsgtm.cars.co.za": "ghs.googlehosted.com",
+        "api.ecomm.beautycounter.com": "ghs.googlehosted.com",
+        "api.stage-id.swmhdata.stuttgarter-nachrichten.de": "api.stage-id.ghs.googlehosted.com",
+        "api.stage-id.swmhdata.stuttgarter-zeitung.de": "api.stage-id.ghs.googlehosted.com",
+        "api.urbandictionary.com": "ghs.googlehosted.com",
+        "assets.thelayoff.com": "ghs.googlehosted.com",
+        "blip-api.edinburghairport.com": "ghs.googlehosted.com",
+        "collect.brilliantearth.com": "ghs.googlehosted.com",
+        "collect.deel.com": "ghs.googlehosted.com",
+        "collect.eastwood.com": "ghs.googlehosted.com",
+        "collect.invisalign.com": "ghs.googlehosted.com",
+        "data.typeracer.com": "ghs.googlehosted.com",
+        "eventapi.pchome.com.tw": "ghs.googlehosted.com",
+        "gtm.aeg.co.uk": "ghs.googlehosted.com",
+        "gtm.aeg.de": "ghs.googlehosted.com",
+        "gtm.aeg.nl": "ghs.googlehosted.com",
+        "gtm.carewell.com": "ghs.googlehosted.com",
+        "gtm.epidemicsound.com": "ghs.googlehosted.com",
+        "gtm.filson.com": "ghs.googlehosted.com",
+        "gtm.fossil.com": "ghs.googlehosted.com",
+        "gtm.foxracing.com": "ghs.googlehosted.com",
+        "gtm.ilpost.it": "ghs.googlehosted.com",
+        "gtm.meinauto.de": "ghs.googlehosted.com",
+        "gtm.mixcloud.com": "ghs.googlehosted.com",
+        "gtm.pointhacks.com.au": "ghs.googlehosted.com",
+        "gtm.publix.com": "ghs.googlehosted.com"
     }
 }

@@ -50,13 +50,17 @@ public class Favicons {
 
         func create() -> ImageCache {
             
-            // If unable to create cache in desired location default to Kinfisher's default location which is Library/Cache.  Images may disappear
+            // If unable to create cache in desired location default to Kingfisher's default location which is Library/Cache.  Images may disappear
             //  but at least the app won't crash.  This should not happen.
             let cache = createCacheInDesiredLocation() ?? ImageCache(name: rawValue)
             
             // We hash the resource key when loading the resource so don't use Kingfisher's hashing which is md5 based
             cache.diskStorage.config.usesHashedFileName = false
-            
+
+            if self == .fireproof {
+                migrateBookmarksCacheContents(to: cache.diskStorage.directoryURL)
+            }
+
             return cache
         }
 
@@ -93,7 +97,27 @@ public class Favicons {
                 return FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
             }
         }
-        
+
+        private func migrateBookmarksCacheContents(to url: URL) {
+            guard let cacheUrl = CacheType.fireproof.cacheLocation() else { return }
+
+            // Using hardcoded path as this is a one time migration
+            let bookmarksCache = cacheUrl.appendingPathComponent("com.onevcat.Kingfisher.ImageCache.bookmarks")
+            guard FileManager.default.fileExists(atPath: bookmarksCache.path) else { return }
+
+            if let contents = try? FileManager.default.contentsOfDirectory(at: bookmarksCache, includingPropertiesForKeys: nil, options: []) {
+                contents.forEach {
+                    let destination = url.appendingPathComponent($0.lastPathComponent)
+                    try? FileManager.default.moveItem(at: $0, to: destination)
+                }
+            }
+
+            do {
+                try FileManager.default.removeItem(at: bookmarksCache)
+            } catch {
+                os_log("Failed to remove favicon bookmarks cache: %s", type: .error, error.localizedDescription)
+            }
+        }
     }
 
     public static let shared = Favicons()

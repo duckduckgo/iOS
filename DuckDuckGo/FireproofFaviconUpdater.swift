@@ -46,7 +46,7 @@ extension Favicons: FaviconProviding {
 
 class FireproofFaviconUpdater: NSObject, FaviconUserScriptDelegate {
 
-    public static let deleteBookmarkFaviconNotification = Notification.Name("com.duckduckgo.app.BookmarkFaviconUpdaterDeleteBookmarkFavicon")
+    public static let deleteFireproofFaviconNotification = Notification.Name("com.duckduckgo.app.FireproofFaviconUpdaterDeleteBookmarkFavicon")
 
     struct UserInfoKeys {
         static let faviconDomain = "com.duckduckgo.com.userInfoKey.faviconDomain"
@@ -69,8 +69,8 @@ class FireproofFaviconUpdater: NSObject, FaviconUserScriptDelegate {
 
     private func registerForNotifications() {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(deleteBookmarkFavicon(_:)),
-                                               name: BookmarkFaviconUpdater.deleteBookmarkFaviconNotification,
+                                               selector: #selector(deleteFireproofFavicon(_:)),
+                                               name: FireproofFaviconUpdater.deleteFireproofFaviconNotification,
                                                object: nil)
     }
 
@@ -122,7 +122,7 @@ class FireproofFaviconUpdater: NSObject, FaviconUserScriptDelegate {
         }
     }
 
-    @objc private func deleteBookmarkFavicon(_ notification: Notification) {
+    @objc private func deleteFireproofFavicon(_ notification: Notification) {
         guard let domain = notification.userInfo?[UserInfoKeys.faviconDomain] as? String,
               !bookmarkExists(for: domain) &&
               !autofillLoginExists(for: domain) else { return }

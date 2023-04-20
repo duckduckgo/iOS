@@ -244,9 +244,9 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             self.viewModel.undoLastDelete()
         }, onDidDismiss: {
             self.viewModel.clearUndoCache()
-            NotificationCenter.default.post(name: BookmarkFaviconUpdater.deleteBookmarkFaviconNotification,
+            NotificationCenter.default.post(name: FireproofFaviconUpdater.deleteFireproofFaviconNotification,
                                             object: nil,
-                                            userInfo: [BookmarkFaviconUpdater.UserInfoKeys.faviconDomain: domain])
+                                            userInfo: [FireproofFaviconUpdater.UserInfoKeys.faviconDomain: domain])
         })
     }
     

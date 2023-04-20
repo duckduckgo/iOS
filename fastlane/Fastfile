@@ -76,9 +76,9 @@ desc 'Makes App Store release build and uploads it to TestFlight'
 lane :release_testflight do
   build_release
 
-  # upload_to_testflight(
-  #   api_key: get_api_key
-  # )
+  upload_to_testflight(
+    api_key: get_api_key
+  )
 end
 
 desc 'Increment build number based on version in App Store Connect'

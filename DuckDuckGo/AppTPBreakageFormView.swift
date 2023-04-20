@@ -41,6 +41,24 @@ private enum BreakageCategory: String, CaseIterable, Identifiable {
     }
 }
 
+struct FontWithLineHeight: ViewModifier {
+    let font: UIFont
+    let lineHeight: CGFloat
+
+    func body(content: Content) -> some View {
+        content
+            .font(Font(font))
+            .lineSpacing(lineHeight - font.lineHeight)
+            .padding(.vertical, (lineHeight - font.lineHeight) / 2)
+    }
+}
+
+extension View {
+    func fontWithLineHeight(font: UIFont, lineHeight: CGFloat) -> some View {
+        ModifiedContent(content: self, modifier: FontWithLineHeight(font: font, lineHeight: lineHeight))
+    }
+}
+
 struct AppTPBreakageFormView: View {
     @Environment(\.presentationMode) var presentation
     
@@ -49,6 +67,7 @@ struct AppTPBreakageFormView: View {
     @State private var appName: String = ""
     @State private var category: BreakageCategory = .appFreeze
     @State private var description: String = ""
+    @State private var placeholderText: String = UserText.appTPReportCommentPlaceholder
     
     @State private var showError = false
     
@@ -59,6 +78,10 @@ struct AppTPBreakageFormView: View {
         }
         
         feedbackModel.sendReport(appName: appName, category: category.rawValue, description: description)
+        DispatchQueue.main.async {
+            ActionMessageView.present(message: UserText.appTPReportToast,
+                                      presentationLocation: .withoutBottomBar)
+        }
         self.presentation.wrappedValue.dismiss()
     }
     
@@ -66,62 +89,76 @@ struct AppTPBreakageFormView: View {
         ZStack {
             Form {
                 Section {
-                    TextField("App Name", text: $appName)
-                } header: {
-                    Text("Which app is broken?")
-                        .font(Font(uiFont: Const.Font.sectionHeader))
-                        .foregroundColor(.infoText)
-                        .padding(.leading, Const.Size.sectionIndentation)
-                        .padding(.bottom, Const.Size.sectionHeaderBottom)
+                    VStack {
+                        AppTPBreakageFormHeaderView(text: UserText.appTPReportAppLabel)
+                        
+                        TextField(UserText.appTPReportAppPlaceholder, text: $appName)
+                    }
                 }
-                .textCase(nil)
                 
                 Section {
-                    Picker("What's happening?", selection: $category) {
-                        ForEach(BreakageCategory.allCases) { cat in
-                            Text(cat.rawValue)
+                    VStack {
+                        AppTPBreakageFormHeaderView(text: UserText.appTPReportCategoryLabel)
+                        
+                        HStack {
+                            Picker("", selection: $category) {
+                                ForEach(BreakageCategory.allCases) { cat in
+                                    Text(cat.rawValue)
+                                }
+                            }
+                            .labelsHidden()
+                            
+                            Spacer()
                         }
+                        .padding(.leading, Const.Size.pickerPadding)
                     }
                 }
                 
                 Section {
-                    if category == .somethingElse {
-                        TextEditor(text: $description)
+                    VStack {
+                        AppTPBreakageFormHeaderView(text: UserText.appTPReportCommentLabel)
+                            .padding(.top, Const.Size.commnetHeaderPadding)
+                        
+                        // As of April 2023 SwiftUI STILL does not support placeholders for `TextEditor`
+                        // Until that time we have to use this hack to show a placeholder
+                        // https://stackoverflow.com/a/65406506
+                        ZStack {
+                            if self.description.isEmpty {
+                                TextEditor(text: $placeholderText)
+                                    .font(.body)
+                                    .foregroundColor(.gray)
+                                    .disabled(true)
+                            }
+                            
+                            TextEditor(text: $description)
+                                .font(.body)
+                                .opacity(self.description.isEmpty ? 0.25 : 1)
+                        }
+                        .padding(.leading, Const.Size.commentFieldPadding)
                     }
-                } header: {
-                    if category == .somethingElse {
-                        Text("Please describe what's happening, what you expected to happen, and steps that led to the issue.")
-                            .font(Font(uiFont: Const.Font.sectionHeader))
-                            .foregroundColor(.infoText)
-                            .padding(.leading, Const.Size.sectionIndentation)
-                            .padding(.bottom, Const.Size.sectionHeaderBottom)
-                    }
+                    .frame(minHeight: Const.Size.minCommentHeight)
                 } footer: {
-                    Text("""
-In addition to the details entered into this form, your app issue report will contain:
-- A list of trackers blocked in the last 10 minutes
-- Whether App Tracking Protection is enabled
-- Aggregate DuckDuckGo app diagnostics
-""")
-                    .font(Font(uiFont: Const.Font.footer))
+                    Text(UserText.appTPReportFooter)
+                    .fontWithLineHeight(font: Const.Font.footer, lineHeight: Const.Size.lineHeight)
                     .foregroundColor(.infoText)
                     .padding(.leading, Const.Size.sectionIndentation)
+                    .padding(.top)
                 }
-                .textCase(nil)
                 
                 Section {
                     Button(action: {
                         sendReport()
                     }, label: {
-                        Text("Submit")
+                        Text(UserText.appTPReportSubmit)
                             .font(Font(uiFont: Const.Font.button))
                             .frame(maxWidth: .infinity, alignment: .center)
-                            .foregroundColor(.white)
+                            .foregroundColor(appName.isEmpty ? Color.disabledButtonLabel : Color.buttonLabelColor)
                     })
-                    .listRowBackground(Color.buttonColor)
+                    .listRowBackground(appName.isEmpty ? Color.disabledButton : Color.buttonColor)
+                    .disabled(appName.isEmpty)
                 }
             }
-            .navigationTitle("Breakage Report")
+            .navigationTitle(UserText.appTPReportTitle)
             .alert(isPresented: $showError) {
                 Alert(
                     title: Text("Error"),
@@ -135,20 +172,24 @@ In addition to the details entered into this form, your app issue report will co
 
 private enum Const {
     enum Font {
-        static let sectionHeader = UIFont.semiBoldAppFont(ofSize: 15)
         static let button = UIFont.semiBoldAppFont(ofSize: 17)
         static let footer = UIFont.appFont(ofSize: 15)
     }
     
     enum Size {
         static let sectionIndentation: CGFloat = -6
-        static let sectionHeaderBottom: CGFloat = 6
+        static let lineHeight: CGFloat = 18
+        static let minCommentHeight: CGFloat = 60
+        static let commentFieldPadding: CGFloat = -4
+        static let commnetHeaderPadding: CGFloat = 8
+        static let pickerPadding: CGFloat = -12
     }
 }
 
 private extension Color {
     static let infoText = Color("AppTPDomainColor")
-    static let cellBackground = Color("AppTPCellBackgroundColor")
-    static let viewBackground = Color("AppTPViewBackgroundColor")
-    static let buttonColor = Color("AppTPToggleColor")
+    static let buttonColor = Color("AppTPBreakageButton")
+    static let buttonLabelColor = Color("AppTPBreakageButtonLabel")
+    static let disabledButton = Color("AppTPBreakageButtonDisabled")
+    static let disabledButtonLabel = Color("AppTPBreakageButtonLabelDisabled")
 }

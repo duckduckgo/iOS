@@ -50,7 +50,7 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
             return cell
         } else {
             let cell = BookmarksViewControllerCellFactory.makeBookmarkCell(tableView, forIndexPath: indexPath)
-            cell.faviconImageView.loadFavicon(forDomain: bookmark.urlObject?.host, usingCache: .bookmarks)
+            cell.faviconImageView.loadFavicon(forDomain: bookmark.urlObject?.host, usingCache: .fireproof)
             cell.titleLabel.text = bookmark.title
             cell.favoriteImageViewContainer.isHidden = !bookmark.isFavorite
             return cell
@@ -91,7 +91,7 @@ class SearchBookmarksDataSource: NSObject, UITableViewDataSource {
         }
 
         let cell = BookmarksViewControllerCellFactory.makeBookmarkCell(tableView, forIndexPath: indexPath)
-        cell.faviconImageView.loadFavicon(forDomain: results[indexPath.row].url.host, usingCache: .bookmarks)
+        cell.faviconImageView.loadFavicon(forDomain: results[indexPath.row].url.host, usingCache: .fireproof)
         cell.titleLabel.text = results[indexPath.row].title
         cell.favoriteImageViewContainer.isHidden = !results[indexPath.row].isFavorite
         return cell

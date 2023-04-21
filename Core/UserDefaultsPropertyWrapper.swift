@@ -90,10 +90,8 @@ public struct UserDefaultsWrapper<T> {
 
         case shouldScheduleRulesCompilationOnAppLaunch = "com.duckduckgo.ios.shouldScheduleRulesCompilationOnAppLaunch"
 
-        case wasFireButtonEverTapped = "com.duckduckgo.ios.wasFireButtonEverTapped"
-        case wasFireButtonEducationRestarted = "com.duckduckgo.ios.wasFireButtonEducationRestarted"
-
         case lastAppTrackingProtectionHistoryFetchTimestamp = "com.duckduckgo.ios.appTrackingProtection.lastTrackerHistoryFetchTimestamp"
+        case appTPUsed = "com.duckduckgo.ios.appTrackingProtection.appTPUsed"
         
     }
 

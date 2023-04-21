@@ -24,17 +24,15 @@ struct AppTPActivityView: View {
     @ObservedObject var viewModel: AppTrackingProtectionListViewModel
     @ObservedObject var feedbackModel: AppTrackingProtectionFeedbackModel
     @ObservedObject var toggleViewModel = AppTPToggleViewModel()
-    
-    @State var vpnOn: Bool = false
-    
+
     let imageCache = AppTrackerImageCache()
     
     func imageForState() -> Image {
-        return vpnOn ? Image("AppTPEmptyEnabled") : Image("AppTPEmptyDisabled")
+        return toggleViewModel.isOn ? Image("AppTPEmptyEnabled") : Image("AppTPEmptyDisabled")
     }
     
     func textForState() -> String {
-        return vpnOn ? UserText.appTPEmptyEnabledInfo : UserText.appTPEmptyDisabledInfo
+        return toggleViewModel.isOn ? UserText.appTPEmptyEnabledInfo : UserText.appTPEmptyDisabledInfo
     }
     
     var emptyState: some View {
@@ -67,14 +65,22 @@ struct AppTPActivityView: View {
                     LazyVStack(alignment: .leading, spacing: 0) {
                         ForEach(section.objects as? [AppTrackerEntity] ?? []) { tracker in
                             let showDivider = tracker != (section.objects?.last as? AppTrackerEntity)
-                            AppTPTrackerCell(trackerDomain: tracker.domain,
-                                             trackerOwner: tracker.trackerOwner,
-                                             trackerCount: tracker.count,
-                                             trackerTimestamp: viewModel.format(date: tracker.timestamp),
-                                             trackerBucket: tracker.bucket,
-                                             debugMode: viewModel.debugModeEnabled,
-                                             imageCache: imageCache,
-                                             showDivider: showDivider)
+                            NavigationLink(
+                                destination: AppTPTrackerDetailView(
+                                    viewModel: AppTPTrackerDetailViewModel(trackerDomain: tracker.domain),
+                                    feedbackModel: feedbackModel
+                                )
+                            ) {
+                                AppTPTrackerCell(trackerDomain: tracker.domain,
+                                                 trackerOwner: tracker.trackerOwner,
+                                                 trackerCount: tracker.count,
+                                                 trackerBlocked: tracker.blocked,
+                                                 trackerTimestamp: viewModel.format(timestamp: tracker.timestamp),
+                                                 trackerBucket: tracker.bucket,
+                                                 debugMode: viewModel.debugModeEnabled,
+                                                 imageCache: imageCache,
+                                                 showDivider: showDivider)
+                            }
                         }
                     }
                     .background(Color.cellBackground)
@@ -100,26 +106,54 @@ struct AppTPActivityView: View {
         }
     }
     
+    var manageSection: some View {
+        Section {
+            VStack(alignment: .leading, spacing: 0) {
+                NavigationLink(destination: AppTPManageTrackersView(viewModel: AppTPManageTrackersViewModel(),
+                                                                    imageCache: imageCache)) {
+                    HStack {
+                        Text(UserText.appTPManageTrackers)
+                            .font(Font(uiFont: Const.Font.info))
+                            .foregroundColor(Color.buttonColor)
+                            
+                        Spacer()
+                    }
+                    .padding(.horizontal)
+                    .frame(height: Const.Size.standardCellHeight)
+                }
+                
+                Divider()
+                
+                NavigationLink(destination: AppTPBreakageFormView(feedbackModel: feedbackModel)) {
+                    HStack {
+                        Text(UserText.appTPReportIssueButton)
+                            .font(Font(uiFont: Const.Font.info))
+                            .foregroundColor(Color.buttonColor)
+                        
+                        Spacer()
+                    }
+                    .padding(.horizontal)
+                    .frame(height: Const.Size.standardCellHeight)
+                }
+            }
+            .background(Color.cellBackground)
+            .cornerRadius(Const.Size.cornerRadius)
+            .padding(.bottom)
+        }
+    }
+    
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .center, spacing: 0) {
                 Section {
-                    VStack {
-                        AppTPToggleView(
-                            vpnOn: $vpnOn,
-                            viewModel: toggleViewModel
-                        )
-                            .background(Color.cellBackground)
-                            .cornerRadius(Const.Size.cornerRadius)
-
-                        NavigationLink(destination: AppTPBreakageFormView(feedbackModel: feedbackModel)) {
-                            Text("Something not working?")
-                                .font(Font(uiFont: Const.Font.sectionHeader))
-                                .foregroundColor(Color("AppTPToggleColor"))
-                                .frame(height: 44)
-                        }
-                    }
-                    .padding(.bottom)
+                    AppTPToggleView(viewModel: toggleViewModel)
+                        .background(Color.cellBackground)
+                        .cornerRadius(Const.Size.cornerRadius)
+                        .padding(.bottom)
+                }
+                
+                if viewModel.appTPUsed || viewModel.sections.count > 0 {
+                    manageSection
                 }
 
                 if viewModel.sections.count > 0 {
@@ -129,6 +163,11 @@ struct AppTPActivityView: View {
                 }
             }
             .padding()
+            .onChange(of: toggleViewModel.firewallStatus) { value in
+                if value == .connected {
+                    viewModel.appTPUsed = true
+                }
+            }
         }
         .background(Color.viewBackground)
         .navigationTitle(UserText.appTPNavTitle)
@@ -145,11 +184,13 @@ private enum Const {
         static let cornerRadius: CGFloat = 12
         static let sectionIndentation: CGFloat = 16
         static let sectionHeaderBottom: CGFloat = 6
+        static let standardCellHeight: CGFloat = 44
     }
 }
 
 private extension Color {
     static let infoText = Color("AppTPDomainColor")
+    static let buttonColor = Color("AppTPToggleColor")
     static let cellBackground = Color("AppTPCellBackgroundColor")
     static let viewBackground = Color("AppTPViewBackgroundColor")
 }

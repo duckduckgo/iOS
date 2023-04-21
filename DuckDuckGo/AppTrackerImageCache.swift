@@ -18,12 +18,23 @@
 //
 
 import UIKit
+import SwiftUI
 import PrivacyDashboardResources
+
+enum TrackerEntityRepresentable {
+    case svg(UIImage)
+    case view(GenericIconData)
+}
+
+struct GenericIconData {
+    let trackerLetter: String
+    let trackerColor: Color
+}
 
 final class AppTrackerImageCache {
     
-    private var blankTrackerImage: Data!
-    private var cachedTrackerImages: [String: Data]!
+    private var blankTrackerImage: TrackerEntityRepresentable!
+    private var cachedTrackerImages: [String: TrackerEntityRepresentable]!
     
     private enum ImageDir: String {
         case letters
@@ -32,32 +43,35 @@ final class AppTrackerImageCache {
     
     let bundleModule = Bundle.privacyDashboardResourcesBundle
     
+    let colors: [Color] = [
+        Color("Blue"),
+        Color("DarkBlue"),
+        Color("GrayPurple"),
+        Color("Green"),
+        Color("GreenBlue"),
+        Color("LightBlue"),
+        Color("LightGreen"),
+        Color("LightGreenBlue"),
+        Color("LightPurple"),
+        Color("Mint"),
+        Color("Orange"),
+        Color("OrangeRed"),
+        Color("Purple"),
+        Color("Red"),
+        Color("Violet"),
+        Color("Yellow")
+    ]
+    
     init() {
         resetCache()
     }
     
-    private func pathForImage(named name: String, subdir: ImageDir) -> URL? {
-        return bundleModule.url(forResource: name, withExtension: "svg", subdirectory: "img/refresh-assets/tracker-icons/\(subdir)")
-    }
-    
-    private func dataFromBundle(for name: String, subdir: ImageDir) -> Data? {
-        guard let path = pathForImage(named: name, subdir: subdir) else { return nil }
-        
-        do {
-            return try Data(contentsOf: path)
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-        return nil
-    }
-    
     private func resetCache() {
         cachedTrackerImages = [:]
-        blankTrackerImage = dataFromBundle(for: "T", subdir: .letters)
+        blankTrackerImage = .view(GenericIconData(trackerLetter: "T", trackerColor: colors.randomElement()!))
     }
     
-    public func loadTrackerImage(for entityName: String) -> Data {
+    public func loadTrackerImage(for entityName: String) -> TrackerEntityRepresentable {
         if let cachedImage = cachedTrackerImages[entityName] {
             return cachedImage
         } else {
@@ -67,71 +81,23 @@ final class AppTrackerImageCache {
         }
     }
     
-    private func makeTrackerImage(for entityName: String) -> Data {
+    private func makeTrackerImage(for entityName: String) -> TrackerEntityRepresentable {
         if let image = loadTrackerLogoImage(for: entityName) {
-            return image
-        } else if let firstLetter = entityName.first,
-                  let letterImage = loadTrackerImage(for: String(firstLetter).uppercased()) {
-            return letterImage
+            return .svg(image)
+        } else if let firstLetter = entityName.first {
+            return .view(GenericIconData(trackerLetter: String(firstLetter),
+                                         trackerColor: colors.randomElement()!))
         } else {
             return blankTrackerImage
         }
     }
     
-    private func loadTrackerImage(for entityName: String) -> Data? {
-        return dataFromBundle(for: entityName, subdir: .letters)
-    }
-    
-    // swiftlint:disable:next cyclomatic_complexity
-    private func loadTrackerLogoImage(for entityName: String) -> Data? {
+    private func loadTrackerLogoImage(for entityName: String) -> UIImage? {
         switch entityName {
-        case "Adjust GmbH": return dataFromBundle(for: "adjust", subdir: .logos)
-        case "Adobe Inc.": return dataFromBundle(for: "adobe", subdir: .logos)
-        case "Amazon Technologies, Inc.": return dataFromBundle(for: "amazon", subdir: .logos)
-        case "Amplitude": return dataFromBundle(for: "amplitude", subdir: .logos)
-        case "appnexus": return dataFromBundle(for: "appnexus", subdir: .logos)
-        case "AppsFlyer": return dataFromBundle(for: "appsflyer", subdir: .logos)
-        case "Beeswax": return dataFromBundle(for: "beeswax", subdir: .logos)
-        case "Braze, Inc.": return dataFromBundle(for: "braze", subdir: .logos)
-        case "Branch Metrics, Inc.": return dataFromBundle(for: "branchmetrics", subdir: .logos)
-        case "Bugsnag Inc.": return dataFromBundle(for: "bugsnag", subdir: .logos)
-        case "cloudflare": return dataFromBundle(for: "cloudflare", subdir: .logos)
-        case "comScore, Inc": return dataFromBundle(for: "comscore", subdir: .logos)
-        case "Criteo SA": return dataFromBundle(for: "criteo", subdir: .logos)
-        case "Facebook, Inc.": return dataFromBundle(for: "facebook", subdir: .logos)
-        case "Google LLC": return dataFromBundle(for: "google", subdir: .logos)
-        case "Index Exchange, Inc.": return dataFromBundle(for: "indexexchange", subdir: .logos)
-        case "IPONWEB GmbH": return dataFromBundle(for: "iponweb", subdir: .logos)
-        case "Kochava": return dataFromBundle(for: "kochava", subdir: .logos)
-        case "linkedin": return dataFromBundle(for: "linkedin", subdir: .logos)
-        case "LiveRamp": return dataFromBundle(for: "liveramp", subdir: .logos)
-        case "MediaMath, Inc.": return dataFromBundle(for: "mediamath", subdir: .logos)
-        case "Microsoft Corporation": return dataFromBundle(for: "microsoft", subdir: .logos)
-        case "Neustar, Inc.": return dataFromBundle(for: "neustar", subdir: .logos)
-        case "New Relic": return dataFromBundle(for: "newrelic", subdir: .logos)
-        case "OpenX Technologies Inc": return dataFromBundle(for: "openx", subdir: .logos)
-        case "Oracle Corporation": return dataFromBundle(for: "oracle", subdir: .logos)
-        case "Outbrain": return dataFromBundle(for: "outbrain", subdir: .logos)
-        case "Pinterest, Inc.": return dataFromBundle(for: "pinterest", subdir: .logos)
-        case "PubMatic, Inc.": return dataFromBundle(for: "pubmatic", subdir: .logos)
-        case "Quantcast Corporation": return dataFromBundle(for: "quantcast", subdir: .logos)
-        case "RythmOne": return dataFromBundle(for: "rhythmone", subdir: .logos)
-        case "Salesforce.com, Inc": return dataFromBundle(for: "salesforce", subdir: .logos)
-        case "Sharethrough, Inc.": return dataFromBundle(for: "sharetrough", subdir: .logos)
-        case "Smaato Inc.": return dataFromBundle(for: "smaato", subdir: .logos)
-        case "SpotX, Inc.": return dataFromBundle(for: "spotx", subdir: .logos)
-        case "stackpath": return dataFromBundle(for: "stackpath", subdir: .logos)
-        case "Taboola, Inc.": return dataFromBundle(for: "taboola", subdir: .logos)
-        case "Tapad, Inc.": return dataFromBundle(for: "tapad", subdir: .logos)
-        case "The Trade Desk Inc": return dataFromBundle(for: "thetradedesk", subdir: .logos)
-        case "Twitter, Inc.": return dataFromBundle(for: "twitter", subdir: .logos)
-        case "Urban Airship, Inc.": return dataFromBundle(for: "urbanairship", subdir: .logos)
-        case "Verizon Media": return dataFromBundle(for: "verizonmedia", subdir: .logos)
-        case "WarnerMedia, LLC": return dataFromBundle(for: "warnermedia", subdir: .logos)
-        case "Xaxis": return dataFromBundle(for: "xaxis", subdir: .logos)
-        case "Yandex LLC": return dataFromBundle(for: "yandex", subdir: .logos)
-        case "Zeotap GmbH": return dataFromBundle(for: "zeotap", subdir: .logos)
-        default: return nil
+        case "Adform A/S": return UIImage(named: "Adform AS")
+        case "cloudflare": return UIImage(named: "cloudflare-app")
+        case "linkedin": return UIImage(named: "linkedin-app")
+        default: return UIImage(named: entityName)
         }
     }
     

@@ -18,11 +18,16 @@
 //
 
 import Foundation
+import Core
 import NetworkExtension
+import Common
 
 class AppTPToggleViewModel: ObservableObject {
     
     var firewallManager: FirewallManaging
+    
+    @Published var isOn: Bool = false
+    @Published var connectFirewall: Bool = false
     
     @Published var firewallStatus: NEVPNStatus = .disconnected
     
@@ -39,8 +44,20 @@ class AppTPToggleViewModel: ObservableObject {
         await firewallManager.refreshManager()
     }
     
-    func setStatus(to status: Bool) async throws {
-        try await firewallManager.setState(to: status)
+    func changeFirewallStatus() async {
+        do {
+            try await firewallManager.setState(to: connectFirewall)
+            let status = status()
+            Task { @MainActor in
+                isOn = status == .connected || status == .connecting
+            }
+        } catch {
+            os_log("Error changing VPN status", log: FirewallManager.apptpLog, type: .error)
+        }
+    }
+    
+    func isLoading() -> Bool {
+        return firewallStatus != .connected && firewallStatus != .disconnected && firewallStatus != .invalid
     }
 }
 
@@ -48,6 +65,10 @@ extension AppTPToggleViewModel: FirewallDelegate {
     func statusDidChange(newStatus: NEVPNStatus) {
         Task { @MainActor in
             firewallStatus = newStatus
+            if newStatus == .connected || newStatus == .disconnected {
+                connectFirewall = newStatus == .connected
+                isOn = connectFirewall
+            }
         }
     }
 }

@@ -18,12 +18,8 @@
 //
 
 import SwiftUI
-import NetworkExtension
-import Common
 
 struct AppTPToggleView: View {
-    @Binding var vpnOn: Bool
-    @State var isExternalChange = false
     
     @ObservedObject var viewModel: AppTPToggleViewModel
     
@@ -31,55 +27,26 @@ struct AppTPToggleView: View {
         await viewModel.refreshManager()
     }
     
-    func setFirewall(_ status: Bool) async {
-        // On first load of the view we sync the status of the toggle
-        // to the firewall. Setting vpnOn will trigger `onChange` of the toggle
-        // We use `isExternalChange` to prevent setting the firewall status multiple times
-        if isExternalChange {
-            isExternalChange = false
-            return
-        }
-        
-        do {
-            try await viewModel.setStatus(to: status)
-            // Give time to connect (0.5s)
-            try await Task.sleep(nanoseconds: 5_000_000)
-            await viewModel.refreshManager()
-            // In the hack days I tried to animate the state change here
-        } catch {
-            os_log("Unable to set firewall", log: FirewallManager.apptpLog, type: .error)
-        }
-    }
-    
-    func isLoading() -> Bool {
-        return viewModel.firewallStatus != .connected && viewModel.firewallStatus != .disconnected && viewModel.firewallStatus != .invalid
-    }
-    
     var body: some View {
-        Toggle(isOn: $vpnOn, label: {
+        Toggle(isOn: $viewModel.isOn, label: {
             HStack {
                 Text(UserText.appTPNavTitle)
 
                 Spacer()
                 
-                if isLoading() {
+                if viewModel.isLoading() {
                     SwiftUI.ProgressView()
                 }
             }
         })
         .toggleStyle(SwitchToggleStyle(tint: Color.toggleTint))
-        .disabled(isLoading())
-        .onChange(of: vpnOn) { value in
-            Task {
-                await setFirewall(value)
-            }
+        .disabled(viewModel.isLoading())
+        .onTapGesture {
+            viewModel.connectFirewall.toggle()
         }
-        .onChange(of: viewModel.firewallStatus) { value in
-            if value == .connected || value == .disconnected {
-                // Set isExternalChange to indicate this change was not initiated by the user
-                // This will prevent the change of vpnOn from causing a loop enabling/disabling the VPN.
-                isExternalChange = true
-                vpnOn = value == .connected
+        .onChange(of: viewModel.connectFirewall) { _ in
+            Task {
+                await viewModel.changeFirewallStatus()
             }
         }
         .padding()

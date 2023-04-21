@@ -27,6 +27,7 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
     func showSyncWithAnotherDevice()
     func showDeviceConnected()
     func showRecoveryPDF()
+    func shareRecoveryPDF()
     func createAccountAndStartSyncing()
     func confirmAndDisableSync() async -> Bool
     func confirmAndDeleteAllData() async -> Bool
@@ -63,8 +64,8 @@ public class SyncSettingsViewModel: ObservableObject {
     }
 
     @Published public var isSyncEnabled = false
+    @Published public var devices = [Device]()
     @Published var isBusy = false
-    @Published var devices = [Device]()
     @Published var recoveryCode = ""
 
     var setupFinishedState: TurnOnSyncViewModel.Result?
@@ -103,7 +104,7 @@ public class SyncSettingsViewModel: ObservableObject {
     }
 
     func saveRecoveryPDF() {
-        delegate?.showRecoveryPDF()
+        delegate?.shareRecoveryPDF()
     }
 
     func scanQRCode() {
@@ -135,14 +136,6 @@ public class SyncSettingsViewModel: ObservableObject {
         isBusy = false
         isSyncEnabled = true
         self.recoveryCode = recoveryCode
-        devices = [
-            Device(id: UUID().uuidString, name: UIDevice.current.name, type: "phone", isThisDevice: true)
-        ]
-    }
-
-    public func appendDevice(_ device: Device) {
-        devices.append(device)
-        objectWillChange.send()
     }
 
     public func setupFinished(_ model: TurnOnSyncViewModel) {

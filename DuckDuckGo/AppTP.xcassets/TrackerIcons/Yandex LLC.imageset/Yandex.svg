@@ -1,0 +1,12 @@
+<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g clip-path="url(#Yandex_svg__a)">
+    <path fill="#FC3F1D" d="M24 12c0 6.627-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0s12 5.373 12 12Z"/>
+    <path fill="#000" fill-opacity=".12" fill-rule="evenodd" d="M23.979 12c0 6.616-5.363 11.98-11.98 11.98C5.385 23.98.022 18.615.022 12 .02 5.384 5.384.021 12 .021s11.979 5.363 11.979 11.98Zm-11.98 11.5c6.352 0 11.5-5.149 11.5-11.5S18.352.5 12 .5C5.65.5.5 5.65.5 12S5.65 23.5 12 23.5Z" clip-rule="evenodd"/>
+    <path fill="#fff" fill-rule="evenodd" d="M10.889 17.19v1.31h2.195v-1.59c0-2.151-.376-3.124-1.238-4.994L8.9 5.5H6.5L9.97 13c.713 1.535.919 2.414.919 4.19ZM15.035 5.5l-2.739 6.285h2.27L17.34 5.5h-2.307Z" clip-rule="evenodd"/>
+  </g>
+  <defs>
+    <clipPath id="Yandex_svg__a">
+      <path fill="#fff" d="M0 0h24v24H0z"/>
+    </clipPath>
+  </defs>
+</svg>

@@ -43,7 +43,7 @@ class AppTrackingProtectionStoringModelTests: XCTestCase {
 
     func testWhenStoringSingleTracker_AndTrackerIsGivenADate_ThenTrackerIsPutIntoCorrectBucket() {
         let store = AppTrackingProtectionStoringModel(appTrackingProtectionDatabase: database)
-        store.storeBlockedTracker(domain: "domain.com", trackerOwner: "Owner", date: createDate(year: 2023, month: 1, day: 1))
+        store.storeTracker(domain: "domain.com", trackerOwner: "Owner", blocked: true, date: createDate(year: 2023, month: 1, day: 1))
 
         let context = database.makeContext(concurrencyType: .mainQueueConcurrencyType)
         let trackers = fetchTrackers(context)
@@ -54,9 +54,9 @@ class AppTrackingProtectionStoringModelTests: XCTestCase {
 
     func testWhenStoringMultipleTrackers_AndTrackersHaveSameDate_ThenAllTrackersAreInTheSameBucket() {
         let store = AppTrackingProtectionStoringModel(appTrackingProtectionDatabase: database)
-        store.storeBlockedTracker(domain: "domain.com", trackerOwner: "Owner", date: createDate(year: 2023, month: 1, day: 1))
-        store.storeBlockedTracker(domain: "domain2.com", trackerOwner: "Owner 2", date: createDate(year: 2023, month: 1, day: 1))
-        store.storeBlockedTracker(domain: "domain3.com", trackerOwner: "Owner 3", date: createDate(year: 2023, month: 1, day: 1))
+        store.storeTracker(domain: "domain.com", trackerOwner: "Owner", blocked: true, date: createDate(year: 2023, month: 1, day: 1))
+        store.storeTracker(domain: "domain2.com", trackerOwner: "Owner 2", blocked: true, date: createDate(year: 2023, month: 1, day: 1))
+        store.storeTracker(domain: "domain3.com", trackerOwner: "Owner 3", blocked: true, date: createDate(year: 2023, month: 1, day: 1))
 
         let context = database.makeContext(concurrencyType: .mainQueueConcurrencyType)
         let trackers = fetchTrackers(context)
@@ -70,9 +70,9 @@ class AppTrackingProtectionStoringModelTests: XCTestCase {
 
     func testWhenStoringMultipleTrackers_AndTrackersHaveSameDomainAndDate_ThenOnlySingleTrackerIsSaved_AndTrackerCountIsUpdated() {
         let store = AppTrackingProtectionStoringModel(appTrackingProtectionDatabase: database)
-        store.storeBlockedTracker(domain: "domain.com", trackerOwner: "Owner", date: createDate(year: 2023, month: 1, day: 1))
-        store.storeBlockedTracker(domain: "domain.com", trackerOwner: "Owner", date: createDate(year: 2023, month: 1, day: 1))
-        store.storeBlockedTracker(domain: "domain.com", trackerOwner: "Owner", date: createDate(year: 2023, month: 1, day: 1))
+        store.storeTracker(domain: "domain.com", trackerOwner: "Owner", blocked: true, date: createDate(year: 2023, month: 1, day: 1))
+        store.storeTracker(domain: "domain.com", trackerOwner: "Owner", blocked: true, date: createDate(year: 2023, month: 1, day: 1))
+        store.storeTracker(domain: "domain.com", trackerOwner: "Owner", blocked: true, date: createDate(year: 2023, month: 1, day: 1))
 
         let context = database.makeContext(concurrencyType: .mainQueueConcurrencyType)
         let trackers = fetchTrackers(context)
@@ -84,19 +84,33 @@ class AppTrackingProtectionStoringModelTests: XCTestCase {
 
     func testWhenStoringTrackers_ThenStaleTrackersAreRemoved() {
         let store = AppTrackingProtectionStoringModel(appTrackingProtectionDatabase: database)
-        store.storeBlockedTracker(domain: "domain.com", trackerOwner: "Owner", date: createDate(year: 2023, month: 1, day: 1))
-        store.storeBlockedTracker(domain: "domain2.com", trackerOwner: "Owner", date: createDate(year: 2023, month: 1, day: 1))
-        store.storeBlockedTracker(domain: "domain3.com", trackerOwner: "Owner", date: createDate(year: 2023, month: 1, day: 1))
+        store.storeTracker(domain: "domain.com", trackerOwner: "Owner", blocked: true, date: createDate(year: 2023, month: 1, day: 1))
+        store.storeTracker(domain: "domain2.com", trackerOwner: "Owner", blocked: true, date: createDate(year: 2023, month: 1, day: 1))
+        store.storeTracker(domain: "domain3.com", trackerOwner: "Owner", blocked: true, date: createDate(year: 2023, month: 1, day: 1))
 
         let context = database.makeContext(concurrencyType: .mainQueueConcurrencyType)
         let initialTrackers = fetchTrackers(context)
         XCTAssertEqual(initialTrackers.count, 3)
 
         // Store a tracker that is over 7 days later from previous ones, which is expected to trigger stale trackers to be purged.
-        store.storeBlockedTracker(domain: "domain4.com", trackerOwner: "Owner", date: createDate(year: 2023, month: 1, day: 9))
+        store.storeTracker(domain: "domain4.com", trackerOwner: "Owner", blocked: true, date: createDate(year: 2023, month: 1, day: 9))
 
         let updatedTrackers = fetchTrackers(context)
         XCTAssertEqual(updatedTrackers.count, 1)
+    }
+
+    func testWhenRemovingStaleTrackers_ThenValidTrackersRemain() {
+        let store = AppTrackingProtectionStoringModel(appTrackingProtectionDatabase: database)
+        store.storeTracker(domain: "domain.com", trackerOwner: "Owner", blocked: true, date: createDate(year: 2023, month: 1, day: 1))
+
+        let context = database.makeContext(concurrencyType: .mainQueueConcurrencyType)
+        let initialTrackers = fetchTrackers(context)
+        XCTAssertEqual(initialTrackers.count, 1)
+
+        store.removeStaleEntries(currentDate: createDate(year: 2023, month: 2, day: 1))
+
+        let updatedTrackers = fetchTrackers(context)
+        XCTAssertEqual(updatedTrackers.count, 0)
     }
 
     // MARK: - Utilities

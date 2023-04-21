@@ -22,11 +22,6 @@ import DuckUI
 
 class AutofillItemsEmptyView: UIView {
     
-    enum ViewState {
-        case autofillEnabled
-        case autofillDisabled
-    }
-
     private enum Constants {
         static let defaultPadding: CGFloat = 15
         static let portraitPaddingImageTitle: CGFloat = 8
@@ -38,13 +33,6 @@ class AutofillItemsEmptyView: UIView {
         super.init(frame: frame)
         installSubviews()
         installConstraints()
-    }
-    
-    var viewState: ViewState = .autofillEnabled {
-        didSet {
-            updateLabels(with: viewState)
-            refreshConstraints()
-        }
     }
     
     required init?(coder: NSCoder) {
@@ -61,6 +49,7 @@ class AutofillItemsEmptyView: UIView {
         label.textAlignment = .center
         label.lineBreakMode = .byWordWrapping
         label.textColor = .gray90
+        label.text = UserText.autofillEmptyViewTitle
         
         return label
     }()
@@ -128,15 +117,6 @@ class AutofillItemsEmptyView: UIView {
         addSubview(outerStackContentView)
     }
 
-    private func updateLabels(with state: AutofillItemsEmptyView.ViewState) {
-        switch state {
-        case .autofillDisabled:
-            title.text = UserText.autofillEmptyViewTitleDisabled
-        case .autofillEnabled:
-            title.text = UserText.autofillEmptyViewTitle
-        }
-    }
-    
     private func installConstraints() {
         stackContentView.translatesAutoresizingMaskIntoConstraints = false
         subtitle.translatesAutoresizingMaskIntoConstraints = false
@@ -159,11 +139,7 @@ class AutofillItemsEmptyView: UIView {
             topConstraintIPhonePortrait.isActive = isIPhonePortrait
             widthConstraintIPhonePortrait.isActive = isIPhonePortrait
             stackContentView.spacing = Constants.portraitPaddingImageTitle
-            if viewState == .autofillEnabled {
-                outerStackContentView.spacing = Constants.portraitPaddingTitleSubtitle + Constants.portraitPaddingTitle
-            } else {
-                outerStackContentView.spacing = Constants.portraitPaddingTitleSubtitle
-            }
+            outerStackContentView.spacing = Constants.portraitPaddingTitleSubtitle + Constants.portraitPaddingTitle
         } else {
             topConstraintIPhonePortrait.isActive = isIPhonePortrait
             widthConstraintIPhonePortrait.isActive = isIPhonePortrait

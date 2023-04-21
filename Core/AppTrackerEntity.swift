@@ -27,11 +27,12 @@ public class AppTrackerEntity: NSManagedObject {
         return NSFetchRequest<AppTrackerEntity>(entityName: "AppTrackerEntity")
     }
 
-    @nonobjc public class func fetchRequest(domain: String, bucket: String) -> NSFetchRequest<AppTrackerEntity> {
+    @nonobjc public class func fetchRequest(domain: String, bucket: String, blocked: Bool) -> NSFetchRequest<AppTrackerEntity> {
         let request = NSFetchRequest<AppTrackerEntity>(entityName: "AppTrackerEntity")
-        request.predicate = NSPredicate(format: "%K == %@ AND %K == %@",
+        request.predicate = NSPredicate(format: "%K == %@ AND %K == %@ AND %K == %@",
                                         #keyPath(AppTrackerEntity.domain), domain,
-                                        #keyPath(AppTrackerEntity.bucket), bucket)
+                                        #keyPath(AppTrackerEntity.bucket), bucket,
+                                        #keyPath(AppTrackerEntity.blocked), NSNumber(value: blocked))
         request.fetchLimit = 1
         return request
     }
@@ -48,8 +49,19 @@ public class AppTrackerEntity: NSManagedObject {
         return request
     }
 
+    public class func entity(in context: NSManagedObjectContext) -> NSEntityDescription {
+        return NSEntityDescription.entity(forEntityName: "AppTrackerEntity", in: context)!
+    }
+
+    public convenience init(context moc: NSManagedObjectContext) {
+        self.init(entity: AppTrackerEntity.entity(in: moc),
+                  insertInto: moc)
+    }
+
+    // swiftlint:disable:next function_parameter_count
     public static func makeTracker(domain: String,
                                    trackerOwner: String,
+                                   blocked: Bool,
                                    date: Date,
                                    bucket: String,
                                    context: NSManagedObjectContext) -> AppTrackerEntity {
@@ -57,6 +69,7 @@ public class AppTrackerEntity: NSManagedObject {
         object.uuid = UUID().uuidString
         object.domain = domain
         object.trackerOwner = trackerOwner
+        object.blocked = blocked
         object.count = 1
         object.timestamp = date
         object.bucket = bucket
@@ -67,6 +80,7 @@ public class AppTrackerEntity: NSManagedObject {
     @NSManaged public var uuid: String
     @NSManaged public var domain: String
     @NSManaged public var trackerOwner: String
+    @NSManaged public var blocked: Bool
     @NSManaged public var bucket: String
     @NSManaged public var timestamp: Date
     @NSManaged public var count: Int32

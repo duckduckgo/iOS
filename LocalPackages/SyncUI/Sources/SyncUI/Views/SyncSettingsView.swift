@@ -54,9 +54,10 @@ public struct SyncSettingsView: View {
     }
 
     @ViewBuilder
-    func deviceTypeImage(_ device: SyncSettingsViewModel.Device) -> Image {
+    func deviceTypeImage(_ device: SyncSettingsViewModel.Device) -> some View {
         let image = UIImage(named: "SyncDeviceType_\(device.type)") ?? UIImage(named: "SyncDeviceType_phone")!
         Image(uiImage: image)
+            .foregroundColor(.primary)
     }
 
     @ViewBuilder

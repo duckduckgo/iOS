@@ -17,9 +17,9 @@
 //  limitations under the License.
 //
 
+import Common
 import Core
 import WebKit
-import os.log
 import BrowserServicesKit
 import Persistence
 

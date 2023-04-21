@@ -214,7 +214,7 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     private func installFavoritesOverlay(onInstall: @escaping () -> Void = {}) {
-        let controller = FavoritesOverlay(favoritesViewModel: favoritesModel)
+        let controller = FavoritesOverlay(viewModel: favoritesModel)
         controller.delegate = favoritesOverlayDelegate
         install(controller: controller, completion: onInstall)
         favoritesOverlay = controller

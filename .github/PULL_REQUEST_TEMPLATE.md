@@ -60,4 +60,3 @@ Using a simulator where a physical device is unavailable is acceptable.
 ###### Internal references:
 [Software Engineering Expectations](https://app.asana.com/0/59792373528535/199064865822552)
 [Technical Design Template](https://app.asana.com/0/59792373528535/184709971311943)
-**When ready for review, remember to post the PR in MM**

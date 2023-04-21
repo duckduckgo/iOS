@@ -27,21 +27,28 @@ public enum FeatureFlag: String {
     case autofillCredentialsSaving
     case autofillInlineIconCredentials
     case autofillAccessCredentialManagement
+    case appTrackingProtection
 }
 
 extension FeatureFlag: FeatureFlagSourceProviding {
     public var source: FeatureFlagSource {
         switch self {
-        // swiftlint:disable line_length
-        case .debugMenu, .sync, .autofillCredentialInjecting, .autofillCredentialsSaving, .autofillInlineIconCredentials, .autofillAccessCredentialManagement:
+        case .debugMenu, .sync, .appTrackingProtection:
             return .internalOnly
+        case .autofillCredentialInjecting:
+            return .remoteReleasable(.subfeature(AutofillSubfeature.credentialsAutofill))
+        case .autofillCredentialsSaving:
+            return .remoteReleasable(.subfeature(AutofillSubfeature.credentialsSaving))
+        case .autofillInlineIconCredentials:
+            return .remoteReleasable(.subfeature(AutofillSubfeature.inlineIconCredentials))
+        case .autofillAccessCredentialManagement:
+            return .remoteReleasable(.subfeature(AutofillSubfeature.accessCredentialManagement))
         }
-        // swiftlint:enable line_length
     }
 }
 
 extension FeatureFlagger {
     public func isFeatureOn(_ featureFlag: FeatureFlag) -> Bool {
-        isFeatureOn(forProvider: featureFlag)
+        return isFeatureOn(forProvider: featureFlag)
     }
 }

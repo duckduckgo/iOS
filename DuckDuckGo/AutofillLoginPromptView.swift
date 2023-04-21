@@ -118,17 +118,19 @@ struct AutofillLoginPromptView: View {
             .padding(.leading, 8 + Const.Size.buttonBorderWidth)
         }
     }
-    
+
     var accountButtons: some View {
         Group {
+            let containsPartialMatches = viewModel.containsPartialMatches
             ForEach(viewModel.accountMatchesViewModels.indices, id: \.self) { group in
                 VStack(spacing: 12) {
-                    buttonGroupTitle(for: viewModel.accountMatchesViewModels[group])
+                    if containsPartialMatches {
+                        buttonGroupTitle(for: viewModel.accountMatchesViewModels[group])
+                    }
                     ForEach(viewModel.accountMatchesViewModels[group].accounts.indices, id: \.self) { index in
                         let accountViewModel = viewModel.accountMatchesViewModels[group].accounts[index]
-                        let isPerfectMatch = viewModel.accountMatchesViewModels[group].isPerfectMatch
                         accountButton(for: accountViewModel,
-                                      style: index == 0 && isPerfectMatch ? .primary : .secondary)
+                                      style: index == 0 && group == 0 ? .primary : .secondary)
                     }
                 }
             }

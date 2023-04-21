@@ -1,0 +1,17 @@
+<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g clip-path="url(#Tapad_svg__a)">
+    <path fill="url(#Tapad_svg__b)" d="M24 12c0 6.627-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0s12 5.373 12 12Z"/>
+    <path fill="#fff" fill-opacity=".12" fill-rule="evenodd" d="M24 12c0 6.627-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0s12 5.373 12 12ZM12 23.5c6.351 0 11.5-5.149 11.5-11.5S18.351.5 12 .5.5 5.649.5 12 5.649 23.5 12 23.5Z" clip-rule="evenodd"/>
+    <path fill="#D6D3EC" d="M9.5 10h5v8.5h-5V10Z"/>
+    <path fill="#fff" d="M5.5 6h13v4h-13V6Z"/>
+  </g>
+  <defs>
+    <linearGradient id="Tapad_svg__b" x1="21.375" x2="2.25" y1="3.875" y2="23" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E84368"/>
+      <stop offset="1" stop-color="#3D8DFD"/>
+    </linearGradient>
+    <clipPath id="Tapad_svg__a">
+      <path fill="#fff" d="M0 0h24v24H0z"/>
+    </clipPath>
+  </defs>
+</svg>

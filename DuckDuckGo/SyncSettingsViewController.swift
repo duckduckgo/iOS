@@ -53,8 +53,8 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
         // For some reason, on iOS 14, the viewDidLoad wasn't getting called so do some setup here
         if syncService.isAuthenticated {
-            // TODO pass in the devices
             rootView.model.syncEnabled(recoveryCode: recoveryCode)
+            refreshDevices()
         }
 
         rootView.model.delegate = self
@@ -74,6 +74,19 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     func dismissPresentedViewController() {
         navigationController?.topViewController?.dismiss(animated: true)
     }
+
+    func refreshDevices() {
+        Task { @MainActor in
+            rootView.model.devices = try await syncService.fetchDevices()
+                .map {
+                    .init(id: $0.id,
+                          name: $0.name,
+                          type: $0.type,
+                          isThisDevice: $0.id == syncService.account?.deviceId)
+                }
+        }
+    }
+    
 }
 
 extension SyncSettingsViewController: Themable {
@@ -138,9 +151,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         let controller = UIHostingController(rootView: DeviceConnectedView(saveRecoveryKeyViewModel: model))
         navigationController?.present(controller, animated: true) { [weak self] in
             self?.rootView.model.syncEnabled(recoveryCode: self!.recoveryCode)
-            self?.rootView.model.appendDevice(.init(id: UUID().uuidString, name: "My MacBook Pro", type: "desktop", isThisDevice: false))
-            self?.rootView.model.appendDevice(.init(id: UUID().uuidString, name: "My iPad", type: "tablet", isThisDevice: false))
-            self?.rootView.model.appendDevice(.init(id: UUID().uuidString, name: "Unknown type", type: "linux", isThisDevice: false))
+            self?.refreshDevices()
         }
     }
     

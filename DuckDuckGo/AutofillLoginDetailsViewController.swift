@@ -324,7 +324,6 @@ extension AutofillLoginDetailsViewController: AutofillLoginDetailsViewModelDeleg
 extension AutofillLoginDetailsViewController: Themable {
 
     func decorate(with theme: Theme) {
-        lockedView.decorate(with: theme)
         lockedView.backgroundColor = theme.backgroundColor
 
         noAuthAvailableView.decorate(with: theme)

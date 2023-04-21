@@ -17,13 +17,13 @@
 //  limitations under the License.
 //
 
+import Common
 import WidgetKit
 import SwiftUI
 import Core
 import CoreData
 import Kingfisher
 import Bookmarks
-import os
 import Persistence
 
 struct Favorite {
@@ -131,7 +131,7 @@ class Provider: TimelineProvider {
         guard let domain = domain else { return nil }
 
         let key = Favicons.createHash(ofDomain: domain)
-        guard let cacheUrl = Favicons.CacheType.bookmarks.cacheLocation() else { return nil }
+        guard let cacheUrl = Favicons.CacheType.fireproof.cacheLocation() else { return nil }
 
         // Slight leap here to avoid loading Kingisher as a library for the widgets.
         // Once dependency management is fixed, link it and use Favicons directly.

@@ -18,7 +18,6 @@
 //
 
 import SwiftUI
-import SVGView
 
 struct AppTPActivityIconView: View {
     
@@ -29,8 +28,8 @@ struct AppTPActivityIconView: View {
         ZStack {
             HStack {
                 switch trackerImage {
-                case .svg(let data):
-                    SVGView(data: data)
+                case .svg(let image):
+                    Image(uiImage: image)
                         .aspectRatio(contentMode: .fit)
                         .frame(width: Const.Size.iconWidth, height: Const.Size.iconWidth)
 

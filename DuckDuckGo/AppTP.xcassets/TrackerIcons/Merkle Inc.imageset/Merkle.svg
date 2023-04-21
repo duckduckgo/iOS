@@ -1,0 +1,13 @@
+<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g clip-path="url(#Merkle_svg__a)">
+    <path fill="#12295D" d="M24 12c0 6.627-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0s12 5.373 12 12Z"/>
+    <path fill="#fff" fill-opacity=".12" fill-rule="evenodd" d="M24 12c0 6.627-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0s12 5.373 12 12ZM12 23.5c6.351 0 11.5-5.149 11.5-11.5S18.351.5 12 .5.5 5.649.5 12 5.649 23.5 12 23.5Z" clip-rule="evenodd"/>
+    <path fill="#fff" d="M19.5 16.553h-1.923v-5.378l-2.883 2.884-2.884-2.884v5.378H9.887V7.5h1.022l3.809 3.809 3.76-3.809H19.5v9.053Z"/>
+    <path fill="#F23A1D" d="M7.965 11.567H3l4.965 4.964v-4.964Z"/>
+  </g>
+  <defs>
+    <clipPath id="Merkle_svg__a">
+      <path fill="#fff" d="M0 0h24v24H0z"/>
+    </clipPath>
+  </defs>
+</svg>

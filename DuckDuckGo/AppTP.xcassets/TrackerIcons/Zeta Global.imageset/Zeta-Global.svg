@@ -1,0 +1,22 @@
+<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g clip-path="url(#Zeta-Global_svg__a)">
+    <path fill="#00003D" d="M24 12c0 6.627-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0s12 5.373 12 12Z"/>
+    <path fill="#fff" fill-opacity=".12" fill-rule="evenodd" d="M23.979 12c0 6.616-5.363 11.98-11.98 11.98C5.385 23.98.022 18.615.022 12 .02 5.384 5.384.021 12 .021s11.979 5.363 11.979 11.98Zm-11.98 11.5c6.352 0 11.5-5.149 11.5-11.5S18.352.5 12 .5C5.65.5.5 5.65.5 12S5.65 23.5 12 23.5Z" clip-rule="evenodd"/>
+    <path fill="url(#Zeta-Global_svg__b)" d="m11.21 16.372-.454-2.072-3.066-2.464H4l5.701 4.573.822 3.85L20 11.836h-3.69l-5.1 4.536Z"/>
+    <path fill="url(#Zeta-Global_svg__c)" d="m12.79 7.3.442 2.072 3.078 2.464H20l-5.701-4.573-.834-3.85L4 11.836h3.69l5.1-4.536Z"/>
+  </g>
+  <defs>
+    <linearGradient id="Zeta-Global_svg__b" x1="20" x2="4" y1="11.836" y2="11.836" gradientUnits="userSpaceOnUse">
+      <stop offset=".399" stop-color="#0A05B0"/>
+      <stop offset="1" stop-color="#0068D0"/>
+    </linearGradient>
+    <linearGradient id="Zeta-Global_svg__c" x1="4" x2="20" y1="7.625" y2="7.625" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00C2FF"/>
+      <stop offset=".54" stop-color="#BC2676"/>
+      <stop offset=".857" stop-color="#FFFB6A"/>
+    </linearGradient>
+    <clipPath id="Zeta-Global_svg__a">
+      <path fill="#fff" d="M0 0h24v24H0z"/>
+    </clipPath>
+  </defs>
+</svg>

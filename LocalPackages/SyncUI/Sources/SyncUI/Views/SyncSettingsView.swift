@@ -62,6 +62,11 @@ public struct SyncSettingsView: View {
     @ViewBuilder
     func devices() -> some View {
         Section {
+            if model.devices.isEmpty {
+                ProgressView()
+                    .padding()
+            }
+
             ForEach(model.devices) { device in
                 NavigationLink(destination: EditDeviceView(model: model.createEditDeviceModel(device))) {
                     HStack {

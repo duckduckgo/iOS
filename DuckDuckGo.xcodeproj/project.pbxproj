@@ -12,7 +12,6 @@
 		020108A529A681E300644F9D /* AppTP.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 020108A429A681E200644F9D /* AppTP.xcassets */; };
 		020108A729A6ABF600644F9D /* AppTPToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020108A629A6ABF600644F9D /* AppTPToggleView.swift */; };
 		020108A929A7C1CD00644F9D /* AppTrackerImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020108A829A7C1CD00644F9D /* AppTrackerImageCache.swift */; };
-		020108AC29A7D7F800644F9D /* SVGView in Frameworks */ = {isa = PBXBuildFile; productRef = 020108AB29A7D7F800644F9D /* SVGView */; };
 		020108AE29A7F91600644F9D /* AppTPTrackerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020108AD29A7F91600644F9D /* AppTPTrackerCell.swift */; };
 		02025664298818B200E694E7 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02025663298818B100E694E7 /* NetworkExtension.framework */; };
 		0202566C298818B200E694E7 /* PacketTunnelProvider.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 02025662298818B100E694E7 /* PacketTunnelProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -100,7 +99,6 @@
 		1E05D1D829C46EDA00BF9A1F /* TimedPixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E05D1D729C46EDA00BF9A1F /* TimedPixel.swift */; };
 		1E05D1DB29C47B3300BF9A1F /* DailyPixelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E05D1D929C47B2B00BF9A1F /* DailyPixelTests.swift */; };
 		1E0A75EA27A2FBD000A2BFB6 /* Downloads.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E0A75E927A2FBD000A2BFB6 /* Downloads.storyboard */; };
-		1E16260229683C650004127F /* CustomDaxDialog.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E16260129683C650004127F /* CustomDaxDialog.xcassets */; };
 		1E162605296840D80004127F /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E162604296840D80004127F /* Triangle.swift */; };
 		1E1626072968413B0004127F /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1626062968413B0004127F /* ViewExtension.swift */; };
 		1E16260B296845120004127F /* cookie-banner-illustration-animated.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E162609296845120004127F /* cookie-banner-illustration-animated.json */; };
@@ -108,7 +106,6 @@
 		1E162610296C5C630004127F /* CustomDaxDialogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E16260F296C5C630004127F /* CustomDaxDialogViewModel.swift */; };
 		1E162613296C62820004127F /* CookieConsentDaxDialogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E162612296C62820004127F /* CookieConsentDaxDialogViewModel.swift */; };
 		1E162615296D910F0004127F /* cookie-icon-animated-40-dark.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E162614296D910F0004127F /* cookie-icon-animated-40-dark.json */; };
-		1E162618296D96430004127F /* OmniBarNotification.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E162617296D96430004127F /* OmniBarNotification.xcassets */; };
 		1E1D8B5D2994FFE100C96994 /* AutoconsentMessageProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1D8B5C2994FFE100C96994 /* AutoconsentMessageProtocolTests.swift */; };
 		1E1D8B6129950FD200C96994 /* AutoconsentBackgroundTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1D8B6029950FD200C96994 /* AutoconsentBackgroundTests.swift */; };
 		1E1D8B632995143200C96994 /* OHHTTPStubs in Frameworks */ = {isa = PBXBuildFile; productRef = 1E1D8B622995143200C96994 /* OHHTTPStubs */; };
@@ -787,6 +784,7 @@
 		F1F533841F26ABAC00D80D4F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1F533861F26ABAC00D80D4F /* Localizable.strings */; };
 		F40F843728C939760081AE75 /* AutofillLoginListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40F843528C938370081AE75 /* AutofillLoginListViewModelTests.swift */; };
 		F4147354283BF834004AA7A5 /* AutofillContentScopeFeatureToggles.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4147353283BF834004AA7A5 /* AutofillContentScopeFeatureToggles.swift */; };
+		F41610BC29E5DF66001F709D /* DeprecatedColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F41610BB29E5DF65001F709D /* DeprecatedColors.xcassets */; };
 		F41C2DA326C1925700F9A760 /* BookmarksAndFolders.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F41C2DA126C1925600F9A760 /* BookmarksAndFolders.xcdatamodeld */; };
 		F41C2DA526C1975E00F9A760 /* BookmarksCoreDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41C2DA426C1975E00F9A760 /* BookmarksCoreDataStorage.swift */; };
 		F42EF9312614BABE00101FB9 /* ActionSheetDaxDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42EF9302614BABD00101FB9 /* ActionSheetDaxDialogViewController.swift */; };
@@ -1045,7 +1043,6 @@
 		1E05D1D729C46EDA00BF9A1F /* TimedPixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimedPixel.swift; sourceTree = "<group>"; };
 		1E05D1D929C47B2B00BF9A1F /* DailyPixelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPixelTests.swift; sourceTree = "<group>"; };
 		1E0A75E927A2FBD000A2BFB6 /* Downloads.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Downloads.storyboard; sourceTree = "<group>"; };
-		1E16260129683C650004127F /* CustomDaxDialog.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = CustomDaxDialog.xcassets; sourceTree = "<group>"; };
 		1E162604296840D80004127F /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
 		1E1626062968413B0004127F /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		1E162609296845120004127F /* cookie-banner-illustration-animated.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cookie-banner-illustration-animated.json"; sourceTree = "<group>"; };
@@ -1053,7 +1050,6 @@
 		1E16260F296C5C630004127F /* CustomDaxDialogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDaxDialogViewModel.swift; sourceTree = "<group>"; };
 		1E162612296C62820004127F /* CookieConsentDaxDialogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieConsentDaxDialogViewModel.swift; sourceTree = "<group>"; };
 		1E162614296D910F0004127F /* cookie-icon-animated-40-dark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cookie-icon-animated-40-dark.json"; sourceTree = "<group>"; };
-		1E162617296D96430004127F /* OmniBarNotification.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = OmniBarNotification.xcassets; sourceTree = "<group>"; };
 		1E1D8B5C2994FFE100C96994 /* AutoconsentMessageProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoconsentMessageProtocolTests.swift; sourceTree = "<group>"; };
 		1E1D8B6029950FD200C96994 /* AutoconsentBackgroundTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoconsentBackgroundTests.swift; sourceTree = "<group>"; };
 		1E1D8B6729953CE200C96994 /* autoconsent-test.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "autoconsent-test.js"; sourceTree = "<group>"; };
@@ -2324,6 +2320,7 @@
 		F1F5337B1F26A9EF00D80D4F /* UserText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserText.swift; sourceTree = "<group>"; };
 		F40F843528C938370081AE75 /* AutofillLoginListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginListViewModelTests.swift; sourceTree = "<group>"; };
 		F4147353283BF834004AA7A5 /* AutofillContentScopeFeatureToggles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillContentScopeFeatureToggles.swift; sourceTree = "<group>"; };
+		F41610BB29E5DF65001F709D /* DeprecatedColors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = DeprecatedColors.xcassets; sourceTree = "<group>"; };
 		F41C2DA226C1925700F9A760 /* BookmarksAndFolders.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BookmarksAndFolders.xcdatamodel; sourceTree = "<group>"; };
 		F41C2DA426C1975E00F9A760 /* BookmarksCoreDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksCoreDataStorage.swift; sourceTree = "<group>"; };
 		F42EF9302614BABD00101FB9 /* ActionSheetDaxDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetDaxDialogViewController.swift; sourceTree = "<group>"; };
@@ -2382,7 +2379,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				020108AC29A7D7F800644F9D /* SVGView in Frameworks */,
 				853273B624FFE0BB00E3C778 /* WidgetKit.framework in Frameworks */,
 				0238E44F29C0FAA100615E30 /* FindInPageIOSJSSupport in Frameworks */,
 				3760DFED299315EF0045A446 /* Waitlist in Frameworks */,
@@ -2757,7 +2753,6 @@
 				1E1626082968418F0004127F /* Animations */,
 				1E162611296C62350004127F /* Model */,
 				1E016AB5294A5EB100F21625 /* CustomDaxDialog.swift */,
-				1E16260129683C650004127F /* CustomDaxDialog.xcassets */,
 			);
 			name = CustomDaxDialog;
 			sourceTree = "<group>";
@@ -2867,7 +2862,6 @@
 				1E7A71162934EB6400B7EA19 /* OmniBarNotificationAnimator.swift */,
 				1E7A71182934EC6100B7EA19 /* OmniBarNotificationContainerView.swift */,
 				1E7A711B2934EEBC00B7EA19 /* OmniBarNotification.swift */,
-				1E162617296D96430004127F /* OmniBarNotification.xcassets */,
 			);
 			name = OmniBarNotifications;
 			sourceTree = "<group>";
@@ -3446,6 +3440,7 @@
 			isa = PBXGroup;
 			children = (
 				F143C2B11E49D78C00CFDE3A /* Assets.xcassets */,
+				F41610BB29E5DF65001F709D /* DeprecatedColors.xcassets */,
 				F18641FF1E949E1900B2A911 /* Fonts */,
 				85514FFC2372DA0000DBC528 /* ios13-home-row.mp4 */,
 				84E3419E1E2F7EFB00BDBA6F /* LaunchScreen.storyboard */,
@@ -5012,7 +5007,6 @@
 				85875B6029912A9900115F05 /* SyncUI */,
 				3760DFEC299315EF0045A446 /* Waitlist */,
 				0238E44E29C0FAA100615E30 /* FindInPageIOSJSSupport */,
-				020108AB29A7D7F800644F9D /* SVGView */,
 				4B2754EB29E8C7DF00394032 /* Lottie */,
 			);
 			productName = DuckDuckGo;
@@ -5302,7 +5296,6 @@
 				98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */,
 				0202568C29881E4300E694E7 /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */,
 				0238E44D29C0FAA100615E30 /* XCRemoteSwiftPackageReference "ios-js-support" */,
-				020108AA29A7D7F800644F9D /* XCRemoteSwiftPackageReference "SVGView" */,
 				4B2754EA29E8C7DF00394032 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 84E341931E2F7EFB00BDBA6F /* Products */;
@@ -5372,6 +5365,7 @@
 				AA4D6AC023DE4D15007E8790 /* AppIconYellow76x76@2x.png in Resources */,
 				AA4D6AA423DE4CC4007E8790 /* AppIconBlue29x29@2x.png in Resources */,
 				AA4D6AE323DE4D33007E8790 /* AppIconGreen60x60@2x.png in Resources */,
+				F41610BC29E5DF66001F709D /* DeprecatedColors.xcassets in Resources */,
 				F4F7F10B25813FE200045D62 /* 02_Water_swirl_really_small.json in Resources */,
 				9880723825FA4E450039EF4B /* menu_light.json in Resources */,
 				85371D242121B9D500920548 /* new_tab.json in Resources */,
@@ -5420,7 +5414,6 @@
 				1EE411FE2858B9300003FE64 /* dark-shield.json in Resources */,
 				84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */,
 				1E16260B296845120004127F /* cookie-banner-illustration-animated.json in Resources */,
-				1E162618296D96430004127F /* OmniBarNotification.xcassets in Resources */,
 				AA4D6AD323DE4D27007E8790 /* AppIconPurple29x29@2x.png in Resources */,
 				AA4D6AA123DE4CC4007E8790 /* AppIconBlue60x60@3x.png in Resources */,
 				981FED712202519C008488D7 /* BlankSnapshot.storyboard in Resources */,
@@ -5464,7 +5457,6 @@
 				F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */,
 				AA4D6AA323DE4CC4007E8790 /* AppIconBlue40x40@3x.png in Resources */,
 				1EEF12542851D32B003DDE57 /* trackers-1.json in Resources */,
-				1E16260229683C650004127F /* CustomDaxDialog.xcassets in Resources */,
 				AAF2E28123E0495400962AF8 /* AppIconBlack83.5x83.5@2x.png in Resources */,
 				AA4D6ABF23DE4D15007E8790 /* AppIconYellow40x40@3x.png in Resources */,
 				AA4D6A8F23DE49A5007E8790 /* AppIconBlack29x29@3x.png in Resources */,
@@ -8158,14 +8150,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		020108AA29A7D7F800644F9D /* XCRemoteSwiftPackageReference "SVGView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/exyte/SVGView";
-			requirement = {
-				kind = exactVersion;
-				version = 1.0.4;
-			};
-		};
 		0202568C29881E4300E694E7 /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/robbiehanson/CocoaAsyncSocket";
@@ -8249,11 +8233,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		020108AB29A7D7F800644F9D /* SVGView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 020108AA29A7D7F800644F9D /* XCRemoteSwiftPackageReference "SVGView" */;
-			productName = SVGView;
-		};
 		0202568F29881ECA00E694E7 /* CocoaAsyncSocket */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0202568C29881E4300E694E7 /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */;

@@ -18,7 +18,6 @@
 //
 
 import SwiftUI
-import SVGView
 
 struct AppTPManageTrackersView: View {
     

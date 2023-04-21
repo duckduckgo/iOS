@@ -182,7 +182,6 @@
 		4B6484ED27FD1E350050A7A1 /* MacBrowserWaitlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E327FD1E340050A7A1 /* MacBrowserWaitlist.swift */; };
 		4B6484EE27FD1E350050A7A1 /* WindowsBrowserWaitlistDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E427FD1E340050A7A1 /* WindowsBrowserWaitlistDebugViewController.swift */; };
 		4B6484EF27FD1E350050A7A1 /* MacWaitlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E527FD1E340050A7A1 /* MacWaitlistViewController.swift */; };
-		4B6484F027FD1E350050A7A1 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E627FD1E340050A7A1 /* FontExtension.swift */; };
 		4B6484F327FD1E350050A7A1 /* MenuControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E927FD1E340050A7A1 /* MenuControllerView.swift */; };
 		4B6484FC27FFD14F0050A7A1 /* WindowsBrowserWaitlistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484FB27FFD14F0050A7A1 /* WindowsBrowserWaitlistTests.swift */; };
 		4B75EA9226A266CB00018634 /* PrintingUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75EA9126A266CB00018634 /* PrintingUserScript.swift */; };
@@ -290,7 +289,6 @@
 		85582E0029D7409700E9AE35 /* SyncSettingsViewController+PDFRendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85582DFF29D7409700E9AE35 /* SyncSettingsViewController+PDFRendering.swift */; };
 		855D914D2063EF6A00C4B448 /* TabSwitcherTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855D914C2063EF6A00C4B448 /* TabSwitcherTransition.swift */; };
 		8563A03C1F9288D600F04442 /* BrowserChromeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */; };
-		8565419C224D304D00DF1FB2 /* proximanova-extrabold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8565419B224D304D00DF1FB2 /* proximanova-extrabold.otf */; };
 		8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A34A1FC8D96B00239327 /* LaunchTabNotification.swift */; };
 		8565A34D1FC8DFE400239327 /* LaunchTabNotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A34C1FC8DFE400239327 /* LaunchTabNotificationTests.swift */; };
 		8577A1C5255D2C0D00D43FCD /* HitTestingToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8577A1C4255D2C0D00D43FCD /* HitTestingToolbar.swift */; };
@@ -682,10 +680,6 @@
 		F1E4A4451EE89460006F2EAE /* Bookmarks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1E4A4431EE89460006F2EAE /* Bookmarks.storyboard */; };
 		F1E90C201E678E7C005E7E21 /* HomeControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E90C1F1E678E7C005E7E21 /* HomeControllerDelegate.swift */; };
 		F1ED309D1EDC2EA400651986 /* TabSwitcher.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1ED309B1EDC2EA400651986 /* TabSwitcher.storyboard */; };
-		F1EEAC541EAFC783006128D9 /* proximanova-bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F18642021E949E1900B2A911 /* proximanova-bold.otf */; };
-		F1EEAC551EAFC783006128D9 /* proximanova-light.otf in Resources */ = {isa = PBXBuildFile; fileRef = F18642031E949E1900B2A911 /* proximanova-light.otf */; };
-		F1EEAC561EAFC783006128D9 /* proximanova-regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F18642041E949E1900B2A911 /* proximanova-regular.otf */; };
-		F1EEAC571EAFC783006128D9 /* proximanova-semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F18642051E949E1900B2A911 /* proximanova-semibold.otf */; };
 		F1F5337C1F26A9EF00D80D4F /* UserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F5337B1F26A9EF00D80D4F /* UserText.swift */; };
 		F1F533841F26ABAC00D80D4F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1F533861F26ABAC00D80D4F /* Localizable.strings */; };
 		F40F843728C939760081AE75 /* AutofillLoginListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40F843528C938370081AE75 /* AutofillLoginListViewModelTests.swift */; };
@@ -1007,7 +1001,6 @@
 		4B6484E327FD1E340050A7A1 /* MacBrowserWaitlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlist.swift; sourceTree = "<group>"; };
 		4B6484E427FD1E340050A7A1 /* WindowsBrowserWaitlistDebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowsBrowserWaitlistDebugViewController.swift; sourceTree = "<group>"; };
 		4B6484E527FD1E340050A7A1 /* MacWaitlistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacWaitlistViewController.swift; sourceTree = "<group>"; };
-		4B6484E627FD1E340050A7A1 /* FontExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
 		4B6484E927FD1E340050A7A1 /* MenuControllerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuControllerView.swift; sourceTree = "<group>"; };
 		4B6484FB27FFD14F0050A7A1 /* WindowsBrowserWaitlistTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowsBrowserWaitlistTests.swift; sourceTree = "<group>"; };
 		4B75EA9126A266CB00018634 /* PrintingUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintingUserScript.swift; sourceTree = "<group>"; };
@@ -1123,7 +1116,6 @@
 		85582DFF29D7409700E9AE35 /* SyncSettingsViewController+PDFRendering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SyncSettingsViewController+PDFRendering.swift"; sourceTree = "<group>"; };
 		855D914C2063EF6A00C4B448 /* TabSwitcherTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcherTransition.swift; sourceTree = "<group>"; };
 		8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserChromeManager.swift; sourceTree = "<group>"; };
-		8565419B224D304D00DF1FB2 /* proximanova-extrabold.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "proximanova-extrabold.otf"; sourceTree = "<group>"; };
 		8565A34A1FC8D96B00239327 /* LaunchTabNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTabNotification.swift; sourceTree = "<group>"; };
 		8565A34C1FC8DFE400239327 /* LaunchTabNotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTabNotificationTests.swift; sourceTree = "<group>"; };
 		8577A1C4255D2C0D00D43FCD /* HitTestingToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitTestingToolbar.swift; sourceTree = "<group>"; };
@@ -2078,10 +2070,6 @@
 		F17922E11E71CD67006E3D97 /* NoSuggestionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSuggestionsTableViewCell.swift; sourceTree = "<group>"; };
 		F17D72381E8B35C6003E8B0E /* AppURLsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppURLsTests.swift; sourceTree = "<group>"; };
 		F17D723B1E8BB374003E8B0E /* AppDeepLinks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDeepLinks.swift; sourceTree = "<group>"; };
-		F18642021E949E1900B2A911 /* proximanova-bold.otf */ = {isa = PBXFileReference; lastKnownFileType = text; name = "proximanova-bold.otf"; path = "licensed/proximanova-bold.otf"; sourceTree = "<group>"; };
-		F18642031E949E1900B2A911 /* proximanova-light.otf */ = {isa = PBXFileReference; lastKnownFileType = text; name = "proximanova-light.otf"; path = "licensed/proximanova-light.otf"; sourceTree = "<group>"; };
-		F18642041E949E1900B2A911 /* proximanova-regular.otf */ = {isa = PBXFileReference; lastKnownFileType = text; name = "proximanova-regular.otf"; path = "licensed/proximanova-regular.otf"; sourceTree = "<group>"; };
-		F18642051E949E1900B2A911 /* proximanova-semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = text; name = "proximanova-semibold.otf"; path = "licensed/proximanova-semibold.otf"; sourceTree = "<group>"; };
 		F189AED61F18F6DE001EBAE1 /* TabTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabTests.swift; sourceTree = "<group>"; };
 		F189AEE31F18FDAF001EBAE1 /* LinkTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkTests.swift; sourceTree = "<group>"; };
 		F194FAEC1F14E2B3009B4DF8 /* UIFontExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFontExtension.swift; sourceTree = "<group>"; };
@@ -2116,11 +2104,6 @@
 		F1E4A4441EE89460006F2EAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Bookmarks.storyboard; sourceTree = "<group>"; };
 		F1E90C1F1E678E7C005E7E21 /* HomeControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeControllerDelegate.swift; sourceTree = "<group>"; };
 		F1ED309C1EDC2EA400651986 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TabSwitcher.storyboard; sourceTree = "<group>"; };
-		F1EEAC481EAFC708006128D9 /* proximanova-bold.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "proximanova-bold.otf"; sourceTree = "<group>"; };
-		F1EEAC491EAFC708006128D9 /* proximanova-light.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "proximanova-light.otf"; sourceTree = "<group>"; };
-		F1EEAC4A1EAFC708006128D9 /* proximanova-regular.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "proximanova-regular.otf"; sourceTree = "<group>"; };
-		F1EEAC4B1EAFC708006128D9 /* proximanova-semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "proximanova-semibold.otf"; sourceTree = "<group>"; };
-		F1EEAC4C1EAFC708006128D9 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
 		F1F5337B1F26A9EF00D80D4F /* UserText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserText.swift; sourceTree = "<group>"; };
 		F40F843528C938370081AE75 /* AutofillLoginListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginListViewModelTests.swift; sourceTree = "<group>"; };
 		F4147353283BF834004AA7A5 /* AutofillContentScopeFeatureToggles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillContentScopeFeatureToggles.swift; sourceTree = "<group>"; };
@@ -2838,7 +2821,6 @@
 				6FB030C7234331B400A10DB9 /* Configuration.xcconfig */,
 				84E341941E2F7EFB00BDBA6F /* DuckDuckGo */,
 				F143C2E51E4A4CD400CFDE3A /* Core */,
-				F1EEAC461EAFC708006128D9 /* Fonts */,
 				8390446D20BDCE10006461CD /* ShareExtension */,
 				98A54A8222AFCB2C00E541F4 /* Instruments */,
 				84E341A91E2F7EFB00BDBA6F /* UnitTests */,
@@ -2939,7 +2921,6 @@
 			children = (
 				F143C2B11E49D78C00CFDE3A /* Assets.xcassets */,
 				F41610BB29E5DF65001F709D /* DeprecatedColors.xcassets */,
-				F18641FF1E949E1900B2A911 /* Fonts */,
 				85514FFC2372DA0000DBC528 /* ios13-home-row.mp4 */,
 				84E3419E1E2F7EFB00BDBA6F /* LaunchScreen.storyboard */,
 				F1F533861F26ABAC00D80D4F /* Localizable.strings */,
@@ -4045,18 +4026,6 @@
 			name = Javascript;
 			sourceTree = "<group>";
 		};
-		F18641FF1E949E1900B2A911 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				F18642021E949E1900B2A911 /* proximanova-bold.otf */,
-				F18642031E949E1900B2A911 /* proximanova-light.otf */,
-				F18642041E949E1900B2A911 /* proximanova-regular.otf */,
-				F18642051E949E1900B2A911 /* proximanova-semibold.otf */,
-			);
-			name = Fonts;
-			path = fonts;
-			sourceTree = SOURCE_ROOT;
-		};
 		F186421A1E94A3F900B2A911 /* Support */ = {
 			isa = PBXGroup;
 			children = (
@@ -4276,7 +4245,6 @@
 				982686AC2600C0850011A8D6 /* ActionMessageView.swift */,
 				982686B82600C0960011A8D6 /* ActionMessageView.xib */,
 				1EF24234273BB9D200DE3D02 /* IntervalSlider.swift */,
-				4B6484E627FD1E340050A7A1 /* FontExtension.swift */,
 				319A37162829C8AD0079FBCE /* UITableViewExtension.swift */,
 				37FCAABB2992F592000E420A /* MultilineScrollableTextFix.swift */,
 				37FCAABF29930E26000E420A /* FailedAssertionView.swift */,
@@ -4300,28 +4268,6 @@
 				F198D7961E3A45C00088DA8A /* Web */,
 			);
 			name = Core;
-			sourceTree = "<group>";
-		};
-		F1EEAC461EAFC708006128D9 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				F1EEAC531EAFC71D006128D9 /* Licensed */,
-			);
-			name = Fonts;
-			path = fonts/licensed;
-			sourceTree = SOURCE_ROOT;
-		};
-		F1EEAC531EAFC71D006128D9 /* Licensed */ = {
-			isa = PBXGroup;
-			children = (
-				8565419B224D304D00DF1FB2 /* proximanova-extrabold.otf */,
-				F1EEAC481EAFC708006128D9 /* proximanova-bold.otf */,
-				F1EEAC491EAFC708006128D9 /* proximanova-light.otf */,
-				F1EEAC4A1EAFC708006128D9 /* proximanova-regular.otf */,
-				F1EEAC4B1EAFC708006128D9 /* proximanova-semibold.otf */,
-				F1EEAC4C1EAFC708006128D9 /* readme.txt */,
-			);
-			name = Licensed;
 			sourceTree = "<group>";
 		};
 		F407605328131910006B1E0B /* AutofillLoginUI */ = {
@@ -4459,7 +4405,6 @@
 				84E3418E1E2F7EFB00BDBA6F /* Sources */,
 				8558AA7D20EE3CB200A346E9 /* Swift Lint */,
 				84E3418F1E2F7EFB00BDBA6F /* Frameworks */,
-				85F4D03A1F44A7BE0018BFD5 /* Install Fonts */,
 				84E341901E2F7EFB00BDBA6F /* Resources */,
 				F143C2F01E4A4CD400CFDE3A /* Embed Frameworks */,
 				F10307651E7D5B2C0059FEC7 /* Copy Frameworks */,
@@ -4809,13 +4754,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E16260C296845120004127F /* cookie-banner-illustration-animated-dark.json in Resources */,
-				F1EEAC541EAFC783006128D9 /* proximanova-bold.otf in Resources */,
 				AA4D6A8D23DE49A5007E8790 /* AppIconBlack40x40@3x.png in Resources */,
 				F47E53DB250A9A1C0037C686 /* Onboarding.xcassets in Resources */,
 				AA4D6ACC23DE4D27007E8790 /* AppIconPurple60x60@2x.png in Resources */,
-				F1EEAC551EAFC783006128D9 /* proximanova-light.otf in Resources */,
-				F1EEAC561EAFC783006128D9 /* proximanova-regular.otf in Resources */,
-				F1EEAC571EAFC783006128D9 /* proximanova-semibold.otf in Resources */,
 				1E242960293F585300584836 /* cookie-icon-animated-40-light.json in Resources */,
 				AA4D6AA223DE4CC4007E8790 /* AppIconBlue76x76@2x.png in Resources */,
 				AA4D6AB823DE4D15007E8790 /* AppIconYellow29x29@2x.png in Resources */,
@@ -4912,7 +4853,6 @@
 				85A9C37920E0E00C00073340 /* HomeRow.xcassets in Resources */,
 				B6BA95C528894A28004ABA20 /* BrowsingMenuViewController.storyboard in Resources */,
 				AA4D6AE623DE4D33007E8790 /* AppIconGreen60x60@3x.png in Resources */,
-				8565419C224D304D00DF1FB2 /* proximanova-extrabold.otf in Resources */,
 				AA4D6A9323DE49A5007E8790 /* AppIconBlack76x76@2x.png in Resources */,
 				1E908BF229827C480008C8F3 /* autoconsent-bundle.js in Resources */,
 				F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */,
@@ -5062,22 +5002,6 @@
 			shellPath = /bin/sh;
 			shellScript = "if [[ -n \"$CI\" ]] || [[ -n \"$BITRISE_IO\" ]]; then\n    echo \"Skipping SwiftLint run in CI\"\n    exit 0\nfi\n\nif test -d \"/opt/homebrew/bin/\"; then\n    PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nif test -d \"$HOME/.mint/bin/\"; then\n    PATH=\"$HOME/.mint/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which swiftlint >/dev/null; then\n   if [ \"$CONFIGURATION\" = \"Release\" ]; then\n       swiftlint lint --strict\n       if [ $? -ne 0 ]; then\n           echo \"error: SwiftLint validation failed.\"\n           exit 1\n       fi\n   else\n       swiftlint lint\n   fi\nelse\n   echo \"error: SwiftLint not installed. Install using \\`brew install swiftlint\\`\"\n   exit 1\nfi\n";
 		};
-		85F4D03A1F44A7BE0018BFD5 /* Install Fonts */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Install Fonts";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ $ENABLE_PREVIEWS == \"YES\" ]\nthen\n  exit 0\nelse\n  [ -z \"$TRAVIS\" ]\n\n  if env | grep -q ^TRAVIS=\n  then\n    echo Skipping fonts on TRAVIS build\n  elif [ -d ~/DuckDuckGo/Fonts/proximanova ]\n  then\n  \n    echo Installing fonts from standard location\n    cp ~/DuckDuckGo/Fonts/proximanova/*.otf \"$SRCROOT/fonts/licensed\"\n\n  elif [ ! -d ~/DuckDuckGo/Fonts/proximanova ]\n  then\n                                        \n      echo \"warning: Correct fonts not found, install proximanova fonts at ~/DuckDuckGo/Fonts/proximanova\"\n                                        \n  fi\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 		98B0CE69251C937D003FB601 /* Update Localizable.strings */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -5182,7 +5106,6 @@
 				314C92BA27C3E7CB0042EC96 /* QuickLookContainerViewController.swift in Sources */,
 				855D914D2063EF6A00C4B448 /* TabSwitcherTransition.swift in Sources */,
 				CB258D1229A4F24900DEBA24 /* ConfigurationManager.swift in Sources */,
-				4B6484F027FD1E350050A7A1 /* FontExtension.swift in Sources */,
 				F4F6DFB226E6AEC100ED7E12 /* AddOrEditBookmarkViewController.swift in Sources */,
 				F44D279F27F331BB0037F371 /* AutofillLoginPromptViewController.swift in Sources */,
 				C1BF0BA529B63D7200482B73 /* AutofillLoginPromptHelper.swift in Sources */,

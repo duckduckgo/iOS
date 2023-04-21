@@ -77,13 +77,8 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
     func refreshDevices() {
         Task { @MainActor in
-            rootView.model.devices = try await syncService.fetchDevices()
-                .map {
-                    .init(id: $0.id,
-                          name: $0.name,
-                          type: $0.type,
-                          isThisDevice: $0.id == syncService.account?.deviceId)
-                }
+            let devices = try await syncService.fetchDevices()
+            mapDevices(devices)
         }
     }
     
@@ -111,6 +106,22 @@ extension SyncSettingsViewController: Themable {
 }
 
 extension SyncSettingsViewController: SyncManagementViewModelDelegate {
+
+    private func mapDevices(_ devices: [RegisteredDevice]) {
+        rootView.model.devices = devices.map {
+            .init(id: $0.id, name: $0.name, type: $0.type, isThisDevice: $0.id == syncService.account?.deviceId)
+        }.sorted(by: { lhs, _ in
+            lhs.isThisDevice
+        })
+    }
+
+    func updateDeviceName(_ name: String) {
+        Task { @MainActor in
+            rootView.model.devices = []
+            let devices = try await syncService.updateDeviceName(name)
+            mapDevices(devices)
+        }
+    }
 
     func createAccountAndStartSyncing() {
         Task { @MainActor in

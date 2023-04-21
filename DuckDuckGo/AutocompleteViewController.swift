@@ -20,7 +20,6 @@
 import Common
 import UIKit
 import Core
-import os.log
 import DesignResourcesKit
 
 class AutocompleteViewController: UIViewController {

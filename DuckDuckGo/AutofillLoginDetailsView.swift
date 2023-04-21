@@ -19,6 +19,7 @@
 
 import SwiftUI
 import DuckUI
+import DesignResourcesKit
 
 // swiftlint:disable file_length
 
@@ -27,14 +28,32 @@ struct AutofillLoginDetailsView: View {
     @State private var actionSheetConfirmDeletePresented: Bool = false
     
     var body: some View {
+        listWithBackground
+    }
+    
+    @ViewBuilder
+    private var listWithBackground: some View {
+        if #available(iOS 16.0, *) {
+            list
+                .scrollContentBackground(.hidden)
+                .background(Color(designSystemColor: .background))
+        } else {
+            list
+                .background(Color(designSystemColor: .background))
+        }
+    }
+    
+    private var list: some View {
         List {
             switch viewModel.viewMode {
             case .edit:
                 editingContentView
+                    .listRowBackground(Color(designSystemColor: .surface))
             case .view:
                 viewingContentView
             case .new:
                 editingContentView
+                    .listRowBackground(Color(designSystemColor: .surface))
             }
         }
         .simultaneousGesture(
@@ -213,7 +232,7 @@ struct AutofillLoginDetailsView: View {
              })
              .foregroundColor(Color.red)
         }
-        .listRowBackground(Color("AutofillCellBackground"))
+        .listRowBackground(Color(designSystemColor: .surface))
     }
 }
 
@@ -473,7 +492,7 @@ private struct BackgroundColor {
         if isSelected {
             return Color("AutofillCellSelectedBackground")
         } else {
-            return Color("AutofillCellBackground")
+            return Color(designSystemColor: .surface)
         }
     }
 }

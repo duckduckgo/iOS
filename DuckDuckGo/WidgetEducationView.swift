@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
 extension Font {
     init(uiFont: UIFont) {
@@ -93,7 +94,7 @@ private struct NumberedCircle: View {
 }
 
 private extension Color {
-    static let background = Color("WidgetEducationBackgroundColor")
+    static let background = Color(designSystemColor: .background)
     static let font = Color("WidgetEducationFontColor")
     static let circle = Color(UIColor.cornflowerBlue)
     static let numbers = Color.white

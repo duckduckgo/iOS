@@ -438,6 +438,8 @@ class SettingsViewController: UITableViewController {
 extension SettingsViewController: Themable {
     
     func decorate(with theme: Theme) {
+        view.backgroundColor = theme.backgroundColor
+
         decorateNavigationBar(with: theme)
         configureThemeCellAccessory()
         

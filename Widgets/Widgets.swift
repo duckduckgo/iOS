@@ -135,7 +135,7 @@ class Provider: TimelineProvider {
 
         // Slight leap here to avoid loading Kingisher as a library for the widgets.
         // Once dependency management is fixed, link it and use Favicons directly.
-        let imageUrl = cacheUrl.appendingPathComponent("com.onevcat.Kingfisher.ImageCache.bookmarks").appendingPathComponent(key)
+        let imageUrl = cacheUrl.appendingPathComponent("com.onevcat.Kingfisher.ImageCache.fireproof").appendingPathComponent(key)
 
         guard let data = (try? Data(contentsOf: imageUrl)) else { return nil }
 

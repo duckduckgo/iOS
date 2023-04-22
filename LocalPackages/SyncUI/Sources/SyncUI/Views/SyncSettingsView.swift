@@ -54,9 +54,10 @@ public struct SyncSettingsView: View {
     }
 
     @ViewBuilder
-    func deviceTypeImage(_ device: SyncSettingsViewModel.Device) -> Image {
+    func deviceTypeImage(_ device: SyncSettingsViewModel.Device) -> some View {
         let image = UIImage(named: "SyncDeviceType_\(device.type)") ?? UIImage(named: "SyncDeviceType_phone")!
         Image(uiImage: image)
+            .foregroundColor(.primary)
     }
 
     @ViewBuilder
@@ -135,8 +136,33 @@ public struct SyncSettingsView: View {
         }
     }
 
+    @ViewBuilder
+    func workInProgress() -> some View {
+        Section {
+            EmptyView()
+        } footer: {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Work in Progress")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundColor(.black)
+
+                // swiftlint:disable line_length
+                Text("This feature is viewable to internal users only and is still being developed and tested. Currently you can create and connect accounts. Management and data syncing will be available soon. **[More Info](https://app.asana.com/0/1201493110486074/1203756800930481/f)**")
+                    .foregroundColor(.black)
+                    .font(.system(size: 11, weight: .regular))
+                // swiftlint:enable line_length
+            }
+            .padding()
+            .background(RoundedRectangle(cornerRadius: 8).foregroundColor(.yellow))
+            .padding(.bottom, 10)
+        }
+
+    }
+
     public var body: some View {
         List {
+            workInProgress()
+
             syncToggle()
 
             if model.isSyncEnabled {

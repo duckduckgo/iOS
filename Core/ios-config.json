@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1682090240730,
+    "version": 1682101168110,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -1229,7 +1229,7 @@
                         "domain": "reddit.com",
                         "rules": [
                             {
-                                "selector": "iframe[src^='https://www.reddit.com/account/sso/one_tap/']",
+                                "selector": "._233XfOVq91N_ugGQDBb_OT",
                                 "type": "hide"
                             }
                         ]
@@ -1544,7 +1544,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "16e0c7ee0eeef2964512d09a73cbc5a0"
+            "hash": "3b2bbe9fba6182981a3b39bfc98f760b"
         },
         "exceptionHandler": {
             "exceptions": [],

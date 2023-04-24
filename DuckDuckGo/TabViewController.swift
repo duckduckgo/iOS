@@ -385,6 +385,13 @@ class TabViewController: UIViewController {
                 self?.load(urlRequest: .userInitiated(cleanURL))
             })
         }
+
+#if DEBUG
+        webView.onDeinit { [weak userContentController, weak self] in
+            userContentController?.assertObjectDeallocated(after: 4.0)
+            self?.assertObjectDeallocated(after: 4.0)
+        }
+#endif
     }
 
     private func addObservers() {
@@ -857,9 +864,11 @@ class TabViewController: UIViewController {
     }
 
     private func cleanUpBeforeClosing() {
-        let job = { [userContentController] in
+        let job = { [weak webView, userContentController] in
             userContentController.removeAllUserScripts()
             userContentController.removeAllContentRuleLists()
+
+            webView?.assertObjectDeallocated(after: 4.0)
         }
         guard Thread.isMainThread else {
             DispatchQueue.main.async(execute: job)

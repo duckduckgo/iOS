@@ -63,7 +63,7 @@ jobs:
         set -o pipefail && xcodebuild test \
           -scheme "DuckDuckGo" \
           -destination "platform=iOS Simulator,name=iPhone 14" \
-          | xcpretty -r junit -o unittests.xml
+          | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml
 
     - name: Publish unit tests report
       uses: mikepenz/action-junit-report@v3

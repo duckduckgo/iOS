@@ -17,7 +17,7 @@
 "action.title.add" = "Hozzáadás";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Bejelentkezési adatok automatikus kitöltése";
+"action.title.autofill.logins" = "Bejelentkezések";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Hozzáadás a könyvjelzőkhöz";
@@ -179,13 +179,13 @@
 "autofill.keep-enabled.alert.disable" = "Letilt";
 
 /* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Használat folytatása";
+"autofill.keep-enabled.alert.keep-using" = "Mentés folytatása";
 
 /* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "Az automatikus kitöltés bármikor kikapcsolható a beállításokban.";
+"autofill.keep-enabled.alert.message" = "Ez bármikor kikapcsolható a beállításokban.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Továbbra is szeretnéd használni az automatikus kitöltést?";
+"autofill.keep-enabled.alert.title" = "Továbbra is el szeretnéd menteni a bejelentkezéseket?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Megtekintés";
@@ -268,26 +268,20 @@
 /* Title for alert when attempting to save a duplicate login */
 "autofill.logins.details.save-duplicate-alert.title" = "Duplikált bejelentkezési adatok";
 
-/* Title for view displayed when autofill is locked */
-"autofill.logins.details.title" = "Automatikus kitöltés feloldása";
-
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Felhasználónév";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Csak ezen az eszközön és biztonságosan tároljuk a bejelentkezési adatokat";
+"autofill.logins.empty-view.subtitle" = "Csak ezen az eszközön és biztonságosan tároljuk a bejelentkezési adatokat.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Még nincsenek mentett bejelentkezési adatok";
-
-/* Title for view displayed when autofill is disabled and has no items */
-"autofill.logins.empty-view.title-disabled" = "Automatikus kitöltés engedélyezése a bejelentkezési adatok mentéséhez";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Mégsem";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Zárolás feloldása a mentett bejelentkezési adatok használatához";
+"autofill.logins.list.auth.reason" = "A mentett bejelentkezésekhez való hozzáférésért oldd fel az eszközt";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Bezárás";
@@ -301,17 +295,20 @@
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Bejelentkezési adatok keresése";
 
+/* Toast message when a login item without a title is deleted */
+"autofill.logins.list.login-deleted-message-no-title" = "Bejelentkezés törölve";
+
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Javasolt";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Bejelentkezési adatok automatikus kitöltése";
+"autofill.logins.list.title" = "Bejelentkezések";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Az automatikusan kitölthető adatok védelméhez jelszóra van szükség. Jelszó beállításához lépj az eszköz beállításaira.";
+"autofill.logins.no-auth.subtitle" = "A bejelentkezések védelméhez jelszó szükséges.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Az automatikus kitöltés használatához állítsd be az eszköz jelszavát";
+"autofill.logins.no-auth.title" = "Tedd biztonságossá a készülékedet a bejelentkezések mentéséhez";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Mégsem";
@@ -337,9 +334,6 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Nincs találat";
 
-/* Message displayed on modal explaining that an additional login will be saved. */
-"autofill.save-login.additional-login.message" = "Ez további bejelentkezési adatot ment el a webhelyhez.";
-
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.message" = "A DuckDuckGo biztonságosan tárolja ezen bejelentkezési adatokat az eszközödön. A mentett bejelentkezési adatokat a Beállításokban kezelheted.";
 
@@ -364,14 +358,17 @@
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Jelszó megjelenítése";
 
-/* Confirm CTA displayed on modal asking for the user to update the login */
-"autofill.update-login.save.CTA" = "Bejelentkezés frissítése";
+/* Message displayed on modal asking for the user to update the password */
+"autofill.update-password.message" = "A DuckDuckGo frissíti az eszközödön ezt a tárolt bejelentkezést.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Jelszó frissítése";
 
 /* Title displayed on modal asking for the user to update the password */
-"autofill.update-password.title" = "Frissíted a jelszót?";
+"autofill.update-password.title" = "Frissíted \n%@ jelszavát?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-username.save.CTA" = "Felhasználónév frissítése";
 
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "Frissíted a felhasználónevet?";

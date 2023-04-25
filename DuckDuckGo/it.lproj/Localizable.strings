@@ -17,7 +17,7 @@
 "action.title.add" = "Aggiungi";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Compilazione automatica dei dati di accesso";
+"action.title.autofill.logins" = "Dati di accesso";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Aggiungi ai segnalibri";
@@ -179,13 +179,13 @@
 "autofill.keep-enabled.alert.disable" = "Disabilita";
 
 /* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Continua a utilizzare";
+"autofill.keep-enabled.alert.keep-using" = "Continua a salvare";
 
 /* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "La funzione di riempimento automatico può essere disattivata in qualsiasi momento in Impostazioni.";
+"autofill.keep-enabled.alert.message" = "Puoi disattivare questa funzione in qualsiasi momento in Impostazioni.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Continuare a utilizzare il riempimento automatico?";
+"autofill.keep-enabled.alert.title" = "Vuoi continuare a salvare i dati di accesso?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Visualizza";
@@ -268,26 +268,20 @@
 /* Title for alert when attempting to save a duplicate login */
 "autofill.logins.details.save-duplicate-alert.title" = "Dati di accesso duplicati";
 
-/* Title for view displayed when autofill is locked */
-"autofill.logins.details.title" = "Sblocca la compilazione automatica";
-
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Nome utente";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "I dati di accesso vengono salvati in modo sicuro solo su questo dispositivo";
+"autofill.logins.empty-view.subtitle" = "I dati di accesso vengono salvati in modo sicuro solo su questo dispositivo.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Non ci sono ancora dati di accesso salvati";
-
-/* Title for view displayed when autofill is disabled and has no items */
-"autofill.logins.empty-view.title-disabled" = "Attiva il riempimento automatico per iniziare a salvare i dati di accesso";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Annulla";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Sblocca per utilizzare i dati di accesso salvati";
+"autofill.logins.list.auth.reason" = "Sblocca il dispositivo per accedere ai dati di accesso salvati";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Chiudi";
@@ -301,17 +295,20 @@
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Cerca dati di accesso";
 
+/* Toast message when a login item without a title is deleted */
+"autofill.logins.list.login-deleted-message-no-title" = "Dati di accesso eliminati";
+
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Suggerimenti";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Accessi compilazione automatica";
+"autofill.logins.list.title" = "Dati di accesso";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Per proteggere i dati del riempimento automatico è necessario un codice di accesso. Accedi alle impostazioni del dispositivo per impostarne uno.";
+"autofill.logins.no-auth.subtitle" = "Per proteggere i dati di accesso è necessario impostare un passcode.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Imposta il codice di accesso del tuo dispositivo per utilizzare la funzione di riempimento automatico";
+"autofill.logins.no-auth.title" = "Proteggi il tuo dispositivo per salvare i dati di accesso";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Annulla";
@@ -337,9 +334,6 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Nessun risultato";
 
-/* Message displayed on modal explaining that an additional login will be saved. */
-"autofill.save-login.additional-login.message" = "In questo modo vengono salvati ulteriori dati di accesso per questo sito.";
-
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.message" = "DuckDuckGo salverà in modo sicuro questi dati di accesso sul tuo dispositivo. Puoi gestire i dati di accesso salvati in Impostazioni.";
 
@@ -364,14 +358,17 @@
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Mostra password";
 
-/* Confirm CTA displayed on modal asking for the user to update the login */
-"autofill.update-login.save.CTA" = "Aggiorna dati di accesso";
+/* Message displayed on modal asking for the user to update the password */
+"autofill.update-password.message" = "DuckDuckGo aggiornerà questi dati di accesso memorizzati sul tuo dispositivo.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Aggiorna password";
 
 /* Title displayed on modal asking for the user to update the password */
-"autofill.update-password.title" = "Aggiornare password?";
+"autofill.update-password.title" = "Aggiornare la password per\n%@?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-username.save.CTA" = "Aggiorna nome utente";
 
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "Aggiornare nome utente?";

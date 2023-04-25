@@ -46,8 +46,8 @@
 /* Class = "UILabel"; text = "Debug Menu"; ObjectID = "A9G-5I-RSn"; */
 "A9G-5I-RSn.text" = "Atkļūdošanas izvēlne";
 
-/* Class = "UILabel"; text = "Autofill Logins"; ObjectID = "And-cQ-SEu"; */
-"And-cQ-SEu.text" = "Automātiski aizpildīt pieteikšanās datus";
+/* Class = "UILabel"; text = "Logins"; ObjectID = "And-cQ-SEu"; */
+"And-cQ-SEu.text" = "Pieteikšanās dati";
 
 /* Class = "UILabel"; text = "Animation"; ObjectID = "AtR-nS-Gun"; */
 "AtR-nS-Gun.text" = "Animācija";

@@ -17,7 +17,7 @@
 "action.title.add" = "Adicionar";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Preenchimento automático de inícios de sessão";
+"action.title.autofill.logins" = "Inícios de sessão";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Adicionar aos marcadores";
@@ -179,13 +179,13 @@
 "autofill.keep-enabled.alert.disable" = "Desabilitar (fora)";
 
 /* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Continuar a utilizar";
+"autofill.keep-enabled.alert.keep-using" = "Continuar a guardar";
 
 /* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "Podes desativar o preenchimento automático em qualquer altura nas Definições.";
+"autofill.keep-enabled.alert.message" = "Podes desativar isto em qualquer altura nas Definições.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Queres continuar a utilizar o preenchimento automático?";
+"autofill.keep-enabled.alert.title" = "Pretendes continuar a guardar inícios de sessão?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Visualizar";
@@ -268,26 +268,21 @@
 /* Title for alert when attempting to save a duplicate login */
 "autofill.logins.details.save-duplicate-alert.title" = "Início de sessão duplicado";
 
-/* Title for view displayed when autofill is locked */
-"autofill.logins.details.title" = "Desbloquear o preenchimento automático";
-
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Nome de utilizador";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Os inícios de sessão são armazenados em segurança apenas neste dispositivo";
+"autofill.logins.empty-view.subtitle" = "Os inícios de sessão são armazenados em segurança apenas neste dispositivo.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Nenhum início de sessão guardado";
 
-/* Title for view displayed when autofill is disabled and has no items */
-"autofill.logins.empty-view.title-disabled" = "Ativa o preenchimento automático para começares a guardar inícios de sessão";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Cancelar";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Desbloqueia para utilizares o início de sessão guardado";
+"autofill.logins.list.auth.reason" = "Desbloqueia o dispositivo para aceder aos inícios de sessão guardados";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Fechar";
@@ -301,17 +296,20 @@
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Pesquisar inícios de sessão";
 
+/* Toast message when a login item without a title is deleted */
+"autofill.logins.list.login-deleted-message-no-title" = "Início de sessão eliminado";
+
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Sugerido";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Preenchimento automático de inícios de sessão";
+"autofill.logins.list.title" = "Inícios de sessão";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "É necessário um código de acesso para proteger os teus detalhes de preenchimento automático. Configura um código de acesso nas definições do dispositivo.";
+"autofill.logins.no-auth.subtitle" = "Precisas de um código de acesso para proteger os teus inícios de sessão.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Configura o código de acesso do teu dispositivo para usares o preenchimento automático";
+"autofill.logins.no-auth.title" = "Proteger o dispositivo para guardar inícios de sessão";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Cancelar";
@@ -337,9 +335,6 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Sem resultados";
 
-/* Message displayed on modal explaining that an additional login will be saved. */
-"autofill.save-login.additional-login.message" = "Isto irá guardar um início de sessão adicional neste site.";
-
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.message" = "O DuckDuckGo vai armazenar este início de sessão em segurança no teu dispositivo. Podes gerir os inícios de sessão guardados nas Definições.";
 
@@ -364,14 +359,17 @@
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Mostrar palavra-passe";
 
-/* Confirm CTA displayed on modal asking for the user to update the login */
-"autofill.update-login.save.CTA" = "Atualizar início de sessão";
+/* Message displayed on modal asking for the user to update the password */
+"autofill.update-password.message" = "O DuckDuckGo vai atualizar este início de sessão armazenado no teu dispositivo.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Atualizar palavra-passe";
 
 /* Title displayed on modal asking for the user to update the password */
-"autofill.update-password.title" = "Atualizar palavra-passe?";
+"autofill.update-password.title" = "Atualizar palavra-passe para\n%@?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-username.save.CTA" = "Atualizar nome de utilizador";
 
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "Atualizar nome de utilizador?";

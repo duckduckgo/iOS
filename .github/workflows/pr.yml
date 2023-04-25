@@ -59,7 +59,7 @@ jobs:
       run: |
         set -o pipefail && xcodebuild test \
           -scheme "DuckDuckGo" \
-          -destination "platform=iOS Simulator,name=iPhone 8" \
+          -destination "platform=iOS Simulator,name=iPhone 14" \
           | xcpretty -r junit -o unittests.xml
 
     - name: Publish unit tests report

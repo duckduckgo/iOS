@@ -77,6 +77,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
     func refreshDevices() {
         Task { @MainActor in
+            rootView.model.devices = []
             let devices = try await syncService.fetchDevices()
             mapDevices(devices)
         }
@@ -262,6 +263,13 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 continuation.resume(returning: true)
             }
             self.present(alert, animated: true)
+        }
+    }
+
+    func removeDevice(_ device: SyncSettingsViewModel.Device) {
+        Task { @MainActor in
+            try await syncService.disconnect(deviceId: device.id)
+            refreshDevices()
         }
     }
 

@@ -65,9 +65,7 @@ jobs:
       if: env.cache_key_hash
       uses: actions/cache@v3
       with:
-        path: |
-          .build
-          ${{ env.HOME }}/.swiftpm
+        path: DerivedData/SourcePackages
         key: ${{ runner.os }}-spm-${{ env.cache_key_hash }}
         restore-keys: |
           ${{ runner.os }}-spm-
@@ -80,6 +78,7 @@ jobs:
         set -o pipefail && xcodebuild test \
           -scheme "DuckDuckGo" \
           -destination "platform=iOS Simulator,name=iPhone 8" \
+          -derivedDataPath "DerivedData" \
           | xcpretty -r junit -o unittests.xml
 
     - name: Publish unit tests report

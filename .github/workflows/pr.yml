@@ -52,6 +52,26 @@ jobs:
       with:
         submodules: recursive
 
+    - name: Set cache key hash
+      run: |
+         has_only_tags=$(jq '[ .pins[].state | has("version") ] | all' Package.resolved)
+         if [[ "$has_only_tags" == "true" ]]; then
+           echo "cache_key_hash=${{ hashFiles('Package.resolved') }}" >> $GITHUB_ENV
+         else
+           echo "Package.resolved contains dependencies specified by branch or commit, skipping cache."
+         fi
+
+    - name: Cache SPM
+      if: env.cache_key_hash
+      uses: actions/cache@v3
+      with:
+        path: |
+          .build
+          ${{ env.HOME }}/.swiftpm
+        key: ${{ runner.os }}-spm-${{ env.cache_key_hash }}
+        restore-keys: |
+          ${{ runner.os }}-spm-
+
     - name: Select Xcode
       run: sudo xcode-select -s /Applications/Xcode_$(<.xcode-version).app/Contents/Developer
 

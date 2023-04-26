@@ -82,6 +82,7 @@ struct UserText {
 
     static let removeButton = "Remove"
     static let cancelButton = "Cancel"
+    static let doneButton = "Done"
     static let nextButton = "Next"
     static let notNowButton = "Not Now"
     static let backButton = "Back"

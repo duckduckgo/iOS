@@ -42,7 +42,7 @@ struct EditDeviceView: View {
                     Button {
                         presentation.wrappedValue.dismiss()
                     } label: {
-                        Text("Cancel")
+                        Text(UserText.cancelButton)
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
@@ -50,7 +50,7 @@ struct EditDeviceView: View {
                         model.save()
                         presentation.wrappedValue.dismiss()
                     } label: {
-                        Text("Done")
+                        Text(UserText.doneButton)
                     }
                 }
             }

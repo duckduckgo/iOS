@@ -17,7 +17,7 @@
 "action.title.add" = "Lisää";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Täytä kirjautumistiedot automaattisesti";
+"action.title.autofill.logins" = "Kirjautumistiedot";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Lisää kirjanmerkkeihin";
@@ -179,13 +179,13 @@
 "autofill.keep-enabled.alert.disable" = "Poista Käytöstä";
 
 /* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Jatka käyttöä";
+"autofill.keep-enabled.alert.keep-using" = "Jatka tallentamista";
 
 /* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "Voit poistaa automaattisen täytön käytöstä milloin vain asetuksissa.";
+"autofill.keep-enabled.alert.message" = "Voit poistaa sen käytöstä milloin vain asetuksissa.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Haluatko jatkaa automaattisen täytön käyttöä?";
+"autofill.keep-enabled.alert.title" = "Haluatko jatkaa kirjautumistietojen tallentamista?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Näytä";
@@ -268,26 +268,20 @@
 /* Title for alert when attempting to save a duplicate login */
 "autofill.logins.details.save-duplicate-alert.title" = "Päällekkäiset kirjautumistiedot";
 
-/* Title for view displayed when autofill is locked */
-"autofill.logins.details.title" = "Poista automaattisen täytön lukitus";
-
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Käyttäjätunnus";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Kirjautumistiedot tallennetaan turvallisesti vain tälle laitteelle";
+"autofill.logins.empty-view.subtitle" = "Kirjautumistiedot tallennetaan turvallisesti vain tälle laitteelle.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Kirjautumistietoja ei ole vielä tallennettu";
-
-/* Title for view displayed when autofill is disabled and has no items */
-"autofill.logins.empty-view.title-disabled" = "Ota automaattinen täyttö käyttöön alkaaksesi tallentaa kirjautumistietoja";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Peruuta";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Avaa lukitus käyttääksesi tallennettuja kirjautumistietoja";
+"autofill.logins.list.auth.reason" = "Avaa laitteen lukitus päästäksesi tallennettuihin kirjautumistietoihin";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Sulje";
@@ -301,17 +295,20 @@
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Hae kirjautumistietoja";
 
+/* Toast message when a login item without a title is deleted */
+"autofill.logins.list.login-deleted-message-no-title" = "Kirjautumistieto poistettu";
+
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Ehdotettu";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Täytä kirjautumistiedot automaattisesti";
+"autofill.logins.list.title" = "Kirjautumistiedot";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Salakoodi tarvitaan suojaamaan automaattisen täytön tietosi. Määritä salakoodi siirtymällä laitteen asetuksiin.";
+"autofill.logins.no-auth.subtitle" = "Salakoodi tarvitaan suojaamaan kirjautumistietosi.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Määritä laitteen salakoodi käyttääksesi automaattista täyttöä";
+"autofill.logins.no-auth.title" = "Suojaa laitteesi kirjautumistietojen tallentamiseksi";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Peruuta";
@@ -328,6 +325,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "Kohteesta % @";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Sivuston %@ salasana";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Käytä tallennettuja kirjautumistietoja?";
 
@@ -337,11 +337,8 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Ei tuloksia";
 
-/* Message displayed on modal explaining that an additional login will be saved. */
-"autofill.save-login.additional-login.message" = "Tämä tallentaa ylimääräiset kirjautumistiedot tälle sivustolle.";
-
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo tallentaa nämä kirjautumistiedot turvallisesti laitteellesi. Voit hallita tallennettuja kirjautumistietoja asetuksissa.";
+"autofill.save-login.new-user.message" = "Kirjautumistiedot tallennetaan turvallisesti vain tälle laitteelle. Niitä voi hallita Asetuksissa Kirjautumistiedot-valikossa.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Haluatko, että DuckDuckGo tallentaa kirjautumistietosi?";
@@ -364,14 +361,17 @@
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Näytä salasana";
 
-/* Confirm CTA displayed on modal asking for the user to update the login */
-"autofill.update-login.save.CTA" = "Päivitä kirjautumistiedot";
+/* Message displayed on modal asking for the user to update the password */
+"autofill.update-password.message" = "DuckDuckGo päivittää tämän laitteellesi tallennetun kirjautumistiedon.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Päivitä salasana";
 
 /* Title displayed on modal asking for the user to update the password */
-"autofill.update-password.title" = "Päivitetäänkö salasana?";
+"autofill.update-password.title" = "Päivitä salasana \n%@?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-username.save.CTA" = "Päivitä käyttäjätunnus";
 
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "Päivitetäänkö käyttäjätunnus?";

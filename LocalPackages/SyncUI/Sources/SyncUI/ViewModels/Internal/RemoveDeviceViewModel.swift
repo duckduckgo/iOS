@@ -1,5 +1,5 @@
 //
-//  EditDeviceViewModel.swift
+//  RemoveDeviceViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -19,22 +19,27 @@
 
 import Foundation
 
-class EditDeviceViewModel: ObservableObject {
+class RemoveDeviceViewModel: ObservableObject {
 
     let device: SyncSettingsViewModel.Device
-    let onSave: (SyncSettingsViewModel.Device) -> Void
+    let onRemove: (SyncSettingsViewModel.Device) -> Void
 
     @Published var name: String
 
+    var imageName: String {
+        let type = device.type == "desktop" ? "Desktop" : "Mobile"
+        return "SyncRemoveDevice\(type)"
+    }
+
     init(device: SyncSettingsViewModel.Device,
-         onSave: @escaping (SyncSettingsViewModel.Device) -> Void) {
+         onRemove: @escaping (SyncSettingsViewModel.Device) -> Void) {
         self.device = device
-        self.onSave = onSave
+        self.onRemove = onRemove
         self.name = device.name
     }
 
-    func save() {
-        onSave(.init(id: device.id, name: name, type: device.type, isThisDevice: device.isThisDevice))
+    func remove() {
+        onRemove(device)
     }
-    
+
 }

@@ -29,49 +29,65 @@ struct AppTPManageTrackersView: View {
         viewModel.changeState(for: domain, blocking: isBlocking)
     }
     
+    var loadingStare: some View {
+        VStack {
+            SwiftUI.ProgressView()
+        }
+        .frame(maxHeight: .infinity)
+    }
+    
     var body: some View {
         ZStack {
             Color.viewBackground
                 .ignoresSafeArea()
             
-            ScrollView {
-                LazyVStack(alignment: .leading, spacing: 0) {
-                    Section {
-                        Button(action: {
-                            viewModel.resetAllowlist()
-                        }, label: {
-                            HStack {
-                                Spacer()
-                                
-                                Text(UserText.appTPRestoreDefaults)
-                                    .font(Font(uiFont: Const.Font.info))
-                                    .foregroundColor(Color.buttonTextColor)
+            if viewModel.trackerList.count == 0 {
+                loadingStare
+            } else {
+                ScrollView {
+                    LazyVStack(alignment: .leading, spacing: 0) {
+                        Section {
+                            Button(action: {
+                                viewModel.resetAllowlist()
+                            }, label: {
+                                HStack {
+                                    Spacer()
                                     
-                                Spacer()
+                                    Text(UserText.appTPRestoreDefaults)
+                                        .font(Font(uiFont: Const.Font.info))
+                                        .foregroundColor(Color.buttonTextColor)
+                                    
+                                    Spacer()
+                                }
+                                .padding(.horizontal)
+                                .frame(height: Const.Size.standardCellHeight)
+                            })
+                            .background(Color.cellBackground)
+                            .cornerRadius(Const.Size.cornerRadius)
+                            .padding(.bottom)
+                        }
+                        
+                        VStack {
+                            ForEach(viewModel.trackerList, id: \.hashValue) { tracker in
+                                let showDivider = tracker != viewModel.trackerList.last
+                                AppTPManageTrackerCell(tracker: tracker,
+                                                       imageCache: imageCache,
+                                                       showDivider: showDivider,
+                                                       onToggleTracker: onTrackerToggled(domain:isBlocking:))
                             }
-                            .padding(.horizontal)
-                            .frame(height: Const.Size.standardCellHeight)
-                        })
+                        }
                         .background(Color.cellBackground)
                         .cornerRadius(Const.Size.cornerRadius)
-                        .padding(.bottom)
                     }
-                    
-                    VStack {
-                        ForEach(viewModel.trackerList, id: \.hashValue) { tracker in
-                            let showDivider = tracker != viewModel.trackerList.last
-                            AppTPManageTrackerCell(tracker: tracker,
-                                                   imageCache: imageCache,
-                                                   showDivider: showDivider,
-                                                   onToggleTracker: onTrackerToggled(domain:isBlocking:))
-                        }
-                    }
-                    .background(Color.cellBackground)
-                    .cornerRadius(Const.Size.cornerRadius)
+                    .padding()
                 }
-                .padding()
             }
-            .navigationTitle(UserText.appTPManageTrackers)
+        }
+        .navigationTitle(UserText.appTPManageTrackers)
+        .onAppear {
+            Task {
+                viewModel.buildTrackerList()
+            }
         }
     }
 }

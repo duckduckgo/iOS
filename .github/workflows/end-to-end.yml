@@ -41,7 +41,7 @@ jobs:
         set -o pipefail && xcodebuild \
           -scheme "DuckDuckGo" \
           -destination "platform=iOS Simulator,name=iPhone 14" \
-          -derivedDataPath ~/DerivedData
+          -derivedDataPath "DerivedData"
 
     - name: Setup tests
       run: bundle install && bundle exec fastlane setup_e2e_tests
@@ -50,20 +50,20 @@ jobs:
       uses: mobile-dev-inc/action-maestro-cloud@v1.2.3
       with:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
-        app-file: /Users/runner/DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
+        app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
         workspace: .maestro/release_tests
 
     - name: Privacy tests
       uses: mobile-dev-inc/action-maestro-cloud@v1.2.3
       with:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
-        app-file: /Users/runner/DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
+        app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
         workspace: .maestro/privacy_tests
     
     - name: Ad Click Detection Flow tests
       uses: mobile-dev-inc/action-maestro-cloud@v1.2.3
       with:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
-        app-file: /Users/runner/DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
+        app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
         workspace: .maestro/privacy_tests
   

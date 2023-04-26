@@ -116,12 +116,12 @@ public class SyncSettingsViewModel: ObservableObject {
     func createEditDeviceModel(_ device: Device) -> EditDeviceViewModel {
         return EditDeviceViewModel(device: device) { [weak self] newValue in
             self?.delegate?.updateDeviceName(newValue.name)
-        } remove: { @MainActor in
-            if await self.delegate?.confirmRemoveDevice(device) == true {
-                self.delegate?.removeDevice(device)
-                return true
-            }
-            return false
+        }
+    }
+
+    func createRemoveDeviceModel(_ device: Device) -> RemoveDeviceViewModel {
+        return RemoveDeviceViewModel(device: device) { [weak self] device in
+            self?.delegate?.removeDevice(device)
         }
     }
 

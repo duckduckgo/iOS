@@ -267,6 +267,8 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
 
     func removeDevice(_ device: SyncSettingsViewModel.Device) {
+        print(#function, device.id, device.name)
+
         Task { @MainActor in
             try await syncService.disconnect(deviceId: device.id)
             refreshDevices()

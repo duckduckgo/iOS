@@ -1,5 +1,5 @@
 //
-//  EditDeviceView.swift
+//  RemoveDeviceView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -18,39 +18,45 @@
 //
 
 import SwiftUI
+import DuckUI
 
-struct EditDeviceView: View {
+struct RemoveDeviceView: View {
 
-    @ObservedObject var model: EditDeviceViewModel
+    @ObservedObject var model: RemoveDeviceViewModel
 
     @Environment(\.presentationMode) var presentation
 
     var body: some View {
         NavigationView {
-            List {
-                Section {
-                    TextField("", text: $model.name)
-                } header: {
-                    Text(UserText.editDeviceLabel)
-                }
+            VStack(spacing: 20) {
+                Image(model.imageName)
+
+                Text(UserText.removeDeviceTitle)
+                    .font(.title)
+
+                Text(UserText.removeDeviceMessage(model.device.name))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 20)
+                    .padding(.top, 20)
+                    .font(.system(size: 14))
             }
-            .applyListStyle()
-            .navigationTitle(UserText.editDevice(model.name))
+            .padding(.horizontal, 20)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button {
                         presentation.wrappedValue.dismiss()
                     } label: {
-                        Text("Cancel")
+                        Text(UserText.cancelButton)
                     }
                 }
-                ToolbarItem(placement: .confirmationAction) {
+                ToolbarItem(placement: .destructiveAction) {
                     Button {
-                        model.save()
+                        model.remove()
                         presentation.wrappedValue.dismiss()
                     } label: {
-                        Text("Done")
+                        Text(UserText.removeDeviceButton)
+                            .foregroundColor(.red)
                     }
                 }
             }

@@ -60,6 +60,8 @@ public struct SyncSettingsView: View {
             .foregroundColor(.primary)
     }
 
+    @State var selectedDevice: SyncSettingsViewModel.Device?
+
     @ViewBuilder
     func devices() -> some View {
         Section {
@@ -69,10 +71,13 @@ public struct SyncSettingsView: View {
             }
 
             ForEach(model.devices) { device in
-                NavigationLink(destination: EditDeviceView(model: model.createEditDeviceModel(device))) {
+                Button {
+                    selectedDevice = device
+                } label: {
                     HStack {
                         deviceTypeImage(device)
                         Text(device.name)
+                            .foregroundColor(.primary)
                         Spacer()
                         if device.isThisDevice {
                             Text(UserText.thisDevice)
@@ -84,6 +89,23 @@ public struct SyncSettingsView: View {
         } header: {
             Text(UserText.connectedDevicesTitle)
         }
+        .sheet(item: $selectedDevice) { device in
+            Group {
+                if device.isThisDevice {
+                    EditDeviceView(model: model.createEditDeviceModel(device))
+                } else {
+                    RemoveDeviceView(model: model.createRemoveDeviceModel(device))
+                }
+            }
+            .modifier {
+                if #available(iOS 16.0, *) {
+                    $0.presentationDetents([.medium])
+                } else {
+                    $0
+                }
+            }
+        }
+
     }
 
     @ViewBuilder
@@ -182,4 +204,11 @@ public struct SyncSettingsView: View {
 
     }
 
+}
+
+// Extension to apply custom view modifier
+extension View {
+    @ViewBuilder func modifier(@ViewBuilder _ closure: (Self) -> some View) -> some View {
+        closure(self)
+    }
 }

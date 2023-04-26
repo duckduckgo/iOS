@@ -865,8 +865,7 @@ class TabViewController: UIViewController {
 
     private func cleanUpBeforeClosing() {
         let job = { [weak webView, userContentController] in
-            userContentController.removeAllUserScripts()
-            userContentController.removeAllContentRuleLists()
+            userContentController.cleanUpBeforeClosing()
 
             webView?.assertObjectDeallocated(after: 4.0)
         }

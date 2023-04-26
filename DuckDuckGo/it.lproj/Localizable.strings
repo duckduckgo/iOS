@@ -275,7 +275,7 @@
 "autofill.logins.empty-view.subtitle" = "I dati di accesso vengono salvati in modo sicuro solo su questo dispositivo.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Non ci sono ancora dati di accesso salvati";
+"autofill.logins.empty-view.title" = "Non vi sono ancora dati di accesso salvati";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Annulla";
@@ -325,6 +325,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "Da %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Password per %@";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Usare i dati di accesso salvati?";
 
@@ -335,7 +338,7 @@
 "autofill.logins.search.no-results.title" = "Nessun risultato";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo salverà in modo sicuro questi dati di accesso sul tuo dispositivo. Puoi gestire i dati di accesso salvati in Impostazioni.";
+"autofill.save-login.new-user.message" = "I dati di accesso sono archiviati in modo sicuro solo su questo dispositivo e possono essere gestiti dal menu Accessi, all'interno di Impostazioni.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vuoi che DuckDuckGo salvi i dati di accesso?";

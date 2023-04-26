@@ -325,6 +325,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "À partir de %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Mot de passe pour %@";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Utiliser un identifiant enregistré ?";
 
@@ -335,7 +338,7 @@
 "autofill.logins.search.no-results.title" = "Aucun résultat";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo stockera cet identifiant en toute sécurité sur votre appareil. Vous pouvez gérer les identifiants enregistrés dans les paramètres.";
+"autofill.save-login.new-user.message" = "Les identifiants sont stockés en toute sécurité sur cet appareil uniquement et peuvent être gérés à partir du menu Identifiants dans Paramètres.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Voulez-vous que DuckDuckGo enregistre votre identifiant ?";

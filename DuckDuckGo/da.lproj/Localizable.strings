@@ -325,8 +325,11 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "Fra %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Adgangskode til %@";
+
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Brug et gemt login?";
+"autofill.logins.prompt.title" = "Vil du bruge et gemt login?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "for '%@'";
@@ -335,7 +338,7 @@
 "autofill.logins.search.no-results.title" = "Ingen resultater";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo gemmer dette login sikkert på din enhed. Du kan administrere gemte logins i Indstillinger.";
+"autofill.save-login.new-user.message" = "Logins gemmes kun sikkert på denne enhed og kan administreres fra menuen Automatisk udfyldning i Indstillinger.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Skal DuckDuckGo gemme dit login?";

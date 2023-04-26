@@ -325,6 +325,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "Från %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Lösenord för %@";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Använd sparad inloggning?";
 
@@ -335,7 +338,7 @@
 "autofill.logins.search.no-results.title" = "Inga resultat";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo lagrar denna inloggning säkert på din enhet. Du kan hantera sparade inloggningar i Inställningar.";
+"autofill.save-login.new-user.message" = "Inloggningar lagras säkert, enbart på den här enheten, och kan hanteras genom menyn Inloggningar i inställningarna.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vill du att DuckDuckGo ska spara din inloggning?";

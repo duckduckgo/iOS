@@ -325,6 +325,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "Z %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Heslo pro %@";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Použít uložené přihlášení?";
 
@@ -335,7 +338,7 @@
 "autofill.logins.search.no-results.title" = "Žádné výsledky";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo tyto přihlašovací údaje bezpečně uloží do tvého zařízení. Uložená přihlášení můžeš spravovat v Nastaveních.";
+"autofill.save-login.new-user.message" = "Přihlašovací údaje jsou bezpečně uložené jen v tomhle zařízení a dají se spravovat v nabídce Přihlášení v Nastaveních.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Má DuckDuckGo uložit přihlašovací údaje?";

@@ -275,7 +275,7 @@
 "autofill.logins.empty-view.subtitle" = "Datele de conectare sunt stocate în siguranță numai pe acest dispozitiv.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Nu au fost salvate încă date de autentificare";
+"autofill.logins.empty-view.title" = "Nu au fost salvate încă date de conectare";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Renunță";
@@ -325,6 +325,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "De la %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Parola pentru %@";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Folosești datele de conectare salvate?";
 
@@ -335,7 +338,7 @@
 "autofill.logins.search.no-results.title" = "Niciun rezultat";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo va stoca în siguranță aceste date de conectare pe dispozitivul tău. Din Setări poți gestiona datele de conectare salvate.";
+"autofill.save-login.new-user.message" = "Datele de conectare sunt stocate în siguranță doar pe acest dispozitiv și pot fi gestionate din meniul Date de conectare din Setări.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Dorești ca DuckDuckGo să îți salveze datele de autentificare?";

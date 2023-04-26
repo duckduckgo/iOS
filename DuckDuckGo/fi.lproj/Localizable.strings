@@ -277,7 +277,6 @@
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Kirjautumistietoja ei ole vielä tallennettu";
 
-
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Peruuta";
 
@@ -326,6 +325,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "Kohteesta % @";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Sivuston %@ salasana";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Käytä tallennettuja kirjautumistietoja?";
 
@@ -336,7 +338,7 @@
 "autofill.logins.search.no-results.title" = "Ei tuloksia";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo tallentaa nämä kirjautumistiedot turvallisesti laitteellesi. Voit hallita tallennettuja kirjautumistietoja asetuksissa.";
+"autofill.save-login.new-user.message" = "Kirjautumistiedot tallennetaan turvallisesti vain tälle laitteelle. Niitä voi hallita Asetuksissa Kirjautumistiedot-valikossa.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Haluatko, että DuckDuckGo tallentaa kirjautumistietosi?";

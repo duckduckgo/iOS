@@ -325,6 +325,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "Veebisaidilt %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Parool veebisaidi %@ jaoks";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Kas kasutada salvestatud sisselogimisandmeid?";
 
@@ -335,7 +338,7 @@
 "autofill.logins.search.no-results.title" = "Tulemusi pole";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo salvestab need sisselogimisandmed turvaliselt sinu seadmes. Salvestatud sisselogimisandmeid saad hallata seadetes.";
+"autofill.save-login.new-user.message" = "Sisselogimisandmed salvestatakse turvaliselt ainult selles seadmes ja neid saab hallata sätete menüüst Sisselogimisandmed.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Kas soovid, et DuckDuckGo salvestaks sinu sisselogimisandmed?";

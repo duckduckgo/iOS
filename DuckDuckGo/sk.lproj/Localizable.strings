@@ -275,7 +275,7 @@
 "autofill.logins.empty-view.subtitle" = "Prihlasovacie údaje sú zabezpečene uložené iba v tomto zariadení.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Zatiaľ nie sú uložené žiadne prihlásenia";
+"autofill.logins.empty-view.title" = "Zatiaľ nie sú uložené žiadne prihlasovacie údaje";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Zrušiť";
@@ -325,6 +325,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "Z adresy %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Heslo pre %@";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Použiť uložené prihlasovacie údaje?";
 
@@ -335,7 +338,7 @@
 "autofill.logins.search.no-results.title" = "Žiadne výsledky";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo toto prihlásenie zabezpečene uloží vo vašom zariadení. Uložené prihlásenia môžete spravovať v Nastaveniach.";
+"autofill.save-login.new-user.message" = "Prihlasovacie údaje sú zabezpečene uložené len v tomto zariadení a môžete ich spravovať v ponuke Prihlasovacie údaje v Nastaveniach.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Chcete, aby DuckDuckGo uložil vaše prihlasovacie údaje?";

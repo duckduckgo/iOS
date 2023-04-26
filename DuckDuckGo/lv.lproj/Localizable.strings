@@ -275,7 +275,7 @@
 "autofill.logins.empty-view.subtitle" = "Pieteikšanās dati tiek droši glabāti tikai šajā ierīcē.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Vēl nav saglabāti nekādi pieteikšanās dati";
+"autofill.logins.empty-view.title" = "Nav saglabātu pieteikšanās datu";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Atcelt";
@@ -325,6 +325,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "No %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "%@ parole";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Vai izmantot saglabātos pieteikšanās datus?";
 
@@ -335,7 +338,7 @@
 "autofill.logins.search.no-results.title" = "Nav rezultātu";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo droši saglabās šos pieteikšanās datus tavā ierīcē. Saglabātos pieteikšanās datus vari pārvaldīt sadaļā Iestatījumi.";
+"autofill.save-login.new-user.message" = "Pieteikšanās dati tiek droši saglabāti tikai šajā ierīcē, un tos var pārvaldīt no iestatījumu izvēlnes Pieteikšanās dati.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vai vēlies, lai DuckDuckGo saglabātu tavus pieteikšanās datus?";

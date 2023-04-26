@@ -277,7 +277,6 @@
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Δεν έχουν αποθηκευτεί ακόμα στοιχεία σύνδεσης";
 
-
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Ακύρωση";
 
@@ -326,6 +325,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "Από %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Κωδικός πρόσβασης για %@";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Χρήση αποθηκευμένων στοιχείων σύνδεσης;";
 
@@ -336,7 +338,7 @@
 "autofill.logins.search.no-results.title" = "Κανένα αποτέλεσμα";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Το DuckDuckGo θα αποθηκεύσει με ασφάλεια αυτά τα στοιχεία σύνδεσης στη συσκευή σας. Μπορείτε να διαχειριστείτε τα αποθηκευμένα στοιχεία σύνδεσής σας από τις Ρυθμίσεις.";
+"autofill.save-login.new-user.message" = "Οι συνδέσεις αποθηκεύονται με ασφάλεια μόνο σε αυτή τη συσκευή και η διαχείρισή τους γίνεται από το μενού Συνδέσεις, στις Ρυθμίσεις.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Θέλετε να αποθηκεύσει το DuckDuckGo τη σύνδεσή σας;";

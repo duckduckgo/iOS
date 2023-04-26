@@ -2470,6 +2470,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
                         
                         self.showLoginDetails(with: newCredential.account)
                     })
+                    Favicons.shared.loadFavicon(forDomain: newCredential.account.domain, intoCache: .fireproof, fromCache: .tabs)
                 }
             }
         } catch {

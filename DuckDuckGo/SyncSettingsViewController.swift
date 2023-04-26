@@ -52,7 +52,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         self.init(rootView: SyncSettingsView(model: SyncSettingsViewModel()))
 
         // For some reason, on iOS 14, the viewDidLoad wasn't getting called so do some setup here
-        if syncService.isAuthenticated {
+        if syncService.state == .active {
             rootView.model.syncEnabled(recoveryCode: recoveryCode)
             refreshDevices()
         }

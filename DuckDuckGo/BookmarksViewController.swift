@@ -102,6 +102,9 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     fileprivate var onDidAppearAction: () -> Void = {}
 
+    private var localUpdatesCancellable: AnyCancellable?
+    private var syncUpdatesCancellable: AnyCancellable?
+
     init?(coder: NSCoder,
           bookmarksDatabase: CoreDataDatabase,
           bookmarksSearch: BookmarksStringSearch,
@@ -112,6 +115,26 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         self.viewModel = BookmarkListViewModel(bookmarksDatabase: bookmarksDatabase, parentID: parentID)
         self.favicons = favicons
         super.init(coder: coder)
+
+        localUpdatesCancellable = viewModel.localUpdates
+            .sink { _ in
+                Task { @MainActor in
+                    guard let syncService = (UIApplication.shared.delegate as? AppDelegate)?.syncService, syncService.state == .active else {
+                        print("sync disabled, not syncing")
+                        return
+                    }
+                    print("requesting sync")
+                    syncService.scheduler.notifyDataChanged()
+                }
+            }
+
+        syncUpdatesCancellable = (UIApplication.shared.delegate as? AppDelegate)?.syncBookmarksAdapter.syncDidCompletePublisher
+            .sink { [weak self] _ in
+                self?.viewModel.reloadData()
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                }
+            }
     }
     
     required init?(coder: NSCoder) {

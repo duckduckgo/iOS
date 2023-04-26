@@ -31,6 +31,7 @@ import Crashes
 import Configuration
 import Networking
 import DDGSync
+import SyncDataProviders
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -57,8 +58,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var showKeyboardIfSettingOn = true
     private var lastBackgroundDate: Date?
 
+    private var syncMetadataDatabase: CoreDataDatabase = SyncMetadataDatabase.make()
+    private(set) var syncBookmarksAdapter: SyncBookmarksAdapter!
     private(set) var syncService: DDGSyncing!
-    private(set) var syncPersistence: SyncDataPersistor!
+    private(set) var syncMetadata: SyncMetadataStore!
 
     // MARK: lifecycle
 
@@ -167,6 +170,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fatalError("Could not create AppTP database stack: \(error?.localizedDescription ?? "err")")
             }
         }
+
+        syncMetadataDatabase.loadStore { context, error in
+            guard context != nil else {
+                if let error = error {
+//                    Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
+//                               error: error)
+                } else {
+//                    Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase)
+                }
+
+                Thread.sleep(forTimeInterval: 1)
+                fatalError("Could not create Sync Metadata database stack: \(error?.localizedDescription ?? "err")")
+            }
+        }
         
         Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
             WidgetCenter.shared.reloadAllTimelines()
@@ -183,8 +200,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         // MARK: Sync initialisation
-        syncPersistence = SyncDataPersistor()
-        syncService = DDGSync(persistence: syncPersistence)
+        syncMetadata = LocalSyncMetadataStore(database: syncMetadataDatabase)
+        syncBookmarksAdapter = SyncBookmarksAdapter(database: bookmarksDatabase, metadataStore: syncMetadata)
+        syncService = DDGSync(dataProviders: [syncBookmarksAdapter.provider])
 
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         
@@ -288,6 +306,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
             }
         }
+
+        syncService.scheduler.notifyAppLifecycleEvent()
     }
 
     private func fireAppLaunchPixel() {

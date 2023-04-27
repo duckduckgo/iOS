@@ -29,7 +29,7 @@ struct AppTPManageTrackersView: View {
         viewModel.changeState(for: domain, blocking: isBlocking)
     }
     
-    var loadingStare: some View {
+    var loadingState: some View {
         VStack {
             SwiftUI.ProgressView()
         }
@@ -42,7 +42,7 @@ struct AppTPManageTrackersView: View {
                 .ignoresSafeArea()
             
             if viewModel.trackerList.count == 0 {
-                loadingStare
+                loadingState
             } else {
                 ScrollView {
                     LazyVStack(alignment: .leading, spacing: 0) {

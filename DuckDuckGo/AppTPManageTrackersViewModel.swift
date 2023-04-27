@@ -51,7 +51,7 @@ class AppTPManageTrackersViewModel: ObservableObject {
             newList.append(tracker)
         }
         // Sort the list by Tracker Network then by domain
-        newList.sort(by: { ($0.trackerOwner, $0.domain) < ($1.trackerOwner, $1.domain) })
+        newList.sort(by: { ($0.trackerOwner.lowercased(), $0.domain) < ($1.trackerOwner.lowercased(), $1.domain) })
         Task { @MainActor in
             trackerList = newList
         }

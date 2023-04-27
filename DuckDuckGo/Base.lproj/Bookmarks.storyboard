@@ -40,7 +40,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No favorites added yet" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y8y-oO-xBm">
-                                        <rect key="frame" x="0.0" y="375.5" width="375" height="17"/>
+                                        <rect key="frame" x="0.0" y="375.5" width="375" height="20"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -166,9 +166,9 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mUo-IX-WrZ">
                                                             <rect key="frame" x="287" y="0.0" width="24" height="24"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MenuFavoriteSolid" translatesAutoresizingMaskIntoConstraints="NO" id="1fK-xP-Cxw">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Favorite-Solid-16" translatesAutoresizingMaskIntoConstraints="NO" id="1fK-xP-Cxw">
                                                                     <rect key="frame" x="4" y="4" width="16" height="16"/>
-                                                                    <color key="tintColor" name="BookmarksFolderColor"/>
+                                                                    <color key="tintColor" name="icons"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="16" id="Ryb-sj-pZe"/>
                                                                         <constraint firstAttribute="height" constant="16" id="x53-Oq-oQ3"/>
@@ -192,12 +192,13 @@
                                                 <constraint firstItem="PlS-RF-bTZ" firstAttribute="centerY" secondItem="2vh-lJ-WoO" secondAttribute="centerY" id="kCg-G1-s27"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" name="BookmarksCellColor"/>
+                                        <color key="backgroundColor" name="surface"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" button="YES"/>
                                         </accessibility>
                                         <connections>
                                             <outlet property="faviconImageView" destination="J8h-Tf-FM1" id="XS7-PQ-3fF"/>
+                                            <outlet property="favoriteImageView" destination="1fK-xP-Cxw" id="QRh-BK-1Yd"/>
                                             <outlet property="favoriteImageViewContainer" destination="mUo-IX-WrZ" id="u6U-4b-Y8d"/>
                                             <outlet property="titleLabel" destination="cV4-pj-JNb" id="gwU-ec-jnx"/>
                                         </connections>
@@ -210,10 +211,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xfD-A4-SRJ">
-                                                    <rect key="frame" x="16" y="14" width="311" height="16"/>
+                                                    <rect key="frame" x="16" y="12.5" width="311" height="19"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="744" text="No matches found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hqG-b3-Fq3">
-                                                            <rect key="frame" x="0.0" y="0.0" width="311" height="16"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="311" height="19"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" name="AlertButtonDestructiveTitleColor"/>
                                                             <nil key="highlightedColor"/>
@@ -228,7 +229,7 @@
                                                 <constraint firstItem="xfD-A4-SRJ" firstAttribute="leading" secondItem="e0A-ci-ZLj" secondAttribute="leadingMargin" id="fHt-IB-Glv"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" name="BookmarksCellColor"/>
+                                        <color key="backgroundColor" name="surface"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" button="YES"/>
                                         </accessibility>
@@ -246,7 +247,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9wR-fm-8Rn">
                                                     <rect key="frame" x="16" y="10" width="292.5" height="24"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Folder" translatesAutoresizingMaskIntoConstraints="NO" id="Ggc-7C-ugZ">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Folder-24" translatesAutoresizingMaskIntoConstraints="NO" id="Ggc-7C-ugZ">
                                                             <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                                                             <color key="tintColor" name="BookmarksFolderColor"/>
                                                             <constraints>
@@ -255,13 +256,13 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="744" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7VM-DV-W3e">
-                                                            <rect key="frame" x="32" y="0.0" width="214" height="24"/>
+                                                            <rect key="frame" x="32" y="0.0" width="213" height="24"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="061-pX-T9z" userLabel="NumberOfChildren">
-                                                            <rect key="frame" x="254" y="0.0" width="38.5" height="24"/>
+                                                            <rect key="frame" x="253" y="0.0" width="39.5" height="24"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" name="TableCellAccessoryTextColor"/>
                                                             <nil key="highlightedColor"/>
@@ -276,7 +277,7 @@
                                                 <constraint firstItem="9wR-fm-8Rn" firstAttribute="centerY" secondItem="1hV-h5-0bK" secondAttribute="centerY" id="NVL-lH-uDP"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" name="BookmarksCellColor"/>
+                                        <color key="backgroundColor" name="surface"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" button="YES"/>
                                         </accessibility>
@@ -298,13 +299,13 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No bookmarks added yet" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jdA-wE-Hkh">
-                                        <rect key="frame" x="93" y="353.5" width="189" height="17"/>
+                                        <rect key="frame" x="91" y="353.5" width="193" height="20"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="R7T-q4-qHz">
-                                        <rect key="frame" x="0.0" y="392.5" width="375" height="26"/>
+                                        <rect key="frame" x="0.0" y="395.5" width="375" height="29"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Import bookmark file from another browser"/>
@@ -407,7 +408,7 @@
                                 </connections>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" name="BookmarksTableViewBackgroundColor"/>
+                        <color key="backgroundColor" name="background"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="63r-nO-tSp" secondAttribute="bottom" id="7uU-MI-iq3"/>
                             <constraint firstItem="63r-nO-tSp" firstAttribute="leading" secondItem="ZKl-y5-8OG" secondAttribute="leading" id="8qg-Gp-0cE"/>
@@ -443,6 +444,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="591"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="separatorColor" name="BookmarksCellSeperatorColor"/>
+                        <color key="sectionIndexBackgroundColor" name="background"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="BookmarkFolderCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkFolderCell" id="OPL-sH-Akf" userLabel="BookmarkFolderCell" customClass="BookmarkFolderCell" customModule="DuckDuckGo" customModuleProvider="target">
                                 <rect key="frame" x="16" y="55.5" width="343" height="43.5"/>
@@ -454,7 +456,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="8R7-gf-yWn">
                                             <rect key="frame" x="16" y="10" width="311" height="24"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Folder" translatesAutoresizingMaskIntoConstraints="NO" id="8qY-sA-7P1">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Folder-24" translatesAutoresizingMaskIntoConstraints="NO" id="8qY-sA-7P1">
                                                     <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                                                     <color key="tintColor" name="BookmarksFolderColor"/>
                                                     <constraints>
@@ -478,7 +480,7 @@
                                         <constraint firstAttribute="trailingMargin" secondItem="8R7-gf-yWn" secondAttribute="trailing" id="gns-zm-1ez"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" name="BookmarksCellColor"/>
+                                <color key="backgroundColor" name="surface"/>
                                 <connections>
                                     <outlet property="folderImageView" destination="8qY-sA-7P1" id="neJ-nR-FKK"/>
                                     <outlet property="leadingPaddingConstraint" destination="7fS-iW-BEh" id="uZ7-wF-WMV"/>
@@ -494,7 +496,6 @@
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="KiU-Wb-7jj">
                                             <rect key="frame" x="16" y="0.0" width="315" height="44"/>
-                                            <color key="backgroundColor" name="BookmarksCellColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="XHp-zE-tVW"/>
                                             </constraints>
@@ -509,7 +510,7 @@
                                         <constraint firstItem="KiU-Wb-7jj" firstAttribute="leading" secondItem="MfZ-X5-f9l" secondAttribute="leading" constant="16" id="lbc-To-k5Z"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" name="BookmarksCellColor"/>
+                                <color key="backgroundColor" name="surface"/>
                                 <connections>
                                     <outlet property="textField" destination="KiU-Wb-7jj" id="hO7-0f-faW"/>
                                 </connections>
@@ -530,7 +531,6 @@
                                         </imageView>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="URL" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YqY-sP-hhb">
                                             <rect key="frame" x="88" y="44" width="243" height="44"/>
-                                            <color key="backgroundColor" name="BookmarksCellColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" priority="999" constant="44" id="tZz-vQ-lla"/>
                                             </constraints>
@@ -539,7 +539,6 @@
                                         </textField>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rT4-Yr-P8D">
                                             <rect key="frame" x="88" y="0.0" width="243" height="44"/>
-                                            <color key="backgroundColor" name="BookmarksCellColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="hfT-Mz-7EA"/>
                                             </constraints>
@@ -570,7 +569,7 @@
                                         <constraint firstItem="fVp-1a-TkJ" firstAttribute="centerY" secondItem="rT4-Yr-P8D" secondAttribute="bottom" id="xK7-H0-w8K"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" name="BookmarksCellColor"/>
+                                <color key="backgroundColor" name="surface"/>
                                 <connections>
                                     <outlet property="faviconImageView" destination="gf7-Lt-ftk" id="kIT-Vf-ZxY"/>
                                     <outlet property="seperatorViewHeight" destination="RDj-dx-Yf1" id="f1A-nY-fdp"/>
@@ -588,7 +587,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="c3O-4F-9vA">
                                             <rect key="frame" x="16" y="10" width="311" height="24"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FolderWithPlus" translatesAutoresizingMaskIntoConstraints="NO" id="lwP-jU-PzJ">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Folder-Add-24" translatesAutoresizingMaskIntoConstraints="NO" id="lwP-jU-PzJ">
                                                     <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                                                     <color key="tintColor" name="BookmarksFolderColor"/>
                                                     <constraints>
@@ -612,7 +611,7 @@
                                         <constraint firstItem="c3O-4F-9vA" firstAttribute="leading" secondItem="xfk-px-QiT" secondAttribute="leadingMargin" id="hdF-AL-e5p"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" name="BookmarksCellColor"/>
+                                <color key="backgroundColor" name="surface"/>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FavoriteCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="FavoriteCell" id="Uew-BN-bP6" userLabel="FavoriteFolderCell" customClass="FavoriteCell" customModule="DuckDuckGo" customModuleProvider="target">
                                 <rect key="frame" x="16" y="275.5" width="343" height="43.5"/>
@@ -622,7 +621,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorite" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mRK-XI-Rr8">
-                                            <rect key="frame" x="56" y="14" width="214" height="16"/>
+                                            <rect key="frame" x="56" y="12.5" width="214" height="19"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                             <color key="textColor" name="BookmarksCellLabelColor"/>
                                             <nil key="highlightedColor"/>
@@ -630,7 +629,7 @@
                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0pM-zQ-xZT">
                                             <rect key="frame" x="278" y="6.5" width="51" height="31"/>
                                         </switch>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BookmarkFavoriteIcon" translatesAutoresizingMaskIntoConstraints="NO" id="bJP-Vc-uWK">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Favorite-24" translatesAutoresizingMaskIntoConstraints="NO" id="bJP-Vc-uWK">
                                             <rect key="frame" x="16" y="10" width="24" height="24"/>
                                             <color key="tintColor" name="BookmarksFolderColor"/>
                                             <constraints>
@@ -650,7 +649,7 @@
                                         <constraint firstItem="mRK-XI-Rr8" firstAttribute="centerY" secondItem="Kwd-kN-eFx" secondAttribute="centerY" id="quc-na-xmf"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" name="BookmarksCellColor"/>
+                                <color key="backgroundColor" name="surface"/>
                                 <connections>
                                     <outlet property="favoriteToggle" destination="0pM-zQ-xZT" id="ZY7-CM-7Xu"/>
                                 </connections>
@@ -672,39 +671,42 @@
         <segue reference="Uhm-2I-Xo5"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="BookmarkFavoriteIcon" width="24" height="24"/>
         <image name="BookmarksEmpty" width="128" height="96"/>
+        <image name="Favorite-24" width="24" height="24"/>
+        <image name="Favorite-Solid-16" width="16" height="16"/>
         <image name="FavoritesEmpty" width="128" height="96"/>
-        <image name="Folder" width="24" height="24"/>
-        <image name="FolderWithPlus" width="24" height="24"/>
+        <image name="Folder-24" width="24" height="24"/>
+        <image name="Folder-Add-24" width="24" height="24"/>
         <image name="GlobeSmall" width="24" height="24"/>
-        <image name="MenuFavoriteSolid" width="16" height="16"/>
         <namedColor name="AlertButtonDestructiveTitleColor">
-            <color red="0.92549019607843142" green="0.21568627450980393" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
-        <namedColor name="BookmarksCellColor">
-            <color red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.92500001192092896" green="0.21600000560283661" blue="0.14100000262260437" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="BookmarksCellLabelColor">
-            <color red="0.28627450980392155" green="0.28627450980392155" blue="0.28627450980392155" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.28600001335144043" green="0.28600001335144043" blue="0.28600001335144043" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="BookmarksCellSeperatorColor">
-            <color red="0.78431372549019607" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.7839999794960022" green="0.77999997138977051" blue="0.80000001192092896" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="BookmarksFolderColor">
-            <color red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="BookmarksNavBarBackgroundColor">
-            <color red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.97600001096725464" green="0.97600001096725464" blue="0.97600001096725464" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="BookmarksNavBarTitleColor">
-            <color red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="BookmarksTableViewBackgroundColor">
-            <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="TableCellAccessoryTextColor">
-            <color red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.53299999237060547" green="0.53299999237060547" blue="0.53299999237060547" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="background">
+            <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="icons">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.8399999737739563" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="surface">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

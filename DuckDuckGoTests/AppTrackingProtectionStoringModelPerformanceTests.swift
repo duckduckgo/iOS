@@ -73,8 +73,9 @@ class AppTrackingProtectionStoringModelPerformanceTests: XCTestCase {
         var newTrackerValue = 1
 
         measure {
-            storingModel.storeBlockedTracker(domain: "newtracker\(newTrackerValue).com",
+            storingModel.storeTracker(domain: "newtracker\(newTrackerValue).com",
                                              trackerOwner: "New",
+                                             blocked: true,
                                              date: createDate(year: 2023, month: 01, day: 07))
             newTrackerValue += 1
         }
@@ -98,7 +99,8 @@ class AppTrackingProtectionStoringModelPerformanceTests: XCTestCase {
         let storingModel = AppTrackingProtectionStoringModel(appTrackingProtectionDatabase: database)
 
         measure {
-            storingModel.storeBlockedTracker(domain: "tracker1.com", trackerOwner: "Existing", date: createDate(year: 2023, month: 01, day: 07))
+            storingModel.storeTracker(domain: "tracker1.com", trackerOwner: "Existing",
+                                      blocked: true, date: createDate(year: 2023, month: 01, day: 07))
         }
     }
 
@@ -110,7 +112,7 @@ class AppTrackingProtectionStoringModelPerformanceTests: XCTestCase {
 
         for value in 0...trackerCount {
             let name = "tracker\(value).com"
-            _ = AppTrackerEntity.makeTracker(domain: name, trackerOwner: name, date: date, bucket: bucket, context: context)
+            _ = AppTrackerEntity.makeTracker(domain: name, trackerOwner: name, blocked: true, date: date, bucket: bucket, context: context)
         }
 
         try context.save()

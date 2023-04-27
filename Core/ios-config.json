@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1681481030583,
+    "version": 1682101168110,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -104,6 +104,10 @@
         "autoconsent": {
             "exceptions": [
                 {
+                    "domain": "autotrader.co.uk",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/326"
+                },
+                {
                     "domain": "zeitraum-moebel.de",
                     "reason": "After the cookie popup is managed and disappears, a semi-transparent overlay remains on the page which prevents further interaction with the site."
                 },
@@ -206,11 +210,12 @@
             ],
             "settings": {
                 "disabledCMPs": [
-                    "Sourcepoint-top"
+                    "Sourcepoint-top",
+                    "generic-cosmetic"
                 ]
             },
             "state": "enabled",
-            "hash": "66de1debed5c1823bde78ef5c26c0447"
+            "hash": "7adde7d4aa1b77fc92f18ec8f626f764"
         },
         "autofill": {
             "exceptions": [
@@ -948,6 +953,15 @@
                         ]
                     },
                     {
+                        "domain": "harpygee.com",
+                        "rules": [
+                            {
+                                "selector": "#leaderboard",
+                                "type": "override"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "hindustantimes.com",
                         "rules": [
                             {
@@ -1215,7 +1229,7 @@
                         "domain": "reddit.com",
                         "rules": [
                             {
-                                "selector": "iframe[src^='https://www.reddit.com/account/sso/one_tap/']",
+                                "selector": "._233XfOVq91N_ugGQDBb_OT",
                                 "type": "hide"
                             }
                         ]
@@ -1530,7 +1544,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "fbf699fbc88972809fe7bc17aeb7eb8f"
+            "hash": "3b2bbe9fba6182981a3b39bfc98f760b"
         },
         "exceptionHandler": {
             "exceptions": [],
@@ -1796,8 +1810,8 @@
             "state": "enabled",
             "exceptions": [
                 {
-                    "domain": "cnn.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/837"
+                    "domain": "natwest.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/851"
                 },
                 {
                     "domain": "ally.com",
@@ -1842,6 +1856,8 @@
                 "matchAllStackDomains": "disabled",
                 "overloadInstanceOf": "enabled",
                 "elementRemovalTimeout": 1000,
+                "injectGlobalStyles": "enabled",
+                "shadowDom": "enabled",
                 "scripts": [
                     {
                         "domain": "substackcdn.com",
@@ -2242,7 +2258,8 @@
                         "domain": "dr3fr5q4g2ul9.cloudfront.net"
                     },
                     {
-                        "domain": "cnn.io"
+                        "disabled_domain": "cnn.io",
+                        "reason": "https://github.com/duckduckgo/privacy-configuration/issues/837"
                     },
                     {
                         "domain": "cams.gratis"
@@ -2341,7 +2358,7 @@
                     }
                 }
             },
-            "hash": "0343456d7f0917ec319efd22d7febe44"
+            "hash": "22b875683b9a4db41bf9d1bb1b8f37af"
         },
         "serviceworkerInitiatedRequests": {
             "exceptions": [],
@@ -2736,7 +2753,8 @@
                             {
                                 "rule": "connatix.com",
                                 "domains": [
-                                    "accuweather.com"
+                                    "accuweather.com",
+                                    "dailymail.co.uk"
                                 ],
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/768"
                             }
@@ -2832,48 +2850,61 @@
                             {
                                 "rule": "securepubads.g.doubleclick.net/gampad/ads",
                                 "domains": [
-                                    "ah.nl"
+                                    "ah.nl",
+                                    "rocketnews24.com"
                                 ],
-                                "reason": "'Bonus offer' elements do not render and are not clickable."
+                                "reason": "ah.nl - 'Bonus offer' elements do not render and are not clickable. rocketnews24.com - https://github.com/duckduckgo/privacy-configuration/issues/846"
                             },
                             {
                                 "rule": "pubads.g.doubleclick.net/gampad/ads",
                                 "domains": [
                                     "nhl.com",
-                                    "viki.com"
+                                    "viki.com",
+                                    "rocketnews24.com"
                                 ],
-                                "reason": "nhl.com - Videos show a spinner and never load. viki.com - after a video has played for a few seconds an adwall pops up. Clicking 'I've turned off my adblocker' resets the video, then after a few seconds the adwall pops up again."
+                                "reason": "nhl.com - Videos show a spinner and never load. viki.com - after a video has played for a few seconds an adwall pops up. Clicking 'I've turned off my adblocker' resets the video, then after a few seconds the adwall pops up again. rocketnews24.com - https://github.com/duckduckgo/privacy-configuration/issues/846"
                             },
                             {
                                 "rule": "pubads.g.doubleclick.net/ssai/event/",
                                 "domains": [
-                                    "cbssports.com"
+                                    "cbssports.com",
+                                    "rocketnews24.com"
                                 ],
-                                "reason": "Live videos do not load or render."
+                                "reason": "cbssports.com - Live videos do not load or render. rocketnews24.com - https://github.com/duckduckgo/privacy-configuration/issues/846"
                             },
                             {
                                 "rule": "securepubads.g.doubleclick.net/tag/js/gpt.js",
                                 "domains": [
                                     "ah.nl",
                                     "wunderground.com",
-                                    "youmath.it"
+                                    "youmath.it",
+                                    "rocketnews24.com"
                                 ],
-                                "reason": "ah.nl - 'Bonus offer' elements do not render and are not clickable. wunderground.com - Video element does not display. youmath.it - Adwall displays which prevents page interaction and resets the page view when clicked."
+                                "reason": "ah.nl - 'Bonus offer' elements do not render and are not clickable. wunderground.com - Video element does not display. youmath.it - Adwall displays which prevents page interaction and resets the page view when clicked. rocketnews24.com - https://github.com/duckduckgo/privacy-configuration/issues/846"
                             },
                             {
                                 "rule": "securepubads.g.doubleclick.net/gpt/pubads_impl_",
                                 "domains": [
                                     "ah.nl",
-                                    "wunderground.com"
+                                    "wunderground.com",
+                                    "rocketnews24.com"
                                 ],
-                                "reason": "ah.nl - 'Bonus offer' elements do not render and are not clickable. wunderground.com - Video element does not display."
+                                "reason": "ah.nl - 'Bonus offer' elements do not render and are not clickable. wunderground.com - Video element does not display. rocketnews24.com - https://github.com/duckduckgo/privacy-configuration/issues/846"
                             },
                             {
                                 "rule": "securepubads.g.doubleclick.net/pagead/ppub_config",
                                 "domains": [
+                                    "rocketnews24.com",
                                     "weather.com"
                                 ],
-                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/415"
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/415 rocketnews24.com - https://github.com/duckduckgo/privacy-configuration/issues/846"
+                            },
+                            {
+                                "rule": "doubleclick.net",
+                                "domains": [
+                                    "rocketnews24.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/846"
                             }
                         ]
                     },
@@ -3235,17 +3266,26 @@
                                 "domains": [
                                     "magicgameworld.com",
                                     "youmath.it",
-                                    "duden.de"
+                                    "duden.de",
+                                    "rocketnews24.com"
                                 ],
-                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/388"
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/388 rocketnews24.com - https://github.com/duckduckgo/privacy-configuration/issues/846"
                             },
                             {
                                 "rule": "tpc.googlesyndication.com/pagead/js/loader21.html",
                                 "domains": [
                                     "laprensa.hn",
-                                    "rumble.com"
+                                    "rumble.com",
+                                    "rocketnews24.com"
                                 ],
-                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/388"
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/388 rocketnews24.com - https://github.com/duckduckgo/privacy-configuration/issues/846"
+                            },
+                            {
+                                "rule": "googlesyndication.com",
+                                "domains": [
+                                    "rocketnews24.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/846"
                             }
                         ]
                     },
@@ -4236,7 +4276,7 @@
                 }
             },
             "exceptions": [],
-            "hash": "db5aa22fb01f9dc5f5bf78a2afc7b3d5"
+            "hash": "76117f8e30dc4e04fe574285484a4967"
         },
         "trackingCookies1p": {
             "settings": {

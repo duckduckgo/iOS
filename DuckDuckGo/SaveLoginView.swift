@@ -182,14 +182,25 @@ struct SaveLoginView: View {
                 viewModel.save()
             } label: {
                 Text(confirmButton)
-            }.buttonStyle(PrimaryButtonStyle())
-            
+                        .font(Const.Fonts.CTA)
+                        .padding()
+                        .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight - Const.Size.buttonBorderWidth)
+                        .foregroundColor(Const.Colors.CTAPrimaryForeground)
+                        .background(Const.Colors.CTAPrimaryBackground)
+                        .cornerRadius(Const.Size.CTAButtonCornerRadius)
+            }
+
             Button {
                 viewModel.cancelButtonPressed()
             } label: {
                 Text(UserText.autofillSaveLoginNotNowCTA)
+                        .font(Const.Fonts.CTA)
+                        .padding()
+                        .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight - Const.Size.buttonBorderWidth)
+                        .foregroundColor(Const.Colors.CTASecondaryForeground)
+                        .background(Const.Colors.CTATertiaryBackground)
+                        .cornerRadius(Const.Size.CTAButtonCornerRadius)
             }
-            .buttonStyle(SecondaryButtonStyle())
         }
         .frame(width: isIPhonePortrait ? Const.Size.contentWidth : frame.width)
     }
@@ -324,6 +335,7 @@ private enum Const {
         static let updatedInfo = Font.system(.callout)
         static let titleCaption = Font.system(.footnote)
         static let userInfo = Font.system(.footnote).weight(.bold)
+        static let CTA = Font(UIFont.boldAppFont(ofSize: 16))
     }
 
     enum Margin {
@@ -343,5 +355,20 @@ private enum Const {
         }
         static let paddingSmallDevice: CGFloat = 28
         static let paddingDefault: CGFloat = 30
+        static let CTAButtonCornerRadius: CGFloat = 12
+        static let buttonBorderWidth: CGFloat = 2
+        static let CTAButtonMaxHeight: CGFloat = 50
     }
+
+    enum Colors {
+        static let CTAPrimaryBackground = Color("CTAPrimaryBackground")
+        static let CTASecondaryBackground = Color("CTASecondaryBackground")
+        static let CTATertiaryBackground = Color("CTATertiaryBackground")
+        static let CTAPrimaryForeground = Color("CTAPrimaryForeground")
+        static let CTASecondaryForeground = Color("CTASecondaryForeground")
+        static let PrimaryTextColor = Color("PrimaryTextColor")
+        static let SecondaryTextColor = Color("SecondaryTextColor")
+        static let CTASecondaryBorder = Color("CTASecondaryBorder")
+    }
+
 }

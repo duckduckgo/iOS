@@ -233,7 +233,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         }
     }
 
-    private func presentDeleteConfirmation(for title: String) {
+    private func presentDeleteConfirmation(for title: String, domain: String) {
         let message = title.isEmpty ? UserText.autofillLoginListLoginDeletedToastMessageNoTitle
                                     : UserText.autofillLoginListLoginDeletedToastMessage(for: title)
 
@@ -244,6 +244,9 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             self.viewModel.undoLastDelete()
         }, onDidDismiss: {
             self.viewModel.clearUndoCache()
+            NotificationCenter.default.post(name: FireproofFaviconUpdater.deleteFireproofFaviconNotification,
+                                            object: nil,
+                                            userInfo: [FireproofFaviconUpdater.UserInfoKeys.faviconDomain: domain])
         })
     }
     
@@ -317,12 +320,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             addBarButtonItem.isEnabled = false
             editButtonItem.isEnabled = false
         case .empty:
-            if viewModel.isAutofillEnabledInSettings {
-                navigationItem.rightBarButtonItems = [editButtonItem, addBarButtonItem]
-                editButtonItem.isEnabled = false
-            } else {
-                navigationItem.rightBarButtonItems = [addBarButtonItem]
-            }
+            navigationItem.rightBarButtonItems = [addBarButtonItem]
             addBarButtonItem.isEnabled = true
         case .searching, .searchingNoResults:
             navigationItem.rightBarButtonItems = []
@@ -448,7 +446,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
         case .empty:
             return max(tableView.bounds.height - tableView.contentSize.height, 250)
         case .showItems:
-            return viewModel.sections[section] == .enableAutofill ? 10 : 0
+            return 10
         default:
             return 0
         }
@@ -485,6 +483,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
         case .credentials(_, let items):
             if editingStyle == .delete {
                 let title = items[indexPath.row].title
+                let domain = items[indexPath.row].account.domain
                 let accountId = items[indexPath.row].account.id
 
                 let tableContentToDelete = viewModel.tableContentsToDelete(accountId: accountId)
@@ -501,7 +500,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
                     }
                     tableView.endUpdates()
 
-                    presentDeleteConfirmation(for: title)
+                    presentDeleteConfirmation(for: title, domain: domain)
                 }
             }
         default:
@@ -573,7 +572,7 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
         if deletedSuccessfully {
             viewModel.updateData()
             tableView.reloadData()
-            presentDeleteConfirmation(for: title)
+            presentDeleteConfirmation(for: title, domain: account.domain)
         }
     }
 }

@@ -19,15 +19,14 @@
 
 import Foundation
 import NetworkExtension
-import Core
 import BrowserServicesKit
 import Common
 
-protocol FirewallDelegate: AnyObject {
+public protocol FirewallDelegate: AnyObject {
     func statusDidChange(newStatus: NEVPNStatus)
 }
 
-protocol FirewallManaging {
+public protocol FirewallManaging {
     func status() -> NEVPNStatus
     func refreshManager() async
     func setState(to enabled: Bool) async throws
@@ -55,14 +54,14 @@ extension NEVPNStatus {
     }
 }
 
-class FirewallManager: FirewallManaging {
+public class FirewallManager: FirewallManaging {
     
-    static let apptpLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier, category: "AppTP")
+    public static let apptpLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier, category: "AppTP")
     
     var manager: NETunnelProviderManager?
-    var delegate: FirewallDelegate?
+    public var delegate: FirewallDelegate?
     
-    init() {
+    public init() {
         NotificationCenter.default.addObserver(self, selector: #selector(statusDidChange),
                                                name: .NEVPNStatusDidChange, object: nil)
     }
@@ -88,7 +87,7 @@ class FirewallManager: FirewallManaging {
         task.resume()
     }
     
-    func status() -> NEVPNStatus {
+    public func status() -> NEVPNStatus {
         guard let manager = manager else {
             return .invalid
         }
@@ -99,10 +98,18 @@ class FirewallManager: FirewallManaging {
     @objc func statusDidChange() {
         // Uncomment this noisy line to debug status changes
 //        os_log("[INFO] VPN status changed: %s", log: FirewallManager.apptpLog, type: .debug, status().description)
+//        if status() == .disconnected || status() == .disconnecting {
+//            if #available(iOSApplicationExtension 16.0, *) {
+//                manager?.connection.fetchLastDisconnectError() { err in
+//                    os_log("Last disconnect error: %s", log: FirewallManager.apptpLog, type: .error, err?.localizedDescription ?? "nil")
+//                }
+//            }
+//        }
+        
         delegate?.statusDidChange(newStatus: status())
     }
     
-    func refreshManager() async {
+    public func refreshManager() async {
         // get the reference to the latest manager in Settings
         do {
             let managers = try await NETunnelProviderManager.loadAllFromPreferences()
@@ -126,7 +133,33 @@ class FirewallManager: FirewallManaging {
         }
     }
     
-    func setState(to enabled: Bool) async throws {
+    public func notifyAllowlistChange() async {
+        await refreshManager()
+        guard let manager = self.manager else {
+            os_log("[ERROR] Could not load managers", log: FirewallManager.apptpLog, type: .error)
+            return
+        }
+        guard let session = manager.connection as? NETunnelProviderSession else {
+            os_log("[ERROR] Could not get tunnel session", log: FirewallManager.apptpLog, type: .error)
+            return
+        }
+        guard let messageData = "Refresh Allowlist".data(using: .utf8) else {
+            os_log("[ERROR] Could not create message data", log: FirewallManager.apptpLog, type: .error)
+            return
+        }
+        
+        do {
+            try session.sendProviderMessage(messageData) { data in
+                if let data = data, let message = String(data: data, encoding: .utf8) {
+                    print(message)
+                }
+            }
+        } catch {
+            os_log("[ERROR] Error sending message to tunnel: %s", log: FirewallManager.apptpLog, type: .error, error.localizedDescription)
+        }
+    }
+    
+    public func setState(to enabled: Bool) async throws {
         let managers = try await NETunnelProviderManager.loadAllFromPreferences()
         manager = nil
         if managers.count > 0 {

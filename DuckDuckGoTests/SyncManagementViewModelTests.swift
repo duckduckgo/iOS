@@ -91,6 +91,14 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
         monitor.incrementCalls(function: #function.cleaningFunctionName())
     }
 
+    func updateDeviceName(_ name: String) {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+    }
+
+    func removeDevice(_ device: SyncSettingsViewModel.Device) {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+    }
+
 }
 
 // MARK: An idea... can be made more public if works out

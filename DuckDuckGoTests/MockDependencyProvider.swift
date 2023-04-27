@@ -35,8 +35,6 @@ class MockDependencyProvider: DependencyProvider {
     var downloadManager: DownloadManager
     var autofillLoginSession: AutofillLoginSession
     var configurationManager: ConfigurationManager
-    var syncPersistence: LocalDataPersisting
-    var syncService: DDGSyncing
 
     init() {
         let defaultProvider = AppDependencyProvider()
@@ -51,7 +49,5 @@ class MockDependencyProvider: DependencyProvider {
         downloadManager = defaultProvider.downloadManager
         autofillLoginSession = defaultProvider.autofillLoginSession
         configurationManager = defaultProvider.configurationManager
-        syncPersistence = defaultProvider.syncPersistence
-        syncService = defaultProvider.syncService
     }
 }

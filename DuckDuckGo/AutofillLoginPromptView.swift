@@ -74,7 +74,7 @@ struct AutofillLoginPromptView: View {
     var titleHeaderView: some View {
         VStack(spacing: 12) {
             HStack {
-                FaviconView(viewModel: FaviconViewModel(domain: viewModel.domain))
+                FaviconView(viewModel: FaviconViewModel(domain: viewModel.domain, cacheType: .fireproof))
                     .scaledToFit()
                     .frame(width: 20, height: 20)
                 Text(viewModel.domain)
@@ -129,9 +129,8 @@ struct AutofillLoginPromptView: View {
                     }
                     ForEach(viewModel.accountMatchesViewModels[group].accounts.indices, id: \.self) { index in
                         let accountViewModel = viewModel.accountMatchesViewModels[group].accounts[index]
-                        let isPerfectMatch = viewModel.accountMatchesViewModels[group].isPerfectMatch
                         accountButton(for: accountViewModel,
-                                      style: index == 0 && isPerfectMatch ? .primary : .secondary)
+                                      style: index == 0 && group == 0 ? .primary : .secondary)
                     }
                 }
             }

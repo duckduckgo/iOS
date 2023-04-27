@@ -50,7 +50,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var suggestionTrayContainer: UIView!
     @IBOutlet weak var customNavigationBar: UIView!
     @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var fireButton: FireBarButtonItem!
+    @IBOutlet weak var fireButton: UIBarButtonItem!
     @IBOutlet weak var lastToolbarButton: UIBarButtonItem!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
@@ -547,9 +547,6 @@ class MainViewController: UIViewController {
 
     @IBAction func onFirePressed() {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
-        FireButton.stopAllFireButtonAnimations()
-        
-        FireButtonExperiment.storeThatFireButtonWasTapped()
         
         wakeLazyFireButtonAnimator()
         
@@ -594,8 +591,6 @@ class MainViewController: UIViewController {
         skipSERPFlow = true
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             showFireButtonPulse()
-            
-            tabSwitcherController?.viewDidAppear(false)
         }
     }
 
@@ -1361,7 +1356,7 @@ extension MainViewController: FavoritesOverlayDelegate {
         Pixel.fire(pixel: .homeScreenFavouriteLaunched)
         homeController?.chromeDelegate = nil
         dismissOmniBar()
-        Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .bookmarks, fromCache: .tabs)
+        Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .fireproof, fromCache: .tabs)
         if url.isBookmarklet() {
             executeBookmarklet(url)
         } else {
@@ -1869,10 +1864,6 @@ extension MainViewController: AutoClearWorker {
         if !ViewHighlighter.highlightedViews.contains(where: { $0.view == view }) {
             ViewHighlighter.hideAll()
             ViewHighlighter.showIn(window, focussedOnView: view)
-            
-            if let fireButton = view as? FireButton {
-                FireButtonExperiment.playFireButtonForOnboarding(fireButton: fireButton)
-            }
         }
     }
     
@@ -1900,7 +1891,6 @@ extension MainViewController: Themable {
         toolbar?.barTintColor = theme.barBackgroundColor
         toolbar?.tintColor = theme.barTintColor
         
-        fireButton.decorate(with: theme)
         tabSwitcherButton.decorate(with: theme)
         gestureBookmarksButton.decorate(with: theme)
         tabsButton.tintColor = theme.barTintColor
@@ -1912,8 +1902,6 @@ extension MainViewController: Themable {
         findInPageView.decorate(with: theme)
         
         logoText.tintColor = theme.ddgTextTintColor
-        
-        FireButtonExperiment.decorateFireButton(fireButton: fireButton, for: theme)
     }
     
 }

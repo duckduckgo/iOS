@@ -131,11 +131,11 @@ class Provider: TimelineProvider {
         guard let domain = domain else { return nil }
 
         let key = Favicons.createHash(ofDomain: domain)
-        guard let cacheUrl = Favicons.CacheType.bookmarks.cacheLocation() else { return nil }
+        guard let cacheUrl = Favicons.CacheType.fireproof.cacheLocation() else { return nil }
 
         // Slight leap here to avoid loading Kingisher as a library for the widgets.
         // Once dependency management is fixed, link it and use Favicons directly.
-        let imageUrl = cacheUrl.appendingPathComponent("com.onevcat.Kingfisher.ImageCache.bookmarks").appendingPathComponent(key)
+        let imageUrl = cacheUrl.appendingPathComponent("com.onevcat.Kingfisher.ImageCache.fireproof").appendingPathComponent(key)
 
         guard let data = (try? Data(contentsOf: imageUrl)) else { return nil }
 

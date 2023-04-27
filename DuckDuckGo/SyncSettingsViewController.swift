@@ -53,8 +53,8 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
         // For some reason, on iOS 14, the viewDidLoad wasn't getting called so do some setup here
         if syncService.isAuthenticated {
-            // TODO pass in the devices
             rootView.model.syncEnabled(recoveryCode: recoveryCode)
+            refreshDevices()
         }
 
         rootView.model.delegate = self
@@ -74,6 +74,15 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     func dismissPresentedViewController() {
         navigationController?.topViewController?.dismiss(animated: true)
     }
+
+    func refreshDevices() {
+        Task { @MainActor in
+            rootView.model.devices = []
+            let devices = try await syncService.fetchDevices()
+            mapDevices(devices)
+        }
+    }
+    
 }
 
 extension SyncSettingsViewController: Themable {
@@ -98,6 +107,22 @@ extension SyncSettingsViewController: Themable {
 }
 
 extension SyncSettingsViewController: SyncManagementViewModelDelegate {
+
+    private func mapDevices(_ devices: [RegisteredDevice]) {
+        rootView.model.devices = devices.map {
+            .init(id: $0.id, name: $0.name, type: $0.type, isThisDevice: $0.id == syncService.account?.deviceId)
+        }.sorted(by: { lhs, _ in
+            lhs.isThisDevice
+        })
+    }
+
+    func updateDeviceName(_ name: String) {
+        Task { @MainActor in
+            rootView.model.devices = []
+            let devices = try await syncService.updateDeviceName(name)
+            mapDevices(devices)
+        }
+    }
 
     func createAccountAndStartSyncing() {
         Task { @MainActor in
@@ -138,9 +163,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         let controller = UIHostingController(rootView: DeviceConnectedView(saveRecoveryKeyViewModel: model))
         navigationController?.present(controller, animated: true) { [weak self] in
             self?.rootView.model.syncEnabled(recoveryCode: self!.recoveryCode)
-            self?.rootView.model.appendDevice(.init(id: UUID().uuidString, name: "My MacBook Pro", type: "desktop", isThisDevice: false))
-            self?.rootView.model.appendDevice(.init(id: UUID().uuidString, name: "My iPad", type: "tablet", isThisDevice: false))
-            self?.rootView.model.appendDevice(.init(id: UUID().uuidString, name: "Unknown type", type: "linux", isThisDevice: false))
+            self?.refreshDevices()
         }
     }
     
@@ -196,8 +219,8 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             }
             alert.addAction(title: UserText.syncTurnOffConfirmAction, style: .destructive) {
                 Task { @MainActor in
-                    // TODO handle error disconnecting
                     do {
+                        self.rootView.model.isSyncEnabled = false
                         try await self.syncService.disconnect()
                     } catch {
                         print(error.localizedDescription)
@@ -218,7 +241,15 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 continuation.resume(returning: false)
             }
             alert.addAction(title: UserText.syncDeleteAllConfirmAction, style: .destructive) {
-                continuation.resume(returning: true)
+                Task { @MainActor in
+                    do {
+                        self.rootView.model.isSyncEnabled = false
+                        try await self.syncService.deleteAccount()
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                    continuation.resume(returning: true)
+                }
             }
             self.present(alert, animated: true)
         }
@@ -240,6 +271,13 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 continuation.resume(returning: true)
             }
             self.present(alert, animated: true)
+        }
+    }
+
+    func removeDevice(_ device: SyncSettingsViewModel.Device) {
+        Task { @MainActor in
+            try await syncService.disconnect(deviceId: device.id)
+            refreshDevices()
         }
     }
 

@@ -19,6 +19,7 @@
 
 import UIKit
 import MessageUI
+import NetworkExtension
 import Core
 import BrowserServicesKit
 import Persistence
@@ -110,7 +111,6 @@ class SettingsViewController: UITableViewController {
 
         configureAutofillCell()
         configureSyncCell()
-        configureAppTPCell()
         configureThemeCellAccessory()
         configureFireButtonAnimationCellAccessory()
         configureTextSizeCell()
@@ -138,6 +138,7 @@ class SettingsViewController: UITableViewController {
         configureEmailProtectionAccessoryText()
         configureMacBrowserWaitlistCell()
         configureWindowsBrowserWaitlistCell()
+        configureAppTPCell()
         
         // Make sure muliline labels are correctly presented
         tableView.setNeedsLayout()
@@ -260,6 +261,16 @@ class SettingsViewController: UITableViewController {
     
     private func configureAppTPCell() {
         appTPCell.isHidden = !shouldShowAppTPCell
+        
+        Task { @MainActor in
+            let fwm = FirewallManager()
+            await fwm.refreshManager()
+            if UserDefaults().bool(forKey: "appTPUsed") && fwm.status() != .connected {
+                appTPCell.detailTextLabel?.text = UserText.appTPCellDisabled
+            } else {
+                appTPCell.detailTextLabel?.text = UserText.appTPCellDetail
+            }
+        }
     }
 
     private func configureDebugCell() {

@@ -46,8 +46,8 @@
 /* Class = "UILabel"; text = "Debug Menu"; ObjectID = "A9G-5I-RSn"; */
 "A9G-5I-RSn.text" = "Fejlfindingsmenu";
 
-/* Class = "UILabel"; text = "Autofill Logins"; ObjectID = "And-cQ-SEu"; */
-"And-cQ-SEu.text" = "Automatisk udfyldning ved login";
+/* Class = "UILabel"; text = "Logins"; ObjectID = "And-cQ-SEu"; */
+"And-cQ-SEu.text" = "Logins";
 
 /* Class = "UILabel"; text = "Animation"; ObjectID = "AtR-nS-Gun"; */
 "AtR-nS-Gun.text" = "Animation";

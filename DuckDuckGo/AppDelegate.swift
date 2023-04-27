@@ -258,8 +258,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             appIsLaunching = false
             onApplicationLaunch(application)
         }
-        
-        FireButtonExperiment.restartFireButtonEducationIfNeeded()
 
         mainViewController?.showBars()
         mainViewController?.didReturnFromBackground()

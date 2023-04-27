@@ -46,8 +46,8 @@
 /* Class = "UILabel"; text = "Debug Menu"; ObjectID = "A9G-5I-RSn"; */
 "A9G-5I-RSn.text" = "Izbornik za ispravljanje pogrešaka";
 
-/* Class = "UILabel"; text = "Autofill Logins"; ObjectID = "And-cQ-SEu"; */
-"And-cQ-SEu.text" = "Automatsko popunjavanje prijave";
+/* Class = "UILabel"; text = "Logins"; ObjectID = "And-cQ-SEu"; */
+"And-cQ-SEu.text" = "Prijave";
 
 /* Class = "UILabel"; text = "Animation"; ObjectID = "AtR-nS-Gun"; */
 "AtR-nS-Gun.text" = "Animacija";

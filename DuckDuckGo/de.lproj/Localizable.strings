@@ -17,7 +17,7 @@
 "action.title.add" = "Hinzufügen";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Anmeldedaten automatisch ausfüllen";
+"action.title.autofill.logins" = "Anmeldedaten";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Zu Lesezeichen hinzufügen";
@@ -179,13 +179,13 @@
 "autofill.keep-enabled.alert.disable" = "Deaktivieren";
 
 /* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Weiterhin verwenden";
+"autofill.keep-enabled.alert.keep-using" = "Weiterhin speichern";
 
 /* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "Du kannst das Autovervollständigen jederzeit in den Einstellungen deaktivieren.";
+"autofill.keep-enabled.alert.message" = "Du kannst dies jederzeit in den Einstellungen deaktivieren.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Möchtest du Autovervollständigen weiterhin verwenden?";
+"autofill.keep-enabled.alert.title" = "Möchtest du weiterhin Anmeldedaten speichern?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Ansehen";
@@ -268,26 +268,20 @@
 /* Title for alert when attempting to save a duplicate login */
 "autofill.logins.details.save-duplicate-alert.title" = "Doppelte Anmeldedaten";
 
-/* Title for view displayed when autofill is locked */
-"autofill.logins.details.title" = "Autovervollständigen freischalten";
-
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Benutzername";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Anmeldedaten werden nur auf diesem Gerät sicher gespeichert";
+"autofill.logins.empty-view.subtitle" = "Anmeldedaten werden nur auf diesem Gerät sicher gespeichert.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Noch keine Anmeldedaten gespeichert";
-
-/* Title for view displayed when autofill is disabled and has no items */
-"autofill.logins.empty-view.title-disabled" = "Autovervollständigen aktivieren, um Anmeldedaten zu speichern";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Abbrechen";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Freischaltung zur Verwendung gespeicherter Anmeldedaten";
+"autofill.logins.list.auth.reason" = "Entsperre das Gerät, um auf die gespeicherten Anmeldedaten zuzugreifen";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Schließen";
@@ -301,17 +295,20 @@
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Anmeldedaten suchen";
 
+/* Toast message when a login item without a title is deleted */
+"autofill.logins.list.login-deleted-message-no-title" = "Anmeldedaten gelöscht";
+
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Vorgeschlagen";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Anmeldedaten automatisch ausfüllen";
+"autofill.logins.list.title" = "Anmeldedaten";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Es ist ein Passcode erforderlich, um deine Anmeldedaten für das automatische Ausfüllen zu schützen. Gehe zu den Geräteeinstellungen, um einen Passcode einzurichten.";
+"autofill.logins.no-auth.subtitle" = "Zum Schutz deiner Anmeldedaten ist ein Passcode erforderlich.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Richte deinen Gerätepasscode ein, um das automatische Ausfüllen zu verwenden";
+"autofill.logins.no-auth.title" = "Sichere dein Gerät, um Anmeldedaten zu speichern";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Abbrechen";
@@ -328,6 +325,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "Von % @";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Passwort für %@";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Gespeicherte Anmeldedaten verwenden?";
 
@@ -337,11 +337,8 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Keine Ergebnisse";
 
-/* Message displayed on modal explaining that an additional login will be saved. */
-"autofill.save-login.additional-login.message" = "Es wird ein zusätzlicher Login für diese Website gespeichert.";
-
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo speichert diese Anmeldedaten sicher auf deinem Gerät. Du kannst die gespeicherten Anmeldedaten in den Einstellungen verwalten.";
+"autofill.save-login.new-user.message" = "Anmeldedaten werden nur auf diesem Gerät sicher gespeichert und können über das Anmeldedaten-Menü in den Einstellungen verwaltet werden.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Möchtest du, dass DuckDuckGo deine Anmeldedaten speichert?";
@@ -364,14 +361,17 @@
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Passwort anzeigen";
 
-/* Confirm CTA displayed on modal asking for the user to update the login */
-"autofill.update-login.save.CTA" = "Anmeldedaten aktualisieren";
+/* Message displayed on modal asking for the user to update the password */
+"autofill.update-password.message" = "DuckDuckGo aktualisiert diese gespeicherten Anmeldedaten auf deinem Gerät.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Passwort aktualisieren";
 
 /* Title displayed on modal asking for the user to update the password */
-"autofill.update-password.title" = "Passwort aktualisieren?";
+"autofill.update-password.title" = "Passwort für\n%@ aktualisieren?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-username.save.CTA" = "Benutzernamen aktualisieren";
 
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "Benutzernamen aktualisieren?";

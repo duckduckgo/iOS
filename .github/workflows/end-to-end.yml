@@ -48,4 +48,21 @@ jobs:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
         app-file: /Users/runner/DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
         workspace: .maestro/privacy_tests
+
+    - name: Create Asana task when workflow failed
+      if: ${{ failure() }}
+      run: |
+        curl -s "https://app.asana.com/api/1.0/tasks" \
+          -H "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
+          --data ' \
+          { \
+            data: " \
+              "name": "GH Workflow Failure - End to end tests", \
+              "workspace": ${{ vars.GH_ASANA_WORKSPACE_ID }}, \
+              "projects": [ \
+                ${{ vars.GH_ASANA_IOS_APP_PROJECT_ID }} \
+              ], \
+              "notes" : "The end to end workflow has failed. See https://github.com/duckduckgo/iOS/actions/runs/${{ github.run_id }}", \
+            " \
+          }'
   

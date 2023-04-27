@@ -1,8 +1,9 @@
 name: End-to-End tests
 
 on:
-  schedule:
-    - cron: '0 4 * * *' # run at 4 AM UTC
+  push: 
+  pull_request:
+    types: [opened, edited, synchronize]
 
 jobs:
   end-to-end-tests:
@@ -26,7 +27,7 @@ jobs:
           -derivedDataPath ~/DerivedData
 
     - name: Setup tests
-      run: bundle install && bundle exec fastlane setup_e2e_tests
+      run: bundle install22 && bundle exec fastlane setup_e2e_tests
 
     - name: Release tests
       uses: mobile-dev-inc/action-maestro-cloud@v1.2.3

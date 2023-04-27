@@ -387,9 +387,11 @@ class TabViewController: UIViewController {
         }
 
 #if DEBUG
-        webView.onDeinit { [weak userContentController, weak self] in
-            userContentController?.assertObjectDeallocated(after: 4.0)
+        webView.onDeinit { [weak self] in
             self?.assertObjectDeallocated(after: 4.0)
+        }
+        webView.configuration.processPool.onDeinit { [weak userContentController] in
+            userContentController?.assertObjectDeallocated(after: 1.0)
         }
 #endif
     }

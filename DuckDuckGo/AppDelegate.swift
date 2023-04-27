@@ -307,7 +307,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        syncService.scheduler.notifyAppLifecycleEvent()
+        // TODO: Revert when done testing
+//        syncService.scheduler.notifyAppLifecycleEvent()
+        syncService.scheduler.requestSyncImmediately()
     }
 
     private func fireAppLaunchPixel() {

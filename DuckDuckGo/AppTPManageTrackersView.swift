@@ -29,6 +29,14 @@ struct AppTPManageTrackersView: View {
         viewModel.changeState(for: domain, blocking: isBlocking)
     }
     
+    func restoreDefaults() {
+        viewModel.resetAllowlist()
+        DispatchQueue.main.async {
+            ActionMessageView.present(message: UserText.appTPRestoreDefaultsToast,
+                                      presentationLocation: .withoutBottomBar)
+        }
+    }
+    
     var loadingState: some View {
         VStack {
             SwiftUI.ProgressView()
@@ -48,7 +56,7 @@ struct AppTPManageTrackersView: View {
                     LazyVStack(alignment: .leading, spacing: 0) {
                         Section {
                             Button(action: {
-                                viewModel.resetAllowlist()
+                                restoreDefaults()
                             }, label: {
                                 HStack {
                                     Spacer()

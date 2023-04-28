@@ -7,7 +7,7 @@ on:
 jobs:
   atb-ui-tests:
     name: ATB UI Tests
-    runs-on: macos-12
+    runs-on: macos-13
     timeout-minutes: 30
 
     steps:
@@ -34,6 +34,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-spm-
 
+    - name: Install xcbeautify
+      run: brew install xcbeautify
+
     - name: Select Xcode
       run: sudo xcode-select -s /Applications/Xcode_$(<.xcode-version).app/Contents/Developer
 
@@ -43,7 +46,7 @@ jobs:
           -scheme "AtbUITests" \
           -destination "platform=iOS Simulator,name=iPhone 12" \
           -derivedDataPath "DerivedData" \
-          | xcpretty -r junit -o unittests.xml
+          | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml
 
     - name: Publish unit tests report
       uses: mikepenz/action-junit-report@v3
@@ -52,7 +55,7 @@ jobs:
 
   fingerprinting-ui-tests:
     name: Fingerprinting UI Tests
-    runs-on: macos-12
+    runs-on: macos-13
     timeout-minutes: 30
 
     steps:
@@ -60,6 +63,9 @@ jobs:
       uses: actions/checkout@v3
       with:
         submodules: recursive
+
+    - name: Install xcbeautify
+      run: brew install xcbeautify
 
     - name: Select Xcode
       run: sudo xcode-select -s /Applications/Xcode_$(<.xcode-version).app/Contents/Developer
@@ -70,7 +76,7 @@ jobs:
           -scheme "FingerprintingUITests" \
           -destination "platform=iOS Simulator,name=iPhone 12" \
           -derivedDataPath "DerivedData" \
-          | xcpretty -r junit -o unittests.xml
+          | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml
 
     - name: Publish unit tests report
       uses: mikepenz/action-junit-report@v3

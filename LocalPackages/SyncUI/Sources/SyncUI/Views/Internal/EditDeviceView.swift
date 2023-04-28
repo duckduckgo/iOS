@@ -26,28 +26,36 @@ struct EditDeviceView: View {
     @Environment(\.presentationMode) var presentation
 
     var body: some View {
-        List {
-            Section {
-                TextField("", text: $model.name)
-            }
-
-            if !model.device.isThisDevice {
+        NavigationView {
+            List {
                 Section {
-                    Button(UserText.removeButton) {
-                        Task { @MainActor in
-                            if await model.remove() {
-                                presentation.wrappedValue.dismiss()
-                            }
-                        }
+                    TextField("", text: $model.name)
+                } header: {
+                    Text(UserText.editDeviceLabel)
+                }
+            }
+            .applyListStyle()
+            .navigationTitle(UserText.editDevice(model.name))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button {
+                        presentation.wrappedValue.dismiss()
+                    } label: {
+                        Text(UserText.cancelButton)
+                    }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        model.save()
+                        presentation.wrappedValue.dismiss()
+                    } label: {
+                        Text(UserText.doneButton)
                     }
                 }
             }
         }
-        .navigationTitle(UserText.editDevice(named: model.name))
-        .applyListStyle()
-        .onDisappear {
-            model.onDisappear()
-        }
+
     }
 
 }

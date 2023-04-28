@@ -33,6 +33,7 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
     func confirmAndDeleteAllData() async -> Bool
     func copyCode()
     func confirmRemoveDevice(_ device: SyncSettingsViewModel.Device) async -> Bool
+    func removeDevice(_ device: SyncSettingsViewModel.Device)
     func updateDeviceName(_ name: String)
 
 }
@@ -115,12 +116,12 @@ public class SyncSettingsViewModel: ObservableObject {
     func createEditDeviceModel(_ device: Device) -> EditDeviceViewModel {
         return EditDeviceViewModel(device: device) { [weak self] newValue in
             self?.delegate?.updateDeviceName(newValue.name)
-        } remove: { @MainActor in
-            if await self.delegate?.confirmRemoveDevice(device) == true {
-                self.devices = self.devices.filter { $0.id != device.id }
-                return true
-            }
-            return false
+        }
+    }
+
+    func createRemoveDeviceModel(_ device: Device) -> RemoveDeviceViewModel {
+        return RemoveDeviceViewModel(device: device) { [weak self] device in
+            self?.delegate?.removeDevice(device)
         }
     }
 

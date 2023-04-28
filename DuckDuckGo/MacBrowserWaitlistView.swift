@@ -19,6 +19,7 @@
 
 import SwiftUI
 import Waitlist
+import DesignResourcesKit
 
 struct MacBrowserWaitlistView: View {
 
@@ -56,20 +57,20 @@ struct MacBrowserWaitlistContentView: View {
                     HeaderView(imageName: "MacWaitlistJoinWaitlist", title: UserText.macWaitlistTryDuckDuckGoForMac)
                     
                     Text(UserText.macWaitlistSummary)
-                        .font(.proximaNova(size: 16, weight: .regular))
+                        .daxBodyRegular()
                         .foregroundColor(.waitlistTextSecondary)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
                     
                     Text(UserText.macWaitlistOnYourMacGoTo)
-                        .font(.proximaNova(size: 16, weight: .regular))
+                        .daxBodyRegular()
                         .foregroundColor(.waitlistTextSecondary)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
                         .padding(.top, 18)
 
                     Text(Constants.downloadURL)
-                        .font(.proximaNova(size: 17, weight: .bold))
+                        .daxHeadline()
                         .foregroundColor(.waitlistBlue)
                         .menuController(UserText.macWaitlistCopy) {
                             action(.copyDownloadURLToPasteboard)
@@ -109,7 +110,7 @@ struct MacBrowserWaitlistContentView: View {
                                 action(.custom(.openWindowsBrowserWaitlist))
                             }, label: {
                                 Text(UserText.macWaitlistWindows)
-                                    .font(.proximaNova(size: 17, weight: .bold))
+                                    .daxHeadline()
                                     .foregroundColor(.waitlistBlue)
                                     .multilineTextAlignment(.center)
                                     .lineSpacing(5)
@@ -121,7 +122,7 @@ struct MacBrowserWaitlistContentView: View {
                     } else {
 
                         Text(UserText.macWaitlistWindowsComingSoon)
-                            .font(.proximaNova(size: 13, weight: .regular))
+                            .daxFootnoteRegular()
                             .foregroundColor(.waitlistTextSecondary)
                             .multilineTextAlignment(.center)
                             .lineSpacing(5)

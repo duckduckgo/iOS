@@ -22,6 +22,7 @@ import Combine
 import Core
 import BrowserServicesKit
 import Common
+import DesignResourcesKit
 
 // swiftlint:disable file_length type_body_length
 
@@ -44,7 +45,10 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private let tld: TLD = AppDependencyProvider.shared.storageCache.tld
 
     private lazy var addBarButtonItem: UIBarButtonItem = {
-        UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
+        UIBarButtonItem(image: UIImage(named: "Add-24"),
+                        style: .plain,
+                        target: self,
+                        action: #selector(addButtonPressed))
     }()
     
     private var cancellables: Set<AnyCancellable> = []
@@ -233,7 +237,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         }
     }
 
-    private func presentDeleteConfirmation(for title: String) {
+    private func presentDeleteConfirmation(for title: String, domain: String) {
         let message = title.isEmpty ? UserText.autofillLoginListLoginDeletedToastMessageNoTitle
                                     : UserText.autofillLoginListLoginDeletedToastMessage(for: title)
 
@@ -244,6 +248,9 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             self.viewModel.undoLastDelete()
         }, onDidDismiss: {
             self.viewModel.clearUndoCache()
+            NotificationCenter.default.post(name: FireproofFaviconUpdater.deleteFireproofFaviconNotification,
+                                            object: nil,
+                                            userInfo: [FireproofFaviconUpdater.UserInfoKeys.faviconDomain: domain])
         })
     }
     
@@ -392,6 +399,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         let cell = tableView.dequeueCell(ofType: AutofillListItemTableViewCell.self, for: indexPath)
         cell.viewModel = item
         cell.accessoryType = .disclosureIndicator
+        cell.backgroundColor = UIColor(designSystemColor: .surface)
         return cell
     }
     
@@ -480,6 +488,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
         case .credentials(_, let items):
             if editingStyle == .delete {
                 let title = items[indexPath.row].title
+                let domain = items[indexPath.row].account.domain
                 let accountId = items[indexPath.row].account.id
 
                 let tableContentToDelete = viewModel.tableContentsToDelete(accountId: accountId)
@@ -496,7 +505,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
                     }
                     tableView.endUpdates()
 
-                    presentDeleteConfirmation(for: title)
+                    presentDeleteConfirmation(for: title, domain: domain)
                 }
             }
         default:
@@ -568,7 +577,7 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
         if deletedSuccessfully {
             viewModel.updateData()
             tableView.reloadData()
-            presentDeleteConfirmation(for: title)
+            presentDeleteConfirmation(for: title, domain: account.domain)
         }
     }
 }

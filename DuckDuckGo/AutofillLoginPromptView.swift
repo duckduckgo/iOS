@@ -61,7 +61,7 @@ struct AutofillLoginPromptView: View {
         Button {
             viewModel.dismissView()
         } label: {
-            Image(systemName: "xmark")
+            Image("Close-24")
                 .resizable()
                 .scaledToFit()
                 .frame(width: Const.Size.closeButtonSize, height: Const.Size.closeButtonSize)
@@ -74,7 +74,7 @@ struct AutofillLoginPromptView: View {
     var titleHeaderView: some View {
         VStack(spacing: 12) {
             HStack {
-                FaviconView(viewModel: FaviconViewModel(domain: viewModel.domain))
+                FaviconView(viewModel: FaviconViewModel(domain: viewModel.domain, cacheType: .fireproof))
                     .scaledToFit()
                     .frame(width: 20, height: 20)
                 Text(viewModel.domain)
@@ -236,7 +236,7 @@ private enum Const {
         static let CTAButtonCornerRadius: CGFloat = 12
         static let CTAButtonMaxHeight: CGFloat = 50
         static let contentWidth: CGFloat = 286
-        static let closeButtonSize: CGFloat = 13
+        static let closeButtonSize: CGFloat = 24
         static let closeButtonTappableArea: CGFloat = 44
         static let buttonBorderWidth: CGFloat = 2
     }

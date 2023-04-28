@@ -47,7 +47,7 @@ final class AutofillLoginListItemViewModel: Identifiable, Hashable {
     
     private func fetchImage() {
         FaviconsHelper.loadFaviconSync(forDomain: account.domain,
-                                       usingCache: .tabs,
+                                       usingCache: .fireproof,
                                        useFakeFavicon: true,
                                        preferredFakeFaviconLetter: preferredFaviconLetter) { image, _ in
             if let image = image {

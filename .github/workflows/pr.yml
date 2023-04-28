@@ -52,6 +52,24 @@ jobs:
       with:
         submodules: recursive
 
+    - name: Set cache key hash
+      run: |
+         has_only_tags=$(jq '[ .object.pins[].state | has("version") ] | all' DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
+         if [[ "$has_only_tags" == "true" ]]; then
+           echo "cache_key_hash=${{ hashFiles('DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}" >> $GITHUB_ENV
+         else
+           echo "Package.resolved contains dependencies specified by branch or commit, skipping cache."
+         fi
+
+    - name: Cache SPM
+      if: env.cache_key_hash
+      uses: actions/cache@v3
+      with:
+        path: DerivedData/SourcePackages
+        key: ${{ runner.os }}-spm-${{ env.cache_key_hash }}
+        restore-keys: |
+          ${{ runner.os }}-spm-
+
     - name: Install xcbeautify
       run: brew install xcbeautify
 
@@ -63,6 +81,7 @@ jobs:
         set -o pipefail && xcodebuild test \
           -scheme "DuckDuckGo" \
           -destination "platform=iOS Simulator,name=iPhone 14" \
+          -derivedDataPath "DerivedData" \
           | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml
 
     - name: Publish unit tests report

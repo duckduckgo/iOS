@@ -266,8 +266,8 @@ extension AutoconsentUserScript {
                 "enablePrehide": preferences.autoconsentPromptSeen,
                 "enableCosmeticRules": true,
                 "detectRetries": 20
-            ]
-        ], nil)
+            ] as [String: Any?]
+        ] as [String: Any?], nil)
     }
     
     @MainActor

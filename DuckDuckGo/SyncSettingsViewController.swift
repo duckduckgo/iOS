@@ -77,6 +77,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
     func refreshDevices() {
         Task { @MainActor in
+            rootView.model.devices = []
             let devices = try await syncService.fetchDevices()
             mapDevices(devices)
         }
@@ -218,8 +219,8 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             }
             alert.addAction(title: UserText.syncTurnOffConfirmAction, style: .destructive) {
                 Task { @MainActor in
-                    // TODO handle error disconnecting
                     do {
+                        self.rootView.model.isSyncEnabled = false
                         try await self.syncService.disconnect()
                     } catch {
                         print(error.localizedDescription)
@@ -240,7 +241,15 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 continuation.resume(returning: false)
             }
             alert.addAction(title: UserText.syncDeleteAllConfirmAction, style: .destructive) {
-                continuation.resume(returning: true)
+                Task { @MainActor in
+                    do {
+                        self.rootView.model.isSyncEnabled = false
+                        try await self.syncService.deleteAccount()
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                    continuation.resume(returning: true)
+                }
             }
             self.present(alert, animated: true)
         }
@@ -262,6 +271,13 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 continuation.resume(returning: true)
             }
             self.present(alert, animated: true)
+        }
+    }
+
+    func removeDevice(_ device: SyncSettingsViewModel.Device) {
+        Task { @MainActor in
+            try await syncService.disconnect(deviceId: device.id)
+            refreshDevices()
         }
     }
 

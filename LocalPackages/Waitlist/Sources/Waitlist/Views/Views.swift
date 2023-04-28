@@ -40,20 +40,3 @@ private struct MultilineScrollableTextFix: ViewModifier {
         return AnyView(content.fixedSize(horizontal: false, vertical: true))
     }
 }
-
-extension Font {
-
-    enum ProximaNovaWeight: String {
-        case light
-        case regular
-        case semiBold = "semibold"
-        case bold
-        case extraBold = "extrabold"
-    }
-
-    static func proximaNova(size: CGFloat, weight: ProximaNovaWeight = .regular) -> Self {
-        let fontName = "proximanova-\(weight.rawValue)"
-        return .custom(fontName, size: size)
-    }
-
-}

@@ -121,17 +121,16 @@ class TabSwitcherViewController: UIViewController {
     private func refreshDisplayModeButton(theme: Theme = ThemeManager.shared.currentTheme) {
         switch theme.currentImageSet {
         case .dark:
-            // Reverse colors (selection)
             if tabSwitcherSettings.isGridViewEnabled {
-                displayModeButton.setImage(UIImage(named: "TabsToggleList"), for: .normal)
+                displayModeButton.setImage(UIImage(named: "TabsToggleGrid-Dark"), for: .normal)
             } else {
-                displayModeButton.setImage(UIImage(named: "TabsToggleGrid"), for: .normal)
+                displayModeButton.setImage(UIImage(named: "TabsToggleList-Dark"), for: .normal)
             }
         case .light:
             if tabSwitcherSettings.isGridViewEnabled {
-                displayModeButton.setImage(UIImage(named: "TabsToggleGrid"), for: .normal)
+                displayModeButton.setImage(UIImage(named: "TabsToggleGrid-Light"), for: .normal)
             } else {
-                displayModeButton.setImage(UIImage(named: "TabsToggleList"), for: .normal)
+                displayModeButton.setImage(UIImage(named: "TabsToggleList-Light"), for: .normal)
             }
         }
     }

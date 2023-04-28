@@ -372,7 +372,7 @@ class TabViewController: UIViewController {
                     loadingStopped = true
                     self?.webView.stopLoading()
                 }
-                showProgressIndicator()
+                self?.showProgressIndicator()
             }, onFinishExtracting: {}, completion: { [weak self] cleanURL in
                 // restart the cleaned-up URL loading here if:
                 //   link protection provided an updated URL
@@ -385,6 +385,15 @@ class TabViewController: UIViewController {
                 self?.load(urlRequest: .userInitiated(cleanURL))
             })
         }
+
+#if DEBUG
+        webView.onDeinit { [weak self] in
+            self?.assertObjectDeallocated(after: 4.0)
+        }
+        webView.configuration.processPool.onDeinit { [weak userContentController] in
+            userContentController?.assertObjectDeallocated(after: 1.0)
+        }
+#endif
     }
 
     private func addObservers() {
@@ -857,9 +866,10 @@ class TabViewController: UIViewController {
     }
 
     private func cleanUpBeforeClosing() {
-        let job = { [userContentController] in
-            userContentController.removeAllUserScripts()
-            userContentController.removeAllContentRuleLists()
+        let job = { [weak webView, userContentController] in
+            userContentController.cleanUpBeforeClosing()
+
+            webView?.assertObjectDeallocated(after: 4.0)
         }
         guard Thread.isMainThread else {
             DispatchQueue.main.async(execute: job)
@@ -2461,6 +2471,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
                         
                         self.showLoginDetails(with: newCredential.account)
                     })
+                    Favicons.shared.loadFavicon(forDomain: newCredential.account.domain, intoCache: .fireproof, fromCache: .tabs)
                 }
             }
         } catch {

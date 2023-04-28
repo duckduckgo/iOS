@@ -82,8 +82,9 @@ public class ScanOrPasteCodeViewModel: ObservableObject {
         guard let string = delegate?
             .pasteboardString?
             .trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: " ", with: "")
             .replacingOccurrences(of: "\n", with: "") else { return }
-        
+
         self.manuallyEnteredCode = string
         invalidCode = false
         isValidating = true

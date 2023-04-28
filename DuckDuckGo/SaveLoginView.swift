@@ -20,6 +20,7 @@
 import SwiftUI
 import DuckUI
 import BrowserServicesKit
+import DesignResourcesKit
 
 struct SaveLoginView: View {
     enum LayoutType {
@@ -116,7 +117,7 @@ struct SaveLoginView: View {
         Button {
             viewModel.cancelButtonPressed()
         } label: {
-            Image(systemName: "xmark")
+            Image("Close-24")
                 .resizable()
                 .scaledToFit()
                 .frame(width: Const.Size.closeButtonSize, height: Const.Size.closeButtonSize)
@@ -133,7 +134,7 @@ struct SaveLoginView: View {
                     .scaledToFit()
                     .frame(width: Const.Size.logoImage, height: Const.Size.logoImage)
                 Text(viewModel.accountDomain)
-                    .secondaryTextStyle()
+                    .foregroundColor(Color(designSystemColor: .textSecondary))
                     .font(Const.Fonts.titleCaption)
             }
 
@@ -232,7 +233,7 @@ struct SaveLoginView: View {
     private var defaultContentView: some View {
         Text(layoutType == .updatePassword ? UserText.autoUpdatePasswordMessage : UserText.autofillSaveLoginMessageNewUser)
             .font(Const.Fonts.subtitle)
-            .secondaryTextStyle()
+            .foregroundColor(Color(designSystemColor: .textSecondary))
             .multilineTextAlignment(.center)
             .padding(.horizontal, isSmallFrame ? Const.Size.paddingSmallDevice : Const.Size.paddingDefault)
             .frame(width: isIPhonePortrait ? Const.Size.contentWidth : frame.width)
@@ -346,7 +347,7 @@ private enum Const {
     
     enum Size {
         static let contentWidth: CGFloat = 286
-        static let closeButtonSize: CGFloat = 13
+        static let closeButtonSize: CGFloat = 24
         static let closeButtonTappableArea: CGFloat = 44
         static let logoImage: CGFloat = 20
         static let smallDevice: CGFloat = 320

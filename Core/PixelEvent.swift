@@ -268,12 +268,16 @@ extension Pixel {
         // MARK: AppTP
         case appTPBreakageReport
 
+        case appTPFailedToCreateProxyServer
+        case appTPFailedToSetTunnelNetworkSettings
         case appTPFailedToAccessPreferences
         case appTPFailedToAccessPreferencesDuringSetup
         case appTPFailedToStartTunnel
 
         case appTPVPNCrash
         case appTPVPNDisconnect
+        case appTPVPNSleep
+        case appTPVPNWake
         
         case appTPBlocklistParseFailed
         case appTPActiveUser
@@ -381,6 +385,8 @@ extension Pixel {
         case debugMissingTopFolderFixHasBookmarks
         
         case debugCantSaveBookmarkFix
+
+        case debugCannotClearObservationsDatabase
         
         // Errors from Bookmarks Module
         case bookmarkFolderExpected
@@ -660,11 +666,15 @@ extension Pixel.Event {
         // MARK: AppTP pixels
 
         case .appTPBreakageReport: return "m_apptp_breakage_report"
+        case .appTPFailedToCreateProxyServer: return "m_apptp_failed_to_create_proxy_server"
+        case .appTPFailedToSetTunnelNetworkSettings: return "m_apptp_failed_to_set_tunnel_network_settings"
         case .appTPFailedToAccessPreferences: return "m_apptp_failed_to_access_preferences"
         case .appTPFailedToAccessPreferencesDuringSetup: return "m_apptp_failed_to_access_preferences_during_setup"
         case .appTPFailedToStartTunnel: return "m_apptp_failed_to_start_tunnel"
         case .appTPVPNCrash: return "m_apptp_vpn_crash"
         case .appTPVPNDisconnect: return "m_apptp_vpn_disconnect"
+        case .appTPVPNSleep: return "m_apptp_vpn_sleep"
+        case .appTPVPNWake: return "m_apptp_vpn_wake"
         case .appTPBlocklistParseFailed: return "m_apptp_blocklist_parse_failed"
         case .appTPActiveUser: return "m_apptp_active_user"
         case .appTPDBLocationFailed: return "m_apptp_db_location_not_found"
@@ -757,6 +767,8 @@ extension Pixel.Event {
         case .debugMissingTopFolderFixHasFavorites: return "m_d_missing_top_folder_has_favorites"
             
         case .debugCantSaveBookmarkFix: return "m_d_cant_save_bookmark_fix"
+
+        case .debugCannotClearObservationsDatabase: return "m_d_cannot_clear_observations_database"
             
         
         // MARK: Ad Attribution

@@ -61,28 +61,39 @@ class AppTrackingProtectionPacketTunnelProvider: NEPacketTunnelProvider {
         ObserverFactory.currentFactory = DDGObserverFactory()
         
         self.setTunnelNetworkSettings(settings) { error in
-            self.proxyServer = GCDHTTPProxyServer(address: IPAddress(fromString: self.proxyServerAddress),
-                                                  port: Port(port: self.proxyServerPort))
+            if let error {
+                Pixel.fire(pixel: .appTPFailedToSetTunnelNetworkSettings, error: error) { _ in
+                    completionHandler(error)
+                }
+
+                return
+            }
+
+            self.proxyServer = GCDHTTPProxyServer(address: IPAddress(fromString: self.proxyServerAddress), port: Port(port: self.proxyServerPort))
+
             do {
                 try self.proxyServer.start()
                 completionHandler(nil)
             } catch {
                 os_log("[ERROR] Error starting proxy server %s", log: generalLog, type: .error, error.localizedDescription)
-                completionHandler(error)
+
+                Pixel.fire(pixel: .appTPFailedToCreateProxyServer, error: error) { _ in
+                    completionHandler(error)
+                }
             }
         }
     }
     
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
-        Pixel.fire(pixel: .appTPVPNDisconnect, withAdditionalParameters: ["reason": String(reason.rawValue)])
-        
         RawSocketFactory.TunnelProvider = nil
         ObserverFactory.currentFactory = nil
         proxyServer.stop()
         proxyServer = nil
-        
-        completionHandler()
-        exit(EXIT_SUCCESS)
+
+        Pixel.fire(pixel: .appTPVPNDisconnect, withAdditionalParameters: ["reason": String(reason.rawValue)]) { _ in
+            completionHandler()
+            exit(EXIT_SUCCESS)
+        }
     }
     
     override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)?) {
@@ -98,11 +109,12 @@ class AppTrackingProtectionPacketTunnelProvider: NEPacketTunnelProvider {
     }
     
     override func sleep(completionHandler: @escaping () -> Void) {
-        // Add code here to get ready to sleep.
-        completionHandler()
+        Pixel.fire(pixel: .appTPVPNSleep) { _ in
+            completionHandler()
+        }
     }
     
     override func wake() {
-        // Add code here to wake up.
+        Pixel.fire(pixel: .appTPVPNWake)
     }
 }

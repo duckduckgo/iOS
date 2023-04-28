@@ -109,7 +109,7 @@ class AppTrackingProtectionPacketTunnelProvider: NEPacketTunnelProvider {
     }
     
     override func sleep(completionHandler: @escaping () -> Void) {
-        Pixel.fire(pixel: .appTPVPNWake) { _ in
+        Pixel.fire(pixel: .appTPVPNSleep) { _ in
             completionHandler()
         }
     }

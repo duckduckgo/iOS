@@ -268,6 +268,8 @@ extension Pixel {
         // MARK: AppTP
         case appTPBreakageReport
 
+        case appTPFailedToCreateProxyServer
+        case appTPFailedToSetTunnelNetworkSettings
         case appTPFailedToAccessPreferences
         case appTPFailedToAccessPreferencesDuringSetup
         case appTPFailedToStartTunnel
@@ -664,6 +666,8 @@ extension Pixel.Event {
         // MARK: AppTP pixels
 
         case .appTPBreakageReport: return "m_apptp_breakage_report"
+        case .appTPFailedToCreateProxyServer: return "m_apptp_failed_to_create_proxy_server"
+        case .appTPFailedToSetTunnelNetworkSettings: return "m_apptp_failed_to_set_tunnel_network_settings"
         case .appTPFailedToAccessPreferences: return "m_apptp_failed_to_access_preferences"
         case .appTPFailedToAccessPreferencesDuringSetup: return "m_apptp_failed_to_access_preferences_during_setup"
         case .appTPFailedToStartTunnel: return "m_apptp_failed_to_start_tunnel"

@@ -61,14 +61,25 @@ class AppTrackingProtectionPacketTunnelProvider: NEPacketTunnelProvider {
         ObserverFactory.currentFactory = DDGObserverFactory()
         
         self.setTunnelNetworkSettings(settings) { error in
-            self.proxyServer = GCDHTTPProxyServer(address: IPAddress(fromString: self.proxyServerAddress),
-                                                  port: Port(port: self.proxyServerPort))
+            if let error {
+                Pixel.fire(pixel: .appTPFailedToSetTunnelNetworkSettings, error: error) { _ in
+                    completionHandler(error)
+                }
+
+                return
+            }
+
+            self.proxyServer = GCDHTTPProxyServer(address: IPAddress(fromString: self.proxyServerAddress), port: Port(port: self.proxyServerPort))
+
             do {
                 try self.proxyServer.start()
                 completionHandler(nil)
             } catch {
                 os_log("[ERROR] Error starting proxy server %s", log: generalLog, type: .error, error.localizedDescription)
-                completionHandler(error)
+
+                Pixel.fire(pixel: .appTPFailedToCreateProxyServer, error: error) { _ in
+                    completionHandler(error)
+                }
             }
         }
     }

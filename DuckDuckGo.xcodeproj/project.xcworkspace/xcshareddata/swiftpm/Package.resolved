@@ -1,0 +1,151 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "BrowserServicesKit",
+        "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
+        "state": {
+          "branch": null,
+          "revision": "6bc19821291d28b65ebcaaadd59affbe0c7adb0b",
+          "version": "57.2.1"
+        }
+      },
+      {
+        "package": "CocoaAsyncSocket",
+        "repositoryURL": "https://github.com/robbiehanson/CocoaAsyncSocket",
+        "state": {
+          "branch": null,
+          "revision": "dbdc00669c1ced63b27c3c5f052ee4d28f10150c",
+          "version": "7.6.5"
+        }
+      },
+      {
+        "package": "ContentScopeScripts",
+        "repositoryURL": "https://github.com/duckduckgo/content-scope-scripts",
+        "state": {
+          "branch": null,
+          "revision": "801b7f23476f797c6eaa72b070e6c80abb82801a",
+          "version": "4.4.4"
+        }
+      },
+      {
+        "package": "Autofill",
+        "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
+        "state": {
+          "branch": null,
+          "revision": "4aee97d550112ba6551e61ea8019fb1f1a2d3af7",
+          "version": "6.4.3"
+        }
+      },
+      {
+        "package": "GRDB",
+        "repositoryURL": "https://github.com/duckduckgo/GRDB.swift.git",
+        "state": {
+          "branch": null,
+          "revision": "4475888676cfe1aabb1a35f379cd079ea692da1e",
+          "version": "2.1.1"
+        }
+      },
+      {
+        "package": "FindInPageIOSJSSupport",
+        "repositoryURL": "https://github.com/duckduckgo/ios-js-support",
+        "state": {
+          "branch": null,
+          "revision": "6a6789ac8104a587316c58af75539753853b50d9",
+          "version": "2.0.0"
+        }
+      },
+      {
+        "package": "Kingfisher",
+        "repositoryURL": "https://github.com/onevcat/Kingfisher.git",
+        "state": {
+          "branch": null,
+          "revision": "af4be924ad984cf4d16f4ae4df424e79a443d435",
+          "version": "7.6.2"
+        }
+      },
+      {
+        "package": "Lottie",
+        "repositoryURL": "https://github.com/duckduckgo/lottie-ios.git",
+        "state": {
+          "branch": null,
+          "revision": "abf5510e261c85ffddd29de0bca9b72592ea2bdd",
+          "version": "3.3.0"
+        }
+      },
+      {
+        "package": "OHHTTPStubs",
+        "repositoryURL": "https://github.com/AliSoftware/OHHTTPStubs.git",
+        "state": {
+          "branch": null,
+          "revision": "12f19662426d0434d6c330c6974d53e2eb10ecd9",
+          "version": "9.1.0"
+        }
+      },
+      {
+        "package": "PrivacyDashboardResources",
+        "repositoryURL": "https://github.com/duckduckgo/privacy-dashboard",
+        "state": {
+          "branch": null,
+          "revision": "51e2b46f413bf3ef18afefad631ca70f2c25ef70",
+          "version": "1.4.0"
+        }
+      },
+      {
+        "package": "Punycode",
+        "repositoryURL": "https://github.com/gumob/PunycodeSwift.git",
+        "state": {
+          "branch": null,
+          "revision": "4356ec54e073741449640d3d50a1fd24fd1e1b8b",
+          "version": "2.1.0"
+        }
+      },
+      {
+        "package": "swift-argument-parser",
+        "repositoryURL": "https://github.com/apple/swift-argument-parser",
+        "state": {
+          "branch": null,
+          "revision": "6b2aa2748a7881eebb9f84fb10c01293e15b52ca",
+          "version": "0.5.0"
+        }
+      },
+      {
+        "package": "Swifter",
+        "repositoryURL": "https://github.com/httpswift/swifter.git",
+        "state": {
+          "branch": null,
+          "revision": "9483a5d459b45c3ffd059f7b55f9638e268632fd",
+          "version": "1.5.0"
+        }
+      },
+      {
+        "package": "SwiftSoup",
+        "repositoryURL": "https://github.com/scinfu/SwiftSoup",
+        "state": {
+          "branch": null,
+          "revision": "41e7c263fb8c277e980ebcb9b0b5f6031d3d4886",
+          "version": "2.4.2"
+        }
+      },
+      {
+        "package": "DDGSyncCrypto",
+        "repositoryURL": "https://github.com/duckduckgo/sync_crypto",
+        "state": {
+          "branch": null,
+          "revision": "2ab6ab6f0f96b259c14c2de3fc948935fc16ac78",
+          "version": "0.2.0"
+        }
+      },
+      {
+        "package": "TrackerRadarKit",
+        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
+        "state": {
+          "branch": null,
+          "revision": "4684440d03304e7638a2c8086895367e90987463",
+          "version": "1.2.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

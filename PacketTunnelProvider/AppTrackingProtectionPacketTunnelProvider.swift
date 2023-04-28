@@ -74,15 +74,15 @@ class AppTrackingProtectionPacketTunnelProvider: NEPacketTunnelProvider {
     }
     
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
-        Pixel.fire(pixel: .appTPVPNDisconnect, withAdditionalParameters: ["reason": String(reason.rawValue)])
-        
         RawSocketFactory.TunnelProvider = nil
         ObserverFactory.currentFactory = nil
         proxyServer.stop()
         proxyServer = nil
-        
-        completionHandler()
-        exit(EXIT_SUCCESS)
+
+        Pixel.fire(pixel: .appTPVPNDisconnect, withAdditionalParameters: ["reason": String(reason.rawValue)]) { _ in
+            completionHandler()
+            exit(EXIT_SUCCESS)
+        }
     }
     
     override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)?) {

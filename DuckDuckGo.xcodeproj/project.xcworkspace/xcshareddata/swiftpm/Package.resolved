@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": null,
-          "revision": "6bc19821291d28b65ebcaaadd59affbe0c7adb0b",
-          "version": "57.2.1"
+          "revision": "1f2509d528ea5b382676956a7a09b804fd0366da",
+          "version": "57.4.2"
         }
       },
       {
@@ -26,6 +26,15 @@
           "branch": null,
           "revision": "801b7f23476f797c6eaa72b070e6c80abb82801a",
           "version": "4.4.4"
+        }
+      },
+      {
+        "package": "DesignResourcesKit",
+        "repositoryURL": "https://github.com/duckduckgo/DesignResourcesKit",
+        "state": {
+          "branch": null,
+          "revision": "4c78cf0808e1aad20245e27b1a7d42c3357420eb",
+          "version": "1.0.0"
         }
       },
       {

@@ -19,6 +19,7 @@
 
 import SwiftUI
 import DuckUI
+import DesignResourcesKit
 
 // swiftlint:disable file_length
 
@@ -27,14 +28,32 @@ struct AutofillLoginDetailsView: View {
     @State private var actionSheetConfirmDeletePresented: Bool = false
     
     var body: some View {
+        listWithBackground
+    }
+    
+    @ViewBuilder
+    private var listWithBackground: some View {
+        if #available(iOS 16.0, *) {
+            list
+                .scrollContentBackground(.hidden)
+                .background(Color(designSystemColor: .background))
+        } else {
+            list
+                .background(Color(designSystemColor: .background))
+        }
+    }
+    
+    private var list: some View {
         List {
             switch viewModel.viewMode {
             case .edit:
                 editingContentView
+                    .listRowBackground(Color(designSystemColor: .surface))
             case .view:
                 viewingContentView
             case .new:
                 editingContentView
+                    .listRowBackground(Color(designSystemColor: .surface))
             }
         }
         .simultaneousGesture(
@@ -104,7 +123,7 @@ struct AutofillLoginDetailsView: View {
                              selectedCell: $viewModel.selectedCell,
                              actionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsUsername),
                              action: { viewModel.copyToPasteboard(.username) },
-                             buttonImageName: "Copy",
+                             buttonImageName: "Copy-24",
                              buttonAccessibilityLabel: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsUsername),
                              buttonAction: { viewModel.copyToPasteboard(.username) })
                 
@@ -116,7 +135,7 @@ struct AutofillLoginDetailsView: View {
                              action: { viewModel.isPasswordHidden.toggle() },
                              secondaryActionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
                              secondaryAction: { viewModel.copyToPasteboard(.password) },
-                             buttonImageName: "Copy",
+                             buttonImageName: "Copy-24",
                              buttonAccessibilityLabel: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
                              buttonAction: { viewModel.copyToPasteboard(.password) })
             }
@@ -213,7 +232,7 @@ struct AutofillLoginDetailsView: View {
              })
              .foregroundColor(Color.red)
         }
-        .listRowBackground(Color("AutofillCellBackground"))
+        .listRowBackground(Color(designSystemColor: .surface))
     }
 }
 
@@ -240,7 +259,7 @@ struct ClearTextField: View {
             .label4Style(design: secure && text.count > 0 ? .monospaced : .default)
             
             Spacer()
-            Image("ClearTextField")
+            Image("Clear-16")
                 .opacity(closeButtonOpacity)
                 .onTapGesture { self.text = "" }
         }
@@ -295,7 +314,7 @@ private struct EditablePasswordCell: View {
 
                 if password.count > 0 {
                     if closeButtonVisible {
-                        Image("ClearTextField")
+                        Image("Clear-16")
                             .onTapGesture {
                                 self.password = ""
                             }
@@ -473,7 +492,7 @@ private struct BackgroundColor {
         if isSelected {
             return Color("AutofillCellSelectedBackground")
         } else {
-            return Color("AutofillCellBackground")
+            return Color(designSystemColor: .surface)
         }
     }
 }

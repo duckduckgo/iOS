@@ -20,7 +20,6 @@
 import Common
 import UIKit
 import Core
-import DesignResourcesKit
 
 class AutocompleteViewController: UIViewController {
     
@@ -213,7 +212,7 @@ extension AutocompleteViewController: UITableViewDataSource {
         cell.updateFor(query: query, suggestion: suggestions[indexPath.row], with: currentTheme)
         cell.plusButton.tag = indexPath.row
         
-        let color = indexPath.row == selectedItem ? currentTheme.tableCellSelectedColor : UIColor(designSystemColor: .panel)
+        let color = indexPath.row == selectedItem ? currentTheme.tableCellSelectedColor : currentTheme.tableCellBackgroundColor
         
         cell.backgroundColor = color
         cell.tintColor = currentTheme.autocompleteCellAccessoryColor
@@ -229,7 +228,7 @@ extension AutocompleteViewController: UITableViewDataSource {
         }
         
         let currentTheme = ThemeManager.shared.currentTheme
-        cell.backgroundColor = UIColor(designSystemColor: .panel)
+        cell.backgroundColor = currentTheme.tableCellBackgroundColor
         cell.tintColor = currentTheme.autocompleteCellAccessoryColor
         cell.label?.textColor = currentTheme.tableCellTextColor
         cell.setHighlightedStateBackgroundColor(currentTheme.tableCellHighlightedBackgroundColor)

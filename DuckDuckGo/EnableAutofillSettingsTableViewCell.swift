@@ -18,7 +18,6 @@
 //
 
 import UIKit
-import DesignResourcesKit
 
 protocol EnableAutofillSettingsTableViewCellDelegate: AnyObject {
     func enableAutofillSettingsTableViewCell(_ cell: EnableAutofillSettingsTableViewCell, didChangeSettings value: Bool)
@@ -83,7 +82,6 @@ class EnableAutofillSettingsTableViewCell: UITableViewCell {
 
         toggleSwitch.onTintColor = theme.buttonTintColor
         titleLabel.textColor = theme.autofillDefaultTitleTextColor
-        contentView.backgroundColor = UIColor(designSystemColor: .surface)
     }
     
     private func installConstraints() {

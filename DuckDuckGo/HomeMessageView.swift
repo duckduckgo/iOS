@@ -71,7 +71,7 @@ struct HomeMessageView: View {
     
     private var closeButton: some View {
         Button(action: { viewModel.onDidClose(.close) },
-               label: { Image("Close-24") })
+               label: { Image.dismiss })
             .layoutPriority(2)
             .offset(x: Const.Offset.closeButton,
                     y: -Const.Offset.closeButton)

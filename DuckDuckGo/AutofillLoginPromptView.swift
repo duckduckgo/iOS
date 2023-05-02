@@ -61,7 +61,7 @@ struct AutofillLoginPromptView: View {
         Button {
             viewModel.dismissView()
         } label: {
-            Image("Close-24")
+            Image(systemName: "xmark")
                 .resizable()
                 .scaledToFit()
                 .frame(width: Const.Size.closeButtonSize, height: Const.Size.closeButtonSize)
@@ -236,7 +236,7 @@ private enum Const {
         static let CTAButtonCornerRadius: CGFloat = 12
         static let CTAButtonMaxHeight: CGFloat = 50
         static let contentWidth: CGFloat = 286
-        static let closeButtonSize: CGFloat = 24
+        static let closeButtonSize: CGFloat = 13
         static let closeButtonTappableArea: CGFloat = 44
         static let buttonBorderWidth: CGFloat = 2
     }

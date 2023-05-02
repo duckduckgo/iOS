@@ -498,7 +498,7 @@ extension OmniBar: UITextFieldDelegate {
 extension OmniBar: Themable {
     
     public func decorate(with theme: Theme) {
-        backgroundColor = theme.barBackgroundColor
+        backgroundColor = theme.omniBarBackgroundColor
         tintColor = theme.barTintColor
         
         configureTextField()

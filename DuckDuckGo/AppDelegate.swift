@@ -338,6 +338,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 Pixel.fire(pixel: .appTPActiveUser)
                 UserDefaults.standard.set(date, forKey: key)
             }
+            
+            // Cancel pending notifications if app is launched and firwall disconnected
+            // This should cover cases where the user disabled AppTP from settings
+            if manager.status() == .disconnected {
+                UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ["apptp_summary"])
+            }
         }
     }
     

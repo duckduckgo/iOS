@@ -175,25 +175,27 @@ struct AppTPActivityView: View {
                     VStack(alignment: .center, spacing: 0) {
                         AppTPToggleView(viewModel: toggleViewModel)
                         
-                        Divider()
-                        
-                        Toggle("Daily Summary Notifications", isOn: $viewModel.summaryNotificationsEnabled)
-                            .toggleStyle(SwitchToggleStyle(tint: Color.buttonColor))
-                            .padding()
-                            .frame(height: Const.Size.standardCellHeight)
-                            .onChange(of: viewModel.summaryNotificationsEnabled) { _ in
-                                viewModel.onNotificationPreferenceChanged()
-                            }
-                        
-                        if viewModel.summaryNotificationsEnabled {
+                        if toggleViewModel.firewallStatus == .connected {
                             Divider()
                             
-                            DatePicker("Time", selection: $viewModel.notifTriggerDate, displayedComponents: .hourAndMinute)
+                            Toggle("Daily Summary Notifications", isOn: $viewModel.summaryNotificationsEnabled)
+                                .toggleStyle(SwitchToggleStyle(tint: Color.buttonColor))
                                 .padding()
                                 .frame(height: Const.Size.standardCellHeight)
-                                .onChange(of: viewModel.notifTriggerDate) { date in
-                                    viewModel.rescheduleNotification(date: date)
+                                .onChange(of: viewModel.summaryNotificationsEnabled) { _ in
+                                    viewModel.onNotificationPreferenceChanged()
                                 }
+                            
+                            if viewModel.summaryNotificationsEnabled {
+                                Divider()
+                                
+                                DatePicker("Time", selection: $viewModel.notifTriggerDate, displayedComponents: .hourAndMinute)
+                                    .padding()
+                                    .frame(height: Const.Size.standardCellHeight)
+                                    .onChange(of: viewModel.notifTriggerDate) { date in
+                                        viewModel.rescheduleNotification(date: date)
+                                    }
+                            }
                         }
                     }
                     .background(Color.cellBackground)
@@ -215,6 +217,9 @@ struct AppTPActivityView: View {
             .onChange(of: toggleViewModel.firewallStatus) { value in
                 if value == .connected {
                     viewModel.appTPUsed = true
+                } else if value == .disconnected {
+                    viewModel.cancelNotifications()
+                    viewModel.summaryNotificationsEnabled = false
                 }
             }
         }

@@ -24,17 +24,21 @@ struct GenericIconView: View {
     let trackerLetter: String
     let trackerColor: Color
     
+    let width: CGFloat
+    
     var body: some View {
         ZStack {
             Circle()
                 .foregroundColor(trackerColor)
+                .scaledToFit()
+                .frame(maxWidth: .infinity)
             
             Text(trackerLetter)
-                .font(Font(uiFont: Const.Font.sectionHeader))
+                .font(Font(Const.Font.sectionHeader))
                 .foregroundColor(.white)
                 .padding(.top, 1)
         }
-        .frame(width: 24)
+        .frame(width: width, height: width)
     }
 }
 

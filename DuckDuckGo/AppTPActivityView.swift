@@ -35,6 +35,20 @@ struct AppTPActivityView: View {
         return toggleViewModel.isOn ? UserText.appTPEmptyEnabledInfo : UserText.appTPEmptyDisabledInfo
     }
     
+    func triggerNotification() {
+        var content = UNMutableNotificationContent()
+        content.title = "AppTP Daily Summary"
+        content.body = "Tap and hold to see your latest stats"
+        content.categoryIdentifier = "TRACKER_SUMMARY"
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1.0, repeats: false)
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request) { err in
+            if let err = err {
+                print(err.localizedDescription)
+            }
+        }
+    }
+    
     var emptyState: some View {
         VStack {
             imageForState()
@@ -109,6 +123,16 @@ struct AppTPActivityView: View {
     var manageSection: some View {
         Section {
             VStack(alignment: .leading, spacing: 0) {
+                Button(action: {
+                    triggerNotification()
+                }, label: {
+                    Text("Trigger Notification")
+                        .font(Font(uiFont: Const.Font.info))
+                        .foregroundColor(Color.buttonColor)
+                        .padding(.horizontal)
+                        .frame(height: Const.Size.standardCellHeight)
+                })
+                
                 NavigationLink(destination: AppTPManageTrackersView(viewModel: AppTPManageTrackersViewModel(),
                                                                     imageCache: imageCache)) {
                     HStack {

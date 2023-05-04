@@ -37,9 +37,16 @@ public class AppTrackerEntity: NSManagedObject {
         return request
     }
 
-    @nonobjc public class func fetchRequest(trackersMoreRecentThan date: Date) -> NSFetchRequest<AppTrackerEntity> {
+    @nonobjc public class func fetchRequest(trackersMoreRecentThan date: Date,
+                                            blockedOnly: Bool = false) -> NSFetchRequest<AppTrackerEntity> {
         let request = NSFetchRequest<AppTrackerEntity>(entityName: "AppTrackerEntity")
-        request.predicate = NSPredicate(format: "%K > %@", #keyPath(AppTrackerEntity.timestamp), date as NSDate)
+        if blockedOnly {
+            request.predicate = NSPredicate(format: "%K > %@ AND %K == %@",
+                                            #keyPath(AppTrackerEntity.timestamp), date as NSDate,
+                                            #keyPath(AppTrackerEntity.blocked), NSNumber(value: true))
+        } else {
+            request.predicate = NSPredicate(format: "%K > %@", #keyPath(AppTrackerEntity.timestamp), date as NSDate)
+        }
         return request
     }
 

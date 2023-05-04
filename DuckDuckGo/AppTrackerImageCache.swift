@@ -19,7 +19,6 @@
 
 import UIKit
 import SwiftUI
-import PrivacyDashboardResources
 
 enum TrackerEntityRepresentable {
     case svg(UIImage)
@@ -40,8 +39,6 @@ final class AppTrackerImageCache {
         case letters
         case logos
     }
-    
-    let bundleModule = Bundle.privacyDashboardResourcesBundle
     
     let colors: [Color] = [
         Color("Blue"),

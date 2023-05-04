@@ -35,7 +35,8 @@ struct AppTPActivityIconView: View {
 
                 case .view(let iconData):
                     GenericIconView(trackerLetter: iconData.trackerLetter,
-                                    trackerColor: iconData.trackerColor)
+                                    trackerColor: iconData.trackerColor,
+                                    width: 24)
                 }
                 
                 Spacer()

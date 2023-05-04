@@ -97,6 +97,7 @@
 		0290472C29E8821E0008FE3C /* AppTPBreakageFormHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290472B29E8821E0008FE3C /* AppTPBreakageFormHeaderView.swift */; };
 		0290472E29E99A2F0008FE3C /* GenericIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290472D29E99A2F0008FE3C /* GenericIconView.swift */; };
 		02A4EACA29B0F464009BE006 /* AppTPToggleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A4EAC929B0F464009BE006 /* AppTPToggleViewModel.swift */; };
+		02AC0A5E2A040BB3008CB9BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F143C2B11E49D78C00CFDE3A /* Assets.xcassets */; };
 		02BA15B126A89ECA00472DD7 /* ios-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 02BA15B026A89ECA00472DD7 /* ios-config.json */; };
 		02C57C4B2514FEFB009E5129 /* DoNotSellSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C57C4A2514FEFB009E5129 /* DoNotSellSettingsViewController.swift */; };
 		02CA904924F6BFE700D41DDF /* navigatorsharepatch.js in Resources */ = {isa = PBXBuildFile; fileRef = 02CA904824F6BFE700D41DDF /* navigatorsharepatch.js */; };
@@ -5420,6 +5421,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0247F2192A02A57400182E66 /* MainInterface.storyboard in Resources */,
+				02AC0A5E2A040BB3008CB9BD /* Assets.xcassets in Resources */,
 				0238D8FC2A030FBE00F2E862 /* AppTP.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

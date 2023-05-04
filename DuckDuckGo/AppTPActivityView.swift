@@ -36,11 +36,11 @@ struct AppTPActivityView: View {
     }
     
     func triggerNotification() {
-        var content = UNMutableNotificationContent()
+        let content = UNMutableNotificationContent()
         content.title = "AppTP Daily Summary"
         content.body = "Tap and hold to see your latest stats"
         content.categoryIdentifier = "TRACKER_SUMMARY"
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1.0, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.25, repeats: false)
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(request) { err in
             if let err = err {
@@ -133,6 +133,8 @@ struct AppTPActivityView: View {
                         .frame(height: Const.Size.standardCellHeight)
                 })
                 
+                Divider()
+                
                 NavigationLink(destination: AppTPManageTrackersView(viewModel: AppTPManageTrackersViewModel(),
                                                                     imageCache: imageCache)) {
                     HStack {
@@ -170,10 +172,33 @@ struct AppTPActivityView: View {
         ScrollView {
             LazyVStack(alignment: .center, spacing: 0) {
                 Section {
-                    AppTPToggleView(viewModel: toggleViewModel)
-                        .background(Color.cellBackground)
-                        .cornerRadius(Const.Size.cornerRadius)
-                        .padding(.bottom)
+                    VStack(alignment: .center, spacing: 0) {
+                        AppTPToggleView(viewModel: toggleViewModel)
+                        
+                        Divider()
+                        
+                        Toggle("Daily Summary Notifications", isOn: $viewModel.summaryNotificationsEnabled)
+                            .toggleStyle(SwitchToggleStyle(tint: Color.buttonColor))
+                            .padding()
+                            .frame(height: Const.Size.standardCellHeight)
+                            .onChange(of: viewModel.summaryNotificationsEnabled) { _ in
+                                viewModel.onNotificationPreferenceChanged()
+                            }
+                        
+                        if viewModel.summaryNotificationsEnabled {
+                            Divider()
+                            
+                            DatePicker("Time", selection: $viewModel.notifTriggerDate, displayedComponents: .hourAndMinute)
+                                .padding()
+                                .frame(height: Const.Size.standardCellHeight)
+                                .onChange(of: viewModel.notifTriggerDate) { date in
+                                    viewModel.rescheduleNotification(date: date)
+                                }
+                        }
+                    }
+                    .background(Color.cellBackground)
+                    .cornerRadius(Const.Size.cornerRadius)
+                    .padding(.bottom)
                 }
                 
                 if viewModel.appTPUsed || viewModel.sections.count > 0 {

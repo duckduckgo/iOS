@@ -44,6 +44,9 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
 
     @Published public var debugModeEnabled = false
     
+    @Published public var summaryNotificationsEnabled = false
+    @Published public var notifTriggerDate: Date = Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: Date())!
+    
     // We only want to show "Manage Trackers" and "Report an issue" if the user has enabled AppTP at least once
     @UserDefaultsWrapper(key: .appTPUsed, defaultValue: false)
     public var appTPUsed
@@ -155,6 +158,9 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
         setupFetchedResultsController()
         registerForLifecycleEvents()
         registerForRemoteChangeNotifications()
+        Task {
+            await checkForActiveNotifications()
+        }
     }
 
     private func setupFetchedResultsController() {
@@ -168,8 +174,59 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
     public func format(date: Date) -> String {
         return listViewDateFormatter.string(from: date)
     }
+    
+    // MARK: - User Notifications
+    
+    private func checkForActiveNotifications() async {
+        let requests = await UNUserNotificationCenter.current().pendingNotificationRequests()
+        if let request = requests.first(where: { $0.identifier.starts(with: "apptp_") }),
+           let trigger = request.trigger as? UNCalendarNotificationTrigger {
+            Task { @MainActor in
+                self.summaryNotificationsEnabled = true
+                self.notifTriggerDate = trigger.nextTriggerDate() ?? Date()
+            }
+        }
+    }
+    
+    public func rescheduleNotification(date: Date) {
+        let components = Calendar.current.dateComponents([.hour, .minute], from: date)
+        cancelNotifications()
+        scheduleNotifications(hour: components.hour ?? 9, minute: components.minute ?? 0)
+    }
+    
+    public func scheduleNotifications(hour: Int = 9, minute: Int = 0) {
+        var triggerDaily = Calendar.current.dateComponents([.hour, .minute, .second], from: Date())
+        triggerDaily.hour = hour
+        triggerDaily.minute = minute
+        triggerDaily.second = 0
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDaily, repeats: true)
 
-    // MARK: - Notifications
+        let content = UNMutableNotificationContent()
+        content.title = "AppTP Daily Summary"
+        content.body = "Tap and hold to see your latest stats"
+        content.categoryIdentifier = "TRACKER_SUMMARY"
+
+        let request = UNNotificationRequest(identifier: "apptp_summary", content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    public func cancelNotifications() {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["apptp_summary"])
+    }
+    
+    public func onNotificationPreferenceChanged() {
+        if summaryNotificationsEnabled {
+            rescheduleNotification(date: notifTriggerDate)
+        } else {
+            cancelNotifications()
+        }
+    }
+
+    // MARK: - Core Data Notifications
 
     private func registerForLifecycleEvents() {
         NotificationCenter.default.addObserver(self,

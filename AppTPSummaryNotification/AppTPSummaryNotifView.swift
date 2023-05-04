@@ -75,7 +75,7 @@ struct AppTPSummaryNotifView: View {
                     HStack {
                         NotifNetworkView(network: network,
                                          imageCache: appTrackerCache,
-                                         scale: index == 1 ? 1.5 : 1)
+                                         scale: index == 1 ? 1.325 : 1)
                         
                         if network != owners.last {
                             Spacer()
@@ -115,7 +115,13 @@ struct AppTPSummaryNotifView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            formatSummary()
+            HStack {
+                Image("Logo")
+                    .resizable()
+                    .frame(width: 35, height: 35)
+                
+                formatSummary()
+            }
             
             topNetworks
             

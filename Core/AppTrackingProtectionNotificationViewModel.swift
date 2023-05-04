@@ -25,6 +25,7 @@ import Persistence
 public struct AppTrackerNetworkStat: Equatable, Hashable {
     public let trackerOwner: String
     public let blockedPrevalence: Double
+    public let count: Int32
 }
 
 public class AppTrackingProtectionNotificationViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
@@ -49,7 +50,6 @@ public class AppTrackingProtectionNotificationViewModel: NSObject, ObservableObj
                                                                                            blockedOnly: true)
         let countSort = NSSortDescriptor(key: #keyPath(AppTrackerEntity.count), ascending: false)
         fetchRequest.sortDescriptors = [countSort]
-        fetchRequest.fetchLimit = 10
         
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
                                                                   managedObjectContext: self.context,
@@ -73,6 +73,30 @@ public class AppTrackingProtectionNotificationViewModel: NSObject, ObservableObj
         return total
     }
     
+    public func aggregatedResults() -> [AppTrackerNetworkStat] {
+        var owners = [String: Int32]()
+        for tracker in trackers {
+            if let currentCount = owners[tracker.trackerOwner] {
+                owners[tracker.trackerOwner] = currentCount + tracker.count
+            } else {
+                owners[tracker.trackerOwner] = tracker.count
+            }
+        }
+        
+        let totalCount = totalTrackerCount()
+        let ownersArr = Array(owners.keys
+                        .sorted(by: { owners[$0]! > owners[$1]! }))
+                        .prefix(10)
+                        .map {
+                            return AppTrackerNetworkStat(
+                                trackerOwner: $0,
+                                blockedPrevalence: Double(owners[$0] ?? 0) / Double(totalCount),
+                                count: owners[$0] ?? 0
+                            )
+                        }
+        return ownersArr
+    }
+    
     /// Return the top tracker owners' names
     /// `topCount` defines how many to return (defaults to `3`)
     public func topTrackerOwners(topCount: Int = 3) -> [AppTrackerNetworkStat] {
@@ -91,7 +115,8 @@ public class AppTrackingProtectionNotificationViewModel: NSObject, ObservableObj
                         .prefix(topCount)).map {
                             return AppTrackerNetworkStat(
                                 trackerOwner: $0,
-                                blockedPrevalence: Double(owners[$0] ?? 0) / Double(totalCount)
+                                blockedPrevalence: Double(owners[$0] ?? 0) / Double(totalCount),
+                                count: owners[$0] ?? 0
                             )
                         }
         topOwners.swapAt(0, 1)

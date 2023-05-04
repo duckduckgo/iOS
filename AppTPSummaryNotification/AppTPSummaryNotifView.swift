@@ -89,7 +89,7 @@ struct AppTPSummaryNotifView: View {
     
     var trackerChart: some View {
         Chart {
-            ForEach(Array(viewModel.trackers.enumerated()), id: \.element) { index, tracker in
+            ForEach(Array(viewModel.aggregatedResults().enumerated()), id: \.element) { index, tracker in
                 BarMark(
                     x: .value("", index),
                     y: .value("Blocked Count", tracker.count)

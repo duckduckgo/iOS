@@ -1,8 +1,8 @@
 //
-//  Views.swift
+//  FontExtension.swift
 //  DuckDuckGo
 //
-//  Copyright © 2023 DuckDuckGo. All rights reserved.
+//  Copyright © 2022 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,32 +17,11 @@
 //  limitations under the License.
 //
 
+import Foundation
 import SwiftUI
 
-public typealias WaitlistViewActionHandler = (WaitlistViewModel.ViewAction) -> Void
-
-extension View {
-    /**
-     * Ensures that multiline text is properly broken into lines
-     * when put in scroll views.
-     *
-     * As seen on [Stack Overflow](https://stackoverflow.com/a/70512685).
-     * Radar: FB6859124.
-     */
-    func fixMultilineScrollableText() -> some View {
-        lineLimit(nil).modifier(MultilineScrollableTextFix())
-    }
-}
-
-private struct MultilineScrollableTextFix: ViewModifier {
-
-    func body(content: Content) -> some View {
-        return AnyView(content.fixedSize(horizontal: false, vertical: true))
-    }
-}
-
 extension Font {
-
+    
     enum ProximaNovaWeight: String {
         case light
         case regular
@@ -50,10 +29,10 @@ extension Font {
         case bold
         case extraBold = "extrabold"
     }
-
+    
     static func proximaNova(size: CGFloat, weight: ProximaNovaWeight = .regular) -> Self {
         let fontName = "proximanova-\(weight.rawValue)"
         return .custom(fontName, size: size)
     }
-
+    
 }

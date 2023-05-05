@@ -18,7 +18,6 @@
 //
 
 import SwiftUI
-import DesignResourcesKit
 
 public struct HeaderView: View {
 
@@ -35,7 +34,7 @@ public struct HeaderView: View {
             Image(imageName)
 
             Text(title)
-                .daxTitle2()
+                .font(.proximaNova(size: 22, weight: .bold))
                 .foregroundColor(.waitlistTextPrimary)
                 .lineSpacing(6)
                 .multilineTextAlignment(.center)

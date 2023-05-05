@@ -205,6 +205,7 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
         content.title = "AppTP Daily Summary"
         content.body = "Tap and hold to see your latest stats"
         content.categoryIdentifier = "TRACKER_SUMMARY"
+        content.sound = .default
 
         let request = UNNotificationRequest(identifier: "apptp_summary", content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(request) { error in

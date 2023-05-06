@@ -518,6 +518,7 @@ public struct UserText {
     
     public static let appTPJustNow = NSLocalizedString("appTP.justNow", value: "just now", comment: "Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now'")
     public static let appTPRestoreDefaults = NSLocalizedString("appTP.restoreDefualts", value: "Restore Defaults", comment: "Button to restore the blocklist to its default state.")
+    public static let appTPRestoreDefaultsToast = NSLocalizedString("appTP.restoreDefaultsToast", value: "Protection restored to default settings", comment: "Toast notification diplayed aftering restoing the blocklist to default")
     public static let appTPManageTrackers = NSLocalizedString("appTP.manageTrackers", value: "Manage Trackers", comment: "View to manage trackers for AppTP. Allows the user to turn trackers on or off.")
     public static let appTPBlockTracker = NSLocalizedString("appTP.blockTrackerText", value: "Block this tracker", comment: "Text label for switch that turns blocking on or off for a tracker")
     

@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1682101168110,
+    "version": 1682643248331,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -348,13 +348,17 @@
                     {
                         "domain": "homedepot.ca",
                         "reason": "https://github.com/duckduckgo/privacy-configuration/issues/554"
+                    },
+                    {
+                        "domain": "unclaimedmoneyinfo.com",
+                        "reason": "https://github.com/duckduckgo/privacy-configuration/issues/667"
                     }
                 ],
                 "omitVersionSites": []
             },
             "exceptions": [],
             "state": "enabled",
-            "hash": "34462d9ad75a5265487fb08a768784ae"
+            "hash": "29326b2596b9727ccae4541e0abd8a86"
         },
         "duckPlayer": {
             "exceptions": [],
@@ -364,32 +368,12 @@
         "elementHiding": {
             "exceptions": [
                 {
-                    "domain": "politico.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/592"
-                },
-                {
                     "domain": "bild.de",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/589"
                 },
                 {
                     "domain": "kbb.com",
                     "reason": "Adblocker wall"
-                },
-                {
-                    "domain": "medium.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/592"
-                },
-                {
-                    "domain": "speedtest.net",
-                    "reason": "main content hidden"
-                },
-                {
-                    "domain": "tvlistings.zap2it.com",
-                    "reason": "main content hidden"
-                },
-                {
-                    "domain": "manhwascan.net",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/592"
                 },
                 {
                     "domain": "wiwo.de",
@@ -405,6 +389,10 @@
                 },
                 {
                     "domain": "thechive.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/592"
+                },
+                {
+                    "domain": "bizjournals.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/592"
                 }
             ],
@@ -1231,6 +1219,10 @@
                             {
                                 "selector": "._233XfOVq91N_ugGQDBb_OT",
                                 "type": "hide"
+                            },
+                            {
+                                "selector": "[data*='\"isNsfw\":false'] ~ shreddit-experience-tree",
+                                "type": "hide"
                             }
                         ]
                     },
@@ -1544,7 +1536,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "3b2bbe9fba6182981a3b39bfc98f760b"
+            "hash": "cb3bb428b63c01194483b0b8767a55eb"
         },
         "exceptionHandler": {
             "exceptions": [],
@@ -1615,6 +1607,14 @@
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/350"
                 },
                 {
+                    "domain": "online-calculator.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/875"
+                },
+                {
+                    "domain": "online-stopwatch.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/875"
+                },
+                {
                     "domain": "spirit.com",
                     "reason": "When attempting to sign in, a semi-transparent overlay appears over the page which prevents further interaction with the site."
                 },
@@ -1644,7 +1644,7 @@
                 }
             ],
             "state": "enabled",
-            "hash": "7038a3d6f10d0bb0b1ea6a22eed15974"
+            "hash": "6504a260bff16984c69ebcf7193ff77d"
         },
         "fingerprintingHardware": {
             "settings": {
@@ -1777,8 +1777,15 @@
         },
         "navigatorInterface": {
             "exceptions": [],
+            "settings": {
+                "privilegedDomains": [
+                    {
+                        "domain": "duckduckgo.com"
+                    }
+                ]
+            },
             "state": "enabled",
-            "hash": "52857469413a66e8b0c7b00de5589162"
+            "hash": "831a734e08585b40a38556ad9d108e7b"
         },
         "nonTracking3pCookies": {
             "settings": {
@@ -1812,6 +1819,14 @@
                 {
                     "domain": "natwest.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/851"
+                },
+                {
+                    "domain": "costco.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/878"
+                },
+                {
+                    "domain": "adobe.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/880"
                 },
                 {
                     "domain": "ally.com",
@@ -2358,7 +2373,7 @@
                     }
                 }
             },
-            "hash": "22b875683b9a4db41bf9d1bb1b8f37af"
+            "hash": "67ad84a010eeff37e22b440dccbacfdd"
         },
         "serviceworkerInitiatedRequests": {
             "exceptions": [],
@@ -3513,6 +3528,24 @@
                             }
                         ]
                     },
+                    "medallia.com": {
+                        "rules": [
+                            {
+                                "rule": "cdn.medallia.com/react-surveys/",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/884"
+                            },
+                            {
+                                "rule": "survey.medallia.com/",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/884"
+                            }
+                        ]
+                    },
                     "medicare.gov": {
                         "rules": [
                             {
@@ -3951,6 +3984,17 @@
                             }
                         ]
                     },
+                    "speedcurve.com": {
+                        "rules": [
+                            {
+                                "rule": "cdn.speedcurve.com/js/lux.js",
+                                "domains": [
+                                    "inquirer.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/869"
+                            }
+                        ]
+                    },
                     "spiegel.de": {
                         "rules": [
                             {
@@ -4276,7 +4320,7 @@
                 }
             },
             "exceptions": [],
-            "hash": "76117f8e30dc4e04fe574285484a4967"
+            "hash": "c3cbfdbc57ac44b459ffcfa13e746592"
         },
         "trackingCookies1p": {
             "settings": {
@@ -4341,10 +4385,6 @@
         },
         "webCompat": {
             "exceptions": [
-                {
-                    "domain": "portal.azure.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/526"
-                },
                 {
                     "domain": "lastpass.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/533"
@@ -4639,7 +4679,7 @@
                 }
             ],
             "state": "disabled",
-            "hash": "b90668dd2aa466abc5eb36578c53ba7f"
+            "hash": "2c9337d1278978467568a7f8f0162022"
         },
         "windowsPermissionUsage": {
             "exceptions": [],

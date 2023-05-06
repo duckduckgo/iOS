@@ -26,6 +26,7 @@ struct ManagedTrackerRepresentable: Hashable {
     let blocking: Bool
 }
 
+@MainActor
 class AppTPManageTrackersViewModel: ObservableObject {
     
     private var blocklist: TrackerDataParser
@@ -37,21 +38,23 @@ class AppTPManageTrackersViewModel: ObservableObject {
          allowlist: AppTrackingProtectionAllowlistModel = AppTrackingProtectionAllowlistModel()) {
         self.blocklist = blocklist
         self.allowlist = allowlist
-        buildTrackerList()
     }
     
-    private func buildTrackerList() {
-        trackerList.removeAll()
+    public func buildTrackerList() {
+        var newList = [ManagedTrackerRepresentable]()
         for blockedTracker in blocklist.flatDomainList() {
             let tracker = ManagedTrackerRepresentable(
                 domain: blockedTracker,
                 trackerOwner: blocklist.trackerOwner(forDomain: blockedTracker)?.name ?? "Unknown",
                 blocking: !allowlist.contains(domain: blockedTracker)
             )
-            trackerList.append(tracker)
+            newList.append(tracker)
         }
         // Sort the list by Tracker Network then by domain
-        trackerList.sort(by: { ($0.trackerOwner, $0.domain) < ($1.trackerOwner, $1.domain) })
+        newList.sort(by: { ($0.trackerOwner.lowercased(), $0.domain) < ($1.trackerOwner.lowercased(), $1.domain) })
+        Task { @MainActor in
+            trackerList = newList
+        }
     }
     
     public func changeState(for trackerDomain: String, blocking: Bool) {
@@ -60,7 +63,15 @@ class AppTPManageTrackersViewModel: ObservableObject {
         } else {
             allowlist.remove(domain: trackerDomain)
         }
-        buildTrackerList()
+        
+        // Update the tracker list
+        if let index = trackerList.firstIndex(where: { $0.domain == trackerDomain }) {
+            trackerList[index] = ManagedTrackerRepresentable(
+                domain: trackerDomain,
+                trackerOwner: blocklist.trackerOwner(forDomain: trackerDomain)?.name ?? "Unknown",
+                blocking: blocking
+            )
+        }
     }
     
     public func resetAllowlist() {

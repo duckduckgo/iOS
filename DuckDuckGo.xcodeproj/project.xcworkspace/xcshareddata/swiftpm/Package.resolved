@@ -5,8 +5,8 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "dominik/bookmarks-v3",
-          "revision": "843b07d8f783b3c3af093f1592e4c5f2c405a3fb",
+          "branch": "dominik/sync-engine",
+          "revision": "de7dbbe3d5524081c37690376d012eea31d0db2e",
           "version": null
         }
       },

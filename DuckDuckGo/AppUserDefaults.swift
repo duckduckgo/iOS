@@ -230,7 +230,7 @@ public class AppUserDefaults: AppSettings {
 
     var inspectableWebViewEnabled: Bool {
         get {
-            guard DefaultFeatureFlagger().isInternalUser else {
+            guard AppDependencyProvider.shared.featureFlagger.isFeatureOn(.inspectableWebViews) else {
                 return false
             }
 

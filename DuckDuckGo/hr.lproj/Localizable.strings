@@ -17,7 +17,7 @@
 "action.title.add" = "Dodaj";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Automatsko popunjavanje prijave";
+"action.title.autofill.logins" = "Prijave";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Dodaj u Knjižne oznake";
@@ -179,13 +179,13 @@
 "autofill.keep-enabled.alert.disable" = "Onemogući";
 
 /* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Nastavi koristiti";
+"autofill.keep-enabled.alert.keep-using" = "Nastavi spremati";
 
 /* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "Automatsko popunjavanje možeš onemogućiti u svakom trenutku u Postavkama.";
+"autofill.keep-enabled.alert.message" = "Ovo možeš onemogućiti u svakom trenutku u Postavkama.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Želiš li nastaviti koristiti automatsko popunjavanje?";
+"autofill.keep-enabled.alert.title" = "Želiš li nastaviti spremati prijave?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Pregled";
@@ -268,26 +268,20 @@
 /* Title for alert when attempting to save a duplicate login */
 "autofill.logins.details.save-duplicate-alert.title" = "Ova prijava već postoji";
 
-/* Title for view displayed when autofill is locked */
-"autofill.logins.details.title" = "Otključaj automatsko popunjavanje";
-
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Korisničko ime";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Prijave su sigurno spremljene samo na ovom uređaju";
+"autofill.logins.empty-view.subtitle" = "Prijave su sigurno spremljene samo na ovom uređaju.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Još nema spremljenih prijava";
-
-/* Title for view displayed when autofill is disabled and has no items */
-"autofill.logins.empty-view.title-disabled" = "Omogući automatsko popunjavanje za početak spremanja prijava";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Otkaži";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Otključaj za korištenje spremljene prijave";
+"autofill.logins.list.auth.reason" = "Otključaj uređaj za pristup spremljenim prijavama";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Zatvori";
@@ -301,17 +295,20 @@
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Pretraživanje prijava";
 
+/* Toast message when a login item without a title is deleted */
+"autofill.logins.list.login-deleted-message-no-title" = "Prijava je izbrisana";
+
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Predloženo";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Automatsko popunjavanje prijave";
+"autofill.logins.list.title" = "Prijave";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Šifra je potrebna za zaštitu tvojih podataka za automatsko popunjavanje. Za postavljanje lozinke idi na postavke uređaja.";
+"autofill.logins.no-auth.subtitle" = "Za zaštitu tvojih prijava potrebna je lozinka.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Postavi lozinku uređaja za korištenje automatskog popunjavanja";
+"autofill.logins.no-auth.title" = "Osiguraj svoj uređaj kako bi spremio prijave";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Otkaži";
@@ -319,11 +316,20 @@
 /* Reason for auth during login prompt */
 "autofill.logins.prompt.auth.reason" = "Otključaj za korištenje spremljene prijave";
 
+/* Title for section of autofill logins that are an exact match to the current website */
+"autofill.logins.prompt.exact.match.title" = "S ove web lokacije";
+
 /* Button title for autofill login prompt if more options are available */
 "autofill.logins.prompt.more-options" = "Dodatne mogućnosti";
 
+/* Title for section of autofill logins that are an approximate match to the current website */
+"autofill.logins.prompt.partial.match.title" = "Od % @";
+
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Lozinka za %@";
+
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Koristiti spremljenu prijavu?";
+"autofill.logins.prompt.title" = "Koristiti spremljene podatke za prijavu?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "za '%@'";
@@ -331,11 +337,8 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Nema rezultata";
 
-/* Message displayed on modal explaining that an additional login will be saved. */
-"autofill.save-login.additional-login.message" = "Ovo će spremiti dodatnu prijavu za ovu stranicu.";
-
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo će sigurno spremiti ovu prijavu na tvoj uređaj.";
+"autofill.save-login.new-user.message" = "Prijave se sigurno spremaju samo na ovom uređaju i njima se može upravljati iz izbornika Prijave u Postavkama.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Želiš li da DuckDuckGo spremi tvoju prijavu?";
@@ -358,14 +361,17 @@
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Pokaži lozinku";
 
-/* Confirm CTA displayed on modal asking for the user to update the login */
-"autofill.update-login.save.CTA" = "Ažuriraj prijavu";
+/* Message displayed on modal asking for the user to update the password */
+"autofill.update-password.message" = "DuckDuckGo će ažurirati ovu spremljenu prijavu na tvom uređaju.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Ažuriraj lozinku";
 
 /* Title displayed on modal asking for the user to update the password */
-"autofill.update-password.title" = "Želiš li ažurirati lozinku?";
+"autofill.update-password.title" = "Ažurirati lozinku za\n%@?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-username.save.CTA" = "Ažuriraj korisničko ime";
 
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "Želiš li ažurirati korisničko ime?";

@@ -18,10 +18,41 @@
 //
 
 import BrowserServicesKit
+import Common
 
 public final class PrivacyFeatures {
-    
-    public static let httpsUpgradeStore = AppHTTPSUpgradeStore()
+
+    private static var bloomFilterDataURL: URL {
+        let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContentBlockerStoreConstants.groupName)
+        return path!.appendingPathComponent("HttpsBloomFilter.bin")
+    }
+    private static var embeddedBloomFilterResources: EmbeddedBloomFilterResources {
+        EmbeddedBloomFilterResources(bloomSpecification: Bundle.core.url(forResource: "httpsMobileV2BloomSpec", withExtension: "json")!,
+                                     bloomFilter: Bundle.core.url(forResource: "httpsMobileV2Bloom", withExtension: "bin")!,
+                                     excludedDomains: Bundle.core.url(forResource: "httpsMobileV2FalsePositives", withExtension: "json")!)
+    }
+    private static let httpsUpgradeDebugEvents = EventMapping<AppHTTPSUpgradeStore.ErrorEvents> { event, error, parameters, onComplete in
+        let domainEvent: Pixel.Event
+        switch event {
+        case .dbSaveBloomFilterError:
+            domainEvent = .dbSaveBloomFilterError
+        case .dbSaveExcludedHTTPSDomainsError:
+            domainEvent = .dbSaveExcludedHTTPSDomainsError
+        }
+
+        if let error {
+            Pixel.fire(pixel: domainEvent, error: error, withAdditionalParameters: parameters ?? [:], onComplete: onComplete)
+        } else {
+            Pixel.fire(pixel: domainEvent, withAdditionalParameters: parameters ?? [:], onComplete: onComplete)
+        }
+    }
+    private static var httpsUpgradeStore: AppHTTPSUpgradeStore {
+        AppHTTPSUpgradeStore(database: Database.shared,
+                             bloomFilterDataURL: bloomFilterDataURL,
+                             embeddedResources: embeddedBloomFilterResources,
+                             errorEvents: httpsUpgradeDebugEvents)
+    }
+
     public static let httpsUpgrade = HTTPSUpgrade(store: httpsUpgradeStore, privacyManager: ContentBlocking.shared.privacyConfigurationManager)
     
 }

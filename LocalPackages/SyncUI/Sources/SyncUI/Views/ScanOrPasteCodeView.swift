@@ -33,7 +33,7 @@ public struct ScanOrPasteCodeView: View {
         Group {
             if model.showCamera {
                 QRCodeScannerView {
-                    model.codeScanned($0)
+                    return await model.codeScanned($0)
                 } onCameraUnavailable: {
                     model.cameraUnavailable()
                 }
@@ -98,10 +98,6 @@ public struct ScanOrPasteCodeView: View {
                 Image("SyncCameraUnavailable")
                     .padding(.top, 40)
                     .padding(.bottom, 20)
-                    // Remove this tap gesture before going live
-                    .onTapGesture {
-                        _ = model.codeScanned("camera unavailable")
-                    }
 
                 Text(UserText.cameraIsUnavailableTitle)
                     .font(.system(size: 20, weight: .bold))
@@ -144,6 +140,9 @@ public struct ScanOrPasteCodeView: View {
             }
             .frame(height: 40)
             .foregroundColor(.primary)
+            .onAppear {
+                model.endConnectMode()
+            }
         }
 
     }

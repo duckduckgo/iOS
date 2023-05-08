@@ -20,7 +20,6 @@
 import Foundation
 import Core
 import Configuration
-import os.log
 import BrowserServicesKit
 import Common
 
@@ -149,7 +148,7 @@ struct ConfigurationManager {
             throw Error.bloomFilterBinaryNotFound
         }
         let specification = try JSONDecoder().decode(HTTPSBloomFilterSpecification.self, from: specData)
-        try PrivacyFeatures.httpsUpgradeStore.persistBloomFilter(specification: specification, data: bloomFilterData)
+        try await PrivacyFeatures.httpsUpgrade.persistBloomFilter(specification: specification, data: bloomFilterData)
         await PrivacyFeatures.httpsUpgrade.loadData()
     }
     
@@ -158,7 +157,7 @@ struct ConfigurationManager {
             throw Error.bloomFilterExcludedDomainsNotFound
         }
         let excludedDomains = try HTTPSUpgradeParser.convertExcludedDomainsData(excludedDomainsData)
-        try PrivacyFeatures.httpsUpgradeStore.persistExcludedDomains(excludedDomains)
+        try await PrivacyFeatures.httpsUpgrade.persistExcludedDomains(excludedDomains)
         await PrivacyFeatures.httpsUpgrade.loadData()
     }
     

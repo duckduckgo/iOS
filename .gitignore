@@ -7,7 +7,6 @@ build/
 DerivedData/
 Carthage/Checkouts
 node_modules/
-Package.resolved
 
 ## Various settings
 *.pbxuser
@@ -70,6 +69,9 @@ vendor
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/test_output
+
+# Mestro
+.maestro/**/shared
 
 # DuckDuckGo
 

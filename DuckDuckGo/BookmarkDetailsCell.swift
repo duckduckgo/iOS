@@ -73,7 +73,7 @@ class BookmarkDetailsCell: UITableViewCell {
     
     func setUrlString(_ urlString: String?) {
         let url = URL(string: urlString ?? "")
-        faviconImageView.loadFavicon(forDomain: url?.host, usingCache: .bookmarks)
+        faviconImageView.loadFavicon(forDomain: url?.host, usingCache: .fireproof)
         self.urlString = urlString
     }
     

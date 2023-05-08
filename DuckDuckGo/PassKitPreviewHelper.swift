@@ -17,9 +17,9 @@
 //  limitations under the License.
 //
 
+import Common
 import UIKit
 import PassKit
-import os.log
 
 class PassKitPreviewHelper: FilePreview {
     private weak var viewController: UIViewController?

@@ -17,10 +17,10 @@
 //  limitations under the License.
 //
 
+import Common
 import Foundation
 import Core
 import WebKit
-import os.log
 import UniformTypeIdentifiers
 
 class DownloadManager {

@@ -20,7 +20,6 @@
 import Foundation
 import CoreData
 import Bookmarks
-import os.log
 
 public class LegacyBookmarksCoreDataStorage {
     

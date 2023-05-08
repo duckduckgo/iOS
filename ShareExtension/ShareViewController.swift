@@ -17,10 +17,10 @@
 //  limitations under the License.
 //
 
+import Common
 import UIKit
 import Social
 import Core
-import os.log
 
 class ShareViewController: SLComposeServiceViewController {
 

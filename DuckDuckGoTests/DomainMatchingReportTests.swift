@@ -22,7 +22,6 @@ import XCTest
 @testable import Core
 import Foundation
 import BrowserServicesKit
-import os.log
 import Common
 
 class DomainMatchingReportTests: XCTestCase {

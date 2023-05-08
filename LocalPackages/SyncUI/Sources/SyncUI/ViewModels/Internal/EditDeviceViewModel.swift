@@ -22,23 +22,19 @@ import Foundation
 class EditDeviceViewModel: ObservableObject {
 
     let device: SyncSettingsViewModel.Device
-    let save: (SyncSettingsViewModel.Device) -> Void
-    let remove: () async -> Bool
+    let onSave: (SyncSettingsViewModel.Device) -> Void
 
     @Published var name: String
 
     init(device: SyncSettingsViewModel.Device,
-         save: @escaping (SyncSettingsViewModel.Device) -> Void,
-         remove: @escaping () async -> Bool) {
+         onSave: @escaping (SyncSettingsViewModel.Device) -> Void) {
         self.device = device
-        self.save = save
-        self.remove = remove
-
+        self.onSave = onSave
         self.name = device.name
     }
 
-    func onDisappear() {
-        save(.init(id: device.id, name: name, type: device.type, isThisDevice: device.isThisDevice))
+    func save() {
+        onSave(.init(id: device.id, name: name, type: device.type, isThisDevice: device.isThisDevice))
     }
     
 }

@@ -82,6 +82,9 @@ class HomeCollectionView: UICollectionView {
                 
             case .homeMessage:
                 renderers.install(renderer: HomeMessageViewSectionRenderer(homePageConfiguration: homePageConfiguration))
+
+            case .appTrackingProtection:
+                renderers.install(renderer: HomeMessageViewSectionRenderer(homePageConfiguration: homePageConfiguration))
             }
 
         }

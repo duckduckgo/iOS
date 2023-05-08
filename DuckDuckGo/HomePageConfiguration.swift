@@ -29,6 +29,7 @@ final class HomePageConfiguration {
         case navigationBarSearch(fixed: Bool)
         case favorites
         case homeMessage
+        case appTrackingProtection
     }
 
     func components(favoritesViewModel: FavoritesListInteracting) -> [Component] {
@@ -36,6 +37,7 @@ final class HomePageConfiguration {
         return [
             .navigationBarSearch(fixed: fixed),
             .homeMessage,
+            .appTrackingProtection,
             .favorites
         ]
     }
@@ -74,6 +76,12 @@ final class HomePageConfiguration {
     }
 
     private func remoteMessageToShow() -> HomeMessage? {
+        let messageModel = RemoteMessageModel(id: "remote-message-id",
+                                              content: .small(titleText: "Title", descriptionText: "Description"),
+                                              matchingRules: [],
+                                              exclusionRules: [])
+        return .remoteMessage(remoteMessage: messageModel)
+
         guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return nil }
 
         os_log("Remote message to show: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)

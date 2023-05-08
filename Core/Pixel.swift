@@ -18,12 +18,9 @@
 //
 
 import Foundation
-import os.log
 import BrowserServicesKit
 import Common
 import Networking
-
-// swiftlint:enable type_body_length
 
 public struct PixelParameters {
     public static let url = "url"
@@ -124,7 +121,7 @@ public class Pixel {
     }
     
     private static var isInternalUser: Bool {
-        DefaultFeatureFlagger().isInternalUser
+        DefaultInternalUserDecider(store: InternalUserStore()).isInternalUser
     }
 
     public enum QueryParameters {
@@ -199,5 +196,3 @@ extension Pixel {
         fire(pixel: pixel, withAdditionalParameters: newParams, includedParameters: [], onComplete: onComplete)
     }
 }
-
-// swiftlint:enable file_length

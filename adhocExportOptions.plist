@@ -22,6 +22,9 @@
 
         <key>com.duckduckgo.mobile.ios.Widgets</key>
         <string>match AdHoc com.duckduckgo.mobile.ios.Widgets</string>
+
+        <key>com.duckduckgo.mobile.ios.NetworkExtension</key>
+		<string>match AdHoc com.duckduckgo.mobile.ios.NetworkExtension</string>
     </dict>
 
 </dict>

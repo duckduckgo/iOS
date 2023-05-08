@@ -46,6 +46,11 @@ class PrivacyConfigurationMock: PrivacyConfiguration {
         return enabledFeaturesForVersions[featureKey]?.contains(versionProvider.appVersion() ?? "") ?? false
     }
 
+    var enabledSubfeaturesForVersions: [String: Set<String>] = [:]
+    func isSubfeatureEnabled(_ subfeature: any PrivacySubfeature, versionProvider: AppVersionProvider) -> Bool {
+        return enabledSubfeaturesForVersions[subfeature.rawValue]?.contains(versionProvider.appVersion() ?? "") ?? false
+    }
+
     var protectedDomains = Set<String>()
     func isProtected(domain: String?) -> Bool {
         return protectedDomains.contains(domain ?? "")

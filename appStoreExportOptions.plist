@@ -16,6 +16,8 @@
 		<string>match AppStore com.duckduckgo.mobile.ios.OpenAction2</string>
 		<key>com.duckduckgo.mobile.ios.Widgets</key>
 		<string>match AppStore com.duckduckgo.mobile.ios.Widgets</string>
+		<key>com.duckduckgo.mobile.ios.NetworkExtension</key>
+		<string>match AppStore com.duckduckgo.mobile.ios.NetworkExtension</string>
 	</dict>
 </dict>
 </plist>

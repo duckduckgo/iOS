@@ -1,0 +1,12 @@
+<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g clip-path="url(#Kochava_svg__a)">
+    <path fill="#000" d="M24 12c0 6.627-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0s12 5.373 12 12Z"/>
+    <path fill="#fff" fill-opacity=".12" fill-rule="evenodd" d="M24 12c0 6.627-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0s12 5.373 12 12ZM12 23.5c6.351 0 11.5-5.149 11.5-11.5S18.351.5 12 .5.5 5.649.5 12 5.649 23.5 12 23.5Z" clip-rule="evenodd"/>
+    <path fill="#E43136" d="M13.701 10.1 12 4.5l-1.701 5.6H5l4.326 3.087L7.681 18.5 12 15.217l4.326 3.283-1.645-5.313L19 10.1h-5.299Z"/>
+  </g>
+  <defs>
+    <clipPath id="Kochava_svg__a">
+      <path fill="#fff" d="M0 0h24v24H0z"/>
+    </clipPath>
+  </defs>
+</svg>

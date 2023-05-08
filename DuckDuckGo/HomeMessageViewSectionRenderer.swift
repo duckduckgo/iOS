@@ -19,7 +19,6 @@
 
 import UIKit
 import Core
-import os.log
 
 protocol HomeMessageViewSectionRendererDelegate: AnyObject {
     

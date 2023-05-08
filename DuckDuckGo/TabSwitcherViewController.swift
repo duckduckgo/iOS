@@ -18,9 +18,9 @@
 //
 
 import UIKit
+import Common
 import Core
 import WebKit
-import os.log
 import Bookmarks
 import Persistence
 
@@ -257,7 +257,7 @@ class TabSwitcherViewController: UIViewController {
             guard let link = tab.link else { return }
             if viewModel.bookmark(for: link.url) == nil {
                 viewModel.createBookmark(title: link.displayTitle, url: link.url)
-                favicons.loadFavicon(forDomain: link.url.host, intoCache: .bookmarks, fromCache: .tabs)
+                favicons.loadFavicon(forDomain: link.url.host, intoCache: .fireproof, fromCache: .tabs)
                 newCount += 1
             }
         }
@@ -303,7 +303,6 @@ class TabSwitcherViewController: UIViewController {
 
     @IBAction func onFirePressed(sender: AnyObject) {
         Pixel.fire(pixel: .forgetAllPressedTabSwitching)
-        DailyPixel.fire(pixel: .experimentDailyFireButtonTapped)
         
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             let spec = DaxDialogs.shared.fireButtonEducationMessage()

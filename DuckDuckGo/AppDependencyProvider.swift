@@ -24,8 +24,8 @@ import BrowserServicesKit
 protocol DependencyProvider {
     var appSettings: AppSettings { get }
     var variantManager: VariantManager { get }
+    var internalUserDecider: InternalUserDecider { get }
     var featureFlagger: FeatureFlagger { get }
-    var featureFlaggerInternalUserDecider: FeatureFlaggerInternalUserDecider { get }
     var remoteMessagingStore: RemoteMessagingStore { get }
     var homePageConfiguration: HomePageConfiguration { get }
     var storageCache: StorageCache { get }
@@ -43,13 +43,9 @@ class AppDependencyProvider: DependencyProvider {
     let appSettings: AppSettings = AppUserDefaults()
     let variantManager: VariantManager = DefaultVariantManager()
     
-    private let defaultFeatureFlagger = DefaultFeatureFlagger()
-    var featureFlagger: FeatureFlagger {
-        return defaultFeatureFlagger
-    }
-    var featureFlaggerInternalUserDecider: FeatureFlaggerInternalUserDecider {
-        return defaultFeatureFlagger
-    }
+    let internalUserDecider: InternalUserDecider = DefaultInternalUserDecider(store: InternalUserStore())
+    private lazy var privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
+    lazy var featureFlagger: FeatureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider, privacyConfig: privacyConfig)
 
     let remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore()
     lazy var homePageConfiguration: HomePageConfiguration = HomePageConfiguration(variantManager: variantManager,
@@ -58,5 +54,6 @@ class AppDependencyProvider: DependencyProvider {
     let voiceSearchHelper: VoiceSearchHelperProtocol = VoiceSearchHelper()
     let downloadManager = DownloadManager()
     let autofillLoginSession = AutofillLoginSession()
+
     let configurationManager = ConfigurationManager()
 }

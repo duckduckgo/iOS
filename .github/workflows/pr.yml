@@ -23,11 +23,27 @@ jobs:
       with:
         args: --strict --force-exclude
 
+  shellcheck:
+
+    name: ShellCheck
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the code
+      uses: actions/checkout@v3
+
+    - name: Run ShellCheck
+      uses: ludeeus/action-shellcheck@master
+      with:
+        format: gcc
+        scandir: scripts
+
   unit-tests:
 
     name: Unit Tests
 
-    runs-on: macos-12
+    runs-on: macos-13
     timeout-minutes: 30
 
     steps:
@@ -36,6 +52,27 @@ jobs:
       with:
         submodules: recursive
 
+    - name: Set cache key hash
+      run: |
+         has_only_tags=$(jq '[ .object.pins[].state | has("version") ] | all' DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
+         if [[ "$has_only_tags" == "true" ]]; then
+           echo "cache_key_hash=${{ hashFiles('DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}" >> $GITHUB_ENV
+         else
+           echo "Package.resolved contains dependencies specified by branch or commit, skipping cache."
+         fi
+
+    - name: Cache SPM
+      if: env.cache_key_hash
+      uses: actions/cache@v3
+      with:
+        path: DerivedData/SourcePackages
+        key: ${{ runner.os }}-spm-${{ env.cache_key_hash }}
+        restore-keys: |
+          ${{ runner.os }}-spm-
+
+    - name: Install xcbeautify
+      run: brew install xcbeautify
+
     - name: Select Xcode
       run: sudo xcode-select -s /Applications/Xcode_$(<.xcode-version).app/Contents/Developer
 
@@ -43,8 +80,9 @@ jobs:
       run: |
         set -o pipefail && xcodebuild test \
           -scheme "DuckDuckGo" \
-          -destination "platform=iOS Simulator,name=iPhone 8" \
-          | xcpretty -r junit -o unittests.xml
+          -destination "platform=iOS Simulator,name=iPhone 14" \
+          -derivedDataPath "DerivedData" \
+          | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml
 
     - name: Publish unit tests report
       uses: mikepenz/action-junit-report@v3

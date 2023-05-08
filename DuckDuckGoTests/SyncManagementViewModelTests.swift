@@ -68,12 +68,12 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
         monitor.incrementCalls(function: #function.cleaningFunctionName())
     }
 
-    func confirmDisableSync() async -> Bool {
+    func confirmAndDisableSync() async -> Bool {
         monitor.incrementCalls(function: #function.cleaningFunctionName())
         return true
     }
 
-    func confirmDeleteAllData() async -> Bool {
+    func confirmAndDeleteAllData() async -> Bool {
         monitor.incrementCalls(function: #function.cleaningFunctionName())
         return true
     }
@@ -85,6 +85,18 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
     func confirmRemoveDevice(_ device: SyncUI.SyncSettingsViewModel.Device) async -> Bool {
         monitor.incrementCalls(function: #function.cleaningFunctionName())
         return true
+    }
+
+    func shareRecoveryPDF() {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+    }
+
+    func updateDeviceName(_ name: String) {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+    }
+
+    func removeDevice(_ device: SyncSettingsViewModel.Device) {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
     }
 
 }

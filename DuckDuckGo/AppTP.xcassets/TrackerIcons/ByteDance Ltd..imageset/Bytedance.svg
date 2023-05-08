@@ -1,0 +1,12 @@
+<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g clip-path="url(#ByteDance_svg__a)">
+    <path fill="#3C8CFF" d="M24 12c0 6.627-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0s12 5.373 12 12Z"/>
+    <path fill="#000" fill-opacity=".12" fill-rule="evenodd" d="M24 12c0 6.627-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0s12 5.373 12 12ZM12 23.5c6.351 0 11.5-5.149 11.5-11.5S18.351.5 12 .5.5 5.649.5 12 5.649 23.5 12 23.5Z" clip-rule="evenodd"/>
+    <path fill="#fff" d="m5 6.045 2.432.709v9.812L5 17.275V6.045Zm3.838 5.015 2.378.6v5.288l-2.378.49V11.06Zm4.054-1.035 2.216-.6v6.487l-2.216-.654v-5.233ZM16.568 5.5 19 6.209V17.22l-2.432.6V5.5Z"/>
+  </g>
+  <defs>
+    <clipPath id="ByteDance_svg__a">
+      <path fill="#fff" d="M0 0h24v24H0z"/>
+    </clipPath>
+  </defs>
+</svg>

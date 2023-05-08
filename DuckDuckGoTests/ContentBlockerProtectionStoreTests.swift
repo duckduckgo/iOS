@@ -48,7 +48,10 @@ class ContentBlockerProtectionStoreTests: XCTestCase {
 
         if let newConfig = newConfig {
             XCTAssertEqual(newConfig.etag, "new etag")
-            let config = AppPrivacyConfiguration(data: newConfig.data, identifier: "", localProtection: DomainsProtectionUserDefaultsStore())
+            let config = AppPrivacyConfiguration(data: newConfig.data,
+                                                 identifier: "",
+                                                 localProtection: DomainsProtectionUserDefaultsStore(),
+                                                 internalUserDecider: DefaultInternalUserDecider())
 
             XCTAssertFalse(config.isTempUnprotected(domain: "main1.com"))
             XCTAssertFalse(config.isTempUnprotected(domain: "notdomain1.com"))

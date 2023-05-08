@@ -18,9 +18,9 @@
 //
 
 import UIKit
+import Common
 import Core
 import UserNotifications
-import os.log
 import Kingfisher
 import WidgetKit
 import BackgroundTasks
@@ -30,6 +30,7 @@ import Persistence
 import Crashes
 import Configuration
 import Networking
+import DDGSync
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -51,13 +52,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private lazy var privacyStore = PrivacyUserDefaults()
     private var bookmarksDatabase: CoreDataDatabase = BookmarksDatabase.make()
+    private var appTrackingProtectionDatabase: CoreDataDatabase = AppTrackingProtectionDatabase.make()
     private var autoClear: AutoClear?
     private var showKeyboardIfSettingOn = true
     private var lastBackgroundDate: Date?
 
+    private(set) var syncService: DDGSyncing!
+    private(set) var syncPersistence: SyncDataPersistor!
+
     // MARK: lifecycle
 
-    // swiftlint:disable function_body_length
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         #if targetEnvironment(simulator)
@@ -148,6 +153,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             legacyStorage?.removeStore()
             WidgetCenter.shared.reloadAllTimelines()
         }
+
+        appTrackingProtectionDatabase.loadStore { context, error in
+            guard context != nil else {
+                if let error = error {
+                    Pixel.fire(pixel: .appTPCouldNotLoadDatabase, error: error)
+                } else {
+                    Pixel.fire(pixel: .appTPCouldNotLoadDatabase)
+                }
+
+                Thread.sleep(forTimeInterval: 1)
+                fatalError("Could not create AppTP database stack: \(error?.localizedDescription ?? "err")")
+            }
+        }
         
         Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
             WidgetCenter.shared.reloadAllTimelines()
@@ -166,7 +184,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         
         guard let main = storyboard.instantiateInitialViewController(creator: { coder in
-            MainViewController(coder: coder, bookmarksDatabase: self.bookmarksDatabase)
+            MainViewController(coder: coder,
+                               bookmarksDatabase: self.bookmarksDatabase,
+                               appTrackingProtectionDatabase: self.appTrackingProtectionDatabase)
         }) else {
             fatalError("Could not load MainViewController")
         }
@@ -193,10 +213,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.windowScene?.screenshotService?.delegate = self
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
+        // MARK: Sync initialisation
+        syncPersistence = SyncDataPersistor()
+        syncService = DDGSync(persistence: syncPersistence)
+
         appIsLaunching = true
         return true
     }
-    // swiftlint:enable function_body_length
 
     private func clearTmp() {
         let tmp = FileManager.default.temporaryDirectory
@@ -226,6 +249,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         StatisticsLoader.shared.load {
             StatisticsLoader.shared.refreshAppRetentionAtb()
             self.fireAppLaunchPixel()
+            self.fireAppTPActiveUserPixel()
         }
         
         if appIsLaunching {
@@ -292,6 +316,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 Pixel.fire(pixel: .appLaunch, withAdditionalParameters: params)
             }
             
+        }
+    }
+
+    private func fireAppTPActiveUserPixel() {
+        guard AppDependencyProvider.shared.featureFlagger.isFeatureOn(.appTrackingProtection) else {
+            return
+        }
+        
+        let manager = FirewallManager()
+
+        Task {
+            await manager.refreshManager()
+            let date = Date()
+            let key = "appTPActivePixelFired"
+
+            // Make sure we don't fire this pixel multiple times a day
+            let dayStart = Calendar.current.startOfDay(for: date)
+            let fireDate = UserDefaults.standard.object(forKey: key) as? Date
+            if fireDate == nil || fireDate! < dayStart, manager.status() == .connected {
+                Pixel.fire(pixel: .appTPActiveUser)
+                UserDefaults.standard.set(date, forKey: key)
+            }
         }
     }
     

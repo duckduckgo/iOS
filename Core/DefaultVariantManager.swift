@@ -17,11 +17,15 @@
 //  limitations under the License.
 //
 
+import Common
 import Foundation
-import os.log
 import Speech
 import BrowserServicesKit
 
+extension FeatureName {
+    // Define your feature e.g.:
+    // public static let experimentalFeature = FeatureName(rawValue: "experimentalFeature")
+}
 
 public struct VariantIOS: Variant {
     

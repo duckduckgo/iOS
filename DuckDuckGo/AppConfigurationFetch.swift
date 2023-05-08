@@ -20,7 +20,6 @@
 import Foundation
 import BackgroundTasks
 import Core
-import os.log
 import BrowserServicesKit
 import Configuration
 

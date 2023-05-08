@@ -169,7 +169,7 @@ class DiagnosticReportDataSource: UIActivityItemProvider {
     func imageCacheReport() -> String {
         """
         ## Image Cache Report
-        Bookmark Cache: \(Favicons.Constants.caches[.bookmarks]?.count ?? -1)
+        Bookmark Cache: \(Favicons.Constants.caches[.fireproof]?.count ?? -1)
         Tabs Cache: \(Favicons.Constants.caches[.tabs]?.count ?? -1)
         """
     }

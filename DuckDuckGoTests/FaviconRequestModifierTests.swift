@@ -65,7 +65,8 @@ class FaviconRequestModifierTests: XCTestCase {
         let manager = PrivacyConfigurationManager(fetchedETag: nil,
                                                   fetchedData: nil,
                                                   embeddedDataProvider: mockEmbeddedData,
-                                                  localProtection: mockProtectionStore)
+                                                  localProtection: mockProtectionStore,
+                                                  internalUserDecider: DefaultInternalUserDecider())
 
         let config = manager.privacyConfig
         

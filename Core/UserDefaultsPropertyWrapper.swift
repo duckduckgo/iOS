@@ -90,6 +90,9 @@ public struct UserDefaultsWrapper<T> {
 
         case shouldScheduleRulesCompilationOnAppLaunch = "com.duckduckgo.ios.shouldScheduleRulesCompilationOnAppLaunch"
 
+        case lastAppTrackingProtectionHistoryFetchTimestamp = "com.duckduckgo.ios.appTrackingProtection.lastTrackerHistoryFetchTimestamp"
+        case appTPUsed = "com.duckduckgo.ios.appTrackingProtection.appTPUsed"
+        
     }
 
     private let key: Key
@@ -117,7 +120,23 @@ public struct UserDefaultsWrapper<T> {
             return defaultValue
         }
         set {
-            container.set(newValue, forKey: key.rawValue)
+            if let optional = newValue as? AnyOptional, optional.isNil {
+                container.removeObject(forKey: key.rawValue)
+            } else {
+                container.setValue(newValue, forKey: key.rawValue)
+            }
         }
     }
+}
+
+private protocol AnyOptional {
+    
+    var isNil: Bool { get }
+    
+}
+
+extension Optional: AnyOptional {
+    
+    var isNil: Bool { self == nil }
+    
 }

@@ -38,6 +38,7 @@ struct UserText {
     static let recoveryModeInstructions = "Scan the QR code on your Recovery PDF, or another synced device, to recover your synced data."
 
     static let validatingCode = "Validating code"
+    static let validatingCodeFailed = "That code does not appear to be valid.  Please try copying it again."
 
     static let pasteCodeInstructions = "Copy the code from the Settings > Sync page in the DuckDuckGo App on another synced device and paste it here to sync this device."
 
@@ -81,12 +82,20 @@ struct UserText {
 
     static let removeButton = "Remove"
     static let cancelButton = "Cancel"
+    static let doneButton = "Done"
     static let nextButton = "Next"
     static let notNowButton = "Not Now"
     static let backButton = "Back"
 
-    static func editDevice(named name: String) -> String {
+    static let editDeviceLabel = "Device Name"
+    static func editDevice(_ name: String) -> String {
         return "Edit \(name)"
+    }
+
+    static let removeDeviceTitle = "Remove Device?"
+    static let removeDeviceButton = "Remove Device"
+    static func removeDeviceMessage(_ name: String) -> String {
+        return "\"\(name)\" will no longer be able to access your synced data."
     }
 
 }

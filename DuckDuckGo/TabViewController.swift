@@ -306,11 +306,6 @@ class TabViewController: UIViewController {
 
     @available(iOS 16.4, *) @objc
     private func updateWebViewInspectability() {
-        guard AppDependencyProvider.shared.featureFlagger.isFeatureOn(.appTrackingProtection) else {
-            webView.isInspectable = false
-            return
-        }
-
         webView.isInspectable = AppUserDefaults().inspectableWebViewEnabled
     }
 

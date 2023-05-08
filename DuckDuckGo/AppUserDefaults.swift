@@ -230,10 +230,6 @@ public class AppUserDefaults: AppSettings {
 
     var inspectableWebViewEnabled: Bool {
         get {
-            guard AppDependencyProvider.shared.featureFlagger.isFeatureOn(.inspectableWebViews) else {
-                return false
-            }
-
             return userDefaults?.object(forKey: DebugKeys.inspectableWebViewsEnabledKey) as? Bool ?? false
         }
 

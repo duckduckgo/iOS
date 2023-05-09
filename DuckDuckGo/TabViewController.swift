@@ -2257,12 +2257,12 @@ extension TabViewController: EmailManagerAliasPermissionDelegate {
 extension TabViewController: EmailManagerRequestDelegate {
 
     // swiftlint:disable function_parameter_count
-    func emailManager(_ emailManager: EmailManager, requested url: URL, method: String, headers: [String: String], parameters: [String: String]?, httpBody: Data?, timeoutInterval: TimeInterval) async throws -> Data {
+    func emailManager(_ emailManager: EmailManager, requested url: URL, method: String, headers: HTTPHeaders, parameters: [String: String]?, httpBody: Data?, timeoutInterval: TimeInterval) async throws -> Data {
         let method = APIRequest.HTTPMethod(rawValue: method) ?? .post
         let configuration = APIRequest.Configuration(url: url,
                                                      method: method,
                                                      queryParameters: parameters ?? [:],
-                                                     headers: headers,
+                                                     headers: APIRequest.Headers(additionalHeaders: headers),
                                                      body: httpBody,
                                                      timeoutInterval: timeoutInterval)
         let request = APIRequest(configuration: configuration, urlSession: .session())

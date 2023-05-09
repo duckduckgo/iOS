@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "6c2dd1700d94c4f26222e36ca48a86b840df85c7",
-          "version": "57.4.4"
+          "branch": "jacek/fix-httpheaders",
+          "revision": "92b2eccbc668a700cc077d5ef206d11c70488b2e",
+          "version": null
         }
       },
       {

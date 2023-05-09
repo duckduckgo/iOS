@@ -136,7 +136,7 @@ public class Pixel {
                             forDeviceType deviceType: UIUserInterfaceIdiom? = UIDevice.current.userInterfaceIdiom,
                             withAdditionalParameters params: [String: String] = [:],
                             allowedQueryReservedCharacters: CharacterSet? = nil,
-                            withHeaders headers: HTTPHeaders = APIRequest.Headers().default,
+                            withHeaders headers: APIRequest.Headers = APIRequest.Headers(),
                             includedParameters: [QueryParameters] = [.atb, .appVersion],
                             onComplete: @escaping (Error?) -> Void = { _ in }) {
         

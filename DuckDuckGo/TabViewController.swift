@@ -265,6 +265,8 @@ class TabViewController: UIViewController {
         return appSettings.autofillCredentialsEnabled && canAuthenticate
     }
 
+    private var autoSavedCredentialsId: String = ""
+
     private var userContentController: UserContentController {
         (webView.configuration.userContentController as? UserContentController)!
     }
@@ -1159,6 +1161,7 @@ extension TabViewController: WKNavigationDelegate {
            ?? false {
             detectedLoginURL = nil
             saveLoginPromptLastDismissed = nil
+            autoSavedCredentialsId = ""
         }
     }
     
@@ -2362,9 +2365,35 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
         return isEnabled
     }
-    
-    func secureVaultManager(_ vault: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData) {
-        if let credentials = data.credentials, isAutofillEnabledInSettings, featureFlagger.isFeatureOn(.autofillCredentialsSaving) {
+
+    func secureVaultManager(_ vault: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData, generatedPassword: Bool) {
+        if var credentials = data.credentials, isAutofillEnabledInSettings, featureFlagger.isFeatureOn(.autofillCredentialsSaving) {
+            if generatedPassword {
+                if autoSavedCredentialsId.isEmpty {
+                    autoSavedCredentialsId = credentials.account.id ?? ""
+                } else {
+                    if !credentials.password.isEmpty && !credentials.account.username.isEmpty {
+                        autoSavedCredentialsId = ""
+                        guard let accountID = credentials.account.id,
+                              let accountIdInt = Int64(accountID) else { return }
+                        confirmSavedCredentialsFor(credentialID: accountIdInt, message: UserText.autofillLoginSavedToastMessage)
+                    }
+                }
+                return
+            }
+
+            if !autoSavedCredentialsId.isEmpty {
+                if let accountIdInt = Int64(autoSavedCredentialsId) {
+                    /// generatedPassword has been modified by user so delete the autosaved credential from db and prompt to save login as new credentials
+                    deleteLoginFor(accountIdInt: accountIdInt)
+                    if credentials.account.id == autoSavedCredentialsId {
+                        credentials.account.id = nil
+                    }
+                }
+
+                self.autoSavedCredentialsId = ""
+            }
+
             // Add a delay to allow propagation of pointer events to the page
             // see https://app.asana.com/0/1202427674957632/1202532842924584/f
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -2372,7 +2401,19 @@ extension TabViewController: SecureVaultManagerDelegate {
             }
         }
     }
-    
+
+    func deleteLoginFor(accountIdInt: Int64) {
+        do {
+            let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
+            if secureVault == nil {
+                os_log("Failed to make vault")
+            }
+            try secureVault?.deleteWebsiteCredentialsFor(accountId: accountIdInt)
+        } catch {
+            Pixel.fire(pixel: .secureVaultError)
+        }
+    }
+
     func secureVaultManager(_: SecureVaultManager,
                             promptUserToAutofillCredentialsForDomain domain: String,
                             withAccounts accounts: [SecureVaultModels.WebsiteAccount],
@@ -2435,11 +2476,33 @@ extension TabViewController: SecureVaultManagerDelegate {
     }
     
     func secureVaultManagerShouldAutomaticallyUpdateCredentialsWithoutUsername(_: SecureVaultManager) -> Bool {
-        false
+        true
     }
-    
+
+    func secureVaultManagerShouldAutomaticallySaveGeneratedPassword(_: SecureVaultManager) -> Bool {
+        true
+    }
+
     func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
         // We don't have auth yet
+    }
+
+    func secureVaultManagerAutoSavedCredentialsId(_: SecureVaultManager) -> String? {
+        return autoSavedCredentialsId
+    }
+
+    func secureVaultManager(_: SecureVaultManager, promptUserToUseGeneratedPasswordForDomain: String, withGeneratedPassword generatedPassword: String, completionHandler: @escaping (Bool) -> Void) {
+        let passwordGenerationPromptViewController = PasswordGenerationPromptViewController(
+            generatedPassword: generatedPassword) { useGeneratedPassword in
+                completionHandler(useGeneratedPassword)
+        }
+
+        if #available(iOS 15.0, *) {
+            if let presentationController = passwordGenerationPromptViewController.presentationController as? UISheetPresentationController {
+                presentationController.detents = [.medium()]
+            }
+        }
+        self.present(passwordGenerationPromptViewController, animated: true)
     }
     
     func secureVaultManager(_: SecureVaultManager, didReceivePixel pixel: AutofillUserScript.JSPixel) {
@@ -2461,7 +2524,14 @@ extension TabViewController: SaveLoginViewControllerDelegate {
         do {
             let credentialID = try SaveAutofillLoginManager.saveCredentials(credentials,
                                                                             with: SecureVaultFactory.default)
-            
+            confirmSavedCredentialsFor(credentialID: credentialID, message: message)
+        } catch {
+            os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
+        }
+    }
+
+    private func confirmSavedCredentialsFor(credentialID: Int64, message: String) {
+        do {
             let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
             
             if let newCredential = try vault.websiteCredentialsFor(accountId: credentialID) {
@@ -2475,7 +2545,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
                 }
             }
         } catch {
-            os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
+            os_log("%: failed to fetch credentials %s", type: .error, #function, error.localizedDescription)
         }
     }
     

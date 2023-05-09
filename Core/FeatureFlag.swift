@@ -27,13 +27,14 @@ public enum FeatureFlag: String {
     case autofillCredentialsSaving
     case autofillInlineIconCredentials
     case autofillAccessCredentialManagement
+    case autofillPasswordGeneration
     case appTrackingProtection
 }
 
 extension FeatureFlag: FeatureFlagSourceProviding {
     public var source: FeatureFlagSource {
         switch self {
-        case .debugMenu, .sync, .appTrackingProtection:
+        case .debugMenu, .sync, .appTrackingProtection, .autofillPasswordGeneration:
             return .internalOnly
         case .autofillCredentialInjecting:
             return .remoteReleasable(.subfeature(AutofillSubfeature.credentialsAutofill))

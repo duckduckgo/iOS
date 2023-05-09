@@ -39,7 +39,7 @@ extension ContentScopeFeatureToggles {
                                    identitiesAutofill: false,
                                    creditCardsAutofill: false,
                                    credentialsSaving: featureFlagger.isFeatureOn(.autofillCredentialsSaving) && isAutofillEnabledInSettings,
-                                   passwordGeneration: false,
+                                   passwordGeneration: featureFlagger.isFeatureOn(.autofillPasswordGeneration) && isAutofillEnabledInSettings,
                                    inlineIconCredentials: featureFlagger.isFeatureOn(.autofillInlineIconCredentials) && isAutofillEnabledInSettings,
                                    thirdPartyCredentialsProvider: false)
     }

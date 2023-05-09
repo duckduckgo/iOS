@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "1f2509d528ea5b382676956a7a09b804fd0366da",
-          "version": "57.4.2"
+          "branch": "autofill/anya/password-generation",
+          "revision": "aa9388cb732fa5d45165faaa58cd1d3664a737f0",
+          "version": null
         }
       },
       {
@@ -41,9 +41,9 @@
         "package": "Autofill",
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
-          "branch": null,
-          "revision": "4aee97d550112ba6551e61ea8019fb1f1a2d3af7",
-          "version": "6.4.3"
+          "branch": "shane/pwg-01",
+          "revision": "5a57e0d819d22799802a6795c8b896f61741992a",
+          "version": null
         }
       },
       {

@@ -418,6 +418,18 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "No Results";
 
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Password will be stored securely on this device only, and can be managed from the Logins menu in Settings.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Use generated password from DuckDuckGo?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Use Generated Password";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Create My Own";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.message" = "Logins are stored securely on this device only, and can be managed from the Logins menu in Settings.";
 

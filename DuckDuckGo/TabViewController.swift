@@ -2329,6 +2329,15 @@ extension NSError {
 }
 
 extension TabViewController: SecureVaultManagerDelegate {
+    func secureVaultManager(_: BrowserServicesKit.SecureVaultManager, didRequestCreditCardsManagerForDomain domain: String) {
+    }
+
+    func secureVaultManager(_: BrowserServicesKit.SecureVaultManager, didRequestIdentitiesManagerForDomain domain: String) {
+    }
+
+    func secureVaultManager(_: BrowserServicesKit.SecureVaultManager, didRequestPasswordManagerForDomain domain: String) {
+    }
+
  
     private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials) {
         guard isAutofillEnabledInSettings,

@@ -2145,8 +2145,12 @@ extension TabViewController: AutoconsentUserScriptDelegate {
         privacyInfo?.cookieConsentManaged = cookieConsentStatus
     }
     
+    // Disabled temporarily as a result of https://app.asana.com/0/1203936086921904/1204496002772588/f
+    private var cookieConsentDaxDialogPresentationAllowed: Bool { false }
+    
     func autoconsentUserScript(_ script: AutoconsentUserScript, didRequestAskingUserForConsent completion: @escaping (Bool) -> Void) {
-        guard Locale.current.isRegionInEurope,
+        guard cookieConsentDaxDialogPresentationAllowed,
+              Locale.current.isRegionInEurope,
               !isShowingFullScreenDaxDialog else { return }
         
         let viewModel = CookieConsentDaxDialogViewModel(okAction: {

@@ -25,7 +25,7 @@ import SyncDataProviders
 
 public final class SyncBookmarksAdapter {
 
-    public let provider: SyncBookmarksProvider
+    public let provider: BookmarksProvider
 
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
 

@@ -306,7 +306,11 @@ class TabViewController: UIViewController {
 
     @available(iOS 16.4, *) @objc
     private func updateWebViewInspectability() {
+#if DEBUG
+        webView.isInspectable = true
+#else
         webView.isInspectable = AppUserDefaults().inspectableWebViewEnabled
+#endif
     }
 
     override func viewDidAppear(_ animated: Bool) {

@@ -317,7 +317,12 @@ extension TabViewController {
         
         shareLinkWithTemporaryDownload(temporaryDownloadForPreviewedFile, originalLink: link) { [weak self] link in
             guard let self = self else { return }
-            self.presentShareSheet(withItems: [ link, self.webView.viewPrintFormatter() ], fromView: view)
+            var items: [Any] = [link, self.webView.viewPrintFormatter()]
+
+            if let webView = self.webView {
+                items.append(webView)
+            }
+            self.presentShareSheet(withItems: items, fromView: view)
         }
     }
     

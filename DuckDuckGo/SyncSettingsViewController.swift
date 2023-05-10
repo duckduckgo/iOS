@@ -76,7 +76,6 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     }
 
     func refreshDevices(clearDevices: Bool = true) {
-        print(#function)
         Task { @MainActor in
             if clearDevices {
                 rootView.model.devices = []

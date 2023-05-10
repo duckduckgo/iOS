@@ -77,7 +77,7 @@ class AppTPHomeViewModel: ObservableObject {
         
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = AppTrackerEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "%K > %@", #keyPath(AppTrackerEntity.timestamp),
-                                             Date(timeIntervalSinceNow: -24 * 60 * 60) as NSDate)
+                                             Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date())! as NSDate)
         fetchRequest.propertiesToFetch = [sumDesc]
         fetchRequest.resultType = .dictionaryResultType
         

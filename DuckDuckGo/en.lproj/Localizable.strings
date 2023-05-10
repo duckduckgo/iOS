@@ -154,6 +154,21 @@
 /* Info string informing the user we're looking for trackers in other apps. */
 "appTP.empty.enabled.info" = "We’re looking for trackers in your apps...";
 
+/* Count part of string 'App Tracking Protection blocked x tracking attempts today' */
+"appTP.home.blockedCount" = "%@ tracking attempts";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the trailing space) */
+"appTP.home.blockedPrefix" = "App Tracking Protection blocked ";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the leading space) */
+"appTP.home.blockedSuffix" = " in your apps today.";
+
+/* Prefix of string 'App Tracking Protection disabled. Tap to re-enable.' (note the trailing space) */
+"appTP.home.disabledPrefix" = "App tracking protection disabled. ";
+
+/* Suffix of string 'App Tracking Protection disabled. Tap to re-enable.' */
+"appTP.home.disabledSuffix" = "Tap to re-enable.";
+
 /* Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now' */
 "appTP.justNow" = "just now";
 

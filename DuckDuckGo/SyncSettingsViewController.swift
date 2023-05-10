@@ -75,9 +75,13 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         navigationController?.topViewController?.dismiss(animated: true)
     }
 
-    func refreshDevices() {
+    func refreshDevices(clearDevices: Bool = true) {
+        print(#function)
         Task { @MainActor in
-            rootView.model.devices = []
+            if clearDevices {
+                rootView.model.devices = []
+            }
+
             let devices = try await syncService.fetchDevices()
             mapDevices(devices)
         }
@@ -127,7 +131,8 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     func createAccountAndStartSyncing() {
         Task { @MainActor in
             try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
-            rootView.model.syncEnabled(recoveryCode: recoveryCode)
+            self.rootView.model.syncEnabled(recoveryCode: recoveryCode)
+            self.refreshDevices()
             self.showRecoveryPDF()
         }
     }

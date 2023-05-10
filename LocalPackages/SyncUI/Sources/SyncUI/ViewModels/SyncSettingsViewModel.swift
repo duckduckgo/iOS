@@ -35,6 +35,7 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
     func confirmRemoveDevice(_ device: SyncSettingsViewModel.Device) async -> Bool
     func removeDevice(_ device: SyncSettingsViewModel.Device)
     func updateDeviceName(_ name: String)
+    func refreshDevices(clearDevices: Bool)
 
 }
 

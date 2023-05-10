@@ -189,8 +189,6 @@ class MainViewController: UIViewController {
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             showFireButtonPulse()
         }
-
-        showHomeRowReminder()
     }
 
     func startAddFavoriteFlow() {
@@ -512,7 +510,9 @@ class MainViewController: UIViewController {
         removeHomeScreen()
 
         let tabModel = currentTab?.tabModel
-        let controller = HomeViewController.loadFromStoryboard(model: tabModel!, favoritesViewModel: favoritesViewModel)
+        let controller = HomeViewController.loadFromStoryboard(model: tabModel!,
+                                                               favoritesViewModel: favoritesViewModel,
+                                                               appTPDatabase: appTrackingProtectionDatabase)
         homeController = controller
 
         controller.chromeDelegate = self
@@ -954,14 +954,6 @@ class MainViewController: UIViewController {
 
     func showHomeRowReminder() {
         let feature = HomeRowReminder()
-        showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
-            if tapped {
-                self.launchInstructions()
-            }
-            self.hideNotification()
-        }
-        feature.setShown()
-        return
 
         if feature.showNow() {
             showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in

@@ -21,21 +21,50 @@ import SwiftUI
 
 struct AppTPHomeView: View {
     
+    @ObservedObject var viewModel: AppTPHomeViewModel
+    
     var countText: some View {
-        Text("App Tracking Protection blocked ")
-        + Text("123 tracking attempts")
-            .fontWeight(.semibold)
-        + Text(" in your apps today.")
+        Group {
+            Text(UserText.appTPHomeBlockedPrefix)
+            + Text(UserText.appTPHomeBlockedCount(countString: String(viewModel.blockCount)))
+                .fontWeight(.semibold)
+            + Text(UserText.appTPHomeBlockedSuffix)
+        }
+        .multilineTextAlignment(.leading)
+        .font(Font(uiFont: Const.Font.text))
+        .lineSpacing(Const.Spacing.line)
+    }
+    
+    var disabledText: some View {
+        Group {
+            Text(UserText.appTPHomeDisabledPrefix)
+                .fontWeight(.semibold)
+            + Text(UserText.appTPHomeDisabledSuffix)
+        }
+        .multilineTextAlignment(.leading)
+        .font(Font(uiFont: Const.Font.text))
+        .lineSpacing(Const.Spacing.line)
+    }
+    
+    var image: some View {
+        viewModel.appTPEnabled
+            ? Image("AppTPHomeEnabled")
+                .resizable()
+            : Image("AppTPHomeDisabled")
+                .resizable()
     }
     
     var body: some View {
         HStack(spacing: Const.Spacing.imageAndTitle) {
-            countText
-                .font(Font(uiFont: Const.Font.text))
-                .lineSpacing(Const.Spacing.line)
+            if viewModel.appTPEnabled {
+                countText
+            } else {
+                disabledText
+            }
             
-            Image("AppTPEmptyEnabled")
-                .resizable()
+            Spacer()
+            
+            image
                 .scaledToFit()
                 .frame(width: 48, height: 48)
         }
@@ -47,6 +76,9 @@ struct AppTPHomeView: View {
                                 radius: Const.Radius.shadow,
                                 x: 0,
                                 y: Const.Offset.shadowVertical))
+        .onTapGesture {
+            viewModel.showAppTPInSettings()
+        }
     }
 }
 
@@ -72,11 +104,5 @@ private enum Const {
     
     enum Offset {
         static let shadowVertical: CGFloat = 2
-    }
-}
-
-struct AppTPHomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        AppTPHomeView()
     }
 }

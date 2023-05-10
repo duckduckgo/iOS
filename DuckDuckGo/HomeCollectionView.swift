@@ -19,6 +19,7 @@
 
 import UIKit
 import Bookmarks
+import Persistence
 
 class HomeCollectionView: UICollectionView {
     
@@ -51,6 +52,7 @@ class HomeCollectionView: UICollectionView {
                  forCellWithReuseIdentifier: "homeMessageCell")
         
         register(HomeMessageCollectionViewCell.self, forCellWithReuseIdentifier: "HomeMessageCell")
+        register(AppTPCollectionViewCell.self, forCellWithReuseIdentifier: "AppTPHomeCell")
         
         register(EmptyCollectionReusableView.self,
                  forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
@@ -68,6 +70,7 @@ class HomeCollectionView: UICollectionView {
     
     func configure(withController controller: HomeViewController,
                    favoritesViewModel: FavoritesListInteracting,
+                   appTPHomeViewModel: AppTPHomeViewModel,
                    andTheme theme: Theme) {
         self.controller = controller
         renderers = HomeViewSectionRenderers(controller: controller, theme: theme)
@@ -84,7 +87,7 @@ class HomeCollectionView: UICollectionView {
                 renderers.install(renderer: HomeMessageViewSectionRenderer(homePageConfiguration: homePageConfiguration))
 
             case .appTrackingProtection:
-                renderers.install(renderer: HomeMessageViewSectionRenderer(homePageConfiguration: homePageConfiguration))
+                renderers.install(renderer: AppTPHomeViewSectionRenderer(appTPHomeViewModel: appTPHomeViewModel))
             }
 
         }

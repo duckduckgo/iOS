@@ -21,15 +21,49 @@ import Foundation
 import CoreData
 import Persistence
 import Core
+import NetworkExtension
 
 class AppTPHomeViewModel: ObservableObject {
     @Published public var blockCount: Int32 = 0
+    @Published public var appTPEnabled: Bool = false
     
+    private let appTPDatabase: CoreDataDatabase
     private let context: NSManagedObjectContext
+    private var firewallManager: FirewallManaging
     
-    public init(appTrackingProtectionDatabase: CoreDataDatabase) {
+    private var timer: Timer?
+    
+    public init(appTrackingProtectionDatabase: CoreDataDatabase,
+                firewallManager: FirewallManaging = FirewallManager()) {
+        self.appTPDatabase = appTrackingProtectionDatabase
         self.context = appTrackingProtectionDatabase.makeContext(concurrencyType: .mainQueueConcurrencyType)
+        self.firewallManager = firewallManager
+        self.firewallManager.delegate = self
+        
         fetchTrackerCount()
+        Task {
+            await self.firewallManager.refreshManager()
+        }
+        
+        startTimer()
+    }
+    
+    deinit {
+        timer?.invalidate()
+    }
+    
+    public func startTimer() {
+        if let timer = timer, timer.isValid {
+            return
+        }
+        
+        self.timer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
+            self?.fetchTrackerCount()
+        }
+    }
+    
+    public func stopTimer() {
+        timer?.invalidate()
     }
     
     /// Use Core Data aggregation to fetch the sum of trackers from the last 24 hours
@@ -41,15 +75,34 @@ class AppTPHomeViewModel: ObservableObject {
         sumDesc.name = "sum"
         sumDesc.expressionResultType = .integer32AttributeType
         
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "AppTrackerEntity")
-        fetchRequest.predicate = NSPredicate(format: "%K > %@", #keyPath(AppTrackerEntity.timestamp), Date(timeIntervalSinceNow: -24 * 60 * 60) as NSDate)
-        fetchRequest.returnsObjectsAsFaults = false
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = AppTrackerEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "%K > %@", #keyPath(AppTrackerEntity.timestamp),
+                                             Date(timeIntervalSinceNow: -24 * 60 * 60) as NSDate)
         fetchRequest.propertiesToFetch = [sumDesc]
         fetchRequest.resultType = .dictionaryResultType
         
         if let result = try? context.fetch(fetchRequest) as? [[String: Any]],
            let sum = result.first?[sumDesc.name] as? Int32 {
             blockCount = sum
+        }
+    }
+    
+    public func showAppTPInSettings() {
+        guard let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first,
+                let rootViewController = window.rootViewController as? MainViewController else { return }
+
+        rootViewController.performSegue(withIdentifier: "Settings", sender: nil)
+        let navigationController = rootViewController.presentedViewController as? UINavigationController
+        navigationController?.popToRootViewController(animated: false)
+        navigationController?.pushViewController(AppTPActivityHostingViewController(appTrackingProtectionDatabase: self.appTPDatabase),
+                                                 animated: true)
+    }
+}
+
+extension AppTPHomeViewModel: FirewallDelegate {
+    func statusDidChange(newStatus: NEVPNStatus) {
+        Task { @MainActor in
+            self.appTPEnabled = newStatus == .connected
         }
     }
 }

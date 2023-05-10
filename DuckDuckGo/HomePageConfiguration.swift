@@ -76,12 +76,6 @@ final class HomePageConfiguration {
     }
 
     private func remoteMessageToShow() -> HomeMessage? {
-        let messageModel = RemoteMessageModel(id: "remote-message-id",
-                                              content: .small(titleText: "Title", descriptionText: "Description"),
-                                              matchingRules: [],
-                                              exclusionRules: [])
-        return .remoteMessage(remoteMessage: messageModel)
-
         guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return nil }
 
         os_log("Remote message to show: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)

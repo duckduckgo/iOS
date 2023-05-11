@@ -111,8 +111,9 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     func updateDeviceName(_ name: String) {
         Task { @MainActor in
             rootView.model.devices = []
-            let devices = try await syncService.updateDeviceName(name)
-            mapDevices(devices)
+            if let devices = try? await syncService.updateDeviceName(name) {
+                mapDevices(devices)
+            }
         }
     }
 

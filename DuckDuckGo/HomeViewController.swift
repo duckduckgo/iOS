@@ -173,15 +173,6 @@ class HomeViewController: UIViewController {
                 
         viewHasAppeared = true
         tabModel.viewed = true
-        
-        appTPHomeViewModel.fetchTrackerCount()
-        appTPHomeViewModel.startTimer()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        appTPHomeViewModel.stopTimer()
     }
     
     var isShowingDax: Bool {

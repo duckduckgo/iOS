@@ -154,8 +154,8 @@
 /* Info string informing the user we're looking for trackers in other apps. */
 "appTP.empty.enabled.info" = "We’re looking for trackers in your apps...";
 
-/* Count part of string 'App Tracking Protection blocked x tracking attempts today' */
-"appTP.home.blockedCount" = "%@ tracking attempts";
+/* Do not translate. StringsDict entry -- Count part of string 'App Tracking Protection blocked x tracking attempts today' */
+"appTP.home.blockedCount" = "appTP.home.blockedCount";
 
 /* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the trailing space) */
 "appTP.home.blockedPrefix" = "App Tracking Protection blocked ";

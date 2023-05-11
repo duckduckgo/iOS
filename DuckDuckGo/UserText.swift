@@ -545,8 +545,8 @@ In addition to the details entered into this form, your app issue report will co
     
     public static let appTPHomeBlockedPrefix = NSLocalizedString("appTP.home.blockedPrefix", value: "App Tracking Protection blocked ", comment: "Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the trailing space)")
     public static let appTPHomeBlockedSuffix = NSLocalizedString("appTP.home.blockedSuffix", value: " in your apps today.", comment: "Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the leading space)")
-    public static func appTPHomeBlockedCount(countString: String) -> String {
-        let message = NSLocalizedString("appTP.home.blockedCount", value: "%@ tracking attempts", comment: "Count part of string 'App Tracking Protection blocked x tracking attempts today'")
+    public static func appTPHomeBlockedCount(countString: Int32) -> String {
+        let message = NSLocalizedString("appTP.home.blockedCount", comment: "Do not translate. StringsDict entry -- Count part of string 'App Tracking Protection blocked x tracking attempts today'")
         return message.format(arguments: countString)
     }
     

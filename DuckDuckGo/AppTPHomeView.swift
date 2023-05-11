@@ -26,7 +26,7 @@ struct AppTPHomeView: View {
     var countText: some View {
         Group {
             Text(UserText.appTPHomeBlockedPrefix)
-            + Text(UserText.appTPHomeBlockedCount(countString: String(viewModel.blockCount)))
+            + Text(UserText.appTPHomeBlockedCount(countString: viewModel.blockCount))
                 .fontWeight(.semibold)
             + Text(UserText.appTPHomeBlockedSuffix)
         }

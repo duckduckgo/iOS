@@ -31,43 +31,35 @@ class AppTPHomeViewModel: ObservableObject {
     private let context: NSManagedObjectContext
     private var firewallManager: FirewallManaging
     
-    private var timer: Timer?
-    
     public init(appTrackingProtectionDatabase: CoreDataDatabase,
                 firewallManager: FirewallManaging = FirewallManager()) {
         self.appTPDatabase = appTrackingProtectionDatabase
         self.context = appTrackingProtectionDatabase.makeContext(concurrencyType: .mainQueueConcurrencyType)
         self.firewallManager = firewallManager
         self.firewallManager.delegate = self
+        registerForRemoteChangeNotifications()
         
         fetchTrackerCount()
         Task {
             await self.firewallManager.refreshManager()
         }
-        
-        startTimer()
     }
     
-    deinit {
-        timer?.invalidate()
-    }
-    
-    public func startTimer() {
-        if let timer = timer, timer.isValid {
+    private func registerForRemoteChangeNotifications() {
+        guard let coordinator = context.persistentStoreCoordinator else {
+            Pixel.fire(pixel: .appTPDBPersistentStoreLoadFailure)
+            assertionFailure("Failed to get AppTP persistent store coordinator")
             return
         }
-        
-        self.timer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
-            self?.fetchTrackerCount()
-        }
-    }
-    
-    public func stopTimer() {
-        timer?.invalidate()
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(fetchTrackerCount),
+                                               name: .NSPersistentStoreRemoteChange,
+                                               object: coordinator)
     }
     
     /// Use Core Data aggregation to fetch the sum of trackers from the last 24 hours
-    public func fetchTrackerCount() {
+    @objc public func fetchTrackerCount() {
         let keyPathExpr = NSExpression(forKeyPath: "count")
         let expr = NSExpression(forFunction: "sum:", arguments: [keyPathExpr])
         let sumDesc = NSExpressionDescription()
@@ -81,9 +73,11 @@ class AppTPHomeViewModel: ObservableObject {
         fetchRequest.propertiesToFetch = [sumDesc]
         fetchRequest.resultType = .dictionaryResultType
         
-        if let result = try? context.fetch(fetchRequest) as? [[String: Any]],
-           let sum = result.first?[sumDesc.name] as? Int32 {
-            blockCount = sum
+        Task { @MainActor in
+            if let result = try? context.fetch(fetchRequest) as? [[String: Any]],
+               let sum = result.first?[sumDesc.name] as? Int32 {
+                blockCount = sum
+            }
         }
     }
     

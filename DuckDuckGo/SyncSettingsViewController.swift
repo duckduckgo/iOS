@@ -48,6 +48,8 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         isPad ? "tablet" : "phone"
     }
 
+    var cancellables = Set<AnyCancellable>()
+
     convenience init() {
         self.init(rootView: SyncSettingsView(model: SyncSettingsViewModel()))
 
@@ -56,6 +58,14 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
             rootView.model.syncEnabled(recoveryCode: recoveryCode)
             refreshDevices()
         }
+
+        syncService.isAuthenticatedPublisher
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.rootView.model.isSyncEnabled = self!.syncService.isAuthenticated
+            }
+            .store(in: &cancellables)
 
         rootView.model.delegate = self
         navigationItem.title = "Sync" // TODO externalise
@@ -333,6 +343,10 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                 showDeviceConnected()
                 return true
             } else if let connectKey = syncCode.connect {
+                if syncService.account == nil {
+                    try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
+                    rootView.model.syncEnabled(recoveryCode: recoveryCode)
+                }
                 try await syncService.transmitRecoveryKey(connectKey)
                 dismissPresentedViewController()
                 return true

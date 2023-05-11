@@ -32,6 +32,8 @@ struct LightTheme: Theme {
     
     var backgroundColor = UIColor(designSystemColor: .background)
     
+    var mainViewBackgroundColor = UIColor(designSystemColor: .base)
+    
     var omniBarBackgroundColor = UIColor(designSystemColor: .panel)
     var barBackgroundColor = UIColor(designSystemColor: .panel)
     var barTintColor = UIColor(designSystemColor: .icons)

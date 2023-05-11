@@ -1857,7 +1857,7 @@ extension MainViewController: Themable {
             statusBarBackground.backgroundColor = theme.omniBarBackgroundColor
         }
 
-        view.backgroundColor = theme.backgroundColor
+        view.backgroundColor = theme.mainViewBackgroundColor
 
         customNavigationBar?.backgroundColor = theme.barBackgroundColor
         customNavigationBar?.tintColor = theme.barTintColor

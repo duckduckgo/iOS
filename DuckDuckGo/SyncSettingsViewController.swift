@@ -19,7 +19,6 @@
 
 import SwiftUI
 import Combine
-import AVFoundation
 import SyncUI
 import DDGSync
 
@@ -101,201 +100,13 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
             }
         }
     }
-    
-}
 
-extension SyncSettingsViewController: SyncManagementViewModelDelegate {
-
-    private func mapDevices(_ devices: [RegisteredDevice]) {
+    func mapDevices(_ devices: [RegisteredDevice]) {
         rootView.model.devices = devices.map {
             .init(id: $0.id, name: $0.name, type: $0.type, isThisDevice: $0.id == syncService.account?.deviceId)
         }.sorted(by: { lhs, _ in
             lhs.isThisDevice
         })
-    }
-
-    func updateDeviceName(_ name: String) {
-        Task { @MainActor in
-            rootView.model.devices = []
-            do {
-                let devices = try await syncService.updateDeviceName(name)
-                mapDevices(devices)
-            } catch {
-                handleError(error)
-            }
-        }
-    }
-
-    func createAccountAndStartSyncing() {
-        Task { @MainActor in
-            do {
-                try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
-                self.rootView.model.syncEnabled(recoveryCode: recoveryCode)
-                self.refreshDevices()
-                self.showRecoveryPDF()
-            } catch {
-                handleError(error)
-            }
-        }
-    }
-
-    @MainActor
-    func handleError(_ error: Error) {
-        // Work out how to handle this properly later
-        assertionFailure(error.localizedDescription)
-    }
-
-    func showSyncSetup() {
-        let model = TurnOnSyncViewModel { [weak self] in
-            assert(self?.navigationController?.visibleViewController is DismissibleHostingController<TurnOnSyncView>)
-            self?.dismissPresentedViewController()
-            // Handle the finished logic in the closing of the view controller so that we also handle the
-            //  user dismissing it (cancel, swipe down, etc)
-        }
-
-        let controller = DismissibleHostingController(rootView: TurnOnSyncView(model: model)) { [weak self] in
-            assert(self?.navigationController?.visibleViewController is DismissibleHostingController<TurnOnSyncView>)
-            self?.rootView.model.setupFinished(model)
-        }
-
-        navigationController?.present(controller, animated: true)
-    }
-
-    func showSyncWithAnotherDevice() {
-        collectCode(showConnectMode: syncService.account == nil)
-    }
-
-    func showRecoverData() {
-        collectCode(showConnectMode: true)
-    }
-
-    func showDeviceConnected() {
-        let model = SaveRecoveryKeyViewModel(key: recoveryCode) { [weak self] in
-            self?.shareRecoveryPDF()
-        }
-        let controller = UIHostingController(rootView: DeviceConnectedView(saveRecoveryKeyViewModel: model))
-        navigationController?.present(controller, animated: true) { [weak self] in
-            self?.rootView.model.syncEnabled(recoveryCode: self!.recoveryCode)
-            self?.refreshDevices()
-        }
-    }
-    
-    func showRecoveryPDF() {
-        let model = SaveRecoveryKeyViewModel(key: recoveryCode) { [weak self] in
-            self?.shareRecoveryPDF()
-        }
-        let controller = UIHostingController(rootView: SaveRecoveryKeyView(model: model))
-        navigationController?.present(controller, animated: true)
-    }
-
-    private func collectCode(showConnectMode: Bool) {
-        let model = ScanOrPasteCodeViewModel(showConnectMode: showConnectMode)
-        model.delegate = self
-
-        let controller = UIHostingController(rootView: ScanOrPasteCodeView(model: model))
-
-        let navController = UIDevice.current.userInterfaceIdiom == .phone
-            ? PortraitNavigationController(rootViewController: controller)
-            : UINavigationController(rootViewController: controller)
-
-        navController.overrideUserInterfaceStyle = .dark
-        navController.modalPresentationStyle = .fullScreen
-        navigationController?.present(navController, animated: true) {
-            self.checkCameraPermission(model: model)
-        }
-    }
-
-    func checkCameraPermission(model: ScanOrPasteCodeViewModel) {
-        let status = AVCaptureDevice.authorizationStatus(for: .video)
-        if status == .notDetermined {
-            Task { @MainActor in
-                _ = await AVCaptureDevice.requestAccess(for: .video)
-                self.checkCameraPermission(model: model)
-            }
-            return
-        }
-
-        switch status {
-        case .denied: model.videoPermission = .denied
-        case .authorized: model.videoPermission = .authorised
-        default: assertionFailure("Unexpected status \(status)")
-        }
-    }
-
-    func confirmAndDisableSync() async -> Bool {
-        return await withCheckedContinuation { continuation in
-            let alert = UIAlertController(title: UserText.syncTurnOffConfirmTitle,
-                                          message: UserText.syncTurnOffConfirmMessage,
-                                          preferredStyle: .alert)
-            alert.addAction(title: UserText.actionCancel, style: .cancel) {
-                continuation.resume(returning: false)
-            }
-            alert.addAction(title: UserText.syncTurnOffConfirmAction, style: .destructive) {
-                Task { @MainActor in
-                    do {
-                        self.rootView.model.isSyncEnabled = false
-                        try await self.syncService.disconnect()
-                    } catch {
-                        self.handleError(error)
-                    }
-                    continuation.resume(returning: true)
-                }
-            }
-            self.present(alert, animated: true)
-        }
-    }
-
-    func confirmAndDeleteAllData() async -> Bool {
-        return await withCheckedContinuation { continuation in
-            let alert = UIAlertController(title: UserText.syncDeleteAllConfirmTitle,
-                                          message: UserText.syncDeleteAllConfirmMessage,
-                                          preferredStyle: .alert)
-            alert.addAction(title: UserText.actionCancel, style: .cancel) {
-                continuation.resume(returning: false)
-            }
-            alert.addAction(title: UserText.syncDeleteAllConfirmAction, style: .destructive) {
-                Task { @MainActor in
-                    do {
-                        self.rootView.model.isSyncEnabled = false
-                        try await self.syncService.deleteAccount()
-                    } catch {
-                        self.handleError(error)
-                    }
-                    continuation.resume(returning: true)
-                }
-            }
-            self.present(alert, animated: true)
-        }
-    }
-
-    func copyCode() {
-        UIPasteboard.general.string = recoveryCode
-    }
-
-    func confirmRemoveDevice(_ device: SyncSettingsViewModel.Device) async -> Bool {
-        return await withCheckedContinuation { continuation in
-            let alert = UIAlertController(title: UserText.syncRemoveDeviceTitle,
-                                          message: UserText.syncRemoveDeviceMessage(device.name),
-                                          preferredStyle: .alert)
-            alert.addAction(title: UserText.actionCancel) {
-                continuation.resume(returning: false)
-            }
-            alert.addAction(title: UserText.syncRemoveDeviceConfirmAction, style: .destructive) {
-                continuation.resume(returning: true)
-            }
-            self.present(alert, animated: true)
-        }
-    }
-
-    func removeDevice(_ device: SyncSettingsViewModel.Device) {
-        Task { @MainActor in
-            do {
-                try await syncService.disconnect(deviceId: device.id)
-                refreshDevices()
-            } catch {
-                handleError(error)
-            }
-        }
     }
 
 }
@@ -377,37 +188,6 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
         if let appSettings = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
         }
-    }
-
-}
-
-private class DismissibleHostingController<Content: View>: UIHostingController<Content> {
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ThemeManager.shared.currentTheme.statusBarStyle
-    }
-
-    let onDismiss: () -> Void
-
-    init(rootView: Content, onDismiss: @escaping () -> Void) {
-        self.onDismiss = onDismiss
-        super.init(rootView: rootView)
-    }
-
-    required dynamic init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        onDismiss()
-    }
-}
-
-private class PortraitNavigationController: UINavigationController {
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        [.portrait, .portraitUpsideDown]
     }
 
 }

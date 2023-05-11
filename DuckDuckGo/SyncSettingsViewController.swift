@@ -98,27 +98,6 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     
 }
 
-extension SyncSettingsViewController: Themable {
-
-    func decorate(with theme: Theme) {
-        view.backgroundColor = theme.backgroundColor
-
-        navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
-        navigationController?.navigationBar.tintColor = theme.navigationBarTintColor
-
-        if #available(iOS 15.0, *) {
-            let appearance = UINavigationBarAppearance()
-            appearance.shadowColor = .clear
-            appearance.backgroundColor = theme.backgroundColor
-
-            navigationController?.navigationBar.standardAppearance = appearance
-            navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        }
-        
-    }
-
-}
-
 extension SyncSettingsViewController: SyncManagementViewModelDelegate {
 
     private func mapDevices(_ devices: [RegisteredDevice]) {

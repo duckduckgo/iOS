@@ -57,11 +57,11 @@ class FireproofFaviconUpdater: NSObject, FaviconUserScriptDelegate {
     let tab: TabNotifying
     let favicons: FaviconProviding
 
-    init(bookmarksDatabase: CoreDataDatabase, tab: TabNotifying, favicons: FaviconProviding) {
+    init(bookmarksDatabase: CoreDataDatabase, tab: TabNotifying, favicons: FaviconProviding, secureVaultEnabled: Bool) {
         self.context = bookmarksDatabase.makeContext(concurrencyType: .mainQueueConcurrencyType)
         self.tab = tab
         self.favicons = favicons
-        secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
+        self.secureVault = secureVaultEnabled ? try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared) : nil
 
         super.init()
         registerForNotifications()

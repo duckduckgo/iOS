@@ -86,13 +86,19 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     }
 
     func refreshDevices(clearDevices: Bool = true) {
+        guard syncService.isAuthenticated else { return }
+
         Task { @MainActor in
             if clearDevices {
                 rootView.model.devices = []
             }
 
-            let devices = try await syncService.fetchDevices()
-            mapDevices(devices)
+            do {
+                let devices = try await syncService.fetchDevices()
+                mapDevices(devices)
+            } catch {
+                handleError(error)
+            }
         }
     }
     
@@ -111,19 +117,32 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     func updateDeviceName(_ name: String) {
         Task { @MainActor in
             rootView.model.devices = []
-            if let devices = try? await syncService.updateDeviceName(name) {
+            do {
+                let devices = try await syncService.updateDeviceName(name)
                 mapDevices(devices)
+            } catch {
+                handleError(error)
             }
         }
     }
 
     func createAccountAndStartSyncing() {
         Task { @MainActor in
-            try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
-            self.rootView.model.syncEnabled(recoveryCode: recoveryCode)
-            self.refreshDevices()
-            self.showRecoveryPDF()
+            do {
+                try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
+                self.rootView.model.syncEnabled(recoveryCode: recoveryCode)
+                self.refreshDevices()
+                self.showRecoveryPDF()
+            } catch {
+                handleError(error)
+            }
         }
+    }
+
+    @MainActor
+    func handleError(_ error: Error) {
+        // Work out how to handle this properly later
+        assertionFailure(error.localizedDescription)
     }
 
     func showSyncSetup() {
@@ -143,11 +162,11 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
 
     func showSyncWithAnotherDevice() {
-        collectCode(isInRecoveryMode: false)
+        collectCode(showConnectMode: syncService.account == nil)
     }
 
     func showRecoverData() {
-        collectCode(isInRecoveryMode: true)
+        collectCode(showConnectMode: true)
     }
 
     func showDeviceConnected() {
@@ -169,8 +188,8 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         navigationController?.present(controller, animated: true)
     }
 
-    private func collectCode(isInRecoveryMode: Bool) {
-        let model = ScanOrPasteCodeViewModel(isInRecoveryMode: isInRecoveryMode)
+    private func collectCode(showConnectMode: Bool) {
+        let model = ScanOrPasteCodeViewModel(showConnectMode: showConnectMode)
         model.delegate = self
 
         let controller = UIHostingController(rootView: ScanOrPasteCodeView(model: model))
@@ -217,7 +236,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                         self.rootView.model.isSyncEnabled = false
                         try await self.syncService.disconnect()
                     } catch {
-                        print(error.localizedDescription)
+                        self.handleError(error)
                     }
                     continuation.resume(returning: true)
                 }
@@ -240,7 +259,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                         self.rootView.model.isSyncEnabled = false
                         try await self.syncService.deleteAccount()
                     } catch {
-                        print(error.localizedDescription)
+                        self.handleError(error)
                     }
                     continuation.resume(returning: true)
                 }
@@ -270,8 +289,12 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
 
     func removeDevice(_ device: SyncSettingsViewModel.Device) {
         Task { @MainActor in
-            try await syncService.disconnect(deviceId: device.id)
-            refreshDevices()
+            do {
+                try await syncService.disconnect(deviceId: device.id)
+                refreshDevices()
+            } catch {
+                handleError(error)
+            }
         }
     }
 
@@ -289,26 +312,32 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
     }
 
     func startConnectMode() async -> String? {
-        if await authenticator.authenticate(reason: "Generate QRCode to connect to other devices") {
+        // Handle local authentication later
+        do {
+            self.connector = try syncService.remoteConnect()
+            self.startPolling()
+            return self.connector?.code
+        } catch {
+            self.handleError(error)
+            return nil
+        }
+    }
+
+    func startPolling() {
+        Task { @MainActor in
             do {
-                self.connector = try syncService.remoteConnect()
-                Task { @MainActor in
-                    if let recoveryKey = try await connector?.pollForRecoveryKey() {
+                if let recoveryKey = try await connector?.pollForRecoveryKey() {
                         try await syncService.login(recoveryKey, deviceName: deviceName, deviceType: deviceType)
-                    } else {
-                        // Likely cancelled elsewhere
-                        return
-                    }
-                    dismissPresentedViewController()
-                    showDeviceConnected()
+                } else {
+                    // Likely cancelled elsewhere
+                    return
                 }
-                return self.connector?.code
+                dismissPresentedViewController()
+                showDeviceConnected()
             } catch {
-                // TODO handle the error
-                return nil
+                handleError(error)
             }
         }
-        return nil
     }
 
     func syncCodeEntered(code: String) async -> Bool {
@@ -333,9 +362,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
             }
 
         } catch {
-            if !(error is SyncError) {
-                assertionFailure(error.localizedDescription)
-            }
+            handleError(error)
         }
         return false
     }

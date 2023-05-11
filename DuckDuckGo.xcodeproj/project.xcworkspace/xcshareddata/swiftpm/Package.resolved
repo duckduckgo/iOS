@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "afeccb2a853290cc88c86bdff7273e36490b6166",
-          "version": "57.4.5"
+          "branch": "anya/rmf-asset-update",
+          "revision": "240659fed027885118715b898637bee600f075db",
+          "version": null
         }
       },
       {

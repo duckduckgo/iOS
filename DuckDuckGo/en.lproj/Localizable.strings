@@ -419,7 +419,7 @@
 "autofill.logins.search.no-results.title" = "No Results";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Password will be stored securely on this device only, and can be managed from the Logins menu in Settings.";
+"autofill.password-generation-prompt.subtitle" = "Password will be saved in Logins.";
 
 /* Title for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.title" = "Use generated password from DuckDuckGo?";

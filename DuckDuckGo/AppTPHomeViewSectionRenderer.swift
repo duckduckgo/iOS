@@ -28,6 +28,8 @@ class AppTPHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         static let horizontalMargin: CGFloat = 16
     }
     
+    fileprivate lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
+    
     private weak var controller: HomeViewController?
     
     let appTPHomeViewModel: AppTPHomeViewModel
@@ -67,7 +69,8 @@ class AppTPHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let appTPUsed = UserDefaults().bool(forKey: UserDefaultsWrapper<Any>.Key.appTPUsed.rawValue)
-        return appTPUsed ? 1 : 0
+        let appTPEnabled = featureFlagger.isFeatureOn(.appTrackingProtection)
+        return appTPUsed && appTPEnabled ? 1 : 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

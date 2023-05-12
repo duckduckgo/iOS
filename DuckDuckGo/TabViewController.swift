@@ -260,13 +260,6 @@ class TabViewController: UIViewController {
         })
         return controller
     }
-    
-    private var isAutofillEnabledInSettings: Bool {
-        let context = LAContext()
-        var error: NSError?
-        let canAuthenticate = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
-        return appSettings.autofillCredentialsEnabled && canAuthenticate
-    }
 
     private var userContentController: UserContentController {
         (webView.configuration.userContentController as? UserContentController)!
@@ -1182,7 +1175,7 @@ extension TabViewController: WKNavigationDelegate {
     private func checkLoginDetectionAfterNavigation() {
         if preserveLoginsWorker?.handleLoginDetection(detectedURL: detectedLoginURL,
                                                       currentURL: url,
-                                                      isAutofillEnabled: isAutofillEnabledInSettings,
+                                                      isAutofillEnabled: AutofillSettingStatus.isAutofillEnabledInSettings,
                                                       saveLoginPromptLastDismissed: saveLoginPromptLastDismissed)
            ?? false {
             detectedLoginURL = nil
@@ -2359,7 +2352,7 @@ extension NSError {
 extension TabViewController: SecureVaultManagerDelegate {
  
     private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials) {
-        guard isAutofillEnabledInSettings,
+        guard AutofillSettingStatus.isAutofillEnabledInSettings,
               featureFlagger.isFeatureOn(.autofillCredentialsSaving),
               let autofillUserScript = autofillUserScript else { return }
 
@@ -2386,7 +2379,7 @@ extension TabViewController: SecureVaultManagerDelegate {
     }
     
     func secureVaultManagerIsEnabledStatus(_: SecureVaultManager) -> Bool {
-        let isEnabled = featureFlagger.isFeatureOn(.autofillCredentialInjecting)
+        let isEnabled = AutofillSettingStatus.isAutofillEnabledInSettings && featureFlagger.isFeatureOn(.autofillCredentialInjecting)
         let isBackgrounded = UIApplication.shared.applicationState == .background
         if isEnabled && isBackgrounded {
             Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded,
@@ -2397,7 +2390,9 @@ extension TabViewController: SecureVaultManagerDelegate {
     }
     
     func secureVaultManager(_ vault: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData) {
-        if let credentials = data.credentials, isAutofillEnabledInSettings, featureFlagger.isFeatureOn(.autofillCredentialsSaving) {
+        if let credentials = data.credentials,
+           AutofillSettingStatus.isAutofillEnabledInSettings,
+           featureFlagger.isFeatureOn(.autofillCredentialsSaving) {
             // Add a delay to allow propagation of pointer events to the page
             // see https://app.asana.com/0/1202427674957632/1202532842924584/f
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -2412,7 +2407,7 @@ extension TabViewController: SecureVaultManagerDelegate {
                             withTrigger trigger: AutofillUserScript.GetTriggerType,
                             completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
   
-        if !isAutofillEnabledInSettings, featureFlagger.isFeatureOn(.autofillCredentialInjecting) {
+        if !AutofillSettingStatus.isAutofillEnabledInSettings, featureFlagger.isFeatureOn(.autofillCredentialInjecting) {
             completionHandler(nil)
             return
         }

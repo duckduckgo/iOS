@@ -134,8 +134,7 @@ class TabViewController: UIViewController {
     let bookmarksDatabase: CoreDataDatabase
     lazy var faviconUpdater = FireproofFaviconUpdater(bookmarksDatabase: bookmarksDatabase,
                                                       tab: tabModel,
-                                                      favicons: Favicons.shared,
-                                                      secureVaultEnabled: secureVaultManagerIsEnabledStatus(vaultManager))
+                                                      favicons: Favicons.shared)
 
     public var url: URL? {
         willSet {

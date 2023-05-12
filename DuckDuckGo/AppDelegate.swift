@@ -174,10 +174,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         syncMetadataDatabase.loadStore { context, error in
             guard context != nil else {
                 if let error = error {
-//                    Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
-//                               error: error)
+                    Pixel.fire(pixel: .syncMetadataCouldNotLoadDatabase, error: error)
                 } else {
-//                    Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase)
+                    Pixel.fire(pixel: .syncMetadataCouldNotLoadDatabase)
                 }
 
                 Thread.sleep(forTimeInterval: 1)

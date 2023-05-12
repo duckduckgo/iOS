@@ -27,7 +27,7 @@ extension ContentScopeFeatureToggles {
 
     static var supportedFeaturesOniOS: ContentScopeFeatureToggles {
         let isAutofillEnabledInSettings = AutofillSettingStatus.isAutofillEnabledInSettings
-        ContentScopeFeatureToggles(emailProtection: true,
+        return ContentScopeFeatureToggles(emailProtection: true,
                                    credentialsAutofill: featureFlagger.isFeatureOn(.autofillCredentialInjecting) && isAutofillEnabledInSettings,
                                    identitiesAutofill: false,
                                    creditCardsAutofill: false,

@@ -41,7 +41,10 @@ final class SecureVaultErrorReporter: SecureVaultErrorReporting {
             if let secureVaultError = error as? SecureVaultError,
                let userInfo = secureVaultError.errorUserInfo["NSUnderlyingError"] as? NSError,
                userInfo.code == -25308 {
-                os_log("SecureVault attempt to access keystore while device is locked: %@", log: .generalLog, type: .debug, error.localizedDescription)
+                os_log("SecureVault attempt to access keystore while device is locked: %@",
+                       log: .generalLog,
+                       type: .debug,
+                       error.localizedDescription)
                 return
             }
             Pixel.fire(pixel: .secureVaultInitFailedError, error: error, withAdditionalParameters: pixelParams)

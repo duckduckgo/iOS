@@ -58,7 +58,7 @@ class WaitlistViewModelTests: XCTestCase {
         let storage = MockWaitlistStorage.init()
         storage.store(waitlistTimestamp: 12345)
         storage.store(inviteCode: "TE5TC0DE")
-        let viewModel = WaitlistViewModel(request, storage)
+        let viewModel = WaitlistViewModel(request, storage, MockNotificationService())
 
         await viewModel.updateViewState()
 
@@ -70,7 +70,7 @@ class WaitlistViewModelTests: XCTestCase {
 
         let request = MockWaitlistRequest.failure()
         let storage = MockWaitlistStorage.init()
-        let viewModel = WaitlistViewModel(request, storage)
+        let viewModel = WaitlistViewModel(request, storage, MockNotificationService())
 
         await viewModel.updateViewState()
 

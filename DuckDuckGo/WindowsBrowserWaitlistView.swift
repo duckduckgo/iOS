@@ -44,7 +44,10 @@ struct WindowsBrowserWaitlistView: View {
                 Task { await viewModel.perform(action: action) }
             }
         case .waitlistRemoved:
-            FailedAssertionView("Windows waitlist is still active")
+            WaitlistDownloadBrowserContentView(platform: .windows) { action in
+                Task { await viewModel.perform(action: action)
+                }
+            }
         }
     }
 }

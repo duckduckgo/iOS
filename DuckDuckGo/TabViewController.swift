@@ -2385,8 +2385,7 @@ extension TabViewController: SecureVaultManagerDelegate {
             Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded,
                        withAdditionalParameters: [PixelParameters.isBackgrounded: "true"])
         }
-        let isBackgroundedAndLocked = isBackgrounded && !UIApplication.shared.isProtectedDataAvailable
-        return isEnabled && !isBackgroundedAndLocked
+        return isEnabled
     }
     
     func secureVaultManager(_ vault: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData) {

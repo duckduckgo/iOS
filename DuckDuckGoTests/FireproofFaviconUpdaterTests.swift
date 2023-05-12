@@ -56,7 +56,7 @@ class FireproofFaviconUpdaterTests: XCTestCase, TabNotifying, FaviconProviding {
     }
 
     func testWhenBookmarkDoesNotExist_ThenImageNotReplacement() {
-        let updater = FireproofFaviconUpdater(bookmarksDatabase: db, tab: self, favicons: self, secureVaultEnabled: false)
+        let updater = FireproofFaviconUpdater(bookmarksDatabase: db, tab: self, favicons: self)
         updater.faviconUserScript(FaviconUserScript(), didRequestUpdateFaviconForHost: "example.com", withUrl: nil)
 
         XCTAssertEqual(loadFaviconDomain, "example.com")
@@ -70,7 +70,7 @@ class FireproofFaviconUpdaterTests: XCTestCase, TabNotifying, FaviconProviding {
     func testWhenBookmarkExistsButNoImage_ThenImageNotReplacement() throws {
         try createBookmark()
 
-        let updater = FireproofFaviconUpdater(bookmarksDatabase: db, tab: self, favicons: self, secureVaultEnabled: false)
+        let updater = FireproofFaviconUpdater(bookmarksDatabase: db, tab: self, favicons: self)
         updater.faviconUserScript(FaviconUserScript(), didRequestUpdateFaviconForHost: "example.com", withUrl: nil)
 
         XCTAssertEqual(loadFaviconDomain, "example.com")
@@ -87,7 +87,7 @@ class FireproofFaviconUpdaterTests: XCTestCase, TabNotifying, FaviconProviding {
         image = UIImage()
         let url = URL(string: "https://example.com/favicon.ico")!
 
-        let updater = FireproofFaviconUpdater(bookmarksDatabase: db, tab: self, favicons: self, secureVaultEnabled: false)
+        let updater = FireproofFaviconUpdater(bookmarksDatabase: db, tab: self, favicons: self)
         updater.faviconUserScript(FaviconUserScript(), didRequestUpdateFaviconForHost: "example.com", withUrl: url)
 
         XCTAssertEqual(loadFaviconDomain, "example.com")
@@ -104,7 +104,7 @@ class FireproofFaviconUpdaterTests: XCTestCase, TabNotifying, FaviconProviding {
         image = UIImage()
         let url = URL(string: "https://example.com/favicon.ico")!
 
-        let updater = FireproofFaviconUpdater(bookmarksDatabase: db, tab: self, favicons: self, secureVaultEnabled: false)
+        let updater = FireproofFaviconUpdater(bookmarksDatabase: db, tab: self, favicons: self)
         updater.faviconUserScript(FaviconUserScript(), didRequestUpdateFaviconForHost: "www.example.com", withUrl: url)
 
         XCTAssertEqual(loadFaviconDomain, "www.example.com")

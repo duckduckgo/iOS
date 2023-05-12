@@ -38,7 +38,8 @@ final class SecureVaultErrorReporter: SecureVaultErrorReporting {
         case .initFailed(let error):
             // Silencing pixel reporting for error -25308 (attempt to access keychain while the device was locked)
             // as per https://app.asana.com/0/30173902528854/1204557908133145/f, at least temporarily
-            if let secureVaultError = error as? SecureVaultError,
+            if isBackgrounded,
+               let secureVaultError = error as? SecureVaultError,
                let userInfo = secureVaultError.errorUserInfo["NSUnderlyingError"] as? NSError,
                userInfo.code == -25308 {
                 os_log("SecureVault attempt to access keystore while device is locked: %@",

@@ -7,13 +7,31 @@ on:
 jobs:
   end-to-end-tests:
     name: End to end Tests
-    runs-on: macos-12
+    runs-on: macos-13
 
     steps:
     - name: Check out the code
       uses: actions/checkout@v3
       with:
         submodules: recursive
+
+    - name: Set cache key hash
+      run: |
+         has_only_tags=$(jq '[ .object.pins[].state | has("version") ] | all' DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
+         if [[ "$has_only_tags" == "true" ]]; then
+           echo "cache_key_hash=${{ hashFiles('DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}" >> $GITHUB_ENV
+         else
+           echo "Package.resolved contains dependencies specified by branch or commit, skipping cache."
+         fi
+
+    - name: Cache SPM
+      if: env.cache_key_hash
+      uses: actions/cache@v3
+      with:
+        path: DerivedData/SourcePackages
+        key: ${{ runner.os }}-spm-${{ env.cache_key_hash }}
+        restore-keys: |
+          ${{ runner.os }}-spm-
 
     - name: Select Xcode
       run: sudo xcode-select -s /Applications/Xcode_$(<.xcode-version).app/Contents/Developer
@@ -23,7 +41,7 @@ jobs:
         set -o pipefail && xcodebuild \
           -scheme "DuckDuckGo" \
           -destination "platform=iOS Simulator,name=iPhone 14" \
-          -derivedDataPath ~/DerivedData
+          -derivedDataPath "DerivedData"
 
     - name: Setup tests
       run: bundle install && bundle exec fastlane setup_e2e_tests
@@ -32,20 +50,37 @@ jobs:
       uses: mobile-dev-inc/action-maestro-cloud@v1.2.3
       with:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
-        app-file: /Users/runner/DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
+        app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
         workspace: .maestro/release_tests
 
     - name: Privacy tests
       uses: mobile-dev-inc/action-maestro-cloud@v1.2.3
       with:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
-        app-file: /Users/runner/DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
+        app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
         workspace: .maestro/privacy_tests
     
     - name: Ad Click Detection Flow tests
       uses: mobile-dev-inc/action-maestro-cloud@v1.2.3
       with:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
-        app-file: /Users/runner/DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
+        app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
         workspace: .maestro/privacy_tests
+
+    - name: Create Asana task when workflow failed
+      if: ${{ failure() }}
+      run: |
+        curl -s "https://app.asana.com/api/1.0/tasks" \
+          -H "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
+          --data ' \
+          { \
+            data: " \
+              "name": "GH Workflow Failure - End to end tests", \
+              "workspace": ${{ vars.GH_ASANA_WORKSPACE_ID }}, \
+              "projects": [ \
+                ${{ vars.GH_ASANA_IOS_APP_PROJECT_ID }} \
+              ], \
+              "notes" : "The end to end workflow has failed. See https://github.com/duckduckgo/iOS/actions/runs/${{ github.run_id }}", \
+            " \
+          }'
   

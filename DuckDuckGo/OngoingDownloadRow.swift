@@ -62,7 +62,10 @@ struct OngoingDownloadRow: View {
         Button {
             cancelButtonAction()
         } label: {
-            Image("Close-24")
+            Image(systemName: "xmark")
+                .resizable()
+                .scaledToFit()
+                .frame(width: Const.Size.cancel.width, height: Const.Size.cancel.height)
         }
         .accessibilityLabel(UserText.cancelDownloadAlertCancelAction)
         .buttonStyle(.plain)

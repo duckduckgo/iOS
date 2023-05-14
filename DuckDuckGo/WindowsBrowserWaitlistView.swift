@@ -20,7 +20,6 @@
 import SwiftUI
 import Core
 import Waitlist
-import DesignResourcesKit
 
 struct WindowsBrowserWaitlistView: View {
 
@@ -63,7 +62,7 @@ struct WindowsBrowserWaitlistSignUpView: View {
                     HeaderView(imageName: "WindowsWaitlistJoinWaitlist", title: UserText.windowsWaitlistTryDuckDuckGoForWindows)
 
                     Text(UserText.windowsWaitlistSummary)
-                        .daxBodyRegular()
+                        .font(.proximaNova(size: 16))
                         .foregroundColor(.waitlistTextSecondary)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
@@ -75,7 +74,7 @@ struct WindowsBrowserWaitlistSignUpView: View {
                     if requestInFlight {
                         HStack {
                             Text(UserText.waitlistJoining)
-                                .daxSubheadRegular()
+                                .font(.proximaNova(size: 15))
                                 .foregroundColor(.waitlistTextSecondary)
 
                             ActivityIndicator(style: .medium)
@@ -90,7 +89,7 @@ struct WindowsBrowserWaitlistSignUpView: View {
                             action(.custom(.openMacBrowserWaitlist))
                         }, label: {
                             Text(UserText.windowsWaitlistMac)
-                                .daxHeadline()
+                                .font(.proximaNova(size: 17, weight: .bold))
                                 .foregroundColor(.waitlistBlue)
                                 .multilineTextAlignment(.center)
                                 .lineSpacing(5)
@@ -100,7 +99,7 @@ struct WindowsBrowserWaitlistSignUpView: View {
                     .fixedSize(horizontal: false, vertical: true)
 
                     Text(UserText.waitlistPrivacyDisclaimer)
-                        .daxFootnoteRegular()
+                        .font(.proximaNova(size: 13))
                         .foregroundColor(.waitlistTextSecondary)
                         .multilineTextAlignment(.center)
                         .lineSpacing(5)
@@ -130,13 +129,13 @@ struct WindowsBrowserWaitlistJoinedWaitlistView: View {
             switch notificationState {
             case .notificationAllowed:
                 Text(UserText.windowsWaitlistJoinedWithNotifications)
-                    .daxBodyRegular()
+                    .font(.proximaNova(size: 17))
                     .foregroundColor(.waitlistTextSecondary)
                     .lineSpacing(6)
 
             default:
                 Text(UserText.windowsWaitlistJoinedWithoutNotifications)
-                    .daxBodyRegular()
+                    .font(.proximaNova(size: 17))
                     .foregroundColor(.waitlistTextSecondary)
                     .lineSpacing(6)
 
@@ -169,7 +168,7 @@ private struct AllowNotificationsView: View {
         VStack(spacing: 20) {
 
             Text(UserText.waitlistNotificationDisabled)
-                .daxBodyRegular()
+                .font(.proximaNova(size: 17))
                 .foregroundColor(.waitlistTextSecondary)
                 .fixMultilineScrollableText()
                 .lineSpacing(5)
@@ -210,25 +209,25 @@ struct WindowsBrowserWaitlistInvitedView: View {
                     HeaderView(imageName: "WaitlistInvited", title: UserText.waitlistYoureInvited)
 
                     Text(UserText.windowsWaitlistInviteScreenSubtitle)
-                        .daxBodyRegular()
+                        .font(.proximaNova(size: 17))
                         .foregroundColor(.waitlistTextSecondary)
                         .padding(.top, 16)
                         .lineSpacing(6)
                         .fixedSize(horizontal: false, vertical: true)
 
                     Text(UserText.waitlistInviteScreenStepTitle(step: 1))
-                        .daxHeadline()
+                        .font(.proximaNova(size: 17, weight: .bold))
                         .foregroundColor(.waitlistTextSecondary)
                         .padding(.top, 28)
                         .padding(.bottom, 8)
 
                     Text(UserText.windowsWaitlistInviteScreenStep1Description)
-                        .daxBodyRegular()
+                        .font(.proximaNova(size: 17))
                         .foregroundColor(.waitlistTextSecondary)
                         .lineSpacing(6)
 
                     Text(URL.windows.absoluteString.dropping(prefix: "https://"))
-                        .daxHeadline()
+                        .font(.proximaNova(size: 17, weight: .bold))
                         .foregroundColor(.waitlistBlue)
                         .menuController(UserText.waitlistCopy) {
                             action(.copyDownloadURLToPasteboard)
@@ -236,13 +235,13 @@ struct WindowsBrowserWaitlistInvitedView: View {
                         .scaledToFit()
 
                     Text(UserText.waitlistInviteScreenStepTitle(step: 2))
-                        .daxHeadline()
+                        .font(.proximaNova(size: 17, weight: .bold))
                         .foregroundColor(.waitlistTextSecondary)
                         .padding(.top, 22)
                         .padding(.bottom, 8)
 
                     Text(UserText.windowsWaitlistInviteScreenStep2Description)
-                        .daxBodyRegular()
+                        .font(.proximaNova(size: 17))
                         .foregroundColor(.waitlistTextSecondary)
                         .lineSpacing(6)
 

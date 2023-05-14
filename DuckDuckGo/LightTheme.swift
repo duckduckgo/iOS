@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 import UIKit
-import DesignResourcesKit
 
 struct LightTheme: Theme {
     var name = ThemeName.light
@@ -30,10 +29,10 @@ struct LightTheme: Theme {
     var tabsBarBackgroundColor = UIColor.lightGreyish
     var tabsBarSeparatorColor = UIColor.greyish
     
-    var backgroundColor = UIColor(designSystemColor: .background)
+    var backgroundColor = UIColor.gray10
     
-    var barBackgroundColor = UIColor(designSystemColor: .panel)
-    var barTintColor = UIColor(designSystemColor: .icons)
+    var barBackgroundColor = UIColor.nearlyWhiteLight
+    var barTintColor = UIColor.nearlyBlackLight
     
     var navigationBarTitleColor = UIColor.nearlyBlackLight
     var navigationBarTintColor = UIColor.darkGreyish
@@ -51,7 +50,7 @@ struct LightTheme: Theme {
     
     var browsingMenuTextColor = UIColor.nearlyBlack
     var browsingMenuIconsColor = UIColor.nearlyBlackLight
-    var browsingMenuBackgroundColor = UIColor(designSystemColor: .surface)
+    var browsingMenuBackgroundColor = UIColor.white
     var browsingMenuSeparatorColor = UIColor.mercury
     var browsingMenuHighlightColor = UIColor.lightGreyish
     
@@ -61,7 +60,7 @@ struct LightTheme: Theme {
     var autocompleteSuggestionTextColor = UIColor.black
     var autocompleteCellAccessoryColor = UIColor.darkGreyish
     
-    var tableCellBackgroundColor = UIColor(designSystemColor: .surface)
+    var tableCellBackgroundColor = UIColor.white
     var tableCellSelectedColor = UIColor.mercury
     var tableCellSeparatorColor = UIColor(white: 0, alpha: 0.09)
     var tableCellTextColor = UIColor.darkGreyish
@@ -70,7 +69,7 @@ struct LightTheme: Theme {
     var tableCellHighlightedBackgroundColor = UIColor.mercury
     var tableHeaderTextColor = UIColor.greyish3
     
-    var tabSwitcherCellBackgroundColor = UIColor(designSystemColor: .surface)
+    var tabSwitcherCellBackgroundColor = UIColor.white
     var tabSwitcherCellBorderColor = UIColor.nearlyBlackLight
     var tabSwitcherCellTextColor = UIColor.black
     var tabSwitcherCellSecondaryTextColor = UIColor.greyishBrown2

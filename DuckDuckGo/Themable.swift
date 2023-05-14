@@ -33,6 +33,7 @@ extension Themable where Self: UIViewController {
     
     func decorateNavigationBar(with theme: Theme) {
         navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
+        navigationController?.navigationBar.backgroundColor = theme.barBackgroundColor
         navigationController?.navigationBar.tintColor = theme.navigationBarTintColor
         
         var titleAttrs = navigationController?.navigationBar.titleTextAttributes ?? [:]
@@ -41,10 +42,10 @@ extension Themable where Self: UIViewController {
         
         if #available(iOS 15.0, *) {
             let appearance = UINavigationBarAppearance()
-            appearance.shadowColor = .clear
-            appearance.backgroundColor = theme.backgroundColor
+            appearance.configureWithDefaultBackground()
+            appearance.backgroundColor = theme.barBackgroundColor
             appearance.titleTextAttributes = titleAttrs
-
+            
             navigationController?.navigationBar.standardAppearance = appearance
             navigationController?.navigationBar.scrollEdgeAppearance = appearance
         }

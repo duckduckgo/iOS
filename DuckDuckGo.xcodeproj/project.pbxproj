@@ -8113,8 +8113,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "tom/burner-window-unit-tests";
-				kind = branch;
+				kind = exactVersion;
+				version = 57.4.7;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

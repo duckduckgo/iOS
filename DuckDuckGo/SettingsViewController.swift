@@ -99,7 +99,11 @@ class SettingsViewController: UITableViewController {
     }()
     
     private lazy var shouldShowAppTPCell: Bool = {
+#if APP_TRACKING_PROTECTION
         return featureFlagger.isFeatureOn(.appTrackingProtection)
+#else
+        return false
+#endif
     }()
 
     static func loadFromStoryboard() -> UIViewController {
@@ -261,7 +265,8 @@ class SettingsViewController: UITableViewController {
     
     private func configureAppTPCell() {
         appTPCell.isHidden = !shouldShowAppTPCell
-        
+
+#if APP_TRACKING_PROTECTION
         Task { @MainActor in
             let fwm = FirewallManager()
             await fwm.refreshManager()
@@ -271,6 +276,7 @@ class SettingsViewController: UITableViewController {
                 appTPCell.detailTextLabel?.text = UserText.appTPCellDetail
             }
         }
+#endif
     }
 
     private func configureDebugCell() {
@@ -311,13 +317,15 @@ class SettingsViewController: UITableViewController {
     private func showMacBrowserWaitlistViewController() {
         navigationController?.pushViewController(MacWaitlistViewController(nibName: nil, bundle: nil), animated: true)
     }
-    
+
+#if APP_TRACKING_PROTECTION
     private func showAppTP() {
         navigationController?.pushViewController(
             AppTPActivityHostingViewController(appTrackingProtectionDatabase: appTPDatabase),
             animated: true
         )
     }
+#endif
 
     private func showWindowsBrowserWaitlistViewController() {
         navigationController?.pushViewController(WindowsWaitlistViewController(nibName: nil, bundle: nil), animated: true)
@@ -355,7 +363,11 @@ class SettingsViewController: UITableViewController {
             showSync()
 
         case appTPCell:
+#if APP_TRACKING_PROTECTION
             showAppTP()
+#else
+            break
+#endif
             
         default: break
         }

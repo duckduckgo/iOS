@@ -14,7 +14,6 @@
 		020108A929A7C1CD00644F9D /* AppTrackerImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020108A829A7C1CD00644F9D /* AppTrackerImageCache.swift */; };
 		020108AE29A7F91600644F9D /* AppTPTrackerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020108AD29A7F91600644F9D /* AppTPTrackerCell.swift */; };
 		02025664298818B200E694E7 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02025663298818B100E694E7 /* NetworkExtension.framework */; };
-		0202566C298818B200E694E7 /* PacketTunnelProvider.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 02025662298818B100E694E7 /* PacketTunnelProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0202569029881ECA00E694E7 /* CocoaAsyncSocket in Frameworks */ = {isa = PBXBuildFile; productRef = 0202568F29881ECA00E694E7 /* CocoaAsyncSocket */; };
 		02025A9A2988229800E694E7 /* TUNInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258EF298820EC00E694E7 /* TUNInterface.swift */; };
 		02025A9B2988229800E694E7 /* IPStackProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258F0298820EC00E694E7 /* IPStackProtocol.swift */; };
@@ -922,7 +921,6 @@
 				85482D942462DCD100EDEDD1 /* OpenAction.appex in Embed App Extensions */,
 				8512EA5D24ED30D30073EE19 /* WidgetsExtension.appex in Embed App Extensions */,
 				8390447620BDCE10006461CD /* ShareExtension.appex in Embed App Extensions */,
-				0202566C298818B200E694E7 /* PacketTunnelProvider.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7525,7 +7523,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG APP_TRACKING_PROTECTION";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "$(ARCHS_STANDARD_64_BIT)";
@@ -7608,6 +7606,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Development - App";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;

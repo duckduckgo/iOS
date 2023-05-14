@@ -21,6 +21,8 @@ import SwiftUI
 import Persistence
 import Core
 
+#if APP_TRACKING_PROTECTION
+
 class AppTPActivityHostingViewController: UIHostingController<AppTPActivityView> {
     init(appTrackingProtectionDatabase: CoreDataDatabase) {
         let feedbackModel = AppTrackingProtectionFeedbackModel(appTrackingProtectionDatabase: appTrackingProtectionDatabase)
@@ -40,3 +42,5 @@ class AppTPActivityHostingViewController: UIHostingController<AppTPActivityView>
         self.view.backgroundColor = UIColor(named: "AppTPViewBackgroundColor")
     }
 }
+
+#endif

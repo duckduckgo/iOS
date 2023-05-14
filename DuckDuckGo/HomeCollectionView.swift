@@ -91,11 +91,11 @@ class HomeCollectionView: UICollectionView {
 
             case .appTrackingProtection:
 #if APP_TRACKING_PROTECTION
-                guard let viewModel = appTPHomeViewModel as? AppTPHomeViewModel else {
-                    assertionFailure()
+                if let viewModel = appTPHomeViewModel as? AppTPHomeViewModel {
+                    renderers.install(renderer: AppTPHomeViewSectionRenderer(appTPHomeViewModel: viewModel))
+                } else {
+                    fatalError("Failed to cast AppTP home view model to expected class")
                 }
-
-                renderers.install(renderer: AppTPHomeViewSectionRenderer(appTPHomeViewModel: viewModel))
 #else
                 break
 #endif

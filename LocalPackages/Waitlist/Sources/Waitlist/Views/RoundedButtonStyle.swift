@@ -29,7 +29,7 @@ public struct RoundedButtonStyle: ButtonStyle {
 
     public func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-            .font(.proximaNova(size: 17, weight: .bold))
+            .daxHeadline()
             .frame(maxWidth: .infinity)
             .padding([.top, .bottom], 16)
             .background(enabled ? Color.waitlistBlue : Color.waitlistBlue.opacity(0.2))

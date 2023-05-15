@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
 class DownloadsListHostingController: UIHostingController<DownloadsList> {
     required init?(coder aDecoder: NSCoder) {
@@ -27,17 +28,22 @@ class DownloadsListHostingController: UIHostingController<DownloadsList> {
         
         super.init(coder: aDecoder, rootView: DownloadsList(viewModel: viewModel))
 
-        setupTableViewAppearance()
+        setUpAppearances()
         
         viewModel.requestActivityViewHandler = { [weak self] url, rectangle in
             self?.presentActivityView(for: url, from: rectangle)
         }
     }
     
-    private func setupTableViewAppearance() {
-        // Required due to lack of SwiftUI API for changing the background color of List
+    private func setUpAppearances() {
+        // Required due to lack of SwiftUI APIs for changing the background color of List and nav bars
         let appearance = UITableView.appearance(whenContainedInInstancesOf: [DownloadsListHostingController.self])
-        appearance.backgroundColor = UIColor(named: "DownloadsListBackgroundColor")
+        appearance.backgroundColor = UIColor(designSystemColor: .background)
+        
+        let navAppearance = UINavigationBar.appearance(whenContainedInInstancesOf: [DownloadsListHostingController.self])
+        navAppearance.backgroundColor = UIColor(designSystemColor: .background)
+        navAppearance.barTintColor = UIColor(designSystemColor: .background)
+        navAppearance.shadowImage = UIImage()
     }
     
     private func presentActivityView(for url: URL, from rect: CGRect) {

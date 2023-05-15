@@ -118,5 +118,5 @@ private extension Color {
 }
 
 private extension Image {
-    static let share = Image("DownloadsShareIcon")
+    static let share = Image("Share-24")
 }

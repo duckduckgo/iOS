@@ -36,8 +36,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     private enum Constants {
         static var saveToFiles = "com.apple.DocumentManagerUICore.SaveToFiles"
         static var bookmarksFileName = "DuckDuckGo Bookmarks.html"
-        static var importBookmarkImage = "BookmarksImport"
-        static var exportBookmarkImage = "BookmarksExport"
+        static var importBookmarkImage = "Import-24"
+        static var exportBookmarkImage = "Export-24"
     }
 
     @IBOutlet weak var tableView: UITableView!
@@ -256,7 +256,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         cell?.tintColor = .black
 
         let title = bookmark.isFavorite ? UserText.actionRemoveFavorite : UserText.favorite
-        let iconName = bookmark.isFavorite ? "RemoveFavoriteMenuIcon" : "BookmarkFavoriteIcon"
+        let iconName = bookmark.isFavorite ? "Favorite-Remove-24" : "Favorite-24"
 
         let toggleFavoriteAction = UIContextualAction(style: .normal, title: title) { [weak self] (_, _, completionHandler) in
             completionHandler(true)
@@ -277,7 +277,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                                                 UserText.deleteBookmarkFolderAlertDeleteButton) { _, _, completion in
             self.deleteBookmarkAfterSwipe(bookmark, indexPath, completion)
         }
-        deleteAction.image = UIImage(named: "Trash")
+        deleteAction.image = UIImage(named: "Trash-24")
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 

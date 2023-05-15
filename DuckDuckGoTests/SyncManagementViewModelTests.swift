@@ -99,6 +99,10 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
         monitor.incrementCalls(function: #function.cleaningFunctionName())
     }
 
+    func refreshDevices(clearDevices: Bool) {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+    }
+
 }
 
 // MARK: An idea... can be made more public if works out

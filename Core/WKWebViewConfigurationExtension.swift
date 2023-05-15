@@ -34,7 +34,9 @@ extension WKWebViewConfiguration {
         if !persistsData {
             configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
         }
-        configuration.dataDetectorTypes = [.phoneNumber]
+
+        // Telephone numbers can be still be interacted with by selecting on them and using the popover menu
+        configuration.dataDetectorTypes = []
 
         configuration.allowsAirPlayForMediaPlayback = true
         configuration.allowsInlineMediaPlayback = true

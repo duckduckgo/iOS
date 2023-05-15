@@ -24,17 +24,10 @@ import BrowserServicesKit
 extension ContentScopeFeatureToggles {
     
     static let featureFlagger = AppDependencyProvider.shared.featureFlagger
-    static let appSettings = AppDependencyProvider.shared.appSettings
-    
-    static var isAutofillEnabledInSettings: Bool {
-        let context = LAContext()
-        var error: NSError?
-        let canAuthenticate = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
-        return appSettings.autofillCredentialsEnabled && canAuthenticate
-    }
-    
+
     static var supportedFeaturesOniOS: ContentScopeFeatureToggles {
-        ContentScopeFeatureToggles(emailProtection: true,
+        let isAutofillEnabledInSettings = AutofillSettingStatus.isAutofillEnabledInSettings
+        return ContentScopeFeatureToggles(emailProtection: true,
                                    credentialsAutofill: featureFlagger.isFeatureOn(.autofillCredentialInjecting) && isAutofillEnabledInSettings,
                                    identitiesAutofill: false,
                                    creditCardsAutofill: false,

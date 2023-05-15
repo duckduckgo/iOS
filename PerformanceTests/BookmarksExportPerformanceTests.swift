@@ -68,7 +68,7 @@ class BookmarksExportPerformanceTests: XCTestCase {
             let expectation = expectation(description: "Exported")
             Task {
                 let exporter = await BookmarksExporter(coreDataStore: db)
-                _ = try await exporter.exportBookmarksToContent()
+                _ = try? await exporter.exportBookmarksToContent()
                 expectation.fulfill()
             }
             

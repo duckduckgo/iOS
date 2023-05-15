@@ -230,6 +230,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
         WindowsBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
         RemoteMessaging.registerBackgroundRefreshTaskHandler(bookmarksDatabase: bookmarksDatabase)
+        SyncBackgroundScheduler.registerBackgroundRefreshTaskHandler(bookmarksDatabase: bookmarksDatabase, syncMetadataDatabase: syncMetadataDatabase)
 
         UNUserNotificationCenter.current().delegate = self
         
@@ -304,11 +305,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if !hasWindowsBrowserWaitlistTask {
                 WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
             }
+
+            let hasSyncBackgroundTask = tasks.contains { $0.identifier == SyncBackgroundScheduler.Constants.backgroundProcessingTaskIdentifier }
+            if !hasSyncBackgroundTask {
+                SyncBackgroundScheduler.scheduleBackgroundRefreshTask()
+            }
         }
 
-        // TODO: Revert when done testing
-//        syncService.scheduler.notifyAppLifecycleEvent()
-        syncService.scheduler.requestSyncImmediately()
+        syncService.scheduler.notifyAppLifecycleEvent()
     }
 
     private func fireAppLaunchPixel() {

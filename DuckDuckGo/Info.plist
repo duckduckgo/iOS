@@ -7,6 +7,7 @@
 		<string>com.duckduckgo.app.windowsBrowserWaitlistStatus</string>
 		<string>com.duckduckgo.app.configurationRefresh</string>
 		<string>com.duckduckgo.app.remoteMessageRefresh</string>
+		<string>com.duckduckgo.app.sync</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>

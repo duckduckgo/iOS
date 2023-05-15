@@ -1854,10 +1854,10 @@ extension MainViewController: Themable {
         if AppWidthObserver.shared.isLargeWidth {
             statusBarBackground.backgroundColor = theme.tabsBarBackgroundColor
         } else {
-            statusBarBackground.backgroundColor = theme.barBackgroundColor
+            statusBarBackground.backgroundColor = theme.omniBarBackgroundColor
         }
 
-        view.backgroundColor = theme.backgroundColor
+        view.backgroundColor = theme.mainViewBackgroundColor
 
         customNavigationBar?.backgroundColor = theme.barBackgroundColor
         customNavigationBar?.tintColor = theme.barTintColor

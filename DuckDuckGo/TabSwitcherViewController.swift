@@ -122,15 +122,15 @@ class TabSwitcherViewController: UIViewController {
         switch theme.currentImageSet {
         case .dark:
             if tabSwitcherSettings.isGridViewEnabled {
-                displayModeButton.setImage(UIImage(named: "TabsToggleGrid-Dark"), for: .normal)
+                displayModeButton.setImage(UIImage(named: "tabsToggleGrid-Dark"), for: .normal)
             } else {
-                displayModeButton.setImage(UIImage(named: "TabsToggleList-Dark"), for: .normal)
+                displayModeButton.setImage(UIImage(named: "tabsToggleList-Dark"), for: .normal)
             }
         case .light:
             if tabSwitcherSettings.isGridViewEnabled {
-                displayModeButton.setImage(UIImage(named: "TabsToggleGrid-Light"), for: .normal)
+                displayModeButton.setImage(UIImage(named: "tabsToggleGrid-Light"), for: .normal)
             } else {
-                displayModeButton.setImage(UIImage(named: "TabsToggleList-Light"), for: .normal)
+                displayModeButton.setImage(UIImage(named: "tabsToggleList-Light"), for: .normal)
             }
         }
     }

@@ -201,7 +201,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // MARK: Sync initialisation
         syncMetadata = LocalSyncMetadataStore(database: syncMetadataDatabase)
         syncBookmarksAdapter = SyncBookmarksAdapter(database: bookmarksDatabase, metadataStore: syncMetadata)
-        syncService = DDGSync(dataProviders: [syncBookmarksAdapter.provider])
+        syncService = DDGSync(dataProviders: [syncBookmarksAdapter.provider], log: .syncLog)
 
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         

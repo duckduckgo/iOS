@@ -8129,8 +8129,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/duckduckgo/DesignResourcesKit";
 			requirement = {
-				kind = revision;
-				revision = 75633bc3bfffcecf5d60527ac6b7daae1f826761;
+				kind = exactVersion;
+				version = 1.1.0;
 			};
 		};
 		F486D2EF25069482002D07D7 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {

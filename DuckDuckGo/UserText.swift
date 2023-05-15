@@ -543,6 +543,16 @@ In addition to the details entered into this form, your app issue report will co
 """, comment: "Breakage report footer explaining what is collected in the breakage report")
     public static let appTPReportSubmit = NSLocalizedString("appTP.report.submit", value: "Submit", comment: "Breakage report submit button")
     
+    public static let appTPHomeBlockedPrefix = NSLocalizedString("appTP.home.blockedPrefix", value: "App Tracking Protection blocked ", comment: "Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the trailing space)")
+    public static let appTPHomeBlockedSuffix = NSLocalizedString("appTP.home.blockedSuffix", value: " in your apps today.", comment: "Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the leading space)")
+    public static func appTPHomeBlockedCount(countString: Int32) -> String {
+        let message = NSLocalizedString("appTP.home.blockedCount", comment: "Do not translate. StringsDict entry -- Count part of string 'App Tracking Protection blocked x tracking attempts today'")
+        return message.format(arguments: countString)
+    }
+    
+    public static let appTPHomeDisabledPrefix = NSLocalizedString("appTP.home.disabledPrefix", value: "App tracking protection disabled. ", comment: "Prefix of string 'App Tracking Protection disabled. Tap to re-enable.' (note the trailing space)")
+    public static let appTPHomeDisabledSuffix = NSLocalizedString("appTP.home.disabledSuffix", value: "Tap to re-enable.", comment: "Suffix of string 'App Tracking Protection disabled. Tap to re-enable.'")
+    
     // MARK: Notifications
     
     public static let macWaitlistAvailableNotificationTitle = NSLocalizedString("mac-waitlist.available.notification.title", value: "DuckDuckGo for Mac is ready!", comment: "Title for the macOS waitlist notification")

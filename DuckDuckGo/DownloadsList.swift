@@ -18,7 +18,6 @@
 //
 
 import SwiftUI
-import DesignResourcesKit
 
 struct DownloadsList: View {
     @Environment(\.presentationMode) var presentationMode
@@ -80,26 +79,15 @@ struct DownloadsList: View {
     @ViewBuilder
     private var listWithBottomToolbar: some View {
         if #available(iOS 15.0, *) {
-            listWithBackground.toolbar {
+            list.toolbar {
                 ToolbarItemGroup(placement: .bottomBar) {
                     toolbarButtons
                 }
             }
         } else {
-            listWithBackground.toolbar {
+            list.toolbar {
                 toolbarContent
             }
-        }
-    }
-    
-    @ViewBuilder
-    private var listWithBackground: some View {
-        if #available(iOS 16.0, *) {
-            list
-                .background(Color.background)
-                .scrollContentBackground(.hidden)
-        } else {
-            list
         }
     }
     
@@ -164,7 +152,7 @@ struct DownloadsList: View {
             }
         }
         .environment(\.editMode, $editMode)
-        .listStyle(.insetGrouped)
+        .listStyle(.grouped)
     }
     
     @ViewBuilder
@@ -222,6 +210,6 @@ private extension Color {
     static let barButton = Color("DownloadsListBarButtonColor")
     static let emptyState = Color("DownloadsListEmptyStateColor")
     static let deleteAll = Color("DownloadsListDestructiveColor")
-    static let background = Color(designSystemColor: .background)
-    static let rowBackground = Color(designSystemColor: .surface)
+    static let background = Color("DownloadsListBackgroundColor")
+    static let rowBackground = Color("DownloadsListRowBackgroundColor")
 }

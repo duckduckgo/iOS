@@ -132,7 +132,9 @@ class TabViewController: UIViewController {
     let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
     
     let bookmarksDatabase: CoreDataDatabase
-    lazy var faviconUpdater = FireproofFaviconUpdater(bookmarksDatabase: bookmarksDatabase, tab: tabModel, favicons: Favicons.shared)
+    lazy var faviconUpdater = FireproofFaviconUpdater(bookmarksDatabase: bookmarksDatabase,
+                                                      tab: tabModel,
+                                                      favicons: Favicons.shared)
 
     public var url: URL? {
         willSet {
@@ -257,13 +259,6 @@ class TabViewController: UIViewController {
         })
         return controller
     }
-    
-    private var isAutofillEnabledInSettings: Bool {
-        let context = LAContext()
-        var error: NSError?
-        let canAuthenticate = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
-        return appSettings.autofillCredentialsEnabled && canAuthenticate
-    }
 
     private var autoSavedCredentialsId: String = ""
 
@@ -292,6 +287,27 @@ class TabViewController: UIViewController {
         addTextSizeObserver()
         addDuckDuckGoEmailSignOutObserver()
         registerForDownloadsNotifications()
+
+        if #available(iOS 16.4, *) {
+            registerForInspectableWebViewNotifications()
+        }
+    }
+
+    @available(iOS 16.4, *)
+    private func registerForInspectableWebViewNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateWebViewInspectability),
+                                               name: AppUserDefaults.Notifications.inspectableWebViewsToggled,
+                                               object: nil)
+    }
+
+    @available(iOS 16.4, *) @objc
+    private func updateWebViewInspectability() {
+#if DEBUG
+        webView.isInspectable = true
+#else
+        webView.isInspectable = AppUserDefaults().inspectableWebViewEnabled
+#endif
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -361,6 +377,10 @@ class TabViewController: UIViewController {
         webViewContainer.addSubview(webView)
 
         updateContentMode()
+
+        if #available(iOS 16.4, *) {
+            updateWebViewInspectability()
+        }
 
         instrumentation.didPrepareWebView()
         
@@ -1156,7 +1176,7 @@ extension TabViewController: WKNavigationDelegate {
     private func checkLoginDetectionAfterNavigation() {
         if preserveLoginsWorker?.handleLoginDetection(detectedURL: detectedLoginURL,
                                                       currentURL: url,
-                                                      isAutofillEnabled: isAutofillEnabledInSettings,
+                                                      isAutofillEnabled: AutofillSettingStatus.isAutofillEnabledInSettings,
                                                       saveLoginPromptLastDismissed: saveLoginPromptLastDismissed)
            ?? false {
             detectedLoginURL = nil
@@ -2027,12 +2047,12 @@ extension TabViewController: UserContentControllerDelegate {
                                updateEvent: ContentBlockerRulesManager.UpdateEvent) {
         guard let userScripts = userScripts as? UserScripts else { fatalError("Unexpected UserScripts") }
 
-        userScripts.faviconScript.delegate = faviconUpdater
         userScripts.debugScript.instrumentation = instrumentation
         userScripts.surrogatesScript.delegate = self
         userScripts.contentBlockerUserScript.delegate = self
         userScripts.autofillUserScript.emailDelegate = emailManager
         userScripts.autofillUserScript.vaultDelegate = vaultManager
+        userScripts.faviconScript.delegate = faviconUpdater
         userScripts.printingUserScript.delegate = self
         userScripts.textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
         userScripts.loginFormDetectionScript?.delegate = self
@@ -2127,8 +2147,12 @@ extension TabViewController: AutoconsentUserScriptDelegate {
         privacyInfo?.cookieConsentManaged = cookieConsentStatus
     }
     
+    // Disabled temporarily as a result of https://app.asana.com/0/1203936086921904/1204496002772588/f
+    private var cookieConsentDaxDialogPresentationAllowed: Bool { false }
+
     func autoconsentUserScript(_ script: AutoconsentUserScript, didRequestAskingUserForConsent completion: @escaping (Bool) -> Void) {
-        guard Locale.current.isRegionInEurope,
+        guard cookieConsentDaxDialogPresentationAllowed,
+              Locale.current.isRegionInEurope,
               !isShowingFullScreenDaxDialog else { return }
         
         let viewModel = CookieConsentDaxDialogViewModel(okAction: {
@@ -2330,7 +2354,7 @@ extension NSError {
 extension TabViewController: SecureVaultManagerDelegate {
  
     private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials) {
-        guard isAutofillEnabledInSettings,
+        guard AutofillSettingStatus.isAutofillEnabledInSettings,
               featureFlagger.isFeatureOn(.autofillCredentialsSaving),
               let autofillUserScript = autofillUserScript else { return }
 
@@ -2357,7 +2381,7 @@ extension TabViewController: SecureVaultManagerDelegate {
     }
     
     func secureVaultManagerIsEnabledStatus(_: SecureVaultManager) -> Bool {
-        let isEnabled = featureFlagger.isFeatureOn(.autofillCredentialInjecting)
+        let isEnabled = AutofillSettingStatus.isAutofillEnabledInSettings && featureFlagger.isFeatureOn(.autofillCredentialInjecting)
         let isBackgrounded = UIApplication.shared.applicationState == .background
         if isEnabled && isBackgrounded {
             Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded,
@@ -2367,7 +2391,7 @@ extension TabViewController: SecureVaultManagerDelegate {
     }
 
     func secureVaultManager(_ vault: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData, generatedPassword: Bool) {
-        if var credentials = data.credentials, isAutofillEnabledInSettings, featureFlagger.isFeatureOn(.autofillCredentialsSaving) {
+        if var credentials = data.credentials, AutofillSettingStatus.isAutofillEnabledInSettings, featureFlagger.isFeatureOn(.autofillCredentialsSaving) {
             if generatedPassword {
                 if autoSavedCredentialsId.isEmpty {
                     autoSavedCredentialsId = credentials.account.id ?? ""
@@ -2420,7 +2444,7 @@ extension TabViewController: SecureVaultManagerDelegate {
                             withTrigger trigger: AutofillUserScript.GetTriggerType,
                             completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
   
-        if !isAutofillEnabledInSettings, featureFlagger.isFeatureOn(.autofillCredentialInjecting) {
+        if !AutofillSettingStatus.isAutofillEnabledInSettings, featureFlagger.isFeatureOn(.autofillCredentialInjecting) {
             completionHandler(nil)
             return
         }
@@ -2482,7 +2506,7 @@ extension TabViewController: SecureVaultManagerDelegate {
     func secureVaultManagerShouldAutomaticallySaveGeneratedPassword(_: SecureVaultManager) -> Bool {
         true
     }
-
+    
     func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
         // We don't have auth yet
     }
@@ -2504,7 +2528,7 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
         self.present(passwordGenerationPromptViewController, animated: true)
     }
-    
+
     func secureVaultManager(_: SecureVaultManager, didReceivePixel pixel: AutofillUserScript.JSPixel) {
         guard !pixel.isEmailPixel else {
             // The iOS app uses a native email autofill UI, and sends its pixels separately. Ignore pixels sent from the JS layer.

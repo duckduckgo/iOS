@@ -510,7 +510,9 @@ class MainViewController: UIViewController {
         removeHomeScreen()
 
         let tabModel = currentTab?.tabModel
-        let controller = HomeViewController.loadFromStoryboard(model: tabModel!, favoritesViewModel: favoritesViewModel)
+        let controller = HomeViewController.loadFromStoryboard(model: tabModel!,
+                                                               favoritesViewModel: favoritesViewModel,
+                                                               appTPDatabase: appTrackingProtectionDatabase)
         homeController = controller
 
         controller.chromeDelegate = self

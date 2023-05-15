@@ -265,7 +265,7 @@ class SettingsViewController: UITableViewController {
         Task { @MainActor in
             let fwm = FirewallManager()
             await fwm.refreshManager()
-            if UserDefaults().bool(forKey: "appTPUsed") && fwm.status() != .connected {
+            if UserDefaults().bool(forKey: UserDefaultsWrapper<Any>.Key.appTPUsed.rawValue) && fwm.status() != .connected {
                 appTPCell.detailTextLabel?.text = UserText.appTPCellDisabled
             } else {
                 appTPCell.detailTextLabel?.text = UserText.appTPCellDetail
@@ -475,8 +475,6 @@ class SettingsViewController: UITableViewController {
 extension SettingsViewController: Themable {
     
     func decorate(with theme: Theme) {
-        view.backgroundColor = theme.backgroundColor
-
         decorateNavigationBar(with: theme)
         configureThemeCellAccessory()
         

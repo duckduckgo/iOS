@@ -45,14 +45,12 @@ final class SyncBackgroundScheduler {
             }
 
             syncService.scheduler.requestSyncImmediately()
-            let syncDidFinishCancellable = syncService.syncDidFinishPublisher
+            let syncDidFinishCancellable = syncService.isInProgressPublisher
+                .dropFirst()
+                .filter { $0 }
                 .prefix(1)
-                .sink { result in
-                    if case .success = result {
-                        task.setTaskCompleted(success: true)
-                    } else {
-                        task.setTaskCompleted(success: false)
-                    }
+                .sink { _ in
+                    task.setTaskCompleted(success: true)
                 }
 
             task.expirationHandler = {

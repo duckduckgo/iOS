@@ -670,5 +670,6 @@ In addition to the details entered into this form, your app issue report will co
         return message.format(arguments: deviceName)
     }
     public static let syncRemoveDeviceConfirmAction = "Remove"
+    public static let syncCodeCopied = "Recovery Code copied"
 
 }

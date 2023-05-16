@@ -80,11 +80,11 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         collectCode(showConnectMode: true)
     }
 
-    func showDeviceConnected() {
+    func showDeviceConnected(_ devices: [SyncSettingsViewModel.Device]) {
         let model = SaveRecoveryKeyViewModel(key: recoveryCode) { [weak self] in
             self?.shareRecoveryPDF()
         }
-        let controller = UIHostingController(rootView: DeviceConnectedView(saveRecoveryKeyViewModel: model))
+        let controller = UIHostingController(rootView: DeviceConnectedView(model, devices: devices))
         navigationController?.present(controller, animated: true) { [weak self] in
             self?.rootView.model.syncEnabled(recoveryCode: self!.recoveryCode)
             self?.refreshDevices()
@@ -181,6 +181,8 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
 
     func copyCode() {
         UIPasteboard.general.string = recoveryCode
+        ActionMessageView.present(message: UserText.syncCodeCopied,
+                                  presentationLocation: .withoutBottomBar)
     }
 
     func confirmRemoveDevice(_ device: SyncSettingsViewModel.Device) async -> Bool {

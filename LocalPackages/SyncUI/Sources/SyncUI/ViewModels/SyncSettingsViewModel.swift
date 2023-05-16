@@ -25,7 +25,6 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
     func showSyncSetup()
     func showRecoverData()
     func showSyncWithAnotherDevice()
-    func showDeviceConnected()
     func showRecoveryPDF()
     func shareRecoveryPDF()
     func createAccountAndStartSyncing()

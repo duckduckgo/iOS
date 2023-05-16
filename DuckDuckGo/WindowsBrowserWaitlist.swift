@@ -49,7 +49,7 @@ final class WindowsBrowserWaitlist: Waitlist {
         self.waitlistRequest = request
 
         isFeatureEnabled = privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .windowsWaitlist)
-        isWaitlistRemoved = privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .windowsDownloadLink)
+        isWaitlistRemoved = privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .windowsWaitlist)
 
         isFeatureEnabledCancellable = privacyConfigurationManager.updatesPublisher
             .map { [weak privacyConfigurationManager] in
@@ -60,7 +60,7 @@ final class WindowsBrowserWaitlist: Waitlist {
 
         isWaitlistRemovedCancellable = privacyConfigurationManager.updatesPublisher
             .map { [weak privacyConfigurationManager] in
-                privacyConfigurationManager?.privacyConfig.isEnabled(featureKey: .windowsDownloadLink) == true
+                privacyConfigurationManager?.privacyConfig.isEnabled(featureKey: .windowsWaitlist) == true
             }
             .receive(on: DispatchQueue.main)
             .assign(to: \.isWaitlistRemoved, onWeaklyHeld: self)

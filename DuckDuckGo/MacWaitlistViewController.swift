@@ -46,7 +46,7 @@ final class MacWaitlistViewController: UIViewController {
     }
     
     private func addHostingControllerToViewHierarchy() {
-        let waitlistView = MacBrowserWaitlistView(isWindowsWaitlistAvailable: WindowsBrowserWaitlist.shared.isAvailable).environmentObject(viewModel)
+        let waitlistView = MacBrowserWaitlistView().environmentObject(viewModel)
         let waitlistViewController = UIHostingController(rootView: waitlistView)
         waitlistViewController.view.backgroundColor = UIColor(designSystemColor: .background)
         

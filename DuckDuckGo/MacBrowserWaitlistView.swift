@@ -24,127 +24,11 @@ import DesignResourcesKit
 struct MacBrowserWaitlistView: View {
 
     @EnvironmentObject var viewModel: WaitlistViewModel
-    let isWindowsWaitlistAvailable: Bool
-    
+
     var body: some View {
-        MacBrowserWaitlistContentView(isWindowsWaitlistAvailable: isWindowsWaitlistAvailable) { action in
+        WaitlistDownloadBrowserContentView(platform: .mac) { action in
             Task { await viewModel.perform(action: action) }
         }
-    }
-
-}
-
-private struct ShareButtonFramePreferenceKey: PreferenceKey {
-    static var defaultValue: CGRect = .zero
-    static func reduce(value: inout CGRect, nextValue: () -> CGRect) {}
-}
-
-struct MacBrowserWaitlistContentView: View {
-    
-    enum Constants {
-        static let downloadURL = "duckduckgo.com/mac"
-    }
-
-    let isWindowsWaitlistAvailable: Bool
-    let action: WaitlistViewActionHandler
-    
-    @State private var shareButtonFrame: CGRect = .zero
-
-    var body: some View {
-        GeometryReader { proxy in
-            ScrollView {
-                VStack(alignment: .center, spacing: 8) {
-                    HeaderView(imageName: "MacWaitlistJoinWaitlist", title: UserText.macWaitlistTryDuckDuckGoForMac)
-                    
-                    Text(UserText.macWaitlistSummary)
-                        .daxBodyRegular()
-                        .foregroundColor(.waitlistTextSecondary)
-                        .multilineTextAlignment(.center)
-                        .lineSpacing(6)
-                    
-                    Text(UserText.macWaitlistOnYourMacGoTo)
-                        .daxBodyRegular()
-                        .foregroundColor(.waitlistTextSecondary)
-                        .multilineTextAlignment(.center)
-                        .lineSpacing(6)
-                        .padding(.top, 18)
-
-                    Text(Constants.downloadURL)
-                        .daxHeadline()
-                        .foregroundColor(.waitlistBlue)
-                        .menuController(UserText.macWaitlistCopy) {
-                            action(.copyDownloadURLToPasteboard)
-                        }
-                        .fixedSize()
-
-                    Button(
-                        action: {
-                            action(.openShareSheet(shareButtonFrame))
-                        }, label: {
-                            HStack {
-                                Image("Share-16")
-                                Text(UserText.macWaitlistShareLink)
-                            }
-                        }
-                    )
-                    .buttonStyle(RoundedButtonStyle(enabled: true))
-                    .padding(.top, 24)
-                    .background(
-                        GeometryReader { proxy in
-                            Color.clear
-                                .preference(key: ShareButtonFramePreferenceKey.self, value: proxy.frame(in: .global))
-                        }
-                    )
-                    .onPreferenceChange(ShareButtonFramePreferenceKey.self) { newFrame in
-                        if UIDevice.current.userInterfaceIdiom == .pad {
-                            self.shareButtonFrame = newFrame
-                        }
-                    }
-                    
-                    Spacer(minLength: 24)
-
-                    if isWindowsWaitlistAvailable {
-
-                        Button(
-                            action: {
-                                action(.custom(.openWindowsBrowserWaitlist))
-                            }, label: {
-                                Text(UserText.macWaitlistWindows)
-                                    .daxHeadline()
-                                    .foregroundColor(.waitlistBlue)
-                                    .multilineTextAlignment(.center)
-                                    .lineSpacing(5)
-                            }
-                        )
-                        .padding(.bottom, 12)
-                        .fixedSize(horizontal: false, vertical: true)
-
-                    } else {
-
-                        Text(UserText.macWaitlistWindowsComingSoon)
-                            .daxFootnoteRegular()
-                            .foregroundColor(.waitlistTextSecondary)
-                            .multilineTextAlignment(.center)
-                            .lineSpacing(5)
-                            .padding(.bottom, 12)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                }
-                .padding([.leading, .trailing], 24)
-                .frame(minHeight: proxy.size.height)
-            }
-        }
-    }
-    
-    var shareButton: some View {
-        
-        Button(action: {
-            action(.openShareSheet(shareButtonFrame))
-        }, label: {
-            Image("Share").foregroundColor(.waitlistTextSecondary)
-        })
-        .frame(width: 44, height: 44)
-        
     }
 
 }
@@ -156,11 +40,11 @@ private struct MacBrowserWaitlistView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             PreviewView("Mac Browser Beta") {
-                MacBrowserWaitlistContentView(isWindowsWaitlistAvailable: true) { _ in }
+                WaitlistDownloadBrowserContentView(platform: .mac) { _ in }
             }
 
             if #available(iOS 15.0, *) {
-                MacBrowserWaitlistContentView(isWindowsWaitlistAvailable: true) { _ in }
+                WaitlistDownloadBrowserContentView(platform: .mac) { _ in }
                     .previewInterfaceOrientation(.landscapeLeft)
             }
         }

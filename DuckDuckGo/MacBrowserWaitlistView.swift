@@ -19,6 +19,7 @@
 
 import SwiftUI
 import Waitlist
+import DesignResourcesKit
 
 struct MacBrowserWaitlistView: View {
 

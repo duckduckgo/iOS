@@ -72,7 +72,7 @@ final class WindowsWaitlistViewController: UIViewController {
     private func addHostingControllerToViewHierarchy() {
         let waitlistView = WindowsBrowserWaitlistView().environmentObject(viewModel)
         let waitlistViewController = UIHostingController(rootView: waitlistView)
-        waitlistViewController.view.backgroundColor = UIColor(named: "WaitlistBackgroundColor")!
+        waitlistViewController.view.backgroundColor = UIColor(designSystemColor: .background)
 
         addChild(waitlistViewController)
         waitlistViewController.view.translatesAutoresizingMaskIntoConstraints = false

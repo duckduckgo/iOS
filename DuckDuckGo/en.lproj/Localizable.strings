@@ -1408,8 +1408,7 @@ https://duckduckgo.com/mac";
 /* Title for the Windows waitlist button redirecting to Mac waitlist */
 "windows-waitlist.join-waitlist-screen.mac-waitlist" = "Looking for the Mac Version?";
 
-/* Title for the Join Windows Waitlist screen
-   Title for the Windows Waitlist feature */
+/* Title for Windows Waitlist screen  */
 "windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Get DuckDuckGo for Windows!";
 
 /* Message for the alert to confirm enabling notifications */

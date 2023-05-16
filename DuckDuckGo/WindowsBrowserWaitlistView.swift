@@ -46,8 +46,7 @@ struct WindowsBrowserWaitlistView: View {
             }
         case .waitlistRemoved:
             WaitlistDownloadBrowserContentView(platform: .windows) { action in
-                Task { await viewModel.perform(action: action)
-                }
+                Task { await viewModel.perform(action: action) }
             }
         }
     }

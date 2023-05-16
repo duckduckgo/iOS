@@ -150,8 +150,8 @@ class MainViewController: UIViewController {
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         super.init(coder: coder)
 
-        syncStateCancellable = syncService.statePublisher
-            .prepend(syncService.state)
+        syncStateCancellable = syncService.authStatePublisher
+            .prepend(syncService.authState)
             .map { $0 == .inactive }
             .removeDuplicates()
             .sink { [weak self] isSyncDisabled in
@@ -166,11 +166,11 @@ class MainViewController: UIViewController {
         localUpdatesCancellable = favoritesViewModel.localUpdates
             .sink { _ in
                 Task { @MainActor in
-                    guard let syncService = (UIApplication.shared.delegate as? AppDelegate)?.syncService, syncService.state == .active else {
-                        print("sync disabled, not syncing")
+                    guard let syncService = (UIApplication.shared.delegate as? AppDelegate)?.syncService, syncService.authState == .active else {
+                        os_log(.debug, log: OSLog.syncLog, "Sync disabled, not scheduling")
                         return
                     }
-                    print("requesting sync")
+                    os_log(.debug, log: OSLog.syncLog, "Requesting sync")
                     syncService.scheduler.notifyDataChanged()
                 }
             }
@@ -1833,7 +1833,7 @@ extension MainViewController: AutoClearWorker {
         AutoconsentManagement.shared.clearCache()
 
         let syncService = (UIApplication.shared.delegate as? AppDelegate)!.syncService
-        if syncService?.state == .inactive {
+        if syncService?.authState == .inactive {
             bookmarksDatabaseCleaner.cleanUpDatabaseNow()
         }
     }

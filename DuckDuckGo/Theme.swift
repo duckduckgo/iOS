@@ -37,6 +37,9 @@ protocol Theme {
     
     var backgroundColor: UIColor { get }
     
+    var mainViewBackgroundColor: UIColor { get }
+    
+    var omniBarBackgroundColor: UIColor { get }
     var barBackgroundColor: UIColor { get }
     var barTintColor: UIColor { get }
     

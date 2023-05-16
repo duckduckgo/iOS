@@ -119,7 +119,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="d6z-g6-mo7"/>
-                                    <barButtonItem title="Tab Switcher" image="NewTab" id="K7o-WL-SC5" userLabel="Tabs Button">
+                                    <barButtonItem title="Tab Switcher" image="Add-24" id="K7o-WL-SC5" userLabel="Tabs Button">
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Tabs"/>
                                         </userDefinedRuntimeAttributes>
@@ -128,7 +128,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="hL8-s1-UNT"/>
-                                    <barButtonItem title="Bookmarks" image="Bookmarks" id="M7u-mw-fly">
+                                    <barButtonItem title="Bookmarks" image="Book-24" id="M7u-mw-fly">
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Bookmarks"/>
                                         </userDefinedRuntimeAttributes>
@@ -473,12 +473,12 @@
         <segue reference="IrO-EU-EzF"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="Bookmarks" width="24" height="24"/>
+        <image name="Add-24" width="24" height="24"/>
+        <image name="Book-24" width="24" height="24"/>
         <image name="BrowseNext" width="24" height="24"/>
         <image name="BrowsePrevious" width="24" height="24"/>
         <image name="Fire" width="19" height="24"/>
         <image name="Logo" width="128" height="128"/>
-        <image name="NewTab" width="24" height="24"/>
         <image name="SearchLoupeMini" width="23" height="23"/>
         <image name="TextDuckDuckGo" width="162" height="21"/>
         <image name="find-next-dark" width="19" height="20"/>

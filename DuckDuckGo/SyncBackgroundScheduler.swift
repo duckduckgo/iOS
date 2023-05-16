@@ -38,7 +38,7 @@ final class SyncBackgroundScheduler {
             let syncBookmarksAdapter = SyncBookmarksAdapter(database: bookmarksDatabase, metadataStore: syncMetadata)
             let syncService = DDGSync(dataProviders: [syncBookmarksAdapter.provider], log: .syncLog)
 
-            guard syncService.state == .active else {
+            guard syncService.authState == .active else {
                 task.setTaskCompleted(success: true)
                 scheduleBackgroundRefreshTask()
                 return

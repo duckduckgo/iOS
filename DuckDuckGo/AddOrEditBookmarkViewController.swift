@@ -123,7 +123,7 @@ class AddOrEditBookmarkViewController: UIViewController {
         dismiss(animated: true, completion: nil)
 
         Task { @MainActor in
-            guard let syncService = (UIApplication.shared.delegate as? AppDelegate)?.syncService, syncService.state == .active else {
+            guard let syncService = (UIApplication.shared.delegate as? AppDelegate)?.syncService, syncService.authState == .active else {
                 print("sync disabled, not syncing")
                 return
             }

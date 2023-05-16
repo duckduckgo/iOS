@@ -39,20 +39,20 @@ struct WaitlistDownloadBrowserContentView: View {
                     HeaderView(imageName: constants.imageName, title: constants.title)
 
                     Text(constants.summary)
-                        .font(.proximaNova(size: 16, weight: .regular))
+                        .daxBodyRegular()
                         .foregroundColor(.waitlistTextSecondary)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
 
                     Text(constants.onYourString)
-                        .font(.proximaNova(size: 16, weight: .regular))
+                        .daxBodyRegular()
                         .foregroundColor(.waitlistTextSecondary)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
                         .padding(.top, 18)
 
                     Text(constants.downloadURL)
-                        .font(.proximaNova(size: 17, weight: .bold))
+                        .daxHeadline()
                         .foregroundColor(.waitlistBlue)
                         .menuController(UserText.macWaitlistCopy) {
                             action(.copyDownloadURLToPasteboard)
@@ -90,7 +90,7 @@ struct WaitlistDownloadBrowserContentView: View {
                             action(.custom(constants.customAction))
                         }, label: {
                             Text(constants.otherPlatformText)
-                                .font(.proximaNova(size: 17, weight: .bold))
+                                .daxHeadline()
                                 .foregroundColor(.waitlistBlue)
                                 .multilineTextAlignment(.center)
                                 .lineSpacing(5)

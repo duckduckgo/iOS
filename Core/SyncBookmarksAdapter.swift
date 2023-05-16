@@ -18,6 +18,7 @@
 //
 
 import Combine
+import Common
 import DDGSync
 import Foundation
 import Persistence
@@ -34,7 +35,13 @@ public final class SyncBookmarksAdapter {
         provider = .init(database: database, metadataStore: metadataStore, reloadBookmarksAfterSync: { [syncDidCompleteSubject] in
             syncDidCompleteSubject.send()
         })
+
+        syncErrorCancellable = provider.syncErrorPublisher
+            .sink { error in
+                os_log(.error, log: OSLog.syncLog, "Bookmarks Sync error: %{public}s", String(reflecting: error))
+            }
     }
 
     private var syncDidCompleteSubject = PassthroughSubject<Void, Never>()
+    private var syncErrorCancellable: AnyCancellable
 }

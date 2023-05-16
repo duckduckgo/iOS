@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+#if APP_TRACKING_PROTECTION
+
 import Foundation
 import NetworkExtension
 import BrowserServicesKit
@@ -223,3 +225,5 @@ public class FirewallManager: FirewallManaging {
         }
     }
 }
+
+#endif

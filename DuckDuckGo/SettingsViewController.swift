@@ -19,12 +19,15 @@
 
 import UIKit
 import MessageUI
-import NetworkExtension
 import Core
 import BrowserServicesKit
 import Persistence
 import SwiftUI
 import Common
+
+#if APP_TRACKING_PROTECTION
+import NetworkExtension
+#endif
 
 // swiftlint:disable file_length type_body_length
 class SettingsViewController: UITableViewController {

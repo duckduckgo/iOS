@@ -17,12 +17,12 @@
 //  limitations under the License.
 //
 
+#if APP_TRACKING_PROTECTION
+
 import Foundation
 import Core
 import NetworkExtension
 import Common
-
-#if APP_TRACKING_PROTECTION
 
 class AppTPToggleViewModel: ObservableObject {
     

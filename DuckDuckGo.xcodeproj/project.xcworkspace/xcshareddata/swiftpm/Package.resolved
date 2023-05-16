@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "sabrina/add-windows-browser-download-link-privacy-config",
-          "revision": "19d384012bc798739def07f7d99c9cb5d8068d86",
-          "version": null
+          "branch": null,
+          "revision": "d124727796ac08ca2de4e106f1a5b87af18207f2",
+          "version": "57.4.8"
         }
       },
       {

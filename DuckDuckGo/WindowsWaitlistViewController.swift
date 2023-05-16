@@ -184,7 +184,9 @@ private final class WindowsWaitlistLinkMetadata: NSObject, UIActivityItemSource 
 
         switch type {
         case .message, .mail:
-            return (inviteCode != nil) ? UserText.windowsWaitlistShareSheetMessage(code: inviteCode!) : UserText.windowsWaitlistDownloadLinkShareSheetMessage
+            return (inviteCode != nil) ?
+            UserText.windowsWaitlistShareSheetMessage(code: inviteCode!) :
+            UserText.windowsWaitlistDownloadLinkShareSheetMessage
         default:
             return self.metadata.originalURL as Any
         }

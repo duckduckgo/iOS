@@ -31,11 +31,12 @@ public final class ContentBlockerRulesLists: DefaultContentBlockerRulesListsSour
     public override var contentBlockerRulesLists: [ContentBlockerRulesList] {
         var result = super.contentBlockerRulesLists
         
-        if adClickAttribution.isEnabled,
+        if //adClickAttribution.isEnabled,
            let tdsRulesIndex = result.firstIndex(where: { $0.name == Constants.trackerDataSetRulesListName }) {
             let tdsRules = result[tdsRulesIndex]
-            let allowlistedTrackerNames = adClickAttribution.allowlist.map { $0.entity }
-            let splitter = AdClickAttributionRulesSplitter(rulesList: tdsRules, allowlistedTrackerNames: allowlistedTrackerNames)
+//            let allowlistedTrackerNames = adClickAttribution.allowlist.map { $0.entity }
+            let splitter = ContentBlockerRulesListSplitter(rulesList: tdsRules)
+//            let splitter = AdClickAttributionRulesSplitter(rulesList: tdsRules, allowlistedTrackerNames: allowlistedTrackerNames)
             if let splitRules = splitter.split() {
                 result.remove(at: tdsRulesIndex)
                 result.append(splitRules.0)

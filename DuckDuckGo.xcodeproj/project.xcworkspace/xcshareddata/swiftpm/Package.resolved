@@ -5,8 +5,8 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "fa6cb9b11a4c785275456ea09c7767d36e7e4335",
+          "branch": "autofill/anya/subdomain-api-updates",
+          "revision": "b38f38e936d59889aa998fae8c9b2d5021f66195",
           "version": null
         }
       },
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
           "branch": null,
-          "revision": "466e3695cdc7839dcd74c45acda8b471a3e68fd5",
-          "version": "6.6.0"
+          "revision": "3cdba80e529eec104e4f593468ba16c59d79093e",
+          "version": "7.0.1"
         }
       },
       {

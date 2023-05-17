@@ -142,7 +142,7 @@ struct BrowserDowloadLinkConstants {
     var title: String {
         switch platform {
         case .windows:
-            return UserText.windowsWaitlistTryDuckDuckGoForWindowsDowload
+            return UserText.windowsWaitlistTryDuckDuckGoForWindows
         case .mac:
             return UserText.macWaitlistTryDuckDuckGoForMac
         }

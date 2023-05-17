@@ -15,11 +15,7 @@ end
 
 desc 'Fetches and updates certificates and provisioning profiles for Ad-Hoc distribution'
 lane :sync_signing_adhoc do |options|
-  sync_code_signing(
-    api_key: get_api_key,
-    username: get_username(options),
-    readonly: false
-  )
+  do_sync_signing(options)
 end
 
 desc 'Makes Ad-Hoc build with a specified name in a given directory'

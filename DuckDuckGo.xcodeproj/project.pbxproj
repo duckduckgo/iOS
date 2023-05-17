@@ -8166,7 +8166,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "dominik/sync-engine";
+				branch = "dominik/sync-engine-lazy";
 				kind = branch;
 			};
 		};

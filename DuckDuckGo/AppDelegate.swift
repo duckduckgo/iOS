@@ -59,9 +59,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var lastBackgroundDate: Date?
 
     private var syncMetadataDatabase: CoreDataDatabase = SyncMetadataDatabase.make()
+    private var isSyncMetadaDatabaseLoaded: Bool = false
+    private var syncMetadata: SyncMetadataStore?
     private(set) var syncBookmarksAdapter: SyncBookmarksAdapter!
     private(set) var syncService: DDGSyncing!
-    private(set) var syncMetadata: SyncMetadataStore!
 
     // MARK: lifecycle
 
@@ -171,19 +172,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        syncMetadataDatabase.loadStore { context, error in
-            guard context != nil else {
-                if let error = error {
-                    Pixel.fire(pixel: .syncMetadataCouldNotLoadDatabase, error: error)
-                } else {
-                    Pixel.fire(pixel: .syncMetadataCouldNotLoadDatabase)
-                }
-
-                Thread.sleep(forTimeInterval: 1)
-                fatalError("Could not create Sync Metadata database stack: \(error?.localizedDescription ?? "err")")
-            }
-        }
-        
         Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
             WidgetCenter.shared.reloadAllTimelines()
         }
@@ -199,9 +187,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         // MARK: Sync initialisation
-        syncMetadata = LocalSyncMetadataStore(database: syncMetadataDatabase)
-        syncBookmarksAdapter = SyncBookmarksAdapter(database: bookmarksDatabase, metadataStore: syncMetadata)
-        syncService = DDGSync(dataProviders: [syncBookmarksAdapter.provider], log: .syncLog)
+
+        syncBookmarksAdapter = SyncBookmarksAdapter()
+        syncService = DDGSync(
+            dataProviders: { [weak self] in
+                guard let self else {
+                    return []
+                }
+
+                if !self.isSyncMetadaDatabaseLoaded {
+                    self.syncMetadataDatabase.loadStore { context, error in
+                        guard context != nil else {
+                            if let error = error {
+                                Pixel.fire(pixel: .syncMetadataCouldNotLoadDatabase, error: error)
+                            } else {
+                                Pixel.fire(pixel: .syncMetadataCouldNotLoadDatabase)
+                            }
+
+                            Thread.sleep(forTimeInterval: 1)
+                            fatalError("Could not create Sync Metadata database stack: \(error?.localizedDescription ?? "err")")
+                        }
+                    }
+                    self.syncMetadata = LocalSyncMetadataStore(database: syncMetadataDatabase)
+                    self.isSyncMetadaDatabaseLoaded = true
+                }
+
+                guard let syncMetadata = self.syncMetadata else {
+                    return []
+                }
+
+                return [self.syncBookmarksAdapter.setUpProvider(database: self.bookmarksDatabase, metadataStore: syncMetadata)]
+            },
+            log: .syncLog
+        )
 
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         

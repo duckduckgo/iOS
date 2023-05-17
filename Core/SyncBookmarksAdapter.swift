@@ -26,13 +26,16 @@ import SyncDataProviders
 
 public final class SyncBookmarksAdapter {
 
-    public let provider: BookmarksProvider
+    public private(set) var provider: BookmarksProvider?
 
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
 
-    public init(database: CoreDataDatabase, metadataStore: SyncMetadataStore) {
+    public init() {
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
-        provider = .init(database: database, metadataStore: metadataStore, reloadBookmarksAfterSync: { [syncDidCompleteSubject] in
+    }
+
+    public func setUpProvider(database: CoreDataDatabase, metadataStore: SyncMetadataStore) -> BookmarksProvider {
+        let provider = BookmarksProvider(database: database, metadataStore: metadataStore, reloadBookmarksAfterSync: { [syncDidCompleteSubject] in
             syncDidCompleteSubject.send()
         })
 
@@ -40,8 +43,11 @@ public final class SyncBookmarksAdapter {
             .sink { error in
                 os_log(.error, log: OSLog.syncLog, "Bookmarks Sync error: %{public}s", String(reflecting: error))
             }
+        self.provider = provider
+
+        return provider
     }
 
     private var syncDidCompleteSubject = PassthroughSubject<Void, Never>()
-    private var syncErrorCancellable: AnyCancellable
+    private var syncErrorCancellable: AnyCancellable?
 }

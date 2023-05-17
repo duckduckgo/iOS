@@ -21,30 +21,19 @@ import UIKit
 
 extension UIFont {
 
-    private enum Name: String {
-        case proximaNovaRegular = "ProximaNova-Regular"
-        case proximaNovaLight = "ProximaNova-Light"
-        case proximaNovaSemibold = "ProximaNova-Semibold"
-        case proximaNovaBold = "ProximaNova-Bold"
-    }
-
     public static func appFont(ofSize size: CGFloat) -> UIFont {
-        return UIFont(name: Name.proximaNovaRegular.rawValue, size: size) ??
-               UIFont.systemFont(ofSize: size)
+        return UIFont.systemFont(ofSize: size)
     }
 
     public static func lightAppFont(ofSize size: CGFloat) -> UIFont {
-        return UIFont(name: Name.proximaNovaLight.rawValue, size: size) ??
-               UIFont.systemFont(ofSize: size, weight: UIFont.Weight.light)
+        return UIFont.systemFont(ofSize: size, weight: UIFont.Weight.light)
     }
 
     public static func semiBoldAppFont(ofSize size: CGFloat) -> UIFont {
-        return UIFont(name: Name.proximaNovaSemibold.rawValue, size: size) ??
-               UIFont.systemFont(ofSize: size, weight: UIFont.Weight.semibold)
+        return UIFont.systemFont(ofSize: size, weight: UIFont.Weight.semibold)
     }
 
     public static func boldAppFont(ofSize size: CGFloat) -> UIFont {
-        return UIFont(name: Name.proximaNovaBold.rawValue, size: size) ??
-               UIFont.boldSystemFont(ofSize: size)
+        return UIFont.boldSystemFont(ofSize: size)
     }
 }

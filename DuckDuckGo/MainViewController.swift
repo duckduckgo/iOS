@@ -510,7 +510,9 @@ class MainViewController: UIViewController {
         removeHomeScreen()
 
         let tabModel = currentTab?.tabModel
-        let controller = HomeViewController.loadFromStoryboard(model: tabModel!, favoritesViewModel: favoritesViewModel)
+        let controller = HomeViewController.loadFromStoryboard(model: tabModel!,
+                                                               favoritesViewModel: favoritesViewModel,
+                                                               appTPDatabase: appTrackingProtectionDatabase)
         homeController = controller
 
         controller.chromeDelegate = self
@@ -1854,10 +1856,10 @@ extension MainViewController: Themable {
         if AppWidthObserver.shared.isLargeWidth {
             statusBarBackground.backgroundColor = theme.tabsBarBackgroundColor
         } else {
-            statusBarBackground.backgroundColor = theme.barBackgroundColor
+            statusBarBackground.backgroundColor = theme.omniBarBackgroundColor
         }
 
-        view.backgroundColor = theme.backgroundColor
+        view.backgroundColor = theme.mainViewBackgroundColor
 
         customNavigationBar?.backgroundColor = theme.barBackgroundColor
         customNavigationBar?.tintColor = theme.barTintColor

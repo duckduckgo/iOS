@@ -41,7 +41,3 @@ Switch off Application lock and ensure that it is no longer requested
 2. Background the app and open it again
 3. Ensure that the application lock is NOT requested
 4. Kill the app and reopen it, again ensure application lock is NOT requested
-
-
-## Fonts
-Check visually that the app is using Proxima Nova rather than the system font.

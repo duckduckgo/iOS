@@ -51,7 +51,9 @@ public class AppTrackingProtectionAllowlistModel {
             let string = allowedDomains.joined(separator: "\n")
             try string.write(to: allowlistUrl, atomically: true, encoding: .utf8)
             Task {
+#if APP_TRACKING_PROTECTION
                 await FirewallManager().notifyAllowlistChange()
+#endif
             }
         } catch {
             print(error.localizedDescription)

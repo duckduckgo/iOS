@@ -107,6 +107,7 @@ class TabSwitcherButton: UIView {
         anim.isUserInteractionEnabled = false
         
         anim.center = CGPoint(x: bounds.midX, y: bounds.midY)
+        anim.layer.zPosition = -0.1
     }
         
     override var tintColor: UIColor! {
@@ -196,6 +197,7 @@ extension TabSwitcherButton: Themable {
     
     func decorate(with theme: Theme) {
         tintColor = theme.barTintColor
+        label.textColor = theme.barTintColor
 
         switch theme.currentImageSet {
         case .light:

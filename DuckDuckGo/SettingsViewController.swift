@@ -19,12 +19,15 @@
 
 import UIKit
 import MessageUI
-import NetworkExtension
 import Core
 import BrowserServicesKit
 import Persistence
 import SwiftUI
 import Common
+
+#if APP_TRACKING_PROTECTION
+import NetworkExtension
+#endif
 
 // swiftlint:disable file_length type_body_length
 class SettingsViewController: UITableViewController {
@@ -69,6 +72,7 @@ class SettingsViewController: UITableViewController {
     
     private let syncSectionIndex = 1
     private let autofillSectionIndex = 2
+    private let appearanceSectionIndex = 3
     private let moreFromDDGSectionIndex = 6
     private let debugSectionIndex = 8
     
@@ -99,7 +103,11 @@ class SettingsViewController: UITableViewController {
     }()
     
     private lazy var shouldShowAppTPCell: Bool = {
+#if APP_TRACKING_PROTECTION
         return featureFlagger.isFeatureOn(.appTrackingProtection)
+#else
+        return false
+#endif
     }()
 
     static func loadFromStoryboard() -> UIViewController {
@@ -261,16 +269,18 @@ class SettingsViewController: UITableViewController {
     
     private func configureAppTPCell() {
         appTPCell.isHidden = !shouldShowAppTPCell
-        
+
+#if APP_TRACKING_PROTECTION
         Task { @MainActor in
             let fwm = FirewallManager()
             await fwm.refreshManager()
-            if UserDefaults().bool(forKey: "appTPUsed") && fwm.status() != .connected {
+            if UserDefaults().bool(forKey: UserDefaultsWrapper<Any>.Key.appTPUsed.rawValue) && fwm.status() != .connected {
                 appTPCell.detailTextLabel?.text = UserText.appTPCellDisabled
             } else {
                 appTPCell.detailTextLabel?.text = UserText.appTPCellDetail
             }
         }
+#endif
     }
 
     private func configureDebugCell() {
@@ -311,13 +321,15 @@ class SettingsViewController: UITableViewController {
     private func showMacBrowserWaitlistViewController() {
         navigationController?.pushViewController(MacWaitlistViewController(nibName: nil, bundle: nil), animated: true)
     }
-    
+
+#if APP_TRACKING_PROTECTION
     private func showAppTP() {
         navigationController?.pushViewController(
             AppTPActivityHostingViewController(appTrackingProtectionDatabase: appTPDatabase),
             animated: true
         )
     }
+#endif
 
     private func showWindowsBrowserWaitlistViewController() {
         navigationController?.pushViewController(WindowsWaitlistViewController(nibName: nil, bundle: nil), animated: true)
@@ -355,7 +367,11 @@ class SettingsViewController: UITableViewController {
             showSync()
 
         case appTPCell:
+#if APP_TRACKING_PROTECTION
             showAppTP()
+#else
+            break
+#endif
             
         default: break
         }
@@ -428,6 +444,17 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return super.tableView(tableView, titleForFooterInSection: section)
     }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let rows = super.tableView(tableView, numberOfRowsInSection: section)
+        if section == appearanceSectionIndex && textSizeCell.isHidden {
+            return rows - 1
+        } else if section == moreFromDDGSectionIndex && appTPCell.isHidden {
+            return rows - 1
+        } else {
+            return rows
+        }
+    }
 
     @IBAction func onVoiceSearchToggled(_ sender: UISwitch) {
         var enableVoiceSearch = sender.isOn
@@ -475,6 +502,8 @@ class SettingsViewController: UITableViewController {
 extension SettingsViewController: Themable {
     
     func decorate(with theme: Theme) {
+        view.backgroundColor = theme.backgroundColor
+
         decorateNavigationBar(with: theme)
         configureThemeCellAccessory()
         

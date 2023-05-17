@@ -21,6 +21,7 @@ import XCTest
 import WaitlistMocks
 @testable import DuckDuckGo
 @testable import Core
+import BrowserServicesKit
 
 class WindowsBrowserWaitlistTests: XCTestCase {
 
@@ -51,6 +52,21 @@ class WindowsBrowserWaitlistTests: XCTestCase {
         let waitlist = WindowsBrowserWaitlist(store: store, request: request, privacyConfigurationManager: PrivacyConfigurationManagerMock())
 
         XCTAssertEqual(waitlist.settingsSubtitle, UserText.waitlistDownloadAvailable)
+    }
+
+    func testWhenWindowsDownloadLinkEnabled_ThenSettingsSubtitleIsCorrect() {
+        let store = MockWaitlistStorage()
+        store.store(inviteCode: "code")
+
+        let request = MockWaitlistRequest.failure()
+        let privacyConfigurationManager: PrivacyConfigurationManagerMock = PrivacyConfigurationManagerMock()
+        let privacyConfig = privacyConfigurationManager.privacyConfig as! PrivacyConfigurationMock // swiftlint:disable:this force_cast
+        var enabledFeatures = privacyConfig.enabledFeaturesForVersions
+        privacyConfig.enabledFeaturesForVersions[.windowsDownloadLink] = Set([AppVersionProvider().appVersion()!])
+
+        let waitlist = WindowsBrowserWaitlist(store: store, request: request, privacyConfigurationManager: privacyConfigurationManager)
+
+        XCTAssertEqual(waitlist.settingsSubtitle, UserText.windowsWaitlistBrowsePrivately)
     }
 
 }

@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+#if APP_TRACKING_PROTECTION
+
 import Foundation
 import Core
 import NetworkExtension
@@ -45,6 +47,12 @@ class AppTPToggleViewModel: ObservableObject {
     }
     
     func changeFirewallStatus() async {
+        os_log("VPN status change requested: %s", log: FirewallManager.apptpLog, type: .info, String(connectFirewall))
+        if status() == .connecting || status() == .disconnecting {
+            // Don't change status while we're busy
+            return
+        }
+        
         do {
             try await firewallManager.setState(to: connectFirewall)
             let status = status()
@@ -64,6 +72,11 @@ class AppTPToggleViewModel: ObservableObject {
 extension AppTPToggleViewModel: FirewallDelegate {
     func statusDidChange(newStatus: NEVPNStatus) {
         Task { @MainActor in
+            // Don't react to status changes that are the same
+            if newStatus == firewallStatus {
+                return
+            }
+            
             firewallStatus = newStatus
             if newStatus == .connected || newStatus == .disconnected {
                 connectFirewall = newStatus == .connected
@@ -72,3 +85,5 @@ extension AppTPToggleViewModel: FirewallDelegate {
         }
     }
 }
+
+#endif

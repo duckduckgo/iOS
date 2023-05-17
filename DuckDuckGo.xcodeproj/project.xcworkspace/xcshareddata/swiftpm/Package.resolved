@@ -29,6 +29,15 @@
         }
       },
       {
+        "package": "DesignResourcesKit",
+        "repositoryURL": "https://github.com/duckduckgo/DesignResourcesKit",
+        "state": {
+          "branch": null,
+          "revision": "119efad12aa5d5917d10ee4492d40839848b3b3c",
+          "version": "1.1.0"
+        }
+      },
+      {
         "package": "Autofill",
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {

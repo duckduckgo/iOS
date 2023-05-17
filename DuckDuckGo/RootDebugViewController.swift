@@ -28,6 +28,13 @@ import Configuration
 
 class RootDebugViewController: UITableViewController {
 
+    enum Row: Int {
+        case resetAutoconsentPrompt = 665
+        case crashFatalError = 666
+        case crashMemory = 667
+        case toggleInspectableWebViews = 668
+    }
+
     @IBOutlet weak var shareButton: UIBarButtonItem!
 
     weak var reportGatheringActivity: UIView?
@@ -36,24 +43,40 @@ class RootDebugViewController: UITableViewController {
         presentShareSheet(withItems: [DiagnosticReportDataSource(delegate: self)], fromButtonItem: shareButton)
     }
 
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if cell.tag == Row.toggleInspectableWebViews.rawValue {
+            cell.accessoryType = AppUserDefaults().inspectableWebViewEnabled ? .checkmark : .none
+        }
+    }
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if tableView.cellForRow(at: indexPath)?.tag == 665 {
+        if tableView.cellForRow(at: indexPath)?.tag == Row.resetAutoconsentPrompt.rawValue {
             AppUserDefaults().autoconsentPromptSeen = false
             AppUserDefaults().autoconsentEnabled = false
             tableView.deselectRow(at: indexPath, animated: true)
         }
         
-        if tableView.cellForRow(at: indexPath)?.tag == 666 {
+        if tableView.cellForRow(at: indexPath)?.tag == Row.crashFatalError.rawValue {
             fatalError(#function)
         }
 
-        if tableView.cellForRow(at: indexPath)?.tag == 667 {
+        if tableView.cellForRow(at: indexPath)?.tag == Row.crashMemory.rawValue {
             var arrays = [String]()
             while 1 != 2 {
                 arrays.append(UUID().uuidString)
             }
         }
+
+        if let cell = tableView.cellForRow(at: indexPath), cell.tag == Row.toggleInspectableWebViews.rawValue {
+            tableView.deselectRow(at: indexPath, animated: true)
+
+            let defaults = AppUserDefaults()
+            defaults.inspectableWebViewEnabled.toggle()
+            cell.accessoryType = defaults.inspectableWebViewEnabled ? .checkmark : .none
+            NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.inspectableWebViewsToggled))
+        }
+
     }
 
 }

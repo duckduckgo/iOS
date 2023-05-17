@@ -136,7 +136,8 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
 
     func loginAndShowDeviceConnected(recoveryKey: SyncCode.RecoveryKey) async throws {
         let knownDevices = Set(self.rootView.model.devices.map { $0.id })
-        mapDevices(try await syncService.login(recoveryKey, deviceName: deviceName, deviceType: deviceType))
+        let registeredDevices = try await syncService.login(recoveryKey, deviceName: deviceName, deviceType: deviceType)
+        mapDevices(registeredDevices)
         dismissPresentedViewController()
         let devices = self.rootView.model.devices.filter { !knownDevices.contains($0.id) && !$0.isThisDevice }
         showDeviceConnected(devices)

@@ -230,7 +230,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
         WindowsBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
         RemoteMessaging.registerBackgroundRefreshTaskHandler(bookmarksDatabase: bookmarksDatabase)
-        SyncBackgroundScheduler.registerBackgroundRefreshTaskHandler(bookmarksDatabase: bookmarksDatabase, syncMetadataDatabase: syncMetadataDatabase)
 
         UNUserNotificationCenter.current().delegate = self
         
@@ -304,11 +303,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let hasWindowsBrowserWaitlistTask = tasks.contains { $0.identifier == WindowsBrowserWaitlist.backgroundRefreshTaskIdentifier }
             if !hasWindowsBrowserWaitlistTask {
                 WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
-            }
-
-            let hasSyncBackgroundTask = tasks.contains { $0.identifier == SyncBackgroundScheduler.Constants.backgroundProcessingTaskIdentifier }
-            if !hasSyncBackgroundTask {
-                SyncBackgroundScheduler.scheduleBackgroundRefreshTask()
             }
         }
 

@@ -54,8 +54,9 @@ public struct DeviceConnectedView: View {
                         .stroke(.black.opacity(0.14))
 
                     ScrollView {
-                        VStack {
+                        VStack(spacing: 0) {
                             ForEach(devices) { devices in
+
                                 HStack(spacing: 0) {
                                     Image(systemName: "checkmark.circle")
                                         .padding(.horizontal, 18)
@@ -63,17 +64,16 @@ public struct DeviceConnectedView: View {
                                     Spacer()
                                 }
                             }
+                            .frame(height: 44)
                         }
                     }
                 }
-                .frame(height: 44)
                 .padding(.bottom, 20)
 
                 Text(UserText.deviceSyncedMessage)
                     .lineLimit(nil)
                     .multilineTextAlignment(.center)
 
-                Spacer()
             }
             .padding(.horizontal, 20)
         } foreground: {

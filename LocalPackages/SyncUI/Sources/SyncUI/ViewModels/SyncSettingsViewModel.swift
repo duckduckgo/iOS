@@ -131,6 +131,7 @@ public class SyncSettingsViewModel: ObservableObject {
         isBusy = false
         isSyncEnabled = true
         self.recoveryCode = recoveryCode
+        self.devices = []
     }
 
     public func setupFinished(_ model: TurnOnSyncViewModel) {

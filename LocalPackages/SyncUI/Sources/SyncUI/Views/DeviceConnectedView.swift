@@ -55,16 +55,21 @@ public struct DeviceConnectedView: View {
 
                     ScrollView {
                         VStack(spacing: 0) {
-                            ForEach(devices) { devices in
+                            ForEach(devices.indices, id: \.self) { deviceIndex in
 
                                 HStack(spacing: 0) {
                                     Image(systemName: "checkmark.circle")
                                         .padding(.horizontal, 18)
-                                    Text(devices.name)
+                                    Text(devices[deviceIndex].name)
                                     Spacer()
                                 }
+                                .frame(height: 44)
+
+                                if deviceIndex + 1 < devices.count {
+                                    Divider()
+                                        .padding(.leading, 52)
+                                }
                             }
-                            .frame(height: 44)
                         }
                     }
                 }

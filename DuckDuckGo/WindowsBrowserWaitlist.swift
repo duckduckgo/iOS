@@ -25,7 +25,6 @@ import Waitlist
 
 final class WindowsBrowserWaitlist: Waitlist {
     static let identifier: String = "windows"
-    static let isWaitlistRemoved: Bool = false
     static let apiProductName: String = "windowsbrowser"
     static let downloadURL: URL = URL.windows
 
@@ -41,6 +40,7 @@ final class WindowsBrowserWaitlist: Waitlist {
         isFeatureEnabled
     }
 
+    var isWaitlistRemoved: Bool = false
     let waitlistStorage: WaitlistStorage
     let waitlistRequest: WaitlistRequest
 
@@ -49,6 +49,7 @@ final class WindowsBrowserWaitlist: Waitlist {
         self.waitlistRequest = request
 
         isFeatureEnabled = privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .windowsWaitlist)
+        isWaitlistRemoved = privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .windowsDownloadLink)
 
         isFeatureEnabledCancellable = privacyConfigurationManager.updatesPublisher
             .map { [weak privacyConfigurationManager] in
@@ -56,6 +57,13 @@ final class WindowsBrowserWaitlist: Waitlist {
             }
             .receive(on: DispatchQueue.main)
             .assign(to: \.isFeatureEnabled, onWeaklyHeld: self)
+
+        isWaitlistRemovedCancellable = privacyConfigurationManager.updatesPublisher
+            .map { [weak privacyConfigurationManager] in
+                privacyConfigurationManager?.privacyConfig.isEnabled(featureKey: .windowsDownloadLink) == true
+            }
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.isWaitlistRemoved, onWeaklyHeld: self)
     }
 
     convenience init(store: WaitlistStorage, request: WaitlistRequest) {
@@ -63,7 +71,7 @@ final class WindowsBrowserWaitlist: Waitlist {
     }
 
     var settingsSubtitle: String {
-        if Self.isWaitlistRemoved {
+        if isWaitlistRemoved {
             return UserText.windowsWaitlistBrowsePrivately
         }
         
@@ -83,6 +91,7 @@ final class WindowsBrowserWaitlist: Waitlist {
     private var isFeatureEnabled: Bool = false
     private var modeCancellable: AnyCancellable?
     private var isFeatureEnabledCancellable: AnyCancellable?
+    private var isWaitlistRemovedCancellable: AnyCancellable?
 }
 
 extension WaitlistViewModel.ViewCustomAction {

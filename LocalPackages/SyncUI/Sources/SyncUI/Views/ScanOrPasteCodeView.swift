@@ -111,7 +111,7 @@ public struct ScanOrPasteCodeView: View {
     @ViewBuilder
     func instructions() -> some View {
 
-        Text(model.isInRecoveryMode ? UserText.recoveryModeInstructions : UserText.connectDeviceInstructions)
+        Text(model.showConnectMode ? UserText.connectDeviceInstructions : UserText.recoveryModeInstructions)
             .lineLimit(nil)
             .multilineTextAlignment(.center)
             .font(.system(size: 16, weight: .regular))
@@ -130,7 +130,7 @@ public struct ScanOrPasteCodeView: View {
                     Label(UserText.manuallyEnterCodeLabel, image: "SyncKeyboardIcon")
                 }
 
-                if !model.isInRecoveryMode {
+                if model.showConnectMode {
                     NavigationLink {
                         ConnectModeView(model: model)
                     } label: {

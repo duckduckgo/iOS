@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import DesignResourcesKit
 
 class TabsBarCell: UICollectionViewCell {
 
@@ -83,8 +84,8 @@ class TabsBarCell: UICollectionViewCell {
 
         label.primaryColor = theme.barTintColor
         if isCurrent {
-            topBackgroundView.backgroundColor = theme.barBackgroundColor
-            bottomBackgroundView.backgroundColor = theme.barBackgroundColor
+            topBackgroundView.backgroundColor = theme.omniBarBackgroundColor
+            bottomBackgroundView.backgroundColor = theme.omniBarBackgroundColor
         } else {
             topBackgroundView.backgroundColor = .clear
             bottomBackgroundView.backgroundColor = .clear

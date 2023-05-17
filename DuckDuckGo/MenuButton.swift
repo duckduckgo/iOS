@@ -90,7 +90,7 @@ class MenuButton: UIView {
     
     private func configureBookmarksView() {
         bookmarksIconView.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
-        bookmarksIconView.image = UIImage(named: "Bookmarks")
+        bookmarksIconView.image = UIImage(named: "Book-24")
         
         bookmarksIconView.center = CGPoint(x: bounds.midX, y: bounds.midY)
         

@@ -43,7 +43,7 @@ extension WaitlistViewModel {
 
     convenience init(waitlist: Waitlist) {
         let waitlistType = type(of: waitlist)
-        let notificationService: NotificationService? = waitlistType.isWaitlistRemoved ? nil : UNUserNotificationCenter.current()
+        let notificationService: NotificationService? = waitlist.isWaitlistRemoved ? nil : UNUserNotificationCenter.current()
         self.init(
             waitlistRequest: ProductWaitlistRequest(productName: waitlistType.apiProductName),
             waitlistStorage: WaitlistKeychainStore(waitlistIdentifier: waitlistType.identifier),

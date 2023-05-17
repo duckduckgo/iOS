@@ -58,11 +58,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var showKeyboardIfSettingOn = true
     private var lastBackgroundDate: Date?
 
-    private var syncMetadataDatabase: CoreDataDatabase = SyncMetadataDatabase.make()
-    private var isSyncMetadaDatabaseLoaded: Bool = false
-    private var syncMetadata: SyncMetadataStore?
-    private(set) var syncBookmarksAdapter: SyncBookmarksAdapter!
     private(set) var syncService: DDGSyncing!
+    private(set) var syncDataProviders: SyncDataProviders!
 
     // MARK: lifecycle
 
@@ -188,38 +185,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // MARK: Sync initialisation
 
-        syncBookmarksAdapter = SyncBookmarksAdapter()
-        syncService = DDGSync(
-            dataProviders: { [weak self] in
-                guard let self else {
-                    return []
-                }
-
-                if !self.isSyncMetadaDatabaseLoaded {
-                    self.syncMetadataDatabase.loadStore { context, error in
-                        guard context != nil else {
-                            if let error = error {
-                                Pixel.fire(pixel: .syncMetadataCouldNotLoadDatabase, error: error)
-                            } else {
-                                Pixel.fire(pixel: .syncMetadataCouldNotLoadDatabase)
-                            }
-
-                            Thread.sleep(forTimeInterval: 1)
-                            fatalError("Could not create Sync Metadata database stack: \(error?.localizedDescription ?? "err")")
-                        }
-                    }
-                    self.syncMetadata = LocalSyncMetadataStore(database: syncMetadataDatabase)
-                    self.isSyncMetadaDatabaseLoaded = true
-                }
-
-                guard let syncMetadata = self.syncMetadata else {
-                    return []
-                }
-
-                return [self.syncBookmarksAdapter.setUpProvider(database: self.bookmarksDatabase, metadataStore: syncMetadata)]
-            },
-            log: .syncLog
-        )
+        syncDataProviders = SyncDataProviders(bookmarksDatabase: bookmarksDatabase)
+        syncService = DDGSync(dataProvidersProvider: syncDataProviders, log: .syncLog)
 
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         

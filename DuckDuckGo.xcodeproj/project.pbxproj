@@ -240,6 +240,7 @@
 		31E69A63280F4CB600478327 /* DuckUI in Frameworks */ = {isa = PBXBuildFile; productRef = 31E69A62280F4CB600478327 /* DuckUI */; };
 		31EF52E1281B3BDC0034796E /* AutofillLoginListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EF52E0281B3BDC0034796E /* AutofillLoginListItemViewModel.swift */; };
 		373D9B4529ED95C800381FDD /* BookmarksIndexesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373D9B4429ED95C800381FDD /* BookmarksIndexesTests.swift */; };
+		37445F972A155F7C0029F789 /* SyncDataProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37445F962A155F7C0029F789 /* SyncDataProviders.swift */; };
 		3760DFED299315EF0045A446 /* Waitlist in Frameworks */ = {isa = PBXBuildFile; productRef = 3760DFEC299315EF0045A446 /* Waitlist */; };
 		379E877429E97C8D001C8BB0 /* BookmarksCleanupErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379E877329E97C8D001C8BB0 /* BookmarksCleanupErrorHandling.swift */; };
 		37DF000A29F9C416002B7D3E /* SyncMetadataDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DF000929F9C416002B7D3E /* SyncMetadataDatabase.swift */; };
@@ -1183,6 +1184,7 @@
 		31DD208327395A5A008FB313 /* VoiceSearchHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSearchHelper.swift; sourceTree = "<group>"; };
 		31EF52E0281B3BDC0034796E /* AutofillLoginListItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginListItemViewModel.swift; sourceTree = "<group>"; };
 		373D9B4429ED95C800381FDD /* BookmarksIndexesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksIndexesTests.swift; sourceTree = "<group>"; };
+		37445F962A155F7C0029F789 /* SyncDataProviders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncDataProviders.swift; sourceTree = "<group>"; };
 		379E877329E97C8D001C8BB0 /* BookmarksCleanupErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksCleanupErrorHandling.swift; sourceTree = "<group>"; };
 		37DF000929F9C416002B7D3E /* SyncMetadataDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMetadataDatabase.swift; sourceTree = "<group>"; };
 		37DF000E29F9D635002B7D3E /* SyncBookmarksAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncBookmarksAdapter.swift; sourceTree = "<group>"; };
@@ -3151,6 +3153,7 @@
 			children = (
 				37DF000929F9C416002B7D3E /* SyncMetadataDatabase.swift */,
 				37DF000E29F9D635002B7D3E /* SyncBookmarksAdapter.swift */,
+				37445F962A155F7C0029F789 /* SyncDataProviders.swift */,
 			);
 			name = Sync;
 			sourceTree = "<group>";
@@ -6304,6 +6307,7 @@
 				F1134EB51F40AEEA00B73467 /* StatisticsLoader.swift in Sources */,
 				CB2A7EF4285383B300885F67 /* AppLastCompiledRulesStore.swift in Sources */,
 				4B75EA9226A266CB00018634 /* PrintingUserScript.swift in Sources */,
+				37445F972A155F7C0029F789 /* SyncDataProviders.swift in Sources */,
 				CB258D1F29A52B2500DEBA24 /* Configuration.swift in Sources */,
 				9847C00027A2DDBB00DB07AA /* AppPrivacyConfigurationDataProvider.swift in Sources */,
 				F143C3281E4A9A0E00CFDE3A /* StringExtension.swift in Sources */,

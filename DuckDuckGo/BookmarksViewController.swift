@@ -116,6 +116,14 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         self.favicons = favicons
         super.init(coder: coder)
 
+        bindSyncService()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("Not implemented")
+    }
+
+    private func bindSyncService() {
         localUpdatesCancellable = viewModel.localUpdates
             .sink { _ in
                 Task { @MainActor in
@@ -128,17 +136,13 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                 }
             }
 
-        syncUpdatesCancellable = (UIApplication.shared.delegate as? AppDelegate)?.syncBookmarksAdapter.syncDidCompletePublisher
+        syncUpdatesCancellable = (UIApplication.shared.delegate as? AppDelegate)?.syncDataProviders.bookmarksAdapter.syncDidCompletePublisher
             .sink { [weak self] _ in
                 self?.viewModel.reloadData()
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
                 }
             }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("Not implemented")
     }
 
     override func viewDidLoad() {

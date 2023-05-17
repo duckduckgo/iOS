@@ -34,7 +34,10 @@ public final class SyncBookmarksAdapter {
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
     }
 
-    public func setUpProvider(database: CoreDataDatabase, metadataStore: SyncMetadataStore) -> BookmarksProvider {
+    public func setUpProviderIfNeeded(database: CoreDataDatabase, metadataStore: SyncMetadataStore) {
+        guard provider == nil else {
+            return
+        }
         let provider = BookmarksProvider(database: database, metadataStore: metadataStore, reloadBookmarksAfterSync: { [syncDidCompleteSubject] in
             syncDidCompleteSubject.send()
         })
@@ -44,8 +47,6 @@ public final class SyncBookmarksAdapter {
                 os_log(.error, log: OSLog.syncLog, "Bookmarks Sync error: %{public}s", String(reflecting: error))
             }
         self.provider = provider
-
-        return provider
     }
 
     private var syncDidCompleteSubject = PassthroughSubject<Void, Never>()

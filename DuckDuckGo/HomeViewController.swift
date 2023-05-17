@@ -22,6 +22,7 @@ import Core
 import Bookmarks
 import Combine
 import Common
+import Persistence
 
 class HomeViewController: UIViewController {
     
@@ -63,18 +64,27 @@ class HomeViewController: UIViewController {
     private let tabModel: Tab
     private let favoritesViewModel: FavoritesListInteracting
     private var viewModelCancellable: AnyCancellable?
+
+#if APP_TRACKING_PROTECTION
+    private let appTPHomeViewModel: AppTPHomeViewModel
+#endif
     
-    static func loadFromStoryboard(model: Tab, favoritesViewModel: FavoritesListInteracting) -> HomeViewController {
+    static func loadFromStoryboard(model: Tab, favoritesViewModel: FavoritesListInteracting, appTPDatabase: CoreDataDatabase) -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "HomeViewController", creator: { coder in
-            HomeViewController(coder: coder, tabModel: model, favoritesViewModel: favoritesViewModel)
+            HomeViewController(coder: coder, tabModel: model, favoritesViewModel: favoritesViewModel, appTPDatabase: appTPDatabase)
         })
         return controller
     }
     
-    required init?(coder: NSCoder, tabModel: Tab, favoritesViewModel: FavoritesListInteracting) {
+    required init?(coder: NSCoder, tabModel: Tab, favoritesViewModel: FavoritesListInteracting, appTPDatabase: CoreDataDatabase) {
         self.tabModel = tabModel
         self.favoritesViewModel = favoritesViewModel
+
+#if APP_TRACKING_PROTECTION
+        self.appTPHomeViewModel = AppTPHomeViewModel(appTrackingProtectionDatabase: appTPDatabase)
+#endif
+
         super.init(coder: coder)
     }
     
@@ -120,9 +130,17 @@ class HomeViewController: UIViewController {
     }
 
     func configureCollectionView() {
+#if APP_TRACKING_PROTECTION
         collectionView.configure(withController: self,
                                  favoritesViewModel: favoritesViewModel,
+                                 appTPHomeViewModel: appTPHomeViewModel,
                                  andTheme: ThemeManager.shared.currentTheme)
+#else
+        collectionView.configure(withController: self,
+                                 favoritesViewModel: favoritesViewModel,
+                                 appTPHomeViewModel: nil,
+                                 andTheme: ThemeManager.shared.currentTheme)
+#endif
     }
     
     func enableContentUnderflow() -> CGFloat {

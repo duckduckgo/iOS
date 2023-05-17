@@ -25,5 +25,5 @@ GROUP_ID_PREFIX = group.com.duckduckgo
 // The code signing style needs to be specified manually because the DDG team has multiple provisioning profiles that match the team and bundle identifier
 CODE_SIGN_STYLE = Manual
 
-// The manualy specified provisioning profile
+// The manually specified provisioning profile
 PROVISIONING_PROFILE_SPECIFIER = Development - App

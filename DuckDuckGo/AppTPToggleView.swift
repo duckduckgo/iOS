@@ -19,6 +19,8 @@
 
 import SwiftUI
 
+#if APP_TRACKING_PROTECTION
+
 struct AppTPToggleView: View {
     
     @ObservedObject var viewModel: AppTPToggleViewModel
@@ -72,3 +74,5 @@ private enum Const {
 private extension Color {
     static let toggleTint = Color("AppTPToggleColor")
 }
+
+#endif

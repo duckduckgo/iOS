@@ -14,11 +14,13 @@ let package = Package(
             name: "Waitlist",
             targets: ["Waitlist", "WaitlistMocks"])
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/duckduckgo/DesignResourcesKit", exact: "1.1.0")
+    ],
     targets: [
         .target(
             name: "Waitlist",
-            dependencies: []),
+            dependencies: ["DesignResourcesKit"]),
         .target(
             name: "WaitlistMocks",
             dependencies: ["Waitlist"]),

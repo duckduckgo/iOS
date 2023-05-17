@@ -134,17 +134,24 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
         }
     }
 
+    func loginAndShowDeviceConnected(recoveryKey: SyncCode.RecoveryKey) async throws {
+        let knownDevices = Set(self.rootView.model.devices.map { $0.id })
+        let registeredDevices = try await syncService.login(recoveryKey, deviceName: deviceName, deviceType: deviceType)
+        mapDevices(registeredDevices)
+        dismissPresentedViewController()
+        let devices = self.rootView.model.devices.filter { !knownDevices.contains($0.id) && !$0.isThisDevice }
+        showDeviceConnected(devices)
+    }
+
     func startPolling() {
         Task { @MainActor in
             do {
                 if let recoveryKey = try await connector?.pollForRecoveryKey() {
-                        try await syncService.login(recoveryKey, deviceName: deviceName, deviceType: deviceType)
+                    try await loginAndShowDeviceConnected(recoveryKey: recoveryKey)
                 } else {
                     // Likely cancelled elsewhere
                     return
                 }
-                dismissPresentedViewController()
-                showDeviceConnected()
             } catch {
                 handleError(error)
             }
@@ -158,17 +165,22 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
             }
 
             if let recoveryKey = syncCode.recovery {
-                try await syncService.login(recoveryKey, deviceName: deviceName, deviceType: deviceType)
-                dismissPresentedViewController()
-                showDeviceConnected()
+                try await loginAndShowDeviceConnected(recoveryKey: recoveryKey)
                 return true
             } else if let connectKey = syncCode.connect {
                 if syncService.account == nil {
                     try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
                     rootView.model.syncEnabled(recoveryCode: recoveryCode)
                 }
+                self.rootView.model.$devices
+                    .removeDuplicates()
+                    .dropFirst()
+                    .prefix(1)
+                    .sink { [weak self] devices in
+                        self?.dismissPresentedViewController()
+                        self?.showDeviceConnected(devices.filter { !$0.isThisDevice })
+                    }.store(in: &cancellables)
                 try await syncService.transmitRecoveryKey(connectKey)
-                dismissPresentedViewController()
                 return true
             }
 

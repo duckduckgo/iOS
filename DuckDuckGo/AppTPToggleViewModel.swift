@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+#if APP_TRACKING_PROTECTION
+
 import Foundation
 import Core
 import NetworkExtension
@@ -83,3 +85,5 @@ extension AppTPToggleViewModel: FirewallDelegate {
         }
     }
 }
+
+#endif

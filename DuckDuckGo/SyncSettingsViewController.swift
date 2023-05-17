@@ -58,11 +58,11 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
             refreshDevices()
         }
 
-        syncService.isAuthenticatedPublisher
+        syncService.authStatePublisher
             .removeDuplicates()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.rootView.model.isSyncEnabled = self!.syncService.isAuthenticated
+            .sink { [weak self] authState in
+                self?.rootView.model.isSyncEnabled = authState != .inactive
             }
             .store(in: &cancellables)
 
@@ -85,7 +85,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     }
 
     func refreshDevices(clearDevices: Bool = true) {
-        guard syncService.isAuthenticated else { return }
+        guard syncService.authState != .inactive else { return }
 
         Task { @MainActor in
             if clearDevices {

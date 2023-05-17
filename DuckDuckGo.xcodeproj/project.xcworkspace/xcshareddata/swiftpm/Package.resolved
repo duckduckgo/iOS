@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "autofill/anya/subdomain-api-updates",
-          "revision": "b38f38e936d59889aa998fae8c9b2d5021f66195",
-          "version": null
+          "branch": null,
+          "revision": "7b5cc081607b638d5a2826d11a8ecdb667e489c2",
+          "version": "57.5.0"
         }
       },
       {

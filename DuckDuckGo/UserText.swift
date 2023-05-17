@@ -455,9 +455,9 @@ public struct UserText {
     // MARK: - Windows Waitlist
 
     public static let windowsWaitlistTitle = NSLocalizedString("windows-waitlist.title", value: "DuckDuckGo App for Windows", comment: "Title for the Windows Waitlist feature")
-    public static let windowsWaitlistTryDuckDuckGoForWindowsDowload = NSLocalizedString("windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows", value: "Get DuckDuckGo for Windows!", comment: "Title for the Windows Waitlist feature")
     public static let windowsWaitlistSummary = NSLocalizedString("windows-waitlist.summary", value: "DuckDuckGo for Windows has what you need to browse with more privacy — private search, tracker blocking, forced encryption, and cookie pop-up blocking, plus more best-in-class protections on the way.", comment: "Summary text for the Windows browser waitlist")
     public static let windowsWaitlistOnYourComputerGoTo = NSLocalizedString("mac-waitlist.join-waitlist-screen.on-your-computer-go-to", value: "On your Windows computer, go to:", comment: "Description text above the Share Link button")
+    public static let windowsWaitlistTryDuckDuckGoForWindowsDownload = NSLocalizedString("windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows", value: "Get DuckDuckGo for Windows!", comment: "Title for the Windows browser download link page")
     public static let windowsWaitlistTryDuckDuckGoForWindows = NSLocalizedString("windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows", value: "Get early access to try DuckDuckGo for Windows!", comment: "Title for the Join Windows Waitlist screen")
     public static let windowsWaitlistMac = NSLocalizedString("windows-waitlist.join-waitlist-screen.mac-waitlist", value: "Looking for the Mac Version?", comment: "Title for the Windows waitlist button redirecting to Mac waitlist")
     public static let windowsWaitlistBrowsePrivately = NSLocalizedString("windows-waitlist.settings.browse-privately", value: "Browse privately with our app for Windows", comment: "Title for the settings subtitle")

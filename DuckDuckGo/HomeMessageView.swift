@@ -87,7 +87,7 @@ struct HomeMessageView: View {
             Image("Close-24")
                 .foregroundColor(.primary)
         }
-        .frame(width: Const.Size.buttonWidth, height: Const.Size.buttonWidth)
+        .frame(width: Const.Size.closeButtonWidth, height: Const.Size.closeButtonWidth)
         .contentShape(Rectangle())
     }
     
@@ -180,7 +180,7 @@ private enum Const {
     }
     
     enum Size {
-        static let buttonWidth: CGFloat = 44
+        static let closeButtonWidth: CGFloat = 44
     }
     
     enum Offset {

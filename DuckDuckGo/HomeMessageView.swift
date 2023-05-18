@@ -37,29 +37,29 @@ struct HomeMessageView: View {
     let viewModel: HomeMessageViewModel
     
     var body: some View {
-        VStack(spacing: Const.Spacing.titleAndSubtitle) {
-            HStack(alignment: .top) {
-                Spacer()
+        ZStack {
+            closeButtonHeader
+                .offset(x: Const.Padding.buttonHorizontal, y: -Const.Padding.buttonHorizontal)
+            VStack(spacing: Const.Spacing.titleAndSubtitle) {
+                HStack(alignment: .top) {
+                    VStack(spacing: 0) {
+                        topText
+                        image
+                        title
+                    }
+                    .padding([.leading, .trailing], Const.Padding.textHorizontalInset)
+                }
+
                 VStack(spacing: 0) {
-                    topText
-                    image
-                    title
+                    subtitle
+                    HStack {
+                        buttons
+                    }
+                    .padding(.top, Const.Spacing.subtitleAndButtons)
                 }
-                .offset(x: Const.Size.closeButtonWidth / 2, y: 0)
-                .layoutPriority(1)
-                Spacer()
-                closeButton
             }
-            
-            VStack(spacing: 0) {
-                subtitle
-                HStack {
-                    buttons
-                }
-                .padding(.top, Const.Spacing.subtitleAndButtons)
-            }
+            .multilineTextAlignment(.center)
         }
-        .multilineTextAlignment(.center)
         .padding()
         .background(RoundedRectangle(cornerRadius: Const.Radius.corner)
                         .fill(Color.background)
@@ -68,13 +68,27 @@ struct HomeMessageView: View {
                                 x: 0,
                                 y: Const.Offset.shadowVertical))
     }
+
+    private var closeButtonHeader: some View {
+        VStack {
+            HStack {
+                Spacer()
+                closeButton
+                    .padding(0)
+            }
+            Spacer()
+        }
+    }
     
     private var closeButton: some View {
-        Button(action: { viewModel.onDidClose(.close) },
-               label: { Image("Close-24") })
-            .layoutPriority(2)
-            .offset(x: Const.Offset.closeButton,
-                    y: -Const.Offset.closeButton)
+        Button {
+            viewModel.onDidClose(.close)
+        } label: {
+            Image("Close-24")
+                .foregroundColor(.primary)
+        }
+        .frame(width: Const.Size.buttonWidth, height: Const.Size.buttonWidth)
+        .contentShape(Rectangle())
     }
     
     private var topText: some View {
@@ -155,6 +169,7 @@ private enum Const {
         static let buttonHorizontal: CGFloat = 16
         static let buttonVertical: CGFloat = 9
         static let buttonVerticalInset: CGFloat = 8
+        static let textHorizontalInset: CGFloat = 30
     }
     
     enum Spacing {
@@ -165,12 +180,10 @@ private enum Const {
     }
     
     enum Size {
-        static let maxImageWidth: CGFloat = 64
-        static let closeButtonWidth: CGFloat = 24
+        static let buttonWidth: CGFloat = 44
     }
     
     enum Offset {
-        static let closeButton: CGFloat = 6
         static let shadowVertical: CGFloat = 2
     }
 }

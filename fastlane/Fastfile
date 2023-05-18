@@ -36,6 +36,7 @@ lane :adhoc do |options|
     scheme: "DuckDuckGo",
     export_options: "adhocExportOptions.plist",
 	derived_data_path: "DerivedData"
+	xcargs: "CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM="
   )
 
   Dir.chdir("..") do

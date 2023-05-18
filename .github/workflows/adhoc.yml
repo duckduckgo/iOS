@@ -67,12 +67,12 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
         run: |
           if [[ -n "${{ github.event.inputs.suffix }}" ]]; then
-            bundle exec fastlane adhoc output:${{ github.workspace }}/build suffix:${{ github.event.inputs.suffix }}
+            bundle exec fastlane adhoc output:./build suffix:${{ github.event.inputs.suffix }}
           else
-            bundle exec fastlane adhoc output:${{ github.workspace }}/build
+            bundle exec fastlane adhoc output:./build
           fi
 
       - name: Fetch ad hoc build artifact
         uses: actions/download-artifact@v3
         with:
-          path: ${{ github.workspace }}/build
+          path: ./build

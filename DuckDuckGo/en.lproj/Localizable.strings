@@ -1085,7 +1085,7 @@
 "mac-waitlist.join-waitlist-screen.windows" = "Windows coming soon!";
 
 /* Title for the macOS waitlist button redirecting to Windows waitlist */
-"mac-waitlist.join-waitlist-screen.windows-waitlist" = "Looking for the Windows Version?";
+"mac-waitlist.join-waitlist-screen.windows-waitlist" = "Looking for the Windows version?";
 
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Browse privately with our app for Mac";
@@ -1406,7 +1406,7 @@ https://duckduckgo.com/mac";
 "windows-waitlist.invite-screen.subtitle" = "Ready to use DuckDuckGo on Windows?";
 
 /* Title for the Windows waitlist button redirecting to Mac waitlist */
-"windows-waitlist.join-waitlist-screen.mac-waitlist" = "Looking for the Mac Version?";
+"windows-waitlist.join-waitlist-screen.mac-waitlist" = "Looking for the Mac version?";
 
 /* Title for Windows Waitlist screen  */
 "windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Get DuckDuckGo for Windows!";
@@ -1443,4 +1443,7 @@ Invite code: %@";
 
 /* Title for the Windows Waitlist feature */
 "windows-waitlist.title" = "DuckDuckGo App for Windows";
+
+/* Title for the Windows browser download link page */
+"windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows" = "Get DuckDuckGo for Windows!";
 

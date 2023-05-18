@@ -19,6 +19,8 @@
 
 import SwiftUI
 
+#if APP_TRACKING_PROTECTION
+
 struct AppTPHomeView: View {
     
     @ObservedObject var viewModel: AppTPHomeViewModel
@@ -106,3 +108,5 @@ private enum Const {
         static let shadowVertical: CGFloat = 2
     }
 }
+
+#endif

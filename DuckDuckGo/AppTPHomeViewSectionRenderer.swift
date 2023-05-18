@@ -21,6 +21,8 @@ import UIKit
 import Core
 import Persistence
 
+#if APP_TRACKING_PROTECTION
+
 class AppTPHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
     struct Constants {
@@ -81,7 +83,7 @@ class AppTPHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         configureCell(cell, in: collectionView, at: indexPath)
         return cell
     }
-    
+
     private func configureCell(_ cell: AppTPCollectionViewCell,
                                in collectionView: UICollectionView,
                                at indexPath: IndexPath) {
@@ -102,3 +104,5 @@ class AppTPHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
     
 }
+
+#endif

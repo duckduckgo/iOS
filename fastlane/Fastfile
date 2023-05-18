@@ -23,7 +23,36 @@ lane :adhoc do |options|
   update_code_signing_settings(
 	use_automatic_signing: false,
 	build_configurations: ["Release"],
-	targets: ["DuckDuckGo", "ShareExtension", "OpenAction", "WidgetsExtension", "PacketTunnelProvider"],
+	targets: ["DuckDuckGo"],
+	profile_name: "match AdHoc com.duckduckgo.mobile.ios",
+	code_sign_identity: "iPhone Distribution"
+  )
+  update_code_signing_settings(
+	use_automatic_signing: false,
+	build_configurations: ["Release"],
+	targets: ["ShareExtension"],
+	profile_name: "match AdHoc com.duckduckgo.mobile.ios.ShareExtension",
+	code_sign_identity: "iPhone Distribution"
+  )
+  update_code_signing_settings(
+	use_automatic_signing: false,
+	build_configurations: ["Release"],
+	targets: ["OpenAction"],
+	profile_name: "match AdHoc com.duckduckgo.mobile.ios.OpenAction2",
+	code_sign_identity: "iPhone Distribution"
+  )
+  update_code_signing_settings(
+	use_automatic_signing: false,
+	build_configurations: ["Release"],
+	targets: ["WidgetsExtension"],
+	profile_name: "match AdHoc com.duckduckgo.mobile.ios.Widgets",
+	code_sign_identity: "iPhone Distribution"
+  )
+  update_code_signing_settings(
+	use_automatic_signing: false,
+	build_configurations: ["Release"],
+	targets: ["PacketTunnelProvider"],
+	profile_name: "match AdHoc com.duckduckgo.mobile.ios.NetworkExtension",
 	code_sign_identity: "iPhone Distribution"
   )
 

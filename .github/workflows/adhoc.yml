@@ -16,12 +16,6 @@ jobs:
 
     steps:
 
-      - name: Set suffix output
-        id: suffix
-        run: |
-          INPUT_SUFFIX=${{ github.event.inputs.suffix }}
-          echo "suffix=${INPUT_DESTINATION:-"appstore"}" >> $GITHUB_OUTPUT
-
       - name: Register SSH keys for access to certificates
         uses: webfactory/ssh-agent@v0.7.0
         with:
@@ -74,10 +68,14 @@ jobs:
             bundle exec fastlane adhoc
           fi
 
-      - name: Upload ad-hoc ipa and dsyms to artifacts
+      - name: Upload IPA artifact
         uses: actions/upload-artifact@v3
         with:
-          name: app-store ipa & dsyms
-          path: |
-            ${{ github.workspace }}/DuckDuckGo-*.ipa
-            ${{ github.workspace }}/DuckDuckGo-*.app.dSYM.zip
+          name: DuckDuckGo.ipa
+          path: ${{ env.output_name }}.ipa
+
+      - name: Upload dSYMs artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: DuckDuckGo.app.dSYM
+          path: ${{ env.output_name }}.app.dSYM.zip

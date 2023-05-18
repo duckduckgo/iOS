@@ -64,15 +64,18 @@ lane :adhoc do |options|
   end
 
   timestamp = Time.now.strftime("%Y-%m-%d-%H-%M")
-
+  output_name = "DuckDuckGo-#{suffix}#{timestamp}"
+  
   build_app(
     output_directory: options[:output],
-    output_name: "DuckDuckGo-#{suffix}#{timestamp}",
+    output_name: output_name,
     export_method: "ad-hoc",
     scheme: "DuckDuckGo",
     export_options: "adhocExportOptions.plist",
     derived_data_path: "DerivedData"
   )
+
+  sh("echo output_name=#{output_name} >> $GITHUB_ENV")
 
   Dir.chdir("..") do
     sh("open", "#{options[:output]}") unless is_ci

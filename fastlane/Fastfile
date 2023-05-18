@@ -20,6 +20,12 @@ end
 
 desc 'Makes Ad-Hoc build with a specified name in a given directory'
 lane :adhoc do |options|
+  update_code_signing_settings(
+	use_automatic_signing: false,
+	targets: ["DuckDuckGo"],
+	code_sign_identity: "iPhone Distribution"
+  )
+
   sync_signing_adhoc(options)
 
   suffix = ""
@@ -35,8 +41,7 @@ lane :adhoc do |options|
     export_method: "ad-hoc",
     scheme: "DuckDuckGo",
     export_options: "adhocExportOptions.plist",
-	derived_data_path: "DerivedData",
-	xcargs: "CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM="
+	derived_data_path: "DerivedData"
   )
 
   Dir.chdir("..") do

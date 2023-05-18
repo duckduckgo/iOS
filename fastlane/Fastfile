@@ -194,9 +194,11 @@ private_lane :get_username do |options|
 end
 
 private_lane :do_sync_signing do |options|
+  is_adhoc = lane_context[SharedValues::LANE_NAME].include?("adhoc")
   sync_code_signing(
     api_key: get_api_key,
-    username: get_username(options)
+    username: get_username(options),
+	readonly: is_ci && !is_adhoc
   )
 end
 

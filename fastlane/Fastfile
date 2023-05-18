@@ -20,6 +20,42 @@ end
 
 desc 'Makes Ad-Hoc build with a specified name in a given directory'
 lane :adhoc do |options|
+
+  # Workaround for match + gym failing at build phase https://forums.swift.org/t/xcode-14-beta-code-signing-issues-when-spm-targets-include-resources/59685/32
+  if is_ci
+    configurations = [
+      {
+        targets: ["DuckDuckGo"],
+        profile_name: "match AdHoc com.duckduckgo.mobile.ios"
+      },
+      {
+        targets: ["ShareExtension"],
+        profile_name: "match AdHoc com.duckduckgo.mobile.ios.ShareExtension"
+      },
+      {
+        targets: ["OpenAction"],
+        profile_name: "match AdHoc com.duckduckgo.mobile.ios.OpenAction2"
+      },
+      {
+        targets: ["WidgetsExtension"],
+        profile_name: "match AdHoc com.duckduckgo.mobile.ios.Widgets"
+      },
+      {
+        targets: ["PacketTunnelProvider"],
+        profile_name: "match AdHoc com.duckduckgo.mobile.ios.NetworkExtension"
+      }
+    ]
+
+    configurations.each do |config|
+      update_code_signing_settings(
+        use_automatic_signing: false,
+        build_configurations: ["Release"],
+        code_sign_identity: "iPhone Distribution",
+        **config
+      )
+    end
+  end
+
   sync_signing_adhoc(options)
 
   suffix = ""
@@ -28,14 +64,18 @@ lane :adhoc do |options|
   end
 
   timestamp = Time.now.strftime("%Y-%m-%d-%H-%M")
-
+  output_name = "DuckDuckGo-#{suffix}#{timestamp}"
+  
   build_app(
     output_directory: options[:output],
-    output_name: "DuckDuckGo-#{suffix}#{timestamp}",
+    output_name: output_name,
     export_method: "ad-hoc",
     scheme: "DuckDuckGo",
-    export_options: "adhocExportOptions.plist"
+    export_options: "adhocExportOptions.plist",
+    derived_data_path: "DerivedData"
   )
+
+  sh("echo output_name=#{output_name} >> $GITHUB_ENV")
 
   Dir.chdir("..") do
     sh("open", "#{options[:output]}") unless is_ci
@@ -156,8 +196,7 @@ end
 private_lane :do_sync_signing do |options|
   sync_code_signing(
     api_key: get_api_key,
-    username: get_username(options),
-    readonly: is_ci
+    username: get_username(options)
   )
 end
 

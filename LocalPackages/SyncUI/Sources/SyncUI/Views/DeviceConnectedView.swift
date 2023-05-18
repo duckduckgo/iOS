@@ -31,9 +31,11 @@ public struct DeviceConnectedView: View {
     @State var showRecoveryPDF = false
 
     let saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel
+    let devices: [SyncSettingsViewModel.Device]
 
-    public init(saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel) {
+    public init(_ saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel, devices: [SyncSettingsViewModel.Device]) {
         self.saveRecoveryKeyViewModel = saveRecoveryKeyViewModel
+        self.devices = devices
     }
 
     @ViewBuilder
@@ -51,21 +53,32 @@ public struct DeviceConnectedView: View {
                     RoundedRectangle(cornerRadius: 8)
                         .stroke(.black.opacity(0.14))
 
-                    HStack(spacing: 0) {
-                        Image(systemName: "checkmark.circle")
-                            .padding(.horizontal, 18)
-                        Text("WIP: Another Device")
-                        Spacer()
+                    ScrollView {
+                        VStack(spacing: 0) {
+                            ForEach(devices.indices, id: \.self) { deviceIndex in
+
+                                HStack(spacing: 0) {
+                                    Image(systemName: "checkmark.circle")
+                                        .padding(.horizontal, 18)
+                                    Text(devices[deviceIndex].name)
+                                    Spacer()
+                                }
+                                .frame(height: 44)
+
+                                if deviceIndex + 1 < devices.count {
+                                    Divider()
+                                        .padding(.leading, 52)
+                                }
+                            }
+                        }
                     }
                 }
-                .frame(height: 44)
                 .padding(.bottom, 20)
 
                 Text(UserText.deviceSyncedMessage)
                     .lineLimit(nil)
                     .multilineTextAlignment(.center)
 
-                Spacer()
             }
             .padding(.horizontal, 20)
         } foreground: {

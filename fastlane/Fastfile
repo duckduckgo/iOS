@@ -34,7 +34,8 @@ lane :adhoc do |options|
     output_name: "DuckDuckGo-#{suffix}#{timestamp}",
     export_method: "ad-hoc",
     scheme: "DuckDuckGo",
-    export_options: "adhocExportOptions.plist"
+    export_options: "adhocExportOptions.plist",
+	derived_data_path: "DerivedData"
   )
 
   Dir.chdir("..") do

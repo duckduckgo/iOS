@@ -196,8 +196,7 @@ end
 private_lane :do_sync_signing do |options|
   sync_code_signing(
     api_key: get_api_key,
-    username: get_username(options),
-    readonly: is_ci
+    username: get_username(options)
   )
 end
 

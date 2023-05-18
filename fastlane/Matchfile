@@ -13,6 +13,10 @@ for_lane :sync_signing_adhoc do
     force_for_new_devices true
 end
 
+for_lane :sync_signing do
+    readonly: is_ci
+end
+
 for_lane :adhoc do
     type "adhoc"
     force_for_new_devices true

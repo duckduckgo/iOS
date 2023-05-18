@@ -22,7 +22,8 @@ desc 'Makes Ad-Hoc build with a specified name in a given directory'
 lane :adhoc do |options|
   update_code_signing_settings(
 	use_automatic_signing: false,
-	targets: ["DuckDuckGo"],
+	build_configurations: ["Release"],
+	targets: ["DuckDuckGo", "ShareExtension", "OpenAction", "WidgetsExtension", "PacketTunnelProvider"],
 	code_sign_identity: "iPhone Distribution"
   )
 

@@ -69,12 +69,15 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
         run: |
           if [[ -n "${{ github.event.inputs.suffix }}" ]]; then
-            bundle exec fastlane adhoc output:./build suffix:${{ github.event.inputs.suffix }}
+            bundle exec fastlane adhoc suffix:${{ github.event.inputs.suffix }}
           else
-            bundle exec fastlane adhoc output:./build
+            bundle exec fastlane adhoc
           fi
 
-      - name: Fetch ad hoc build artifact
-        uses: actions/download-artifact@v3
+      - name: Upload ad-hoc ipa and dsyms to artifacts
+        uses: actions/upload-artifact@v3
         with:
-          path: ./build
+          name: app-store ipa & dsyms
+          path: |
+            ${{ github.workspace }}/DuckDuckGo-*.ipa
+            ${{ github.workspace }}/DuckDuckGo-*.app.dSYM.zip

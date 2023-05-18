@@ -1,8 +1,6 @@
 name: Make ad-hoc build
 
 on:
-  push:
-    branches: [ jacek/gha-adhoc ]
   workflow_dispatch:
     inputs:
       suffix:
@@ -91,17 +89,17 @@ jobs:
       
       - name: Get Asana Task ID
         id: get-task-id
-        # if: github.event.inputs.asana-task-url
+        if: github.event.inputs.asana-task-url
         run: |
           task_url_regex='^https://app.asana.com/[0-9]/[0-9]*/([0-9]*)/f$'
-          if [[ "https://app.asana.com/0/414235014887631/1204025184026742/f" =~ ${task_url_regex} ]]; then
+          if [[ "${{ github.event.inputs.asana-task-url }}" =~ ${task_url_regex} ]]; then
             echo "task_id=${BASH_REMATCH[1]}" >> $GITHUB_OUTPUT
           else
             echo "::error::Asana Task URL has incorrect format (attempted to match ${task_url_regex})."
           fi
 
       - name: Upload IPA to Asana
-        # if: github.event.inputs.asana-task-url
+        if: github.event.inputs.asana-task-url
         env:
           ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
         run: |

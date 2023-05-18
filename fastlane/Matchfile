@@ -15,7 +15,7 @@ end
 
 # This code sets the App Store release to read-only mode when the CI triggers it. Conversely, the Ad-hoc build remains in read-write mode regardless of where it's triggered from.
 for_lane :sync_signing do
-    readonly: is_ci
+    readonly is_ci
 end
 
 for_lane :adhoc do

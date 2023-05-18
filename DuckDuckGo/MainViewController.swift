@@ -149,41 +149,9 @@ class MainViewController: UIViewController {
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         super.init(coder: coder)
-
-        syncStateCancellable = syncService.authStatePublisher
-            .prepend(syncService.authState)
-            .map { $0 == .inactive }
-            .removeDuplicates()
-            .sink { [weak self] isSyncDisabled in
-                self?.bookmarksDatabaseCleaner.cleanUpDatabaseNow()
-                if isSyncDisabled {
-                    self?.bookmarksDatabaseCleaner.scheduleRegularCleaning()
-                } else {
-                    self?.bookmarksDatabaseCleaner.cancelCleaningSchedule()
-                }
-            }
-
-        localUpdatesCancellable = favoritesViewModel.localUpdates
-            .sink { _ in
-                Task { @MainActor in
-                    guard let syncService = (UIApplication.shared.delegate as? AppDelegate)?.syncService, syncService.authState == .active else {
-                        os_log(.debug, log: OSLog.syncLog, "Sync disabled, not scheduling")
-                        return
-                    }
-                    os_log(.debug, log: OSLog.syncLog, "Requesting sync")
-                    syncService.scheduler.notifyDataChanged()
-                }
-            }
-
-        syncUpdatesCancellable = (UIApplication.shared.delegate as? AppDelegate)?.syncBookmarksAdapter.syncDidCompletePublisher
-            .sink { [weak self] _ in
-                self?.favoritesViewModel.reloadData()
-                DispatchQueue.main.async {
-                    self?.homeController?.collectionView.reloadData()
-                }
-            }
+        bindSyncService()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("Use init?(code:")
     }
@@ -350,7 +318,42 @@ class MainViewController: UIViewController {
         gestureBookmarksButton.delegate = self
         gestureBookmarksButton.image = UIImage(named: "Bookmarks")
     }
-    
+
+    private func bindSyncService() {
+        syncStateCancellable = syncService.authStatePublisher
+            .prepend(syncService.authState)
+            .map { $0 == .inactive }
+            .removeDuplicates()
+            .sink { [weak self] isSyncDisabled in
+                self?.bookmarksDatabaseCleaner.cleanUpDatabaseNow()
+                if isSyncDisabled {
+                    self?.bookmarksDatabaseCleaner.scheduleRegularCleaning()
+                } else {
+                    self?.bookmarksDatabaseCleaner.cancelCleaningSchedule()
+                }
+            }
+
+        localUpdatesCancellable = favoritesViewModel.localUpdates
+            .sink { _ in
+                Task { @MainActor in
+                    guard let syncService = (UIApplication.shared.delegate as? AppDelegate)?.syncService, syncService.authState == .active else {
+                        os_log(.debug, log: OSLog.syncLog, "Sync disabled, not scheduling")
+                        return
+                    }
+                    os_log(.debug, log: OSLog.syncLog, "Requesting sync")
+                    syncService.scheduler.notifyDataChanged()
+                }
+            }
+
+        syncUpdatesCancellable = (UIApplication.shared.delegate as? AppDelegate)?.syncDataProviders.bookmarksAdapter.syncDidCompletePublisher
+            .sink { [weak self] _ in
+                self?.favoritesViewModel.reloadData()
+                DispatchQueue.main.async {
+                    self?.homeController?.collectionView.reloadData()
+                }
+            }
+    }
+
     @objc func quickSaveBookmarkLongPress(gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
             quickSaveBookmark()

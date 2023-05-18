@@ -335,14 +335,7 @@ class MainViewController: UIViewController {
 
         localUpdatesCancellable = favoritesViewModel.localUpdates
             .sink { _ in
-                Task { @MainActor in
-                    guard let syncService = (UIApplication.shared.delegate as? AppDelegate)?.syncService, syncService.authState == .active else {
-                        os_log(.debug, log: OSLog.syncLog, "Sync disabled, not scheduling")
-                        return
-                    }
-                    os_log(.debug, log: OSLog.syncLog, "Requesting sync")
-                    syncService.scheduler.notifyDataChanged()
-                }
+                (UIApplication.shared.delegate as? AppDelegate)?.requestSyncIfEnabled()
             }
 
         syncUpdatesCancellable = (UIApplication.shared.delegate as? AppDelegate)?.syncDataProviders.bookmarksAdapter.syncDidCompletePublisher

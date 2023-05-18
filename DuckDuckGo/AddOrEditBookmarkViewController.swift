@@ -121,15 +121,7 @@ class AddOrEditBookmarkViewController: UIViewController {
         WidgetCenter.shared.reloadAllTimelines()
         self.delegate?.finishedEditing(self, entityID: viewModel.bookmark.objectID)
         dismiss(animated: true, completion: nil)
-
-        Task { @MainActor in
-            guard let syncService = (UIApplication.shared.delegate as? AppDelegate)?.syncService, syncService.authState == .active else {
-                print("sync disabled, not syncing")
-                return
-            }
-            print("requesting sync")
-            syncService.scheduler.notifyDataChanged()
-        }
+        (UIApplication.shared.delegate as? AppDelegate)?.requestSyncIfEnabled()
     }
 
     @IBSegueAction func onCreateEditor(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> AddOrEditBookmarkViewController? {

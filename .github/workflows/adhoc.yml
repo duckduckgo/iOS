@@ -102,6 +102,8 @@ jobs:
         env:
           ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
         run: |
+          asana_ipa_path="${{ github.workspace }}/${{ env.output_name }}.ipa"
+          mv -f "${{ env.ipa_path }}" "$asana_ipa_path"
           curl -s "https://app.asana.com/api/1.0/tasks/${{ steps.get-task-id.outputs.task_id }}/attachments" \
             -H "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
-            --form "file=@${{ env.ipa_path }};type=application/zip"
+            --form "file=@${asana_ipa_path};type=application/zip"

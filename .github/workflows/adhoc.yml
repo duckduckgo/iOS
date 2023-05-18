@@ -1,8 +1,6 @@
 name: Make ad-hoc build
 
 on:
-  push:
-    branches: [ jacek/gha-adhoc ]
   workflow_dispatch:
     inputs:
       suffix:

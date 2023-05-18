@@ -39,7 +39,7 @@ lane :adhoc do |options|
       {
         targets: ["WidgetsExtension"],
         profile_name: "match AdHoc com.duckduckgo.mobile.ios.Widgets"
-      }
+      },
       {
         targets: ["PacketTunnelProvider"],
         profile_name: "match AdHoc com.duckduckgo.mobile.ios.NetworkExtension"

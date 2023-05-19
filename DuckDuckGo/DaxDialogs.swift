@@ -232,6 +232,10 @@ final class DaxDialogs {
         nextHomeScreenMessageOverride = nil
     }
     
+    func clearHeldURLData() {
+        lastURLDaxDialogReturnedFor = nil
+    }
+    
     private var fireButtonPulseTimer: Timer?
     private static let timeToFireButtonExpire: TimeInterval = 1 * 60 * 60
     

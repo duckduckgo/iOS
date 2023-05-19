@@ -2390,20 +2390,21 @@ extension TabViewController: SecureVaultManagerDelegate {
         return isEnabled
     }
 
-    func secureVaultManager(_ vault: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData, generatedPassword: Bool) {
-        if var credentials = data.credentials, AutofillSettingStatus.isAutofillEnabledInSettings, featureFlagger.isFeatureOn(.autofillCredentialsSaving) {
-            if generatedPassword {
-                if autoSavedCredentialsId.isEmpty {
+    func secureVaultManager(_ vault: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData, generatedPassword: Bool, trigger: AutofillUserScript.GetTriggerType?) {
+        if var credentials = data.credentials,
+            AutofillSettingStatus.isAutofillEnabledInSettings,
+            featureFlagger.isFeatureOn(.autofillCredentialsSaving) {
+            if generatedPassword, let trigger = trigger {
+                if trigger == AutofillUserScript.GetTriggerType.passwordGeneration {
                     autoSavedCredentialsId = credentials.account.id ?? ""
-                } else {
-                    if !credentials.password.isEmpty && !credentials.account.username.isEmpty {
-                        autoSavedCredentialsId = ""
-                        guard let accountID = credentials.account.id,
-                              let accountIdInt = Int64(accountID) else { return }
-                        confirmSavedCredentialsFor(credentialID: accountIdInt, message: UserText.autofillLoginSavedToastMessage)
-                    }
+                    return
+                } else if trigger == AutofillUserScript.GetTriggerType.formSubmission {
+                    guard let accountID = credentials.account.id,
+                          let accountIdInt = Int64(accountID) else { return }
+                    confirmSavedCredentialsFor(credentialID: accountIdInt, message: UserText.autofillLoginSavedToastMessage)
+                    self.autoSavedCredentialsId = ""
+                    return
                 }
-                return
             }
 
             if !autoSavedCredentialsId.isEmpty {
@@ -2499,11 +2500,11 @@ extension TabViewController: SecureVaultManagerDelegate {
         // No-op, don't need to do anything here
     }
     
-    func secureVaultManagerShouldAutomaticallyUpdateCredentialsWithoutUsername(_: SecureVaultManager) -> Bool {
-        true
+    func secureVaultManagerShouldAutomaticallyUpdateCredentialsWithoutUsername(_: SecureVaultManager, generatedPassword: Bool) -> Bool {
+        generatedPassword ? true : false
     }
 
-    func secureVaultManagerShouldAutomaticallySaveGeneratedPassword(_: SecureVaultManager) -> Bool {
+    func secureVaultManagerShouldSilentlySaveGeneratedPassword(_: SecureVaultManager) -> Bool {
         true
     }
     
@@ -2515,9 +2516,11 @@ extension TabViewController: SecureVaultManagerDelegate {
         return autoSavedCredentialsId
     }
 
-    func secureVaultManager(_: SecureVaultManager, promptUserToUseGeneratedPasswordForDomain: String, withGeneratedPassword generatedPassword: String, completionHandler: @escaping (Bool) -> Void) {
+    func secureVaultManager(_: SecureVaultManager,
+                            promptUserWithGeneratedPassword password: String,
+                            completionHandler: @escaping (Bool) -> Void) {
         let passwordGenerationPromptViewController = PasswordGenerationPromptViewController(
-            generatedPassword: generatedPassword) { useGeneratedPassword in
+            generatedPassword: password) { useGeneratedPassword in
                 completionHandler(useGeneratedPassword)
         }
 

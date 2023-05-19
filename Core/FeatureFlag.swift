@@ -34,7 +34,7 @@ public enum FeatureFlag: String {
 extension FeatureFlag: FeatureFlagSourceProviding {
     public var source: FeatureFlagSource {
         switch self {
-        case .debugMenu, .sync, .appTrackingProtection, .autofillPasswordGeneration:
+        case .debugMenu, .sync, .appTrackingProtection:
             return .internalOnly
         case .autofillCredentialInjecting:
             return .remoteReleasable(.subfeature(AutofillSubfeature.credentialsAutofill))
@@ -44,6 +44,8 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .remoteReleasable(.subfeature(AutofillSubfeature.inlineIconCredentials))
         case .autofillAccessCredentialManagement:
             return .remoteReleasable(.subfeature(AutofillSubfeature.accessCredentialManagement))
+        case .autofillPasswordGeneration:
+            return .remoteReleasable(.subfeature(AutofillSubfeature.autofillPasswordGeneration))
         }
     }
 }

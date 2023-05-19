@@ -238,6 +238,15 @@ final class DaxDialog: XCTestCase {
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
         XCTAssertEqual(DaxDialogs.BrowsingSpec.afterSearch, onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.ddg)))
     }
+    
+    func testWhenOnSamePageAndPresenceOfTrackersChangesThenShowOnlyOneMessage() {
+        let privacyInfo = makePrivacyInfo(url: URLs.example)
+        XCTAssertEqual(DaxDialogs.BrowsingSpec.withoutTrackers, onboarding.nextBrowsingMessageIfShouldShow(for: privacyInfo))
+        
+        let privacyInfoWithTrackers = makePrivacyInfo(url: URLs.google)
+        privacyInfo.trackerInfo = privacyInfoWithTrackers.trackerInfo
+        XCTAssertNil(onboarding.nextBrowsingMessageIfShouldShow(for: privacyInfo))
+    }
 
     func testWhenDimissedThenShowNothing() {
         onboarding.dismiss()

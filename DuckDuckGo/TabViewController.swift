@@ -1123,7 +1123,7 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
-        guard let spec = DaxDialogs.shared.nextBrowsingMessage(privacyInfo: privacyInfo) else {
+        guard let spec = DaxDialogs.shared.nextBrowsingMessageIfShouldShow(for: privacyInfo) else {
             
             if DaxDialogs.shared.shouldShowFireButtonPulse {
                 delegate?.tabDidRequestFireButtonPulse(tab: self)

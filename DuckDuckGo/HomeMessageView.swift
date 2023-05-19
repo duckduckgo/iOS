@@ -41,14 +41,12 @@ struct HomeMessageView: View {
             closeButtonHeader
                 .offset(x: Const.Padding.buttonHorizontal, y: -Const.Padding.buttonHorizontal)
             VStack(spacing: Const.Spacing.titleAndSubtitle) {
-                HStack(alignment: .top) {
-                    VStack(spacing: 0) {
-                        topText
-                        image
-                        title
-                    }
-                    .padding([.leading, .trailing], Const.Padding.textHorizontalInset)
+                VStack(spacing: 0) {
+                    topText
+                    image
+                    title
                 }
+                .padding([.leading, .trailing], Const.Padding.textHorizontalInset)
 
                 VStack(spacing: 0) {
                     subtitle

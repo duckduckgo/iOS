@@ -25,7 +25,6 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
     func showSyncSetup()
     func showRecoverData()
     func showSyncWithAnotherDevice()
-    func showDeviceConnected()
     func showRecoveryPDF()
     func shareRecoveryPDF()
     func createAccountAndStartSyncing()
@@ -66,7 +65,14 @@ public class SyncSettingsViewModel: ObservableObject {
         case valid
     }
 
-    @Published public var isSyncEnabled = false
+    @Published public var isSyncEnabled = false {
+        didSet {
+            if !isSyncEnabled {
+                devices = []
+            }
+        }
+    }
+
     @Published public var devices = [Device]()
     @Published var isBusy = false
     @Published var recoveryCode = ""

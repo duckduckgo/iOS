@@ -34,7 +34,6 @@ struct PasswordGenerationPromptView: View {
             makeBodyView(geometry)
         }
         .padding(.horizontal, isIPhonePortrait ? 16 : 48)
-        .ignoresSafeArea(edges: [.top, .bottom])
         .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
             orientation = UIDevice.current.orientation
         }
@@ -49,11 +48,44 @@ struct PasswordGenerationPromptView: View {
 
             VStack {
                 titleHeaderView
-                contentView
-                contentViewBottomSpacer
+                Spacer()
+                HStack(spacing: 10) {
+                    Text(viewModel.generatedPassword)
+                            .textSelectionEnabled()
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .setKerning(0)
+                            .font(Const.Fonts.password)
+                            .secondaryTextStyle()
+                    Button {
+                        UIPasteboard.general.string = viewModel.generatedPassword
+                        presentCopyConfirmation(message: UserText.autofillCopyToastPasswordCopied)
+                    } label: {
+                        Image("Copy")
+                            .foregroundColor(Const.Colors.SecondaryTextColor)
+                    }
+                    .buttonStyle(.plain) // Prevent taps from being forwarded to the container view
+                }
+                Spacer()
+                Text(UserText.autofillPasswordGenerationPromptSubtitle)
+                        .font(Const.Fonts.subtitle)
+                        .secondaryTextStyle()
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, isSmallFrame ? Const.Size.paddingSmallDevice : Const.Size.paddingDefault)
+                        .fixedSize(horizontal: false, vertical: true)
+                Spacer()
                 ctaView
-                bottomSpacer
+                Spacer()
+                    .frame(height: 24)
             }
+        }
+    }
+
+    private func presentCopyConfirmation(message: String) {
+        DispatchQueue.main.async {
+            ActionMessageView.present(message: message,
+                                      actionTitle: "",
+                                      onAction: {})
         }
     }
 
@@ -89,42 +121,9 @@ struct PasswordGenerationPromptView: View {
                 .frame(maxWidth: .infinity)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
-                .padding(.top, isSmallFrame ? 12 : (isIPhonePortrait ? 25 : 29))
+                .padding(.top, isSmallFrame ? 12 : 56)
         }
         .frame(width: isIPhone ? Const.Size.contentWidth : frame.width)
-        .padding(.top, isSmallFrame ? 12 : (isIPhonePortrait ? 40 : 54))
-    }
-
-    private var contentView: some View {
-        VStack {
-            Text(viewModel.generatedPassword)
-                    .textSelectionEnabled()
-                    .multilineTextAlignment(.center)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .setKerning(0)
-                    .font(Const.Fonts.password)
-                    .secondaryTextStyle()
-                    .padding(.top, isSmallFrame ? frame.height * 0.02 : frame.height * 0.05)
-
-            Text(UserText.autofillPasswordGenerationPromptSubtitle)
-                    .font(Const.Fonts.subtitle)
-                    .secondaryTextStyle()
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, isSmallFrame ? Const.Size.paddingSmallDevice : Const.Size.paddingDefault)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.top, isSmallFrame ? frame.height * 0.02 : frame.height * 0.05)
-        }
-    }
-
-    var contentViewBottomSpacer: some View {
-        VStack {
-            if isIPad {
-                Spacer()
-            } else {
-                Spacer()
-                    .frame(maxHeight: isSmallFrame ? 5 : 40)
-            }
-        }
     }
 
     var ctaView: some View {
@@ -156,19 +155,6 @@ struct PasswordGenerationPromptView: View {
         .padding(.horizontal, isSmallFrame ? Const.Size.paddingCtaSmallDevice : Const.Size.paddingCtaDefault)
     }
 
-    var bottomSpacer: some View {
-        VStack {
-            if isIPhonePortrait {
-                Spacer()
-            } else if isIPad {
-                Spacer()
-                    .frame(height: orientation == .portrait ? 24 : 64)
-            } else {
-                Spacer()
-                    .frame(height: 44)
-            }
-        }
-    }
 
     // We have specific layouts for the smaller iPhones
     private var isSmallFrame: Bool {
@@ -224,17 +210,11 @@ private enum Const {
         static let CTA = Font(UIFont.boldAppFont(ofSize: 16))
     }
 
-//    enum Margin {
-//        static var closeButtonMargin: CGFloat {
-//            Const.Size.closeButtonOffset - 21
-//        }
-//    }
-
     enum Size {
         static let contentWidth: CGFloat = 286
         static let closeButtonSize: CGFloat = 13
         static let closeButtonTappableArea: CGFloat = 44
-        static let smallDevice: CGFloat = 351
+        static let smallDevice: CGFloat = 320
 
         static let paddingSmallDevice: CGFloat = 28
         static let paddingDefault: CGFloat = 36
@@ -250,6 +230,7 @@ private enum Const {
         static let CTATertiaryBackground = Color("CTATertiaryBackground")
         static let CTAPrimaryForeground = Color("CTAPrimaryForeground")
         static let CTASecondaryForeground = Color("CTASecondaryForeground")
+        static let SecondaryTextColor = Color("SecondaryTextColor")
     }
 
 }

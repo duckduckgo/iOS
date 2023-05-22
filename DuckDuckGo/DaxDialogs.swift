@@ -24,6 +24,7 @@ import BrowserServicesKit
 import Common
 import PrivacyDashboard
 
+// swiftlint:disable file_length
 // swiftlint:disable type_body_length
 
 protocol EntityProviding {
@@ -404,3 +405,4 @@ final class DaxDialogs {
     }
 }
 // swiftlint:enable type_body_length
+// swiftlint:enable file_length

@@ -44,6 +44,9 @@ public final class SyncBookmarksAdapter {
 
         syncErrorCancellable = provider.syncErrorPublisher
             .sink { error in
+                let processedErrors = CoreDataErrorsParser.parse(error: error as NSError)
+                let params = processedErrors.errorPixelParameters
+                Pixel.fire(pixel: .syncBookmarksFailed, error: error, withAdditionalParameters: params)
                 os_log(.error, log: OSLog.syncLog, "Bookmarks Sync error: %{public}s", String(reflecting: error))
             }
         self.provider = provider

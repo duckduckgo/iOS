@@ -23,7 +23,7 @@ public struct SyncSettingsView: View {
 
     @ObservedObject public var model: SyncSettingsViewModel
 
-    let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
 
     public init(model: SyncSettingsViewModel) {
         self.model = model

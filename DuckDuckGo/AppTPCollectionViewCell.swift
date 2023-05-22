@@ -20,6 +20,8 @@
 import SwiftUI
 import UIKit
 
+#if APP_TRACKING_PROTECTION
+
 final class AppTPCollectionViewCell: SwiftUICollectionViewCell<AppTPHomeView> {
     
     static let maximumWidth: CGFloat = 380
@@ -34,3 +36,5 @@ final class AppTPCollectionViewCell: SwiftUICollectionViewCell<AppTPHomeView> {
     }
     
 }
+
+#endif

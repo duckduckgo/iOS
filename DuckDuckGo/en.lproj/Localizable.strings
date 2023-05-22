@@ -1082,6 +1082,9 @@
 "mac-waitlist.copy" = "Copy";
 
 /* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-computer-go-to" = "On your Windows computer, go to:";
+
+/* Description text above the Share Link button */
 "mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "On your Mac, go to:";
 
 /* Title for the Share Link button */
@@ -1432,7 +1435,8 @@ https://duckduckgo.com/mac";
 /* Title for the settings subtitle */
 "windows-waitlist.settings.browse-privately" = "Browse privately with our app for Windows";
 
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+/* Message used when sharing to iMessage
+   Message used when sharing to iMessage. Parameter is an eight digit invite code. */
 "windows-waitlist.share-sheet.message" = "You’re invited!
 
 Ready to use DuckDuckGo on Windows?
@@ -1451,4 +1455,7 @@ Invite code: %@";
 
 /* Title for the Windows Waitlist feature */
 "windows-waitlist.title" = "DuckDuckGo App for Windows";
+
+/* Title for the Windows browser download link page */
+"windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows" = "Get DuckDuckGo for Windows!";
 

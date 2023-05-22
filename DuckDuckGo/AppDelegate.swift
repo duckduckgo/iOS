@@ -320,6 +320,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func fireAppTPActiveUserPixel() {
+#if APP_TRACKING_PROTECTION
         guard AppDependencyProvider.shared.featureFlagger.isFeatureOn(.appTrackingProtection) else {
             return
         }
@@ -339,6 +340,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 UserDefaults.standard.set(date, forKey: key)
             }
         }
+#endif
     }
     
     private func shouldShowKeyboardOnLaunch() -> Bool {

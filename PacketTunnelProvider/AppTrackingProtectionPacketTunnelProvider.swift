@@ -29,6 +29,34 @@ class AppTrackingProtectionPacketTunnelProvider: NEPacketTunnelProvider {
     let proxyServerAddress = "127.0.0.1"
     var proxyServer: GCDHTTPProxyServer!
     
+    override init() {
+        super.init()
+        
+        let source = DispatchSource.makeMemoryPressureSource(eventMask: .all, queue: nil)
+
+        let q = DispatchQueue.init(label: "test")
+        q.async {
+            source.setEventHandler {
+                let event: DispatchSource.MemoryPressureEvent = source.mask
+                print(event)
+                switch event {
+                case DispatchSource.MemoryPressureEvent.normal:
+                    break
+                case DispatchSource.MemoryPressureEvent.warning:
+                    os_log("[ERROR] AppTP VPN memory warning", log: generalLog, type: .error)
+                    Pixel.fire(pixel: .appTPVPNMemoryWarning)
+                case DispatchSource.MemoryPressureEvent.critical:
+                    os_log("[ERROR] AppTP VPN memory critical", log: generalLog, type: .error)
+                    Pixel.fire(pixel: .appTPVPNMemoryCritical)
+                default:
+                    break
+                }
+                
+            }
+            source.resume()
+        }
+    }
+    
     override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
         os_log("[AppTP] Starting tunnel...", log: generalLog, type: .debug)
         

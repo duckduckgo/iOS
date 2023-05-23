@@ -35,10 +35,10 @@ class DDGObserverFactory: ObserverFactory {
     private let appTrackingProtectionDatabase: CoreDataDatabase
     private let appTrackingProtectionStoringModel: AppTrackingProtectionStoringModel
     
+    private var observer: DDGProxySocketObserver?
+    
     override func getObserverForProxySocket(_ socket: ProxySocket) -> Observer<ProxySocketEvent>? {
-        return DDGProxySocketObserver(trackerData: trackerData,
-                                      allowlist: allowlist,
-                                      appTrackingProtectionStoringModel: appTrackingProtectionStoringModel)
+        return observer
     }
     
     override init() {
@@ -53,6 +53,10 @@ class DDGObserverFactory: ObserverFactory {
 
         appTrackingProtectionStoringModel = AppTrackingProtectionStoringModel(appTrackingProtectionDatabase: appTrackingProtectionDatabase)
         appTrackingProtectionStoringModel.removeStaleEntries()
+        
+        observer = DDGProxySocketObserver(trackerData: trackerData,
+                                          allowlist: allowlist,
+                                          appTrackingProtectionStoringModel: appTrackingProtectionStoringModel)
     }
     
     func refreshAllowlist() {
@@ -76,18 +80,18 @@ class DDGObserverFactory: ObserverFactory {
             switch event {
             case .receivedRequest(let session, let socket):
                 if let trackerData = trackerData, trackerData.shouldBlock(domain: session.host) {
-                    let trackerOwner = trackerData.trackerOwner(forDomain: session.host)
-                    let ownerName = trackerOwner?.name ?? "Unknown Owner"
-                    
                     var blocked = true
                     if allowlist?.contains(domain: session.host) ?? false {
                         blocked = false
                     }
-
-                    appTrackingProtectionStoringModel.storeTracker(domain: session.host, trackerOwner: ownerName, blocked: blocked)
+                    
                     if blocked {
                         socket.forceDisconnect(becauseOf: BlockedReason())
                     }
+                    
+                    let trackerOwner = trackerData.trackerOwner(forDomain: session.host)
+                    let ownerName = trackerOwner?.name ?? "Unknown Owner"
+                    appTrackingProtectionStoringModel.storeTracker(domain: session.host, trackerOwner: ownerName, blocked: blocked)
                 }
                 
                 return

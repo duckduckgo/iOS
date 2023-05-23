@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+#if APP_TRACKING_PROTECTION
+
 import Foundation
 import NetworkExtension
 import BrowserServicesKit
@@ -73,18 +75,16 @@ public class FirewallManager: FirewallManaging {
     /**
      * Calling a request will help force the VPN to enable. We can use an invalid dummy URL to make things simple.
      */
-    func fireDummyRequest() {
+    func fireDummyRequest() async {
         let config = URLSessionConfiguration.default
         config.requestCachePolicy = .reloadIgnoringLocalCacheData
         config.urlCache = nil
         let session = URLSession(configuration: config)
         let url = URL(string: "https://bad_url")
-        let task = session.dataTask(with: url!) { _, _, _ in
-            os_log("[INFO] Response from dummy URL while activating VPN",
-                   log: FirewallManager.apptpLog, type: .debug)
-        }
+        
         os_log("[INFO] Calling dummy URL to force VPN", log: FirewallManager.apptpLog, type: .debug)
-        task.resume()
+        _ = try? await session.data(from: url!)
+        os_log("[INFO] Response from dummy URL while activating VPN", log: FirewallManager.apptpLog, type: .debug)
     }
     
     public func status() -> NEVPNStatus {
@@ -100,8 +100,10 @@ public class FirewallManager: FirewallManaging {
 //        os_log("[INFO] VPN status changed: %s", log: FirewallManager.apptpLog, type: .debug, status().description)
 //        if status() == .disconnected || status() == .disconnecting {
 //            if #available(iOSApplicationExtension 16.0, *) {
-//                manager?.connection.fetchLastDisconnectError() { err in
-//                    os_log("Last disconnect error: %s", log: FirewallManager.apptpLog, type: .error, err?.localizedDescription ?? "nil")
+//                manager?.connection.fetchLastDisconnectError { err in
+//                    if let err = err {
+//                        os_log("Last disconnect error: %s", log: FirewallManager.apptpLog, type: .error, err.localizedDescription)
+//                    }
 //                }
 //            }
 //        }
@@ -202,9 +204,10 @@ public class FirewallManager: FirewallManaging {
         try await withCheckedThrowingContinuation { continuation in
             Task { @MainActor in
                 os_log("[INFO] Starting VPN...", log: FirewallManager.apptpLog, type: .debug)
+                
                 do {
                     try manager?.connection.startVPNTunnel()
-                    fireDummyRequest()
+                    await fireDummyRequest()
                     os_log("[INFO] Refreshing manager", log: FirewallManager.apptpLog, type: .debug)
                     await refreshManager()
                         
@@ -222,3 +225,5 @@ public class FirewallManager: FirewallManaging {
         }
     }
 }
+
+#endif

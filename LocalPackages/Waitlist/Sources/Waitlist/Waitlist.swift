@@ -25,7 +25,6 @@ public protocol WaitlistConstants {
     static var identifier: String { get }
     static var apiProductName: String { get }
     static var downloadURL: URL { get }
-    static var isWaitlistRemoved: Bool { get }
 
     static var backgroundTaskName: String { get }
     static var backgroundRefreshTaskIdentifier: String { get }
@@ -45,6 +44,7 @@ public protocol Waitlist: WaitlistConstants {
     static var shared: Self { get }
 
     var isAvailable: Bool { get }
+    var isWaitlistRemoved: Bool { get }
 
     var waitlistStorage: WaitlistStorage { get }
     var waitlistRequest: WaitlistRequest { get }

@@ -320,6 +320,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func fireAppTPActiveUserPixel() {
+#if APP_TRACKING_PROTECTION
         guard AppDependencyProvider.shared.featureFlagger.isFeatureOn(.appTrackingProtection) else {
             return
         }
@@ -345,6 +346,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ["apptp_summary"])
             }
         }
+#endif
     }
     
     private func shouldShowKeyboardOnLaunch() -> Bool {

@@ -23,6 +23,8 @@ public struct SyncSettingsView: View {
 
     @ObservedObject public var model: SyncSettingsViewModel
 
+    let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
+
     public init(model: SyncSettingsViewModel) {
         self.model = model
     }
@@ -104,6 +106,9 @@ public struct SyncSettingsView: View {
                     $0
                 }
             }
+        }
+        .onReceive(timer) { _ in
+            model.delegate?.refreshDevices(clearDevices: false)
         }
 
     }

@@ -72,7 +72,7 @@ final class WindowsWaitlistViewController: UIViewController {
     private func addHostingControllerToViewHierarchy() {
         let waitlistView = WindowsBrowserWaitlistView().environmentObject(viewModel)
         let waitlistViewController = UIHostingController(rootView: waitlistView)
-        waitlistViewController.view.backgroundColor = UIColor(named: "WaitlistBackgroundColor")!
+        waitlistViewController.view.backgroundColor = UIColor(designSystemColor: .background)
 
         addChild(waitlistViewController)
         waitlistViewController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -130,7 +130,16 @@ extension WindowsWaitlistViewController: WaitlistViewModelDelegate {
     }
 
     func waitlistViewModelDidOpenDownloadURLShareSheet(_ viewModel: WaitlistViewModel, senderFrame: CGRect) {
-        assertionFailure("Windows Waitlist is still active")
+        let linkMetadata = WindowsWaitlistLinkMetadata()
+        let activityViewController = UIActivityViewController(activityItems: [linkMetadata], applicationActivities: nil)
+
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            activityViewController.popoverPresentationController?.sourceView = UIApplication.shared.windows.first
+            activityViewController.popoverPresentationController?.permittedArrowDirections = .right
+            activityViewController.popoverPresentationController?.sourceRect = senderFrame
+        }
+
+        present(activityViewController, animated: true, completion: nil)
     }
 
     func waitlistViewModel(_ viewModel: WaitlistViewModel, didTriggerCustomAction action: WaitlistViewModel.ViewCustomAction) {
@@ -154,9 +163,9 @@ private final class WindowsWaitlistLinkMetadata: NSObject, UIActivityItemSource 
         return metadata
     }()
 
-    private let inviteCode: String
+    private let inviteCode: String?
 
-    init(inviteCode: String) {
+    init(inviteCode: String? = nil) {
         self.inviteCode = inviteCode
     }
 
@@ -175,7 +184,9 @@ private final class WindowsWaitlistLinkMetadata: NSObject, UIActivityItemSource 
 
         switch type {
         case .message, .mail:
-            return UserText.windowsWaitlistShareSheetMessage(code: inviteCode)
+            return (inviteCode != nil) ?
+            UserText.windowsWaitlistShareSheetMessage(code: inviteCode!) :
+            UserText.windowsWaitlistDownloadLinkShareSheetMessage
         default:
             return self.metadata.originalURL as Any
         }

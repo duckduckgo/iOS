@@ -20,6 +20,8 @@
 import SwiftUI
 import Core
 
+#if APP_TRACKING_PROTECTION
+
 struct AppTPActivityView: View {
     @ObservedObject var viewModel: AppTrackingProtectionListViewModel
     @ObservedObject var feedbackModel: AppTrackingProtectionFeedbackModel
@@ -248,3 +250,5 @@ private extension Color {
     static let cellBackground = Color("AppTPCellBackgroundColor")
     static let viewBackground = Color("AppTPViewBackgroundColor")
 }
+
+#endif

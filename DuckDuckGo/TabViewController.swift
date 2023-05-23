@@ -2399,7 +2399,10 @@ extension TabViewController: SecureVaultManagerDelegate {
         return isEnabled
     }
 
-    func secureVaultManager(_ vault: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData, generatedPassword: Bool, trigger: AutofillUserScript.GetTriggerType?) {
+    func secureVaultManager(_ vault: SecureVaultManager,
+                            promptUserToStoreAutofillData data: AutofillData,
+                            hasGeneratedPassword generatedPassword: Bool,
+                            withTrigger trigger: AutofillUserScript.GetTriggerType?) {
         if var credentials = data.credentials,
             AutofillSettingStatus.isAutofillEnabledInSettings,
             featureFlagger.isFeatureOn(.autofillCredentialsSaving) {
@@ -2509,8 +2512,8 @@ extension TabViewController: SecureVaultManagerDelegate {
         // No-op, don't need to do anything here
     }
     
-    func secureVaultManagerShouldAutomaticallyUpdateCredentialsWithoutUsername(_: SecureVaultManager, generatedPassword: Bool) -> Bool {
-        generatedPassword ? true : false
+    func secureVaultManagerShouldAutomaticallyUpdateCredentialsWithoutUsername(_: SecureVaultManager, shouldSilentlySave: Bool) -> Bool {
+        shouldSilentlySave ? true : false
     }
 
     func secureVaultManagerShouldSilentlySaveGeneratedPassword(_: SecureVaultManager) -> Bool {

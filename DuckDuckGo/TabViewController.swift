@@ -2352,16 +2352,7 @@ extension NSError {
 }
 
 extension TabViewController: SecureVaultManagerDelegate {
-    func secureVaultManager(_: BrowserServicesKit.SecureVaultManager, didRequestCreditCardsManagerForDomain domain: String) {
-    }
 
-    func secureVaultManager(_: BrowserServicesKit.SecureVaultManager, didRequestIdentitiesManagerForDomain domain: String) {
-    }
-
-    func secureVaultManager(_: BrowserServicesKit.SecureVaultManager, didRequestPasswordManagerForDomain domain: String) {
-    }
-
- 
     private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials) {
         guard AutofillSettingStatus.isAutofillEnabledInSettings,
               featureFlagger.isFeatureOn(.autofillCredentialsSaving),
@@ -2439,7 +2430,7 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
     }
 
-    func deleteLoginFor(accountIdInt: Int64) {
+    private func deleteLoginFor(accountIdInt: Int64) {
         do {
             let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
             if secureVault == nil {
@@ -2524,10 +2515,6 @@ extension TabViewController: SecureVaultManagerDelegate {
         // We don't have auth yet
     }
 
-    func secureVaultManagerAutoSavedCredentialsId(_: SecureVaultManager) -> String? {
-        return autoSavedCredentialsId
-    }
-
     func secureVaultManager(_: SecureVaultManager,
                             promptUserWithGeneratedPassword password: String,
                             completionHandler: @escaping (Bool) -> Void) {
@@ -2541,6 +2528,15 @@ extension TabViewController: SecureVaultManagerDelegate {
             }
         }
         self.present(passwordGenerationPromptViewController, animated: true)
+    }
+
+    func secureVaultManager(_: BrowserServicesKit.SecureVaultManager, didRequestCreditCardsManagerForDomain domain: String) {
+    }
+
+    func secureVaultManager(_: BrowserServicesKit.SecureVaultManager, didRequestIdentitiesManagerForDomain domain: String) {
+    }
+
+    func secureVaultManager(_: BrowserServicesKit.SecureVaultManager, didRequestPasswordManagerForDomain domain: String) {
     }
 
     func secureVaultManager(_: SecureVaultManager, didReceivePixel pixel: AutofillUserScript.JSPixel) {

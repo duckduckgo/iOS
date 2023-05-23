@@ -2531,8 +2531,7 @@ extension TabViewController: SecureVaultManagerDelegate {
     func secureVaultManager(_: SecureVaultManager,
                             promptUserWithGeneratedPassword password: String,
                             completionHandler: @escaping (Bool) -> Void) {
-        let passwordGenerationPromptViewController = PasswordGenerationPromptViewController(
-            generatedPassword: password) { useGeneratedPassword in
+        let passwordGenerationPromptViewController = PasswordGenerationPromptViewController(generatedPassword: password) { useGeneratedPassword in
                 completionHandler(useGeneratedPassword)
         }
 

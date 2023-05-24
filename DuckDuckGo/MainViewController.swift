@@ -1829,6 +1829,7 @@ extension MainViewController: AutoClearWorker {
         }
         
         AutoconsentManagement.shared.clearCache()
+        DaxDialogs.shared.clearHeldURLData()
 
         let syncService = (UIApplication.shared.delegate as? AppDelegate)!.syncService
         if syncService?.authState == .inactive {

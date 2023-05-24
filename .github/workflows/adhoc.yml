@@ -4,8 +4,12 @@ on:
   workflow_dispatch:
     inputs:
       suffix:
-        description: 'Suffix to append to the build name'
+        description: "Text to append at the end of the build name"
         required: false
+      asana-task-url:
+        description: "Asana task URL"
+        required: false
+        type: string
 
 jobs:
   make-adhoc:
@@ -13,12 +17,6 @@ jobs:
     name: Make ad-hoc build
 
     steps:
-
-      - name: Set suffix output
-        id: suffix
-        run: |
-          INPUT_SUFFIX=${{ github.event.inputs.suffix }}
-          echo "suffix=${INPUT_DESTINATION:-"appstore"}" >> $GITHUB_OUTPUT
 
       - name: Register SSH keys for access to certificates
         uses: webfactory/ssh-agent@v0.7.0
@@ -67,12 +65,49 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
         run: |
           if [[ -n "${{ github.event.inputs.suffix }}" ]]; then
-            bundle exec fastlane adhoc output:./build suffix:${{ github.event.inputs.suffix }}
+            bundle exec fastlane adhoc suffix:${{ github.event.inputs.suffix }}
           else
-            bundle exec fastlane adhoc output:./build
+            bundle exec fastlane adhoc
           fi
 
-      - name: Fetch ad hoc build artifact
-        uses: actions/download-artifact@v3
+      - name: Set filenames
+        run: |
+          echo "ipa_filename=${{ env.output_name }}.ipa" >> $GITHUB_ENV
+          echo "dsyms_filename=${{ env.output_name }}.app.dSYM.zip" >> $GITHUB_ENV
+
+      - name: Set paths
+        run: |
+          echo "ipa_path=${{ github.workspace }}/${{ env.ipa_filename }}" >> $GITHUB_ENV
+          echo "dsyms_path=${{ github.workspace }}/${{ env.dsyms_filename }}" >> $GITHUB_ENV
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v3
         with:
-          path: ./build
+          name: ${{ env.ipa_filename }}
+          path: ${{ env.ipa_path }}
+
+      - name: Upload dSYMs artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.dsyms_filename }}
+          path: ${{ env.dsyms_path }}
+      
+      - name: Get Asana Task ID
+        id: get-task-id
+        if: github.event.inputs.asana-task-url
+        run: |
+          task_url_regex='^https://app.asana.com/[0-9]/[0-9]*/([0-9]*)/f$'
+          if [[ "${{ github.event.inputs.asana-task-url }}" =~ ${task_url_regex} ]]; then
+            echo "task_id=${BASH_REMATCH[1]}" >> $GITHUB_OUTPUT
+          else
+            echo "::error::Asana Task URL has incorrect format (attempted to match ${task_url_regex})."
+          fi
+
+      - name: Upload IPA to Asana
+        if: github.event.inputs.asana-task-url
+        env:
+          ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+        run: |
+          curl -s "https://app.asana.com/api/1.0/tasks/${{ steps.get-task-id.outputs.task_id }}/attachments" \
+            -H "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
+            --form "file=@${{ env.ipa_path }};type=application/zip"

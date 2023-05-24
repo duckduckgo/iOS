@@ -117,20 +117,14 @@ extension WindowsWaitlistViewController: WaitlistViewModelDelegate {
     }
 
     func waitlistViewModelDidOpenInviteCodeShareSheet(_ viewModel: WaitlistViewModel, inviteCode: String, senderFrame: CGRect) {
-        let linkMetadata = WindowsWaitlistLinkMetadata(inviteCode: inviteCode)
-        let activityViewController = UIActivityViewController(activityItems: [linkMetadata], applicationActivities: nil)
-
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            activityViewController.popoverPresentationController?.sourceView = UIApplication.shared.windows.first
-            activityViewController.popoverPresentationController?.permittedArrowDirections = .right
-            activityViewController.popoverPresentationController?.sourceRect = senderFrame
-        }
-
-        present(activityViewController, animated: true, completion: nil)
+        openShareSheetWithMetadata(WindowsWaitlistLinkMetadata(pageType: .waitlist), senderFrame: senderFrame)
     }
 
     func waitlistViewModelDidOpenDownloadURLShareSheet(_ viewModel: WaitlistViewModel, senderFrame: CGRect) {
-        let linkMetadata = WindowsWaitlistLinkMetadata()
+        openShareSheetWithMetadata(WindowsWaitlistLinkMetadata(pageType: .download), senderFrame: senderFrame)
+    }
+
+    private func openShareSheetWithMetadata(_ linkMetadata: WindowsWaitlistLinkMetadata, senderFrame: CGRect) {
         let activityViewController = UIActivityViewController(activityItems: [linkMetadata], applicationActivities: nil)
 
         if UIDevice.current.userInterfaceIdiom == .pad {
@@ -164,9 +158,11 @@ private final class WindowsWaitlistLinkMetadata: NSObject, UIActivityItemSource 
     }()
 
     private let inviteCode: String?
+    private let pageType: WindowsWaitlistPageType
 
-    init(inviteCode: String? = nil) {
+    init(inviteCode: String? = nil, pageType: WindowsWaitlistPageType) {
         self.inviteCode = inviteCode
+        self.pageType = pageType
     }
 
     func activityViewControllerLinkMetadata(_: UIActivityViewController) -> LPLinkMetadata? {
@@ -184,12 +180,17 @@ private final class WindowsWaitlistLinkMetadata: NSObject, UIActivityItemSource 
 
         switch type {
         case .message, .mail:
-            return (inviteCode != nil) ?
+            return pageType == .waitlist ?
             UserText.windowsWaitlistShareSheetMessage(code: inviteCode!) :
             UserText.windowsWaitlistDownloadLinkShareSheetMessage
         default:
             return self.metadata.originalURL as Any
         }
+    }
+
+    enum WindowsWaitlistPageType {
+        case waitlist
+        case download
     }
 
 }

@@ -101,7 +101,7 @@ private enum Const {
 
 private extension Color {
     static let trackerDomain = Color("AppTPDomainColor")
-    static let trackerSize = Color("AppTPCountColor")
-    static let cellBackground = Color("AppTPCellBackgroundColor")
+    static let trackerSize = Color(designSystemColor: .textSecondary)
+    static let cellBackground = Color(designSystemColor: .background)
     static let disclosureColor = Color("AppTPDisclosureColor")
 }

@@ -192,9 +192,9 @@ private enum Const {
 
 private extension Color {
     static let infoText = Color("AppTPDomainColor")
-    static let buttonColor = Color("AppTPToggleColor")
-    static let cellBackground = Color("AppTPCellBackgroundColor")
-    static let viewBackground = Color("AppTPViewBackgroundColor")
+    static let buttonColor = Color(designSystemColor: .accent)
+    static let cellBackground = Color(designSystemColor: .surface)
+    static let viewBackground = Color(designSystemColor: .background)
 }
 
 #endif

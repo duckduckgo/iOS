@@ -72,7 +72,7 @@ private enum Const {
 }
 
 private extension Color {
-    static let toggleTint = Color("AppTPToggleColor")
+    static let toggleTint = Color(designSystemColor: .accent)
 }
 
 #endif

@@ -103,7 +103,7 @@ struct AppTPBreakageFormView: View {
     
     var form: some View {
         ZStack {
-            Form {
+            List {
                 Section {
                     VStack {
                         AppTPBreakageFormHeaderView(text: UserText.appTPReportAppLabel)
@@ -155,10 +155,10 @@ struct AppTPBreakageFormView: View {
                     .frame(minHeight: Const.Size.minCommentHeight)
                 } footer: {
                     Text(UserText.appTPReportFooter)
-                    .fontWithLineHeight(font: Const.Font.footer, lineHeight: Const.Size.lineHeight)
-                    .foregroundColor(.footerText)
-                    .padding(.leading, Const.Size.sectionIndentation)
-                    .padding(.top)
+                        .fontWithLineHeight(font: Const.Font.footer, lineHeight: Const.Size.lineHeight)
+                        .foregroundColor(.footerText)
+                        .padding(.leading, Const.Size.sectionIndentation)
+                        .padding(.top)
                 }
                 
                 Section {
@@ -176,6 +176,7 @@ struct AppTPBreakageFormView: View {
                     .disabled(appName.isEmpty)
                 }
             }
+            .listStyle(.insetGrouped)
             .navigationTitle(UserText.appTPReportTitle)
             .alert(isPresented: $showError) {
                 Alert(

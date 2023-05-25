@@ -51,6 +51,7 @@ struct AppTPTrackerCell: View {
 
                 VStack(alignment: .leading, spacing: Const.Size.rowSpacing) {
                     Text(trackerDomain)
+                        .lineLimit(1)
                         .font(Font(uiFont: Const.Font.trackerDomain))
                         .foregroundColor(.trackerDomain)
                     

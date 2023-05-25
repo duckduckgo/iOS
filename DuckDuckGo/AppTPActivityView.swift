@@ -89,7 +89,7 @@ struct AppTPActivityView: View {
                     .cornerRadius(Const.Size.cornerRadius)
                 }, header: {
                     HStack {
-                        Text(viewModel.formattedDate(section.name))
+                        Text(viewModel.formattedDate(section.name).uppercased())
                             .font(Font(uiFont: Const.Font.sectionHeader))
                             .foregroundColor(.infoText)
                             .padding(.top)
@@ -100,11 +100,6 @@ struct AppTPActivityView: View {
                     }
                 })
             }
-            
-            Toggle(isOn: $viewModel.debugModeEnabled, label: {
-                Text("Show Additional Tracker Information")
-            })
-            .padding(.top, 8)
         }
     }
     
@@ -144,7 +139,7 @@ struct AppTPActivityView: View {
         }
     }
     
-    var body: some View {
+    var scrollView: some View {
         ScrollView {
             LazyVStack(alignment: .center, spacing: 0) {
                 Section {
@@ -174,18 +169,34 @@ struct AppTPActivityView: View {
         .background(Color.viewBackground)
         .navigationTitle(UserText.appTPNavTitle)
     }
+    
+    @ViewBuilder
+    var scrollWithBackgroud: some View {
+        if #available(iOS 16, *) {
+            scrollView
+                .scrollContentBackground(.hidden)
+                .background(Color.viewBackground)
+        } else {
+            scrollView
+                .background(Color.viewBackground)
+        }
+    }
+    
+    var body: some View {
+        scrollWithBackgroud
+    }
 }
 
 private enum Const {
     enum Font {
-        static let sectionHeader = UIFont.semiBoldAppFont(ofSize: 15)
+        static let sectionHeader = UIFont.systemFont(ofSize: 12)
         static let info = UIFont.appFont(ofSize: 16)
     }
     
     enum Size {
         static let cornerRadius: CGFloat = 12
         static let sectionIndentation: CGFloat = 16
-        static let sectionHeaderBottom: CGFloat = 6
+        static let sectionHeaderBottom: CGFloat = 0
         static let standardCellHeight: CGFloat = 44
     }
 }

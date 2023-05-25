@@ -29,15 +29,19 @@ class AppTrackingProtectionPacketTunnelProvider: NEPacketTunnelProvider {
     let proxyServerAddress = "127.0.0.1"
     var proxyServer: GCDHTTPProxyServer!
     
+    // Dispatch objects for memory warnings
+    let dispatchSource: DispatchSourceMemoryPressure
+    let dispatchQueue: DispatchQueue
+    
     override init() {
+        dispatchSource = DispatchSource.makeMemoryPressureSource(eventMask: .all, queue: nil)
+        dispatchQueue = DispatchQueue.init(label: "AppTPMemoryPressure")
+        
         super.init()
         
-        let source = DispatchSource.makeMemoryPressureSource(eventMask: .all, queue: nil)
-
-        let q = DispatchQueue.init(label: "test")
-        q.async {
-            source.setEventHandler {
-                let event: DispatchSource.MemoryPressureEvent = source.mask
+        dispatchQueue.async {
+            self.dispatchSource.setEventHandler {
+                let event: DispatchSource.MemoryPressureEvent = self.dispatchSource.mask
                 print(event)
                 switch event {
                 case DispatchSource.MemoryPressureEvent.normal:
@@ -53,7 +57,7 @@ class AppTrackingProtectionPacketTunnelProvider: NEPacketTunnelProvider {
                 }
                 
             }
-            source.resume()
+            self.dispatchSource.resume()
         }
     }
     

@@ -56,12 +56,6 @@ struct AppTPActivityView: View {
     
     var listState: some View {
         VStack {
-            Picker("Tracker Sorting", selection: $viewModel.trackerSortingOption) {
-                Text("Sort By Count").tag(AppTrackingProtectionListViewModel.TrackerSorting.count)
-                Text("Sort By Date").tag(AppTrackingProtectionListViewModel.TrackerSorting.timestamp)
-            }
-            .pickerStyle(.segmented)
-            
             ForEach(viewModel.sections, id: \.name) { section in
                 Section(content: {
                     LazyVStack(alignment: .leading, spacing: 0) {

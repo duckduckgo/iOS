@@ -38,26 +38,36 @@ public final class SyncBookmarksAdapter {
         guard provider == nil else {
             return
         }
-        let provider = BookmarksProvider(database: database, metadataStore: metadataStore, reloadBookmarksAfterSync: { [syncDidCompleteSubject] in
-            syncDidCompleteSubject.send()
-        })
-
-        syncErrorCancellable = provider.syncErrorPublisher
-            .sink { error in
-                switch error {
-                case let syncError as SyncError:
-                    Pixel.fire(pixel: .syncBookmarksFailed, error: syncError)
-                default:
-                    let nsError = error as NSError
-                    if nsError.domain != NSURLErrorDomain {
-                        let processedErrors = CoreDataErrorsParser.parse(error: error as NSError)
-                        let params = processedErrors.errorPixelParameters
-                        Pixel.fire(pixel: .syncBookmarksFailed, error: error, withAdditionalParameters: params)
-                    }
+        do {
+            let provider = try BookmarksProvider(
+                database: database,
+                metadataStore: metadataStore,
+                reloadBookmarksAfterSync: { [syncDidCompleteSubject] in
+                    syncDidCompleteSubject.send()
                 }
-                os_log(.error, log: OSLog.syncLog, "Bookmarks Sync error: %{public}s", String(reflecting: error))
-            }
-        self.provider = provider
+            )
+
+            syncErrorCancellable = provider.syncErrorPublisher
+                .sink { error in
+                    switch error {
+                    case let syncError as SyncError:
+                        Pixel.fire(pixel: .syncBookmarksFailed, error: syncError)
+                    default:
+                        let nsError = error as NSError
+                        if nsError.domain != NSURLErrorDomain {
+                            let processedErrors = CoreDataErrorsParser.parse(error: error as NSError)
+                            let params = processedErrors.errorPixelParameters
+                            Pixel.fire(pixel: .syncBookmarksFailed, error: error, withAdditionalParameters: params)
+                        }
+                    }
+                    os_log(.error, log: OSLog.syncLog, "Bookmarks Sync error: %{public}s", String(reflecting: error))
+                }
+            self.provider = provider
+        } catch let error as NSError {
+            let processedErrors = CoreDataErrorsParser.parse(error: error)
+            let params = processedErrors.errorPixelParameters
+            Pixel.fire(pixel: .syncBookmarksProviderInitializationFailed, error: error, withAdditionalParameters: params)
+        }
     }
 
     private var syncDidCompleteSubject = PassthroughSubject<Void, Never>()

@@ -58,8 +58,6 @@ struct MacPromoView: View {
             VStack {
 
                 Image("RemoteMessageMacComputer")
-                    .resizable()
-                    .frame(width: 200, height: 200)
                     .padding(.bottom, 16)
 
                 Text("Get DuckDuckGo Browser for Mac")

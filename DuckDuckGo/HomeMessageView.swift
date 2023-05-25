@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
 struct RoundedRectStyle: ButtonStyle {
     let foregroundColor: Color
@@ -27,6 +28,7 @@ struct RoundedRectStyle: ButtonStyle {
         configuration.label
             .padding(.horizontal, Const.Padding.buttonHorizontal)
             .padding(.vertical, Const.Padding.buttonVertical)
+            .frame(maxWidth: .infinity)
             .foregroundColor(configuration.isPressed ? foregroundColor.opacity(0.5) : foregroundColor)
             .background(backgroundColor)
             .cornerRadius(Const.Radius.corner)
@@ -39,26 +41,28 @@ struct HomeMessageView: View {
     var body: some View {
         ZStack {
             closeButtonHeader
-                .offset(x: Const.Padding.buttonHorizontal, y: -Const.Padding.buttonHorizontal)
-            VStack(spacing: Const.Spacing.titleAndSubtitle) {
-                VStack(spacing: 0) {
+
+            VStack(spacing: 8) {
+                Group {
                     topText
                     image
                     title
-                }
-                .padding([.leading, .trailing], Const.Padding.textHorizontalInset)
-
-                VStack(spacing: 0) {
                     subtitle
-                    HStack {
-                        buttons
-                    }
-                    .padding(.top, Const.Spacing.subtitleAndButtons)
+                        .padding(.top, 8)
+                    prompt
                 }
+                    .padding(.horizontal, 24)
+
+                HStack {
+                    buttons
+                }
+                .padding(.top, 8)
+                .padding(.horizontal, 32)
             }
             .multilineTextAlignment(.center)
+            .padding(.vertical)
+            .padding(.horizontal, 8)
         }
-        .padding()
         .background(RoundedRectangle(cornerRadius: Const.Radius.corner)
                         .fill(Color.background)
                         .shadow(color: Color.shadow,
@@ -113,33 +117,46 @@ struct HomeMessageView: View {
 
     private var title: some View {
         Text(viewModel.title)
-            .font(Font(uiFont: Const.Font.title))
-            .fixedSize(horizontal: false, vertical: true)
+            .daxHeadline()
+            // .fixedSize(horizontal: false, vertical: true)
             .padding(.top, Const.Spacing.imageAndTitle)
    }
     
     private var subtitle: some View {
         Text(viewModel.subtitle)
-            .font(Font(uiFont: Const.Font.subtitle))
-            .lineSpacing(Const.Spacing.line)
+            .daxBodyRegular()
             .padding(.top, Const.Spacing.titleAndSubtitle)
+    }
+
+    // EXP2: Hardcoded for experiment
+    private var prompt: some View {
+        Text("Send a link to yourself for later:")
+            .daxSubheadRegular()
+            .foregroundColor(Color(designSystemColor: .textSecondary))
+            .padding(.top, Const.Spacing.prompt)
     }
     
     private var buttons: some View {
-        ForEach(viewModel.buttons, id: \.title) {
-            let foreground: Color = $0.actionStyle == .default ? .white : .cancelButtonForeground
-            let background: Color = $0.actionStyle == .default ? .button : .cancelButtonBackground
-            Button($0.title, action: $0.action)
-                .font(Font(uiFont: Const.Font.button))
-                .buttonStyle(RoundedRectStyle(foregroundColor: foreground,
-                                              backgroundColor: background))
-                .padding([.top, .bottom], Const.Padding.buttonVerticalInset)
+        ForEach(viewModel.buttons, id: \.title) { model in
+            let foreground: Color = model.actionStyle == .default ? .white : .cancelButtonForeground
+            let background: Color = model.actionStyle == .default ? .button : .cancelButtonBackground
+            Button(action: model.action) {
+                HStack {
+                    Image(systemName: "square.and.arrow.up")
+                    Text(model.title)
+                        .font((Font(uiFont: Const.Font.button)))
+                }
+            }
+            .buttonStyle(RoundedRectStyle(foregroundColor: foreground,
+                                          backgroundColor: background))
+            // EXP2: Remove top padding for experiment
+            .padding([.bottom], Const.Padding.buttonVerticalInset)
         }
     }
 }
 
 private extension Color {
-    static let button = Color(UIColor.cornflowerBlue)
+    static let button = Color(designSystemColor: .accent)
     static let cancelButtonBackground = Color("CancelButtonBackgroundColor")
     static let cancelButtonForeground = Color("CancelButtonForegroundColor")
     static let background = Color("HomeMessageBackgroundColor")
@@ -164,7 +181,7 @@ private enum Const {
     }
     
     enum Padding {
-        static let buttonHorizontal: CGFloat = 16
+        static let buttonHorizontal: CGFloat = 24
         static let buttonVertical: CGFloat = 9
         static let buttonVerticalInset: CGFloat = 8
         static let textHorizontalInset: CGFloat = 30
@@ -174,6 +191,7 @@ private enum Const {
         static let imageAndTitle: CGFloat = 8
         static let titleAndSubtitle: CGFloat = 4
         static let subtitleAndButtons: CGFloat = 6
+        static let prompt: CGFloat = 12
         static let line: CGFloat = 4
     }
     

@@ -76,20 +76,29 @@ final class HomePageConfiguration {
     }
 
     private func remoteMessageToShow() -> HomeMessage? {
-        guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return nil }
-
-        os_log("Remote message to show: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
-        Pixel.fire(pixel: .remoteMessageShown,
-                   withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessageToPresent.id)"])
-
-        if !remoteMessagingStore.hasShownRemoteMessage(withId: remoteMessageToPresent.id) {
-            os_log("Remote message shown for first time: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
-            Pixel.fire(pixel: .remoteMessageShownUnique,
-                       withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessageToPresent.id)"])
-            remoteMessagingStore.updateRemoteMessage(withId: remoteMessageToPresent.id, asShown: true)
-        }
-
-        return .remoteMessage(remoteMessage: remoteMessageToPresent)
+//        guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return nil }
+//
+//        os_log("Remote message to show: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
+//        Pixel.fire(pixel: .remoteMessageShown,
+//                   withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessageToPresent.id)"])
+//
+//        if !remoteMessagingStore.hasShownRemoteMessage(withId: remoteMessageToPresent.id) {
+//            os_log("Remote message shown for first time: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
+//            Pixel.fire(pixel: .remoteMessageShownUnique,
+//                       withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessageToPresent.id)"])
+//            remoteMessagingStore.updateRemoteMessage(withId: remoteMessageToPresent.id, asShown: true)
+//        }
+//
+//        return .remoteMessage(remoteMessage: remoteMessageToPresent)
+        return .remoteMessage(remoteMessage: .init(id: "test1", content:
+                 .bigSingleAction(titleText: "Get DuckDuckGo Browser for Mac",
+                                  descriptionText: "Search privately, block trackers and hide cookie pop-ups on your Mac for free!",
+                                  placeholder: .macComputer,
+                                  primaryActionText: "Send Link", primaryAction: .url(value: "https://duckduckgo.com/mac")),
+//            .bigTwoAction(titleText: "Title", descriptionText: "description text", placeholder: .macComputer,
+//                          primaryActionText: "primary", primaryAction: .dismiss,
+//                          secondaryActionText: "secondary", secondaryAction: .dismiss),
+                                                   matchingRules: [], exclusionRules: []))
     }
 
     func dismissHomeMessage(_ homeMessage: HomeMessage) {

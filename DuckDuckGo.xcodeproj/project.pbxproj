@@ -8151,7 +8151,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "daniel/secure-vault-query";
+				branch = 57.6.2;
 				kind = branch;
 			};
 		};

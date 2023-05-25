@@ -5,8 +5,8 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "daniel/secure-vault-query",
-          "revision": "c7046153fe3eafd7f691a1403a26f3021c8cae33",
+          "branch": "57.6.2",
+          "revision": "cbd9ed8c4e1dc16eff27cd526d2eb2972e69e468",
           "version": null
         }
       },

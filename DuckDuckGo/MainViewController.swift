@@ -1795,6 +1795,8 @@ extension MainViewController: AutoClearWorker {
         }
         
         AutoconsentManagement.shared.clearCache()
+        
+        DaxDialogs.shared.clearHeldURLData()
     }
     
     func stopAllOngoingDownloads() {

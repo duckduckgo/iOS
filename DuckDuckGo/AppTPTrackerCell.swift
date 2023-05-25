@@ -72,7 +72,7 @@ struct AppTPTrackerCell: View {
                 
                 Spacer()
                 
-                Image(systemName: "chevron.forward")
+                Image("DisclosureIndicator")
                     .resizable()
                     .frame(width: 7, height: 12)
                     .foregroundColor(Color.disclosureColor)

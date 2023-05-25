@@ -32,6 +32,7 @@ struct AppTPHomeView: View {
                 .fontWeight(.semibold)
             + Text(UserText.appTPHomeBlockedSuffix)
         }
+        .fixedSize(horizontal: false, vertical: true)
         .multilineTextAlignment(.leading)
         .font(Font(uiFont: Const.Font.text))
         .lineSpacing(Const.Spacing.line)
@@ -43,6 +44,7 @@ struct AppTPHomeView: View {
                 .fontWeight(.semibold)
             + Text(UserText.appTPHomeDisabledSuffix)
         }
+        .fixedSize(horizontal: false, vertical: true)
         .multilineTextAlignment(.leading)
         .font(Font(uiFont: Const.Font.text))
         .lineSpacing(Const.Spacing.line)
@@ -67,10 +69,8 @@ struct AppTPHomeView: View {
             Spacer()
             
             image
-                .scaledToFit()
                 .frame(width: 48, height: 48)
         }
-        .multilineTextAlignment(.leading)
         .padding()
         .background(RoundedRectangle(cornerRadius: Const.Radius.corner)
                         .fill(Color.background)
@@ -85,7 +85,7 @@ struct AppTPHomeView: View {
 }
 
 private extension Color {
-    static let background = Color("HomeMessageBackgroundColor")
+    static let background = Color(designSystemColor: .surface)
     static let shadow = Color("HomeMessageShadowColor")
 }
 

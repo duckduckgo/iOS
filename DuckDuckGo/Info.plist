@@ -149,9 +149,11 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>ddgNewSearch</string>
+				<string>ddgVoiceSearch</string>
+				<string>ddgFireButton</string>
+				<string>ddgFavorites</string>
+				<string>ddgEmailProtection</string>
 				<string>ddgQuickLink</string>
-				<string>ddgFavorite</string>
-				<string>ddgFavoriteHttps</string>
 				<string>ddgAddFavorite</string>
 				<string>http</string>
 				<string>https</string>

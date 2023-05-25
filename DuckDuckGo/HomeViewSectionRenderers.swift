@@ -40,7 +40,7 @@ protocol HomeViewSectionRenderer: AnyObject {
     
     func omniBarCancelPressed()
     
-    func openedAsNewTab()
+    func openedAsNewTab(allowingKeyboard: Bool)
 
     func launchNewSearch()
     
@@ -136,9 +136,9 @@ class HomeViewSectionRenderers: NSObject,
         }
     }
     
-    func openedAsNewTab() {
+    func openedAsNewTab(allowingKeyboard: Bool) {
         renderers.forEach { renderer in
-            renderer.openedAsNewTab()
+            renderer.openedAsNewTab(allowingKeyboard: allowingKeyboard)
         }
     }
     

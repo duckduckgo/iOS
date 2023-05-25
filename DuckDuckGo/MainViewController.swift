@@ -981,7 +981,7 @@ class MainViewController: UIViewController {
         toolbar.setItems(newItems, animated: false)
     }
 
-    func newTab(reuseExisting: Bool = false) {
+    func newTab(reuseExisting: Bool = false, allowingKeyboard: Bool = true) {
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
@@ -995,7 +995,7 @@ class MainViewController: UIViewController {
             tabManager.addHomeTab()
         }
         attachHomeScreen()
-        homeController?.openedAsNewTab()
+        homeController?.openedAsNewTab(allowingKeyboard: allowingKeyboard)
         tabsBarController?.refresh(tabsModel: tabManager.model)
     }
     

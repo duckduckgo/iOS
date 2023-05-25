@@ -80,8 +80,7 @@ class ShareViewController: SLComposeServiceViewController {
 
     private func open(url: URL) {
         let selector = sel_registerName(Constants.openURLSelector)
-        let deepLink = URL(string: "\(AppDeepLinks.quickLink)\(url)")!
-
+        let deepLink = URL(string: AppDeepLinkSchemes.quickLink.appending(url.absoluteString))! 
         var responder = self as UIResponder?
         while responder != nil {
             if responder!.responds(to: selector) {

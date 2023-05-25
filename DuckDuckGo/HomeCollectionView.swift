@@ -160,8 +160,8 @@ class HomeCollectionView: UICollectionView {
         renderers.omniBarCancelPressed()
     }
     
-    func openedAsNewTab() {
-        renderers.openedAsNewTab()
+    func openedAsNewTab(allowingKeyboard: Bool) {
+        renderers.openedAsNewTab(allowingKeyboard: allowingKeyboard)
     }
     
     func viewDidTransition(to size: CGSize) {

@@ -189,6 +189,11 @@ class MainViewController: UIViewController {
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             showFireButtonPulse()
         }
+
+        if MacPromoExperiment().shouldShowSheet() {
+            let controller = MacPromoViewController()
+            present(controller, animated: true)
+        }
     }
 
     func startAddFavoriteFlow() {

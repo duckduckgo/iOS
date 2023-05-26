@@ -74,7 +74,7 @@ final class DaxDialog: XCTestCase {
         onboarding.resumeRegularFlow()
         XCTAssertNil(onboarding.nextHomeScreenMessage())
         XCTAssertEqual(settings.homeScreenMessagesSeen, 1)
-        XCTAssertNotNil(onboarding.nextBrowsingMessage(privacyInfo: makePrivacyInfo(url: URLs.google)))
+        XCTAssertNotNil(onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.google)))
         XCTAssertEqual(onboarding.nextHomeScreenMessage(), .subsequent)
         XCTAssertEqual(settings.homeScreenMessagesSeen, 2)
     }
@@ -122,11 +122,11 @@ final class DaxDialog: XCTestCase {
             XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
             
             // Assert the expected case
-            XCTAssertEqual(testCase.expected, onboarding.nextBrowsingMessage(privacyInfo: privacyInfo), line: UInt(testCase.line))
+            XCTAssertEqual(testCase.expected, onboarding.nextBrowsingMessageIfShouldShow(for: privacyInfo), line: UInt(testCase.line))
             
             // Also assert the we don't see the message on subsequent calls
             XCTAssertTrue(onboarding.shouldShowFireButtonPulse)
-            XCTAssertNil(onboarding.nextBrowsingMessage(privacyInfo: privacyInfo), line: UInt(testCase.line))
+            XCTAssertNil(onboarding.nextBrowsingMessageIfShouldShow(for: privacyInfo), line: UInt(testCase.line))
         }
         
     }
@@ -136,114 +136,123 @@ final class DaxDialog: XCTestCase {
         privacyInfo.trackerInfo.addDetectedTracker(detectedTrackerFrom(URLs.google, pageUrl: URLs.example.absoluteString),
                                                    onPageWithURL: URLs.example)
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
-        XCTAssertNotNil(onboarding.nextBrowsingMessage(privacyInfo: privacyInfo))
+        XCTAssertNotNil(onboarding.nextBrowsingMessageIfShouldShow(for: privacyInfo))
         XCTAssertTrue(onboarding.shouldShowFireButtonPulse)
-        XCTAssertNil(onboarding.nextBrowsingMessage(privacyInfo: makePrivacyInfo(url: URLs.example)))
+        XCTAssertNil(onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.example)))
     }
 
     func testWhenMajorTrackerShownThenFireEducationShown() {
         let privacyInfo = makePrivacyInfo(url: URLs.google)
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
-        XCTAssertNotNil(onboarding.nextBrowsingMessage(privacyInfo: privacyInfo))
+        XCTAssertNotNil(onboarding.nextBrowsingMessageIfShouldShow(for: privacyInfo))
         XCTAssertTrue(onboarding.shouldShowFireButtonPulse)
-        XCTAssertNil(onboarding.nextBrowsingMessage(privacyInfo: makePrivacyInfo(url: URLs.example)))
+        XCTAssertNil(onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.example)))
     }
 
     func testWhenSearchShownThenNoTrackersIsShown() {
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
-        XCTAssertNotNil(onboarding.nextBrowsingMessage(privacyInfo: makePrivacyInfo(url: URLs.ddg)))
-        XCTAssertNotNil(onboarding.nextBrowsingMessage(privacyInfo: makePrivacyInfo(url: URLs.example)))
+        XCTAssertNotNil(onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.ddg)))
+        XCTAssertNotNil(onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.example)))
         XCTAssertTrue(onboarding.shouldShowFireButtonPulse)
-        XCTAssertNil(onboarding.nextBrowsingMessage(privacyInfo: makePrivacyInfo(url: URLs.example)))
+        XCTAssertNil(onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.example)))
     }
 
     func testWhenMajorTrackerShownThenNoTrackersIsNotShown() {
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
-        XCTAssertNotNil(onboarding.nextBrowsingMessage(privacyInfo: makePrivacyInfo(url: URLs.facebook)))
+        XCTAssertNotNil(onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.facebook)))
         XCTAssertTrue(onboarding.shouldShowFireButtonPulse)
-        XCTAssertNil(onboarding.nextBrowsingMessage(privacyInfo: makePrivacyInfo(url: URLs.example)))
+        XCTAssertNil(onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.example)))
     }
 
     func testWhenTrackersShownThenNoTrackersIsNotShown() {
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
-        XCTAssertNotNil(onboarding.nextBrowsingMessage(privacyInfo: makePrivacyInfo(url: URLs.amazon)))
+        XCTAssertNotNil(onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.amazon)))
         XCTAssertTrue(onboarding.shouldShowFireButtonPulse)
-        XCTAssertNil(onboarding.nextBrowsingMessage(privacyInfo: makePrivacyInfo(url: URLs.example)))
+        XCTAssertNil(onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.example)))
     }
     
     func testWhenMajorTrackerShownThenOwnedByIsNotShown() {
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
-        XCTAssertNotNil(onboarding.nextBrowsingMessage(privacyInfo: makePrivacyInfo(url: URLs.facebook)))
+        XCTAssertNotNil(onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.facebook)))
         XCTAssertTrue(onboarding.shouldShowFireButtonPulse)
-        XCTAssertNil(onboarding.nextBrowsingMessage(privacyInfo: makePrivacyInfo(url: URLs.ownedByFacebook)))
+        XCTAssertNil(onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.ownedByFacebook)))
     }
 
     func testWhenSecondTimeOnSiteThatIsOwnedByFacebookThenShowNothingAfterFireEducation() {
         let privacyInfo = makePrivacyInfo(url: URLs.ownedByFacebook)
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
-        XCTAssertNotNil(onboarding.nextBrowsingMessage(privacyInfo: privacyInfo))
+        XCTAssertNotNil(onboarding.nextBrowsingMessageIfShouldShow(for: privacyInfo))
         XCTAssertTrue(onboarding.shouldShowFireButtonPulse)
-        XCTAssertNil(onboarding.nextBrowsingMessage(privacyInfo: privacyInfo))
+        XCTAssertNil(onboarding.nextBrowsingMessageIfShouldShow(for: privacyInfo))
     }
 
     func testWhenFirstTimeOnSiteThatIsOwnedByFacebookThenShowOwnedByMajorTrackingMessage() {
         let privacyInfo = makePrivacyInfo(url: URLs.ownedByFacebook)
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
         XCTAssertEqual(DaxDialogs.BrowsingSpec.siteOwnedByMajorTracker.format(args: "instagram.com", "Facebook", 39.0),
-                       onboarding.nextBrowsingMessage(privacyInfo: privacyInfo))
+                       onboarding.nextBrowsingMessageIfShouldShow(for: privacyInfo))
     }
 
     func testWhenSecondTimeOnSiteThatIsMajorTrackerThenShowNothingAfterFireEducation() {
         let privacyInfo = makePrivacyInfo(url: URLs.facebook)
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
-        XCTAssertNotNil(onboarding.nextBrowsingMessage(privacyInfo: privacyInfo))
+        XCTAssertNotNil(onboarding.nextBrowsingMessageIfShouldShow(for: privacyInfo))
         XCTAssertTrue(onboarding.shouldShowFireButtonPulse)
-        XCTAssertNil(onboarding.nextBrowsingMessage(privacyInfo: privacyInfo))
+        XCTAssertNil(onboarding.nextBrowsingMessageIfShouldShow(for: privacyInfo))
     }
 
     func testWhenFirstTimeOnFacebookThenShowMajorTrackingMessage() {
         let privacyInfo = makePrivacyInfo(url: URLs.facebook)
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
         XCTAssertEqual(DaxDialogs.BrowsingSpec.siteIsMajorTracker.format(args: "Facebook", URLs.facebook.host ?? ""),
-                       onboarding.nextBrowsingMessage(privacyInfo: privacyInfo))
+                       onboarding.nextBrowsingMessageIfShouldShow(for: privacyInfo))
     }
 
     func testWhenFirstTimeOnGoogleThenShowMajorTrackingMessage() {
         let privacyInfo = makePrivacyInfo(url: URLs.google)
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
         XCTAssertEqual(DaxDialogs.BrowsingSpec.siteIsMajorTracker.format(args: "Google", URLs.google.host ?? ""),
-                       onboarding.nextBrowsingMessage(privacyInfo: privacyInfo))
+                       onboarding.nextBrowsingMessageIfShouldShow(for: privacyInfo))
     }
 
     func testWhenSecondTimeOnPageWithNoTrackersThenTrackersThenShowFireEducation() {
         let privacyInfo = makePrivacyInfo(url: URLs.example)
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
-        XCTAssertNotNil(onboarding.nextBrowsingMessage(privacyInfo: privacyInfo))
+        XCTAssertNotNil(onboarding.nextBrowsingMessageIfShouldShow(for: privacyInfo))
         XCTAssertTrue(onboarding.shouldShowFireButtonPulse)
-        XCTAssertNil(onboarding.nextBrowsingMessage(privacyInfo: privacyInfo))
+        XCTAssertNil(onboarding.nextBrowsingMessageIfShouldShow(for: privacyInfo))
     }
 
     func testWhenFirstTimeOnPageWithNoTrackersThenTrackersThenShowNoTrackersMessage() {
         let privacyInfo = makePrivacyInfo(url: URLs.example)
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
-        XCTAssertEqual(DaxDialogs.BrowsingSpec.withoutTrackers, onboarding.nextBrowsingMessage(privacyInfo: privacyInfo))
+        XCTAssertEqual(DaxDialogs.BrowsingSpec.withoutTrackers, onboarding.nextBrowsingMessageIfShouldShow(for: privacyInfo))
     }
     
     func testWhenSecondTimeOnSearchPageThenShowNothing() {
-        XCTAssertNotNil(onboarding.nextBrowsingMessage(privacyInfo: makePrivacyInfo(url: URLs.ddg)))
-        XCTAssertNil(onboarding.nextBrowsingMessage(privacyInfo: makePrivacyInfo(url: URLs.ddg)))
+        XCTAssertNotNil(onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.ddg)))
+        XCTAssertNil(onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.ddg)))
     }
     
     func testWhenFirstTimeOnSearchPageThenShowSearchPageMessage() {
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
-        XCTAssertEqual(DaxDialogs.BrowsingSpec.afterSearch, onboarding.nextBrowsingMessage(privacyInfo: makePrivacyInfo(url: URLs.ddg)))
+        XCTAssertEqual(DaxDialogs.BrowsingSpec.afterSearch, onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.ddg)))
+    }
+    
+    func testWhenOnSamePageAndPresenceOfTrackersChangesThenShowOnlyOneMessage() {
+        let privacyInfo = makePrivacyInfo(url: URLs.example)
+        XCTAssertEqual(DaxDialogs.BrowsingSpec.withoutTrackers, onboarding.nextBrowsingMessageIfShouldShow(for: privacyInfo))
+        
+        let privacyInfoWithTrackers = makePrivacyInfo(url: URLs.google)
+        privacyInfo.trackerInfo = privacyInfoWithTrackers.trackerInfo
+        XCTAssertNil(onboarding.nextBrowsingMessageIfShouldShow(for: privacyInfo))
     }
 
     func testWhenDimissedThenShowNothing() {
         onboarding.dismiss()
         XCTAssertNil(onboarding.nextHomeScreenMessage())
         XCTAssertEqual(settings.homeScreenMessagesSeen, 0)
-        XCTAssertNil(onboarding.nextBrowsingMessage(privacyInfo: makePrivacyInfo(url: URLs.example)))
+        XCTAssertNil(onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.example)))
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
     }
     
@@ -251,7 +260,7 @@ final class DaxDialog: XCTestCase {
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
         XCTAssertNotNil(onboarding.nextHomeScreenMessage())
         XCTAssertEqual(settings.homeScreenMessagesSeen, 1)
-        XCTAssertNotNil(onboarding.nextBrowsingMessage(privacyInfo: makePrivacyInfo(url: URLs.example)))
+        XCTAssertNotNil(onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.example)))
         XCTAssertTrue(onboarding.shouldShowFireButtonPulse)
         XCTAssertEqual(DaxDialogs.HomeScreenSpec.subsequent, onboarding.nextHomeScreenMessage())
         XCTAssertEqual(settings.homeScreenMessagesSeen, 2)
@@ -263,7 +272,7 @@ final class DaxDialog: XCTestCase {
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
         XCTAssertNotNil(onboarding.nextHomeScreenMessage())
         XCTAssertEqual(settings.homeScreenMessagesSeen, 1)
-        XCTAssertNotNil(onboarding.nextBrowsingMessage(privacyInfo: makePrivacyInfo(url: URLs.example)))
+        XCTAssertNotNil(onboarding.nextBrowsingMessageIfShouldShow(for: makePrivacyInfo(url: URLs.example)))
         XCTAssertTrue(onboarding.shouldShowFireButtonPulse)
         XCTAssertEqual(DaxDialogs.HomeScreenSpec.subsequent, onboarding.nextHomeScreenMessage())
         XCTAssertEqual(settings.homeScreenMessagesSeen, 2)

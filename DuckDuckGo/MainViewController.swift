@@ -19,8 +19,10 @@
 
 import UIKit
 import WebKit
+import Combine
 import Common
 import Core
+import DDGSync
 import Lottie
 import Kingfisher
 import BrowserServicesKit
@@ -99,10 +101,15 @@ class MainViewController: UIViewController {
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private var launchTabObserver: LaunchTabNotification.Observer?
     
-    private let bookmarksDatabase: CoreDataDatabase
     private let appTrackingProtectionDatabase: CoreDataDatabase
+    private let bookmarksDatabase: CoreDataDatabase
+    private let bookmarksDatabaseCleaner: BookmarkDatabaseCleaner
     private let favoritesViewModel: FavoritesListInteracting
-    
+    private let syncService: DDGSyncing
+    private var syncStateCancellable: AnyCancellable?
+    private var localUpdatesCancellable: AnyCancellable?
+    private var syncUpdatesCancellable: AnyCancellable?
+
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase)
 
     weak var tabSwitcherController: TabSwitcherViewController?
@@ -130,17 +137,25 @@ class MainViewController: UIViewController {
     
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
-    
+
     required init?(coder: NSCoder,
                    bookmarksDatabase: CoreDataDatabase,
-                   appTrackingProtectionDatabase: CoreDataDatabase) {
-        self.bookmarksDatabase = bookmarksDatabase
+                   appTrackingProtectionDatabase: CoreDataDatabase,
+                   syncService: DDGSyncing) {
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
+        self.bookmarksDatabase = bookmarksDatabase
+        self.bookmarksDatabaseCleaner = BookmarkDatabaseCleaner(
+            bookmarkDatabase: bookmarksDatabase,
+            errorEvents: BookmarksCleanupErrorHandling(),
+            log: .generalLog
+        )
+        self.syncService = syncService
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         super.init(coder: coder)
+        bindSyncService()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("Use init?(code:")
     }
@@ -307,7 +322,35 @@ class MainViewController: UIViewController {
         gestureBookmarksButton.delegate = self
         gestureBookmarksButton.image = UIImage(named: "Bookmarks")
     }
-    
+
+    private func bindSyncService() {
+        syncStateCancellable = syncService.authStatePublisher
+            .prepend(syncService.authState)
+            .map { $0 == .inactive }
+            .removeDuplicates()
+            .sink { [weak self] isSyncDisabled in
+                self?.bookmarksDatabaseCleaner.cleanUpDatabaseNow()
+                if isSyncDisabled {
+                    self?.bookmarksDatabaseCleaner.scheduleRegularCleaning()
+                } else {
+                    self?.bookmarksDatabaseCleaner.cancelCleaningSchedule()
+                }
+            }
+
+        localUpdatesCancellable = favoritesViewModel.localUpdates
+            .sink { _ in
+                (UIApplication.shared.delegate as? AppDelegate)?.requestSyncIfEnabled()
+            }
+
+        syncUpdatesCancellable = (UIApplication.shared.delegate as? AppDelegate)?.syncDataProviders.bookmarksAdapter.syncDidCompletePublisher
+            .sink { [weak self] _ in
+                self?.favoritesViewModel.reloadData()
+                DispatchQueue.main.async {
+                    self?.homeController?.collectionView.reloadData()
+                }
+            }
+    }
+
     @objc func quickSaveBookmarkLongPress(gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
             quickSaveBookmark()
@@ -1790,6 +1833,12 @@ extension MainViewController: AutoClearWorker {
         }
         
         AutoconsentManagement.shared.clearCache()
+        DaxDialogs.shared.clearHeldURLData()
+
+        let syncService = (UIApplication.shared.delegate as? AppDelegate)!.syncService
+        if syncService?.authState == .inactive {
+            bookmarksDatabaseCleaner.cleanUpDatabaseNow()
+        }
     }
     
     func stopAllOngoingDownloads() {

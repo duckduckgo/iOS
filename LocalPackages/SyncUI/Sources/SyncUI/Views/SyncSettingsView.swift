@@ -108,7 +108,9 @@ public struct SyncSettingsView: View {
             }
         }
         .onReceive(timer) { _ in
-            model.delegate?.refreshDevices(clearDevices: false)
+            if selectedDevice == nil {
+                model.delegate?.refreshDevices(clearDevices: false)
+            }
         }
 
     }

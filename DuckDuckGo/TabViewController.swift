@@ -2502,13 +2502,17 @@ extension TabViewController: SecureVaultManagerDelegate {
     func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: String) {
         // No-op, don't need to do anything here
     }
-    
+
     func secureVaultManagerShouldAutomaticallyUpdateCredentialsWithoutUsername(_: SecureVaultManager, shouldSilentlySave: Bool) -> Bool {
-        shouldSilentlySave ? true : false
+        guard AutofillSettingStatus.isAutofillEnabledInSettings,
+              featureFlagger.isFeatureOn(.autofillPasswordGeneration) else { return false }
+        return shouldSilentlySave ? true : false
     }
 
     func secureVaultManagerShouldSilentlySaveGeneratedPassword(_: SecureVaultManager) -> Bool {
-        true
+        guard AutofillSettingStatus.isAutofillEnabledInSettings,
+              featureFlagger.isFeatureOn(.autofillPasswordGeneration) else { return false }
+        return true
     }
     
     func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {

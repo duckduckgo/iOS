@@ -62,11 +62,15 @@ public class CoreDataBookmarksSearchStore: BookmarksSearchStore {
         let context = bookmarksStore.makeContext(concurrencyType: .privateQueueConcurrencyType)
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "BookmarkEntity")
-        fetchRequest.predicate = NSPredicate(format: "%K = false", #keyPath(BookmarkEntity.isFolder))
+        fetchRequest.predicate = NSPredicate(
+            format: "%K = false AND %K == NO",
+            #keyPath(BookmarkEntity.isFolder),
+            #keyPath(BookmarkEntity.isPendingDeletion)
+        )
         fetchRequest.resultType = .dictionaryResultType
         fetchRequest.propertiesToFetch = [#keyPath(BookmarkEntity.title),
                                           #keyPath(BookmarkEntity.url),
-                                          #keyPath(BookmarkEntity.isFavorite),
+                                          #keyPath(BookmarkEntity.favoriteFolder),
                                           #keyPath(BookmarkEntity.objectID)]
         
         context.perform {
@@ -127,7 +131,7 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
             self.init(objectID: objectID,
                       title: title,
                       url: url,
-                      isFavorite: (bookmark[#keyPath(BookmarkEntity.isFavorite)] as? NSNumber)?.boolValue ?? false)
+                      isFavorite: bookmark[#keyPath(BookmarkEntity.favoriteFolder)] != nil)
         }
 
         public func togglingFavorite() -> BookmarksStringSearchResult {

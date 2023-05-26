@@ -96,7 +96,7 @@ class BookmarkListViewModelTests: XCTestCase {
         let bookmark = result[0]
         XCTAssertFalse(bookmark.isFolder)
         
-        viewModel.deleteBookmark(bookmark)
+        viewModel.softDeleteBookmark(bookmark)
         
         let newViewModel = BookmarkListViewModel(bookmarksDatabase: db,
                                                parentID: nil)
@@ -122,7 +122,7 @@ class BookmarkListViewModelTests: XCTestCase {
         let totalCount = viewModel.totalBookmarksCount
         let expectedCountAfterRemoval = totalCount - folder.childrenArray.filter { !$0.isFolder }.count
         
-        viewModel.deleteBookmark(folder)
+        viewModel.softDeleteBookmark(folder)
         
         let newViewModel = BookmarkListViewModel(bookmarksDatabase: db,
                                                parentID: nil)
@@ -181,7 +181,7 @@ class BookmarkListViewModelTests: XCTestCase {
             expectation.fulfill()
         }) {
             let startState = viewModel.bookmarks
-            viewModel.deleteBookmark(startState[0])
+            viewModel.softDeleteBookmark(startState[0])
             
             waitForExpectations(timeout: 1)
             

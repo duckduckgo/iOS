@@ -51,7 +51,9 @@ class FavoritesViewController: UIViewController {
     private let bookmarksDatabase: CoreDataDatabase
     
     fileprivate var viewModelCancellable: AnyCancellable?
-    
+    private var localUpdatesCancellable: AnyCancellable?
+    private var syncUpdatesCancellable: AnyCancellable?
+
     var hasFavorites: Bool {
         renderer.viewModel.favorites.count > 0
     }
@@ -67,7 +69,7 @@ class FavoritesViewController: UIViewController {
         self.bookmarksDatabase = bookmarksDatabase
         super.init(coder: coder)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("Not implemented")
     }
@@ -104,6 +106,23 @@ class FavoritesViewController: UIViewController {
         updateHeroImage()
 
         applyTheme(ThemeManager.shared.currentTheme)
+
+        bindSyncService()
+    }
+
+    private func bindSyncService() {
+        localUpdatesCancellable = renderer.viewModel.localUpdates
+            .sink { _ in
+                (UIApplication.shared.delegate as? AppDelegate)?.requestSyncIfEnabled()
+            }
+
+        syncUpdatesCancellable = (UIApplication.shared.delegate as? AppDelegate)?.syncDataProviders.bookmarksAdapter.syncDidCompletePublisher
+            .sink { [weak self] _ in
+                self?.renderer.viewModel.reloadData()
+                DispatchQueue.main.async {
+                    self?.collectionView.reloadData()
+                }
+            }
     }
 
     override func viewDidLayoutSubviews() {

@@ -1,8 +1,8 @@
 //
-//  BookmarksDatabase.swift
+//  SyncMetadataDatabase.swift
 //  DuckDuckGo
 //
-//  Copyright © 2022 DuckDuckGo. All rights reserved.
+//  Copyright © 2023 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,45 +17,38 @@
 //  limitations under the License.
 //
 
-import Common
 import Foundation
 import CoreData
+import DDGSync
 import Persistence
-import Bookmarks
+import Common
 
-public class BookmarksDatabase {
-
-    public enum Constants {
-        public static let bookmarksGroupID = "\(Global.groupIdPrefix).bookmarks"
-    }
-
-    // Used only in debug screen
-    public static var globalReferenceForDebug: CoreDataDatabase?
+public final class SyncMetadataDatabase {
 
     private init() { }
-    
+
     public static var defaultDBLocation: URL = {
-        guard let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.bookmarksGroupID) else {
-            os_log("BookmarksDatabase.make - OUT, failed to get location %{public}s", Constants.bookmarksGroupID)
+        guard let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
+            os_log("SyncMetadataDatabase.make - OUT, failed to get location")
             fatalError("Failed to get location")
         }
         return url
     }()
 
     public static func make(location: URL = defaultDBLocation, readOnly: Bool = false) -> CoreDataDatabase {
-        os_log("BookmarksDatabase.make - IN - %s", location.absoluteString)
-        let bundle = Bookmarks.bundle
-        guard let model = CoreDataDatabase.loadModel(from: bundle, named: "BookmarksModel") else {
-            os_log("BookmarksDatabase.make - OUT, failed to loadModel")
+        os_log("SyncMetadataDatabase.make - IN - %s", location.absoluteString)
+        let bundle = DDGSync.bundle
+        guard let model = CoreDataDatabase.loadModel(from: bundle, named: "SyncMetadata") else {
+            os_log("SyncMetadataDatabase.make - OUT, failed to loadModel")
             fatalError("Failed to load model")
         }
 
-        let db = CoreDataDatabase(name: "Bookmarks",
+        let db = CoreDataDatabase(name: "SyncMetadata",
                                   containerLocation: location,
                                   model: model,
                                   readOnly: readOnly)
-        os_log("BookmarksDatabase.make - OUT")
-        globalReferenceForDebug = db
+        os_log("SyncMetadataDatabase.make - OUT")
         return db
     }
+
 }

@@ -32,6 +32,11 @@ class MacPromoViewController: UIHostingController<MacPromoView> {
         isPad ? .all : .portrait
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        MacPromoExperiment().sheetWasShown()
+    }
+
 }
 
 struct MacPromoView: View {

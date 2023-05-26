@@ -121,6 +121,7 @@ class AddOrEditBookmarkViewController: UIViewController {
         WidgetCenter.shared.reloadAllTimelines()
         self.delegate?.finishedEditing(self, entityID: viewModel.bookmark.objectID)
         dismiss(animated: true, completion: nil)
+        (UIApplication.shared.delegate as? AppDelegate)?.requestSyncIfEnabled()
     }
 
     @IBSegueAction func onCreateEditor(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> AddOrEditBookmarkViewController? {

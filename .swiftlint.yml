@@ -86,6 +86,7 @@ file_header:
 # General Config
 excluded:
   - Carthage
+  - DerivedData
   - DuckDuckGo/UserText.swift
   - fastlane/SnapshotHelper.swift
   - vendor

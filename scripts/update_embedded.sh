@@ -60,5 +60,5 @@ performUpdate() {
 	rm -f "$TEMP_ETAG_FILENAME"
 }
 
-performUpdate 'https://staticcdn.duckduckgo.com/trackerblocking/v3/apple-tds.json' "${base_dir}/Core/AppTrackerDataSetProvider.swift" "${base_dir}/Core/trackerData.json"
+performUpdate 'https://staticcdn.duckduckgo.com/trackerblocking/v5/current/ios-tds.json' "${base_dir}/Core/AppTrackerDataSetProvider.swift" "${base_dir}/Core/trackerData.json"
 performUpdate 'https://staticcdn.duckduckgo.com/trackerblocking/config/v2/ios-config.json' "${base_dir}/Core/AppPrivacyConfigurationDataProvider.swift" "${base_dir}/Core/ios-config.json"

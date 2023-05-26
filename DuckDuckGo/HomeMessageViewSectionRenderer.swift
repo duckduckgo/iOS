@@ -112,7 +112,8 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         case .remoteMessage(let remoteMessage):
             return HomeMessageViewModelBuilder.build(for: remoteMessage) { [weak self] action in
 
-                guard let action else { return }
+                guard let action,
+                        let self else { return }
 
                 switch action {
                 case .primaryAction:
@@ -122,7 +123,7 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
                     Pixel.fire(pixel: .remoteMessageShownSecondaryActionClicked,
                                withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
                 case .close:
-                    self?.dismissHomeMessage(message, at: indexPath, in: collectionView)
+                    self.dismissHomeMessage(message, at: indexPath, in: collectionView)
                     Pixel.fire(pixel: .remoteMessageDismissed,
                                withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
                     

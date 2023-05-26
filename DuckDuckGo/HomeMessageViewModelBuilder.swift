@@ -84,7 +84,12 @@ struct HomeMessageViewModelBuilder {
     static func mapActionToViewModel(remoteAction: RemoteAction,
                                      buttonAction: HomeMessageViewModel.ButtonAction,
                                      onDidClose: @escaping (HomeMessageViewModel.ButtonAction?) -> Void) -> () -> Void {
+
         switch remoteAction {
+        case .share(let title, let url):
+            return {
+                print("shareAction", title, url)
+            }
         case .url(let value):
             return {
                 LaunchTabNotification.postLaunchTabNotification(urlString: value)

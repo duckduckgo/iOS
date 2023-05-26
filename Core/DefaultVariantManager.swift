@@ -58,13 +58,7 @@ public struct VariantIOS: Variant {
         // SERP testing
         VariantIOS(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
-        VariantIOS(name: "se", weight: doNotAllocate, isIncluded: When.always, features: []),
-
-        // Mac Promo
-        VariantIOS(name: "ma", weight: 1, isIncluded: When.inEnglish, features: [.homePageMacPromo]),
-        VariantIOS(name: "mb", weight: 1, isIncluded: When.inEnglish, features: [.sheetMacPromo]),
-        VariantIOS(name: "mc", weight: 1, isIncluded: When.inEnglish, features: [])
-
+        VariantIOS(name: "se", weight: doNotAllocate, isIncluded: When.always, features: [])
     ]
     
     public var name: String

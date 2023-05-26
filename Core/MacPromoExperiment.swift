@@ -18,30 +18,79 @@
 //
 
 import Foundation
+import BrowserServicesKit
+import Core
 
 /**
  Encapsulate logic for showing the two types of promo.
 
  Decision making for showing the promo is based on the following:
- * Is the RMF message enabled?
+ * Is the RMF message with id `macos_promo_may2023` ready to show?  This handles the logic for when.
  * For the sheet: has it been shown already?  The RMF message handles this already (via dismiss button)
- * Is it enabled in the current variant?
- * Is it at least 3 days since install?
+ * Is it enabled in the current cohort?
 
  */
-public struct MacPromoExperiment {
+public class MacPromoExperiment {
 
-    public init() { }
+    static let promoId = "macos_promo_may2023"
 
-    public func shouldShowSheet() -> Bool {
-        return true
+    private var remoteMessagingStore: RemoteMessagingStoring
+    private var randomBool: () -> Bool
+
+    @UserDefaultsWrapper(key: .macPromo23Exp2, defaultValue: Cohort.unassigned.rawValue)
+    private var cohortValue: String
+
+    var cohort: Cohort {
+        get {
+            Cohort(rawValue: cohortValue)!
+        }
+        set {
+            cohortValue = newValue.rawValue
+        }
     }
 
-    public func shouldShowMessage() -> Bool {
+    init(remoteMessagingStore: RemoteMessagingStoring = RemoteMessagingStore(),
+         randomBool: @escaping () -> Bool = { Bool.random() }
+    ) {
+        self.remoteMessagingStore = remoteMessagingStore
+        self.randomBool = randomBool
+    }
+
+    func shouldShowSheet() -> Bool {
+        guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return false }
+        if remoteMessageToPresent.id == Self.promoId {
+            assignCohort()
+            return cohort == .sheet
+        }
         return false
     }
 
-    public func sheetWasShown() {
+    func shouldShowMessage() -> Bool {
+        guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return false }
+        if remoteMessageToPresent.id == Self.promoId {
+            assignCohort()
+            return cohort == .message
+        }
+        // If there's a message to show that's not part of the experiement
+        //  we should show it in case of genuine usage.
+        return true
     }
 
+    func sheetWasShown() {
+        guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return }
+        remoteMessagingStore.dismissRemoteMessage(withId: remoteMessageToPresent.id)
+    }
+
+    private func assignCohort() {
+        guard cohort == .unassigned else { return }
+        cohort = randomBool() ? .sheet : .message
+    }
+
+    enum Cohort: String {
+
+        case sheet
+        case message
+        case unassigned
+
+    }
 }

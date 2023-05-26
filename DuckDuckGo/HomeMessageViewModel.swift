@@ -34,6 +34,10 @@ struct HomeMessageViewModel: Equatable {
     
     let onDidClose: (ButtonAction?) -> Void
 
+    var isSharing: Bool {
+        return buttons.contains(where: { $0.actionStyle == .share })
+    }
+
     static func == (lhs: HomeMessageViewModel, rhs: HomeMessageViewModel) -> Bool {
         return lhs.image == rhs.image &&
                lhs.topText == rhs.topText &&
@@ -46,6 +50,7 @@ struct HomeMessageViewModel: Equatable {
 struct HomeMessageButtonViewModel: Equatable {
     enum ActionStyle {
         case `default`
+        case share
         case cancel
     }
     

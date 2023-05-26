@@ -92,7 +92,8 @@ public struct UserDefaultsWrapper<T> {
 
         case lastAppTrackingProtectionHistoryFetchTimestamp = "com.duckduckgo.ios.appTrackingProtection.lastTrackerHistoryFetchTimestamp"
         case appTPUsed = "com.duckduckgo.ios.appTrackingProtection.appTPUsed"
-        
+
+        case macPromo23Exp2 = "com.duckduckgo.ios.macPromo23.exp2"
     }
 
     private let key: Key

@@ -49,9 +49,12 @@ struct HomeMessageView: View {
                     title
                     subtitle
                         .padding(.top, 8)
-                    prompt
+
+                    if viewModel.isSharing {
+                        prompt
+                    }
                 }
-                    .padding(.horizontal, 24)
+                .padding(.horizontal, 24)
 
                 HStack {
                     buttons
@@ -118,7 +121,6 @@ struct HomeMessageView: View {
     private var title: some View {
         Text(viewModel.title)
             .daxHeadline()
-            // .fixedSize(horizontal: false, vertical: true)
             .padding(.top, Const.Spacing.imageAndTitle)
    }
     
@@ -138,18 +140,19 @@ struct HomeMessageView: View {
     
     private var buttons: some View {
         ForEach(viewModel.buttons, id: \.title) { model in
-            let foreground: Color = model.actionStyle == .default ? .white : .cancelButtonForeground
-            let background: Color = model.actionStyle == .default ? .button : .cancelButtonBackground
+            let foreground: Color = model.actionStyle == .cancel ? .cancelButtonForeground : .white
+            let background: Color = model.actionStyle == .cancel ? .cancelButtonBackground : .button
             Button(action: model.action) {
                 HStack {
-                    Image(systemName: "square.and.arrow.up")
+                    if model.actionStyle == .share {
+                        Image(systemName: "square.and.arrow.up")
+                    }
                     Text(model.title)
                         .font((Font(uiFont: Const.Font.button)))
                 }
             }
             .buttonStyle(RoundedRectStyle(foregroundColor: foreground,
                                           backgroundColor: background))
-            // EXP2: Remove top padding for experiment
             .padding([.bottom], Const.Padding.buttonVerticalInset)
         }
     }

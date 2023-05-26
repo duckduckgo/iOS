@@ -33,7 +33,7 @@ struct SearchLockScreenWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { _ in
-            return LockScreenWidgetView(imageNamed: "Logo")
+            return LockScreenWidgetView(imageNamed: "LockScreenSearch")
                 .widgetURL(DeepLinks.newSearch)
         }
         .configurationDisplayName("DuckDuckGo Search")
@@ -44,13 +44,30 @@ struct SearchLockScreenWidget: Widget {
 }
 
 @available(iOSApplicationExtension 16.0, *)
+struct FavoritesLockScreenWidget: Widget {
+
+    let kind: String = "FavoritesLockScreenWidget"
+
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: Provider()) { _ in
+            return LockScreenWidgetView(imageNamed: "LockScreenFavorites")
+                .widgetURL(DeepLinks.favorites)
+        }
+        .configurationDisplayName("DuckDuckGo Favorites")
+        .description("Quickly access your favorites in DuckDuckGo.")
+        .supportedFamilies([ .accessoryCircular ])
+    }
+}
+
+#warning("TODO")
+@available(iOSApplicationExtension 16.0, *)
 struct VoiceSearchLockScreenWidget: Widget {
 
     let kind: String = "VoiceSearchLockScreenWidget"
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { _ in
-            return LockScreenWidgetView(imageNamed: "Logo")
+            return LockScreenWidgetView(imageNamed: "LockScreenVoice")
                 .widgetURL(DeepLinks.voiceSearch)
         }
         .configurationDisplayName("DuckDuckGo Voice Search")
@@ -60,6 +77,7 @@ struct VoiceSearchLockScreenWidget: Widget {
 
 }
 
+#warning("TODO")
 @available(iOSApplicationExtension 16.0, *)
 struct EmailProtectionLockScreenWidget: Widget {
 
@@ -67,16 +85,17 @@ struct EmailProtectionLockScreenWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { _ in
-            return LockScreenWidgetView(imageNamed: "Logo")
+            return LockScreenWidgetView(imageNamed: "LockScreenEmail")
                 .widgetURL(DeepLinks.emailProtection)
         }
         .configurationDisplayName("DuckDuckGo Email Protection")
-        .description("Quickly launch DuckDuckGO Email Protection.")
+        .description("Quickly launch DuckDuckGo Email Protection.")
         .supportedFamilies([ .accessoryCircular ])
     }
 
 }
 
+#warning("TODO")
 @available(iOSApplicationExtension 16.0, *)
 struct FireButtonLockScreenWidget: Widget {
 
@@ -84,27 +103,11 @@ struct FireButtonLockScreenWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { _ in
-            return LockScreenWidgetView(imageNamed: "Logo")
+            return LockScreenWidgetView(imageNamed: "LockScreenFire")
                 .widgetURL(DeepLinks.fireButton)
-}
-        .configurationDisplayName("DuckDuckGo Fire Button")
-        .description("Burn all data and launch a private search in DuckDuckGo.")
-        .supportedFamilies([ .accessoryCircular ])
-    }
-}
-
-@available(iOSApplicationExtension 16.0, *)
-struct FavoritesLockScreenWidget: Widget {
-
-    let kind: String = "FavoritesLockScreenWidget"
-
-    var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { _ in
-            return LockScreenWidgetView(imageNamed: "Logo")
-                .widgetURL(DeepLinks.favorites)
         }
         .configurationDisplayName("DuckDuckGo Fire Button")
-        .description("Quickly access your favorites in DuckDuckGo.")
+        .description("Burn all data and launch a private search in DuckDuckGo.")
         .supportedFamilies([ .accessoryCircular ])
     }
 }
@@ -114,7 +117,16 @@ struct LockScreenWidgetView: View {
     let imageNamed: String
 
     var body: some View {
-        Image(imageNamed)
+        ZStack {
+                Image("Logo")
+                    .resizable()
+
+                Image(imageNamed)
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    .offset(y: 12)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
 }

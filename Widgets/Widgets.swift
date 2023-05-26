@@ -194,6 +194,10 @@ struct Widgets: WidgetBundle {
 
         if #available(iOSApplicationExtension 16.0, *) {
             SearchLockScreenWidget()
+            VoiceSearchLockScreenWidget()
+            EmailProtectionLockScreenWidget()
+            FireButtonLockScreenWidget()
+            FavoritesLockScreenWidget()
         }
 
     }

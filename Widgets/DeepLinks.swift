@@ -21,9 +21,9 @@ import Core
 
 struct DeepLinks {
 
-    static let newSearch = AppDeepLinkSchemes.newSearch.url.appendingPathComponent("?w=1")
+    static let newSearch = AppDeepLinkSchemes.newSearch.url
     static let voiceSearch = AppDeepLinkSchemes.voiceSearch.url
-    static let emailProtection = AppDeepLinkSchemes.emailProtection.url
+    static let emailProtection = URL(string: AppDeepLinkSchemes.quickLink.appending("duckduckgo.com/email"))!
     static let fireButton = AppDeepLinkSchemes.fireButton.url
     static let favorites = AppDeepLinkSchemes.favorites.url
 

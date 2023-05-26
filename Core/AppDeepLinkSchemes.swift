@@ -25,8 +25,7 @@ public enum AppDeepLinkSchemes: String, CaseIterable {
     case voiceSearch = "ddgVoiceSearch"
     case fireButton = "ddgFireButton"
     case favorites = "ddgFavorites"
-    case emailProtection = "ddgEmailProtection"
-    
+
     case quickLink = "ddgQuickLink"
 
     case addFavorite = "ddgAddFavorite"

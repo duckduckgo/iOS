@@ -41,6 +41,12 @@ extension AppDelegate {
         case .addFavorite:
             mainViewController.startAddFavoriteFlow()
 
+        case .fireButton:
+            mainViewController.forgetAllWithAnimation()
+
+        case .voiceSearch:
+            print("*** voice search")
+
         default:
             guard app.applicationState == .active,
                   let currentTab = mainViewController.currentTab else {

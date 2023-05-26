@@ -30,6 +30,7 @@ public extension OSLog {
         case lifecycleLog = "DDG Lifecycle"
         case autoconsentLog = "DDG Autoconsent"
         case configurationLog = "DDG Configuration"
+        case syncLog = "DDG Sync"
     }
 
     @OSLogWrapper(.generalLog) static var generalLog
@@ -38,6 +39,7 @@ public extension OSLog {
     @OSLogWrapper(.lifecycleLog) static var lifecycleLog
     @OSLogWrapper(.autoconsentLog) static var autoconsentLog
     @OSLogWrapper(.configurationLog) static var configurationLog
+    @OSLogWrapper(.syncLog) static var syncLog
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // To activate Logging Categories add categories here:
@@ -47,7 +49,8 @@ public extension OSLog {
         .contentBlockingLog,
         .adAttributionLog,
         .lifecycleLog,
-        .configurationLog
+        .configurationLog,
+        .syncLog
     ]
 #endif
 

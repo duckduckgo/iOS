@@ -102,6 +102,9 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     fileprivate var onDidAppearAction: () -> Void = {}
 
+    private var localUpdatesCancellable: AnyCancellable?
+    private var syncUpdatesCancellable: AnyCancellable?
+
     init?(coder: NSCoder,
           bookmarksDatabase: CoreDataDatabase,
           bookmarksSearch: BookmarksStringSearch,
@@ -112,10 +115,27 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         self.viewModel = BookmarkListViewModel(bookmarksDatabase: bookmarksDatabase, parentID: parentID)
         self.favicons = favicons
         super.init(coder: coder)
+
+        bindSyncService()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("Not implemented")
+    }
+
+    private func bindSyncService() {
+        localUpdatesCancellable = viewModel.localUpdates
+            .sink { _ in
+                (UIApplication.shared.delegate as? AppDelegate)?.requestSyncIfEnabled()
+            }
+
+        syncUpdatesCancellable = (UIApplication.shared.delegate as? AppDelegate)?.syncDataProviders.bookmarksAdapter.syncDidCompletePublisher
+            .sink { [weak self] _ in
+                self?.viewModel.reloadData()
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                }
+            }
     }
 
     override func viewDidLoad() {
@@ -339,7 +359,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             let domains = domainsInBookmarkTree(bookmark)
 
             let oldCount = viewModel.bookmarks.count
-            viewModel.deleteBookmark(bookmark)
+            viewModel.softDeleteBookmark(bookmark)
             let newCount = viewModel.bookmarks.count
 
             // Make sure we are animating only single removal

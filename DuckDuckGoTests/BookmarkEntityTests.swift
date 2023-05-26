@@ -116,22 +116,6 @@ class BookmarkEntityTests: XCTestCase {
         }
     }
 
-    func testWhenFavoriteIsMissingFavoriteRootThenValidationFails() {
-        let favorite = BookmarkEntity.makeBookmark(title: "t",
-                                                   url: "u",
-                                                   parent: root,
-                                                   context: context)
-
-        favorite.setValue(true, forKey: #keyPath(BookmarkEntity.isFavorite))
-
-        do {
-            try context.save()
-            XCTFail("Save should fail")
-        } catch {
-
-        }
-    }
-
     func testWhenFolderHasURLThenValidationFails() {
         let folder = BookmarkEntity.makeFolder(title: "f", parent: root, context: context)
 

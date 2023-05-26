@@ -144,7 +144,11 @@ class MainViewController: UIViewController {
                    syncService: DDGSyncing) {
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
         self.bookmarksDatabase = bookmarksDatabase
-        self.bookmarksDatabaseCleaner = BookmarkDatabaseCleaner(bookmarkDatabase: bookmarksDatabase, errorEvents: BookmarksCleanupErrorHandling())
+        self.bookmarksDatabaseCleaner = BookmarkDatabaseCleaner(
+            bookmarkDatabase: bookmarksDatabase,
+            errorEvents: BookmarksCleanupErrorHandling(),
+            log: .generalLog
+        )
         self.syncService = syncService
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))

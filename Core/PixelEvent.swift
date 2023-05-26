@@ -242,7 +242,11 @@ extension Pixel {
         case autofillLoginsSettingsEnabled
         case autofillLoginsSettingsDisabled
         case autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate
-        
+
+        case autofillLoginsPasswordGenerationPromptDisplayed
+        case autofillLoginsPasswordGenerationPromptConfirmed
+        case autofillLoginsPasswordGenerationPromptDismissed
+
         case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
         
         case secureVaultInitError
@@ -401,13 +405,18 @@ extension Pixel {
         
         case bookmarksCouldNotLoadDatabase
         case bookmarksCouldNotPrepareDatabase
+        case bookmarksCleanupFailed
         case bookmarksMigrationAlreadyPerformed
         case bookmarksMigrationFailed
         case bookmarksMigrationCouldNotPrepareDatabase
         case bookmarksMigrationCouldNotPrepareDatabaseOnFailedMigration
         case bookmarksMigrationCouldNotValidateDatabase
         case bookmarksMigrationCouldNotRemoveOldStore
-        
+
+        case syncMetadataCouldNotLoadDatabase
+        case syncBookmarksProviderInitializationFailed
+        case syncBookmarksFailed
+
         case invalidPayload(Configuration)
     }
     
@@ -641,7 +650,11 @@ extension Pixel.Event {
         case .autofillLoginsSettingsDisabled: return "m_autofill_logins_settings_disabled"
         case .autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate:
             return "m_autofill_logins_settings_add-new-login_error_attempted-to-create-duplicate"
-            
+
+        case .autofillLoginsPasswordGenerationPromptDisplayed: return "m_autofill_logins_password_generation_prompt_displayed"
+        case .autofillLoginsPasswordGenerationPromptConfirmed: return "m_autofill_logins_password_generation_prompt_confirmed"
+        case .autofillLoginsPasswordGenerationPromptDismissed: return "m_autofill_logins_password_generation_prompt_dismissed"
+
         case .autofillJSPixelFired(let pixel):
             return "m_ios_\(pixel.pixelName)"
             
@@ -797,6 +810,7 @@ extension Pixel.Event {
             
         case .bookmarksCouldNotLoadDatabase: return "m_d_bookmarks_could_not_load_database"
         case .bookmarksCouldNotPrepareDatabase: return "m_d_bookmarks_could_not_prepare_database"
+        case .bookmarksCleanupFailed: return "m_d_bookmarks_cleanup_failed"
         case .bookmarksMigrationAlreadyPerformed: return "m_d_bookmarks_migration_already_performed"
         case .bookmarksMigrationFailed: return "m_d_bookmarks_migration_failed"
         case .bookmarksMigrationCouldNotPrepareDatabase: return "m_d_bookmarks_migration_could_not_prepare_database"
@@ -804,6 +818,10 @@ extension Pixel.Event {
             return "m_d_bookmarks_migration_could_not_prepare_database_on_failed_migration"
         case .bookmarksMigrationCouldNotValidateDatabase: return "m_d_bookmarks_migration_could_not_validate_database"
         case .bookmarksMigrationCouldNotRemoveOldStore: return "m_d_bookmarks_migration_could_not_remove_old_store"
+
+        case .syncMetadataCouldNotLoadDatabase: return "m_d_sync_metadata_could_not_load_database"
+        case .syncBookmarksProviderInitializationFailed: return "m_d_sync_bookmarks_provider_initialization_failed"
+        case .syncBookmarksFailed: return "m_d_sync_bookmarks_failed"
 
         case .invalidPayload(let configuration): return "m_d_\(configuration.rawValue)_invalid_payload".lowercased()
         }

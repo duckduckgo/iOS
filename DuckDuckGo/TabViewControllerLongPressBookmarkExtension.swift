@@ -32,12 +32,15 @@ extension TabViewController {
         if favorite && nil == viewModel.favorite(for: link.url) {
             viewModel.createOrToggleFavorite(title: link.displayTitle, url: link.url)
             WidgetCenter.shared.reloadAllTimelines()
-            
+            (UIApplication.shared.delegate as? AppDelegate)?.requestSyncIfEnabled()
+
             DispatchQueue.main.async {
                 ActionMessageView.present(message: UserText.webSaveFavoriteDone)
             }
         } else if nil == viewModel.bookmark(for: link.url) {
             viewModel.createBookmark(title: link.displayTitle, url: link.url)
+            (UIApplication.shared.delegate as? AppDelegate)?.requestSyncIfEnabled()
+
             DispatchQueue.main.async {
                 ActionMessageView.present(message: UserText.webSaveBookmarkDone)
             }

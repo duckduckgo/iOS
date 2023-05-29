@@ -99,7 +99,7 @@ extension TabViewController {
 
     fileprivate func buildOpenLinkPreview(for url: URL) -> UIViewController? {
         let tab = Tab(link: Link(title: nil, url: url))
-        let tabController = TabViewController.loadFromStoryboard(model: tab, bookmarksDatabase: bookmarksDatabase)
+        let tabController = TabViewController.loadFromStoryboard(model: tab, bookmarksDatabase: bookmarksDatabase, syncService: syncService)
         tabController.isLinkPreview = true
         tabController.decorate(with: ThemeManager.shared.currentTheme)
         let configuration = WKWebViewConfiguration.nonPersistent()

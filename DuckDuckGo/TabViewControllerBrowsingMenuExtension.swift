@@ -217,7 +217,7 @@ extension TabViewController {
         Pixel.fire(pixel: .browsingMenuAddToBookmarks)
         bookmarksInterface.createBookmark(title: link.title ?? "", url: link.url)
         favicons.loadFavicon(forDomain: link.url.host, intoCache: .fireproof, fromCache: .tabs)
-        (UIApplication.shared.delegate as? AppDelegate)?.requestSyncIfEnabled()
+        syncService.scheduler.notifyDataChanged()
 
         ActionMessageView.present(message: UserText.webSaveBookmarkDone,
                                   actionTitle: UserText.actionGenericEdit, onAction: {

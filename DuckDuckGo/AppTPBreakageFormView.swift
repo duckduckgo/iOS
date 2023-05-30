@@ -171,7 +171,7 @@ struct AppTPBreakageFormView: View {
                             .foregroundColor(appName.isEmpty ? Color.disabledButtonLabel : Color.buttonLabelColor)
                     })
                     .buttonStyle(PlainButtonStyle())
-                    .frame(height: 44)
+                    .frame(height: 30)
                     .listRowBackground(appName.isEmpty ? Color.disabledButton : Color.buttonColor)
                     .disabled(appName.isEmpty)
                 }

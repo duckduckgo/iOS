@@ -32,6 +32,7 @@ struct AppTPHomeView: View {
                 .fontWeight(.semibold)
             + Text(UserText.appTPHomeBlockedSuffix)
         }
+        .foregroundColor(Color.fontColor)
         .fixedSize(horizontal: false, vertical: true)
         .multilineTextAlignment(.leading)
         .font(Font(uiFont: Const.Font.text))
@@ -44,6 +45,7 @@ struct AppTPHomeView: View {
                 .fontWeight(.semibold)
             + Text(UserText.appTPHomeDisabledSuffix)
         }
+        .foregroundColor(Color.fontColor)
         .fixedSize(horizontal: false, vertical: true)
         .multilineTextAlignment(.leading)
         .font(Font(uiFont: Const.Font.text))
@@ -87,6 +89,7 @@ struct AppTPHomeView: View {
 private extension Color {
     static let background = Color(designSystemColor: .surface)
     static let shadow = Color("HomeMessageShadowColor")
+    static let fontColor = Color("AppTPDomainColor")
 }
 
 private enum Const {

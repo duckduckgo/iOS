@@ -101,6 +101,7 @@ struct AppTPActivityView: View {
         Section {
             VStack(alignment: .leading, spacing: 0) {
                 NavigationLink(destination: AppTPManageTrackersView(viewModel: AppTPManageTrackersViewModel(),
+                                                                    feedbackModel: feedbackModel,
                                                                     imageCache: imageCache)) {
                     HStack {
                         Text(UserText.appTPManageTrackers)

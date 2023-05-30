@@ -148,6 +148,9 @@
 /* String indicating AppTP is disabled when viewed from the settings screen */
 "appTP.cell.disabled" = "Disabled";
 
+/* String indicating AppTP is enabled when viewed from the settings screen */
+"appTP.cell.enabled" = "Enabled";
+
 /* Info string informing the user what App Tracking Protection does. */
 "appTP.empty.disabled.info" = "Enable App Tracking Protection so we can block pesky trackers in other apps.";
 

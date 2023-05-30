@@ -18,10 +18,15 @@
 //
 
 import SwiftUI
+import Core
 
 struct AppTPManageTrackersView: View {
     
     @StateObject var viewModel: AppTPManageTrackersViewModel
+    @StateObject var feedbackModel: AppTrackingProtectionFeedbackModel
+    
+    @State var isBreakageLinkActive: Bool = false
+    @State var showReportAlert: Bool = false
     
     let imageCache: AppTrackerImageCache
     
@@ -78,7 +83,9 @@ struct AppTPManageTrackersView: View {
                         LazyVStack(spacing: 0) {
                             ForEach(viewModel.trackerList, id: \.hashValue) { tracker in
                                 let showDivider = tracker != viewModel.trackerList.last
-                                AppTPManageTrackerCell(tracker: tracker,
+                                AppTPManageTrackerCell(trackerDomain: tracker.domain,
+                                                       trackerBlocked: tracker.blocking,
+                                                       trackerOwner: tracker.trackerOwner,
                                                        imageCache: imageCache,
                                                        showDivider: showDivider,
                                                        onToggleTracker: onTrackerToggled(domain:isBlocking:))
@@ -90,11 +97,32 @@ struct AppTPManageTrackersView: View {
                     .padding()
                 }
             }
+            
+            NavigationLink(destination: AppTPBreakageFormView(feedbackModel: feedbackModel), isActive: $isBreakageLinkActive) {
+                EmptyView()
+            }
         }
         .navigationTitle(UserText.appTPManageTrackers)
         .onAppear {
             Task {
                 viewModel.buildTrackerList()
+            }
+        }
+        .alert(isPresented: $showReportAlert) {
+            Alert(title: Text(UserText.appTPReportAlertTitle),
+                  message: Text(UserText.appTPReportAlertMessage),
+                  primaryButton: .default(Text(UserText.appTPReportAlertConfirm)) {
+                      isBreakageLinkActive = true
+                      viewModel.trackerDisabled = false
+                  },
+                  secondaryButton: .cancel(Text(UserText.appTPReportAlertCancel)) {
+                      viewModel.trackerDisabled = false
+                  }
+            )
+        }
+        .onChange(of: viewModel.trackerList) { _ in
+            if viewModel.trackerDisabled {
+                showReportAlert = true
             }
         }
     }

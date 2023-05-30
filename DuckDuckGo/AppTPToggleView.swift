@@ -33,6 +33,7 @@ struct AppTPToggleView: View {
         Toggle(isOn: $viewModel.isOn, label: {
             HStack {
                 Text(UserText.appTPNavTitle)
+                    .foregroundColor(Color.fontColor)
 
                 Spacer()
                 
@@ -73,6 +74,7 @@ private enum Const {
 
 private extension Color {
     static let toggleTint = Color(designSystemColor: .accent)
+    static let fontColor = Color("AppTPDomainColor")
 }
 
 #endif

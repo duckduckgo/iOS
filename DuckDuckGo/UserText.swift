@@ -497,6 +497,7 @@ public struct UserText {
     
     public static let appTPNavTitle = NSLocalizedString("appTP.title", value: "App Tracking Protection", comment: "Title for the App Tracking Protection feature")
     public static let appTPCellDetail = NSLocalizedString("appTP.cell.detail", value: "Block app trackers on your device", comment: "Detail string describing what AppTP is")
+    public static let appTPCellEnabled = NSLocalizedString("appTP.cell.enabled", value: "Enabled", comment: "String indicating AppTP is enabled when viewed from the settings screen")
     public static let appTPCellDisabled = NSLocalizedString("appTP.cell.disabled", value: "Disabled", comment: "String indicating AppTP is disabled when viewed from the settings screen")
     
     public static let appTPEmptyDisabledInfo = NSLocalizedString("appTP.empty.disabled.info", value: "Enable App Tracking Protection so we can block pesky trackers in other apps.", comment: "Info string informing the user what App Tracking Protection does.")

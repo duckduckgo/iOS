@@ -31,7 +31,7 @@ struct HomeMessageViewModelBuilder {
         static let macComputer = "RemoteMessageMacComputer"
     }
 
-    static func build(for remoteMessage: RemoteMessageModel, onDidClose: @escaping (HomeMessageViewModel.ButtonAction?) -> Void) -> HomeMessageViewModel? {
+    static func build(for remoteMessage: RemoteMessageModel, onDidClose: @escaping (HomeMessageViewModel.ButtonAction?, RemoteAction) -> Void) -> HomeMessageViewModel? {
             guard let content = remoteMessage.content else { return nil }
 
             switch content {
@@ -56,6 +56,7 @@ struct HomeMessageViewModelBuilder {
                                             subtitle: descriptionText,
                                             buttons: [
                                                 HomeMessageButtonViewModel(title: primaryActionText,
+                                                                           actionStyle: primaryAction.isSharing ? .share : .default,
                                                                            action: mapActionToViewModel(remoteAction: primaryAction,
                                                                                                         buttonAction: .primaryAction,
                                                                                                         onDidClose: onDidClose))],
@@ -73,7 +74,7 @@ struct HomeMessageViewModelBuilder {
                                                                                                         buttonAction: .secondaryAction,
                                                                                                         onDidClose: onDidClose)),
                                                 HomeMessageButtonViewModel(title: primaryActionText,
-                                                                           actionStyle: .default,
+                                                                           actionStyle: primaryAction.isSharing ? .share : .default,
                                                                            action: mapActionToViewModel(remoteAction: primaryAction,
                                                                                                         buttonAction: .primaryAction,
                                                                                                         onDidClose: onDidClose))],
@@ -83,17 +84,17 @@ struct HomeMessageViewModelBuilder {
 
     static func mapActionToViewModel(remoteAction: RemoteAction,
                                      buttonAction: HomeMessageViewModel.ButtonAction,
-                                     onDidClose: @escaping (HomeMessageViewModel.ButtonAction?) -> Void) -> () -> Void {
+                                     onDidClose: @escaping (HomeMessageViewModel.ButtonAction?, RemoteAction) -> Void) -> () -> Void {
 
         switch remoteAction {
-        case .share(let title, let url):
+        case .share(let url, let title):
             return {
-                print("shareAction", title, url)
+                ShareLinkNotification.postShareLinkNotification(urlString: url, title: title)
             }
         case .url(let value):
             return {
                 LaunchTabNotification.postLaunchTabNotification(urlString: value)
-                onDidClose(buttonAction)
+                onDidClose(buttonAction, remoteAction)
             }
         case .appStore:
             return {
@@ -101,11 +102,11 @@ struct HomeMessageViewModelBuilder {
                 if UIApplication.shared.canOpenURL(url as URL) {
                     UIApplication.shared.open(url)
                 }
-                onDidClose(buttonAction)
+                onDidClose(buttonAction, remoteAction)
             }
         case .dismiss:
             return {
-                onDidClose(buttonAction)
+                onDidClose(buttonAction, remoteAction)
             }
         }
     }

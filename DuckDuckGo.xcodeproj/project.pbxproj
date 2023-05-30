@@ -470,6 +470,7 @@
 		85F21DC621145DD5002631A6 /* global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512BCBF2061B6110085E862 /* global.swift */; };
 		85F2FFCD2211F615006BB258 /* MainViewController+KeyCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2FFCC2211F615006BB258 /* MainViewController+KeyCommands.swift */; };
 		85F2FFCF2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2FFCE2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift */; };
+		85F81A582A264D0A00840D65 /* ShareLinkNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F81A572A264D0A00840D65 /* ShareLinkNotification.swift */; };
 		85F98F92296F32BD00742F4A /* SyncSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F98F91296F32BD00742F4A /* SyncSettingsViewController.swift */; };
 		85F98F98296F4CB100742F4A /* SyncAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85F98F97296F4CB100742F4A /* SyncAssets.xcassets */; };
 		8C4724502217A14B004C9B2D /* TabViewControllerLongPressBookmarkExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C47244F2217A14B004C9B2D /* TabViewControllerLongPressBookmarkExtension.swift */; };
@@ -1418,6 +1419,7 @@
 		85F2FFCC2211F615006BB258 /* MainViewController+KeyCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+KeyCommands.swift"; sourceTree = "<group>"; };
 		85F2FFCE2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabSwitcherViewController+KeyCommands.swift"; sourceTree = "<group>"; };
 		85F2FFFF2215C17B006BB258 /* FindInPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindInPage.swift; sourceTree = "<group>"; };
+		85F81A572A264D0A00840D65 /* ShareLinkNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareLinkNotification.swift; sourceTree = "<group>"; };
 		85F98F91296F32BD00742F4A /* SyncSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncSettingsViewController.swift; sourceTree = "<group>"; };
 		85F98F97296F4CB100742F4A /* SyncAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SyncAssets.xcassets; sourceTree = "<group>"; };
 		8C47244F2217A14B004C9B2D /* TabViewControllerLongPressBookmarkExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewControllerLongPressBookmarkExtension.swift; sourceTree = "<group>"; };
@@ -4366,6 +4368,7 @@
 		F13B4BF41F18C74500814661 /* Tabs */ = {
 			isa = PBXGroup;
 			children = (
+				85F81A572A264D0A00840D65 /* ShareLinkNotification.swift */,
 				8565A34A1FC8D96B00239327 /* LaunchTabNotification.swift */,
 				F1617C141E57336D00DEDCAF /* TabManager.swift */,
 				F13B4BF51F18C75D00814661 /* Model */,
@@ -5925,6 +5928,7 @@
 				02A54A9A2A094A17000C8FED /* AppTPHomeView.swift in Sources */,
 				31C70B5528045E3500FB6AD1 /* SecureVaultErrorReporter.swift in Sources */,
 				F4CE6D1B257EA33C00D0A6AA /* FireButtonAnimator.swift in Sources */,
+				85F81A582A264D0A00840D65 /* ShareLinkNotification.swift in Sources */,
 				85582E0029D7409700E9AE35 /* SyncSettingsViewController+PDFRendering.swift in Sources */,
 				9888F77B2224980500C46159 /* FeedbackViewController.swift in Sources */,
 				982686AD2600C0850011A8D6 /* ActionMessageView.swift in Sources */,
@@ -8209,7 +8213,7 @@
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = revision;
-				revision = 602d8b649cd68ee2a67c8b923c9ff42f235c19c9;
+				revision = eb229412abfb87536ebcf61e2554d7e34ad361a1;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

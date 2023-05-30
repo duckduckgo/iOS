@@ -87,7 +87,7 @@ struct HomeMessageView: View {
     
     private var closeButton: some View {
         Button {
-            viewModel.onDidClose(.close)
+            viewModel.onDidClose(.close, .dismiss)
         } label: {
             Image("Close-24")
                 .foregroundColor(.primary)
@@ -215,7 +215,7 @@ struct HomeMessageView_Previews: PreviewProvider {
                                              subtitle: "Body text goes here. This component can be used with one or two buttons.",
                                              buttons: [.init(title: "Button1", actionStyle: .cancel) {},
                                                        .init(title: "Button2") {}],
-                                             onDidClose: { _ in })
+                                             onDidClose: { _, _ in })
         return HomeMessageView(viewModel: viewModel)
             .padding(.horizontal)
     }

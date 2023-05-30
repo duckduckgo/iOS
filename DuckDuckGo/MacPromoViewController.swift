@@ -20,12 +20,16 @@
 import SwiftUI
 import DesignResourcesKit
 import DuckUI
+import LinkPresentation
 
 class MacPromoViewController: UIHostingController<MacPromoView> {
 
+    let experiment = MacPromoExperiment()
+
     convenience init() {
         self.init(rootView: MacPromoView())
-        modalPresentationStyle = .overCurrentContext
+        rootView.model.controller = self
+        modalPresentationStyle = .pageSheet
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -34,14 +38,38 @@ class MacPromoViewController: UIHostingController<MacPromoView> {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        MacPromoExperiment().sheetWasShown()
+        experiment.sheetWasShown()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        experiment.sheetWasDismissed()
+    }
+
+    class ViewModel: ObservableObject {
+
+        weak var controller: MacPromoViewController?
+
+        func shareLink() {
+            guard let message = controller?.experiment.message else { return }
+            switch message.content {
+            case .bigSingleAction(_, _, _, _, let action):
+                guard case .share(let url, let title) = action else { return }
+                ShareLinkNotification.postShareLinkNotification(urlString: url, title: title)
+            default:
+                assertionFailure("unexpected content for mac promo")
+            }
+        }
+
+    }
+    
 }
 
 struct MacPromoView: View {
 
     @Environment(\.presentationMode) var presentationMode
+
+    @ObservedObject var model = MacPromoViewController.ViewModel()
 
     var body: some View {
         VStack {
@@ -82,6 +110,7 @@ struct MacPromoView: View {
 
                 Button {
                     print("Share!")
+                    model.shareLink()
                 } label: {
                     HStack {
                         Image(systemName: "square.and.arrow.up")

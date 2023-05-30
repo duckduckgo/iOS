@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import BrowserServicesKit
 
 struct HomeMessageViewModel: Equatable {
     enum ButtonAction {
@@ -32,7 +33,7 @@ struct HomeMessageViewModel: Equatable {
     let subtitle: String
     let buttons: [HomeMessageButtonViewModel]
     
-    let onDidClose: (ButtonAction?) -> Void
+    let onDidClose: (ButtonAction?, RemoteAction) -> Void
 
     var isSharing: Bool {
         return buttons.contains(where: { $0.actionStyle == .share })

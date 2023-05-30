@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import BrowserServicesKit
 
 protocol HomeMessageViewSectionRendererDelegate: AnyObject {
     
@@ -106,24 +107,29 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         let message = homePageConfiguration.homeMessages[indexPath.row]
         switch message {
         case .placeholder:
-            return HomeMessageViewModel(image: nil, topText: nil, title: "", subtitle: "", buttons: []) { [weak self] _ in
+            return HomeMessageViewModel(image: nil, topText: nil, title: "", subtitle: "", buttons: []) { [weak self] _, _ in
                 self?.dismissHomeMessage(message, at: indexPath, in: collectionView)
             }
         case .remoteMessage(let remoteMessage):
-            return HomeMessageViewModelBuilder.build(for: remoteMessage) { [weak self] action in
+            return HomeMessageViewModelBuilder.build(for: remoteMessage) { [weak self] action, remoteAction in
 
                 guard let action,
                         let self else { return }
+
+                if !remoteAction.isSharing {
+                    self.dismissHomeMessage(message, at: indexPath, in: collectionView)
+                }
 
                 switch action {
                 case .primaryAction:
                     Pixel.fire(pixel: .remoteMessageShownPrimaryActionClicked,
                                withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
+
                 case .secondaryAction:
                     Pixel.fire(pixel: .remoteMessageShownSecondaryActionClicked,
                                withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
+
                 case .close:
-                    self.dismissHomeMessage(message, at: indexPath, in: collectionView)
                     Pixel.fire(pixel: .remoteMessageDismissed,
                                withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
                     
@@ -176,4 +182,16 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     private var isPad: Bool {
         return controller?.traitCollection.horizontalSizeClass == .regular
     }
+}
+
+extension RemoteAction {
+
+    var isSharing: Bool {
+        if case .share = self {
+            return true
+        }
+
+        return false
+    }
+
 }

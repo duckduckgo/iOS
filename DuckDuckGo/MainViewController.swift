@@ -100,7 +100,8 @@ class MainViewController: UIViewController {
     private let previewsSource = TabPreviewsSource()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private var launchTabObserver: LaunchTabNotification.Observer?
-    
+    private var shareLinkObserver: ShareLinkNotification.Observer?
+
     private let appTrackingProtectionDatabase: CoreDataDatabase
     private let bookmarksDatabase: CoreDataDatabase
     private let bookmarksDatabaseCleaner: BookmarkDatabaseCleaner
@@ -178,6 +179,7 @@ class MainViewController: UIViewController {
         loadInitialView()
         previewsSource.prepare()
         addLaunchTabNotificationObserver()
+        addShareLinkNotificationObserver()
         addDuckDuckGoEmailAuthenticationObservers()
 
         findInPageView.delegate = self
@@ -515,6 +517,13 @@ class MainViewController: UIViewController {
             } else {
                 self.loadQuery(urlString)
             }
+        })
+    }
+
+    private func addShareLinkNotificationObserver() {
+        shareLinkObserver = ShareLinkNotification.addObserver(handler: { [weak self] urlString, title in
+            guard let self = self, let url = URL(string: urlString) else { return }
+            presentShareSheet(withItems: [TitledURLActivityItem(url, title)], fromView: self.view)
         })
     }
 

@@ -50,7 +50,7 @@ final class HomePageConfiguration {
     var homeMessages: [HomeMessage] = []
 
     init(variantManager: VariantManager? = nil,
-         remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore()) {
+         remoteMessagingStore: RemoteMessagingStore = AppDependencyProvider.shared.remoteMessagingStore) {
         homeMessageStorage = HomeMessageStorage(variantManager: variantManager)
         self.remoteMessagingStore = remoteMessagingStore
         homeMessages = buildHomeMessages()
@@ -76,7 +76,7 @@ final class HomePageConfiguration {
     }
 
     private func remoteMessageToShow() -> HomeMessage? {
-        guard MacPromoExperiment().shouldShowMessage() else { return nil }
+        guard MacPromoExperiment(remoteMessagingStore: remoteMessagingStore).shouldShowMessage() else { return nil }
         guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return nil }
 
         os_log("Remote message to show: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
@@ -91,12 +91,6 @@ final class HomePageConfiguration {
         }
 
         return .remoteMessage(remoteMessage: remoteMessageToPresent)
-//        return .remoteMessage(remoteMessage: .init(id: "test1", content:
-//                 .bigSingleAction(titleText: "Get DuckDuckGo Browser for Mac",
-//                                  descriptionText: "Search privately, block trackers and hide cookie pop-ups on your Mac for free!",
-//                                  placeholder: .macComputer,
-//                                  primaryActionText: "Send Link", primaryAction: .url(value: "https://duckduckgo.com/mac")),
-//                                                   matchingRules: [], exclusionRules: []))
     }
 
     func dismissHomeMessage(_ homeMessage: HomeMessage) {

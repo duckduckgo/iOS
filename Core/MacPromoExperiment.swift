@@ -49,7 +49,11 @@ public class MacPromoExperiment {
         }
     }
 
-    init(remoteMessagingStore: RemoteMessagingStoring = RemoteMessagingStore(),
+    var message: RemoteMessageModel? {
+        return remoteMessagingStore.fetchScheduledRemoteMessage()
+    }
+
+    init(remoteMessagingStore: RemoteMessagingStoring = AppDependencyProvider.shared.remoteMessagingStore,
          randomBool: @escaping () -> Bool = { Bool.random() }
     ) {
         self.remoteMessagingStore = remoteMessagingStore
@@ -57,7 +61,7 @@ public class MacPromoExperiment {
     }
 
     func shouldShowSheet() -> Bool {
-        guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return false }
+        guard let remoteMessageToPresent = message else { return false }
         if remoteMessageToPresent.id == Self.promoId {
             assignCohort()
             return cohort == .sheet
@@ -66,7 +70,7 @@ public class MacPromoExperiment {
     }
 
     func shouldShowMessage() -> Bool {
-        guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return false }
+        guard let remoteMessageToPresent = message else { return false }
         if remoteMessageToPresent.id == Self.promoId {
             assignCohort()
             return cohort == .message
@@ -77,8 +81,21 @@ public class MacPromoExperiment {
     }
 
     func sheetWasShown() {
-        guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return }
+        guard let remoteMessageToPresent = message else { return }
+        Pixel.fire(pixel: .macPromoSheetShownUnique)
         remoteMessagingStore.dismissRemoteMessage(withId: remoteMessageToPresent.id)
+    }
+
+    func sheetWasDismissed() {
+        Pixel.fire(pixel: .macPromoSheetDismissed)
+    }
+
+    func sheetPrimaryActionClicked() {
+        Pixel.fire(pixel: .macPromoPrimaryActionClicked)
+    }
+
+    func sheetSecondaryActionClicked() {
+        Pixel.fire(pixel: .macPromoSecondaryActionClicked)
     }
 
     private func assignCohort() {

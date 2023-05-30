@@ -53,7 +53,7 @@ struct AppTPManageTrackersView: View {
                 loadingState
             } else {
                 ScrollView {
-                    LazyVStack(alignment: .leading, spacing: 0) {
+                    VStack(alignment: .leading, spacing: 0) {
                         Section {
                             Button(action: {
                                 restoreDefaults()
@@ -75,7 +75,7 @@ struct AppTPManageTrackersView: View {
                             .padding(.bottom)
                         }
                         
-                        VStack {
+                        LazyVStack(spacing: 0) {
                             ForEach(viewModel.trackerList, id: \.hashValue) { tracker in
                                 let showDivider = tracker != viewModel.trackerList.last
                                 AppTPManageTrackerCell(tracker: tracker,

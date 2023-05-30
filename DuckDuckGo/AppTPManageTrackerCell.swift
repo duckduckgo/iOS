@@ -40,7 +40,7 @@ struct AppTPManageTrackerCell: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            HStack {
+            HStack(alignment: .center) {
                 let trackerRep = imageCache.loadTrackerImage(for: tracker.trackerOwner)
                 switch trackerRep {
                 case .svg(let image):
@@ -69,6 +69,7 @@ struct AppTPManageTrackerCell: View {
             
             if showDivider {
                 Divider()
+                    .padding(.leading, 44)
             }
         }
     }

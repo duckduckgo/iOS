@@ -114,6 +114,7 @@ struct AppTPActivityView: View {
                 }
                 
                 Divider()
+                    .padding(.leading)
                 
                 NavigationLink(destination: AppTPBreakageFormView(feedbackModel: feedbackModel)) {
                     HStack {
@@ -190,7 +191,7 @@ private enum Const {
     enum Size {
         static let cornerRadius: CGFloat = 12
         static let sectionIndentation: CGFloat = 16
-        static let sectionHeaderBottom: CGFloat = 0
+        static let sectionHeaderBottom: CGFloat = -4
         static let standardCellHeight: CGFloat = 44
     }
 }

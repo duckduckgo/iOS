@@ -82,6 +82,7 @@ struct AppTPTrackerCell: View {
             
             if showDivider {
                 Divider()
+                    .padding(.leading, Const.Size.dividerPadding)
             }
         }
     }
@@ -97,6 +98,7 @@ private enum Const {
         static let rowHeight: CGFloat = 78
         static let rowPadding: CGFloat = 16
         static let rowSpacing: CGFloat = 4
+        static let dividerPadding: CGFloat = 56
     }
 }
 

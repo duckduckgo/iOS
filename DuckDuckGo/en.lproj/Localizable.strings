@@ -232,8 +232,8 @@
 /* Text indicating when the tracker was last blocked. Example: Last attempt blocked (timeString) */
 "appTP.trackerBlockedTimestamp" = "Last attempt blocked %@";
 
-/* Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts */
-"appTP.trackingattempts" = "%@ tracking attempts";
+/* Do not translate. StringsDict entry -- Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts */
+"appTP.trackingattempts" = "appTP.trackingattempts";
 
 /* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Sign In";

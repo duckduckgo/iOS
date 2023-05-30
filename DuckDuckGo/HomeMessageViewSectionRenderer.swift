@@ -20,6 +20,7 @@
 import UIKit
 import Core
 import BrowserServicesKit
+import Common
 
 protocol HomeMessageViewSectionRendererDelegate: AnyObject {
     
@@ -49,6 +50,22 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     func install(into controller: HomeViewController) {
         self.controller = controller
         hideLogoIfThereAreMessagesToDisplay()
+    }
+
+    func didAppear() {
+        let remoteMessagingStore = AppDependencyProvider.shared.remoteMessagingStore
+        guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return }
+
+        os_log("Remote message to show: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
+        Pixel.fire(pixel: .remoteMessageShown,
+                   withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessageToPresent.id)"])
+
+        if !remoteMessagingStore.hasShownRemoteMessage(withId: remoteMessageToPresent.id) {
+            os_log("Remote message shown for first time: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
+            Pixel.fire(pixel: .remoteMessageShownUnique,
+                       withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessageToPresent.id)"])
+            remoteMessagingStore.updateRemoteMessage(withId: remoteMessageToPresent.id, asShown: true)
+        }
     }
 
     func refresh() {

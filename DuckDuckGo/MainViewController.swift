@@ -523,13 +523,19 @@ class MainViewController: UIViewController {
     private func addShareLinkNotificationObserver() {
         shareLinkObserver = ShareLinkNotification.addObserver(handler: { [weak self] urlString, title in
             guard let self = self, let url = URL(string: urlString) else { return }
-            presentShareSheet(withItems: [TitledURLActivityItem(url, title)], fromView: self.view) { _, result, _, error in
-                #warning("Remove this after the Mac Promo Experiment is over")
-                let cohort = MacPromoExperiment().cohort.rawValue
+
+            let controller = presentedViewController ?? self
+
+            controller.presentShareSheet(withItems: [TitledURLActivityItem(url, title)], fromView: self.view) { activityType, result, _, error in
+                #warning("Remove this after the Mac Promo Experiment is over")            
+                let experiment = MacPromoExperiment()
+                let cohort = experiment.cohort.rawValue
 
                 var parameters = [
                     "cohort": cohort,
-                    "success": "\(result)"
+
+                    // Result returns false if the user opens it in DuckDuckGo (which causes the share sheet to get force closed)
+                    "success": "\(result || activityType?.rawValue == "com.duckduckgo.mobile.ios.ShareExtension")"
                 ]
 
                 if let error = error as? NSError {
@@ -538,6 +544,12 @@ class MainViewController: UIViewController {
                 }
 
                 Pixel.fire(pixel: .shareLink, withAdditionalParameters: parameters)
+
+                if let controller = self.presentedViewController as? MacPromoViewController {
+                    controller.dismiss(animated: true)
+                } else {
+                    experiment.dismissMessage()
+                }
             }
         })
     }

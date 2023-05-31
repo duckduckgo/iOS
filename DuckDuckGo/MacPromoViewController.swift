@@ -55,6 +55,7 @@ class MacPromoViewController: UIHostingController<MacPromoView> {
             switch message.content {
             case .bigSingleAction(_, _, _, _, let action):
                 guard case .share(let url, let title) = action else { return }
+                controller?.experiment.sheetPrimaryActionClicked()
                 ShareLinkNotification.postShareLinkNotification(urlString: url, title: title)
             default:
                 assertionFailure("unexpected content for mac promo")
@@ -109,7 +110,6 @@ struct MacPromoView: View {
                     .padding(.bottom, 16)
 
                 Button {
-                    print("Share!")
                     model.shareLink()
                 } label: {
                     HStack {

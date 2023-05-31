@@ -308,7 +308,6 @@ extension Pixel {
         case macPromoSheetShownUnique
         case macPromoSheetDismissed
         case macPromoPrimaryActionClicked
-        case macPromoSecondaryActionClicked
         case shareLink
 
         // MARK: debug pixels
@@ -720,7 +719,6 @@ extension Pixel.Event {
         case .macPromoSheetShownUnique: return "m_macpromo_sheet_shown_unique"
         case .macPromoSheetDismissed: return "m_macpromo_sheet_dismissed"
         case .macPromoPrimaryActionClicked: return "m_macpromo_primary_action_clicked"
-        case .macPromoSecondaryActionClicked: return "m_macpromo_secondary_action_clicked"
         case .shareLink: return "m_share_link"
 
         // MARK: debug pixels

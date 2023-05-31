@@ -94,8 +94,8 @@ public class MacPromoExperiment {
         Pixel.fire(pixel: .macPromoPrimaryActionClicked)
     }
 
-    func sheetSecondaryActionClicked() {
-        Pixel.fire(pixel: .macPromoSecondaryActionClicked)
+    func dismissMessage() {
+        remoteMessagingStore.dismissRemoteMessage(withId: Self.promoId)
     }
 
     private func assignCohort() {

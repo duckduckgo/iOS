@@ -44,7 +44,7 @@ class MacPromoExperimentTests: XCTestCase {
                                  matchingRules: [],
                                  exclusionRules: [])
 
-        let experiment = MacPromoExperiment(remoteMessagingStore: self, randomBool: returnFalse)
+        let experiment = MacPromoExperiment(remoteMessagingStore: self, randomBool: returningFalse)
         XCTAssertEqual(experiment.cohort, .unassigned)
         XCTAssertFalse(experiment.shouldShowSheet())
         XCTAssertTrue(experiment.shouldShowMessage())
@@ -58,7 +58,7 @@ class MacPromoExperimentTests: XCTestCase {
                                  matchingRules: [],
                                  exclusionRules: [])
 
-        let experiment = MacPromoExperiment(remoteMessagingStore: self, randomBool: returnTrue)
+        let experiment = MacPromoExperiment(remoteMessagingStore: self, randomBool: returningTrue)
         XCTAssertEqual(experiment.cohort, .unassigned)
         XCTAssertFalse(experiment.shouldShowMessage())
         XCTAssertTrue(experiment.shouldShowSheet())
@@ -72,17 +72,17 @@ class MacPromoExperimentTests: XCTestCase {
                                  matchingRules: [],
                                  exclusionRules: [])
 
-        let experiment = MacPromoExperiment(remoteMessagingStore: self, randomBool: returnTrue)
+        let experiment = MacPromoExperiment(remoteMessagingStore: self, randomBool: returningTrue)
         XCTAssertTrue(experiment.shouldShowMessage())
         XCTAssertFalse(experiment.shouldShowSheet())
         XCTAssertEqual(experiment.cohort, .unassigned)
     }
 
-    func returnFalse() -> Bool {
+    func returningFalse() -> Bool {
         return false
     }
 
-    func returnTrue() -> Bool {
+    func returningTrue() -> Bool {
         return true
     }
 

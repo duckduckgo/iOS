@@ -26,9 +26,6 @@ extension FeatureName {
     // Define your feature e.g.:
     // public static let experimentalFeature = FeatureName(rawValue: "experimentalFeature")
 
-    public static let homePageMacPromo = FeatureName(rawValue: "homePageMacPromo")
-    public static let sheetMacPromo = FeatureName(rawValue: "sheetMacPromo")
-
 }
 
 public struct VariantIOS: Variant {

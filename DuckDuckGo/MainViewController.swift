@@ -549,6 +549,7 @@ class MainViewController: UIViewController {
                     controller.dismiss(animated: true)
                 } else {
                     experiment.dismissMessage()
+                    self.homeController?.remoteMessagesDidChange()
                 }
             }
         })

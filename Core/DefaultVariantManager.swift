@@ -25,7 +25,6 @@ import BrowserServicesKit
 extension FeatureName {
     // Define your feature e.g.:
     // public static let experimentalFeature = FeatureName(rawValue: "experimentalFeature")
-
 }
 
 public struct VariantIOS: Variant {
@@ -56,6 +55,7 @@ public struct VariantIOS: Variant {
         VariantIOS(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "se", weight: doNotAllocate, isIncluded: When.always, features: [])
+        
     ]
     
     public var name: String

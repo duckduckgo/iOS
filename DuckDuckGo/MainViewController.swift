@@ -523,7 +523,22 @@ class MainViewController: UIViewController {
     private func addShareLinkNotificationObserver() {
         shareLinkObserver = ShareLinkNotification.addObserver(handler: { [weak self] urlString, title in
             guard let self = self, let url = URL(string: urlString) else { return }
-            presentShareSheet(withItems: [TitledURLActivityItem(url, title)], fromView: self.view)
+            presentShareSheet(withItems: [TitledURLActivityItem(url, title)], fromView: self.view) { _, result, _, error in
+                #warning("Remove this after the Mac Promo Experiment is over")
+                let cohort = MacPromoExperiment().cohort.rawValue
+
+                var parameters = [
+                    "cohort": cohort,
+                    "success": "\(result)"
+                ]
+
+                if let error = error as? NSError {
+                    parameters["errorDomain"] = error.domain
+                    parameters["errorCode"] = "\(error.code)"
+                }
+
+                Pixel.fire(pixel: .shareLink, withAdditionalParameters: parameters)
+            }
         })
     }
 

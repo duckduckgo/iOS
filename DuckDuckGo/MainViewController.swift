@@ -527,7 +527,7 @@ class MainViewController: UIViewController {
             let controller = presentedViewController ?? self
 
             controller.presentShareSheet(withItems: [TitledURLActivityItem(url, title)], fromView: self.view) { activityType, result, _, error in
-                #warning("Remove this after the Mac Promo Experiment is over")            
+                #warning("Remove this after the Mac Promo Experiment is over")
                 let experiment = MacPromoExperiment()
                 let cohort = experiment.cohort.rawValue
 

@@ -27,7 +27,7 @@ public struct RemoteMessageRequest {
 
     private var endpoint: URL {
         #if DEBUG
-        // Restore this before PR 
+        #warning("Restore sample before merging")
         // return URL(string: "https://raw.githubusercontent.com/duckduckgo/remote-messaging-config/main/samples/ios/sample1.json")!
         return URL(string: "https://raw.githubusercontent.com/duckduckgo/remote-messaging-config/brindy/mac-promo-exp2/live/ios-config/ios-config.json")!
         #else

@@ -37,7 +37,7 @@ public class MacPromoExperiment {
     private var remoteMessagingStore: RemoteMessagingStoring
     private var randomBool: () -> Bool
 
-    @UserDefaultsWrapper(key: .macPromo23Exp2, defaultValue: Cohort.unassigned.rawValue)
+    @UserDefaultsWrapper(key: .macPromoMay23Exp2Cohort, defaultValue: Cohort.unassigned.rawValue)
     private var cohortValue: String
 
     var cohort: Cohort {

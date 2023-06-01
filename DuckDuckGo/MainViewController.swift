@@ -338,8 +338,8 @@ class MainViewController: UIViewController {
             }
 
         localUpdatesCancellable = favoritesViewModel.localUpdates
-            .sink { _ in
-                (UIApplication.shared.delegate as? AppDelegate)?.requestSyncIfEnabled()
+            .sink { [weak self] in
+                self?.syncService.scheduler.notifyDataChanged()
             }
 
         syncUpdatesCancellable = (UIApplication.shared.delegate as? AppDelegate)?.syncDataProviders.bookmarksAdapter.syncDidCompletePublisher
@@ -425,7 +425,8 @@ class MainViewController: UIViewController {
     @IBSegueAction func onCreateBookmarksList(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> BookmarksViewController {
         guard let controller = BookmarksViewController(coder: coder,
                                                        bookmarksDatabase: self.bookmarksDatabase,
-                                                       bookmarksSearch: bookmarksCachingSearch) else {
+                                                       bookmarksSearch: bookmarksCachingSearch,
+                                                       syncService: syncService) else {
             fatalError("Failed to create controller")
         }
         controller.delegate = self
@@ -499,6 +500,7 @@ class MainViewController: UIViewController {
         tabManager = TabManager(model: tabsModel,
                                 previewsSource: previewsSource,
                                 bookmarksDatabase: bookmarksDatabase,
+                                syncService: syncService,
                                 delegate: self)
     }
 
@@ -1835,8 +1837,7 @@ extension MainViewController: AutoClearWorker {
         AutoconsentManagement.shared.clearCache()
         DaxDialogs.shared.clearHeldURLData()
 
-        let syncService = (UIApplication.shared.delegate as? AppDelegate)!.syncService
-        if syncService?.authState == .inactive {
+        if syncService.authState == .inactive {
             bookmarksDatabaseCleaner.cleanUpDatabaseNow()
         }
     }

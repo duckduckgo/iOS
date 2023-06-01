@@ -26,6 +26,7 @@ import SwiftUI
 import Bookmarks
 import Persistence
 import Common
+import DDGSync
 import PrivacyDashboard
 import UserScript
 import ContentBlocking
@@ -135,6 +136,7 @@ class TabViewController: UIViewController {
     lazy var faviconUpdater = FireproofFaviconUpdater(bookmarksDatabase: bookmarksDatabase,
                                                       tab: tabModel,
                                                       favicons: Favicons.shared)
+    let syncService: DDGSyncing
 
     public var url: URL? {
         willSet {
@@ -250,12 +252,13 @@ class TabViewController: UIViewController {
 
     private let rulesCompilationMonitor = RulesCompilationMonitor.shared
 
-    static func loadFromStoryboard(model: Tab, bookmarksDatabase: CoreDataDatabase) -> TabViewController {
+    static func loadFromStoryboard(model: Tab, bookmarksDatabase: CoreDataDatabase, syncService: DDGSyncing) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
                               tabModel: model,
-                              bookmarksDatabase: bookmarksDatabase)
+                              bookmarksDatabase: bookmarksDatabase,
+                              syncService: syncService)
         })
         return controller
     }
@@ -268,10 +271,12 @@ class TabViewController: UIViewController {
     
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
-                   bookmarksDatabase: CoreDataDatabase) {
-            self.tabModel = tabModel
-            self.bookmarksDatabase = bookmarksDatabase
-            super.init(coder: aDecoder)
+                   bookmarksDatabase: CoreDataDatabase,
+                   syncService: DDGSyncing) {
+        self.tabModel = tabModel
+        self.bookmarksDatabase = bookmarksDatabase
+        self.syncService = syncService
+        super.init(coder: aDecoder)
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -117,13 +117,9 @@ struct LockScreenWidgetView: View {
         ZStack {
             Image(imageNamed)
                 .resizable()
-
-            Image("Logo")
-                .resizable()
-                .frame(width: 24, height: 24)
-                .offset(y: 12)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Rectangle().foregroundColor(.white.opacity(0.3)))
     }
 
 }

@@ -21,14 +21,18 @@ import SwiftUI
 import DesignResourcesKit
 import DuckUI
 import LinkPresentation
+import BrowserServicesKit
 
 class MacPromoViewController: UIHostingController<MacPromoView> {
 
     let experiment = MacPromoExperiment()
+    var message: RemoteMessageModel?
 
     convenience init() {
         self.init(rootView: MacPromoView())
         rootView.model.controller = self
+        message = experiment.message
+        assert(message != nil)
         modalPresentationStyle = .pageSheet
     }
 
@@ -41,8 +45,8 @@ class MacPromoViewController: UIHostingController<MacPromoView> {
         experiment.sheetWasShown()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         experiment.sheetWasDismissed()
     }
 
@@ -51,7 +55,7 @@ class MacPromoViewController: UIHostingController<MacPromoView> {
         weak var controller: MacPromoViewController?
 
         func shareLink() {
-            guard let message = controller?.experiment.message else { return }
+            guard let message = controller?.message else { return }
             switch message.content {
             case .bigSingleAction(_, _, _, _, let action):
                 guard case .share(let url, let title) = action else { return }

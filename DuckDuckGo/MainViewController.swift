@@ -526,15 +526,10 @@ class MainViewController: UIViewController {
 
             let controller = presentedViewController ?? self
 
-            controller.presentShareSheet(withItems: [TitledURLActivityItem(url, title)], fromView: self.view) { activityType, result, _, error in
+            controller.presentShareSheet(withItems: [TitledURLActivityItem(url, title)], fromView: controller.view) { activityType, result, _, error in
                 #warning("Remove this after the Mac Promo Experiment is over")
                 let experiment = MacPromoExperiment()
-
-                // ensure that if someone else starts using this share link notification for some reason we don't trigger pixels, clear messages, etc by mistake
-                guard experiment.message?.id == MacPromoExperiment.promoId else { return }
-
                 let cohort = experiment.cohort.rawValue
-
                 var parameters = [
                     "cohort": cohort,
 

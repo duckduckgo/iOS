@@ -141,9 +141,11 @@ class BookmarkEditorViewModelTests: XCTestCase {
         let folders = model.locations
         
         let fetchFolders = BookmarkEntity.fetchRequest()
-        fetchFolders.predicate = NSPredicate(format: "%K == true AND %K != %@", #keyPath(BookmarkEntity.isFolder),
-                                                                                #keyPath(BookmarkEntity.uuid),
-                                                                                BookmarkEntity.Constants.favoritesFolderID)
+        fetchFolders.predicate = NSPredicate(format: "%K == true AND %K != %@ AND %K == false",
+                                             #keyPath(BookmarkEntity.isFolder),
+                                             #keyPath(BookmarkEntity.uuid),
+                                             BookmarkEntity.Constants.favoritesFolderID,
+                                             #keyPath(BookmarkEntity.isPendingDeletion))
         let allFolders = (try? context.fetch(fetchFolders)) ?? []
         
         XCTAssertEqual(folders.count, allFolders.count)

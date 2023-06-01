@@ -23,6 +23,7 @@ import CoreData
 import Bookmarks
 import Persistence
 import Combine
+import DDGSync
 import WidgetKit
 
 protocol AddOrEditBookmarkViewControllerDelegate: AnyObject {
@@ -38,27 +39,32 @@ class AddOrEditBookmarkViewController: UIViewController {
     private var foldersViewController: BookmarkFoldersViewController?
     private let viewModel: BookmarkEditorViewModel
     private let bookmarksDatabase: CoreDataDatabase
+    private let syncService: DDGSyncing
 
     private var viewModelCancellable: AnyCancellable?
 
     init?(coder: NSCoder,
           editingEntityID: NSManagedObjectID,
-          bookmarksDatabase: CoreDataDatabase) {
+          bookmarksDatabase: CoreDataDatabase,
+          syncService: DDGSyncing) {
         
         self.bookmarksDatabase = bookmarksDatabase
         self.viewModel = BookmarkEditorViewModel(editingEntityID: editingEntityID,
                                                  bookmarksDatabase: bookmarksDatabase)
+        self.syncService = syncService
 
         super.init(coder: coder)
     }
     
     init?(coder: NSCoder,
           parentFolderID: NSManagedObjectID?,
-          bookmarksDatabase: CoreDataDatabase) {
-        
+          bookmarksDatabase: CoreDataDatabase,
+          syncService: DDGSyncing) {
+
         self.bookmarksDatabase = bookmarksDatabase
         self.viewModel = BookmarkEditorViewModel(creatingFolderWithParentID: parentFolderID,
                                                  bookmarksDatabase: bookmarksDatabase)
+        self.syncService = syncService
 
         super.init(coder: coder)
     }
@@ -121,12 +127,16 @@ class AddOrEditBookmarkViewController: UIViewController {
         WidgetCenter.shared.reloadAllTimelines()
         self.delegate?.finishedEditing(self, entityID: viewModel.bookmark.objectID)
         dismiss(animated: true, completion: nil)
+        syncService.scheduler.notifyDataChanged()
     }
 
     @IBSegueAction func onCreateEditor(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> AddOrEditBookmarkViewController? {
-        guard let controller = AddOrEditBookmarkViewController(coder: coder,
-                                                               parentFolderID: viewModel.bookmark.parent?.objectID,
-                                                               bookmarksDatabase: bookmarksDatabase) else {
+        guard let controller = AddOrEditBookmarkViewController(
+            coder: coder,
+            parentFolderID: viewModel.bookmark.parent?.objectID,
+            bookmarksDatabase: bookmarksDatabase,
+            syncService: syncService
+        ) else {
             fatalError("Failed to create controller")
         }
         controller.delegate = self

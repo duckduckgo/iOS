@@ -36,15 +36,18 @@ struct HomeMessageViewModelBuilder {
 
             switch content {
             case .small(let titleText, let descriptionText):
-                return HomeMessageViewModel(messageId: remoteMessage.id, image: nil, topText: nil, title: titleText, subtitle: descriptionText,
+                return HomeMessageViewModel(messageId: remoteMessage.id,
+                                            image: nil, topText: nil, title: titleText, subtitle: descriptionText,
                                             buttons: [],
                                             onDidClose: onDidClose)
             case .medium(let titleText, let descriptionText, let placeholder):
-                return HomeMessageViewModel(messageId: remoteMessage.id, image: placeholder.rawValue, topText: nil, title: titleText, subtitle: descriptionText,
+                return HomeMessageViewModel(messageId: remoteMessage.id,
+                                            image: placeholder.rawValue, topText: nil, title: titleText, subtitle: descriptionText,
                                             buttons: [],
                                             onDidClose: onDidClose)
             case .bigSingleAction(let titleText, let descriptionText, let placeholder, let primaryActionText, let primaryAction):
-                return HomeMessageViewModel(messageId: remoteMessage.id, image: placeholder.rawValue, topText: nil, title: titleText, subtitle: descriptionText,
+                return HomeMessageViewModel(messageId: remoteMessage.id,
+                                            image: placeholder.rawValue, topText: nil, title: titleText, subtitle: descriptionText,
                                             buttons: [
                                                 HomeMessageButtonViewModel(title: primaryActionText,
                                                                            actionStyle: primaryAction.actionStyle,
@@ -54,7 +57,8 @@ struct HomeMessageViewModelBuilder {
                                             onDidClose: onDidClose)
             case .bigTwoAction(let titleText, let descriptionText, let placeholder, let primaryActionText,
                                let primaryAction, let secondaryActionText, let secondaryAction):
-                return HomeMessageViewModel(messageId: remoteMessage.id, image: placeholder.rawValue, topText: nil, title: titleText, subtitle: descriptionText,
+                return HomeMessageViewModel(messageId: remoteMessage.id,
+                                            image: placeholder.rawValue, topText: nil, title: titleText, subtitle: descriptionText,
                                             buttons: [
                                                 HomeMessageButtonViewModel(title: secondaryActionText,
                                                                            actionStyle: .cancel,

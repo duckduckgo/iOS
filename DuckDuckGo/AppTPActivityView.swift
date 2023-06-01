@@ -192,7 +192,7 @@ private enum Const {
     enum Size {
         static let cornerRadius: CGFloat = 12
         static let sectionIndentation: CGFloat = 16
-        static let sectionHeaderBottom: CGFloat = -4
+        static let sectionHeaderBottom: CGFloat = -2
         static let standardCellHeight: CGFloat = 44
     }
 }

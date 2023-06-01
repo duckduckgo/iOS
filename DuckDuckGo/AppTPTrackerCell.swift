@@ -55,7 +55,7 @@ struct AppTPTrackerCell: View {
                         .font(Font(uiFont: Const.Font.trackerDomain))
                         .foregroundColor(.trackerDomain)
                     
-                    Text(UserText.appTPTrackingAttempts(count: "\(trackerCount)"))
+                    Text(UserText.appTPTrackingAttempts(count: trackerCount))
                         .font(Font(uiFont: Const.Font.trackerCount))
                         .foregroundColor(.trackerSize)
                     
@@ -98,7 +98,7 @@ private enum Const {
         static let rowHeight: CGFloat = 78
         static let rowPadding: CGFloat = 16
         static let rowSpacing: CGFloat = 4
-        static let dividerPadding: CGFloat = 56
+        static let dividerPadding: CGFloat = 62
     }
 }
 

@@ -35,8 +35,7 @@ struct AppTPHomeView: View {
         .foregroundColor(Color.fontColor)
         .fixedSize(horizontal: false, vertical: true)
         .multilineTextAlignment(.leading)
-        .font(Font(uiFont: Const.Font.text))
-        .lineSpacing(Const.Spacing.line)
+        .fontWithLineHeight(font: Const.Font.text, lineHeight: Const.Spacing.lineHeight)
     }
     
     var disabledText: some View {
@@ -48,8 +47,7 @@ struct AppTPHomeView: View {
         .foregroundColor(Color.fontColor)
         .fixedSize(horizontal: false, vertical: true)
         .multilineTextAlignment(.leading)
-        .font(Font(uiFont: Const.Font.text))
-        .lineSpacing(Const.Spacing.line)
+        .fontWithLineHeight(font: Const.Font.text, lineHeight: Const.Spacing.lineHeight)
     }
     
     var image: some View {
@@ -104,7 +102,7 @@ private enum Const {
     
     enum Spacing {
         static let imageAndTitle: CGFloat = 4
-        static let line: CGFloat = 4
+        static let lineHeight: CGFloat = 20
     }
     
     enum Offset {

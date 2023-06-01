@@ -529,8 +529,15 @@ class MainViewController: UIViewController {
 
             let controller = presentedViewController ?? self
 
+            var point: Point? = Point(x: Int(self.view.frame.width / 2), y: 325)
+            var anchor: UIView = self.omniBar
+            if let promoController = controller as? MacPromoViewController {
+                anchor = promoController.anchor
+                point = nil
+            }
+
             controller.presentShareSheet(withItems: [TitledURLActivityItem(url, title)],
-                                         fromView: controller.view) { activityType, result, _, error in
+                                         fromView: anchor, atPoint: point) { activityType, result, _, error in
 
                 #warning("Remove this after the Mac Promo Experiment is over")
                 let experiment = MacPromoExperiment()

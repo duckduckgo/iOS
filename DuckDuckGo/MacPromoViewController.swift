@@ -27,9 +27,11 @@ class MacPromoViewController: UIHostingController<MacPromoView> {
 
     let experiment = MacPromoExperiment()
     var message: RemoteMessageModel?
+    var anchor: UIView!
 
     convenience init() {
         self.init(rootView: MacPromoView())
+        self.anchor = UIView(frame: .zero)
         rootView.model.controller = self
         message = experiment.message
         assert(message != nil)
@@ -43,6 +45,8 @@ class MacPromoViewController: UIHostingController<MacPromoView> {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         experiment.sheetWasShown()
+        anchor.center = view.center
+        view.addSubview(anchor)
     }
 
     override func viewDidDisappear(_ animated: Bool) {

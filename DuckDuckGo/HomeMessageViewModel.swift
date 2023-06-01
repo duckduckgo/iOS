@@ -27,6 +27,7 @@ struct HomeMessageViewModel: Equatable {
         case secondaryAction
     }
 
+    let messageId: String
     let image: String?
     let topText: String?
     let title: String
@@ -35,8 +36,13 @@ struct HomeMessageViewModel: Equatable {
     
     let onDidClose: (ButtonAction?, RemoteAction) -> Void
 
-    var isSharing: Bool {
-        return buttons.contains(where: { $0.actionStyle == .share })
+    var hasSharing: Bool {
+        for button in buttons {
+            if case .share = button.actionStyle {
+                return true
+            }
+        }
+        return false
     }
 
     static func == (lhs: HomeMessageViewModel, rhs: HomeMessageViewModel) -> Bool {
@@ -49,9 +55,9 @@ struct HomeMessageViewModel: Equatable {
 }
 
 struct HomeMessageButtonViewModel: Equatable {
-    enum ActionStyle {
+    enum ActionStyle: Equatable {
         case `default`
-        case share
+        case share(url: URL, title: String)
         case cancel
     }
     

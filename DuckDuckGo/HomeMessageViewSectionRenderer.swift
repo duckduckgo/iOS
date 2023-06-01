@@ -124,7 +124,7 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         let message = homePageConfiguration.homeMessages[indexPath.row]
         switch message {
         case .placeholder:
-            return HomeMessageViewModel(image: nil, topText: nil, title: "", subtitle: "", buttons: []) { [weak self] _, _ in
+            return HomeMessageViewModel(messageId: "", image: nil, topText: nil, title: "", subtitle: "", buttons: []) { [weak self] _, _ in
                 self?.dismissHomeMessage(message, at: indexPath, in: collectionView)
             }
         case .remoteMessage(let remoteMessage):
@@ -135,14 +135,14 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
 
                 switch action {
                 case .primaryAction:
-                    if !remoteAction.isSharing {
+                    if case .share = remoteAction.actionStyle {
                         self.dismissHomeMessage(message, at: indexPath, in: collectionView)
                     }
                     Pixel.fire(pixel: .remoteMessageShownPrimaryActionClicked,
                                withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
 
                 case .secondaryAction:
-                    if !remoteAction.isSharing {
+                    if case .share = remoteAction.actionStyle {
                         self.dismissHomeMessage(message, at: indexPath, in: collectionView)
                     }
                     Pixel.fire(pixel: .remoteMessageShownSecondaryActionClicked,
@@ -202,16 +202,4 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     private var isPad: Bool {
         return controller?.traitCollection.horizontalSizeClass == .regular
     }
-}
-
-extension RemoteAction {
-
-    var isSharing: Bool {
-        if case .share = self {
-            return true
-        }
-
-        return false
-    }
-
 }

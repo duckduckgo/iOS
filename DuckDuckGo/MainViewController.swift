@@ -100,7 +100,6 @@ class MainViewController: UIViewController {
     private let previewsSource = TabPreviewsSource()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private var launchTabObserver: LaunchTabNotification.Observer?
-    private var shareLinkObserver: ShareLinkNotification.Observer?
 
     private let appTrackingProtectionDatabase: CoreDataDatabase
     private let bookmarksDatabase: CoreDataDatabase
@@ -179,7 +178,6 @@ class MainViewController: UIViewController {
         loadInitialView()
         previewsSource.prepare()
         addLaunchTabNotificationObserver()
-        addShareLinkNotificationObserver()
         addDuckDuckGoEmailAuthenticationObservers()
 
         findInPageView.delegate = self
@@ -519,49 +517,6 @@ class MainViewController: UIViewController {
                 self.loadUrlInNewTab(url, inheritedAttribution: nil)
             } else {
                 self.loadQuery(urlString)
-            }
-        })
-    }
-
-    private func addShareLinkNotificationObserver() {
-        shareLinkObserver = ShareLinkNotification.addObserver(handler: { [weak self] urlString, title in
-            guard let self = self, let url = URL(string: urlString) else { return }
-
-            let controller = presentedViewController ?? self
-
-            var point: Point? = Point(x: Int(self.view.frame.width / 2), y: 325)
-            var anchor: UIView = self.omniBar
-            if let promoController = controller as? MacPromoViewController {
-                anchor = promoController.anchor
-                point = nil
-            }
-
-            controller.presentShareSheet(withItems: [TitledURLActivityItem(url, title)],
-                                         fromView: anchor, atPoint: point) { activityType, result, _, error in
-
-                #warning("Remove this after the Mac Promo Experiment is over")
-                let experiment = MacPromoExperiment()
-                let cohort = experiment.cohort.rawValue
-                var parameters = [
-                    "cohort": cohort,
-
-                    // Result returns false if the user opens it in DuckDuckGo (which causes the share sheet to get force closed)
-                    "success": "\(result || activityType?.rawValue == "com.duckduckgo.mobile.ios.ShareExtension")"
-                ]
-
-                if let error = error as? NSError {
-                    parameters["errorDomain"] = error.domain
-                    parameters["errorCode"] = "\(error.code)"
-                }
-
-                Pixel.fire(pixel: .shareLink, withAdditionalParameters: parameters)
-
-                if let controller = self.presentedViewController as? MacPromoViewController {
-                    controller.dismiss(animated: true)
-                } else {
-                    experiment.dismissMessage()
-                    self.homeController?.remoteMessagesDidChange()
-                }
             }
         })
     }

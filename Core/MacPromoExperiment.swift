@@ -20,6 +20,8 @@
 import Foundation
 import BrowserServicesKit
 import Core
+import UIKit
+import LinkPresentation
 
 /**
  Encapsulate logic for showing the two types of promo.
@@ -98,6 +100,25 @@ public class MacPromoExperiment {
         remoteMessagingStore.dismissRemoteMessage(withId: Self.promoId)
     }
 
+    func shareSheetFinished(_ messageId: String, activityType: UIActivity.ActivityType?, result: Bool, error: Error?) {
+        guard messageId == Self.promoId else { return }
+        let cohort = cohort.rawValue
+        var parameters = [
+            "cohort": cohort,
+
+            // Result returns false if the user opens it in DuckDuckGo (which causes the share sheet to get force closed)
+            "success": "\(result || activityType?.rawValue == "com.duckduckgo.mobile.ios.ShareExtension")"
+        ]
+
+        if let error = error as? NSError {
+            parameters["errorDomain"] = error.domain
+            parameters["errorCode"] = "\(error.code)"
+        }
+
+        Pixel.fire(pixel: .shareLink, withAdditionalParameters: parameters)
+        NotificationCenter.default.post(name: RemoteMessaging.Notifications.remoteMessagesDidChange, object: nil)
+    }
+
     private func assignCohort() {
         guard cohort == .unassigned else { return }
         cohort = randomBool() ? .sheet : .message
@@ -110,4 +131,33 @@ public class MacPromoExperiment {
         case unassigned
 
     }
+}
+
+class TitledURLActivityItem: NSObject, UIActivityItemSource, Identifiable {
+
+    let id: String
+    let url: URL
+    let title: String
+
+    init(_ url: URL, _ title: String) {
+        self.id = url.absoluteString
+        self.url = url
+        self.title = title
+    }
+
+    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        url
+    }
+
+    func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+        url
+    }
+
+    func activityViewControllerLinkMetadata(_ activityViewController: UIActivityViewController) -> LPLinkMetadata? {
+        let metadata = LPLinkMetadata()
+        metadata.title = title
+        metadata.url = url
+        return metadata
+    }
+
 }

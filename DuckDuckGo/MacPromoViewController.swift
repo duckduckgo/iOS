@@ -27,11 +27,9 @@ class MacPromoViewController: UIHostingController<MacPromoView> {
 
     let experiment = MacPromoExperiment()
     var message: RemoteMessageModel?
-    var anchor: UIView!
 
     convenience init() {
         self.init(rootView: MacPromoView())
-        self.anchor = UIView(frame: .zero)
         rootView.model.controller = self
         message = experiment.message
         assert(message != nil)
@@ -45,29 +43,54 @@ class MacPromoViewController: UIHostingController<MacPromoView> {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         experiment.sheetWasShown()
-        anchor.center = view.center
-        view.addSubview(anchor)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        experiment.sheetWasDismissed()
+
+        // This means the user did a swipe down, or closed the UI in some other way
+        //  ie they didn't click close or use the share link
+        if !rootView.model.programaticallyClosed {
+            experiment.sheetWasDismissed()
+        }
+
     }
 
     class ViewModel: ObservableObject {
 
         weak var controller: MacPromoViewController?
 
-        func shareLink() {
-            guard let message = controller?.message else { return }
+        var programaticallyClosed = false
+
+        var messageId: String {
+            controller?.message?.id ?? ""
+        }
+
+        var activityItem: TitledURLActivityItem? {
+            guard let message = controller?.message else { return nil }
             switch message.content {
             case .bigSingleAction(_, _, _, _, let action):
-                guard case .share(let url, let title) = action else { return }
-                controller?.experiment.sheetPrimaryActionClicked()
-                ShareLinkNotification.postShareLinkNotification(urlString: url, title: title)
+                guard case .share(let url, let title) = action,
+                        let url = URL(string: url) else { return nil }
+
+                return TitledURLActivityItem(url, title)
+
             default:
                 assertionFailure("unexpected content for mac promo")
+                return nil
             }
+        }
+
+        func shareSheetFinished(_ activityType: UIActivity.ActivityType?, _ result: Bool, _ items: [Any]?, _ error: Error?) {
+            programaticallyClosed = true
+            controller?.experiment.shareSheetFinished(messageId, activityType: activityType, result: result, error: error)
+            controller?.dismiss(animated: true)
+        }
+
+        func close() {
+            programaticallyClosed = true
+            controller?.experiment.sheetWasDismissed()
+            controller?.dismiss(animated: true)
         }
 
     }
@@ -76,16 +99,15 @@ class MacPromoViewController: UIHostingController<MacPromoView> {
 
 struct MacPromoView: View {
 
-    @Environment(\.presentationMode) var presentationMode
-
     @ObservedObject var model = MacPromoViewController.ViewModel()
+    @State var activityItem: TitledURLActivityItem?
 
     var body: some View {
         VStack {
 
             HStack {
                 Button {
-                    presentationMode.wrappedValue.dismiss()
+                    model.close()
                 } label: {
                     Text("Close")
                         .bold()
@@ -118,7 +140,7 @@ struct MacPromoView: View {
                     .padding(.bottom, 16)
 
                 Button {
-                    model.shareLink()
+                    activityItem = model.activityItem
                 } label: {
                     HStack {
                         Image(systemName: "square.and.arrow.up")
@@ -127,6 +149,12 @@ struct MacPromoView: View {
                 }
                 .buttonStyle(PrimaryButtonStyle())
                 .padding(.bottom, 24)
+                .sheet(item: $activityItem) { activityItem in
+                    ActivityViewController(activityItems: [activityItem],
+                                           applicationActivities: nil,
+                                           completionWithItemsHandler: model.shareSheetFinished)
+                    .modifier(ActivityViewPresentationModifier())
+                }
 
                 Text("Or on your Mac, go to:")
                     .daxSubheadRegular()

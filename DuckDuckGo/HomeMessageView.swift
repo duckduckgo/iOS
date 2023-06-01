@@ -37,7 +37,9 @@ struct RoundedRectStyle: ButtonStyle {
 
 struct HomeMessageView: View {
     let viewModel: HomeMessageViewModel
-    
+
+    @State var activityItem: TitledURLActivityItem?
+
     var body: some View {
         ZStack {
             closeButtonHeader
@@ -50,7 +52,7 @@ struct HomeMessageView: View {
                     subtitle
                         .padding(.top, 8)
 
-                    if viewModel.isSharing {
+                    if viewModel.hasSharing {
                         prompt
                     }
                 }
@@ -142,9 +144,15 @@ struct HomeMessageView: View {
         ForEach(viewModel.buttons, id: \.title) { model in
             let foreground: Color = model.actionStyle == .cancel ? .cancelButtonForeground : .white
             let background: Color = model.actionStyle == .cancel ? .cancelButtonBackground : .button
-            Button(action: model.action) {
+            Button {
+                if case .share(let url, let title) = model.actionStyle {
+                    activityItem = TitledURLActivityItem(url, title)
+                } else {
+                    model.action()
+                }
+            } label: {
                 HStack {
-                    if model.actionStyle == .share {
+                    if case .share = model.actionStyle {
                         Image(systemName: "square.and.arrow.up")
                     }
                     Text(model.title)
@@ -154,8 +162,27 @@ struct HomeMessageView: View {
             .buttonStyle(RoundedRectStyle(foregroundColor: foreground,
                                           backgroundColor: background))
             .padding([.bottom], Const.Padding.buttonVerticalInset)
+            .sheet(item: $activityItem) { activityItem in
+                ActivityViewController(activityItems: [activityItem]) { activityType, result, _, error in
+                    MacPromoExperiment().shareSheetFinished(viewModel.messageId, activityType: activityType, result: result, error: error)
+                }
+                .modifier(ActivityViewPresentationModifier())
+            }
+
         }
     }
+}
+
+struct ActivityViewPresentationModifier: ViewModifier {
+
+    func body(content: Content) -> some View {
+        if #available(iOS 16.0, *) {
+            content.presentationDetents([.medium])
+        } else {
+            content
+        }
+    }
+
 }
 
 private extension Color {
@@ -209,7 +236,8 @@ private enum Const {
 
 struct HomeMessageView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = HomeMessageViewModel(image: "RemoteMessageDDGAnnouncement",
+        let viewModel = HomeMessageViewModel(messageId: "Preview",
+                                             image: "RemoteMessageDDGAnnouncement",
                                              topText: "",
                                              title: "Placeholder Title",
                                              subtitle: "Body text goes here. This component can be used with one or two buttons.",
@@ -219,4 +247,20 @@ struct HomeMessageView_Previews: PreviewProvider {
         return HomeMessageView(viewModel: viewModel)
             .padding(.horizontal)
     }
+}
+
+struct ActivityViewController: UIViewControllerRepresentable {
+
+    var activityItems: [Any]
+    var applicationActivities: [UIActivity]?
+    var completionWithItemsHandler: UIActivityViewController.CompletionWithItemsHandler?
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
+        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
+        controller.completionWithItemsHandler = completionWithItemsHandler
+        return controller
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityViewController>) {}
+
 }

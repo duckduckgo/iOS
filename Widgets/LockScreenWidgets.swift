@@ -59,7 +59,6 @@ struct FavoritesLockScreenWidget: Widget {
     }
 }
 
-#warning("TODO")
 @available(iOSApplicationExtension 16.0, *)
 struct VoiceSearchLockScreenWidget: Widget {
 
@@ -77,7 +76,6 @@ struct VoiceSearchLockScreenWidget: Widget {
 
 }
 
-#warning("TODO")
 @available(iOSApplicationExtension 16.0, *)
 struct EmailProtectionLockScreenWidget: Widget {
 
@@ -95,7 +93,6 @@ struct EmailProtectionLockScreenWidget: Widget {
 
 }
 
-#warning("TODO")
 @available(iOSApplicationExtension 16.0, *)
 struct FireButtonLockScreenWidget: Widget {
 
@@ -118,13 +115,13 @@ struct LockScreenWidgetView: View {
 
     var body: some View {
         ZStack {
-                Image("Logo")
-                    .resizable()
+            Image(imageNamed)
+                .resizable()
 
-                Image(imageNamed)
-                    .resizable()
-                    .frame(width: 24, height: 24)
-                    .offset(y: 12)
+            Image("Logo")
+                .resizable()
+                .frame(width: 24, height: 24)
+                .offset(y: 12)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }

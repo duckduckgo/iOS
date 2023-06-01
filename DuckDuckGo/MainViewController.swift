@@ -473,6 +473,9 @@ class MainViewController: UIViewController {
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if let presentedViewController {
+            return presentedViewController.supportedInterfaceOrientations
+        }
         return DefaultTutorialSettings().hasSeenOnboarding ? [.allButUpsideDown] : [.portrait]
     }
 

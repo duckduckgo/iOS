@@ -81,7 +81,7 @@ struct MacPromoView: View {
                 } label: {
                     Text("Close")
                         .bold()
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                 }
                 .padding()
 

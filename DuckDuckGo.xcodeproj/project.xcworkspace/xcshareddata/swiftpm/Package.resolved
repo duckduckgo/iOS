@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "e1e50bab938c9722d1cf4f8b1f28a31308b14167",
-          "version": "58.1.1"
+          "branch": "daniel/macos-incontext-signup-updates",
+          "revision": "9475ad4efdcb031d07d145769b96d2dfe0103441",
+          "version": null
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
           "branch": null,
-          "revision": "d1558f7757b26f64364dd23d02d235c113d558ae",
-          "version": "7.1.0"
+          "revision": "44cd844b6bb5d8ccfefbd6e025817d800c26ad76",
+          "version": "7.2.0"
         }
       },
       {

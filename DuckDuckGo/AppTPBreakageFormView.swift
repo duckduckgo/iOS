@@ -142,13 +142,12 @@ struct AppTPBreakageFormView: View {
                             if self.description.isEmpty {
                                 TextEditor(text: $placeholderText)
                                     .font(.body)
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(Color(UIColor.placeholderText))
                                     .disabled(true)
                             }
                             
                             TextEditor(text: $description)
                                 .font(.body)
-                                .opacity(self.description.isEmpty ? 0.25 : 1)
                         }
                         .padding(.leading, Const.Size.commentFieldPadding)
                     }

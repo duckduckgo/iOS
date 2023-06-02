@@ -45,7 +45,7 @@ extension AppDelegate {
             mainViewController.forgetAllWithAnimation()
 
         case .voiceSearch:
-            print("*** voice search")
+            mainViewController.onVoiceSearchPressed()
 
         default:
             guard app.applicationState == .active,

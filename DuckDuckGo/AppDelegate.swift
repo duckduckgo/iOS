@@ -186,7 +186,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // MARK: Sync initialisation
 
         syncDataProviders = SyncDataProviders(bookmarksDatabase: bookmarksDatabase)
-        syncService = DDGSync(dataProvidersSource: syncDataProviders, log: .syncLog)
+        syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog)
 
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         

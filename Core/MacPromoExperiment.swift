@@ -102,6 +102,8 @@ public class MacPromoExperiment {
 
     func shareSheetFinished(_ messageId: String, activityType: UIActivity.ActivityType?, result: Bool, error: Error?) {
         guard messageId == Self.promoId else { return }
+        dismissMessage()
+        
         let cohort = cohort.rawValue
         var parameters = [
             "cohort": cohort,

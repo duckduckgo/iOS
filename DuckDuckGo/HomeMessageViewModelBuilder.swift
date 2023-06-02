@@ -79,10 +79,10 @@ struct HomeMessageViewModelBuilder {
                                      onDidClose: @escaping (HomeMessageViewModel.ButtonAction?, RemoteAction) -> Void) -> () -> Void {
 
         switch remoteAction {
-        case .share: return {
-            // no-op
-        }
-
+        case .share:
+            return {
+                onDidClose(buttonAction, remoteAction)
+            }
         case .url(let value):
             return {
                 LaunchTabNotification.postLaunchTabNotification(urlString: value)

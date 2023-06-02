@@ -165,6 +165,7 @@ struct HomeMessageView: View {
             .sheet(item: $activityItem) { activityItem in
                 ActivityViewController(activityItems: [activityItem]) { activityType, result, _, error in
                     MacPromoExperiment().shareSheetFinished(viewModel.messageId, activityType: activityType, result: result, error: error)
+                    model.action()
                 }
                 .modifier(ActivityViewPresentationModifier())
             }

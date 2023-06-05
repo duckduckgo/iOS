@@ -89,4 +89,12 @@ extension PasswordGenerationPromptViewController: PasswordGenerationPromptViewMo
             self.completion?(false)
         }
     }
+
+    func passwordGenerationPromptViewModelDidResizeContent(_ viewModel: PasswordGenerationPromptViewModel, contentHeight: CGFloat) {
+        if #available(iOS 16.0, *) {
+            if let sheetPresentationController = self.presentationController as? UISheetPresentationController {
+                sheetPresentationController.detents = [.custom(resolver: { _ in contentHeight })]
+            }
+        }
+    }
 }

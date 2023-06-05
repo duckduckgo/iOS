@@ -74,12 +74,13 @@ class BasicAuthenticationAlert: UIAlertController {
         }
         updateButtons()
     }
-    
+
     private func createLogInAction(with completion: @escaping LogInCompletion) -> UIAlertAction {
-        return addAction(title: UserText.authAlertLogInButtonTitle, style: .default) {
+        return addAction(title: UserText.authAlertLogInButtonTitle, style: .default) { [weak self] in
+            guard let self else { return }
             guard let login = self.usernameField.text else { return }
             guard let password = self.passwordField.text else { return }
-            
+
             completion(login, password)
         }
     }

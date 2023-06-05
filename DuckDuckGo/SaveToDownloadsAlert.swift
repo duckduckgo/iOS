@@ -28,18 +28,28 @@ struct SaveToDownloadsAlert {
         let style: UIAlertController.Style = UIDevice.current.userInterfaceIdiom == .pad ? .alert : .actionSheet
         let title = SaveToDownloadsAlert.makeTitle(downloadMetadata: downloadMetadata)
         let alert = UIAlertController(title: title, message: nil, preferredStyle: style)
+        var completionCalled = false
         alert.overrideUserInterfaceStyle()
 
         let saveToDownloadsAction = UIAlertAction(title: UserText.actionSaveToDownloads, style: .default) { _ in
             saveToDownloadsHandler()
+            completionCalled = true
         }
         
         let cancelAction = UIAlertAction(title: UserText.actionCancel, style: .cancel) { _ in
             cancelHandler?()
+            completionCalled = true
         }
 
         alert.addAction(saveToDownloadsAction)
         alert.addAction(cancelAction)
+
+        alert.onDeinit {
+            if !completionCalled {
+                cancelHandler?()
+            }
+        }
+
         return alert
     }
     

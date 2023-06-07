@@ -36,7 +36,7 @@ struct SaveLoginView: View {
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @State private var orientation = UIDevice.current.orientation
 
-    var layoutType: LayoutType {
+    private var layoutType: LayoutType {
         viewModel.layoutType
     }
 
@@ -74,196 +74,134 @@ struct SaveLoginView: View {
         GeometryReader { geometry in
             makeBodyView(geometry)
         }
-        .padding(.horizontal, isIPhonePortrait ? 16 : 48)
-        .ignoresSafeArea(edges: [.top, .bottom])
         .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
             orientation = UIDevice.current.orientation
         }
     }
     
     private func makeBodyView(_ geometry: GeometryProxy) -> some View {
-        // Workaround for the isSmallFrame property to return the correct value
-        // .async to fix the "Modifying state during view update, this will cause undefined behavior." issue
-        // TODO remove this for V2
         DispatchQueue.main.async { self.frame = geometry.size }
         
         return ZStack {
-            closeButtonHeader
-                .offset(x: isIPhonePortrait ? 16 : 48)
+            AutofillViews.CloseButtonHeader(action: viewModel.cancelButtonPressed)
+                .offset(x: AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) ? Const.Size.closeButtonOffsetPortrait
+                                                                                                           : Const.Size.closeButtonOffset)
+                .zIndex(1)
 
-            VStack(spacing: 0) {
-                titleHeaderView
-                contentViewTopSpacer
-                contentView
-                contentViewBottomSpacer
+            VStack {
+                Spacer()
+                    .frame(height: Const.Size.topPadding)
+                AutofillViews.WebsiteWithFavicon(accountDomain: viewModel.accountDomain)
+                Spacer()
+                    .frame(height: Const.Size.headlineTopPadding)
+                AutofillViews.Headline(title: title)
+                if #available(iOS 16.0, *) {
+                    contentView
+                        .padding([.top, .bottom], contentPadding)
+                } else {
+                    Spacer()
+                    contentView
+                    Spacer()
+                }
                 ctaView
                 bottomSpacer
             }
+            .background(GeometryReader { proxy -> Color in
+                DispatchQueue.main.async { viewModel.contentHeight = proxy.size.height }
+                return Color.clear
+            })
+            .useScrollView(shouldUseScrollView(), minHeight: frame.height)
         }
-    }
-    
-    var closeButtonHeader: some View {
-        VStack {
-            HStack {
-                Spacer()
-                closeButton
-                    .padding(5)
-            }
-            Spacer()
-        }
-    }
-    
-    private var closeButton: some View {
-        Button {
-            viewModel.cancelButtonPressed()
-        } label: {
-            Image("Close-24")
-                .resizable()
-                .scaledToFit()
-                .frame(width: Const.Size.closeButtonSize, height: Const.Size.closeButtonSize)
-                .foregroundColor(.primary)
-        }
-        .frame(width: Const.Size.closeButtonTappableArea, height: Const.Size.closeButtonTappableArea)
-        .contentShape(Rectangle())
-    }
-    
-    var titleHeaderView: some View {
-        VStack(spacing: 0) {
-            HStack {
-                FaviconView(viewModel: FaviconViewModel(domain: viewModel.accountDomain))
-                    .scaledToFit()
-                    .frame(width: Const.Size.logoImage, height: Const.Size.logoImage)
-                Text(viewModel.accountDomain)
-                    .foregroundColor(Color(designSystemColor: .textSecondary))
-                    .font(Const.Fonts.titleCaption)
-            }
-
-            Text(title)
-                .font(Const.Fonts.title)
-                .frame(maxWidth: .infinity)
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.top, isSmallFrame ? 2 : (isIPhonePortrait ? 25 : 29))
-        }
-        .frame(width: isIPhone ? Const.Size.contentWidth : frame.width)
-        .padding(.top, isSmallFrame ? 20 : (isIPhonePortrait ? 40 : 54))
+        .padding(.horizontal, AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) ? Const.Size.closeButtonOffsetPortrait
+                                                                                                              : Const.Size.closeButtonOffset)
     }
 
-    var contentViewTopSpacer: some View {
+    private func shouldUseScrollView() -> Bool {
+        var useScrollView: Bool = false
+
+        if #available(iOS 16.0, *) {
+            useScrollView = viewModel.contentHeight > UIScreen.main.bounds.size.height - (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0)
+        } else {
+            useScrollView = viewModel.contentHeight > frame.height + Const.Size.ios15scrollOffset
+        }
+
+        return useScrollView
+    }
+
+    private var contentPadding: CGFloat {
+        if AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) {
+            return Const.Size.contentSpacerHeight
+        } else if AutofillViews.isIPad(verticalSizeClass, horizontalSizeClass) {
+            return Const.Size.contentSpacerHeightIPad
+        } else {
+            return Const.Size.contentSpacerHeightLandscape
+        }
+    }
+
+    private var ctaView: some View {
+        VStack(spacing: Const.Size.ctaVerticalSpacing) {
+            AutofillViews.PrimaryButton(title: confirmButton,
+                                                 action: viewModel.save)
+
+            AutofillViews.TertiaryButton(title: UserText.autofillSaveLoginNotNowCTA,
+                                                  action: viewModel.cancelButtonPressed)
+        }
+    }
+
+    private var bottomSpacer: some View {
         VStack {
-            if isIPad {
-                Spacer()
-            } else if layoutType == .newUser || layoutType == .saveLogin {
-                Spacer()
-                    .frame(maxHeight: isSmallFrame ? 8 : 24)
+            if AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) {
+                AutofillViews.LegacySpacerView(height: Const.Size.bottomSpacerHeight, legacyHeight: Const.Size.bottomSpacerLegacyHeight)
+            } else if AutofillViews.isIPad(verticalSizeClass, horizontalSizeClass) {
+                AutofillViews.LegacySpacerView(height: Const.Size.bottomSpacerHeightIPad,
+                                                        legacyHeight: orientation == .portrait ? Const.Size.bottomSpacerHeightIPad
+                                                                                               : Const.Size.bottomSpacerLegacyHeightIPad)
             } else {
-                Spacer()
-                    .frame(maxHeight: isSmallFrame ? 24 : 56)
+                AutofillViews.LegacySpacerView(height: Const.Size.bottomSpacerHeight,
+                                                        legacyHeight: Const.Size.bottomSpacerLegacyHeightLandscape)
             }
         }
     }
 
-    var contentViewBottomSpacer: some View {
-        VStack {
-            if isIPad {
-                Spacer()
-            } else if layoutType == .newUser || layoutType == .saveLogin {
-                Spacer()
-                    .frame(maxHeight: isSmallFrame ? 24 : 40)
-            } else {
-                Spacer()
-                    .frame(maxHeight: isSmallFrame ? 24 : 56)
-            }
-        }
-    }
-
-    var ctaView: some View {
-        VStack(spacing: 8) {
-            Button {
-                viewModel.save()
-            } label: {
-                Text(confirmButton)
-                        .font(Const.Fonts.CTA)
-                        .padding()
-                        .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight - Const.Size.buttonBorderWidth)
-                        .foregroundColor(Const.Colors.CTAPrimaryForeground)
-                        .background(Const.Colors.CTAPrimaryBackground)
-                        .cornerRadius(Const.Size.CTAButtonCornerRadius)
-            }
-
-            Button {
-                viewModel.cancelButtonPressed()
-            } label: {
-                Text(UserText.autofillSaveLoginNotNowCTA)
-                        .font(Const.Fonts.CTA)
-                        .padding()
-                        .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight - Const.Size.buttonBorderWidth)
-                        .foregroundColor(Const.Colors.CTASecondaryForeground)
-                        .background(Const.Colors.CTATertiaryBackground)
-                        .cornerRadius(Const.Size.CTAButtonCornerRadius)
-            }
-        }
-        .frame(width: isIPhonePortrait ? Const.Size.contentWidth : frame.width)
-    }
-
-    var bottomSpacer: some View {
-        VStack {
-            if isIPhonePortrait {
-                Spacer()
-            } else if isIPad {
-                Spacer()
-                    .frame(height: orientation == .portrait ? 24 : 64)
-            } else {
-                Spacer()
-                    .frame(height: 44)
-            }
-        }
-    }
-    
     @ViewBuilder
     private var contentView: some View {
         switch layoutType {
         case .newUser, .saveLogin, .savePassword, .updatePassword:
-            defaultContentView
+            let text = layoutType == .updatePassword ? UserText.autoUpdatePasswordMessage : UserText.autofillSaveLoginMessageNewUser
+            AutofillViews.Description(text: text)
         case .updateUsername:
             updateUsernameContentView
         }
     }
-    
-    private var defaultContentView: some View {
-        Text(layoutType == .updatePassword ? UserText.autoUpdatePasswordMessage : UserText.autofillSaveLoginMessageNewUser)
-            .font(Const.Fonts.subtitle)
-            .foregroundColor(Color(designSystemColor: .textSecondary))
-            .multilineTextAlignment(.center)
-            .padding(.horizontal, isSmallFrame ? Const.Size.paddingSmallDevice : Const.Size.paddingDefault)
-            .frame(width: isIPhonePortrait ? Const.Size.contentWidth : frame.width)
-            .fixedSize(horizontal: false, vertical: true)
-    }
-    
+
     private var updateUsernameContentView: some View {
         Text(verbatim: viewModel.usernameTruncated)
             .font(Const.Fonts.userInfo)
             .lineLimit(1)
-            .frame(maxWidth: .infinity)
             .multilineTextAlignment(.center)
-            .padding(.horizontal, isSmallFrame ? Const.Size.paddingSmallDevice : Const.Size.paddingDefault)
     }
-    
-    // We have specific layouts for the smaller iPhones
-    private var isSmallFrame: Bool {
-        frame.width <= Const.Size.smallDevice || frame.height <= Const.Size.smallDevice
+}
+
+private enum Const {
+    enum Fonts {
+        static let userInfo = Font.system(.footnote).weight(.bold)
     }
 
-    private var isIPhonePortrait: Bool {
-        verticalSizeClass == .regular && horizontalSizeClass == .compact
-    }
-
-    private var isIPhone: Bool {
-        verticalSizeClass == .compact || horizontalSizeClass == .compact
-    }
-
-    private var isIPad: Bool {
-        verticalSizeClass == .regular && horizontalSizeClass == .regular
+    enum Size {
+        static let closeButtonOffset: CGFloat = 48.0
+        static let closeButtonOffsetPortrait: CGFloat = 44.0
+        static let topPadding: CGFloat = 56.0
+        static let headlineTopPadding: CGFloat = 24.0
+        static let ios15scrollOffset: CGFloat = 80.0
+        static let contentSpacerHeight: CGFloat = 24.0
+        static let contentSpacerHeightIPad: CGFloat = 34.0
+        static let contentSpacerHeightLandscape: CGFloat = 44.0
+        static let ctaVerticalSpacing: CGFloat = 8.0
+        static let bottomSpacerHeight: CGFloat = 12.0
+        static let bottomSpacerHeightIPad: CGFloat = 24.0
+        static let bottomSpacerLegacyHeight: CGFloat = 16.0
+        static let bottomSpacerLegacyHeightIPad: CGFloat = 64.0
+        static let bottomSpacerLegacyHeightLandscape: CGFloat = 44.0
     }
 }
 
@@ -325,51 +263,5 @@ struct SaveLoginView_Previews: PreviewProvider {
                 SaveLoginView(viewModel: viewModelSavePassword)
             }
         }
-        
     }
-}
-
-private enum Const {
-    enum Fonts {
-        static let title = Font.system(.title3).weight(.bold)
-        static let subtitle = Font.system(.footnote)
-        static let updatedInfo = Font.system(.callout)
-        static let titleCaption = Font.system(.footnote)
-        static let userInfo = Font.system(.footnote).weight(.bold)
-        static let CTA = Font(UIFont.boldAppFont(ofSize: 16))
-    }
-
-    enum Margin {
-        static var closeButtonMargin: CGFloat {
-            Const.Size.closeButtonOffset - 21
-        }
-    }
-    
-    enum Size {
-        static let contentWidth: CGFloat = 286
-        static let closeButtonSize: CGFloat = 24
-        static let closeButtonTappableArea: CGFloat = 44
-        static let logoImage: CGFloat = 20
-        static let smallDevice: CGFloat = 320
-        static var closeButtonOffset: CGFloat {
-            closeButtonTappableArea - closeButtonSize
-        }
-        static let paddingSmallDevice: CGFloat = 28
-        static let paddingDefault: CGFloat = 30
-        static let CTAButtonCornerRadius: CGFloat = 12
-        static let buttonBorderWidth: CGFloat = 2
-        static let CTAButtonMaxHeight: CGFloat = 50
-    }
-
-    enum Colors {
-        static let CTAPrimaryBackground = Color("CTAPrimaryBackground")
-        static let CTASecondaryBackground = Color("CTASecondaryBackground")
-        static let CTATertiaryBackground = Color("CTATertiaryBackground")
-        static let CTAPrimaryForeground = Color("CTAPrimaryForeground")
-        static let CTASecondaryForeground = Color("CTASecondaryForeground")
-        static let PrimaryTextColor = Color("PrimaryTextColor")
-        static let SecondaryTextColor = Color("SecondaryTextColor")
-        static let CTASecondaryBorder = Color("CTASecondaryBorder")
-    }
-
 }

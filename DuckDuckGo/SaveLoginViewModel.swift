@@ -25,10 +25,17 @@ protocol SaveLoginViewModelDelegate: AnyObject {
     func saveLoginViewModelDidSave(_ viewModel: SaveLoginViewModel)
     func saveLoginViewModelDidCancel(_ viewModel: SaveLoginViewModel)
     func saveLoginViewModelConfirmKeepUsing(_ viewModel: SaveLoginViewModel, isAlreadyDismissed: Bool)
+    func saveLoginViewModelDidResizeContent(_ viewModel: SaveLoginViewModel, contentHeight: CGFloat)
 }
 
 final class SaveLoginViewModel: ObservableObject {
-    
+
+    private enum Constants {
+        static let minSaveLoginHeight = 375.0
+        static let minSavePasswordHeight = 340.0
+        static let minUpdateUsernameHeight = 310.0
+    }
+
     /*
      - The url of the last site where autofill was declined is stored in app memory
      - The count of the number of times autofill has been declined is kept in user defaults
@@ -57,6 +64,24 @@ final class SaveLoginViewModel: ObservableObject {
     var didSave = false
     
     weak var delegate: SaveLoginViewModelDelegate?
+
+    var minHeight: CGFloat {
+        switch layoutType {
+        case .newUser, .saveLogin:
+            return Constants.minSaveLoginHeight
+        case .savePassword, .updatePassword:
+            return Constants.minSavePasswordHeight
+        case .updateUsername:
+            return Constants.minUpdateUsernameHeight
+        }
+    }
+
+    var contentHeight: CGFloat = Constants.minUpdateUsernameHeight {
+        didSet {
+            guard contentHeight != oldValue else { return }
+            delegate?.saveLoginViewModelDidResizeContent(self, contentHeight: max(contentHeight, minHeight))
+        }
+    }
 
     var accountDomain: String {
         credentialManager.accountDomain

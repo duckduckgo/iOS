@@ -63,8 +63,29 @@ class MacPromoViewController: UIHostingController<MacPromoView> {
         var programaticallyClosed = false
 
         var messageId: String {
-            controller?.message?.id ?? ""
+            homeViewModel?.messageId ?? ""
         }
+
+        var title: String {
+            homeViewModel?.title ?? ""
+        }
+
+        var subtitle: String {
+            homeViewModel?.subtitle ?? ""
+        }
+
+        var image: String {
+            homeViewModel?.image ?? ""
+        }
+
+        var primaryAction: String {
+            homeViewModel?.buttons[0].title ?? ""
+        }
+
+        lazy var homeViewModel: HomeMessageViewModel? = {
+            guard let message = controller?.message else { return nil }
+            return HomeMessageViewModelBuilder.build(for: message, onDidClose: { _, _ in })
+        }()
 
         var activityItem: TitledURLActivityItem? {
             guard let message = controller?.message else { return nil }
@@ -110,8 +131,7 @@ struct MacPromoView: View {
                     model.close()
                 } label: {
                     Text("Close")
-                        .bold()
-                        .foregroundColor(.primary)
+                        .foregroundColor(Color(designSystemColor: .textPrimary))
                 }
                 .padding()
 
@@ -121,33 +141,29 @@ struct MacPromoView: View {
 
             VStack {
 
-                Image("RemoteMessageMacComputer")
+                Image(model.image)
                     .padding(.bottom, 16)
 
-                Text("Get DuckDuckGo Browser for Mac")
+                Text(model.title)
                     .daxTitle1()
                     .foregroundColor(Color(designSystemColor: .textPrimary))
                     .padding(.bottom, 24)
 
-                Text("Search privately, block trackers and hide cookie pop-ups on your Mac for free!")
+                Text(model.subtitle)
                     .daxHeadline()
                     .foregroundColor(Color(designSystemColor: .textPrimary))
                     .padding(.bottom, 24)
-
-                Text("Send a link to yourself for later:")
-                    .daxBodyRegular()
-                    .foregroundColor(Color(designSystemColor: .textPrimary))
-                    .padding(.bottom, 16)
 
                 Button {
                     activityItem = model.activityItem
                 } label: {
                     HStack {
                         Image(systemName: "square.and.arrow.up")
-                        Text("Send Link")
+                        Text(model.primaryAction)
                     }
                 }
-                .buttonStyle(PrimaryButtonStyle())
+                .buttonStyle(RoundedRectStyle(foregroundColor: .white,
+                                              backgroundColor: Color(designSystemColor: .accent)))
                 .padding(.bottom, 24)
                 .sheet(item: $activityItem) { activityItem in
                     ActivityViewController(activityItems: [activityItem],
@@ -156,14 +172,11 @@ struct MacPromoView: View {
                     .modifier(ActivityViewPresentationModifier())
                 }
 
-                Text("Or on your Mac, go to:")
+                #warning("Hardcoded for experiment")
+                Text("Or visit **duckduckgo.com/browser**")
                     .daxSubheadRegular()
                     .foregroundColor(Color(designSystemColor: .textPrimary))
                     .padding(.bottom, 4)
-
-                Text("duckduckgo.com/mac")
-                    .daxSubheadSemibold()
-                    .foregroundColor(Color(.link))
 
                 Spacer()
 

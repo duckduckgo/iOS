@@ -51,10 +51,6 @@ struct HomeMessageView: View {
                     title
                     subtitle
                         .padding(.top, 8)
-
-                    if viewModel.hasSharing {
-                        prompt
-                    }
                 }
                 .padding(.horizontal, 24)
 
@@ -63,6 +59,15 @@ struct HomeMessageView: View {
                 }
                 .padding(.top, 8)
                 .padding(.horizontal, 32)
+
+                if viewModel.messageId == MacPromoExperiment.promoId {
+                    #warning("Hardcoded for experiment")
+                    Text("Or visit **duckduckgo.com/browser**")
+                        .daxSubheadRegular()
+                        .foregroundColor(Color(designSystemColor: .textPrimary))
+                        .padding(.vertical, 4)
+                }
+
             }
             .multilineTextAlignment(.center)
             .padding(.vertical)
@@ -129,17 +134,8 @@ struct HomeMessageView: View {
     private var subtitle: some View {
         Text(viewModel.subtitle)
             .daxBodyRegular()
-            .padding(.top, Const.Spacing.titleAndSubtitle)
     }
 
-    // EXP2: Hardcoded for experiment
-    private var prompt: some View {
-        Text("Send a link to yourself for later:")
-            .daxSubheadRegular()
-            .foregroundColor(Color(designSystemColor: .textSecondary))
-            .padding(.top, Const.Spacing.prompt)
-    }
-    
     private var buttons: some View {
         ForEach(viewModel.buttons, id: \.title) { model in
             let foreground: Color = model.actionStyle == .cancel ? .cancelButtonForeground : .white
@@ -222,7 +218,6 @@ private enum Const {
         static let imageAndTitle: CGFloat = 8
         static let titleAndSubtitle: CGFloat = 4
         static let subtitleAndButtons: CGFloat = 6
-        static let prompt: CGFloat = 12
         static let line: CGFloat = 4
     }
     

@@ -76,6 +76,9 @@ class AutofillLoginPromptViewController: UIViewController {
     }
     
     private var isExpanded: Bool {
+        if #available(iOS 16.0, *) {
+            return true
+        }
         if #available(iOS 15.0, *),
            let presentationController = presentationController as? UISheetPresentationController {
             if presentationController.selectedDetentIdentifier == nil &&
@@ -173,6 +176,14 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
         if #available(iOS 15.0, *) {
             dismiss(animated: true) {
                 self.completion?(nil, true)
+            }
+        }
+    }
+
+    func autofillLoginPromptViewModelDidResizeContent(_ viewModel: AutofillLoginPromptViewModel, contentHeight: CGFloat) {
+        if #available(iOS 16.0, *) {
+            if let sheetPresentationController = self.presentationController as? UISheetPresentationController {
+                sheetPresentationController.detents = [.custom(resolver: { _ in contentHeight })]
             }
         }
     }

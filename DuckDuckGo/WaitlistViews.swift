@@ -128,7 +128,7 @@ struct BrowserDowloadLinkConstants {
         case .windows:
             return "WindowsWaitlistJoinWaitlist"
         case .mac:
-            return "RemoteMessageMacComputer"
+            return "WaitlistMacComputer"
         }
     }
     var title: String {

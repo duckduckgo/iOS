@@ -474,9 +474,13 @@ extension TabSwitcherViewController: TabObserver {
     func didChange(tab: Tab) {
         // Reloading when updates are processed will result in a crash
         guard !isProcessingUpdates else { return }
-        
+
         if let index = tabsModel.indexOf(tab: tab), index < collectionView.numberOfItems(inSection: 0) {
-            collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
+            if #available(iOS 15.0, *) {
+                collectionView.reconfigureItems(at: [IndexPath(row: index, section: 0)])
+            } else {
+                collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
+            }
         }
     }
 }

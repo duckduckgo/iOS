@@ -45,8 +45,9 @@ public struct BookmarksExporter {
         guard let rootFolder = BookmarkUtils.fetchRootFolder(context) else {
             throw BookmarksExporterError.brokenDatabaseStructure
         }
-        
-        let topLevelBookmarksAndFavorites = rootFolder.childrenArray
+
+        let orphanedBookmarks = BookmarkUtils.fetchOrphanedEntities(context)
+        let topLevelBookmarksAndFavorites = rootFolder.childrenArray + orphanedBookmarks
         content.append(contentsOf: export(topLevelBookmarksAndFavorites, level: 2))
         content.append(Template.footer)
         return content.joined()

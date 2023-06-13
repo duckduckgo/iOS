@@ -20,6 +20,7 @@
 import Common
 import UIKit
 import Core
+import DDGSync
 import MobileCoreServices
 import UniformTypeIdentifiers
 import Bookmarks
@@ -53,6 +54,9 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     private let bookmarksDatabase: CoreDataDatabase
     private let favicons: Favicons
+    private let syncService: DDGSyncing
+    private var localUpdatesCancellable: AnyCancellable?
+    private var syncUpdatesCancellable: AnyCancellable?
 
     /// Creating left and right toolbar UIBarButtonItems with customView so that 'Edit' button is centered
     private lazy var addFolderButton: UIButton = {
@@ -106,16 +110,35 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
           bookmarksDatabase: CoreDataDatabase,
           bookmarksSearch: BookmarksStringSearch,
           parentID: NSManagedObjectID? = nil,
-          favicons: Favicons = Favicons.shared) {
+          favicons: Favicons = Favicons.shared,
+          syncService: DDGSyncing) {
         self.bookmarksDatabase = bookmarksDatabase
         self.searchDataSource = SearchBookmarksDataSource(searchEngine: bookmarksSearch)
         self.viewModel = BookmarkListViewModel(bookmarksDatabase: bookmarksDatabase, parentID: parentID)
         self.favicons = favicons
+        self.syncService = syncService
         super.init(coder: coder)
+
+        bindSyncService()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("Not implemented")
+    }
+
+    private func bindSyncService() {
+        localUpdatesCancellable = viewModel.localUpdates
+            .sink { [weak self] in
+                self?.syncService.scheduler.notifyDataChanged()
+            }
+
+        syncUpdatesCancellable = (UIApplication.shared.delegate as? AppDelegate)?.syncDataProviders.bookmarksAdapter.syncDidCompletePublisher
+            .sink { [weak self] _ in
+                self?.viewModel.reloadData()
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                }
+            }
     }
 
     override func viewDidLoad() {
@@ -238,7 +261,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             let controller = BookmarksViewController(coder: coder,
                                                      bookmarksDatabase: self.bookmarksDatabase,
                                                      bookmarksSearch: self.searchDataSource.searchEngine,
-                                                     parentID: parent.objectID)
+                                                     parentID: parent.objectID,
+                                                     syncService: self.syncService)
             controller?.delegate = self.delegate
             return controller
         })
@@ -339,7 +363,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             let domains = domainsInBookmarkTree(bookmark)
 
             let oldCount = viewModel.bookmarks.count
-            viewModel.deleteBookmark(bookmark)
+            viewModel.softDeleteBookmark(bookmark)
             let newCount = viewModel.bookmarks.count
 
             // Make sure we are animating only single removal
@@ -513,7 +537,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         if let id = sender as? NSManagedObjectID {
             guard let controller = AddOrEditBookmarkViewController(coder: coder,
                                                                    editingEntityID: id,
-                                                                   bookmarksDatabase: bookmarksDatabase) else {
+                                                                   bookmarksDatabase: bookmarksDatabase,
+                                                                   syncService: syncService) else {
                 assertionFailure("Failed to create controller")
                 return nil
             }
@@ -522,7 +547,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         } else {
             guard let controller = AddOrEditBookmarkViewController(coder: coder,
                                                                    parentFolderID: viewModel.currentFolder?.objectID,
-                                                                   bookmarksDatabase: bookmarksDatabase) else {
+                                                                   bookmarksDatabase: bookmarksDatabase,
+                                                                   syncService: syncService) else {
                 assertionFailure("Failed to create controller")
                 return nil
             }
@@ -532,7 +558,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
     
     @IBSegueAction func onCreateFavoritesView(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> FavoritesViewController {
-        guard let controller = FavoritesViewController(coder: coder, bookmarksDatabase: bookmarksDatabase) else {
+        guard let controller = FavoritesViewController(coder: coder, bookmarksDatabase: bookmarksDatabase, syncService: syncService) else {
             fatalError("Failed to create controller")
         }
 

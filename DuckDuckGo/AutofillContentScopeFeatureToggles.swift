@@ -28,11 +28,12 @@ extension ContentScopeFeatureToggles {
     static var supportedFeaturesOniOS: ContentScopeFeatureToggles {
         let isAutofillEnabledInSettings = AutofillSettingStatus.isAutofillEnabledInSettings
         return ContentScopeFeatureToggles(emailProtection: true,
+                                   emailProtectionIncontextSignup: false,
                                    credentialsAutofill: featureFlagger.isFeatureOn(.autofillCredentialInjecting) && isAutofillEnabledInSettings,
                                    identitiesAutofill: false,
                                    creditCardsAutofill: false,
                                    credentialsSaving: featureFlagger.isFeatureOn(.autofillCredentialsSaving) && isAutofillEnabledInSettings,
-                                   passwordGeneration: false,
+                                   passwordGeneration: featureFlagger.isFeatureOn(.autofillPasswordGeneration) && isAutofillEnabledInSettings,
                                    inlineIconCredentials: featureFlagger.isFeatureOn(.autofillInlineIconCredentials) && isAutofillEnabledInSettings,
                                    thirdPartyCredentialsProvider: false)
     }

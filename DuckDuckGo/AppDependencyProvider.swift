@@ -20,6 +20,8 @@
 import Foundation
 import Core
 import BrowserServicesKit
+import DDGSync
+import Bookmarks
 
 protocol DependencyProvider {
     var appSettings: AppSettings { get }

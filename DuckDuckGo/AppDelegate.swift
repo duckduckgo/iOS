@@ -31,6 +31,7 @@ import Crashes
 import Configuration
 import Networking
 import DDGSync
+import SyncDataProviders
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -58,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var lastBackgroundDate: Date?
 
     private(set) var syncService: DDGSyncing!
-    private(set) var syncPersistence: SyncDataPersistor!
+    private(set) var syncDataProviders: SyncDataProviders!
 
     // MARK: lifecycle
 
@@ -151,6 +152,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
                                                   to: context)
             legacyStorage?.removeStore()
+
             WidgetCenter.shared.reloadAllTimelines()
         }
 
@@ -166,7 +168,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fatalError("Could not create AppTP database stack: \(error?.localizedDescription ?? "err")")
             }
         }
-        
+
         Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
             WidgetCenter.shared.reloadAllTimelines()
         }
@@ -181,12 +183,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DaxDialogs.shared.primeForUse()
         }
 
+        // MARK: Sync initialisation
+
+        syncDataProviders = SyncDataProviders(bookmarksDatabase: bookmarksDatabase)
+        syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog)
+
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         
         guard let main = storyboard.instantiateInitialViewController(creator: { coder in
             MainViewController(coder: coder,
                                bookmarksDatabase: self.bookmarksDatabase,
-                               appTrackingProtectionDatabase: self.appTrackingProtectionDatabase)
+                               appTrackingProtectionDatabase: self.appTrackingProtectionDatabase,
+                               syncService: self.syncService)
         }) else {
             fatalError("Could not load MainViewController")
         }
@@ -212,10 +220,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.windowScene?.screenshotService?.delegate = self
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
-
-        // MARK: Sync initialisation
-        syncPersistence = SyncDataPersistor()
-        syncService = DDGSync(persistence: syncPersistence)
 
         appIsLaunching = true
         return true
@@ -286,6 +290,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
             }
         }
+
+        syncService.scheduler.notifyAppLifecycleEvent()
     }
 
     private func fireAppLaunchPixel() {

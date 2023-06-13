@@ -61,8 +61,7 @@ struct HomeMessageView: View {
                 .padding(.horizontal, 32)
 
                 if viewModel.messageId == MacPromoExperiment.promoId {
-                    #warning("Hardcoded for experiment")
-                    Text("Or visit **duckduckgo.com/browser**")
+                    Text("Or visit **duckduckgo.com/browser** on your computer.")
                         .daxSubheadRegular()
                         .foregroundColor(Color(designSystemColor: .textPrimary))
                         .padding(.vertical, 4)

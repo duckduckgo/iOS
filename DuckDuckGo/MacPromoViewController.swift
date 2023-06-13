@@ -173,7 +173,7 @@ struct MacPromoView: View {
                 }
 
                 #warning("Hardcoded for experiment")
-                Text("Or visit **duckduckgo.com/browser**")
+                Text("Or visit **duckduckgo.com/browser** on your computer.")
                     .daxSubheadRegular()
                     .foregroundColor(Color(designSystemColor: .textPrimary))
                     .padding(.bottom, 4)

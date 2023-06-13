@@ -326,6 +326,11 @@ class TabSwitcherViewController: UIViewController {
     func dismiss() {
         dismiss(animated: true, completion: nil)
     }
+
+    override func dismiss(animated: Bool, completion: (() -> Void)? = nil) {
+        tabsModel.tabs.forEach { $0.removeObserver(self) }
+        super.dismiss(animated: animated, completion: completion)
+    }
 }
 
 extension TabSwitcherViewController: TabViewCellDelegate {

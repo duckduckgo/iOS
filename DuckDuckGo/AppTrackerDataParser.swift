@@ -33,7 +33,7 @@ class TrackerDataParser {
     }
     
     var blocklistUrl: URL {
-        return Bundle.main.url(forResource: "blocklist", withExtension: "json")!
+        return Bundle.main.url(forResource: "ios_blocklist_075", withExtension: "json")!
     }
     
     func loadTrackers() {

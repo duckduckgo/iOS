@@ -280,8 +280,6 @@ extension Pixel {
 
         case appTPVPNCrash
         case appTPVPNDisconnect
-        case appTPVPNSleep
-        case appTPVPNWake
         
         case appTPBlocklistParseFailed
         case appTPActiveUser
@@ -687,8 +685,6 @@ extension Pixel.Event {
         case .appTPFailedToStartTunnel: return "m_apptp_failed_to_start_tunnel"
         case .appTPVPNCrash: return "m_apptp_vpn_crash"
         case .appTPVPNDisconnect: return "m_apptp_vpn_disconnect"
-        case .appTPVPNSleep: return "m_apptp_vpn_sleep"
-        case .appTPVPNWake: return "m_apptp_vpn_wake"
         case .appTPBlocklistParseFailed: return "m_apptp_blocklist_parse_failed"
         case .appTPActiveUser: return "m_apptp_active_user"
         case .appTPDBLocationFailed: return "m_apptp_db_location_not_found"

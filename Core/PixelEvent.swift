@@ -420,6 +420,7 @@ extension Pixel {
         case bookmarksMigrationCouldNotValidateDatabase
         case bookmarksMigrationCouldNotRemoveOldStore
 
+        case syncSentUnauthenticatedRequest
         case syncMetadataCouldNotLoadDatabase
         case syncBookmarksProviderInitializationFailed
         case syncBookmarksFailed
@@ -833,6 +834,7 @@ extension Pixel.Event {
         case .bookmarksMigrationCouldNotValidateDatabase: return "m_d_bookmarks_migration_could_not_validate_database"
         case .bookmarksMigrationCouldNotRemoveOldStore: return "m_d_bookmarks_migration_could_not_remove_old_store"
 
+        case .syncSentUnauthenticatedRequest: return "m_d_sync_sent_unauthenticated_request"
         case .syncMetadataCouldNotLoadDatabase: return "m_d_sync_metadata_could_not_load_database"
         case .syncBookmarksProviderInitializationFailed: return "m_d_sync_bookmarks_provider_initialization_failed"
         case .syncBookmarksFailed: return "m_d_sync_bookmarks_failed"

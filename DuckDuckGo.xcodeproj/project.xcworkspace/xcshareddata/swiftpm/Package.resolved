@@ -3,11 +3,11 @@
     "pins": [
       {
         "package": "BrowserServicesKit",
-        "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit",
+        "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "5c775d2f5735222e6cd95ca5823ba5b8ccc628d6",
-          "version": "59.1.1"
+          "branch": "bartek/sync-tweaks",
+          "revision": "f7dec867f10010e93dbe1932dc75cbabb89be04b",
+          "version": null
         }
       },
       {

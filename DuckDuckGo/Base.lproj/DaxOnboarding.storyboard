@@ -8,11 +8,6 @@
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="proximanova-bold.otf">
-            <string>ProximaNova-Bold</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Dax Onboarding View Controller-->
         <scene sceneID="8Y2-Tw-v4h">
@@ -174,7 +169,7 @@ DuckDuckGo!</string>
                                             <fragment content="Label">
                                                 <attributes>
                                                     <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" size="16" name="ProximaNova-Regular"/>
+                                                    <font key="NSFont" size="16" metaFont="system"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.3500000000000001" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>

@@ -144,7 +144,7 @@ struct MacPromoView: View {
                 Image(model.image)
                     .padding(.bottom, 16)
 
-                Text(model.title)
+                Text(model.title.replacingOccurrences(of: "\n", with: " "))
                     .daxTitle1()
                     .foregroundColor(Color(designSystemColor: .textPrimary))
                     .padding(.bottom, 24)
@@ -158,12 +158,15 @@ struct MacPromoView: View {
                     activityItem = model.activityItem
                 } label: {
                     HStack {
-                        Image(systemName: "square.and.arrow.up")
+                        Image("Share-24")
+                            .resizable()
+                            .frame(width: 24, height: 24)
                         Text(model.primaryAction)
+                            .daxButton()
                     }
                 }
-                .buttonStyle(RoundedRectStyle(foregroundColor: .white,
-                                              backgroundColor: Color(designSystemColor: .accent)))
+                .buttonStyle(HomeMessageButtonStyle(foregroundColor: Color("RemoteMessagePrimaryActionTextColor"),
+                                                    backgroundColor: Color(designSystemColor: .accent)))
                 .padding(.bottom, 24)
                 .sheet(item: $activityItem) { activityItem in
                     ActivityViewController(activityItems: [activityItem],
@@ -175,13 +178,13 @@ struct MacPromoView: View {
                 #warning("Hardcoded for experiment")
                 Text("Or visit **duckduckgo.com/browser** on your computer.")
                     .daxSubheadRegular()
-                    .foregroundColor(Color(designSystemColor: .textPrimary))
+                    .foregroundColor(Color(designSystemColor: .textSecondary))
                     .padding(.bottom, 4)
 
                 Spacer()
 
             }
-            .padding(.horizontal, 32)
+            .padding(.horizontal, 24)
             .frame(maxWidth: 514)
         }
         .multilineTextAlignment(.center)

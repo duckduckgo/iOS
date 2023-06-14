@@ -20,7 +20,7 @@
 import SwiftUI
 import DesignResourcesKit
 
-struct RoundedRectStyle: ButtonStyle {
+struct HomeMessageButtonStyle: ButtonStyle {
     let foregroundColor: Color
     let backgroundColor: Color
 
@@ -29,6 +29,7 @@ struct RoundedRectStyle: ButtonStyle {
             .padding(.horizontal, Const.Padding.buttonHorizontal)
             .padding(.vertical, Const.Padding.buttonVertical)
             .frame(maxWidth: .infinity)
+            .frame(height: 40)
             .foregroundColor(configuration.isPressed ? foregroundColor.opacity(0.5) : foregroundColor)
             .background(backgroundColor)
             .cornerRadius(Const.Radius.corner)
@@ -63,7 +64,7 @@ struct HomeMessageView: View {
                 if viewModel.messageId == MacPromoExperiment.promoId {
                     Text("Or visit **duckduckgo.com/browser** on your computer.")
                         .daxSubheadRegular()
-                        .foregroundColor(Color(designSystemColor: .textPrimary))
+                        .foregroundColor(Color(designSystemColor: .textSecondary))
                         .padding(.vertical, 4)
                 }
 
@@ -137,7 +138,7 @@ struct HomeMessageView: View {
 
     private var buttons: some View {
         ForEach(viewModel.buttons, id: \.title) { model in
-            let foreground: Color = model.actionStyle == .cancel ? .cancelButtonForeground : .white
+            let foreground: Color = model.actionStyle == .cancel ? .cancelButtonForeground : .primaryButtonText
             let background: Color = model.actionStyle == .cancel ? .cancelButtonBackground : .button
             Button {
                 if case .share(let url, let title) = model.actionStyle {
@@ -148,14 +149,16 @@ struct HomeMessageView: View {
             } label: {
                 HStack {
                     if case .share = model.actionStyle {
-                        Image(systemName: "square.and.arrow.up")
+                        Image("Share-24")
+                            .resizable()
+                            .frame(width: 24, height: 24)
                     }
                     Text(model.title)
-                        .font((Font(uiFont: Const.Font.button)))
+                        .daxButton()
                 }
             }
-            .buttonStyle(RoundedRectStyle(foregroundColor: foreground,
-                                          backgroundColor: background))
+            .buttonStyle(HomeMessageButtonStyle(foregroundColor: foreground,
+                                                backgroundColor: background))
             .padding([.bottom], Const.Padding.buttonVerticalInset)
             .sheet(item: $activityItem) { activityItem in
                 ActivityViewController(activityItems: [activityItem]) { activityType, result, _, error in
@@ -183,6 +186,7 @@ struct ActivityViewPresentationModifier: ViewModifier {
 
 private extension Color {
     static let button = Color(designSystemColor: .accent)
+    static let primaryButtonText = Color("RemoteMessagePrimaryActionTextColor")
     static let cancelButtonBackground = Color("CancelButtonBackgroundColor")
     static let cancelButtonForeground = Color("CancelButtonForegroundColor")
     static let background = Color("HomeMessageBackgroundColor")

@@ -23,13 +23,14 @@ import DesignResourcesKit
 struct HomeMessageButtonStyle: ButtonStyle {
     let foregroundColor: Color
     let backgroundColor: Color
+    let height: CGFloat
 
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
             .padding(.horizontal, Const.Padding.buttonHorizontal)
             .padding(.vertical, Const.Padding.buttonVertical)
             .frame(maxWidth: .infinity)
-            .frame(height: 40)
+            .frame(height: height)
             .foregroundColor(configuration.isPressed ? foregroundColor.opacity(0.5) : foregroundColor)
             .background(backgroundColor)
             .cornerRadius(Const.Radius.corner)
@@ -158,7 +159,8 @@ struct HomeMessageView: View {
                 }
             }
             .buttonStyle(HomeMessageButtonStyle(foregroundColor: foreground,
-                                                backgroundColor: background))
+                                                backgroundColor: background,
+                                                height: 40))
             .padding([.bottom], Const.Padding.buttonVerticalInset)
             .sheet(item: $activityItem) { activityItem in
                 ActivityViewController(activityItems: [activityItem]) { activityType, result, _, error in

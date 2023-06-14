@@ -144,7 +144,7 @@ struct MacPromoView: View {
                 Image(model.image)
                     .padding(.bottom, 16)
 
-                Text(model.title.replacingOccurrences(of: "\n", with: " "))
+                Text(UIDevice.current.userInterfaceIdiom == .pad ? model.title : model.title.replacingOccurrences(of: "\n", with: " "))
                     .daxTitle1()
                     .foregroundColor(Color(designSystemColor: .textPrimary))
                     .padding(.bottom, 24)
@@ -166,7 +166,8 @@ struct MacPromoView: View {
                     }
                 }
                 .buttonStyle(HomeMessageButtonStyle(foregroundColor: Color("RemoteMessagePrimaryActionTextColor"),
-                                                    backgroundColor: Color(designSystemColor: .accent)))
+                                                    backgroundColor: Color(designSystemColor: .accent),
+                                                    height: 50))
                 .padding(.bottom, 24)
                 .sheet(item: $activityItem) { activityItem in
                     ActivityViewController(activityItems: [activityItem],

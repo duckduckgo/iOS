@@ -580,7 +580,6 @@
 		98DDF9F322C4029D00DE38DB /* InitHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9846AA6622BD3BBF007DE48E /* InitHelpers.swift */; };
 		98E888F2223FCC4A00B608A4 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B128B2220483A004781BC /* OnboardingViewController.swift */; };
 		98EA2C3C218B9AAD0023E1DC /* ThemeManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EA2C3B218B9AAD0023E1DC /* ThemeManagerTests.swift */; };
-		98EA2C41218BB5400023E1DC /* SettingsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EA2C40218BB5400023E1DC /* SettingsViewControllerTests.swift */; };
 		98EF177D21837E35006750C1 /* new_tab_dark.json in Resources */ = {isa = PBXBuildFile; fileRef = 98EF177C21837E35006750C1 /* new_tab_dark.json */; };
 		98F0FC2021FF18E700CE77AB /* AutoClearSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F0FC1F21FF18E700CE77AB /* AutoClearSettingsViewController.swift */; };
 		98F3A1D8217B37010011A0D4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F3A1D7217B37010011A0D4 /* Theme.swift */; };
@@ -2118,7 +2117,6 @@
 		98E47763251EAC4200699DD3 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		98E47764251EAC4200699DD3 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		98EA2C3B218B9AAD0023E1DC /* ThemeManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManagerTests.swift; sourceTree = "<group>"; };
-		98EA2C40218BB5400023E1DC /* SettingsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewControllerTests.swift; sourceTree = "<group>"; };
 		98EF177C21837E35006750C1 /* new_tab_dark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = new_tab_dark.json; sourceTree = "<group>"; };
 		98F02E81251EAC11002A6C60 /* lt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lt; path = lt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		98F02E83251EAC11002A6C60 /* lt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lt; path = lt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -3911,7 +3909,6 @@
 		98EA2C3F218BB5140023E1DC /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				98EA2C40218BB5400023E1DC /* SettingsViewControllerTests.swift */,
 				981FED682201FE69008488D7 /* AutoClearSettingsScreenTests.swift */,
 				8598F6792405EB8600FBC70C /* KeyboardSettingsTests.swift */,
 			);
@@ -6139,7 +6136,6 @@
 				987130C7294AAB9F00AB05E0 /* MenuBookmarksViewModelTests.swift in Sources */,
 				858650D32469BFAD00C36F8A /* DaxDialogTests.swift in Sources */,
 				31C138B227A4097800FFD4B2 /* DownloadTestsHelper.swift in Sources */,
-				98EA2C41218BB5400023E1DC /* SettingsViewControllerTests.swift in Sources */,
 				1E1D8B5D2994FFE100C96994 /* AutoconsentMessageProtocolTests.swift in Sources */,
 				85C11E532090B23A00BFFEB4 /* UserDefaultsHomeRowReminderStorageTests.swift in Sources */,
 				85E5603026541D9E00F4DC44 /* AutocompleteRequestTests.swift in Sources */,

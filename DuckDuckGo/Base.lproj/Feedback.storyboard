@@ -501,7 +501,7 @@
                                                     <constraint firstAttribute="height" constant="44" id="05S-7A-LKg"/>
                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="340" id="YZg-2T-hYX"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription"type="system" weight="semibold" pointSize="16"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                 <state key="normal" title="Submit">
                                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>

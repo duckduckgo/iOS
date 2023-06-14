@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad12_9rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -167,7 +167,7 @@
                                                             </constraints>
                                                         </view>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoIcon" translatesAutoresizingMaskIntoConstraints="NO" id="eoZ-Ly-QHi">
-                                                            <rect key="frame" x="0.0" y="0.0" width="43" height="40"/>
+                                                            <rect key="frame" x="0.0" y="2" width="43" height="38"/>
                                                         </imageView>
                                                     </subviews>
                                                     <accessibility key="accessibilityConfiguration">
@@ -175,7 +175,7 @@
                                                         <bool key="isElement" value="YES"/>
                                                     </accessibility>
                                                     <constraints>
-                                                        <constraint firstItem="eoZ-Ly-QHi" firstAttribute="top" secondItem="99p-YW-bjm" secondAttribute="top" id="2K9-i4-lfC"/>
+                                                        <constraint firstItem="eoZ-Ly-QHi" firstAttribute="top" secondItem="99p-YW-bjm" secondAttribute="top" constant="2" id="2K9-i4-lfC"/>
                                                         <constraint firstAttribute="trailing" secondItem="eoZ-Ly-QHi" secondAttribute="trailing" id="3ae-7C-euU"/>
                                                         <constraint firstItem="TmK-n8-JJZ" firstAttribute="top" secondItem="99p-YW-bjm" secondAttribute="top" id="AQ7-2Q-kEO"/>
                                                         <constraint firstAttribute="bottom" secondItem="eoZ-Ly-QHi" secondAttribute="bottom" id="Dbo-hu-FiF"/>
@@ -356,7 +356,7 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IHT-9R-ERy">
                             <rect key="frame" x="162" y="0.0" width="65" height="43"/>
-                            <fontDescription key="fontDescription" type="system" weight="regular" pointSize="17"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <inset key="contentEdgeInsets" minX="6" minY="0.0" maxX="6" maxY="0.0"/>
                             <state key="normal" title="Cancel">
                                 <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -440,7 +440,7 @@
     </objects>
     <designables>
         <designable name="fqM-N4-jNd">
-            <size key="intrinsicContentSize" width="10" height="21.5"/>
+            <size key="intrinsicContentSize" width="9" height="22"/>
         </designable>
     </designables>
     <resources>

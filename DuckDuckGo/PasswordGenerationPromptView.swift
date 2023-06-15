@@ -75,7 +75,7 @@ struct PasswordGenerationPromptView: View {
         var useScrollView: Bool = false
 
         if #available(iOS 16.0, *) {
-            useScrollView = viewModel.contentHeight > UIScreen.main.bounds.size.height - (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0)
+            useScrollView = AutofillViews.contentHeightExceedsScreenHeight(viewModel.contentHeight)
         } else {
             useScrollView = viewModel.contentHeight > frame.height + Const.Size.ios15scrollOffset
         }

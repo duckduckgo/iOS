@@ -184,6 +184,19 @@ struct AutofillViews {
     static func isIPad(_ verticalSizeClass: UserInterfaceSizeClass?, _ horizontalSizeClass: UserInterfaceSizeClass?) -> Bool {
         verticalSizeClass == .regular && horizontalSizeClass == .regular
     }
+
+    static func contentHeightExceedsScreenHeight(_ contentHeight: CGFloat) -> Bool {
+        if #available(iOS 16.0, *) {
+            let topSafeAreaInset = UIApplication.shared.connectedScenes
+                .compactMap { ($0 as? UIWindowScene)?.keyWindow }
+                .first?
+                .safeAreaInsets
+                .top ?? 0.0
+            return contentHeight > UIScreen.main.bounds.size.height - topSafeAreaInset
+        } else {
+            return false
+        }
+    }
 }
 
 extension View {

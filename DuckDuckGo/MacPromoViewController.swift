@@ -155,6 +155,7 @@ struct MacPromoView: View {
                     .padding(.bottom, 24)
 
                 Button {
+                    model.controller?.experiment.sheetPrimaryActionClicked()
                     activityItem = model.activityItem
                 } label: {
                     HStack {

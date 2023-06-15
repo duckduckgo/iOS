@@ -57,13 +57,22 @@ class BookmarksLookupPerformanceTests: XCTestCase {
         let allBookmarks = try context.fetch(BookmarkEntity.fetchRequest())
 
         let firstQuery = BookmarkEntity.fetchRequest()
-        firstQuery.predicate = NSPredicate(format: "%K == %@", #keyPath(BookmarkEntity.uuid), allBookmarks[0].uuid!)
+        firstQuery.predicate = NSPredicate(format: "%K == %@ AND %K == NO",
+                                           #keyPath(BookmarkEntity.uuid),
+                                           allBookmarks[0].uuid!,
+                                           #keyPath(BookmarkEntity.isPendingDeletion))
 
         let secondQuery = BookmarkEntity.fetchRequest()
-        secondQuery.predicate = NSPredicate(format: "%K == %@", #keyPath(BookmarkEntity.uuid), allBookmarks[allBookmarks.count / 2].uuid!)
+        secondQuery.predicate = NSPredicate(format: "%K == %@ AND %K == NO",
+                                            #keyPath(BookmarkEntity.uuid),
+                                            allBookmarks[allBookmarks.count / 2].uuid!,
+                                            #keyPath(BookmarkEntity.isPendingDeletion))
 
         let thirdQuery = BookmarkEntity.fetchRequest()
-        thirdQuery.predicate = NSPredicate(format: "%K == %@", #keyPath(BookmarkEntity.uuid), allBookmarks[allBookmarks.count - 1].uuid!)
+        thirdQuery.predicate = NSPredicate(format: "%K == %@ AND %K == NO",
+                                           #keyPath(BookmarkEntity.uuid),
+                                           allBookmarks[allBookmarks.count - 1].uuid!,
+                                           #keyPath(BookmarkEntity.isPendingDeletion))
 
         context.reset()
 

@@ -433,6 +433,18 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "No Results";
 
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Password will be saved in Logins.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Use generated password from DuckDuckGo?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Use Generated Password";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Create My Own";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.message" = "Logins are stored securely on this device only, and can be managed from the Logins menu in Settings.";
 
@@ -1423,9 +1435,8 @@ https://duckduckgo.com/mac";
 /* Title for the settings subtitle */
 "windows-waitlist.settings.browse-privately" = "Browse privately with our app for Windows";
 
-/* Message used when sharing to iMessage
-   Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"windows-waitlist.share-sheet.message" = "You’re invited!
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"windows-waitlist.share-sheet.invite-code-message" = "You’re invited!
 
 Ready to use DuckDuckGo on Windows?
 
@@ -1437,6 +1448,12 @@ Step 2
 Open DuckDuckGo Installer in Downloads, select Install, then enter your invite code.
 
 Invite code: %@";
+
+/* Message used when sharing to iMessage */
+"windows-waitlist.share-sheet.message" = "Ready to start browsing privately on Windows?
+
+Visit this URL on your Computer to download:
+https://duckduckgo.com/windows";
 
 /* Summary text for the Windows browser waitlist */
 "windows-waitlist.summary" = "DuckDuckGo for Windows has what you need to browse with more privacy — private search, tracker blocking, forced encryption, and cookie pop-up blocking, plus more best-in-class protections on the way.";

@@ -1,5 +1,5 @@
 //
-//  SyncDataPersistor.swift
+//  SyncErrorHandler.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -17,16 +17,20 @@
 //  limitations under the License.
 //
 
-import Foundation
+import Common
 import DDGSync
+import Foundation
 
-final class SyncDataPersistor: LocalDataPersisting {
-    private(set) var bookmarksLastModified: String?
+public class SyncErrorHandler: EventMapping<SyncError> {
 
-    func updateBookmarksLastModified(_ lastModified: String?) {
-        bookmarksLastModified = lastModified
+    public init() {
+        super.init { event, _, _, _ in
+            let domainEvent = Pixel.Event.syncSentUnauthenticatedRequest
+            Pixel.fire(pixel: domainEvent, error: event)
+        }
     }
 
-    func persistEvents(_ events: [SyncEvent]) async throws {
+    override init(mapping: @escaping EventMapping<SyncError>.Mapping) {
+        fatalError("Use init()")
     }
 }

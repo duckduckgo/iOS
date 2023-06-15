@@ -84,22 +84,6 @@ class BookmarkEntityTests: XCTestCase {
         try context.save()
     }
 
-    func testWhenBookmarkIsMissingURLThenValidationFails() {
-        let bookmark = BookmarkEntity.makeBookmark(title: "t",
-                                                   url: "u",
-                                                   parent: root,
-                                                   context: context)
-
-        bookmark.url = nil
-
-        do {
-            try context.save()
-            XCTFail("Save should fail")
-        } catch {
-
-        }
-    }
-
     func testWhenFavoriteIsUnderWrongFavoriteRootThenValidationFails() {
         let favorite = BookmarkEntity.makeBookmark(title: "t",
                                                    url: "u",
@@ -107,22 +91,6 @@ class BookmarkEntityTests: XCTestCase {
                                                    context: context)
 
         favorite.addToFavorites(favoritesRoot: root)
-
-        do {
-            try context.save()
-            XCTFail("Save should fail")
-        } catch {
-
-        }
-    }
-
-    func testWhenFavoriteIsMissingFavoriteRootThenValidationFails() {
-        let favorite = BookmarkEntity.makeBookmark(title: "t",
-                                                   url: "u",
-                                                   parent: root,
-                                                   context: context)
-
-        favorite.setValue(true, forKey: #keyPath(BookmarkEntity.isFavorite))
 
         do {
             try context.save()

@@ -58,7 +58,7 @@ public class BookmarksModelsErrorHandling: EventMapping<BookmarksModelError> {
             case .missingParent(let object):
                 domainEvent = .missingParent(object)
             case .orphanedBookmarksPresent:
-                if let syncService, syncService.authState != .inactive {
+                if let syncService, syncService.authState == .inactive {
                     domainEvent = .orphanedBookmarksPresent
                 }
             }

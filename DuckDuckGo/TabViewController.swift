@@ -324,7 +324,7 @@ class TabViewController: UIViewController {
     }
 
     override func buildActivities() -> [UIActivity] {
-        let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase)
+        let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
         var activities: [UIActivity] = [SaveBookmarkActivity(controller: self,
                                                              viewModel: viewModel)]
 

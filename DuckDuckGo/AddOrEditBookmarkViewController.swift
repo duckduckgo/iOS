@@ -50,7 +50,8 @@ class AddOrEditBookmarkViewController: UIViewController {
         
         self.bookmarksDatabase = bookmarksDatabase
         self.viewModel = BookmarkEditorViewModel(editingEntityID: editingEntityID,
-                                                 bookmarksDatabase: bookmarksDatabase)
+                                                 bookmarksDatabase: bookmarksDatabase,
+                                                 syncService: syncService)
         self.syncService = syncService
 
         super.init(coder: coder)
@@ -63,7 +64,8 @@ class AddOrEditBookmarkViewController: UIViewController {
 
         self.bookmarksDatabase = bookmarksDatabase
         self.viewModel = BookmarkEditorViewModel(creatingFolderWithParentID: parentFolderID,
-                                                 bookmarksDatabase: bookmarksDatabase)
+                                                 bookmarksDatabase: bookmarksDatabase,
+                                                 syncService: syncService)
         self.syncService = syncService
 
         super.init(coder: coder)

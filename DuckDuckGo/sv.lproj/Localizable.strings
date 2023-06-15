@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Användarnamn";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Inloggningar lagras säkert endast på den här enheten.";
+"autofill.logins.empty-view.subtitle" = "Inloggningar lagras säkert på din enhet.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Inga inloggningar sparade ännu";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Inloggning till %@ raderad";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Sök inloggningar";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Inloggning raderad";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Sök inloggningar";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Förslag";
@@ -350,7 +350,7 @@
 "autofill.password-generation-prompt.use-own-password.cta" = "Skapa mitt eget";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Inloggningar lagras säkert, enbart på den här enheten, och kan hanteras genom menyn Inloggningar i inställningarna.";
+"autofill.save-login.new-user.message" = "Inloggningar lagras säkert på din enhet, och kan hanteras genom menyn Inloggningar i inställningarna.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vill du att DuckDuckGo ska spara din inloggning?";

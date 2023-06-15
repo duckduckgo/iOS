@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Kullanıcı adı";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Girişler yalnızca bu cihazda güvenli bir şekilde saklanır.";
+"autofill.logins.empty-view.subtitle" = "Giriş bilgileri cihazınızda güvenli bir şekilde saklanır.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Henüz kaydedilmiş Giriş yok";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "%@ için giriş silindi";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Giriş Ara";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Giriş bilgileri silindi";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Giriş Ara";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Önerilen";

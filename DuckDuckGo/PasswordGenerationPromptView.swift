@@ -112,7 +112,7 @@ struct PasswordGenerationPromptView: View {
                 UIPasteboard.general.string = viewModel.generatedPassword
                 presentCopyConfirmation(message: UserText.autofillCopyToastPasswordCopied)
             } label: {
-                Image("Copy-20")
+                Image.copy
                     .foregroundColor(Color(designSystemColor: .textSecondary))
             }
             .buttonStyle(.plain) // Prevent taps from being forwarded to the container view
@@ -185,6 +185,10 @@ private enum Const {
         static let bottomPaddingIPad: CGFloat = 24.0
     }
 
+}
+
+private extension Image {
+    static let copy = Image("Copy-24")
 }
 
 // MARK: - Preview

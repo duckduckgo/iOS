@@ -33,7 +33,7 @@ struct AutofillViews {
                     Button {
                         action()
                     } label: {
-                        Image("Close-24")
+                        Image.close
                             .resizable()
                             .scaledToFit()
                             .frame(width: Const.Size.closeButtonSize, height: Const.Size.closeButtonSize)
@@ -204,4 +204,8 @@ private enum Const {
         static let buttonCornerRadius: CGFloat = 8.0
         static let buttonBorderWidth: CGFloat = 1.0
     }
+}
+
+private extension Image {
+    static let close = Image("Close-24")
 }

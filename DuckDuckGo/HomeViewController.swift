@@ -182,9 +182,11 @@ class HomeViewController: UIViewController {
         
         if presentedViewController == nil { // prevents these being called when settings forces this controller to be reattached
             showNextDaxDialog()
-            Pixel.fire(pixel: .homeScreenShown)
         }
-                
+
+        Pixel.fire(pixel: .homeScreenShown)
+        collectionView.didAppear()
+
         viewHasAppeared = true
         tabModel.viewed = true
     }

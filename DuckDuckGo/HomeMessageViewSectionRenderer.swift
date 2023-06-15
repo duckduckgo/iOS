@@ -19,6 +19,8 @@
 
 import UIKit
 import Core
+import BrowserServicesKit
+import Common
 
 protocol HomeMessageViewSectionRendererDelegate: AnyObject {
     
@@ -48,6 +50,23 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     func install(into controller: HomeViewController) {
         self.controller = controller
         hideLogoIfThereAreMessagesToDisplay()
+    }
+
+    func didAppear() {
+        let remoteMessagingStore = AppDependencyProvider.shared.remoteMessagingStore
+        guard MacPromoExperiment(remoteMessagingStore: remoteMessagingStore).shouldShowMessage() else { return }
+        guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return }
+
+        os_log("Remote message to show: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
+        Pixel.fire(pixel: .remoteMessageShown,
+                   withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessageToPresent.id)"])
+
+        if !remoteMessagingStore.hasShownRemoteMessage(withId: remoteMessageToPresent.id) {
+            os_log("Remote message shown for first time: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
+            Pixel.fire(pixel: .remoteMessageShownUnique,
+                       withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessageToPresent.id)"])
+            remoteMessagingStore.updateRemoteMessage(withId: remoteMessageToPresent.id, asShown: true)
+        }
     }
 
     func refresh() {
@@ -106,23 +125,35 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         let message = homePageConfiguration.homeMessages[indexPath.row]
         switch message {
         case .placeholder:
-            return HomeMessageViewModel(image: nil, topText: nil, title: "", subtitle: "", buttons: []) { [weak self] _ in
+            return HomeMessageViewModel(messageId: "", image: nil, topText: nil, title: "", subtitle: "", buttons: []) { [weak self] _, _ in
                 self?.dismissHomeMessage(message, at: indexPath, in: collectionView)
             }
         case .remoteMessage(let remoteMessage):
-            return HomeMessageViewModelBuilder.build(for: remoteMessage) { [weak self] action in
-                self?.dismissHomeMessage(message, at: indexPath, in: collectionView)
+            return HomeMessageViewModelBuilder.build(for: remoteMessage) { [weak self] action, remoteAction in
+
+                guard let action,
+                        let self else { return }
 
                 switch action {
                 case .primaryAction:
+                    if !remoteAction.isSharing {
+                        self.dismissHomeMessage(message, at: indexPath, in: collectionView)
+                    }
                     Pixel.fire(pixel: .remoteMessageShownPrimaryActionClicked,
                                withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
+
                 case .secondaryAction:
+                    if !remoteAction.isSharing {
+                        self.dismissHomeMessage(message, at: indexPath, in: collectionView)
+                    }
                     Pixel.fire(pixel: .remoteMessageShownSecondaryActionClicked,
                                withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
-                default:
+
+                case .close:
+                    self.dismissHomeMessage(message, at: indexPath, in: collectionView)
                     Pixel.fire(pixel: .remoteMessageDismissed,
                                withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
+
                 }
             }
         }
@@ -172,4 +203,15 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     private var isPad: Bool {
         return controller?.traitCollection.horizontalSizeClass == .regular
     }
+}
+
+extension RemoteAction {
+
+    var isSharing: Bool {
+        if case .share = self.actionStyle {
+            return true
+        }
+        return false
+    }
+
 }

@@ -39,7 +39,7 @@ struct PasswordGenerationPromptView: View {
         return ZStack {
             AutofillViews.CloseButtonHeader(action: viewModel.cancelButtonPressed)
                 .offset(x: AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) ? Const.Size.closeButtonOffsetPortrait
-                                                                                                           : Const.Size.closeButtonOffset)
+                                                                                                  : Const.Size.closeButtonOffset)
                 .zIndex(1)
 
                 VStack {
@@ -49,15 +49,15 @@ struct PasswordGenerationPromptView: View {
                         passwordView
                             .padding([.top, .bottom], passwordVerticalPadding)
                     } else {
-                        Spacer()
+                        AutofillViews.LegacySpacerView()
                         passwordView
-                        Spacer()
+                        AutofillViews.LegacySpacerView()
                     }
                     AutofillViews.Description(text: UserText.autofillPasswordGenerationPromptSubtitle)
                     contentViewSpacer
                     ctaView
                         .padding(.bottom, AutofillViews.isIPad(verticalSizeClass, horizontalSizeClass) ? Const.Size.bottomPaddingIPad
-                                                                                                                : Const.Size.bottomPadding)
+                                                                                                       : Const.Size.bottomPadding)
                 }
                 .background(GeometryReader { proxy -> Color in
                     DispatchQueue.main.async { viewModel.contentHeight = proxy.size.height }
@@ -67,7 +67,7 @@ struct PasswordGenerationPromptView: View {
 
         }
         .padding(.horizontal, AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) ? Const.Size.closeButtonOffsetPortrait
-                                                                                                              : Const.Size.closeButtonOffset)
+                                                                                                     : Const.Size.closeButtonOffset)
 
     }
 
@@ -122,9 +122,9 @@ struct PasswordGenerationPromptView: View {
     private var contentViewSpacer: some View {
         VStack {
             if AutofillViews.isIPhoneLandscape(verticalSizeClass) {
-                AutofillViews.LegacySpacerView(height: Const.Size.contentSpacerHeightLandscape, legacyHeight: nil)
+                AutofillViews.LegacySpacerView(height: Const.Size.contentSpacerHeightLandscape)
             } else {
-                AutofillViews.LegacySpacerView(height: Const.Size.contentSpacerHeight, legacyHeight: nil)
+                AutofillViews.LegacySpacerView(height: Const.Size.contentSpacerHeight)
             }
         }
     }
@@ -132,10 +132,10 @@ struct PasswordGenerationPromptView: View {
     private var ctaView: some View {
         VStack(spacing: Const.Size.ctaVerticalSpacing) {
             AutofillViews.PrimaryButton(title: UserText.autofillPasswordGenerationPromptUseGeneratedPasswordCTA,
-                                                 action: viewModel.useGeneratedPasswordPressed)
+                                        action: viewModel.useGeneratedPasswordPressed)
 
             AutofillViews.TertiaryButton(title: UserText.autofillPasswordGenerationPromptUseOwnPasswordCTA,
-                                                  action: viewModel.cancelButtonPressed)
+                                         action: viewModel.cancelButtonPressed)
         }
     }
 }

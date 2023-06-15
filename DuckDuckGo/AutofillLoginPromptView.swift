@@ -39,7 +39,7 @@ struct AutofillLoginPromptView: View {
         return ZStack {
             AutofillViews.CloseButtonHeader(action: viewModel.dismissView)
                 .offset(x: AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) ? Const.Size.closeButtonOffsetPortrait
-                                                                                                           : Const.Size.closeButtonOffset)
+                                                                                                  : Const.Size.closeButtonOffset)
                 .zIndex(1)
             
             VStack {
@@ -61,7 +61,7 @@ struct AutofillLoginPromptView: View {
 
         }
         .padding(.horizontal, AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) ? Const.Size.closeButtonOffsetPortrait
-                                                                                                              : Const.Size.closeButtonOffset)
+                                                                                                     : Const.Size.closeButtonOffset)
 
     }
 
@@ -87,7 +87,7 @@ struct AutofillLoginPromptView: View {
                 if viewModel.expanded {
                     AutofillViews.LegacySpacerView(height: Const.Size.contentSpacerHeight, legacyHeight: Const.Size.contentSpacerHeight)
                 } else {
-                    AutofillViews.LegacySpacerView(height: Const.Size.contentSpacerHeight, legacyHeight: nil)
+                    AutofillViews.LegacySpacerView(height: Const.Size.contentSpacerHeight)
                 }
             }
         }
@@ -96,11 +96,11 @@ struct AutofillLoginPromptView: View {
     private var bottomSpacer: some View {
         VStack {
             if AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) {
-                AutofillViews.LegacySpacerView(height: Const.Size.bottomSpacerHeight, legacyHeight: nil)
+                AutofillViews.LegacySpacerView(height: Const.Size.bottomSpacerHeight)
             } else if AutofillViews.isIPad(verticalSizeClass, horizontalSizeClass) {
-                AutofillViews.LegacySpacerView(height: Const.Size.bottomSpacerHeightIPad, legacyHeight: nil)
+                AutofillViews.LegacySpacerView(height: Const.Size.bottomSpacerHeightIPad)
             } else {
-                AutofillViews.LegacySpacerView(height: nil, legacyHeight: nil)
+                AutofillViews.LegacySpacerView()
             }
         }
     }
@@ -148,10 +148,10 @@ struct AutofillLoginPromptView: View {
         switch style {
         case .primary:
             AutofillViews.PrimaryButton(title: accountViewModel.displayString,
-                                                 action: { viewModel.didSelectAccount(accountViewModel.account) })
+                                        action: { viewModel.didSelectAccount(accountViewModel.account) })
         case .secondary:
             AutofillViews.SecondaryButton(title: accountViewModel.displayString,
-                                                   action: { viewModel.didSelectAccount(accountViewModel.account) })
+                                          action: { viewModel.didSelectAccount(accountViewModel.account) })
         }
     }
 

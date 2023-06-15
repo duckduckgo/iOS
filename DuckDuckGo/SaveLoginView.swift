@@ -85,7 +85,7 @@ struct SaveLoginView: View {
         return ZStack {
             AutofillViews.CloseButtonHeader(action: viewModel.cancelButtonPressed)
                 .offset(x: AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) ? Const.Size.closeButtonOffsetPortrait
-                                                                                                           : Const.Size.closeButtonOffset)
+                                                                                                  : Const.Size.closeButtonOffset)
                 .zIndex(1)
 
             VStack {
@@ -113,7 +113,7 @@ struct SaveLoginView: View {
             .useScrollView(shouldUseScrollView(), minHeight: frame.height)
         }
         .padding(.horizontal, AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) ? Const.Size.closeButtonOffsetPortrait
-                                                                                                              : Const.Size.closeButtonOffset)
+                                                                                                     : Const.Size.closeButtonOffset)
     }
 
     private func shouldUseScrollView() -> Bool {
@@ -141,10 +141,10 @@ struct SaveLoginView: View {
     private var ctaView: some View {
         VStack(spacing: Const.Size.ctaVerticalSpacing) {
             AutofillViews.PrimaryButton(title: confirmButton,
-                                                 action: viewModel.save)
+                                        action: viewModel.save)
 
             AutofillViews.TertiaryButton(title: UserText.autofillSaveLoginNotNowCTA,
-                                                  action: viewModel.cancelButtonPressed)
+                                         action: viewModel.cancelButtonPressed)
         }
     }
 
@@ -154,11 +154,11 @@ struct SaveLoginView: View {
                 AutofillViews.LegacySpacerView(height: Const.Size.bottomSpacerHeight, legacyHeight: Const.Size.bottomSpacerLegacyHeight)
             } else if AutofillViews.isIPad(verticalSizeClass, horizontalSizeClass) {
                 AutofillViews.LegacySpacerView(height: Const.Size.bottomSpacerHeightIPad,
-                                                        legacyHeight: orientation == .portrait ? Const.Size.bottomSpacerHeightIPad
-                                                                                               : Const.Size.bottomSpacerLegacyHeightIPad)
+                                               legacyHeight: orientation == .portrait ? Const.Size.bottomSpacerHeightIPad
+                                                                                      : Const.Size.bottomSpacerLegacyHeightIPad)
             } else {
                 AutofillViews.LegacySpacerView(height: Const.Size.bottomSpacerHeight,
-                                                        legacyHeight: Const.Size.bottomSpacerLegacyHeightLandscape)
+                                               legacyHeight: Const.Size.bottomSpacerLegacyHeightLandscape)
             }
         }
     }

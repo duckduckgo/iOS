@@ -157,6 +157,11 @@ struct AutofillViews {
         let height: CGFloat?
         let legacyHeight: CGFloat?
 
+        init(height: CGFloat? = nil, legacyHeight: CGFloat? = nil) {
+            self.height = height
+            self.legacyHeight = legacyHeight
+        }
+
         var body: some View {
             if #available(iOS 16.0, *) {
                 Spacer()

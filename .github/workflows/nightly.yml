@@ -77,8 +77,7 @@ jobs:
         set -o pipefail && xcodebuild test \
           -scheme "FingerprintingUITests" \
           -destination "platform=iOS Simulator,name=iPhone 14" \
-          -derivedDataPath "DerivedData" \
-          | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml
+          -derivedDataPath "DerivedData"
 
     - name: Publish unit tests report
       uses: mikepenz/action-junit-report@v3

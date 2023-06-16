@@ -392,8 +392,6 @@ class MainViewController: UIViewController {
                 }
                 
                 brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
-            } else if let settingsScreen = navController.topViewController as? SettingsViewController {
-                settingsScreen.appTPDatabase = self.appTrackingProtectionDatabase
             }
         }
 
@@ -460,6 +458,27 @@ class MainViewController: UIViewController {
         controller.previewsSource = previewsSource
         tabSwitcherController = controller
         
+        return controller
+    }
+    
+    @IBSegueAction func onCreateSettings(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> SettingsViewController {
+        guard let controller = SettingsViewController(coder: coder,
+                                                      appTPDatabase: appTrackingProtectionDatabase,
+                                                      bookmarksDatabase: bookmarksDatabase,
+                                                      syncService: syncService) else {
+            fatalError("Failed to create controller")
+        }
+
+        if segueIdentifier == "SettingsToLogins" {
+            if let account = sender as? SecureVaultModels.WebsiteAccount {
+                controller.openLoginsWhenPresented(accountDetails: account)
+            } else {
+                controller.openLoginsWhenPresented()
+            }
+        } else if segueIdentifier == "SettingsToCookiePopupManagement" {
+            controller.openCookiePopupManagementWhenPresented()
+        }
+
         return controller
     }
     
@@ -953,13 +972,7 @@ class MainViewController: UIViewController {
     }
     
     func launchCookiePopupManagementSettings() {
-        if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
-           let settingsController = navController.topViewController as? SettingsViewController {
-            settingsController.loadViewIfNeeded()
-            
-            settingsController.showCookiePopupManagement(animated: false)
-            self.present(navController, animated: true)
-        }
+        performSegue(withIdentifier: "SettingsToCookiePopupManagement", sender: self)
     }
 
     fileprivate func launchInstructions() {
@@ -1616,6 +1629,11 @@ extension MainViewController: TabDelegate {
     
     func tabDidRequestSettings(tab: TabViewController) {
         launchSettings()
+    }
+
+    func tab(_ tab: TabViewController,
+             didRequestSettingsToLogins account: SecureVaultModels.WebsiteAccount?) {
+        performSegue(withIdentifier: "SettingsToLogins", sender: account)
     }
 
     func tabContentProcessDidTerminate(tab: TabViewController) {

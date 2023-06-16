@@ -149,6 +149,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             self?.refreshAll()
         }
 
+        syncService.scheduler.requestSyncImmediately()
+
         tableView.delegate = self
 
         registerForNotifications()

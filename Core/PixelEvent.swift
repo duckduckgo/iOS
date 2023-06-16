@@ -346,9 +346,7 @@ extension Pixel {
         case contentBlockingCompilationTime
         
         case ampBlockingRulesCompilationFailed
-        
-        case contentBlockingIdentifierError
-        
+
         case webKitDidTerminate
         case webKitTerminationDidReloadCurrentTab
         
@@ -759,9 +757,7 @@ extension Pixel.Event {
         case .contentBlockingCompilationTime: return "m_content_blocking_compilation_time"
             
         case .ampBlockingRulesCompilationFailed: return "m_debug_amp_rules_compilation_failed"
-            
-        case .contentBlockingIdentifierError: return "m_d_cb_ie"
-            
+
         case .webKitDidTerminate: return "m_d_wkt"
         case .webKitTerminationDidReloadCurrentTab: return "m_d_wktct"
             

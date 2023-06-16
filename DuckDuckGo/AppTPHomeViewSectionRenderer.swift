@@ -34,6 +34,13 @@ class AppTPHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     fileprivate lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     
     private weak var controller: HomeViewController?
+
+    private var showAppTPHomeViewHeader: Bool {
+        let appTPEnabled = featureFlagger.isFeatureOn(.appTrackingProtection)
+        let appTPUsed = UserDefaults().bool(forKey: UserDefaultsWrapper<Any>.Key.appTPUsed.rawValue)
+
+        return appTPEnabled && appTPUsed
+    }
     
     let appTPHomeViewModel: AppTPHomeViewModel
     
@@ -44,11 +51,17 @@ class AppTPHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
     func install(into controller: HomeViewController) {
         self.controller = controller
-        hideLogo()
+        hideLogoIfAppTPIsEnabled()
     }
-    
-    private func hideLogo() {
-        controller?.hideLogo()
+
+    func refresh() {
+        hideLogoIfAppTPIsEnabled()
+    }
+
+    private func hideLogoIfAppTPIsEnabled() {
+        if showAppTPHomeViewHeader {
+            controller?.hideLogo()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -71,9 +84,7 @@ class AppTPHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let appTPUsed = UserDefaults().bool(forKey: UserDefaultsWrapper<Any>.Key.appTPUsed.rawValue)
-        let appTPEnabled = featureFlagger.isFeatureOn(.appTrackingProtection)
-        return appTPUsed && appTPEnabled ? 1 : 0
+        return showAppTPHomeViewHeader ? 1 : 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

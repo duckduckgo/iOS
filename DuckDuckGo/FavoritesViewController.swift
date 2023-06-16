@@ -20,6 +20,7 @@
 import Foundation
 import UIKit
 import Core
+import DDGSync
 import Bookmarks
 import Persistence
 import Combine
@@ -49,6 +50,7 @@ class FavoritesViewController: UIViewController {
     weak var delegate: FavoritesViewControllerDelegate?
     
     private let bookmarksDatabase: CoreDataDatabase
+    private let syncService: DDGSyncing
     
     fileprivate var viewModelCancellable: AnyCancellable?
     private var localUpdatesCancellable: AnyCancellable?
@@ -65,8 +67,9 @@ class FavoritesViewController: UIViewController {
         }
     }
     
-    init?(coder: NSCoder, bookmarksDatabase: CoreDataDatabase) {
+    init?(coder: NSCoder, bookmarksDatabase: CoreDataDatabase, syncService: DDGSyncing) {
         self.bookmarksDatabase = bookmarksDatabase
+        self.syncService = syncService
         super.init(coder: coder)
     }
 
@@ -112,8 +115,8 @@ class FavoritesViewController: UIViewController {
 
     private func bindSyncService() {
         localUpdatesCancellable = renderer.viewModel.localUpdates
-            .sink { _ in
-                (UIApplication.shared.delegate as? AppDelegate)?.requestSyncIfEnabled()
+            .sink { [weak self] in
+                self?.syncService.scheduler.notifyDataChanged()
             }
 
         syncUpdatesCancellable = (UIApplication.shared.delegate as? AppDelegate)?.syncDataProviders.bookmarksAdapter.syncDidCompletePublisher

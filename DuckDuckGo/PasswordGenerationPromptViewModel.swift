@@ -22,11 +22,22 @@ import Foundation
 protocol PasswordGenerationPromptViewModelDelegate: AnyObject {
     func passwordGenerationPromptViewModelDidSelect(_ viewModel: PasswordGenerationPromptViewModel)
     func passwordGenerationPromptViewModelDidCancel(_ viewModel: PasswordGenerationPromptViewModel)
+    func passwordGenerationPromptViewModelDidResizeContent(_ viewModel: PasswordGenerationPromptViewModel, contentHeight: CGFloat)
 }
 
 class PasswordGenerationPromptViewModel: ObservableObject {
 
     weak var delegate: PasswordGenerationPromptViewModelDelegate?
+
+    var contentHeight: CGFloat = AutofillViews.passwordGenerationMinHeight {
+        didSet {
+            guard contentHeight != oldValue else {
+                return
+            }
+            delegate?.passwordGenerationPromptViewModelDidResizeContent(self,
+                                                                        contentHeight: max(contentHeight, AutofillViews.passwordGenerationMinHeight))
+        }
+    }
 
     let generatedPassword: String
 

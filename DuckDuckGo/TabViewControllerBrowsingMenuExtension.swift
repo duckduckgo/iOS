@@ -217,7 +217,7 @@ extension TabViewController {
         Pixel.fire(pixel: .browsingMenuAddToBookmarks)
         bookmarksInterface.createBookmark(title: link.title ?? "", url: link.url)
         favicons.loadFavicon(forDomain: link.url.host, intoCache: .fireproof, fromCache: .tabs)
-        (UIApplication.shared.delegate as? AppDelegate)?.requestSyncIfEnabled()
+        syncService.scheduler.notifyDataChanged()
 
         ActionMessageView.present(message: UserText.webSaveBookmarkDone,
                                   actionTitle: UserText.actionGenericEdit, onAction: {
@@ -264,7 +264,8 @@ extension TabViewController {
         bookmarksInterface.createOrToggleFavorite(title: link.title ?? "", url: link.url)
         favicons.loadFavicon(forDomain: link.url.host, intoCache: .fireproof, fromCache: .tabs)
         WidgetCenter.shared.reloadAllTimelines()
-        
+        syncService.scheduler.notifyDataChanged()
+
         ActionMessageView.present(message: UserText.webSaveFavoriteDone, actionTitle: UserText.actionGenericUndo, onAction: {
             self.performRemoveFavoriteAction(for: link, with: bookmarksInterface)
         })
@@ -274,7 +275,8 @@ extension TabViewController {
                                              with bookmarksInterface: MenuBookmarksInteracting) {
         bookmarksInterface.createOrToggleFavorite(title: link.title ?? "", url: link.url)
         WidgetCenter.shared.reloadAllTimelines()
-        
+        syncService.scheduler.notifyDataChanged()
+
         ActionMessageView.present(message: UserText.webFavoriteRemoved, actionTitle: UserText.actionGenericUndo, onAction: {
             self.performAddFavoriteAction(for: link, with: bookmarksInterface)
         })

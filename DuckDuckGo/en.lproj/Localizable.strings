@@ -1438,9 +1438,8 @@ https://duckduckgo.com/mac";
 /* Title for the settings subtitle */
 "windows-waitlist.settings.browse-privately" = "Browse privately with our app for Windows";
 
-/* Message used when sharing to iMessage
-   Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"windows-waitlist.share-sheet.message" = "You’re invited!
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"windows-waitlist.share-sheet.invite-code-message" = "You’re invited!
 
 Ready to use DuckDuckGo on Windows?
 
@@ -1452,6 +1451,12 @@ Step 2
 Open DuckDuckGo Installer in Downloads, select Install, then enter your invite code.
 
 Invite code: %@";
+
+/* Message used when sharing to iMessage */
+"windows-waitlist.share-sheet.message" = "Ready to start browsing privately on Windows?
+
+Visit this URL on your Computer to download:
+https://duckduckgo.com/windows";
 
 /* Summary text for the Windows browser waitlist */
 "windows-waitlist.summary" = "DuckDuckGo for Windows has what you need to browse with more privacy — private search, tracker blocking, forced encryption, and cookie pop-up blocking, plus more best-in-class protections on the way.";

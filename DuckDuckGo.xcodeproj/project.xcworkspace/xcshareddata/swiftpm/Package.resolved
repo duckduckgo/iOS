@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "bartek/sync-tweaks",
-          "revision": "f7dec867f10010e93dbe1932dc75cbabb89be04b",
-          "version": null
+          "branch": null,
+          "revision": "a2f73428e6827c9b1210351d000595dc0d2e8525",
+          "version": "60.1.0"
         }
       },
       {

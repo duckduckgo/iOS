@@ -93,6 +93,8 @@ class FingerprintUITest: XCTestCase {
 
     func test() throws {
         let app = XCUIApplication()
+
+        _ = app.buttons["Browsing Menu"].waitForExistence(timeout: 25)
         
         app.buttons["Browsing Menu"].tap()
         if app.tables.staticTexts["Bookmarks"].waitForExistence(timeout: 2) {

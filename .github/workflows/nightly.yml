@@ -1,6 +1,8 @@
 name: Nightly Integration Tests
 
 on:
+  push:
+    branches: [ michal/fix-nightly ]
   schedule:
     - cron: '0 2 * * *' # Run at 2 AM UTC
 

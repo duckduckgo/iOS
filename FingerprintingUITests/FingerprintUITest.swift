@@ -25,8 +25,6 @@ class FingerprintUITest: XCTestCase {
 
     override func setUpWithError() throws {
         try super.setUpWithError()
-
-        print("setUpWithError - ")
         
         continueAfterFailure = false
         
@@ -40,11 +38,10 @@ class FingerprintUITest: XCTestCase {
         ]
         
         app.launch()
-        print("setUpWithError - after app.launch()")
 
         // Add a bookmark to edit to a bookmarklet later
         app.searchFields["searchEntry"].tap()
-        print("setUpWithError - after app.searchFields[\"searchEntry\"].tap()")
+        
         sleep(1)
         
         app
@@ -53,11 +50,8 @@ class FingerprintUITest: XCTestCase {
         
         sleep(5) // let site load
 
-        print("setUpWithError - site loaded?")
-
 //        _ = app.buttons["Browsing Menu"].waitForExistence(timeout: 25)
         app.buttons["Browsing Menu"].tap()
-        print("setUpWithError - browsing menu tapped?")
 
         if app.tables.staticTexts["Add Bookmark"].waitForExistence(timeout: 2) {
             app.tables.staticTexts["Add Bookmark"].tap()
@@ -72,8 +66,6 @@ class FingerprintUITest: XCTestCase {
                 XCTFail("Could not ensure one bookmark is present")
             }
         }
-
-        print("setUpWithError - setup done")
     }
     
     override func tearDownWithError() throws {
@@ -102,18 +94,17 @@ class FingerprintUITest: XCTestCase {
     }
 
     func test() throws {
-        print("setUpWithError - test start")
         let app = XCUIApplication()
 
         _ = app.buttons["Browsing Menu"].waitForExistence(timeout: 25)
+        
         app.buttons["Browsing Menu"].tap()
         if app.tables.staticTexts["Bookmarks"].waitForExistence(timeout: 2) {
             app.tables.staticTexts["Bookmarks"].tap()
         } else {
             XCTFail("Bookmarks button missing")
         }
-
-        print("setUpWithError - edit bookmark")
+        
         // Edit bookmark into bookmarklet to verify fingerprinting test
         let bookmarksToolbarButtons = app.toolbars.buttons
         _ = bookmarksToolbarButtons["Edit"].waitForExistence(timeout: 25)

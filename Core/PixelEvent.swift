@@ -409,6 +409,7 @@ extension Pixel {
         case indexOutOfRange(BookmarksModelError.ModelType)
         case saveFailed(BookmarksModelError.ModelType)
         case missingParent(BookmarksModelError.ObjectType)
+        case orphanedBookmarksPresent
         
         case bookmarksCouldNotLoadDatabase
         case bookmarksCouldNotPrepareDatabase
@@ -827,6 +828,7 @@ extension Pixel.Event {
         case .indexOutOfRange(let modelType): return "m_d_bookmarks_index_out_of_range_\(modelType.rawValue)"
         case .saveFailed(let modelType): return "m_d_bookmarks_view_model_save_failed_\(modelType.rawValue)"
         case .missingParent(let objectType): return "m_d_bookmark_model_missing_parent_\(objectType.rawValue)"
+        case .orphanedBookmarksPresent: return "m_d_bookmarks_orphans_present"
             
         case .bookmarksCouldNotLoadDatabase: return "m_d_bookmarks_could_not_load_database"
         case .bookmarksCouldNotPrepareDatabase: return "m_d_bookmarks_could_not_prepare_database"

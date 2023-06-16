@@ -110,7 +110,7 @@ class MainViewController: UIViewController {
     private var localUpdatesCancellable: AnyCancellable?
     private var syncUpdatesCancellable: AnyCancellable?
 
-    lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase)
+    lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
 
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
@@ -448,7 +448,8 @@ class MainViewController: UIViewController {
     
     @IBSegueAction func onCreateTabSwitcher(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> TabSwitcherViewController {
         guard let controller = TabSwitcherViewController(coder: coder,
-                                                         bookmarksDatabase: bookmarksDatabase) else {
+                                                         bookmarksDatabase: bookmarksDatabase,
+                                                         syncService: syncService) else {
             fatalError("Failed to create controller")
         }
         

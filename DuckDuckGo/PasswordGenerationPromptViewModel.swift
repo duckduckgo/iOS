@@ -27,18 +27,15 @@ protocol PasswordGenerationPromptViewModelDelegate: AnyObject {
 
 class PasswordGenerationPromptViewModel: ObservableObject {
 
-    private enum Constants {
-        static let minHeight: CGFloat = 310.0
-    }
-
     weak var delegate: PasswordGenerationPromptViewModelDelegate?
 
-    var contentHeight: CGFloat = Constants.minHeight {
+    var contentHeight: CGFloat = AutofillViews.passwordGenerationMinHeight {
         didSet {
             guard contentHeight != oldValue else {
                 return
             }
-            delegate?.passwordGenerationPromptViewModelDidResizeContent(self, contentHeight: max(contentHeight, Constants.minHeight))
+            delegate?.passwordGenerationPromptViewModelDidResizeContent(self,
+                                                                        contentHeight: max(contentHeight, AutofillViews.passwordGenerationMinHeight))
         }
     }
 

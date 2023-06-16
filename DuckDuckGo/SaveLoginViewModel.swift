@@ -30,12 +30,6 @@ protocol SaveLoginViewModelDelegate: AnyObject {
 
 final class SaveLoginViewModel: ObservableObject {
 
-    private enum Constants {
-        static let minSaveLoginHeight = 375.0
-        static let minSavePasswordHeight = 340.0
-        static let minUpdateUsernameHeight = 310.0
-    }
-
     /*
      - The url of the last site where autofill was declined is stored in app memory
      - The count of the number of times autofill has been declined is kept in user defaults
@@ -68,15 +62,15 @@ final class SaveLoginViewModel: ObservableObject {
     var minHeight: CGFloat {
         switch layoutType {
         case .newUser, .saveLogin:
-            return Constants.minSaveLoginHeight
+            return AutofillViews.saveLoginMinHeight
         case .savePassword, .updatePassword:
-            return Constants.minSavePasswordHeight
+            return AutofillViews.savePasswordMinHeight
         case .updateUsername:
-            return Constants.minUpdateUsernameHeight
+            return AutofillViews.updateUsernameMinHeight
         }
     }
 
-    var contentHeight: CGFloat = Constants.minUpdateUsernameHeight {
+    var contentHeight: CGFloat = AutofillViews.updateUsernameMinHeight {
         didSet {
             guard contentHeight != oldValue else { return }
             delegate?.saveLoginViewModelDidResizeContent(self, contentHeight: max(contentHeight, minHeight))

@@ -183,7 +183,9 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
     func autofillLoginPromptViewModelDidResizeContent(_ viewModel: AutofillLoginPromptViewModel, contentHeight: CGFloat) {
         if #available(iOS 16.0, *) {
             if let sheetPresentationController = self.presentationController as? UISheetPresentationController {
-                sheetPresentationController.detents = [.custom(resolver: { _ in contentHeight })]
+                sheetPresentationController.animateChanges {
+                    sheetPresentationController.detents = [.custom(resolver: { _ in contentHeight })]
+                }
             }
         }
     }

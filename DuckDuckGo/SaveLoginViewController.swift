@@ -178,7 +178,9 @@ extension SaveLoginViewController: SaveLoginViewModelDelegate {
     func saveLoginViewModelDidResizeContent(_ viewModel: SaveLoginViewModel, contentHeight: CGFloat) {
         if #available(iOS 16.0, *) {
             if let sheetPresentationController = self.presentationController as? UISheetPresentationController {
-                sheetPresentationController.detents = [.custom(resolver: { _ in contentHeight })]
+                sheetPresentationController.animateChanges {
+                    sheetPresentationController.detents = [.custom(resolver: { _ in contentHeight })]
+                }
             }
         }
     }

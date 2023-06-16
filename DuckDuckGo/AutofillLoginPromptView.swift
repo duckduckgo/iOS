@@ -173,8 +173,8 @@ private enum Const {
         static let contentSpacerHeightLandscape: CGFloat = 24.0
         static let buttonVerticalSpacing: CGFloat = 12.0
         static let buttonGroupTitleTopPadding: CGFloat = 22.0
-        static let bottomSpacerHeight: CGFloat = 24.0
-        static let bottomSpacerHeightIPad: CGFloat = 44.0
+        static let bottomSpacerHeight: CGFloat = 40.0
+        static let bottomSpacerHeightIPad: CGFloat = 60.0
     }
 }
 

@@ -64,10 +64,6 @@ struct AccountViewModel: Hashable {
 
 class AutofillLoginPromptViewModel: ObservableObject {
 
-    private enum Constants {
-        static let minHeight: CGFloat = 200.0
-    }
-
     weak var delegate: AutofillLoginPromptViewModelDelegate?
     
     @Published var accountMatchesViewModels: [AccountMatchesViewModel] = []
@@ -87,10 +83,10 @@ class AutofillLoginPromptViewModel: ObservableObject {
         }
     }
 
-    var contentHeight: CGFloat = Constants.minHeight {
+    var contentHeight: CGFloat = AutofillViews.loginPromptMinHeight {
         didSet {
             guard contentHeight != oldValue, contentHeight > 0 else { return }
-            delegate?.autofillLoginPromptViewModelDidResizeContent(self, contentHeight: max(contentHeight, Constants.minHeight))
+            delegate?.autofillLoginPromptViewModelDidResizeContent(self, contentHeight: max(contentHeight, AutofillViews.loginPromptMinHeight))
         }
     }
     

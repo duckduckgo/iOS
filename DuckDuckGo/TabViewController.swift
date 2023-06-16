@@ -2505,7 +2505,13 @@ extension TabViewController: SecureVaultManagerDelegate {
 
         if #available(iOS 15.0, *) {
             if let presentationController = autofillPromptViewController.presentationController as? UISheetPresentationController {
-                presentationController.detents = useLargeDetent ? [.large()] : [.medium()]
+                if #available(iOS 16.0, *) {
+                    presentationController.detents = [.custom(resolver: { _ in
+                        AutofillViews.loginPromptMinHeight
+                    })]
+                } else {
+                    presentationController.detents = useLargeDetent ? [.large()] : [.medium()]
+                }
             }
         }
         self.present(autofillPromptViewController, animated: true, completion: nil)
@@ -2540,7 +2546,13 @@ extension TabViewController: SecureVaultManagerDelegate {
 
         if #available(iOS 15.0, *) {
             if let presentationController = passwordGenerationPromptViewController.presentationController as? UISheetPresentationController {
-                presentationController.detents = [.medium()]
+                if #available(iOS 16.0, *) {
+                    presentationController.detents = [.custom(resolver: { _ in
+                        AutofillViews.passwordGenerationMinHeight
+                    })]
+                } else {
+                    presentationController.detents = [.medium()]
+                }
             }
         }
         self.present(passwordGenerationPromptViewController, animated: true)

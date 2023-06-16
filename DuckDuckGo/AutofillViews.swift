@@ -23,6 +23,12 @@ import DesignResourcesKit
 
 struct AutofillViews {
 
+    static let loginPromptMinHeight: CGFloat = 200.0
+    static let saveLoginMinHeight = 375.0
+    static let savePasswordMinHeight = 340.0
+    static let updateUsernameMinHeight = 310.0
+    static let passwordGenerationMinHeight: CGFloat = 310.0
+
     struct CloseButtonHeader: View {
         let action: () -> Void
 

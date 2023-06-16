@@ -55,7 +55,7 @@ class FingerprintUITest: XCTestCase {
 
         print("setUpWithError - site loaded?")
 
-        _ = app.buttons["Browsing Menu"].waitForExistence(timeout: 25)
+//        _ = app.buttons["Browsing Menu"].waitForExistence(timeout: 25)
         app.buttons["Browsing Menu"].tap()
         print("setUpWithError - browsing menu tapped?")
 

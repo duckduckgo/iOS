@@ -33,10 +33,9 @@ struct GenericIconView: View {
                 .scaledToFit()
                 .frame(maxWidth: .infinity)
             
-            Text(trackerLetter)
+            Text(trackerLetter.uppercased())
                 .font(Font(Const.Font.sectionHeader))
                 .foregroundColor(.white)
-                .padding(.top, 1)
         }
         .frame(width: width, height: width)
     }

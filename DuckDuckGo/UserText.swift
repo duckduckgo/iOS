@@ -448,7 +448,7 @@ public struct UserText {
     public static let macWaitlistTryDuckDuckGoForMac = NSLocalizedString("mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac", value: "Get DuckDuckGo for Mac!", comment: "Title for the Join Waitlist screen")
     public static let macWaitlistOnYourMacGoTo = NSLocalizedString("mac-waitlist.join-waitlist-screen.on-your-mac-go-to", value: "On your Mac, go to:", comment: "Description text above the Share Link button")
     public static let macWaitlistWindowsComingSoon = NSLocalizedString("mac-waitlist.join-waitlist-screen.windows", value: "Windows coming soon!", comment: "Disclaimer for the Join Waitlist screen")
-    public static let macWaitlistWindows = NSLocalizedString("mac-waitlist.join-waitlist-screen.windows-waitlist", value: "Looking for the Windows Version?", comment: "Title for the macOS waitlist button redirecting to Windows waitlist")
+    public static let macWaitlistWindows = NSLocalizedString("mac-waitlist.join-waitlist-screen.windows-waitlist", value: "Looking for the Windows version?", comment: "Title for the macOS waitlist button redirecting to Windows waitlist")
     public static let macWaitlistCopy = NSLocalizedString("mac-waitlist.copy", value: "Copy", comment: "Title for the copy action")
     public static let macWaitlistShareLink = NSLocalizedString("mac-waitlist.join-waitlist-screen.share-link", value: "Share Link", comment: "Title for the Share Link button")
 
@@ -459,7 +459,7 @@ public struct UserText {
     public static let windowsWaitlistOnYourComputerGoTo = NSLocalizedString("mac-waitlist.join-waitlist-screen.on-your-computer-go-to", value: "On your Windows computer, go to:", comment: "Description text above the Share Link button")
     public static let windowsWaitlistTryDuckDuckGoForWindowsDownload = NSLocalizedString("windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows", value: "Get DuckDuckGo for Windows!", comment: "Title for the Windows browser download link page")
     public static let windowsWaitlistTryDuckDuckGoForWindows = NSLocalizedString("windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows", value: "Get early access to try DuckDuckGo for Windows!", comment: "Title for the Join Windows Waitlist screen")
-    public static let windowsWaitlistMac = NSLocalizedString("windows-waitlist.join-waitlist-screen.mac-waitlist", value: "Looking for the Mac Version?", comment: "Title for the Windows waitlist button redirecting to Mac waitlist")
+    public static let windowsWaitlistMac = NSLocalizedString("windows-waitlist.join-waitlist-screen.mac-waitlist", value: "Looking for the Mac version?", comment: "Title for the Windows waitlist button redirecting to Mac waitlist")
     public static let windowsWaitlistBrowsePrivately = NSLocalizedString("windows-waitlist.settings.browse-privately", value: "Browse privately with our app for Windows", comment: "Title for the settings subtitle")
 
     public static let windowsWaitlistJoinedWithNotifications = NSLocalizedString("windows-waitlist.joined.notifications-enabled",
@@ -474,7 +474,7 @@ public struct UserText {
     public static let windowsWaitlistInviteScreenStep2Description = NSLocalizedString("windows-waitlist.invite-screen.step-2.description", value: "Open DuckDuckGo Installer in Downloads, select Install, then enter your invite code.", comment: "Description on the invite screen")
     public static let windowsWaitlistAvailableNotificationTitle = NSLocalizedString("windows-waitlist.available.notification.title", value: "Try DuckDuckGo for Windows!", comment: "Title for the Windows waitlist notification")
     public static func windowsWaitlistShareSheetMessage(code: String) -> String {
-        let localized = NSLocalizedString("windows-waitlist.share-sheet.message", value: """
+        let localized = NSLocalizedString("windows-waitlist.share-sheet.invite-code-message", value: """
             You’re invited!
 
             Ready to use DuckDuckGo on Windows?
@@ -497,14 +497,15 @@ public struct UserText {
     
     public static let appTPNavTitle = NSLocalizedString("appTP.title", value: "App Tracking Protection", comment: "Title for the App Tracking Protection feature")
     public static let appTPCellDetail = NSLocalizedString("appTP.cell.detail", value: "Block app trackers on your device", comment: "Detail string describing what AppTP is")
+    public static let appTPCellEnabled = NSLocalizedString("appTP.cell.enabled", value: "Enabled", comment: "String indicating AppTP is enabled when viewed from the settings screen")
     public static let appTPCellDisabled = NSLocalizedString("appTP.cell.disabled", value: "Disabled", comment: "String indicating AppTP is disabled when viewed from the settings screen")
     
     public static let appTPEmptyDisabledInfo = NSLocalizedString("appTP.empty.disabled.info", value: "Enable App Tracking Protection so we can block pesky trackers in other apps.", comment: "Info string informing the user what App Tracking Protection does.")
     
     public static let appTPEmptyEnabledInfo = NSLocalizedString("appTP.empty.enabled.info", value: "We’re looking for trackers in your apps...", comment: "Info string informing the user we're looking for trackers in other apps.")
     
-    public static func appTPTrackingAttempts(count: String) -> String {
-        let message = NSLocalizedString("appTP.trackingattempts", value: "%@ tracking attempts", comment: "Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts")
+    public static func appTPTrackingAttempts(count: Int32) -> String {
+        let message = NSLocalizedString("appTP.trackingattempts", comment: "Do not translate. StringsDict entry -- Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts")
         return message.format(arguments: count)
     }
     
@@ -680,4 +681,9 @@ In addition to the details entered into this form, your app issue report will co
     public static let syncRemoveDeviceConfirmAction = "Remove"
     public static let syncCodeCopied = "Recovery Code copied"
 
+    // Autofill Password Generation Prompt
+    public static let autofillPasswordGenerationPromptTitle = NSLocalizedString("autofill.password-generation-prompt.title", value:"Use generated password from DuckDuckGo?", comment: "Title for prompt to use suggested strong password for creating a login")
+    public static let autofillPasswordGenerationPromptSubtitle = NSLocalizedString("autofill.password-generation-prompt.subtitle", value:"Password will be saved in Logins.", comment: "Subtitle for prompt to use suggested strong password for creating a login")
+    public static let autofillPasswordGenerationPromptUseGeneratedPasswordCTA = NSLocalizedString("autofill.password-generation-prompt.use-generated-password.cta", value:"Use Generated Password", comment: "Button title choosing to use the suggested generated password for creating a login")
+    public static let autofillPasswordGenerationPromptUseOwnPasswordCTA = NSLocalizedString("autofill.password-generation-prompt.use-own-password.cta", value:"Create My Own", comment: "Button title choosing to use own password for creating a login")
 }

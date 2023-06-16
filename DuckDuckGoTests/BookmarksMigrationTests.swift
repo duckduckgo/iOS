@@ -123,7 +123,7 @@ class BookmarksMigrationTests: XCTestCase {
         XCTAssertNotNil(BookmarkUtils.fetchRootFolder(context))
         XCTAssertNotNil(BookmarkUtils.fetchFavoritesFolder(context))
         
-        let topLevel = BookmarkListViewModel(bookmarksDatabase: destinationStack, parentID: nil)
+        let topLevel = BookmarkListViewModel(bookmarksDatabase: destinationStack, parentID: nil, syncService: nil)
         XCTAssertEqual(topLevel.bookmarks.count, 4)
         
         let topLevelNames = topLevel.bookmarks.map { $0.title }

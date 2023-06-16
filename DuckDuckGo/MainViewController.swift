@@ -19,8 +19,10 @@
 
 import UIKit
 import WebKit
+import Combine
 import Common
 import Core
+import DDGSync
 import Lottie
 import Kingfisher
 import BrowserServicesKit
@@ -98,12 +100,17 @@ class MainViewController: UIViewController {
     private let previewsSource = TabPreviewsSource()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private var launchTabObserver: LaunchTabNotification.Observer?
-    
-    private let bookmarksDatabase: CoreDataDatabase
+
     private let appTrackingProtectionDatabase: CoreDataDatabase
+    private let bookmarksDatabase: CoreDataDatabase
+    private let bookmarksDatabaseCleaner: BookmarkDatabaseCleaner
     private let favoritesViewModel: FavoritesListInteracting
-    
-    lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase)
+    private let syncService: DDGSyncing
+    private var syncStateCancellable: AnyCancellable?
+    private var localUpdatesCancellable: AnyCancellable?
+    private var syncUpdatesCancellable: AnyCancellable?
+
+    lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
 
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
@@ -130,17 +137,25 @@ class MainViewController: UIViewController {
     
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
-    
+
     required init?(coder: NSCoder,
                    bookmarksDatabase: CoreDataDatabase,
-                   appTrackingProtectionDatabase: CoreDataDatabase) {
-        self.bookmarksDatabase = bookmarksDatabase
+                   appTrackingProtectionDatabase: CoreDataDatabase,
+                   syncService: DDGSyncing) {
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
+        self.bookmarksDatabase = bookmarksDatabase
+        self.bookmarksDatabaseCleaner = BookmarkDatabaseCleaner(
+            bookmarkDatabase: bookmarksDatabase,
+            errorEvents: BookmarksCleanupErrorHandling(),
+            log: .generalLog
+        )
+        self.syncService = syncService
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         super.init(coder: coder)
+        bindSyncService()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("Use init?(code:")
     }
@@ -188,6 +203,11 @@ class MainViewController: UIViewController {
         
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             showFireButtonPulse()
+        }
+
+        if MacPromoExperiment().shouldShowSheet() {
+            let controller = MacPromoViewController()
+            present(controller, animated: true)
         }
     }
 
@@ -307,7 +327,35 @@ class MainViewController: UIViewController {
         gestureBookmarksButton.delegate = self
         gestureBookmarksButton.image = UIImage(named: "Bookmarks")
     }
-    
+
+    private func bindSyncService() {
+        syncStateCancellable = syncService.authStatePublisher
+            .prepend(syncService.authState)
+            .map { $0 == .inactive }
+            .removeDuplicates()
+            .sink { [weak self] isSyncDisabled in
+                self?.bookmarksDatabaseCleaner.cleanUpDatabaseNow()
+                if isSyncDisabled {
+                    self?.bookmarksDatabaseCleaner.scheduleRegularCleaning()
+                } else {
+                    self?.bookmarksDatabaseCleaner.cancelCleaningSchedule()
+                }
+            }
+
+        localUpdatesCancellable = favoritesViewModel.localUpdates
+            .sink { [weak self] in
+                self?.syncService.scheduler.notifyDataChanged()
+            }
+
+        syncUpdatesCancellable = (UIApplication.shared.delegate as? AppDelegate)?.syncDataProviders.bookmarksAdapter.syncDidCompletePublisher
+            .sink { [weak self] _ in
+                self?.favoritesViewModel.reloadData()
+                DispatchQueue.main.async {
+                    self?.homeController?.collectionView.reloadData()
+                }
+            }
+    }
+
     @objc func quickSaveBookmarkLongPress(gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
             quickSaveBookmark()
@@ -344,8 +392,6 @@ class MainViewController: UIViewController {
                 }
                 
                 brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
-            } else if let settingsScreen = navController.topViewController as? SettingsViewController {
-                settingsScreen.appTPDatabase = self.appTrackingProtectionDatabase
             }
         }
 
@@ -382,7 +428,8 @@ class MainViewController: UIViewController {
     @IBSegueAction func onCreateBookmarksList(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> BookmarksViewController {
         guard let controller = BookmarksViewController(coder: coder,
                                                        bookmarksDatabase: self.bookmarksDatabase,
-                                                       bookmarksSearch: bookmarksCachingSearch) else {
+                                                       bookmarksSearch: bookmarksCachingSearch,
+                                                       syncService: syncService) else {
             fatalError("Failed to create controller")
         }
         controller.delegate = self
@@ -401,7 +448,8 @@ class MainViewController: UIViewController {
     
     @IBSegueAction func onCreateTabSwitcher(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> TabSwitcherViewController {
         guard let controller = TabSwitcherViewController(coder: coder,
-                                                         bookmarksDatabase: bookmarksDatabase) else {
+                                                         bookmarksDatabase: bookmarksDatabase,
+                                                         syncService: syncService) else {
             fatalError("Failed to create controller")
         }
         
@@ -414,6 +462,27 @@ class MainViewController: UIViewController {
         return controller
     }
     
+    @IBSegueAction func onCreateSettings(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> SettingsViewController {
+        guard let controller = SettingsViewController(coder: coder,
+                                                      appTPDatabase: appTrackingProtectionDatabase,
+                                                      bookmarksDatabase: bookmarksDatabase,
+                                                      syncService: syncService) else {
+            fatalError("Failed to create controller")
+        }
+
+        if segueIdentifier == "SettingsToLogins" {
+            if let account = sender as? SecureVaultModels.WebsiteAccount {
+                controller.openLoginsWhenPresented(accountDetails: account)
+            } else {
+                controller.openLoginsWhenPresented()
+            }
+        } else if segueIdentifier == "SettingsToCookiePopupManagement" {
+            controller.openCookiePopupManagementWhenPresented()
+        }
+
+        return controller
+    }
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
@@ -423,6 +492,9 @@ class MainViewController: UIViewController {
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if let presentedViewController {
+            return presentedViewController.supportedInterfaceOrientations
+        }
         return DefaultTutorialSettings().hasSeenOnboarding ? [.allButUpsideDown] : [.portrait]
     }
 
@@ -456,6 +528,7 @@ class MainViewController: UIViewController {
         tabManager = TabManager(model: tabsModel,
                                 previewsSource: previewsSource,
                                 bookmarksDatabase: bookmarksDatabase,
+                                syncService: syncService,
                                 delegate: self)
     }
 
@@ -508,11 +581,13 @@ class MainViewController: UIViewController {
         
         currentTab?.dismiss()
         removeHomeScreen()
+        AppDependencyProvider.shared.homePageConfiguration.refresh()
 
         let tabModel = currentTab?.tabModel
         let controller = HomeViewController.loadFromStoryboard(model: tabModel!,
                                                                favoritesViewModel: favoritesViewModel,
                                                                appTPDatabase: appTrackingProtectionDatabase)
+        
         homeController = controller
 
         controller.chromeDelegate = self
@@ -898,13 +973,7 @@ class MainViewController: UIViewController {
     }
     
     func launchCookiePopupManagementSettings() {
-        if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
-           let settingsController = navController.topViewController as? SettingsViewController {
-            settingsController.loadViewIfNeeded()
-            
-            settingsController.showCookiePopupManagement(animated: false)
-            self.present(navController, animated: true)
-        }
+        performSegue(withIdentifier: "SettingsToCookiePopupManagement", sender: self)
     }
 
     fileprivate func launchInstructions() {
@@ -1563,6 +1632,11 @@ extension MainViewController: TabDelegate {
         launchSettings()
     }
 
+    func tab(_ tab: TabViewController,
+             didRequestSettingsToLogins account: SecureVaultModels.WebsiteAccount?) {
+        performSegue(withIdentifier: "SettingsToLogins", sender: account)
+    }
+
     func tabContentProcessDidTerminate(tab: TabViewController) {
         findInPageView.done()
         tabManager.invalidateCache(forController: tab)
@@ -1790,6 +1864,11 @@ extension MainViewController: AutoClearWorker {
         }
         
         AutoconsentManagement.shared.clearCache()
+        DaxDialogs.shared.clearHeldURLData()
+
+        if syncService.authState == .inactive {
+            bookmarksDatabaseCleaner.cleanUpDatabaseNow()
+        }
     }
     
     func stopAllOngoingDownloads() {

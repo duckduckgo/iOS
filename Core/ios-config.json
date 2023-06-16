@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1684257604887,
+    "version": 1685052177947,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -239,25 +239,36 @@
             "state": "enabled",
             "features": {
                 "credentialsSaving": {
-                    "state": "internal"
+                    "state": "enabled",
+                    "minSupportedVersion": "7.74.0"
                 },
                 "credentialsAutofill": {
-                    "state": "internal"
+                    "state": "enabled",
+                    "minSupportedVersion": "7.74.0"
                 },
                 "inlineIconCredentials": {
-                    "state": "internal"
+                    "state": "enabled",
+                    "minSupportedVersion": "7.74.0"
                 },
                 "accessCredentialManagement": {
+                    "state": "enabled",
+                    "minSupportedVersion": "7.74.0"
+                },
+                "autofillPasswordGeneration": {
                     "state": "internal"
                 }
             },
-            "hash": "092a78ae602103940ea6a957cc9100b8"
+            "hash": "11d9fbc46099d0954c9e1235f9a31169"
         },
         "clickToLoad": {
             "exceptions": [
                 {
                     "domain": "duckduckgo.com",
                     "reason": "Warnings are already displayed before embedded YouTube videos are loaded."
+                },
+                {
+                    "domain": "khanacademy.org",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/945"
                 },
                 {
                     "domain": "www.google.ad",
@@ -1035,7 +1046,7 @@
                 }
             },
             "state": "disabled",
-            "hash": "f11fc2358f1247ac76cfe80efe796173"
+            "hash": "3349c86ccf4e47d5f620006a29700f69"
         },
         "clickToPlay": {
             "exceptions": [],
@@ -2691,10 +2702,14 @@
                 {
                     "domain": "player.vimeo.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/931"
+                },
+                {
+                    "domain": "xcelenergy.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/941"
                 }
             ],
             "state": "enabled",
-            "hash": "43e40de7213b8c6f476f19e76c11b3aa"
+            "hash": "1ed2336bb12ce5218b091ee5f33bf4c0"
         },
         "requestFilterer": {
             "state": "disabled",
@@ -2722,6 +2737,10 @@
                 {
                     "domain": "rbs.co.uk",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/902"
+                },
+                {
+                    "domain": "panomax.com",
+                    "reason": "https://github.com/duckduckgo/duckduckgo-privacy-extension/issues/2007"
                 },
                 {
                     "domain": "ally.com",
@@ -3268,7 +3287,7 @@
                     }
                 }
             },
-            "hash": "f1aa0a97c6e6e7ff0518995cff415dac"
+            "hash": "3e40be6f1f3c04ce8570fc20010bec7a"
         },
         "serviceworkerInitiatedRequests": {
             "exceptions": [],
@@ -3467,6 +3486,37 @@
                                     "cigna.com"
                                 ],
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/820"
+                            }
+                        ]
+                    },
+                    "amazon.dev": {
+                        "rules": [
+                            {
+                                "rule": "prime.amazon.dev",
+                                "domains": [
+                                    "amazon.eg",
+                                    "amazon.com.br",
+                                    "amazon.ca",
+                                    "amazon.com.mx",
+                                    "amazon.com",
+                                    "amazon.cn",
+                                    "amazon.in",
+                                    "amazon.co.jp",
+                                    "amazon.sa",
+                                    "amazon.sg",
+                                    "amazon.com.tr",
+                                    "amazon.ae",
+                                    "amazon.com.be",
+                                    "amazon.fr",
+                                    "amazon.it",
+                                    "amazon.nl",
+                                    "amazon.pl",
+                                    "amazon.es",
+                                    "amazon.se",
+                                    "amazon.co.uk",
+                                    "amazon.com.au"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/943"
                             }
                         ]
                     },
@@ -3827,9 +3877,10 @@
                                 "rule": "securepubads.g.doubleclick.net/pagead/ppub_config",
                                 "domains": [
                                     "rocketnews24.com",
-                                    "weather.com"
+                                    "weather.com",
+                                    "wunderground.com"
                                 ],
-                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/415 rocketnews24.com - https://github.com/duckduckgo/privacy-configuration/issues/846"
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/415 rocketnews24.com - https://github.com/duckduckgo/privacy-configuration/issues/846 wunderground.com - https://github.com/duckduckgo/privacy-configuration/issues/956"
                             },
                             {
                                 "rule": "doubleclick.net",
@@ -4296,6 +4347,18 @@
                                     "<all>"
                                 ],
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/760"
+                            }
+                        ]
+                    },
+                    "impervadns.net": {
+                        "rules": [
+                            {
+                                "rule": "e9pkvlf.impervadns.net",
+                                "domains": [
+                                    "cox.com",
+                                    "cox.net"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/948"
                             }
                         ]
                     },
@@ -5354,6 +5417,32 @@
                                     "thetrainline.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: datadome.co"
+                            }
+                        ]
+                    },
+                    "cox.com": {
+                        "rules": [
+                            {
+                                "rule": "webcdn.cox.com",
+                                "domains": [
+                                    "cox.com",
+                                    "cox.net"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: e9pkvlf.impervadns.net"
+                            },
+                            {
+                                "rule": "smetrics.cox.com",
+                                "domains": [
+                                    "pizzahut.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
+                            },
+                            {
+                                "rule": "target.cox.com",
+                                "domains": [
+                                    "pizzahut.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
                             }
                         ]
                     },
@@ -8900,24 +8989,6 @@
                         "rules": [
                             {
                                 "rule": "smetrics.countryfinancial.com",
-                                "domains": [
-                                    "pizzahut.com"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
-                            }
-                        ]
-                    },
-                    "cox.com": {
-                        "rules": [
-                            {
-                                "rule": "smetrics.cox.com",
-                                "domains": [
-                                    "pizzahut.com"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
-                            },
-                            {
-                                "rule": "target.cox.com",
                                 "domains": [
                                     "pizzahut.com"
                                 ],
@@ -13538,7 +13609,7 @@
                 }
             },
             "exceptions": [],
-            "hash": "98367a2c5a43cccceb443e3fcd63f38d"
+            "hash": "91b7c0498d7699979b5c7903cb1fb5f4"
         },
         "trackingCookies1p": {
             "settings": {

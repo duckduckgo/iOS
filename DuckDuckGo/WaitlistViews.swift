@@ -32,6 +32,8 @@ struct WaitlistDownloadBrowserContentView: View {
 
     @State private var shareButtonFrame: CGRect = .zero
 
+    let padding = UIDevice.current.localizedModel == "iPad" ? 100.0 : 0.0
+
     var body: some View {
         GeometryReader { proxy in
             ScrollView {
@@ -43,6 +45,7 @@ struct WaitlistDownloadBrowserContentView: View {
                         .foregroundColor(.waitlistTextSecondary)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
+                        .padding(.horizontal, padding)
 
                     Text(constants.onYourString)
                         .daxBodyRegular()
@@ -70,6 +73,7 @@ struct WaitlistDownloadBrowserContentView: View {
                         }
                     )
                     .buttonStyle(RoundedButtonStyle(enabled: true))
+                    .padding(.horizontal, padding)
                     .padding(.top, 24)
                     .background(
                         GeometryReader { proxy in
@@ -104,18 +108,6 @@ struct WaitlistDownloadBrowserContentView: View {
             }
         }
     }
-
-    var shareButton: some View {
-
-        Button(action: {
-            action(.openShareSheet(shareButtonFrame))
-        }, label: {
-            Image("Share").foregroundColor(.waitlistTextSecondary)
-        })
-        .frame(width: 44, height: 44)
-
-    }
-
 }
 
 private struct ShareButtonFramePreferenceKey: PreferenceKey {
@@ -136,7 +128,7 @@ struct BrowserDowloadLinkConstants {
         case .windows:
             return "WindowsWaitlistJoinWaitlist"
         case .mac:
-            return "MacWaitlistJoinWaitlist"
+            return "WaitlistMacComputer"
         }
     }
     var title: String {

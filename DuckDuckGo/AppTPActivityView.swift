@@ -70,12 +70,6 @@ struct AppTPActivityView: View {
     
     var listState: some View {
         VStack {
-            Picker("Tracker Sorting", selection: $viewModel.trackerSortingOption) {
-                Text("Sort By Count").tag(AppTrackingProtectionListViewModel.TrackerSorting.count)
-                Text("Sort By Date").tag(AppTrackingProtectionListViewModel.TrackerSorting.timestamp)
-            }
-            .pickerStyle(.segmented)
-            
             ForEach(viewModel.sections, id: \.name) { section in
                 Section(content: {
                     LazyVStack(alignment: .leading, spacing: 0) {
@@ -103,7 +97,7 @@ struct AppTPActivityView: View {
                     .cornerRadius(Const.Size.cornerRadius)
                 }, header: {
                     HStack {
-                        Text(viewModel.formattedDate(section.name))
+                        Text(viewModel.formattedDate(section.name).uppercased())
                             .font(Font(uiFont: Const.Font.sectionHeader))
                             .foregroundColor(.infoText)
                             .padding(.top)
@@ -114,11 +108,6 @@ struct AppTPActivityView: View {
                     }
                 })
             }
-            
-            Toggle(isOn: $viewModel.debugModeEnabled, label: {
-                Text("Show Additional Tracker Information")
-            })
-            .padding(.top, 8)
         }
     }
     
@@ -138,6 +127,7 @@ struct AppTPActivityView: View {
                 Divider()
                 
                 NavigationLink(destination: AppTPManageTrackersView(viewModel: AppTPManageTrackersViewModel(),
+                                                                    feedbackModel: feedbackModel,
                                                                     imageCache: imageCache)) {
                     HStack {
                         Text(UserText.appTPManageTrackers)
@@ -151,6 +141,7 @@ struct AppTPActivityView: View {
                 }
                 
                 Divider()
+                    .padding(.leading)
                 
                 NavigationLink(destination: AppTPBreakageFormView(feedbackModel: feedbackModel)) {
                     HStack {
@@ -170,7 +161,7 @@ struct AppTPActivityView: View {
         }
     }
     
-    var body: some View {
+    var scrollView: some View {
         ScrollView {
             LazyVStack(alignment: .center, spacing: 0) {
                 Section {
@@ -228,27 +219,43 @@ struct AppTPActivityView: View {
         .background(Color.viewBackground)
         .navigationTitle(UserText.appTPNavTitle)
     }
+    
+    @ViewBuilder
+    var scrollWithBackgroud: some View {
+        if #available(iOS 16, *) {
+            scrollView
+                .scrollContentBackground(.hidden)
+                .background(Color.viewBackground)
+        } else {
+            scrollView
+                .background(Color.viewBackground)
+        }
+    }
+    
+    var body: some View {
+        scrollWithBackgroud
+    }
 }
 
 private enum Const {
     enum Font {
-        static let sectionHeader = UIFont.semiBoldAppFont(ofSize: 15)
+        static let sectionHeader = UIFont.systemFont(ofSize: 12)
         static let info = UIFont.appFont(ofSize: 16)
     }
     
     enum Size {
         static let cornerRadius: CGFloat = 12
         static let sectionIndentation: CGFloat = 16
-        static let sectionHeaderBottom: CGFloat = 6
+        static let sectionHeaderBottom: CGFloat = -2
         static let standardCellHeight: CGFloat = 44
     }
 }
 
 private extension Color {
     static let infoText = Color("AppTPDomainColor")
-    static let buttonColor = Color("AppTPToggleColor")
-    static let cellBackground = Color("AppTPCellBackgroundColor")
-    static let viewBackground = Color("AppTPViewBackgroundColor")
+    static let buttonColor = Color(designSystemColor: .accent)
+    static let cellBackground = Color(designSystemColor: .surface)
+    static let viewBackground = Color(designSystemColor: .background)
 }
 
 #endif

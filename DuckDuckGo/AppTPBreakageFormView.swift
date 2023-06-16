@@ -86,8 +86,24 @@ struct AppTPBreakageFormView: View {
     }
     
     var body: some View {
+        formWithBackground
+    }
+    
+    @ViewBuilder
+    var formWithBackground: some View {
+        if #available(iOS 16.0, *) {
+            form
+                .scrollContentBackground(.hidden)
+                .background(Color.viewBackground)
+        } else {
+            form
+                .background(Color.viewBackground)
+        }
+    }
+    
+    var form: some View {
         ZStack {
-            Form {
+            List {
                 Section {
                     VStack {
                         AppTPBreakageFormHeaderView(text: UserText.appTPReportAppLabel)
@@ -126,23 +142,22 @@ struct AppTPBreakageFormView: View {
                             if self.description.isEmpty {
                                 TextEditor(text: $placeholderText)
                                     .font(.body)
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(Color(UIColor.placeholderText))
                                     .disabled(true)
                             }
                             
                             TextEditor(text: $description)
                                 .font(.body)
-                                .opacity(self.description.isEmpty ? 0.25 : 1)
                         }
                         .padding(.leading, Const.Size.commentFieldPadding)
                     }
                     .frame(minHeight: Const.Size.minCommentHeight)
                 } footer: {
                     Text(UserText.appTPReportFooter)
-                    .fontWithLineHeight(font: Const.Font.footer, lineHeight: Const.Size.lineHeight)
-                    .foregroundColor(.infoText)
-                    .padding(.leading, Const.Size.sectionIndentation)
-                    .padding(.top)
+                        .fontWithLineHeight(font: Const.Font.footer, lineHeight: Const.Size.lineHeight)
+                        .foregroundColor(.footerText)
+                        .padding(.leading, Const.Size.sectionIndentation)
+                        .padding(.top)
                 }
                 
                 Section {
@@ -154,10 +169,13 @@ struct AppTPBreakageFormView: View {
                             .frame(maxWidth: .infinity, alignment: .center)
                             .foregroundColor(appName.isEmpty ? Color.disabledButtonLabel : Color.buttonLabelColor)
                     })
+                    .buttonStyle(PlainButtonStyle())
+                    .frame(height: 30)
                     .listRowBackground(appName.isEmpty ? Color.disabledButton : Color.buttonColor)
                     .disabled(appName.isEmpty)
                 }
             }
+            .listStyle(.insetGrouped)
             .navigationTitle(UserText.appTPReportTitle)
             .alert(isPresented: $showError) {
                 Alert(
@@ -188,8 +206,10 @@ private enum Const {
 
 private extension Color {
     static let infoText = Color("AppTPDomainColor")
-    static let buttonColor = Color("AppTPBreakageButton")
+    static let footerText = Color(designSystemColor: .textSecondary)
+    static let buttonColor = Color(designSystemColor: .accent)
     static let buttonLabelColor = Color("AppTPBreakageButtonLabel")
     static let disabledButton = Color("AppTPBreakageButtonDisabled")
     static let disabledButtonLabel = Color("AppTPBreakageButtonLabelDisabled")
+    static let viewBackground = Color(designSystemColor: .background)
 }

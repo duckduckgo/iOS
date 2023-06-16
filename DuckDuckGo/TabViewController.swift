@@ -1556,13 +1556,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func showLoginDetails(with account: SecureVaultModels.WebsiteAccount) {
-        if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
-           let settingsController = navController.topViewController as? SettingsViewController {
-            settingsController.loadViewIfNeeded()
-            
-            settingsController.showAutofillAccountDetails(account, animated: false)
-            self.present(navController, animated: true)
-        }
+        delegate?.tab(self, didRequestSettingsToLogins: account)
     }
     
     @objc private func dismissLoginDetails() {

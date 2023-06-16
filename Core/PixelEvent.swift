@@ -280,8 +280,8 @@ extension Pixel {
 
         case appTPVPNCrash
         case appTPVPNDisconnect
-        case appTPVPNSleep
-        case appTPVPNWake
+        case appTPVPNMemoryWarning
+        case appTPVPNMemoryCritical
         
         case appTPBlocklistParseFailed
         case appTPActiveUser
@@ -302,7 +302,14 @@ extension Pixel {
         case remoteMessageDismissed
         case remoteMessageShownPrimaryActionClicked
         case remoteMessageShownSecondaryActionClicked
-        
+
+        // MARK: mac promo
+
+        case macPromoSheetShownUnique
+        case macPromoSheetDismissed
+        case macPromoPrimaryActionClicked
+        case shareLink
+
         // MARK: debug pixels
         case dbCrashDetected
 
@@ -412,6 +419,10 @@ extension Pixel {
         case bookmarksMigrationCouldNotPrepareDatabaseOnFailedMigration
         case bookmarksMigrationCouldNotValidateDatabase
         case bookmarksMigrationCouldNotRemoveOldStore
+
+        case syncFailedToMigrate
+        case syncFailedToLoadAccount
+        case syncFailedToSetupEngine
 
         case syncSentUnauthenticatedRequest
         case syncMetadataCouldNotLoadDatabase
@@ -687,8 +698,9 @@ extension Pixel.Event {
         case .appTPFailedToStartTunnel: return "m_apptp_failed_to_start_tunnel"
         case .appTPVPNCrash: return "m_apptp_vpn_crash"
         case .appTPVPNDisconnect: return "m_apptp_vpn_disconnect"
-        case .appTPVPNSleep: return "m_apptp_vpn_sleep"
-        case .appTPVPNWake: return "m_apptp_vpn_wake"
+        case .appTPVPNMemoryWarning: return "m_apptp_vpn_memory_warning"
+        case .appTPVPNMemoryCritical: return "m_apptp_vpn_memory_critical"
+
         case .appTPBlocklistParseFailed: return "m_apptp_blocklist_parse_failed"
         case .appTPActiveUser: return "m_apptp_active_user"
         case .appTPDBLocationFailed: return "m_apptp_db_location_not_found"
@@ -707,6 +719,13 @@ extension Pixel.Event {
         case .remoteMessageDismissed: return "m_remote_message_dismissed"
         case .remoteMessageShownPrimaryActionClicked: return "m_remote_message_primary_action_clicked"
         case .remoteMessageShownSecondaryActionClicked: return "m_remote_message_secondary_action_clicked"
+
+        // MARK: mac promo experiment
+
+        case .macPromoSheetShownUnique: return "m_macpromo_sheet_shown_unique"
+        case .macPromoSheetDismissed: return "m_macpromo_sheet_dismissed"
+        case .macPromoPrimaryActionClicked: return "m_macpromo_primary_action_clicked"
+        case .shareLink: return "m_share_link"
 
         // MARK: debug pixels
 
@@ -819,6 +838,10 @@ extension Pixel.Event {
             return "m_d_bookmarks_migration_could_not_prepare_database_on_failed_migration"
         case .bookmarksMigrationCouldNotValidateDatabase: return "m_d_bookmarks_migration_could_not_validate_database"
         case .bookmarksMigrationCouldNotRemoveOldStore: return "m_d_bookmarks_migration_could_not_remove_old_store"
+
+        case .syncFailedToMigrate: return "m_d_sync_failed_to_migrate"
+        case .syncFailedToLoadAccount: return "m_d_sync_failed_to_load_account"
+        case .syncFailedToSetupEngine: return "m_d_sync_failed_to_setup_engine"
 
         case .syncSentUnauthenticatedRequest: return "m_d_sync_sent_unauthenticated_request"
         case .syncMetadataCouldNotLoadDatabase: return "m_d_sync_metadata_could_not_load_database"

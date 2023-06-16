@@ -280,8 +280,8 @@ extension Pixel {
 
         case appTPVPNCrash
         case appTPVPNDisconnect
-        case appTPVPNSleep
-        case appTPVPNWake
+        case appTPVPNMemoryWarning
+        case appTPVPNMemoryCritical
         
         case appTPBlocklistParseFailed
         case appTPActiveUser
@@ -302,7 +302,14 @@ extension Pixel {
         case remoteMessageDismissed
         case remoteMessageShownPrimaryActionClicked
         case remoteMessageShownSecondaryActionClicked
-        
+
+        // MARK: mac promo
+
+        case macPromoSheetShownUnique
+        case macPromoSheetDismissed
+        case macPromoPrimaryActionClicked
+        case shareLink
+
         // MARK: debug pixels
         case dbCrashDetected
 
@@ -339,9 +346,7 @@ extension Pixel {
         case contentBlockingCompilationTime
         
         case ampBlockingRulesCompilationFailed
-        
-        case contentBlockingIdentifierError
-        
+
         case webKitDidTerminate
         case webKitTerminationDidReloadCurrentTab
         
@@ -402,6 +407,7 @@ extension Pixel {
         case indexOutOfRange(BookmarksModelError.ModelType)
         case saveFailed(BookmarksModelError.ModelType)
         case missingParent(BookmarksModelError.ObjectType)
+        case orphanedBookmarksPresent
         
         case bookmarksCouldNotLoadDatabase
         case bookmarksCouldNotPrepareDatabase
@@ -413,6 +419,11 @@ extension Pixel {
         case bookmarksMigrationCouldNotValidateDatabase
         case bookmarksMigrationCouldNotRemoveOldStore
 
+        case syncFailedToMigrate
+        case syncFailedToLoadAccount
+        case syncFailedToSetupEngine
+
+        case syncSentUnauthenticatedRequest
         case syncMetadataCouldNotLoadDatabase
         case syncBookmarksProviderInitializationFailed
         case syncBookmarksFailed
@@ -686,8 +697,9 @@ extension Pixel.Event {
         case .appTPFailedToStartTunnel: return "m_apptp_failed_to_start_tunnel"
         case .appTPVPNCrash: return "m_apptp_vpn_crash"
         case .appTPVPNDisconnect: return "m_apptp_vpn_disconnect"
-        case .appTPVPNSleep: return "m_apptp_vpn_sleep"
-        case .appTPVPNWake: return "m_apptp_vpn_wake"
+        case .appTPVPNMemoryWarning: return "m_apptp_vpn_memory_warning"
+        case .appTPVPNMemoryCritical: return "m_apptp_vpn_memory_critical"
+
         case .appTPBlocklistParseFailed: return "m_apptp_blocklist_parse_failed"
         case .appTPActiveUser: return "m_apptp_active_user"
         case .appTPDBLocationFailed: return "m_apptp_db_location_not_found"
@@ -706,6 +718,13 @@ extension Pixel.Event {
         case .remoteMessageDismissed: return "m_remote_message_dismissed"
         case .remoteMessageShownPrimaryActionClicked: return "m_remote_message_primary_action_clicked"
         case .remoteMessageShownSecondaryActionClicked: return "m_remote_message_secondary_action_clicked"
+
+        // MARK: mac promo experiment
+
+        case .macPromoSheetShownUnique: return "m_macpromo_sheet_shown_unique"
+        case .macPromoSheetDismissed: return "m_macpromo_sheet_dismissed"
+        case .macPromoPrimaryActionClicked: return "m_macpromo_primary_action_clicked"
+        case .shareLink: return "m_share_link"
 
         // MARK: debug pixels
 
@@ -743,9 +762,7 @@ extension Pixel.Event {
         case .contentBlockingCompilationTime: return "m_content_blocking_compilation_time"
             
         case .ampBlockingRulesCompilationFailed: return "m_debug_amp_rules_compilation_failed"
-            
-        case .contentBlockingIdentifierError: return "m_d_cb_ie"
-            
+
         case .webKitDidTerminate: return "m_d_wkt"
         case .webKitTerminationDidReloadCurrentTab: return "m_d_wktct"
             
@@ -807,6 +824,7 @@ extension Pixel.Event {
         case .indexOutOfRange(let modelType): return "m_d_bookmarks_index_out_of_range_\(modelType.rawValue)"
         case .saveFailed(let modelType): return "m_d_bookmarks_view_model_save_failed_\(modelType.rawValue)"
         case .missingParent(let objectType): return "m_d_bookmark_model_missing_parent_\(objectType.rawValue)"
+        case .orphanedBookmarksPresent: return "m_d_bookmarks_orphans_present"
             
         case .bookmarksCouldNotLoadDatabase: return "m_d_bookmarks_could_not_load_database"
         case .bookmarksCouldNotPrepareDatabase: return "m_d_bookmarks_could_not_prepare_database"
@@ -819,6 +837,11 @@ extension Pixel.Event {
         case .bookmarksMigrationCouldNotValidateDatabase: return "m_d_bookmarks_migration_could_not_validate_database"
         case .bookmarksMigrationCouldNotRemoveOldStore: return "m_d_bookmarks_migration_could_not_remove_old_store"
 
+        case .syncFailedToMigrate: return "m_d_sync_failed_to_migrate"
+        case .syncFailedToLoadAccount: return "m_d_sync_failed_to_load_account"
+        case .syncFailedToSetupEngine: return "m_d_sync_failed_to_setup_engine"
+
+        case .syncSentUnauthenticatedRequest: return "m_d_sync_sent_unauthenticated_request"
         case .syncMetadataCouldNotLoadDatabase: return "m_d_sync_metadata_could_not_load_database"
         case .syncBookmarksProviderInitializationFailed: return "m_d_sync_bookmarks_provider_initialization_failed"
         case .syncBookmarksFailed: return "m_d_sync_bookmarks_failed"

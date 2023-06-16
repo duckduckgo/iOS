@@ -186,7 +186,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // MARK: Sync initialisation
 
         syncDataProviders = SyncDataProviders(bookmarksDatabase: bookmarksDatabase)
-        syncService = DDGSync(dataProvidersSource: syncDataProviders, log: .syncLog)
+        syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog)
+        syncService.initializeIfNeeded(isInternalUser: InternalUserStore().isInternalUser)
 
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         
@@ -246,6 +247,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 
+        syncService.initializeIfNeeded(isInternalUser: InternalUserStore().isInternalUser)
+
         if !(overlayWindow?.rootViewController is AuthenticationViewController) {
             removeOverlay()
         }
@@ -292,15 +295,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         syncService.scheduler.notifyAppLifecycleEvent()
-    }
-
-    func requestSyncIfEnabled() {
-        guard let syncService, syncService.authState == .active else {
-            os_log(.debug, log: OSLog.syncLog, "Sync disabled, not scheduling")
-            return
-        }
-        os_log(.debug, log: OSLog.syncLog, "Requesting sync")
-        syncService.scheduler.notifyDataChanged()
     }
 
     private func fireAppLaunchPixel() {

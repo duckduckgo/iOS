@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "dominik/reattach-orphaned-bookmarks",
-          "revision": "d58586888e2fc53c2056cf9e605fdb79619705b3",
-          "version": null
+          "branch": null,
+          "revision": "213dae8bca9ac17a9794d438ae4eda03c9e38b4f",
+          "version": "61.0.0"
         }
       },
       {

@@ -69,7 +69,7 @@ struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
         context.coordinator.onClose = onClose
     }
     
-    class Coordinator<Content: View>: NSObject {
+    class Coordinator<CoordinatorContent: View>: NSObject {
         var responder: UIResponder?
         var observer: Any?
         var title: String
@@ -98,12 +98,12 @@ struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
             responder?.becomeFirstResponder()
 
             menu.menuItems = [
-                UIMenuItem(title: self.title, action: #selector(HostingController<Content>.menuItemAction(_:)))
+                UIMenuItem(title: self.title, action: #selector(HostingController<CoordinatorContent>.menuItemAction(_:)))
             ]
 
             if let secondaryTitle = secondaryTitle, !secondaryTitle.isEmpty, secondaryAction != nil {
                 menu.menuItems?.append(UIMenuItem(title: secondaryTitle,
-                                                  action: #selector(HostingController<Content>.menuItemSecondaryAction(_:))))
+                                                  action: #selector(HostingController<CoordinatorContent>.menuItemSecondaryAction(_:))))
             }
 
             menu.showMenu(from: view, rect: view.bounds)
@@ -127,11 +127,11 @@ struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
         }
     }
     
-    class HostingController<Content: View>: UIHostingController<Content> {
+    class HostingController<HostedContent: View>: UIHostingController<HostedContent> {
         private var action: (() -> Void)?
         private var secondaryAction: (() -> Void)?
 
-        convenience init(rootView: Content, action: @escaping () -> Void, secondaryAction: (() -> Void)?) {
+        convenience init(rootView: HostedContent, action: @escaping () -> Void, secondaryAction: (() -> Void)?) {
             self.init(rootView: rootView)
 
             self.action = action

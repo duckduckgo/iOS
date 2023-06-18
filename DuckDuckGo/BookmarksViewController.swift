@@ -114,7 +114,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
           syncService: DDGSyncing) {
         self.bookmarksDatabase = bookmarksDatabase
         self.searchDataSource = SearchBookmarksDataSource(searchEngine: bookmarksSearch)
-        self.viewModel = BookmarkListViewModel(bookmarksDatabase: bookmarksDatabase, parentID: parentID)
+        self.viewModel = BookmarkListViewModel(bookmarksDatabase: bookmarksDatabase, parentID: parentID, syncService: syncService)
         self.favicons = favicons
         self.syncService = syncService
         super.init(coder: coder)
@@ -148,6 +148,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             self?.tableView.reloadData()
             self?.refreshAll()
         }
+
+        syncService.scheduler.requestSyncImmediately()
 
         tableView.delegate = self
 

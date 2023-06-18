@@ -115,6 +115,10 @@ class HomeCollectionView: UICollectionView {
     func launchNewSearch() {
         renderers.launchNewSearch()
     }
+
+    func didAppear() {
+        renderers.didAppear()
+    }
  
     @objc func collectionViewReorderingGestureHandler(gesture: UILongPressGestureRecognizer) {
         switch gesture.state {

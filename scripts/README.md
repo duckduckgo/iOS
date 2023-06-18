@@ -3,7 +3,6 @@
 * [assert_xcode_version.sh](#assert_xcode_versionsh-check-that-xcode-version-meets-minimum-requirement)
 * [check_metadata_length.sh](#check_metadata_lengthsh-check-length-of-metadata-strings-for-app-store-connect)
 * [check_version.sh](#check_versionsh-check-length-of-metadata-strings-for-app-store-connect)
-* [decrypt_fonts.sh](#decrypt_fontssh-decrypt-and-extract-fonts-for-release-build)
 * [loc_export.sh](#loc_exportsh-export-localizations-for-translation)
 * [loc_import.sh](#loc_importsh-import-localizations)
 * [loc_update.sh](#loc_updatesh-update-localization-strings-for-app-targets)
@@ -50,18 +49,6 @@ No 3rd party software is required to run the script. It uses built-in command li
 ### Usage
 
 This script is intended to be used as a Build Phase in Xcode called "Prevent Version Override".
-
-## `decrypt_fonts.sh`: Decrypt and extract fonts for release build
-
-This script decrypts and extracts the fonts required for release build from an encrypted archive. It is used from inside the `prepare_release.sh` script as our fonts cannot be stored in a public repository due to licensing restrictions.
-
-### Requirements
-
-The script requires `gpg` and `unzip` to be installed on the system. It also requires the FONTS_ENCRYPTION_KEY environment variable to be set to the passphrase used to encrypt the archive.
-
-### Usage
-
-The script is not intended to be used independently. It is called from inside the `prepare_release.sh` script during release build.
 
 ## `loc_export.sh`: Export localizations for translation
 

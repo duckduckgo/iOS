@@ -116,4 +116,6 @@ extension HomeViewSectionRenderer {
     }
 
     func endReordering() { }
+
+    func didAppear() { }
 }

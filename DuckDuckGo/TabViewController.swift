@@ -26,6 +26,7 @@ import SwiftUI
 import Bookmarks
 import Persistence
 import Common
+import DDGSync
 import PrivacyDashboard
 import UserScript
 import ContentBlocking
@@ -135,6 +136,7 @@ class TabViewController: UIViewController {
     lazy var faviconUpdater = FireproofFaviconUpdater(bookmarksDatabase: bookmarksDatabase,
                                                       tab: tabModel,
                                                       favicons: Favicons.shared)
+    let syncService: DDGSyncing
 
     public var url: URL? {
         willSet {
@@ -250,15 +252,18 @@ class TabViewController: UIViewController {
 
     private let rulesCompilationMonitor = RulesCompilationMonitor.shared
 
-    static func loadFromStoryboard(model: Tab, bookmarksDatabase: CoreDataDatabase) -> TabViewController {
+    static func loadFromStoryboard(model: Tab, bookmarksDatabase: CoreDataDatabase, syncService: DDGSyncing) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
                               tabModel: model,
-                              bookmarksDatabase: bookmarksDatabase)
+                              bookmarksDatabase: bookmarksDatabase,
+                              syncService: syncService)
         })
         return controller
     }
+
+    private var autoSavedCredentialsId: String = ""
 
     private var userContentController: UserContentController {
         (webView.configuration.userContentController as? UserContentController)!
@@ -266,10 +271,12 @@ class TabViewController: UIViewController {
     
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
-                   bookmarksDatabase: CoreDataDatabase) {
-            self.tabModel = tabModel
-            self.bookmarksDatabase = bookmarksDatabase
-            super.init(coder: aDecoder)
+                   bookmarksDatabase: CoreDataDatabase,
+                   syncService: DDGSyncing) {
+        self.tabModel = tabModel
+        self.bookmarksDatabase = bookmarksDatabase
+        self.syncService = syncService
+        super.init(coder: aDecoder)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -317,7 +324,7 @@ class TabViewController: UIViewController {
     }
 
     override func buildActivities() -> [UIActivity] {
-        let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase)
+        let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
         var activities: [UIActivity] = [SaveBookmarkActivity(controller: self,
                                                              viewModel: viewModel)]
 
@@ -1123,7 +1130,7 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
-        guard let spec = DaxDialogs.shared.nextBrowsingMessage(privacyInfo: privacyInfo) else {
+        guard let spec = DaxDialogs.shared.nextBrowsingMessageIfShouldShow(for: privacyInfo) else {
             
             if DaxDialogs.shared.shouldShowFireButtonPulse {
                 delegate?.tabDidRequestFireButtonPulse(tab: self)
@@ -1179,6 +1186,7 @@ extension TabViewController: WKNavigationDelegate {
            ?? false {
             detectedLoginURL = nil
             saveLoginPromptLastDismissed = nil
+            autoSavedCredentialsId = ""
         }
     }
     
@@ -1548,13 +1556,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func showLoginDetails(with account: SecureVaultModels.WebsiteAccount) {
-        if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
-           let settingsController = navController.topViewController as? SettingsViewController {
-            settingsController.loadViewIfNeeded()
-            
-            settingsController.showAutofillAccountDetails(account, animated: false)
-            self.present(navController, animated: true)
-        }
+        delegate?.tab(self, didRequestSettingsToLogins: account)
     }
     
     @objc private func dismissLoginDetails() {
@@ -2146,7 +2148,7 @@ extension TabViewController: AutoconsentUserScriptDelegate {
     
     // Disabled temporarily as a result of https://app.asana.com/0/1203936086921904/1204496002772588/f
     private var cookieConsentDaxDialogPresentationAllowed: Bool { false }
-    
+
     func autoconsentUserScript(_ script: AutoconsentUserScript, didRequestAskingUserForConsent completion: @escaping (Bool) -> Void) {
         guard cookieConsentDaxDialogPresentationAllowed,
               Locale.current.isRegionInEurope,
@@ -2349,7 +2351,7 @@ extension NSError {
 }
 
 extension TabViewController: SecureVaultManagerDelegate {
- 
+
     private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials) {
         guard AutofillSettingStatus.isAutofillEnabledInSettings,
               featureFlagger.isFeatureOn(.autofillCredentialsSaving),
@@ -2366,7 +2368,14 @@ extension TabViewController: SecureVaultManagerDelegate {
             saveLoginController.delegate = self
             if #available(iOS 15.0, *) {
                 if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
-                    presentationController.detents = [.medium(), .large()]
+                    if #available(iOS 16.0, *) {
+                        presentationController.detents = [.custom(resolver: { _ in
+                            saveLoginController.viewModel?.minHeight
+                        })]
+                    } else {
+                        presentationController.detents = [.medium()]
+                    }
+                    presentationController.prefersScrollingExpandsWhenScrolledToEdge = false
                 }
             }
             self.present(saveLoginController, animated: true, completion: nil)
@@ -2386,11 +2395,39 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
         return isEnabled
     }
-    
-    func secureVaultManager(_ vault: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData) {
-        if let credentials = data.credentials,
-           AutofillSettingStatus.isAutofillEnabledInSettings,
-           featureFlagger.isFeatureOn(.autofillCredentialsSaving) {
+
+    func secureVaultManager(_ vault: SecureVaultManager,
+                            promptUserToStoreAutofillData data: AutofillData,
+                            hasGeneratedPassword generatedPassword: Bool,
+                            withTrigger trigger: AutofillUserScript.GetTriggerType?) {
+        if var credentials = data.credentials,
+            AutofillSettingStatus.isAutofillEnabledInSettings,
+            featureFlagger.isFeatureOn(.autofillCredentialsSaving) {
+            if generatedPassword, let trigger = trigger {
+                if trigger == AutofillUserScript.GetTriggerType.passwordGeneration {
+                    autoSavedCredentialsId = credentials.account.id ?? ""
+                    return
+                } else if trigger == AutofillUserScript.GetTriggerType.formSubmission {
+                    guard let accountID = credentials.account.id,
+                          let accountIdInt = Int64(accountID) else { return }
+                    confirmSavedCredentialsFor(credentialID: accountIdInt, message: UserText.autofillLoginSavedToastMessage)
+                    self.autoSavedCredentialsId = ""
+                    return
+                }
+            }
+
+            if !autoSavedCredentialsId.isEmpty {
+                if let accountIdInt = Int64(autoSavedCredentialsId) {
+                    /// generatedPassword has been modified by user so delete the autosaved credential from db and prompt to save login as new credentials
+                    deleteLoginFor(accountIdInt: accountIdInt)
+                    if credentials.account.id == autoSavedCredentialsId {
+                        credentials.account.id = nil
+                    }
+                }
+
+                self.autoSavedCredentialsId = ""
+            }
+
             // Add a delay to allow propagation of pointer events to the page
             // see https://app.asana.com/0/1202427674957632/1202532842924584/f
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -2398,7 +2435,19 @@ extension TabViewController: SecureVaultManagerDelegate {
             }
         }
     }
-    
+
+    private func deleteLoginFor(accountIdInt: Int64) {
+        do {
+            let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
+            if secureVault == nil {
+                os_log("Failed to make vault")
+            }
+            try secureVault?.deleteWebsiteCredentialsFor(accountId: accountIdInt)
+        } catch {
+            Pixel.fire(pixel: .secureVaultError)
+        }
+    }
+
     func secureVaultManager(_: SecureVaultManager,
                             promptUserToAutofillCredentialsForDomain domain: String,
                             withAccounts accounts: [SecureVaultModels.WebsiteAccount],
@@ -2450,7 +2499,13 @@ extension TabViewController: SecureVaultManagerDelegate {
 
         if #available(iOS 15.0, *) {
             if let presentationController = autofillPromptViewController.presentationController as? UISheetPresentationController {
-                presentationController.detents = useLargeDetent ? [.large()] : [.medium()]
+                if #available(iOS 16.0, *) {
+                    presentationController.detents = [.custom(resolver: { _ in
+                        AutofillViews.loginPromptMinHeight
+                    })]
+                } else {
+                    presentationController.detents = useLargeDetent ? [.large()] : [.medium()]
+                }
             }
         }
         self.present(autofillPromptViewController, animated: true, completion: nil)
@@ -2459,15 +2514,53 @@ extension TabViewController: SecureVaultManagerDelegate {
     func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: String) {
         // No-op, don't need to do anything here
     }
-    
-    func secureVaultManagerShouldAutomaticallyUpdateCredentialsWithoutUsername(_: SecureVaultManager) -> Bool {
-        false
+
+    func secureVaultManagerShouldAutomaticallyUpdateCredentialsWithoutUsername(_: SecureVaultManager, shouldSilentlySave: Bool) -> Bool {
+        guard AutofillSettingStatus.isAutofillEnabledInSettings,
+              featureFlagger.isFeatureOn(.autofillPasswordGeneration) else { return false }
+        return shouldSilentlySave ? true : false
+    }
+
+    func secureVaultManagerShouldSilentlySaveGeneratedPassword(_: SecureVaultManager) -> Bool {
+        guard AutofillSettingStatus.isAutofillEnabledInSettings,
+              featureFlagger.isFeatureOn(.autofillPasswordGeneration) else { return false }
+        return true
     }
     
     func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
         // We don't have auth yet
     }
-    
+
+    func secureVaultManager(_: SecureVaultManager,
+                            promptUserWithGeneratedPassword password: String,
+                            completionHandler: @escaping (Bool) -> Void) {
+        let passwordGenerationPromptViewController = PasswordGenerationPromptViewController(generatedPassword: password) { useGeneratedPassword in
+                completionHandler(useGeneratedPassword)
+        }
+
+        if #available(iOS 15.0, *) {
+            if let presentationController = passwordGenerationPromptViewController.presentationController as? UISheetPresentationController {
+                if #available(iOS 16.0, *) {
+                    presentationController.detents = [.custom(resolver: { _ in
+                        AutofillViews.passwordGenerationMinHeight
+                    })]
+                } else {
+                    presentationController.detents = [.medium()]
+                }
+            }
+        }
+        self.present(passwordGenerationPromptViewController, animated: true)
+    }
+
+    func secureVaultManager(_: BrowserServicesKit.SecureVaultManager, didRequestCreditCardsManagerForDomain domain: String) {
+    }
+
+    func secureVaultManager(_: BrowserServicesKit.SecureVaultManager, didRequestIdentitiesManagerForDomain domain: String) {
+    }
+
+    func secureVaultManager(_: BrowserServicesKit.SecureVaultManager, didRequestPasswordManagerForDomain domain: String) {
+    }
+
     func secureVaultManager(_: SecureVaultManager, didReceivePixel pixel: AutofillUserScript.JSPixel) {
         guard !pixel.isEmailPixel else {
             // The iOS app uses a native email autofill UI, and sends its pixels separately. Ignore pixels sent from the JS layer.
@@ -2487,7 +2580,14 @@ extension TabViewController: SaveLoginViewControllerDelegate {
         do {
             let credentialID = try SaveAutofillLoginManager.saveCredentials(credentials,
                                                                             with: SecureVaultFactory.default)
-            
+            confirmSavedCredentialsFor(credentialID: credentialID, message: message)
+        } catch {
+            os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
+        }
+    }
+
+    private func confirmSavedCredentialsFor(credentialID: Int64, message: String) {
+        do {
             let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
             
             if let newCredential = try vault.websiteCredentialsFor(accountId: credentialID) {
@@ -2501,7 +2601,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
                 }
             }
         } catch {
-            os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
+            os_log("%: failed to fetch credentials %s", type: .error, #function, error.localizedDescription)
         }
     }
     

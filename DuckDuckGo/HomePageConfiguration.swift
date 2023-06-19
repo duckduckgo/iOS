@@ -50,7 +50,7 @@ final class HomePageConfiguration {
     var homeMessages: [HomeMessage] = []
 
     init(variantManager: VariantManager? = nil,
-         remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore()) {
+         remoteMessagingStore: RemoteMessagingStore = AppDependencyProvider.shared.remoteMessagingStore) {
         homeMessageStorage = HomeMessageStorage(variantManager: variantManager)
         self.remoteMessagingStore = remoteMessagingStore
         homeMessages = buildHomeMessages()
@@ -76,19 +76,12 @@ final class HomePageConfiguration {
     }
 
     private func remoteMessageToShow() -> HomeMessage? {
-        guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return nil }
+        let experiement = MacPromoExperiment(remoteMessagingStore: remoteMessagingStore)
+        guard MacPromoExperiment(remoteMessagingStore: remoteMessagingStore).shouldShowMessage() else { return nil }
 
+        // Use the experiment's message property to make it easer to test
+        guard let remoteMessageToPresent = experiement.message else { return nil }
         os_log("Remote message to show: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
-        Pixel.fire(pixel: .remoteMessageShown,
-                   withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessageToPresent.id)"])
-
-        if !remoteMessagingStore.hasShownRemoteMessage(withId: remoteMessageToPresent.id) {
-            os_log("Remote message shown for first time: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
-            Pixel.fire(pixel: .remoteMessageShownUnique,
-                       withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessageToPresent.id)"])
-            remoteMessagingStore.updateRemoteMessage(withId: remoteMessageToPresent.id, asShown: true)
-        }
-
         return .remoteMessage(remoteMessage: remoteMessageToPresent)
     }
 

@@ -63,8 +63,11 @@ class HomeViewController: UIViewController {
     
     private let tabModel: Tab
     private let favoritesViewModel: FavoritesListInteracting
-    private let appTPHomeViewModel: AppTPHomeViewModel
     private var viewModelCancellable: AnyCancellable?
+
+#if APP_TRACKING_PROTECTION
+    private let appTPHomeViewModel: AppTPHomeViewModel
+#endif
     
     static func loadFromStoryboard(model: Tab, favoritesViewModel: FavoritesListInteracting, appTPDatabase: CoreDataDatabase) -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
@@ -77,7 +80,11 @@ class HomeViewController: UIViewController {
     required init?(coder: NSCoder, tabModel: Tab, favoritesViewModel: FavoritesListInteracting, appTPDatabase: CoreDataDatabase) {
         self.tabModel = tabModel
         self.favoritesViewModel = favoritesViewModel
+
+#if APP_TRACKING_PROTECTION
         self.appTPHomeViewModel = AppTPHomeViewModel(appTrackingProtectionDatabase: appTPDatabase)
+#endif
+
         super.init(coder: coder)
     }
     
@@ -123,10 +130,17 @@ class HomeViewController: UIViewController {
     }
 
     func configureCollectionView() {
+#if APP_TRACKING_PROTECTION
         collectionView.configure(withController: self,
                                  favoritesViewModel: favoritesViewModel,
                                  appTPHomeViewModel: appTPHomeViewModel,
                                  andTheme: ThemeManager.shared.currentTheme)
+#else
+        collectionView.configure(withController: self,
+                                 favoritesViewModel: favoritesViewModel,
+                                 appTPHomeViewModel: nil,
+                                 andTheme: ThemeManager.shared.currentTheme)
+#endif
     }
     
     func enableContentUnderflow() -> CGFloat {
@@ -168,9 +182,11 @@ class HomeViewController: UIViewController {
         
         if presentedViewController == nil { // prevents these being called when settings forces this controller to be reattached
             showNextDaxDialog()
-            Pixel.fire(pixel: .homeScreenShown)
         }
-                
+
+        Pixel.fire(pixel: .homeScreenShown)
+        collectionView.didAppear()
+
         viewHasAppeared = true
         tabModel.viewed = true
     }

@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+#if APP_TRACKING_PROTECTION
+
 import Foundation
 import CoreData
 import Persistence
@@ -100,3 +102,5 @@ extension AppTPHomeViewModel: FirewallDelegate {
         }
     }
 }
+
+#endif

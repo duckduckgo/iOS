@@ -25,6 +25,8 @@ import WebKit
 import BrowserServicesKit
 import Common
 import Configuration
+import Persistence
+import DDGSync
 
 class RootDebugViewController: UITableViewController {
 
@@ -41,6 +43,41 @@ class RootDebugViewController: UITableViewController {
 
     @IBAction func onShareTapped() {
         presentShareSheet(withItems: [DiagnosticReportDataSource(delegate: self)], fromButtonItem: shareButton)
+    }
+
+    private let bookmarksDatabase: CoreDataDatabase
+    private let sync: DDGSyncing
+
+    init?(coder: NSCoder,
+          sync: DDGSyncing,
+          bookmarksDatabase: CoreDataDatabase) {
+
+        self.sync = sync
+        self.bookmarksDatabase = bookmarksDatabase
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("Not implemented")
+    }
+
+    @IBSegueAction func onCreateImageCacheDebugScreen(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> ImageCacheDebugViewController {
+        guard let controller = ImageCacheDebugViewController(coder: coder,
+                                                             bookmarksDatabase: bookmarksDatabase) else {
+            fatalError("Failed to create controller")
+        }
+
+        return controller
+    }
+
+    @IBSegueAction func onCreateSyncDebugScreen(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> SyncDebugViewController {
+        guard let controller = SyncDebugViewController(coder: coder,
+                                                       sync: sync,
+                                                       bookmarksDatabase: bookmarksDatabase) else {
+            fatalError("Failed to create controller")
+        }
+
+        return controller
     }
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

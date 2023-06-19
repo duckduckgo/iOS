@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
 public struct InviteCodeView: View {
 
@@ -32,7 +33,7 @@ public struct InviteCodeView: View {
     public var body: some View {
         VStack(spacing: 4) {
             Text(title)
-                .font(.proximaNova(size: 17))
+                .daxBodyRegular()
                 .foregroundColor(.white)
                 .padding([.top, .bottom], 4)
 

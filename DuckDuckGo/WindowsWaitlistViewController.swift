@@ -72,7 +72,7 @@ final class WindowsWaitlistViewController: UIViewController {
     private func addHostingControllerToViewHierarchy() {
         let waitlistView = WindowsBrowserWaitlistView().environmentObject(viewModel)
         let waitlistViewController = UIHostingController(rootView: waitlistView)
-        waitlistViewController.view.backgroundColor = UIColor(named: "WaitlistBackgroundColor")!
+        waitlistViewController.view.backgroundColor = UIColor(designSystemColor: .background)
 
         addChild(waitlistViewController)
         waitlistViewController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -117,7 +117,14 @@ extension WindowsWaitlistViewController: WaitlistViewModelDelegate {
     }
 
     func waitlistViewModelDidOpenInviteCodeShareSheet(_ viewModel: WaitlistViewModel, inviteCode: String, senderFrame: CGRect) {
-        let linkMetadata = WindowsWaitlistLinkMetadata(inviteCode: inviteCode)
+        openShareSheetWithMetadata(WindowsWaitlistLinkMetadata(pageType: .waitlist), senderFrame: senderFrame)
+    }
+
+    func waitlistViewModelDidOpenDownloadURLShareSheet(_ viewModel: WaitlistViewModel, senderFrame: CGRect) {
+        openShareSheetWithMetadata(WindowsWaitlistLinkMetadata(pageType: .download), senderFrame: senderFrame)
+    }
+
+    private func openShareSheetWithMetadata(_ linkMetadata: WindowsWaitlistLinkMetadata, senderFrame: CGRect) {
         let activityViewController = UIActivityViewController(activityItems: [linkMetadata], applicationActivities: nil)
 
         if UIDevice.current.userInterfaceIdiom == .pad {
@@ -127,10 +134,6 @@ extension WindowsWaitlistViewController: WaitlistViewModelDelegate {
         }
 
         present(activityViewController, animated: true, completion: nil)
-    }
-
-    func waitlistViewModelDidOpenDownloadURLShareSheet(_ viewModel: WaitlistViewModel, senderFrame: CGRect) {
-        assertionFailure("Windows Waitlist is still active")
     }
 
     func waitlistViewModel(_ viewModel: WaitlistViewModel, didTriggerCustomAction action: WaitlistViewModel.ViewCustomAction) {
@@ -154,10 +157,12 @@ private final class WindowsWaitlistLinkMetadata: NSObject, UIActivityItemSource 
         return metadata
     }()
 
-    private let inviteCode: String
+    private let inviteCode: String?
+    private let pageType: WindowsWaitlistPageType
 
-    init(inviteCode: String) {
+    init(inviteCode: String? = nil, pageType: WindowsWaitlistPageType) {
         self.inviteCode = inviteCode
+        self.pageType = pageType
     }
 
     func activityViewControllerLinkMetadata(_: UIActivityViewController) -> LPLinkMetadata? {
@@ -175,10 +180,17 @@ private final class WindowsWaitlistLinkMetadata: NSObject, UIActivityItemSource 
 
         switch type {
         case .message, .mail:
-            return UserText.windowsWaitlistShareSheetMessage(code: inviteCode)
+            return pageType == .waitlist ?
+            UserText.windowsWaitlistShareSheetMessage(code: inviteCode!) :
+            UserText.windowsWaitlistDownloadLinkShareSheetMessage
         default:
             return self.metadata.originalURL as Any
         }
+    }
+
+    enum WindowsWaitlistPageType {
+        case waitlist
+        case download
     }
 
 }

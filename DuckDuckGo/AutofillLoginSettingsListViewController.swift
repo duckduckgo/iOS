@@ -22,6 +22,7 @@ import Combine
 import Core
 import BrowserServicesKit
 import Common
+import DesignResourcesKit
 
 // swiftlint:disable file_length type_body_length
 
@@ -44,7 +45,10 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private let tld: TLD = AppDependencyProvider.shared.storageCache.tld
 
     private lazy var addBarButtonItem: UIBarButtonItem = {
-        UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
+        UIBarButtonItem(image: UIImage(named: "Add-24"),
+                        style: .plain,
+                        target: self,
+                        action: #selector(addButtonPressed))
     }()
     
     private var cancellables: Set<AnyCancellable> = []
@@ -165,13 +169,18 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         let detailsNavigationController = UINavigationController(rootViewController: detailsController)
         navigationController?.present(detailsNavigationController, animated: true)
     }
-    
-    func showAccountDetails(_ account: SecureVaultModels.WebsiteAccount, animated: Bool = true) {
+
+    func makeAccountDetailsScreen(_ account: SecureVaultModels.WebsiteAccount) -> AutofillLoginDetailsViewController {
         let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator,
                                                                    account: account,
                                                                    tld: tld,
                                                                    authenticationNotRequired: viewModel.authenticationNotRequired)
         detailsController.delegate = self
+        return detailsController
+    }
+    
+    func showAccountDetails(_ account: SecureVaultModels.WebsiteAccount, animated: Bool = true) {
+        let detailsController = makeAccountDetailsScreen(account)
         navigationController?.pushViewController(detailsController, animated: animated)
     }
     
@@ -395,6 +404,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         let cell = tableView.dequeueCell(ofType: AutofillListItemTableViewCell.self, for: indexPath)
         cell.viewModel = item
         cell.accessoryType = .disclosureIndicator
+        cell.backgroundColor = UIColor(designSystemColor: .surface)
         return cell
     }
     

@@ -18,15 +18,19 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
-struct RoundedRectStyle: ButtonStyle {
+struct HomeMessageButtonStyle: ButtonStyle {
     let foregroundColor: Color
     let backgroundColor: Color
+    let height: CGFloat
 
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
             .padding(.horizontal, Const.Padding.buttonHorizontal)
             .padding(.vertical, Const.Padding.buttonVertical)
+            .frame(maxWidth: .infinity)
+            .frame(height: height)
             .foregroundColor(configuration.isPressed ? foregroundColor.opacity(0.5) : foregroundColor)
             .background(backgroundColor)
             .cornerRadius(Const.Radius.corner)
@@ -35,32 +39,41 @@ struct RoundedRectStyle: ButtonStyle {
 
 struct HomeMessageView: View {
     let viewModel: HomeMessageViewModel
-    
+
+    @State var activityItem: TitledURLActivityItem?
+
     var body: some View {
-        VStack(spacing: Const.Spacing.titleAndSubtitle) {
-            HStack(alignment: .top) {
-                Spacer()
-                VStack(spacing: 0) {
+        ZStack {
+            closeButtonHeader
+
+            VStack(spacing: 8) {
+                Group {
                     topText
                     image
                     title
+                    subtitle
+                        .padding(.top, 8)
                 }
-                .offset(x: Const.Size.closeButtonWidth / 2, y: 0)
-                .layoutPriority(1)
-                Spacer()
-                closeButton
-            }
-            
-            VStack(spacing: 0) {
-                subtitle
+                .padding(.horizontal, 24)
+
                 HStack {
                     buttons
                 }
-                .padding(.top, Const.Spacing.subtitleAndButtons)
+                .padding(.top, 8)
+                .padding(.horizontal, 32)
+
+                if viewModel.messageId == MacPromoExperiment.promoId {
+                    Text("Or visit **duckduckgo.com/browser** on your computer.")
+                        .daxSubheadRegular()
+                        .foregroundColor(Color(designSystemColor: .textSecondary))
+                        .padding(.vertical, 4)
+                }
+
             }
+            .multilineTextAlignment(.center)
+            .padding(.vertical)
+            .padding(.horizontal, 8)
         }
-        .multilineTextAlignment(.center)
-        .padding()
         .background(RoundedRectangle(cornerRadius: Const.Radius.corner)
                         .fill(Color.background)
                         .shadow(color: Color.shadow,
@@ -68,13 +81,27 @@ struct HomeMessageView: View {
                                 x: 0,
                                 y: Const.Offset.shadowVertical))
     }
+
+    private var closeButtonHeader: some View {
+        VStack {
+            HStack {
+                Spacer()
+                closeButton
+                    .padding(0)
+            }
+            Spacer()
+        }
+    }
     
     private var closeButton: some View {
-        Button(action: { viewModel.onDidClose(.close) },
-               label: { Image.dismiss })
-            .layoutPriority(2)
-            .offset(x: Const.Offset.closeButton,
-                    y: -Const.Offset.closeButton)
+        Button {
+            viewModel.onDidClose(.close, .dismiss)
+        } label: {
+            Image("Close-24")
+                .foregroundColor(.primary)
+        }
+        .frame(width: Const.Size.closeButtonWidth, height: Const.Size.closeButtonWidth)
+        .contentShape(Rectangle())
     }
     
     private var topText: some View {
@@ -101,33 +128,66 @@ struct HomeMessageView: View {
 
     private var title: some View {
         Text(viewModel.title)
-            .font(Font(uiFont: Const.Font.title))
-            .fixedSize(horizontal: false, vertical: true)
+            .daxHeadline()
             .padding(.top, Const.Spacing.imageAndTitle)
    }
     
     private var subtitle: some View {
         Text(viewModel.subtitle)
-            .font(Font(uiFont: Const.Font.subtitle))
-            .lineSpacing(Const.Spacing.line)
-            .padding(.top, Const.Spacing.titleAndSubtitle)
+            .daxBodyRegular()
     }
-    
+
     private var buttons: some View {
-        ForEach(viewModel.buttons, id: \.title) {
-            let foreground: Color = $0.actionStyle == .default ? .white : .cancelButtonForeground
-            let background: Color = $0.actionStyle == .default ? .button : .cancelButtonBackground
-            Button($0.title, action: $0.action)
-                .font(Font(uiFont: Const.Font.button))
-                .buttonStyle(RoundedRectStyle(foregroundColor: foreground,
-                                              backgroundColor: background))
-                .padding([.top, .bottom], Const.Padding.buttonVerticalInset)
+        ForEach(viewModel.buttons, id: \.title) { model in
+            let foreground: Color = model.actionStyle == .cancel ? .cancelButtonForeground : .primaryButtonText
+            let background: Color = model.actionStyle == .cancel ? .cancelButtonBackground : .button
+            Button {
+                model.action()
+                if case .share(let url, let title) = model.actionStyle {
+                    activityItem = TitledURLActivityItem(url, title)
+                }
+            } label: {
+                HStack {
+                    if case .share = model.actionStyle {
+                        Image("Share-24")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                    }
+                    Text(model.title)
+                        .daxButton()
+                }
+            }
+            .buttonStyle(HomeMessageButtonStyle(foregroundColor: foreground,
+                                                backgroundColor: background,
+                                                height: 40))
+            .padding([.bottom], Const.Padding.buttonVerticalInset)
+            .sheet(item: $activityItem) { activityItem in
+                ActivityViewController(activityItems: [activityItem]) { activityType, result, _, error in
+                    MacPromoExperiment().shareSheetFinished(viewModel.messageId, activityType: activityType, result: result, error: error)
+                    model.action()
+                }
+                .modifier(ActivityViewPresentationModifier())
+            }
+
         }
     }
 }
 
+struct ActivityViewPresentationModifier: ViewModifier {
+
+    func body(content: Content) -> some View {
+        if #available(iOS 16.0, *) {
+            content.presentationDetents([.medium])
+        } else {
+            content
+        }
+    }
+
+}
+
 private extension Color {
-    static let button = Color(UIColor.cornflowerBlue)
+    static let button = Color(designSystemColor: .accent)
+    static let primaryButtonText = Color("RemoteMessagePrimaryActionTextColor")
     static let cancelButtonBackground = Color("CancelButtonBackgroundColor")
     static let cancelButtonForeground = Color("CancelButtonForegroundColor")
     static let background = Color("HomeMessageBackgroundColor")
@@ -152,9 +212,10 @@ private enum Const {
     }
     
     enum Padding {
-        static let buttonHorizontal: CGFloat = 16
+        static let buttonHorizontal: CGFloat = 24
         static let buttonVertical: CGFloat = 9
         static let buttonVerticalInset: CGFloat = 8
+        static let textHorizontalInset: CGFloat = 30
     }
     
     enum Spacing {
@@ -165,26 +226,41 @@ private enum Const {
     }
     
     enum Size {
-        static let maxImageWidth: CGFloat = 64
-        static let closeButtonWidth: CGFloat = 24
+        static let closeButtonWidth: CGFloat = 44
     }
     
     enum Offset {
-        static let closeButton: CGFloat = 6
         static let shadowVertical: CGFloat = 2
     }
 }
 
 struct HomeMessageView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = HomeMessageViewModel(image: "RemoteMessageDDGAnnouncement",
+        let viewModel = HomeMessageViewModel(messageId: "Preview",
+                                             image: "RemoteMessageDDGAnnouncement",
                                              topText: "",
                                              title: "Placeholder Title",
                                              subtitle: "Body text goes here. This component can be used with one or two buttons.",
                                              buttons: [.init(title: "Button1", actionStyle: .cancel) {},
                                                        .init(title: "Button2") {}],
-                                             onDidClose: { _ in })
+                                             onDidClose: { _, _ in })
         return HomeMessageView(viewModel: viewModel)
             .padding(.horizontal)
     }
+}
+
+struct ActivityViewController: UIViewControllerRepresentable {
+
+    var activityItems: [Any]
+    var applicationActivities: [UIActivity]?
+    var completionWithItemsHandler: UIActivityViewController.CompletionWithItemsHandler?
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
+        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
+        controller.completionWithItemsHandler = completionWithItemsHandler
+        return controller
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityViewController>) {}
+
 }

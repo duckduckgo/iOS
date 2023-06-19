@@ -35,7 +35,7 @@
                             <fragment content="Edit">
                                 <attributes>
                                     <color key="NSColor" red="0.76470588235294112" green="0.76470588235294112" blue="0.76470588235294112" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <font key="NSFont" size="13" metaFont="system"/>
+                                    <font key="NSFont" size="15" metaFont="systemBold"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>

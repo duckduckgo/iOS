@@ -521,7 +521,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="150" id="d7z-bj-sBD"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="regular" pointSize="14"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -554,7 +554,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="38" id="bhe-AJ-LtA"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="regular" pointSize="14"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="url"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">

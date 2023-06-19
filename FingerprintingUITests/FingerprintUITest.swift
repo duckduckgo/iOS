@@ -49,8 +49,10 @@ class FingerprintUITest: XCTestCase {
             .typeText("https://duckduckgo.com\n")
         
         sleep(5) // let site load
-        
+
+        _ = app.buttons["Browsing Menu"].waitForExistence(timeout: 25)
         app.buttons["Browsing Menu"].tap()
+
         if app.tables.staticTexts["Add Bookmark"].waitForExistence(timeout: 2) {
             app.tables.staticTexts["Add Bookmark"].tap()
         } else if app.tables.staticTexts["Bookmarks"].waitForExistence(timeout: 2) {
@@ -79,13 +81,16 @@ class FingerprintUITest: XCTestCase {
     func removeTheBookmark() {
         // Remove the bookmark we added
         let app = XCUIApplication()
+
+        _ = app.buttons["Browsing Menu"].waitForExistence(timeout: 25)
         app.buttons["Browsing Menu"].tap()
         
-        if app.tables.staticTexts["Bookmarks"].waitForExistence(timeout: 2) {
+        if app.tables.staticTexts["Bookmarks"].waitForExistence(timeout: 25) {
             app.tables.staticTexts["Bookmarks"].tap()
         }
         
         let tablesQuery = app.tables
+        _ = tablesQuery.staticTexts["DuckDuckGo — Privacy, simplified."].waitForExistence(timeout: 25)
         tablesQuery.staticTexts["DuckDuckGo — Privacy, simplified."].swipeLeft()
         tablesQuery.buttons["Delete"].tap()
         app.navigationBars["Bookmarks"].buttons["Done"].tap()
@@ -93,8 +98,10 @@ class FingerprintUITest: XCTestCase {
 
     func test() throws {
         let app = XCUIApplication()
-        
+
+        _ = app.buttons["Browsing Menu"].waitForExistence(timeout: 25)
         app.buttons["Browsing Menu"].tap()
+
         if app.tables.staticTexts["Bookmarks"].waitForExistence(timeout: 2) {
             app.tables.staticTexts["Bookmarks"].tap()
         } else {

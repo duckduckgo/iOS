@@ -24,9 +24,20 @@ import Foundation
 public class SyncErrorHandler: EventMapping<SyncError> {
 
     public init() {
-        super.init { event, _, _, _ in
-            let domainEvent = Pixel.Event.syncSentUnauthenticatedRequest
-            Pixel.fire(pixel: domainEvent, error: event)
+        super.init { event, error, _, _ in
+            switch event {
+            case .failedToMigrate:
+                Pixel.fire(pixel: .syncFailedToMigrate, error: error)
+            case .failedToLoadAccount:
+                Pixel.fire(pixel: .syncFailedToLoadAccount, error: error)
+            case .failedToSetupEngine:
+                Pixel.fire(pixel: .syncFailedToSetupEngine, error: error)
+            default:
+                // Should this be so generic?
+                let domainEvent = Pixel.Event.syncSentUnauthenticatedRequest
+                Pixel.fire(pixel: domainEvent, error: event)
+            }
+
         }
     }
 

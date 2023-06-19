@@ -144,6 +144,8 @@ class TabViewCell: UICollectionViewCell, Themable {
     
     @IBAction func deleteTab() {
         guard let tab = tab else { return }
+        guard collectionReorderRecognizer == nil || collectionReorderRecognizer?.state == .possible else { return }
+
         self.delegate?.deleteTab(tab: tab)
     }
     

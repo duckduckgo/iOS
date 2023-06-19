@@ -53,15 +53,16 @@ class FireproofFaviconUpdater: NSObject, FaviconUserScriptDelegate {
     }
 
     let context: NSManagedObjectContext
-    let secureVault: SecureVault?
+    var secureVault: SecureVault?
     let tab: TabNotifying
     let favicons: FaviconProviding
+
+    private let featureFlagger = AppDependencyProvider.shared.featureFlagger
 
     init(bookmarksDatabase: CoreDataDatabase, tab: TabNotifying, favicons: FaviconProviding) {
         self.context = bookmarksDatabase.makeContext(concurrencyType: .mainQueueConcurrencyType)
         self.tab = tab
         self.favicons = favicons
-        secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
 
         super.init()
         registerForNotifications()
@@ -98,19 +99,31 @@ class FireproofFaviconUpdater: NSObject, FaviconUserScriptDelegate {
         ])
 
         let notFolderPredicate = NSPredicate(format: "%K = NO", #keyPath(BookmarkEntity.isFolder))
+        let notDeletedPredicate = NSPredicate(format: "%K = NO", #keyPath(BookmarkEntity.isPendingDeletion))
 
         let request = BookmarkEntity.fetchRequest()
         request.fetchLimit = 1
         request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
             notFolderPredicate,
+            notDeletedPredicate,
             domainPredicate
         ])
         let result = (try? context.count(for: request)) ?? 0 > 0
         return result
     }
 
+    private func initSecureVault() -> SecureVault? {
+        if featureFlagger.isFeatureOn(.autofillCredentialInjecting) && AutofillSettingStatus.isAutofillEnabledInSettings {
+            if secureVault == nil {
+                secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
+            }
+            return secureVault
+        }
+        return nil
+    }
+
     private func autofillLoginExists(for domain: String) -> Bool {
-        guard let secureVault = secureVault else {
+        guard let secureVault = initSecureVault() else {
             return false
         }
 

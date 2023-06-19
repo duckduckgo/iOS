@@ -154,6 +154,21 @@
 /* Info string informing the user we're looking for trackers in other apps. */
 "appTP.empty.enabled.info" = "We’re looking for trackers in your apps...";
 
+/* Do not translate. StringsDict entry -- Count part of string 'App Tracking Protection blocked x tracking attempts today' */
+"appTP.home.blockedCount" = "appTP.home.blockedCount";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the trailing space) */
+"appTP.home.blockedPrefix" = "App Tracking Protection blocked ";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the leading space) */
+"appTP.home.blockedSuffix" = " in your apps today.";
+
+/* Prefix of string 'App Tracking Protection disabled. Tap to re-enable.' (note the trailing space) */
+"appTP.home.disabledPrefix" = "App tracking protection disabled. ";
+
+/* Suffix of string 'App Tracking Protection disabled. Tap to re-enable.' */
+"appTP.home.disabledSuffix" = "Tap to re-enable.";
+
 /* Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now' */
 "appTP.justNow" = "just now";
 
@@ -417,6 +432,18 @@
 
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "No Results";
+
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Password will be saved in Logins.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Use generated password from DuckDuckGo?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Use Generated Password";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Create My Own";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.message" = "Logins are stored securely on this device only, and can be managed from the Logins menu in Settings.";
@@ -1055,6 +1082,9 @@
 "mac-waitlist.copy" = "Copy";
 
 /* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-computer-go-to" = "On your Windows computer, go to:";
+
+/* Description text above the Share Link button */
 "mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "On your Mac, go to:";
 
 /* Title for the Share Link button */
@@ -1067,7 +1097,7 @@
 "mac-waitlist.join-waitlist-screen.windows" = "Windows coming soon!";
 
 /* Title for the macOS waitlist button redirecting to Windows waitlist */
-"mac-waitlist.join-waitlist-screen.windows-waitlist" = "Looking for the Windows Version?";
+"mac-waitlist.join-waitlist-screen.windows-waitlist" = "Looking for the Windows version?";
 
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Browse privately with our app for Mac";
@@ -1388,7 +1418,7 @@ https://duckduckgo.com/mac";
 "windows-waitlist.invite-screen.subtitle" = "Ready to use DuckDuckGo on Windows?";
 
 /* Title for the Windows waitlist button redirecting to Mac waitlist */
-"windows-waitlist.join-waitlist-screen.mac-waitlist" = "Looking for the Mac Version?";
+"windows-waitlist.join-waitlist-screen.mac-waitlist" = "Looking for the Mac version?";
 
 /* Title for the Join Windows Waitlist screen */
 "windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Get early access to try DuckDuckGo for Windows!";
@@ -1406,7 +1436,7 @@ https://duckduckgo.com/mac";
 "windows-waitlist.settings.browse-privately" = "Browse privately with our app for Windows";
 
 /* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"windows-waitlist.share-sheet.message" = "You’re invited!
+"windows-waitlist.share-sheet.invite-code-message" = "You’re invited!
 
 Ready to use DuckDuckGo on Windows?
 
@@ -1419,9 +1449,18 @@ Open DuckDuckGo Installer in Downloads, select Install, then enter your invite c
 
 Invite code: %@";
 
+/* Message used when sharing to iMessage */
+"windows-waitlist.share-sheet.message" = "Ready to start browsing privately on Windows?
+
+Visit this URL on your Computer to download:
+https://duckduckgo.com/windows";
+
 /* Summary text for the Windows browser waitlist */
 "windows-waitlist.summary" = "DuckDuckGo for Windows has what you need to browse with more privacy — private search, tracker blocking, forced encryption, and cookie pop-up blocking, plus more best-in-class protections on the way.";
 
 /* Title for the Windows Waitlist feature */
 "windows-waitlist.title" = "DuckDuckGo App for Windows";
+
+/* Title for the Windows browser download link page */
+"windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows" = "Get DuckDuckGo for Windows!";
 

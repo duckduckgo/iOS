@@ -19,12 +19,16 @@
 
 import UIKit
 import MessageUI
-import NetworkExtension
 import Core
 import BrowserServicesKit
 import Persistence
 import SwiftUI
 import Common
+import DDGSync
+
+#if APP_TRACKING_PROTECTION
+import NetworkExtension
+#endif
 
 // swiftlint:disable file_length type_body_length
 class SettingsViewController: UITableViewController {
@@ -63,16 +67,20 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var debugCell: UITableViewCell!
     @IBOutlet weak var voiceSearchCell: UITableViewCell!
     @IBOutlet weak var voiceSearchToggle: UISwitch!
+
+    fileprivate var onDidAppearAction: () -> Void = {}
     
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
     
     private let syncSectionIndex = 1
     private let autofillSectionIndex = 2
+    private let appearanceSectionIndex = 3
     private let moreFromDDGSectionIndex = 6
     private let debugSectionIndex = 8
     
-    public var appTPDatabase: CoreDataDatabase!
+    private let appTPDatabase: CoreDataDatabase
+    private let bookmarksDatabase: CoreDataDatabase
 
     private lazy var emailManager = EmailManager()
     
@@ -81,6 +89,7 @@ class SettingsViewController: UITableViewController {
     fileprivate lazy var appSettings = AppDependencyProvider.shared.appSettings
     fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager
     fileprivate lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
+    fileprivate let syncService: DDGSyncing
 
     private var shouldShowDebugCell: Bool {
         return featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild
@@ -99,12 +108,12 @@ class SettingsViewController: UITableViewController {
     }()
     
     private lazy var shouldShowAppTPCell: Bool = {
+#if APP_TRACKING_PROTECTION
         return featureFlagger.isFeatureOn(.appTrackingProtection)
+#else
+        return false
+#endif
     }()
-
-    static func loadFromStoryboard() -> UIViewController {
-        return UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()!
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,9 +149,59 @@ class SettingsViewController: UITableViewController {
         configureWindowsBrowserWaitlistCell()
         configureAppTPCell()
         
-        // Make sure muliline labels are correctly presented
+        // Make sure multiline labels are correctly presented
         tableView.setNeedsLayout()
         tableView.layoutIfNeeded()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        onDidAppearAction()
+        onDidAppearAction = {}
+    }
+
+    init?(coder: NSCoder,
+          appTPDatabase: CoreDataDatabase,
+          bookmarksDatabase: CoreDataDatabase,
+          syncService: DDGSyncing) {
+
+        self.appTPDatabase = appTPDatabase
+        self.bookmarksDatabase = bookmarksDatabase
+        self.syncService = syncService
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("Not implemented")
+    }
+
+    func openLoginsWhenPresented() {
+        onDidAppearAction = { [weak self] in
+            self?.showAutofill()
+        }
+    }
+
+    func openLoginsWhenPresented(accountDetails: SecureVaultModels.WebsiteAccount) {
+        onDidAppearAction = { [weak self] in
+            self?.showAutofillAccountDetails(accountDetails)
+        }
+    }
+
+    func openCookiePopupManagementWhenPresented() {
+        onDidAppearAction = { [weak self] in
+            self?.showCookiePopupManagement(animated: true)
+        }
+    }
+
+    @IBSegueAction func onCreateRootDebugScreen(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> RootDebugViewController {
+        guard let controller = RootDebugViewController(coder: coder,
+                                                       sync: syncService,
+                                                       bookmarksDatabase: bookmarksDatabase) else {
+            fatalError("Failed to create controller")
+        }
+
+        return controller
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -261,16 +320,18 @@ class SettingsViewController: UITableViewController {
     
     private func configureAppTPCell() {
         appTPCell.isHidden = !shouldShowAppTPCell
-        
+
+#if APP_TRACKING_PROTECTION
         Task { @MainActor in
             let fwm = FirewallManager()
             await fwm.refreshManager()
-            if UserDefaults().bool(forKey: "appTPUsed") && fwm.status() != .connected {
+            if UserDefaults().bool(forKey: UserDefaultsWrapper<Any>.Key.appTPUsed.rawValue) && fwm.status() != .connected {
                 appTPCell.detailTextLabel?.text = UserText.appTPCellDisabled
             } else {
                 appTPCell.detailTextLabel?.text = UserText.appTPCellDetail
             }
         }
+#endif
     }
 
     private func configureDebugCell() {
@@ -289,11 +350,15 @@ class SettingsViewController: UITableViewController {
         navigationController?.pushViewController(autofillController, animated: animated)
     }
     
-    func showAutofillAccountDetails(_ account: SecureVaultModels.WebsiteAccount, animated: Bool = true) {
+    func showAutofillAccountDetails(_ account: SecureVaultModels.WebsiteAccount) {
         let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
         autofillController.delegate = self
-        navigationController?.pushViewController(autofillController, animated: animated)
-        autofillController.showAccountDetails(account, animated: animated)
+        let detailsController = autofillController.makeAccountDetailsScreen(account)
+
+        var controllers = navigationController?.viewControllers ?? []
+        controllers.append(autofillController)
+        controllers.append(detailsController)
+        navigationController?.viewControllers = controllers
     }
     
     private func configureEmailProtectionAccessoryText() {
@@ -311,13 +376,15 @@ class SettingsViewController: UITableViewController {
     private func showMacBrowserWaitlistViewController() {
         navigationController?.pushViewController(MacWaitlistViewController(nibName: nil, bundle: nil), animated: true)
     }
-    
+
+#if APP_TRACKING_PROTECTION
     private func showAppTP() {
         navigationController?.pushViewController(
             AppTPActivityHostingViewController(appTrackingProtectionDatabase: appTPDatabase),
             animated: true
         )
     }
+#endif
 
     private func showWindowsBrowserWaitlistViewController() {
         navigationController?.pushViewController(WindowsWaitlistViewController(nibName: nil, bundle: nil), animated: true)
@@ -355,7 +422,11 @@ class SettingsViewController: UITableViewController {
             showSync()
 
         case appTPCell:
+#if APP_TRACKING_PROTECTION
             showAppTP()
+#else
+            break
+#endif
             
         default: break
         }
@@ -428,6 +499,17 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return super.tableView(tableView, titleForFooterInSection: section)
     }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let rows = super.tableView(tableView, numberOfRowsInSection: section)
+        if section == appearanceSectionIndex && textSizeCell.isHidden {
+            return rows - 1
+        } else if section == moreFromDDGSectionIndex && appTPCell.isHidden {
+            return rows - 1
+        } else {
+            return rows
+        }
+    }
 
     @IBAction func onVoiceSearchToggled(_ sender: UISwitch) {
         var enableVoiceSearch = sender.isOn
@@ -475,6 +557,8 @@ class SettingsViewController: UITableViewController {
 extension SettingsViewController: Themable {
     
     func decorate(with theme: Theme) {
+        view.backgroundColor = theme.backgroundColor
+
         decorateNavigationBar(with: theme)
         configureThemeCellAccessory()
         

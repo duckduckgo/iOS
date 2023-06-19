@@ -34,18 +34,18 @@ extension TabViewController {
         
         entries.append(BrowsingMenuEntry.regular(name: UserText.actionNewTab,
                                                  accessibilityLabel: UserText.keyCommandNewTab,
-                                                 image: UIImage(named: "MenuNewTab")!,
+                                                 image: UIImage(named: "Add-24")!,
                                                  action: { [weak self] in
             self?.onNewTabAction()
         }))
         
-        entries.append(BrowsingMenuEntry.regular(name: UserText.actionShare, image: UIImage(named: "MenuShare")!, action: { [weak self] in
+        entries.append(BrowsingMenuEntry.regular(name: UserText.actionShare, image: UIImage(named: "Share-24")!, action: { [weak self] in
             guard let self = self else { return }
             guard let menu = self.chromeDelegate?.omniBar.menuButton else { return }
             self.onShareAction(forLink: self.link!, fromView: menu, orginatedFromMenu: true)
         }))
         
-        entries.append(BrowsingMenuEntry.regular(name: UserText.actionCopy, image: UIImage(named: "MenuCopy")!, action: { [weak self] in
+        entries.append(BrowsingMenuEntry.regular(name: UserText.actionCopy, image: UIImage(named: "Copy-24")!, action: { [weak self] in
             guard let strongSelf = self else { return }
             if !strongSelf.isError, let url = strongSelf.webView.url {
                 strongSelf.onCopyAction(forUrl: url)
@@ -57,7 +57,7 @@ extension TabViewController {
             ActionMessageView.present(message: UserText.actionCopyMessage)
         }))
         
-        entries.append(BrowsingMenuEntry.regular(name: UserText.actionPrint, image: UIImage(named: "MenuPrint")!, action: { [weak self] in
+        entries.append(BrowsingMenuEntry.regular(name: UserText.actionPrint, image: UIImage(named: "Print-24")!, action: { [weak self] in
             Pixel.fire(pixel: .browsingMenuPrint)
             self?.print()
         }))
@@ -78,7 +78,7 @@ extension TabViewController {
         }
 
         entries.append(BrowsingMenuEntry.regular(name: UserText.actionReportBrokenSite,
-                                                 image: UIImage(named: "MenuFeedback")!,
+                                                 image: UIImage(named: "Feedback-16")!,
                                                  action: { [weak self] in
             self?.onReportBrokenSiteAction()
         }))
@@ -87,21 +87,21 @@ extension TabViewController {
 
         if featureFlagger.isFeatureOn(.autofillAccessCredentialManagement) {
             entries.append(BrowsingMenuEntry.regular(name: UserText.actionAutofillLogins,
-                                                     image: UIImage(named: "MenuAutofill")!,
+                                                     image: UIImage(named: "Key-16")!,
                                                      action: { [weak self] in
                 self?.onOpenAutofillLoginsAction()
             }))
         }
 
         entries.append(BrowsingMenuEntry.regular(name: UserText.actionDownloads,
-                                                 image: UIImage(named: "MenuDownloads")!,
+                                                 image: UIImage(named: "Downloads-16")!,
                                                  showNotificationDot: AppDependencyProvider.shared.downloadManager.unseenDownloadsAvailable,
                                                  action: { [weak self] in
             self?.onOpenDownloadsAction()
         }))
 
         entries.append(BrowsingMenuEntry.regular(name: UserText.actionSettings,
-                                                 image: UIImage(named: "MenuSettings")!,
+                                                 image: UIImage(named: "Settings-16")!,
                                                  action: { [weak self] in
             self?.onBrowsingSettingsAction()
         }))
@@ -120,7 +120,7 @@ extension TabViewController {
         entries.append(bookmarkEntries.favorite)
                 
         entries.append(BrowsingMenuEntry.regular(name: UserText.actionOpenBookmarks,
-                                                 image: UIImage(named: "MenuBookmarks")!,
+                                                 image: UIImage(named: "Library-16")!,
                                                  action: { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.delegate?.tabDidRequestBookmarks(tab: strongSelf)
@@ -137,7 +137,7 @@ extension TabViewController {
         }
 
         let title = self.tabModel.isDesktop ? UserText.actionRequestMobileSite : UserText.actionRequestDesktopSite
-        let image = self.tabModel.isDesktop ? UIImage(named: "MenuMobileMode")! : UIImage(named: "MenuDesktopMode")!
+        let image = self.tabModel.isDesktop ? UIImage(named: "Device-Mobile-16")! : UIImage(named: "Device-Desktop-16")!
         entries.append(BrowsingMenuEntry.regular(name: title, image: image, action: { [weak self] in
             self?.onToggleDesktopSiteAction(forUrl: link.url)
         }))
@@ -172,7 +172,7 @@ extension TabViewController {
     }
 
     private func buildFindInPageEntry(forLink link: Link) -> BrowsingMenuEntry {
-        return BrowsingMenuEntry.regular(name: UserText.findInPage, image: UIImage(named: "MenuFind")!, action: { [weak self] in
+        return BrowsingMenuEntry.regular(name: UserText.findInPage, image: UIImage(named: "Find-16")!, action: { [weak self] in
             Pixel.fire(pixel: .browsingMenuFindInPage)
             self?.requestFindInPage()
         })
@@ -198,14 +198,14 @@ extension TabViewController {
         
         if bookmark != nil {
             return BrowsingMenuEntry.regular(name: UserText.actionEditBookmark,
-                                             image: UIImage(named: "MenuBookmarkSolid")!,
+                                             image: UIImage(named: "Bookmark-Solid-16")!,
                                              action: { [weak self] in
                                                 self?.performEditBookmarkAction(for: link)
                                              })
         }
 
         return BrowsingMenuEntry.regular(name: UserText.actionSaveBookmark,
-                                         image: UIImage(named: "MenuBookmark")!,
+                                         image: UIImage(named: "Bookmark-16")!,
                                          action: { [weak self] in
                                            self?.performSaveBookmarkAction(for: link,
                                                                            with: bookmarksInterface)
@@ -217,6 +217,7 @@ extension TabViewController {
         Pixel.fire(pixel: .browsingMenuAddToBookmarks)
         bookmarksInterface.createBookmark(title: link.title ?? "", url: link.url)
         favicons.loadFavicon(forDomain: link.url.host, intoCache: .fireproof, fromCache: .tabs)
+        syncService.scheduler.notifyDataChanged()
 
         ActionMessageView.present(message: UserText.webSaveBookmarkDone,
                                   actionTitle: UserText.actionGenericEdit, onAction: {
@@ -240,7 +241,7 @@ extension TabViewController {
             }
 
             let entry = BrowsingMenuEntry.regular(name: UserText.actionRemoveFavorite,
-                                                  image: UIImage(named: "MenuFavoriteSolid")!,
+                                                  image: UIImage(named: "Favorite-Solid-16")!,
                                                   action: action)
             return entry
 
@@ -250,7 +251,7 @@ extension TabViewController {
         let addToFavoriteFlow = DaxDialogs.shared.isAddFavoriteFlow
 
         let entry = BrowsingMenuEntry.regular(name: UserText.actionSaveFavorite,
-                                              image: UIImage(named: "MenuFavorite")!,
+                                              image: UIImage(named: "Favorite-16")!,
                                               action: { [weak self] in
             Pixel.fire(pixel: addToFavoriteFlow ? .browsingMenuAddToFavoritesAddFavoriteFlow : .browsingMenuAddToFavorites)
             self?.performAddFavoriteAction(for: link, with: bookmarksInterface)
@@ -263,7 +264,8 @@ extension TabViewController {
         bookmarksInterface.createOrToggleFavorite(title: link.title ?? "", url: link.url)
         favicons.loadFavicon(forDomain: link.url.host, intoCache: .fireproof, fromCache: .tabs)
         WidgetCenter.shared.reloadAllTimelines()
-        
+        syncService.scheduler.notifyDataChanged()
+
         ActionMessageView.present(message: UserText.webSaveFavoriteDone, actionTitle: UserText.actionGenericUndo, onAction: {
             self.performRemoveFavoriteAction(for: link, with: bookmarksInterface)
         })
@@ -273,7 +275,8 @@ extension TabViewController {
                                              with bookmarksInterface: MenuBookmarksInteracting) {
         bookmarksInterface.createOrToggleFavorite(title: link.title ?? "", url: link.url)
         WidgetCenter.shared.reloadAllTimelines()
-        
+        syncService.scheduler.notifyDataChanged()
+
         ActionMessageView.present(message: UserText.webFavoriteRemoved, actionTitle: UserText.actionGenericUndo, onAction: {
             self.performAddFavoriteAction(for: link, with: bookmarksInterface)
         })
@@ -282,7 +285,7 @@ extension TabViewController {
     private func buildUseNewDuckAddressEntry(forLink link: Link) -> BrowsingMenuEntry? {
         guard emailManager.isSignedIn else { return nil }
         let title = UserText.emailBrowsingMenuUseNewDuckAddress
-        let image = UIImage(named: "MenuEmail")!
+        let image = UIImage(named: "Email-16")!
 
         return BrowsingMenuEntry.regular(name: title, image: image) { [weak self] in
             guard let emailManager = self?.emailManager else { return }
@@ -317,7 +320,12 @@ extension TabViewController {
         
         shareLinkWithTemporaryDownload(temporaryDownloadForPreviewedFile, originalLink: link) { [weak self] link in
             guard let self = self else { return }
-            self.presentShareSheet(withItems: [ link, self.webView.viewPrintFormatter() ], fromView: view)
+            var items: [Any] = [link, self.webView.viewPrintFormatter()]
+
+            if let webView = self.webView {
+                items.append(webView)
+            }
+            self.presentShareSheet(withItems: items, fromView: view)
         }
     }
     
@@ -386,7 +394,7 @@ extension TabViewController {
         let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
         let isProtected = !config.isUserUnprotected(domain: domain)
         let title = isProtected ? UserText.actionDisableProtection : UserText.actionEnableProtection
-        let image = isProtected ? UIImage(named: "MenuDisableProtection")! : UIImage(named: "MenuEnableProtection")!
+        let image = isProtected ? UIImage(named: "Protections-Blocked-16")! : UIImage(named: "Protections-16")!
     
         return BrowsingMenuEntry.regular(name: title, image: image, action: { [weak self] in
             Pixel.fire(pixel: isProtected ? .browsingMenuDisableProtection : .browsingMenuEnableProtection)

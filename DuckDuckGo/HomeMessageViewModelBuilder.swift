@@ -24,47 +24,41 @@ import Core
 struct HomeMessageViewModelBuilder {
 
     private enum Images {
-        static let announcement      = "RemoteMessageAnnouncement"
-        static let ddgAnnouncement   = "RemoteMessageDDGAnnouncement"
-        static let appUpdate         = "RemoteMessageAppUpdate"
+        static let announcement = "RemoteMessageAnnouncement"
+        static let ddgAnnouncement = "RemoteMessageDDGAnnouncement"
+        static let appUpdate = "RemoteMessageAppUpdate"
         static let criticalAppUpdate = "RemoteMessageCriticalAppUpdate"
+        static let macComputer = "RemoteMessageMacComputer"
     }
 
-    static func build(for remoteMessage: RemoteMessageModel, onDidClose: @escaping (HomeMessageViewModel.ButtonAction?) -> Void) -> HomeMessageViewModel? {
+    static func build(for remoteMessage: RemoteMessageModel, onDidClose: @escaping (HomeMessageViewModel.ButtonAction?, RemoteAction) -> Void) -> HomeMessageViewModel? {
             guard let content = remoteMessage.content else { return nil }
 
             switch content {
             case .small(let titleText, let descriptionText):
-                return HomeMessageViewModel(image: nil,
-                                            topText: nil,
-                                            title: titleText,
-                                            subtitle: descriptionText,
+                return HomeMessageViewModel(messageId: remoteMessage.id,
+                                            image: nil, topText: nil, title: titleText, subtitle: descriptionText,
                                             buttons: [],
                                             onDidClose: onDidClose)
             case .medium(let titleText, let descriptionText, let placeholder):
-                return HomeMessageViewModel(image: placeholder.rawValue,
-                                            topText: nil,
-                                            title: titleText,
-                                            subtitle: descriptionText,
+                return HomeMessageViewModel(messageId: remoteMessage.id,
+                                            image: placeholder.rawValue, topText: nil, title: titleText, subtitle: descriptionText,
                                             buttons: [],
                                             onDidClose: onDidClose)
             case .bigSingleAction(let titleText, let descriptionText, let placeholder, let primaryActionText, let primaryAction):
-                return HomeMessageViewModel(image: placeholder.rawValue,
-                                            topText: nil,
-                                            title: titleText,
-                                            subtitle: descriptionText,
+                return HomeMessageViewModel(messageId: remoteMessage.id,
+                                            image: placeholder.rawValue, topText: nil, title: titleText, subtitle: descriptionText,
                                             buttons: [
                                                 HomeMessageButtonViewModel(title: primaryActionText,
+                                                                           actionStyle: primaryAction.actionStyle,
                                                                            action: mapActionToViewModel(remoteAction: primaryAction,
                                                                                                         buttonAction: .primaryAction,
                                                                                                         onDidClose: onDidClose))],
                                             onDidClose: onDidClose)
             case .bigTwoAction(let titleText, let descriptionText, let placeholder, let primaryActionText,
                                let primaryAction, let secondaryActionText, let secondaryAction):
-                return HomeMessageViewModel(image: placeholder.rawValue,
-                                            topText: nil,
-                                            title: titleText,
-                                            subtitle: descriptionText,
+                return HomeMessageViewModel(messageId: remoteMessage.id,
+                                            image: placeholder.rawValue, topText: nil, title: titleText, subtitle: descriptionText,
                                             buttons: [
                                                 HomeMessageButtonViewModel(title: secondaryActionText,
                                                                            actionStyle: .cancel,
@@ -72,7 +66,7 @@ struct HomeMessageViewModelBuilder {
                                                                                                         buttonAction: .secondaryAction,
                                                                                                         onDidClose: onDidClose)),
                                                 HomeMessageButtonViewModel(title: primaryActionText,
-                                                                           actionStyle: .default,
+                                                                           actionStyle: primaryAction.actionStyle,
                                                                            action: mapActionToViewModel(remoteAction: primaryAction,
                                                                                                         buttonAction: .primaryAction,
                                                                                                         onDidClose: onDidClose))],
@@ -82,12 +76,17 @@ struct HomeMessageViewModelBuilder {
 
     static func mapActionToViewModel(remoteAction: RemoteAction,
                                      buttonAction: HomeMessageViewModel.ButtonAction,
-                                     onDidClose: @escaping (HomeMessageViewModel.ButtonAction?) -> Void) -> () -> Void {
+                                     onDidClose: @escaping (HomeMessageViewModel.ButtonAction?, RemoteAction) -> Void) -> () -> Void {
+
         switch remoteAction {
+        case .share:
+            return {
+                onDidClose(buttonAction, remoteAction)
+            }
         case .url(let value):
             return {
                 LaunchTabNotification.postLaunchTabNotification(urlString: value)
-                onDidClose(buttonAction)
+                onDidClose(buttonAction, remoteAction)
             }
         case .appStore:
             return {
@@ -95,12 +94,33 @@ struct HomeMessageViewModelBuilder {
                 if UIApplication.shared.canOpenURL(url as URL) {
                     UIApplication.shared.open(url)
                 }
-                onDidClose(buttonAction)
+                onDidClose(buttonAction, remoteAction)
             }
         case .dismiss:
             return {
-                onDidClose(buttonAction)
+                onDidClose(buttonAction, remoteAction)
             }
         }
     }
+}
+
+extension RemoteAction {
+
+    var actionStyle: HomeMessageButtonViewModel.ActionStyle {
+        switch self {
+        case .share(let url, let title):
+            if let url = URL(string: url) {
+                return .share(url: url, title: title)
+            } else {
+                return .default
+            }
+
+        case .appStore, .url:
+            return .default
+
+        default:
+            return .cancel
+        }
+    }
+
 }

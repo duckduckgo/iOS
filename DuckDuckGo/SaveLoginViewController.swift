@@ -35,7 +35,7 @@ class SaveLoginViewController: UIViewController {
     private let credentialManager: SaveAutofillLoginManager
     private let appSettings: AppSettings
     private let domainLastShownOn: String?
-    private var viewModel: SaveLoginViewModel?
+    var viewModel: SaveLoginViewModel?
 
     internal init(credentialManager: SaveAutofillLoginManager, appSettings: AppSettings, domainLastShownOn: String? = nil) {
         self.credentialManager = credentialManager
@@ -172,6 +172,16 @@ extension SaveLoginViewController: SaveLoginViewModelDelegate {
         } else {
             Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptShown)
             present(alertController, animated: true)
+        }
+    }
+
+    func saveLoginViewModelDidResizeContent(_ viewModel: SaveLoginViewModel, contentHeight: CGFloat) {
+        if #available(iOS 16.0, *) {
+            if let sheetPresentationController = self.presentationController as? UISheetPresentationController {
+                sheetPresentationController.animateChanges {
+                    sheetPresentationController.detents = [.custom(resolver: { _ in contentHeight })]
+                }
+            }
         }
     }
 }

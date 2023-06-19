@@ -224,7 +224,7 @@
                                                 <bool key="isElement" value="YES"/>
                                             </accessibility>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="webSearch" smartQuotesType="no"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="leftInset">

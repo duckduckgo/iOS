@@ -32,6 +32,7 @@ final class UserScripts: UserScriptsProvider {
     let loginFormDetectionScript: LoginFormDetectionUserScript?
     let contentScopeUserScript: ContentScopeUserScript
     let autoconsentUserScript: AutoconsentUserScript
+    let clickToLoadUserScript: ClickToLoadUserScript
 
     private(set) var faviconScript = FaviconUserScript()
     private(set) var navigatorPatchScript = NavigatorSharePatchUserScript()
@@ -50,6 +51,9 @@ final class UserScripts: UserScriptsProvider {
         contentScopeUserScript = ContentScopeUserScript(sourceProvider.privacyConfigurationManager,
                                                         properties: sourceProvider.contentScopeProperties)
         autoconsentUserScript = AutoconsentUserScript(config: sourceProvider.privacyConfigurationManager.privacyConfig)
+        clickToLoadUserScript = ClickToLoadUserScript()
+
+        contentScopeUserScript.registerSubfeature(delegate: clickToLoadUserScript)
     }
 
     lazy var userScripts: [UserScript] = [

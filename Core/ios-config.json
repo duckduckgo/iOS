@@ -1081,16 +1081,16 @@
                     "ruleActions": [
                         "block-ctl-fb"
                     ],
-                    "state": "disabled"
+                    "state": "enabled"
                 },
                 "Youtube": {
                     "ruleActions": [
                         "block-ctl-yt"
                     ],
-                    "state": "disabled"
+                    "state": "enabled"
                 }
             },
-            "state": "disabled",
+            "state": "enabled",
             "hash": "1526ca67acf2606be86e62506cb10243"
         },
         "clickToPlay": {

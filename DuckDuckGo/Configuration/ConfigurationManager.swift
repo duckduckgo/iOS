@@ -94,7 +94,7 @@ struct ConfigurationManager {
         var tasks = [Configuration: Task<(), Swift.Error>]()
         tasks[.trackerDataSet] = Task { try await fetcher.fetch(.trackerDataSet) }
         tasks[.surrogates] = Task { try await fetcher.fetch(.surrogates) }
-        tasks[.privacyConfiguration] = Task { try await fetcher.fetch(.privacyConfiguration) }
+//        tasks[.privacyConfiguration] = Task { try await fetcher.fetch(.privacyConfiguration) }
 
         for (configuration, task) in tasks {
             do {

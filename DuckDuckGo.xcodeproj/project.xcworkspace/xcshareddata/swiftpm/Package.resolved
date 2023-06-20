@@ -2,30 +2,12 @@
   "object": {
     "pins": [
       {
-        "package": "BrowserServicesKit",
-        "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
-        "state": {
-          "branch": null,
-          "revision": "68e3bd3951f08427d2f2198ab4d1f232c0160ed1",
-          "version": "61.0.1"
-        }
-      },
-      {
         "package": "CocoaAsyncSocket",
         "repositoryURL": "https://github.com/robbiehanson/CocoaAsyncSocket",
         "state": {
           "branch": null,
           "revision": "dbdc00669c1ced63b27c3c5f052ee4d28f10150c",
           "version": "7.6.5"
-        }
-      },
-      {
-        "package": "ContentScopeScripts",
-        "repositoryURL": "https://github.com/duckduckgo/content-scope-scripts",
-        "state": {
-          "branch": null,
-          "revision": "801b7f23476f797c6eaa72b070e6c80abb82801a",
-          "version": "4.4.4"
         }
       },
       {

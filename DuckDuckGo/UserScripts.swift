@@ -22,6 +22,7 @@ import Core
 import BrowserServicesKit
 import TrackerRadarKit
 import UserScript
+import Combine
 import WebKit
 
 final class UserScripts: UserScriptsProvider {
@@ -48,7 +49,64 @@ final class UserScripts: UserScriptsProvider {
         autofillUserScript = AutofillUserScript(scriptSourceProvider: sourceProvider.autofillSourceProvider)
 
         loginFormDetectionScript = sourceProvider.loginDetectionEnabled ? LoginFormDetectionUserScript() : nil
-        contentScopeUserScript = ContentScopeUserScript(sourceProvider.privacyConfigurationManager,
+
+        class TempConfig: PrivacyConfigurationManaging {
+            var base: Data
+            var currentConfig: Data {
+                guard var jsonObject = try? JSONSerialization.jsonObject(with: self.base, options: []) as? [String: Any],
+                      var features = jsonObject["features"] as? [String: Any]
+                else {
+                    print("couldn't deserialize the config")
+                    return self.base
+                }
+
+                features["clickToLoad"] = [
+                    "state": "enabled",
+                    "exceptions": [],
+                    "settings": [
+                        "Facebook, Inc.": [
+                            "ruleActions": [
+                                "block-ctl-fb"
+                            ],
+                            "state": "enabled"
+                        ],
+                        "Youtube": [
+                            "ruleActions": [
+                                "block-ctl-yt"
+                            ],
+                            "state": "disabled"
+                        ]
+                    ]
+                ]
+
+                jsonObject["features"] = features
+
+                // Convert the modified object back to JSON data
+                guard let updatedJsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: []) else {
+                    print("couldn't serialize the config back to Data")
+                    return self.base
+                }
+
+                return updatedJsonData
+            }
+
+            var updatesPublisher: AnyPublisher<(), Never>
+            var privacyConfig: PrivacyConfiguration
+
+            func reload(etag: String?, data: Data?) -> PrivacyConfigurationManager.ReloadResult {
+                fatalError("reload(etag:data:) has not been implemented")
+            }
+
+            init(manager: PrivacyConfigurationManaging) {
+                base = manager.currentConfig
+                self.updatesPublisher = manager.updatesPublisher
+                self.privacyConfig = manager.privacyConfig
+            }
+        }
+
+        let tempConfig = TempConfig(manager: sourceProvider.privacyConfigurationManager)
+
+        contentScopeUserScript = ContentScopeUserScript(tempConfig,
                                                         properties: sourceProvider.contentScopeProperties)
         autoconsentUserScript = AutoconsentUserScript(config: sourceProvider.privacyConfigurationManager.privacyConfig)
         clickToLoadUserScript = ClickToLoadUserScript()

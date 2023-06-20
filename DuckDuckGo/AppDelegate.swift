@@ -403,7 +403,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if syncService.isSyncInProgress {
             os_log(.debug, log: .syncLog, "Sync is in progress. Starting background task to allow it to gracefully complete.")
 
-            let taskID = UIApplication.shared.beginBackgroundTask(withName: "Cancelled Sync Completion Task")
+            var taskID: UIBackgroundTaskIdentifier!
+            taskID = UIApplication.shared.beginBackgroundTask(withName: "Cancelled Sync Completion Task") {
+                os_log(.debug, log: .syncLog, "Forcing background task completion")
+                UIApplication.shared.endBackgroundTask(taskID)
+            }
             syncDidFinishCancellable?.cancel()
             syncDidFinishCancellable = syncService.isSyncInProgressPublisher.filter { !$0 }
                 .prefix(1)

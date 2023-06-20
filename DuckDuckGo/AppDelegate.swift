@@ -187,6 +187,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         syncDataProviders = SyncDataProviders(bookmarksDatabase: bookmarksDatabase)
         syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog)
+        syncService.initializeIfNeeded(isInternalUser: InternalUserStore().isInternalUser)
 
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         
@@ -245,6 +246,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
+
+        syncService.initializeIfNeeded(isInternalUser: InternalUserStore().isInternalUser)
 
         if !(overlayWindow?.rootViewController is AuthenticationViewController) {
             removeOverlay()

@@ -20,6 +20,7 @@
 import UIKit
 import Common
 import Core
+import DDGSync
 import WebKit
 import Bookmarks
 import Persistence
@@ -61,6 +62,7 @@ class TabSwitcherViewController: UIViewController {
     weak var previewsSource: TabPreviewsSource!
     
     private var bookmarksDatabase: CoreDataDatabase
+    private let syncService: DDGSyncing
     
     weak var reorderGestureRecognizer: UIGestureRecognizer?
     
@@ -74,8 +76,10 @@ class TabSwitcherViewController: UIViewController {
     let favicons = Favicons.shared
     
     required init?(coder: NSCoder,
-                   bookmarksDatabase: CoreDataDatabase) {
+                   bookmarksDatabase: CoreDataDatabase,
+                   syncService: DDGSyncing) {
         self.bookmarksDatabase = bookmarksDatabase
+        self.syncService = syncService
         super.init(coder: coder)
     }
     
@@ -241,7 +245,7 @@ class TabSwitcherViewController: UIViewController {
         alert.overrideUserInterfaceStyle()
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         alert.addAction(title: UserText.actionBookmark, style: .default) {
-            let model = MenuBookmarksViewModel(bookmarksDatabase: self.bookmarksDatabase)
+            let model = MenuBookmarksViewModel(bookmarksDatabase: self.bookmarksDatabase, syncService: self.syncService)
             let result = self.bookmarkAll(viewModel: model)
             self.displayBookmarkAllStatusMessage(with: result, openTabsCount: self.tabsModel.tabs.count)
         }

@@ -108,9 +108,8 @@ struct QRCodeScannerView: UIViewRepresentable {
 
             captureCodes = false
             Task {
-                if await cameraView.scanningQueue.codeScanned(code) {
-                    stop()
-                } else {
+                let codeAccepted = await cameraView.scanningQueue.codeScanned(code)
+                if !codeAccepted {
                     captureCodes = true
                 }
             }

@@ -24,11 +24,13 @@ struct QRCodeScannerView: UIViewRepresentable {
 
     let scanningQueue: ScanningQueue
 
-    var onCameraUnavailable: () -> Void
+    let onCameraUnavailable: () -> Void
+    let onInvalidCodeScanned: () -> Void
 
-    init(onQRCodeScanned: @escaping (String) async -> Bool, onCameraUnavailable: @escaping () -> Void) {
+    init(onQRCodeScanned: @escaping (String) async -> Bool, onCameraUnavailable: @escaping () -> Void, onInvalidCodeScanned: @escaping () -> Void) {
         scanningQueue = ScanningQueue(onQRCodeScanned)
         self.onCameraUnavailable = onCameraUnavailable
+        self.onInvalidCodeScanned = onInvalidCodeScanned
     }
 
     func makeCoordinator() -> Coordinator {
@@ -107,9 +109,10 @@ struct QRCodeScannerView: UIViewRepresentable {
                   let code = codeObject.stringValue else { return }
 
             captureCodes = false
-            Task {
+            Task { @MainActor in
                 let codeAccepted = await cameraView.scanningQueue.codeScanned(code)
                 if !codeAccepted {
+                    cameraView.onInvalidCodeScanned()
                     captureCodes = true
                 }
             }

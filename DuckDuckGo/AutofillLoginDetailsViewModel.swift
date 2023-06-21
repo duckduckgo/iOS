@@ -216,7 +216,11 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     viewMode = .view
                 }
             } catch let error {
-                Pixel.fire(pixel: .secureVaultError, error: error)
+                if case SecureVaultError.duplicateRecord = error {
+                    delegate?.autofillLoginDetailsViewModelDidAttemptToSaveDuplicateLogin()
+                } else {
+                    Pixel.fire(pixel: .secureVaultError, error: error)
+                }
             }
         case .view:
             break

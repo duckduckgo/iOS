@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Nome de utilizador";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Os inícios de sessão são armazenados em segurança apenas neste dispositivo.";
+"autofill.logins.empty-view.subtitle" = "Os inícios de sessão são armazenados com segurança no teu dispositivo.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Nenhum início de sessão guardado";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Início de sessão para %@ eliminado";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Pesquisar inícios de sessão";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Início de sessão eliminado";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Pesquisar inícios de sessão";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Sugerido";
@@ -350,7 +350,7 @@
 "autofill.password-generation-prompt.use-own-password.cta" = "Criar a minha própria palavra-passe";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Os inícios de sessão são armazenados com segurança apenas neste dispositivo, e podes efetuar a gestão dos mesmos a partir do menu de Inícios de sessão nas Definições.";
+"autofill.save-login.new-user.message" = "Os inícios de sessão são armazenados com segurança no teu dispositivo, e podes efetuar a gestão dos mesmos a partir do menu Inícios de sessão nas Definições.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Queres que o DuckDuckGo guarde o teu início de sessão?";

@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Lietotājvārds";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Pieteikšanās dati tiek droši glabāti tikai šajā ierīcē.";
+"autofill.logins.empty-view.subtitle" = "Pieteikšanās dati tiek droši saglabāti tavā ierīcē.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Nav saglabātu pieteikšanās datu";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "%@ pieteikšanās dati izdzēsti";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Meklēt pieteikšanās datus";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Pieteikšanās dati izdzēsti";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Meklēt pieteikšanās datus";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Ieteikts";
@@ -350,7 +350,7 @@
 "autofill.password-generation-prompt.use-own-password.cta" = "Izveidot savu";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Pieteikšanās dati tiek droši saglabāti tikai šajā ierīcē, un tos var pārvaldīt no iestatījumu izvēlnes Pieteikšanās dati.";
+"autofill.save-login.new-user.message" = "Pieteikšanās dati tiek droši saglabāti tavā ierīcē, un tos var pārvaldīt no iestatījumu izvēlnes Pieteikšanās dati.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vai vēlies, lai DuckDuckGo saglabātu tavus pieteikšanās datus?";

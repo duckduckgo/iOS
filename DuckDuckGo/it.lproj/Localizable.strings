@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Nome utente";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "I dati di accesso vengono salvati in modo sicuro solo su questo dispositivo.";
+"autofill.logins.empty-view.subtitle" = "I dati di accesso sono archiviati in modo sicuro sul tuo dispositivo.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Non vi sono ancora dati di accesso salvati";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Dati di accesso per %@ eliminati";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Cerca dati di accesso";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Dati di accesso eliminati";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Cerca dati di accesso";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Suggerimenti";
@@ -350,7 +350,7 @@
 "autofill.password-generation-prompt.use-own-password.cta" = "Crea la mia";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "I dati di accesso sono archiviati in modo sicuro solo su questo dispositivo e possono essere gestiti dal menu Accessi, all'interno di Impostazioni.";
+"autofill.save-login.new-user.message" = "I dati di accesso sono archiviati in modo sicuro sul tuo dispositivo e possono essere gestiti dal menu Accessi, in Impostazioni.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vuoi che DuckDuckGo salvi i dati di accesso?";

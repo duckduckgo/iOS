@@ -184,7 +184,6 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         }
     }
 
-    // swiftlint:disable cyclomatic_complexity
     func save() {
         guard let vault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared) else {
             return
@@ -216,11 +215,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     viewMode = .view
                 }
             } catch let error {
-                if case SecureVaultError.duplicateRecord = error {
-                    delegate?.autofillLoginDetailsViewModelDidAttemptToSaveDuplicateLogin()
-                } else {
-                    Pixel.fire(pixel: .secureVaultError, error: error)
-                }
+                handleSecureVaultError(error)
             }
         case .view:
             break
@@ -240,16 +235,18 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                 }
                 
             } catch let error {
-                if case SecureVaultError.duplicateRecord = error {
-                    Pixel.fire(pixel: .autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate)
-                    delegate?.autofillLoginDetailsViewModelDidAttemptToSaveDuplicateLogin()
-                } else {
-                    Pixel.fire(pixel: .secureVaultError, error: error)
-                }
+                handleSecureVaultError(error)
             }
         }
     }
-    // swiftlint:enable cyclomatic_complexity
+
+    private func handleSecureVaultError(_ error: Error) {
+        if case SecureVaultError.duplicateRecord = error {
+            delegate?.autofillLoginDetailsViewModelDidAttemptToSaveDuplicateLogin()
+        } else {
+            Pixel.fire(pixel: .secureVaultError, error: error)
+        }
+    }
 
     func delete() {
         guard let account = account else {

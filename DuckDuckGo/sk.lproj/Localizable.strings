@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Používateľské meno";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Prihlasovacie údaje sú zabezpečene uložené iba v tomto zariadení.";
+"autofill.logins.empty-view.subtitle" = "Prihlasovacie údaje sú zabezpečeným spôsobom uložené vo vašom zariadení.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Zatiaľ nie sú uložené žiadne prihlasovacie údaje";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Prihlásenie pre %@ bolo odstránené";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Vyhľadávanie prihlásení";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Prihlasovacie údaje boli odstránené";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Vyhľadávanie prihlásení";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Navrhované";

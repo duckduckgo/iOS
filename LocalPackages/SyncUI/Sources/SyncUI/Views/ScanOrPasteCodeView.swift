@@ -28,6 +28,8 @@ public struct ScanOrPasteCodeView: View {
         self.model = model
     }
 
+    @State var isInvalidCode = false
+
     @ViewBuilder
     func fullscreenCameraBackground() -> some View {
         Group {
@@ -36,6 +38,14 @@ public struct ScanOrPasteCodeView: View {
                     return await model.codeScanned($0)
                 } onCameraUnavailable: {
                     model.cameraUnavailable()
+                } onInvalidCodeScanned: {
+                    withAnimation(.linear.delay(0.0)) {
+                        isInvalidCode = true
+                    }
+
+                    withAnimation(.linear.delay(0.2)) {
+                        isInvalidCode = false
+                    }
                 }
             } else {
                 Rectangle()
@@ -162,7 +172,7 @@ public struct ScanOrPasteCodeView: View {
                 ForEach([0.0, 90.0, 180.0, 270.0], id: \.self) { degrees in
                     RoundedCorner()
                         .stroke(lineWidth: 8)
-                        .foregroundColor(.white.opacity(0.8))
+                        .foregroundColor(isInvalidCode ? .red.opacity(0.6) : .white.opacity(0.8))
                         .rotationEffect(.degrees(degrees), anchor: .center)
                         .frame(width: 300, height: 300)
                 }

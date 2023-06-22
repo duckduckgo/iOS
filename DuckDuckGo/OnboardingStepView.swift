@@ -31,10 +31,10 @@ struct OnboardingStepView: View {
                 .font(Font(uiFont: Const.Font.titleFont))
                 .foregroundColor(Color.fontColor)
             
-            Text(viewModel.paragraph1)
+            viewModel.paragraph1
                 .font(Font(uiFont: Const.Font.paragraphFont))
             
-            Text(viewModel.paragraph2)
+            viewModel.paragraph2
                 .font(Font(uiFont: Const.Font.paragraphFont))
             
             if let auxButtonText = viewModel.auxButtonTitle {
@@ -74,14 +74,7 @@ private extension Color {
 struct OnboardingStepView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            OnboardingStepView(viewModel: OnboardingStepViewModel(
-                title: "One easy step for better app privacy!",
-                paragraph1: "Over 85% of free iOS apps we’ve tested allow other companies to track your personal information, even when you’re sleeping.",
-                paragraph2: "See who we catch trying to track you in your apps and take back control.",
-                auxButtonTitle: "Learn More",
-                primaryButtonTitle: "Continue",
-                pictogramName: "AppTPWatching-Blocked"
-            ))
+            OnboardingStepView(viewModel: OnboardingStepViewModel.onboardingData[0])
         }
     }
 }

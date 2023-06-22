@@ -37,6 +37,14 @@ struct AppTPActivityView: View {
         return toggleViewModel.isOn ? UserText.appTPEmptyEnabledInfo : UserText.appTPEmptyDisabledInfo
     }
     
+    func enableAppTPFromOnboarding() {
+        viewModel.appTPUsed = true
+        toggleViewModel.connectFirewall = true
+        Task { @MainActor in
+            await toggleViewModel.changeFirewallStatus()
+        }
+    }
+    
     var emptyState: some View {
         VStack {
             imageForState()
@@ -179,7 +187,11 @@ struct AppTPActivityView: View {
     }
     
     var body: some View {
-        scrollWithBackgroud
+        if viewModel.appTPUsed {
+            scrollWithBackgroud
+        } else {
+            OnboardingContainerView(viewModels: OnboardingStepViewModel.onboardingData, enableAppTP: enableAppTPFromOnboarding)
+        }
     }
 }
 

@@ -39,7 +39,7 @@ struct OnboardingStepView: View {
             
             if let auxButtonText = viewModel.auxButtonTitle {
                 Button(action: {
-                    viewModel.auxAction?()
+                    
                 }, label: {
                     Text(auxButtonText)
                         .font(Font(uiFont: Const.Font.paragraphFont))
@@ -48,21 +48,11 @@ struct OnboardingStepView: View {
                 })
             }
             
-            Spacer()
-            
-            Button(action: viewModel.action, label: {
-                Text(viewModel.primaryButtonTitle)
-                    .font(Font(uiFont: Const.Font.buttonFont))
-                    .foregroundColor(Color.buttonLabelColor)
-            })
-            .frame(maxWidth: .infinity, minHeight: 50, maxHeight: 50)
-            .background(Color(designSystemColor: .accent))
-            .cornerRadius(8)
-            
         }
         .multilineTextAlignment(.center)
         .padding(.horizontal, 32)
         .padding(.top, 20)
+        .background(Color(designSystemColor: .surface))
     }
 }
 
@@ -90,9 +80,7 @@ struct OnboardingStepView_Previews: PreviewProvider {
                 paragraph2: "See who we catch trying to track you in your apps and take back control.",
                 auxButtonTitle: "Learn More",
                 primaryButtonTitle: "Continue",
-                pictogramName: "AppTPWatching-Blocked",
-                action: {},
-                auxAction: nil
+                pictogramName: "AppTPWatching-Blocked"
             ))
         }
     }

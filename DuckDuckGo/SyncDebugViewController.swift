@@ -65,7 +65,7 @@ class SyncDebugViewController: UITableViewController {
 
         super.init(coder: coder)
 
-        syncCancellable = sync.isInProgressPublisher.receive(on: DispatchQueue.main).sink { [weak self] progress in
+        syncCancellable = sync.isSyncInProgressPublisher.receive(on: DispatchQueue.main).sink { [weak self] progress in
             if progress == false {
                 self?.tableView.reloadData()
             }

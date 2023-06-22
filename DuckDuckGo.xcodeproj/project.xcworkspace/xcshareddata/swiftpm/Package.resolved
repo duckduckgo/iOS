@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "dominik/sync-operation",
-          "revision": "2394ef8d422c96041bf62ce88643927f8b39af26",
-          "version": null
+          "branch": null,
+          "revision": "e0b5c953058227b060c935e8c8c006196918a5d1",
+          "version": "62.0.0"
         }
       },
       {

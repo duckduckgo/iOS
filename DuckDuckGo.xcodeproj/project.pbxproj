@@ -66,6 +66,8 @@
 		02025B1529884EA500E694E7 /* DDGObserverFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025B1429884EA500E694E7 /* DDGObserverFactory.swift */; };
 		021D30752989C04200918636 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021D306D2989C04200918636 /* Observer.swift */; };
 		021D30762989C04200918636 /* ObserverFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021D306E2989C04200918636 /* ObserverFactory.swift */; };
+		02341FA42A437999008A1531 /* OnboardingStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02341FA32A437999008A1531 /* OnboardingStepView.swift */; };
+		02341FA62A4379CC008A1531 /* OnboardingStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02341FA52A4379CC008A1531 /* OnboardingStepViewModel.swift */; };
 		0238E44F29C0FAA100615E30 /* FindInPageIOSJSSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 0238E44E29C0FAA100615E30 /* FindInPageIOSJSSupport */; };
 		0253A43129E5DCD7003697C1 /* AppTrackingProtectionAllowlistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0253A43029E5DCD7003697C1 /* AppTrackingProtectionAllowlistModel.swift */; };
 		0253A43329E5E393003697C1 /* AppTrackingProtectionAllowlistModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0253A43229E5E393003697C1 /* AppTrackingProtectionAllowlistModelTests.swift */; };
@@ -1034,6 +1036,8 @@
 		021D307C2989C0C600918636 /* ProxyServerEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyServerEvent.swift; sourceTree = "<group>"; };
 		021D307D2989C0C700918636 /* RuleMatchEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleMatchEvent.swift; sourceTree = "<group>"; };
 		021D307E2989C0C800918636 /* EventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventType.swift; sourceTree = "<group>"; };
+		02341FA32A437999008A1531 /* OnboardingStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingStepView.swift; sourceTree = "<group>"; };
+		02341FA52A4379CC008A1531 /* OnboardingStepViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingStepViewModel.swift; sourceTree = "<group>"; };
 		0253A43029E5DCD7003697C1 /* AppTrackingProtectionAllowlistModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionAllowlistModel.swift; sourceTree = "<group>"; };
 		0253A43229E5E393003697C1 /* AppTrackingProtectionAllowlistModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionAllowlistModelTests.swift; sourceTree = "<group>"; };
 		025CCF75257EAFAF001CD5BB /* FingerprintUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FingerprintUITest.swift; sourceTree = "<group>"; };
@@ -2673,6 +2677,7 @@
 		02025B0A29884CF300E694E7 /* AppTrackingProtection */ = {
 			isa = PBXGroup;
 			children = (
+				02341FA22A435E42008A1531 /* AppTPOnboarding */,
 				0290471C29E7085D0008FE3C /* AppTPManageTrackersView */,
 				0290472629E8619B0008FE3C /* AppTPTrackerDetailView */,
 				02EC02C229AFA31900557F1A /* AppTPBreakageForm */,
@@ -2706,6 +2711,15 @@
 				021D307D2989C0C700918636 /* RuleMatchEvent.swift */,
 			);
 			path = Event;
+			sourceTree = "<group>";
+		};
+		02341FA22A435E42008A1531 /* AppTPOnboarding */ = {
+			isa = PBXGroup;
+			children = (
+				02341FA32A437999008A1531 /* OnboardingStepView.swift */,
+				02341FA52A4379CC008A1531 /* OnboardingStepViewModel.swift */,
+			);
+			name = AppTPOnboarding;
 			sourceTree = "<group>";
 		};
 		025CCFE32582601C001CD5BB /* FingerprintingUITests */ = {
@@ -5941,6 +5955,7 @@
 				85DFEDF124C7EEA400973FE7 /* LargeOmniBarState.swift in Sources */,
 				9880722A25FA497B0039EF4B /* MenuButton.swift in Sources */,
 				F46FEC5727987A5F0061D9DF /* KeychainItemsDebugViewController.swift in Sources */,
+				02341FA62A4379CC008A1531 /* OnboardingStepViewModel.swift in Sources */,
 				850365F323DE087800D0F787 /* UIImageViewExtension.swift in Sources */,
 				C160544129D6044D00B715A1 /* AutofillInterfaceUsernameTruncator.swift in Sources */,
 				02A54A9A2A094A17000C8FED /* AppTPHomeView.swift in Sources */,
@@ -5976,6 +5991,7 @@
 				98DA6ECA2181E41F00E65433 /* ThemeManager.swift in Sources */,
 				85DB12E92A1E92E3000A4A72 /* MacPromoViewController.swift in Sources */,
 				1E016AB6294A5EB100F21625 /* CustomDaxDialog.swift in Sources */,
+				02341FA42A437999008A1531 /* OnboardingStepView.swift in Sources */,
 				F1CA3C3B1F045B65005FADB3 /* Authenticator.swift in Sources */,
 				CBD4F13D279EBFA000B20FD7 /* HomeMessageCollectionViewCell.swift in Sources */,
 				8505836D219F424500ED4EDB /* Point.swift in Sources */,

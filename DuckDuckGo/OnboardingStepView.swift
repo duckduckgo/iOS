@@ -1,0 +1,99 @@
+//
+//  OnboardingStepView.swift
+//  DuckDuckGo
+//
+//  Copyright © 2023 DuckDuckGo. All rights reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
+
+import SwiftUI
+
+struct OnboardingStepView: View {
+    
+    let viewModel: OnboardingStepViewModel
+    
+    var body: some View {
+        VStack(spacing: 24) {
+            Image(viewModel.pictogramName)
+            
+            Text(viewModel.title)
+                .font(Font(uiFont: Const.Font.titleFont))
+                .foregroundColor(Color.fontColor)
+            
+            Text(viewModel.paragraph1)
+                .font(Font(uiFont: Const.Font.paragraphFont))
+            
+            Text(viewModel.paragraph2)
+                .font(Font(uiFont: Const.Font.paragraphFont))
+            
+            if let auxButtonText = viewModel.auxButtonTitle {
+                Button(action: {
+                    viewModel.auxAction?()
+                }, label: {
+                    Text(auxButtonText)
+                        .font(Font(uiFont: Const.Font.paragraphFont))
+                        .fontWeight(.bold)
+                        .foregroundColor(Color(designSystemColor: .accent))
+                })
+            }
+            
+            Spacer()
+            
+            Button(action: viewModel.action, label: {
+                Text(viewModel.primaryButtonTitle)
+                    .font(Font(uiFont: Const.Font.buttonFont))
+                    .foregroundColor(Color.buttonLabelColor)
+            })
+            .frame(maxWidth: .infinity, minHeight: 50, maxHeight: 50)
+            .background(Color(designSystemColor: .accent))
+            .cornerRadius(8)
+            
+        }
+        .multilineTextAlignment(.center)
+        .padding(.horizontal, 32)
+        .padding(.top, 20)
+    }
+}
+
+private enum Const {
+    enum Font {
+        static let titleFont = UIFont.boldAppFont(ofSize: 28)
+        static let paragraphFont = UIFont.appFont(ofSize: 16)
+        static let buttonFont = UIFont.boldAppFont(ofSize: 15)
+    }
+}
+
+private extension Color {
+    static let fontColor = Color("AppTPDomainColor")
+    static let buttonLabelColor = Color("AppTPBreakageButtonLabel")
+    static let disabledButton = Color("AppTPBreakageButtonDisabled")
+    static let disabledButtonLabel = Color("AppTPBreakageButtonLabelDisabled")
+}
+
+struct OnboardingStepView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            OnboardingStepView(viewModel: OnboardingStepViewModel(
+                title: "One easy step for better app privacy!",
+                paragraph1: "Over 85% of free iOS apps we’ve tested allow other companies to track your personal information, even when you’re sleeping.",
+                paragraph2: "See who we catch trying to track you in your apps and take back control.",
+                auxButtonTitle: "Learn More",
+                primaryButtonTitle: "Continue",
+                pictogramName: "AppTPWatching-Blocked",
+                action: {},
+                auxAction: nil
+            ))
+        }
+    }
+}

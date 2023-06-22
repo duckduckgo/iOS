@@ -293,7 +293,11 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configureVersionText() {
+#if BETA
+        versionText.text = versionProvider.versionAndBuildNumber + " (Beta)"
+#else
         versionText.text = versionProvider.versionAndBuildNumber
+#endif
     }
     
     private func configureUniversalLinksToggle() {

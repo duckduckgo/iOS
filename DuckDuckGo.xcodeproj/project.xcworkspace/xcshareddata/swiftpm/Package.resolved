@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "shane/css-for-duckplayer",
-          "revision": "f744c78481cd4ceaa2d9d475d213977a02190010",
-          "version": null
+          "branch": null,
+          "revision": "ade328a6d938ece5f21843818e55688e63c6fbba",
+          "version": "62.0.1"
         }
       },
       {

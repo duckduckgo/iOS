@@ -21,7 +21,7 @@
                         <fragment content="Label">
                             <attributes>
                                 <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <font key="NSFont" size="16" name="ProximaNova-Regular"/>
+                                <font key="NSFont" size="16" metaFont="system"/>
                                 <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                             </attributes>
                         </fragment>
@@ -35,7 +35,7 @@
                             <fragment content="Edit">
                                 <attributes>
                                     <color key="NSColor" red="0.76470588235294112" green="0.76470588235294112" blue="0.76470588235294112" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <font key="NSFont" size="13" name="ProximaNova-Regular"/>
+                                    <font key="NSFont" size="15" metaFont="systemBold"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>

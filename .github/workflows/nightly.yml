@@ -44,7 +44,7 @@ jobs:
       run: |
         set -o pipefail && xcodebuild test \
           -scheme "AtbUITests" \
-          -destination "platform=iOS Simulator,name=iPhone 12" \
+          -destination "platform=iOS Simulator,name=iPhone 14" \
           -derivedDataPath "DerivedData" \
           | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml
 
@@ -74,7 +74,7 @@ jobs:
       run: |
         set -o pipefail && xcodebuild test \
           -scheme "FingerprintingUITests" \
-          -destination "platform=iOS Simulator,name=iPhone 12" \
+          -destination "platform=iOS Simulator,name=iPhone 14" \
           -derivedDataPath "DerivedData" \
           | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml
 

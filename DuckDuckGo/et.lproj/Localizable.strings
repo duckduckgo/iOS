@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Kasutajanimi";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Sisselogimisandmed salvestatakse turvaliselt ainult selles seadmes.";
+"autofill.logins.empty-view.subtitle" = "Sisselogimisandmed salvestatakse turvaliselt sinu seadmesse.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Sisselogimisandmeid pole veel salvestatud";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Saidi %@ sisselogimisandmed on kustutatud";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Otsi sisselogimisandmeid";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Sisselogimisandmed kustutati";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Otsi sisselogimisandmeid";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Soovitatud";
@@ -350,7 +350,7 @@
 "autofill.password-generation-prompt.use-own-password.cta" = "Loon selle ise";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Sisselogimisandmed salvestatakse turvaliselt ainult selles seadmes ja neid saab hallata sätete menüüst Sisselogimisandmed.";
+"autofill.save-login.new-user.message" = "Sisselogimisandmed salvestatakse turvaliselt selles seadmes ja neid saab hallata sätete menüüst Sisselogimisandmed.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Kas soovid, et DuckDuckGo salvestaks sinu sisselogimisandmed?";

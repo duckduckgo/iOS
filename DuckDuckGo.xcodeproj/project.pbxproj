@@ -63,8 +63,6 @@
 		02025B0D29884D2C00E694E7 /* AppTrackerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025B0B29884D2C00E694E7 /* AppTrackerData.swift */; };
 		02025B0F29884DC500E694E7 /* AppTrackerDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025B0E29884DC500E694E7 /* AppTrackerDataParser.swift */; };
 		02025B1029884DC500E694E7 /* AppTrackerDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025B0E29884DC500E694E7 /* AppTrackerDataParser.swift */; };
-		02025B1229884E7000E694E7 /* blocklist.json in Resources */ = {isa = PBXBuildFile; fileRef = 02025B1129884E7000E694E7 /* blocklist.json */; };
-		02025B1329884E7000E694E7 /* blocklist.json in Resources */ = {isa = PBXBuildFile; fileRef = 02025B1129884E7000E694E7 /* blocklist.json */; };
 		02025B1529884EA500E694E7 /* DDGObserverFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025B1429884EA500E694E7 /* DDGObserverFactory.swift */; };
 		021D30752989C04200918636 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021D306D2989C04200918636 /* Observer.swift */; };
 		021D30762989C04200918636 /* ObserverFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021D306E2989C04200918636 /* ObserverFactory.swift */; };
@@ -72,6 +70,8 @@
 		0253A43129E5DCD7003697C1 /* AppTrackingProtectionAllowlistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0253A43029E5DCD7003697C1 /* AppTrackingProtectionAllowlistModel.swift */; };
 		0253A43329E5E393003697C1 /* AppTrackingProtectionAllowlistModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0253A43229E5E393003697C1 /* AppTrackingProtectionAllowlistModelTests.swift */; };
 		025CD01025826035001CD5BB /* FingerprintUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025CCF75257EAFAF001CD5BB /* FingerprintUITest.swift */; };
+		0262085B2A37915D006CB755 /* ios_blocklist_075.json in Resources */ = {isa = PBXBuildFile; fileRef = 0262085A2A37915D006CB755 /* ios_blocklist_075.json */; };
+		0262085C2A37915D006CB755 /* ios_blocklist_075.json in Resources */ = {isa = PBXBuildFile; fileRef = 0262085A2A37915D006CB755 /* ios_blocklist_075.json */; };
 		026DABA428242BC80089E0B5 /* MockUserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026DABA328242BC80089E0B5 /* MockUserAgent.swift */; };
 		026F08B829B7DC480079B9DF /* EmbeddedAppTPDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026F08B729B7DC480079B9DF /* EmbeddedAppTPDataTests.swift */; };
 		0290471E29E708750008FE3C /* AppTPManageTrackersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290471D29E708750008FE3C /* AppTPManageTrackersView.swift */; };
@@ -1015,7 +1015,6 @@
 		020259CD298820F100E694E7 /* HTTPHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
 		02025B0B29884D2C00E694E7 /* AppTrackerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackerData.swift; sourceTree = "<group>"; };
 		02025B0E29884DC500E694E7 /* AppTrackerDataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackerDataParser.swift; sourceTree = "<group>"; };
-		02025B1129884E7000E694E7 /* blocklist.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = blocklist.json; sourceTree = "<group>"; };
 		02025B1429884EA500E694E7 /* DDGObserverFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDGObserverFactory.swift; sourceTree = "<group>"; };
 		02025B16298851D500E694E7 /* FirewallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FirewallManager.swift; path = ../DuckDuckGo/FirewallManager.swift; sourceTree = "<group>"; };
 		021D306D2989C04200918636 /* Observer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
@@ -1031,6 +1030,7 @@
 		025CCF75257EAFAF001CD5BB /* FingerprintUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FingerprintUITest.swift; sourceTree = "<group>"; };
 		025CCFE22582601C001CD5BB /* FingerprintingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FingerprintingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		025CCFE62582601C001CD5BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0262085A2A37915D006CB755 /* ios_blocklist_075.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ios_blocklist_075.json; sourceTree = "<group>"; };
 		026DABA328242BC80089E0B5 /* MockUserAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserAgent.swift; sourceTree = "<group>"; };
 		026F08B729B7DC480079B9DF /* EmbeddedAppTPDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedAppTPDataTests.swift; sourceTree = "<group>"; };
 		0290471D29E708750008FE3C /* AppTPManageTrackersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTPManageTrackersView.swift; sourceTree = "<group>"; };
@@ -2670,7 +2670,7 @@
 				0201089F29A560D400644F9D /* AppTPActivityView */,
 				02025B0B29884D2C00E694E7 /* AppTrackerData.swift */,
 				02025B0E29884DC500E694E7 /* AppTrackerDataParser.swift */,
-				02025B1129884E7000E694E7 /* blocklist.json */,
+				0262085A2A37915D006CB755 /* ios_blocklist_075.json */,
 				020108A429A681E200644F9D /* AppTP.xcassets */,
 			);
 			name = AppTrackingProtection;
@@ -5358,7 +5358,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02025B1329884E7000E694E7 /* blocklist.json in Resources */,
+				0262085C2A37915D006CB755 /* ios_blocklist_075.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5463,7 +5463,6 @@
 				F1ED309D1EDC2EA400651986 /* TabSwitcher.storyboard in Resources */,
 				8524AAAC2A3888FE00EEC6D2 /* Waitlist.xcassets in Resources */,
 				982686B92600C0960011A8D6 /* ActionMessageView.xib in Resources */,
-				02025B1229884E7000E694E7 /* blocklist.json in Resources */,
 				F4F7F10A25813FE200045D62 /* 01_Fire_really_small.json in Resources */,
 				1E0A75EA27A2FBD000A2BFB6 /* Downloads.storyboard in Resources */,
 				8517D98B221783A0006A8DD0 /* FindInPage.xcassets in Resources */,
@@ -5482,6 +5481,7 @@
 				85A9C37920E0E00C00073340 /* HomeRow.xcassets in Resources */,
 				B6BA95C528894A28004ABA20 /* BrowsingMenuViewController.storyboard in Resources */,
 				AA4D6AE623DE4D33007E8790 /* AppIconGreen60x60@3x.png in Resources */,
+				0262085B2A37915D006CB755 /* ios_blocklist_075.json in Resources */,
 				020108A529A681E300644F9D /* AppTP.xcassets in Resources */,
 				AA4D6A9323DE49A5007E8790 /* AppIconBlack76x76@2x.png in Resources */,
 				1E908BF229827C480008C8F3 /* autoconsent-bundle.js in Resources */,
@@ -8221,7 +8221,7 @@
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = exactVersion;
-				version = 61.0.0;
+				version = 62.0.0;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

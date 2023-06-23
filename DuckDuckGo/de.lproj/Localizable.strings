@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Benutzername";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Anmeldedaten werden nur auf diesem Gerät sicher gespeichert.";
+"autofill.logins.empty-view.subtitle" = "Die Anmeldedaten werden sicher auf deinem Gerät gespeichert.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Noch keine Anmeldedaten gespeichert";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Anmeldedaten für %@ gelöscht";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Anmeldedaten suchen";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Anmeldedaten gelöscht";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Anmeldedaten suchen";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Vorgeschlagen";
@@ -350,7 +350,7 @@
 "autofill.password-generation-prompt.use-own-password.cta" = "Eigenes erstellen";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Anmeldedaten werden nur auf diesem Gerät sicher gespeichert und können über das Anmeldedaten-Menü in den Einstellungen verwaltet werden.";
+"autofill.save-login.new-user.message" = "Die Anmeldedaten werden auf diesem Gerät sicher gespeichert und können über das Anmeldedaten-Menü in den Einstellungen verwaltet werden.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Möchtest du, dass DuckDuckGo deine Anmeldedaten speichert?";

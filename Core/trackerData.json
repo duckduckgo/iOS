@@ -1382,12 +1382,14 @@
                             "bjs.com",
                             "bose.com",
                             "bose.com.au",
+                            "creditonebank.com",
                             "fedex.com",
                             "fnbo.com",
                             "guitarcenter.com",
                             "harley-davidson.com",
                             "hilton.com",
                             "jcpenney.com",
+                            "jewelosco.com",
                             "kohls.com",
                             "lenovo.com",
                             "lowes.com",
@@ -1395,6 +1397,7 @@
                             "safeway.com",
                             "shutterfly.com",
                             "truist.com",
+                            "uhc.com",
                             "verizon.com",
                             "vineyardvines.com",
                             "xfinity.com"
@@ -27770,6 +27773,7 @@
                     "rule": "tags\\.tiqcdn\\.com/utag/.*/utag\\.js",
                     "exceptions": {
                         "domains": [
+                            "asics.com",
                             "bankofamerica.com",
                             "bloomingdales.com",
                             "caremark.com",
@@ -27779,9 +27783,11 @@
                             "hsbc.com",
                             "humana.com",
                             "intuit.com",
+                            "marksandspencer.com",
                             "ml.com",
                             "mtb.com",
                             "pch.com",
+                            "priceline.com",
                             "usbank.com"
                         ]
                     },

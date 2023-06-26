@@ -63,11 +63,13 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] authState in
                 self?.rootView.model.isSyncEnabled = authState != .inactive
+                guard authState != .inactive, let recoveryCode = self?.recoveryCode else { return }
+                self?.rootView.model.syncEnabled(recoveryCode: recoveryCode)
             }
             .store(in: &cancellables)
 
         rootView.model.delegate = self
-        navigationItem.title = "Sync" // TODO externalise
+        navigationItem.title = UserText.syncTitle
     }
 
     override func viewDidLoad() {

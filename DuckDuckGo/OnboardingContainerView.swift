@@ -20,14 +20,14 @@
 import SwiftUI
 
 struct OnboardingButtonStyle: ButtonStyle {
-
-  func makeBody(configuration: Self.Configuration) -> some View {
+    
+    func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-          .frame(maxWidth: .infinity, minHeight: 50, maxHeight: 50)
-          .background(configuration.isPressed ? Color.blue70 : Color(designSystemColor: .accent))
-          .cornerRadius(8)
-  }
-
+            .frame(maxWidth: .infinity, minHeight: Const.Size.buttonHeight, maxHeight: Const.Size.buttonHeight)
+            .background(configuration.isPressed ? Color.blue70 : Color(designSystemColor: .accent))
+            .cornerRadius(Const.Size.cornerRadius)
+    }
+    
 }
 
 struct OnboardingContainerView: View {
@@ -70,7 +70,7 @@ struct OnboardingContainerView: View {
                     .foregroundColor(Color.buttonLabelColor)
             })
             .buttonStyle(OnboardingButtonStyle())
-            .padding(.bottom, 24)
+            .padding(.bottom, Const.Size.buttonPadding)
         }
         .padding()
         .background(Color(designSystemColor: .surface))
@@ -83,6 +83,12 @@ private enum Const {
         static let titleFont = UIFont.boldAppFont(ofSize: 28)
         static let paragraphFont = UIFont.appFont(ofSize: 16)
         static let buttonFont = UIFont.boldAppFont(ofSize: 15)
+    }
+    
+    enum Size {
+        static let buttonPadding: CGFloat = 24
+        static let cornerRadius: CGFloat = 8
+        static let buttonHeight: CGFloat = 50
     }
 }
 

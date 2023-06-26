@@ -24,7 +24,7 @@ struct OnboardingStepView: View {
     let viewModel: OnboardingStepViewModel
     
     var body: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: Const.Size.stackSpacing) {
             Image(viewModel.pictogramName)
             
             Text(viewModel.title)
@@ -50,8 +50,8 @@ struct OnboardingStepView: View {
             
         }
         .multilineTextAlignment(.center)
-        .padding(.horizontal, 32)
-        .padding(.top, 20)
+        .padding(.horizontal, Const.Size.horizontalPadding)
+        .padding(.top, Const.Size.topPadding)
         .background(Color(designSystemColor: .surface))
     }
 }
@@ -61,6 +61,12 @@ private enum Const {
         static let titleFont = UIFont.boldAppFont(ofSize: 28)
         static let paragraphFont = UIFont.appFont(ofSize: 16)
         static let buttonFont = UIFont.boldAppFont(ofSize: 15)
+    }
+    
+    enum Size {
+        static let stackSpacing: CGFloat = 24
+        static let horizontalPadding: CGFloat = 32
+        static let topPadding: CGFloat = 20
     }
 }
 

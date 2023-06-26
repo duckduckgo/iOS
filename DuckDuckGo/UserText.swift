@@ -495,6 +495,29 @@ public struct UserText {
     
     // MARK: App Tracking Protection
     
+    public static let appTPOnboardingTitle1 = NSLocalizedString("appTP.onboarding.title1", value: "One easy step for better app privacy!", comment: "Title for first AppTP onboarding page")
+    public static let appTPOnboardingPage1Info1 = NSLocalizedString("appTP.onboarding.page1Info1", value: "Over 85% of free iOS apps", comment: "First part of info on the first AppTP onboarding page")
+    public static let appTPOnboardingPage1Info2 = NSLocalizedString("appTP.onboarding.page1Info2", value: " we’ve tested allow other companies to track your personal information, even when you’re sleeping.", comment: "Second part of info on the first AppTP onboarding page (note the leading space)")
+    public static let appTPOnboardingPage1Info3 = NSLocalizedString("appTP.onboarding.page1Info3", value: "See who we catch trying to track you in your apps and take back control.", comment: "Third part of info on the first AppTP onboarding page")
+    
+    public static let appTPOnboardingTitle2 = NSLocalizedString("appTP.onboarding.title2", value: "How does it work?", comment: "Title for second AppTP onboarding page")
+    public static let appTPOnboardingPage2Info1 = NSLocalizedString("appTP.onboarding.page2Info1", value: "App Tracking Protection ", comment: "First part of info on the second AppTP onboarding page (note the trailing space)")
+    public static let appTPOnboardingPage2Info2 = NSLocalizedString("appTP.onboarding.page2Info2", value: "detects and blocks app trackers from other companies,", comment: "Second part of info on the second AppTP onboarding page")
+    public static let appTPOnboardingPage2Info3 = NSLocalizedString("appTP.onboarding.page2Info3", value: " like when Google attempts to track you in a health app.", comment: "Third part of info on the second AppTP onboarding page (note the leading space)")
+    public static let appTPOnboardingPage2Info4 = NSLocalizedString("appTP.onboarding.page2Info4", value: "It’s free,", comment: "Fourth part of info on the second AppTP onboarding page")
+    public static let appTPOnboardingPage2Info5 = NSLocalizedString("appTP.onboarding.page2Info5", value: " and you can enjoy your apps as you normally would. Working in the background, it helps ", comment: "Fifth part of info on the second AppTP onboarding page (note the leading and trailing space)")
+    public static let appTPOnboardingPage2Info6 = NSLocalizedString("appTP.onboarding.page2Info6", value: "protect you night and day.", comment: "Sixth part of info on the second AppTP onboarding page")
+    
+    public static let appTPOnboardingTitle3 = NSLocalizedString("appTP.onboarding.title3", value: "Who sees your data?", comment: "Title for third AppTP onboarding page")
+    public static let appTPOnboardingPage3Info1 = NSLocalizedString("appTP.onboarding.page3Info1", value: "App Tracking Protection is not a VPN.", comment: "First part of info on the third AppTP onboarding page")
+    public static let appTPOnboardingPage3Info2 = NSLocalizedString("appTP.onboarding.page3Info2", value: " However, your device will recognize it as one. This is because it uses a local VPN connection to work.", comment: "Second part of info on the third AppTP onboarding page (note the leading space)")
+    public static let appTPOnboardingPage3Info3 = NSLocalizedString("appTP.onboarding.page3Info3", value: "App Tracking Protection is different. ", comment: "Third part of info on the third AppTP onboarding page (note the trailing space)")
+    public static let appTPOnboardingPage3Info4 = NSLocalizedString("appTP.onboarding.page3Info4", value: "It never routes app data through an external server.", comment: "Fourth part of info on the third AppTP onboarding page")
+    
+    public static let appTPOnboardingLearnMoreButton = NSLocalizedString("appTP.onboarding.learnMoreButton", value: "Learn More", comment: "Button title for AppTP onboarding to learn more about AppTP")
+    public static let appTPOnboardingContinueButton = NSLocalizedString("appTP.onboarding.continueButton", value: "Continue", comment: "Button title for AppTP onboarding")
+    public static let appTPOnboardingEnableButton = NSLocalizedString("appTP.onboarding.enableeButton", value: "Enable App Tracking Protection", comment: "Button title for AppTP onboarding to enable AppTP")
+    
     public static let appTPNavTitle = NSLocalizedString("appTP.title", value: "App Tracking Protection", comment: "Title for the App Tracking Protection feature")
     public static let appTPCellDetail = NSLocalizedString("appTP.cell.detail", value: "Block app trackers on your device", comment: "Detail string describing what AppTP is")
     public static let appTPCellEnabled = NSLocalizedString("appTP.cell.enabled", value: "Enabled", comment: "String indicating AppTP is enabled when viewed from the settings screen")

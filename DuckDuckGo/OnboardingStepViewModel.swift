@@ -29,52 +29,52 @@ struct OnboardingStepViewModel {
     
     static let onboardingData: [OnboardingStepViewModel] = [
         OnboardingStepViewModel(
-            title: "One easy step for better app privacy!",
+            title: UserText.appTPOnboardingTitle1,
             paragraph1: {
-                Text("Over 85% of free iOS apps")
+                Text(UserText.appTPOnboardingPage1Info1)
                     .fontWeight(.semibold)
-                + Text(" we’ve tested allow other companies to track your personal information, even when you’re sleeping.")
+                + Text(UserText.appTPOnboardingPage1Info2)
             }(),
             paragraph2: {
-                Text("See who we catch trying to track you in your apps and take back control.")
+                Text(UserText.appTPOnboardingPage1Info3)
             }(),
             auxButtonTitle: nil,
-            primaryButtonTitle: "Continue",
+            primaryButtonTitle: UserText.appTPOnboardingContinueButton,
             pictogramName: "AppTPWatching-Blocked"
         ),
         OnboardingStepViewModel(
-            title: "How does it work?",
+            title: UserText.appTPOnboardingTitle2,
             paragraph1: {
-                Text("App Tracking Protection ")
-                + Text("detects and blocks app trackers from other companies,")
+                Text(UserText.appTPOnboardingPage2Info1)
+                + Text(UserText.appTPOnboardingPage2Info2)
                     .fontWeight(.semibold)
-                + Text(" like when Google attempts to track you in a health app.")
+                + Text(UserText.appTPOnboardingPage2Info3)
             }(),
             paragraph2: {
-                Text("It’s free,")
+                Text(UserText.appTPOnboardingPage2Info4)
                     .fontWeight(.semibold)
-                + Text(" and you can enjoy your apps as you normally would. Working in the background, it helps ")
-                + Text("protect you night and day.")
+                + Text(UserText.appTPOnboardingPage2Info5)
+                + Text(UserText.appTPOnboardingPage2Info6)
                     .fontWeight(.semibold)
             }(),
             auxButtonTitle: nil,
-            primaryButtonTitle: "Continue",
+            primaryButtonTitle: UserText.appTPOnboardingContinueButton,
             pictogramName: "AppTPRadar"
         ),
         OnboardingStepViewModel(
-            title: "Who sees your data?",
+            title: UserText.appTPOnboardingTitle3,
             paragraph1: {
-                Text("App Tracking Protection is not a VPN.")
+                Text(UserText.appTPOnboardingPage3Info1)
                     .fontWeight(.semibold)
-                + Text(" However, your device will recognize it as one. This is because it uses a local VPN connection to work.")
+                + Text(UserText.appTPOnboardingPage3Info2)
             }(),
             paragraph2: {
-                Text("App Tracking Protection is different. ")
-                + Text("It never routes app data through an external server.")
+                Text(UserText.appTPOnboardingPage3Info3)
+                + Text(UserText.appTPOnboardingPage3Info4)
                     .fontWeight(.semibold)
             }(),
-            auxButtonTitle: "Learn More",
-            primaryButtonTitle: "Enable App Tracking Protection",
+            auxButtonTitle: UserText.appTPOnboardingLearnMoreButton,
+            primaryButtonTitle: UserText.appTPOnboardingEnableButton,
             pictogramName: "AppTPSwitch"
         )
     ]

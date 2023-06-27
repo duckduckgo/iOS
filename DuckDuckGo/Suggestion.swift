@@ -31,11 +31,6 @@ struct Suggestion {
     let suggestion: String
     let url: URL?
     
-    init(source: Source, suggestion: String, url: URL?) {
-        self.source = source
-        self.suggestion = suggestion
-        self.url = url
-    }
 }
 
 struct AutocompleteEntry: Decodable {

@@ -58,14 +58,12 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
 
     func showSyncSetup() {
         let model = TurnOnSyncViewModel { [weak self] in
-            assert(self?.navigationController?.visibleViewController is DismissibleHostingController<TurnOnSyncView>)
             self?.dismissPresentedViewController()
             // Handle the finished logic in the closing of the view controller so that we also handle the
             //  user dismissing it (cancel, swipe down, etc)
         }
 
         let controller = DismissibleHostingController(rootView: TurnOnSyncView(model: model)) { [weak self] in
-            assert(self?.navigationController?.visibleViewController is DismissibleHostingController<TurnOnSyncView>)
             self?.rootView.model.setupFinished(model)
         }
 
@@ -230,8 +228,8 @@ private class DismissibleHostingController<Content: View>: UIHostingController<C
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         onDismiss()
     }
 }

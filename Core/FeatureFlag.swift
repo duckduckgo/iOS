@@ -52,6 +52,12 @@ extension FeatureFlag: FeatureFlagSourceProviding {
 
 extension FeatureFlagger {
     public func isFeatureOn(_ featureFlag: FeatureFlag) -> Bool {
+#if BETA
+        if featureFlag == .appTrackingProtection {
+            return true
+        }
+#endif
+
         return isFeatureOn(forProvider: featureFlag)
     }
 }

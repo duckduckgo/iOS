@@ -32,8 +32,6 @@ class BookmarksMigrationTests: XCTestCase {
     override func setUp() async throws {
         try await super.setUp()
         
-        destinationStack.loadStore()
-        
         let containerLocation = MockBookmarksDatabase.tempDBDir()
         try FileManager.default.createDirectory(at: containerLocation, withIntermediateDirectories: true)
         

@@ -23,7 +23,7 @@ import Core
 class TrackerDataParser {
     
     struct Constants {
-        static let blocklistHash = "a8402a2a06f17d79e8b359d051fd398dd304e20cd6632c28f5247b35e487dd75"
+        static let blocklistHash = "890ea65fb8e28d13c05bdf70c45a48874f79abc4d77ed02fe686a38dbc37bdaa"
     }
     
     var blocklist: AppTrackerList?
@@ -33,7 +33,7 @@ class TrackerDataParser {
     }
     
     var blocklistUrl: URL {
-        return Bundle.main.url(forResource: "blocklist", withExtension: "json")!
+        return Bundle.main.url(forResource: "ios_blocklist_075", withExtension: "json")!
     }
     
     func loadTrackers() {

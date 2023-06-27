@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Gebruikersnaam";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Aanmeldgegevens worden alleen op dit apparaat veilig opgeslagen.";
+"autofill.logins.empty-view.subtitle" = "Aanmeldgegevens worden veilig opgeslagen op je apparaat.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Nog geen aanmeldgegevens opgeslagen";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Aanmeldgegevens voor %@ verwijderd";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Aanmeldgegevens zoeken";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Aanmeldgegevens verwijderd";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Aanmeldgegevens zoeken";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Aanbevolen";
@@ -350,7 +350,7 @@
 "autofill.password-generation-prompt.use-own-password.cta" = "Zelf wachtwoord aanmaken";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Aanmeldgegevens worden enkel op dit apparaat veilig opgeslagen en kunnen worden beheerd via het menu Aanmeldgegevens in Instellingen.";
+"autofill.save-login.new-user.message" = "Aanmeldgegevens worden veilig opgeslagen op je apparaat en kunnen worden beheerd via het menu Aanmeldgegevens in Instellingen.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Wil je dat DuckDuckGo je login opslaat?";

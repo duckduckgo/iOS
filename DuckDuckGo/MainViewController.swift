@@ -596,6 +596,7 @@ class MainViewController: UIViewController {
         addToView(controller: controller)
 
         refreshControls()
+        syncService.scheduler.requestSyncImmediately()
     }
 
     fileprivate func removeHomeScreen() {

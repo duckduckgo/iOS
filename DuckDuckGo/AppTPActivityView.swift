@@ -111,30 +111,28 @@ struct AppTPActivityView: View {
                 NavigationLink(destination: AppTPManageTrackersView(viewModel: AppTPManageTrackersViewModel(),
                                                                     feedbackModel: feedbackModel,
                                                                     imageCache: imageCache)) {
-                    HStack {
-                        Text(UserText.appTPManageTrackers)
-                            .font(Font(uiFont: Const.Font.info))
-                            .foregroundColor(Color.buttonColor)
-                            
-                        Spacer()
-                    }
-                    .padding(.horizontal)
-                    .frame(height: Const.Size.standardCellHeight)
+                    AppTPLinkButton(buttonText: UserText.appTPManageTrackers)
                 }
                 
                 Divider()
                     .padding(.leading)
                 
                 NavigationLink(destination: AppTPBreakageFormView(feedbackModel: feedbackModel)) {
-                    HStack {
-                        Text(UserText.appTPReportIssueButton)
-                            .font(Font(uiFont: Const.Font.info))
-                            .foregroundColor(Color.buttonColor)
-                        
-                        Spacer()
-                    }
-                    .padding(.horizontal)
-                    .frame(height: Const.Size.standardCellHeight)
+                    AppTPLinkButton(buttonText: UserText.appTPReportIssueButton)
+                }
+                
+                Divider()
+                    .padding(.leading)
+                
+                NavigationLink(destination: AppTPAboutView()) {
+                    AppTPLinkButton(buttonText: UserText.appTPAboutTitle)
+                }
+                
+                Divider()
+                    .padding(.leading)
+                
+                NavigationLink(destination: AppTPFAQView()) {
+                    AppTPLinkButton(buttonText: UserText.appTPFAQTitle)
                 }
             }
             .background(Color.cellBackground)

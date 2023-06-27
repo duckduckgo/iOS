@@ -38,14 +38,12 @@ struct OnboardingStepView: View {
                 .font(Font(uiFont: Const.Font.paragraphFont))
             
             if let auxButtonText = viewModel.auxButtonTitle {
-                Button(action: {
-                    
-                }, label: {
+                NavigationLink(destination: AppTPFAQView()) {
                     Text(auxButtonText)
                         .font(Font(uiFont: Const.Font.paragraphFont))
                         .fontWeight(.bold)
                         .foregroundColor(Color(designSystemColor: .accent))
-                })
+                }
             }
             
         }
@@ -79,7 +77,7 @@ private extension Color {
 struct OnboardingStepView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            OnboardingStepView(viewModel: OnboardingStepViewModel.onboardingData[0])
+            OnboardingStepView(viewModel: OnboardingStepViewModel.onboardingData[2])
         }
     }
 }

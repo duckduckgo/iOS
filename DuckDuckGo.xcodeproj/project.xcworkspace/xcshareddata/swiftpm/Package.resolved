@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "dominik/syncable-crash-fix",
-          "revision": "52a7633addd3cf267e2ef52a78a3779bc6674335",
-          "version": null
+          "branch": null,
+          "revision": "7279299b3964b400b96acfdf5800ead396927ee9",
+          "version": "62.0.2"
         }
       },
       {

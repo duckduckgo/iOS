@@ -60,7 +60,6 @@ private enum Const {
     enum Font {
         static let titleFont = UIFont.boldAppFont(ofSize: 28)
         static let paragraphFont = UIFont.appFont(ofSize: 16)
-        static let buttonFont = UIFont.boldAppFont(ofSize: 15)
     }
     
     enum Size {

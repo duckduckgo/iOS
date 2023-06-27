@@ -20,14 +20,12 @@
 import SwiftUI
 
 struct OnboardingButtonStyle: ButtonStyle {
-    
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
             .frame(maxWidth: .infinity, minHeight: Const.Size.buttonHeight, maxHeight: Const.Size.buttonHeight)
             .background(configuration.isPressed ? Color.blue70 : Color(designSystemColor: .accent))
             .cornerRadius(Const.Size.cornerRadius)
     }
-    
 }
 
 struct OnboardingContainerView: View {

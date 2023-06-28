@@ -106,38 +106,44 @@ struct AppTPActivityView: View {
     }
     
     var manageSection: some View {
-        Section {
-            VStack(alignment: .leading, spacing: 0) {
-                NavigationLink(destination: AppTPManageTrackersView(viewModel: AppTPManageTrackersViewModel(),
-                                                                    feedbackModel: feedbackModel,
-                                                                    imageCache: imageCache)) {
-                    AppTPLinkButton(buttonText: UserText.appTPManageTrackers)
+        Group {
+            Section {
+                VStack(alignment: .leading, spacing: 0) {
+                    NavigationLink(destination: AppTPManageTrackersView(viewModel: AppTPManageTrackersViewModel(),
+                                                                        feedbackModel: feedbackModel,
+                                                                        imageCache: imageCache)) {
+                        AppTPLinkButton(buttonText: UserText.appTPManageTrackers)
+                    }
+                    
+                    Divider()
+                        .padding(.leading)
+                    
+                    NavigationLink(destination: AppTPBreakageFormView(feedbackModel: feedbackModel)) {
+                        AppTPLinkButton(buttonText: UserText.appTPReportIssueButton)
+                    }
                 }
-                
-                Divider()
-                    .padding(.leading)
-                
-                NavigationLink(destination: AppTPBreakageFormView(feedbackModel: feedbackModel)) {
-                    AppTPLinkButton(buttonText: UserText.appTPReportIssueButton)
-                }
-                
-                Divider()
-                    .padding(.leading)
-                
-                NavigationLink(destination: AppTPAboutView()) {
-                    AppTPLinkButton(buttonText: UserText.appTPAboutTitle)
-                }
-                
-                Divider()
-                    .padding(.leading)
-                
-                NavigationLink(destination: AppTPFAQView()) {
-                    AppTPLinkButton(buttonText: UserText.appTPFAQTitle)
-                }
+                .background(Color.cellBackground)
+                .cornerRadius(Const.Size.cornerRadius)
+                .padding(.bottom)
             }
-            .background(Color.cellBackground)
-            .cornerRadius(Const.Size.cornerRadius)
-            .padding(.bottom)
+            
+            Section {
+                VStack(alignment: .leading, spacing: 0) {
+                    NavigationLink(destination: AppTPAboutView()) {
+                        AppTPLinkButton(buttonText: UserText.appTPAboutTitle)
+                    }
+                    
+                    Divider()
+                        .padding(.leading)
+                    
+                    NavigationLink(destination: AppTPFAQView()) {
+                        AppTPLinkButton(buttonText: UserText.appTPFAQTitle)
+                    }
+                }
+                .background(Color.cellBackground)
+                .cornerRadius(Const.Size.cornerRadius)
+                .padding(.bottom)
+            }
         }
     }
     

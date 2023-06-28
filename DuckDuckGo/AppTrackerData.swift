@@ -32,12 +32,10 @@ struct TrackerAppInfo: Codable {
 struct AppTracker: Codable {
     let defaultRule: String
     let owner: AppTrackerOwner
-    let app: TrackerAppInfo
     
     enum CodingKeys: String, CodingKey {
         case defaultRule = "default"
         case owner
-        case app
     }
 }
 

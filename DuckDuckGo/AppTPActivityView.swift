@@ -124,7 +124,7 @@ struct AppTPActivityView: View {
                 }
                 .background(Color.cellBackground)
                 .cornerRadius(Const.Size.cornerRadius)
-                .padding(.bottom)
+                .padding(.bottom, Const.Size.sectionBottomPadding)
             }
             
             Section {
@@ -154,7 +154,7 @@ struct AppTPActivityView: View {
                     AppTPToggleView(viewModel: toggleViewModel)
                         .background(Color.cellBackground)
                         .cornerRadius(Const.Size.cornerRadius)
-                        .padding(.bottom)
+                        .padding(.bottom, Const.Size.sectionBottomPadding)
                 }
                 
                 if viewModel.appTPUsed || viewModel.sections.count > 0 {
@@ -210,6 +210,7 @@ private enum Const {
         static let sectionIndentation: CGFloat = 16
         static let sectionHeaderBottom: CGFloat = -2
         static let standardCellHeight: CGFloat = 44
+        static let sectionBottomPadding: CGFloat = 32
     }
 }
 

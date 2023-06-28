@@ -835,19 +835,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0202566A298818B200E694E7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 02025661298818B100E694E7;
-			remoteInfo = PacketTunnelProvider;
-		};
 		025CCFE72582601C001CD5BB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 84E341911E2F7EFB00BDBA6F;
 			remoteInfo = DuckDuckGo;
+		};
+		02FFD7BB2A1FC8BE007BD7D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 02025661298818B100E694E7;
+			remoteInfo = PacketTunnelProvider;
 		};
 		4B470EE6299C6DFB0086EBDC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -5029,7 +5029,7 @@
 				8390447520BDCE10006461CD /* PBXTargetDependency */,
 				85482D932462DCD100EDEDD1 /* PBXTargetDependency */,
 				8512EA5C24ED30D30073EE19 /* PBXTargetDependency */,
-				0202566B298818B200E694E7 /* PBXTargetDependency */,
+				02FFD7BC2A1FC8BE007BD7D1 /* PBXTargetDependency */,
 			);
 			name = DuckDuckGo;
 			packageProductDependencies = (
@@ -6416,15 +6416,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0202566B298818B200E694E7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 02025661298818B100E694E7 /* PacketTunnelProvider */;
-			targetProxy = 0202566A298818B200E694E7 /* PBXContainerItemProxy */;
-		};
 		025CCFE82582601C001CD5BB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 84E341911E2F7EFB00BDBA6F /* DuckDuckGo */;
 			targetProxy = 025CCFE72582601C001CD5BB /* PBXContainerItemProxy */;
+		};
+		02FFD7BC2A1FC8BE007BD7D1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 02025661298818B100E694E7 /* PacketTunnelProvider */;
+			targetProxy = 02FFD7BB2A1FC8BE007BD7D1 /* PBXContainerItemProxy */;
 		};
 		4B470EE7299C6DFB0086EBDC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -8220,8 +8220,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = revision;
-				revision = 3b65919608430eb9c21762c1faa0b0da9e0e582b;
+				kind = exactVersion;
+				version = 62.0.4;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

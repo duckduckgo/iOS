@@ -70,12 +70,13 @@ struct AppTPTrackerDetailView: View {
             }
         }
         .alert(isPresented: $showReportAlert) {
-            Alert(title: Text(UserText.appTPReportAlertTitle),
-                  message: Text(UserText.appTPReportAlertMessage),
-                  primaryButton: .default(Text(UserText.appTPReportAlertConfirm)) {
-                      isBreakageLinkActive = true
-                  },
-                  secondaryButton: .cancel(Text(UserText.appTPReportAlertCancel))
+            Alert(
+                title: Text(UserText.appTPReportAlertTitle),
+                message: Text(UserText.appTPReportAlertMessage),
+                primaryButton: .cancel(Text(UserText.appTPReportAlertConfirm)) {
+                    isBreakageLinkActive = true
+                },
+                secondaryButton: .default(Text(UserText.appTPReportAlertCancel))
             )
         }
     }

@@ -518,7 +518,7 @@ public struct UserText {
     public static let appTPOnboardingContinueButton = NSLocalizedString("appTP.onboarding.continueButton", value: "Continue", comment: "Button title for AppTP onboarding")
     public static let appTPOnboardingEnableButton = NSLocalizedString("appTP.onboarding.enableeButton", value: "Enable App Tracking Protection", comment: "Button title for AppTP onboarding to enable AppTP")
     
-    public static let appTPAboutTitle = NSLocalizedString("appTP.about.title", value: "What are app trackers?", comment: "Title for AppTP about page")
+    public static let appTPAboutTitle = NSLocalizedString("appTP.about.title", value: "What Are App Trackers?", comment: "Title for AppTP about page")
     public static let appTPAboutContent1 = NSLocalizedString("appTP.about.content1", value: "You’ve probably heard about companies like Google and Facebook tracking you behind the scenes on third-party websites. But did you know they also track your personal information through apps on your device?\n\nIn 2022, DuckDuckGo found that ", comment: "First part of about page content (note the trailing space)")
     public static let appTPAboutContent2 = NSLocalizedString("appTP.about.content2", value: "over 85% of free iOS apps tested contained hidden trackers from other companies.", comment: "Second part of about page content (note the trailing space)")
     public static let appTPAboutContent3 = NSLocalizedString("appTP.about.content3", value: " Of the 395 apps tested, 60% sent data to Google. This happens even while you’re not using your device.\n\nTrackers in apps may have access to a lot more information than their website tracker cousins, such as your location down to which floor of a building you're on, how often you play games while at work, and when and how long you sleep each day. Even if you haven’t given apps explicit permission to collect data, they can still take it without your knowledge.\n\nTracking networks like Facebook and Google use these little pieces of information to build a digital profile about you. With it, tracking networks can manipulate what you see online and allow advertisers to bid on access to you based on your data.\n\nTrackers in apps is a BIG problem for privacy. But DuckDuckGo has a solution that can help.\n\nWhen enabled in the DuckDuckGo Privacy Browser app, App Tracking Protection blocks many trackers in other apps, not just the trackers we find on websites when you browse. These dual layers of protection reduce what companies know about you overall, so you can use your apps with more peace of mind, knowing you’re more protected.", comment: "Third part of about page content (note the leading space)")
@@ -566,26 +566,26 @@ public struct UserText {
     
     public static let appTPJustNow = NSLocalizedString("appTP.justNow", value: "just now", comment: "Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now'")
     public static let appTPRestoreDefaults = NSLocalizedString("appTP.restoreDefualts", value: "Restore Defaults", comment: "Button to restore the blocklist to its default state.")
-    public static let appTPRestoreDefaultsToast = NSLocalizedString("appTP.restoreDefaultsToast", value: "Protection restored to default settings", comment: "Toast notification diplayed aftering restoing the blocklist to default")
+    public static let appTPRestoreDefaultsToast = NSLocalizedString("appTP.restoreDefaultsToast", value: "Default settings restored", comment: "Toast notification diplayed after restoring the blocklist to default settings")
     public static let appTPManageTrackers = NSLocalizedString("appTP.manageTrackers", value: "Manage Trackers", comment: "View to manage trackers for AppTP. Allows the user to turn trackers on or off.")
-    public static let appTPBlockTracker = NSLocalizedString("appTP.blockTrackerText", value: "Block this tracker", comment: "Text label for switch that turns blocking on or off for a tracker")
+    public static let appTPBlockTracker = NSLocalizedString("appTP.blockTrackerText", value: "Block this Tracker", comment: "Text label for switch that turns blocking on or off for a tracker")
     
-    public static let appTPReportIssueButton = NSLocalizedString("appTP.activityView.reportIssue", value: "Report an issue with an app", comment: "Title for 'Report an Issue' button in the activity view.")
-    public static let appTPReportAlertTitle = NSLocalizedString("appTP.reportAlert.title", value: "Report an Issue?", comment: "Title for 'Report an Issue' alert.")
-    public static let appTPReportAlertMessage = NSLocalizedString("appTP.reportAlert.message", value: "Please let us know if you don’t want us to block this tracker because you experienced app issues.", comment: "Message for 'Report an Issue' alert.")
+    public static let appTPReportIssueButton = NSLocalizedString("appTP.activityView.reportIssue", value: "Report Issue", comment: "Title for 'Report an Issue' button in the activity view.")
+    public static let appTPReportAlertTitle = NSLocalizedString("appTP.reportAlert.title", value: "Report Issue?", comment: "Title for 'Report an Issue' alert.")
+    public static let appTPReportAlertMessage = NSLocalizedString("appTP.reportAlert.message", value: "Let us know if you disabled App Tracking Protection for this specific tracker because it caused app issues. Your feedback helps us improve!", comment: "Message for 'Report an Issue' alert.")
     public static let appTPReportAlertConfirm = NSLocalizedString("appTP.reportAlert.confirm", value: "Report Issue", comment: "Confirm button for 'Report an Issue' alert.")
     public static let appTPReportAlertCancel = NSLocalizedString("appTP.reportAlert.cancel", value: "Not Now", comment: "Cancel button for 'Report an Issue' alert.")
     
-    public static let appTPReportTitle = NSLocalizedString("appTP.report.title", value: "Breakage Report", comment: "Breakage report form title")
-    public static let appTPReportCommentPlaceholder = NSLocalizedString("appTP.report.commentPlaceholder", value: "Add any more details", comment: "Breakage report comment placeholder")
-    public static let appTPReportCommentLabel = NSLocalizedString("appTP.report.commentLabel", value: "Comment", comment: "Breakage report comment label")
+    public static let appTPReportTitle = NSLocalizedString("appTP.report.title", value: "Report Issue", comment: "Breakage report form title")
+    public static let appTPReportCommentPlaceholder = NSLocalizedString("appTP.report.commentPlaceholder", value: "Add additional details", comment: "Breakage report comment placeholder")
+    public static let appTPReportCommentLabel = NSLocalizedString("appTP.report.commentLabel", value: "Comments", comment: "Breakage report comment label")
     public static let appTPReportToast = NSLocalizedString("appTP.report.toast", value: "Thank you! Feedback submitted.", comment: "Breakage report succcess message")
-    public static let appTPReportAppLabel = NSLocalizedString("appTP.report.appLabel", value: "Which app is broken?", comment: "Breakage report app name label")
-    public static let appTPReportAppPlaceholder = NSLocalizedString("appTP.report.appPlaceholder", value: "App Name", comment: "Breakage report app name placeholder")
+    public static let appTPReportAppLabel = NSLocalizedString("appTP.report.appLabel", value: "Which app is having issues?", comment: "Breakage report app name label")
+    public static let appTPReportAppPlaceholder = NSLocalizedString("appTP.report.appPlaceholder", value: "App name", comment: "Breakage report app name placeholder")
     public static let appTPReportCategoryLabel = NSLocalizedString("appTP.report.categoryLabel", value: "What’s happening?", comment: "Breakage report category label")
     public static let appTPReportFooter = NSLocalizedString("appTP.report.footer", value: """
 In addition to the details entered into this form, your app issue report will contain:
-• A list of trackers blocked in the last 10 minutes
+• A list of trackers blocked in the last 10 min
 • Whether App Tracking Protection is enabled
 • Aggregate DuckDuckGo app diagnostics
 """, comment: "Breakage report footer explaining what is collected in the breakage report")
@@ -598,8 +598,8 @@ In addition to the details entered into this form, your app issue report will co
         return message.format(arguments: countString)
     }
     
-    public static let appTPHomeDisabledPrefix = NSLocalizedString("appTP.home.disabledPrefix", value: "App tracking protection disabled. ", comment: "Prefix of string 'App Tracking Protection disabled. Tap to re-enable.' (note the trailing space)")
-    public static let appTPHomeDisabledSuffix = NSLocalizedString("appTP.home.disabledSuffix", value: "Tap to re-enable.", comment: "Suffix of string 'App Tracking Protection disabled. Tap to re-enable.'")
+    public static let appTPHomeDisabledPrefix = NSLocalizedString("appTP.home.disabledPrefix", value: "App Tracking Protection disabled. ", comment: "Prefix of string 'App Tracking Protection disabled. Tap to re-enable.' (note the trailing space)")
+    public static let appTPHomeDisabledSuffix = NSLocalizedString("appTP.home.disabledSuffix", value: "Tap to continue blocking tracking attempts across your apps.", comment: "Suffix of string 'App Tracking Protection disabled. Tap to re-enable.'")
     
     // MARK: Notifications
     

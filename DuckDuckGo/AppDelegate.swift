@@ -158,7 +158,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             WidgetCenter.shared.reloadAllTimelines()
         }
 
-        UserDefaults().set(false, forKey: UserDefaultsWrapper<Any>.Key.appTPUsed.rawValue)
         appTrackingProtectionDatabase.loadStore { context, error in
             guard context != nil else {
                 if let error = error {

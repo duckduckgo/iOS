@@ -21,7 +21,6 @@ import Foundation
 
 #if APP_TRACKING_PROTECTION
 
-// swiftlint:disable line_length
 struct AppTPFAQViewModel {
     let question: String
     let answer: String

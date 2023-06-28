@@ -19,6 +19,8 @@
 
 import SwiftUI
 
+#if APP_TRACKING_PROTECTION
+
 struct OnboardingStepView: View {
     
     let viewModel: OnboardingStepViewModel
@@ -81,3 +83,5 @@ struct OnboardingStepView_Previews: PreviewProvider {
         }
     }
 }
+
+#endif

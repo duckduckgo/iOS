@@ -19,6 +19,8 @@
 
 import SwiftUI
 
+#if APP_TRACKING_PROTECTION
+
 struct OnboardingButtonStyle: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
@@ -107,3 +109,5 @@ struct OnboardingContainerView_Previews: PreviewProvider {
         }
     }
 }
+
+#endif

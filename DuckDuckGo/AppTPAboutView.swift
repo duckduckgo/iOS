@@ -19,6 +19,8 @@
 
 import SwiftUI
 
+#if APP_TRACKING_PROTECTION
+
 struct AppTPAboutView: View {
     var aboutBody: some View {
         ScrollView {
@@ -72,3 +74,5 @@ struct AppTPAboutView_Previews: PreviewProvider {
         AppTPAboutView()
     }
 }
+
+#endif

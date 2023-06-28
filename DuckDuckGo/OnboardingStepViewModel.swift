@@ -19,6 +19,8 @@
 
 import SwiftUI
 
+#if APP_TRACKING_PROTECTION
+
 struct OnboardingStepViewModel {
     let title: String
     let paragraph1: Text
@@ -85,3 +87,5 @@ extension OnboardingStepViewModel: Equatable {
         lhs.title == rhs.title
     }
 }
+
+#endif

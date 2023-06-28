@@ -843,13 +843,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0202566A298818B200E694E7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 02025661298818B100E694E7;
-			remoteInfo = PacketTunnelProvider;
-		};
 		025CCFE72582601C001CD5BB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
@@ -6462,11 +6455,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0202566B298818B200E694E7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 02025661298818B100E694E7 /* PacketTunnelProvider */;
-			targetProxy = 0202566A298818B200E694E7 /* PBXContainerItemProxy */;
-		};
 		025CCFE82582601C001CD5BB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 84E341911E2F7EFB00BDBA6F /* DuckDuckGo */;
@@ -8272,7 +8260,7 @@
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = exactVersion;
-				version = 61.0.1;
+				version = 62.0.4;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

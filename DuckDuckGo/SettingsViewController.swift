@@ -18,7 +18,6 @@
 //
 
 import UIKit
-import MessageUI
 import Core
 import BrowserServicesKit
 import Persistence
@@ -590,18 +589,6 @@ extension SettingsViewController: Themable {
                           options: .transitionCrossDissolve, animations: {
                             self.tableView.reloadData()
         }, completion: nil)
-    }
-}
-
-extension SettingsViewController: MFMailComposeViewControllerDelegate {
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        dismiss(animated: true, completion: nil)
-    }
-}
-
-extension MFMailComposeViewController {
-    static func create() -> MFMailComposeViewController? {
-        return MFMailComposeViewController()
     }
 }
 

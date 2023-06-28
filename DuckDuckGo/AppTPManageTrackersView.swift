@@ -111,11 +111,11 @@ struct AppTPManageTrackersView: View {
         .alert(isPresented: $showReportAlert) {
             Alert(title: Text(UserText.appTPReportAlertTitle),
                   message: Text(UserText.appTPReportAlertMessage),
-                  primaryButton: .default(Text(UserText.appTPReportAlertConfirm)) {
+                  primaryButton: .cancel(Text(UserText.appTPReportAlertConfirm)) {
                       isBreakageLinkActive = true
                       viewModel.trackerDisabled = false
                   },
-                  secondaryButton: .cancel(Text(UserText.appTPReportAlertCancel)) {
+                  secondaryButton: .default(Text(UserText.appTPReportAlertCancel)) {
                       viewModel.trackerDisabled = false
                   }
             )

@@ -324,8 +324,12 @@ class SettingsViewController: UITableViewController {
         Task { @MainActor in
             let fwm = FirewallManager()
             await fwm.refreshManager()
-            if UserDefaults().bool(forKey: UserDefaultsWrapper<Any>.Key.appTPUsed.rawValue) && fwm.status() != .connected {
-                appTPCell.detailTextLabel?.text = UserText.appTPCellDisabled
+            if UserDefaults().bool(forKey: UserDefaultsWrapper<Any>.Key.appTPUsed.rawValue) {
+                if fwm.status() != .connected {
+                    appTPCell.detailTextLabel?.text = UserText.appTPCellDisabled
+                } else {
+                    appTPCell.detailTextLabel?.text = UserText.appTPCellEnabled
+                }
             } else {
                 appTPCell.detailTextLabel?.text = UserText.appTPCellDetail
             }

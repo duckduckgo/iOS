@@ -24,11 +24,16 @@ import Core
 #if APP_TRACKING_PROTECTION
 
 class AppTPActivityHostingViewController: UIHostingController<AppTPActivityView> {
-    init(appTrackingProtectionDatabase: CoreDataDatabase) {
+    init(appTrackingProtectionDatabase: CoreDataDatabase, setNavColor: ((Bool) -> Void)? = nil) {
         let feedbackModel = AppTrackingProtectionFeedbackModel(appTrackingProtectionDatabase: appTrackingProtectionDatabase)
         let viewModel = AppTrackingProtectionListViewModel(appTrackingProtectionDatabase: appTrackingProtectionDatabase)
         
-        let root = AppTPActivityView(viewModel: viewModel, feedbackModel: feedbackModel)
+        if !viewModel.appTPUsed {
+            // We are onboarding. Set the navigation bar color to match the view
+            setNavColor?(true)
+        }
+        
+        let root = AppTPActivityView(viewModel: viewModel, feedbackModel: feedbackModel, setNavColor: setNavColor)
         
         super.init(rootView: root)
     }

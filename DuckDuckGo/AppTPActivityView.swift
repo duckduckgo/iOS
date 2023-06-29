@@ -29,6 +29,8 @@ struct AppTPActivityView: View {
 
     let imageCache = AppTrackerImageCache()
     
+    let setNavColor: ((Bool) -> Void)?
+    
     func imageForState() -> Image {
         return toggleViewModel.isOn ? Image("AppTPEmptyEnabled") : Image("AppTPEmptyDisabled")
     }
@@ -38,6 +40,7 @@ struct AppTPActivityView: View {
     }
     
     func enableAppTPFromOnboarding() {
+        setNavColor?(false)
         viewModel.appTPUsed = true
         toggleViewModel.connectFirewall = true
         Task { @MainActor in

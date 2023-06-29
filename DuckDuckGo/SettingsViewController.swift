@@ -384,14 +384,12 @@ class SettingsViewController: UITableViewController {
     func setNavigationColor(isOnboarding: Bool) {
         let coloredAppearance = UINavigationBarAppearance()
         coloredAppearance.configureWithTransparentBackground()
-//        coloredAppearance.titleTextAttributes = [.foregroundColor: UIColor(designSystemColor: .textPrimary)]
-//        coloredAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor(designSystemColor: .textPrimary)]
         coloredAppearance.backgroundColor = UIColor(designSystemColor: isOnboarding ? .surface : .background)
         
-        let navBar = self.navigationController!.navigationBar
-        navBar.standardAppearance = coloredAppearance
-        navBar.compactAppearance = coloredAppearance
-        navBar.scrollEdgeAppearance = coloredAppearance
+        let navBar = self.navigationController?.navigationBar
+        navBar?.standardAppearance = coloredAppearance
+        navBar?.compactAppearance = coloredAppearance
+        navBar?.scrollEdgeAppearance = coloredAppearance
     }
     
     private func showAppTP() {

@@ -35,6 +35,8 @@ struct OnboardingContainerView: View {
     let viewModels: [OnboardingStepViewModel]
     let enableAppTP: () -> Void
     
+    @Binding var isLoading: Bool
+    
     @State var currentModel: Int = 0
     
     func nextModel() {
@@ -44,17 +46,22 @@ struct OnboardingContainerView: View {
     }
     
     func finishOnboarding() {
+        isLoading = true
         enableAppTP()
     }
     
-    func learnMoreTapped() {
-        
+    private var isPad: Bool {
+        return UIDevice.current.userInterfaceIdiom == .pad
     }
     
     var body: some View {
         VStack {
             let currentViewModel = viewModels[currentModel]
             OnboardingStepView(viewModel: currentViewModel)
+                .padding(
+                    .horizontal,
+                    isPad ? Const.Size.horizontalStackPaddingPad : Const.Size.horizontalStackPadding
+                )
             
             Spacer()
             
@@ -65,14 +72,28 @@ struct OnboardingContainerView: View {
                     finishOnboarding()
                 }
             }, label: {
-                Text(currentViewModel.primaryButtonTitle)
-                    .font(Font(uiFont: Const.Font.buttonFont))
-                    .foregroundColor(Color.buttonLabelColor)
+                if isLoading {
+                    if #available(iOS 16, *) {
+                        SwiftUI.ProgressView()
+                            .tint(Color.buttonLabelColor)
+                    } else {
+                        SwiftUI.ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: Color.buttonLabelColor))
+                    }
+                } else {
+                    Text(currentViewModel.primaryButtonTitle)
+                        .font(Font(uiFont: Const.Font.buttonFont))
+                        .foregroundColor(Color.buttonLabelColor)
+                }
             })
             .buttonStyle(OnboardingButtonStyle())
             .padding(.bottom, Const.Size.buttonPadding)
+            .padding(
+                .horizontal,
+                isPad ? Const.Size.buttonHPaddingPad : Const.Size.buttonHPadding
+            )
         }
-        .padding()
+        .padding(.vertical)
         .background(Color(designSystemColor: .surface))
         .ignoresSafeArea()
     }
@@ -86,7 +107,11 @@ private enum Const {
     }
     
     enum Size {
+        static let horizontalStackPadding: CGFloat = 32
+        static let horizontalStackPaddingPad: CGFloat = 140
         static let buttonPadding: CGFloat = 24
+        static let buttonHPadding: CGFloat = 24
+        static let buttonHPaddingPad: CGFloat = 92
         static let cornerRadius: CGFloat = 8
         static let buttonHeight: CGFloat = 50
     }
@@ -104,9 +129,21 @@ struct OnboardingContainerView_Previews: PreviewProvider {
         NavigationView {
             OnboardingContainerView(
                 viewModels: OnboardingStepViewModel.onboardingData,
-                enableAppTP: {}
+                enableAppTP: {},
+                isLoading: .constant(false)
             )
         }
+        .previewDevice("iPhone 14 Pro Max")
+        
+        Color.clear
+            .sheet(isPresented: .constant(true)) {
+                OnboardingContainerView(
+                    viewModels: OnboardingStepViewModel.onboardingData,
+                    enableAppTP: {},
+                    isLoading: .constant(false)
+                )
+            }
+            .previewDevice("iPad Pro (11 inch)")
     }
 }
 

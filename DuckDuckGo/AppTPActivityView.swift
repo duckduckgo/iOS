@@ -26,6 +26,8 @@ struct AppTPActivityView: View {
     @ObservedObject var viewModel: AppTrackingProtectionListViewModel
     @ObservedObject var feedbackModel: AppTrackingProtectionFeedbackModel
     @ObservedObject var toggleViewModel = AppTPToggleViewModel()
+    
+    @State var isConnectingForOnboarding = false
 
     let imageCache = AppTrackerImageCache()
     
@@ -40,8 +42,8 @@ struct AppTPActivityView: View {
     }
     
     func enableAppTPFromOnboarding() {
-        setNavColor?(false)
-        viewModel.appTPUsed = true
+        isConnectingForOnboarding = true
+        toggleViewModel.firewallStatus = .disconnected
         toggleViewModel.connectFirewall = true
         Task { @MainActor in
             await toggleViewModel.changeFirewallStatus()
@@ -171,11 +173,6 @@ struct AppTPActivityView: View {
                 }
             }
             .padding()
-            .onChange(of: toggleViewModel.firewallStatus) { value in
-                if value == .connected {
-                    viewModel.appTPUsed = true
-                }
-            }
         }
         .background(Color.viewBackground)
         .navigationTitle(UserText.appTPNavTitle)
@@ -197,7 +194,19 @@ struct AppTPActivityView: View {
         if viewModel.appTPUsed {
             scrollWithBackgroud
         } else {
-            OnboardingContainerView(viewModels: OnboardingStepViewModel.onboardingData, enableAppTP: enableAppTPFromOnboarding)
+            OnboardingContainerView(
+                viewModels: OnboardingStepViewModel.onboardingData,
+                enableAppTP: enableAppTPFromOnboarding,
+                isLoading: $isConnectingForOnboarding
+            )
+                .onChange(of: toggleViewModel.firewallStatus) { value in
+                    if value == .connected {
+                        setNavColor?(false)
+                        viewModel.appTPUsed = true
+                    } else if value == .invalid {
+                        isConnectingForOnboarding = false
+                    }
+                }
         }
     }
 }

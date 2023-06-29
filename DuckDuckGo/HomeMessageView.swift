@@ -136,10 +136,9 @@ struct HomeMessageView: View {
             let foreground: Color = model.actionStyle == .cancel ? .cancelButtonForeground : .primaryButtonText
             let background: Color = model.actionStyle == .cancel ? .cancelButtonBackground : .button
             Button {
+                model.action()
                 if case .share(let url, let title) = model.actionStyle {
                     activityItem = TitledURLActivityItem(url, title)
-                } else {
-                    model.action()
                 }
             } label: {
                 HStack {
@@ -207,7 +206,7 @@ private enum Const {
     }
     
     enum Padding {
-        static let buttonHorizontal: CGFloat = 24
+        static let buttonHorizontal: CGFloat = 16
         static let buttonVertical: CGFloat = 9
         static let buttonVerticalInset: CGFloat = 8
         static let textHorizontalInset: CGFloat = 30

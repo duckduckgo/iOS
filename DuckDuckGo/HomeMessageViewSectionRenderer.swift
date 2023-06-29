@@ -121,16 +121,10 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
 
                 switch action {
                 case .primaryAction:
-                    if !remoteAction.isSharing {
-                        self.dismissHomeMessage(message, at: indexPath, in: collectionView)
-                    }
                     Pixel.fire(pixel: .remoteMessageShownPrimaryActionClicked,
                                withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
 
                 case .secondaryAction:
-                    if !remoteAction.isSharing {
-                        self.dismissHomeMessage(message, at: indexPath, in: collectionView)
-                    }
                     Pixel.fire(pixel: .remoteMessageShownSecondaryActionClicked,
                                withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
 

@@ -61,14 +61,6 @@ struct HomeMessageView: View {
                 }
                 .padding(.top, 8)
                 .padding(.horizontal, 32)
-
-                if viewModel.messageId == MacPromoExperiment.promoId {
-                    Text("Or visit **duckduckgo.com/browser** on your computer.")
-                        .daxSubheadRegular()
-                        .foregroundColor(Color(designSystemColor: .textSecondary))
-                        .padding(.vertical, 4)
-                }
-
             }
             .multilineTextAlignment(.center)
             .padding(.vertical)
@@ -163,7 +155,6 @@ struct HomeMessageView: View {
             .padding([.bottom], Const.Padding.buttonVerticalInset)
             .sheet(item: $activityItem) { activityItem in
                 ActivityViewController(activityItems: [activityItem]) { activityType, result, _, error in
-                    MacPromoExperiment().shareSheetFinished(viewModel.messageId, activityType: activityType, result: result, error: error)
                     model.action()
                 }
                 .modifier(ActivityViewPresentationModifier())
@@ -247,20 +238,4 @@ struct HomeMessageView_Previews: PreviewProvider {
         return HomeMessageView(viewModel: viewModel)
             .padding(.horizontal)
     }
-}
-
-struct ActivityViewController: UIViewControllerRepresentable {
-
-    var activityItems: [Any]
-    var applicationActivities: [UIActivity]?
-    var completionWithItemsHandler: UIActivityViewController.CompletionWithItemsHandler?
-
-    func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
-        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
-        controller.completionWithItemsHandler = completionWithItemsHandler
-        return controller
-    }
-
-    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityViewController>) {}
-
 }

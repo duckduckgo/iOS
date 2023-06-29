@@ -76,11 +76,7 @@ final class HomePageConfiguration {
     }
 
     private func remoteMessageToShow() -> HomeMessage? {
-        let experiement = MacPromoExperiment(remoteMessagingStore: remoteMessagingStore)
-        guard MacPromoExperiment(remoteMessagingStore: remoteMessagingStore).shouldShowMessage() else { return nil }
-
-        // Use the experiment's message property to make it easer to test
-        guard let remoteMessageToPresent = experiement.message else { return nil }
+        guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return nil }
         os_log("Remote message to show: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
         return .remoteMessage(remoteMessage: remoteMessageToPresent)
     }

@@ -54,7 +54,6 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
 
     func didAppear() {
         let remoteMessagingStore = AppDependencyProvider.shared.remoteMessagingStore
-        guard MacPromoExperiment(remoteMessagingStore: remoteMessagingStore).shouldShowMessage() else { return }
         guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return }
 
         os_log("Remote message to show: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)

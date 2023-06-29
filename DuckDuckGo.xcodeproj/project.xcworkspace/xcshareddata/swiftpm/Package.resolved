@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "shane/duckplayer/shorts",
-          "revision": "c3ce297a675da8b5d37536af34de28d44aa31a18",
-          "version": null
+          "branch": null,
+          "revision": "8794f9b1c0ff58fb8cc25ad6661bc62ae51924b8",
+          "version": "62.0.7"
         }
       },
       {

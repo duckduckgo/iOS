@@ -31,7 +31,9 @@ struct HomeMessageViewModelBuilder {
         static let macComputer = "RemoteMessageMacComputer"
     }
 
-    static func build(for remoteMessage: RemoteMessageModel, onDidClose: @escaping (HomeMessageViewModel.ButtonAction?, RemoteAction) -> Void) -> HomeMessageViewModel? {
+    static func build(for remoteMessage: RemoteMessageModel,
+                      onDidClose: @escaping (HomeMessageViewModel.ButtonAction?, RemoteAction) -> Void,
+                      onDidAppear: @escaping () -> Void) -> HomeMessageViewModel? {
             guard let content = remoteMessage.content else { return nil }
 
             switch content {
@@ -39,12 +41,12 @@ struct HomeMessageViewModelBuilder {
                 return HomeMessageViewModel(messageId: remoteMessage.id,
                                             image: nil, topText: nil, title: titleText, subtitle: descriptionText,
                                             buttons: [],
-                                            onDidClose: onDidClose)
+                                            onDidClose: onDidClose, onDidAppear: onDidAppear)
             case .medium(let titleText, let descriptionText, let placeholder):
                 return HomeMessageViewModel(messageId: remoteMessage.id,
                                             image: placeholder.rawValue, topText: nil, title: titleText, subtitle: descriptionText,
                                             buttons: [],
-                                            onDidClose: onDidClose)
+                                            onDidClose: onDidClose, onDidAppear: onDidAppear)
             case .bigSingleAction(let titleText, let descriptionText, let placeholder, let primaryActionText, let primaryAction):
                 return HomeMessageViewModel(messageId: remoteMessage.id,
                                             image: placeholder.rawValue, topText: nil, title: titleText, subtitle: descriptionText,
@@ -54,7 +56,7 @@ struct HomeMessageViewModelBuilder {
                                                                            action: mapActionToViewModel(remoteAction: primaryAction,
                                                                                                         buttonAction: .primaryAction,
                                                                                                         onDidClose: onDidClose))],
-                                            onDidClose: onDidClose)
+                                            onDidClose: onDidClose, onDidAppear: onDidAppear)
             case .bigTwoAction(let titleText, let descriptionText, let placeholder, let primaryActionText,
                                let primaryAction, let secondaryActionText, let secondaryAction):
                 return HomeMessageViewModel(messageId: remoteMessage.id,
@@ -70,7 +72,7 @@ struct HomeMessageViewModelBuilder {
                                                                            action: mapActionToViewModel(remoteAction: primaryAction,
                                                                                                         buttonAction: .primaryAction,
                                                                                                         onDidClose: onDidClose))],
-                                            onDidClose: onDidClose)
+                                            onDidClose: onDidClose, onDidAppear: onDidAppear)
             }
     }
 

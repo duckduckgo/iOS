@@ -35,6 +35,7 @@ struct HomeMessageViewModel: Equatable {
     let buttons: [HomeMessageButtonViewModel]
     
     let onDidClose: (ButtonAction?, RemoteAction) -> Void
+    let onDidAppear: () -> Void
 
     var hasSharing: Bool {
         for button in buttons {

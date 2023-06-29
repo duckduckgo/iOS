@@ -76,9 +76,19 @@ final class HomePageConfiguration {
     }
 
     private func remoteMessageToShow() -> HomeMessage? {
-        guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return nil }
-        os_log("Remote message to show: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
-        return .remoteMessage(remoteMessage: remoteMessageToPresent)
+//        guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return nil }
+//        os_log("Remote message to show: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
+//        return .remoteMessage(remoteMessage: remoteMessageToPresent)
+
+        return .remoteMessage(remoteMessage: .init(id: "test", content:
+                .bigTwoAction(titleText: "title",
+                              descriptionText: "description",
+                              placeholder: .macComputer,
+                              primaryActionText: "primary",
+                              primaryAction: .share(url: "https://examplecom", title: "Example"),
+                              secondaryActionText: "2nd",
+                              secondaryAction: .url(value: "2nd palce")),
+                                                   matchingRules: [], exclusionRules: []))
     }
 
     func dismissHomeMessage(_ homeMessage: HomeMessage) {
@@ -93,5 +103,26 @@ final class HomePageConfiguration {
         default:
             break
         }
+    }
+
+    func didAppear(_ homeMessage: HomeMessage) {
+
+        switch homeMessage {
+        case .remoteMessage(let remoteMessage):
+            os_log("Remote message shown: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
+            Pixel.fire(pixel: .remoteMessageShown,
+                       withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
+
+            if !remoteMessagingStore.hasShownRemoteMessage(withId: remoteMessage.id) {
+                os_log("Remote message shown for first time: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
+                Pixel.fire(pixel: .remoteMessageShownUnique,
+                           withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
+                remoteMessagingStore.updateRemoteMessage(withId: remoteMessage.id, asShown: true)
+            }
+
+        default:
+            break
+        }
+
     }
 }

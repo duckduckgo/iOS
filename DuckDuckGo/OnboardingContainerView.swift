@@ -46,7 +46,6 @@ struct OnboardingContainerView: View {
     }
     
     func finishOnboarding() {
-        isLoading = true
         enableAppTP()
     }
     

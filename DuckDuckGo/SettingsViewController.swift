@@ -507,7 +507,7 @@ class SettingsViewController: UITableViewController {
         let rows = super.tableView(tableView, numberOfRowsInSection: section)
         if section == appearanceSectionIndex && textSizeCell.isHidden {
             return rows - 1
-        } else if section == moreFromDDGSectionIndex && appTPCell.isHidden {
+        } else if section == moreFromDDGSectionIndex && !shouldShowAppTPCell {
             return rows - 1
         } else {
             return rows

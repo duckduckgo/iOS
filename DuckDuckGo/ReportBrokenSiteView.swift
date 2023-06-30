@@ -58,7 +58,10 @@ struct ReportBrokenSiteView: View {
                 HStack {
                     Picker("", selection: $selectedCategory) {
                         ForEach(categories) { cat in
-                            Text(cat.categoryText)
+                            HStack {
+                                Text(cat.categoryText)
+                                Spacer()
+                            }
                         }
                     }
                     .labelsHidden()

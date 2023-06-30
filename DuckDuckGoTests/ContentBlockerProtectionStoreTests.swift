@@ -20,45 +20,49 @@
 import XCTest
 import BrowserServicesKit
 @testable import Core
-@testable import DuckDuckGo
 
 class ContentBlockerProtectionStoreTests: XCTestCase {
 
-    func testWhenCheckingDomainsAreProtected_ThenUsesPersistedUnprotectedDomainList() throws {
-        let configFile =
+    func testWhenCheckingDomainsAreProtected_ThenUsesPersistedUnprotectedDomainList() {
+        let configFile = makeConfigurationFile(domains: ["domain1.com", "domain2.com"])
+        let privacyConfigurationManager = makePrivateConfigurationManager()
+
+        privacyConfigurationManager.reload(etag: "new etag", data: configFile)
+        let newConfig = privacyConfigurationManager.fetchedConfigData!
+        let privacyConfig = privacyConfiguration(newConfig.data)
+
+        XCTAssertEqual(newConfig.etag, "new etag")
+        XCTAssertTrue(privacyConfig.isTempUnprotected(domain: "www.domain1.com"))
+        XCTAssertTrue(privacyConfig.isTempUnprotected(domain: "www.domain2.com"))
+        XCTAssertFalse(privacyConfig.isTempUnprotected(domain: "www.domain3.com"))
+        XCTAssertTrue(privacyConfig.isTempUnprotected(domain: "domain1.com"))
+        XCTAssertTrue(privacyConfig.isTempUnprotected(domain: "domain2.com"))
+        XCTAssertFalse(privacyConfig.isTempUnprotected(domain: "domain3.com"))
+    }
+
+    // MARK: - Helpers
+
+    private func makePrivateConfigurationManager() -> PrivacyConfigurationManager {
+        // swiftlint:disable:next force_cast
+        ContentBlocking.shared.privacyConfigurationManager as! PrivacyConfigurationManager
+    }
+
+    private func privacyConfiguration(_ data: PrivacyConfigurationData) -> AppPrivacyConfiguration {
+        AppPrivacyConfiguration(data: data,
+                                identifier: "",
+                                localProtection: DomainsProtectionUserDefaultsStore(),
+                                internalUserDecider: DefaultInternalUserDecider())
+    }
+
+    private func makeConfigurationFile(domains: [String]) -> Data {
         """
         {
             "features": {},
             "unprotectedTemporary": [
-                    { "domain": "domain1.com" },
-                    { "domain": "domain2.com" },
-                    { "domain": "domain3.com" },
+                    { "domain": "\(domains[0])" },
+                    { "domain": "\(domains[1])" },
             ]
         }
         """.data(using: .utf8)!
-        try FileStore().persist(configFile, for: .privacyConfiguration)
-        // swiftlint:disable:next force_cast
-        let privacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager as! PrivacyConfigurationManager
-        XCTAssertEqual(privacyConfigurationManager.embeddedConfigData.etag,
-                       AppPrivacyConfigurationDataProvider.Constants.embeddedDataETag)
-        XCTAssertEqual(privacyConfigurationManager.reload(etag: "new etag", data: configFile), .downloaded)
-
-        let newConfig = privacyConfigurationManager.fetchedConfigData
-        XCTAssertNotNil(newConfig)
-
-        if let newConfig = newConfig {
-            XCTAssertEqual(newConfig.etag, "new etag")
-            let config = AppPrivacyConfiguration(data: newConfig.data,
-                                                 identifier: "",
-                                                 localProtection: DomainsProtectionUserDefaultsStore(),
-                                                 internalUserDecider: DefaultInternalUserDecider())
-
-            XCTAssertFalse(config.isTempUnprotected(domain: "main1.com"))
-            XCTAssertFalse(config.isTempUnprotected(domain: "notdomain1.com"))
-            XCTAssertTrue(config.isTempUnprotected(domain: "domain1.com"))
-
-            XCTAssertTrue(config.isTempUnprotected(domain: "www.domain1.com"))
-        }
     }
-
 }

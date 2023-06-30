@@ -598,6 +598,12 @@
 /* Broken Site Category */
 "brokensite.category.videos" = "Video didn’t play";
 
+/* Broken Site Category Section Title */
+"brokensite.categoryTitle" = "SELECT A CATEGORY";
+
+/* Broken Site Comment Placeholder */
+"brokensite.commentPlaceholder" = "If you'd like, tell us about the problem you experienced";
+
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "DESCRIBE WHAT HAPPENED";
 

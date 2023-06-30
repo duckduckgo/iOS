@@ -34,7 +34,7 @@ struct HomeMessageViewModel: Equatable {
     let subtitle: String
     let buttons: [HomeMessageButtonViewModel]
     
-    let onDidClose: (ButtonAction?, RemoteAction) -> Void
+    let onDidClose: (ButtonAction?) -> Void
     let onDidAppear: () -> Void
 
     var hasSharing: Bool {
@@ -58,7 +58,7 @@ struct HomeMessageViewModel: Equatable {
 struct HomeMessageButtonViewModel: Equatable {
     enum ActionStyle: Equatable {
         case `default`
-        case share(url: URL, title: String)
+        case share(content: String)
         case cancel
     }
     

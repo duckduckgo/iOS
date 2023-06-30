@@ -32,7 +32,7 @@ struct HomeMessageViewModelBuilder {
     }
 
     static func build(for remoteMessage: RemoteMessageModel,
-                      onDidClose: @escaping (HomeMessageViewModel.ButtonAction?, RemoteAction) -> Void,
+                      onDidClose: @escaping (HomeMessageViewModel.ButtonAction?) -> Void,
                       onDidAppear: @escaping () -> Void) -> HomeMessageViewModel? {
             guard let content = remoteMessage.content else { return nil }
 
@@ -78,17 +78,17 @@ struct HomeMessageViewModelBuilder {
 
     static func mapActionToViewModel(remoteAction: RemoteAction,
                                      buttonAction: HomeMessageViewModel.ButtonAction,
-                                     onDidClose: @escaping (HomeMessageViewModel.ButtonAction?, RemoteAction) -> Void) -> () -> Void {
+                                     onDidClose: @escaping (HomeMessageViewModel.ButtonAction?) -> Void) -> () -> Void {
 
         switch remoteAction {
         case .share:
             return {
-                onDidClose(buttonAction, remoteAction)
+                onDidClose(buttonAction)
             }
         case .url(let value):
             return {
                 LaunchTabNotification.postLaunchTabNotification(urlString: value)
-                onDidClose(buttonAction, remoteAction)
+                onDidClose(buttonAction)
             }
         case .appStore:
             return {
@@ -96,11 +96,11 @@ struct HomeMessageViewModelBuilder {
                 if UIApplication.shared.canOpenURL(url as URL) {
                     UIApplication.shared.open(url)
                 }
-                onDidClose(buttonAction, remoteAction)
+                onDidClose(buttonAction)
             }
         case .dismiss:
             return {
-                onDidClose(buttonAction, remoteAction)
+                onDidClose(buttonAction)
             }
         }
     }
@@ -110,12 +110,8 @@ extension RemoteAction {
 
     var actionStyle: HomeMessageButtonViewModel.ActionStyle {
         switch self {
-        case .share(let url, let title):
-            if let url = URL(string: url) {
-                return .share(url: url, title: title)
-            } else {
-                return .default
-            }
+        case .share(let content):
+            return .share(content: content)
 
         case .appStore, .url:
             return .default

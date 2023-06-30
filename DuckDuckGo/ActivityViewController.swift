@@ -36,32 +36,3 @@ struct ActivityViewController: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityViewController>) {}
 
 }
-
-class TitledURLActivityItem: NSObject, UIActivityItemSource, Identifiable {
-
-    let id: String
-    let url: URL
-    let title: String
-
-    init(_ url: URL, _ title: String) {
-        self.id = url.absoluteString
-        self.url = url
-        self.title = title
-    }
-
-    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
-        url
-    }
-
-    func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
-        url
-    }
-
-    func activityViewControllerLinkMetadata(_ activityViewController: UIActivityViewController) -> LPLinkMetadata? {
-        let metadata = LPLinkMetadata()
-        metadata.title = title
-        metadata.url = url
-        return metadata
-    }
-
-}

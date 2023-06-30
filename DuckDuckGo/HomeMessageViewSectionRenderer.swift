@@ -108,13 +108,13 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         let message = homePageConfiguration.homeMessages[indexPath.row]
         switch message {
         case .placeholder:
-            return HomeMessageViewModel(messageId: "", image: nil, topText: nil, title: "", subtitle: "", buttons: []) { [weak self] _, _ in
+            return HomeMessageViewModel(messageId: "", image: nil, topText: nil, title: "", subtitle: "", buttons: []) { [weak self] _ in
                 self?.dismissHomeMessage(message, at: indexPath, in: collectionView)
             } onDidAppear: {
                 // no-op
             }
         case .remoteMessage(let remoteMessage):
-            return HomeMessageViewModelBuilder.build(for: remoteMessage) { [weak self] action, remoteAction in
+            return HomeMessageViewModelBuilder.build(for: remoteMessage) { [weak self] action in
 
                 guard let action,
                         let self else { return }

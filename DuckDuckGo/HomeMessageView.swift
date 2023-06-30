@@ -37,9 +37,19 @@ struct HomeMessageButtonStyle: ButtonStyle {
 }
 
 struct HomeMessageView: View {
+
+    struct ShareItem: Identifiable {
+        var id: String {
+            content
+        }
+
+        let content: String
+
+    }
+
     let viewModel: HomeMessageViewModel
 
-    @State var activityItem: TitledURLActivityItem?
+    @State var activityItem: ShareItem?
 
     var body: some View {
         ZStack {
@@ -59,7 +69,7 @@ struct HomeMessageView: View {
                     buttons
                 }
                 .padding(.top, 8)
-                .padding(.horizontal, 32)
+                .padding(.horizontal, 8)
             }
             .multilineTextAlignment(.center)
             .padding(.vertical)
@@ -89,7 +99,7 @@ struct HomeMessageView: View {
     
     private var closeButton: some View {
         Button {
-            viewModel.onDidClose(.close, .dismiss)
+            viewModel.onDidClose(.close)
         } label: {
             Image("Close-24")
                 .foregroundColor(.primary)
@@ -137,8 +147,8 @@ struct HomeMessageView: View {
             let background: Color = model.actionStyle == .cancel ? .cancelButtonBackground : .button
             Button {
                 model.action()
-                if case .share(let url, let title) = model.actionStyle {
-                    activityItem = TitledURLActivityItem(url, title)
+                if case .share(let content) = model.actionStyle {
+                    activityItem = ShareItem(content: content)
                 }
             } label: {
                 HStack {
@@ -156,7 +166,7 @@ struct HomeMessageView: View {
                                                 height: 40))
             .padding([.bottom], Const.Padding.buttonVerticalInset)
             .sheet(item: $activityItem) { activityItem in
-                ActivityViewController(activityItems: [activityItem]) { _, _, _, _ in
+                ActivityViewController(activityItems: [activityItem.id]) { _, _, _, _ in
                     // It would be good to review the parameters passed to this and
                     //  fire a pixel indicating what kind of interaction happened
                 }
@@ -237,7 +247,7 @@ struct HomeMessageView_Previews: PreviewProvider {
                                              subtitle: "Body text goes here. This component can be used with one or two buttons.",
                                              buttons: [.init(title: "Button1", actionStyle: .cancel) {},
                                                        .init(title: "Button2") {}],
-                                             onDidClose: { _, _ in }, onDidAppear: {})
+                                             onDidClose: { _ in }, onDidAppear: {})
         return HomeMessageView(viewModel: viewModel)
             .padding(.horizontal)
     }

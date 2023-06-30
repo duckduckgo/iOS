@@ -116,7 +116,7 @@ final class BrokenSiteReportingTests: XCTestCase {
             return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
         }
         
-        brokenSiteInfo.send(with: test.category, comment: "")
+        brokenSiteInfo.send(with: test.category, description: "")
     }
 }
 

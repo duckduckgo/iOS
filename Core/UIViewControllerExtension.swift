@@ -42,24 +42,20 @@ extension UIViewController {
         }
     }
 
-    private func createActivityController(withItems activityItems: [Any],
-                                          excludedActivityTypes: [UIActivity.ActivityType]? = nil,
-                                          completion: UIActivityViewController.CompletionWithItemsHandler? = nil) -> UIActivityViewController {
+    public func presentShareSheet(withItems activityItems: [Any], fromButtonItem buttonItem: UIBarButtonItem, completion: UIActivityViewController.CompletionWithItemsHandler? = nil) {
         let activities = buildActivities()
         let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: activities)
-        shareController.overrideUserInterfaceStyle()
-        shareController.excludedActivityTypes = excludedActivityTypes
         shareController.completionWithItemsHandler = completion
-        return shareController
-    }
-
-    public func presentShareSheet(withItems activityItems: [Any], fromButtonItem buttonItem: UIBarButtonItem, completion: UIActivityViewController.CompletionWithItemsHandler? = nil) {
-        let shareController = createActivityController(withItems: activityItems)
+        shareController.overrideUserInterfaceStyle()
         present(controller: shareController, fromButtonItem: buttonItem)
     }
 
     public func presentShareSheet(withItems activityItems: [Any], fromView sourceView: UIView, atPoint point: Point? = nil, completion: UIActivityViewController.CompletionWithItemsHandler? = nil) {
-        let shareController = createActivityController(withItems: activityItems, excludedActivityTypes: [.markupAsPDF])
+        let activities = buildActivities()
+        let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: activities)
+        shareController.completionWithItemsHandler = completion
+        shareController.overrideUserInterfaceStyle()
+        shareController.excludedActivityTypes = [.markupAsPDF]
         present(controller: shareController, fromView: sourceView, atPoint: point)
     }
 

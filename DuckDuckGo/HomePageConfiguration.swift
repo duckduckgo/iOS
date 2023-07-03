@@ -76,19 +76,9 @@ final class HomePageConfiguration {
     }
 
     private func remoteMessageToShow() -> HomeMessage? {
-//        guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return nil }
-//        os_log("Remote message to show: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
-//        return .remoteMessage(remoteMessage: remoteMessageToPresent)
-
-        return .remoteMessage(remoteMessage: .init(id: "test", content:
-                .bigTwoAction(titleText: "title",
-                              descriptionText: "description",
-                              placeholder: .macComputer,
-                              primaryActionText: "primary",
-                              primaryAction: .share(url: "https://examplecom", title: "Example"),
-                              secondaryActionText: "2nd",
-                              secondaryAction: .url(value: "2nd palce")),
-                                                   matchingRules: [], exclusionRules: []))
+        guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return nil }
+        os_log("Remote message to show: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
+        return .remoteMessage(remoteMessage: remoteMessageToPresent)
     }
 
     func dismissHomeMessage(_ homeMessage: HomeMessage) {

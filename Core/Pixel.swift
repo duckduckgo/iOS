@@ -177,20 +177,23 @@ public class Pixel {
 extension Pixel {
     
     public static func fire(pixel: Pixel.Event,
-                            error: Error,
+                            error: Error?,
                             withAdditionalParameters params: [String: String] = [:],
                             onComplete: @escaping (Error?) -> Void = { _ in }) {
-        let nsError = error as NSError
         var newParams = params
-        newParams[PixelParameters.errorCode] = "\(nsError.code)"
-        newParams[PixelParameters.errorDomain] = nsError.domain
-        
-        if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError {
-            newParams[PixelParameters.underlyingErrorCode] = "\(underlyingError.code)"
-            newParams[PixelParameters.underlyingErrorDomain] = underlyingError.domain
-        } else if let sqlErrorCode = nsError.userInfo["NSSQLiteErrorDomain"] as? NSNumber {
-            newParams[PixelParameters.underlyingErrorCode] = "\(sqlErrorCode.intValue)"
-            newParams[PixelParameters.underlyingErrorDomain] = "NSSQLiteErrorDomain"
+        if let error {
+            let nsError = error as NSError
+
+            newParams[PixelParameters.errorCode] = "\(nsError.code)"
+            newParams[PixelParameters.errorDomain] = nsError.domain
+
+            if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError {
+                newParams[PixelParameters.underlyingErrorCode] = "\(underlyingError.code)"
+                newParams[PixelParameters.underlyingErrorDomain] = underlyingError.domain
+            } else if let sqlErrorCode = nsError.userInfo["NSSQLiteErrorDomain"] as? NSNumber {
+                newParams[PixelParameters.underlyingErrorCode] = "\(sqlErrorCode.intValue)"
+                newParams[PixelParameters.underlyingErrorDomain] = "NSSQLiteErrorDomain"
+            }
         }
         
         fire(pixel: pixel, withAdditionalParameters: newParams, includedParameters: [], onComplete: onComplete)

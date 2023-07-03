@@ -24,7 +24,9 @@ class BasicAuthenticationAlert: UIAlertController {
     
     typealias LogInCompletion = (_ userName: String, _ password: String) -> Void
     typealias CancelCompletion = () -> Void
-    
+
+    private var didCallCompletion = false
+    private var cancelCompletion: CancelCompletion!
     var usernameField: UITextField!
     var passwordField: UITextField!
     var logInAction: UIAlertAction!
@@ -39,10 +41,12 @@ class BasicAuthenticationAlert: UIAlertController {
         } else {
             message = UserText.authAlertPlainConnectionMessage.format(arguments: host)
         }
-        
+
         self.init(title: UserText.authAlertTitle, message: message, preferredStyle: .alert)
         overrideUserInterfaceStyle()
-        
+
+        self.cancelCompletion = cancelCompletion
+
         let keyboardAppearance = ThemeManager.shared.currentTheme.keyboardAppearance
         addTextField { textField in
             textField.accessibilityLabel = "Username"
@@ -69,17 +73,26 @@ class BasicAuthenticationAlert: UIAlertController {
         passwordField.addTarget(self, action: #selector(onTextChanged), for: .allEditingEvents)
         
         logInAction = createLogInAction(with: logInCompletion)
-        addAction(title: UserText.actionCancel, style: .cancel) {
+        addAction(title: UserText.actionCancel, style: .cancel) { [weak self] in
+            self?.didCallCompletion = true
             cancelCompletion()
         }
         updateButtons()
     }
-    
+
+    deinit {
+        if !didCallCompletion {
+            cancelCompletion()
+        }
+    }
+
     private func createLogInAction(with completion: @escaping LogInCompletion) -> UIAlertAction {
-        return addAction(title: UserText.authAlertLogInButtonTitle, style: .default) {
+        return addAction(title: UserText.authAlertLogInButtonTitle, style: .default) { [weak self] in
+            guard let self else { return }
             guard let login = self.usernameField.text else { return }
             guard let password = self.passwordField.text else { return }
-            
+
+            self.didCallCompletion = true
             completion(login, password)
         }
     }

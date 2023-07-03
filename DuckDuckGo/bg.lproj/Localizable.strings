@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Потребителско име";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Данните за вход се съхраняват на сигурно място само на това устройство.";
+"autofill.logins.empty-view.subtitle" = "Данните за вход се съхраняват сигурно на Вашето устройство.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Все още няма запазени данни за вход";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Данните за вход за %@ са изтрити";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Търсене на данни за вход";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Данните за вход са изтрити";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Търсене на данни за вход";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Предложения";
@@ -337,8 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Няма резултати";
 
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Паролата ще бъде запазена в „Данни за вход“.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Използване на парола, генерирана от DuckDuckGo?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Използване на генерирана парола";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Създаване на собствена";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Данните за вход се съхраняват защитени само на това устройство и могат да се управляват от менюто Данни за вход в Настройки.";
+"autofill.save-login.new-user.message" = "Данните за вход са сигурно съхранени само на Вашето устройство и могат да се управляват от менюто Данни за вход в Настройки.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Искате ли DuckDuckGo да запази данните за вход?";

@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Korisničko ime";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Prijave su sigurno spremljene samo na ovom uređaju.";
+"autofill.logins.empty-view.subtitle" = "Prijave su sigurno pohranjene na tvom uređaju.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Još nema spremljenih prijava";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Prijava za %@ izbrisana";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Pretraživanje prijava";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Prijava je izbrisana";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Pretraživanje prijava";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Predloženo";
@@ -337,8 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Nema rezultata";
 
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Lozinka će biti spremljena u Prijavama.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Koristiti generiranu lozinku iz DuckDuckGoa?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Koristi generiranu lozinku";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Izradi vlastitu";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Prijave se sigurno spremaju samo na ovom uređaju i njima se može upravljati iz izbornika Prijave u Postavkama.";
+"autofill.save-login.new-user.message" = "Prijave se sigurno spremaju na tvom uređaju i njima se može upravljati putem izbornika Prijave u Postavkama.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Želiš li da DuckDuckGo spremi tvoju prijavu?";

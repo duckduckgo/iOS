@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Brukernavn";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Pålogginger lagres sikkert og bare på denne enheten.";
+"autofill.logins.empty-view.subtitle" = "Pålogginger lagres på enheten din på en sikker måte.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Ingen pålogginger er lagret ennå";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Pålogging for %@ er slettet";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Søk i pålogginger";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Påloggingen er slettet";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Søk i pålogginger";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Forslag";
@@ -337,8 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Ingen resultater";
 
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Passord blir lagret i pålogginger.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Vil du bruke et generert passord fra DuckDuckGo?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Bruk generert passord";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Opprett eget passord";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Pålogginger lagres bare på denne enheten og kan administreres i påloggingsmenyen i innstillinger.";
+"autofill.save-login.new-user.message" = "Pålogginger lagres trygt på enheten din og kan administreres i påloggingsmenyen i innstillinger.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vil du at DuckDuckGo skal lagre påloggingen din?";

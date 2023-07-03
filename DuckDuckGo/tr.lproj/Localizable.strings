@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Kullanıcı adı";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Girişler yalnızca bu cihazda güvenli bir şekilde saklanır.";
+"autofill.logins.empty-view.subtitle" = "Giriş bilgileri cihazınızda güvenli bir şekilde saklanır.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Henüz kaydedilmiş Giriş yok";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "%@ için giriş silindi";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Giriş Ara";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Giriş bilgileri silindi";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Giriş Ara";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Önerilen";
@@ -336,6 +336,18 @@
 
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Sonuç yok";
+
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Şifre, Girişlere kaydedilecektir.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "DuckDuckGo'dan oluşturulan şifre kullanılsın mı?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Oluşturulan Şifreyi Kullan";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Kendiminkini Oluştur";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.message" = "Giriş bilgileri yalnızca bu cihazda güvenli bir şekilde saklanır ve Ayarlar'daki Giriş Bilgileri menüsünden yönetilebilir.";

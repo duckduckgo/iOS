@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Felhasználónév";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Csak ezen az eszközön és biztonságosan tároljuk a bejelentkezési adatokat.";
+"autofill.logins.empty-view.subtitle" = "A bejelentkezési adatokat az eszközöd biztonságosan tárolja.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Még nincsenek mentett bejelentkezési adatok";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "%@ bejelentkezési adatai törölve";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Bejelentkezési adatok keresése";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Bejelentkezés törölve";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Bejelentkezési adatok keresése";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Javasolt";
@@ -337,8 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Nincs találat";
 
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "A jelszó mentve lesz a Bejelentkezésekben.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "DuckDuckGo által generált jelszó használata?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Generált jelszó használata";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Saját létrehozása";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "A bejelentkezési adatok csak ezen az eszközön lesznek biztonságosan tárolva, és a Beállítások > Bejelentkezések menüpontban kezelhetők.";
+"autofill.save-login.new-user.message" = "A bejelentkezési adatokat az eszközöd biztonságosan tárolja, ezen adatok pedig a Beállítások > Bejelentkezések menüpontban kezelhetők.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "A DuckDuckGo mentse a bejelentkezést?";

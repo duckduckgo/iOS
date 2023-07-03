@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Combine
 import Common
 import Core
 import UserNotifications
@@ -31,6 +32,7 @@ import Crashes
 import Configuration
 import Networking
 import DDGSync
+import SyncDataProviders
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -58,7 +60,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var lastBackgroundDate: Date?
 
     private(set) var syncService: DDGSyncing!
-    private(set) var syncPersistence: SyncDataPersistor!
+    private(set) var syncDataProviders: SyncDataProviders!
+    private var syncDidFinishCancellable: AnyCancellable?
 
     // MARK: lifecycle
 
@@ -151,6 +154,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
                                                   to: context)
             legacyStorage?.removeStore()
+
             WidgetCenter.shared.reloadAllTimelines()
         }
 
@@ -166,7 +170,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fatalError("Could not create AppTP database stack: \(error?.localizedDescription ?? "err")")
             }
         }
-        
+
         Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
             WidgetCenter.shared.reloadAllTimelines()
         }
@@ -181,12 +185,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DaxDialogs.shared.primeForUse()
         }
 
+        // MARK: Sync initialisation
+
+        syncDataProviders = SyncDataProviders(bookmarksDatabase: bookmarksDatabase)
+        syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog)
+        syncService.initializeIfNeeded(isInternalUser: InternalUserStore().isInternalUser)
+
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         
         guard let main = storyboard.instantiateInitialViewController(creator: { coder in
             MainViewController(coder: coder,
                                bookmarksDatabase: self.bookmarksDatabase,
-                               appTrackingProtectionDatabase: self.appTrackingProtectionDatabase)
+                               appTrackingProtectionDatabase: self.appTrackingProtectionDatabase,
+                               syncService: self.syncService)
         }) else {
             fatalError("Could not load MainViewController")
         }
@@ -213,10 +224,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.windowScene?.screenshotService?.delegate = self
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
-        // MARK: Sync initialisation
-        syncPersistence = SyncDataPersistor()
-        syncService = DDGSync(persistence: syncPersistence)
-
         appIsLaunching = true
         return true
     }
@@ -241,6 +248,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
+
+        syncService.initializeIfNeeded(isInternalUser: InternalUserStore().isInternalUser)
 
         if !(overlayWindow?.rootViewController is AuthenticationViewController) {
             removeOverlay()
@@ -286,6 +295,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
             }
         }
+
+        syncService.scheduler.notifyAppLifecycleEvent()
     }
 
     private func fireAppLaunchPixel() {
@@ -320,6 +331,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func fireAppTPActiveUserPixel() {
+#if APP_TRACKING_PROTECTION
         guard AppDependencyProvider.shared.featureFlagger.isFeatureOn(.appTrackingProtection) else {
             return
         }
@@ -339,6 +351,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 UserDefaults.standard.set(date, forKey: key)
             }
         }
+#endif
     }
     
     private func shouldShowKeyboardOnLaunch() -> Bool {
@@ -375,6 +388,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         beginAuthentication()
         autoClear?.applicationWillMoveToForeground()
         showKeyboardIfSettingOn = true
+        syncService.scheduler.resumeSyncQueue()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -382,6 +396,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         autoClear?.applicationDidEnterBackground()
         lastBackgroundDate = Date()
         AppDependencyProvider.shared.autofillLoginSession.endSession()
+        suspendSync()
+    }
+
+    private func suspendSync() {
+        if syncService.isSyncInProgress {
+            os_log(.debug, log: .syncLog, "Sync is in progress. Starting background task to allow it to gracefully complete.")
+
+            var taskID: UIBackgroundTaskIdentifier!
+            taskID = UIApplication.shared.beginBackgroundTask(withName: "Cancelled Sync Completion Task") {
+                os_log(.debug, log: .syncLog, "Forcing background task completion")
+                UIApplication.shared.endBackgroundTask(taskID)
+            }
+            syncDidFinishCancellable?.cancel()
+            syncDidFinishCancellable = syncService.isSyncInProgressPublisher.filter { !$0 }
+                .prefix(1)
+                .receive(on: DispatchQueue.main)
+                .sink { _ in
+                    os_log(.debug, log: .syncLog, "Ending background task")
+                    UIApplication.shared.endBackgroundTask(taskID)
+                }
+        }
+
+        syncService.scheduler.cancelSyncAndSuspendSyncQueue()
     }
 
     func application(_ application: UIApplication,

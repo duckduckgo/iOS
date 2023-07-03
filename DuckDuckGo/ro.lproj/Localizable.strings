@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Nume utilizator";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Datele de conectare sunt stocate în siguranță numai pe acest dispozitiv.";
+"autofill.logins.empty-view.subtitle" = "Datele de conectare sunt stocate în siguranță pe dispozitivul tău.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Nu au fost salvate încă date de conectare";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "S-a șters autentificarea pentru %@";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Date de autentificare pentru căutare";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Date de conectare șterse";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Date de autentificare pentru căutare";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Sugerat";
@@ -337,8 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Niciun rezultat";
 
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Parola va fi salvată în Datele de conectare.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Vrei să folosești parola generată de DuckDuckGo?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Folosește parola generată";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Îmi creez propria parolă";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Datele de conectare sunt stocate în siguranță doar pe acest dispozitiv și pot fi gestionate din meniul Date de conectare din Setări.";
+"autofill.save-login.new-user.message" = "Datele de conectare sunt stocate în siguranță pe dispozitivul tău și pot fi gestionate din Setări, meniul Date de conectare.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Dorești ca DuckDuckGo să îți salveze datele de autentificare?";

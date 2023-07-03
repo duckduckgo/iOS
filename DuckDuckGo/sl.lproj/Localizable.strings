@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Uporabniško ime";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Podatki za prijavo so varno shranjeni samo v tej napravi.";
+"autofill.logins.empty-view.subtitle" = "Prijave so varno shranjene v vaši napravi.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Podatki za prijavo še niso shranjeni";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Prijavni podatki za %@ so bili izbrisani";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Iskanje podatkov za prijavo";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Prijava je izbrisana";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Iskanje podatkov za prijavo";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Predlagano";
@@ -337,8 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Ni rezultatov";
 
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Geslo bo shranjeno v razdelku Prijave.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Želite uporabiti geslo, ki ga je ustvaril DuckDuckGo?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Uporabi ustvarjeno geslo";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Ustvari svoje";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Prijave so varno shranjene samo v tej napravi in jih lahko upravljate v meniju Prijave v Nastavitvah.";
+"autofill.save-login.new-user.message" = "Prijave so varno shranjene v tej napravi in jih lahko upravljate v razdelku Prijave v nastavitvah.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Ali želite, da DuckDuckGo shrani vašo prijavo?";

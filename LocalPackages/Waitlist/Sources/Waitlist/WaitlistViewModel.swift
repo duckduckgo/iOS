@@ -95,6 +95,9 @@ public final class WaitlistViewModel: ObservableObject {
     }
 
     public func updateViewState() async {
+        guard viewState != .waitlistRemoved else {
+            return
+        }
         if waitlistStorage.getWaitlistTimestamp() != nil, waitlistStorage.getWaitlistInviteCode() == nil {
             await checkNotificationPermissions()
         } else if let inviteCode = waitlistStorage.getWaitlistInviteCode() {

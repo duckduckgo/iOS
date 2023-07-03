@@ -144,7 +144,15 @@ class TabViewCell: UICollectionViewCell, Themable {
     
     @IBAction func deleteTab() {
         guard let tab = tab else { return }
+        guard isNotReordering(with: collectionReorderRecognizer) else { return }
+
         self.delegate?.deleteTab(tab: tab)
+    }
+
+    private func isNotReordering(with gestureRecognizer: UIGestureRecognizer?) -> Bool {
+        guard let gestureRecognizer = gestureRecognizer else { return true }
+        let inactiveStates: [UIGestureRecognizer.State] = [.possible, .failed, .cancelled, .ended]
+        return inactiveStates.contains(gestureRecognizer.state)
     }
     
     func decorate(with theme: Theme) {}

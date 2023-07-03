@@ -22,8 +22,16 @@ import AVFoundation
 
 struct QRCodeScannerView: UIViewRepresentable {
 
-    var onQRCodeScanned: (String) async -> Bool
-    var onCameraUnavailable: () -> Void
+    let scanningQueue: ScanningQueue
+
+    let onCameraUnavailable: () -> Void
+    let onInvalidCodeScanned: () -> Void
+
+    init(onQRCodeScanned: @escaping (String) async -> Bool, onCameraUnavailable: @escaping () -> Void, onInvalidCodeScanned: @escaping () -> Void) {
+        scanningQueue = ScanningQueue(onQRCodeScanned)
+        self.onCameraUnavailable = onCameraUnavailable
+        self.onInvalidCodeScanned = onInvalidCodeScanned
+    }
 
     func makeCoordinator() -> Coordinator {
         return Coordinator(self)
@@ -102,7 +110,9 @@ struct QRCodeScannerView: UIViewRepresentable {
 
             captureCodes = false
             Task { @MainActor in
-                if await cameraView.onQRCodeScanned(code) {
+                let codeAccepted = await cameraView.scanningQueue.codeScanned(code)
+                if !codeAccepted {
+                    cameraView.onInvalidCodeScanned()
                     captureCodes = true
                 }
             }
@@ -137,6 +147,21 @@ private extension UIDeviceOrientation {
         case .portrait: return .portrait
         default: return .portrait
         }
+    }
+
+}
+
+actor ScanningQueue {
+
+    var onQRCodeScanned: (String) async -> Bool
+
+    init(_ onQRCodeScanned: @escaping (String) async -> Bool) {
+        self.onQRCodeScanned = onQRCodeScanned
+    }
+
+    /// Returns true if scanning should stop
+    func codeScanned(_ code: String) async -> Bool {
+        return await onQRCodeScanned(code)
     }
 
 }

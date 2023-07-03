@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Käyttäjätunnus";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Kirjautumistiedot tallennetaan turvallisesti vain tälle laitteelle.";
+"autofill.logins.empty-view.subtitle" = "Kirjautumiset tallennetaan laitteellesi turvallisesti.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Kirjautumistietoja ei ole vielä tallennettu";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Kohteen %@ kirjautumistiedot poistettu";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Hae kirjautumistietoja";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Kirjautumistieto poistettu";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Hae kirjautumistietoja";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Ehdotettu";
@@ -337,8 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Ei tuloksia";
 
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Salasana tallennetaan Kirjautumiset-osioon.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Haluatko käyttää DuckDuckGon luomaa salasanaa?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Käytä luotua salasanaa";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Luo oma";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Kirjautumistiedot tallennetaan turvallisesti vain tälle laitteelle. Niitä voi hallita Asetuksissa Kirjautumistiedot-valikossa.";
+"autofill.save-login.new-user.message" = "Kirjautumistiedot tallennetaan turvallisesti laitteellesi. Niitä voi hallita asetusten kirjautumistiedot-valikosta.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Haluatko, että DuckDuckGo tallentaa kirjautumistietosi?";

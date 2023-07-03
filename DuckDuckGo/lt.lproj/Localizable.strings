@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Naudotojo vardas";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Prisijungimai saugiai saugomi tik šiame įrenginyje.";
+"autofill.logins.empty-view.subtitle" = "Prisijungimai saugiai laikomi jūsų įrenginyje.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Dar nėra išsaugotų prisijungimų";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Prisijungimas prie %@ ištrintas";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Ieškoti prisijungimų";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Prisijungimas ištrintas";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Ieškoti prisijungimų";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Siūloma";
@@ -336,6 +336,18 @@
 
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Rezultatų nerasta";
+
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Slaptažodis bus išsaugotas prisijungimų lange.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Naudoti sugeneruotą slaptažodį iš „DuckDuckGo“?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Naudoti sugeneruotą slaptažodį";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Sukurti savo";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.message" = "Prisijungimai saugiai laikomi tik šiame įrenginyje, o juos galima tvarkyti nustatymuose, prisijungimų meniu.";

@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Όνομα χρήστη";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Τα στοιχεία σύνδεσης αποθηκεύονται με ασφάλεια μόνο σε αυτήν τη συσκευή.";
+"autofill.logins.empty-view.subtitle" = "Τα στοιχεία σύνδεσης αποθηκεύονται με ασφάλεια στη συσκευή σας.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Δεν έχουν αποθηκευτεί ακόμα στοιχεία σύνδεσης";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Τα στοιχεία σύνδεσης για το %@ διαγράφηκαν";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Αναζήτηση στοιχείων σύνδεσης";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Η σύνδεση διαγράφηκε";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Αναζήτηση στοιχείων σύνδεσης";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Προτεινόμενο";
@@ -337,8 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Κανένα αποτέλεσμα";
 
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Ο κωδικός πρόσβασης θα αποθηκευτεί στις Συνδέσεις.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Χρήση κωδικού πρόσβασης που δημιουργήθηκε από το DuckDuckGo;";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Χρήση του κωδικού πρόσβασης που δημιουργήθηκε";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Δημιουργία δικού μου";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Οι συνδέσεις αποθηκεύονται με ασφάλεια μόνο σε αυτή τη συσκευή και η διαχείρισή τους γίνεται από το μενού Συνδέσεις, στις Ρυθμίσεις.";
+"autofill.save-login.new-user.message" = "Οι συνδέσεις αποθηκεύονται με ασφάλεια στη συσκευή σας και η διαχείρισή τους γίνεται από το μενού Συνδέσεις, στις Ρυθμίσεις.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Θέλετε να αποθηκεύσει το DuckDuckGo τη σύνδεσή σας;";

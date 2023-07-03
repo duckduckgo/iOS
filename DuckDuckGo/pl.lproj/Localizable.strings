@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Nazwa użytkownika";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Loginy są bezpiecznie przechowywane tylko na tym urządzeniu.";
+"autofill.logins.empty-view.subtitle" = "Dane logowania są bezpiecznie przechowywane na Twoim urządzeniu.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Nie zapisano jeszcze żadnych loginów.";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Usunięto login dla: %@";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Wyszukiwanie loginów";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Login usunięty";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Wyszukiwanie loginów";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Sugerowane";
@@ -337,8 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Brak wyników";
 
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Hasło zostanie zapisane w Danych logowania.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Użyć hasła wygenerowanego z DuckDuckGo?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Użyj wygenerowanego hasła";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Utwórz własne";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Dane logowania są bezpiecznie przechowywane wyłącznie na tym urządzeniu i można nimi zarządzać w sekcji Loginy menu Ustawienia.";
+"autofill.save-login.new-user.message" = "Dane logowania są bezpiecznie przechowywane na Twoim urządzeniu i można nimi zarządzać w sekcji Loginy menu Ustawienia.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Czy chcesz zapisać dane logowania w DuckDuckGo?";

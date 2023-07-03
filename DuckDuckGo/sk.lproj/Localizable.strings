@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Používateľské meno";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Prihlasovacie údaje sú zabezpečene uložené iba v tomto zariadení.";
+"autofill.logins.empty-view.subtitle" = "Prihlasovacie údaje sú zabezpečeným spôsobom uložené vo vašom zariadení.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Zatiaľ nie sú uložené žiadne prihlasovacie údaje";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Prihlásenie pre %@ bolo odstránené";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Vyhľadávanie prihlásení";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Prihlasovacie údaje boli odstránené";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Vyhľadávanie prihlásení";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Navrhované";
@@ -336,6 +336,18 @@
 
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Žiadne výsledky";
+
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Heslo sa uloží do prihlasovacích údajov.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Použiť vygenerované heslo z DuckDuckGo?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Použiť vygenerované heslo";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Vytvoriť vlastné";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.message" = "Prihlasovacie údaje sú zabezpečene uložené len v tomto zariadení a môžete ich spravovať v ponuke Prihlasovacie údaje v Nastaveniach.";

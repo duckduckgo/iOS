@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Uživatelské jméno";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Přihlašovací údaje jsou bezpečně uložené jen v tomhle zařízení.";
+"autofill.logins.empty-view.subtitle" = "Přihlašovací údaje se bezpečně ukládají do tvého zařízení.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Zatím nemáš uložené žádné přihlašovací údaje";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Přihlašovací údaje pro %@ se smazaly";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Hledání přihlašovacích údajů";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Přihlašovací údaje smazány";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Hledání přihlašovacích údajů";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Navrhované";
@@ -337,8 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Žádné výsledky";
 
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Heslo se uloží do části Přihlášení.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Použít heslo vygenerované DuckDuckGo?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Použít vygenerované heslo";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Vytvořit vlastní";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Přihlašovací údaje jsou bezpečně uložené jen v tomhle zařízení a dají se spravovat v nabídce Přihlášení v Nastaveních.";
+"autofill.save-login.new-user.message" = "Přihlašovací údaje se bezpečně ukládají do tvého zařízení a dají se spravovat v nabídce Přihlášení v Nastavení.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Má DuckDuckGo uložit přihlašovací údaje?";

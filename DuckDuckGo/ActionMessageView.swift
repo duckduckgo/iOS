@@ -124,7 +124,7 @@ class ActionMessageView: UIView {
         dismissAllMessages()
                 
         if let actionTitle = actionTitle, let title = messageView.actionButton.attributedTitle(for: .normal) {
-            messageView.actionButton.setAttributedTitle(title.withText(actionTitle.uppercased()), for: .normal)
+            messageView.actionButton.setAttributedTitle(title.withText(actionTitle), for: .normal)
             messageView.action = onAction
         } else {
             messageView.labelToButton.isActive = false

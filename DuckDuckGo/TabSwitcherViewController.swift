@@ -20,6 +20,7 @@
 import UIKit
 import Common
 import Core
+import DDGSync
 import WebKit
 import Bookmarks
 import Persistence
@@ -61,6 +62,7 @@ class TabSwitcherViewController: UIViewController {
     weak var previewsSource: TabPreviewsSource!
     
     private var bookmarksDatabase: CoreDataDatabase
+    private let syncService: DDGSyncing
     
     weak var reorderGestureRecognizer: UIGestureRecognizer?
     
@@ -74,8 +76,10 @@ class TabSwitcherViewController: UIViewController {
     let favicons = Favicons.shared
     
     required init?(coder: NSCoder,
-                   bookmarksDatabase: CoreDataDatabase) {
+                   bookmarksDatabase: CoreDataDatabase,
+                   syncService: DDGSyncing) {
         self.bookmarksDatabase = bookmarksDatabase
+        self.syncService = syncService
         super.init(coder: coder)
     }
     
@@ -121,17 +125,16 @@ class TabSwitcherViewController: UIViewController {
     private func refreshDisplayModeButton(theme: Theme = ThemeManager.shared.currentTheme) {
         switch theme.currentImageSet {
         case .dark:
-            // Reverse colors (selection)
             if tabSwitcherSettings.isGridViewEnabled {
-                displayModeButton.setImage(UIImage(named: "TabsToggleList"), for: .normal)
+                displayModeButton.setImage(UIImage(named: "tabsToggleGrid-Dark"), for: .normal)
             } else {
-                displayModeButton.setImage(UIImage(named: "TabsToggleGrid"), for: .normal)
+                displayModeButton.setImage(UIImage(named: "tabsToggleList-Dark"), for: .normal)
             }
         case .light:
             if tabSwitcherSettings.isGridViewEnabled {
-                displayModeButton.setImage(UIImage(named: "TabsToggleGrid"), for: .normal)
+                displayModeButton.setImage(UIImage(named: "tabsToggleGrid-Light"), for: .normal)
             } else {
-                displayModeButton.setImage(UIImage(named: "TabsToggleList"), for: .normal)
+                displayModeButton.setImage(UIImage(named: "tabsToggleList-Light"), for: .normal)
             }
         }
     }
@@ -242,7 +245,7 @@ class TabSwitcherViewController: UIViewController {
         alert.overrideUserInterfaceStyle()
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         alert.addAction(title: UserText.actionBookmark, style: .default) {
-            let model = MenuBookmarksViewModel(bookmarksDatabase: self.bookmarksDatabase)
+            let model = MenuBookmarksViewModel(bookmarksDatabase: self.bookmarksDatabase, syncService: self.syncService)
             let result = self.bookmarkAll(viewModel: model)
             self.displayBookmarkAllStatusMessage(with: result, openTabsCount: self.tabsModel.tabs.count)
         }
@@ -326,6 +329,11 @@ class TabSwitcherViewController: UIViewController {
 
     func dismiss() {
         dismiss(animated: true, completion: nil)
+    }
+
+    override func dismiss(animated: Bool, completion: (() -> Void)? = nil) {
+        tabsModel.tabs.forEach { $0.removeObserver(self) }
+        super.dismiss(animated: animated, completion: completion)
     }
 }
 
@@ -470,9 +478,13 @@ extension TabSwitcherViewController: TabObserver {
     func didChange(tab: Tab) {
         // Reloading when updates are processed will result in a crash
         guard !isProcessingUpdates else { return }
-        
-        if let index = tabsModel.indexOf(tab: tab) {
-            collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
+
+        if let index = tabsModel.indexOf(tab: tab), index < collectionView.numberOfItems(inSection: 0) {
+            if #available(iOS 15.0, *) {
+                collectionView.reconfigureItems(at: [IndexPath(row: index, section: 0)])
+            } else {
+                collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
+            }
         }
     }
 }

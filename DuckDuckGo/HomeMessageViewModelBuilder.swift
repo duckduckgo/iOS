@@ -110,8 +110,8 @@ extension RemoteAction {
 
     var actionStyle: HomeMessageButtonViewModel.ActionStyle {
         switch self {
-        case .share(let content):
-            return .share(content: content)
+        case .share(let value, let title):
+            return .share(value: value, title: title)
 
         case .appStore, .url:
             return .default

@@ -58,7 +58,7 @@ struct HomeMessageViewModel: Equatable {
 struct HomeMessageButtonViewModel: Equatable {
     enum ActionStyle: Equatable {
         case `default`
-        case share(content: String)
+        case share(value: String, title: String?)
         case cancel
     }
     

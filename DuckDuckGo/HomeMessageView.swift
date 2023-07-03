@@ -40,11 +40,19 @@ struct HomeMessageView: View {
 
     struct ShareItem: Identifiable {
         var id: String {
-            content
+            value
         }
 
-        let content: String
+        var item: Any {
+            if let url = URL(string: value), let title = title {
+                return TitledURLActivityItem(url, title)
+            } else {
+                return value
+            }
+        }
 
+        let value: String
+        let title: String?
     }
 
     let viewModel: HomeMessageViewModel
@@ -147,8 +155,8 @@ struct HomeMessageView: View {
             let background: Color = model.actionStyle == .cancel ? .cancelButtonBackground : .button
             Button {
                 model.action()
-                if case .share(let content) = model.actionStyle {
-                    activityItem = ShareItem(content: content)
+                if case .share(let value, let title) = model.actionStyle {
+                    activityItem = ShareItem(value: value, title: title)
                 }
             } label: {
                 HStack {
@@ -166,7 +174,7 @@ struct HomeMessageView: View {
                                                 height: 40))
             .padding([.bottom], Const.Padding.buttonVerticalInset)
             .sheet(item: $activityItem) { activityItem in
-                ActivityViewController(activityItems: [activityItem.id]) { _, _, _, _ in
+                ActivityViewController(activityItems: [activityItem.item]) { _, _, _, _ in
                     // It would be good to review the parameters passed to this and
                     //  fire a pixel indicating what kind of interaction happened
                 }

@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "8794f9b1c0ff58fb8cc25ad6661bc62ae51924b8",
-          "version": "62.0.7"
+          "branch": "dominik/sync-setup-fix-account-state",
+          "revision": "c4e15908803826cd0ce1bc332dc576ed0a77cd11",
+          "version": null
         }
       },
       {

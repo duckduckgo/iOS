@@ -2,12 +2,21 @@
   "object": {
     "pins": [
       {
+        "package": "BloomFilter",
+        "repositoryURL": "https://github.com/duckduckgo/bloom_cpp.git",
+        "state": {
+          "branch": null,
+          "revision": "8076199456290b61b4544bf2f4caf296759906a0",
+          "version": "3.0.0"
+        }
+      },
+      {
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "dominik/sync-setup-fix-account-state",
-          "revision": "c4e15908803826cd0ce1bc332dc576ed0a77cd11",
-          "version": null
+          "branch": null,
+          "revision": "a1ab5637050156f800914e641d75dec97d3652e8",
+          "version": "63.0.4"
         }
       },
       {
@@ -24,8 +33,8 @@
         "repositoryURL": "https://github.com/duckduckgo/content-scope-scripts",
         "state": {
           "branch": null,
-          "revision": "63f77323f119ac61fdb483f9c25f02d5d09f49ba",
-          "version": "4.22.3"
+          "revision": "630eb2c4cf94055e630fd5b7daae71bed893ad0a",
+          "version": "4.22.4"
         }
       },
       {

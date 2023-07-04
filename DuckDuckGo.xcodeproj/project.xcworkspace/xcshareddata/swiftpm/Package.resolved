@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "dominik/sync-improve-crypter-performance",
-          "revision": "db07cf8adaee6ce431efb0b6ec28e7762d369a8b",
-          "version": null
+          "branch": null,
+          "revision": "bff444d6f54bdb904c1f16e5152bcfe515d32977",
+          "version": "64.0.0"
         }
       },
       {

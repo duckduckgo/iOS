@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "bff444d6f54bdb904c1f16e5152bcfe515d32977",
-          "version": "64.0.0"
+          "branch": "graeme/add-netp-package",
+          "revision": "c6ee080d79fd4fe5c9157baebb961ddf7de9d495",
+          "version": null
         }
       },
       {
@@ -161,6 +161,15 @@
           "branch": null,
           "revision": "4684440d03304e7638a2c8086895367e90987463",
           "version": "1.2.1"
+        }
+      },
+      {
+        "package": "WireGuardKit",
+        "repositoryURL": "https://github.com/duckduckgo/wireguard-apple",
+        "state": {
+          "branch": null,
+          "revision": "cf3c0f5132dbb8de08c46155a1bbd5e5bb6a47c1",
+          "version": "1.1.0"
         }
       }
     ]

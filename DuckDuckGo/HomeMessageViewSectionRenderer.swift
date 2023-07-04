@@ -120,11 +120,17 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
                         let self else { return }
 
                 switch action {
-                case .primaryAction:
+                case .primaryAction(let sharing):
+                    if !sharing {
+                        self.dismissHomeMessage(message, at: indexPath, in: collectionView)
+                    }
                     Pixel.fire(pixel: .remoteMessageShownPrimaryActionClicked,
                                withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
 
-                case .secondaryAction:
+                case .secondaryAction(let sharing):
+                    if !sharing {
+                        self.dismissHomeMessage(message, at: indexPath, in: collectionView)
+                    }
                     Pixel.fire(pixel: .remoteMessageShownSecondaryActionClicked,
                                withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
 
@@ -188,7 +194,7 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
 
 extension RemoteAction {
 
-    var isSharing: Bool {
+    var isShare: Bool {
         if case .share = self.actionStyle {
             return true
         }

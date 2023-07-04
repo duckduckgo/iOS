@@ -54,7 +54,8 @@ struct HomeMessageViewModelBuilder {
                                                 HomeMessageButtonViewModel(title: primaryActionText,
                                                                            actionStyle: primaryAction.actionStyle,
                                                                            action: mapActionToViewModel(remoteAction: primaryAction,
-                                                                                                        buttonAction: .primaryAction,
+                                                                                                        buttonAction:
+                                                                                .primaryAction(isShare: primaryAction.isShare),
                                                                                                         onDidClose: onDidClose))],
                                             onDidClose: onDidClose, onDidAppear: onDidAppear)
             case .bigTwoAction(let titleText, let descriptionText, let placeholder, let primaryActionText,
@@ -65,12 +66,14 @@ struct HomeMessageViewModelBuilder {
                                                 HomeMessageButtonViewModel(title: secondaryActionText,
                                                                            actionStyle: .cancel,
                                                                            action: mapActionToViewModel(remoteAction: secondaryAction,
-                                                                                                        buttonAction: .secondaryAction,
+                                                                                                        buttonAction:
+                                                                                .secondaryAction(isShare: secondaryAction.isShare),
                                                                                                         onDidClose: onDidClose)),
                                                 HomeMessageButtonViewModel(title: primaryActionText,
                                                                            actionStyle: primaryAction.actionStyle,
                                                                            action: mapActionToViewModel(remoteAction: primaryAction,
-                                                                                                        buttonAction: .primaryAction,
+                                                                                                        buttonAction:
+                                                                                .primaryAction(isShare: primaryAction.isShare),
                                                                                                         onDidClose: onDidClose))],
                                             onDidClose: onDidClose, onDidAppear: onDidAppear)
             }

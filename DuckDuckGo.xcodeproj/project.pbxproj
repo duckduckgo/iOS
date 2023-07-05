@@ -247,7 +247,6 @@
 		31DD208427395A5A008FB313 /* VoiceSearchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DD208327395A5A008FB313 /* VoiceSearchHelper.swift */; };
 		31E69A63280F4CB600478327 /* DuckUI in Frameworks */ = {isa = PBXBuildFile; productRef = 31E69A62280F4CB600478327 /* DuckUI */; };
 		31EF52E1281B3BDC0034796E /* AutofillLoginListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EF52E0281B3BDC0034796E /* AutofillLoginListItemViewModel.swift */; };
-		373D9B4529ED95C800381FDD /* BookmarksIndexesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373D9B4429ED95C800381FDD /* BookmarksIndexesTests.swift */; };
 		37445F972A155F7C0029F789 /* SyncDataProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37445F962A155F7C0029F789 /* SyncDataProviders.swift */; };
 		3760DFED299315EF0045A446 /* Waitlist in Frameworks */ = {isa = PBXBuildFile; productRef = 3760DFEC299315EF0045A446 /* Waitlist */; };
 		379E877429E97C8D001C8BB0 /* BookmarksCleanupErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379E877329E97C8D001C8BB0 /* BookmarksCleanupErrorHandling.swift */; };
@@ -280,7 +279,6 @@
 		4B6484F327FD1E350050A7A1 /* MenuControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E927FD1E340050A7A1 /* MenuControllerView.swift */; };
 		4B6484FC27FFD14F0050A7A1 /* WindowsBrowserWaitlistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484FB27FFD14F0050A7A1 /* WindowsBrowserWaitlistTests.swift */; };
 		4B75EA9226A266CB00018634 /* PrintingUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75EA9126A266CB00018634 /* PrintingUserScript.swift */; };
-		4B82E98025B634B800656FE7 /* TrackerRadarKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4B82E97F25B634B800656FE7 /* TrackerRadarKit */; };
 		4B83396C29AC0701003F7EA9 /* AppTrackingProtectionStoringModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B470EE2299C6DD10086EBDC /* AppTrackingProtectionStoringModel.swift */; };
 		4B83396F29AC1437003F7EA9 /* AppTrackingProtectionListModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B83396E29AC1437003F7EA9 /* AppTrackingProtectionListModelTests.swift */; };
 		4B83397129AC18C9003F7EA9 /* AppTrackingProtectionStoringModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B83397029AC18C9003F7EA9 /* AppTrackingProtectionStoringModelTests.swift */; };
@@ -1208,7 +1206,6 @@
 		31CC224828369B38001654A4 /* AutofillLoginSettingsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginSettingsListViewController.swift; sourceTree = "<group>"; };
 		31DD208327395A5A008FB313 /* VoiceSearchHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSearchHelper.swift; sourceTree = "<group>"; };
 		31EF52E0281B3BDC0034796E /* AutofillLoginListItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginListItemViewModel.swift; sourceTree = "<group>"; };
-		373D9B4429ED95C800381FDD /* BookmarksIndexesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksIndexesTests.swift; sourceTree = "<group>"; };
 		37445F962A155F7C0029F789 /* SyncDataProviders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncDataProviders.swift; sourceTree = "<group>"; };
 		379E877329E97C8D001C8BB0 /* BookmarksCleanupErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksCleanupErrorHandling.swift; sourceTree = "<group>"; };
 		37DF000929F9C416002B7D3E /* SyncMetadataDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMetadataDatabase.swift; sourceTree = "<group>"; };
@@ -2493,7 +2490,6 @@
 				98A50962294B48A400D10880 /* Bookmarks in Frameworks */,
 				1E60989B290009C700A508F9 /* Common in Frameworks */,
 				1E60989D290011E600A508F9 /* ContentBlocking in Frameworks */,
-				4B82E98025B634B800656FE7 /* TrackerRadarKit in Frameworks */,
 				F486D33425069BBB002D07D7 /* Kingfisher in Frameworks */,
 				CBC83E3429B631780008E19C /* Configuration in Frameworks */,
 				98A16C2D28A11D6200A6C003 /* BrowserServicesKit in Frameworks */,
@@ -3928,7 +3924,6 @@
 		987130BD294AAB8200AB05E0 /* BSK */ = {
 			isa = PBXGroup;
 			children = (
-				373D9B4429ED95C800381FDD /* BookmarksIndexesTests.swift */,
 				986B45CF299E30A50089D2D7 /* BookmarkEntityTests.swift */,
 				987130BF294AAB9E00AB05E0 /* BookmarkEditorViewModelTests.swift */,
 				987130C0294AAB9E00AB05E0 /* BookmarkListViewModelTests.swift */,
@@ -5229,7 +5224,6 @@
 			name = Core;
 			packageProductDependencies = (
 				F486D33325069BBB002D07D7 /* Kingfisher */,
-				4B82E97F25B634B800656FE7 /* TrackerRadarKit */,
 				C14882EC27F211A000D59F0C /* SwiftSoup */,
 				98A16C2C28A11D6200A6C003 /* BrowserServicesKit */,
 				1E7060BD28F88EE200E4CCDB /* Common */,
@@ -5357,7 +5351,6 @@
 				F486D2EF25069482002D07D7 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				F486D2FD25069744002D07D7 /* XCRemoteSwiftPackageReference "OHHTTPStubs" */,
 				F486D3022506975E002D07D7 /* XCRemoteSwiftPackageReference "swifter" */,
-				4B82E97E25B634B800656FE7 /* XCRemoteSwiftPackageReference "TrackerRadarKit" */,
 				C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */,
 				F42D541B29DCA40B004C4FF1 /* XCRemoteSwiftPackageReference "DesignResourcesKit" */,
@@ -6284,7 +6277,6 @@
 				B6AD9E3728D4510A0019CDE9 /* ContentBlockingUpdatingTests.swift in Sources */,
 				C14882E427F20D9A00D59F0C /* BookmarksImporterTests.swift in Sources */,
 				8588026A24E424EE00C24AB6 /* AppWidthObserverTests.swift in Sources */,
-				373D9B4529ED95C800381FDD /* BookmarksIndexesTests.swift in Sources */,
 				8588026624E420BD00C24AB6 /* LargeOmniBarStateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8247,20 +8239,12 @@
 				version = 3.3.0;
 			};
 		};
-		4B82E97E25B634B800656FE7 /* XCRemoteSwiftPackageReference "TrackerRadarKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/duckduckgo/TrackerRadarKit.git";
-			requirement = {
-				kind = exactVersion;
-				version = 1.2.1;
-			};
-		};
 		98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = exactVersion;
-				version = 62.0.4;
+				version = 64.0.0;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
@@ -8371,11 +8355,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4B2754EA29E8C7DF00394032 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
-		};
-		4B82E97F25B634B800656FE7 /* TrackerRadarKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4B82E97E25B634B800656FE7 /* XCRemoteSwiftPackageReference "TrackerRadarKit" */;
-			productName = TrackerRadarKit;
 		};
 		4B948E2529DCCDB9002531FA /* Persistence */ = {
 			isa = XCSwiftPackageProductDependency;

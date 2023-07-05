@@ -2283,8 +2283,7 @@ extension TabViewController: EmailManagerAliasPermissionDelegate {
 extension TabViewController: EmailManagerRequestDelegate {
 
     public var activeTask: URLSessionTask? {
-        get { return nil }
-        set {}
+        get { return nil }        
     }
 
     // swiftlint:disable function_parameter_count

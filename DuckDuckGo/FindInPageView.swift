@@ -27,6 +27,7 @@ protocol FindInPageViewDelegate: NSObjectProtocol {
 
 class FindInPageView: UIView {
 
+    @IBOutlet weak var container: UIView!
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var previousButton: UIButton!
     @IBOutlet weak var searchLoupe: UIImageView!
@@ -131,8 +132,14 @@ extension FindInPageView: Themable {
         inputText.textColor = theme.searchBarTextColor
         inputText.tintColor = theme.searchBarTextColor
         inputText.keyboardAppearance = theme.keyboardAppearance
-        searchLoupe.tintColor = theme.barTintColor
+        searchLoupe.tintColor = theme.barTintColor.withAlphaComponent(0.5)
         doneButton.setTitleColor(theme.barTintColor, for: .normal)
         activityView.style = theme.activityStyle
+    }
+}
+
+extension FindInPageView: NibLoading {
+    static func loadFromXib() -> FindInPageView {
+        return FindInPageView.load(nibName: "FindInPage")
     }
 }

@@ -702,6 +702,11 @@ class TabViewController: UIViewController {
 
     private func addDuckDuckGoEmailSignOutObserver() {
         NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onDuckDuckGoEmailIncontextSignup),
+                                               name: .emailDidIncontextSignup,
+                                               object: nil)
+
+        NotificationCenter.default.addObserver(self,
                                                selector: #selector(onDuckDuckGoEmailSignOut),
                                                name: .emailDidSignOut,
                                                object: nil)
@@ -709,6 +714,14 @@ class TabViewController: UIViewController {
 
     @objc func onTextSizeChange() {
         webView.adjustTextSize(appSettings.textSize)
+    }
+
+    @objc
+    private func onDuckDuckGoEmailIncontextSignup(_ notification: Notification) {
+        let controller = EmailSignupViewController()
+        controller.delegate = self
+        let navigationController = UINavigationController(rootViewController: controller)
+        self.present(navigationController, animated: true, completion: nil)
     }
 
     @objc func onDuckDuckGoEmailSignOut(_ notification: Notification) {
@@ -2320,6 +2333,14 @@ extension TabViewController: EmailManagerRequestDelegate {
         Pixel.fire(pixel: .emailAutofillKeychainError, withAdditionalParameters: parameters)
     }
 
+}
+
+// MARK: EmailSignupViewControllerDelegate
+extension TabViewController: EmailSignupViewControllerDelegate {
+
+    func emailSignupViewControllerDidFinish(_ controller: EmailSignupViewController) {
+        webView.evaluateJavaScript("window.openAutofillAfterClosingEmailProtectionTab()", in: nil, in: WKContentWorld.defaultClient)
+    }
 }
 
 // MARK: - Themable

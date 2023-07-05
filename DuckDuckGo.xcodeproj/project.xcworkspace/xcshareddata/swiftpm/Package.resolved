@@ -50,9 +50,9 @@
         "package": "Autofill",
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
-          "branch": null,
-          "revision": "44cd844b6bb5d8ccfefbd6e025817d800c26ad76",
-          "version": "7.2.0"
+          "branch": "shane/email-protection-saving",
+          "revision": "c1c18ca7589f61a092ff4b0cee45f1b82b0f1479",
+          "version": null
         }
       },
       {

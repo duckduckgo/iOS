@@ -2409,7 +2409,7 @@ extension TabViewController: SecureVaultManagerDelegate {
         if var credentials = data.credentials,
             AutofillSettingStatus.isAutofillEnabledInSettings,
             featureFlagger.isFeatureOn(.autofillCredentialsSaving) {
-            if let trigger = trigger {
+            if data.automaticallySavedCredentials, let trigger = trigger {
                 if trigger == AutofillUserScript.GetTriggerType.passwordGeneration {
                     autoSavedCredentialsId = credentials.account.id ?? ""
                     return

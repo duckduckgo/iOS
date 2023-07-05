@@ -171,13 +171,13 @@ class MainViewController: UIViewController {
         let superview = self.view!
 
         let height = view.constrainAttribute(.height, to: view.frame.height)
-        let bottom = superview.constrainView(view, by: .bottom)
+        let bottom = superview.constrainView(view, by: .bottom, to: .bottom)
 
         NSLayoutConstraint.activate([
             bottom,
-            superview.constrainView(view, by: .width),
+            superview.constrainView(view, by: .width, to: .width),
             height,
-            superview.constrainView(view, by: .centerX)
+            superview.constrainView(view, by: .centerX, to: .centerX)
         ])
 
         findInPageView = view

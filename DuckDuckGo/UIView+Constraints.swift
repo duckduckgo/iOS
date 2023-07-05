@@ -23,6 +23,7 @@ extension UIView {
 
     func constrainView(_ other: UIView,
                        by attribute: NSLayoutConstraint.Attribute,
+                       to otherAttribute: NSLayoutConstraint.Attribute,
                        relatedBy relation: NSLayoutConstraint.Relation = .equal,
                        multiplier: Double = 1.0,
                        constant: Double = 0.0) -> NSLayoutConstraint {
@@ -31,7 +32,7 @@ extension UIView {
                                   attribute: attribute,
                                   relatedBy: relation,
                                   toItem: other,
-                                  attribute: attribute,
+                                  attribute: otherAttribute,
                                   multiplier: multiplier,
                                   constant: constant)
 

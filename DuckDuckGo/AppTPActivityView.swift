@@ -53,19 +53,20 @@ struct AppTPActivityView: View {
     }
     
     var emptyState: some View {
-        VStack {
-            imageForState()
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 128, height: 96)
-                .padding(.bottom)
+        VStack(alignment: .center, spacing: 16) {
+            Text(UserText.appTPEmptyHeading)
+                .font(Font(uiFont: Const.Font.emptyHeading))
             
             Text(textForState())
                 .multilineTextAlignment(.center)
                 .font(Font(uiFont: Const.Font.info))
                 .foregroundColor(.infoText)
+                .frame(maxWidth: .infinity)
         }
-        .padding()
+        .frame(maxWidth: .infinity)
+        .padding(16)
+        .background(Color(designSystemColor: .surface))
+        .cornerRadius(Const.Size.cornerRadius)
         .padding(.top)
     }
     
@@ -168,11 +169,11 @@ struct AppTPActivityView: View {
                     manageSection
                 }
 
-                if viewModel.sections.count > 0 {
-                    listState
-                } else {
+//                if viewModel.sections.count > 0 {
+//                    listState
+//                } else {
                     emptyState
-                }
+//                }
             }
             .padding()
         }
@@ -218,6 +219,7 @@ private enum Const {
     enum Font {
         static let sectionHeader = UIFont.systemFont(ofSize: 12)
         static let info = UIFont.appFont(ofSize: 16)
+        static let emptyHeading = UIFont.semiBoldAppFont(ofSize: 17)
     }
     
     enum Size {

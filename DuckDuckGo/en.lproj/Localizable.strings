@@ -170,7 +170,10 @@
 "appTP.empty.disabled.info" = "Enable App Tracking Protection so we can block pesky trackers in other apps.";
 
 /* Info string informing the user we're looking for trackers in other apps. */
-"appTP.empty.enabled.info" = "We’re looking for trackers in your apps...";
+"appTP.empty.enabled.heading" = "We’re blocking hidden trackers";
+
+/* Info string informing the user we're looking for trackers in other apps. */
+"appTP.empty.enabled.info" = "Come back soon to see a list of all the app trackers we’ve blocked.";
 
 /* First answer for AppTP FAQ page */
 "appTP.faq.answer1" = "App Tracking Protection blocks app trackers from other companies, like when Facebook tries to track you in a banking app. Companies may still track you in apps they own.";

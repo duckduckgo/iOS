@@ -546,9 +546,9 @@ public struct UserText {
     public static let appTPCellEnabled = NSLocalizedString("appTP.cell.enabled", value: "Enabled", comment: "String indicating AppTP is enabled when viewed from the settings screen")
     public static let appTPCellDisabled = NSLocalizedString("appTP.cell.disabled", value: "Disabled", comment: "String indicating AppTP is disabled when viewed from the settings screen")
     
+    public static let appTPEmptyHeading = NSLocalizedString("appTP.empty.enabled.heading", value: "We’re blocking hidden trackers", comment: "Info string informing the user we're looking for trackers in other apps.")
     public static let appTPEmptyDisabledInfo = NSLocalizedString("appTP.empty.disabled.info", value: "Enable App Tracking Protection so we can block pesky trackers in other apps.", comment: "Info string informing the user what App Tracking Protection does.")
-    
-    public static let appTPEmptyEnabledInfo = NSLocalizedString("appTP.empty.enabled.info", value: "We’re looking for trackers in your apps...", comment: "Info string informing the user we're looking for trackers in other apps.")
+    public static let appTPEmptyEnabledInfo = NSLocalizedString("appTP.empty.enabled.info", value: "Come back soon to see a list of all the app trackers we’ve blocked.", comment: "Info string informing the user we're looking for trackers in other apps.")
     
     public static func appTPTrackingAttempts(count: Int32) -> String {
         let message = NSLocalizedString("appTP.trackingattempts", comment: "Do not translate. StringsDict entry -- Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts")

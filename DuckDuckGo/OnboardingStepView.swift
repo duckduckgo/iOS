@@ -50,7 +50,6 @@ struct OnboardingStepView: View {
             
         }
         .multilineTextAlignment(.center)
-        .padding(.horizontal, Const.Size.horizontalPadding)
         .padding(.top, Const.Size.topPadding)
         .background(Color(designSystemColor: .surface))
     }

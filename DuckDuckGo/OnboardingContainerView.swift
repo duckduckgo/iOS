@@ -39,6 +39,20 @@ struct OnboardingContainerView: View {
     
     @State var currentModel: Int = 0
     
+    init(viewModels: [OnboardingStepViewModel], enableAppTP: @escaping () -> Void, isLoading: Binding<Bool>) {
+        self.viewModels = viewModels
+        self.enableAppTP = enableAppTP
+        self._isLoading = isLoading
+        
+        let coloredAppearance = UINavigationBarAppearance()
+        coloredAppearance.configureWithOpaqueBackground()
+        coloredAppearance.backgroundColor = UIColor(designSystemColor: .surface)
+        
+        UINavigationBar.appearance().standardAppearance = coloredAppearance
+        UINavigationBar.appearance().compactAppearance = coloredAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance
+    }
+    
     func nextModel() {
         withAnimation {
             currentModel += 1

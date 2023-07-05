@@ -518,6 +518,7 @@ public struct UserText {
     public static let appTPOnboardingContinueButton = NSLocalizedString("appTP.onboarding.continueButton", value: "Continue", comment: "Button title for AppTP onboarding")
     public static let appTPOnboardingEnableButton = NSLocalizedString("appTP.onboarding.enableeButton", value: "Enable App Tracking Protection", comment: "Button title for AppTP onboarding to enable AppTP")
     
+    public static let appTPAboutNavTitle = NSLocalizedString("appTP.about.navTitle", value: "About App Trackers", comment: "Navigation Title for AppTP about page")
     public static let appTPAboutTitle = NSLocalizedString("appTP.about.title", value: "What Are App Trackers?", comment: "Title for AppTP about page")
     public static let appTPAboutContent1 = NSLocalizedString("appTP.about.content1", value: "You’ve probably heard about companies like Google and Facebook tracking you behind the scenes on third-party websites. But did you know they also track your personal information through apps on your device?\n\nIn 2022, DuckDuckGo found that ", comment: "First part of about page content (note the trailing space)")
     public static let appTPAboutContent2 = NSLocalizedString("appTP.about.content2", value: "over 85% of free iOS apps tested contained hidden trackers from other companies.", comment: "Second part of about page content (note the trailing space)")

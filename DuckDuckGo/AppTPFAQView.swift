@@ -22,6 +22,17 @@ import SwiftUI
 #if APP_TRACKING_PROTECTION
 
 struct AppTPFAQView: View {
+    
+    init() {
+        let coloredAppearance = UINavigationBarAppearance()
+        coloredAppearance.configureWithTransparentBackground()
+        coloredAppearance.backgroundColor = UIColor(designSystemColor: .background)
+        
+        UINavigationBar.appearance().standardAppearance = coloredAppearance
+        UINavigationBar.appearance().compactAppearance = coloredAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance
+    }
+    
     var faqBody: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Const.Size.stackSpacing) {

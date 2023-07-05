@@ -23,6 +23,8 @@ import Core
 #if APP_TRACKING_PROTECTION
 
 struct AppTPActivityView: View {
+    @Environment(\.colorScheme) var scheme
+    
     @ObservedObject var viewModel: AppTrackingProtectionListViewModel
     @ObservedObject var feedbackModel: AppTrackingProtectionFeedbackModel
     @ObservedObject var toggleViewModel = AppTPToggleViewModel()
@@ -191,23 +193,24 @@ struct AppTPActivityView: View {
     }
     
     var body: some View {
-        if viewModel.appTPUsed {
-            scrollWithBackgroud
-        } else {
-            OnboardingContainerView(
-                viewModels: OnboardingStepViewModel.onboardingData,
-                enableAppTP: enableAppTPFromOnboarding,
-                isLoading: $isConnectingForOnboarding
-            )
-                .onChange(of: toggleViewModel.firewallStatus) { value in
-                    if value == .connected {
-                        setNavColor?(false)
-                        viewModel.appTPUsed = true
-                    } else if value == .invalid {
-                        isConnectingForOnboarding = false
+        scrollWithBackgroud
+            .sheet(isPresented: $viewModel.isOnboarding) {
+                NavigationView {
+                    OnboardingContainerView(
+                        viewModels: OnboardingStepViewModel.onboardingData,
+                        enableAppTP: enableAppTPFromOnboarding,
+                        isLoading: $isConnectingForOnboarding
+                    )
+                    .onChange(of: toggleViewModel.firewallStatus) { value in
+                        if value == .connected {
+                            viewModel.appTPUsed = true
+                        } else if value == .invalid {
+                            isConnectingForOnboarding = false
+                        }
                     }
                 }
-        }
+                .accentColor(Color(scheme == .dark ? UIColor.lightMercury : UIColor.darkGreyish))
+            }
     }
 }
 

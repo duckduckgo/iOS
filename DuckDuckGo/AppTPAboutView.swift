@@ -38,6 +38,7 @@ struct AppTPAboutView: View {
             .frame(maxWidth: .infinity)
             .padding(Const.Size.stackPadding)
         }
+        .navigationTitle(Text(UserText.appTPAboutNavTitle))
     }
     
     @ViewBuilder

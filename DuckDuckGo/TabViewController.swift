@@ -2282,8 +2282,14 @@ extension TabViewController: EmailManagerAliasPermissionDelegate {
 // MARK: - EmailManagerRequestDelegate
 extension TabViewController: EmailManagerRequestDelegate {
 
+    public var activeTask: URLSessionTask? {
+        get { return nil }
+        set {}
+    }
+
     // swiftlint:disable function_parameter_count
-    func emailManager(_ emailManager: EmailManager, requested url: URL, method: String, headers: HTTPHeaders, parameters: [String: String]?, httpBody: Data?, timeoutInterval: TimeInterval) async throws -> Data {
+    func emailManager(_ emailManager: EmailManager, requested url: URL, method: String, headers: [String: String], parameters: [String: String]?, httpBody: Data?, timeoutInterval: TimeInterval) async throws -> Data {
+
         let method = APIRequest.HTTPMethod(rawValue: method) ?? .post
         let configuration = APIRequest.Configuration(url: url,
                                                      method: method,
@@ -2398,12 +2404,12 @@ extension TabViewController: SecureVaultManagerDelegate {
 
     func secureVaultManager(_ vault: SecureVaultManager,
                             promptUserToStoreAutofillData data: AutofillData,
-                            hasGeneratedPassword generatedPassword: Bool,
                             withTrigger trigger: AutofillUserScript.GetTriggerType?) {
+        
         if var credentials = data.credentials,
             AutofillSettingStatus.isAutofillEnabledInSettings,
             featureFlagger.isFeatureOn(.autofillCredentialsSaving) {
-            if generatedPassword, let trigger = trigger {
+            if let trigger = trigger {
                 if trigger == AutofillUserScript.GetTriggerType.passwordGeneration {
                     autoSavedCredentialsId = credentials.account.id ?? ""
                     return

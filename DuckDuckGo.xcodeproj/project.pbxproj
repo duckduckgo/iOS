@@ -390,7 +390,6 @@
 		85514FFD2372DA0100DBC528 /* ios13-home-row.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 85514FFC2372DA0000DBC528 /* ios13-home-row.mp4 */; };
 		8551912724746EDC0010FDD0 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8551912624746EDC0010FDD0 /* SnapshotHelper.swift */; };
 		85582E0029D7409700E9AE35 /* SyncSettingsViewController+PDFRendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85582DFF29D7409700E9AE35 /* SyncSettingsViewController+PDFRendering.swift */; };
-		855933312A21425C000AC4DB /* MacPromoExperimentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8559332F2A214254000AC4DB /* MacPromoExperimentTests.swift */; };
 		855D914D2063EF6A00C4B448 /* TabSwitcherTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855D914C2063EF6A00C4B448 /* TabSwitcherTransition.swift */; };
 		8563A03C1F9288D600F04442 /* BrowserChromeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */; };
 		8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A34A1FC8D96B00239327 /* LaunchTabNotification.swift */; };
@@ -1339,7 +1338,6 @@
 		85519124247468580010FDD0 /* TrackerRadarIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerRadarIntegrationTests.swift; sourceTree = "<group>"; };
 		8551912624746EDC0010FDD0 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		85582DFF29D7409700E9AE35 /* SyncSettingsViewController+PDFRendering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SyncSettingsViewController+PDFRendering.swift"; sourceTree = "<group>"; };
-		8559332F2A214254000AC4DB /* MacPromoExperimentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacPromoExperimentTests.swift; sourceTree = "<group>"; };
 		855D914C2063EF6A00C4B448 /* TabSwitcherTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcherTransition.swift; sourceTree = "<group>"; };
 		8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserChromeManager.swift; sourceTree = "<group>"; };
 		8565A34A1FC8D96B00239327 /* LaunchTabNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTabNotification.swift; sourceTree = "<group>"; };
@@ -3575,14 +3573,6 @@
 			path = OpenAction;
 			sourceTree = "<group>";
 		};
-		8559332E2A21423B000AC4DB /* MacPromoExperiment */ = {
-			isa = PBXGroup;
-			children = (
-				8559332F2A214254000AC4DB /* MacPromoExperimentTests.swift */,
-			);
-			name = MacPromoExperiment;
-			sourceTree = "<group>";
-		};
 		858566F1252E55AE007501B8 /* Debug */ = {
 			isa = PBXGroup;
 			children = (
@@ -4294,7 +4284,6 @@
 		F12D98401F266B30003C2EE3 /* DuckDuckGo */ = {
 			isa = PBXGroup;
 			children = (
-				8559332E2A21423B000AC4DB /* MacPromoExperiment */,
 				F17669A21E411D63003D3222 /* Application */,
 				026F08B629B7DC130079B9DF /* AppTrackingProtection */,
 				981FED7222045FFA008488D7 /* AutoClear */,
@@ -6159,7 +6148,6 @@
 				85D2187224BF24F2004373D2 /* NotFoundCachingDownloaderTests.swift in Sources */,
 				C111B26927F579EF006558B1 /* BookmarkOrFolderTests.swift in Sources */,
 				026F08B829B7DC480079B9DF /* EmbeddedAppTPDataTests.swift in Sources */,
-				855933312A21425C000AC4DB /* MacPromoExperimentTests.swift in Sources */,
 				851CD674244D7E6000331B98 /* UserDefaultsExtension.swift in Sources */,
 				850559D223CF710C0055C0D5 /* WebCacheManagerTests.swift in Sources */,
 				987130C5294AAB9F00AB05E0 /* BookmarkEditorViewModelTests.swift in Sources */,

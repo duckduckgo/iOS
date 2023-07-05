@@ -2282,10 +2282,12 @@ extension TabViewController: EmailManagerAliasPermissionDelegate {
 // MARK: - EmailManagerRequestDelegate
 extension TabViewController: EmailManagerRequestDelegate {
 
+    // swiftlint:disable unused_setter_value
     public var activeTask: URLSessionTask? {
         get { return nil }
         set {}
     }
+    // swiftlint:enable unused_setter_value
 
     // swiftlint:disable function_parameter_count
     func emailManager(_ emailManager: EmailManager, requested url: URL, method: String, headers: [String: String], parameters: [String: String]?, httpBody: Data?, timeoutInterval: TimeInterval) async throws -> Data {

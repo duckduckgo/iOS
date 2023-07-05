@@ -100,7 +100,7 @@ class MainViewController: UIViewController {
     private let previewsSource = TabPreviewsSource()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private var launchTabObserver: LaunchTabNotification.Observer?
-
+    
     private let appTrackingProtectionDatabase: CoreDataDatabase
     private let bookmarksDatabase: CoreDataDatabase
     private let bookmarksDatabaseCleaner: BookmarkDatabaseCleaner
@@ -227,11 +227,6 @@ class MainViewController: UIViewController {
         
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             showFireButtonPulse()
-        }
-
-        if MacPromoExperiment().shouldShowSheet() {
-            let controller = MacPromoViewController()
-            present(controller, animated: true)
         }
     }
 

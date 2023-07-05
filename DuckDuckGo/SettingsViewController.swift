@@ -56,6 +56,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var windowsBrowserWaitlistCell: UITableViewCell!
     @IBOutlet weak var windowsBrowserWaitlistAccessoryText: UILabel!
     @IBOutlet weak var appTPCell: UITableViewCell!
+    @IBOutlet weak var netPCell: UITableViewCell!
     @IBOutlet weak var longPressCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
     @IBOutlet weak var textSizeCell: UITableViewCell!
@@ -114,6 +115,14 @@ class SettingsViewController: UITableViewController {
 #endif
     }()
 
+    private lazy var shouldShowNetPCell: Bool = {
+#if NETWORK_PROTECTION
+        return featureFlagger.isFeatureOn(.networkProtection)
+#else
+        return false
+#endif
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -147,6 +156,7 @@ class SettingsViewController: UITableViewController {
         configureMacBrowserWaitlistCell()
         configureWindowsBrowserWaitlistCell()
         configureAppTPCell()
+        configureNetPCell()
         
         // Make sure multiline labels are correctly presented
         tableView.setNeedsLayout()
@@ -337,6 +347,13 @@ class SettingsViewController: UITableViewController {
 #endif
     }
 
+    private func configureNetPCell() {
+        netPCell.isHidden = !shouldShowNetPCell
+        netPCell.textLabel?.textColor = ThemeManager.shared.currentTheme.tableCellTextColor
+        netPCell.detailTextLabel?.textColor = ThemeManager.shared.currentTheme.tableCellAccessoryTextColor
+        netPCell.detailTextLabel?.text = UserText.netPCellDetail
+    }
+
     private func configureDebugCell() {
         debugCell.isHidden = !shouldShowDebugCell
     }
@@ -400,6 +417,9 @@ class SettingsViewController: UITableViewController {
     }
 #endif
 
+    private func showNetP() {
+    }
+
     private func showWindowsBrowserWaitlistViewController() {
         navigationController?.pushViewController(WindowsWaitlistViewController(nibName: nil, bundle: nil), animated: true)
     }
@@ -438,6 +458,12 @@ class SettingsViewController: UITableViewController {
         case appTPCell:
 #if APP_TRACKING_PROTECTION
             showAppTP()
+#else
+            break
+#endif
+        case netPCell:
+#if APP_TRACKING_PROTECTION // TODO: Maybe add real precompiler flag
+            showNetP()
 #else
             break
 #endif
@@ -503,7 +529,7 @@ class SettingsViewController: UITableViewController {
             return CGFloat.leastNonzeroMagnitude
         } else if debugSectionIndex == section && !shouldShowDebugCell {
             return CGFloat.leastNonzeroMagnitude
-        } else if moreFromDDGSectionIndex == section && !shouldShowAppTPCell {
+        } else if moreFromDDGSectionIndex == section && !shouldShowAppTPCell { // TODO: Figure out what to do here
             return CGFloat.leastNonzeroMagnitude
         } else {
             return super.tableView(tableView, heightForFooterInSection: section)

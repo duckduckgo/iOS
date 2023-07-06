@@ -2280,55 +2280,7 @@ extension TabViewController: EmailManagerAliasPermissionDelegate {
 }
 
 // MARK: - EmailManagerRequestDelegate
-extension TabViewController: EmailManagerRequestDelegate {
-
-    // swiftlint:disable unused_setter_value
-    public var activeTask: URLSessionTask? {
-        get { return nil }
-        set {}
-    }
-    // swiftlint:enable unused_setter_value
-
-    // swiftlint:disable function_parameter_count
-    func emailManager(_ emailManager: EmailManager, requested url: URL, method: String, headers: [String: String], parameters: [String: String]?, httpBody: Data?, timeoutInterval: TimeInterval) async throws -> Data {
-
-        let method = APIRequest.HTTPMethod(rawValue: method) ?? .post
-        let configuration = APIRequest.Configuration(url: url,
-                                                     method: method,
-                                                     queryParameters: parameters ?? [:],
-                                                     headers: APIRequest.Headers(additionalHeaders: headers),
-                                                     body: httpBody,
-                                                     timeoutInterval: timeoutInterval)
-        let request = APIRequest(configuration: configuration, urlSession: .session())
-        return try await request.fetch().data ?? { throw AliasRequestError.noDataError }()
-    }
-    // swiftlint:enable function_parameter_count
-    
-    func emailManagerKeychainAccessFailed(accessType: EmailKeychainAccessType, error: EmailKeychainAccessError) {
-        var parameters = [
-            PixelParameters.emailKeychainAccessType: accessType.rawValue,
-            PixelParameters.emailKeychainError: error.errorDescription
-        ]
-        
-        if case let .keychainLookupFailure(status) = error {
-            parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
-            parameters[PixelParameters.emailKeychainKeychainOperation] = "lookup"
-        }
-        
-        if case let .keychainDeleteFailure(status) = error {
-            parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
-            parameters[PixelParameters.emailKeychainKeychainOperation] = "delete"
-        }
-        
-        if case let .keychainSaveFailure(status) = error {
-            parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
-            parameters[PixelParameters.emailKeychainKeychainOperation] = "save"
-        }
-        
-        Pixel.fire(pixel: .emailAutofillKeychainError, withAdditionalParameters: parameters)
-    }
-
-}
+extension TabViewController: EmailManagerRequestDelegate {}
 
 // MARK: - Themable
 extension TabViewController: Themable {

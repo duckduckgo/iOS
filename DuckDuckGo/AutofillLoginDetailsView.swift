@@ -72,7 +72,7 @@ struct AutofillLoginDetailsView: View {
                              autoCapitalizationType: .words,
                              disableAutoCorrection: false)
             }
-    
+
             Section {
                 editableCell(UserText.autofillLoginDetailsUsername,
                              subtitle: $viewModel.username,
@@ -126,21 +126,19 @@ struct AutofillLoginDetailsView: View {
                              buttonImageName: "Copy-24",
                              buttonAccessibilityLabel: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsUsername),
                              buttonAction: { viewModel.copyToPasteboard(.username) })
-                
-                CopyableCell(title: UserText.autofillLoginDetailsPassword,
-                             subtitle: viewModel.userVisiblePassword,
-                             selectedCell: $viewModel.selectedCell,
-                             isMonospaced: true,
-                             actionTitle: viewModel.isPasswordHidden ? UserText.autofillShowPassword : UserText.autofillHidePassword,
-                             action: { viewModel.isPasswordHidden.toggle() },
-                             secondaryActionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
-                             secondaryAction: { viewModel.copyToPasteboard(.password) },
-                             buttonImageName: "Copy-24",
-                             buttonAccessibilityLabel: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
-                             buttonAction: { viewModel.copyToPasteboard(.password) })
+                if viewModel.hasValidPrivateEmail {
+                    privateEmailCell()
+
+                } else {
+                    passwordCell()
+                }
             }
 
-            
+            // Password should be displayed in a separate section if theres a private email
+            if viewModel.hasValidPrivateEmail {
+                Section { passwordCell() }
+            }
+
             Section {
                 CopyableCell(title: UserText.autofillLoginDetailsAddress,
                              subtitle: viewModel.address,
@@ -234,6 +232,36 @@ struct AutofillLoginDetailsView: View {
         }
         .listRowBackground(Color(designSystemColor: .surface))
     }
+
+    private func passwordCell() -> some View {
+        CopyableCell(title: UserText.autofillLoginDetailsPassword,
+                     subtitle: viewModel.userVisiblePassword,
+                     selectedCell: $viewModel.selectedCell,
+                     isMonospaced: true,
+                     actionTitle: viewModel.isPasswordHidden ? UserText.autofillShowPassword : UserText.autofillHidePassword,
+                     action: { viewModel.isPasswordHidden.toggle() },
+                     secondaryActionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
+                     secondaryAction: { viewModel.copyToPasteboard(.password) },
+                     buttonImageName: "Copy-24",
+                     buttonAccessibilityLabel: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
+                     buttonAction: { viewModel.copyToPasteboard(.password) })
+    }
+
+
+    private func privateEmailCell() -> some View {
+
+        HStack {
+            VStack(alignment: .leading, spacing: 3) {
+                Text("Duck Address").label4Style()
+                Text("Activated").label4Style(design: .default,
+                                              foregroundColorLight: .gray50,
+                                              foregroundColorDark: .gray30)
+            }
+            Toggle("", isOn: $viewModel.privateEmailStatusBool)
+                .disabled(viewModel.privateEmailRequestInProgress)
+        }
+    }
+
 }
 
 struct ClearTextField: View {

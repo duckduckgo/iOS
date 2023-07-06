@@ -149,9 +149,7 @@ struct AutofillLoginDetailsView: View {
                              buttonAccessibilityLabel: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsUsername),
                              buttonAction: { viewModel.copyToPasteboard(.username) })
 
-                if viewModel.hasValidPrivateEmail &&
-                    viewModel.isSignedIn &&
-                    (viewModel.privateEmailStatus == .active || viewModel.privateEmailStatus == .inactive) {
+                if viewModel.shouldDisplayPrivateEmailAddress {
                     privateEmailCell()
 
                 } else {
@@ -160,7 +158,7 @@ struct AutofillLoginDetailsView: View {
             }
 
             // Password should be displayed in a separate section if theres a private email
-            if viewModel.hasValidPrivateEmail {
+            if viewModel.shouldDisplayPrivateEmailAddress {
                 Section { passwordCell() }
             }
 

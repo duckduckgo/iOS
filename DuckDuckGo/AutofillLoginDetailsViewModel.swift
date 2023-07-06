@@ -122,6 +122,10 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                                  button: UserText.autofillActivate)
     }
 
+    var shouldDisplayPrivateEmailAddress: Bool {
+        return hasValidPrivateEmail && isSignedIn && (privateEmailStatus == .active || privateEmailStatus == .inactive)
+    }
+
     private var previousUsername: String = ""
     
     private var passwordData: Data {

@@ -64,8 +64,8 @@ class ReportBrokenSiteViewController: UIViewController {
         dismiss(animated: true)
     }
     
-    func submitForm(category: BrokenSite.Category, description: String) {
-        brokenSiteInfo?.send(with: category.rawValue, description: description)
+    func submitForm(category: BrokenSite.Category?, description: String) {
+        brokenSiteInfo?.send(with: category?.rawValue, description: description)
         ActionMessageView.present(message: UserText.feedbackSumbittedConfirmation)
         dismiss(animated: true)
     }

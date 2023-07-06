@@ -18,13 +18,14 @@
 //
 
 import SwiftUI
+import DuckUI
 
 struct ReportBrokenSiteView: View {
     
     let categories: [BrokenSite.Category]
-    let submitReport: (BrokenSite.Category, String) -> Void
+    let submitReport: (BrokenSite.Category?, String) -> Void
     
-    @State private var selectedCategory: BrokenSite.Category = BrokenSite.Category.other
+    @State private var selectedCategory: BrokenSite.Category?
     
     @State private var description: String = ""
     @State private var placeholderText: String = UserText.brokenSiteCommentPlaceholder
@@ -57,11 +58,18 @@ struct ReportBrokenSiteView: View {
             Section {
                 HStack {
                     Picker("", selection: $selectedCategory) {
+                        HStack {
+                            Text(UserText.brokenSiteCategoryPlaceholder)
+                            Spacer()
+                        }
+                        .tag(nil as BrokenSite.Category?)
+                        
                         ForEach(categories) { cat in
                             HStack {
                                 Text(cat.categoryText)
                                 Spacer()
                             }
+                            .tag(Optional(cat))
                         }
                     }
                     .labelsHidden()
@@ -99,14 +107,11 @@ struct ReportBrokenSiteView: View {
                     submitForm()
                 }, label: {
                     Text(UserText.appTPReportSubmit)
-                        .font(Font(uiFont: Const.Font.button))
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .foregroundColor(Color.buttonLabelColor)
                 })
-                .buttonStyle(PlainButtonStyle())
-                .frame(height: Const.Size.buttonHeight)
-                .listRowBackground(Color.buttonColor)
+                .buttonStyle(PrimaryButtonStyle())
+                .listRowBackground(Color.clear)
             }
+            .listRowInsets(EdgeInsets())
         }
     }
     
@@ -140,11 +145,6 @@ private enum Const {
         static let pickerPadding: CGFloat = -12
         static let buttonHeight: CGFloat = 30
     }
-}
-
-private extension Color {
-    static let buttonColor = Color(designSystemColor: .accent)
-    static let buttonLabelColor = Color("AppTPBreakageButtonLabel")
 }
 
 struct ReportBrokenSiteView_Previews: PreviewProvider {

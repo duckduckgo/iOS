@@ -598,6 +598,9 @@
 /* Broken Site Category */
 "brokensite.category.videos" = "Video didn’t play";
 
+/* Broken Site Category Placeholder */
+"brokensite.categoryPlaceholder" = "Pick your issue from the list...";
+
 /* Broken Site Category Section Title */
 "brokensite.categoryTitle" = "SELECT A CATEGORY";
 

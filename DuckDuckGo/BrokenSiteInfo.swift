@@ -84,10 +84,10 @@ public struct BrokenSiteInfo {
         }
     }
     
-    func send(with category: String, description: String) {
+    func send(with category: String?, description: String) {
         
         let parameters = [Keys.url: normalize(url),
-                          Keys.category: category,
+                          Keys.category: category ?? "",
                           Keys.description: description,
                           Keys.upgradedHttps: httpsUpgrade ? "true" : "false",
                           Keys.siteType: isDesktop ? "desktop" : "mobile",

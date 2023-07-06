@@ -1,49 +1,49 @@
-name: Make App Store Connect Release
+name: Make TestFlight Alpha Build
 
 on:
-  workflow_dispatch:
-    inputs:
-      destination:
-        description: "Type of release (App Store or Beta)"
-        required: true
-        default: appstore
-        type: choice
-        options:
-        - appstore
-        - beta
-      asana-task-url:
-        description: "Asana release task URL"
-        required: false
-        type: string
+  # workflow_dispatch:
+  #   inputs:
+  #     destination:
+  #       description: "Upload destination (App Store or TestFlight)"
+  #       required: true
+  #       default: appstore
+  #       type: choice
+  #       options:
+  #       - appstore
+  #       - testflight
+  #     asana-task-url:
+  #       description: "Asana release task URL"
+  #       required: false
+  #       type: string
 
   pull_request:
     branches:
-    - release/**
-    - '!release/**-' # filter out PRs matching that pattern
+    - develop
+    - '!develop' # filter out PRs matching that pattern
     types: [closed]
 
 jobs:
   make-release:
     if: github.event.action == 0 || github.event.pull_request.merged == true # empty string returns 0; for case when workflow is triggered manually
     runs-on: macos-13
-    name: Make App Store Connect Release
+    name: Make TestFlight Alpha Build
 
     steps:
 
-    - name: Set destination output
-      id: destination
-      run: |
-        INPUT_DESTINATION=${{ github.event.inputs.destination }}
-        echo "destination=${INPUT_DESTINATION:-"appstore"}" >> $GITHUB_OUTPUT
+    # - name: Set destination output
+    #   id: destination
+    #   run: |
+    #     INPUT_DESTINATION=${{ github.event.inputs.destination }}
+    #     echo "destination=${INPUT_DESTINATION:-"appstore"}" >> $GITHUB_OUTPUT
 
-    - name: Assert release branch
-      if: steps.destination.outputs.destination == 'appstore'
-      run: |
-        case "${{ github.ref }}" in
-          *release/*) ;;
-          *hotfix/*) ;;
-          *) echo "👎 Not a release or hotfix branch"; exit 1 ;;
-        esac
+    # - name: Assert release branch
+    #   if: steps.destination.outputs.destination == 'appstore'
+    #   run: |
+    #     case "${{ github.ref }}" in
+    #       *release/*) ;;
+    #       *hotfix/*) ;;
+    #       *) echo "👎 Not a release or hotfix branch"; exit 1 ;;
+    #     esac
 
     - name: Register SSH keys for access to certificates
       uses: webfactory/ssh-agent@v0.7.0
@@ -97,28 +97,28 @@ jobs:
         name: DuckDuckGo-${{ steps.destination.outputs.destination }}-dSYM-${{ env.app_version }}
         path: ${{ env.dsyms_path }}
 
-    - name: Get Asana Task ID
-      id: get-task-id
-      if: github.event.inputs.asana-task-url
-      run: |
-        task_url_regex='^https://app.asana.com/[0-9]/[0-9]*/([0-9]*)/f$'
-        if [[ "${{ github.event.inputs.asana-task-url }}" =~ ${task_url_regex} ]]; then
-          echo "task_id=${BASH_REMATCH[1]}" >> $GITHUB_OUTPUT
-        else
-          echo "::error::Asana Task URL has incorrect format (attempted to match ${task_url_regex})."
-        fi
+    # - name: Get Asana Task ID
+    #   id: get-task-id
+    #   if: github.event.inputs.asana-task-url
+    #   run: |
+    #     task_url_regex='^https://app.asana.com/[0-9]/[0-9]*/([0-9]*)/f$'
+    #     if [[ "${{ github.event.inputs.asana-task-url }}" =~ ${task_url_regex} ]]; then
+    #       echo "task_id=${BASH_REMATCH[1]}" >> $GITHUB_OUTPUT
+    #     else
+    #       echo "::error::Asana Task URL has incorrect format (attempted to match ${task_url_regex})."
+    #     fi
 
-    - name: Upload debug symbols to Asana
-      if: github.event.inputs.asana-task-url
-      env:
-        ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
-      run: |
-        asana_dsyms_path="${{ github.workspace }}/DuckDuckGo-${{ env.app_version }}-dSYM.zip"
-        mv -f "${{ env.dsyms_path }}" "$asana_dsyms_path"
+    # - name: Upload debug symbols to Asana
+    #   if: github.event.inputs.asana-task-url
+    #   env:
+    #     ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+    #   run: |
+    #     asana_dsyms_path="${{ github.workspace }}/DuckDuckGo-${{ env.app_version }}-dSYM.zip"
+    #     mv -f "${{ env.dsyms_path }}" "$asana_dsyms_path"
 
-        curl -s "https://app.asana.com/api/1.0/tasks/${{ steps.get-task-id.outputs.task_id }}/attachments" \
-          -H "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
-          --form "file=@${asana_dsyms_path};type=application/zip"
+    #     curl -s "https://app.asana.com/api/1.0/tasks/${{ steps.get-task-id.outputs.task_id }}/attachments" \
+    #       -H "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
+    #       --form "file=@${asana_dsyms_path};type=application/zip"
 
     - name: Send Mattermost message
       env:

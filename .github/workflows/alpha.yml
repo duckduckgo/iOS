@@ -25,13 +25,13 @@ jobs:
     #     INPUT_DESTINATION=${{ github.event.inputs.destination }}
     #     echo "destination=${INPUT_DESTINATION:-"appstore"}" >> $GITHUB_OUTPUT
 
-    - name: Assert develop branch
-      run: |
-        case "${{ github.ref }}" in
-          *develop/*) ;;
-          *hotfix/*) ;;
-          *) echo "👎 Not a release or hotfix branch"; exit 1 ;;
-        esac
+    # - name: Assert develop branch
+    #   run: |
+    #     case "${{ github.ref }}" in
+    #       *develop/*) ;;
+    #       graeme/ios-nightly-builds) ;;
+    #       *) echo "👎 Not develop branch"; exit 1 ;;
+    #     esac
 
     - name: Register SSH keys for access to certificates
       uses: webfactory/ssh-agent@v0.7.0

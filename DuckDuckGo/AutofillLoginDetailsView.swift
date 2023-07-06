@@ -253,12 +253,15 @@ struct AutofillLoginDetailsView: View {
         HStack {
             VStack(alignment: .leading, spacing: 3) {
                 Text("Duck Address").label4Style()
-                Text("Activated").label4Style(design: .default,
+                Text(viewModel.privateEmailMessage).label4Style(design: .default,
                                               foregroundColorLight: .gray50,
                                               foregroundColorDark: .gray30)
             }
             Toggle("", isOn: $viewModel.privateEmailStatusBool)
                 .disabled(viewModel.privateEmailRequestInProgress)
+                .onChange(of: viewModel.privateEmailStatusBool) { _ in
+                    viewModel.togglePrivateEmailStatus()
+                }
         }
     }
 

@@ -122,11 +122,22 @@ lane :upload_metadata do |options|
 end
 
 desc 'Makes App Store release build and uploads it to TestFlight'
-lane :release_testflight do
+lane :release_beta do
   build_release
 
   upload_to_testflight(
-    api_key: get_api_key
+    api_key: get_api_key, 
+    groups: "iOS Daily Testers"
+  )
+end
+
+desc 'Makes alpha build and uploads it to TestFlight'
+lane :release_alpha do
+  build_release
+
+  upload_to_testflight(
+    api_key: get_api_key,
+    groups: "iOS Daily Testers"
   )
 end
 

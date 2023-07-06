@@ -4,13 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       destination:
-        description: "Upload destination (App Store or TestFlight)"
+        description: "Type of release (App Store or Beta)"
         required: true
         default: appstore
         type: choice
         options:
         - appstore
-        - testflight
+        - beta
       asana-task-url:
         description: "Asana release task URL"
         required: false

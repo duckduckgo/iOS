@@ -635,6 +635,8 @@ In addition to the details entered into this form, your app issue report will co
         https://duckduckgo.com/windows
         """, comment: "Message used when sharing to iMessage")
 
+    // MARK: Autofill
+
     public static let autofillLoginDetailsLoginName = NSLocalizedString("autofill.logins.details.login-name", value:"Login Title", comment: "Login name label for login details on autofill")
     public static let autofillLoginDetailsUsername = NSLocalizedString("autofill.logins.details.username", value:"Username", comment: "Username label for login details on autofill")
     public static let autofillLoginDetailsPassword = NSLocalizedString("autofill.logins.details.password", value:"Password", comment: "Password label for login details on autofill")
@@ -711,15 +713,39 @@ In addition to the details entered into this form, your app issue report will co
     public static let autofillLoginDetailsSaveDuplicateLoginAlertAction = NSLocalizedString("autofill.logins.details.save-duplicate-alert.action", value:"OK", comment: "Action text for alert when attempting to save a duplicate login")
 
     public static let autofillNavigationButtonItemTitleClose = NSLocalizedString("autofill.logins.list.close-title", value:"Close", comment: "Title for close navigation button")
+
+    // Autofill Password Generation Prompt
+    public static let autofillPasswordGenerationPromptTitle = NSLocalizedString("autofill.password-generation-prompt.title", value:"Use generated password from DuckDuckGo?", comment: "Title for prompt to use suggested strong password for creating a login")
+    public static let autofillPasswordGenerationPromptSubtitle = NSLocalizedString("autofill.password-generation-prompt.subtitle", value:"Password will be saved in Logins.", comment: "Subtitle for prompt to use suggested strong password for creating a login")
+    public static let autofillPasswordGenerationPromptUseGeneratedPasswordCTA = NSLocalizedString("autofill.password-generation-prompt.use-generated-password.cta", value:"Use Generated Password", comment: "Button title choosing to use the suggested generated password for creating a login")
+    public static let autofillPasswordGenerationPromptUseOwnPasswordCTA = NSLocalizedString("autofill.password-generation-prompt.use-own-password.cta", value:"Create My Own", comment: "Button title choosing to use own password for creating a login")
+
+    // Autofill Email Management
+    static let autofillPrivateEmailMessageError = NSLocalizedString("autofill.private.email.mesage.error", value: "Management of this address is temporarily unavailable.", comment: "Mesasage displayed when a user tries to manage a private email address but the service is not available, returns an error or network is down")
+    static let autofillPrivateEmailMessageActive = NSLocalizedString("autofill.private.email.mesage.active", value: "Active", comment: "Mesasage displayed when a private email address is active")
+    static let autofillPrivateEmailMessageDeactivated = NSLocalizedString("autofill.private.email.mesage.inactive", value: "Deactivated", comment: "Mesasage displayed when a private email address is inactive")
+    static let autofillEnableEmailProtection = NSLocalizedString("autofill.enable.email.protection", value: "Enable Email Protection", comment: "Text link to email protection website")
+    static let autofillSignInToManageEmail = NSLocalizedString("autofill.signin.to.manage", value: "%@ to manage your Duck Addresses on this device.", comment: "Message displayed to the user when they are logged out of Email protection.")
+
+
+    
+    
+
+
+    // MARK: Omnibar
     
     public static let omnibarNotificationCookiesManaged = NSLocalizedString("omnibar.notification.cookies-managed", value:"Cookies Managed", comment: "Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it")
     public static let omnibarNotificationPopupHidden = NSLocalizedString("omnibar.notification.popup-hidden", value:"Pop-up Hidden", comment: "Text displayed on notification appearing in the address bar when the browser  hides a cookie popup")
+
+    // MARK: Dax Dialog
 
     public static let daxDialogCookieConsentFirst = NSLocalizedString("dax.cookie-consent.first", value:"Looks like this site has a cookie consent pop-up👇", comment: "First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature")
     public static let daxDialogCookieConsentSecond = NSLocalizedString("dax.cookie-consent.second", value:"Want me to handle these for you? I can try to minimize cookies, maximize privacy, and hide pop-ups like these.", comment: "Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature")
 
     public static let daxDialogCookieConsentAcceptButton = NSLocalizedString("dax.cookie-consent.button.accept", value:"Manage Cookie Pop-ups", comment: "Button title accepting to enable feature to automatically manage cookie popups")
     public static let daxDialogCookieConsentRejectButton = NSLocalizedString("dax.cookie-consent.button.reject", value:"No Thanks", comment: "Button title rejecting to enable feature to automatically manage cookie popups")
+
+    // MARK: Sync
 
     public static let syncTurnOffConfirmTitle = "Turn Off Sync?"
     public static let syncTurnOffConfirmMessage = "This Device will no longer be able to access your synced data."
@@ -736,9 +762,4 @@ In addition to the details entered into this form, your app issue report will co
     public static let syncCodeCopied = "Recovery Code copied"
     public static let syncTitle = "Sync"
 
-    // Autofill Password Generation Prompt
-    public static let autofillPasswordGenerationPromptTitle = NSLocalizedString("autofill.password-generation-prompt.title", value:"Use generated password from DuckDuckGo?", comment: "Title for prompt to use suggested strong password for creating a login")
-    public static let autofillPasswordGenerationPromptSubtitle = NSLocalizedString("autofill.password-generation-prompt.subtitle", value:"Password will be saved in Logins.", comment: "Subtitle for prompt to use suggested strong password for creating a login")
-    public static let autofillPasswordGenerationPromptUseGeneratedPasswordCTA = NSLocalizedString("autofill.password-generation-prompt.use-generated-password.cta", value:"Use Generated Password", comment: "Button title choosing to use the suggested generated password for creating a login")
-    public static let autofillPasswordGenerationPromptUseOwnPasswordCTA = NSLocalizedString("autofill.password-generation-prompt.use-own-password.cta", value:"Create My Own", comment: "Button title choosing to use own password for creating a login")
 }

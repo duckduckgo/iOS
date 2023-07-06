@@ -391,6 +391,9 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "When DuckDuckGo detects cookie consent pop-ups on sites you visit, we can try to automatically set your cookie preferences to minimize cookies and maximize privacy, then close the pop-ups. Some sites don't provide an option to manage cookie preferences, so we can only hide pop-ups like these.";
 
+/* Text link to email protection website */
+"autofill.enable.email.protection" = "Enable Email Protection";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Hide Password";
 
@@ -568,6 +571,15 @@
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Create My Own";
 
+/* Mesasage displayed when a private email address is active */
+"autofill.private.email.mesage.active" = "Active";
+
+/* Mesasage displayed when a user tries to manage a private email address but the service is not available, returns an error or network is down */
+"autofill.private.email.mesage.error" = "Management of this address is temporarily unavailable.";
+
+/* Mesasage displayed when a private email address is inactive */
+"autofill.private.email.mesage.inactive" = "Deactivated";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.message" = "Logins are stored securely on your device, and can be managed from the Logins menu in Settings.";
 
@@ -591,6 +603,9 @@
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Show Password";
+
+/* Message displayed to the user when they are logged out of Email protection. */
+"autofill.signin.to.manage" = "%@ to manage your Duck Addresses on this device.";
 
 /* Message displayed on modal asking for the user to update the password */
 "autofill.update-password.message" = "DuckDuckGo will update this stored Login on your device.";

@@ -89,18 +89,18 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         if isSignedIn {
             switch privateEmailStatus {
             case .error:
-                message = "Cannot manage this" //UserText.pmEmailMessageError
+                    message = UserText.autofillPrivateEmailMessageError
             case .active:
-                message = "Activated"
+                message = UserText.autofillPrivateEmailMessageActive
             case .inactive:
-                message = "Deactivated"
+                message = UserText.autofillPrivateEmailMessageDeactivated
             case .notFound:
                 message = ""
             default:
-                message = "Activated"
+                message = UserText.autofillPrivateEmailMessageDeactivated
             }
         } else {
-            message = "Sign in to do shit" //UserText.pmSignInToManageEmail
+            message = UserText.autofillSignInToManageEmail
         }
         return message
     }

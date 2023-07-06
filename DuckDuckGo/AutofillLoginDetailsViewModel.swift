@@ -208,6 +208,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     updateData(with: account)
                 }
             } else {
+                previousUsername = username
                 viewMode = .edit
             }
         }
@@ -260,14 +261,21 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         guard let vault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared) else {
             return
         }
-            
+
+        // Show the removal alert if email is no longer a Duck Address
+        if emailManager.isPrivateEmail(email: previousUsername) &&
+            hasValidPrivateEmail &&
+            (privateEmailStatus == .active || privateEmailStatus == .inactive) {
+            isShowingDuckRemovalAlert = true
+        }
+
         switch viewMode {
         case .edit:
             guard let accountID = account?.id else {
                 assertionFailure("Trying to save edited account, but the account doesn't exist")
                 return
             }
-                           
+
             do {
                 if let accountIdInt = Int64(accountID),
                    var credential = try vault.websiteCredentialsFor(accountId: accountIdInt) {
@@ -276,7 +284,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     credential.account.domain = autofillDomainNameUrlMatcher.normalizeUrlForWeb(address)
                     credential.account.notes = notes
                     credential.password = passwordData
-                    
+
                     try vault.storeWebsiteCredentials(credential)
                     delegate?.autofillLoginDetailsViewModelDidSave()
                     
@@ -284,7 +292,9 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     if let newCredential = try vault.websiteCredentialsFor(accountId: accountIdInt) {
                         self.updateData(with: newCredential.account)
                     }
+
                     viewMode = .view
+
                 }
             } catch let error {
                 handleSecureVaultError(error)

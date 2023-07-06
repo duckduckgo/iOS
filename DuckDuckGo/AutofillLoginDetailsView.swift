@@ -33,17 +33,14 @@ struct AutofillLoginDetailsView: View {
                 let btnLabel = Text(viewModel.toggleConfirmationAlert.button)
                 let btnAction = viewModel.togglePrivateEmailStatus
                 let button = Alert.Button.default(btnLabel, action: btnAction)
-
                 let cancelBtnLabel = Text(UserText.autofillCancel)
                 let cancelBtnAction = { viewModel.refreshprivateEmailStatusBool() }
                 let cancelButton = Alert.Button.cancel(cancelBtnLabel, action: cancelBtnAction)
-
                 return Alert(
                     title: Text(viewModel.toggleConfirmationAlert.title),
                     message: Text(viewModel.toggleConfirmationAlert.message),
                     primaryButton: button,
-                    secondaryButton: cancelButton
-                )
+                    secondaryButton: cancelButton)
             })
             .background(EmptyView().alert(isPresented: $viewModel.isShowingDuckRemovalAlert) {
                 Alert(
@@ -151,7 +148,10 @@ struct AutofillLoginDetailsView: View {
                              buttonImageName: "Copy-24",
                              buttonAccessibilityLabel: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsUsername),
                              buttonAction: { viewModel.copyToPasteboard(.username) })
-                if viewModel.hasValidPrivateEmail {
+
+                if viewModel.hasValidPrivateEmail &&
+                    viewModel.isSignedIn &&
+                    (viewModel.privateEmailStatus == .active || viewModel.privateEmailStatus == .inactive) {
                     privateEmailCell()
 
                 } else {
@@ -283,10 +283,21 @@ struct AutofillLoginDetailsView: View {
                     .label4Style(design: .default, foregroundColorLight: .gray50, foregroundColorDark: .gray30)
                 
             }
-            Toggle("", isOn: $viewModel.privateEmailStatusBool)
-                .onTapGesture {
-                    viewModel.isShowingAddressUpdateConfirmAlert = true
-                }
+            Spacer(minLength: Constants.textFieldImageSize)
+            if viewModel.privateEmailStatus == .active || viewModel.privateEmailStatus == .inactive {
+                Toggle("", isOn: $viewModel.privateEmailStatusBool)
+                    .frame(width: 80)
+                    .foregroundColor(.blue)
+                    .onTapGesture {
+                        viewModel.isShowingAddressUpdateConfirmAlert = true
+                    }
+            } else {
+                Image("Alert-Color-16")
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
+
+            }
         }
     }
 

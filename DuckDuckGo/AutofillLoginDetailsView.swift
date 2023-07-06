@@ -29,7 +29,32 @@ struct AutofillLoginDetailsView: View {
     
     var body: some View {
         listWithBackground
+            .background(EmptyView().alert(isPresented: $viewModel.isShowingAddressUpdateConfirmAlert) {
+                let btnLabel = Text(viewModel.toggleConfirmationAlert.button)
+                let btnAction = viewModel.togglePrivateEmailStatus
+                let button = Alert.Button.default(btnLabel, action: btnAction)
+
+                let cancelBtnLabel = Text(UserText.autofillCancel)
+                let cancelBtnAction = { viewModel.refreshprivateEmailStatusBool() }
+                let cancelButton = Alert.Button.cancel(cancelBtnLabel, action: cancelBtnAction)
+
+                return Alert(
+                    title: Text(viewModel.toggleConfirmationAlert.title),
+                    message: Text(viewModel.toggleConfirmationAlert.message),
+                    primaryButton: button,
+                    secondaryButton: cancelButton
+                )
+            })
+            .background(EmptyView().alert(isPresented: $viewModel.isShowingDuckRemovalAlert) {
+                Alert(
+                    title: Text(UserText.autofillRemovedDuckAddressTitle),
+                    message: Text(UserText.autofillRemovedDuckAddressContent),
+                    dismissButton: .default(Text(UserText.autofillRemovedDuckAddressButton))
+                )
+            })
+
     }
+
     
     @ViewBuilder
     private var listWithBackground: some View {
@@ -259,9 +284,8 @@ struct AutofillLoginDetailsView: View {
                 
             }
             Toggle("", isOn: $viewModel.privateEmailStatusBool)
-                .disabled(viewModel.privateEmailRequestInProgress)
-                .onChange(of: viewModel.privateEmailStatusBool) { _ in
-                    viewModel.togglePrivateEmailStatus()
+                .onTapGesture {
+                    viewModel.isShowingAddressUpdateConfirmAlert = true
                 }
         }
     }

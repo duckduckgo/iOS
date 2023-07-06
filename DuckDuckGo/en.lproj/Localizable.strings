@@ -571,14 +571,35 @@
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Create My Own";
 
+/* Text for the confirmation message displayed when a user tries activate a Private Email Address */
+"autofill.private.email.mesage.activate.confirm.content" = "Emails sent to %@ will be forwarded to your inbox.";
+
+/* Title for the confirmation message  displayed when a user tries activate a Private Email Address */
+"autofill.private.email.mesage.activate.confirm.title" = "Reactivate Private Duck Address?";
+
 /* Mesasage displayed when a private email address is active */
 "autofill.private.email.mesage.active" = "Active";
+
+/* Text for the confirmation message displayed when a user tries deactivate a Private Email Address */
+"autofill.private.email.mesage.deactivate.confirm.content" = "Emails sent to %@ will stop being forwarded to your inbox.";
+
+/* Title for the confirmation message displayed when a user tries deactivate a Private Email Address */
+"autofill.private.email.mesage.deactivate.confirm.title" = "Deactivate Private Duck Address?";
 
 /* Mesasage displayed when a user tries to manage a private email address but the service is not available, returns an error or network is down */
 "autofill.private.email.mesage.error" = "Management of this address is temporarily unavailable.";
 
 /* Mesasage displayed when a private email address is inactive */
 "autofill.private.email.mesage.inactive" = "Deactivated";
+
+/* Button text for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.button" = "Got it";
+
+/* Content for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.content" = "You can still manage this Duck Address from emails received from it in your personal inbox.";
+
+/* Title for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.title" = "Private Duck Address username was removed";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.message" = "Logins are stored securely on your device, and can be managed from the Logins menu in Settings.";
@@ -1317,6 +1338,15 @@ https://duckduckgo.com/mac";
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "The app required to open that link can’t be found";
+
+/* Activate button */
+"pm.activate" = "Reactivate";
+
+/* Cancel button */
+"pm.cancel" = "Cancel";
+
+/* Deactivate button */
+"pm.deactivate" = "Deactivate";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Websites rely on cookies to keep you signed in. When you Fireproof a site, cookies won’t be erased and you’ll stay signed in, even after using the Fire Button. We still block third-party trackers found on Fireproof websites.";

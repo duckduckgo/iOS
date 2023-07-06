@@ -30,6 +30,12 @@ protocol AutofillLoginDetailsViewModelDelegate: AnyObject {
     func autofillLoginDetailsViewModelDismiss()
 }
 
+struct ConfirmationAlert {
+    var title: String
+    var message: String
+    var button: String
+}
+
 final class AutofillLoginDetailsViewModel: ObservableObject {
     enum ViewMode {
         case edit
@@ -105,15 +111,15 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         return message
     }
 
-    var toggleConfirmationAlert: (title: String, message: String, button: String) {
+    var toggleConfirmationAlert: ConfirmationAlert {
         if privateEmailStatus == .active {
-            return (title: "Deactivate?", //UserText.pmEmailDeactivateConfirmTitle,
-                    message: "you fucking sure?", //String(format: UserText.pmEmailDeactivateConfirmContent, username),
-                    button: "yes") //UserText.pmDeactivate
+            return ConfirmationAlert(title: UserText.autofillEmailDeactivateConfirmTitle,
+                                     message: String(format: UserText.autofillEmailDeactivateConfirmContent, username),
+                                     button: UserText.autofillDeactivate)
         }
-        return (title: "Activate?", //UserText.pmEmailActivateConfirmTitle,
-                message: "you fucking sure?", //String(format: UserText.pmEmailActivateConfirmContent, username),
-                button: "yes")  //UserText.pmActivate
+        return ConfirmationAlert(title: UserText.autofillEmailActivateConfirmTitle,
+                                 message: String(format: UserText.autofillEmailActivateConfirmContent, username),
+                                 button: UserText.autofillActivate)
     }
 
     private var previousUsername: String = ""
@@ -348,7 +354,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
             setLoadingStatus(false)
             setPrivateEmailStatus(.error)
         }
-    }
+    }    
 
     private func togglePrivateEmailStatus() async throws {
         guard emailManager.isSignedIn else {
@@ -374,6 +380,10 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
             setPrivateEmailStatus(.error)
         }
 
+    }
+
+    func refreshprivateEmailStatusBool() {
+        privateEmailStatusBool = privateEmailStatus == .active ? true : false
     }
 
     func enableEmailProtection() {

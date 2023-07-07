@@ -49,13 +49,18 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         case address
         case notes
     }
+
+    enum Constants {
+        static let privateEmailURL = URL(string: "https://duckduckgo.com/email")!
+    }
     
     weak var delegate: AutofillLoginDetailsViewModelDelegate?
     var account: SecureVaultModels.WebsiteAccount?
+    var emailManager: EmailManager
+
     private let tld: TLD
     private let autofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
     private let autofillDomainNameUrlSort = AutofillDomainNameUrlSort()
-    var emailManager: EmailManager
 
     @ObservedObject var headerViewModel: AutofillLoginDetailsHeaderViewModel
     @Published var isPasswordHidden = true
@@ -122,8 +127,8 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                                  button: UserText.autofillActivate)
     }
 
-    var shouldDisplayPrivateEmailAddress: Bool {
-        return hasValidPrivateEmail && isSignedIn && (privateEmailStatus == .active || privateEmailStatus == .inactive)
+    var shouldAllowManagePrivateAddress: Bool {
+        return hasValidPrivateEmail && isSignedIn && (privateEmailStatus != .notFound)
     }
 
     private var previousUsername: String = ""
@@ -342,6 +347,11 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         guard let url = account?.domain.toTrimmedURL else { return }
 
         LaunchTabNotification.postLaunchTabNotification(urlString: url.absoluteString)
+        delegate?.autofillLoginDetailsViewModelDismiss()
+    }
+
+    func openPrivateEmailURL() {
+        LaunchTabNotification.postLaunchTabNotification(urlString: Constants.privateEmailURL.absoluteString)
         delegate?.autofillLoginDetailsViewModelDismiss()
     }
 

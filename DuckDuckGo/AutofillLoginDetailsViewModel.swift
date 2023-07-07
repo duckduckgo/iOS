@@ -327,6 +327,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     private func showRemovalAlertIfRequired() {
         if emailManager.isPrivateEmail(email: previousUsername) &&
             hasValidPrivateEmail &&
+            previousUsername != username &&
             (privateEmailStatus == .active || privateEmailStatus == .inactive) {
             isShowingDuckRemovalAlert = true
         }

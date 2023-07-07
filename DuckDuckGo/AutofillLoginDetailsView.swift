@@ -195,7 +195,7 @@ struct AutofillLoginDetailsView: View {
                             let text = String(format: UserText.autofillSignInToManageEmail, UserText.autofillEnableEmailProtection)
                             var attributedString = AttributedString(text)
                             if let range = attributedString.range(of: UserText.autofillEnableEmailProtection) {
-                                attributedString[range].foregroundColor = .blue
+                                attributedString[range].foregroundColor = Color(designSystemColor: .accent)
                             }
                             return attributedString
                         }
@@ -343,10 +343,10 @@ struct AutofillLoginDetailsView: View {
             if viewModel.privateEmailStatus == .active || viewModel.privateEmailStatus == .inactive {
                 Toggle("", isOn: $viewModel.privateEmailStatusBool)
                     .frame(width: 80)
-                    .foregroundColor(.blue)
                     .onTapGesture {
                         viewModel.isShowingAddressUpdateConfirmAlert = true
                     }
+                    .toggleStyle(SwitchToggleStyle(tint: Color(designSystemColor: .accent)))
             } else {
                 Image("Alert-Color-16")
                     .resizable()

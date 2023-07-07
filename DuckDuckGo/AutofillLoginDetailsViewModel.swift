@@ -22,6 +22,7 @@ import BrowserServicesKit
 import Common
 import SwiftUI
 import Core
+import DesignResourcesKit
 
 protocol AutofillLoginDetailsViewModelDelegate: AnyObject {
     func autofillLoginDetailsViewModelDidSave()
@@ -268,11 +269,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         }
 
         // Show the removal alert if email is no longer a Duck Address
-        if emailManager.isPrivateEmail(email: previousUsername) &&
-            hasValidPrivateEmail &&
-            (privateEmailStatus == .active || privateEmailStatus == .inactive) {
-            isShowingDuckRemovalAlert = true
-        }
+        showRemovalAlertIfRequired()
 
         switch viewMode {
         case .edit:
@@ -324,6 +321,14 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
             } catch let error {
                 handleSecureVaultError(error)
             }
+        }
+    }
+
+    private func showRemovalAlertIfRequired() {
+        if emailManager.isPrivateEmail(email: previousUsername) &&
+            hasValidPrivateEmail &&
+            (privateEmailStatus == .active || privateEmailStatus == .inactive) {
+            isShowingDuckRemovalAlert = true
         }
     }
 

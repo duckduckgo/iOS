@@ -52,6 +52,7 @@ class EnableAutofillSettingsTableViewCell: UITableViewCell {
     
     private lazy var toggleSwitch: UISwitch = {
         let toggle = UISwitch(frame: CGRect.zero)
+        toggle.tintColor = UIColor(designSystemColor: .accent)
         toggle.addTarget(self, action: #selector(onToggleValueChanged(_:)), for: .valueChanged)
         return toggle
     }()

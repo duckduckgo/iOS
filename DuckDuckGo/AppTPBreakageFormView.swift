@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DuckUI
 import Core
 
 private enum BreakageCategory: String, CaseIterable, Identifiable {
@@ -165,14 +166,12 @@ struct AppTPBreakageFormView: View {
                         sendReport()
                     }, label: {
                         Text(UserText.appTPReportSubmit)
-                            .font(Font(uiFont: Const.Font.button))
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .foregroundColor(appName.isEmpty ? Color.disabledButtonLabel : Color.buttonLabelColor)
                     })
-                    .buttonStyle(PlainButtonStyle())
+                    .buttonStyle(PrimaryButtonStyle(disabled: appName.isEmpty))
                     .frame(height: 30)
-                    .listRowBackground(appName.isEmpty ? Color.disabledButton : Color.buttonColor)
+                    .listRowBackground(Color.clear)
                     .disabled(appName.isEmpty)
+                    .listRowInsets(EdgeInsets())
                 }
             }
             .listStyle(.insetGrouped)

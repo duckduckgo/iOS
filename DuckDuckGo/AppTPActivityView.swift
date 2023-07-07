@@ -53,14 +53,14 @@ struct AppTPActivityView: View {
     }
     
     var emptyState: some View {
-        VStack(alignment: .center, spacing: 16) {
+        VStack(alignment: .center, spacing: 8) {
             Text(UserText.appTPEmptyHeading)
                 .font(Font(uiFont: Const.Font.emptyHeading))
             
             Text(textForState())
                 .multilineTextAlignment(.center)
                 .font(Font(uiFont: Const.Font.info))
-                .foregroundColor(.infoText)
+                .foregroundColor(Color(designSystemColor: .textSecondary))
                 .frame(maxWidth: .infinity)
         }
         .frame(maxWidth: .infinity)
@@ -169,11 +169,11 @@ struct AppTPActivityView: View {
                     manageSection
                 }
 
-//                if viewModel.sections.count > 0 {
-//                    listState
-//                } else {
+                if viewModel.sections.count > 0 {
+                    listState
+                } else {
                     emptyState
-//                }
+                }
             }
             .padding()
         }

@@ -114,8 +114,6 @@ struct OnboardingContainerView: View {
 
 private enum Const {
     enum Font {
-        static let titleFont = UIFont.boldAppFont(ofSize: 28)
-        static let paragraphFont = UIFont.appFont(ofSize: 16)
         static let buttonFont = UIFont.boldAppFont(ofSize: 15)
     }
     
@@ -131,7 +129,6 @@ private enum Const {
 }
 
 private extension Color {
-    static let fontColor = Color("AppTPDomainColor")
     static let buttonLabelColor = Color("AppTPBreakageButtonLabel")
     static let disabledButton = Color("AppTPBreakageButtonDisabled")
     static let disabledButtonLabel = Color("AppTPBreakageButtonLabelDisabled")

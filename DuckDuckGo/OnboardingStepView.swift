@@ -35,9 +35,11 @@ struct OnboardingStepView: View {
             
             viewModel.paragraph1
                 .font(Font(uiFont: Const.Font.paragraphFont))
+                .foregroundColor(Color.fontColor)
             
             viewModel.paragraph2
                 .font(Font(uiFont: Const.Font.paragraphFont))
+                .foregroundColor(Color.fontColor)
             
             if let auxButtonText = viewModel.auxButtonTitle {
                 NavigationLink(destination: AppTPFAQView()) {
@@ -70,9 +72,6 @@ private enum Const {
 
 private extension Color {
     static let fontColor = Color("AppTPDomainColor")
-    static let buttonLabelColor = Color("AppTPBreakageButtonLabel")
-    static let disabledButton = Color("AppTPBreakageButtonDisabled")
-    static let disabledButtonLabel = Color("AppTPBreakageButtonLabelDisabled")
 }
 
 struct OnboardingStepView_Previews: PreviewProvider {

@@ -195,7 +195,7 @@ struct AutofillLoginDetailsView: View {
                             let text = String(format: UserText.autofillSignInToManageEmail, UserText.autofillEnableEmailProtection)
                             var attributedString = AttributedString(text)
                             if let range = attributedString.range(of: UserText.autofillEnableEmailProtection) {
-                                attributedString[range].foregroundColor = Color(designSystemColor: .accent)
+                                attributedString[range].foregroundColor = Color(ThemeManager.shared.currentTheme.buttonTintColor)
                             }
                             return attributedString
                         }
@@ -346,7 +346,7 @@ struct AutofillLoginDetailsView: View {
                     .onTapGesture {
                         viewModel.isShowingAddressUpdateConfirmAlert = true
                     }
-                    .toggleStyle(SwitchToggleStyle(tint: Color(designSystemColor: .accent)))
+                    .toggleStyle(SwitchToggleStyle(tint: Color(ThemeManager.shared.currentTheme.buttonTintColor)))
             } else {
                 Image("Alert-Color-16")
                     .resizable()

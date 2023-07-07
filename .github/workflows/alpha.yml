@@ -98,19 +98,3 @@ jobs:
     #     curl -s "https://app.asana.com/api/1.0/tasks/${{ steps.get-task-id.outputs.task_id }}/attachments" \
     #       -H "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
     #       --form "file=@${asana_dsyms_path};type=application/zip"
-
-    # - name: Send Mattermost message
-    #   env:
-    #     WORKFLOW_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-    #     DESTINATION: ${{ steps.destination.outputs.destination }}
-    #   run: |
-    #     export MM_USER_HANDLE=$(base64 -d <<< ${{ secrets.MM_HANDLES_BASE64 }} | jq ".${{ github.actor }}" | tr -d '"')
-
-    #     if [[ -z "${MM_USER_HANDLE}" ]]; then
-    #         echo "Mattermost user handle not known for ${{ github.actor }}, skipping sending message"
-    #     else
-
-    #         curl -s -H 'Content-type: application/json' \
-    #             -d "$(envsubst < ./scripts/assets/appstore-release-mm-template.json)" \
-    #             ${{ secrets.MM_WEBHOOK_URL }}
-    #     fi  

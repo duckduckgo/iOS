@@ -126,8 +126,7 @@ lane :release_beta do
   build_release
 
   upload_to_testflight(
-    api_key: get_api_key, 
-    groups: "iOS Daily Testers"
+    api_key: get_api_key
   )
 end
 

@@ -54,8 +54,7 @@ struct AppTPFAQView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
     
-    @ViewBuilder
-    var scrollWithBackgroud: some View {
+    var body: some View {
         if #available(iOS 16, *) {
             faqBody
                 .scrollContentBackground(.hidden)
@@ -64,10 +63,6 @@ struct AppTPFAQView: View {
             faqBody
                 .background(Color(designSystemColor: .background))
         }
-    }
-    
-    var body: some View {
-        scrollWithBackgroud
     }
 }
 

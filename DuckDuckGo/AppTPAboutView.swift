@@ -41,8 +41,7 @@ struct AppTPAboutView: View {
         .navigationTitle(Text(UserText.appTPAboutNavTitle))
     }
     
-    @ViewBuilder
-    var scrollWithBackgroud: some View {
+    var body: some View {
         if #available(iOS 16, *) {
             aboutBody
                 .scrollContentBackground(.hidden)
@@ -51,10 +50,6 @@ struct AppTPAboutView: View {
             aboutBody
                 .background(Color(designSystemColor: .background))
         }
-    }
-    
-    var body: some View {
-        scrollWithBackgroud
     }
 }
 

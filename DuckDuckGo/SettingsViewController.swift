@@ -381,7 +381,7 @@ class SettingsViewController: UITableViewController {
     }
 
 #if APP_TRACKING_PROTECTION
-    func setNavigationColor(isOnboarding: Bool) {
+    func setNavColor(isOnboarding: Bool) {
         let coloredAppearance = UINavigationBarAppearance()
         coloredAppearance.configureWithTransparentBackground()
         coloredAppearance.backgroundColor = UIColor(designSystemColor: isOnboarding ? .surface : .background)
@@ -394,7 +394,7 @@ class SettingsViewController: UITableViewController {
     
     private func showAppTP() {
         navigationController?.pushViewController(
-            AppTPActivityHostingViewController(appTrackingProtectionDatabase: appTPDatabase, setNavColor: setNavigationColor(isOnboarding:)),
+            AppTPActivityHostingViewController(appTrackingProtectionDatabase: appTPDatabase, setNavColor: setNavColor(isOnboarding:)),
             animated: true
         )
     }

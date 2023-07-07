@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1688070198986,
+    "version": 1688727300803,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -246,6 +246,10 @@
                 {
                     "domain": "upstart.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/897"
+                },
+                {
+                    "domain": "granit.com",
+                    "reason": "https://github.com/duckduckgo/autoconsent/issues/200"
                 }
             ],
             "settings": {
@@ -255,7 +259,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "1d01334077a08d69f450adba9b278f35"
+            "hash": "558792e54daecddf71939b03b238c49c"
         },
         "autofill": {
             "exceptions": [
@@ -2888,6 +2892,109 @@
             },
             "hash": "470c77b05c99b8f0986cc40422a59c91"
         },
+        "harmfulApis": {
+            "settings": {
+                "deviceOrientation": {
+                    "state": "enabled",
+                    "filterEvents": [
+                        "deviceorientation",
+                        "devicemotion"
+                    ]
+                },
+                "GenericSensor": {
+                    "state": "enabled",
+                    "filterPermissions": [
+                        "accelerometer",
+                        "ambient-light-sensor",
+                        "gyroscope",
+                        "magnetometer"
+                    ],
+                    "blockSensorStart": true
+                },
+                "UaClientHints": {
+                    "state": "enabled",
+                    "highEntropyValues": {
+                        "trimBrands": true,
+                        "model": "",
+                        "trimPlatformVersion": 2,
+                        "trimUaFullVersion": 1,
+                        "trimFullVersionList": 1
+                    }
+                },
+                "NetworkInformation": {
+                    "state": "enabled"
+                },
+                "getInstalledRelatedApps": {
+                    "state": "enabled",
+                    "returnValue": []
+                },
+                "FileSystemAccess": {
+                    "state": "enabled",
+                    "disableOpenFilePicker": true,
+                    "disableSaveFilePicker": true,
+                    "disableDirectoryPicker": true,
+                    "disableGetAsFileSystemHandle": true
+                },
+                "WindowPlacement": {
+                    "state": "enabled",
+                    "filterPermissions": [
+                        "window-placement",
+                        "window-management"
+                    ],
+                    "screenIsExtended": false
+                },
+                "WebBluetooth": {
+                    "state": "enabled",
+                    "filterPermissions": [
+                        "bluetooth"
+                    ],
+                    "filterEvents": [
+                        "availabilitychanged"
+                    ],
+                    "blockGetAvailability": true,
+                    "blockRequestDevice": true
+                },
+                "WebUsb": {
+                    "state": "enabled"
+                },
+                "WebSerial": {
+                    "state": "enabled"
+                },
+                "WebHid": {
+                    "state": "enabled"
+                },
+                "WebMidi": {
+                    "state": "enabled",
+                    "filterPermissions": [
+                        "midi"
+                    ]
+                },
+                "IdleDetection": {
+                    "state": "enabled",
+                    "filterPermissions": [
+                        "idle-detection"
+                    ]
+                },
+                "WebNfc": {
+                    "state": "enabled",
+                    "disableNdefReader": true,
+                    "disableNdefMessage": true,
+                    "disableNdefRecord": true
+                },
+                "StorageManager": {
+                    "state": "enabled",
+                    "allowedQuotaValues": [
+                        1073741824,
+                        4294967296,
+                        9999999999
+                    ]
+                },
+                "domains": []
+            },
+            "exceptions": [],
+            "state": "disabled",
+            "hash": "40ccb9ae93e37d9c2c991a5fadabded7"
+        },
         "https": {
             "state": "enabled",
             "exceptions": [],
@@ -3384,6 +3491,17 @@
                             }
                         ]
                     },
+                    "quantcast.com": {
+                        "rules": [
+                            {
+                                "rule": "cmp.quantcast.com",
+                                "domains": [
+                                    "express.co.uk"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1068"
+                            }
+                        ]
+                    },
                     "criteo.com": {
                         "rules": [
                             {
@@ -3658,6 +3776,17 @@
                                     "<all>"
                                 ],
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
+                            }
+                        ]
+                    },
+                    "ezodn.com": {
+                        "rules": [
+                            {
+                                "rule": "ezodn.com/cmp",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/468"
                             }
                         ]
                     },
@@ -4379,6 +4508,17 @@
                                     "pizzahut.com"
                                 ],
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/805"
+                            }
+                        ]
+                    },
+                    "online-metrix.net": {
+                        "rules": [
+                            {
+                                "rule": "online-metrix.net/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1079"
                             }
                         ]
                     },
@@ -5680,6 +5820,13 @@
                                     "pizzahut.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
+                            },
+                            {
+                                "rule": "w-profiling.cibc.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
                             }
                         ]
                     },
@@ -6070,6 +6217,13 @@
                                     "pizzahut.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
+                            },
+                            {
+                                "rule": "mfp.intuit.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
                             }
                         ]
                     },
@@ -6704,6 +6858,13 @@
                                     "pizzahut.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
+                            },
+                            {
+                                "rule": "content22.citibankonline.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
                             }
                         ]
                     },
@@ -6803,6 +6964,13 @@
                                     "pizzahut.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
+                            },
+                            {
+                                "rule": "drfdisvc.walmart.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
                             }
                         ]
                     },
@@ -8407,6 +8575,13 @@
                                     "pizzahut.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
+                            },
+                            {
+                                "rule": "content22.bmo.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
                             }
                         ]
                     },
@@ -8872,6 +9047,13 @@
                                     "pizzahut.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
+                            },
+                            {
+                                "rule": "content.discover.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
                             }
                         ]
                     },
@@ -9216,6 +9398,13 @@
                                     "pizzahut.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
+                            },
+                            {
+                                "rule": "content.espace-client.hellobank.fr/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
                             }
                         ]
                     },
@@ -10325,6 +10514,13 @@
                                     "pizzahut.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
+                            },
+                            {
+                                "rule": "tm.regions.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
                             }
                         ]
                     },
@@ -10508,6 +10704,13 @@
                                     "pizzahut.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
+                            },
+                            {
+                                "rule": "idstatus.sky.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
                             }
                         ]
                     },
@@ -10749,6 +10952,13 @@
                                     "pizzahut.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
+                            },
+                            {
+                                "rule": "check3.tiaa.org/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
                             }
                         ]
                     },
@@ -12686,6 +12896,358 @@
                             }
                         ]
                     },
+                    "gusto.com": {
+                        "rules": [
+                            {
+                                "rule": "cdn.gusto.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "f-cdn.com": {
+                        "rules": [
+                            {
+                                "rule": "cdn1.f-cdn.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "fidelity.com": {
+                        "rules": [
+                            {
+                                "rule": "cfa.fidelity.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "mystreetscape.com": {
+                        "rules": [
+                            {
+                                "rule": "cfa.mystreetscape.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "tiaabank.com": {
+                        "rules": [
+                            {
+                                "rule": "check3.tiaabank.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "wallapop.com": {
+                        "rules": [
+                            {
+                                "rule": "clear.wallapop.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "atmosphere.ca": {
+                        "rules": [
+                            {
+                                "rule": "content.atmosphere.ca/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "canadiantire.ca": {
+                        "rules": [
+                            {
+                                "rule": "content.canadiantire.ca/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "citizensbankonline.com": {
+                        "rules": [
+                            {
+                                "rule": "content.citizensbankonline.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "gap.com": {
+                        "rules": [
+                            {
+                                "rule": "content.gap.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "marks.com": {
+                        "rules": [
+                            {
+                                "rule": "content.marks.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "quicken.com": {
+                        "rules": [
+                            {
+                                "rule": "content.quicken.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "sportchek.ca": {
+                        "rules": [
+                            {
+                                "rule": "content.sportchek.ca/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "homedepot.com": {
+                        "rules": [
+                            {
+                                "rule": "customer.homedepot.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "my100bank.com": {
+                        "rules": [
+                            {
+                                "rule": "debs.my100bank.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "santanderbank.com": {
+                        "rules": [
+                            {
+                                "rule": "digitalid.santanderbank.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "authorize.net": {
+                        "rules": [
+                            {
+                                "rule": "dpf.authorize.net/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "53.com": {
+                        "rules": [
+                            {
+                                "rule": "event.evtm.53.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "adp.com": {
+                        "rules": [
+                            {
+                                "rule": "image.online.adp.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "cdscdn.com": {
+                        "rules": [
+                            {
+                                "rule": "imagesmx.cdscdn.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "myfrs.com": {
+                        "rules": [
+                            {
+                                "rule": "metrics.myfrs.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "ameriprise.com": {
+                        "rules": [
+                            {
+                                "rule": "ocs.ameriprise.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "spectrum.net": {
+                        "rules": [
+                            {
+                                "rule": "pov.spectrum.net/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "betfair.com": {
+                        "rules": [
+                            {
+                                "rule": "regstat.betfair.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "liveme.com": {
+                        "rules": [
+                            {
+                                "rule": "sc.liveme.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "pilates.com": {
+                        "rules": [
+                            {
+                                "rule": "sptbb.pilates.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "ebay-us.com": {
+                        "rules": [
+                            {
+                                "rule": "src.ebay-us.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "tacdn.com": {
+                        "rules": [
+                            {
+                                "rule": "t1.tacdn.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "beachbody.com": {
+                        "rules": [
+                            {
+                                "rule": "tm.beachbody.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "td.com": {
+                        "rules": [
+                            {
+                                "rule": "tmx.td.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "simplii.com": {
+                        "rules": [
+                            {
+                                "rule": "w-profiling.simplii.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "nsbank.com": {
+                        "rules": [
+                            {
+                                "rule": "w3.nsbank.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
                     "joindeleteme.com": {
                         "rules": [
                             {
@@ -13415,7 +13977,7 @@
                 }
             },
             "exceptions": [],
-            "hash": "2af7cd0148aca1d2d5681cdabdb207ca"
+            "hash": "9dbcc2f941ef7eef745249baddd6b2f0"
         },
         "trackingCookies1p": {
             "settings": {

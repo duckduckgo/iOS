@@ -228,8 +228,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
         appIsLaunching = true
+
+        // TEMPORARY: Attempting to trigger CodeQL using this example:
+        // https://github.com/github/codeql/blob/7bc549103a0a7cd8e12833a14f7b4c0bcbea41f9/swift/ql/test/query-tests/Security/CWE-946/predicateInjection.swift#L22C1-L38C2
+        test()
+
         return true
     }
+
+    func test() {
+        // swiftlint:disable:next force_try
+        let remoteString = try! String(contentsOf: URL(string: "http://example.com/")!)
+        let safeString = "safe"
+
+        NSPredicate(format: remoteString, argumentArray: []) // $ hasPredicateInjection=23
+        NSPredicate(format: safeString, argumentArray: []) // Safe
+        NSPredicate(format: safeString, argumentArray: [remoteString]) // Safe
+        NSPredicate(format: remoteString, arguments: CVaListPointer(_fromUnsafeMutablePointer: UnsafeMutablePointer(bitPattern: 0)!)) // $ hasPredicateInjection=23
+        NSPredicate(format: safeString, arguments: CVaListPointer(_fromUnsafeMutablePointer: UnsafeMutablePointer(bitPattern: 0)!)) // Safe
+        NSPredicate(format: remoteString) // $ hasPredicateInjection=23
+        NSPredicate(format: safeString) // Safe
+        NSPredicate(format: remoteString, "" as CVarArg) // $ hasPredicateInjection=23
+        NSPredicate(format: safeString, "" as CVarArg) // Safe
+        NSPredicate(format: safeString, remoteString as CVarArg) // Safe
+    }
+
 
     private func cleanUpMacPromoExperiment2() {
         UserDefaults.standard.removeObject(forKey: "com.duckduckgo.ios.macPromoMay23.exp2.cohort")

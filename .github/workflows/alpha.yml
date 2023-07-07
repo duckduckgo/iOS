@@ -74,28 +74,31 @@ jobs:
         APPLE_API_KEY_ISSUER: ${{ secrets.APPLE_API_KEY_ISSUER }}
         MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       run: |
-        bundle exec fastlane release_alpha
         app_version="$(cut -d ' ' -f 3 < Configuration/Version.xcconfig)"
-#        echo "dsyms_path=${{ github.workspace }}/DuckDuckGo.app.dSYM.zip" >> $GITHUB_ENV
-#        echo "app_version=${app_version}" >> $GITHUB_ENV
+        bundle exec fastlane increment_build_number_for_version: app_version
+        bundle exec fastlane release_alpha
+        build_version="cat DuckDuckGo.xcodeproj/project.pbxproj | grep -m1 'CURRENT_PROJECT_VERSION' | cut -d'=' -f2 | tr -d ';' | tr -d ' '"
+        echo "dsyms_path=${{ github.workspace }}/DuckDuckGo.app.dSYM.zip" >> $GITHUB_ENV
+        echo "app_version=${app_version}" >> $GITHUB_ENV
+        echo "build_version=${build_version}" >> $GITHUB_ENV
 
-    - name: Upload dSYMs artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: DuckDuckGo-alpha-dSYM-${{ env.app_version }}
-        path: ${{ env.dsyms_path }}
+    # - name: Upload dSYMs artifact
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: DuckDuckGo-alpha-dSYM-${{ env.app_version }}
+    #     path: ${{ env.dsyms_path }}
 
-    - name: Upload debug symbols to Asana
-      if: github.event.inputs.asana-task-url
-      env:
-        ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
-      run: |
-        asana_dsyms_path="${{ github.workspace }}/DuckDuckGo-${{ env.app_version }}-dSYM.zip"
-        mv -f "${{ env.dsyms_path }}" "$asana_dsyms_path"
+    # - name: Upload debug symbols to Asana
+    #   if: github.event.inputs.asana-task-url
+    #   env:
+    #     ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+    #   run: |
+    #     asana_dsyms_path="${{ github.workspace }}/DuckDuckGo-${{ env.app_version }}(${{ env.app_version }})-dSYM.zip"
+    #     mv -f "${{ env.dsyms_path }}" "$asana_dsyms_path"
 
-        curl -s "https://app.asana.com/api/1.0/tasks/${{ steps.get-task-id.outputs.task_id }}/attachments" \
-          -H "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
-          --form "file=@${asana_dsyms_path};type=application/zip"
+    #     curl -s "https://app.asana.com/api/1.0/tasks/${{ steps.get-task-id.outputs.task_id }}/attachments" \
+    #       -H "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
+    #       --form "file=@${asana_dsyms_path};type=application/zip"
 
     # - name: Send Mattermost message
     #   env:

@@ -87,7 +87,14 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     @Published var usernameIsPrivateEmail: Bool = false
     @Published var hasValidPrivateEmail: Bool = false
     @Published var privateEmailStatus: EmailAliasStatus = .unknown
-    @Published var privateEmailStatusBool: Bool = false
+    @Published var privateEmailStatusBool: Bool = false {
+        didSet {
+            let status = privateEmailStatus == .active ? true : false
+            if status != privateEmailStatusBool {
+                isShowingAddressUpdateConfirmAlert = true
+            }
+        }
+    }
     @Published var isShowingAddressUpdateConfirmAlert: Bool = false
     @Published var isShowingDuckRemovalAlert: Bool = false
     @Published var isSignedIn: Bool = false
@@ -414,11 +421,6 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
 
     func refreshprivateEmailStatusBool() {
         privateEmailStatusBool = privateEmailStatus == .active ? true : false
-    }
-
-    func enableEmailProtection() {
-        //NSApp.sendAction(#selector(NSPopover.performClose(_:)), to: nil, from: nil)
-        //NSApp.sendAction(#selector(AppDelegate.navigateToPrivateEmail(_:)), to: nil, from: nil)
     }
 
     @MainActor

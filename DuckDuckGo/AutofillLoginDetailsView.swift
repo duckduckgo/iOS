@@ -25,7 +25,7 @@ import DesignResourcesKit
 
 struct AutofillLoginDetailsView: View {
     @ObservedObject var viewModel: AutofillLoginDetailsViewModel
-    @State private var actionSheetConfirmDeletePresented: Bool = false
+    @State private var actionSheetConfirmDeletePresented: Bool = false    
     
     var body: some View {
         listWithBackground
@@ -342,10 +342,7 @@ struct AutofillLoginDetailsView: View {
             Spacer(minLength: Constants.textFieldImageSize)
             if viewModel.privateEmailStatus == .active || viewModel.privateEmailStatus == .inactive {
                 Toggle("", isOn: $viewModel.privateEmailStatusBool)
-                    .frame(width: 80)
-                    .onTapGesture {
-                        viewModel.isShowingAddressUpdateConfirmAlert = true
-                    }
+                    .frame(width: 80)                    
                     .toggleStyle(SwitchToggleStyle(tint: Color(ThemeManager.shared.currentTheme.buttonTintColor)))
             } else {
                 Image("Alert-Color-16")

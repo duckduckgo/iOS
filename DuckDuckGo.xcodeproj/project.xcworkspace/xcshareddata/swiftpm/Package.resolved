@@ -6,7 +6,7 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": null,
-          "revision": "61012206d3b1f275b27e2df14481df38f5ea0ca9",
+          "revision": "122165d1b39d1d9662840bf26d0f6463f41a6a13",
           "version": null
         }
       },
@@ -41,9 +41,9 @@
         "package": "Autofill",
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
-          "branch": null,
-          "revision": "44cd844b6bb5d8ccfefbd6e025817d800c26ad76",
-          "version": "7.2.0"
+          "branch": "abrown/ios-incontext-email-promotion",
+          "revision": "b0061b7e13bd7890bd82c0d075c63a75060e1a05",
+          "version": null
         }
       },
       {

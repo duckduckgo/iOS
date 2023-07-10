@@ -290,7 +290,7 @@ class TabViewController: UIViewController {
         initAttributionLogic()
         applyTheme(ThemeManager.shared.currentTheme)
         addTextSizeObserver()
-        addDuckDuckGoEmailSignOutObserver()
+        addDuckDuckGoEmailObserver()
         registerForDownloadsNotifications()
 
         if #available(iOS 16.4, *) {
@@ -700,7 +700,7 @@ class TabViewController: UIViewController {
                                                object: nil)
     }
 
-    private func addDuckDuckGoEmailSignOutObserver() {
+    private func addDuckDuckGoEmailObserver() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onDuckDuckGoEmailIncontextSignup),
                                                name: .emailDidIncontextSignup,
@@ -2339,7 +2339,14 @@ extension TabViewController: EmailManagerRequestDelegate {
 extension TabViewController: EmailSignupViewControllerDelegate {
 
     func emailSignupViewControllerDidFinish(_ controller: EmailSignupViewController) {
-        webView.evaluateJavaScript("window.openAutofillAfterClosingEmailProtectionTab()", in: nil, in: WKContentWorld.defaultClient)
+        guard let autofillUserScript = autofillUserScript else {
+            return
+        }
+        emailManager.autofillUserScript(autofillUserScript,
+                                        didRequestAliasAndRequiresUserPermission: true,
+                                        shouldConsumeAliasIfProvided: true) { _, _ in
+
+        }
     }
 }
 

@@ -20,6 +20,7 @@
 
 import Foundation
 import BrowserServicesKit
+import RemoteMessaging
 import Core
 import Networking
 
@@ -27,7 +28,7 @@ public struct RemoteMessageRequest {
 
     private var endpoint: URL {
         #if DEBUG
-        return URL(string: "https://raw.githubusercontent.com/duckduckgo/remote-messaging-config/main/samples/ios/sample1.json")!
+        return URL(string: "https://raw.githubusercontent.com/duckduckgo/remote-messaging-config/main/samples/ios/sample3.json")!
         #else
         return URL(string: "https://staticcdn.duckduckgo.com/remotemessaging/config/staging/ios-config.json")!
         #endif

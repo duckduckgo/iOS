@@ -19,6 +19,7 @@
 
 import Foundation
 import BrowserServicesKit
+import RemoteMessaging
 
 struct HomeMessageViewModel: Equatable {
     enum ButtonAction {

@@ -20,6 +20,7 @@
 import Foundation
 import BrowserServicesKit
 import Core
+import RemoteMessaging
 
 struct HomeMessageViewModelBuilder {
 

@@ -19,6 +19,7 @@
 
 import Foundation
 import BrowserServicesKit
+import RemoteMessaging
 import Common
 import Core
 import Bookmarks

@@ -18,7 +18,6 @@
 //
 
 import UIKit
-import MessageUI
 import Core
 import BrowserServicesKit
 import Persistence
@@ -325,8 +324,12 @@ class SettingsViewController: UITableViewController {
         Task { @MainActor in
             let fwm = FirewallManager()
             await fwm.refreshManager()
-            if UserDefaults().bool(forKey: UserDefaultsWrapper<Any>.Key.appTPUsed.rawValue) && fwm.status() != .connected {
-                appTPCell.detailTextLabel?.text = UserText.appTPCellDisabled
+            if UserDefaults().bool(forKey: UserDefaultsWrapper<Any>.Key.appTPUsed.rawValue) {
+                if fwm.status() != .connected {
+                    appTPCell.detailTextLabel?.text = UserText.appTPCellDisabled
+                } else {
+                    appTPCell.detailTextLabel?.text = UserText.appTPCellEnabled
+                }
             } else {
                 appTPCell.detailTextLabel?.text = UserText.appTPCellDetail
             }
@@ -586,18 +589,6 @@ extension SettingsViewController: Themable {
                           options: .transitionCrossDissolve, animations: {
                             self.tableView.reloadData()
         }, completion: nil)
-    }
-}
-
-extension SettingsViewController: MFMailComposeViewControllerDelegate {
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        dismiss(animated: true, completion: nil)
-    }
-}
-
-extension MFMailComposeViewController {
-    static func create() -> MFMailComposeViewController? {
-        return MFMailComposeViewController()
     }
 }
 

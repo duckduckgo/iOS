@@ -21,6 +21,7 @@ import Foundation
 import Core
 
 struct ManagedTrackerRepresentable: Hashable {
+    let uuid: String
     let domain: String
     let trackerOwner: String
     let blocking: Bool
@@ -34,6 +35,11 @@ class AppTPManageTrackersViewModel: ObservableObject {
     
     @Published public var trackerList: [ManagedTrackerRepresentable] = []
     
+    // This is set to true when a tracker is disabled
+    // If this is true we know to show the "report breakage" dialog when the
+    // tracker list updates in the view
+    public var trackerDisabled: Bool = false
+    
     init(blocklist: TrackerDataParser = TrackerDataParser(),
          allowlist: AppTrackingProtectionAllowlistModel = AppTrackingProtectionAllowlistModel()) {
         self.blocklist = blocklist
@@ -44,6 +50,7 @@ class AppTPManageTrackersViewModel: ObservableObject {
         var newList = [ManagedTrackerRepresentable]()
         for blockedTracker in blocklist.flatDomainList() {
             let tracker = ManagedTrackerRepresentable(
+                uuid: UUID().uuidString,
                 domain: blockedTracker,
                 trackerOwner: blocklist.trackerOwner(forDomain: blockedTracker)?.name ?? "Unknown",
                 blocking: !allowlist.contains(domain: blockedTracker)
@@ -60,6 +67,7 @@ class AppTPManageTrackersViewModel: ObservableObject {
     public func changeState(for trackerDomain: String, blocking: Bool) {
         if !blocking {
             allowlist.allow(domain: trackerDomain)
+            trackerDisabled = true
         } else {
             allowlist.remove(domain: trackerDomain)
         }
@@ -67,6 +75,7 @@ class AppTPManageTrackersViewModel: ObservableObject {
         // Update the tracker list
         if let index = trackerList.firstIndex(where: { $0.domain == trackerDomain }) {
             trackerList[index] = ManagedTrackerRepresentable(
+                uuid: UUID().uuidString, // New UUID string forces view updates
                 domain: trackerDomain,
                 trackerOwner: blocklist.trackerOwner(forDomain: trackerDomain)?.name ?? "Unknown",
                 blocking: blocking

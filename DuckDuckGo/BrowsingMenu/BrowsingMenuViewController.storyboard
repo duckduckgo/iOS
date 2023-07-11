@@ -92,7 +92,7 @@
                                                             <attributedString key="attributedText">
                                                                 <fragment content="Label Label Label Label Label">
                                                                     <attributes>
-                                                                        <font key="NSFont" size="17" name="ProximaNova-Regular"/>
+                                                                        <font key="NSFont" size="17" metaFont="system"/>
                                                                         <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="22" tighteningFactorForTruncation="0.0"/>
                                                                     </attributes>
                                                                 </fragment>

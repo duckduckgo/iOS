@@ -52,23 +52,6 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         hideLogoIfThereAreMessagesToDisplay()
     }
 
-    func didAppear() {
-        let remoteMessagingStore = AppDependencyProvider.shared.remoteMessagingStore
-        guard MacPromoExperiment(remoteMessagingStore: remoteMessagingStore).shouldShowMessage() else { return }
-        guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return }
-
-        os_log("Remote message to show: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
-        Pixel.fire(pixel: .remoteMessageShown,
-                   withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessageToPresent.id)"])
-
-        if !remoteMessagingStore.hasShownRemoteMessage(withId: remoteMessageToPresent.id) {
-            os_log("Remote message shown for first time: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
-            Pixel.fire(pixel: .remoteMessageShownUnique,
-                       withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessageToPresent.id)"])
-            remoteMessagingStore.updateRemoteMessage(withId: remoteMessageToPresent.id, asShown: true)
-        }
-    }
-
     func refresh() {
         hideLogoIfThereAreMessagesToDisplay()
     }
@@ -125,25 +108,27 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         let message = homePageConfiguration.homeMessages[indexPath.row]
         switch message {
         case .placeholder:
-            return HomeMessageViewModel(messageId: "", image: nil, topText: nil, title: "", subtitle: "", buttons: []) { [weak self] _, _ in
+            return HomeMessageViewModel(messageId: "", image: nil, topText: nil, title: "", subtitle: "", buttons: []) { [weak self] _ in
                 self?.dismissHomeMessage(message, at: indexPath, in: collectionView)
+            } onDidAppear: {
+                // no-op
             }
         case .remoteMessage(let remoteMessage):
-            return HomeMessageViewModelBuilder.build(for: remoteMessage) { [weak self] action, remoteAction in
+            return HomeMessageViewModelBuilder.build(for: remoteMessage) { [weak self] action in
 
                 guard let action,
                         let self else { return }
 
                 switch action {
-                case .primaryAction:
-                    if !remoteAction.isSharing {
+                case .primaryAction(let sharing):
+                    if !sharing {
                         self.dismissHomeMessage(message, at: indexPath, in: collectionView)
                     }
                     Pixel.fire(pixel: .remoteMessageShownPrimaryActionClicked,
                                withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
 
-                case .secondaryAction:
-                    if !remoteAction.isSharing {
+                case .secondaryAction(let sharing):
+                    if !sharing {
                         self.dismissHomeMessage(message, at: indexPath, in: collectionView)
                     }
                     Pixel.fire(pixel: .remoteMessageShownSecondaryActionClicked,
@@ -155,6 +140,8 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
                                withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
 
                 }
+            } onDidAppear: { [weak self] in
+                self?.homePageConfiguration.didAppear(message)
             }
         }
     }
@@ -207,7 +194,7 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
 
 extension RemoteAction {
 
-    var isSharing: Bool {
+    var isShare: Bool {
         if case .share = self.actionStyle {
             return true
         }

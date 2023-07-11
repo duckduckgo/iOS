@@ -272,7 +272,7 @@
 "autofill.logins.details.username" = "Nom d'utilisateur";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Les identifiants sont stockés de manière sécurisée sur cet appareil uniquement.";
+"autofill.logins.empty-view.subtitle" = "Les identifiants de connexion sont stockés en toute sécurité sur votre appareil.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Aucun identifiant enregistré pour l'instant";
@@ -292,11 +292,11 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Identifiant pour %@ supprimé";
 
-/* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Recherche d'identifiants";
-
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Identifiant supprimé";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Recherche d'identifiants";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Suggéré";
@@ -350,7 +350,7 @@
 "autofill.password-generation-prompt.use-own-password.cta" = "Créer le mien";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Les identifiants sont stockés en toute sécurité sur cet appareil uniquement et peuvent être gérés à partir du menu Identifiants dans Paramètres.";
+"autofill.save-login.new-user.message" = "Les identifiants sont stockés en toute sécurité sur votre appareil et peuvent être gérés à partir du menu Identifiants dans Paramètres.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Voulez-vous que DuckDuckGo enregistre votre identifiant ?";

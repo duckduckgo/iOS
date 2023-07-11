@@ -68,14 +68,14 @@ class MainViewController: UIViewController {
     @IBOutlet weak var notificationContainerHeight: NSLayoutConstraint!
     
     @IBOutlet weak var statusBarBackground: UIView!
-    @IBOutlet weak var findInPageView: FindInPageView!
-    @IBOutlet weak var findInPageHeightLayoutConstraint: NSLayoutConstraint!
-    @IBOutlet weak var findInPageBottomLayoutConstraint: NSLayoutConstraint!
-    @IBOutlet weak var findInPageInnerContainerView: UIView!
 
     @IBOutlet weak var logoContainer: UIView!
     @IBOutlet weak var logo: UIImageView!
     @IBOutlet weak var logoText: UIImageView!
+
+    weak var findInPageView: FindInPageView!
+    weak var findInPageHeightLayoutConstraint: NSLayoutConstraint!
+    weak var findInPageBottomLayoutConstraint: NSLayoutConstraint!
 
     weak var notificationView: NotificationView?
 
@@ -100,7 +100,7 @@ class MainViewController: UIViewController {
     private let previewsSource = TabPreviewsSource()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private var launchTabObserver: LaunchTabNotification.Observer?
-
+    
     private let appTrackingProtectionDatabase: CoreDataDatabase
     private let bookmarksDatabase: CoreDataDatabase
     private let bookmarksDatabaseCleaner: BookmarkDatabaseCleaner
@@ -162,9 +162,33 @@ class MainViewController: UIViewController {
 
     fileprivate var tabCountInfo: TabCountInfo?
 
+    func loadFindInPage() {
+
+        let view = FindInPageView.loadFromXib()
+        self.view.addSubview(view)
+
+        // Avoids coercion swiftlint warnings
+        let superview = self.view!
+
+        let height = view.constrainAttribute(.height, to: view.frame.height)
+        let bottom = superview.constrainView(view, by: .bottom, to: .bottom)
+
+        NSLayoutConstraint.activate([
+            bottom,
+            superview.constrainView(view, by: .width, to: .width),
+            height,
+            superview.constrainView(view, by: .centerX, to: .centerX)
+        ])
+
+        findInPageView = view
+        findInPageBottomLayoutConstraint = bottom
+        findInPageHeightLayoutConstraint = height
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+
+        loadFindInPage()
         attachOmniBar()
 
         view.addInteraction(UIDropInteraction(delegate: self))
@@ -204,11 +228,6 @@ class MainViewController: UIViewController {
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             showFireButtonPulse()
         }
-
-        if MacPromoExperiment().shouldShowSheet() {
-            let controller = MacPromoViewController()
-            present(controller, animated: true)
-        }
     }
 
     func startAddFavoriteFlow() {
@@ -241,23 +260,6 @@ class MainViewController: UIViewController {
                                                selector: #selector(keyboardWillChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
-
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillHide),
-                                               name: UIResponder.keyboardWillHideNotification,
-                                               object: nil)
-    }
-
-    /// This is only really for iOS 10 devices that don't properly support the change frame approach.
-    @objc private func keyboardWillHide(_ notification: Notification) {
-
-        guard findInPageBottomLayoutConstraint.constant > 0,
-            let userInfo = notification.userInfo else {
-            return
-        }
-
-        findInPageBottomLayoutConstraint.constant = 0
-        animateForKeyboard(userInfo: userInfo, y: view.frame.height)
     }
 
     /// Based on https://stackoverflow.com/a/46117073/73479
@@ -596,6 +598,7 @@ class MainViewController: UIViewController {
         addToView(controller: controller)
 
         refreshControls()
+        syncService.scheduler.requestSyncImmediately()
     }
 
     fileprivate func removeHomeScreen() {
@@ -1222,7 +1225,7 @@ extension MainViewController: BrowserChromeDelegate {
         bottomHeight += view.safeAreaInsets.bottom
         let multiplier = toolbar.isHidden ? 1.0 : 1.0 - ratio
         toolbarBottom.constant = bottomHeight * multiplier
-        findInPageHeightLayoutConstraint.constant = findInPageInnerContainerView.frame.height + view.safeAreaInsets.bottom
+        findInPageHeightLayoutConstraint.constant = findInPageView.container.frame.height + view.safeAreaInsets.bottom
     }
 
     // 1.0 - full size, 0.0 - hidden

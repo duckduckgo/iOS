@@ -1,0 +1,729 @@
+{
+    "readme": "https://github.com/duckduckgo/tracker-blocklists",
+    "version": 1685643007158,
+    "trackers": {
+        "adrta.com": {
+            "owner": {
+                "name": "Pixalate, Inc.",
+                "displayName": "Pixalate"
+            },
+            "default": "ignore"
+        },
+        "api.weibo.com": {
+            "owner": {
+                "name": "Sina Corporation",
+                "displayName": "Sina"
+            },
+            "default": "block"
+        },
+        "api2.branch.io": {
+            "owner": {
+                "name": "Branch Metrics, Inc.",
+                "displayName": "Branch Metrics"
+            },
+            "default": "block"
+        },
+        "api3.siftscience.com": {
+            "owner": {
+                "name": "Sift Science, Inc.",
+                "displayName": "Sift Science"
+            },
+            "default": "ignore"
+        },
+        "app-measurement.com": {
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google"
+            },
+            "default": "block"
+        },
+        "app.adjust.com": {
+            "owner": {
+                "name": "Adjust GmbH",
+                "displayName": "Adjust"
+            },
+            "default": "block"
+        },
+        "appmetrica.yandex.net": {
+            "owner": {
+                "name": "Yandex LLC",
+                "displayName": "Yandex"
+            },
+            "default": "block"
+        },
+        "attr.appsflyer.com": {
+            "owner": {
+                "name": "AppsFlyer",
+                "displayName": "AppsFlyer"
+            },
+            "default": "block"
+        },
+        "bugly.qq.com": {
+            "owner": {
+                "name": "Tencent Holdings Ltd.",
+                "displayName": "Tencent"
+            },
+            "default": "block"
+        },
+        "c.riskified.com": {
+            "owner": {
+                "name": "Riskified Ltd.",
+                "displayName": "Riskified"
+            },
+            "default": "ignore"
+        },
+        "cdn.branch.io": {
+            "owner": {
+                "name": "Branch Metrics, Inc.",
+                "displayName": "Branch Metrics"
+            },
+            "default": "block"
+        },
+        "cf-assets.hcaptcha.com": {
+            "owner": {
+                "name": "Intuition Machines, Inc.",
+                "displayName": "Intuition Machines"
+            },
+            "default": "ignore"
+        },
+        "cloudflare.hcaptcha.com": {
+            "owner": {
+                "name": "Intuition Machines, Inc.",
+                "displayName": "Intuition Machines"
+            },
+            "default": "ignore"
+        },
+        "connect.facebook.net": {
+            "owner": {
+                "name": "Facebook, Inc.",
+                "displayName": "Facebook"
+            },
+            "default": "block"
+        },
+        "conversions.appsflyer.com": {
+            "owner": {
+                "name": "AppsFlyer",
+                "displayName": "AppsFlyer"
+            },
+            "default": "block"
+        },
+        "device-provisioning.googleapis.com": {
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google"
+            },
+            "default": "ignore"
+        },
+        "dpm.demdex.net": {
+            "owner": {
+                "name": "Adobe Inc.",
+                "displayName": "Adobe"
+            },
+            "default": "block"
+        },
+        "fcmtoken.googleapis.com": {
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google"
+            },
+            "default": "ignore"
+        },
+        "firebase-settings.crashlytics.com": {
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google"
+            },
+            "default": "block"
+        },
+        "firebasedynamiclinks.googleapis.com": {
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google"
+            },
+            "default": "ignore"
+        },
+        "firebaseinstallations.googleapis.com": {
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google"
+            },
+            "default": "ignore"
+        },
+        "firebaselogging-pa.googleapis.com": {
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google"
+            },
+            "default": "block"
+        },
+        "firebaseremoteconfig.googleapis.com": {
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google"
+            },
+            "default": "ignore"
+        },
+        "fonts.googleapis.com": {
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google"
+            },
+            "default": "ignore"
+        },
+        "fonts.gstatic.com": {
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google"
+            },
+            "default": "ignore"
+        },
+        "g.doubleclick.net": {
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google"
+            },
+            "default": "block"
+        },
+        "gcdsdk.appsflyer.com": {
+            "owner": {
+                "name": "AppsFlyer",
+                "displayName": "AppsFlyer"
+            },
+            "default": "block"
+        },
+        "graph.facebook.com": {
+            "owner": {
+                "name": "Facebook, Inc.",
+                "displayName": "Facebook"
+            },
+            "default": "ignore"
+        },
+        "hcaptcha.com": {
+            "owner": {
+                "name": "Intuition Machines, Inc.",
+                "displayName": "Intuition Machines"
+            },
+            "default": "ignore"
+        },
+        "inapps.appsflyer.com": {
+            "owner": {
+                "name": "AppsFlyer",
+                "displayName": "AppsFlyer"
+            },
+            "default": "block"
+        },
+        "ipv6.adrta.com": {
+            "owner": {
+                "name": "Pixalate, Inc.",
+                "displayName": "Pixalate"
+            },
+            "default": "ignore"
+        },
+        "js.hcaptcha.com": {
+            "owner": {
+                "name": "Intuition Machines, Inc.",
+                "displayName": "Intuition Machines"
+            },
+            "default": "ignore"
+        },
+        "launches.appsflyer.com": {
+            "owner": {
+                "name": "AppsFlyer",
+                "displayName": "AppsFlyer"
+            },
+            "default": "block"
+        },
+        "lbs.yandex.net": {
+            "owner": {
+                "name": "Yandex LLC",
+                "displayName": "Yandex"
+            },
+            "default": "block"
+        },
+        "lh3.googleusercontent.com": {
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google"
+            },
+            "default": "ignore"
+        },
+        "ls.apple.com": {
+            "owner": {
+                "name": "Apple Inc.",
+                "displayName": "Apple"
+            },
+            "default": "ignore"
+        },
+        "m.facebook.com": {
+            "owner": {
+                "name": "Facebook, Inc.",
+                "displayName": "Facebook"
+            },
+            "default": "ignore"
+        },
+        "mc.yandex.ru": {
+            "owner": {
+                "name": "Yandex LLC",
+                "displayName": "Yandex"
+            },
+            "default": "block"
+        },
+        "mobile.webvisor.net": {
+            "owner": {
+                "name": "Yandex LLC",
+                "displayName": "Yandex"
+            },
+            "default": "block"
+        },
+        "mobile.yandex.net": {
+            "owner": {
+                "name": "Yandex LLC",
+                "displayName": "Yandex"
+            },
+            "default": "block"
+        },
+        "newassets.hcaptcha.com": {
+            "owner": {
+                "name": "Intuition Machines, Inc.",
+                "displayName": "Intuition Machines"
+            },
+            "default": "ignore"
+        },
+        "pagead2.googleadservices.com": {
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google"
+            },
+            "default": "block"
+        },
+        "pagead2.googlesyndication.com": {
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google"
+            },
+            "default": "block"
+        },
+        "pix.adrta.com": {
+            "owner": {
+                "name": "Pixalate, Inc.",
+                "displayName": "Pixalate"
+            },
+            "default": "ignore"
+        },
+        "platform.twitter.com": {
+            "owner": {
+                "name": "Twitter, Inc.",
+                "displayName": "Twitter"
+            },
+            "default": "ignore"
+        },
+        "q.adrta.com": {
+            "owner": {
+                "name": "Pixalate, Inc.",
+                "displayName": "Pixalate"
+            },
+            "default": "ignore"
+        },
+        "s.adsximg.com": {
+            "owner": {
+                "name": "Human Security, Inc.",
+                "displayName": "Human Security"
+            },
+            "default": "ignore"
+        },
+        "skadsdk.appsflyer.com": {
+            "owner": {
+                "name": "AppsFlyer",
+                "displayName": "AppsFlyer"
+            },
+            "default": "block"
+        },
+        "t.co": {
+            "owner": {
+                "name": "Twitter, Inc.",
+                "displayName": "Twitter"
+            },
+            "default": "ignore"
+        },
+        "tpc.googlesyndication.com": {
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google"
+            },
+            "default": "block"
+        },
+        "ulogs.umeng.com": {
+            "owner": {
+                "name": "Alibaba Group",
+                "displayName": "Alibaba"
+            },
+            "default": "block"
+        },
+        "web.facebook.com": {
+            "owner": {
+                "name": "Facebook, Inc.",
+                "displayName": "Facebook"
+            },
+            "default": "ignore"
+        },
+        "www.facebook.com": {
+            "owner": {
+                "name": "Facebook, Inc.",
+                "displayName": "Facebook"
+            },
+            "default": "ignore"
+        },
+        "www.google-analytics.com": {
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google"
+            },
+            "default": "block"
+        },
+        "www.google.co.uk": {
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google"
+            },
+            "default": "ignore"
+        },
+        "www.google.com": {
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google"
+            },
+            "default": "ignore"
+        },
+        "www.googleadservices.com": {
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google"
+            },
+            "default": "block"
+        },
+        "www.googletagmanager.com": {
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google"
+            },
+            "default": "block"
+        },
+        "www.googletagservices.com": {
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google"
+            },
+            "default": "block"
+        },
+        "www.gstatic.com": {
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google"
+            },
+            "default": "ignore"
+        },
+        "www.instagram.com": {
+            "owner": {
+                "name": "Facebook, Inc.",
+                "displayName": "Facebook"
+            },
+            "default": "ignore"
+        },
+        "xx.fbcdn.net": {
+            "owner": {
+                "name": "Facebook, Inc.",
+                "displayName": "Facebook"
+            },
+            "default": "ignore"
+        }
+    },
+    "packageNames": {},
+    "entities": {
+        "Adjust GmbH": {
+            "score": 11088,
+            "signals": [
+                "platform",
+                "app_name",
+                "country",
+                "device_language",
+                "device_connectivity",
+                "device_resolution",
+                "os_version",
+                "device_model",
+                "cpu_data",
+                "cookies",
+                "IDFV",
+                "unique_identifier",
+                "device_name",
+                "IDFA"
+            ]
+        },
+        "Adobe Inc.": {
+            "score": 6176,
+            "signals": [
+                "platform",
+                "app_name",
+                "country",
+                "device_language",
+                "os_version",
+                "device_model",
+                "cpu_data",
+                "cookies",
+                "unique_identifier",
+                "IDFA"
+            ]
+        },
+        "Alibaba Group": {
+            "score": 2883,
+            "signals": [
+                "platform",
+                "country",
+                "app_name",
+                "device_language",
+                "os_version",
+                "device_model",
+                "unique_identifier"
+            ]
+        },
+        "Apple Inc.": {
+            "score": 10535,
+            "signals": [
+                "platform",
+                "app_name",
+                "country",
+                "device_language",
+                "os_version",
+                "device_model",
+                "state",
+                "unique_identifier",
+                "city",
+                "neighborhood",
+                "postal_code",
+                "gps_coordinates"
+            ]
+        },
+        "AppsFlyer": {
+            "score": 40278,
+            "signals": [
+                "platform",
+                "device_screen_density",
+                "app_name",
+                "country",
+                "device_language",
+                "os_version",
+                "IDFV",
+                "state",
+                "unique_identifier",
+                "birthday"
+            ]
+        },
+        "Branch Metrics, Inc.": {
+            "score": 16474,
+            "signals": [
+                "platform",
+                "app_name",
+                "country",
+                "device_connectivity",
+                "device_language",
+                "device_resolution",
+                "os_version",
+                "device_model",
+                "cpu_data",
+                "IDFV",
+                "network_carrier",
+                "unique_identifier",
+                "IDFA",
+                "local_ip"
+            ]
+        },
+        "Facebook, Inc.": {
+            "score": 72443,
+            "signals": [
+                "device_orientation",
+                "platform",
+                "timezone",
+                "device_screen_density",
+                "app_name",
+                "device_charging_status",
+                "country",
+                "device_language",
+                "device_resolution",
+                "device_connectivity",
+                "os_version",
+                "device_model",
+                "device_total_memory",
+                "device_volume",
+                "cookies",
+                "network_carrier",
+                "IDFV",
+                "device_free_storage",
+                "unique_identifier",
+                "IDFA",
+                "birthday",
+                "first_name",
+                "email_address"
+            ]
+        },
+        "Google LLC": {
+            "score": 264196,
+            "signals": [
+                "device_orientation",
+                "platform",
+                "timezone",
+                "device_screen_density",
+                "app_name",
+                "country",
+                "device_language",
+                "device_resolution",
+                "device_connectivity",
+                "cpu_data",
+                "os_version",
+                "device_model",
+                "device_volume",
+                "cookies",
+                "network_carrier",
+                "IDFV",
+                "network_isp",
+                "gender",
+                "state",
+                "unique_identifier",
+                "IDFA",
+                "local_ip",
+                "city",
+                "birthday",
+                "postal_code",
+                "first_name",
+                "last_name",
+                "email_address",
+                "gps_coordinates"
+            ]
+        },
+        "Human Security, Inc.": {
+            "score": 96,
+            "signals": [
+                "platform",
+                "app_name",
+                "os_version",
+                "cookies",
+                "IDFA"
+            ]
+        },
+        "Intuition Machines, Inc.": {
+            "score": 166,
+            "signals": [
+                "platform",
+                "device_language",
+                "device_resolution",
+                "os_version",
+                "device_model",
+                "cookies"
+            ]
+        },
+        "Pixalate, Inc.": {
+            "score": 109,
+            "signals": [
+                "device_orientation",
+                "platform",
+                "app_name",
+                "device_language",
+                "device_resolution",
+                "os_version",
+                "device_model",
+                "cookies"
+            ]
+        },
+        "Riskified Ltd.": {
+            "score": 1132,
+            "signals": [
+                "platform",
+                "timezone",
+                "country",
+                "device_language",
+                "os_version",
+                "network_carrier",
+                "IDFV",
+                "device_name",
+                "unique_identifier",
+                "IDFA"
+            ]
+        },
+        "Sift Science, Inc.": {
+            "score": 2784,
+            "signals": [
+                "device_orientation",
+                "platform",
+                "device_charging_status",
+                "app_name",
+                "country",
+                "device_connectivity",
+                "device_resolution",
+                "device_language",
+                "cpu_data",
+                "os_version",
+                "device_model",
+                "device_total_memory",
+                "device_battery_level",
+                "IDFV",
+                "network_carrier",
+                "device_name",
+                "unique_identifier",
+                "local_ip",
+                "IDFA",
+                "gps_coordinates"
+            ]
+        },
+        "Sina Corporation": {
+            "score": 688,
+            "signals": [
+                "platform",
+                "app_name",
+                "device_language",
+                "os_version"
+            ]
+        },
+        "Tencent Holdings Ltd.": {
+            "score": 4978,
+            "signals": [
+                "platform",
+                "app_name",
+                "country",
+                "device_language",
+                "os_version",
+                "device_model",
+                "device_total_memory",
+                "cookies",
+                "unique_identifier"
+            ]
+        },
+        "Twitter, Inc.": {
+            "score": 2468,
+            "signals": [
+                "platform",
+                "app_name",
+                "country",
+                "device_language",
+                "os_version",
+                "device_model",
+                "cookies",
+                "unique_identifier"
+            ]
+        },
+        "Yandex LLC": {
+            "score": 1219,
+            "signals": [
+                "gps_coordinates",
+                "AAID",
+                "unique_identifier",
+                "cookies",
+                "os_build_version",
+                "device_resolution",
+                "device_model",
+                "device_language",
+                "device_make",
+                "app_name",
+                "os_version",
+                "platform"
+            ]
+        }
+    }
+}

@@ -29,7 +29,6 @@ struct HomeMessageButtonStyle: ButtonStyle {
         configuration.label
             .padding(.horizontal, Const.Padding.buttonHorizontal)
             .padding(.vertical, Const.Padding.buttonVertical)
-            .frame(maxWidth: .infinity)
             .frame(height: height)
             .foregroundColor(configuration.isPressed ? foregroundColor.opacity(0.5) : foregroundColor)
             .background(backgroundColor)
@@ -38,9 +37,27 @@ struct HomeMessageButtonStyle: ButtonStyle {
 }
 
 struct HomeMessageView: View {
+
+    struct ShareItem: Identifiable {
+        var id: String {
+            value
+        }
+
+        var item: Any {
+            if let url = URL(string: value), let title = title {
+                return TitledURLActivityItem(url, title)
+            } else {
+                return value
+            }
+        }
+
+        let value: String
+        let title: String?
+    }
+
     let viewModel: HomeMessageViewModel
 
-    @State var activityItem: TitledURLActivityItem?
+    @State var activityItem: ShareItem?
 
     var body: some View {
         ZStack {
@@ -60,15 +77,7 @@ struct HomeMessageView: View {
                     buttons
                 }
                 .padding(.top, 8)
-                .padding(.horizontal, 32)
-
-                if viewModel.messageId == MacPromoExperiment.promoId {
-                    Text("Or visit **duckduckgo.com/browser** on your computer.")
-                        .daxSubheadRegular()
-                        .foregroundColor(Color(designSystemColor: .textSecondary))
-                        .padding(.vertical, 4)
-                }
-
+                .padding(.horizontal, 8)
             }
             .multilineTextAlignment(.center)
             .padding(.vertical)
@@ -80,6 +89,9 @@ struct HomeMessageView: View {
                                 radius: Const.Radius.shadow,
                                 x: 0,
                                 y: Const.Offset.shadowVertical))
+        .onAppear {
+            viewModel.onDidAppear()
+        }
     }
 
     private var closeButtonHeader: some View {
@@ -95,7 +107,7 @@ struct HomeMessageView: View {
     
     private var closeButton: some View {
         Button {
-            viewModel.onDidClose(.close, .dismiss)
+            viewModel.onDidClose(.close)
         } label: {
             Image("Close-24")
                 .foregroundColor(.primary)
@@ -143,8 +155,8 @@ struct HomeMessageView: View {
             let background: Color = model.actionStyle == .cancel ? .cancelButtonBackground : .button
             Button {
                 model.action()
-                if case .share(let url, let title) = model.actionStyle {
-                    activityItem = TitledURLActivityItem(url, title)
+                if case .share(let value, let title) = model.actionStyle {
+                    activityItem = ShareItem(value: value, title: title)
                 }
             } label: {
                 HStack {
@@ -162,9 +174,9 @@ struct HomeMessageView: View {
                                                 height: 40))
             .padding([.bottom], Const.Padding.buttonVerticalInset)
             .sheet(item: $activityItem) { activityItem in
-                ActivityViewController(activityItems: [activityItem]) { activityType, result, _, error in
-                    MacPromoExperiment().shareSheetFinished(viewModel.messageId, activityType: activityType, result: result, error: error)
-                    model.action()
+                ActivityViewController(activityItems: [activityItem.item]) { _, _, _, _ in
+                    // It would be good to review the parameters passed to this and
+                    //  fire a pixel indicating what kind of interaction happened
                 }
                 .modifier(ActivityViewPresentationModifier())
             }
@@ -212,7 +224,7 @@ private enum Const {
     }
     
     enum Padding {
-        static let buttonHorizontal: CGFloat = 24
+        static let buttonHorizontal: CGFloat = 16
         static let buttonVertical: CGFloat = 9
         static let buttonVerticalInset: CGFloat = 8
         static let textHorizontalInset: CGFloat = 30
@@ -243,24 +255,8 @@ struct HomeMessageView_Previews: PreviewProvider {
                                              subtitle: "Body text goes here. This component can be used with one or two buttons.",
                                              buttons: [.init(title: "Button1", actionStyle: .cancel) {},
                                                        .init(title: "Button2") {}],
-                                             onDidClose: { _, _ in })
+                                             onDidClose: { _ in }, onDidAppear: {})
         return HomeMessageView(viewModel: viewModel)
             .padding(.horizontal)
     }
-}
-
-struct ActivityViewController: UIViewControllerRepresentable {
-
-    var activityItems: [Any]
-    var applicationActivities: [UIActivity]?
-    var completionWithItemsHandler: UIActivityViewController.CompletionWithItemsHandler?
-
-    func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
-        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
-        controller.completionWithItemsHandler = completionWithItemsHandler
-        return controller
-    }
-
-    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityViewController>) {}
-
 }

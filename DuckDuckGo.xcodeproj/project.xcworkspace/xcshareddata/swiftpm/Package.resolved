@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "BloomFilter",
+        "repositoryURL": "https://github.com/duckduckgo/bloom_cpp.git",
+        "state": {
+          "branch": null,
+          "revision": "8076199456290b61b4544bf2f4caf296759906a0",
+          "version": "3.0.0"
+        }
+      },
+      {
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
@@ -24,8 +33,8 @@
         "repositoryURL": "https://github.com/duckduckgo/content-scope-scripts",
         "state": {
           "branch": null,
-          "revision": "801b7f23476f797c6eaa72b070e6c80abb82801a",
-          "version": "4.4.4"
+          "revision": "630eb2c4cf94055e630fd5b7daae71bed893ad0a",
+          "version": "4.22.4"
         }
       },
       {

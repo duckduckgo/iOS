@@ -390,7 +390,7 @@ public struct UserText {
     public static let autofillSaveLoginTitle = NSLocalizedString("autofill.save-login.title", value: "Save Login?", comment: "Title displayed on modal asking for the user to save the login")
     public static let autofillUpdateUsernameTitle = NSLocalizedString("autofill.update-usernamr.title", value: "Update username?", comment: "Title displayed on modal asking for the user to update the username")
 
-    public static let autofillSaveLoginMessageNewUser = NSLocalizedString("autofill.save-login.new-user.message", value: "Logins are stored securely on this device only, and can be managed from the Logins menu in Settings.", comment: "Message displayed on modal asking for the user to save the login for the first time")
+    public static let autofillSaveLoginMessageNewUser = NSLocalizedString("autofill.save-login.new-user.message", value: "Logins are stored securely on your device, and can be managed from the Logins menu in Settings.", comment: "Message displayed on modal asking for the user to save the login for the first time")
     public static let autofillSaveLoginNotNowCTA = NSLocalizedString("autofill.save-login.not-now.CTA", value: "Not Now", comment: "Cancel CTA displayed on modal asking for the user to save the login")
    
     public static let autofillSavePasswordTitle = NSLocalizedString("autofill.save-password.title", value: "Save Password?", comment: "Title displayed on modal asking for the user to save the password")
@@ -497,14 +497,15 @@ public struct UserText {
     
     public static let appTPNavTitle = NSLocalizedString("appTP.title", value: "App Tracking Protection", comment: "Title for the App Tracking Protection feature")
     public static let appTPCellDetail = NSLocalizedString("appTP.cell.detail", value: "Block app trackers on your device", comment: "Detail string describing what AppTP is")
+    public static let appTPCellEnabled = NSLocalizedString("appTP.cell.enabled", value: "Enabled", comment: "String indicating AppTP is enabled when viewed from the settings screen")
     public static let appTPCellDisabled = NSLocalizedString("appTP.cell.disabled", value: "Disabled", comment: "String indicating AppTP is disabled when viewed from the settings screen")
     
     public static let appTPEmptyDisabledInfo = NSLocalizedString("appTP.empty.disabled.info", value: "Enable App Tracking Protection so we can block pesky trackers in other apps.", comment: "Info string informing the user what App Tracking Protection does.")
     
     public static let appTPEmptyEnabledInfo = NSLocalizedString("appTP.empty.enabled.info", value: "We’re looking for trackers in your apps...", comment: "Info string informing the user we're looking for trackers in other apps.")
     
-    public static func appTPTrackingAttempts(count: String) -> String {
-        let message = NSLocalizedString("appTP.trackingattempts", value: "%@ tracking attempts", comment: "Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts")
+    public static func appTPTrackingAttempts(count: Int32) -> String {
+        let message = NSLocalizedString("appTP.trackingattempts", comment: "Do not translate. StringsDict entry -- Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts")
         return message.format(arguments: count)
     }
     
@@ -587,7 +588,7 @@ In addition to the details entered into this form, your app issue report will co
     public static let autofillLoginDetailsAddress = NSLocalizedString("autofill.logins.details.address", value:"Website URL", comment: "Address label for login details on autofill")
     public static let autofillLoginDetailsNotes = NSLocalizedString("autofill.logins.details.notes", value:"Notes", comment: "Notes label for login details on autofill")
     public static let autofillEmptyViewTitle = NSLocalizedString("autofill.logins.empty-view.title", value:"No Logins saved yet", comment: "Title for view displayed when autofill has no items")
-    public static let autofillEmptyViewSubtitle = NSLocalizedString("autofill.logins.empty-view.subtitle", value:"Logins are stored securely on this device only.", comment: "Subtitle for view displayed when autofill has no items")
+    public static let autofillEmptyViewSubtitle = NSLocalizedString("autofill.logins.empty-view.subtitle", value:"Logins are stored securely on your device.", comment: "Subtitle for view displayed when autofill has no items")
     public static let autofillSearchNoResultTitle = NSLocalizedString("autofill.logins.search.no-results.title", value:"No Results", comment: "Title displayed when there are no results on Autofill search")
     public static func autofillSearchNoResultSubtitle(for query: String) -> String {
         let message = NSLocalizedString("autofill.logins.search.no-results.subtitle", value: "for '%@'", comment: "Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle)")
@@ -679,6 +680,7 @@ In addition to the details entered into this form, your app issue report will co
     }
     public static let syncRemoveDeviceConfirmAction = "Remove"
     public static let syncCodeCopied = "Recovery Code copied"
+    public static let syncTitle = "Sync"
 
     // Autofill Password Generation Prompt
     public static let autofillPasswordGenerationPromptTitle = NSLocalizedString("autofill.password-generation-prompt.title", value:"Use generated password from DuckDuckGo?", comment: "Title for prompt to use suggested strong password for creating a login")

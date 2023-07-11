@@ -24,6 +24,7 @@ import Core
 import Networking
 import UserScript
 import WebKit
+import DesignResourcesKit
 
 protocol EmailSignupViewControllerDelegate: AnyObject {
     func emailSignupViewControllerDidFinish(_ controller: EmailSignupViewController)
@@ -42,9 +43,20 @@ class EmailSignupViewController: UIViewController {
 
     weak var delegate: EmailSignupViewControllerDelegate?
 
+    var completionHandler: (() -> Void)?
+
+    private var webView: WKWebView!
+
+    private var canGoBack: Bool {
+        let webViewCanGoBack = webView.canGoBack
+        let navigatedToError = webView.url != nil
+        return webViewCanGoBack || navigatedToError
+    }
+
+    lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
+
     lazy private var emailManager: EmailManager = {
         let emailManager = EmailManager()
-        emailManager.aliasPermissionDelegate = self
         emailManager.requestDelegate = self
         return emailManager
     }()
@@ -56,8 +68,21 @@ class EmailSignupViewController: UIViewController {
         return manager
     }()
 
+    private lazy var backBarButtonItem: UIBarButtonItem = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        button.setTitle(UserText.backButtonTitle, for: .normal)
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
+        button.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
+        return UIBarButtonItem(customView: button)
+    }()
+
+    private lazy var cancelBarButtonItem: UIBarButtonItem = {
+        UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonPressed))
+    }()
+
     private lazy var nextBarButtonItem: UIBarButtonItem = {
-        UIBarButtonItem(title: "Next",
+        UIBarButtonItem(title: UserText.nextButtonTitle,
                         style: .plain,
                         target: self,
                         action: #selector(nextButtonPressed))
@@ -65,9 +90,21 @@ class EmailSignupViewController: UIViewController {
 
     private var url: URL? {
         didSet {
-            if let url = url, url.absoluteString.contains("welcome") || url.absoluteString.contains("settings") {
-                navigationItem.rightBarButtonItems = [nextBarButtonItem]
+            guard let url = url else {
+                navigationItem.rightBarButtonItems = []
+                return
+            }
+            if url.absoluteString.contains("welcome") {
+                navigationItem.leftBarButtonItems = []
+                navigationItem.rightBarButtonItem = nextBarButtonItem
+            } else if url.absoluteString.hasSuffix("email/") {
+                navigationItem.leftBarButtonItem = cancelBarButtonItem
+                navigationItem.rightBarButtonItems = []
+            } else if url.absoluteString.contains("start-incontext") {
+                navigationItem.leftBarButtonItems = []
+                navigationItem.rightBarButtonItems = []
             } else {
+                navigationItem.leftBarButtonItems = canGoBack ? [backBarButtonItem] : []
                 navigationItem.rightBarButtonItems = []
             }
         }
@@ -91,26 +128,35 @@ class EmailSignupViewController: UIViewController {
         }
 
         setup()
+        navBarTitle()
+        addDuckDuckGoEmailObserver()
+        applyTheme(ThemeManager.shared.currentTheme)
+    }
+
+    private func navBarTitle() {
+        let titleLabel: UILabel = UILabel()
+        titleLabel.text = "DuckDuckGo"
+        titleLabel.font = .daxFootnoteRegular()
+        titleLabel.textColor = UIColor(designSystemColor: .textSecondary)
+
+        let subtitleLabel: UILabel = UILabel()
+        subtitleLabel.text = "Email Protection"
+        subtitleLabel.font = .daxHeadline()
+        subtitleLabel.textColor = UIColor(designSystemColor: .textPrimary)
+
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
+        stackView.axis = .vertical
+        stackView.alignment = .center
+
+        navigationItem.titleView = stackView
     }
 
     private func setup() {
-        view.addSubview(webViewContainer)
-
-        webViewContainer.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            webViewContainer.leftAnchor.constraint(equalTo: view.leftAnchor),
-            webViewContainer.rightAnchor.constraint(equalTo: view.rightAnchor),
-            webViewContainer.topAnchor.constraint(equalTo: view.topAnchor),
-            webViewContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-
-
         let configuration =  WKWebViewConfiguration.persistent()
 
         let request = URLRequest.userInitiated(URL(string: Constants.signUpUrl)!)
         attachWebView(configuration: configuration, andLoadRequest: request, consumeCookies: true)
     }
-
 
     private func attachWebView(configuration: WKWebViewConfiguration,
                                andLoadRequest request: URLRequest?,
@@ -121,20 +167,18 @@ class EmailSignupViewController: UIViewController {
         configuration.userContentController = userContentController
         userContentController.delegate = self
 
-        webView = WKWebView(frame: webViewContainer.bounds, configuration: configuration)
+        webView = WKWebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-
-        addObservers()
-
-        webViewContainer.addSubview(webView)
-
+        view.addSubview(webView)
 
         if #available(iOS 16.4, *) {
             updateWebViewInspectability()
         }
 
         let assertion = DispatchWorkItem { [unowned self] in
-            consumeCookiesThenLoadRequest(request)
+            if let request = request {
+                webView.load(request)
+            }
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: assertion)
@@ -157,28 +201,6 @@ class EmailSignupViewController: UIViewController {
 #endif
     }
 
-    private func consumeCookiesThenLoadRequest(_ request: URLRequest?) {
-        webView.configuration.websiteDataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { _ in
-            WebCacheManager.shared.consumeCookies { [weak self] in
-                guard let strongSelf = self else { return }
-
-                if let request = request {
-                    strongSelf.load(urlRequest: request)
-                }
-            }
-        }
-    }
-
-    private func load(urlRequest: URLRequest) {
-        loadViewIfNeeded()
-
-        if #available(iOS 15.0, *) {
-            assert(urlRequest.attribution == .user, "WebView requests should be user attributed")
-        }
-
-        webView.stopLoading()
-        webView.load(urlRequest)
-    }
 
     private func addObservers() {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.url), options: .new, context: nil)
@@ -194,10 +216,8 @@ class EmailSignupViewController: UIViewController {
         guard let keyPath = keyPath else { return }
 
         switch keyPath {
-
         case #keyPath(WKWebView.url):
             webViewUrlHasChanged()
-
         default:
             os_log("Unhandled keyPath %s", log: .generalLog, type: .debug, keyPath)
         }
@@ -206,6 +226,19 @@ class EmailSignupViewController: UIViewController {
     private func webViewUrlHasChanged() {
         print("webViewUrlHasChanged: \(String(describing: webView.url))")
         url = webView.url
+    }
+
+    @objc
+    func backButtonPressed() {
+        if canGoBack {
+            webView.goBack()
+        }
+    }
+
+    @objc
+    func cancelButtonPressed() {
+        // TODO - pixel
+        dismiss(animated: true)
     }
 
     @objc
@@ -292,7 +325,7 @@ extension EmailSignupViewController: EmailManagerRequestDelegate {
         let configuration = APIRequest.Configuration(url: url,
                                                      method: method,
                                                      queryParameters: parameters ?? [:],
-                                                     headers: headers,
+                                                     headers: APIRequest.Headers(additionalHeaders: headers),
                                                      body: httpBody,
                                                      timeoutInterval: timeoutInterval)
         let request = APIRequest(configuration: configuration, urlSession: .session())
@@ -358,13 +391,13 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
     }
 
     func secureVaultManagerIsEnabledStatus(_: SecureVaultManager) -> Bool {
-//        let isEnabled = AutofillSettingStatus.isAutofillEnabledInSettings && featureFlagger.isFeatureOn(.autofillCredentialInjecting)
-//        let isBackgrounded = UIApplication.shared.applicationState == .background
-//        if isEnabled && isBackgrounded {
-//            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded,
-//                       withAdditionalParameters: [PixelParameters.isBackgrounded: "true"])
-//        }
-        return true
+        let isEnabled = AutofillSettingStatus.isAutofillEnabledInSettings && featureFlagger.isFeatureOn(.autofillCredentialInjecting)
+        let isBackgrounded = UIApplication.shared.applicationState == .background
+        if isEnabled && isBackgrounded {
+            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded,
+                       withAdditionalParameters: [PixelParameters.isBackgrounded: "true"])
+        }
+        return isEnabled
     }
 
     func secureVaultManager(_ vault: SecureVaultManager,
@@ -422,4 +455,16 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
     }
 
 }
+
+// MARK: Themable
+
+extension EmailSignupViewController: Themable {
+    func decorate(with theme: Theme) {
+        view.backgroundColor = theme.backgroundColor
+
+        navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
+        navigationController?.navigationBar.tintColor = theme.navigationBarTintColor
+    }
+}
+
 // swiftlint:enable file_length

@@ -687,4 +687,9 @@ In addition to the details entered into this form, your app issue report will co
     public static let autofillPasswordGenerationPromptSubtitle = NSLocalizedString("autofill.password-generation-prompt.subtitle", value:"Password will be saved in Logins.", comment: "Subtitle for prompt to use suggested strong password for creating a login")
     public static let autofillPasswordGenerationPromptUseGeneratedPasswordCTA = NSLocalizedString("autofill.password-generation-prompt.use-generated-password.cta", value:"Use Generated Password", comment: "Button title choosing to use the suggested generated password for creating a login")
     public static let autofillPasswordGenerationPromptUseOwnPasswordCTA = NSLocalizedString("autofill.password-generation-prompt.use-own-password.cta", value:"Create My Own", comment: "Button title choosing to use own password for creating a login")
+
+    // Email In-Context Signup
+    public static let backButtonTitle = NSLocalizedString("navbar.back-button.title", value:"Back", comment: "Title for back button in navigation bar")
+    public static let nextButtonTitle = NSLocalizedString("navbar.next-button.title", value:"Next", comment: "Title for next button in navigation bar to progress forward")
+
 }

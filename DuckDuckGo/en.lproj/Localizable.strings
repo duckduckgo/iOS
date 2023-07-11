@@ -1120,6 +1120,12 @@ https://duckduckgo.com/mac";
 /* No comment provided by engineer. */
 "menu.button.hint" = "Browsing Menu";
 
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Back";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Next";
+
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Done";
 

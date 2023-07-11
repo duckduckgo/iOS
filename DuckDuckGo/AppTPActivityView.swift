@@ -19,6 +19,7 @@
 
 import SwiftUI
 import Core
+import DesignResourcesKit
 
 #if APP_TRACKING_PROTECTION
 
@@ -53,18 +54,18 @@ struct AppTPActivityView: View {
     }
     
     var emptyState: some View {
-        VStack(alignment: .center, spacing: 8) {
+        VStack(alignment: .center, spacing: Const.Size.emptyStateSpacing) {
             Text(UserText.appTPEmptyHeading)
-                .font(Font(uiFont: Const.Font.emptyHeading))
+                .daxHeadline()
             
             Text(textForState())
                 .multilineTextAlignment(.center)
-                .font(Font(uiFont: Const.Font.info))
+                .daxBodyRegular()
                 .foregroundColor(Color(designSystemColor: .textSecondary))
                 .frame(maxWidth: .infinity)
         }
         .frame(maxWidth: .infinity)
-        .padding(16)
+        .padding(Const.Size.emptyStatePadding)
         .background(Color(designSystemColor: .surface))
         .cornerRadius(Const.Size.cornerRadius)
         .padding(.top)
@@ -218,8 +219,6 @@ struct AppTPActivityView: View {
 private enum Const {
     enum Font {
         static let sectionHeader = UIFont.systemFont(ofSize: 12)
-        static let info = UIFont.appFont(ofSize: 16)
-        static let emptyHeading = UIFont.semiBoldAppFont(ofSize: 17)
     }
     
     enum Size {
@@ -228,6 +227,8 @@ private enum Const {
         static let sectionHeaderBottom: CGFloat = -2
         static let standardCellHeight: CGFloat = 44
         static let sectionBottomPadding: CGFloat = 32
+        static let emptyStatePadding: CGFloat = 16
+        static let emptyStateSpacing: CGFloat = 8
     }
 }
 

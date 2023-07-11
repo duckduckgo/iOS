@@ -19,6 +19,7 @@
 
 import SwiftUI
 import DuckUI
+import DesignResourcesKit
 import Core
 
 private enum BreakageCategory: String, CaseIterable, Identifiable {
@@ -189,7 +190,6 @@ struct AppTPBreakageFormView: View {
 
 private enum Const {
     enum Font {
-        static let button = UIFont.semiBoldAppFont(ofSize: 17)
         static let footer = UIFont.appFont(ofSize: 15)
     }
     
@@ -207,8 +207,5 @@ private extension Color {
     static let infoText = Color("AppTPDomainColor")
     static let footerText = Color(designSystemColor: .textSecondary)
     static let buttonColor = Color(designSystemColor: .accent)
-    static let buttonLabelColor = Color("AppTPBreakageButtonLabel")
-    static let disabledButton = Color("AppTPBreakageButtonDisabled")
-    static let disabledButtonLabel = Color("AppTPBreakageButtonLabelDisabled")
     static let viewBackground = Color(designSystemColor: .background)
 }

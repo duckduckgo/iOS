@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
 #if APP_TRACKING_PROTECTION
 
@@ -30,22 +31,21 @@ struct OnboardingStepView: View {
             Image(viewModel.pictogramName)
             
             Text(viewModel.title)
-                .font(Font(uiFont: Const.Font.titleFont))
+                .daxTitle1()
                 .foregroundColor(Color.fontColor)
             
             viewModel.paragraph1
-                .font(Font(uiFont: Const.Font.paragraphFont))
+                .daxBodyRegular()
                 .foregroundColor(Color.fontColor)
             
             viewModel.paragraph2
-                .font(Font(uiFont: Const.Font.paragraphFont))
+                .daxBodyRegular()
                 .foregroundColor(Color.fontColor)
             
             if let auxButtonText = viewModel.auxButtonTitle {
                 NavigationLink(destination: AppTPFAQView()) {
                     Text(auxButtonText)
-                        .font(Font(uiFont: Const.Font.paragraphFont))
-                        .fontWeight(.bold)
+                        .daxBodyBold()
                         .foregroundColor(Color(designSystemColor: .accent))
                 }
             }
@@ -58,11 +58,6 @@ struct OnboardingStepView: View {
 }
 
 private enum Const {
-    enum Font {
-        static let titleFont = UIFont.boldAppFont(ofSize: 28)
-        static let paragraphFont = UIFont.appFont(ofSize: 16)
-    }
-    
     enum Size {
         static let stackSpacing: CGFloat = 24
         static let horizontalPadding: CGFloat = 32

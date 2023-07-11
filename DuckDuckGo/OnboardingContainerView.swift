@@ -18,17 +18,9 @@
 //
 
 import SwiftUI
+import DuckUI
 
 #if APP_TRACKING_PROTECTION
-
-struct OnboardingButtonStyle: ButtonStyle {
-    func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .frame(maxWidth: .infinity, minHeight: Const.Size.buttonHeight, maxHeight: Const.Size.buttonHeight)
-            .background(configuration.isPressed ? Color.blue70 : Color(designSystemColor: .accent))
-            .cornerRadius(Const.Size.cornerRadius)
-    }
-}
 
 struct OnboardingContainerView: View {
     
@@ -88,18 +80,16 @@ struct OnboardingContainerView: View {
                 if isLoading {
                     if #available(iOS 16, *) {
                         SwiftUI.ProgressView()
-                            .tint(Color.buttonLabelColor)
+                            .tint(Color.white)
                     } else {
                         SwiftUI.ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: Color.buttonLabelColor))
+                            .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
                     }
                 } else {
                     Text(currentViewModel.primaryButtonTitle)
-                        .font(Font(uiFont: Const.Font.buttonFont))
-                        .foregroundColor(Color.buttonLabelColor)
                 }
             })
-            .buttonStyle(OnboardingButtonStyle())
+            .buttonStyle(PrimaryButtonStyle())
             .padding(.bottom, Const.Size.buttonPadding)
             .padding(
                 .horizontal,
@@ -113,10 +103,6 @@ struct OnboardingContainerView: View {
 }
 
 private enum Const {
-    enum Font {
-        static let buttonFont = UIFont.boldAppFont(ofSize: 15)
-    }
-    
     enum Size {
         static let horizontalStackPadding: CGFloat = 32
         static let horizontalStackPaddingPad: CGFloat = 140
@@ -126,12 +112,6 @@ private enum Const {
         static let cornerRadius: CGFloat = 8
         static let buttonHeight: CGFloat = 50
     }
-}
-
-private extension Color {
-    static let buttonLabelColor = Color("AppTPBreakageButtonLabel")
-    static let disabledButton = Color("AppTPBreakageButtonDisabled")
-    static let disabledButtonLabel = Color("AppTPBreakageButtonLabelDisabled")
 }
 
 struct OnboardingContainerView_Previews: PreviewProvider {

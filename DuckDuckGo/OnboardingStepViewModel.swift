@@ -34,7 +34,7 @@ struct OnboardingStepViewModel {
             title: UserText.appTPOnboardingTitle1,
             paragraph1: {
                 Text(UserText.appTPOnboardingPage1Info1)
-                    .fontWeight(.semibold)
+                    .fontWeight(.bold)
                 + Text(UserText.appTPOnboardingPage1Info2)
             }(),
             paragraph2: {
@@ -49,15 +49,15 @@ struct OnboardingStepViewModel {
             paragraph1: {
                 Text(UserText.appTPOnboardingPage2Info1)
                 + Text(UserText.appTPOnboardingPage2Info2)
-                    .fontWeight(.semibold)
+                    .fontWeight(.bold)
                 + Text(UserText.appTPOnboardingPage2Info3)
             }(),
             paragraph2: {
                 Text(UserText.appTPOnboardingPage2Info4)
-                    .fontWeight(.semibold)
+                    .fontWeight(.bold)
                 + Text(UserText.appTPOnboardingPage2Info5)
                 + Text(UserText.appTPOnboardingPage2Info6)
-                    .fontWeight(.semibold)
+                    .fontWeight(.bold)
             }(),
             auxButtonTitle: nil,
             primaryButtonTitle: UserText.appTPOnboardingContinueButton,
@@ -67,13 +67,13 @@ struct OnboardingStepViewModel {
             title: UserText.appTPOnboardingTitle3,
             paragraph1: {
                 Text(UserText.appTPOnboardingPage3Info1)
-                    .fontWeight(.semibold)
+                    .fontWeight(.bold)
                 + Text(UserText.appTPOnboardingPage3Info2)
             }(),
             paragraph2: {
                 Text(UserText.appTPOnboardingPage3Info3)
                 + Text(UserText.appTPOnboardingPage3Info4)
-                    .fontWeight(.semibold)
+                    .fontWeight(.bold)
             }(),
             auxButtonTitle: UserText.appTPOnboardingLearnMoreButton,
             primaryButtonTitle: UserText.appTPOnboardingEnableButton,

@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
 #if APP_TRACKING_PROTECTION
 
@@ -28,7 +29,7 @@ struct AppTPLinkButton: View {
     var body: some View {
         HStack {
             Text(buttonText)
-                .font(Font(uiFont: Const.Font.buttonFont))
+                .daxBodyRegular()
                 .foregroundColor(Color(designSystemColor: .accent))
                 
             Spacer()
@@ -39,10 +40,6 @@ struct AppTPLinkButton: View {
 }
 
 private enum Const {
-    enum Font {
-        static let buttonFont = UIFont.appFont(ofSize: 16)
-    }
-    
     enum Size {
         static let standardCellHeight: CGFloat = 44
     }

@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
 #if APP_TRACKING_PROTECTION
 
@@ -26,14 +27,15 @@ struct AppTPAboutView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: Const.Size.stackSpacing) {
                 Text(UserText.appTPAboutTitle)
-                    .font(Font(uiFont: Const.Font.titleFont))
+                    .daxTitle3()
                 
                 Group {
                     Text(UserText.appTPAboutContent1)
                     + Text(UserText.appTPAboutContent2)
-                        .fontWeight(.semibold)
+                        .fontWeight(.bold)
                     + Text(UserText.appTPAboutContent3)
                 }
+                .daxBodyRegular()
             }
             .frame(maxWidth: .infinity)
             .padding(Const.Size.stackPadding)
@@ -54,11 +56,6 @@ struct AppTPAboutView: View {
 }
 
 private enum Const {
-    enum Font {
-        static let titleFont = UIFont.boldAppFont(ofSize: 20)
-        static let contentFont = UIFont.appFont(ofSize: 16)
-    }
-    
     enum Size {
         static let stackSpacing: CGFloat = 10
         static let stackPadding: CGFloat = 24

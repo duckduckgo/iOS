@@ -109,7 +109,7 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         let message = homePageConfiguration.homeMessages[indexPath.row]
         switch message {
         case .placeholder:
-            return HomeMessageViewModel(messageId: "", image: nil, topText: nil, title: "", subtitle: "", buttons: []) { [weak self] _ in
+            return HomeMessageViewModel(messageId: "", modelType: .small(titleText: "", descriptionText: "")) { [weak self] _ in
                 self?.dismissHomeMessage(message, at: indexPath, in: collectionView)
             } onDidAppear: {
                 // no-op
@@ -121,15 +121,22 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
                         let self else { return }
 
                 switch action {
-                case .primaryAction(let sharing):
-                    if !sharing {
+
+                case .action(let isSharing):
+                    if !isSharing {
+                        self.dismissHomeMessage(message, at: indexPath, in: collectionView)
+                    }
+                    #warning("Fire correct pixel")
+
+                case .primaryAction(let isSharing):
+                    if !isSharing {
                         self.dismissHomeMessage(message, at: indexPath, in: collectionView)
                     }
                     Pixel.fire(pixel: .remoteMessageShownPrimaryActionClicked,
                                withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
 
-                case .secondaryAction(let sharing):
-                    if !sharing {
+                case .secondaryAction(let isSharing):
+                    if !isSharing {
                         self.dismissHomeMessage(message, at: indexPath, in: collectionView)
                     }
                     Pixel.fire(pixel: .remoteMessageShownSecondaryActionClicked,

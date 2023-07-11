@@ -19,22 +19,7 @@
 
 import SwiftUI
 import DesignResourcesKit
-
-struct HomeMessageButtonStyle: ButtonStyle {
-    let foregroundColor: Color
-    let backgroundColor: Color
-    let height: CGFloat
-
-    func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .padding(.horizontal, Const.Padding.buttonHorizontal)
-            .padding(.vertical, Const.Padding.buttonVertical)
-            .frame(height: height)
-            .foregroundColor(configuration.isPressed ? foregroundColor.opacity(0.5) : foregroundColor)
-            .background(backgroundColor)
-            .cornerRadius(Const.Radius.corner)
-    }
-}
+import RemoteMessaging
 
 struct HomeMessageView: View {
 
@@ -66,8 +51,17 @@ struct HomeMessageView: View {
             VStack(spacing: 8) {
                 Group {
                     topText
-                    image
-                    title
+
+                    if case .promoSingleAction = viewModel.modelType {
+                        title
+                            .daxTitle3()
+                        image
+                    } else {
+                        image
+                        title
+                            .daxHeadline()
+                    }
+
                     subtitle
                         .padding(.top, 8)
                 }
@@ -140,38 +134,39 @@ struct HomeMessageView: View {
 
     private var title: some View {
         Text(viewModel.title)
-            .daxHeadline()
             .padding(.top, Const.Spacing.imageAndTitle)
    }
-    
+
+    @ViewBuilder
     private var subtitle: some View {
-        Text(viewModel.subtitle)
-            .daxBodyRegular()
+        if #available(iOS 15, *), let attributed = try? AttributedString(markdown: viewModel.subtitle) {
+            Text(attributed)
+                .daxBodyRegular()
+        } else {
+            Text(viewModel.subtitle)
+                .daxBodyRegular()
+        }
     }
 
     private var buttons: some View {
-        ForEach(viewModel.buttons, id: \.title) { model in
-            let foreground: Color = model.actionStyle == .cancel ? .cancelButtonForeground : .primaryButtonText
-            let background: Color = model.actionStyle == .cancel ? .cancelButtonBackground : .button
+        ForEach(viewModel.buttons, id: \.title) { buttonModel in
             Button {
-                model.action()
-                if case .share(let value, let title) = model.actionStyle {
+                buttonModel.action()
+                if case .share(let value, let title) = buttonModel.actionStyle {
                     activityItem = ShareItem(value: value, title: title)
                 }
             } label: {
                 HStack {
-                    if case .share = model.actionStyle {
+                    if case .share = buttonModel.actionStyle {
                         Image("Share-24")
                             .resizable()
                             .frame(width: 24, height: 24)
                     }
-                    Text(model.title)
+                    Text(buttonModel.title)
                         .daxButton()
                 }
             }
-            .buttonStyle(HomeMessageButtonStyle(foregroundColor: foreground,
-                                                backgroundColor: background,
-                                                height: 40))
+            .buttonStyle(HomeMessageButtonStyle(viewModel: viewModel, buttonModel: buttonModel))
             .padding([.bottom], Const.Padding.buttonVerticalInset)
             .sheet(item: $activityItem) { activityItem in
                 ActivityViewController(activityItems: [activityItem.item]) { _, _, _, _ in
@@ -182,6 +177,46 @@ struct HomeMessageView: View {
             }
 
         }
+    }
+}
+
+private struct HomeMessageButtonStyle: ButtonStyle {
+
+    let viewModel: HomeMessageViewModel
+    let buttonModel: HomeMessageButtonViewModel
+
+    var foregroundColor: Color {
+        if case .promoSingleAction = viewModel.modelType {
+            return .cancelButtonForeground
+        }
+
+        if case .cancel = buttonModel.actionStyle {
+            return .cancelButtonBackground
+        }
+
+        return .primaryButtonText
+    }
+
+    var backgroundColor: Color {
+        if case .promoSingleAction = viewModel.modelType {
+            return .cancelButtonBackground
+        }
+
+        if case .cancel = buttonModel.actionStyle {
+            return .cancelButtonBackground
+        }
+
+        return .button
+    }
+
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .padding(.horizontal, Const.Padding.buttonHorizontal)
+            .padding(.vertical, Const.Padding.buttonVertical)
+            .frame(height: Const.Size.buttonHeight)
+            .foregroundColor(configuration.isPressed ? foregroundColor.opacity(0.5) : foregroundColor)
+            .background(backgroundColor)
+            .cornerRadius(Const.Radius.corner)
     }
 }
 
@@ -239,6 +274,7 @@ private enum Const {
     
     enum Size {
         static let closeButtonWidth: CGFloat = 44
+        static let buttonHeight: CGFloat = 40
     }
     
     enum Offset {
@@ -247,16 +283,62 @@ private enum Const {
 }
 
 struct HomeMessageView_Previews: PreviewProvider {
+
+    static let small: RemoteMessageModelType =
+        .small(titleText: "Small", descriptionText: "Description")
+
+    static let critical: RemoteMessageModelType =
+        .medium(titleText: "Critical",
+                descriptionText: "Description text",
+                placeholder: .criticalUpdate)
+
+    static let bigSingle: RemoteMessageModelType =
+        .bigSingleAction(titleText: "Big Single",
+                         descriptionText: "This is a description",
+                         placeholder: .ddgAnnounce,
+                         primaryActionText: "Primary",
+                         primaryAction: .dismiss)
+
+    static let bigTwo: RemoteMessageModelType =
+        .bigTwoAction(titleText: "Big Two",
+                      descriptionText: "This is a big two style",
+                      placeholder: .macComputer,
+                      primaryActionText: "App Store",
+                      primaryAction: .appStore,
+                      secondaryActionText: "Dismiss",
+                      secondaryAction: .dismiss)
+
+    static let promo: RemoteMessageModelType =
+        .promoSingleAction(titleText: "Promotional",
+                           descriptionText: "Description **with bold** to make a statement.",
+                           placeholder: .newForMacAndWindows,
+                           actionText: "Share",
+                           action: .share(value: "value", title: "title"))
+
     static var previews: some View {
-        let viewModel = HomeMessageViewModel(messageId: "Preview",
-                                             image: "RemoteMessageDDGAnnouncement",
-                                             topText: "",
-                                             title: "Placeholder Title",
-                                             subtitle: "Body text goes here. This component can be used with one or two buttons.",
-                                             buttons: [.init(title: "Button1", actionStyle: .cancel) {},
-                                                       .init(title: "Button2") {}],
-                                             onDidClose: { _ in }, onDidAppear: {})
-        return HomeMessageView(viewModel: viewModel)
-            .padding(.horizontal)
+        Group {
+            HomeMessageView(viewModel: HomeMessageViewModel(messageId: "Small",
+                                                            modelType: small,
+                                                            onDidClose: { _ in }, onDidAppear: {}))
+
+            HomeMessageView(viewModel: HomeMessageViewModel(messageId: "Critical",
+                                                            modelType: critical,
+                                                            onDidClose: { _ in }, onDidAppear: {}))
+
+            HomeMessageView(viewModel: HomeMessageViewModel(messageId: "Big Single",
+                                                            modelType: bigSingle,
+                                                            onDidClose: { _ in }, onDidAppear: {}))
+
+            HomeMessageView(viewModel: HomeMessageViewModel(messageId: "Big Two",
+                                                            modelType: bigTwo,
+                                                            onDidClose: { _ in }, onDidAppear: {}))
+
+            HomeMessageView(viewModel: HomeMessageViewModel(messageId: "Promo",
+                                                            modelType: promo,
+                                                            onDidClose: { _ in }, onDidAppear: {}))
+        }
+        .frame(height: 200)
+        .padding(.horizontal)
+
     }
 }

@@ -22,8 +22,6 @@ import SwiftUI
 
 class ReportBrokenSiteViewController: UIViewController {
     
-    @IBOutlet var submitButton: UIBarButtonItem!
-    
     public var brokenSiteInfo: BrokenSiteInfo?
     
     private var reportView: ReportBrokenSiteView?
@@ -68,10 +66,6 @@ class ReportBrokenSiteViewController: UIViewController {
         brokenSiteInfo?.send(with: category?.rawValue, description: description)
         ActionMessageView.present(message: UserText.feedbackSumbittedConfirmation)
         dismiss(animated: true)
-    }
-
-    @IBAction func onSubmitPressed(sender: Any) {
-        reportView?.submitForm()
     }
 }
 

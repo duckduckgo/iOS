@@ -666,17 +666,9 @@
                                 <action selector="onClosePressedWithSender:" destination="8h9-Oy-9xi" id="F2e-uB-ZF8"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Submit" style="done" id="jr6-Al-4fr">
-                            <connections>
-                                <action selector="onSubmitPressedWithSender:" destination="8h9-Oy-9xi" id="Sz5-pn-C7u"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="submitButton" destination="jr6-Al-4fr" id="FFZ-kf-otb"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8yo-EF-AhR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -685,7 +677,7 @@
     </scenes>
     <designables>
         <designable name="TMj-NM-j3b">
-            <size key="intrinsicContentSize" width="172" height="18.666666666666668"/>
+            <size key="intrinsicContentSize" width="164" height="18.666666666666668"/>
         </designable>
     </designables>
     <resources>

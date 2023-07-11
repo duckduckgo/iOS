@@ -19,6 +19,7 @@
 
 import SwiftUI
 import DuckUI
+import DesignResourcesKit
 
 struct ReportBrokenSiteView: View {
     
@@ -48,7 +49,7 @@ struct ReportBrokenSiteView: View {
                     Text(UserText.reportBrokenSiteHeader)
                         .textCase(nil)
                         .multilineTextAlignment(.center)
-                        .font(Font(uiFont: Const.Font.header))
+                        .daxBodyRegular()
                         .foregroundColor(Color(designSystemColor: .textSecondary))
                 }
                 .frame(maxWidth: .infinity)
@@ -133,11 +134,6 @@ struct ReportBrokenSiteView: View {
 }
 
 private enum Const {
-    enum Font {
-        static let button = UIFont.semiBoldAppFont(ofSize: 17)
-        static let header = UIFont.appFont(ofSize: 17)
-    }
-    
     enum Size {
         static let imageSize: CGFloat = 128
         static let minCommentHeight: CGFloat = 60

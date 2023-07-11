@@ -136,15 +136,45 @@
                 "Advertising",
                 "Ad Fraud"
             ],
-            "default": "block",
+            "default": "ignore",
             "rules": [
                 {
-                    "rule": "2mdn\\.net\\/instream\\/html5\\/ima3\\.js",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
+                    "rule": "2mdn\\.net/dot\\.gif"
                 },
                 {
-                    "rule": "2mdn\\.net\\/instream\\/video\\/client\\.js",
+                    "rule": "2mdn\\.net/10533936/1679336805544/"
+                },
+                {
+                    "rule": "2mdn\\.net/8762481/1679421215390"
+                },
+                {
+                    "rule": "2mdn\\.net/879366/"
+                },
+                {
+                    "rule": "2mdn\\.net/ads/"
+                },
+                {
+                    "rule": "2mdn\\.net/creatives/assets/"
+                },
+                {
+                    "rule": "2mdn\\.net/dfp/"
+                },
+                {
+                    "rule": "2mdn\\.net/dynamic/2/"
+                },
+                {
+                    "rule": "2mdn\\.net/sadbundle/"
+                },
+                {
+                    "rule": "2mdn\\.net/simgad/[0-9]+"
+                },
+                {
+                    "rule": "2mdn\\.net/videoplayback"
+                },
+                {
+                    "rule": "2mdn\\.net/instream/video/client\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0,
                     "exceptions": {
                         "domains": [
                             "dailywire.com",
@@ -175,7 +205,7 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "nintendo\\.com\\.102\\.112\\.2o7\\.net/.*\\/analytics\\.min\\.js",
+                    "rule": "nintendo\\.com\\.102\\.112\\.2o7\\.net/.*/analytics\\.min\\.js",
                     "exceptions": {
                         "types": [
                             "first-party",
@@ -246,7 +276,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "3gl\\.net\\/jp\\/",
+                    "rule": "3gl\\.net/jp/",
                     "fingerprinting": 2,
                     "cookies": 0.0000136
                 },
@@ -761,7 +791,7 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "s7\\.addthis\\.com\\/js\\/250\\/addthis_widget\\.js",
+                    "rule": "s7\\.addthis\\.com/js/250/addthis_widget\\.js",
                     "exceptions": {
                         "domains": [
                             "restorationhardware.com",
@@ -1103,7 +1133,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "adlooxtracking\\.com\\/ads\\/js\\/",
+                    "rule": "adlooxtracking\\.com/ads/js/",
                     "fingerprinting": 2,
                     "cookies": 0
                 }
@@ -1260,7 +1290,7 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "ib\\.adnxs\\.com\\/ut",
+                    "rule": "ib\\.adnxs\\.com/ut",
                     "exceptions": {
                         "domains": [
                             "aftonbladet.se"
@@ -1268,7 +1298,7 @@
                     }
                 },
                 {
-                    "rule": "acdn\\.adnxs\\.com\\/video",
+                    "rule": "acdn\\.adnxs\\.com/video",
                     "exceptions": {
                         "domains": [
                             "thechive.com"
@@ -1279,22 +1309,22 @@
                     }
                 },
                 {
-                    "rule": "acdn\\.adnxs\\.com\\/prebid\\/.*\\/prebid\\.js",
+                    "rule": "adnxs\\.com/jpt",
+                    "exceptions": {
+                        "domains": [
+                            "thechive.com"
+                        ],
+                        "types": [
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "acdn\\.adnxs\\.com/prebid/.*/prebid\\.js",
                     "exceptions": {
                         "domains": [
                             "foxbusiness.com",
                             "foxnews.com"
-                        ]
-                    }
-                },
-                {
-                    "rule": "adnxs\\.com\\/jpt",
-                    "exceptions": {
-                        "domains": [
-                            "thechive.com"
-                        ],
-                        "types": [
-                            "script"
                         ]
                     }
                 }
@@ -1315,7 +1345,7 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "ogkxoh1ajf\\.data\\.adobedc\\.net/ap\\/oa",
+                    "rule": "ogkxoh1ajf\\.data\\.adobedc\\.net/ap/oa",
                     "exceptions": {
                         "types": [
                             "subdocument"
@@ -1340,19 +1370,69 @@
                 "Audience Measurement",
                 "Third-Party Analytics Marketing"
             ],
-            "default": "block",
+            "default": "ignore",
             "rules": [
                 {
-                    "rule": "assets\\.adobedtm\\.com",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
+                    "rule": "adobedtm\\.com/v6/ds\\.min\\.js",
+                    "exceptions": {
+                        "domains": [
+                            "aarp.org",
+                            "ally.com",
+                            "auspost.com.au",
+                            "bjs.com",
+                            "bose.com",
+                            "bose.com.au",
+                            "creditonebank.com",
+                            "fedex.com",
+                            "fnbo.com",
+                            "guitarcenter.com",
+                            "harley-davidson.com",
+                            "hilton.com",
+                            "jcpenney.com",
+                            "jewelosco.com",
+                            "kohls.com",
+                            "lenovo.com",
+                            "lowes.com",
+                            "nvidia.com",
+                            "safeway.com",
+                            "shutterfly.com",
+                            "truist.com",
+                            "uhc.com",
+                            "verizon.com",
+                            "vineyardvines.com",
+                            "xfinity.com"
+                        ]
+                    }
                 },
                 {
-                    "rule": "adobedtm\\.com\\/.*\\/launch",
+                    "rule": "adobedtm\\.com/recommendations/events/v1/recommendationsEvents\\.min\\.js",
                     "exceptions": {
-                        "types": [
-                            "script",
-                            "xmlhttprequest"
+                        "domains": [
+                            "aarp.org",
+                            "ally.com",
+                            "auspost.com.au",
+                            "bjs.com",
+                            "bose.com",
+                            "bose.com.au",
+                            "creditonebank.com",
+                            "fedex.com",
+                            "fnbo.com",
+                            "guitarcenter.com",
+                            "harley-davidson.com",
+                            "hilton.com",
+                            "jcpenney.com",
+                            "jewelosco.com",
+                            "kohls.com",
+                            "lenovo.com",
+                            "lowes.com",
+                            "nvidia.com",
+                            "safeway.com",
+                            "shutterfly.com",
+                            "truist.com",
+                            "uhc.com",
+                            "verizon.com",
+                            "vineyardvines.com",
+                            "xfinity.com"
                         ]
                     }
                 }
@@ -1492,7 +1572,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "adpushup\\.com\\/prebid\\/pb.*\\.js",
+                    "rule": "adpushup\\.com/prebid/pb.*\\.js",
                     "fingerprinting": 3,
                     "cookies": 0.0000204
                 }
@@ -1613,7 +1693,7 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "static\\.adsafeprotected\\.com\\/favicon\\.ico",
+                    "rule": "static\\.adsafeprotected\\.com/favicon\\.ico",
                     "exceptions": {
                         "domains": [
                             "tf1.fr"
@@ -1621,7 +1701,7 @@
                     }
                 },
                 {
-                    "rule": "static\\.adsafeprotected\\.com\\/vans-adapter-google-ima\\.js",
+                    "rule": "static\\.adsafeprotected\\.com/vans-adapter-google-ima\\.js",
                     "exceptions": {
                         "domains": [
                             "nfl.com"
@@ -2092,7 +2172,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "affinity\\.com\\/v5\\/.*\\/index\\.php",
+                    "rule": "affinity\\.com/v5/.*/index\\.php",
                     "fingerprinting": 1,
                     "cookies": 0.000034
                 },
@@ -2423,7 +2503,11 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "c\\.amazon-adsystem\\.com\\/aax2\\/apstag\\.js",
+                    "rule": "amazon-adsystem\\.com\\/aax2\\/amzn_ads\\.js",
+                    "surrogate": "amzn_ads.js"
+                },
+                {
+                    "rule": "c\\.amazon-adsystem\\.com/aax2/apstag\\.js",
                     "exceptions": {
                         "domains": [
                             "aetv.com",
@@ -2437,10 +2521,6 @@
                             "sueddeutsche.de"
                         ]
                     }
-                },
-                {
-                    "rule": "amazon-adsystem\\.com\\/aax2\\/amzn_ads\\.js",
-                    "surrogate": "amzn_ads.js"
                 }
             ]
         },
@@ -2465,32 +2545,6 @@
             ],
             "default": "ignore",
             "rules": [
-                {
-                    "rule": "api-cdn\\.amazon\\.com\\/sdk\\/login1\\.js",
-                    "exceptions": {
-                        "types": [
-                            "script",
-                            "subdocument"
-                        ]
-                    }
-                },
-                {
-                    "rule": "api-cdn\\.amazon\\.com\\/sdk",
-                    "exceptions": {
-                        "types": [
-                            "subdocument"
-                        ]
-                    }
-                },
-                {
-                    "rule": "api\\.amazon\\.com\\/auth",
-                    "exceptions": {
-                        "types": [
-                            "script",
-                            "xmlhttprequest"
-                        ]
-                    }
-                },
                 {
                     "rule": "amazon\\.com\\/kp\\/card",
                     "fingerprinting": 3,
@@ -2642,9 +2696,9 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "analytics-egain\\.com\\/onetag\\/",
+                    "rule": "analytics-egain\\.com/onetag/",
                     "fingerprinting": 1,
-                    "cookies": 0.000201
+                    "cookies": 0.0000272
                 }
             ]
         },
@@ -2746,7 +2800,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "anymind360\\.com\\/js\\/.*\\/prebid",
+                    "rule": "anymind360\\.com/js/.*/prebid",
                     "fingerprinting": 3,
                     "cookies": 0.0000272
                 },
@@ -3562,7 +3616,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "ayads\\.co\\/sublime\\/",
+                    "rule": "ayads\\.co/sublime/",
                     "fingerprinting": 2,
                     "cookies": 0
                 },
@@ -3719,12 +3773,12 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "bannerflow\\.net\\/scripts\\/",
+                    "rule": "bannerflow\\.net/scripts/",
                     "fingerprinting": 2,
                     "cookies": 0
                 },
                 {
-                    "rule": "bannerflow\\.net\\/a\\/",
+                    "rule": "bannerflow\\.net/a/",
                     "fingerprinting": 2,
                     "cookies": 0
                 },
@@ -4280,7 +4334,7 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "cdn\\.blueconic\\.net\\/salemmediagroup\\.js",
+                    "rule": "cdn\\.blueconic\\.net/salemmediagroup\\.js",
                     "exceptions": {
                         "domains": [
                             "biblestudytools.com"
@@ -4430,9 +4484,9 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "boldchat\\.com\\/aid\\/.*\\/vms\\.js",
+                    "rule": "boldchat\\.com/aid/.*/vms\\.js",
                     "fingerprinting": 2,
-                    "cookies": 0.000302
+                    "cookies": 0.000201
                 }
             ]
         },
@@ -4834,7 +4888,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "buysellads\\.net\\/pub\\/",
+                    "rule": "buysellads\\.net/pub/",
                     "fingerprinting": 3,
                     "cookies": 0
                 }
@@ -5213,14 +5267,14 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "cedexis\\.net\\/.*sc\\/h\\/",
+                    "rule": "cedexis\\.net/.*sc/h/",
                     "fingerprinting": 3,
-                    "cookies": 0.00151
+                    "cookies": 0.000245
                 },
                 {
-                    "rule": "cedexis\\.net\\/litms\\/utag\\/",
+                    "rule": "cedexis\\.net/litms/utag/",
                     "fingerprinting": 2,
-                    "cookies": 0.00151
+                    "cookies": 0.000306
                 },
                 {
                     "rule": "cedexis\\.net\\/litms\\/vendor\\/google\\/gtag-adwords\\.js",
@@ -5292,7 +5346,9 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "js\\.center\\.io",
+                    "rule": "center\\.io\\/identify\\.html",
+                    "fingerprinting": 1,
+                    "cookies": 0.0000272,
                     "exceptions": {
                         "domains": [
                             "randpac.com"
@@ -5300,14 +5356,14 @@
                     }
                 },
                 {
-                    "rule": "center\\.io\\/identify\\.html",
-                    "fingerprinting": 1,
-                    "cookies": 0.0000272
-                },
-                {
                     "rule": "center\\.io\\/center\\.js",
                     "fingerprinting": 2,
-                    "cookies": 0
+                    "cookies": 0,
+                    "exceptions": {
+                        "domains": [
+                            "randpac.com"
+                        ]
+                    }
                 }
             ]
         },
@@ -5324,9 +5380,9 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "certona\\.net\\/cd\\/.*\\/.*\\/scripts\\.resonance\\.js",
+                    "rule": "certona\\.net/cd/.*/.*/scripts/resonance\\.js",
                     "fingerprinting": 1,
-                    "cookies": 0.000301
+                    "cookies": 0.0001
                 }
             ]
         },
@@ -5413,24 +5469,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "richmedia\\.channeladvisor\\.com\\/ImageDelivery\\/imageService",
-                    "exceptions": {
-                        "types": [
-                            "image"
-                        ]
-                    }
-                },
-                {
-                    "rule": "richmedia\\.channeladvisor\\.com\\/ViewerDelivery",
-                    "exceptions": {
-                        "types": [
-                            "script",
-                            "stylesheet"
-                        ]
-                    }
-                },
-                {
-                    "rule": "channeladvisor\\.com\\/v2\\/.*\\.js",
+                    "rule": "channeladvisor\\.com/v2/.*\\.js",
                     "fingerprinting": 1,
                     "cookies": 0.000201
                 },
@@ -5816,7 +5855,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "clearbitjs\\.com\\/v2\\/.*\\/tracking\\.min\\.js",
+                    "rule": "clearbitjs\\.com/v2/.*/tracking\\.min\\.js",
                     "fingerprinting": 1,
                     "cookies": 0.0000272
                 },
@@ -5826,7 +5865,7 @@
                     "cookies": 0.000177
                 },
                 {
-                    "rule": "clearbitjs\\.com\\/v2\\/.*\\/destinations\\.min\\.js",
+                    "rule": "clearbitjs\\.com/v2/.*/destinations\\.min\\.js",
                     "fingerprinting": 0,
                     "cookies": 0,
                     "comment": "pixel"
@@ -6022,7 +6061,7 @@
                     "cookies": 0
                 },
                 {
-                    "rule": "cloudflare\\.com\\/ajax\\/libs\\/fingerprintjs2\\/.*\\/fingerprint2\\.min\\.js",
+                    "rule": "cloudflare\\.com/ajax/libs/fingerprintjs2/.*/fingerprint2\\.min\\.js",
                     "fingerprinting": 3,
                     "cookies": 0
                 },
@@ -6240,9 +6279,9 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "codigo\\.se\\/j\\/.*\\.js",
+                    "rule": "codigo\\.se/j/.*\\.js",
                     "fingerprinting": 1,
-                    "cookies": 0.000201
+                    "cookies": 0.0000204
                 }
             ]
         },
@@ -6518,9 +6557,9 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "consentframework\\.com\\/js\\/pa\\/.*",
+                    "rule": "consentframework\\.com/js/pa/.*",
                     "fingerprinting": 2,
-                    "cookies": 0.00131
+                    "cookies": 0.000201
                 },
                 {
                     "rule": "consentframework\\.com\\/api\\/v1\\/public\\/user-action",
@@ -7126,7 +7165,7 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "ad\\.crwdcntrl\\.net\\/.*\\/callback=jsonp_callback",
+                    "rule": "ad\\.crwdcntrl\\.net/.*/callback=jsonp_callback",
                     "exceptions": {
                         "domains": [
                             "weather.com"
@@ -7186,7 +7225,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "cuddlethehyena\\.com\\/.*\\.js",
+                    "rule": "cuddlethehyena\\.com/.*\\.js",
                     "fingerprinting": 2,
                     "cookies": 0
                 },
@@ -7223,7 +7262,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "curalate\\.com\\/sites\\/.*",
+                    "rule": "curalate\\.com/sites/.*",
                     "fingerprinting": 2,
                     "cookies": 0.000201
                 },
@@ -7894,12 +7933,10 @@
             "fingerprinting": 3,
             "cookies": 0.00353,
             "categories": [],
-            "default": "block",
+            "default": "ignore",
             "rules": [
                 {
-                    "rule": "datadome\\.co\\/tags\\.js",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
+                    "rule": "datadome\\.co/js/"
                 }
             ]
         },
@@ -8352,7 +8389,32 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "pubads\\.g\\.doubleclick\\.net\\/gampad\\/ads",
+                    "rule": "doubleclick\\.net/instream/ad_status\\.js",
+                    "surrogate": "ad_status.js",
+                    "exceptions": {
+                        "domains": [
+                            "investing.com"
+                        ],
+                        "types": [
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "securepubads\\.g\\.doubleclick\\.net/tag/js/gpt\\.js",
+                    "exceptions": {
+                        "domains": [
+                            "weather.com"
+                        ]
+                    },
+                    "surrogate": "gpt.js"
+                },
+                {
+                    "rule": "doubleclick\\.net\\/tag\\/js\\/gpt\\.js",
+                    "surrogate": "gpt.js"
+                },
+                {
+                    "rule": "pubads\\.g\\.doubleclick\\.net/gampad/ads",
                     "exceptions": {
                         "domains": [
                             "dailywire.com",
@@ -8365,7 +8427,7 @@
                     }
                 },
                 {
-                    "rule": "pubads\\.g\\.doubleclick\\.net\\/ssai\\/event",
+                    "rule": "pubads\\.g\\.doubleclick\\.net/ssai/event",
                     "exceptions": {
                         "domains": [
                             "cbsnews.com"
@@ -8376,7 +8438,7 @@
                     }
                 },
                 {
-                    "rule": "securepubads\\.g\\.doubleclick\\.net\\/gpt",
+                    "rule": "securepubads\\.g\\.doubleclick\\.net/gpt",
                     "exceptions": {
                         "domains": [
                             "ijpr.org",
@@ -8385,37 +8447,12 @@
                     }
                 },
                 {
-                    "rule": "securepubads\\.g\\.doubleclick\\.net\\/tag\\/js\\/gpt\\.js",
-                    "exceptions": {
-                        "domains": [
-                            "weather.com"
-                        ]
-                    },
-                    "surrogate": "gpt.js"
-                },
-                {
-                    "rule": "pubads\\.g\\.doubleclick\\.net\\/ondemand\\/",
+                    "rule": "pubads\\.g\\.doubleclick\\.net/ondemand/",
                     "exceptions": {
                         "domains": [
                             "sbs.com.au"
                         ]
                     }
-                },
-                {
-                    "rule": "doubleclick\\.net\\/instream\\/ad_status\\.js",
-                    "surrogate": "ad_status.js",
-                    "exceptions": {
-                        "domains": [
-                            "investing.com"
-                        ],
-                        "types": [
-                            "script"
-                        ]
-                    }
-                },
-                {
-                    "rule": "doubleclick\\.net\\/tag\\/js\\/gpt\\.js",
-                    "surrogate": "gpt.js"
                 }
             ]
         },
@@ -8510,7 +8547,7 @@
                     "cookies": 0
                 },
                 {
-                    "rule": "driftt\\.com\\/include\\/.*\\.js",
+                    "rule": "driftt\\.com/include/.*\\.js",
                     "fingerprinting": 2,
                     "cookies": 0.000201
                 },
@@ -8974,7 +9011,7 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "img\\.en25\\.com\\/Web",
+                    "rule": "img\\.en25\\.com/Web",
                     "exceptions": {
                         "types": [
                             "image",
@@ -8984,7 +9021,7 @@
                     }
                 },
                 {
-                    "rule": "img\\.en25\\.com\\/EloquaImages",
+                    "rule": "img\\.en25\\.com/EloquaImages",
                     "exceptions": {
                         "types": [
                             "image"
@@ -9036,7 +9073,7 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "nexus\\.ensighten\\.com\\/homedepot\\/Bootstrap\\.js",
+                    "rule": "nexus\\.ensighten\\.com/homedepot/Bootstrap\\.js",
                     "exceptions": {
                         "domains": [
                             "homedepot.com"
@@ -9659,7 +9696,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "exponential\\.com\\/tags\\/.*\\/.*\\/tags\\.js",
+                    "rule": "exponential\\.com/tags/.*/.*/tags\\.js",
                     "fingerprinting": 3,
                     "cookies": 0.0000136
                 }
@@ -9946,14 +9983,6 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "connect\\.facebook\\.com\\/.*\\/audiencenetworkprebid\\.js",
-                    "exceptions": {
-                        "domains": [
-                            "cbssports.com"
-                        ]
-                    }
-                },
-                {
                     "rule": "facebook\\.com\\/en_US\\/fbevents\\.js",
                     "fingerprinting": 1,
                     "cookies": 0.000034
@@ -10012,27 +10041,19 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "connect\\.facebook\\.net\\/.*\\/audiencenetworkprebid\\.js",
-                    "exceptions": {
-                        "domains": [
-                            "cbssports.com"
-                        ]
-                    }
+                    "rule": "facebook\\.net/.*/all\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.0000408
                 },
                 {
-                    "rule": "facebook\\.net\\/.*\\/all\\.js",
+                    "rule": "facebook\\.net/.*/fbevents\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.108
+                },
+                {
+                    "rule": "facebook\\.net/signals/config/",
                     "fingerprinting": 1,
                     "cookies": 0.000101
-                },
-                {
-                    "rule": "facebook\\.net\\/.*\\/fbevents\\.js",
-                    "fingerprinting": 1,
-                    "cookies": 0.321
-                },
-                {
-                    "rule": "facebook\\.net\\/signals\\/config\\/",
-                    "fingerprinting": 1,
-                    "cookies": 0.000201
                 },
                 {
                     "rule": "facebook\\.net\\/signals\\/plugins\\/openbridge3\\.js",
@@ -10040,8 +10061,8 @@
                     "cookies": 0
                 },
                 {
-                    "rule": "facebook\\.net\\/.*\\/sdk\\/.*customerchat\\.js",
-                    "fingerprinting": 2,
+                    "rule": "facebook\\.net/.*/sdk/.*customerchat\\.js",
+                    "fingerprinting": 1,
                     "cookies": 0.00000681
                 },
                 {
@@ -10416,7 +10437,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "flux-cdn\\.com\\/client\\/.*",
+                    "rule": "flux-cdn\\.com/client/.*",
                     "fingerprinting": 3,
                     "cookies": 0.0000204
                 }
@@ -10457,14 +10478,14 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "foresee\\.com\\/sites\\/.*\\/gateway\\.min\\.js",
+                    "rule": "foresee\\.com/sites/.*/gateway\\.min\\.js",
                     "fingerprinting": 2,
                     "cookies": 0
                 },
                 {
-                    "rule": "foresee\\.com\\/code\\/.*\\/fs\\.utils\\.js",
+                    "rule": "foresee\\.com/code/.*/fs\\.utils\\.js",
                     "fingerprinting": 2,
-                    "cookies": 0.000502
+                    "cookies": 0.000197
                 },
                 {
                     "rule": "foresee\\.com\\/code\\/6\\.8\\.1-mp\\/mpathy-modern\\.js",
@@ -10472,7 +10493,7 @@
                     "cookies": 0.000034
                 },
                 {
-                    "rule": "foresee\\.com\\/code\\/.*\\/fs\\.trigger\\.js",
+                    "rule": "foresee\\.com/code/.*/fs\\.trigger\\.js",
                     "fingerprinting": 2,
                     "cookies": 0
                 },
@@ -10819,7 +10840,7 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "fwmrm\\.net\\/p\\/.*\\/admanager\\.js",
+                    "rule": "fwmrm\\.net/p/.*/admanager\\.js",
                     "exceptions": {
                         "domains": [
                             "msn.com"
@@ -10860,7 +10881,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "gbqofs\\.com\\/.*\\/detector-dom\\.min\\.js",
+                    "rule": "gbqofs\\.com/.*/detector-dom\\.min\\.js",
                     "fingerprinting": 3,
                     "cookies": 0.0000408
                 }
@@ -11154,7 +11175,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "getdrip\\.com\\/.*\\.js",
+                    "rule": "getdrip\\.com/.*\\.js",
                     "fingerprinting": 2,
                     "cookies": 0.0000136
                 }
@@ -11173,7 +11194,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "getelevar\\.com\\/shops\\/.*\\/gtm-suite\\.js",
+                    "rule": "getelevar\\.com/shops/.*/gtm-suite\\.js",
                     "fingerprinting": 2,
                     "cookies": 0
                 }
@@ -11279,17 +11300,19 @@
             "fingerprinting": 2,
             "cookies": 0.00273,
             "categories": [],
-            "default": "block",
+            "default": "ignore",
             "rules": [
                 {
-                    "rule": "lib\\.getshogun\\.com",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
+                    "rule": "getshogun\\.com/collector\\.js"
                 },
                 {
-                    "rule": "cdn\\.getshogun\\.com",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
+                    "rule": "getshogun\\.com/pageview"
+                },
+                {
+                    "rule": "getshogun\\.com/api/instagram/posts"
+                },
+                {
+                    "rule": "getshogun\\.com/api/products"
                 }
             ]
         },
@@ -11428,7 +11451,7 @@
                     "surrogate": "ga.js"
                 },
                 {
-                    "rule": "google-analytics\\.com\\/analytics\\.js",
+                    "rule": "google-analytics\\.com/analytics\\.js",
                     "surrogate": "analytics.js",
                     "exceptions": {
                         "domains": [
@@ -11476,20 +11499,6 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "developers\\.google\\.com\\/maps",
-                    "exceptions": {
-                        "types": [
-                            "script",
-                            "stylesheet"
-                        ]
-                    }
-                },
-                {
-                    "rule": "google\\.com\\/pagead\\/",
-                    "fingerprinting": 0,
-                    "cookies": 0.0001
-                },
-                {
                     "rule": "google\\.com\\/js\\/th\\/KufJDO6SkqUZI2HRBZv3YqBaDEKqe_qTExVa0pXPSkI\\.js",
                     "fingerprinting": 3,
                     "cookies": 0
@@ -11498,6 +11507,11 @@
                     "rule": "google\\.com\\/js\\/th\\/8UE1alQR35UAvwuJtt-44LfpSpEBrl7CDo1Hk3uXWyY\\.js",
                     "fingerprinting": 3,
                     "cookies": 0
+                },
+                {
+                    "rule": "google\\.com/pagead/",
+                    "fingerprinting": 0,
+                    "cookies": 0.00000681
                 },
                 {
                     "rule": "google\\.com\\/js\\/th\\/WvVrk5sia8wEN_-gw_byMcrKRdZqNX22ILWWYpHu7qg\\.js",
@@ -11588,7 +11602,7 @@
                     "comment": "pixel"
                 },
                 {
-                    "rule": "google\\.com\\/scripts\\/.*\\/loader\\.js",
+                    "rule": "google\\.com/scripts/.*/loader\\.js",
                     "fingerprinting": 0,
                     "cookies": 0.0000204,
                     "comment": "pixel"
@@ -11654,7 +11668,7 @@
                     "comment": "pixel"
                 },
                 {
-                    "rule": "google\\.com\\/el\\/",
+                    "rule": "google\\.com/el/",
                     "fingerprinting": 0,
                     "cookies": 0,
                     "comment": "pixel"
@@ -11801,7 +11815,7 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "googleoptimize\\.com\\/optimize\\.js",
+                    "rule": "googleoptimize\\.com/optimize\\.js",
                     "exceptions": {
                         "domains": [
                             "tentree.ca",
@@ -11859,7 +11873,7 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "googletagmanager\\.com\\/gtm\\.js",
+                    "rule": "googletagmanager\\.com/gtm\\.js",
                     "surrogate": "gtm.js",
                     "exceptions": {
                         "domains": [
@@ -11899,7 +11913,7 @@
                     "surrogate": "gpt.js"
                 },
                 {
-                    "rule": "googletagservices\\.com\\/tag\\/js\\/gpt\\.js",
+                    "rule": "googletagservices\\.com/tag/js/gpt\\.js",
                     "surrogate": "gpt.js",
                     "exceptions": {
                         "domains": [
@@ -12044,7 +12058,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "greylabeldelivery\\.com\\/.*\\/prod\\/utag.*\\.js",
+                    "rule": "greylabeldelivery\\.com/.*/prod/utag.*\\.js",
                     "fingerprinting": 2,
                     "cookies": 0.000129
                 }
@@ -12542,9 +12556,9 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "hhbypdoecp\\.com\\/lv\\/esnk\\/[0-9]+\\/code\\.js",
+                    "rule": "hhbypdoecp\\.com/lv/esnk/[0-9]+/code\\.js",
                     "fingerprinting": 2,
-                    "cookies": 0.0000136
+                    "cookies": 0.000109
                 },
                 {
                     "rule": "hhbypdoecp\\.com\\/lvesnk\\.html",
@@ -12640,7 +12654,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "hlserve\\.com\\/Delivery\\/ClientPaths\\/Library\\/hook\\.js",
+                    "rule": "hlserve\\.com/Delivery/ClientPaths/Library/hook\\.js",
                     "fingerprinting": 1,
                     "cookies": 0.0000476,
                     "exceptions": {
@@ -12834,15 +12848,10 @@
                 "Third-Party Analytics Marketing",
                 "Embedded Content"
             ],
-            "default": "block",
+            "default": "ignore",
             "rules": [
                 {
-                    "rule": "hubspot\\.com\\/meetings",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                },
-                {
-                    "rule": "forms\\.hubspot\\.com",
+                    "rule": "hubspot\\.com/livechat-public/v1/message/public",
                     "exceptions": {
                         "types": [
                             "xmlhttprequest"
@@ -12850,7 +12859,195 @@
                     }
                 },
                 {
-                    "rule": "app\\.hubspot\\.com\\/.*\\/api",
+                    "rule": "hubspot\\.com/__ptq\\.gif",
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/__pto\\.gif",
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/api/cartographer/v1/rhumb",
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/web-interactives-embed\\.js",
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/web-interactives/public/v1/embed/combinedConfigs",
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/api/1/store/",
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/feedback-web-fetcher",
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/__ptbe\\.gif",
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/viral-links/v1/tracking",
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/api/usage-logging/v1/log/hublytics-multi/no-auth",
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/api/metrics/v1/frontend/send",
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/web-interactives-container\\.js",
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/web-interactives/public/v1/track/view",
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/img/trackers/blank001\\.gif",
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/odometer/odometer\\.js",
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/forms/current\\.js",
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/hs-fs/hub/327485/file-2054199286-css/font-awesome\\.css",
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/analytics/",
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/api/livechat-public/v1/",
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/hubfs/",
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/cta/",
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/ctas/",
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/lead-flows-config/v1/config/json",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "types": [
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "hubspot\\.com/content-tools-menu/api/v1/tools-menu/has-permission",
+                    "fingerprinting": 0,
+                    "cookies": 0.000327,
                     "exceptions": {
                         "types": [
                             "script"
@@ -13287,6 +13484,11 @@
             "default": "ignore",
             "rules": [
                 {
+                    "rule": "impervadns\\.net//SP2013v1/Enterprise/JS/",
+                    "fingerprinting": 1,
+                    "cookies": 0.000136
+                },
+                {
                     "rule": "impervadns\\.net\\/frontend\\/bundles\\/ts-common\\.prod\\.js",
                     "fingerprinting": 1,
                     "cookies": 0.0000136
@@ -13413,7 +13615,7 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "secure-drm\\.imrworldwide\\.com\\/.*\\/ggcmb400\\.js",
+                    "rule": "secure-drm\\.imrworldwide\\.com/.*/ggcmb400\\.js",
                     "exceptions": {
                         "types": [
                             "script"
@@ -13421,7 +13623,7 @@
                     }
                 },
                 {
-                    "rule": "imrworldwide\\.com\\/v60\\.js",
+                    "rule": "imrworldwide\\.com/v60\\.js",
                     "exceptions": {
                         "domains": [
                             "threenow.co.nz"
@@ -13827,7 +14029,7 @@
                     "cookies": 0.0000817
                 },
                 {
-                    "rule": "instagram\\.com\\/static\\/bundles\\/es6\\/.*\\.js",
+                    "rule": "instagram\\.com\\/static\\/bundles\\/es6\\/EmbedSDK\\.js\\/2fe3a16f6aeb\\.js",
                     "fingerprinting": 1,
                     "cookies": 0
                 },
@@ -15438,9 +15640,9 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "lightboxcdn\\.com\\/vendor\\/.*\\/user\\.js",
+                    "rule": "lightboxcdn\\.com/vendor/.*/user\\.js",
                     "fingerprinting": 3,
-                    "cookies": 0.000402
+                    "cookies": 0.0000749
                 },
                 {
                     "rule": "lightboxcdn\\.com\\/w37htfhcq2\\/vendor\\/721dac7b-a982-4a33-afe7-ffe31144fbdd\\/user\\.js",
@@ -15621,15 +15823,34 @@
                 "Third-Party Analytics Marketing",
                 "Embedded Content"
             ],
-            "default": "block",
+            "default": "ignore",
             "rules": [
                 {
-                    "rule": "list-manage\\.com\\/subscribe\\/",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
+                    "rule": "list-manage\\.com/4gnjwD/7v0/I_w/ZGKg9DT1/1Xf3SmVJfY/ByIdCwE/eV5-Bg/03X1Q",
+                    "fingerprinting": 3,
+                    "cookies": 0.000201,
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "stylesheet"
+                        ]
+                    }
                 },
                 {
-                    "rule": "list-manage\\.com",
+                    "rule": "list-manage\\.com/generate-js/",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000204,
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "stylesheet"
+                        ]
+                    }
+                },
+                {
+                    "rule": "list-manage\\.com/ZzdmSHQizQ/ig7fpB/IhcQ/f3G7m2Dz9b/fiIGKFw/My/ktTSk9UDY",
+                    "fingerprinting": 3,
+                    "cookies": 0.0000136,
                     "exceptions": {
                         "types": [
                             "image",
@@ -15694,12 +15915,73 @@
                 "Third-Party Analytics Marketing",
                 "Action Pixels"
             ],
-            "default": "block",
+            "default": "ignore",
             "rules": [
                 {
-                    "rule": "cdn\\.listrakbi\\.com\\/scripts\\/script\\.js",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
+                    "rule": "listrakbi\\.com/api/ActivityEvents/PageBrowse"
+                },
+                {
+                    "rule": "listrakbi\\.com/css/animate\\.min\\.css"
+                },
+                {
+                    "rule": "listrakbi\\.com/v1/Product/ImageUrls"
+                },
+                {
+                    "rule": "listrakbi\\.com/ModalImpression\\.ashx"
+                },
+                {
+                    "rule": "listrakbi\\.com/t/EX\\.ashx"
+                },
+                {
+                    "rule": "listrakbi\\.com/api/ActivityEvents/ProductBrowse"
+                },
+                {
+                    "rule": "listrakbi\\.com/v1/Product"
+                },
+                {
+                    "rule": "listrakbi\\.com/json/07c34100-1080-4c55-9097-05c7f4a2b19b"
+                },
+                {
+                    "rule": "listrakbi\\.com/json/f5f04466-f923-491d-9354-679d54e32def"
+                },
+                {
+                    "rule": "listrakbi\\.com/json/eb9d26f3-d7e9-4df8-9800-a79cfaf345be"
+                },
+                {
+                    "rule": "listrakbi\\.com/SadvKLqKgI5T/cart/update"
+                },
+                {
+                    "rule": "listrakbi\\.com/json/a6c8a6f0-379f-4e0e-8f1a-db4e3efa6123"
+                },
+                {
+                    "rule": "listrakbi\\.com/json/86d9476c-c670-4b5d-a33c-bca65c91576f"
+                },
+                {
+                    "rule": "listrakbi\\.com/json/043b15b6-cb62-4e61-9d8a-89856bdbf496"
+                },
+                {
+                    "rule": "listrakbi\\.com/json/9902c090-0d30-4673-b94b-3851cb8d6035"
+                },
+                {
+                    "rule": "listrakbi\\.com/RmR1Kqh2AYPr/cart/update"
+                },
+                {
+                    "rule": "listrakbi\\.com/jcCo1vsOu8U6/cart/update"
+                },
+                {
+                    "rule": "listrakbi\\.com/w2ixhT7WChl3/session/setPersonalizedStatus"
+                },
+                {
+                    "rule": "listrakbi\\.com/qFnzaK3F3vM4/session/setPersonalizedStatus"
+                },
+                {
+                    "rule": "listrakbi\\.com/activity/"
+                },
+                {
+                    "rule": "listrakbi\\.com/.*/session/getIds"
+                },
+                {
+                    "rule": "listrakbi\\.com/[a-zA-Z0-9]+\\.js"
                 }
             ]
         },
@@ -16202,12 +16484,12 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "lytics\\.io\\/api\\/tag\\/.*\\/latest\\.min\\.js",
+                    "rule": "lytics\\.io/api/tag/.*/latest\\.min\\.js",
                     "fingerprinting": 2,
                     "cookies": 0.000201
                 },
                 {
-                    "rule": "lytics\\.io\\/api\\/tag\\/.*\\/lio\\.js",
+                    "rule": "lytics\\.io/api/tag/.*/lio\\.js",
                     "fingerprinting": 1,
                     "cookies": 0.000034
                 },
@@ -16243,12 +16525,12 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "m2\\.ai\\/v\\/pg.*\\.js",
+                    "rule": "m2\\.ai/v/pg.*\\.js",
                     "fingerprinting": 3,
-                    "cookies": 0.000301
+                    "cookies": 0.0000408
                 },
                 {
-                    "rule": "m2\\.ai\\/pg.*\\.js",
+                    "rule": "m2\\.ai/pg.*\\.js",
                     "fingerprinting": 1,
                     "cookies": 0.0000136
                 },
@@ -16325,22 +16607,7 @@
                 "Action Pixels",
                 "Embedded Content"
             ],
-            "default": "block",
-            "rules": [
-                {
-                    "rule": "money\\.mail\\.ru",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                },
-                {
-                    "rule": "mail\\.ru",
-                    "exceptions": {
-                        "domains": [
-                            "yandex.ru"
-                        ]
-                    }
-                }
-            ]
+            "default": "ignore"
         },
         "mailchimp.com": {
             "domain": "mailchimp.com",
@@ -16394,7 +16661,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "mailchimpapp\\.com\\/js\\/stores\\/.*\\/conduit\\.js",
+                    "rule": "mailchimpapp\\.com/js/stores/.*/conduit\\.js",
                     "fingerprinting": 1,
                     "cookies": 0.0000136
                 }
@@ -16489,7 +16756,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "marinsm\\.com\\/tracker\\/async\\/",
+                    "rule": "marinsm\\.com/tracker/async/",
                     "fingerprinting": 1,
                     "cookies": 0.000034
                 }
@@ -16732,7 +16999,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "maxymiser\\.net\\/api\\/.*\\/mmapi\\.js",
+                    "rule": "maxymiser\\.net/api/.*/mmapi\\.js",
                     "fingerprinting": 2,
                     "cookies": 0.000201
                 },
@@ -16835,9 +17102,9 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "medallia\\.eu\\/wd.*\\/generic.*\\.js",
+                    "rule": "medallia\\.eu/wd.*/generic.*\\.js",
                     "fingerprinting": 2,
-                    "cookies": 0.000302
+                    "cookies": 0.0000272
                 },
                 {
                     "rule": "medallia\\.eu\\/we\\/369443\\/onsite\\/generic1681763090678\\.js",
@@ -16874,7 +17141,7 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "contextual\\.media\\.net\\/bidexchange\\.js",
+                    "rule": "contextual\\.media\\.net/bidexchange\\.js",
                     "exceptions": {
                         "domains": [
                             "nytimes.com"
@@ -17556,7 +17823,7 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "moatads\\.com\\/freewheel.*\\/MoatFreeWheelJSPEM\\.js",
+                    "rule": "moatads\\.com/freewheel.*/MoatFreeWheelJSPEM\\.js",
                     "exceptions": {
                         "domains": [
                             "nba.com",
@@ -17565,7 +17832,7 @@
                     }
                 },
                 {
-                    "rule": "moatads\\.com\\/.*\\/moatwrapper\\.js",
+                    "rule": "moatads\\.com/.*/moatwrapper\\.js",
                     "exceptions": {
                         "domains": [
                             "cc.com",
@@ -17669,7 +17936,7 @@
                     "cookies": 0.000259
                 },
                 {
-                    "rule": "monu\\.delivery\\/sitesplit\\/.*\\.js",
+                    "rule": "monu\\.delivery/sitesplit/.*\\.js",
                     "fingerprinting": 2,
                     "cookies": 0.000201
                 }
@@ -17859,7 +18126,7 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "cdn\\.mxpnl\\.com\\/libs\\/mixpanel-2-latest\\.min\\.js",
+                    "rule": "cdn\\.mxpnl\\.com/libs/mixpanel-2-latest\\.min\\.js",
                     "exceptions": {
                         "domains": [
                             "7-eleven.ca"
@@ -18472,9 +18739,9 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "nitropay\\.com\\/ads-.*",
+                    "rule": "nitropay\\.com/ads-.*",
                     "fingerprinting": 2,
-                    "cookies": 0.0000136
+                    "cookies": 0.0000272
                 },
                 {
                     "rule": "nitropay\\.com\\/o9\\.js",
@@ -18529,7 +18796,7 @@
                     "cookies": 0.0000681
                 },
                 {
-                    "rule": "nosto\\.com\\/include\\/.*",
+                    "rule": "nosto\\.com/include/.*",
                     "fingerprinting": 2,
                     "cookies": 0.000201
                 },
@@ -18597,7 +18864,7 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "npttech\\.com\\/advertising\\.js",
+                    "rule": "npttech\\.com/advertising\\.js",
                     "exceptions": {
                         "types": [
                             "script"
@@ -18898,25 +19165,12 @@
                 "Audience Measurement",
                 "Third-Party Analytics Marketing"
             ],
-            "default": "block",
+            "default": "ignore",
             "rules": [
                 {
-                    "rule": "snow\\.com\\.ssl\\.d2\\.sc\\.omtrdc\\.net",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                },
-                {
-                    "rule": "tt\\.omtrdc\\.net\\/cdn\\/target\\.js",
-                    "exceptions": {
-                        "domains": [
-                            "canadiantire.ca",
-                            "delltechnologiesworld.com",
-                            "go.com"
-                        ]
-                    }
-                },
-                {
-                    "rule": "omtrdc\\.net\\/b\\/ss",
+                    "rule": "omtrdc\\.net/b/ss/ibmtestmasters1/1/JS-2\\.23\\.0-LDQM/s85422832335905",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000136,
                     "exceptions": {
                         "domains": [
                             "canadiantire.ca",
@@ -18925,10 +19179,211 @@
                     }
                 },
                 {
-                    "rule": "omtrdc\\.net",
+                    "rule": "omtrdc\\.net/b/ss/ibmtestmasters1/1/JS-2\\.23\\.0-LDQM/s83623637962335",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000136,
                     "exceptions": {
                         "domains": [
-                            "canadiantire.ca"
+                            "canadiantire.ca",
+                            "mercuryinsurance.com"
+                        ]
+                    }
+                },
+                {
+                    "rule": "omtrdc\\.net/b/ss/bnscmst/1/JS-2\\.12\\.0/s6129481970358",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "domains": [
+                            "canadiantire.ca",
+                            "mercuryinsurance.com"
+                        ]
+                    }
+                },
+                {
+                    "rule": "omtrdc\\.net/b/ss/bnscmst/1/JS-2\\.12\\.0/s66194680297495",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "domains": [
+                            "canadiantire.ca",
+                            "mercuryinsurance.com"
+                        ]
+                    }
+                },
+                {
+                    "rule": "omtrdc\\.net/b/ss/interikeaaboutikea/1/JS-2\\.23\\.0-LCXS/s15608923336014",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "domains": [
+                            "canadiantire.ca",
+                            "mercuryinsurance.com"
+                        ]
+                    }
+                },
+                {
+                    "rule": "omtrdc\\.net/b/ss/interikeaaboutikea/1/JS-2\\.23\\.0-LCXS/s11658288843898",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "domains": [
+                            "canadiantire.ca",
+                            "mercuryinsurance.com"
+                        ]
+                    }
+                },
+                {
+                    "rule": "omtrdc\\.net/b/ss/anactivenet,anactivecomprod/1/JS-2\\.20\\.0/s3181205944880",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "domains": [
+                            "canadiantire.ca",
+                            "mercuryinsurance.com"
+                        ]
+                    }
+                },
+                {
+                    "rule": "omtrdc\\.net/b/ss/acsde-prod/1/H\\.25\\.1/s67756145218639",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "domains": [
+                            "canadiantire.ca",
+                            "mercuryinsurance.com"
+                        ]
+                    }
+                },
+                {
+                    "rule": "omtrdc\\.net/b/ss/westpac-prd/1/H\\.27\\.5/s69739083247049",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "domains": [
+                            "canadiantire.ca",
+                            "mercuryinsurance.com"
+                        ]
+                    }
+                },
+                {
+                    "rule": "omtrdc\\.net/b/ss/sxmr\\.prod/1/JS-2\\.9\\.0/s05130048168995",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "domains": [
+                            "canadiantire.ca",
+                            "mercuryinsurance.com"
+                        ]
+                    }
+                },
+                {
+                    "rule": "omtrdc\\.net/b/ss/nhlglobal15,nhlcom15/1/JS-2\\.9\\.0/s51377876533534",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "domains": [
+                            "canadiantire.ca",
+                            "mercuryinsurance.com"
+                        ]
+                    }
+                },
+                {
+                    "rule": "omtrdc\\.net/b/ss/michaels-canada/1/JS-2\\.10\\.0/s52474694773933",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "domains": [
+                            "canadiantire.ca",
+                            "mercuryinsurance.com"
+                        ]
+                    }
+                },
+                {
+                    "rule": "omtrdc\\.net/b/ss/michaels-canada/1/JS-2\\.10\\.0/s56192439388197",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "domains": [
+                            "canadiantire.ca",
+                            "mercuryinsurance.com"
+                        ]
+                    }
+                },
+                {
+                    "rule": "omtrdc\\.net/b/ss/peoplexpprod/1/JS-2\\.8\\.2-D7QN/s44584274673375",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "domains": [
+                            "canadiantire.ca",
+                            "mercuryinsurance.com"
+                        ]
+                    }
+                },
+                {
+                    "rule": "omtrdc\\.net/b/ss/peoplexpprod/1/JS-2\\.8\\.2-D7QN/s41543120497149",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "domains": [
+                            "canadiantire.ca",
+                            "mercuryinsurance.com"
+                        ]
+                    }
+                },
+                {
+                    "rule": "omtrdc\\.net/b/ss/locgovprod/1/H\\.27\\.5/s07225474618741",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "domains": [
+                            "canadiantire.ca",
+                            "mercuryinsurance.com"
+                        ]
+                    }
+                },
+                {
+                    "rule": "omtrdc\\.net/b/ss/locgovprod/1/H\\.27\\.5/s09830926089388",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "domains": [
+                            "canadiantire.ca",
+                            "mercuryinsurance.com"
+                        ]
+                    }
+                },
+                {
+                    "rule": "omtrdc\\.net/b/ss/citicrssywprod/1/JS-1\\.4\\.3/s3565121488112",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "domains": [
+                            "canadiantire.ca",
+                            "mercuryinsurance.com"
+                        ]
+                    }
+                },
+                {
+                    "rule": "omtrdc\\.net/b/ss/aaamaClubAlliance/1/JS-2\\.20\\.0/s95895919209469",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "domains": [
+                            "canadiantire.ca",
+                            "mercuryinsurance.com"
+                        ]
+                    }
+                },
+                {
+                    "rule": "omtrdc\\.net/b/ss/aaamaClubAlliance/1/JS-2\\.20\\.0/s96080203079269",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "domains": [
+                            "canadiantire.ca",
+                            "mercuryinsurance.com"
                         ]
                     }
                 }
@@ -19330,7 +19785,7 @@
                     "cookies": 0.000136
                 },
                 {
-                    "rule": "optad360\\.io\\/items\\/.*\\.min\\.js",
+                    "rule": "optad360\\.io/items/.*\\.min\\.js",
                     "fingerprinting": 1,
                     "cookies": 0.0000204
                 },
@@ -20021,22 +20476,40 @@
                 "Analytics",
                 "Embedded Content"
             ],
-            "default": "block",
+            "default": "ignore",
             "rules": [
                 {
-                    "rule": "go\\.pardot\\.com\\/.*\\/2tmb",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
+                    "rule": "pardot\\.com/pd\\.js"
                 },
                 {
-                    "rule": "go\\.pardot\\.com\\/css\\/form\\.css",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
+                    "rule": "pardot\\.com/analytics"
                 },
                 {
-                    "rule": "go\\.pardot\\.com/js\\/v2\\/affirm\\.js",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
+                    "rule": "pardot\\.com/js/piUtils\\.js"
+                },
+                {
+                    "rule": "pardot\\.com/dcjs/82202/1182/dc\\.js"
+                },
+                {
+                    "rule": "pardot\\.com/pi\\.js"
+                },
+                {
+                    "rule": "pardot\\.com/dcjs/82202/1474/dc\\.js"
+                },
+                {
+                    "rule": "pardot\\.com/pdt\\.js"
+                },
+                {
+                    "rule": "pardot\\.com/551052/109491/pd_mod\\.js"
+                },
+                {
+                    "rule": "pardot\\.com/887233/1632555795QSFtQtuZ/LedvanceIcon\\.png"
+                },
+                {
+                    "rule": "pardot\\.com/65342/1614970963wKvFVtYq/parent_window\\.js"
+                },
+                {
+                    "rule": "pardot\\.com/l/"
                 }
             ]
         },
@@ -20284,9 +20757,9 @@
                     "cookies": 0
                 },
                 {
-                    "rule": "perimeterx\\.net\\/[a-zA-Z0-9]+\\/main\\.min\\.js",
+                    "rule": "perimeterx\\.net/[a-zA-Z0-9]+/main\\.min\\.js",
                     "fingerprinting": 3,
-                    "cookies": 0.0000136
+                    "cookies": 0.0000272
                 },
                 {
                     "rule": "perimeterx\\.net\\/PXh1Z8j4kW\\/captcha\\.js",
@@ -20307,11 +20780,6 @@
                     "rule": "perimeterx\\.net\\/PXev56mY37\\/captcha\\.js",
                     "fingerprinting": 2,
                     "cookies": 0
-                },
-                {
-                    "rule": "perimeterx\\.net\\/[a-zA-Z0-9]+\\/main\\.min\\.js",
-                    "fingerprinting": 3,
-                    "cookies": 0.000201
                 }
             ]
         },
@@ -20487,7 +20955,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "piwik\\.pro\\/.*-.*\\.js",
+                    "rule": "piwik\\.pro/.*-.*\\.js",
                     "fingerprinting": 2,
                     "cookies": 0.00141
                 },
@@ -20810,7 +21278,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "postaffiliatepro\\.com\\/scripts\\/.*",
+                    "rule": "postaffiliatepro\\.com/scripts/.*",
                     "fingerprinting": 1,
                     "cookies": 0.000302
                 }
@@ -21396,9 +21864,9 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "pubnation\\.com\\/tags\\/.*",
+                    "rule": "pubnation\\.com/tags/.*",
                     "fingerprinting": 2,
-                    "cookies": 0.00232
+                    "cookies": 0.000904
                 },
                 {
                     "rule": "pubnation\\.com\\/usersync\\.min\\.js",
@@ -21552,9 +22020,9 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "qualaroo\\.com\\/ki\\.js\\/.*\\.js",
+                    "rule": "qualaroo\\.com/ki\\.js/.*\\.js",
                     "fingerprinting": 2,
-                    "cookies": 0.000201
+                    "cookies": 0.0000204
                 }
             ]
         },
@@ -21574,12 +22042,67 @@
                 "Embedded Content",
                 "Session Replay"
             ],
-            "default": "block",
+            "default": "ignore",
             "rules": [
                 {
-                    "rule": "sjc1\\.qualtrics\\.com",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
+                    "rule": "qualtrics\\.com/SIE/"
+                },
+                {
+                    "rule": "qualtrics\\.com/WRSiteInterceptEngine/Targeting\\.php"
+                },
+                {
+                    "rule": "qualtrics\\.com/WRSiteInterceptEngine/Asset\\.php"
+                },
+                {
+                    "rule": "qualtrics\\.com/WRSiteInterceptEngine/"
+                },
+                {
+                    "rule": "qualtrics\\.com/WRQualtricsShared/Graphics/siteintercept/wr-dialog-close-btn-black\\.png"
+                },
+                {
+                    "rule": "qualtrics\\.com/WRQualtricsShared/Graphics/siteintercept/wr-dialog-close-btn-white\\.png"
+                },
+                {
+                    "rule": "qualtrics\\.com/WRQualtricsShared/Graphics/siteintercept/building_preview\\.gif"
+                },
+                {
+                    "rule": "qualtrics\\.com/WRQualtricsShared/Graphics/siteintercept/remove_screen_capture\\.png"
+                },
+                {
+                    "rule": "qualtrics\\.com/static/prototype-ui-modules/SharedGraphics/siteintercept/svg-close-btn-black-7\\.svg"
+                },
+                {
+                    "rule": "qualtrics\\.com/static/prototype-ui-modules/SharedGraphics/siteintercept/svg-close-btn-black-5\\.svg"
+                },
+                {
+                    "rule": "qualtrics\\.com/CP/Graphic\\.php"
+                },
+                {
+                    "rule": "qualtrics\\.com/WRQualtricsControlPanel/Graphic\\.php"
+                },
+                {
+                    "rule": "qualtrics\\.com/static/prototype-ui-modules/SharedGraphics/siteintercept/svg-close-btn-black-4\\.svg"
+                },
+                {
+                    "rule": "qualtrics\\.com/WRQualtricsShared/Graphics/siteintercept/popup_shadow_transparent\\.png"
+                },
+                {
+                    "rule": "qualtrics\\.com/WRQualtricsShared/Graphics/siteintercept/feedback-blue-right\\.png"
+                },
+                {
+                    "rule": "qualtrics\\.com/ControlPanel/Graphic\\.php"
+                },
+                {
+                    "rule": "qualtrics\\.com/SE/"
+                },
+                {
+                    "rule": "qualtrics\\.com/dxjsmodule/"
+                },
+                {
+                    "rule": "qualtrics\\.com/jfe/"
+                },
+                {
+                    "rule": "qualtrics\\.com/static/q-siteintercept/"
                 }
             ]
         },
@@ -21715,9 +22238,9 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "r42tag\\.com\\/lib\\/",
+                    "rule": "r42tag\\.com/lib/",
                     "fingerprinting": 2,
-                    "cookies": 0.000703
+                    "cookies": 0.000034
                 }
             ]
         },
@@ -21817,69 +22340,71 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "palacesquare\\.rambler\\.ru",
-                    "exceptions": {
-                        "domains": [
-                            "championat.com",
-                            "lenta.ru"
-                        ],
-                        "types": [
-                            "image",
-                            "stylesheet"
-                        ]
-                    }
-                },
-                {
-                    "rule": "comments\\.rambler\\.ru",
-                    "exceptions": {
-                        "domains": [
-                            "championat.com",
-                            "lenta.ru"
-                        ],
-                        "types": [
-                            "script"
-                        ]
-                    }
-                },
-                {
-                    "rule": "myqualification\\.rambler\\.ru",
-                    "exceptions": {
-                        "domains": [
-                            "championat.com",
-                            "lenta.ru"
-                        ]
-                    }
-                },
-                {
                     "rule": "rambler\\.ru\\/capirs_async\\.js",
                     "fingerprinting": 3,
-                    "cookies": 0.0000136
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "domains": [
+                            "championat.com",
+                            "lenta.ru"
+                        ]
+                    }
                 },
                 {
                     "rule": "rambler\\.ru\\/rambler-id-helper\\/auth_events\\.js",
                     "fingerprinting": 1,
-                    "cookies": 0.00000681
+                    "cookies": 0.00000681,
+                    "exceptions": {
+                        "domains": [
+                            "championat.com",
+                            "lenta.ru"
+                        ]
+                    }
                 },
                 {
                     "rule": "rambler\\.ru\\/top100\\.jcn",
                     "fingerprinting": 3,
-                    "cookies": 0.0000204
+                    "cookies": 0.0000204,
+                    "exceptions": {
+                        "domains": [
+                            "championat.com",
+                            "lenta.ru"
+                        ]
+                    }
                 },
                 {
                     "rule": "rambler\\.ru\\/helper\\/sdk\\.js",
                     "fingerprinting": 1,
-                    "cookies": 0.0000136
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "domains": [
+                            "championat.com",
+                            "lenta.ru"
+                        ]
+                    }
                 },
                 {
                     "rule": "rambler\\.ru\\/static\\/recommender\\.js",
                     "fingerprinting": 1,
-                    "cookies": 0.0000136
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "domains": [
+                            "championat.com",
+                            "lenta.ru"
+                        ]
+                    }
                 },
                 {
                     "rule": "rambler\\.ru\\/set",
                     "fingerprinting": 0,
                     "cookies": 0,
-                    "comment": "pixel"
+                    "comment": "pixel",
+                    "exceptions": {
+                        "domains": [
+                            "championat.com",
+                            "lenta.ru"
+                        ]
+                    }
                 }
             ]
         },
@@ -22055,15 +22580,33 @@
                 "Embedded Content",
                 "Social Network"
             ],
-            "default": "block",
+            "default": "ignore",
             "rules": [
                 {
-                    "rule": "oauth\\.reddit\\.com",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
+                    "rule": "reddit\\.com/button_info\\.json"
                 },
                 {
-                    "rule": "reddit\\.com\\/r",
+                    "rule": "reddit\\.com/widgets\\.js"
+                },
+                {
+                    "rule": "reddit\\.com/snoo\\.gif"
+                },
+                {
+                    "rule": "reddit\\.com/static/button/button1\\.html"
+                },
+                {
+                    "rule": "reddit\\.com/policy"
+                },
+                {
+                    "rule": "reddit\\.com/static/spreddit1\\.gif"
+                },
+                {
+                    "rule": "reddit\\.com/hot/\\.json"
+                },
+                {
+                    "rule": "reddit\\.com/rp\\.gif",
+                    "fingerprinting": 0,
+                    "cookies": 0,
                     "exceptions": {
                         "types": [
                             "script",
@@ -22072,7 +22615,9 @@
                     }
                 },
                 {
-                    "rule": "reddit\\.com\\/comments",
+                    "rule": "reddit\\.com/r/geogebra/",
+                    "fingerprinting": 0,
+                    "cookies": 0.000201,
                     "exceptions": {
                         "types": [
                             "script",
@@ -22081,7 +22626,9 @@
                     }
                 },
                 {
-                    "rule": "reddit\\.com\\/api",
+                    "rule": "reddit\\.com/r/MortalCumbat/",
+                    "fingerprinting": 0,
+                    "cookies": 0,
                     "exceptions": {
                         "types": [
                             "script",
@@ -22090,13 +22637,65 @@
                     }
                 },
                 {
-                    "rule": "reddit\\.com\\/hot\\.json",
+                    "rule": "reddit\\.com/r",
                     "exceptions": {
                         "types": [
                             "script",
                             "xmlhttprequest"
                         ]
                     }
+                },
+                {
+                    "rule": "reddit\\.com/comments",
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "reddit\\.com/api/info\\.json",
+                    "fingerprinting": 0,
+                    "cookies": 0.000558,
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "reddit\\.com/api/v1/access_token",
+                    "fingerprinting": 0,
+                    "cookies": 0,
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "reddit\\.com/api",
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "reddit\\.com/hot\\.json",
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "reddit\\.com/"
                 }
             ]
         },
@@ -22251,7 +22850,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "resonate\\.com\\/analytics\\.js\\/v1\\/[0-9]+\\/analytics\\.min\\.js",
+                    "rule": "resonate\\.com/analytics\\.js/v1/[0-9]+/analytics\\.min\\.js",
                     "fingerprinting": 1,
                     "cookies": 0.000803
                 }
@@ -22592,7 +23191,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "rmtag\\.com\\/.*ct\\.js",
+                    "rule": "rmtag\\.com/.*ct\\.js",
                     "fingerprinting": 1,
                     "cookies": 0.000201
                 }
@@ -22904,7 +23503,7 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "ak\\.sail-horizon\\.com\\/spm\\/spm",
+                    "rule": "ak\\.sail-horizon\\.com/spm/spm",
                     "exceptions": {
                         "domains": [
                             "wwe.com"
@@ -22930,15 +23529,259 @@
             "categories": [
                 "Embedded Content"
             ],
-            "default": "block",
+            "default": "ignore",
             "rules": [
                 {
-                    "rule": "salesforceliveagent\\.com\\/chat\\/rest\\/cdm",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
+                    "rule": "salesforceliveagent\\.com/content/g/js/51\\.0/deployment\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.0000681,
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "stylesheet",
+                            "subdocument",
+                            "xmlhttprequest"
+                        ]
+                    }
                 },
                 {
-                    "rule": "salesforceliveagent\\.com",
+                    "rule": "salesforceliveagent\\.com/content/g/js/45\\.0/deployment\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.0000408,
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "stylesheet",
+                            "subdocument",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "salesforceliveagent\\.com/content/g/js/43\\.0/deployment\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.0000681,
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "stylesheet",
+                            "subdocument",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "salesforceliveagent\\.com/content/g/js/56\\.0/deployment\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.0000272,
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "stylesheet",
+                            "subdocument",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "salesforceliveagent\\.com/content/g/js/55\\.0/deployment\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.0000272,
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "stylesheet",
+                            "subdocument",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "salesforceliveagent\\.com/content/g/js/42\\.0/deployment\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.0000817,
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "stylesheet",
+                            "subdocument",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "salesforceliveagent\\.com/content/g/js/46\\.0/deployment\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.0000272,
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "stylesheet",
+                            "subdocument",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "salesforceliveagent\\.com/content/g/deployment\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.0000272,
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "stylesheet",
+                            "subdocument",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "salesforceliveagent\\.com/content/g/js/28\\.0/deployment\\.js",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000272,
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "stylesheet",
+                            "subdocument",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "salesforceliveagent\\.com/content/g/js/47\\.0/deployment\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.000034,
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "stylesheet",
+                            "subdocument",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "salesforceliveagent\\.com/content/g/js/39\\.0/deployment\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.0000408,
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "stylesheet",
+                            "subdocument",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "salesforceliveagent\\.com/content/g/js/57\\.0/deployment\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.0000272,
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "stylesheet",
+                            "subdocument",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "salesforceliveagent\\.com/content/g/js/36\\.0/deployment\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.0000204,
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "stylesheet",
+                            "subdocument",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "salesforceliveagent\\.com/content/g/js/29\\.0/deployment\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.0000204,
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "stylesheet",
+                            "subdocument",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "salesforceliveagent\\.com/content/g/js/52\\.0/deployment\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.000034,
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "stylesheet",
+                            "subdocument",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "salesforceliveagent\\.com/content/g/js/38\\.0/deployment\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.0000204,
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "stylesheet",
+                            "subdocument",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "salesforceliveagent\\.com/content/g/js/35\\.0/deployment\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "stylesheet",
+                            "subdocument",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "salesforceliveagent\\.com/content/g/js/37\\.0/deployment\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "stylesheet",
+                            "subdocument",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "salesforceliveagent\\.com/content/g/js/49\\.0/deployment\\.js",
+                    "fingerprinting": 1,
+                    "cookies": 0.0000204,
+                    "exceptions": {
+                        "types": [
+                            "script",
+                            "stylesheet",
+                            "subdocument",
+                            "xmlhttprequest"
+                        ]
+                    }
+                },
+                {
+                    "rule": "salesforceliveagent\\.com/content/images/x\\.png",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000204,
                     "exceptions": {
                         "types": [
                             "script",
@@ -22983,7 +23826,7 @@
                     "cookies": 0.0000817
                 },
                 {
-                    "rule": "salesmanago\\.pl\\/dynamic\\/.*\\/popups\\.js",
+                    "rule": "salesmanago\\.pl/dynamic/.*/popups\\.js",
                     "fingerprinting": 1,
                     "cookies": 0.0000136
                 },
@@ -23441,7 +24284,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "sdiapi\\.com\\/vice_loader\\/.*",
+                    "rule": "sdiapi\\.com/vice_loader/",
                     "fingerprinting": 2,
                     "cookies": 0.0000204
                 },
@@ -23481,7 +24324,7 @@
                     "cookies": 0
                 },
                 {
-                    "rule": "sdiapi\\.com\\/helenoftroy\\/.*",
+                    "rule": "sdiapi\\.com/helenoftroy/.*",
                     "fingerprinting": 2,
                     "cookies": 0
                 },
@@ -23537,7 +24380,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "searchspring\\.io\\/.*\\/bundle\\.js",
+                    "rule": "searchspring\\.io/.*/bundle\\.js",
                     "fingerprinting": 2,
                     "cookies": 0.0000136
                 },
@@ -23643,7 +24486,7 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "segment\\.com\\/analytics\\.js/.*/analytics\\.min\\.js",
+                    "rule": "segment\\.com/analytics\\.js/.*/analytics\\.min\\.js",
                     "exceptions": {
                         "domains": [
                             "aspiration.com",
@@ -24440,7 +25283,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "siteimprove\\.com\\/js\\/siteanalyze_.*\\.js",
+                    "rule": "siteimprove\\.com/js/siteanalyze_.*\\.js",
                     "fingerprinting": 2,
                     "cookies": 0.000201
                 }
@@ -24557,7 +25400,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "slgnt\\.eu\\/.*\\/.*\\.js",
+                    "rule": "slgnt\\.eu/.*/.*\\.js",
                     "fingerprinting": 2,
                     "cookies": 0.0000136
                 },
@@ -24953,7 +25796,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "socy\\.es\\/pixel\\/js\\/.*",
+                    "rule": "socy\\.es/pixel/js/.*",
                     "fingerprinting": 2,
                     "cookies": 0.000136
                 }
@@ -25491,12 +26334,12 @@
                     "cookies": 0.000116
                 },
                 {
-                    "rule": "storage\\.googleapis\\.com\\/code\\.snapengage\\.com\\/",
+                    "rule": "storage\\.googleapis\\.com\\/uniqueicchat\\/js\\/e4607c5e-0fb9-4bbc-8416-bf0f723ddddc\\.js",
                     "fingerprinting": 3,
                     "cookies": 0.0000136
                 },
                 {
-                    "rule": "storage\\.googleapis\\.com\\/uniqueicchat\\/js\\/e4607c5e-0fb9-4bbc-8416-bf0f723ddddc\\.js",
+                    "rule": "storage\\.googleapis\\.com/code\\.snapengage\\.com/",
                     "fingerprinting": 3,
                     "cookies": 0.0000136
                 },
@@ -25695,7 +26538,7 @@
                     "cookies": 0.00000681
                 },
                 {
-                    "rule": "sumologic\\.com\\/receiver\\/v1\\/.*",
+                    "rule": "sumologic\\.com/receiver/v1/.*",
                     "fingerprinting": 0,
                     "cookies": 0.000034,
                     "comment": "pixel"
@@ -25956,7 +26799,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "talkable\\.com\\/public\\/.*\\/affiliate_members\\/create\\.html",
+                    "rule": "talkable\\.com/public/.*/affiliate_members/create\\.html",
                     "fingerprinting": 1,
                     "cookies": 0.0000136
                 },
@@ -26451,12 +27294,12 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "theadex\\.com\\/d\\/.*\\/adex\\.js",
+                    "rule": "theadex\\.com/d/.*/adex\\.js",
                     "fingerprinting": 3,
-                    "cookies": 0.000201
+                    "cookies": 0.0000272
                 },
                 {
-                    "rule": "theadex\\.com\\/d\\/.*\\.gif",
+                    "rule": "theadex\\.com/d/.*\\.gif",
                     "fingerprinting": 0,
                     "cookies": 0.000116,
                     "comment": "pixel"
@@ -26696,15 +27539,218 @@
                 "Audience Measurement",
                 "Third-Party Analytics Marketing"
             ],
-            "default": "block",
+            "default": "ignore",
             "rules": [
                 {
-                    "rule": "tags\\.tiqcdn\\.com\\/utag\\/.*\\/utag\\.js",
+                    "rule": "tags\\.tiqcdn\\.com/utag/.*/utag\\.js",
                     "exceptions": {
-                        "types": [
-                            "script"
+                        "domains": [
+                            "asics.com",
+                            "bankofamerica.com",
+                            "bloomingdales.com",
+                            "caremark.com",
+                            "chilis.com",
+                            "cox.com",
+                            "hsbc.co.uk",
+                            "hsbc.com",
+                            "humana.com",
+                            "intuit.com",
+                            "marksandspencer.com",
+                            "ml.com",
+                            "mtb.com",
+                            "pch.com",
+                            "priceline.com",
+                            "usbank.com"
+                        ]
+                    },
+                    "options": {
+                        "domains": [
+                            "10play.com.au",
+                            "32red.com",
+                            "active.com",
+                            "aktion-mensch.de",
+                            "americastire.com",
+                            "baseballsavings.com",
+                            "basf.us",
+                            "belk.com",
+                            "blackbaud.com",
+                            "bloomingdales.com",
+                            "boxlunch.com",
+                            "canon.co.uk",
+                            "cbs.com",
+                            "cdw.com",
+                            "celebritycruises.com",
+                            "commonspirit.org",
+                            "consumentenbond.nl",
+                            "converse.com",
+                            "costadelmar.com",
+                            "customerservice-macys.com",
+                            "cvshealth.com",
+                            "dignityhealth.org",
+                            "discounttire.com",
+                            "discounttiredirect.com",
+                            "dropbox.com",
+                            "dropboxforum.com",
+                            "eddiebaueroutlet.com",
+                            "hagerty.com",
+                            "hartvannederland.nl",
+                            "hottopic.com",
+                            "hotwire.com",
+                            "hulu.com",
+                            "ibm.com",
+                            "iweb-sharedealing.co.uk",
+                            "just-eat.ie",
+                            "kijk.nl",
+                            "klachtenkompas.nl",
+                            "lenscrafters.com",
+                            "lloydsbankinggroup.com",
+                            "macys.com",
+                            "marksandspencer.com",
+                            "meinestadt.de",
+                            "mercer.com",
+                            "michaels.com",
+                            "microsoft.com",
+                            "miumiu.com",
+                            "mscdirect.com",
+                            "ncl.com",
+                            "neimanmarcus.com",
+                            "newbalance.com",
+                            "newzealand.com",
+                            "northerntool.com",
+                            "oakley.com",
+                            "oakleysi.com",
+                            "oliverpeoples.com",
+                            "opsm.com.au",
+                            "pacsun.com",
+                            "paramountplus.com",
+                            "patagonia.com",
+                            "pbteen.com",
+                            "pearlevision.com",
+                            "persol.com",
+                            "politico.com",
+                            "potterybarn.com",
+                            "potterybarnkids.com",
+                            "prada.com",
+                            "qualcomm.com",
+                            "qvc.com",
+                            "rakuten.co.jp",
+                            "rei.com",
+                            "rejuvenation.com",
+                            "royalcaribbean.com",
+                            "royalmail.com",
+                            "salvationarmy.org",
+                            "salvationarmyusa.org",
+                            "satruck.org",
+                            "schwabassetmanagement.com",
+                            "shownieuws.nl",
+                            "sunglasshut.com",
+                            "talbots.com",
+                            "targetoptical.com",
+                            "thegreatcourses.com",
+                            "tommy.com",
+                            "top10.com",
+                            "versace.com",
+                            "victoriassecret.com",
+                            "westelm.com",
+                            "williams-sonoma.com",
+                            "woolworths.com.au",
+                            "woolworthsrewards.com.au",
+                            "zegna.com"
                         ]
                     }
+                },
+                {
+                    "rule": "tiqcdn\\.com/utag/tiqapp/utag\\.v\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/utag/tiqapp/utag\\.currency\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/location/location\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/dle/epson/northamerica/%7C\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/libs/tealiumjs/latest/tealium_collect\\.min\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/shared/tms/t\\.tealium_collect\\.1_0_3\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/utag/immobilienscout/is24/prod/utag\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/dle/ibm/web/d_medallia_survey_configurations\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/utag/telekom/bestellcentergk/prod/utag\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/utag/telekom/unterhaltung/prod/utag\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/utag/telekom/community/prod/utag\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/dle/usaa/nw/ent-pubhome-app\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/dle/bofa/ml/prod-_-benefits%20online%20%7C%20login\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/dle/bofa/main/prod-_-live%20chat\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/utag/colruytgroup/colruyt/prod/utag\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/utag/colruytgroup/dreamland/prod/utag\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/utag/corelio/gva-pub/prod/utag\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/utag/corelio/hbvl-pub/prod/utag\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/utag/intesasanpaolo/vetrina/prod/utag\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/utag/gmcr/keurighybris/prod/utag\\.modalExt_857\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/utag/corelio/limburger-pub/prod/utag\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/utag/telekom/tsport/prod/utag\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/utag/corelio/nieuwsblad-pub/prod/utag\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/utag/axelspringer/asmb-rollingstone\\.de/prod/utag\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/utag/corelio/standaard-pub/prod/utag\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/utag/blog\\.telekom/com/prod/utag\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/utag/immobilienscout/is24-de-satellite/prod/utag\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/.*/prod/utag\\.tagsOptOut\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/.*/prod/mobile\\.html"
+                },
+                {
+                    "rule": "tiqcdn\\.com/.*/utag\\.[0-9]+\\.js"
+                },
+                {
+                    "rule": "tiqcdn\\.com/.*/utag\\.sync\\.js"
                 }
             ]
         },
@@ -27479,11 +28525,6 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "twitter\\.com\\/widgets\\/tweet_button\\.",
-                    "fingerprinting": 1,
-                    "cookies": 0
-                },
-                {
                     "rule": "twitter\\.com\\/embed\\/embed\\.7796\\.1cc3f324e058b5b670fb\\.js",
                     "fingerprinting": 2,
                     "cookies": 0
@@ -27509,12 +28550,7 @@
                     "cookies": 0.00647
                 },
                 {
-                    "rule": "twitter\\.com\\/widgets\\/follow_button\\.",
-                    "fingerprinting": 1,
-                    "cookies": 0
-                },
-                {
-                    "rule": "twitter\\.com\\/_next\\/static\\/.*",
+                    "rule": "twitter\\.com/_next/static/.*",
                     "fingerprinting": 2,
                     "cookies": 0
                 },
@@ -27675,18 +28711,6 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "nav\\.files\\.bbci\\.co\\.uk\\.edgekey\\.net/nav-analytics\\/.*",
-                    "exceptions": {
-                        "domains": [
-                            "bbc.co.uk",
-                            "bbc.com"
-                        ],
-                        "types": [
-                            "script"
-                        ]
-                    }
-                },
-                {
                     "rule": "uk\\.edgekey\\.net\\/assets\\/2b3b09cdd04020bf68e8694bae58ac44\\/dist\\/scripts\\/main\\.js",
                     "fingerprinting": 3,
                     "cookies": 0
@@ -27781,7 +28805,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "uncn\\.jp\\/uwt\\/.*\\/uwt\\.js",
+                    "rule": "uncn\\.jp\\/uwt\\/3493\\/uwt\\.js",
                     "fingerprinting": 1,
                     "cookies": 0.0000136
                 },
@@ -27979,9 +29003,9 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "upsellit\\.com\\/active\\/.*\\.jsp",
+                    "rule": "upsellit\\.com/active/.*\\.jsp",
                     "fingerprinting": 2,
-                    "cookies": 0.000201
+                    "cookies": 0.0000204
                 },
                 {
                     "rule": "upsellit\\.com\\/launch\\/pimsleur\\.jsp",
@@ -28096,14 +29120,7 @@
             "categories": [
                 "Embedded Content"
             ],
-            "default": "block",
-            "rules": [
-                {
-                    "rule": "js\\.usemessages\\.com\\/conversations-embed\\.js",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                }
-            ]
+            "default": "ignore"
         },
         "usercentrics.eu": {
             "domain": "usercentrics.eu",
@@ -28979,7 +29996,7 @@
                     "cookies": 0.0000749
                 },
                 {
-                    "rule": "webeyez\\.com\\/js\\/.*\\/wzbody\\.js",
+                    "rule": "webeyez\\.com/js/.*/wzbody\\.js",
                     "fingerprinting": 2,
                     "cookies": 0.0000204
                 },
@@ -29195,7 +30212,7 @@
                     "cookies": 0.000626
                 },
                 {
-                    "rule": "wgplayer\\.com\\/wgdu\\/.*\\/wgDesktopAds\\.min\\.js",
+                    "rule": "wgplayer\\.com/wgdu/.*/wgDesktopAds\\.min\\.js",
                     "fingerprinting": 2,
                     "cookies": 0.0000136
                 },
@@ -29475,7 +30492,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "wt-safetag\\.com\\/resp\\/api\\/get\\/",
+                    "rule": "wt-safetag\\.com/resp/api/get/",
                     "fingerprinting": 2,
                     "cookies": 0.000301
                 },
@@ -29632,7 +30649,7 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "y-track\\.com\\/.*\\/tracker\\.min\\.js",
+                    "rule": "y-track\\.com/.*/tracker\\.min\\.js",
                     "fingerprinting": 2,
                     "cookies": 0.0000136
                 }
@@ -29703,7 +30720,7 @@
                     "cookies": 0.00796
                 },
                 {
-                    "rule": "yandex\\.com\\/watch\\/.*",
+                    "rule": "yandex\\.com/watch/.*",
                     "fingerprinting": 0,
                     "cookies": 0.000647
                 },
@@ -29754,30 +30771,10 @@
                 "Embedded Content",
                 "Session Replay"
             ],
-            "default": "block",
+            "default": "ignore",
             "rules": [
                 {
-                    "rule": "pay\\.yandex\\.ru",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                },
-                {
-                    "rule": "money\\.yandex\\.ru",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                },
-                {
-                    "rule": "geocode-maps\\.yandex\\.ru",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                },
-                {
-                    "rule": "frontend\\.vh\\.yandex\\.ru\\/player",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                },
-                {
-                    "rule": "api-maps\\.yandex\\.ru",
+                    "rule": "yandex\\.ru/show",
                     "exceptions": {
                         "types": [
                             "image",
@@ -29786,35 +30783,284 @@
                     }
                 },
                 {
-                    "rule": "static-maps\\.yandex\\.ru",
+                    "rule": "yandex\\.ru/an/newscount",
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/captchapgrd",
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/captcha",
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/gpp\\.xml",
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/cycounter",
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/push",
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/widget-loader",
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/portal/searchframe/desktop",
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/suggest/suggest-ya\\.cgi",
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/v1/exps/",
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/ping",
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/jserr/1",
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/adfox/",
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/an/tracking/",
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/count/",
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/informer/",
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/meta/",
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/pixel/",
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/setud/",
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/sync_cookie.*"
+                },
+                {
+                    "rule": "yandex\\.ru/tracking/",
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/vh-canvas-converted/",
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/webvisor/",
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/widgets?/"
+                },
+                {
+                    "rule": "yandex\\.ru/2\\.0-stable/",
+                    "fingerprinting": 1,
+                    "cookies": 0.0000136,
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/2\\.1/",
+                    "fingerprinting": 2,
+                    "cookies": 0.000102,
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/2\\.1\\.79/build/release/images/cursor/grab\\.cur",
+                    "fingerprinting": 0,
+                    "cookies": 0.000109,
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/2\\.1\\.79/build/release/images/cursor/grabbing\\.cur",
+                    "fingerprinting": 0,
+                    "cookies": 0.000109,
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/2\\.1\\.79/build/release/images/cursor/help\\.cur",
+                    "fingerprinting": 0,
+                    "cookies": 0.000109,
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/2\\.1\\.79/build/release/images/cursor/zoom_in\\.cur",
+                    "fingerprinting": 0,
+                    "cookies": 0.000109,
+                    "exceptions": {
+                        "types": [
+                            "image",
+                            "script"
+                        ]
+                    }
+                },
+                {
+                    "rule": "yandex\\.ru/1\\.x/",
+                    "fingerprinting": 0,
+                    "cookies": 0.0000408,
                     "exceptions": {
                         "types": [
                             "image"
                         ]
                     }
-                },
-                {
-                    "rule": "img-fotki\\.yandex\\.ru",
-                    "exceptions": {
-                        "types": [
-                            "image"
-                        ]
-                    }
-                },
-                {
-                    "rule": "yandex\\.ru\\/system\\/video-ads-sdk\\/adsdk\\.js",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                },
-                {
-                    "rule": "yandex\\.ru\\/vod\\/vh-special-converted\\/vod-content",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
-                },
-                {
-                    "rule": "yandex\\.ru\\/log",
-                    "action": "ignore",
-                    "comment": "Allow to load, but all other protections apply, including cookie protection"
                 }
             ]
         },
@@ -30119,7 +31365,7 @@
             "default": "block",
             "rules": [
                 {
-                    "rule": "yotpo\\.com\\/.*\\/widget\\.js",
+                    "rule": "yotpo\\.com/.*/widget\\.js",
                     "exceptions": {
                         "domains": [
                             "candywarehouse.com"
@@ -30127,7 +31373,7 @@
                     }
                 },
                 {
-                    "rule": "yotpo\\.com\\/.*\\/widget\\.css",
+                    "rule": "yotpo\\.com/.*/widget\\.css",
                     "exceptions": {
                         "domains": [
                             "candywarehouse.com"
@@ -30149,9 +31395,9 @@
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "yottaa\\.com\\/rapid",
+                    "rule": "yottaa\\.com/rapid",
                     "fingerprinting": 2,
-                    "cookies": 0.000101
+                    "cookies": 0.000034
                 }
             ]
         },
@@ -30349,30 +31595,6 @@
             "categories": [],
             "default": "ignore",
             "rules": [
-                {
-                    "rule": "api\\.zipmoney\\.com\\.au\\/v1\\/assets",
-                    "exceptions": {
-                        "types": [
-                            "script"
-                        ]
-                    }
-                },
-                {
-                    "rule": "static\\.zipmoney\\.com\\.au\\/assets\\/default\\/logos\\/icons\\/.*\\.svg",
-                    "exceptions": {
-                        "types": [
-                            "image"
-                        ]
-                    }
-                },
-                {
-                    "rule": "static\\.zipmoney\\.com\\.au\\/logo\\/25px\\/zip\\.png",
-                    "exceptions": {
-                        "types": [
-                            "image"
-                        ]
-                    }
-                },
                 {
                     "rule": "zipmoney\\.com\\.au\\/lib\\/js\\/zm-widget-js\\/modules\\/vendors\\.052f507ed4b57d6ff81c\\.bundle\\.min\\.js",
                     "fingerprinting": 3,
@@ -51651,585 +52873,413 @@
         "dtm.victoriassecret.com": "c2482.csd.dotomi.com",
         "dtm.visitomaha.com": "c80258.csd.dotomi.com",
         "dtm.zales.com": "usadmm.dotomi.com",
-        "a.rohde-schwarz.com": "rohde-schwarz.com.ssl.sc.omtrdc.net",
-        "aa-metrics.beauty.hotpepper.jp": "beauty.hotpepper.jp.ssl.sc.omtrdc.net",
-        "aa-metrics.hotpepper.jp": "hotpepper.jp.ssl.sc.omtrdc.net",
-        "aa-metrics.jalan.net": "jalan.net.ssl.sc.omtrdc.net",
-        "aamt.msnbc.com": "msnbc.com.ssl.sc.omtrdc.net",
-        "aamt.nbcnews.com": "nbcnews.com.ssl.sc.omtrdc.net",
-        "aamt.newsapp.telemundo.com": "newsapp.telemundo.com.ssl.sc.omtrdc.net",
-        "aamt.today.com": "today.com.ssl.sc.omtrdc.net",
-        "aanalytics.adelaide.edu.au": "adelaide.edu.au.ssl.sc.omtrdc.net",
-        "abt.nike.com": "nike.tt.omtrdc.net",
-        "acemetrics.aaa.com": "aaa.com.ssl.sc.omtrdc.net",
-        "adb-secured.kijk.nl": "kijk.nl.ssl.sc.omtrdc.net",
-        "adobe.aeonbank.co.jp": "aeonbank.co.jp.ssl.sc.omtrdc.net",
-        "adobeanalytics.bws.com.au": "bws.com.au.ssl.sc.omtrdc.net",
-        "adobeanalytics.danmurphys.com.au": "danmurphys.com.au.ssl.sc.omtrdc.net",
-        "adtarget.fcbarcelona.com": "futbolclubbarcelona.tt.omtrdc.net",
-        "adtarget.fcbarcelona.es": "futbolclubbarcelona.tt.omtrdc.net",
-        "al-smetrics.vizio.com": "vizio.com.ssl.sc.omtrdc.net",
-        "analytics.asml.com": "asml.com.ssl.sc.omtrdc.net",
-        "analytics.capitalgroup.com": "capitalgroup.com.ssl.sc.omtrdc.net",
-        "analytics.cibc.com": "cibc.com.ssl.d2.sc.omtrdc.net",
-        "analytics.navyfederal.org": "navyfederal.org.ssl.d1.sc.omtrdc.net",
-        "analytics.pnc.com": "pnc.com.ssl.sc.omtrdc.net",
-        "analytics.ubs.com": "ubs.com.ssl.sc.omtrdc.net",
-        "ans.mlb.com": "mlb.com.ssl.sc.omtrdc.net",
-        "as.autobild.de": "autobild.de.ssl.sc.omtrdc.net",
-        "as.bild.de": "bild.de.ssl.sc.omtrdc.net",
-        "as.bz-berlin.de": "bz-berlin.de.ssl.sc.omtrdc.net",
-        "as.computerbild.de": "computerbild.de.ssl.sc.omtrdc.net",
-        "as.fitbook.de": "fitbook.de.ssl.sc.omtrdc.net",
-        "as.metal-hammer.de": "metal-hammer.de.ssl.sc.omtrdc.net",
-        "as.musikexpress.de": "musikexpress.de.ssl.sc.omtrdc.net",
-        "as.myhomebook.de": "myhomebook.de.ssl.sc.omtrdc.net",
-        "as.rollingstone.de": "rollingstone.de.ssl.sc.omtrdc.net",
-        "as.stylebook.de": "stylebook.de.ssl.sc.omtrdc.net",
-        "as.techbook.de": "techbook.de.ssl.sc.omtrdc.net",
-        "as.travelbook.de": "travelbook.de.ssl.sc.omtrdc.net",
-        "as.welt.de": "welt.de.ssl.sc.omtrdc.net",
-        "assets2.aami.com.au": "suncorpmetwayltd.tt.omtrdc.net",
-        "assets2.shannons.com.au": "suncorpmetwayltd.tt.omtrdc.net",
-        "assets2.suncorp.com.au": "suncorpmetwayltd.tt.omtrdc.net",
-        "at.mclaren.com": "mclarenautomotivelim.tt.omtrdc.net",
-        "at.postbank.de": "deutschebankag.tt.omtrdc.net",
-        "at.swisscom.ch": "swisscomag.tt.omtrdc.net",
-        "at.vodafone.de": "atvodafone-fpssl.tt.omtrdc.net",
-        "atarget.adelaide.edu.au": "adelaideedu.tt.omtrdc.net",
-        "atarget.harley-davidson.com": "harleydavidson.tt.omtrdc.net",
-        "b.fox.com": "fox.com.ssl.d2.sc.omtrdc.net",
-        "b.foxsports.com": "foxsports.com.ssl.d2.sc.omtrdc.net",
-        "b.koodomobile.com": "koodomobile.com.ssl.sc.omtrdc.net",
-        "b.law.com": "law.com.ssl.sc.omtrdc.net",
-        "b.medtronic.com": "medtronic.com.ssl.sc.omtrdc.net",
-        "b.snow.com": "snow.com.ssl.d2.sc.omtrdc.net",
-        "b.telus.com": "telus.com.ssl.sc.omtrdc.net",
-        "ci.intuit.com": "intuit.com.sc.omtrdc.net",
-        "digistats.westjet.com": "westjet.com.ssl.d1.sc.omtrdc.net",
-        "dm-target.fishersci.com": "thermofisherscientif.tt.omtrdc.net",
-        "emetrics.bose.com": "bose.com.ssl.sc.omtrdc.net",
-        "experience.asb.co.nz": "asbbankltd.tt.omtrdc.net",
-        "hub.firestonecompleteautocare.com": "firestonecompleteautocare.com.ssl.d1.sc.omtrdc.net",
-        "infos.anz.com.au": "anz.com.au.ssl.sc.omtrdc.net",
-        "infos.belong.com.au": "belong.com.au.ssl.sc.omtrdc.net",
-        "infos.telstra.com.au": "telstra.com.au.ssl.sc.omtrdc.net",
-        "maling.dn.no": "dn.no.ssl.sc.omtrdc.net",
-        "mbox.wegmans.com": "wegmans.tt.omtrdc.net",
-        "mcdmetrics2.aaa.com": "aaanortheast.tt.omtrdc.net",
-        "met2.hp.com": "hp.com.ssl.d1.sc.omtrdc.net",
-        "metrics-target.siriusxm.com": "siriusxmradio.tt.omtrdc.net",
-        "metrics.aa.com": "aa.com.d1.sc.omtrdc.net",
-        "metrics.adelaidenow.com.au": "adelaidenow.com.au.ssl.sc.omtrdc.net",
-        "metrics.armstrongceilings.com": "armstrongceilings.com.ssl.sc.omtrdc.net",
-        "metrics.asos.com": "asos.com.ssl.d3.sc.omtrdc.net",
-        "metrics.barclaycardus.com": "barclaycardus.com.ssl.sc.omtrdc.net",
-        "metrics.bestrecipes.com.au": "bestrecipes.com.au.ssl.sc.omtrdc.net",
-        "metrics.bodyandsoul.com.au": "bodyandsoul.com.au.ssl.sc.omtrdc.net",
-        "metrics.cancer.gov": "cancer.gov.ssl.sc.omtrdc.net",
-        "metrics.chapters.indigo.ca": "chapters.indigo.ca.ssl.d1.sc.omtrdc.net",
-        "metrics.couriermail.com.au": "couriermail.com.au.ssl.sc.omtrdc.net",
-        "metrics.crateandbarrel.com": "crateandbarrel.com.ssl.sc.omtrdc.net",
-        "metrics.dailytelegraph.com.au": "dailytelegraph.com.au.ssl.sc.omtrdc.net",
-        "metrics.delicious.com.au": "delicious.com.au.ssl.sc.omtrdc.net",
-        "metrics.duluthtrading.com": "duluthtrading.com.ssl.d2.sc.omtrdc.net",
-        "metrics.fortinet.com": "fortinet.com.ssl.sc.omtrdc.net",
-        "metrics.heraldsun.com.au": "heraldsun.com.au.ssl.sc.omtrdc.net",
-        "metrics.ionos.co.uk": "ionos.co.uk.ssl.sc.omtrdc.net",
-        "metrics.ionos.com": "ionos.com.ssl.sc.omtrdc.net",
-        "metrics.ionos.es": "ionos.es.ssl.sc.omtrdc.net",
-        "metrics.ionos.it": "ionos.it.ssl.sc.omtrdc.net",
-        "metrics.makemytrip.com": "makemytrip.com.ssl.d2.sc.omtrdc.net",
-        "metrics.news.com.au": "news.com.au.ssl.sc.omtrdc.net",
-        "metrics.nrma.com.au": "nrma.com.au.ssl.sc.omtrdc.net",
-        "metrics.ntnews.com.au": "ntnews.com.au.ssl.sc.omtrdc.net",
-        "metrics.postoffice.co.uk": "postoffice.co.uk.ssl.d1.sc.omtrdc.net",
-        "metrics.rewe.de": "rewe.de.ssl.d3.sc.omtrdc.net",
-        "metrics.samsclub.com": "samsclub.com.ssl.d1.sc.omtrdc.net",
-        "metrics.siriusxm.com": "siriusxm.com.d1.sc.omtrdc.net",
-        "metrics.steelcase.com": "steelcase.com.ssl.sc.omtrdc.net",
-        "metrics.synopsys.com": "synopsys.com.sc.omtrdc.net",
-        "metrics.taste.com.au": "taste.com.au.ssl.sc.omtrdc.net",
-        "metrics.telegraph.co.uk": "telegraph.co.uk.sc.omtrdc.net",
-        "metrics.theaustralian.com.au": "theaustralian.com.au.ssl.sc.omtrdc.net",
-        "metrics.thelott.com": "thelott.com.ssl.sc.omtrdc.net",
-        "metrics.themercury.com.au": "themercury.com.au.ssl.sc.omtrdc.net",
-        "metrics.timewarnercable.com": "timewarnercable.com.ssl.sc.omtrdc.net",
-        "metrics.uhc.com": "uhc.com.d1.sc.omtrdc.net",
-        "metrics.vogue.com.au": "vogue.com.au.ssl.sc.omtrdc.net",
-        "metrics.yellowpages.com": "yellowpages.com.ssl.sc.omtrdc.net",
-        "metrics1.citi.com": "citi.com.ssl.sc.omtrdc.net",
-        "metrics1.citibankonline.com": "citibankonline.com.ssl.sc.omtrdc.net",
-        "metrics2.houselogic.com": "houselogic.com.ssl.sc.omtrdc.net",
-        "mtcs.nhk.or.jp": "nhk.or.jp.ssl.sc.omtrdc.net",
-        "nsteq.queensland.com": "queensland.com.ssl.sc.omtrdc.net",
-        "om.familysearch.org": "familysearch.org.ssl.d1.sc.omtrdc.net",
-        "omnis.basspro.com": "basspro.com.ssl.sc.omtrdc.net",
-        "omniture-dc-sec.cadence.com": "cadence.com.ssl.d1.sc.omtrdc.net",
-        "omniture-ssl.direct.asda.com": "direct.asda.com.ssl.sc.omtrdc.net",
-        "omniture-ssl.walmart.ca": "walmart.ca.ssl.d1.sc.omtrdc.net",
-        "omniture-ssl.walmart.com": "walmart.com.ssl.d1.sc.omtrdc.net",
-        "omniture.kennametal.com": "kennametal.com.ssl.sc.omtrdc.net",
-        "omns.americanexpress.com": "americanexpress.com.ssl.d2.sc.omtrdc.net",
-        "oms.chatrwireless.com": "chatrwireless.com.ssl.sc.omtrdc.net",
-        "oms.dowjones.com": "dowjones.com.ssl.sc.omtrdc.net",
-        "oms.dowjoneson.com": "dowjoneson.com.ssl.sc.omtrdc.net",
-        "oms.expedia.com": "expedia.com.ssl.d1.sc.omtrdc.net",
-        "oms.hotels.com": "hotels.com.ssl.d2.sc.omtrdc.net",
-        "oms.neimanmarcus.com": "neimanmarcus.com.ssl.sc.omtrdc.net",
-        "oms.norton.com": "norton.com.ssl.sc.omtrdc.net",
-        "oms1.sportsnet.ca": "sportsnet.ca.ssl.sc.omtrdc.net",
-        "os.fandango.com": "fandango.com.ssl.d2.sc.omtrdc.net",
-        "os.shutterfly.com": "shutterfly.com.ssl.sc.omtrdc.net",
-        "osimg.nbcuni.com": "nbcuni.com.ssl.sc.omtrdc.net",
-        "otracks.workday.com": "workday.com.ssl.sc.omtrdc.net",
-        "owss.ihs.com": "ihs.com.ssl.sc.omtrdc.net",
-        "pdmsmrt.buick.com": "buick.com.ssl.sc.omtrdc.net",
-        "pdmsmrt.cadillac.com": "cadillac.com.ssl.sc.omtrdc.net",
-        "pdmsmrt.chevrolet.com": "chevrolet.com.ssl.sc.omtrdc.net",
-        "pdmsmrt.gmc.com": "gmc.com.ssl.sc.omtrdc.net",
-        "s.ameriprisestats.com": "ameriprisestats.com.ssl.sc.omtrdc.net",
-        "s.cadent.bloomberglaw.com": "cadent.bloomberglaw.com.ssl.sc.omtrdc.net",
-        "s.lenovo.com": "lenovo.com.ssl.d1.sc.omtrdc.net",
-        "s.lexusfinancial.com": "lexusfinancial.com.ssl.sc.omtrdc.net",
-        "s.metric.vodacom.co.za": "metric.vodacom.co.za.ssl.d2.sc.omtrdc.net",
-        "s.thestar.com": "thestar.com.ssl.sc.omtrdc.net",
-        "s.toyotafinancial.com": "toyotafinancial.com.ssl.sc.omtrdc.net",
-        "s1.subaru.com": "subaru.com.ssl.sc.omtrdc.net",
-        "saa.cbs.com": "cbs.com.ssl.sc.omtrdc.net",
-        "saa.cbsnews.com": "cbsnews.com.ssl.sc.omtrdc.net",
-        "saa.comicbook.com": "comicbook.com.ssl.sc.omtrdc.net",
-        "saa.drphil.com": "drphil.com.ssl.sc.omtrdc.net",
-        "saa.dyson.co.uk": "dyson.co.uk.ssl.sc.omtrdc.net",
-        "saa.dyson.com": "dyson.com.ssl.sc.omtrdc.net",
-        "saa.dyson.de": "dyson.de.ssl.sc.omtrdc.net",
-        "saa.dyson.fr": "dyson.fr.ssl.sc.omtrdc.net",
-        "saa.dysoncanada.ca": "dysoncanada.ca.ssl.sc.omtrdc.net",
-        "saa.etonline.com": "etonline.com.ssl.sc.omtrdc.net",
-        "saa.globalspec.com": "globalspec.com.ssl.sc.omtrdc.net",
-        "saa.insideedition.com": "insideedition.com.ssl.sc.omtrdc.net",
-        "saa.last.fm": "last.fm.ssl.sc.omtrdc.net",
-        "saa.maxpreps.com": "maxpreps.com.ssl.sc.omtrdc.net",
-        "saa.popculture.com": "popculture.com.ssl.sc.omtrdc.net",
-        "saa.rachaelrayshow.com": "rachaelrayshow.com.ssl.sc.omtrdc.net",
-        "saa.sportsline.com": "sportsline.com.ssl.sc.omtrdc.net",
-        "saa.startrek.com": "startrek.com.ssl.sc.omtrdc.net",
-        "saa.tallink.com": "tallink.com.ssl.sc.omtrdc.net",
-        "saa.thedrewbarrymoreshow.com": "thedrewbarrymoreshow.com.ssl.sc.omtrdc.net",
-        "saa.wowma.jp": "wowma.jp.ssl.sc.omtrdc.net",
-        "saainfo.anz.co.nz": "anz.co.nz.ssl.sc.omtrdc.net",
-        "saam.gumtree.com.au": "gumtree.com.au.ssl.sc.omtrdc.net",
-        "saat.dow.com": "dow.com.ssl.sc.omtrdc.net",
-        "sadbmetrics.abc.es": "abc.es.ssl.sc.omtrdc.net",
-        "sadbmetrics.autocasion.com": "autocasion.com.ssl.sc.omtrdc.net",
-        "sadbmetrics.diariosur.es": "diariosur.es.ssl.sc.omtrdc.net",
-        "sadbmetrics.diariovasco.com": "diariovasco.com.ssl.sc.omtrdc.net",
-        "sadbmetrics.elcomercio.es": "elcomercio.es.ssl.sc.omtrdc.net",
-        "sadbmetrics.elcorreo.com": "elcorreo.com.ssl.sc.omtrdc.net",
-        "sadbmetrics.eldiariomontanes.es": "eldiariomontanes.es.ssl.sc.omtrdc.net",
-        "sadbmetrics.elnortedecastilla.es": "elnortedecastilla.es.ssl.sc.omtrdc.net",
-        "sadbmetrics.hoy.es": "hoy.es.ssl.sc.omtrdc.net",
-        "sadbmetrics.ideal.es": "ideal.es.ssl.sc.omtrdc.net",
-        "sadbmetrics.larioja.com": "larioja.com.ssl.sc.omtrdc.net",
-        "sadbmetrics.lasprovincias.es": "lasprovincias.es.ssl.sc.omtrdc.net",
-        "sadbmetrics.laverdad.es": "laverdad.es.ssl.sc.omtrdc.net",
-        "sadbmetrics.mujerhoy.com": "mujerhoy.com.ssl.sc.omtrdc.net",
-        "sadbmetrics.pisos.com": "pisos.com.ssl.sc.omtrdc.net",
-        "sadbmetrics.rtve.es": "rtve.es.ssl.sc.omtrdc.net",
-        "sadobe.falabella.com.co": "falabella.com.co.ssl.d2.sc.omtrdc.net",
-        "sadobe.falabella.com.pe": "falabella.com.pe.ssl.d2.sc.omtrdc.net",
-        "sadobeanalytics.geico.com": "geico.com.ssl.sc.omtrdc.net",
-        "sams.manager-magazin.de": "manager-magazin.de.ssl.sc.omtrdc.net",
-        "sams.spiegel.de": "spiegel.de.ssl.sc.omtrdc.net",
-        "sanalytics.box.com": "box.com.ssl.sc.omtrdc.net",
-        "sanalytics.disneyplus.com": "disneyplus.com.ssl.sc.omtrdc.net",
-        "sanalytics.hallmark.com": "hallmark.com.ssl.sc.omtrdc.net",
-        "sanalytics.hottopic.com": "hottopic.com.ssl.sc.omtrdc.net",
-        "sanalytics.skinny.co.nz": "skinny.co.nz.ssl.sc.omtrdc.net",
-        "sanalytics.spark.co.nz": "spark.co.nz.ssl.sc.omtrdc.net",
-        "sanalytics.verizon.com": "verizon.com.ssl.d1.sc.omtrdc.net",
-        "sanalytics.visible.com": "visible.com.ssl.sc.omtrdc.net",
-        "sanmet.originenergy.com.au": "originenergy.com.au.ssl.sc.omtrdc.net",
-        "sats.manager-magazin.de": "spiegelverlagrudolfa.tt.omtrdc.net",
-        "sats.spiegel.de": "spiegelverlagrudolfa.tt.omtrdc.net",
-        "sawap.equifax.com": "equifax.com.ssl.sc.omtrdc.net",
-        "sci.intuit.com": "intuit.com.ssl.sc.omtrdc.net",
-        "scnd.landsend.co.uk": "landsend.co.uk.ssl.sc.omtrdc.net",
-        "scnd.landsend.com": "landsend.com.ssl.sc.omtrdc.net",
-        "scnd.landsend.de": "landsend.de.ssl.sc.omtrdc.net",
-        "scs.arcteryx.com": "arcteryx.com.ssl.d2.sc.omtrdc.net",
-        "sdcs.felissimo.co.jp": "felissimo.co.jp.ssl.d1.sc.omtrdc.net",
-        "secu.hagerty.ca": "hagerty.ca.ssl.sc.omtrdc.net",
-        "secu.hagerty.com": "hagerty.com.ssl.sc.omtrdc.net",
-        "secure.analytics.ihg.com": "analytics.ihg.com.ssl.d1.sc.omtrdc.net",
-        "securedata.unsw.edu.au": "unsw.edu.au.ssl.sc.omtrdc.net",
-        "securetags.esri.com": "esri.com.ssl.sc.omtrdc.net",
-        "sgw-analytics.panasonic.com": "panasonic.com.ssl.d3.sc.omtrdc.net",
-        "sicas.ikea.com": "ikea.com.ssl.sc.omtrdc.net",
-        "sig.ig.com": "ig.com.ssl.d2.sc.omtrdc.net",
-        "sitecats.troweprice.com": "troweprice.com.ssl.d2.sc.omtrdc.net",
-        "sjourney.aarp.org": "aarp.tt.omtrdc.net",
-        "sjourney.penfed.org": "penfed.tt.omtrdc.net",
-        "sm.dell.com": "dell.com.ssl.d1.sc.omtrdc.net",
-        "sm.stjude.org": "stjude.org.ssl.sc.omtrdc.net",
-        "smetric.betway.com": "betway.com.ssl.sc.omtrdc.net",
-        "smetric.hilton.com": "hilton.com.ssl.sc.omtrdc.net",
-        "smetric.malaysiaairlines.com": "malaysiaairlines.com.ssl.sc.omtrdc.net",
-        "smetric.schwab.com": "schwab.com.ssl.d1.sc.omtrdc.net",
-        "smetric.trulia.com": "trulia.com.ssl.d2.sc.omtrdc.net",
-        "smetrics-ieeexplore.ieee.org": "ieee.org.ssl.sc.omtrdc.net",
-        "smetrics.10play.com.au": "10play.com.au.ssl.sc.omtrdc.net",
-        "smetrics.1800contacts.com": "1800contacts.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.24hourfitness.com": "24hourfitness.com.ssl.sc.omtrdc.net",
-        "smetrics.3m.com": "3m.com.ssl.sc.omtrdc.net",
-        "smetrics.aa.com": "aa.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.aami.com.au": "aami.com.au.ssl.sc.omtrdc.net",
-        "smetrics.aarp.org": "aarp.org.ssl.sc.omtrdc.net",
-        "smetrics.activecommunities.com": "activecommunities.com.ssl.sc.omtrdc.net",
-        "smetrics.adage.com": "adage.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.aem.playstation.com": "aem.playstation.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.aetn.com": "aetn.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.aircanada.com": "aircanada.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.airtv.net": "airtv.net.ssl.sc.omtrdc.net",
-        "smetrics.ajinomoto.co.jp": "ajinomoto.co.jp.ssl.sc.omtrdc.net",
-        "smetrics.allegion.com": "allegion.com.ssl.sc.omtrdc.net",
-        "smetrics.allstate.com": "allstate.com.ssl.sc.omtrdc.net",
-        "smetrics.ally.com": "ally.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.americancentury.com": "americancentury.com.ssl.sc.omtrdc.net",
-        "smetrics.amfam.com": "amfam.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.amica.com": "amica.com.ssl.sc.omtrdc.net",
-        "smetrics.ancestry.com": "ancestry.com.ssl.sc.omtrdc.net",
-        "smetrics.ansible.com": "ansible.com.ssl.sc.omtrdc.net",
-        "smetrics.anthem.com": "anthem.com.ssl.sc.omtrdc.net",
-        "smetrics.argenta.be": "argenta.be.ssl.sc.omtrdc.net",
-        "smetrics.atomic.com": "atomic.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.autodesk.com": "autodesk.com.ssl.sc.omtrdc.net",
-        "smetrics.avalara.com": "avalara.com.ssl.sc.omtrdc.net",
-        "smetrics.banamex.com": "banamex.com.ssl.sc.omtrdc.net",
-        "smetrics.bankatfirst.com": "bankatfirst.com.ssl.sc.omtrdc.net",
-        "smetrics.bbva.com.ar": "bbva.com.ar.ssl.sc.omtrdc.net",
-        "smetrics.bbva.es": "bbva.es.ssl.sc.omtrdc.net",
-        "smetrics.bbva.mx": "bbva.mx.ssl.sc.omtrdc.net",
-        "smetrics.bedbathandbeyond.com": "bedbathandbeyond.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.beefeater.co.uk": "beefeater.co.uk.ssl.sc.omtrdc.net",
-        "smetrics.belk.com": "belk.com.ssl.sc.omtrdc.net",
-        "smetrics.bestbuy.com": "bestbuy.com.ssl.sc.omtrdc.net",
-        "smetrics.bet.com": "bet.com.ssl.sc.omtrdc.net",
-        "smetrics.blair.com": "blair.com.ssl.sc.omtrdc.net",
-        "smetrics.bloombergtax.com": "bloombergtax.com.ssl.sc.omtrdc.net",
-        "smetrics.bmc.com": "bmc.com.ssl.sc.omtrdc.net",
-        "smetrics.bmo.com": "bmo.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.bnymellon.com": "bnymellon.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.boozallen.com": "boozallen.com.ssl.sc.omtrdc.net",
-        "smetrics.boscovs.com": "boscovs.com.ssl.sc.omtrdc.net",
-        "smetrics.bostonglobe.com": "bostonglobe.com.ssl.sc.omtrdc.net",
-        "smetrics.brewersfayre.co.uk": "brewersfayre.co.uk.ssl.sc.omtrdc.net",
-        "smetrics.britishgas.co.uk": "britishgas.co.uk.ssl.sc.omtrdc.net",
-        "smetrics.brookdale.com": "brookdale.com.ssl.sc.omtrdc.net",
-        "smetrics.buffalotracedistillery.com": "buffalotracedistillery.com.ssl.sc.omtrdc.net",
-        "smetrics.builddirect.com": "builddirect.com.ssl.sc.omtrdc.net",
-        "smetrics.calvinklein.us": "calvinklein.us.ssl.sc.omtrdc.net",
-        "smetrics.capitalone.com": "capitalone.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.carfax.com": "carfax.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.carphonewarehouse.com": "carphonewarehouse.com.ssl.sc.omtrdc.net",
-        "smetrics.cars.com": "cars.com.ssl.sc.omtrdc.net",
-        "smetrics.cartersoshkosh.ca": "cartersoshkosh.ca.ssl.sc.omtrdc.net",
-        "smetrics.casio.com": "casio.com.ssl.sc.omtrdc.net",
-        "smetrics.casio.jp": "casio.jp.ssl.sc.omtrdc.net",
-        "smetrics.cbn.com": "cbn.com.ssl.sc.omtrdc.net",
-        "smetrics.cdiscount.com": "cdiscount.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.cedars-sinai.org": "cedars-sinai.org.ssl.sc.omtrdc.net",
-        "smetrics.centurylink.com": "centurylink.com.ssl.sc.omtrdc.net",
-        "smetrics.chicagobusiness.com": "chicagobusiness.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.christies.com": "christies.com.ssl.sc.omtrdc.net",
-        "smetrics.cisco.com": "cisco.com.ssl.sc.omtrdc.net",
-        "smetrics.cit.com": "cit.com.ssl.sc.omtrdc.net",
-        "smetrics.citibank.com.au": "citibank.com.au.ssl.sc.omtrdc.net",
-        "smetrics.citizensbank.com": "citizensbank.com.ssl.sc.omtrdc.net",
-        "smetrics.claris.com": "claris.com.ssl.sc.omtrdc.net",
-        "smetrics.cloudera.com": "cloudera.com.ssl.sc.omtrdc.net",
-        "smetrics.cluballiance.aaa.com": "cluballiance.aaa.com.ssl.sc.omtrdc.net",
-        "smetrics.comenity.net": "comenity.net.ssl.d2.sc.omtrdc.net",
-        "smetrics.consumerreports.org": "consumerreports.org.ssl.d2.sc.omtrdc.net",
-        "smetrics.corus.ca": "corus.ca.ssl.sc.omtrdc.net",
-        "smetrics.costadelmar.com": "costadelmar.com.ssl.sc.omtrdc.net",
-        "smetrics.costco.com": "costco.com.ssl.sc.omtrdc.net",
-        "smetrics.countryfinancial.com": "countryfinancial.com.ssl.sc.omtrdc.net",
-        "smetrics.cox.com": "cox.com.ssl.sc.omtrdc.net",
-        "smetrics.crainsdetroit.com": "crainsdetroit.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.deakin.edu.au": "deakin.edu.au.ssl.sc.omtrdc.net",
-        "smetrics.delta.com": "delta.com.ssl.sc.omtrdc.net",
-        "smetrics.demarini.com": "demarini.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.dickssportinggoods.com": "dickssportinggoods.com.ssl.sc.omtrdc.net",
-        "smetrics.discover.com": "discover.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.dish.com": "dish.com.ssl.sc.omtrdc.net",
-        "smetrics.dominos.com": "dominos.com.ssl.sc.omtrdc.net",
-        "smetrics.elal.com": "elal.com.ssl.sc.omtrdc.net",
-        "smetrics.element14.com": "element14.com.ssl.sc.omtrdc.net",
-        "smetrics.elsevier.com": "elsevier.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.enterprise.com": "enterprise.com.ssl.sc.omtrdc.net",
-        "smetrics.etihad.com": "etihad.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.eurowings.com": "eurowings.com.ssl.sc.omtrdc.net",
-        "smetrics.eversource.com": "eversource.com.ssl.sc.omtrdc.net",
-        "smetrics.express.com": "express.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.fcacert.com": "fcacert.com.ssl.d3.sc.omtrdc.net",
-        "smetrics.fedex.com": "fedex.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.fieldandstreamshop.com": "fieldandstreamshop.com.ssl.sc.omtrdc.net",
-        "smetrics.flagstar.com": "flagstar.com.ssl.sc.omtrdc.net",
-        "smetrics.ford.com": "ford.com.ssl.sc.omtrdc.net",
-        "smetrics.foxbusiness.com": "foxbusiness.com.ssl.sc.omtrdc.net",
-        "smetrics.foxnews.com": "foxnews.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.fpl.com": "fpl.com.ssl.sc.omtrdc.net",
-        "smetrics.frontier.com": "frontier.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.gehealthcare.com": "gehealthcare.com.ssl.sc.omtrdc.net",
-        "smetrics.global.mandg.com": "global.mandg.com.ssl.sc.omtrdc.net",
-        "smetrics.global.nba.com": "global.nba.com.ssl.sc.omtrdc.net",
-        "smetrics.globaltv.com": "globaltv.com.ssl.sc.omtrdc.net",
-        "smetrics.golfgalaxy.com": "golfgalaxy.com.ssl.sc.omtrdc.net",
-        "smetrics.grainger.com": "grainger.com.ssl.sc.omtrdc.net",
-        "smetrics.grundfos.com": "grundfos.com.ssl.sc.omtrdc.net",
-        "smetrics.hbs.edu": "hbs.edu.ssl.sc.omtrdc.net",
-        "smetrics.healthengine.com.au": "healthengine.com.au.ssl.sc.omtrdc.net",
-        "smetrics.healthpartners.com": "healthpartners.com.ssl.sc.omtrdc.net",
-        "smetrics.hellobank.fr": "hellobank.fr.ssl.sc.omtrdc.net",
-        "smetrics.helvetia.com": "helvetia.com.ssl.d3.sc.omtrdc.net",
-        "smetrics.herbalife.com": "herbalife.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.hollandamerica.com": "hollandamerica.com.ssl.sc.omtrdc.net",
-        "smetrics.homeadvisor.com": "homeadvisor.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.hpe.com": "hpe.com.ssl.sc.omtrdc.net",
-        "smetrics.hrblock.com": "hrblock.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.huntington.com": "huntington.com.ssl.sc.omtrdc.net",
-        "smetrics.hyundaiusa.com": "hyundaiusa.com.ssl.sc.omtrdc.net",
-        "smetrics.illumina.com": "illumina.com.ssl.sc.omtrdc.net",
-        "smetrics.intact.ca": "intact.ca.ssl.sc.omtrdc.net",
-        "smetrics.jared.com": "jared.com.ssl.sc.omtrdc.net",
-        "smetrics.jcb.co.jp": "jcb.co.jp.ssl.sc.omtrdc.net",
-        "smetrics.jcpenney.com": "jcpenney.com.ssl.sc.omtrdc.net",
-        "smetrics.jcrew.com": "jcrew.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.jjill.com": "jjill.com.ssl.sc.omtrdc.net",
-        "smetrics.joefresh.com": "joefresh.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.joules.com": "joules.com.ssl.sc.omtrdc.net",
-        "smetrics.kaercher.com": "kaercher.com.ssl.ldc.d3.sc.omtrdc.net",
-        "smetrics.kaiserpermanente.org": "kaiserpermanente.org.ssl.sc.omtrdc.net",
-        "smetrics.kao.co.jp": "kao.co.jp.ssl.sc.omtrdc.net",
-        "smetrics.kao.com": "kao.com.ssl.sc.omtrdc.net",
-        "smetrics.kay.com": "kay.com.ssl.sc.omtrdc.net",
-        "smetrics.kayosports.com.au": "kayosports.com.au.ssl.sc.omtrdc.net",
-        "smetrics.kayoutlet.com": "kayoutlet.com.ssl.sc.omtrdc.net",
-        "smetrics.labaie.com": "labaie.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.landolakes.com": "landolakes.com.ssl.sc.omtrdc.net",
-        "smetrics.lanebryant.com": "lanebryant.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.latitudefinancial.com.au": "latitudefinancial.com.au.ssl.sc.omtrdc.net",
-        "smetrics.latrobe.edu.au": "latrobe.edu.au.ssl.sc.omtrdc.net",
-        "smetrics.libertymutual.com": "libertymutual.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.lifetime.life": "lifetime.life.ssl.sc.omtrdc.net",
-        "smetrics.loblaws.ca": "loblaws.ca.ssl.d1.sc.omtrdc.net",
-        "smetrics.lululemon.com.au": "lululemon.com.au.ssl.sc.omtrdc.net",
-        "smetrics.manheim.com": "manheim.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.marksandspencer.com": "marksandspencer.com.ssl.d3.sc.omtrdc.net",
-        "smetrics.marriott.com": "marriott.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.marshalls.com": "marshalls.com.ssl.sc.omtrdc.net",
-        "smetrics.mathworks.com": "mathworks.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.maurices.com": "maurices.com.ssl.sc.omtrdc.net",
-        "smetrics.mcdonalds.com": "mcdonalds.com.ssl.sc.omtrdc.net",
-        "smetrics.mercy.net": "mercy.net.ssl.sc.omtrdc.net",
-        "smetrics.metrobyt-mobile.com": "metrobyt-mobile.com.ssl.sc.omtrdc.net",
-        "smetrics.mgmresorts.com": "mgmresorts.com.ssl.sc.omtrdc.net",
-        "smetrics.michaels.com": "michaels.com.ssl.sc.omtrdc.net",
-        "smetrics.misumi-ec.com": "misumi-ec.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.mitsubishi-motors.co.jp": "mitsubishi-motors.co.jp.ssl.d2.sc.omtrdc.net",
-        "smetrics.mitsubishi-motors.com.au": "mitsubishi-motors.com.au.ssl.sc.omtrdc.net",
-        "smetrics.moodys.com": "moodys.com.ssl.sc.omtrdc.net",
-        "smetrics.morganstanley.com": "morganstanley.com.ssl.sc.omtrdc.net",
-        "smetrics.motorsportreg.com": "motorsportreg.com.ssl.sc.omtrdc.net",
-        "smetrics.motortrend.com": "motortrend.com.ssl.sc.omtrdc.net",
-        "smetrics.mrrooter.com": "mrrooter.com.ssl.sc.omtrdc.net",
-        "smetrics.msg.com": "msg.com.ssl.sc.omtrdc.net",
-        "smetrics.murata.com": "murata.com.ssl.sc.omtrdc.net",
-        "smetrics.nab.com.au": "nab.com.au.ssl.d1.sc.omtrdc.net",
-        "smetrics.napaonline.com": "napaonline.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.nationwide.co.uk": "nationwide.co.uk.ssl.d2.sc.omtrdc.net",
-        "smetrics.nesn.com": "nesn.com.ssl.sc.omtrdc.net",
-        "smetrics.newark.com": "newark.com.ssl.sc.omtrdc.net",
-        "smetrics.nfl.com": "nfl.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.ni.com": "ni.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.nofrills.ca": "nofrills.ca.ssl.sc.omtrdc.net",
-        "smetrics.nvidia.com": "nvidia.com.ssl.sc.omtrdc.net",
-        "smetrics.nyulangone.org": "nyulangone.org.ssl.sc.omtrdc.net",
-        "smetrics.oakley.com": "oakley.com.ssl.sc.omtrdc.net",
-        "smetrics.oakleysi.com": "oakleysi.com.ssl.sc.omtrdc.net",
-        "smetrics.officeworks.com.au": "officeworks.com.au.ssl.sc.omtrdc.net",
-        "smetrics.oliverpeoples.com": "oliverpeoples.com.ssl.sc.omtrdc.net",
-        "smetrics.openshift.com": "openshift.com.ssl.sc.omtrdc.net",
-        "smetrics.opensource.com": "opensource.com.ssl.sc.omtrdc.net",
-        "smetrics.opsm.com.au": "opsm.com.au.ssl.sc.omtrdc.net",
-        "smetrics.optimum.net": "optimum.net.ssl.d1.sc.omtrdc.net",
-        "smetrics.optum.com": "optum.com.ssl.sc.omtrdc.net",
-        "smetrics.pacsun.com": "pacsun.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.pandora.net": "pandora.net.ssl.sc.omtrdc.net",
-        "smetrics.pbteen.com": "pbteen.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.pcoptimum.ca": "pcoptimum.ca.ssl.sc.omtrdc.net",
-        "smetrics.penfed.org": "penfed.org.ssl.sc.omtrdc.net",
-        "smetrics.persol.com": "persol.com.ssl.sc.omtrdc.net",
-        "smetrics.petco.com": "petco.com.ssl.sc.omtrdc.net",
-        "smetrics.politico.com": "politico.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.potterybarn.com": "potterybarn.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.potterybarnkids.com": "potterybarnkids.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.premera.com": "premera.com.ssl.sc.omtrdc.net",
-        "smetrics.princess.com": "princess.com.ssl.sc.omtrdc.net",
-        "smetrics.proximus.be": "proximus.be.ssl.sc.omtrdc.net",
-        "smetrics.quill.com": "quill.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.rac.co.uk": "rac.co.uk.ssl.sc.omtrdc.net",
-        "smetrics.rackroomshoes.com": "rackroomshoes.com.ssl.sc.omtrdc.net",
-        "smetrics.racv.com.au": "racv.com.au.ssl.sc.omtrdc.net",
-        "smetrics.ralphlauren.com": "ralphlauren.com.ssl.sc.omtrdc.net",
-        "smetrics.ray-ban.com": "ray-ban.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.rcsmetrics.it": "rcsmetrics.it.ssl.d3.sc.omtrdc.net",
-        "smetrics.realcanadiansuperstore.ca": "realcanadiansuperstore.ca.ssl.sc.omtrdc.net",
-        "smetrics.realestate.com.au": "realestate.com.au.ssl.sc.omtrdc.net",
-        "smetrics.realtor.com": "realtor.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.redcross.org": "redcross.org.ssl.sc.omtrdc.net",
-        "smetrics.regions.com": "regions.com.ssl.sc.omtrdc.net",
-        "smetrics.rejuvenation.com": "rejuvenation.com.ssl.sc.omtrdc.net",
-        "smetrics.riteaid.com": "riteaid.com.ssl.sc.omtrdc.net",
-        "smetrics.rolex.com": "rolex.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.roomandboard.com": "roomandboard.com.ssl.sc.omtrdc.net",
-        "smetrics.royalcaribbean.com": "royalcaribbean.com.ssl.sc.omtrdc.net",
-        "smetrics.saksoff5th.com": "saksoff5th.com.ssl.sc.omtrdc.net",
-        "smetrics.salliemae.com": "salliemae.com.ssl.sc.omtrdc.net",
-        "smetrics.salomon.com": "salomon.com.ssl.sc.omtrdc.net",
-        "smetrics.samsung.com": "samsung.com.ssl.sc.omtrdc.net",
-        "smetrics.santander.co.uk": "santander.co.uk.ssl.d3.sc.omtrdc.net",
-        "smetrics.sasktel.com": "sasktel.com.ssl.sc.omtrdc.net",
-        "smetrics.schwans.com": "schwans.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.sdcvisit.com": "sdcvisit.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.sephora.com": "sephora.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.shannons.com.au": "shannons.com.au.ssl.sc.omtrdc.net",
-        "smetrics.shopmyexchange.com": "shopmyexchange.com.ssl.sc.omtrdc.net",
-        "smetrics.siriusxm.com": "siriusxm.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.sky.com": "sky.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.sky.it": "sky.it.ssl.sc.omtrdc.net",
-        "smetrics.sling.com": "sling.com.ssl.sc.omtrdc.net",
-        "smetrics.solarwinds.com": "solarwinds.com.ssl.sc.omtrdc.net",
-        "smetrics.southwest.com": "southwest.com.ssl.sc.omtrdc.net",
-        "smetrics.staples.com": "staples.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.startribune.com": "startribune.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.statefarm.com": "statefarm.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.statnews.com": "statnews.com.ssl.sc.omtrdc.net",
-        "smetrics.suncorp.com.au": "suncorp.com.au.ssl.sc.omtrdc.net",
-        "smetrics.sunglasshut.com": "sunglasshut.com.ssl.sc.omtrdc.net",
-        "smetrics.sunlife.ca": "sunlife.ca.ssl.sc.omtrdc.net",
-        "smetrics.swinburne.edu.au": "swinburne.edu.au.ssl.sc.omtrdc.net",
-        "smetrics.synopsys.com": "synopsys.com.ssl.sc.omtrdc.net",
-        "smetrics.t-mobile.com": "t-mobile.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.talbots.com": "talbots.com.ssl.sc.omtrdc.net",
-        "smetrics.te.com": "te.com.ssl.sc.omtrdc.net",
-        "smetrics.tedbaker.com": "tedbaker.com.ssl.sc.omtrdc.net",
-        "smetrics.telegraph.co.uk": "telegraph.co.uk.ssl.sc.omtrdc.net",
-        "smetrics.tesco.com": "tesco.com.ssl.sc.omtrdc.net",
-        "smetrics.theathletesfoot.com.au": "theathletesfoot.com.au.ssl.sc.omtrdc.net",
-        "smetrics.thebay.com": "thebay.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.three.co.uk": "three.co.uk.ssl.d2.sc.omtrdc.net",
-        "smetrics.tiaa.org": "tiaa.org.ssl.sc.omtrdc.net",
-        "smetrics.time.com": "time.com.ssl.sc.omtrdc.net",
-        "smetrics.tmz.com": "tmz.com.ssl.sc.omtrdc.net",
-        "smetrics.tommy.com": "tommy.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.toofab.com": "toofab.com.ssl.sc.omtrdc.net",
-        "smetrics.toyota.com": "toyota.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.tudorwatch.com": "tudorwatch.com.ssl.sc.omtrdc.net",
-        "smetrics.uhc.com": "uhc.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.upc.ch": "upc.ch.sc.omtrdc.net",
-        "smetrics.usbank.com": "usbank.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.usopen.org": "usopen.org.ssl.sc.omtrdc.net",
-        "smetrics.virginatlantic.com": "virginatlantic.com.ssl.sc.omtrdc.net",
-        "smetrics.virginaustralia.com": "virginaustralia.com.ssl.sc.omtrdc.net",
-        "smetrics.visitsingapore.com": "visitsingapore.com.ssl.sc.omtrdc.net",
-        "smetrics.vitacost.com": "vitacost.com.ssl.sc.omtrdc.net",
-        "smetrics.vodafone.co.uk": "vodafone.co.uk.ssl.d2.sc.omtrdc.net",
-        "smetrics.vodafone.com.tr": "vodafone.com.tr.ssl.d2.sc.omtrdc.net",
-        "smetrics.vonage.com": "vonage.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.webex.com": "webex.com.ssl.sc.omtrdc.net",
-        "smetrics.westelm.com": "westelm.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.westernaustralia.com": "westernaustralia.com.ssl.sc.omtrdc.net",
-        "smetrics.westernunion.com": "westernunion.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.westpac.com.au": "westpac.com.au.ssl.d2.sc.omtrdc.net",
-        "smetrics.wgu.edu": "wgu.edu.ssl.sc.omtrdc.net",
-        "smetrics.williams-sonoma.com": "williams-sonoma.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.wilson.com": "wilson.com.ssl.d2.sc.omtrdc.net",
-        "smetrics.wmg.com": "wmg.com.ssl.sc.omtrdc.net",
-        "smetrics.worldmarket.com": "worldmarket.com.ssl.d1.sc.omtrdc.net",
-        "smetrics.wyndhamhotels.com": "wyndhamhotels.com.ssl.sc.omtrdc.net",
-        "smetrics.yellowpages.com.au": "yellowpages.com.au.ssl.sc.omtrdc.net",
-        "smetrics.zales.com": "zales.com.ssl.sc.omtrdc.net",
-        "smetrics.zalesoutlet.com": "zalesoutlet.com.ssl.sc.omtrdc.net",
-        "smetrics.ziplyfiber.com": "ziplyfiber.com.ssl.sc.omtrdc.net",
-        "smetrics1.experian.com": "experian.com.ssl.sc.omtrdc.net",
-        "smodus.nike.com": "nike.com.ssl.sc.omtrdc.net",
-        "smon.congress.gov": "congress.gov.ssl.sc.omtrdc.net",
-        "smon.loc.gov": "loc.gov.ssl.sc.omtrdc.net",
-        "smtc.qantas.com": "qantas.com.ssl.sc.omtrdc.net",
-        "smtx.belfius.be": "belfius.be.ssl.sc.omtrdc.net",
-        "smy.iheart.com": "iheart.com.ssl.sc.omtrdc.net",
-        "so.swisscom.ch": "swisscom.ch.ssl.sc.omtrdc.net",
-        "som.athenahealth.com": "athenahealth.com.ssl.sc.omtrdc.net",
-        "som.hotwire.com": "hotwire.com.ssl.sc.omtrdc.net",
-        "som.sears.com": "sears.com.ssl.d1.sc.omtrdc.net",
-        "sometrics.netapp.com": "netapp.com.ssl.sc.omtrdc.net",
-        "somni.accenture.com": "accenture.com.ssl.sc.omtrdc.net",
-        "somni.alaskaair.com": "alaskaair.com.ssl.d1.sc.omtrdc.net",
-        "somni.bell.ca": "bellcanada.tt.omtrdc.net",
-        "somni.deere.com": "deere.com.ssl.sc.omtrdc.net",
-        "somni.dsw.com": "dsw.com.ssl.sc.omtrdc.net",
-        "somni.hardrockhotels.com": "hardrockhotels.com.ssl.sc.omtrdc.net",
-        "somni.home.saxo": "home.saxo.ssl.sc.omtrdc.net",
-        "somni.lightstream.com": "lightstream.com.ssl.sc.omtrdc.net",
-        "somni.nine.com.au": "nine.com.au.ssl.sc.omtrdc.net",
-        "somni.quickenloans.com": "quickenloans.com.ssl.d2.sc.omtrdc.net",
-        "somni.rei.com": "rei.com.ssl.d2.sc.omtrdc.net",
-        "somni.rockethomes.com": "rockethomes.com.ssl.sc.omtrdc.net",
-        "somni.rocketmortgage.com": "rocketmortgage.com.ssl.sc.omtrdc.net",
-        "somni.sky.de": "sky.de.ssl.d2.sc.omtrdc.net",
-        "somni.sundancecatalog.com": "sundancecatalog.com.ssl.sc.omtrdc.net",
-        "somnistats.jetblue.com": "jetblue.com.ssl.d1.sc.omtrdc.net",
-        "somniture.scotiabank.com": "scotiabank.com.ssl.sc.omtrdc.net",
-        "somt.honda.com": "honda.com.ssl.sc.omtrdc.net",
-        "soptimize.southwest.com": "southwestairlines.tt.omtrdc.net",
-        "sreport.mitsubishicars.com": "mitsubishicars.com.ssl.d1.sc.omtrdc.net",
-        "ssc.cc.com": "cc.com.ssl.sc.omtrdc.net",
-        "ssc.cmt.com": "cmt.com.ssl.sc.omtrdc.net",
-        "ssc.logotv.com": "logotv.com.ssl.sc.omtrdc.net",
-        "ssc.mtv.com": "mtv.com.ssl.sc.omtrdc.net",
-        "ssc.muji.net": "muji.net.ssl.d2.sc.omtrdc.net",
-        "ssc.nick.com": "nick.com.ssl.sc.omtrdc.net",
-        "ssc.paramountnetwork.com": "paramountnetwork.com.ssl.sc.omtrdc.net",
-        "ssc.vh1.com": "vh1.com.ssl.sc.omtrdc.net",
-        "ssitecat.eset.com": "eset.com.ssl.sc.omtrdc.net",
-        "ssl.o.auspost.com.au": "o.auspost.com.au.ssl.d2.sc.omtrdc.net",
-        "ssl.o.emedicinehealth.com": "o.emedicinehealth.com.ssl.sc.omtrdc.net",
-        "ssl.o.mdedge.com": "o.mdedge.com.ssl.sc.omtrdc.net",
-        "ssl.o.medhelp.org": "o.medhelp.org.ssl.sc.omtrdc.net",
-        "ssl.o.medicinenet.com": "o.medicinenet.com.ssl.sc.omtrdc.net",
-        "ssl.o.medscape.com": "o.medscape.com.ssl.sc.omtrdc.net",
-        "ssl.o.onhealth.com": "o.onhealth.com.ssl.sc.omtrdc.net",
-        "ssl.o.rxlist.com": "o.rxlist.com.ssl.sc.omtrdc.net",
-        "ssl.o.webmd.com": "o.webmd.com.ssl.d2.sc.omtrdc.net",
-        "sslstats.canadapost.ca": "canadapost.ca.ssl.d1.sc.omtrdc.net",
-        "ssmr.nuro.jp": "nuro.jp.ssl.d1.sc.omtrdc.net",
-        "sstats.americafirst.com": "americafirst.com.ssl.sc.omtrdc.net",
-        "sstats.asadventure.com": "asadventure.com.ssl.sc.omtrdc.net",
-        "sstats.bever.nl": "bever.nl.ssl.sc.omtrdc.net",
-        "sstats.bitdefender.com": "bitdefender.com.ssl.sc.omtrdc.net",
-        "sstats.bnpparibasfortis.be": "bnpparibasfortis.be.ssl.sc.omtrdc.net",
-        "sstats.cotswoldoutdoor.com": "cotswoldoutdoor.com.ssl.sc.omtrdc.net",
-        "sstats.deloitte.com": "deloitte.com.ssl.sc.omtrdc.net",
-        "sstats.fairmont.com": "fairmont.com.ssl.d1.sc.omtrdc.net",
-        "sstats.fishersci.co.uk": "fishersci.co.uk.ssl.sc.omtrdc.net",
-        "sstats.fishersci.com": "fishersci.com.ssl.d1.sc.omtrdc.net",
-        "sstats.investors.com": "investors.com.ssl.d1.sc.omtrdc.net",
-        "sstats.kroger.com": "kroger.com.ssl.sc.omtrdc.net",
-        "sstats.mt.com": "mt.com.ssl.sc.omtrdc.net",
-        "sstats.pitchfork.com": "pitchfork.com.ssl.sc.omtrdc.net",
-        "sstats.runnersneed.com": "runnersneed.com.ssl.sc.omtrdc.net",
-        "sstats.scholastic.com": "scholastic.com.ssl.sc.omtrdc.net"
+        "mc.yandex.tm": "mc.yandex.ru",
+        "static.newsmaxfeednetwork.com": "adapty.revcontent.com",
+        "trends.newsmaxwidget.com": "trends.revcontent.com",
+        "fpa-cdn.adweek.com": "fpa-cdn-adweek-com.parsely.com",
+        "help.amber.com.au": "amberelectric.zendesk.com",
+        "evaluation.canadapost-postescanada.ca": "canadapostdigital.vanity7.ca1.qualtrics.com",
+        "feedback.goto.com": "logmeinvoc-primary.vanitydomains.qualtrics.com",
+        "profiles.ope.scmp.com": "profiles-scmp.tagger.opecloud.com",
+        "tagger.ope.scmp.com": "tagger-scmp.opecloud.com",
+        "cdn.snsimg.carview.co.jp": "e.edge12.g.yimg.jp",
+        "permutive.architecturaldigest.in": "sl6xupiz5jkb.customer.permutive.app",
+        "permutive.businessinsider.com": "atcvt1h5rg5p.customer.permutive.app",
+        "permutive.cntraveller.in": "zfvfsk4dkjal.customer.permutive.app",
+        "permutive.glamour.mx": "z9mubt4shfbr.customer.permutive.app",
+        "permutive.gq.com.mx": "posizohooekr.customer.permutive.app",
+        "permutive.gqindia.com": "tytljf7jnmiw.customer.permutive.app",
+        "permutive.gqjapan.jp": "sxpntkernob2.customer.permutive.app",
+        "permutive.insider.com": "r7nff50myx9v.customer.permutive.app",
+        "permutive.mawdoo3.com": "jxwghe5kuw0c.customer.permutive.app",
+        "permutive.vogue.co.jp": "ydzdjbatm0dv.customer.permutive.app",
+        "permutive.vogue.in": "rvvnicjx82ly.customer.permutive.app",
+        "permutive.vogue.mx": "evkwdfp0k46k.customer.permutive.app",
+        "permutive.wired.jp": "y1323mhiosaf.customer.permutive.app",
+        "az729104.cdn.laget.se": "az729104.vo.msecnd.net",
+        "images.hattons.co.uk": "az592500.vo.msecnd.net",
+        "collect.rbcroyalbank.com": "rbcroyalbank.fp.collect.igodigital.com",
+        "b.actualno.com": "webgroundadbg.hit.gemius.pl",
+        "data-0142dcfbcf.yacht.de": "yachtde-relay.iocnt.net",
+        "data-01e876a345.tichyseinblick.de": "tichyein-relay.iocnt.net",
+        "data-02011e6008.dasoertliche.de": "dasoertl-relay.iocnt.net",
+        "data-02011e6008.golocal.de": "dasoertl-relay.iocnt.net",
+        "data-0331877d53.radsport-news.com": "radsport-relay.iocnt.net",
+        "data-0420d605d9.90min.de": "ran-relay.iocnt.net",
+        "data-044c671387.desired.de": "desired-relay.iocnt.net",
+        "data-051302072f.gabler.de": "gabler-relay.iocnt.net",
+        "data-057c6f44b1.womenshealth.de": "mobwohea-relay.iocnt.net",
+        "data-05c346d0b0.gea.de": "gea-relay.iocnt.net",
+        "data-05f15c0145.runnersworld.de": "runworld-relay.iocnt.net",
+        "data-06d9d19ba0.filmdienst.de": "filmdien-relay.iocnt.net",
+        "data-08d52e2a42.handelsblatt.com": "handbl-relay.iocnt.net",
+        "data-0b2c5acddd.echtemamas.de": "echtmama-relay.iocnt.net",
+        "data-0cf18bcfe3.katholisch.de": "kathde-relay.iocnt.net",
+        "data-0d5230f0d5.tvmovie.de": "tvmovie-relay.iocnt.net",
+        "data-0dc128409f.watchtime.net": "watchtim-relay.iocnt.net",
+        "data-0f46564db8.nebenan.de": "nebenan-relay.iocnt.net",
+        "data-11c63b1cbc.mz.de": "mobsao-relay.iocnt.net",
+        "data-12b92dc35b.wetter.de": "wettede-relay.iocnt.net",
+        "data-1381d79962.mainpost.de": "mainpost-relay.iocnt.net",
+        "data-162d89b6ce.haufe.de": "haperson-relay.iocnt.net",
+        "data-16d7ec9a30.wn.de": "westnach-relay.iocnt.net",
+        "data-17c7ec5f16.giga.de": "giga-relay.iocnt.net",
+        "data-1818d50639.focus.de": "focus-relay.iocnt.net",
+        "data-1842699cc4.dastelefonbuch.de": "dastelef-relay.iocnt.net",
+        "data-1865901ce0.schoener-wohnen.de": "schowohn-relay.iocnt.net",
+        "data-191b2429e8.rtl.de": "rtl-relay.iocnt.net",
+        "data-19f62f6612.druckerchannel.de": "druckerc-relay.iocnt.net",
+        "data-1a8175bc05.presseportal.de": "presspor-relay.iocnt.net",
+        "data-1aec34a522.elle.de": "elle-relay.iocnt.net",
+        "data-1b32532ce1.freiepresse.de": "freipres-relay.iocnt.net",
+        "data-1b8b21e54b.speedweek.com": "speedwee-relay.iocnt.net",
+        "data-1c9505e4f1.digitalphoto.de": "digitalp-relay.iocnt.net",
+        "data-1e71eb44ba.caravaning.de": "caravani-relay.iocnt.net",
+        "data-1fbcf6d7f5.esslinger-zeitung.de": "mhsdigi-relay.iocnt.net",
+        "data-1fbcf6d7f5.frankenpost.de": "mhsdigi-relay.iocnt.net",
+        "data-1fbcf6d7f5.insuedthueringen.de": "mhsdigi-relay.iocnt.net",
+        "data-1fbcf6d7f5.schwarzwaelder-bote.de": "mhsdigi-relay.iocnt.net",
+        "data-1fbcf6d7f5.stuttgarter-nachrichten.de": "mhsdigi-relay.iocnt.net",
+        "data-1fbcf6d7f5.stuttgarter-zeitung.de": "mhsdigi-relay.iocnt.net",
+        "data-209f9bb45a.mopo.de": "mopo-relay.iocnt.net",
+        "data-232059cb53.vip.de": "vip-relay.iocnt.net",
+        "data-236c420b67.glamour.de": "glamour-relay.iocnt.net",
+        "data-2527e6d775.sportdeutschland.tv": "sportdeu-relay.iocnt.net",
+        "data-2732fcab6f.flugrevue.de": "mobflugr-relay.iocnt.net",
+        "data-27f08504c8.capital.de": "capital-relay.iocnt.net",
+        "data-285d0c5451.spektrum.de": "spektrum-relay.iocnt.net",
+        "data-28e246ff03.esquire.de": "esquire-relay.iocnt.net",
+        "data-28f3f6582c.maedchen.de": "maedchen-relay.iocnt.net",
+        "data-2af9963ee4.computerbild.de": "cbo-relay.iocnt.net",
+        "data-2af9963ee4.wieistmeineip.de": "cbo-relay.iocnt.net",
+        "data-2cfc77297e.tagesspiegel.de": "tagspieg-relay.iocnt.net",
+        "data-2d805a2d6c.leben-und-erziehen.de": "leberzie-relay.iocnt.net",
+        "data-2d86fd41e0.geo.de": "stern-relay.iocnt.net",
+        "data-2d86fd41e0.stern.de": "stern-relay.iocnt.net",
+        "data-2e91d05bea.bluray-disc.de": "bluray-relay.iocnt.net",
+        "data-2ee2564ecd.ariva.de": "ariva-relay.iocnt.net",
+        "data-2f2ec12966.chip.de": "chip-relay.iocnt.net",
+        "data-30826b1c29.agrarheute.com": "agrar-relay.iocnt.net",
+        "data-3698886e7b.manager-magazin.de": "managerm-relay.iocnt.net",
+        "data-36eb08aa0f.autozeitung.de": "autozeit-relay.iocnt.net",
+        "data-3823552b7a.sport.de": "sport-relay.iocnt.net",
+        "data-382f03151d.harpersbazaar.de": "hbazaar-relay.iocnt.net",
+        "data-38a6e3d7f2.domradio.de": "domradio-relay.iocnt.net",
+        "data-3bd3168117.boerse.de": "boersely-relay.iocnt.net",
+        "data-3cd8fb3825.kicker.de": "mobkicke-relay.iocnt.net",
+        "data-3eff3aac07.kino-zeit.de": "kinozeit-relay.iocnt.net",
+        "data-407c1ec0f8.apotheken-umschau.de": "gesundhp-relay.iocnt.net",
+        "data-40a1d254c9.familie.de": "familie-relay.iocnt.net",
+        "data-40dcbb4884.tag24.de": "mopo24-relay.iocnt.net",
+        "data-40e0b9b7dd.chefkoch.de": "mobchefk-relay.iocnt.net",
+        "data-421b67c653.ka-news.de": "kanews-relay.iocnt.net",
+        "data-4494a61d21.chefkoch.de": "chefkoch-relay.iocnt.net",
+        "data-44a005f23c.bergfex.at": "bergfex-relay.iocnt.net",
+        "data-44a005f23c.bergfex.ch": "bergfex-relay.iocnt.net",
+        "data-44a005f23c.bergfex.de": "bergfex-relay.iocnt.net",
+        "data-44a005f23c.bergfex.it": "bergfex-relay.iocnt.net",
+        "data-44baecba13.digitalfernsehen.de": "digifern-relay.iocnt.net",
+        "data-452782981b.eltern.de": "eltern-relay.iocnt.net",
+        "data-452782981b.urbia.de": "eltern-relay.iocnt.net",
+        "data-452782981b.vorname.com": "eltern-relay.iocnt.net",
+        "data-45798f2697.rheinpfalz.de": "ron-relay.iocnt.net",
+        "data-4754325bf6.scinexx.de": "scinexx-relay.iocnt.net",
+        "data-48d3085f82.hildesheimer-allgemeine.de": "hialzeit-relay.iocnt.net",
+        "data-497ecca600.ga.de": "rponl-relay.iocnt.net",
+        "data-497ecca600.rp-online.de": "rponl-relay.iocnt.net",
+        "data-497ecca600.saarbruecker-zeitung.de": "rponl-relay.iocnt.net",
+        "data-497ecca600.sol.de": "rponl-relay.iocnt.net",
+        "data-497ecca600.tonight.de": "rponl-relay.iocnt.net",
+        "data-497ecca600.volksfreund.de": "rponl-relay.iocnt.net",
+        "data-4a575dad18.abendblatt.de": "abendbl-relay.iocnt.net",
+        "data-4ca65a8bdb.express.de": "express-relay.iocnt.net",
+        "data-4cd3a663da.all-in.de": "allin-relay.iocnt.net",
+        "data-4cf02e3b23.schlager.de": "schlager-relay.iocnt.net",
+        "data-4ede7e9c86.faz.net": "faz-relay.iocnt.net",
+        "data-4f2efe538c.einfachbacken.de": "einfaba-relay.iocnt.net",
+        "data-4fa18eb5e3.zvw.de": "zvw-relay.iocnt.net",
+        "data-501446ac98.einfachtierisch.de": "toi-relay.iocnt.net",
+        "data-501446ac98.t-online.de": "toi-relay.iocnt.net",
+        "data-50b219a31f.btc-echo.de": "btcecho-relay.iocnt.net",
+        "data-50de2f2b04.netmoms.de": "anetmoms-relay.iocnt.net",
+        "data-513a50551b.psychologie-heute.de": "psyheute-relay.iocnt.net",
+        "data-51c17cab74.aerztezeitung.de": "arztzeit-relay.iocnt.net",
+        "data-524af4397a.weltfussball.de": "weltfuss-relay.iocnt.net",
+        "data-524af4397a.worldfootball.net": "weltfuss-relay.iocnt.net",
+        "data-52a43bc433.gala.de": "gala-relay.iocnt.net",
+        "data-53ce61d695.bike-x.de": "bikex-relay.iocnt.net",
+        "data-557fc65a33.womenshealth.de": "wohealth-relay.iocnt.net",
+        "data-56aa71f393.essen-und-trinken.de": "esundtri-relay.iocnt.net",
+        "data-56b1bc19e7.autobild.de": "autobild-relay.iocnt.net",
+        "data-56b1bc19e7.clever-tanken.de": "autobild-relay.iocnt.net",
+        "data-572c83e731.motorsport-total.com": "motorspo-relay.iocnt.net",
+        "data-589866a496.laut.de": "laut-relay.iocnt.net",
+        "data-59a3f7fb00.ksta.de": "koelnsta-relay.iocnt.net",
+        "data-5b771a2641.berliner-zeitung.de": "berlizei-relay.iocnt.net",
+        "data-5c62bbdb1e.maclife.de": "maclifed-relay.iocnt.net",
+        "data-5c8ddfc1d2.selbst.de": "selbst-relay.iocnt.net",
+        "data-5ce6ecf8d0.nn.de": "nordbay-relay.iocnt.net",
+        "data-5ce6ecf8d0.nordbayern.de": "nordbay-relay.iocnt.net",
+        "data-5d4a957104.focus-arztsuche.de": "lineexte-relay.iocnt.net",
+        "data-5dd8125a5b.gofeminin.de": "gofemini-relay.iocnt.net",
+        "data-5e5ac4ec65.menshealth.de": "mensh-relay.iocnt.net",
+        "data-605b7fe247.babyclub.de": "mobbaby-relay.iocnt.net",
+        "data-60d896f23d.dnn.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.goettinger-tageblatt.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.haz.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.kn-online.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.ln-online.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.lvz.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.maz-online.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.ostsee-zeitung.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.radio.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.radio.fr": "haz-relay.iocnt.net",
+        "data-60d896f23d.radio.net": "haz-relay.iocnt.net",
+        "data-60d896f23d.reisereporter.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.rnd.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.sportbuzzer.de": "haz-relay.iocnt.net",
+        "data-60d896f23d.trauer-anzeigen.de": "haz-relay.iocnt.net",
+        "data-62e93c650b.hannover.de": "hannovin-relay.iocnt.net",
+        "data-6314dfb442.chip.de": "efahrer-relay.iocnt.net",
+        "data-6345746ba5.nwzonline.de": "nwz-relay.iocnt.net",
+        "data-6463194ae5.fitbook.de": "fitbook-relay.iocnt.net",
+        "data-6590696975.wunderweib.de": "wuweib-relay.iocnt.net",
+        "data-66b7771b69.motorsport.com": "motspode-relay.iocnt.net",
+        "data-67f17c94f0.9monate.de": "lifeline-relay.iocnt.net",
+        "data-67f17c94f0.gesundheit.de": "lifeline-relay.iocnt.net",
+        "data-67f17c94f0.lifeline.de": "lifeline-relay.iocnt.net",
+        "data-67f17c94f0.onmeda.de": "lifeline-relay.iocnt.net",
+        "data-684c5faba8.ok-magazin.de": "okmaga-relay.iocnt.net",
+        "data-69f8b27f58.deutsche-handwerks-zeitung.de": "dhz-relay.iocnt.net",
+        "data-6ad61cf514.petra.de": "petra-relay.iocnt.net",
+        "data-6e2d34ec1f.pnp.de": "mobpnp-relay.iocnt.net",
+        "data-7023b17a38.onetz.de": "oberpfal-relay.iocnt.net",
+        "data-707aff899d.myself.de": "funkelst-relay.iocnt.net",
+        "data-70f37c510a.suedkurier.de": "skol-relay.iocnt.net",
+        "data-7294bdf136.focus.de": "mobfocus-relay.iocnt.net",
+        "data-7352c83f4a.cosmopolitan.de": "cosmopol-relay.iocnt.net",
+        "data-74131617db.achgut.com": "achgut-relay.iocnt.net",
+        "data-7462ea72ec.augsburger-allgemeine.de": "augsallg-relay.iocnt.net",
+        "data-7899267776.daskochrezept.de": "kochzept-relay.iocnt.net",
+        "data-79b61f918a.mittelbayerische.de": "mobmibay-relay.iocnt.net",
+        "data-7a534833b2.techbook.de": "techbook-relay.iocnt.net",
+        "data-7b4229ab74.idowa.de": "idowa-relay.iocnt.net",
+        "data-7b5c057fdb.emotion.de": "emotion-relay.iocnt.net",
+        "data-7c0fd2a117.pz-news.de": "pznewsde-relay.iocnt.net",
+        "data-83380557db.nw.de": "nwnews-relay.iocnt.net",
+        "data-83d91ea519.mannheimer-morgen.de": "morgweb-relay.iocnt.net",
+        "data-8459ce106e.bike-x.de": "mobbikex-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.at": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.ch": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.co.uk": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.com": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.com.br": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.com.tr": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.de": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.es": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.fr": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.it": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.nl": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.pl": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.pt": "transfer-relay.iocnt.net",
+        "data-84a0f3455d.transfermarkt.us": "transfer-relay.iocnt.net",
+        "data-84bc7eaa45.vodafone.de": "vodafone-relay.iocnt.net",
+        "data-861bbf2127.bild.de": "mobbild-relay.iocnt.net",
+        "data-887ad996d8.berliner-woche.de": "morgpost-relay.iocnt.net",
+        "data-887ad996d8.morgenpost.de": "morgpost-relay.iocnt.net",
+        "data-89254d05a3.alpin.de": "mobalpin-relay.iocnt.net",
+        "data-8a60c76189.myhomebook.de": "myhomebo-relay.iocnt.net",
+        "data-8abe5cc617.badische-zeitung.de": "badzeit-relay.iocnt.net",
+        "data-8abe5cc617.bz-ticket.de": "badzeit-relay.iocnt.net",
+        "data-8abe5cc617.bztrauer.de": "badzeit-relay.iocnt.net",
+        "data-8ba5310956.spielaffe.de": "spielaff-relay.iocnt.net",
+        "data-8c0b0197a5.weser-kurier.de": "weserkur-relay.iocnt.net",
+        "data-8d3bec589f.schwaebische.de": "szon-relay.iocnt.net",
+        "data-8dfcf84b38.rundschau-online.de": "koelrund-relay.iocnt.net",
+        "data-8f03f9dd42.spiegel.de": "spiegel-relay.iocnt.net",
+        "data-9090cf2efa.impulse.de": "impulse-relay.iocnt.net",
+        "data-90cb6242e4.fuersie.de": "fuersie-relay.iocnt.net",
+        "data-91e02cd2b8.ip-insider.de": "network-relay.iocnt.net",
+        "data-927768f668.pharmazeutische-zeitung.de": "pharmaz-relay.iocnt.net",
+        "data-93158690b1.moviepilot.de": "moviepil-relay.iocnt.net",
+        "data-9336f0fb1d.news.de": "newsde-relay.iocnt.net",
+        "data-964f7f3f43.boerse-online.de": "boerseon-relay.iocnt.net",
+        "data-992bb00b0c.messen.de": "messende-relay.iocnt.net",
+        "data-99329e3cb2.metal-hammer.de": "welt-relay.iocnt.net",
+        "data-99329e3cb2.musikexpress.de": "welt-relay.iocnt.net",
+        "data-99329e3cb2.rollingstone.de": "welt-relay.iocnt.net",
+        "data-99329e3cb2.welt.de": "welt-relay.iocnt.net",
+        "data-9a1d790604.maennersache.de": "mannsach-relay.iocnt.net",
+        "data-9b3233a086.bunte.de": "bunteton-relay.iocnt.net",
+        "data-9b7927207a.outdoor-magazin.com": "outmag-relay.iocnt.net",
+        "data-9c9d7ad92f.tagblatt.de": "schwaetb-relay.iocnt.net",
+        "data-9d5ca866eb.baunetzwissen.de": "baunetz-relay.iocnt.net",
+        "data-9dc3fcd9b4.mylife.de": "netdok-relay.iocnt.net",
+        "data-9dc3fcd9b4.netdoktor.de": "netdok-relay.iocnt.net",
+        "data-9e4ff1c91f.wz.de": "wznews-relay.iocnt.net",
+        "data-9f47bd3ec3.volksstimme.de": "mobvolkm-relay.iocnt.net",
+        "data-9fc27eb430.cineplex.de": "cineplex-relay.iocnt.net",
+        "data-9fcd0b641d.falstaff.com": "falstaff-relay.iocnt.net",
+        "data-a01a8a1ba4.allgemeine-zeitung.de": "mainrhei-relay.iocnt.net",
+        "data-a01a8a1ba4.echo-online.de": "mainrhei-relay.iocnt.net",
+        "data-a01a8a1ba4.vrm-trauer.de": "mainrhei-relay.iocnt.net",
+        "data-a06056e0a7.lz.de": "moblippi-relay.iocnt.net",
+        "data-a0f0ae1310.gelbeseiten.de": "gelbseit-relay.iocnt.net",
+        "data-a0f0ae1310.goyellow.de": "gelbseit-relay.iocnt.net",
+        "data-a25b878079.deutsche-apotheker-zeitung.de": "deapze-relay.iocnt.net",
+        "data-a351401692.kachelmannwetter.com": "kachelma-relay.iocnt.net",
+        "data-a4e945dbeb.sz-trauer.de": "saechsde-relay.iocnt.net",
+        "data-a784464fa2.hallo-eltern.de": "halloelt-relay.iocnt.net",
+        "data-a7a0d7a6db.brigitte.de": "brigitte-relay.iocnt.net",
+        "data-a7c3ea71dc.ptaheute.de": "ptaheu-relay.iocnt.net",
+        "data-a7deba18e8.evangelisch.de": "evangede-relay.iocnt.net",
+        "data-a98482617b.holidaycheck.at": "holidayc-relay.iocnt.net",
+        "data-a98482617b.holidaycheck.de": "holidayc-relay.iocnt.net",
+        "data-a9dcbfdd12.noz.de": "neueoz-relay.iocnt.net",
+        "data-aac883f83b.offiziellecharts.de": "chartsde-relay.iocnt.net",
+        "data-ac3d45df06.jetzt.de": "sueddeut-relay.iocnt.net",
+        "data-ac3d45df06.sueddeutsche.de": "sueddeut-relay.iocnt.net",
+        "data-ad8351f80c.outdoor-magazin.com": "moboutma-relay.iocnt.net",
+        "data-ae8875c8b8.nordkurier.de": "nordkuri-relay.iocnt.net",
+        "data-ae99031d75.mittelbayerische-trauer.de": "donaude-relay.iocnt.net",
+        "data-ae99031d75.mittelbayerische.de": "donaude-relay.iocnt.net",
+        "data-af9a061aaf.deraktionaer.de": "daktion-relay.iocnt.net",
+        "data-af9be266ee.tour-magazin.de": "tourmag-relay.iocnt.net",
+        "data-af9f3dfb33.zeit.de": "zeitonl-relay.iocnt.net",
+        "data-b0980db7ec.wiwo.de": "wirtwoch-relay.iocnt.net",
+        "data-b204b9f978.4players.de": "4playde-relay.iocnt.net",
+        "data-b43a87d00c.businessinsider.de": "businsi-relay.iocnt.net",
+        "data-b4d5de22d2.mehr-tanken.de": "mobaumos-relay.iocnt.net",
+        "data-b4df3518e0.haustec.de": "haustec-relay.iocnt.net",
+        "data-b5689af0d0.aerotelegraph.com": "aerotele-relay.iocnt.net",
+        "data-b640a0ce46.connect.de": "connect-relay.iocnt.net",
+        "data-b784e2dbb0.echo24.de": "echo24-relay.iocnt.net",
+        "data-b80f3dd5d8.rnz.de": "rnzonl-relay.iocnt.net",
+        "data-b851447daf.praxisvita.de": "mobpraxv-relay.iocnt.net",
+        "data-b8587f1b76.stimme.de": "stimme-relay.iocnt.net",
+        "data-b8625c5378.lz.de": "lzonline-relay.iocnt.net",
+        "data-bab9a31794.shz.de": "shz-relay.iocnt.net",
+        "data-bb21a2f11b.bild.de": "bild-relay.iocnt.net",
+        "data-bb4ada6163.travelbook.de": "travelbo-relay.iocnt.net",
+        "data-be9b6161bf.aponet.de": "aponet-relay.iocnt.net",
+        "data-c061012ba4.bisafans.de": "bisafans-relay.iocnt.net",
+        "data-c0c484e9be.hoerzu.de": "funkenex-relay.iocnt.net",
+        "data-c0c484e9be.tvdigital.de": "funkenex-relay.iocnt.net",
+        "data-c0c484e9be.werstreamt.es": "funkenex-relay.iocnt.net",
+        "data-c0cce5983f.business-wissen.de": "busiwiss-relay.iocnt.net",
+        "data-c14a6b9c37.1000ps.de": "motradon-relay.iocnt.net",
+        "data-c14a6b9c37.motorradonline.de": "motradon-relay.iocnt.net",
+        "data-c2b71254f2.finanzen100.de": "finan100-relay.iocnt.net",
+        "data-c2cfe04d43.formel1.de": "formel-relay.iocnt.net",
+        "data-c32add6b67.vital.de": "vital-relay.iocnt.net",
+        "data-c3391a3eb3.braunschweiger-zeitung.de": "newsclic-relay.iocnt.net",
+        "data-c33ac4a00e.tvnow.de": "tvnow-relay.iocnt.net",
+        "data-c53e1346fa.gamepro.de": "gastar-relay.iocnt.net",
+        "data-c53e1346fa.gamestar.de": "gastar-relay.iocnt.net",
+        "data-c5925d7d99.buffed.de": "gamworld-relay.iocnt.net",
+        "data-c5925d7d99.pcgames.de": "gamworld-relay.iocnt.net",
+        "data-c5925d7d99.pcgameshardware.de": "gamworld-relay.iocnt.net",
+        "data-c5b0f9d827.grazia-magazin.de": "graziaon-relay.iocnt.net",
+        "data-c5c818f755.zaubertopf.de": "zauberto-relay.iocnt.net",
+        "data-c76cebcfed.kino.de": "kino-relay.iocnt.net",
+        "data-c835a62a97.runnersworld.de": "mobrunwo-relay.iocnt.net",
+        "data-cb2c174131.menshealth.de": "mobmenhe-relay.iocnt.net",
+        "data-cd0b4bd19f.auto-motor-und-sport.de": "aumospo-relay.iocnt.net",
+        "data-cd9a346bd6.vox.de": "vox-relay.iocnt.net",
+        "data-ce326d00f8.flugrevue.de": "flugrevu-relay.iocnt.net",
+        "data-cfe819bed5.playboy.de": "playboy-relay.iocnt.net",
+        "data-d03ddf25a3.wissenschaft.de": "wissens-relay.iocnt.net",
+        "data-d1cf1ee90a.bike-magazin.de": "bikemaga-relay.iocnt.net",
+        "data-d3b795e73c.instyle.de": "instyle-relay.iocnt.net",
+        "data-d47b934372.regionalheute.de": "regiheut-relay.iocnt.net",
+        "data-d4ecb517ab.cinema.de": "tvspielf-relay.iocnt.net",
+        "data-d4ecb517ab.tvspielfilm.de": "tvspielf-relay.iocnt.net",
+        "data-d4ecb517ab.tvtoday.de": "tvspielf-relay.iocnt.net",
+        "data-d946a9c4a1.otz.de": "zgtonlin-relay.iocnt.net",
+        "data-d946a9c4a1.thueringer-allgemeine.de": "zgtonlin-relay.iocnt.net",
+        "data-da1d9cc48a.osthessen-news.de": "osthesse-relay.iocnt.net",
+        "data-daaad80bda.babelli.de": "babelli-relay.iocnt.net",
+        "data-dc874fa9ed.koeln.de": "koelnde-relay.iocnt.net",
+        "data-dea12ffb25.prisma.de": "prisma-relay.iocnt.net",
+        "data-deb04a4388.westfalen-blatt.de": "westblat-relay.iocnt.net",
+        "data-df5a2bcc30.aerzteblatt.de": "aerztebl-relay.iocnt.net",
+        "data-df89bd769a.rund-ums-baby.de": "rundumsb-relay.iocnt.net",
+        "data-e0448d0e4a.herz-fuer-tiere.de": "herztier-relay.iocnt.net",
+        "data-e34440d805.jolie.de": "joliede-relay.iocnt.net",
+        "data-e3d4300b49.n-tv.de": "ntv-relay.iocnt.net",
+        "data-e4997adf31.metal-hammer.de": "mobwelt-relay.iocnt.net",
+        "data-e4dc2eea88.kochbar.de": "kochbar-relay.iocnt.net",
+        "data-e54efb31a3.aachener-zeitung.de": "azweb-relay.iocnt.net",
+        "data-e627e4d475.filmstarts.de": "fistart-relay.iocnt.net",
+        "data-e69b3d32a9.kicker.de": "kicker-relay.iocnt.net",
+        "data-e723f0d7d1.stylebook.de": "stylbook-relay.iocnt.net",
+        "data-e7308988a6.freundin.de": "freundin-relay.iocnt.net",
+        "data-e86b27e677.spieletipps.de": "spielet-relay.iocnt.net",
+        "data-e89c765eef.main-echo.de": "mainecho-relay.iocnt.net",
+        "data-e9439b5f81.ruhrnachrichten.de": "ruhrnari-relay.iocnt.net",
+        "data-ebb08b8040.bildderfrau.de": "bildfrau-relay.iocnt.net",
+        "data-ed1ee98a6c.medpertise.de": "fgs-relay.iocnt.net",
+        "data-ee807be806.derwesten.de": "westeins-relay.iocnt.net",
+        "data-ee807be806.lokalkompass.de": "westeins-relay.iocnt.net",
+        "data-ee807be806.nrz.de": "westeins-relay.iocnt.net",
+        "data-ee807be806.reviersport.de": "westeins-relay.iocnt.net",
+        "data-ee807be806.waz.de": "westeins-relay.iocnt.net",
+        "data-ee807be806.wp.de": "westeins-relay.iocnt.net",
+        "data-ef8760a9b2.infranken.de": "frtag-relay.iocnt.net",
+        "data-f06c8efc81.fitforfun.de": "fitforfu-relay.iocnt.net",
+        "data-f0a1fa7abc.cinestar.de": "cinestar-relay.iocnt.net",
+        "data-f10a591664.caraworld.de": "promobil-relay.iocnt.net",
+        "data-f10a591664.promobil.de": "promobil-relay.iocnt.net",
+        "data-f13c34cd1a.wissen.de": "wissende-relay.iocnt.net",
+        "data-f1c47705fc.rimondo.com": "topagrar-relay.iocnt.net",
+        "data-f1c47705fc.topagrar.com": "topagrar-relay.iocnt.net",
+        "data-f1e447fbcf.24garten.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.24hamburg.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.24rhein.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.buzzfeed.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.chiemgau24.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.come-on.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.fnp.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.fr.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.fuldaerzeitung.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.giessener-allgemeine.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.heidelberg24.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.hna.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.in-muenchen.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.ingame.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.kreiszeitung.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.mannheim24.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.merkur.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.op-online.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.ovb-online.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.rosenheim24.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.ruhr24.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.soester-anzeiger.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.tz.de": "ippenmed-relay.iocnt.net",
+        "data-f1e447fbcf.wa.de": "ippenmed-relay.iocnt.net",
+        "data-f3fe376ba8.allgaeuer-zeitung.de": "allgauze-relay.iocnt.net",
+        "data-f6d2ad6f1b.t3n.de": "t3n-relay.iocnt.net",
+        "data-f943e74ec9.bz-berlin.de": "bzberlin-relay.iocnt.net",
+        "data-fa3432c50a.donaukurier.de": "mobdokur-relay.iocnt.net",
+        "data-fd53e9bda6.urlaubsguru.de": "urlguru-relay.iocnt.net",
+        "data-fd9ab41e47.bravo.de": "bravo-relay.iocnt.net",
+        "data-fdb60ee122.hamburg.de": "hamburgd-relay.iocnt.net",
+        "data-fdbbf15b66.finanzen.at": "finaonl-relay.iocnt.net",
+        "data-fdbbf15b66.finanzen.ch": "finaonl-relay.iocnt.net",
+        "data-fdbbf15b66.finanzen.net": "finaonl-relay.iocnt.net",
+        "data-fe87994a5d.freenet.de": "freenet-relay.iocnt.net",
+        "data-ff5b197ecc.traceparts.com": "tracepar-relay.iocnt.net",
+        "cams.camsrips.com": "cname.whitelabel.chaturbate.com",
+        "cams.rectube.me": "cname.whitelabel.chaturbate.com",
+        "cams.urlgalleries.net": "cname.whitelabel.chaturbate.com",
+        "chat.3kcams.com": "cname.whitelabel.chaturbate.com",
+        "live.cumchat.cam": "cname.whitelabel.chaturbate.com",
+        "live.fapcam.tv": "cname.whitelabel.chaturbate.com",
+        "live.share-nude.com": "cname.whitelabel.chaturbate.com",
+        "live.whassup.fr": "cname.whitelabel.chaturbate.com",
+        "lp-03.chat.online.citi.com": "va.v.liveperson.net",
+        "lp-07.customermessaging.bupa.com.au": "sy.v.liveperson.net",
+        "lp-07.messaging.optus.com.au": "sy.v.liveperson.net",
+        "lptag.messaging.optus.com.au": "lptag.liveperson.net"
     }
 }

@@ -23,8 +23,8 @@ import BrowserServicesKit
 struct HomeMessageViewModel: Equatable {
     enum ButtonAction {
         case close
-        case primaryAction
-        case secondaryAction
+        case primaryAction(isShare: Bool)
+        case secondaryAction(isShare: Bool)
     }
 
     let messageId: String
@@ -34,16 +34,8 @@ struct HomeMessageViewModel: Equatable {
     let subtitle: String
     let buttons: [HomeMessageButtonViewModel]
     
-    let onDidClose: (ButtonAction?, RemoteAction) -> Void
-
-    var hasSharing: Bool {
-        for button in buttons {
-            if case .share = button.actionStyle {
-                return true
-            }
-        }
-        return false
-    }
+    let onDidClose: (ButtonAction?) -> Void
+    let onDidAppear: () -> Void
 
     static func == (lhs: HomeMessageViewModel, rhs: HomeMessageViewModel) -> Bool {
         return lhs.image == rhs.image &&
@@ -57,7 +49,7 @@ struct HomeMessageViewModel: Equatable {
 struct HomeMessageButtonViewModel: Equatable {
     enum ActionStyle: Equatable {
         case `default`
-        case share(url: URL, title: String)
+        case share(value: String, title: String?)
         case cancel
     }
     

@@ -27,19 +27,16 @@ import WebKit
 import DesignResourcesKit
 
 protocol EmailSignupViewControllerDelegate: AnyObject {
-    func emailSignupViewControllerDidFinish(_ controller: EmailSignupViewController)
+    func emailSignupViewControllerDidFinish(_ controller: EmailSignupViewController, completionHandler: @escaping () -> Void)
 }
 
 // swiftlint:disable file_length
 class EmailSignupViewController: UIViewController {
 
     private enum Constants {
-//        static let signUpUrl: String = "https://quackdev.com/email/start-incontext"
+//        static let signUpUrl: String = "https://quack.duckduckgo.com/email/start-incontext"
         static let signUpUrl: String = "https://duckduckgo.com/email/start-incontext"
     }
-
-    private(set) var webView: WKWebView!
-    private var webViewContainer: UIView
 
     weak var delegate: EmailSignupViewControllerDelegate?
 
@@ -111,7 +108,6 @@ class EmailSignupViewController: UIViewController {
     }
 
     init() {
-        self.webViewContainer = UIView()
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -182,6 +178,16 @@ class EmailSignupViewController: UIViewController {
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: assertion)
+
+        addObservers()
+
+    }
+
+    private func addDuckDuckGoEmailObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onDuckDuckGoEmailDidCloseEmailProtection),
+                                               name: .emailDidCloseEmailProtection,
+                                               object: nil)
     }
 
     @available(iOS 16.4, *)
@@ -243,71 +249,17 @@ class EmailSignupViewController: UIViewController {
 
     @objc
     func nextButtonPressed() {
-        delegate?.emailSignupViewControllerDidFinish(self)
-        dismiss(animated: true)
+        emailSignupCompleted()
     }
 
+    @objc
+    private func onDuckDuckGoEmailDidCloseEmailProtection(_ notification: Notification) {
+        emailSignupCompleted()
+    }
 
-}
-
-// MARK: - EmailManagerAliasPermissionDelegate
-extension EmailSignupViewController: EmailManagerAliasPermissionDelegate {
-
-    func emailManager(_ emailManager: EmailManager,
-                      didRequestPermissionToProvideAliasWithCompletion completionHandler: @escaping (EmailManagerPermittedAddressType) -> Void) {
-
-        DispatchQueue.main.async {
-            let alert = UIAlertController(title: UserText.emailAliasAlertTitle, message: nil, preferredStyle: .actionSheet)
-            alert.overrideUserInterfaceStyle()
-
-            var pixelParameters: [String: String] = [:]
-
-            if let cohort = emailManager.cohort {
-                pixelParameters[PixelParameters.emailCohort] = cohort
-            }
-
-            if let userEmail = emailManager.userEmail {
-                let actionTitle = String(format: UserText.emailAliasAlertUseUserAddress, userEmail)
-                alert.addAction(title: actionTitle) {
-                    pixelParameters[PixelParameters.emailLastUsed] = emailManager.lastUseDate
-                    emailManager.updateLastUseDate()
-
-                    Pixel.fire(pixel: .emailUserPressedUseAddress, withAdditionalParameters: pixelParameters, includedParameters: [])
-
-                    completionHandler(.user)
-                }
-            }
-
-            alert.addAction(title: UserText.emailAliasAlertGeneratePrivateAddress) {
-                pixelParameters[PixelParameters.emailLastUsed] = emailManager.lastUseDate
-                emailManager.updateLastUseDate()
-
-                Pixel.fire(pixel: .emailUserPressedUseAlias, withAdditionalParameters: pixelParameters, includedParameters: [])
-
-                completionHandler(.generated)
-            }
-
-            alert.addAction(title: UserText.emailAliasAlertDecline) {
-                Pixel.fire(pixel: .emailTooltipDismissed, withAdditionalParameters: pixelParameters, includedParameters: [])
-
-                completionHandler(.none)
-            }
-
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                // make sure the completion handler is called if the alert is dismissed by tapping outside the alert
-                alert.addAction(title: "", style: .cancel) {
-                    Pixel.fire(pixel: .emailTooltipDismissed, withAdditionalParameters: pixelParameters)
-                    completionHandler(.none)
-                }
-            }
-
-            alert.popoverPresentationController?.permittedArrowDirections = []
-            alert.popoverPresentationController?.delegate = self
-            let bounds = self.view.bounds
-            let point = Point(x: Int((bounds.maxX - bounds.minX) / 2.0), y: Int(bounds.maxY))
-            self.present(controller: alert, fromView: self.view, atPoint: point)
-        }
-
+    func emailSignupCompleted() {
+        delegate?.emailSignupViewControllerDidFinish(self, completionHandler: completionHandler!)
+        dismiss(animated: true)
     }
 
 }

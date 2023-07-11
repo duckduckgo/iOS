@@ -702,11 +702,6 @@ class TabViewController: UIViewController {
 
     private func addDuckDuckGoEmailObserver() {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(onDuckDuckGoEmailIncontextSignup),
-                                               name: .emailDidIncontextSignup,
-                                               object: nil)
-
-        NotificationCenter.default.addObserver(self,
                                                selector: #selector(onDuckDuckGoEmailSignOut),
                                                name: .emailDidSignOut,
                                                object: nil)
@@ -2290,6 +2285,13 @@ extension TabViewController: EmailManagerAliasPermissionDelegate {
 
     }
 
+    func emailManager(_ emailManager: BrowserServicesKit.EmailManager, didRequestInContextSignUp completionHandler: @escaping () -> Void) {
+        let controller = EmailSignupViewController()
+        controller.delegate = self
+        controller.completionHandler = completionHandler
+        let navigationController = UINavigationController(rootViewController: controller)
+        self.present(navigationController, animated: true, completion: nil)
+    }
 }
 
 // MARK: - EmailManagerRequestDelegate
@@ -2338,15 +2340,8 @@ extension TabViewController: EmailManagerRequestDelegate {
 // MARK: EmailSignupViewControllerDelegate
 extension TabViewController: EmailSignupViewControllerDelegate {
 
-    func emailSignupViewControllerDidFinish(_ controller: EmailSignupViewController) {
-        guard let autofillUserScript = autofillUserScript else {
-            return
-        }
-        emailManager.autofillUserScript(autofillUserScript,
-                                        didRequestAliasAndRequiresUserPermission: true,
-                                        shouldConsumeAliasIfProvided: true) { _, _ in
-
-        }
+    func emailSignupViewControllerDidFinish(_ controller: EmailSignupViewController, completionHandler: @escaping () -> Void) {
+        completionHandler()
     }
 }
 

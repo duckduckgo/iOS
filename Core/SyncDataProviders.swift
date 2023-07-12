@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+import BrowserServicesKit
 import Common
 import DDGSync
 import Persistence
@@ -24,6 +25,7 @@ import SyncDataProviders
 
 public class SyncDataProviders: DataProvidersSource {
     public let bookmarksAdapter: SyncBookmarksAdapter
+    public let loginsAdapter: SyncLoginsAdapter
 
     public func makeDataProviders() -> [DataProviding] {
         initializeMetadataDatabaseIfNeeded()
@@ -33,12 +35,21 @@ public class SyncDataProviders: DataProvidersSource {
         }
 
         bookmarksAdapter.setUpProviderIfNeeded(database: bookmarksDatabase, metadataStore: syncMetadata)
-        return [bookmarksAdapter.provider].compactMap { $0 }
+        loginsAdapter.setUpProviderIfNeeded(secureVaultFactory: secureVaultFactory, metadataStore: syncMetadata)
+
+        let providers: [Any] = [
+//            bookmarksAdapter.provider as Any,
+            loginsAdapter.provider as Any
+        ]
+
+        return providers.compactMap { $0 as? DataProviding }
     }
 
-    public init(bookmarksDatabase: CoreDataDatabase) {
+    public init(bookmarksDatabase: CoreDataDatabase, secureVaultFactory: SecureVaultFactory = .default) {
         self.bookmarksDatabase = bookmarksDatabase
+        self.secureVaultFactory = secureVaultFactory
         bookmarksAdapter = SyncBookmarksAdapter()
+        loginsAdapter = SyncLoginsAdapter()
     }
 
     private func initializeMetadataDatabaseIfNeeded() {
@@ -67,4 +78,5 @@ public class SyncDataProviders: DataProvidersSource {
 
     private let syncMetadataDatabase: CoreDataDatabase = SyncMetadataDatabase.make()
     private let bookmarksDatabase: CoreDataDatabase
+    private let secureVaultFactory: SecureVaultFactory
 }

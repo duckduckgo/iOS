@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "763043e8de014a9a8d82829b618a1ca1e69ca5a3",
-          "version": "65.0.0"
+          "branch": "shane/duckplayer-shorts-enabled",
+          "revision": "89ade55a62fb38efa0f95f4c83474a49b6ab2303",
+          "version": null
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/duckduckgo/content-scope-scripts",
         "state": {
           "branch": null,
-          "revision": "630eb2c4cf94055e630fd5b7daae71bed893ad0a",
-          "version": "4.22.4"
+          "revision": "6ec1ebb5738474501ea00bcb64eb84360181359d",
+          "version": "4.24.0"
         }
       },
       {

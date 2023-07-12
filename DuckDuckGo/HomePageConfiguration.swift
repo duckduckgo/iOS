@@ -102,12 +102,12 @@ final class HomePageConfiguration {
         case .remoteMessage(let remoteMessage):
             os_log("Remote message shown: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
             Pixel.fire(pixel: .remoteMessageShown,
-                       withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
+                       withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
 
             if !remoteMessagingStore.hasShownRemoteMessage(withId: remoteMessage.id) {
                 os_log("Remote message shown for first time: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
                 Pixel.fire(pixel: .remoteMessageShownUnique,
-                           withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
+                           withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
                 remoteMessagingStore.updateRemoteMessage(withId: remoteMessage.id, asShown: true)
             }
 

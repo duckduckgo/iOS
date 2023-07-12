@@ -29,6 +29,9 @@ struct ActivityViewController: UIViewControllerRepresentable {
 
     func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
         let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
+        controller.excludedActivityTypes = [
+            UIActivity.ActivityType(rawValue: (Bundle.main.bundleIdentifier ?? "") + ".ShareExtension")
+        ]
         controller.completionWithItemsHandler = completionWithItemsHandler
         return controller
     }

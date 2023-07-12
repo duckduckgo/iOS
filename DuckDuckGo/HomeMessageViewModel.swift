@@ -69,18 +69,23 @@ struct HomeMessageViewModel {
     }
 
     var subtitle: String {
-        switch modelType {
-        case .small(_, let descriptionText):
-            return descriptionText
-        case .medium(_, let descriptionText, _):
-            return descriptionText
-        case .bigSingleAction(_, let descriptionText, _, _, _):
-            return descriptionText
-        case .bigTwoAction(_, let descriptionText, _, _, _, _, _):
-            return descriptionText
-        case .promoSingleAction(_, let descriptionText, _, _, _):
-            return descriptionText
-        }
+        let subtitle = {
+            switch modelType {
+            case .small(_, let descriptionText):
+                return descriptionText
+            case .medium(_, let descriptionText, _):
+                return descriptionText
+            case .bigSingleAction(_, let descriptionText, _, _, _):
+                return descriptionText
+            case .bigTwoAction(_, let descriptionText, _, _, _, _, _):
+                return descriptionText
+            case .promoSingleAction(_, let descriptionText, _, _, _):
+                return descriptionText
+            }
+        }()
+        return subtitle
+            .replacingOccurrences(of: "<b>", with: "**")
+            .replacingOccurrences(of: "</b>", with: "**")
     }
 
     var buttons: [HomeMessageButtonViewModel] {

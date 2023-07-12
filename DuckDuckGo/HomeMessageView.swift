@@ -20,6 +20,7 @@
 import SwiftUI
 import DesignResourcesKit
 import RemoteMessaging
+import Core
 
 struct HomeMessageView: View {
 
@@ -169,9 +170,13 @@ struct HomeMessageView: View {
             .buttonStyle(HomeMessageButtonStyle(viewModel: viewModel, buttonModel: buttonModel))
             .padding([.bottom], Const.Padding.buttonVerticalInset)
             .sheet(item: $activityItem) { activityItem in
-                ActivityViewController(activityItems: [activityItem.item]) { _, _, _, _ in
-                    // It would be good to review the parameters passed to this and
-                    //  fire a pixel indicating what kind of interaction happened
+                ActivityViewController(activityItems: [activityItem.item]) { _, result, _, _ in
+
+                    Pixel.fire(pixel: .remoteMessageSheet, withAdditionalParameters: [
+                        PixelParameters.message: "\(viewModel.messageId)",
+                        PixelParameters.sheetResult: "\(result)"
+                    ])
+
                 }
                 .modifier(ActivityViewPresentationModifier())
             }
@@ -191,7 +196,7 @@ private struct HomeMessageButtonStyle: ButtonStyle {
         }
 
         if case .cancel = buttonModel.actionStyle {
-            return .cancelButtonBackground
+            return .cancelButtonForeground
         }
 
         return .primaryButtonText
@@ -301,7 +306,7 @@ struct HomeMessageView_Previews: PreviewProvider {
 
     static let bigTwo: RemoteMessageModelType =
         .bigTwoAction(titleText: "Big Two",
-                      descriptionText: "This is a big two style",
+                      descriptionText: "This is a <b>big</b> two style",
                       placeholder: .macComputer,
                       primaryActionText: "App Store",
                       primaryAction: .appStore,
@@ -310,7 +315,7 @@ struct HomeMessageView_Previews: PreviewProvider {
 
     static let promo: RemoteMessageModelType =
         .promoSingleAction(titleText: "Promotional",
-                           descriptionText: "Description **with bold** to make a statement.",
+                           descriptionText: "Description <b>with bold</b> to make a statement.",
                            placeholder: .newForMacAndWindows,
                            actionText: "Share",
                            action: .share(value: "value", title: "title"))

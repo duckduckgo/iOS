@@ -126,26 +126,27 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
                     if !isSharing {
                         self.dismissHomeMessage(message, at: indexPath, in: collectionView)
                     }
-                    #warning("Fire correct pixel")
+                    Pixel.fire(pixel: .remoteMessageActionClicked,
+                               withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
 
                 case .primaryAction(let isSharing):
                     if !isSharing {
                         self.dismissHomeMessage(message, at: indexPath, in: collectionView)
                     }
-                    Pixel.fire(pixel: .remoteMessageShownPrimaryActionClicked,
-                               withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
+                    Pixel.fire(pixel: .remoteMessagePrimaryActionClicked,
+                               withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
 
                 case .secondaryAction(let isSharing):
                     if !isSharing {
                         self.dismissHomeMessage(message, at: indexPath, in: collectionView)
                     }
-                    Pixel.fire(pixel: .remoteMessageShownSecondaryActionClicked,
-                               withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
+                    Pixel.fire(pixel: .remoteMessageSecondaryActionClicked,
+                               withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
 
                 case .close:
                     self.dismissHomeMessage(message, at: indexPath, in: collectionView)
                     Pixel.fire(pixel: .remoteMessageDismissed,
-                               withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
+                               withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
 
                 }
             } onDidAppear: { [weak self] in

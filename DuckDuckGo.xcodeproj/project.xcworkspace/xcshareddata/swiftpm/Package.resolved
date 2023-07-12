@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "763043e8de014a9a8d82829b618a1ca1e69ca5a3",
-          "version": "65.0.0"
+          "branch": "dominik/privacy-debug-tools",
+          "revision": "e490899ed68aa868ed30dabe2bdd580d20eeb63e",
+          "version": null
         }
       },
       {
@@ -32,9 +32,9 @@
         "package": "ContentScopeScripts",
         "repositoryURL": "https://github.com/duckduckgo/content-scope-scripts",
         "state": {
-          "branch": null,
-          "revision": "630eb2c4cf94055e630fd5b7daae71bed893ad0a",
-          "version": "4.22.4"
+          "branch": "shane/debug-tools",
+          "revision": "58574c547383bb41c8ea92d998d8e2aec0247776",
+          "version": null
         }
       },
       {

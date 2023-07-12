@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "a5a9d2055e7cd8cc286fd241fe4c548aea14f445",
-          "version": "65.2.0"
+          "branch": "dominik/sync-logins",
+          "revision": "a63a43b5cece3871ad63b7c197d12403d9362bad",
+          "version": null
         }
       },
       {
@@ -60,8 +60,8 @@
         "repositoryURL": "https://github.com/duckduckgo/GRDB.swift.git",
         "state": {
           "branch": null,
-          "revision": "77d9a83191a74e319a5cfa27b0e3145d15607573",
-          "version": "2.2.0"
+          "revision": "4475888676cfe1aabb1a35f379cd079ea692da1e",
+          "version": "2.1.1"
         }
       },
       {

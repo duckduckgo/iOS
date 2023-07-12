@@ -59,11 +59,11 @@ final class SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
     }
     
     var username: String {
-        credentials.account.username
+        credentials.account.username ?? ""
     }
     
     var visiblePassword: String {
-        String(data: credentials.password, encoding: .utf8) ?? ""
+        credentials.password.flatMap { String(data: $0, encoding: .utf8) } ?? ""
     }
     
     var isNewAccount: Bool {
@@ -71,7 +71,7 @@ final class SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
     }
     
     var accountDomain: String {
-        credentials.account.domain
+        credentials.account.domain ?? ""
     }
 
     var isPasswordOnlyAccount: Bool {
@@ -95,7 +95,7 @@ final class SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
     }
 
     private var savedMatchingPasswordWithoutUsername: SecureVaultModels.WebsiteCredentials? {
-        let credentialsWithSamePassword = domainStoredCredentials.filter { $0.password == credentials.password && $0.account.username.count == 0 }
+        let credentialsWithSamePassword = domainStoredCredentials.filter { $0.password == credentials.password && ($0.account.username?.count ?? 0) == 0 }
         return credentialsWithSamePassword.first
     }
     

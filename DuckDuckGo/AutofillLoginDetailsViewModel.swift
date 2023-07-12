@@ -91,7 +91,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
 
     var websiteIsValidUrl: Bool {
-        account?.domain.toTrimmedURL != nil
+        account?.domain?.toTrimmedURL != nil
     }
     
     var userVisiblePassword: String {
@@ -117,8 +117,8 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     
     private func updateData(with account: SecureVaultModels.WebsiteAccount) {
         self.account = account
-        username = account.username
-        address = account.domain
+        username = account.username ?? ""
+        address = account.domain ?? ""
         title = account.title ?? ""
         notes = account.notes ?? ""
         headerViewModel.updateData(with: account,
@@ -176,7 +176,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                 
                 if let credential = try
                     vault.websiteCredentialsFor(accountId: accountIdInt) {
-                    self.password = String(data: credential.password, encoding: .utf8) ?? ""
+                    self.password = credential.password.flatMap { String(data: $0, encoding: .utf8)} ?? ""
                 }
             }
         } catch {
@@ -257,7 +257,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
 
     func openUrl() {
-        guard let url = account?.domain.toTrimmedURL else { return }
+        guard let url = account?.domain?.toTrimmedURL else { return }
 
         LaunchTabNotification.postLaunchTabNotification(urlString: url.absoluteString)
         delegate?.autofillLoginDetailsViewModelDismiss()
@@ -281,7 +281,7 @@ final class AutofillLoginDetailsHeaderViewModel: ObservableObject {
     func updateData(with account: SecureVaultModels.WebsiteAccount, tld: TLD, autofillDomainNameUrlMatcher: AutofillDomainNameUrlMatcher, autofillDomainNameUrlSort: AutofillDomainNameUrlSort) {
         self.title = account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
         self.subtitle = UserText.autofillLoginDetailsLastUpdated(for: (dateFormatter.string(from: account.lastUpdated)))
-        self.domain = account.domain
+        self.domain = account.domain ?? ""
         self.preferredFakeFaviconLetter = account.faviconLetter(tld: tld, autofillDomainNameUrlSort: autofillDomainNameUrlSort)
     }
 

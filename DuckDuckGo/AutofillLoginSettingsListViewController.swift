@@ -501,7 +501,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
         case .credentials(_, let items):
             if editingStyle == .delete {
                 let title = items[indexPath.row].title
-                let domain = items[indexPath.row].account.domain
+                let domain = items[indexPath.row].account.domain ?? ""
                 let accountId = items[indexPath.row].account.id
 
                 let tableContentToDelete = viewModel.tableContentsToDelete(accountId: accountId)
@@ -590,7 +590,7 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
         if deletedSuccessfully {
             viewModel.updateData()
             tableView.reloadData()
-            presentDeleteConfirmation(for: title, domain: account.domain)
+            presentDeleteConfirmation(for: title, domain: account.domain ?? "")
         }
     }
 }

@@ -171,8 +171,8 @@ final class AutofillLoginListViewModel: ObservableObject {
         if let query = query, query.count > 0 {
             filteredAccounts = filteredAccounts.filter { account in
                 if !account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher).lowercased().contains(query.lowercased()) &&
-                    !account.domain.lowercased().contains(query.lowercased()) &&
-                    !account.username.lowercased().contains(query.lowercased()) {
+                    !(account.domain ?? "").lowercased().contains(query.lowercased()) &&
+                    !(account.username ?? "").lowercased().contains(query.lowercased()) {
                     return false
                 }
                 return true
@@ -203,7 +203,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
 
         let suggestedAccounts = accounts.filter { account in
-            return autofillDomainNameUrlMatcher.isMatchingForAutofill(currentSite: currentUrl.absoluteString, savedSite: account.domain, tld: tld)
+            return autofillDomainNameUrlMatcher.isMatchingForAutofill(currentSite: currentUrl.absoluteString, savedSite: account.domain ?? "", tld: tld)
         }
 
         let sortedSuggestions = suggestedAccounts.sorted(by: {

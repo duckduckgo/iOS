@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "graeme/add-netp-package",
-          "revision": "c6ee080d79fd4fe5c9157baebb961ddf7de9d495",
-          "version": null
+          "branch": null,
+          "revision": "41b65b0d7ea427ccb60412e80a92d74f6d5f210a",
+          "version": "65.1.0"
         }
       },
       {

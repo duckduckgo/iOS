@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": null,
-          "revision": "dc602aeef8975bbb1c1f0e8cd012d95e3b93f3d8",
-          "version": "65.0.1"
+          "revision": "41b65b0d7ea427ccb60412e80a92d74f6d5f210a",
+          "version": "65.1.0"
         }
       },
       {
@@ -161,6 +161,15 @@
           "branch": null,
           "revision": "4684440d03304e7638a2c8086895367e90987463",
           "version": "1.2.1"
+        }
+      },
+      {
+        "package": "WireGuardKit",
+        "repositoryURL": "https://github.com/duckduckgo/wireguard-apple",
+        "state": {
+          "branch": null,
+          "revision": "cf3c0f5132dbb8de08c46155a1bbd5e5bb6a47c1",
+          "version": "1.1.0"
         }
       }
     ]

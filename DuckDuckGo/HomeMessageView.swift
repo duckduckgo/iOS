@@ -56,6 +56,7 @@ struct HomeMessageView: View {
                     if case .promoSingleAction = viewModel.modelType {
                         title
                             .daxTitle3()
+                            .padding(.top, 16)
                         image
                     } else {
                         image

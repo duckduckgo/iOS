@@ -344,6 +344,7 @@
 		8512EA5724ED30D30073EE19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8512EA5624ED30D30073EE19 /* Assets.xcassets */; };
 		8512EA5D24ED30D30073EE19 /* WidgetsExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8512EA4D24ED30D20073EE19 /* WidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8512EA9D24EEA6820073EE19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F143C2B11E49D78C00CFDE3A /* Assets.xcassets */; };
+		851481882A600EFC00ABC65F /* RemoteMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 851481872A600EFC00ABC65F /* RemoteMessaging */; };
 		8517D98B221783A0006A8DD0 /* FindInPage.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8517D98A221783A0006A8DD0 /* FindInPage.xcassets */; };
 		851B1283221FE65E004781BC /* ImproveOnboardingExperiment1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B1281221FE64E004781BC /* ImproveOnboardingExperiment1Tests.swift */; };
 		851B128822200575004781BC /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B128722200575004781BC /* Onboarding.swift */; };
@@ -2495,6 +2496,7 @@
 				98A16C2D28A11D6200A6C003 /* BrowserServicesKit in Frameworks */,
 				8599690F29D2F1C100DBF9FA /* DDGSync in Frameworks */,
 				1E60989F290011E600A508F9 /* PrivacyDashboard in Frameworks */,
+				851481882A600EFC00ABC65F /* RemoteMessaging in Frameworks */,
 				37DF000C29F9CA80002B7D3E /* SyncDataProviders in Frameworks */,
 				1E6098A1290011E600A508F9 /* UserScript in Frameworks */,
 				C14882ED27F211A000D59F0C /* SwiftSoup in Frameworks */,
@@ -5039,7 +5041,6 @@
 				8390447520BDCE10006461CD /* PBXTargetDependency */,
 				85482D932462DCD100EDEDD1 /* PBXTargetDependency */,
 				8512EA5C24ED30D30073EE19 /* PBXTargetDependency */,
-				0202566B298818B200E694E7 /* PBXTargetDependency */,
 				02FFD7BC2A1FC8BE007BD7D1 /* PBXTargetDependency */,
 			);
 			name = DuckDuckGo;
@@ -5219,6 +5220,7 @@
 				8599690E29D2F1C100DBF9FA /* DDGSync */,
 				4B948E2529DCCDB9002531FA /* Persistence */,
 				37DF000B29F9CA80002B7D3E /* SyncDataProviders */,
+				851481872A600EFC00ABC65F /* RemoteMessaging */,
 			);
 			productName = Core;
 			productReference = F143C2E41E4A4CD400CFDE3A /* Core.framework */;
@@ -8228,7 +8230,7 @@
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = exactVersion;
-				version = 65.2.0;
+				version = 66.0.0;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
@@ -8344,6 +8346,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = Persistence;
+		};
+		851481872A600EFC00ABC65F /* RemoteMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = RemoteMessaging;
 		};
 		85875B6029912A9900115F05 /* SyncUI */ = {
 			isa = XCSwiftPackageProductDependency;

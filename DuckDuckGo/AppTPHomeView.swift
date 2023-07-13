@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
 #if APP_TRACKING_PROTECTION
 
@@ -35,7 +36,7 @@ struct AppTPHomeView: View {
         .foregroundColor(Color.fontColor)
         .fixedSize(horizontal: false, vertical: true)
         .multilineTextAlignment(.leading)
-        .fontWithLineHeight(font: Const.Font.text, lineHeight: Const.Spacing.lineHeight)
+        .daxSubheadRegular()
     }
     
     var disabledText: some View {
@@ -47,7 +48,7 @@ struct AppTPHomeView: View {
         .foregroundColor(Color.fontColor)
         .fixedSize(horizontal: false, vertical: true)
         .multilineTextAlignment(.leading)
-        .fontWithLineHeight(font: Const.Font.text, lineHeight: Const.Spacing.lineHeight)
+        .daxSubheadRegular()
     }
     
     var image: some View {
@@ -91,10 +92,6 @@ private extension Color {
 }
 
 private enum Const {
-    enum Font {
-        static let text = UIFont.appFont(ofSize: 15)
-    }
-    
     enum Radius {
         static let shadow: CGFloat = 3
         static let corner: CGFloat = 8

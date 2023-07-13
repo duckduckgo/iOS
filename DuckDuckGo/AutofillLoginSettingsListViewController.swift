@@ -243,7 +243,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                     self.delegate?.autofillLoginSettingsListViewControllerDidFinish(self)
                 }
             } else {
-                self.syncService.scheduler.notifyAppLifecycleEvent()
+                self.syncService.scheduler.requestSyncImmediately()
             }
         }
     }

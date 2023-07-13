@@ -1,5 +1,5 @@
 //
-//  SyncLoginsAdapter.swift
+//  SyncCredentialsAdapter.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -24,7 +24,7 @@ import DDGSync
 import Persistence
 import SyncDataProviders
 
-public final class SyncLoginsAdapter {
+public final class SyncCredentialsAdapter {
 
     public private(set) var provider: LoginsProvider?
 
@@ -44,14 +44,13 @@ public final class SyncLoginsAdapter {
                 .sink { error in
                     switch error {
                     case let syncError as SyncError:
-                        break
-//                        Pixel.fire(.debug(event: .syncLoginsFailed, error: syncError))
+                        Pixel.fire(pixel: .syncCredentialsFailed, error: syncError)
                     default:
                         let nsError = error as NSError
                         if nsError.domain != NSURLErrorDomain {
                             let processedErrors = CoreDataErrorsParser.parse(error: error as NSError)
                             let params = processedErrors.errorPixelParameters
-//                            Pixel.fire(.debug(event: .syncLoginsFailed, error: error), withAdditionalParameters: params)
+                            Pixel.fire(pixel: .syncCredentialsFailed, error: error, withAdditionalParameters: params)
                         }
                     }
                     os_log(.error, log: OSLog.syncLog, "Credentials Sync error: %{public}s", String(reflecting: error))
@@ -62,8 +61,8 @@ public final class SyncLoginsAdapter {
         } catch let error as NSError {
             let processedErrors = CoreDataErrorsParser.parse(error: error)
             let params = processedErrors.errorPixelParameters
-//            Pixel.fire(.debug(event: .syncLoginsProviderInitializationFailed, error: error), withAdditionalParameters: params)
-        }
+            Pixel.fire(pixel: .syncCredentialsProviderInitializationFailed, error: error, withAdditionalParameters: params)
+       }
 
     }
 

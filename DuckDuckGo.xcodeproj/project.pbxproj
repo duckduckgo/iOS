@@ -245,7 +245,7 @@
 		37DF000A29F9C416002B7D3E /* SyncMetadataDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DF000929F9C416002B7D3E /* SyncMetadataDatabase.swift */; };
 		37DF000C29F9CA80002B7D3E /* SyncDataProviders in Frameworks */ = {isa = PBXBuildFile; productRef = 37DF000B29F9CA80002B7D3E /* SyncDataProviders */; };
 		37DF000F29F9D635002B7D3E /* SyncBookmarksAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DF000E29F9D635002B7D3E /* SyncBookmarksAdapter.swift */; };
-		37E615752A5F533E00ACD63D /* SyncLoginsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E615742A5F533E00ACD63D /* SyncLoginsAdapter.swift */; };
+		37E615752A5F533E00ACD63D /* SyncCredentialsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E615742A5F533E00ACD63D /* SyncCredentialsAdapter.swift */; };
 		37FCAAAB29911BF1000E420A /* WaitlistExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FCAAAA29911BF1000E420A /* WaitlistExtensions.swift */; };
 		37FCAAB229914232000E420A /* WindowsBrowserWaitlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FCAAB129914232000E420A /* WindowsBrowserWaitlistView.swift */; };
 		37FCAAB429914C77000E420A /* WindowsWaitlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FCAAB329914C77000E420A /* WindowsWaitlistViewController.swift */; };
@@ -1195,7 +1195,7 @@
 		379E877329E97C8D001C8BB0 /* BookmarksCleanupErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksCleanupErrorHandling.swift; sourceTree = "<group>"; };
 		37DF000929F9C416002B7D3E /* SyncMetadataDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMetadataDatabase.swift; sourceTree = "<group>"; };
 		37DF000E29F9D635002B7D3E /* SyncBookmarksAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncBookmarksAdapter.swift; sourceTree = "<group>"; };
-		37E615742A5F533E00ACD63D /* SyncLoginsAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncLoginsAdapter.swift; sourceTree = "<group>"; };
+		37E615742A5F533E00ACD63D /* SyncCredentialsAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCredentialsAdapter.swift; sourceTree = "<group>"; };
 		37FCAAAA29911BF1000E420A /* WaitlistExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitlistExtensions.swift; sourceTree = "<group>"; };
 		37FCAAB129914232000E420A /* WindowsBrowserWaitlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowsBrowserWaitlistView.swift; sourceTree = "<group>"; };
 		37FCAAB329914C77000E420A /* WindowsWaitlistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowsWaitlistViewController.swift; sourceTree = "<group>"; };
@@ -3162,7 +3162,7 @@
 			children = (
 				37DF000929F9C416002B7D3E /* SyncMetadataDatabase.swift */,
 				37DF000E29F9D635002B7D3E /* SyncBookmarksAdapter.swift */,
-				37E615742A5F533E00ACD63D /* SyncLoginsAdapter.swift */,
+				37E615742A5F533E00ACD63D /* SyncCredentialsAdapter.swift */,
 				37445F962A155F7C0029F789 /* SyncDataProviders.swift */,
 				37FD780E2A29E28B00B36DB1 /* SyncErrorHandler.swift */,
 			);
@@ -6318,7 +6318,7 @@
 				C14882DC27F2011C00D59F0C /* BookmarksImporter.swift in Sources */,
 				CBAA195A27BFE15600A4BD49 /* NSManagedObjectContextExtension.swift in Sources */,
 				F1134EB31F40AD2500B73467 /* Atb.swift in Sources */,
-				37E615752A5F533E00ACD63D /* SyncLoginsAdapter.swift in Sources */,
+				37E615752A5F533E00ACD63D /* SyncCredentialsAdapter.swift in Sources */,
 				02CA904B24F6C11A00D41DDF /* NavigatorSharePatchUserScript.swift in Sources */,
 				85BDC3192436161C0053DB07 /* LoginFormDetectionUserScript.swift in Sources */,
 				98982B3422F8D8E400578AC9 /* Debounce.swift in Sources */,

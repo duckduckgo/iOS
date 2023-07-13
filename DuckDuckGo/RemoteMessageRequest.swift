@@ -27,11 +27,12 @@ import Networking
 public struct RemoteMessageRequest {
 
     private var endpoint: URL {
-        #if DEBUG
+        #warning("Restore after review")
+        // #if DEBUG
         return URL(string: "https://raw.githubusercontent.com/duckduckgo/remote-messaging-config/brindy/ios-share-example/samples/ios/promo.json")!
-        #else
-        return URL(string: "https://staticcdn.duckduckgo.com/remotemessaging/config/staging/ios-config.json")!
-        #endif
+        // #else
+        // return URL(string: "https://staticcdn.duckduckgo.com/remotemessaging/config/staging/ios-config.json")!
+        // #endif
     }
 
     public init() { }

@@ -953,7 +953,11 @@ class MainViewController: UIViewController {
     
     fileprivate func launchAutofillLogins(with currentTabUrl: URL? = nil) {
         let appSettings = AppDependencyProvider.shared.appSettings
-        let autofillSettingsViewController = AutofillLoginSettingsListViewController(appSettings: appSettings, currentTabUrl: currentTabUrl)
+        let autofillSettingsViewController = AutofillLoginSettingsListViewController(
+            appSettings: appSettings,
+            currentTabUrl: currentTabUrl,
+            syncService: syncService
+        )
         autofillSettingsViewController.delegate = self
         let navigationController = UINavigationController(rootViewController: autofillSettingsViewController)
         autofillSettingsViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: UserText.autofillNavigationButtonItemTitleClose,

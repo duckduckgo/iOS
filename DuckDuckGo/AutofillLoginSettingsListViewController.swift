@@ -22,6 +22,7 @@ import Combine
 import Core
 import BrowserServicesKit
 import Common
+import DDGSync
 import DesignResourcesKit
 
 // swiftlint:disable file_length type_body_length
@@ -43,6 +44,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private let emptySearchView = AutofillEmptySearchView()
     private let noAuthAvailableView = AutofillNoAuthAvailableView()
     private let tld: TLD = AppDependencyProvider.shared.storageCache.tld
+    private let syncService: DDGSyncing
 
     private lazy var addBarButtonItem: UIBarButtonItem = {
         UIBarButtonItem(image: UIImage(named: "Add-24"),
@@ -96,12 +98,13 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                            constant: (tableView.frame.height / 2))
     }()
 
-    init(appSettings: AppSettings, currentTabUrl: URL? = nil) {
+    init(appSettings: AppSettings, currentTabUrl: URL? = nil, syncService: DDGSyncing) {
         let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
         if secureVault == nil {
             os_log("Failed to make vault")
         }
         self.viewModel = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: secureVault, currentTabUrl: currentTabUrl)
+        self.syncService = syncService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -239,6 +242,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                 if error != .noAuthAvailable {
                     self.delegate?.autofillLoginSettingsListViewControllerDidFinish(self)
                 }
+            } else {
+                self.syncService.scheduler.notifyAppLifecycleEvent()
             }
         }
     }
@@ -578,6 +583,7 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
     func autofillLoginDetailsViewControllerDidSave(_ controller: AutofillLoginDetailsViewController, account: SecureVaultModels.WebsiteAccount?) {
         viewModel.updateData()
         tableView.reloadData()
+        syncService.scheduler.notifyDataChanged()
 
         if let account = account {
             showAccountDetails(account)
@@ -590,6 +596,7 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
         if deletedSuccessfully {
             viewModel.updateData()
             tableView.reloadData()
+            syncService.scheduler.notifyDataChanged()
             presentDeleteConfirmation(for: title, domain: account.domain ?? "")
         }
     }

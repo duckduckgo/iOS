@@ -347,14 +347,14 @@ class SettingsViewController: UITableViewController {
     }
 
     private func showAutofill(animated: Bool = true) {
-        let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+        let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings, syncService: syncService)
         autofillController.delegate = self
         Pixel.fire(pixel: .autofillSettingsOpened)
         navigationController?.pushViewController(autofillController, animated: animated)
     }
     
     func showAutofillAccountDetails(_ account: SecureVaultModels.WebsiteAccount) {
-        let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+        let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings, syncService: syncService)
         autofillController.delegate = self
         let detailsController = autofillController.makeAccountDetailsScreen(account)
 

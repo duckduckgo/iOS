@@ -87,7 +87,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     var shouldShowSaveButton: Bool {
         guard viewMode == .new else { return false }
         
-        return !username.isEmpty || !password.isEmpty || !address.isEmpty || !title.isEmpty
+        return !username.isEmpty || !password.isEmpty || !address.isEmpty || !title.isEmpty || !notes.isEmpty
     }
 
     var websiteIsValidUrl: Bool {

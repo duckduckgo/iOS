@@ -198,7 +198,8 @@ class AutofillLoginDetailsViewController: UIViewController {
             viewModel.$title,
             viewModel.$username,
             viewModel.$password,
-            viewModel.$address)
+            viewModel.$address,
+            viewModel.$notes)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.setupNavigationBar()

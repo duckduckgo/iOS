@@ -19,6 +19,7 @@
 
 import SwiftUI
 import Core
+import DesignResourcesKit
 
 struct AppTPTrackerCell: View {
     let trackerDomain: String
@@ -52,7 +53,7 @@ struct AppTPTrackerCell: View {
                 VStack(alignment: .leading, spacing: Const.Size.rowSpacing) {
                     Text(trackerDomain)
                         .lineLimit(1)
-                        .font(Font(uiFont: Const.Font.trackerDomain))
+                        .daxBodyRegular()
                         .foregroundColor(.trackerDomain)
                     
                     Text(UserText.appTPTrackingAttempts(count: trackerCount))
@@ -90,7 +91,6 @@ struct AppTPTrackerCell: View {
 
 private enum Const {
     enum Font {
-        static let trackerDomain = UIFont.appFont(ofSize: 16)
         static let trackerCount = UIFont.appFont(ofSize: 13)
     }
     

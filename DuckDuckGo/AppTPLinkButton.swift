@@ -1,5 +1,5 @@
 //
-//  AppTPBreakageFormHeaderView.swift
+//  AppTPLinkButton.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -20,21 +20,35 @@
 import SwiftUI
 import DesignResourcesKit
 
-struct AppTPBreakageFormHeaderView: View {
+#if APP_TRACKING_PROTECTION
+
+struct AppTPLinkButton: View {
     
-    let text: String
+    let buttonText: String
     
     var body: some View {
         HStack {
-            Text(text)
+            Text(buttonText)
                 .daxBodyRegular()
-                .foregroundColor(.infoText)
-            
+                .foregroundColor(Color(designSystemColor: .accent))
+                
             Spacer()
         }
+        .padding(.horizontal)
+        .frame(height: Const.Size.standardCellHeight)
     }
 }
 
-private extension Color {
-    static let infoText = Color("AppTPDomainColor")
+private enum Const {
+    enum Size {
+        static let standardCellHeight: CGFloat = 44
+    }
 }
+
+struct AppTPLinkButton_Previews: PreviewProvider {
+    static var previews: some View {
+        AppTPLinkButton(buttonText: UserText.appTPManageTrackers)
+    }
+}
+
+#endif

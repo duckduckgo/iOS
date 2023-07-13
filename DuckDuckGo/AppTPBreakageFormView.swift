@@ -18,6 +18,8 @@
 //
 
 import SwiftUI
+import DuckUI
+import DesignResourcesKit
 import Core
 
 private enum BreakageCategory: String, CaseIterable, Identifiable {
@@ -165,14 +167,12 @@ struct AppTPBreakageFormView: View {
                         sendReport()
                     }, label: {
                         Text(UserText.appTPReportSubmit)
-                            .font(Font(uiFont: Const.Font.button))
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .foregroundColor(appName.isEmpty ? Color.disabledButtonLabel : Color.buttonLabelColor)
                     })
-                    .buttonStyle(PlainButtonStyle())
+                    .buttonStyle(PrimaryButtonStyle(disabled: appName.isEmpty))
                     .frame(height: 30)
-                    .listRowBackground(appName.isEmpty ? Color.disabledButton : Color.buttonColor)
+                    .listRowBackground(Color.clear)
                     .disabled(appName.isEmpty)
+                    .listRowInsets(EdgeInsets())
                 }
             }
             .listStyle(.insetGrouped)
@@ -190,7 +190,6 @@ struct AppTPBreakageFormView: View {
 
 private enum Const {
     enum Font {
-        static let button = UIFont.semiBoldAppFont(ofSize: 17)
         static let footer = UIFont.appFont(ofSize: 15)
     }
     
@@ -208,8 +207,5 @@ private extension Color {
     static let infoText = Color("AppTPDomainColor")
     static let footerText = Color(designSystemColor: .textSecondary)
     static let buttonColor = Color(designSystemColor: .accent)
-    static let buttonLabelColor = Color("AppTPBreakageButtonLabel")
-    static let disabledButton = Color("AppTPBreakageButtonDisabled")
-    static let disabledButtonLabel = Color("AppTPBreakageButtonLabelDisabled")
     static let viewBackground = Color(designSystemColor: .background)
 }

@@ -20,12 +20,6 @@
 import SwiftUI
 import WidgetKit
 
-// Search
-// Voice Search
-// Email Protection
-// Fire Button
-// Favorites
-
 @available(iOSApplicationExtension 16.0, *)
 struct SearchLockScreenWidget: Widget {
 
@@ -36,8 +30,8 @@ struct SearchLockScreenWidget: Widget {
             return LockScreenWidgetView(imageNamed: "LockScreenSearch")
                 .widgetURL(DeepLinks.newSearch)
         }
-        .configurationDisplayName("DuckDuckGo Search")
-        .description("Quickly launch a private search in DuckDuckGo.")
+        .configurationDisplayName(UserText.lockScreenSearchTitle)
+        .description(UserText.lockScreenSearchDescription)
         .supportedFamilies([ .accessoryCircular ])
     }
 
@@ -53,8 +47,8 @@ struct FavoritesLockScreenWidget: Widget {
             return LockScreenWidgetView(imageNamed: "LockScreenFavorites")
                 .widgetURL(DeepLinks.favorites)
         }
-        .configurationDisplayName("DuckDuckGo Favorites")
-        .description("Quickly access your favorites in DuckDuckGo.")
+        .configurationDisplayName(UserText.lockScreenFavoritesTitle)
+        .description(UserText.lockScreenFavoritesDescription)
         .supportedFamilies([ .accessoryCircular ])
     }
 }
@@ -69,8 +63,8 @@ struct VoiceSearchLockScreenWidget: Widget {
             return LockScreenWidgetView(imageNamed: "LockScreenVoice")
                 .widgetURL(DeepLinks.voiceSearch)
         }
-        .configurationDisplayName("DuckDuckGo Voice Search")
-        .description("Quickly launch a private voice search in DuckDuckGo.")
+        .configurationDisplayName(UserText.lockScreenVoiceTitle)
+        .description(UserText.lockScreenVoiceDescription)
         .supportedFamilies([ .accessoryCircular ])
     }
 
@@ -86,8 +80,8 @@ struct EmailProtectionLockScreenWidget: Widget {
             return LockScreenWidgetView(imageNamed: "LockScreenEmail")
                 .widgetURL(DeepLinks.emailProtection)
         }
-        .configurationDisplayName("DuckDuckGo Email Protection")
-        .description("Quickly launch DuckDuckGo Email Protection.")
+        .configurationDisplayName(UserText.lockScreenEmailTitle)
+        .description(UserText.lockScreenEmailDescription)
         .supportedFamilies([ .accessoryCircular ])
     }
 
@@ -103,8 +97,8 @@ struct FireButtonLockScreenWidget: Widget {
             return LockScreenWidgetView(imageNamed: "LockScreenFire")
                 .widgetURL(DeepLinks.fireButton)
         }
-        .configurationDisplayName("DuckDuckGo Fire Button")
-        .description("Burn all data and launch a private search in DuckDuckGo.")
+        .configurationDisplayName(UserText.lockScreenFireTitle)
+        .description(UserText.lockScreenFireDescription)
         .supportedFamilies([ .accessoryCircular ])
     }
 }

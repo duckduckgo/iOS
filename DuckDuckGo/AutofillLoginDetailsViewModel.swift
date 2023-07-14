@@ -205,7 +205,10 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     credential.account.notes = notes
                     credential.password = passwordData
 
-                    guard try vault.hasAccountFor(username: credential.account.username, domain: credential.account.domain) == false else {
+                    let didUpdateUsernameOrDomain = account?.username != credential.account.username || account?.domain != credential.account.domain
+
+                    if didUpdateUsernameOrDomain,
+                       try vault.hasAccountFor(username: credential.account.username, domain: credential.account.domain) {
                         delegate?.autofillLoginDetailsViewModelDidAttemptToSaveDuplicateLogin()
                         return
                     }

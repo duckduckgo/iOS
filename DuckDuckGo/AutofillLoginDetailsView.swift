@@ -22,11 +22,12 @@ import DuckUI
 import DesignResourcesKit
 
 // swiftlint:disable file_length
+// swiftlint:disable type_body_length
 
 struct AutofillLoginDetailsView: View {
     @ObservedObject var viewModel: AutofillLoginDetailsViewModel
-    @State private var actionSheetConfirmDeletePresented: Bool = false    
-    
+    @State private var actionSheetConfirmDeletePresented: Bool = false
+
     var body: some View {
         listWithBackground
             .background(EmptyView().alert(isPresented: $viewModel.isShowingAddressUpdateConfirmAlert) {
@@ -83,6 +84,7 @@ struct AutofillLoginDetailsView: View {
                 viewModel.selectedCell = nil
             }))
         .listStyle(.insetGrouped)
+        .animation(.easeInOut)
     }
     
     private var editingContentView: some View {
@@ -223,17 +225,20 @@ struct AutofillLoginDetailsView: View {
 
         // If signed in, we only show the separate sections if the email is manageable
         } else if viewModel.shouldAllowManagePrivateAddress {
+            Group {
+                Section {
+                    usernameCell()
+                    privateEmailCell()
+                }
+                Section {
+                    passwordCell()
+                }
+            }.transition(.opacity)
+
+        } else {
             Section {
-                usernameCell()
-                privateEmailCell()
-            }
-            Section {
-                passwordCell()
-            }
-        }
-        // Fall back to a plain password cell
-        else {
-            credentialsSection()
+                credentialsSection()
+            }.transition(.opacity)
         }
     }
     
@@ -342,7 +347,7 @@ struct AutofillLoginDetailsView: View {
             Spacer(minLength: Constants.textFieldImageSize)
             if viewModel.privateEmailStatus == .active || viewModel.privateEmailStatus == .inactive {
                 Toggle("", isOn: $viewModel.privateEmailStatusBool)
-                    .frame(width: 80)                    
+                    .frame(width: 80)
                     .toggleStyle(SwitchToggleStyle(tint: Color(ThemeManager.shared.currentTheme.buttonTintColor)))
             } else {
                 Image("Alert-Color-16")
@@ -637,3 +642,5 @@ private struct Constants {
     static let textFieldTapSize: CGFloat = 44
     static let insets = EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
 }
+
+// swiftlint:enable type_body_length

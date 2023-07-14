@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+// swiftlint:disable file_length
+
 import Foundation
 import BrowserServicesKit
 import Common
@@ -36,6 +38,8 @@ struct ConfirmationAlert {
     var message: String
     var button: String
 }
+
+// swiftlint:disable type_body_length
 
 final class AutofillLoginDetailsViewModel: ObservableObject {
     enum ViewMode {
@@ -391,7 +395,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
             setLoadingStatus(false)
             setPrivateEmailStatus(.error)
         }
-    }    
+    }
 
     private func togglePrivateEmailStatus() async throws {
         guard emailManager.isSignedIn else {
@@ -444,6 +448,8 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         privateEmailRequestInProgress = true
     }
 }
+
+// swiftlint:enable type_body_length
 
 final class AutofillLoginDetailsHeaderViewModel: ObservableObject {
     private var dateFormatter: DateFormatter = {

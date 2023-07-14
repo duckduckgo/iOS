@@ -204,7 +204,12 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     credential.account.domain = autofillDomainNameUrlMatcher.normalizeUrlForWeb(address)
                     credential.account.notes = notes
                     credential.password = passwordData
-                    
+
+                    guard try vault.hasAccountFor(username: credential.account.username, domain: credential.account.domain) == false else {
+                        delegate?.autofillLoginDetailsViewModelDidAttemptToSaveDuplicateLogin()
+                        return
+                    }
+
                     try vault.storeWebsiteCredentials(credential)
                     delegate?.autofillLoginDetailsViewModelDidSave()
                     
@@ -225,6 +230,10 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
             let credentials = SecureVaultModels.WebsiteCredentials(account: account, password: passwordData)
 
             do {
+                guard try vault.hasAccountFor(username: account.username, domain: account.domain) == false else {
+                    delegate?.autofillLoginDetailsViewModelDidAttemptToSaveDuplicateLogin()
+                    return
+                }
                 let id = try vault.storeWebsiteCredentials(credentials)
                 
                 delegate?.autofillLoginDetailsViewModelDidSave()

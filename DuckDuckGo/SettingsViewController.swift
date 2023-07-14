@@ -381,9 +381,20 @@ class SettingsViewController: UITableViewController {
     }
 
 #if APP_TRACKING_PROTECTION
+    func setNavColor(isOnboarding: Bool) {
+        let coloredAppearance = UINavigationBarAppearance()
+        coloredAppearance.configureWithTransparentBackground()
+        coloredAppearance.backgroundColor = UIColor(designSystemColor: isOnboarding ? .surface : .background)
+        
+        let navBar = self.navigationController?.navigationBar
+        navBar?.standardAppearance = coloredAppearance
+        navBar?.compactAppearance = coloredAppearance
+        navBar?.scrollEdgeAppearance = coloredAppearance
+    }
+    
     private func showAppTP() {
         navigationController?.pushViewController(
-            AppTPActivityHostingViewController(appTrackingProtectionDatabase: appTPDatabase),
+            AppTPActivityHostingViewController(appTrackingProtectionDatabase: appTPDatabase, setNavColor: setNavColor(isOnboarding:)),
             animated: true
         )
     }
@@ -507,7 +518,7 @@ class SettingsViewController: UITableViewController {
         let rows = super.tableView(tableView, numberOfRowsInSection: section)
         if section == appearanceSectionIndex && textSizeCell.isHidden {
             return rows - 1
-        } else if section == moreFromDDGSectionIndex && appTPCell.isHidden {
+        } else if section == moreFromDDGSectionIndex && !shouldShowAppTPCell {
             return rows - 1
         } else {
             return rows

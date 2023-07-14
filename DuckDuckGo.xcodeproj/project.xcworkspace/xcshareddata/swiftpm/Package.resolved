@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": null,
-          "revision": "763043e8de014a9a8d82829b618a1ca1e69ca5a3",
-          "version": "65.0.0"
+          "revision": "5f53e41526f0afec54d6096b83bb0c035fa148ee",
+          "version": "66.0.0"
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/duckduckgo/content-scope-scripts",
         "state": {
           "branch": null,
-          "revision": "630eb2c4cf94055e630fd5b7daae71bed893ad0a",
-          "version": "4.22.4"
+          "revision": "0cfcedb9c8aefa52c7f3a36a2b3793a2c44de764",
+          "version": "4.22.5"
         }
       },
       {
@@ -60,8 +60,8 @@
         "repositoryURL": "https://github.com/duckduckgo/GRDB.swift.git",
         "state": {
           "branch": null,
-          "revision": "4475888676cfe1aabb1a35f379cd079ea692da1e",
-          "version": "2.1.1"
+          "revision": "77d9a83191a74e319a5cfa27b0e3145d15607573",
+          "version": "2.2.0"
         }
       },
       {
@@ -161,6 +161,15 @@
           "branch": null,
           "revision": "4684440d03304e7638a2c8086895367e90987463",
           "version": "1.2.1"
+        }
+      },
+      {
+        "package": "WireGuardKit",
+        "repositoryURL": "https://github.com/duckduckgo/wireguard-apple",
+        "state": {
+          "branch": null,
+          "revision": "cf3c0f5132dbb8de08c46155a1bbd5e5bb6a47c1",
+          "version": "1.1.0"
         }
       }
     ]

@@ -19,6 +19,7 @@
 
 import SwiftUI
 import Core
+import DesignResourcesKit
 
 struct AppTPTrackerDetailView: View {
     
@@ -36,13 +37,13 @@ struct AppTPTrackerDetailView: View {
             ScrollView {
                 VStack(alignment: .leading) {
                     Text(viewModel.trackerDomain)
-                        .font(Font(uiFont: Const.Font.sectionHeader))
+                        .daxSubheadSemibold()
                         .foregroundColor(.infoText)
                         .padding(.leading, Const.Size.sectionHeaderPadding)
                     
                     Toggle(isOn: $viewModel.isOn, label: {
                         Text(UserText.appTPBlockTracker)
-                            .font(Font(uiFont: Const.Font.info))
+                            .daxBodyRegular()
                             .foregroundColor(.infoText)
                     })
                     .toggleStyle(SwitchToggleStyle(tint: Color.toggleTint))
@@ -70,23 +71,19 @@ struct AppTPTrackerDetailView: View {
             }
         }
         .alert(isPresented: $showReportAlert) {
-            Alert(title: Text(UserText.appTPReportAlertTitle),
-                  message: Text(UserText.appTPReportAlertMessage),
-                  primaryButton: .default(Text(UserText.appTPReportAlertConfirm)) {
-                      isBreakageLinkActive = true
-                  },
-                  secondaryButton: .cancel(Text(UserText.appTPReportAlertCancel))
+            Alert(
+                title: Text(UserText.appTPReportAlertTitle),
+                message: Text(UserText.appTPReportAlertMessage),
+                primaryButton: .cancel(Text(UserText.appTPReportAlertConfirm)) {
+                    isBreakageLinkActive = true
+                },
+                secondaryButton: .default(Text(UserText.appTPReportAlertCancel))
             )
         }
     }
 }
 
 private enum Const {
-    enum Font {
-        static let sectionHeader = UIFont.semiBoldAppFont(ofSize: 15)
-        static let info = UIFont.appFont(ofSize: 16)
-    }
-    
     enum Size {
         static let cornerRadius: CGFloat = 12
         static let standardCellHeight: CGFloat = 44

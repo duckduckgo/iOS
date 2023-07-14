@@ -56,7 +56,7 @@ struct UserText {
 
     static let lockScreenSearchDescription = NSLocalizedString(
         "lock.screen.widget.search.description",
-        value: "Quickly launch a private search in DuckDuckGo.",
+        value: "Instantly open a private search in DuckDuckGo.",
         comment: "Description shown to the user when adding the Search lock screen widget")
 
     static let lockScreenFavoritesTitle = NSLocalizedString(

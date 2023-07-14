@@ -17,7 +17,7 @@
 "lock.screen.widget.fire.title" = "Fire Button";
 
 /* Description shown to the user when adding the Search lock screen widget */
-"lock.screen.widget.search.description" = "Quickly launch a private search in DuckDuckGo.";
+"lock.screen.widget.search.description" = "Instantly open a private search in DuckDuckGo.";
 
 /* Title shown to the user when adding the Search lock screen widget */
 "lock.screen.widget.search.title" = "Private Search";

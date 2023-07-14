@@ -19,6 +19,7 @@
 
 import SwiftUI
 import Core
+import DesignResourcesKit
 
 struct AppTPManageTrackersView: View {
     
@@ -67,7 +68,7 @@ struct AppTPManageTrackersView: View {
                                     Spacer()
                                     
                                     Text(UserText.appTPRestoreDefaults)
-                                        .font(Font(uiFont: Const.Font.info))
+                                        .daxBodyRegular()
                                         .foregroundColor(Color.buttonTextColor)
                                     
                                     Spacer()
@@ -111,11 +112,11 @@ struct AppTPManageTrackersView: View {
         .alert(isPresented: $showReportAlert) {
             Alert(title: Text(UserText.appTPReportAlertTitle),
                   message: Text(UserText.appTPReportAlertMessage),
-                  primaryButton: .default(Text(UserText.appTPReportAlertConfirm)) {
+                  primaryButton: .cancel(Text(UserText.appTPReportAlertConfirm)) {
                       isBreakageLinkActive = true
                       viewModel.trackerDisabled = false
                   },
-                  secondaryButton: .cancel(Text(UserText.appTPReportAlertCancel)) {
+                  secondaryButton: .default(Text(UserText.appTPReportAlertCancel)) {
                       viewModel.trackerDisabled = false
                   }
             )
@@ -129,10 +130,6 @@ struct AppTPManageTrackersView: View {
 }
 
 private enum Const {
-    enum Font {
-        static let info = UIFont.appFont(ofSize: 16)
-    }
-    
     enum Size {
         static let cornerRadius: CGFloat = 12
         static let standardCellHeight: CGFloat = 44

@@ -718,6 +718,15 @@
 /* Broken Site Category */
 "brokensite.category.videos" = "Video didn’t play";
 
+/* Broken Site Category Placeholder */
+"brokensite.categoryPlaceholder" = "Pick your issue from the list...";
+
+/* Broken Site Category Section Title */
+"brokensite.categoryTitle" = "SELECT A CATEGORY";
+
+/* Broken Site Comment Placeholder */
+"brokensite.commentPlaceholder" = "Sharing more details can help us address this issue";
+
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "DESCRIBE WHAT HAPPENED";
 

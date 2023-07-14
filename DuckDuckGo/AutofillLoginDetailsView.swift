@@ -43,13 +43,6 @@ struct AutofillLoginDetailsView: View {
                     primaryButton: button,
                     secondaryButton: cancelButton)
             })
-            .background(EmptyView().alert(isPresented: $viewModel.isShowingDuckRemovalAlert) {
-                Alert(
-                    title: Text(UserText.autofillRemovedDuckAddressTitle),
-                    message: Text(UserText.autofillRemovedDuckAddressContent),
-                    dismissButton: .default(Text(UserText.autofillRemovedDuckAddressButton))
-                )
-            })
 
     }
 

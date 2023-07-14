@@ -100,7 +100,6 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         }
     }
     @Published var isShowingAddressUpdateConfirmAlert: Bool = false
-    @Published var isShowingDuckRemovalAlert: Bool = false
     @Published var isSignedIn: Bool = false
 
     var userDuckAddress: String {
@@ -279,9 +278,6 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
             return
         }
 
-        // Show the removal alert if email is no longer a Duck Address
-        showRemovalAlertIfRequired()
-
         switch viewMode {
         case .edit:
             guard let accountID = account?.id else {
@@ -332,15 +328,6 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
             } catch let error {
                 handleSecureVaultError(error)
             }
-        }
-    }
-
-    private func showRemovalAlertIfRequired() {
-        if emailManager.isPrivateEmail(email: previousUsername) &&
-            hasValidPrivateEmail &&
-            previousUsername != username &&
-            (privateEmailStatus == .active || privateEmailStatus == .inactive) {
-            isShowingDuckRemovalAlert = true
         }
     }
 

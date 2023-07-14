@@ -19,6 +19,7 @@
 
 import SwiftUI
 import Core
+import DesignResourcesKit
 
 struct AppTPTrackerCell: View {
     let trackerDomain: String
@@ -51,10 +52,11 @@ struct AppTPTrackerCell: View {
 
                 VStack(alignment: .leading, spacing: Const.Size.rowSpacing) {
                     Text(trackerDomain)
-                        .font(Font(uiFont: Const.Font.trackerDomain))
+                        .lineLimit(1)
+                        .daxBodyRegular()
                         .foregroundColor(.trackerDomain)
                     
-                    Text(UserText.appTPTrackingAttempts(count: "\(trackerCount)"))
+                    Text(UserText.appTPTrackingAttempts(count: trackerCount))
                         .font(Font(uiFont: Const.Font.trackerCount))
                         .foregroundColor(.trackerSize)
                     
@@ -71,7 +73,7 @@ struct AppTPTrackerCell: View {
                 
                 Spacer()
                 
-                Image(systemName: "chevron.forward")
+                Image("DisclosureIndicator")
                     .resizable()
                     .frame(width: 7, height: 12)
                     .foregroundColor(Color.disclosureColor)
@@ -81,6 +83,7 @@ struct AppTPTrackerCell: View {
             
             if showDivider {
                 Divider()
+                    .padding(.leading, Const.Size.dividerPadding)
             }
         }
     }
@@ -88,7 +91,6 @@ struct AppTPTrackerCell: View {
 
 private enum Const {
     enum Font {
-        static let trackerDomain = UIFont.appFont(ofSize: 16)
         static let trackerCount = UIFont.appFont(ofSize: 13)
     }
     
@@ -96,12 +98,13 @@ private enum Const {
         static let rowHeight: CGFloat = 78
         static let rowPadding: CGFloat = 16
         static let rowSpacing: CGFloat = 4
+        static let dividerPadding: CGFloat = 62
     }
 }
 
 private extension Color {
     static let trackerDomain = Color("AppTPDomainColor")
-    static let trackerSize = Color("AppTPCountColor")
-    static let cellBackground = Color("AppTPCellBackgroundColor")
+    static let trackerSize = Color(designSystemColor: .textSecondary)
+    static let cellBackground = Color(designSystemColor: .background)
     static let disclosureColor = Color("AppTPDisclosureColor")
 }

@@ -20,6 +20,7 @@
 
 import Foundation
 import BrowserServicesKit
+import RemoteMessaging
 import Core
 import Networking
 

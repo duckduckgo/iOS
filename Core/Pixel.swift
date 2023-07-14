@@ -106,7 +106,9 @@ public struct PixelParameters {
 
     public static let bookmarkErrorOrphanedFolderCount = "bookmark_error_orphaned_count"
 
-    public static let ctaShown = "cta"
+    // Remote messaging
+    public static let message = "message"
+    public static let sheetResult = "success"
 }
 
 public struct PixelValues {
@@ -136,7 +138,7 @@ public class Pixel {
                             forDeviceType deviceType: UIUserInterfaceIdiom? = UIDevice.current.userInterfaceIdiom,
                             withAdditionalParameters params: [String: String] = [:],
                             allowedQueryReservedCharacters: CharacterSet? = nil,
-                            withHeaders headers: HTTPHeaders = APIRequest.Headers().default,
+                            withHeaders headers: APIRequest.Headers = APIRequest.Headers(),
                             includedParameters: [QueryParameters] = [.atb, .appVersion],
                             onComplete: @escaping (Error?) -> Void = { _ in }) {
         

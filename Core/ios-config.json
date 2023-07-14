@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1687534465648,
+    "version": 1688727300803,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -124,6 +124,10 @@
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/326"
                 },
                 {
+                    "domain": "nationalgrid.co.uk",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/326"
+                },
+                {
                     "domain": "t-online.de",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/326"
                 },
@@ -242,6 +246,10 @@
                 {
                     "domain": "upstart.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/897"
+                },
+                {
+                    "domain": "granit.com",
+                    "reason": "https://github.com/duckduckgo/autoconsent/issues/200"
                 }
             ],
             "settings": {
@@ -251,7 +259,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "7025ef66138fdc1da20b9237088fd3ab"
+            "hash": "558792e54daecddf71939b03b238c49c"
         },
         "autofill": {
             "exceptions": [
@@ -1111,10 +1119,6 @@
             "state": "enabled",
             "exceptions": [
                 {
-                    "domain": "foxnews.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
-                },
-                {
                     "domain": "strava.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/748"
                 },
@@ -1123,7 +1127,7 @@
                     "reason": "Video pauses at about 13-15 seconds in. Playing the video again results in a single frame rendering without progressing to the next frame."
                 }
             ],
-            "hash": "7550837006dcfeed61c9dabcc0a0012c"
+            "hash": "8d35648bb7862913ed30243074e6b6f1"
         },
         "cookie": {
             "settings": {
@@ -1243,6 +1247,10 @@
                     "reason": "Adblocker wall"
                 },
                 {
+                    "domain": "google.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/592"
+                },
+                {
                     "domain": "wiwo.de",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/592"
                 },
@@ -1264,7 +1272,7 @@
                 }
             ],
             "settings": {
-                "useStrictHideStyleTag": false,
+                "useStrictHideStyleTag": true,
                 "rules": [
                     {
                         "selector": "[id*='gpt-']",
@@ -1392,6 +1400,10 @@
                     },
                     {
                         "selector": ".top-banner",
+                        "type": "hide-empty"
+                    },
+                    {
+                        "selector": "#top-banner",
                         "type": "hide-empty"
                     },
                     {
@@ -1559,7 +1571,16 @@
                         "type": "hide-empty"
                     }
                 ],
-                "styleTagExceptions": [],
+                "styleTagExceptions": [
+                    {
+                        "domain": "github.com",
+                        "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1058"
+                    },
+                    {
+                        "domain": "duckduckgo.com",
+                        "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1058"
+                    }
+                ],
                 "mediaAndFormSelectors": "video,canvas,embed,object,audio,map,form,input,textarea,select,option",
                 "adLabelStrings": [
                     "ad",
@@ -1775,6 +1796,31 @@
                         "rules": [
                             {
                                 "selector": ".top-ads-container",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "focus.de",
+                        "rules": [
+                            {
+                                "selector": "[id*='M_CONTENTAD']",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": "[id*='M_TRSCT_hor']",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": "[id*='M_FLYCPT_hor']",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": "#tfm_admanagerTeaser",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": ".cls_slot_xxoutstreamxx",
                                 "type": "hide-empty"
                             }
                         ]
@@ -2374,7 +2420,7 @@
                                 "type": "hide"
                             },
                             {
-                                "selector": ".mxEhR",
+                                "selector": ".ZkqhQ",
                                 "type": "hide"
                             }
                         ]
@@ -2387,7 +2433,7 @@
                                 "type": "hide"
                             },
                             {
-                                "selector": ".mxEhR",
+                                "selector": ".ZkqhQ",
                                 "type": "hide"
                             }
                         ]
@@ -2576,7 +2622,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "a305dfe64d0b3abbcd0516f200806580"
+            "hash": "c6be96b0355dc5deb121ae2de2172ea6"
         },
         "exceptionHandler": {
             "exceptions": [],
@@ -2687,6 +2733,10 @@
                     "reason": "After filling out travel info and clicking 'Get times & tickets', there is an error warning that 'Something went wrong', which prevents further interaction."
                 },
                 {
+                    "domain": "usps.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
+                },
+                {
                     "domain": "walgreens.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/499"
                 },
@@ -2703,8 +2753,8 @@
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/499"
                 }
             ],
-            "state": "enabled",
-            "hash": "3b8cd34edd138e29c251289b3024558d"
+            "state": "disabled",
+            "hash": "4cbf5510157399d16404475be76e5980"
         },
         "fingerprintingHardware": {
             "settings": {
@@ -2842,6 +2892,109 @@
             },
             "hash": "470c77b05c99b8f0986cc40422a59c91"
         },
+        "harmfulApis": {
+            "settings": {
+                "deviceOrientation": {
+                    "state": "enabled",
+                    "filterEvents": [
+                        "deviceorientation",
+                        "devicemotion"
+                    ]
+                },
+                "GenericSensor": {
+                    "state": "enabled",
+                    "filterPermissions": [
+                        "accelerometer",
+                        "ambient-light-sensor",
+                        "gyroscope",
+                        "magnetometer"
+                    ],
+                    "blockSensorStart": true
+                },
+                "UaClientHints": {
+                    "state": "enabled",
+                    "highEntropyValues": {
+                        "trimBrands": true,
+                        "model": "",
+                        "trimPlatformVersion": 2,
+                        "trimUaFullVersion": 1,
+                        "trimFullVersionList": 1
+                    }
+                },
+                "NetworkInformation": {
+                    "state": "enabled"
+                },
+                "getInstalledRelatedApps": {
+                    "state": "enabled",
+                    "returnValue": []
+                },
+                "FileSystemAccess": {
+                    "state": "enabled",
+                    "disableOpenFilePicker": true,
+                    "disableSaveFilePicker": true,
+                    "disableDirectoryPicker": true,
+                    "disableGetAsFileSystemHandle": true
+                },
+                "WindowPlacement": {
+                    "state": "enabled",
+                    "filterPermissions": [
+                        "window-placement",
+                        "window-management"
+                    ],
+                    "screenIsExtended": false
+                },
+                "WebBluetooth": {
+                    "state": "enabled",
+                    "filterPermissions": [
+                        "bluetooth"
+                    ],
+                    "filterEvents": [
+                        "availabilitychanged"
+                    ],
+                    "blockGetAvailability": true,
+                    "blockRequestDevice": true
+                },
+                "WebUsb": {
+                    "state": "enabled"
+                },
+                "WebSerial": {
+                    "state": "enabled"
+                },
+                "WebHid": {
+                    "state": "enabled"
+                },
+                "WebMidi": {
+                    "state": "enabled",
+                    "filterPermissions": [
+                        "midi"
+                    ]
+                },
+                "IdleDetection": {
+                    "state": "enabled",
+                    "filterPermissions": [
+                        "idle-detection"
+                    ]
+                },
+                "WebNfc": {
+                    "state": "enabled",
+                    "disableNdefReader": true,
+                    "disableNdefMessage": true,
+                    "disableNdefRecord": true
+                },
+                "StorageManager": {
+                    "state": "enabled",
+                    "allowedQuotaValues": [
+                        1073741824,
+                        4294967296,
+                        9999999999
+                    ]
+                },
+                "domains": []
+            },
+            "exceptions": [],
+            "state": "disabled",
+            "hash": "40ccb9ae93e37d9c2c991a5fadabded7"
+        },
         "https": {
             "state": "enabled",
             "exceptions": [],
@@ -2903,618 +3056,10 @@
             "hash": "9439c856372a09f0cfdc9e2e0fd086fd"
         },
         "runtimeChecks": {
-            "state": "enabled",
-            "exceptions": [
-                {
-                    "domain": "amazon.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/995"
-                },
-                {
-                    "domain": "amazon.co.uk",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/995"
-                },
-                {
-                    "domain": "chase.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/988"
-                },
-                {
-                    "domain": "natwest.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/851"
-                },
-                {
-                    "domain": "royalcaribbean.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1035"
-                },
-                {
-                    "domain": "concordgroupinsurance.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1035"
-                },
-                {
-                    "domain": "auto-owners.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1035"
-                },
-                {
-                    "domain": "aoins.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1035"
-                },
-                {
-                    "domain": "bell.ca",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1035"
-                },
-                {
-                    "domain": "costco.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/878"
-                },
-                {
-                    "domain": "adobe.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/880"
-                },
-                {
-                    "domain": "rbs.co.uk",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/902"
-                },
-                {
-                    "domain": "panomax.com",
-                    "reason": "https://github.com/duckduckgo/duckduckgo-privacy-extension/issues/2007"
-                },
-                {
-                    "domain": "wikimedia.org",
-                    "reason": "https://github.com/duckduckgo/content-scope-scripts/issues/540"
-                },
-                {
-                    "domain": "login.xfinity.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1018"
-                },
-                {
-                    "domain": "truist.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1020"
-                },
-                {
-                    "domain": "ally.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/780"
-                },
-                {
-                    "domain": "stackoverflow.com",
-                    "reason": "https://github.com/duckduckgo/duckduckgo-privacy-extension/issues/1819"
-                },
-                {
-                    "domain": "stackexchange.com",
-                    "reason": "https://github.com/duckduckgo/duckduckgo-privacy-extension/issues/1819"
-                },
-                {
-                    "domain": "mathoverflow.net",
-                    "reason": "https://github.com/duckduckgo/duckduckgo-privacy-extension/issues/1819"
-                },
-                {
-                    "domain": "askubuntu.com",
-                    "reason": "https://github.com/duckduckgo/duckduckgo-privacy-extension/issues/1819"
-                },
-                {
-                    "domain": "superuser.com",
-                    "reason": "https://github.com/duckduckgo/duckduckgo-privacy-extension/issues/1819"
-                },
-                {
-                    "domain": "serverfault.com",
-                    "reason": "https://github.com/duckduckgo/duckduckgo-privacy-extension/issues/1819"
-                },
-                {
-                    "domain": "stackapps.com",
-                    "reason": "https://github.com/duckduckgo/duckduckgo-privacy-extension/issues/1819"
-                },
-                {
-                    "domain": "substack.com",
-                    "reason": "https://github.com/duckduckgo/duckduckgo-privacy-extension/issues/1841"
-                }
-            ],
-            "settings": {
-                "taintCheck": "disabled",
-                "matchAllDomains": "disabled",
-                "matchAllStackDomains": "disabled",
-                "overloadInstanceOf": "enabled",
-                "elementRemovalTimeout": 1000,
-                "injectGlobalStyles": "enabled",
-                "shadowDom": "enabled",
-                "scripts": [
-                    {
-                        "domain": "substackcdn.com",
-                        "reason": "https://github.com/duckduckgo/duckduckgo-privacy-extension/issues/1841"
-                    }
-                ],
-                "domains": [
-                    {
-                        "domain": "bbc.co.uk"
-                    },
-                    {
-                        "domain": "cnn.com"
-                    },
-                    {
-                        "domain": "preactjs.com"
-                    },
-                    {
-                        "domain": "reactjs.org"
-                    },
-                    {
-                        "domain": "browserbench.org"
-                    },
-                    {
-                        "domain": "xnxx.com"
-                    },
-                    {
-                        "domain": "wikipedia.org"
-                    },
-                    {
-                        "domain": "xvideos.com"
-                    },
-                    {
-                        "domain": "pornhub.com"
-                    },
-                    {
-                        "domain": "reddit.com"
-                    },
-                    {
-                        "domain": "amazon.com"
-                    },
-                    {
-                        "domain": "youtube.com"
-                    },
-                    {
-                        "domain": "facebook.com"
-                    },
-                    {
-                        "domain": "youtube.com"
-                    },
-                    {
-                        "disabled_domain": "stackoverflow.com"
-                    },
-                    {
-                        "domain": "xhamster.com"
-                    }
-                ],
-                "stackDomains": [
-                    {
-                        "domain": "clean.gg"
-                    },
-                    {
-                        "domain": "googlevideo.com"
-                    },
-                    {
-                        "domain": "nexac.com"
-                    },
-                    {
-                        "domain": "associates-amazon.com"
-                    },
-                    {
-                        "domain": "redd.it"
-                    },
-                    {
-                        "domain": "amazonbusiness.com"
-                    },
-                    {
-                        "domain": "indeed.com"
-                    },
-                    {
-                        "disabled_domain": "stackexchange.com"
-                    },
-                    {
-                        "domain": "bangassets.com"
-                    },
-                    {
-                        "domain": "fontawesome.com"
-                    },
-                    {
-                        "domain": "live-video.net"
-                    },
-                    {
-                        "domain": "behave.com"
-                    },
-                    {
-                        "domain": "imasdk.googleapis.com"
-                    },
-                    {
-                        "domain": "appcast.io"
-                    },
-                    {
-                        "domain": "d3b16pg7hqg2cy.cloudfront.net"
-                    },
-                    {
-                        "domain": "d7qzviu3xw2xc.cloudfront.net"
-                    },
-                    {
-                        "domain": "brightspot.cloud"
-                    },
-                    {
-                        "domain": "dogvlw4b46a0r.cloudfront.net"
-                    },
-                    {
-                        "domain": "d1at2uq7yy5k1j.cloudfront.net"
-                    },
-                    {
-                        "domain": "d2uap9jskdzp2.cloudfront.net"
-                    },
-                    {
-                        "domain": "consumertrack.com"
-                    },
-                    {
-                        "domain": "strpst.com"
-                    },
-                    {
-                        "domain": "d9esmwyn3ffr1.cloudfront.net"
-                    },
-                    {
-                        "domain": "mapbox.com"
-                    },
-                    {
-                        "domain": "mobtrakk.com"
-                    },
-                    {
-                        "domain": "d1qze0i78vhibv.cloudfront.net"
-                    },
-                    {
-                        "domain": "trustarc.com"
-                    },
-                    {
-                        "domain": "wikimedia.org"
-                    },
-                    {
-                        "domain": "phncdn.com"
-                    },
-                    {
-                        "domain": "vfthr.com"
-                    },
-                    {
-                        "domain": "aws.dev"
-                    },
-                    {
-                        "domain": "mediawiki.org"
-                    },
-                    {
-                        "domain": "ds69ljjohz9sr.cloudfront.net"
-                    },
-                    {
-                        "domain": "ad-delivery.net"
-                    },
-                    {
-                        "domain": "wunderkind.co"
-                    },
-                    {
-                        "domain": "d2in0p32vp1pij.cloudfront.net"
-                    },
-                    {
-                        "domain": "trustx.org"
-                    },
-                    {
-                        "domain": "bouncex.net"
-                    },
-                    {
-                        "domain": "ngtv.io"
-                    },
-                    {
-                        "domain": "ds6yc8t7pnx74.cloudfront.net"
-                    },
-                    {
-                        "domain": "d3216uwaav9lg7.cloudfront.net"
-                    },
-                    {
-                        "domain": "veryinterestvids.xyz"
-                    },
-                    {
-                        "domain": "vfgte.com"
-                    },
-                    {
-                        "domain": "schwab.com"
-                    },
-                    {
-                        "domain": "imgur.com"
-                    },
-                    {
-                        "domain": "persprovath.xyz"
-                    },
-                    {
-                        "domain": "outbrainimg.com"
-                    },
-                    {
-                        "domain": "ajax.googleapis.com"
-                    },
-                    {
-                        "domain": "w.org"
-                    },
-                    {
-                        "domain": "fonts.googleapis.com"
-                    },
-                    {
-                        "domain": "turner.com"
-                    },
-                    {
-                        "domain": "googleusercontent.com"
-                    },
-                    {
-                        "domain": "d8aa01cdolqj7.cloudfront.net"
-                    },
-                    {
-                        "domain": "navdmp.com"
-                    },
-                    {
-                        "domain": "xhcdn.com"
-                    },
-                    {
-                        "domain": "imglnke.com"
-                    },
-                    {
-                        "domain": "usbrowserspeed.com"
-                    },
-                    {
-                        "domain": "warnermediacdn.com"
-                    },
-                    {
-                        "domain": "d1xfq2052q7thw.cloudfront.net"
-                    },
-                    {
-                        "domain": "bangcreatives.com"
-                    },
-                    {
-                        "domain": "hotjar.io"
-                    },
-                    {
-                        "domain": "amazonaws.com"
-                    },
-                    {
-                        "domain": "vercel-analytics.com"
-                    },
-                    {
-                        "domain": "boomtrain.com"
-                    },
-                    {
-                        "domain": "cdnbasket.net"
-                    },
-                    {
-                        "domain": "awsstatic.com"
-                    },
-                    {
-                        "domain": "fbcdn.net"
-                    },
-                    {
-                        "domain": "dianomi.com"
-                    },
-                    {
-                        "domain": "amazon.co.uk"
-                    },
-                    {
-                        "domain": "dwrl96u0lgux5.cloudfront.net"
-                    },
-                    {
-                        "domain": "d39dwei46hk6jd.cloudfront.net"
-                    },
-                    {
-                        "domain": "bbci.co.uk"
-                    },
-                    {
-                        "domain": "bbcimg.co.uk"
-                    },
-                    {
-                        "domain": "edigitalsurvey.com"
-                    },
-                    {
-                        "domain": "gscontxt.net"
-                    },
-                    {
-                        "domain": "afcdn.net"
-                    },
-                    {
-                        "domain": "iperceptions.com"
-                    },
-                    {
-                        "disabled_domain": "cookielaw.org"
-                    },
-                    {
-                        "domain": "vscdns.com"
-                    },
-                    {
-                        "domain": "vs3.com"
-                    },
-                    {
-                        "domain": "summerhamster.com"
-                    },
-                    {
-                        "domain": "d1x2hu8k357bsh.cloudfront.net"
-                    },
-                    {
-                        "domain": "d2ef20sk9hi1u3.cloudfront.net"
-                    },
-                    {
-                        "domain": "ggpht.com"
-                    },
-                    {
-                        "domain": "ds7igiccqury3.cloudfront.net"
-                    },
-                    {
-                        "domain": "xvideos.com"
-                    },
-                    {
-                        "domain": "redditmedia.com"
-                    },
-                    {
-                        "domain": "adobe.com"
-                    },
-                    {
-                        "domain": "jnn-pa.googleapis.com"
-                    },
-                    {
-                        "domain": "zetaglobal.net"
-                    },
-                    {
-                        "domain": "gobankingrates.com"
-                    },
-                    {
-                        "domain": "chartbeat.net"
-                    },
-                    {
-                        "domain": "amzndevresources.com"
-                    },
-                    {
-                        "domain": "imdb.com"
-                    },
-                    {
-                        "domain": "wikidata.org"
-                    },
-                    {
-                        "domain": "etahub.com"
-                    },
-                    {
-                        "domain": "revjet.com"
-                    },
-                    {
-                        "domain": "ixiaa.com"
-                    },
-                    {
-                        "domain": "trustedbanana.com"
-                    },
-                    {
-                        "domain": "fanagentmu.pics"
-                    },
-                    {
-                        "domain": "indeed.tech"
-                    },
-                    {
-                        "domain": "outturner.com"
-                    },
-                    {
-                        "domain": "trafficfactory.biz"
-                    },
-                    {
-                        "domain": "d2beun48pmgqbs.cloudfront.net"
-                    },
-                    {
-                        "domain": "wmcdp.io"
-                    },
-                    {
-                        "domain": "bbc.com"
-                    },
-                    {
-                        "domain": "d1uznvntk80v7s.cloudfront.net"
-                    },
-                    {
-                        "domain": "ytimg.com"
-                    },
-                    {
-                        "domain": "beemray.com"
-                    },
-                    {
-                        "domain": "siege-amazon.com"
-                    },
-                    {
-                        "domain": "trafficjunky.net"
-                    },
-                    {
-                        "domain": "consensu.org"
-                    },
-                    {
-                        "domain": "ugdturner.com"
-                    },
-                    {
-                        "domain": "dr3fr5q4g2ul9.cloudfront.net"
-                    },
-                    {
-                        "disabled_domain": "cnn.io",
-                        "reason": "https://github.com/duckduckgo/privacy-configuration/issues/837"
-                    },
-                    {
-                        "domain": "cams.gratis"
-                    },
-                    {
-                        "domain": "d1t40axu4ik42k.cloudfront.net"
-                    },
-                    {
-                        "domain": "optimizely.com"
-                    },
-                    {
-                        "domain": "media-amazon.com"
-                    },
-                    {
-                        "domain": "amazondelivers.jobs"
-                    },
-                    {
-                        "domain": "keywee.co"
-                    },
-                    {
-                        "domain": "zqtk.net"
-                    },
-                    {
-                        "domain": "d23tl967axkois.cloudfront.net"
-                    },
-                    {
-                        "domain": "d3h2kq7so8dggb.cloudfront.net"
-                    },
-                    {
-                        "domain": "bangkazza.com"
-                    },
-                    {
-                        "domain": "effectivemeasure.net"
-                    },
-                    {
-                        "domain": "gravatar.com"
-                    },
-                    {
-                        "domain": "sstatic.net"
-                    },
-                    {
-                        "domain": "d2u4zldaqlyj2w.cloudfront.net"
-                    },
-                    {
-                        "domain": "akamaihd.net"
-                    },
-                    {
-                        "domain": "onaudience.com"
-                    },
-                    {
-                        "domain": "xhpingcdn.com"
-                    },
-                    {
-                        "domain": "eu-1-id5-sync.com"
-                    },
-                    {
-                        "domain": "xvideos-cdn.com"
-                    },
-                    {
-                        "domain": "wp.com"
-                    },
-                    {
-                        "domain": "quantcount.com"
-                    },
-                    {
-                        "domain": "vercel-insights.com"
-                    },
-                    {
-                        "domain": "jobsatamazon.co.uk"
-                    },
-                    {
-                        "domain": "flixcdn.com"
-                    },
-                    {
-                        "domain": "d2h1qfxg5j5pfv.cloudfront.net"
-                    },
-                    {
-                        "domain": "d20kffh39acpue.cloudfront.net"
-                    },
-                    {
-                        "domain": "d9sq4cz0q8up0.cloudfront.net"
-                    }
-                ],
-                "tagModifiers": {
-                    "script": {
-                        "filters": {
-                            "property": [
-                                "blocking",
-                                "fetchPriority"
-                            ],
-                            "attribute": [
-                                "blocking",
-                                "fetchpriority"
-                            ]
-                        }
-                    }
-                }
-            },
-            "hash": "602c7a440d15e5fdb6cf477d30b790ed"
+            "state": "disabled",
+            "exceptions": [],
+            "settings": {},
+            "hash": "86f6d35de3d5a529017ed8da512bac98"
         },
         "serviceworkerInitiatedRequests": {
             "exceptions": [],
@@ -3946,6 +3491,17 @@
                             }
                         ]
                     },
+                    "quantcast.com": {
+                        "rules": [
+                            {
+                                "rule": "cmp.quantcast.com",
+                                "domains": [
+                                    "express.co.uk"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1068"
+                            }
+                        ]
+                    },
                     "criteo.com": {
                         "rules": [
                             {
@@ -4220,6 +3776,17 @@
                                     "<all>"
                                 ],
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
+                            }
+                        ]
+                    },
+                    "ezodn.com": {
+                        "rules": [
+                            {
+                                "rule": "ezodn.com/cmp",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/468"
                             }
                         ]
                     },
@@ -4941,6 +4508,17 @@
                                     "pizzahut.com"
                                 ],
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/805"
+                            }
+                        ]
+                    },
+                    "online-metrix.net": {
+                        "rules": [
+                            {
+                                "rule": "online-metrix.net/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1079"
                             }
                         ]
                     },
@@ -6242,6 +5820,13 @@
                                     "pizzahut.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
+                            },
+                            {
+                                "rule": "w-profiling.cibc.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
                             }
                         ]
                     },
@@ -6632,6 +6217,13 @@
                                     "pizzahut.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
+                            },
+                            {
+                                "rule": "mfp.intuit.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
                             }
                         ]
                     },
@@ -7266,6 +6858,13 @@
                                     "pizzahut.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
+                            },
+                            {
+                                "rule": "content22.citibankonline.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
                             }
                         ]
                     },
@@ -7365,6 +6964,13 @@
                                     "pizzahut.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
+                            },
+                            {
+                                "rule": "drfdisvc.walmart.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
                             }
                         ]
                     },
@@ -8969,6 +8575,13 @@
                                     "pizzahut.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
+                            },
+                            {
+                                "rule": "content22.bmo.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
                             }
                         ]
                     },
@@ -9434,6 +9047,13 @@
                                     "pizzahut.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
+                            },
+                            {
+                                "rule": "content.discover.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
                             }
                         ]
                     },
@@ -9778,6 +9398,13 @@
                                     "pizzahut.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
+                            },
+                            {
+                                "rule": "content.espace-client.hellobank.fr/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
                             }
                         ]
                     },
@@ -10887,6 +10514,13 @@
                                     "pizzahut.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
+                            },
+                            {
+                                "rule": "tm.regions.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
                             }
                         ]
                     },
@@ -11070,6 +10704,13 @@
                                     "pizzahut.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
+                            },
+                            {
+                                "rule": "idstatus.sky.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
                             }
                         ]
                     },
@@ -11311,6 +10952,13 @@
                                     "pizzahut.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: omtrdc.net"
+                            },
+                            {
+                                "rule": "check3.tiaa.org/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
                             }
                         ]
                     },
@@ -13248,6 +12896,358 @@
                             }
                         ]
                     },
+                    "gusto.com": {
+                        "rules": [
+                            {
+                                "rule": "cdn.gusto.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "f-cdn.com": {
+                        "rules": [
+                            {
+                                "rule": "cdn1.f-cdn.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "fidelity.com": {
+                        "rules": [
+                            {
+                                "rule": "cfa.fidelity.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "mystreetscape.com": {
+                        "rules": [
+                            {
+                                "rule": "cfa.mystreetscape.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "tiaabank.com": {
+                        "rules": [
+                            {
+                                "rule": "check3.tiaabank.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "wallapop.com": {
+                        "rules": [
+                            {
+                                "rule": "clear.wallapop.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "atmosphere.ca": {
+                        "rules": [
+                            {
+                                "rule": "content.atmosphere.ca/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "canadiantire.ca": {
+                        "rules": [
+                            {
+                                "rule": "content.canadiantire.ca/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "citizensbankonline.com": {
+                        "rules": [
+                            {
+                                "rule": "content.citizensbankonline.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "gap.com": {
+                        "rules": [
+                            {
+                                "rule": "content.gap.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "marks.com": {
+                        "rules": [
+                            {
+                                "rule": "content.marks.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "quicken.com": {
+                        "rules": [
+                            {
+                                "rule": "content.quicken.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "sportchek.ca": {
+                        "rules": [
+                            {
+                                "rule": "content.sportchek.ca/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "homedepot.com": {
+                        "rules": [
+                            {
+                                "rule": "customer.homedepot.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "my100bank.com": {
+                        "rules": [
+                            {
+                                "rule": "debs.my100bank.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "santanderbank.com": {
+                        "rules": [
+                            {
+                                "rule": "digitalid.santanderbank.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "authorize.net": {
+                        "rules": [
+                            {
+                                "rule": "dpf.authorize.net/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "53.com": {
+                        "rules": [
+                            {
+                                "rule": "event.evtm.53.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "adp.com": {
+                        "rules": [
+                            {
+                                "rule": "image.online.adp.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "cdscdn.com": {
+                        "rules": [
+                            {
+                                "rule": "imagesmx.cdscdn.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "myfrs.com": {
+                        "rules": [
+                            {
+                                "rule": "metrics.myfrs.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "ameriprise.com": {
+                        "rules": [
+                            {
+                                "rule": "ocs.ameriprise.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "spectrum.net": {
+                        "rules": [
+                            {
+                                "rule": "pov.spectrum.net/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "betfair.com": {
+                        "rules": [
+                            {
+                                "rule": "regstat.betfair.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "liveme.com": {
+                        "rules": [
+                            {
+                                "rule": "sc.liveme.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "pilates.com": {
+                        "rules": [
+                            {
+                                "rule": "sptbb.pilates.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "ebay-us.com": {
+                        "rules": [
+                            {
+                                "rule": "src.ebay-us.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "tacdn.com": {
+                        "rules": [
+                            {
+                                "rule": "t1.tacdn.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "beachbody.com": {
+                        "rules": [
+                            {
+                                "rule": "tm.beachbody.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "td.com": {
+                        "rules": [
+                            {
+                                "rule": "tmx.td.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "simplii.com": {
+                        "rules": [
+                            {
+                                "rule": "w-profiling.simplii.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
+                    "nsbank.com": {
+                        "rules": [
+                            {
+                                "rule": "w3.nsbank.com/",
+                                "domains": [
+                                    "citizensbankonline.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: online-metrix.net"
+                            }
+                        ]
+                    },
                     "joindeleteme.com": {
                         "rules": [
                             {
@@ -13977,7 +13977,7 @@
                 }
             },
             "exceptions": [],
-            "hash": "2af7cd0148aca1d2d5681cdabdb207ca"
+            "hash": "9dbcc2f941ef7eef745249baddd6b2f0"
         },
         "trackingCookies1p": {
             "settings": {
@@ -14365,6 +14365,18 @@
         },
         {
             "domain": "ticketmaster.com",
+            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
+        },
+        {
+            "domain": "livenation.com",
+            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1053"
+        },
+        {
+            "domain": "bank.marksandspencer.com",
+            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
+        },
+        {
+            "domain": "www7.marksandspencer.com",
             "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
         }
     ]

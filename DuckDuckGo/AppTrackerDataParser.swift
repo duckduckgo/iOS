@@ -70,7 +70,7 @@ class TrackerDataParser {
                 return tracker
             }
             
-            let parts = domain.split(separator: ".").dropFirst()
+            let parts = check.split(separator: ".").dropFirst()
             check = parts.joined(separator: ".")
         }
         
@@ -93,7 +93,7 @@ class TrackerDataParser {
                 return check
             }
             
-            let parts = domain.split(separator: ".").dropFirst()
+            let parts = check.split(separator: ".").dropFirst()
             check = parts.joined(separator: ".")
         }
         

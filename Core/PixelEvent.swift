@@ -296,15 +296,10 @@ extension Pixel {
         case remoteMessageShown
         case remoteMessageShownUnique
         case remoteMessageDismissed
-        case remoteMessageShownPrimaryActionClicked
-        case remoteMessageShownSecondaryActionClicked
-
-        // MARK: mac promo
-
-        case macPromoSheetShownUnique
-        case macPromoSheetDismissed
-        case macPromoPrimaryActionClicked
-        case shareLink
+        case remoteMessageActionClicked
+        case remoteMessagePrimaryActionClicked
+        case remoteMessageSecondaryActionClicked
+        case remoteMessageSheet
 
         // MARK: debug pixels
         case dbCrashDetected
@@ -708,15 +703,10 @@ extension Pixel.Event {
         case .remoteMessageShown: return "m_remote_message_shown"
         case .remoteMessageShownUnique: return "m_remote_message_shown_unique"
         case .remoteMessageDismissed: return "m_remote_message_dismissed"
-        case .remoteMessageShownPrimaryActionClicked: return "m_remote_message_primary_action_clicked"
-        case .remoteMessageShownSecondaryActionClicked: return "m_remote_message_secondary_action_clicked"
-
-        // MARK: mac promo experiment
-
-        case .macPromoSheetShownUnique: return "m_macpromo_sheet_shown_unique"
-        case .macPromoSheetDismissed: return "m_macpromo_sheet_dismissed"
-        case .macPromoPrimaryActionClicked: return "m_macpromo_primary_action_clicked"
-        case .shareLink: return "m_share_link"
+        case .remoteMessageActionClicked: return "m_remote_message_action_clicked"
+        case .remoteMessagePrimaryActionClicked: return "m_remote_message_primary_action_clicked"
+        case .remoteMessageSecondaryActionClicked: return "m_remote_message_secondary_action_clicked"
+        case .remoteMessageSheet: return "m_remote_message_sheet"
 
         // MARK: debug pixels
 

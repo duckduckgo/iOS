@@ -78,7 +78,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 .forEach { $0.perform(setHardwareLayout, with: nil) }
         }
         #endif
-        
+
+        // Can be removed after a couple of versions
+        cleanUpMacPromoExperiment2()
+
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
         Configuration.setURLProvider(AppConfigurationURLProvider())
 
@@ -226,6 +229,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         appIsLaunching = true
         return true
+    }
+
+    private func cleanUpMacPromoExperiment2() {
+        UserDefaults.standard.removeObject(forKey: "com.duckduckgo.ios.macPromoMay23.exp2.cohort")
     }
 
     private func clearTmp() {

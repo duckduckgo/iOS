@@ -20,6 +20,7 @@
 import Foundation
 import BrowserServicesKit
 import Core
+import RemoteMessaging
 
 struct HomeMessageViewModelBuilder {
 
@@ -31,89 +32,22 @@ struct HomeMessageViewModelBuilder {
         static let macComputer = "RemoteMessageMacComputer"
     }
 
-    static func build(for remoteMessage: RemoteMessageModel, onDidClose: @escaping (HomeMessageViewModel.ButtonAction?, RemoteAction) -> Void) -> HomeMessageViewModel? {
+    static func build(for remoteMessage: RemoteMessageModel,
+                      onDidClose: @escaping (HomeMessageViewModel.ButtonAction?) -> Void,
+                      onDidAppear: @escaping () -> Void) -> HomeMessageViewModel? {
             guard let content = remoteMessage.content else { return nil }
 
-            switch content {
-            case .small(let titleText, let descriptionText):
-                return HomeMessageViewModel(messageId: remoteMessage.id,
-                                            image: nil, topText: nil, title: titleText, subtitle: descriptionText,
-                                            buttons: [],
-                                            onDidClose: onDidClose)
-            case .medium(let titleText, let descriptionText, let placeholder):
-                return HomeMessageViewModel(messageId: remoteMessage.id,
-                                            image: placeholder.rawValue, topText: nil, title: titleText, subtitle: descriptionText,
-                                            buttons: [],
-                                            onDidClose: onDidClose)
-            case .bigSingleAction(let titleText, let descriptionText, let placeholder, let primaryActionText, let primaryAction):
-                return HomeMessageViewModel(messageId: remoteMessage.id,
-                                            image: placeholder.rawValue, topText: nil, title: titleText, subtitle: descriptionText,
-                                            buttons: [
-                                                HomeMessageButtonViewModel(title: primaryActionText,
-                                                                           actionStyle: primaryAction.actionStyle,
-                                                                           action: mapActionToViewModel(remoteAction: primaryAction,
-                                                                                                        buttonAction: .primaryAction,
-                                                                                                        onDidClose: onDidClose))],
-                                            onDidClose: onDidClose)
-            case .bigTwoAction(let titleText, let descriptionText, let placeholder, let primaryActionText,
-                               let primaryAction, let secondaryActionText, let secondaryAction):
-                return HomeMessageViewModel(messageId: remoteMessage.id,
-                                            image: placeholder.rawValue, topText: nil, title: titleText, subtitle: descriptionText,
-                                            buttons: [
-                                                HomeMessageButtonViewModel(title: secondaryActionText,
-                                                                           actionStyle: .cancel,
-                                                                           action: mapActionToViewModel(remoteAction: secondaryAction,
-                                                                                                        buttonAction: .secondaryAction,
-                                                                                                        onDidClose: onDidClose)),
-                                                HomeMessageButtonViewModel(title: primaryActionText,
-                                                                           actionStyle: primaryAction.actionStyle,
-                                                                           action: mapActionToViewModel(remoteAction: primaryAction,
-                                                                                                        buttonAction: .primaryAction,
-                                                                                                        onDidClose: onDidClose))],
-                                            onDidClose: onDidClose)
-            }
+        return HomeMessageViewModel(messageId: remoteMessage.id, modelType: content, onDidClose: onDidClose, onDidAppear: onDidAppear)
     }
 
-    static func mapActionToViewModel(remoteAction: RemoteAction,
-                                     buttonAction: HomeMessageViewModel.ButtonAction,
-                                     onDidClose: @escaping (HomeMessageViewModel.ButtonAction?, RemoteAction) -> Void) -> () -> Void {
-
-        switch remoteAction {
-        case .share:
-            return {
-                onDidClose(buttonAction, remoteAction)
-            }
-        case .url(let value):
-            return {
-                LaunchTabNotification.postLaunchTabNotification(urlString: value)
-                onDidClose(buttonAction, remoteAction)
-            }
-        case .appStore:
-            return {
-                let url = URL.appStore
-                if UIApplication.shared.canOpenURL(url as URL) {
-                    UIApplication.shared.open(url)
-                }
-                onDidClose(buttonAction, remoteAction)
-            }
-        case .dismiss:
-            return {
-                onDidClose(buttonAction, remoteAction)
-            }
-        }
-    }
 }
 
 extension RemoteAction {
 
     var actionStyle: HomeMessageButtonViewModel.ActionStyle {
         switch self {
-        case .share(let url, let title):
-            if let url = URL(string: url) {
-                return .share(url: url, title: title)
-            } else {
-                return .default
-            }
+        case .share(let value, let title):
+            return .share(value: value, title: title)
 
         case .appStore, .url:
             return .default

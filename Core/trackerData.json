@@ -3068,18 +3068,6 @@
                 }
             ]
         },
-        "arkoselabs.com": {
-            "domain": "arkoselabs.com",
-            "owner": {
-                "name": "Arkose Labs, Inc.",
-                "displayName": "Arkose Labs"
-            },
-            "prevalence": 0.000116,
-            "fingerprinting": 3,
-            "cookies": 0.0000136,
-            "categories": [],
-            "default": "ignore"
-        },
         "aspiringattempt.com": {
             "domain": "aspiringattempt.com",
             "owner": {
@@ -5679,85 +5667,6 @@
             "cookies": 0.01,
             "default": "block"
         },
-        "civiccomputing.com": {
-            "domain": "civiccomputing.com",
-            "owner": {
-                "name": "Civic Computing Limited",
-                "displayName": "Civic Computing"
-            },
-            "prevalence": 0.00236,
-            "fingerprinting": 2,
-            "cookies": 0.000912,
-            "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "civiccomputing\\.com\\/9\\/cookieControl-9\\.5\\.min\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0.0000136
-                },
-                {
-                    "rule": "civiccomputing\\.com\\/9\\/cookieControl-9\\.x\\.min\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0.000368
-                },
-                {
-                    "rule": "civiccomputing\\.com\\/9\\/cookieControl-9\\.8\\.min\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0.0000136
-                },
-                {
-                    "rule": "civiccomputing\\.com\\/8\\/cookieControl-8\\.1\\.min\\.js",
-                    "fingerprinting": 1,
-                    "cookies": 0.00000681
-                },
-                {
-                    "rule": "civiccomputing\\.com\\/9\\/cookieControl-9\\.7\\.min\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0.0000204
-                },
-                {
-                    "rule": "civiccomputing\\.com\\/8\\/cookieControl-8\\.x\\.min\\.js",
-                    "fingerprinting": 1,
-                    "cookies": 0.0000272
-                },
-                {
-                    "rule": "civiccomputing\\.com\\/js\\/container_sCsGby1s\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0.0000136
-                },
-                {
-                    "rule": "civiccomputing\\.com\\/9\\/cookieControl-9\\.4\\.min\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0.0000136
-                },
-                {
-                    "rule": "civiccomputing\\.com\\/8\\.0\\/cookieControl-8\\.2\\.1\\.min\\.js",
-                    "fingerprinting": 1,
-                    "cookies": 0.0000136
-                },
-                {
-                    "rule": "civiccomputing\\.com\\/9\\/cookieControl-9\\.0\\.min\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                },
-                {
-                    "rule": "civiccomputing\\.com\\/9\\/cookieControl-9\\.6\\.1\\.min\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0.0000136
-                },
-                {
-                    "rule": "civiccomputing\\.com\\/9\\/cookieControl-9\\.3\\.1\\.min\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                },
-                {
-                    "rule": "civiccomputing\\.com\\/9\\/cookieControl-9\\.1\\.min\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                }
-            ]
-        },
         "ck-ie.com": {
             "domain": "ck-ie.com",
             "owner": {
@@ -6544,43 +6453,6 @@
             "categories": [],
             "default": "block"
         },
-        "consentframework.com": {
-            "domain": "consentframework.com",
-            "owner": {
-                "name": "Sirdata SAS",
-                "displayName": "Sirdata"
-            },
-            "prevalence": 0.00208,
-            "fingerprinting": 2,
-            "cookies": 0.00205,
-            "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "consentframework\\.com/js/pa/.*",
-                    "fingerprinting": 2,
-                    "cookies": 0.000201
-                },
-                {
-                    "rule": "consentframework\\.com\\/api\\/v1\\/public\\/user-action",
-                    "fingerprinting": 0,
-                    "cookies": 0,
-                    "comment": "pixel"
-                }
-            ]
-        },
-        "consentmanager.net": {
-            "domain": "consentmanager.net",
-            "owner": {
-                "name": "consentmanager AB",
-                "displayName": "ConsentManager"
-            },
-            "prevalence": 0.00426,
-            "fingerprinting": 2,
-            "cookies": 0.00325,
-            "categories": [],
-            "default": "block"
-        },
         "contentexchange.me": {
             "domain": "contentexchange.me",
             "owner": {
@@ -6720,62 +6592,6 @@
                     "cookies": 0.000201
                 }
             ]
-        },
-        "cookiefirst.com": {
-            "domain": "cookiefirst.com",
-            "owner": {
-                "name": "cookiefirst.com",
-                "displayName": "cookiefirst.com"
-            },
-            "prevalence": 0.0011,
-            "fingerprinting": 2,
-            "cookies": 0,
-            "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "cookiefirst\\.com\\/banner\\/v2\\.6\\.9\\/static-main\\/app\\.95b2\\.c\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                }
-            ]
-        },
-        "cookieinformation.com": {
-            "domain": "cookieinformation.com",
-            "owner": {
-                "name": "Cookie Information A/S",
-                "displayName": "Cookie Information"
-            },
-            "prevalence": 0.00195,
-            "fingerprinting": 1,
-            "cookies": 0.00153,
-            "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "cookieinformation\\.com\\/uc\\.js",
-                    "fingerprinting": 1,
-                    "cookies": 0.000674
-                },
-                {
-                    "rule": "cookieinformation\\.com\\/cookiesharingiframe\\.html",
-                    "fingerprinting": 1,
-                    "cookies": 0.000381
-                }
-            ]
-        },
-        "cookiepro.com": {
-            "domain": "cookiepro.com",
-            "owner": {
-                "name": "OneTrust LLC",
-                "displayName": "OneTrust",
-                "privacyPolicy": "https://www.onetrust.com/privacy-notice"
-            },
-            "prevalence": 0.00518,
-            "fingerprinting": 2,
-            "cookies": 0.00485,
-            "categories": [],
-            "default": "block"
         },
         "cootlogix.com": {
             "domain": "cootlogix.com",
@@ -7923,23 +7739,6 @@
             "categories": [],
             "default": "block"
         },
-        "datadome.co": {
-            "domain": "datadome.co",
-            "owner": {
-                "name": "DataDome",
-                "displayName": "DataDome"
-            },
-            "prevalence": 0.00418,
-            "fingerprinting": 3,
-            "cookies": 0.00353,
-            "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "datadome\\.co/js/"
-                }
-            ]
-        },
         "dbukjj6eu5tsf.cloudfront.net": {
             "domain": "dbukjj6eu5tsf.cloudfront.net",
             "owner": {
@@ -8495,25 +8294,6 @@
             "fingerprinting": 1,
             "cookies": 0.01,
             "default": "block"
-        },
-        "dreamlab.pl": {
-            "domain": "dreamlab.pl",
-            "owner": {
-                "name": "Ringier Axel Springer Media AG",
-                "displayName": "Ringier Axel Springer"
-            },
-            "prevalence": 0.000109,
-            "fingerprinting": 1,
-            "cookies": 0.000109,
-            "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "dreamlab\\.pl\\/static-v2\\/cmp\\.bundle\\.js",
-                    "fingerprinting": 1,
-                    "cookies": 0.0000545
-                }
-            ]
         },
         "driftt.com": {
             "domain": "driftt.com",
@@ -10538,18 +10318,6 @@
                     "cookies": 0.0000136
                 }
             ]
-        },
-        "forter.com": {
-            "domain": "forter.com",
-            "owner": {
-                "name": "Forter Inc.",
-                "displayName": "Forter"
-            },
-            "prevalence": 0.00302,
-            "fingerprinting": 3,
-            "cookies": 0.00283,
-            "categories": [],
-            "default": "block"
         },
         "fortunatemark.com": {
             "domain": "fortunatemark.com",
@@ -13210,65 +12978,6 @@
                     "rule": "idio\\.co\\/ia\\.js",
                     "fingerprinting": 1,
                     "cookies": 0.0000749
-                }
-            ]
-        },
-        "iesnare.com": {
-            "domain": "iesnare.com",
-            "owner": {
-                "name": "TransUnion LLC",
-                "displayName": "TransUnion"
-            },
-            "prevalence": 0.00167,
-            "fingerprinting": 3,
-            "cookies": 0.00164,
-            "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "iesnare\\.com\\/general5\\/wdp\\.js",
-                    "fingerprinting": 3,
-                    "cookies": 0.000626
-                },
-                {
-                    "rule": "iesnare\\.com\\/snare\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0.000177
-                },
-                {
-                    "rule": "iesnare\\.com\\/general5\\/8kBKRVp2MD8gzqEz2pogphwEF2uRk3-QIGEed9TZ_wM\\/wdp\\.js",
-                    "fingerprinting": 3,
-                    "cookies": 0.0000613
-                },
-                {
-                    "rule": "iesnare\\.com\\/general5\\/NmVxq-iDDMiwb1gCA5eBhL60S9VNaWh5lDA1Ne2MdRI\\/wdp\\.js",
-                    "fingerprinting": 3,
-                    "cookies": 0.000034
-                },
-                {
-                    "rule": "iesnare\\.com\\/5\\.0\\.0\\/wdp\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0.0000204
-                },
-                {
-                    "rule": "iesnare\\.com\\/general5\\/5FExse%2BoA1134BhiwCF2EeQ1TfisPJGha4CpVG2nd7E%3D\\/wdp\\.js",
-                    "fingerprinting": 3,
-                    "cookies": 0.0000136
-                },
-                {
-                    "rule": "iesnare\\.com\\/5\\.2\\.2\\/wdp\\.js",
-                    "fingerprinting": 3,
-                    "cookies": 0.0000681
-                },
-                {
-                    "rule": "iesnare\\.com\\/early5\\/nLdMddw0jvDUZG3ETn8y0CEt7ZECk8Jm4N-uQ7wPu0k\\/wdp\\.js",
-                    "fingerprinting": 3,
-                    "cookies": 0.0000136
-                },
-                {
-                    "rule": "iesnare\\.com\\/5\\.1\\.0\\/wdp\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0.0000204
                 }
             ]
         },
@@ -20734,55 +20443,6 @@
             ],
             "default": "block"
         },
-        "perimeterx.net": {
-            "domain": "perimeterx.net",
-            "owner": {
-                "name": "PerimeterX, Inc.",
-                "displayName": "PerimeterX"
-            },
-            "prevalence": 0.000374,
-            "fingerprinting": 3,
-            "cookies": 0.000279,
-            "categories": [
-                "Ad Motivated Tracking",
-                "Ad Fraud",
-                "Analytics",
-                "Audience Measurement"
-            ],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "perimeterx\\.net\\/PXFF0j69T5\\/captcha\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                },
-                {
-                    "rule": "perimeterx\\.net/[a-zA-Z0-9]+/main\\.min\\.js",
-                    "fingerprinting": 3,
-                    "cookies": 0.0000272
-                },
-                {
-                    "rule": "perimeterx\\.net\\/PXh1Z8j4kW\\/captcha\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                },
-                {
-                    "rule": "perimeterx\\.net\\/PX31404oqJ\\/captcha\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                },
-                {
-                    "rule": "perimeterx\\.net\\/PX8T5aKZsq\\/captcha\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                },
-                {
-                    "rule": "perimeterx\\.net\\/PXev56mY37\\/captcha\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                }
-            ]
-        },
         "permutive.app": {
             "domain": "permutive.app",
             "owner": {
@@ -21885,48 +21545,6 @@
                     "comment": "pixel"
                 }
             ]
-        },
-        "px-cdn.net": {
-            "domain": "px-cdn.net",
-            "owner": {
-                "name": "PerimeterX, Inc.",
-                "displayName": "PerimeterX"
-            },
-            "prevalence": 0.0011,
-            "fingerprinting": 2,
-            "cookies": 0,
-            "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "px-cdn\\.net\\/PXLkXIE7Oj\\/captcha\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                },
-                {
-                    "rule": "px-cdn\\.net\\/PXO4boPf13\\/captcha\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                },
-                {
-                    "rule": "px-cdn\\.net\\/api\\/v1\\/PXsLC3j22K\\/d\\/e",
-                    "fingerprinting": 0,
-                    "cookies": 0,
-                    "comment": "pixel"
-                }
-            ]
-        },
-        "px-cloud.net": {
-            "domain": "px-cloud.net",
-            "owner": {
-                "name": "PerimeterX, Inc.",
-                "displayName": "PerimeterX"
-            },
-            "prevalence": 0.00277,
-            "fingerprinting": 3,
-            "cookies": 0.000728,
-            "categories": [],
-            "default": "block"
         },
         "pxlclnmdecom-a.akamaihd.net": {
             "domain": "pxlclnmdecom-a.akamaihd.net",
@@ -24271,80 +23889,6 @@
             "categories": [],
             "default": "block"
         },
-        "sdiapi.com": {
-            "domain": "sdiapi.com",
-            "owner": {
-                "name": "sourcedefense",
-                "displayName": "sourcedefense"
-            },
-            "prevalence": 0.000327,
-            "fingerprinting": 2,
-            "cookies": 0.000252,
-            "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "sdiapi\\.com/vice_loader/",
-                    "fingerprinting": 2,
-                    "cookies": 0.0000204
-                },
-                {
-                    "rule": "sdiapi\\.com\\/vice_release\\/1\\.23\\.1\\.1",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                },
-                {
-                    "rule": "sdiapi\\.com\\/callawaygolf\\/callawaygolf\\/1\\.23\\.1\\.1\\/",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                },
-                {
-                    "rule": "sdiapi\\.com\\/reporter\\/1\\.0\\.7\\.22\\/receiver\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                },
-                {
-                    "rule": "sdiapi\\.com\\/big5\\/big5\\/1\\.23\\.1\\.1\\/",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                },
-                {
-                    "rule": "sdiapi\\.com\\/tprg\\/bouxavenue\\/1\\.23\\.1\\.1\\/",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                },
-                {
-                    "rule": "sdiapi\\.com\\/callawaygolf\\/callawaygolfpreowned\\/1\\.23\\.1\\.1\\/",
-                    "fingerprinting": 2,
-                    "cookies": 0.00000681
-                },
-                {
-                    "rule": "sdiapi\\.com\\/stevemadden\\/dolcevita\\/1\\.23\\.1\\.1\\/",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                },
-                {
-                    "rule": "sdiapi\\.com/helenoftroy/.*",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                },
-                {
-                    "rule": "sdiapi\\.com\\/horizonblue\\/horizonblue\\/1\\.23\\.1\\.1\\/",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                },
-                {
-                    "rule": "sdiapi\\.com\\/rb\\/mucinex\\/1\\.23\\.1\\.1\\/",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                },
-                {
-                    "rule": "sdiapi\\.com\\/stevemadden\\/stevemadden\\/1\\.23\\.1\\.1\\/",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                }
-            ]
-        },
         "sdtagging.azureedge.net": {
             "domain": "sdtagging.azureedge.net",
             "owner": {
@@ -25142,53 +24686,6 @@
             "fingerprinting": 1,
             "cookies": 0.01,
             "default": "block"
-        },
-        "sift.com": {
-            "domain": "sift.com",
-            "owner": {
-                "name": "Sift Science, Inc.",
-                "displayName": "Sift Science",
-                "privacyPolicy": "https://sift.com/service-privacy"
-            },
-            "prevalence": 0.000987,
-            "fingerprinting": 3,
-            "cookies": 0.000858,
-            "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "sift\\.com\\/s\\.js",
-                    "fingerprinting": 3,
-                    "cookies": 0.000456
-                },
-                {
-                    "rule": "sift\\.com\\/s-beta\\.js",
-                    "fingerprinting": 3,
-                    "cookies": 0.0000136
-                }
-            ]
-        },
-        "siftscience.com": {
-            "domain": "siftscience.com",
-            "owner": {
-                "name": "Sift Science, Inc.",
-                "displayName": "Sift Science",
-                "privacyPolicy": "https://sift.com/service-privacy"
-            },
-            "prevalence": 0.0012,
-            "fingerprinting": 3,
-            "cookies": 0.00103,
-            "categories": [
-                "Ad Fraud"
-            ],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "siftscience\\.com\\/s\\.js",
-                    "fingerprinting": 3,
-                    "cookies": 0.000572
-                }
-            ]
         },
         "signifyd.com": {
             "domain": "signifyd.com",
@@ -27545,46 +27042,92 @@
                     "rule": "tags\\.tiqcdn\\.com/utag/.*/utag\\.js",
                     "exceptions": {
                         "domains": [
+                            "1und1.de",
+                            "agl.com.au",
                             "asics.com",
                             "bankofamerica.com",
+                            "bankofscotland.co.uk",
                             "bloomingdales.com",
+                            "bupa.co.uk",
+                            "bupa.com.au",
                             "caremark.com",
+                            "chihealth.com",
                             "chilis.com",
                             "cox.com",
+                            "cvs.com",
+                            "dignityhealth.com",
+                            "fidelityrewards.com",
+                            "fingerhut.com",
+                            "halifax-online.co.uk",
+                            "halifax.co.uk",
                             "hsbc.co.uk",
                             "hsbc.com",
                             "humana.com",
                             "intuit.com",
+                            "latitudefinancial.com.au",
+                            "lloydsbank.com",
                             "marksandspencer.com",
+                            "mbna.co.uk",
+                            "mdanderson.org",
                             "ml.com",
                             "mtb.com",
+                            "myaccountaccess.com",
+                            "myvi.in",
                             "pch.com",
                             "priceline.com",
-                            "usbank.com"
+                            "providence.org",
+                            "psjhmedgroups.org",
+                            "schwab.com",
+                            "scottishwidows.co.uk",
+                            "spectrum.com",
+                            "spectrum.net",
+                            "stlukeshealth.org",
+                            "sunlife.ca",
+                            "swedish.org",
+                            "t-mobile.com",
+                            "tdameritrade.com",
+                            "travelers.com",
+                            "unimelb.edu.au",
+                            "unionbank.com",
+                            "unipolsai.it",
+                            "unive.nl",
+                            "usbank.com",
+                            "visible.com",
+                            "vmfh.org",
+                            "vodacom.co.za",
+                            "vodafone.co.uk",
+                            "voeazul.com.br"
                         ]
                     },
                     "options": {
                         "domains": [
                             "10play.com.au",
+                            "1und1.de",
                             "32red.com",
                             "active.com",
+                            "agl.com.au",
                             "aktion-mensch.de",
                             "americastire.com",
+                            "bankofscotland.co.uk",
                             "baseballsavings.com",
                             "basf.us",
                             "belk.com",
                             "blackbaud.com",
                             "bloomingdales.com",
                             "boxlunch.com",
+                            "bupa.co.uk",
+                            "bupa.com.au",
                             "canon.co.uk",
                             "cbs.com",
                             "cdw.com",
                             "celebritycruises.com",
+                            "chihealth.com",
                             "commonspirit.org",
                             "consumentenbond.nl",
                             "converse.com",
                             "costadelmar.com",
                             "customerservice-macys.com",
+                            "cvs.com",
                             "cvshealth.com",
                             "dignityhealth.org",
                             "discounttire.com",
@@ -27592,26 +27135,39 @@
                             "dropbox.com",
                             "dropboxforum.com",
                             "eddiebaueroutlet.com",
+                            "fidelityrewards.com",
+                            "fingerhut.com",
                             "hagerty.com",
+                            "halifax-online.co.uk",
+                            "halifax.co.uk",
                             "hartvannederland.nl",
                             "hottopic.com",
                             "hotwire.com",
                             "hulu.com",
+                            "humana.com",
                             "ibm.com",
+                            "intuit.com",
                             "iweb-sharedealing.co.uk",
                             "just-eat.ie",
                             "kijk.nl",
                             "klachtenkompas.nl",
+                            "latitudefinancial.com.au",
                             "lenscrafters.com",
+                            "lloydsbank.com",
                             "lloydsbankinggroup.com",
                             "macys.com",
                             "marksandspencer.com",
+                            "mbna.co.uk",
+                            "mdanderson.org",
                             "meinestadt.de",
                             "mercer.com",
                             "michaels.com",
                             "microsoft.com",
                             "miumiu.com",
                             "mscdirect.com",
+                            "mtb.com",
+                            "myaccountaccess.com",
+                            "myvi.in",
                             "ncl.com",
                             "neimanmarcus.com",
                             "newbalance.com",
@@ -27631,6 +27187,8 @@
                             "potterybarn.com",
                             "potterybarnkids.com",
                             "prada.com",
+                            "providence.org",
+                            "psjhmedgroups.org",
                             "qualcomm.com",
                             "qvc.com",
                             "rakuten.co.jp",
@@ -27641,16 +27199,36 @@
                             "salvationarmy.org",
                             "salvationarmyusa.org",
                             "satruck.org",
+                            "schwab.com",
                             "schwabassetmanagement.com",
+                            "scottishwidows.co.uk",
                             "shownieuws.nl",
+                            "spectrum.com",
+                            "spectrum.net",
+                            "stlukeshealth.org",
                             "sunglasshut.com",
+                            "sunlife.ca",
+                            "swedish.org",
+                            "t-mobile.com",
                             "talbots.com",
                             "targetoptical.com",
+                            "tdameritrade.com",
                             "thegreatcourses.com",
                             "tommy.com",
                             "top10.com",
+                            "travelers.com",
+                            "unimelb.edu.au",
+                            "unionbank.com",
+                            "unipolsai.it",
+                            "unive.nl",
+                            "usbank.com",
                             "versace.com",
                             "victoriassecret.com",
+                            "visible.com",
+                            "vmfh.org",
+                            "vodacom.co.za",
+                            "vodafone.co.uk",
+                            "voeazul.com.br",
                             "westelm.com",
                             "williams-sonoma.com",
                             "woolworths.com.au",
@@ -27678,19 +27256,7 @@
                     "rule": "tiqcdn\\.com/shared/tms/t\\.tealium_collect\\.1_0_3\\.js"
                 },
                 {
-                    "rule": "tiqcdn\\.com/utag/immobilienscout/is24/prod/utag\\.js"
-                },
-                {
                     "rule": "tiqcdn\\.com/dle/ibm/web/d_medallia_survey_configurations\\.js"
-                },
-                {
-                    "rule": "tiqcdn\\.com/utag/telekom/bestellcentergk/prod/utag\\.js"
-                },
-                {
-                    "rule": "tiqcdn\\.com/utag/telekom/unterhaltung/prod/utag\\.js"
-                },
-                {
-                    "rule": "tiqcdn\\.com/utag/telekom/community/prod/utag\\.js"
                 },
                 {
                     "rule": "tiqcdn\\.com/dle/usaa/nw/ent-pubhome-app\\.js"
@@ -27702,43 +27268,7 @@
                     "rule": "tiqcdn\\.com/dle/bofa/main/prod-_-live%20chat\\.js"
                 },
                 {
-                    "rule": "tiqcdn\\.com/utag/colruytgroup/colruyt/prod/utag\\.js"
-                },
-                {
-                    "rule": "tiqcdn\\.com/utag/colruytgroup/dreamland/prod/utag\\.js"
-                },
-                {
-                    "rule": "tiqcdn\\.com/utag/corelio/gva-pub/prod/utag\\.js"
-                },
-                {
-                    "rule": "tiqcdn\\.com/utag/corelio/hbvl-pub/prod/utag\\.js"
-                },
-                {
-                    "rule": "tiqcdn\\.com/utag/intesasanpaolo/vetrina/prod/utag\\.js"
-                },
-                {
                     "rule": "tiqcdn\\.com/utag/gmcr/keurighybris/prod/utag\\.modalExt_857\\.js"
-                },
-                {
-                    "rule": "tiqcdn\\.com/utag/corelio/limburger-pub/prod/utag\\.js"
-                },
-                {
-                    "rule": "tiqcdn\\.com/utag/telekom/tsport/prod/utag\\.js"
-                },
-                {
-                    "rule": "tiqcdn\\.com/utag/corelio/nieuwsblad-pub/prod/utag\\.js"
-                },
-                {
-                    "rule": "tiqcdn\\.com/utag/axelspringer/asmb-rollingstone\\.de/prod/utag\\.js"
-                },
-                {
-                    "rule": "tiqcdn\\.com/utag/corelio/standaard-pub/prod/utag\\.js"
-                },
-                {
-                    "rule": "tiqcdn\\.com/utag/blog\\.telekom/com/prod/utag\\.js"
-                },
-                {
-                    "rule": "tiqcdn\\.com/utag/immobilienscout/is24-de-satellite/prod/utag\\.js"
                 },
                 {
                     "rule": "tiqcdn\\.com/.*/prod/utag\\.tagsOptOut\\.js"
@@ -29121,18 +28651,6 @@
                 "Embedded Content"
             ],
             "default": "ignore"
-        },
-        "usercentrics.eu": {
-            "domain": "usercentrics.eu",
-            "owner": {
-                "name": "usercentrics.eu",
-                "displayName": "usercentrics.eu"
-            },
-            "prevalence": 0.00803,
-            "fingerprinting": 2,
-            "cookies": 0.0000545,
-            "categories": [],
-            "default": "block"
         },
         "usergram.info": {
             "domain": "usergram.info",
@@ -31529,30 +31047,6 @@
             "categories": [],
             "default": "block"
         },
-        "zeronaught.com": {
-            "domain": "zeronaught.com",
-            "owner": {
-                "name": "F5 Networks Inc",
-                "displayName": "F5 Networks"
-            },
-            "prevalence": 0.000191,
-            "fingerprinting": 3,
-            "cookies": 0.0000476,
-            "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "zeronaught\\.com\\/__imp_apg__\\/js\\/f5cs-a_aa_yxmyOQk-c56be27e\\.js",
-                    "fingerprinting": 3,
-                    "cookies": 0.0000136
-                },
-                {
-                    "rule": "zeronaught\\.com\\/__imp_apg__\\/js\\/sed-hawaiianairlines-66239934\\.js",
-                    "fingerprinting": 3,
-                    "cookies": 0.0000136
-                }
-            ]
-        },
         "zestycrime.com": {
             "domain": "zestycrime.com",
             "owner": {
@@ -31788,25 +31282,6 @@
             "cookies": 0.000201,
             "categories": [],
             "default": "ignore"
-        },
-        "appconsent.io": {
-            "domain": "appconsent.io",
-            "owner": {
-                "name": "SFBX SAS",
-                "displayName": "SFBX"
-            },
-            "prevalence": 0.00784,
-            "fingerprinting": 1,
-            "cookies": 0.00653,
-            "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "appconsent\\.io\\/tcf2\\/30\\.2\\.0\\/core\\.bundle\\.js",
-                    "fingerprinting": 1,
-                    "cookies": 0.000101
-                }
-            ]
         },
         "veoxa.com": {
             "domain": "veoxa.com",
@@ -32133,70 +31608,6 @@
                 {
                     "rule": "clean\\.gg\\/1a",
                     "fingerprinting": 0,
-                    "cookies": 0,
-                    "comment": "pixel"
-                }
-            ]
-        },
-        "consensu.org": {
-            "domain": "consensu.org",
-            "owner": {
-                "name": "IAB Europe",
-                "displayName": "IAB Europe"
-            },
-            "prevalence": 0.0174,
-            "fingerprinting": 2,
-            "cookies": 0.00149,
-            "categories": [
-                "Non-Tracking"
-            ],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "consensu\\.org\\/v2\\/cmp\\.js",
-                    "fingerprinting": 0,
-                    "cookies": 0,
-                    "comment": "pixel"
-                }
-            ]
-        },
-        "cookielaw.org": {
-            "domain": "cookielaw.org",
-            "owner": {
-                "name": "OneTrust LLC",
-                "displayName": "OneTrust",
-                "privacyPolicy": "https://www.onetrust.com/privacy-notice"
-            },
-            "prevalence": 0.0642,
-            "fingerprinting": 2,
-            "cookies": 0.0602,
-            "categories": [
-                "Embedded Content",
-                "Non-Tracking"
-            ],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "cookielaw\\.org\\/consent\\/undefined\\/undefined\\.json",
-                    "fingerprinting": 0,
-                    "cookies": 0,
-                    "comment": "pixel"
-                },
-                {
-                    "rule": "cookielaw\\.org\\/scripttemplates\\/otSDKStub\\.js",
-                    "fingerprinting": 1,
-                    "cookies": 0,
-                    "comment": "pixel"
-                },
-                {
-                    "rule": "cookielaw\\.org\\/scripttemplates\\/202210\\.1\\.0\\/otBannerSdk\\.js",
-                    "fingerprinting": 1,
-                    "cookies": 0.000034,
-                    "comment": "pixel"
-                },
-                {
-                    "rule": "cookielaw\\.org\\/scripttemplates\\/202210\\.1\\.0\\/otTCF\\.js",
-                    "fingerprinting": 1,
                     "cookies": 0,
                     "comment": "pixel"
                 }
@@ -32553,30 +31964,6 @@
             "cookies": 0,
             "categories": [],
             "default": "ignore"
-        },
-        "onetrust.com": {
-            "domain": "onetrust.com",
-            "owner": {
-                "name": "OneTrust LLC",
-                "displayName": "OneTrust",
-                "privacyPolicy": "https://www.onetrust.com/privacy-notice"
-            },
-            "prevalence": 0.0637,
-            "fingerprinting": 1,
-            "cookies": 0.00597,
-            "categories": [
-                "Embedded Content",
-                "Non-Tracking"
-            ],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "onetrust\\.com\\/request\\/v1\\/privacyNotices\\/stats\\/views",
-                    "fingerprinting": 0,
-                    "cookies": 0,
-                    "comment": "pixel"
-                }
-            ]
         },
         "outbrainimg.com": {
             "domain": "outbrainimg.com",
@@ -38923,18 +38310,6 @@
             "prevalence": 0.175,
             "displayName": "Arcspire"
         },
-        "Arkose Labs, Inc.": {
-            "domains": [
-                "arkoselabs.com",
-                "funcaptcha.co",
-                "funcaptcha.com",
-                "funcaptcha.net",
-                "swipeads.co",
-                "swipeads.com"
-            ],
-            "prevalence": 0.0102,
-            "displayName": "Arkose Labs"
-        },
         "Akamai Technologies": {
             "domains": [
                 "abmr.net",
@@ -39792,13 +39167,6 @@
             "prevalence": 0.639,
             "displayName": "Cint"
         },
-        "Civic Computing Limited": {
-            "domains": [
-                "civiccomputing.com"
-            ],
-            "prevalence": 0.201,
-            "displayName": "Civic Computing"
-        },
         "ck-ie.com": {
             "domains": [
                 "ck-ie.com"
@@ -40037,51 +39405,6 @@
             "prevalence": 0.296,
             "displayName": "ConnectAd"
         },
-        "Sirdata SAS": {
-            "domains": [
-                "consentframework.com",
-                "datnova.com",
-                "sddan.com",
-                "sirdata.com",
-                "sirdata.io",
-                "thirdata.com"
-            ],
-            "prevalence": 0.442,
-            "displayName": "Sirdata"
-        },
-        "consentmanager AB": {
-            "domains": [
-                "choicemanager.net",
-                "consentmanager.be",
-                "consentmanager.ch",
-                "consentmanager.es",
-                "consentmanager.fr",
-                "consentmanager.io",
-                "consentmanager.mx",
-                "consentmanager.net",
-                "consentmanager.us",
-                "cookie-consent.net",
-                "cookiebot.es",
-                "cookiebot.it",
-                "cookiebot.net",
-                "cookiecrawler.net",
-                "cookiecrawler.org",
-                "cookiefirst.net",
-                "cookiefirst.org",
-                "cookiefirst.pl",
-                "cookiefirst.sk",
-                "cookiefox.net",
-                "cookieinformation.lt",
-                "cookiescanner.org",
-                "cookiespider.net",
-                "cookiespider.org",
-                "cookietext.net",
-                "cookieyes.nl",
-                "policymanager.net"
-            ],
-            "prevalence": 0.359,
-            "displayName": "ConsentManager"
-        },
         "contentexchange.me": {
             "domains": [
                 "contentexchange.me"
@@ -40127,39 +39450,6 @@
             ],
             "prevalence": 0.0027,
             "displayName": "Motionpoint"
-        },
-        "cookiefirst.com": {
-            "domains": [
-                "cookiefirst.com"
-            ],
-            "prevalence": 0,
-            "displayName": "cookiefirst.com"
-        },
-        "Cookie Information A/S": {
-            "domains": [
-                "cookiebanner.com",
-                "cookieinfo.dk",
-                "cookieinformation.co.uk",
-                "cookieinformation.com",
-                "cookieinformation.dk",
-                "cookieinformation.eu",
-                "cookieinformation.se",
-                "freeccpatool.com",
-                "vendorlistgenerator.eu",
-                "wpgdprc.com"
-            ],
-            "prevalence": 0.187,
-            "displayName": "Cookie Information"
-        },
-        "OneTrust LLC": {
-            "domains": [
-                "cookielaw.org",
-                "cookiepro.com",
-                "onetrust.com",
-                "onetrust.io"
-            ],
-            "prevalence": 7.37,
-            "displayName": "OneTrust"
         },
         "Vidazoo Ltd": {
             "domains": [
@@ -40592,29 +39882,6 @@
             ],
             "prevalence": 0.975,
             "displayName": "DoubleVerify"
-        },
-        "Ringier Axel Springer Media AG": {
-            "domains": [
-                "auto-swiat.pl",
-                "blikk.hu",
-                "dreamlab.pl",
-                "ewydania.pl",
-                "grupaonet.pl",
-                "komputerswiat.pl",
-                "medonet.pl",
-                "newsweek.pl",
-                "nk.pl",
-                "ocdn.eu",
-                "onet.pl",
-                "pclab.pl",
-                "schweizer-illustrierte.ch",
-                "skapiec.pl",
-                "vod.pl",
-                "zapytaj.com.pl",
-                "zumi.pl"
-            ],
-            "prevalence": 0.0368,
-            "displayName": "Ringier Axel Springer"
         },
         "Drift.com, Inc.": {
             "domains": [
@@ -41099,13 +40366,6 @@
             ],
             "prevalence": 0.214,
             "displayName": "ForeSee Results"
-        },
-        "Forter Inc.": {
-            "domains": [
-                "forter.com"
-            ],
-            "prevalence": 0.3,
-            "displayName": "Forter"
         },
         "Marketing Science Consulting Group, Inc.": {
             "domains": [
@@ -43411,6 +42671,29 @@
             "prevalence": 0,
             "displayName": "ntvpwpush.com"
         },
+        "Ringier Axel Springer Media AG": {
+            "domains": [
+                "auto-swiat.pl",
+                "blikk.hu",
+                "dreamlab.pl",
+                "ewydania.pl",
+                "grupaonet.pl",
+                "komputerswiat.pl",
+                "medonet.pl",
+                "newsweek.pl",
+                "nk.pl",
+                "ocdn.eu",
+                "onet.pl",
+                "pclab.pl",
+                "schweizer-illustrierte.ch",
+                "skapiec.pl",
+                "vod.pl",
+                "zapytaj.com.pl",
+                "zumi.pl"
+            ],
+            "prevalence": 0.0368,
+            "displayName": "Ringier Axel Springer"
+        },
         "Retyp LLC": {
             "domains": [
                 "monstercampaigns.com",
@@ -43881,18 +43164,6 @@
             ],
             "prevalence": 0.688,
             "displayName": "Perfect Market"
-        },
-        "PerimeterX, Inc.": {
-            "domains": [
-                "perimeterx.com",
-                "perimeterx.net",
-                "px-cdn.net",
-                "px-client.net",
-                "px-cloud.net",
-                "pxi.pub"
-            ],
-            "prevalence": 0.107,
-            "displayName": "PerimeterX"
         },
         "Permutive, Inc.": {
             "domains": [
@@ -44708,12 +43979,17 @@
             "prevalence": 0,
             "displayName": "sda.fyi"
         },
-        "sourcedefense": {
+        "Sirdata SAS": {
             "domains": [
-                "sdiapi.com"
+                "consentframework.com",
+                "datnova.com",
+                "sddan.com",
+                "sirdata.com",
+                "sirdata.io",
+                "thirdata.com"
             ],
-            "prevalence": 0.0327,
-            "displayName": "sourcedefense"
+            "prevalence": 0.442,
+            "displayName": "Sirdata"
         },
         "searchspring.io": {
             "domains": [
@@ -44913,14 +44189,6 @@
             ],
             "prevalence": 0.107,
             "displayName": "Dual Technologies Services"
-        },
-        "Sift Science, Inc.": {
-            "domains": [
-                "sift.com",
-                "siftscience.com"
-            ],
-            "prevalence": 0.217,
-            "displayName": "Sift Science"
         },
         "Signifyd Inc.": {
             "domains": [
@@ -45826,13 +45094,6 @@
             "prevalence": 0,
             "displayName": "usbrowserspeed.com"
         },
-        "usercentrics.eu": {
-            "domains": [
-                "usercentrics.eu"
-            ],
-            "prevalence": 0,
-            "displayName": "usercentrics.eu"
-        },
         "beBit Inc.": {
             "domains": [
                 "usergram.info",
@@ -46374,15 +45635,6 @@
             "prevalence": 0.511,
             "displayName": "Zeotap"
         },
-        "F5 Networks Inc": {
-            "domains": [
-                "f5.com",
-                "nginx.com",
-                "zeronaught.com"
-            ],
-            "prevalence": 0.0054,
-            "displayName": "F5 Networks"
-        },
         "zipMoney Payments Pty Ltd": {
             "domains": [
                 "zip.co",
@@ -46436,14 +45688,6 @@
             ],
             "prevalence": 0.0041,
             "displayName": "Telstra"
-        },
-        "SFBX SAS": {
-            "domains": [
-                "appconsent.io",
-                "sfbx.io"
-            ],
-            "prevalence": 0.0892,
-            "displayName": "SFBX"
         },
         "J S WEB PRODUCTION": {
             "domains": [
@@ -46520,13 +45764,6 @@
             ],
             "prevalence": 0,
             "displayName": "clean.gg"
-        },
-        "IAB Europe": {
-            "domains": [
-                "consensu.org"
-            ],
-            "prevalence": 1.45,
-            "displayName": "IAB Europe"
         },
         "Fonticons Inc": {
             "domains": [
@@ -49516,12 +48753,6 @@
         "showmore.cc": "ucfunnel Co., Ltd.",
         "ucfunnel.com": "ucfunnel Co., Ltd.",
         "arcspire.io": "Arcspire Limited",
-        "arkoselabs.com": "Arkose Labs, Inc.",
-        "funcaptcha.co": "Arkose Labs, Inc.",
-        "funcaptcha.com": "Arkose Labs, Inc.",
-        "funcaptcha.net": "Arkose Labs, Inc.",
-        "swipeads.co": "Arkose Labs, Inc.",
-        "swipeads.com": "Arkose Labs, Inc.",
         "abmr.net": "Akamai Technologies",
         "accdn.com.cn": "Akamai Technologies",
         "akadns.net": "Akamai Technologies",
@@ -49902,7 +49133,6 @@
         "vdopia.com": "Vdopia Inc.",
         "cint.com": "Cint AB",
         "cintnetworks.com": "Cint AB",
-        "civiccomputing.com": "Civic Computing Limited",
         "ck-ie.com": "ck-ie.com",
         "clearbit.com": "APIHub, Inc.",
         "clearbitjs.com": "clearbitjs.com",
@@ -50003,39 +49233,6 @@
         "connatix.com": "Connatix",
         "connectad.io": "ConnectAd",
         "connectadrealtime.com": "ConnectAd",
-        "consentframework.com": "Sirdata SAS",
-        "datnova.com": "Sirdata SAS",
-        "sddan.com": "Sirdata SAS",
-        "sirdata.com": "Sirdata SAS",
-        "sirdata.io": "Sirdata SAS",
-        "thirdata.com": "Sirdata SAS",
-        "choicemanager.net": "consentmanager AB",
-        "consentmanager.be": "consentmanager AB",
-        "consentmanager.ch": "consentmanager AB",
-        "consentmanager.es": "consentmanager AB",
-        "consentmanager.fr": "consentmanager AB",
-        "consentmanager.io": "consentmanager AB",
-        "consentmanager.mx": "consentmanager AB",
-        "consentmanager.net": "consentmanager AB",
-        "consentmanager.us": "consentmanager AB",
-        "cookie-consent.net": "consentmanager AB",
-        "cookiebot.es": "consentmanager AB",
-        "cookiebot.it": "consentmanager AB",
-        "cookiebot.net": "consentmanager AB",
-        "cookiecrawler.net": "consentmanager AB",
-        "cookiecrawler.org": "consentmanager AB",
-        "cookiefirst.net": "consentmanager AB",
-        "cookiefirst.org": "consentmanager AB",
-        "cookiefirst.pl": "consentmanager AB",
-        "cookiefirst.sk": "consentmanager AB",
-        "cookiefox.net": "consentmanager AB",
-        "cookieinformation.lt": "consentmanager AB",
-        "cookiescanner.org": "consentmanager AB",
-        "cookiespider.net": "consentmanager AB",
-        "cookiespider.org": "consentmanager AB",
-        "cookietext.net": "consentmanager AB",
-        "cookieyes.nl": "consentmanager AB",
-        "policymanager.net": "consentmanager AB",
         "contentexchange.me": "contentexchange.me",
         "content-square.net": "ContentSquare",
         "contentsquare.com": "ContentSquare",
@@ -50046,21 +49243,6 @@
         "conversionruler.com": "Market Ruler, LLC",
         "convertkit.com": "ConvertKit LLC",
         "convertlanguage.com": "Motionpoint Corporation",
-        "cookiefirst.com": "cookiefirst.com",
-        "cookiebanner.com": "Cookie Information A/S",
-        "cookieinfo.dk": "Cookie Information A/S",
-        "cookieinformation.co.uk": "Cookie Information A/S",
-        "cookieinformation.com": "Cookie Information A/S",
-        "cookieinformation.dk": "Cookie Information A/S",
-        "cookieinformation.eu": "Cookie Information A/S",
-        "cookieinformation.se": "Cookie Information A/S",
-        "freeccpatool.com": "Cookie Information A/S",
-        "vendorlistgenerator.eu": "Cookie Information A/S",
-        "wpgdprc.com": "Cookie Information A/S",
-        "cookielaw.org": "OneTrust LLC",
-        "cookiepro.com": "OneTrust LLC",
-        "onetrust.com": "OneTrust LLC",
-        "onetrust.io": "OneTrust LLC",
         "cootlogix.com": "Vidazoo Ltd",
         "vidazoo.com": "Vidazoo Ltd",
         "cordial.io": "Bandfarm, Inc.",
@@ -50265,23 +49447,6 @@
         "openslate.com": "DoubleVerify",
         "openslatedata.com": "DoubleVerify",
         "research.de.com": "DoubleVerify",
-        "auto-swiat.pl": "Ringier Axel Springer Media AG",
-        "blikk.hu": "Ringier Axel Springer Media AG",
-        "dreamlab.pl": "Ringier Axel Springer Media AG",
-        "ewydania.pl": "Ringier Axel Springer Media AG",
-        "grupaonet.pl": "Ringier Axel Springer Media AG",
-        "komputerswiat.pl": "Ringier Axel Springer Media AG",
-        "medonet.pl": "Ringier Axel Springer Media AG",
-        "newsweek.pl": "Ringier Axel Springer Media AG",
-        "nk.pl": "Ringier Axel Springer Media AG",
-        "ocdn.eu": "Ringier Axel Springer Media AG",
-        "onet.pl": "Ringier Axel Springer Media AG",
-        "pclab.pl": "Ringier Axel Springer Media AG",
-        "schweizer-illustrierte.ch": "Ringier Axel Springer Media AG",
-        "skapiec.pl": "Ringier Axel Springer Media AG",
-        "vod.pl": "Ringier Axel Springer Media AG",
-        "zapytaj.com.pl": "Ringier Axel Springer Media AG",
-        "zumi.pl": "Ringier Axel Springer Media AG",
         "drift.com": "Drift.com, Inc.",
         "driftt.com": "Drift.com, Inc.",
         "dtscdn.com": "DTS Technology",
@@ -50508,7 +49673,6 @@
         "4seeresults.com": "ForeSee Results, Inc.",
         "foresee.com": "ForeSee Results, Inc.",
         "foreseeresults.com": "ForeSee Results, Inc.",
-        "forter.com": "Forter Inc.",
         "fouanalytics.com": "Marketing Science Consulting Group, Inc.",
         "mktsci.com": "Marketing Science Consulting Group, Inc.",
         "fout.jp": "FreakOut Holdings, inc.",
@@ -51559,6 +50723,23 @@
         "ntv.io": "Nativo, Inc",
         "postrelease.com": "Nativo, Inc",
         "ntvpwpush.com": "ntvpwpush.com",
+        "auto-swiat.pl": "Ringier Axel Springer Media AG",
+        "blikk.hu": "Ringier Axel Springer Media AG",
+        "dreamlab.pl": "Ringier Axel Springer Media AG",
+        "ewydania.pl": "Ringier Axel Springer Media AG",
+        "grupaonet.pl": "Ringier Axel Springer Media AG",
+        "komputerswiat.pl": "Ringier Axel Springer Media AG",
+        "medonet.pl": "Ringier Axel Springer Media AG",
+        "newsweek.pl": "Ringier Axel Springer Media AG",
+        "nk.pl": "Ringier Axel Springer Media AG",
+        "ocdn.eu": "Ringier Axel Springer Media AG",
+        "onet.pl": "Ringier Axel Springer Media AG",
+        "pclab.pl": "Ringier Axel Springer Media AG",
+        "schweizer-illustrierte.ch": "Ringier Axel Springer Media AG",
+        "skapiec.pl": "Ringier Axel Springer Media AG",
+        "vod.pl": "Ringier Axel Springer Media AG",
+        "zapytaj.com.pl": "Ringier Axel Springer Media AG",
+        "zumi.pl": "Ringier Axel Springer Media AG",
         "monstercampaigns.com": "Retyp LLC",
         "omappapi.com": "Retyp LLC",
         "omwpapi.com": "Retyp LLC",
@@ -51802,12 +50983,6 @@
         "radware.com": "Radware Ltd.",
         "shieldsquare.com": "Radware Ltd.",
         "perfectmarket.com": "Perfect Market, Inc.",
-        "perimeterx.com": "PerimeterX, Inc.",
-        "perimeterx.net": "PerimeterX, Inc.",
-        "px-cdn.net": "PerimeterX, Inc.",
-        "px-client.net": "PerimeterX, Inc.",
-        "px-cloud.net": "PerimeterX, Inc.",
-        "pxi.pub": "PerimeterX, Inc.",
         "permutive.app": "Permutive, Inc.",
         "permutive.com": "Permutive, Inc.",
         "prmutv.co": "Permutive, Inc.",
@@ -52184,7 +51359,12 @@
         "ryzeo.com": "EZ Publishing Inc.",
         "screenpopper.com": "EZ Publishing Inc.",
         "sda.fyi": "sda.fyi",
-        "sdiapi.com": "sourcedefense",
+        "consentframework.com": "Sirdata SAS",
+        "datnova.com": "Sirdata SAS",
+        "sddan.com": "Sirdata SAS",
+        "sirdata.com": "Sirdata SAS",
+        "sirdata.io": "Sirdata SAS",
+        "thirdata.com": "Sirdata SAS",
         "searchspring.io": "searchspring.io",
         "securedvisit.com": "4Cite Marketing",
         "seedtag.com": "SEEDTAG ADVERTISING S.L.",
@@ -52258,8 +51438,6 @@
         "shopperapproved.com": "Global Marketing Strategies",
         "sendinblue.com": "Dual Technologies Services",
         "sibautomation.com": "Dual Technologies Services",
-        "sift.com": "Sift Science, Inc.",
-        "siftscience.com": "Sift Science, Inc.",
         "signifyd.com": "Signifyd Inc.",
         "simpli.fi": "Simplifi Holdings Inc.",
         "siteimprove.com": "Siteimprove AS",
@@ -52558,7 +51736,6 @@
         "unrulymedia.com": "Unruly Group Limited",
         "upsellit.com": "USI Technologies, Inc.",
         "usbrowserspeed.com": "usbrowserspeed.com",
-        "usercentrics.eu": "usercentrics.eu",
         "usergram.info": "beBit Inc.",
         "webantenna.info": "beBit Inc.",
         "audienceproject.com": "AudienceProject",
@@ -52776,9 +51953,6 @@
         "zopim.com": "Zendesk, Inc.",
         "zopim.io": "Zendesk, Inc.",
         "zeotap.com": "Zeotap GmbH",
-        "f5.com": "F5 Networks Inc",
-        "nginx.com": "F5 Networks Inc",
-        "zeronaught.com": "F5 Networks Inc",
         "zip.co": "zipMoney Payments Pty Ltd",
         "zipmoney.com.au": "zipMoney Payments Pty Ltd",
         "zippay.com.au": "zipMoney Payments Pty Ltd",
@@ -52791,8 +51965,6 @@
         "shop.pe": "Add Shoppers",
         "telstra.com": "Telstra Corporation Limited",
         "telstra.com.au": "Telstra Corporation Limited",
-        "appconsent.io": "SFBX SAS",
-        "sfbx.io": "SFBX SAS",
         "ad2perf.com": "J S WEB PRODUCTION",
         "moxielinks.com": "J S WEB PRODUCTION",
         "veoxa.com": "J S WEB PRODUCTION",
@@ -52821,7 +51993,6 @@
         "bugsnag.com": "Bugsnag Inc.",
         "clarium.io": "ClarityAd",
         "clean.gg": "clean.gg",
-        "consensu.org": "IAB Europe",
         "fontawesome.com": "Fonticons Inc",
         "fontawesome.io": "Fonticons Inc",
         "fonticons.com": "Fonticons Inc",

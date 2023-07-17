@@ -45,6 +45,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private let noAuthAvailableView = AutofillNoAuthAvailableView()
     private let tld: TLD = AppDependencyProvider.shared.storageCache.tld
     private let syncService: DDGSyncing
+    private var syncUpdatesCancellable: AnyCancellable?
 
     private lazy var addBarButtonItem: UIBarButtonItem = {
         UIBarButtonItem(image: UIImage(named: "Add-24"),
@@ -106,6 +107,13 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         self.viewModel = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: secureVault, currentTabUrl: currentTabUrl)
         self.syncService = syncService
         super.init(nibName: nil, bundle: nil)
+
+        syncUpdatesCancellable = (UIApplication.shared.delegate as? AppDelegate)?.syncDataProviders.credentialsAdapter.syncDidCompletePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.viewModel.updateData()
+                self?.tableView.reloadData()
+            }
     }
     
     required init?(coder: NSCoder) {

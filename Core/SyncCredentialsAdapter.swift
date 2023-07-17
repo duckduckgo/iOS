@@ -26,7 +26,13 @@ import SyncDataProviders
 
 public final class SyncCredentialsAdapter {
 
-    public private(set) var provider: LoginsProvider?
+    public private(set) var provider: CredentialsProvider?
+
+    public let syncDidCompletePublisher: AnyPublisher<Void, Never>
+
+    public init() {
+        syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
+    }
 
     public func setUpProviderIfNeeded(secureVaultFactory: SecureVaultFactory, metadataStore: SyncMetadataStore) {
         guard provider == nil else {
@@ -34,10 +40,12 @@ public final class SyncCredentialsAdapter {
         }
 
         do {
-            let provider = try LoginsProvider(
+            let provider = try CredentialsProvider(
                 secureVaultFactory: secureVaultFactory,
                 metadataStore: metadataStore,
-                reloadLoginsAfterSync: {}
+                reloadCredentialsAfterSync: { [weak self] in
+                    self?.syncDidCompleteSubject.send()
+                }
             )
 
             syncErrorCancellable = provider.syncErrorPublisher
@@ -63,8 +71,8 @@ public final class SyncCredentialsAdapter {
             let params = processedErrors.errorPixelParameters
             Pixel.fire(pixel: .syncCredentialsProviderInitializationFailed, error: error, withAdditionalParameters: params)
        }
-
     }
 
+    private var syncDidCompleteSubject = PassthroughSubject<Void, Never>()
     private var syncErrorCancellable: AnyCancellable?
 }

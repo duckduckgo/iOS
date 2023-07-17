@@ -290,7 +290,7 @@ class TabViewController: UIViewController {
         initAttributionLogic()
         applyTheme(ThemeManager.shared.currentTheme)
         addTextSizeObserver()
-        addDuckDuckGoEmailObserver()
+        addDuckDuckGoEmailSignOutObserver()
         registerForDownloadsNotifications()
 
         if #available(iOS 16.4, *) {
@@ -700,7 +700,7 @@ class TabViewController: UIViewController {
                                                object: nil)
     }
 
-    private func addDuckDuckGoEmailObserver() {
+    private func addDuckDuckGoEmailSignOutObserver() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onDuckDuckGoEmailSignOut),
                                                name: .emailDidSignOut,
@@ -709,14 +709,6 @@ class TabViewController: UIViewController {
 
     @objc func onTextSizeChange() {
         webView.adjustTextSize(appSettings.textSize)
-    }
-
-    @objc
-    private func onDuckDuckGoEmailIncontextSignup(_ notification: Notification) {
-        let controller = EmailSignupViewController()
-        controller.delegate = self
-        let navigationController = UINavigationController(rootViewController: controller)
-        self.present(navigationController, animated: true, completion: nil)
     }
 
     @objc func onDuckDuckGoEmailSignOut(_ notification: Notification) {
@@ -2285,12 +2277,31 @@ extension TabViewController: EmailManagerAliasPermissionDelegate {
 
     }
 
-    func emailManager(_ emailManager: BrowserServicesKit.EmailManager, didRequestInContextSignUp completionHandler: @escaping () -> Void) {
-        let controller = EmailSignupViewController()
-        controller.delegate = self
-        controller.completionHandler = completionHandler
-        let navigationController = UINavigationController(rootViewController: controller)
-        self.present(navigationController, animated: true, completion: nil)
+    func emailManager(_ emailManager: EmailManager, didRequestInContextSignUp completionHandler: @escaping (_ shouldContinue: Bool) -> Void) {
+        let emailSignupPromptViewController = EmailSignupPromptViewController { continueSignup in
+            if shouldContinue {
+                let signupViewController = EmailSignupViewController { [weak self] shouldContinue in
+                    completionHandler(shouldContinue)
+                }
+                let signupNavigationController = UINavigationController(rootViewController: signupViewController)
+                self.present(signupNavigationController, animated: true, completion: nil)
+            } else {
+                completionHandler(shouldContinue)
+            }
+        }
+
+        if #available(iOS 15.0, *) {
+            if let presentationController = emailSignupPromptViewController.presentationController as? UISheetPresentationController {
+                if #available(iOS 16.0, *) {
+                    presentationController.detents = [.custom(resolver: { _ in
+                        AutofillViews.emailSignupPromptMinHeight
+                    })]
+                } else {
+                    presentationController.detents = [.medium()]
+                }
+            }
+        }
+        self.present(emailSignupPromptViewController, animated: true)
     }
 }
 
@@ -2335,14 +2346,6 @@ extension TabViewController: EmailManagerRequestDelegate {
         Pixel.fire(pixel: .emailAutofillKeychainError, withAdditionalParameters: parameters)
     }
 
-}
-
-// MARK: EmailSignupViewControllerDelegate
-extension TabViewController: EmailSignupViewControllerDelegate {
-
-    func emailSignupViewControllerDidFinish(_ controller: EmailSignupViewController, completionHandler: @escaping () -> Void) {
-        completionHandler()
-    }
 }
 
 // MARK: - Themable

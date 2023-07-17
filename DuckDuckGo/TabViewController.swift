@@ -2278,9 +2278,9 @@ extension TabViewController: EmailManagerAliasPermissionDelegate {
     }
 
     func emailManager(_ emailManager: EmailManager, didRequestInContextSignUp completionHandler: @escaping (_ shouldContinue: Bool) -> Void) {
-        let emailSignupPromptViewController = EmailSignupPromptViewController { continueSignup in
+        let emailSignupPromptViewController = EmailSignupPromptViewController { shouldContinue in
             if shouldContinue {
-                let signupViewController = EmailSignupViewController { [weak self] shouldContinue in
+                let signupViewController = EmailSignupViewController { shouldContinue in
                     completionHandler(shouldContinue)
                 }
                 let signupNavigationController = UINavigationController(rootViewController: signupViewController)

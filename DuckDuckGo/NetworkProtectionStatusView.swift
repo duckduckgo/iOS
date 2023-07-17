@@ -19,6 +19,8 @@
 
 import SwiftUI
 
+#if NETWORK_PROTECTION
+
 struct NetworkProtectionStatusView: View {
 
     var body: some View {
@@ -32,3 +34,5 @@ struct NetPActivityView_Previews: PreviewProvider {
         NetworkProtectionStatusView()
     }
 }
+
+#endif

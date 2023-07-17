@@ -26,10 +26,6 @@ import UserScript
 import WebKit
 import DesignResourcesKit
 
-protocol EmailSignupViewControllerDelegate: AnyObject {
-    func emailSignupViewControllerDidFinish(_ controller: EmailSignupViewController, completionHandler: @escaping () -> Void)
-}
-
 // swiftlint:disable file_length
 class EmailSignupViewController: UIViewController {
 
@@ -38,19 +34,20 @@ class EmailSignupViewController: UIViewController {
         static let signUpUrl: String = "https://duckduckgo.com/email/start-incontext"
     }
 
-    weak var delegate: EmailSignupViewControllerDelegate?
+    private enum SignupState {
+        case start
+        case emailEntered
+        case complete
+        case other
+    }
 
     let completion: ((Bool) -> Void)
 
     private var webView: WKWebView!
 
-    private var canGoBack: Bool {
-        let webViewCanGoBack = webView.canGoBack
-        let navigatedToError = webView.url != nil
-        return webViewCanGoBack || navigatedToError
-    }
+    private var webViewUrlObserver: NSKeyValueObservation?
 
-    lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
+    lazy private var featureFlagger = AppDependencyProvider.shared.featureFlagger
 
     lazy private var emailManager: EmailManager = {
         let emailManager = EmailManager()
@@ -64,6 +61,36 @@ class EmailSignupViewController: UIViewController {
         manager.delegate = self
         return manager
     }()
+
+    private var url: URL? {
+        didSet {
+            guard let url = url else {
+                navigationItem.rightBarButtonItems = []
+                return
+            }
+            if url.absoluteString.hasSuffix("email/") || url.absoluteString.hasSuffix("email/start-incontext") {
+                signupStage = .start
+            } else if url.absoluteString.hasSuffix("email/choose-address") || url.absoluteString.hasSuffix("email/review") {
+                signupStage = .emailEntered
+            } else if url.absoluteString.hasSuffix("email/welcome") {
+                signupStage = .complete
+            } else {
+                signupStage = .other
+            }
+        }
+    }
+
+    @Published private var signupStage: SignupState = .start {
+        didSet {
+            updateNavigationBarButtons()
+        }
+    }
+
+    private var canGoBack: Bool {
+        let webViewCanGoBack = webView.canGoBack
+        let navigatedToError = webView.url != nil
+        return webViewCanGoBack || navigatedToError
+    }
 
     private lazy var backBarButtonItem: UIBarButtonItem = {
         let button = UIButton(type: .system)
@@ -85,27 +112,7 @@ class EmailSignupViewController: UIViewController {
                         action: #selector(nextButtonPressed))
     }()
 
-    private var url: URL? {
-        didSet {
-            guard let url = url else {
-                navigationItem.rightBarButtonItems = []
-                return
-            }
-            if url.absoluteString.contains("welcome") {
-                navigationItem.leftBarButtonItems = []
-                navigationItem.rightBarButtonItem = nextBarButtonItem
-            } else if url.absoluteString.hasSuffix("email/") {
-                navigationItem.leftBarButtonItem = cancelBarButtonItem
-                navigationItem.rightBarButtonItems = []
-            } else if url.absoluteString.contains("start-incontext") {
-                navigationItem.leftBarButtonItems = []
-                navigationItem.rightBarButtonItems = []
-            } else {
-                navigationItem.leftBarButtonItems = canGoBack ? [backBarButtonItem] : []
-                navigationItem.rightBarButtonItems = []
-            }
-        }
-    }
+    // MARK: - Public interface
 
     init(completion: @escaping ((Bool) -> Void)) {
         self.completion = completion
@@ -116,16 +123,11 @@ class EmailSignupViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if #available(iOS 16.4, *) {
-            registerForInspectableWebViewNotifications()
-        }
-
-        setup()
-        navBarTitle()
+        setupWebView()
+        setupNavigationBarTitle()
         addDuckDuckGoEmailObserver()
         applyTheme(ThemeManager.shared.currentTheme)
 
@@ -133,73 +135,42 @@ class EmailSignupViewController: UIViewController {
         navigationController?.presentationController?.delegate = self
     }
 
-    private func navBarTitle() {
-        let titleLabel: UILabel = UILabel()
-        titleLabel.text = "DuckDuckGo"
-        titleLabel.font = .daxFootnoteRegular()
-        titleLabel.textColor = UIColor(designSystemColor: .textSecondary)
 
-        let subtitleLabel: UILabel = UILabel()
-        subtitleLabel.text = "Email Protection"
-        subtitleLabel.font = .daxHeadline()
-        subtitleLabel.textColor = UIColor(designSystemColor: .textPrimary)
+    func loadUrl(_ url: URL?) {
+        guard let url = url else { return }
 
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
-        stackView.axis = .vertical
-        stackView.alignment = .center
-
-        navigationItem.titleView = stackView
+        let request = URLRequest.userInitiated(url)
+        webView.load(request)
     }
 
-    private func setup() {
+
+    // MARK: - Private
+
+    private func setupWebView() {
         let configuration =  WKWebViewConfiguration.persistent()
-
-        let request = URLRequest.userInitiated(URL(string: Constants.signUpUrl)!)
-        attachWebView(configuration: configuration, andLoadRequest: request, consumeCookies: true)
-    }
-
-    private func attachWebView(configuration: WKWebViewConfiguration,
-                               andLoadRequest request: URLRequest?,
-                               consumeCookies: Bool,
-                               loadingInitiatedByParentTab: Bool = false) {
-
         let userContentController = UserContentController()
         configuration.userContentController = userContentController
         userContentController.delegate = self
 
         webView = WKWebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
         view.addSubview(webView)
+
+        webViewUrlObserver = webView.observe(\.url, options: .new, changeHandler: { [weak self] _, _ in
+            self?.webViewUrlHasChanged()
+        })
 
         if #available(iOS 16.4, *) {
             updateWebViewInspectability()
         }
 
-        let assertion = DispatchWorkItem { [unowned self] in
-            if let request = request {
-                webView.load(request)
-            }
+        // Slight delay needed for userScripts to load otherwise email protection webpage reports that this is an unsupported browser
+        let workItem = DispatchWorkItem { [unowned self] in
+            self.loadUrl(URL(string: Constants.signUpUrl))
         }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: assertion)
-
-        addObservers()
-
-    }
-
-    private func addDuckDuckGoEmailObserver() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(onDuckDuckGoEmailDidCloseEmailProtection),
-                                               name: .emailDidCloseEmailProtection,
-                                               object: nil)
-    }
-
-    @available(iOS 16.4, *)
-    private func registerForInspectableWebViewNotifications() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(updateWebViewInspectability),
-                                               name: AppUserDefaults.Notifications.inspectableWebViewsToggled,
-                                               object: nil)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: workItem)
     }
 
     @available(iOS 16.4, *) @objc
@@ -211,30 +182,7 @@ class EmailSignupViewController: UIViewController {
 #endif
     }
 
-
-    private func addObservers() {
-        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.url), options: .new, context: nil)
-    }
-
-    // swiftlint:disable block_based_kvo
-    open override func observeValue(forKeyPath keyPath: String?,
-                                    of object: Any?,
-                                    change: [NSKeyValueChangeKey: Any]?,
-                                    context: UnsafeMutableRawPointer?) {
-        // swiftlint:enable block_based_kvo
-
-        guard let keyPath = keyPath else { return }
-
-        switch keyPath {
-        case #keyPath(WKWebView.url):
-            webViewUrlHasChanged()
-        default:
-            os_log("Unhandled keyPath %s", log: .generalLog, type: .debug, keyPath)
-        }
-    }
-
     private func webViewUrlHasChanged() {
-        print("webViewUrlHasChanged: \(String(describing: webView.url))")
         url = webView.url
     }
 
@@ -296,30 +244,30 @@ class EmailSignupViewController: UIViewController {
     }
 
     @objc
-    func backButtonPressed() {
+    private func backButtonPressed() {
         if canGoBack {
             webView.goBack()
         }
     }
 
     @objc
-    func cancelButtonPressed() {
+    private func cancelButtonPressed() {
         // TODO - pixel
-        dismiss(animated: true)
+        completed(false)
     }
 
     @objc
-    func nextButtonPressed() {
+    private func nextButtonPressed() {
         emailSignupCompleted()
     }
 
-    @objc
-    private func onDuckDuckGoEmailDidCloseEmailProtection(_ notification: Notification) {
-        emailSignupCompleted()
+    private func emailSignupCompleted() {
+        // TODO - pixel
+        completed(true)
     }
 
-    func emailSignupCompleted() {
-        delegate?.emailSignupViewControllerDidFinish(self, completionHandler: completionHandler!)
+    private func completed(_ success: Bool) {
+        completion(success)
         dismiss(animated: true)
     }
 }
@@ -376,11 +324,12 @@ extension EmailSignupViewController: UserContentControllerDelegate {
 }
 
 // MARK: - EmailManagerRequestDelegate
+
 extension EmailSignupViewController: EmailManagerRequestDelegate {
+
     func emailManagerIncontextPromotion() {
         // no-op
     }
-
 
     // swiftlint:disable function_parameter_count
     func emailManager(_ emailManager: EmailManager, requested url: URL, method: String, headers: [String: String], parameters: [String: String]?, httpBody: Data?, timeoutInterval: TimeInterval) async throws -> Data {
@@ -420,34 +369,11 @@ extension EmailSignupViewController: EmailManagerRequestDelegate {
         Pixel.fire(pixel: .emailAutofillKeychainError, withAdditionalParameters: parameters)
     }
 
-
 }
 
-// MARK: - UIPopoverPresentationControllerDelegate
-extension EmailSignupViewController: UIPopoverPresentationControllerDelegate {
-
-    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
-        return .none
-    }
-}
-
-// MARK: - UserContentControllerDelegate
-extension EmailSignupViewController: UserContentControllerDelegate {
-
-    func userContentController(_ userContentController: UserContentController,
-                               didInstallContentRuleLists contentRuleLists: [String: WKContentRuleList],
-                               userScripts: UserScriptsProvider,
-                               updateEvent: ContentBlockerRulesManager.UpdateEvent) {
-        guard let userScripts = userScripts as? UserScripts else { fatalError("Unexpected UserScripts") }
-
-        userScripts.autofillUserScript.emailDelegate = emailManager
-        userScripts.autofillUserScript.vaultDelegate = vaultManager
-    }
-
-}
+// MARK: - SecureVaultManagerDelegate
 
 extension EmailSignupViewController: SecureVaultManagerDelegate {
-
 
     func secureVaultInitFailed(_ error: SecureVaultError) {
         SecureVaultErrorReporter.shared.secureVaultInitFailed(error)
@@ -455,11 +381,6 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
 
     func secureVaultManagerIsEnabledStatus(_: SecureVaultManager) -> Bool {
         let isEnabled = AutofillSettingStatus.isAutofillEnabledInSettings && featureFlagger.isFeatureOn(.autofillCredentialInjecting)
-        let isBackgrounded = UIApplication.shared.applicationState == .background
-        if isEnabled && isBackgrounded {
-            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded,
-                       withAdditionalParameters: [PixelParameters.isBackgrounded: "true"])
-        }
         return isEnabled
     }
 
@@ -467,7 +388,7 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
                             promptUserToStoreAutofillData data: AutofillData,
                             hasGeneratedPassword generatedPassword: Bool,
                             withTrigger trigger: AutofillUserScript.GetTriggerType?) {
-
+        // no-op
     }
 
     func secureVaultManager(_: SecureVaultManager,
@@ -475,11 +396,11 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
                             withAccounts accounts: [SecureVaultModels.WebsiteAccount],
                             withTrigger trigger: AutofillUserScript.GetTriggerType,
                             completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
-        completionHandler(nil)
+        // no-op
     }
 
     func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: String) {
-        // No-op, don't need to do anything here
+        // no-op
     }
 
     func secureVaultManagerShouldAutomaticallyUpdateCredentialsWithoutUsername(_: SecureVaultManager, shouldSilentlySave: Bool) -> Bool {
@@ -491,21 +412,25 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
     }
 
     func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
-        // We don't have auth yet
+        // no-op
     }
 
     func secureVaultManager(_: SecureVaultManager,
                             promptUserWithGeneratedPassword password: String,
                             completionHandler: @escaping (Bool) -> Void) {
+        // no-op
     }
 
     func secureVaultManager(_: BrowserServicesKit.SecureVaultManager, didRequestCreditCardsManagerForDomain domain: String) {
+        // no-op
     }
 
     func secureVaultManager(_: BrowserServicesKit.SecureVaultManager, didRequestIdentitiesManagerForDomain domain: String) {
+        // no-op
     }
 
     func secureVaultManager(_: BrowserServicesKit.SecureVaultManager, didRequestPasswordManagerForDomain domain: String) {
+        // no-op
     }
 
     func secureVaultManager(_: SecureVaultManager, didReceivePixel pixel: AutofillUserScript.JSPixel) {
@@ -522,12 +447,14 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
 // MARK: Themable
 
 extension EmailSignupViewController: Themable {
+
     func decorate(with theme: Theme) {
         view.backgroundColor = theme.backgroundColor
 
         navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
         navigationController?.navigationBar.tintColor = theme.navigationBarTintColor
     }
+
 }
 
 // swiftlint:enable file_length

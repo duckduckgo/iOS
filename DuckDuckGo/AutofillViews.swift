@@ -28,6 +28,7 @@ struct AutofillViews {
     static let savePasswordMinHeight = 340.0
     static let updateUsernameMinHeight = 310.0
     static let passwordGenerationMinHeight: CGFloat = 310.0
+    static let emailSignupPromptMinHeight: CGFloat = 310.0
 
     struct CloseButtonHeader: View {
         let action: () -> Void

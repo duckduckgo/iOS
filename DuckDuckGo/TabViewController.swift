@@ -2221,7 +2221,8 @@ extension TabViewController: AdClickAttributionLogicDelegate {
 extension TabViewController: EmailManagerAliasPermissionDelegate {
 
     func emailManager(_ emailManager: EmailManager,
-                      didRequestPermissionToProvideAliasWithCompletion completionHandler: @escaping (EmailManagerPermittedAddressType) -> Void) {
+                      didRequestPermissionToProvideAliasWithCompletion completionHandler: @escaping (EmailManagerPermittedAddressType,
+                                                                                                     _ autosave: Bool) -> Void) {
 
         DispatchQueue.main.async {
             let alert = UIAlertController(title: UserText.emailAliasAlertTitle, message: nil, preferredStyle: .actionSheet)
@@ -2241,7 +2242,7 @@ extension TabViewController: EmailManagerAliasPermissionDelegate {
 
                     Pixel.fire(pixel: .emailUserPressedUseAddress, withAdditionalParameters: pixelParameters, includedParameters: [])
 
-                    completionHandler(.user)
+                    completionHandler(.user, false)
                 }
             }
 
@@ -2251,20 +2252,21 @@ extension TabViewController: EmailManagerAliasPermissionDelegate {
 
                 Pixel.fire(pixel: .emailUserPressedUseAlias, withAdditionalParameters: pixelParameters, includedParameters: [])
 
-                completionHandler(.generated)
+                let shouldSave = AutofillSettingStatus.isAutofillEnabledInSettings
+                completionHandler(.generated, shouldSave)
             }
 
             alert.addAction(title: UserText.emailAliasAlertDecline) {
                 Pixel.fire(pixel: .emailTooltipDismissed, withAdditionalParameters: pixelParameters, includedParameters: [])
 
-                completionHandler(.none)
+                completionHandler(.none, false)
             }
 
             if UIDevice.current.userInterfaceIdiom == .pad {
                 // make sure the completion handler is called if the alert is dismissed by tapping outside the alert
                 alert.addAction(title: "", style: .cancel) {
                     Pixel.fire(pixel: .emailTooltipDismissed, withAdditionalParameters: pixelParameters)
-                    completionHandler(.none)
+                    completionHandler(.none, false)
                 }
             }
 

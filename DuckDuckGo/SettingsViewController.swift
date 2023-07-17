@@ -417,12 +417,14 @@ class SettingsViewController: UITableViewController {
     }
 #endif
 
+#if NETWORK_PROTECTION
     private func showNetP() {
         navigationController?.pushViewController(
             UIHostingController(rootView: NetworkProtectionStatusView()),
             animated: true
         )
     }
+#endif
 
     private func showWindowsBrowserWaitlistViewController() {
         navigationController?.pushViewController(WindowsWaitlistViewController(nibName: nil, bundle: nil), animated: true)
@@ -466,7 +468,7 @@ class SettingsViewController: UITableViewController {
             break
 #endif
         case netPCell:
-#if APP_TRACKING_PROTECTION // TODO: Maybe add real precompiler flag
+#if NETWORK_PROTECTION
             showNetP()
 #else
             break

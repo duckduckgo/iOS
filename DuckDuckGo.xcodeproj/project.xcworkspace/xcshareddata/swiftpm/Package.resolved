@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "graeme/fix-ios-netp-incompatibility",
-          "revision": "f6322db67e938e71dd83e2f02943ac7d529f33c8",
-          "version": null
+          "branch": null,
+          "revision": "84cf076cb8b9b9d733c59a89ee5536296c38a7d2",
+          "version": "67.1.0"
         }
       },
       {

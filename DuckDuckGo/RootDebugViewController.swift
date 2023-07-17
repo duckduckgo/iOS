@@ -35,6 +35,7 @@ class RootDebugViewController: UITableViewController {
         case crashFatalError = 666
         case crashMemory = 667
         case toggleInspectableWebViews = 668
+        case resetEmailProtectionInContextSignUp = 669
     }
 
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -112,6 +113,11 @@ class RootDebugViewController: UITableViewController {
             defaults.inspectableWebViewEnabled.toggle()
             cell.accessoryType = defaults.inspectableWebViewEnabled ? .checkmark : .none
             NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.inspectableWebViewsToggled))
+        }
+
+        if tableView.cellForRow(at: indexPath)?.tag == Row.resetEmailProtectionInContextSignUp.rawValue {
+            EmailManager().resetEmailProtectionInContextPrompt()
+            tableView.deselectRow(at: indexPath, animated: true)
         }
 
     }

@@ -11,15 +11,6 @@
         }
       },
       {
-        "package": "BrowserServicesKit",
-        "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
-        "state": {
-          "branch": null,
-          "revision": "3e9cbd5262bdd008c433040ac3d9cb009515b441",
-          "version": null
-        }
-      },
-      {
         "package": "CocoaAsyncSocket",
         "repositoryURL": "https://github.com/robbiehanson/CocoaAsyncSocket",
         "state": {

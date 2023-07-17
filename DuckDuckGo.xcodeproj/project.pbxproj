@@ -4224,18 +4224,18 @@
 		EECD94B22A28B8580085C66E /* NetworkProtection */ = {
 			isa = PBXGroup;
 			children = (
-				EECD94B32A28B96C0085C66E /* NetPActivityView */,
+				EECD94B32A28B96C0085C66E /* Status */,
 				EE8594982A44791C008A6D06 /* NetworkProtectionTunnelController.swift */,
 			);
 			name = NetworkProtection;
 			sourceTree = "<group>";
 		};
-		EECD94B32A28B96C0085C66E /* NetPActivityView */ = {
+		EECD94B32A28B96C0085C66E /* Status */ = {
 			isa = PBXGroup;
 			children = (
 				EE4FB1852A28CE7200E5CBA7 /* NetworkProtectionStatusView.swift */,
 			);
-			name = NetPActivityView;
+			name = Status;
 			sourceTree = "<group>";
 		};
 		F1134EA71F3E2B3500B73467 /* Statistics */ = {

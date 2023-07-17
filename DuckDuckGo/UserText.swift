@@ -604,6 +604,11 @@ In addition to the details entered into this form, your app issue report will co
     
     public static let appTPHomeDisabledPrefix = NSLocalizedString("appTP.home.disabledPrefix", value: "App Tracking Protection disabled. ", comment: "Prefix of string 'App Tracking Protection disabled. Tap to re-enable.' (note the trailing space)")
     public static let appTPHomeDisabledSuffix = NSLocalizedString("appTP.home.disabledSuffix", value: "Tap to continue blocking tracking attempts across your apps.", comment: "Suffix of string 'App Tracking Protection disabled. Tap to re-enable.'")
+
+    // MARK: Network Protection
+
+    public static let netPNavTitle = NSLocalizedString("netP.title", value: "Network Protection", comment: "Title for the Network Protection feature")
+    public static let netPCellDetail = NSLocalizedString("netP.cell.detail", value: "Hide your location and conceal your online activity", comment: "Detail string describing what NetP is")
     
     // MARK: Notifications
     

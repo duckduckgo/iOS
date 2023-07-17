@@ -418,6 +418,10 @@ class SettingsViewController: UITableViewController {
 #endif
 
     private func showNetP() {
+        navigationController?.pushViewController(
+            UIHostingController(rootView: NetPActivityView()),
+            animated: true
+        )
     }
 
     private func showWindowsBrowserWaitlistViewController() {

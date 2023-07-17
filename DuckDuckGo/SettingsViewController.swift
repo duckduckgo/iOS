@@ -535,7 +535,7 @@ class SettingsViewController: UITableViewController {
             return CGFloat.leastNonzeroMagnitude
         } else if debugSectionIndex == section && !shouldShowDebugCell {
             return CGFloat.leastNonzeroMagnitude
-        } else if moreFromDDGSectionIndex == section && !shouldShowAppTPCell { // TODO: Figure out what to do here
+        } else if moreFromDDGSectionIndex == section && !(shouldShowAppTPCell || shouldShowNetPCell) {
             return CGFloat.leastNonzeroMagnitude
         } else {
             return super.tableView(tableView, heightForFooterInSection: section)
@@ -550,11 +550,22 @@ class SettingsViewController: UITableViewController {
         let rows = super.tableView(tableView, numberOfRowsInSection: section)
         if section == appearanceSectionIndex && textSizeCell.isHidden {
             return rows - 1
-        } else if section == moreFromDDGSectionIndex && !shouldShowAppTPCell {
-            return rows - 1
+        } else if section == moreFromDDGSectionIndex {
+           return adaptNumberOfRowsForMoreFromDDGSection(rows)
         } else {
             return rows
         }
+    }
+
+    private func adaptNumberOfRowsForMoreFromDDGSection(_ rows: Int) -> Int {
+        var adaptedRows = rows
+        if !shouldShowNetPCell {
+            adaptedRows -= 1
+        }
+        if !shouldShowAppTPCell {
+            adaptedRows -= 1
+        }
+        return adaptedRows
     }
 
     @IBAction func onVoiceSearchToggled(_ sender: UISwitch) {

@@ -128,6 +128,9 @@ class EmailSignupViewController: UIViewController {
         navBarTitle()
         addDuckDuckGoEmailObserver()
         applyTheme(ThemeManager.shared.currentTheme)
+
+        isModalInPresentation = true
+        navigationController?.presentationController?.delegate = self
     }
 
     private func navBarTitle() {
@@ -319,7 +322,57 @@ class EmailSignupViewController: UIViewController {
         delegate?.emailSignupViewControllerDidFinish(self, completionHandler: completionHandler!)
         dismiss(animated: true)
     }
+}
 
+// MARK: - UIPopoverPresentationControllerDelegate
+
+extension EmailSignupViewController: UIPopoverPresentationControllerDelegate {
+
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return .none
+    }
+
+}
+
+// MARK: - UIAdaptivePresentationControllerDelegate
+
+extension EmailSignupViewController: UIAdaptivePresentationControllerDelegate {
+
+    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        if case .emailEntered = signupStage {
+            let alert = UIAlertController(title: UserText.emailSignupExitEarlyAlertTitle, message: nil, preferredStyle: .alert)
+
+            let continueAction = UIAlertAction(title: UserText.emailSignupExitEarlyActionContinue, style: .default, handler: nil)
+
+            let cancelAction = UIAlertAction(title: UserText.emailSignupExitEarlyActionExit, style: .default) { [weak self] _ in
+                self?.completed(false)
+            }
+
+            alert.addAction(continueAction)
+            alert.addAction(cancelAction)
+            alert.preferredAction = continueAction
+
+            present(alert, animated: true)
+        } else {
+            dismiss(animated: true)
+        }
+    }
+
+}
+
+// MARK: - UserContentControllerDelegate
+
+extension EmailSignupViewController: UserContentControllerDelegate {
+
+    func userContentController(_ userContentController: UserContentController,
+                               didInstallContentRuleLists contentRuleLists: [String: WKContentRuleList],
+                               userScripts: UserScriptsProvider,
+                               updateEvent: ContentBlockerRulesManager.UpdateEvent) {
+        guard let userScripts = userScripts as? UserScripts else { fatalError("Unexpected UserScripts") }
+
+        userScripts.autofillUserScript.emailDelegate = emailManager
+        userScripts.autofillUserScript.vaultDelegate = vaultManager
+    }
 }
 
 // MARK: - EmailManagerRequestDelegate

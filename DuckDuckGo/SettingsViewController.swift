@@ -419,7 +419,7 @@ class SettingsViewController: UITableViewController {
 
     private func showNetP() {
         navigationController?.pushViewController(
-            UIHostingController(rootView: NetPActivityView()),
+            UIHostingController(rootView: NetworkProtectionStatusView()),
             animated: true
         )
     }

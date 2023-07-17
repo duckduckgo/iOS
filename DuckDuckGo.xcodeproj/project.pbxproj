@@ -724,7 +724,7 @@
 		EAB19EDA268963510015D3EA /* DomainMatchingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB19ED9268963510015D3EA /* DomainMatchingTests.swift */; };
 		EE3B226B29DE0F110082298A /* MockInternalUserStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3B226A29DE0F110082298A /* MockInternalUserStoring.swift */; };
 		EE3B226C29DE0FD30082298A /* MockInternalUserStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3B226A29DE0F110082298A /* MockInternalUserStoring.swift */; };
-		EE4FB1862A28CE7200E5CBA7 /* NetPActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4FB1852A28CE7200E5CBA7 /* NetPActivityView.swift */; };
+		EE4FB1862A28CE7200E5CBA7 /* NetworkProtectionStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4FB1852A28CE7200E5CBA7 /* NetworkProtectionStatusView.swift */; };
 		EE50052E29C369D300AE0773 /* FeatureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE50052D29C369D300AE0773 /* FeatureFlag.swift */; };
 		EE50053029C3BA0800AE0773 /* InternalUserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE50052F29C3BA0800AE0773 /* InternalUserStore.swift */; };
 		EE8594992A44791C008A6D06 /* NetworkProtectionTunnelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8594982A44791C008A6D06 /* NetworkProtectionTunnelController.swift */; };
@@ -2271,7 +2271,7 @@
 		EA39B7E1268A1A35000C62CD /* privacy-reference-tests */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "privacy-reference-tests"; path = "submodules/privacy-reference-tests"; sourceTree = SOURCE_ROOT; };
 		EAB19ED9268963510015D3EA /* DomainMatchingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainMatchingTests.swift; sourceTree = "<group>"; };
 		EE3B226A29DE0F110082298A /* MockInternalUserStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockInternalUserStoring.swift; sourceTree = "<group>"; };
-		EE4FB1852A28CE7200E5CBA7 /* NetPActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetPActivityView.swift; sourceTree = "<group>"; };
+		EE4FB1852A28CE7200E5CBA7 /* NetworkProtectionStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionStatusView.swift; sourceTree = "<group>"; };
 		EE50052D29C369D300AE0773 /* FeatureFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlag.swift; sourceTree = "<group>"; };
 		EE50052F29C3BA0800AE0773 /* InternalUserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalUserStore.swift; sourceTree = "<group>"; };
 		EE8594982A44791C008A6D06 /* NetworkProtectionTunnelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionTunnelController.swift; sourceTree = "<group>"; };
@@ -4233,7 +4233,7 @@
 		EECD94B32A28B96C0085C66E /* NetPActivityView */ = {
 			isa = PBXGroup;
 			children = (
-				EE4FB1852A28CE7200E5CBA7 /* NetPActivityView.swift */,
+				EE4FB1852A28CE7200E5CBA7 /* NetworkProtectionStatusView.swift */,
 			);
 			name = NetPActivityView;
 			sourceTree = "<group>";
@@ -5816,7 +5816,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE4FB1862A28CE7200E5CBA7 /* NetPActivityView.swift in Sources */,
+				EE4FB1862A28CE7200E5CBA7 /* NetworkProtectionStatusView.swift in Sources */,
 				C17B59592A03AAD30055F2D1 /* PasswordGenerationPromptViewModel.swift in Sources */,
 				8528AE81212F15D600D0BD74 /* AppRatingPrompt.xcdatamodeld in Sources */,
 				1E24295E293F57FA00584836 /* LottieView.swift in Sources */,

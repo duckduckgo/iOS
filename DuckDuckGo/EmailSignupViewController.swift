@@ -40,7 +40,7 @@ class EmailSignupViewController: UIViewController {
 
     weak var delegate: EmailSignupViewControllerDelegate?
 
-    var completionHandler: (() -> Void)?
+    let completion: ((Bool) -> Void)
 
     private var webView: WKWebView!
 
@@ -107,7 +107,8 @@ class EmailSignupViewController: UIViewController {
         }
     }
 
-    init() {
+    init(completion: @escaping ((Bool) -> Void)) {
+        self.completion = completion
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -232,6 +233,63 @@ class EmailSignupViewController: UIViewController {
     private func webViewUrlHasChanged() {
         print("webViewUrlHasChanged: \(String(describing: webView.url))")
         url = webView.url
+    }
+
+    private func setupNavigationBarTitle() {
+        let titleLabel: UILabel = UILabel()
+        titleLabel.text = "DuckDuckGo"
+        titleLabel.font = .daxFootnoteRegular()
+        titleLabel.textColor = UIColor(designSystemColor: .textSecondary)
+
+        let subtitleLabel: UILabel = UILabel()
+        subtitleLabel.text = UserText.emailProtection
+        subtitleLabel.font = .daxHeadline()
+        subtitleLabel.textColor = UIColor(designSystemColor: .textPrimary)
+
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
+        stackView.axis = .vertical
+        stackView.alignment = .center
+
+        navigationItem.titleView = stackView
+    }
+
+    private func addDuckDuckGoEmailObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onDuckDuckGoEmailSignIn),
+                                               name: .emailDidSignIn,
+                                               object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onDuckDuckGoEmailDidCloseEmailProtection),
+                                               name: .emailDidCloseEmailProtection,
+                                               object: nil)
+    }
+
+    @objc
+    private func onDuckDuckGoEmailSignIn(_ notification: Notification) {
+        if signupStage != .complete {
+            // TODO - pixel
+            completed(true)
+        }
+    }
+
+    @objc
+    private func onDuckDuckGoEmailDidCloseEmailProtection(_ notification: Notification) {
+        emailSignupCompleted()
+    }
+
+    private func updateNavigationBarButtons() {
+        switch signupStage {
+        case .start:
+            navigationItem.leftBarButtonItem = cancelBarButtonItem
+            navigationItem.rightBarButtonItem = nil
+        case .complete:
+            navigationItem.leftBarButtonItem = nil
+            navigationItem.rightBarButtonItem = nextBarButtonItem
+        default:
+            navigationItem.leftBarButtonItem = canGoBack ? backBarButtonItem : nil
+            navigationItem.rightBarButtonItem = nil
+        }
     }
 
     @objc

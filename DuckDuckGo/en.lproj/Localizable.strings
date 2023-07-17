@@ -757,6 +757,9 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Download started for %@";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "Email Protection";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Cancel";
 
@@ -786,6 +789,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Block email trackers and hide your address";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Continue Setup";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Exit Setup";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "If you exit now, your Duck Address will not be saved!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Don’t Show Again";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Protect My Email";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Create a unique, random address that also removes hidden trackers and forwards email to your inbox.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Hide Your Email and\nBlock Trackers";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "No bookmarks added yet";

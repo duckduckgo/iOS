@@ -17,10 +17,9 @@
 //  limitations under the License.
 //
 
-import SwiftUI
-
 #if NETWORK_PROTECTION
 
+import SwiftUI
 struct NetworkProtectionStatusView: View {
 
     var body: some View {

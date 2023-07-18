@@ -57,32 +57,32 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
         }
     }
 
-    func testDidToggleNetPToTrue_setsTunnelControllerStateToTrue() {
-        viewModel.didToggleNetP(to: true)
-        waitFor(condition: self.tunnelController.spySetStateEnabled == true)
+    func testDidToggleNetPToTrue_setsTunnelControllerStateToTrue() async {
+        await viewModel.didToggleNetP(to: true)
+        XCTAssertEqual(self.tunnelController.spySetStateEnabled, true)
     }
 
-    func testDidToggleNetPToTrue_tunnelControllerErrors_setsStatusMessage() {
+    func testDidToggleNetPToTrue_tunnelControllerErrors_setsStatusMessage() async {
         tunnelController.stubSetStateError = testError
-        viewModel.didToggleNetP(to: true)
-        waitFor(condition: self.viewModel.statusMessage != nil)
+        await viewModel.didToggleNetP(to: true)
+        XCTAssertNotNil(self.viewModel.statusMessage)
     }
 
-    func testDidToggleNetPToTrue_tunnelControllerErrors_setsIsNetPEnabledToFalse() {
+    func testDidToggleNetPToTrue_tunnelControllerErrors_setsIsNetPEnabledToFalse() async {
         tunnelController.stubSetStateError = testError
-        viewModel.didToggleNetP(to: true)
-        waitFor(condition: !self.viewModel.isNetPEnabled)
+        await viewModel.didToggleNetP(to: true)
+        XCTAssertFalse(self.viewModel.isNetPEnabled)
     }
 
-    func testDidToggleNetPToFalse_tunnelControllerErrors_setsStatusMessage() {
+    func testDidToggleNetPToFalse_tunnelControllerErrors_setsStatusMessage() async {
         tunnelController.stubSetStateError = testError
-        viewModel.didToggleNetP(to: false)
-        waitFor(condition: self.viewModel.statusMessage != nil)
+        await viewModel.didToggleNetP(to: false)
+        XCTAssertNotNil(self.viewModel.statusMessage)
     }
 
-    func testDidToggleNetPToFalse_setsTunnelControllerStateToFalse() {
-        viewModel.didToggleNetP(to: false)
-        waitFor(condition: self.tunnelController.spySetStateEnabled == false)
+    func testDidToggleNetPToFalse_setsTunnelControllerStateToFalse() async {
+        await viewModel.didToggleNetP(to: false)
+        XCTAssertEqual(self.tunnelController.spySetStateEnabled, false)
     }
 
     // MARK: - Helpers

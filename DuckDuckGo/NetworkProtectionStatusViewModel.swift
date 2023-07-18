@@ -76,32 +76,30 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         .store(in: &cancellables)
     }
 
-    func didToggleNetP(to enabled: Bool) {
+    func didToggleNetP(to enabled: Bool) async {
         if enabled {
-            enableNetP()
+            await enableNetP()
         } else {
-            disableNetP()
+            await disableNetP()
         }
     }
 
-    private func enableNetP() {
-        Task {
-            do {
-                try await tunnelController.setState(to: true)
-            } catch {
-                statusMessage = error.localizedDescription
-                isNetPEnabled = false
-            }
+    @MainActor
+    private func enableNetP() async {
+        do {
+            try await tunnelController.setState(to: true)
+        } catch {
+            statusMessage = error.localizedDescription
+            isNetPEnabled = false
         }
     }
 
-    private func disableNetP() {
-        Task {
-            do {
-                try await tunnelController.setState(to: false)
-            } catch {
-                statusMessage = error.localizedDescription
-            }
+    @MainActor
+    private func disableNetP() async {
+        do {
+            try await tunnelController.setState(to: false)
+        } catch {
+            statusMessage = error.localizedDescription
         }
     }
 }

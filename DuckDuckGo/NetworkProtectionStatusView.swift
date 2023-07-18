@@ -41,7 +41,11 @@ struct NetworkProtectionStatusView: View {
 
                 Toggle("", isOn: Binding(
                     get: { statusModel.isNetPEnabled },
-                    set: statusModel.didToggleNetP(to:)
+                    set: { isOn in
+                        Task {
+                            await statusModel.didToggleNetP(to: isOn)
+                        }
+                    }
                 ))
                 .disabled(statusModel.shouldShowLoading)
                 .toggleStyle(SwitchToggleStyle(tint: Color(designSystemColor: .accent)))

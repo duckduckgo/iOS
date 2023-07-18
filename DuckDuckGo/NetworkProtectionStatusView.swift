@@ -60,17 +60,20 @@ struct NetworkProtectionStatusView: View {
     @ViewBuilder
     func inviteCodeEntry() -> some View {
         Section {
-            HStack {
-                TextField("Invite Code", text: $inviteModel.text)
+            VStack(alignment: .leading) {
+                HStack {
+                    TextField("Invite Code", text: $inviteModel.text)
+                }
+                if let status = inviteModel.redeemedText {
+                    Text(status)
+                        .font(.caption)
+                        .foregroundColor(.green)
+                }
             }
             Button("Submit") {
                 Task {
                     await inviteModel.submit()
                 }
-            }
-            if let status = inviteModel.redeemedText {
-                Text(status)
-                    .foregroundColor(.green)
             }
             Button("Clear") {
                 Task {

@@ -20,17 +20,47 @@
 #if NETWORK_PROTECTION
 
 import SwiftUI
+import NetworkProtection
+
 struct NetworkProtectionStatusView: View {
+    @ObservedObject public var statusModel: NetworkProtectionStatusViewModel
 
     var body: some View {
-        return Text("Feature coming soon")
-            .navigationTitle(UserText.netPNavTitle)
+        List {
+            toggle()
+        }
+    }
+
+    @ViewBuilder
+    func toggle() -> some View {
+        Section {
+            HStack {
+                Text("Network Protection")
+
+                Toggle("", isOn: Binding(
+                    get: { statusModel.isNetPEnabled },
+                    set: statusModel.didToggleNetP(to:)
+                ))
+                .disabled(statusModel.shouldShowLoading)
+                .toggleStyle(SwitchToggleStyle(tint: Color(designSystemColor: .accent)))
+            }
+            HStack {
+                if let status = statusModel.statusMessage {
+                    Text(status)
+                        .foregroundColor(statusModel.isNetPEnabled ? .green : .red)
+                }
+            }
+        } footer: {
+            Text(UserText.netPCellDetail)
+        }
+    }
     }
 }
 
-struct NetPActivityView_Previews: PreviewProvider {
+struct NetworkProtectionStatusView_Previews: PreviewProvider {
     static var previews: some View {
         NetworkProtectionStatusView()
+        NetworkProtectionStatusView(statusModel: NetworkProtectionStatusViewModel())
     }
 }
 

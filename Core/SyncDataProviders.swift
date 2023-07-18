@@ -48,7 +48,7 @@ public class SyncDataProviders: DataProvidersSource {
     public init(bookmarksDatabase: CoreDataDatabase, secureVaultFactory: SecureVaultFactory = .default) {
         self.bookmarksDatabase = bookmarksDatabase
         self.secureVaultFactory = secureVaultFactory
-        bookmarksAdapter = SyncBookmarksAdapter()
+        bookmarksAdapter = SyncBookmarksAdapter(database: bookmarksDatabase)
         credentialsAdapter = SyncCredentialsAdapter()
     }
 

@@ -422,6 +422,7 @@ extension Pixel {
         case syncBookmarksFailed
         case syncCredentialsProviderInitializationFailed
         case syncCredentialsFailed
+        case credentialsDatabaseCleanupFailed
 
         case invalidPayload(Configuration)
     }
@@ -835,6 +836,7 @@ extension Pixel.Event {
         case .syncBookmarksFailed: return "m_d_sync_bookmarks_failed"
         case .syncCredentialsProviderInitializationFailed: return "m_d_sync_credentials_provider_initialization_failed"
         case .syncCredentialsFailed: return "m_d_sync_credentials_failed"
+        case .credentialsDatabaseCleanupFailed: return "m_d_credentials_database_cleanup_failed"
 
         case .invalidPayload(let configuration): return "m_d_\(configuration.rawValue)_invalid_payload".lowercased()
         }

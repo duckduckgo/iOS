@@ -34,6 +34,7 @@ final class NetworkProtectionInviteViewModel: ObservableObject {
     @Published var redeemedText: String?
     @Published var errorText: String?
 
+    private let tokenStore: NetworkProtectionTokenStore
     private let redemptionCoordinator: NetworkProtectionCodeRedeeming
     private let featureVisibility: NetworkProtectionFeatureVisibility
     private var textCancellable: AnyCancellable?
@@ -45,6 +46,7 @@ final class NetworkProtectionInviteViewModel: ObservableObject {
     init() {
         let tokenStore = NetworkProtectionKeychainTokenStore(useSystemKeychain: false,
                                                              errorEvents: nil)
+        self.tokenStore = tokenStore
         self.redemptionCoordinator = NetworkProtectionCodeRedemptionCoordinator(tokenStore: tokenStore,
                                                                                 errorEvents: Self.errorEvents)
         self.featureVisibility = tokenStore
@@ -62,7 +64,17 @@ final class NetworkProtectionInviteViewModel: ObservableObject {
             return
         } catch {
             errorText = "Error: try again"
-            return
+        }
+    }
+
+    @MainActor
+    func clear() async {
+        errorText = nil
+        do {
+            try tokenStore.deleteToken()
+            updateAuthenticatedText()
+        } catch {
+            errorText = "Could not clear token"
         }
     }
 

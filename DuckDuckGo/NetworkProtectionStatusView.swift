@@ -72,6 +72,12 @@ struct NetworkProtectionStatusView: View {
                 Text(status)
                     .foregroundColor(.green)
             }
+            Button("Clear") {
+                Task {
+                    await inviteModel.clear()
+                }
+            }
+            .foregroundColor(.red)
             if let errorText = inviteModel.errorText {
                 Text(errorText)
                     .foregroundColor(.red)

@@ -387,6 +387,7 @@
 		85449EFB23FDA0BC00512AAF /* UserDefaultsPropertyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85449EFA23FDA0BC00512AAF /* UserDefaultsPropertyWrapper.swift */; };
 		85449EFD23FDA71F00512AAF /* KeyboardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85449EFC23FDA71F00512AAF /* KeyboardSettings.swift */; };
 		8544C37C250B827300A0FE73 /* UserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8544C37A250B823600A0FE73 /* UserText.swift */; };
+		8546A54A2A672959003929BF /* MainViewController+Email.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8546A5492A672959003929BF /* MainViewController+Email.swift */; };
 		85480CB429226B3B007E8F13 /* CrashCollectionExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85480CB229226B1E007E8F13 /* CrashCollectionExtensionTests.swift */; };
 		85482D8D2462DCD100EDEDD1 /* ActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85482D8C2462DCD100EDEDD1 /* ActionViewController.swift */; };
 		85482D902462DCD100EDEDD1 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85482D8E2462DCD100EDEDD1 /* MainInterface.storyboard */; };
@@ -1347,6 +1348,7 @@
 		85449EFC23FDA71F00512AAF /* KeyboardSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardSettings.swift; sourceTree = "<group>"; };
 		85449F0023FEAF3000512AAF /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		8544C37A250B823600A0FE73 /* UserText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserText.swift; sourceTree = "<group>"; };
+		8546A5492A672959003929BF /* MainViewController+Email.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+Email.swift"; sourceTree = "<group>"; };
 		85480CB229226B1E007E8F13 /* CrashCollectionExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashCollectionExtensionTests.swift; sourceTree = "<group>"; };
 		85482D882462DCD100EDEDD1 /* OpenAction.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OpenAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		85482D8C2462DCD100EDEDD1 /* ActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionViewController.swift; sourceTree = "<group>"; };
@@ -4780,6 +4782,7 @@
 				6AC6DAB228804F97002723C0 /* BarsAnimator.swift */,
 				31B2F11E287846320040427A /* NoMicPermissionAlert.swift */,
 				854A012E2A5563A400FCC628 /* FindInPage.xib */,
+				8546A5492A672959003929BF /* MainViewController+Email.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -5840,6 +5843,7 @@
 				314C92BA27C3E7CB0042EC96 /* QuickLookContainerViewController.swift in Sources */,
 				855D914D2063EF6A00C4B448 /* TabSwitcherTransition.swift in Sources */,
 				CB258D1229A4F24900DEBA24 /* ConfigurationManager.swift in Sources */,
+				8546A54A2A672959003929BF /* MainViewController+Email.swift in Sources */,
 				F4F6DFB226E6AEC100ED7E12 /* AddOrEditBookmarkViewController.swift in Sources */,
 				85047C752A0D3C2900D2FF3F /* SyncSettingsViewController+Themable.swift in Sources */,
 				F44D279F27F331BB0037F371 /* AutofillLoginPromptViewController.swift in Sources */,

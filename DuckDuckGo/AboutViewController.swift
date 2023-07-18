@@ -35,8 +35,7 @@ class AboutViewController: UIViewController {
 
     @IBAction func onPrivacyLinkTapped(_ sender: UIButton) {
         dismiss(animated: true) {
-            let aboutLink = URL(string: AppDeepLinkSchemes.quickLink.appending("duckduckgo.com/about"))!
-            UIApplication.shared.open(aboutLink, options: [:])
+            UIApplication.shared.open(URL.aboutLink, options: [:])
         }
     }
 }

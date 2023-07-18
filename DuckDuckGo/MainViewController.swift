@@ -29,6 +29,7 @@ import BrowserServicesKit
 import Bookmarks
 import Persistence
 import PrivacyDashboard
+import Networking
 
 // swiftlint:disable type_body_length
 // swiftlint:disable file_length
@@ -91,7 +92,14 @@ class MainViewController: UIViewController {
     var contentUnderflow: CGFloat {
         return 3 + (allowContentUnderflow ? -customNavigationBar.frame.size.height : 0)
     }
-    
+
+    lazy var emailManager: EmailManager = {
+        let emailManager = EmailManager()
+        emailManager.aliasPermissionDelegate = self
+        emailManager.requestDelegate = self
+        return emailManager
+    }()
+
     var homeController: HomeViewController?
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
@@ -2075,6 +2083,5 @@ extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
         controller.dismiss(animated: true)
     }
 }
-
 
 // swiftlint:enable file_length

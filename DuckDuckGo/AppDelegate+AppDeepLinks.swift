@@ -47,6 +47,9 @@ extension AppDelegate {
         case .voiceSearch:
             mainViewController.onVoiceSearchPressed()
 
+        case .newEmail:
+            mainViewController.newEmailAddress()
+
         default:
             guard app.applicationState == .active,
                   let currentTab = mainViewController.currentTab else {

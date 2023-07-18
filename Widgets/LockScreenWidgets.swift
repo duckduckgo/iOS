@@ -78,7 +78,7 @@ struct EmailProtectionLockScreenWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { _ in
             return LockScreenWidgetView(imageNamed: "LockScreenEmail")
-                .widgetURL(DeepLinks.emailProtection)
+                .widgetURL(DeepLinks.newEmail)
         }
         .configurationDisplayName(UserText.lockScreenEmailTitle)
         .description(UserText.lockScreenEmailDescription)

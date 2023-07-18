@@ -23,7 +23,7 @@ struct DeepLinks {
 
     static let newSearch = AppDeepLinkSchemes.newSearch.url
     static let voiceSearch = AppDeepLinkSchemes.voiceSearch.url
-    static let emailProtection = URL(string: AppDeepLinkSchemes.quickLink.appending("duckduckgo.com/email"))!
+    static let newEmail = AppDeepLinkSchemes.newEmail.url
     static let fireButton = AppDeepLinkSchemes.fireButton.url
     static let favorites = AppDeepLinkSchemes.favorites.url
 

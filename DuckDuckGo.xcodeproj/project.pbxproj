@@ -4766,8 +4766,9 @@
 				8C4838B4221C8F7F008A6739 /* GestureToolbarButton.swift */,
 				84E341991E2F7EFB00BDBA6F /* Main.storyboard */,
 				F17669D61E43401C003D3222 /* MainViewController.swift */,
-				1E4F4A59297193DE00625985 /* MainViewController+CookiesManaged.swift */,
 				981CA7E92617797500E119D5 /* MainViewController+AddFavoriteFlow.swift */,
+				1E4F4A59297193DE00625985 /* MainViewController+CookiesManaged.swift */,
+				8546A5492A672959003929BF /* MainViewController+Email.swift */,
 				85F2FFCC2211F615006BB258 /* MainViewController+KeyCommands.swift */,
 				98EF177C21837E35006750C1 /* new_tab_dark.json */,
 				85371D232121B9D400920548 /* new_tab.json */,
@@ -4782,7 +4783,6 @@
 				6AC6DAB228804F97002723C0 /* BarsAnimator.swift */,
 				31B2F11E287846320040427A /* NoMicPermissionAlert.swift */,
 				854A012E2A5563A400FCC628 /* FindInPage.xib */,
-				8546A5492A672959003929BF /* MainViewController+Email.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";

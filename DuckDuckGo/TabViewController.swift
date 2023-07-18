@@ -313,6 +313,9 @@ class TabViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        // The email manager is pulled from the main view controller, so reconnect it now, otherwise, it's nil
+        userScripts?.autofillUserScript.emailDelegate = emailManager
+
         woShownRecently = false // don't fire if the user goes somewhere else first
         resetNavigationBar()
         delegate?.tabDidRequestShowingMenuHighlighter(tab: self)

@@ -18,10 +18,16 @@
 //
 
 import SwiftUI
+import Core
+import DesignResourcesKit
 
 struct AppTPManageTrackersView: View {
     
     @StateObject var viewModel: AppTPManageTrackersViewModel
+    @StateObject var feedbackModel: AppTrackingProtectionFeedbackModel
+    
+    @State var isBreakageLinkActive: Bool = false
+    @State var showReportAlert: Bool = false
     
     let imageCache: AppTrackerImageCache
     
@@ -53,7 +59,7 @@ struct AppTPManageTrackersView: View {
                 loadingState
             } else {
                 ScrollView {
-                    LazyVStack(alignment: .leading, spacing: 0) {
+                    VStack(alignment: .leading, spacing: 0) {
                         Section {
                             Button(action: {
                                 restoreDefaults()
@@ -62,7 +68,7 @@ struct AppTPManageTrackersView: View {
                                     Spacer()
                                     
                                     Text(UserText.appTPRestoreDefaults)
-                                        .font(Font(uiFont: Const.Font.info))
+                                        .daxBodyRegular()
                                         .foregroundColor(Color.buttonTextColor)
                                     
                                     Spacer()
@@ -75,10 +81,12 @@ struct AppTPManageTrackersView: View {
                             .padding(.bottom)
                         }
                         
-                        VStack {
+                        LazyVStack(spacing: 0) {
                             ForEach(viewModel.trackerList, id: \.hashValue) { tracker in
                                 let showDivider = tracker != viewModel.trackerList.last
-                                AppTPManageTrackerCell(tracker: tracker,
+                                AppTPManageTrackerCell(trackerDomain: tracker.domain,
+                                                       trackerBlocked: tracker.blocking,
+                                                       trackerOwner: tracker.trackerOwner,
                                                        imageCache: imageCache,
                                                        showDivider: showDivider,
                                                        onToggleTracker: onTrackerToggled(domain:isBlocking:))
@@ -90,6 +98,10 @@ struct AppTPManageTrackersView: View {
                     .padding()
                 }
             }
+            
+            NavigationLink(destination: AppTPBreakageFormView(feedbackModel: feedbackModel), isActive: $isBreakageLinkActive) {
+                EmptyView()
+            }
         }
         .navigationTitle(UserText.appTPManageTrackers)
         .onAppear {
@@ -97,14 +109,27 @@ struct AppTPManageTrackersView: View {
                 viewModel.buildTrackerList()
             }
         }
+        .alert(isPresented: $showReportAlert) {
+            Alert(title: Text(UserText.appTPReportAlertTitle),
+                  message: Text(UserText.appTPReportAlertMessage),
+                  primaryButton: .cancel(Text(UserText.appTPReportAlertConfirm)) {
+                      isBreakageLinkActive = true
+                      viewModel.trackerDisabled = false
+                  },
+                  secondaryButton: .default(Text(UserText.appTPReportAlertCancel)) {
+                      viewModel.trackerDisabled = false
+                  }
+            )
+        }
+        .onChange(of: viewModel.trackerList) { _ in
+            if viewModel.trackerDisabled {
+                showReportAlert = true
+            }
+        }
     }
 }
 
 private enum Const {
-    enum Font {
-        static let info = UIFont.appFont(ofSize: 16)
-    }
-    
     enum Size {
         static let cornerRadius: CGFloat = 12
         static let standardCellHeight: CGFloat = 44
@@ -112,7 +137,7 @@ private enum Const {
 }
 
 private extension Color {
-    static let cellBackground = Color("AppTPCellBackgroundColor")
-    static let viewBackground = Color("AppTPViewBackgroundColor")
-    static let buttonTextColor = Color("AppTPToggleColor")
+    static let cellBackground = Color(designSystemColor: .surface)
+    static let viewBackground = Color(designSystemColor: .background)
+    static let buttonTextColor = Color(designSystemColor: .accent)
 }

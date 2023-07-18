@@ -19,15 +19,22 @@
 
 import SwiftUI
 import Core
+import DesignResourcesKit
 
 #if APP_TRACKING_PROTECTION
 
 struct AppTPActivityView: View {
+    @Environment(\.colorScheme) var scheme
+    
     @ObservedObject var viewModel: AppTrackingProtectionListViewModel
     @ObservedObject var feedbackModel: AppTrackingProtectionFeedbackModel
     @ObservedObject var toggleViewModel = AppTPToggleViewModel()
+    
+    @State var isConnectingForOnboarding = false
 
     let imageCache = AppTrackerImageCache()
+    
+    let setNavColor: ((Bool) -> Void)?
     
     func imageForState() -> Image {
         return toggleViewModel.isOn ? Image("AppTPEmptyEnabled") : Image("AppTPEmptyDisabled")
@@ -37,31 +44,35 @@ struct AppTPActivityView: View {
         return toggleViewModel.isOn ? UserText.appTPEmptyEnabledInfo : UserText.appTPEmptyDisabledInfo
     }
     
+    func enableAppTPFromOnboarding() {
+        isConnectingForOnboarding = true
+        toggleViewModel.firewallStatus = .disconnected
+        toggleViewModel.connectFirewall = true
+        Task { @MainActor in
+            await toggleViewModel.changeFirewallStatus()
+        }
+    }
+    
     var emptyState: some View {
-        VStack {
-            imageForState()
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 128, height: 96)
-                .padding(.bottom)
+        VStack(alignment: .center, spacing: Const.Size.emptyStateSpacing) {
+            Text(UserText.appTPEmptyHeading)
+                .daxHeadline()
             
             Text(textForState())
                 .multilineTextAlignment(.center)
-                .font(Font(uiFont: Const.Font.info))
-                .foregroundColor(.infoText)
+                .daxBodyRegular()
+                .foregroundColor(Color(designSystemColor: .textSecondary))
+                .frame(maxWidth: .infinity)
         }
-        .padding()
+        .frame(maxWidth: .infinity)
+        .padding(Const.Size.emptyStatePadding)
+        .background(Color(designSystemColor: .surface))
+        .cornerRadius(Const.Size.cornerRadius)
         .padding(.top)
     }
     
     var listState: some View {
         VStack {
-            Picker("Tracker Sorting", selection: $viewModel.trackerSortingOption) {
-                Text("Sort By Count").tag(AppTrackingProtectionListViewModel.TrackerSorting.count)
-                Text("Sort By Date").tag(AppTrackingProtectionListViewModel.TrackerSorting.timestamp)
-            }
-            .pickerStyle(.segmented)
-            
             ForEach(viewModel.sections, id: \.name) { section in
                 Section(content: {
                     LazyVStack(alignment: .leading, spacing: 0) {
@@ -89,7 +100,7 @@ struct AppTPActivityView: View {
                     .cornerRadius(Const.Size.cornerRadius)
                 }, header: {
                     HStack {
-                        Text(viewModel.formattedDate(section.name))
+                        Text(viewModel.formattedDate(section.name).uppercased())
                             .font(Font(uiFont: Const.Font.sectionHeader))
                             .foregroundColor(.infoText)
                             .padding(.top)
@@ -100,58 +111,59 @@ struct AppTPActivityView: View {
                     }
                 })
             }
-            
-            Toggle(isOn: $viewModel.debugModeEnabled, label: {
-                Text("Show Additional Tracker Information")
-            })
-            .padding(.top, 8)
         }
     }
     
     var manageSection: some View {
-        Section {
-            VStack(alignment: .leading, spacing: 0) {
-                NavigationLink(destination: AppTPManageTrackersView(viewModel: AppTPManageTrackersViewModel(),
-                                                                    imageCache: imageCache)) {
-                    HStack {
-                        Text(UserText.appTPManageTrackers)
-                            .font(Font(uiFont: Const.Font.info))
-                            .foregroundColor(Color.buttonColor)
-                            
-                        Spacer()
+        Group {
+            Section {
+                VStack(alignment: .leading, spacing: 0) {
+                    NavigationLink(destination: AppTPManageTrackersView(viewModel: AppTPManageTrackersViewModel(),
+                                                                        feedbackModel: feedbackModel,
+                                                                        imageCache: imageCache)) {
+                        AppTPLinkButton(buttonText: UserText.appTPManageTrackers)
                     }
-                    .padding(.horizontal)
-                    .frame(height: Const.Size.standardCellHeight)
-                }
-                
-                Divider()
-                
-                NavigationLink(destination: AppTPBreakageFormView(feedbackModel: feedbackModel)) {
-                    HStack {
-                        Text(UserText.appTPReportIssueButton)
-                            .font(Font(uiFont: Const.Font.info))
-                            .foregroundColor(Color.buttonColor)
-                        
-                        Spacer()
+                    
+                    Divider()
+                        .padding(.leading)
+                    
+                    NavigationLink(destination: AppTPBreakageFormView(feedbackModel: feedbackModel)) {
+                        AppTPLinkButton(buttonText: UserText.appTPReportIssueButton)
                     }
-                    .padding(.horizontal)
-                    .frame(height: Const.Size.standardCellHeight)
                 }
+                .background(Color.cellBackground)
+                .cornerRadius(Const.Size.cornerRadius)
+                .padding(.bottom, Const.Size.sectionBottomPadding)
             }
-            .background(Color.cellBackground)
-            .cornerRadius(Const.Size.cornerRadius)
-            .padding(.bottom)
+            
+            Section {
+                VStack(alignment: .leading, spacing: 0) {
+                    NavigationLink(destination: AppTPAboutView()) {
+                        AppTPLinkButton(buttonText: UserText.appTPAboutTitle)
+                    }
+                    
+                    Divider()
+                        .padding(.leading)
+                    
+                    NavigationLink(destination: AppTPFAQView()) {
+                        AppTPLinkButton(buttonText: UserText.appTPFAQTitle)
+                    }
+                }
+                .background(Color.cellBackground)
+                .cornerRadius(Const.Size.cornerRadius)
+                .padding(.bottom)
+            }
         }
     }
     
-    var body: some View {
+    var scrollView: some View {
         ScrollView {
             LazyVStack(alignment: .center, spacing: 0) {
                 Section {
                     AppTPToggleView(viewModel: toggleViewModel)
                         .background(Color.cellBackground)
                         .cornerRadius(Const.Size.cornerRadius)
-                        .padding(.bottom)
+                        .padding(.bottom, Const.Size.sectionBottomPadding)
                 }
                 
                 if viewModel.appTPUsed || viewModel.sections.count > 0 {
@@ -165,36 +177,66 @@ struct AppTPActivityView: View {
                 }
             }
             .padding()
-            .onChange(of: toggleViewModel.firewallStatus) { value in
-                if value == .connected {
-                    viewModel.appTPUsed = true
-                }
-            }
         }
         .background(Color.viewBackground)
         .navigationTitle(UserText.appTPNavTitle)
+    }
+    
+    @ViewBuilder
+    var scrollWithBackgroud: some View {
+        if #available(iOS 16, *) {
+            scrollView
+                .scrollContentBackground(.hidden)
+                .background(Color.viewBackground)
+        } else {
+            scrollView
+                .background(Color.viewBackground)
+        }
+    }
+    
+    var body: some View {
+        scrollWithBackgroud
+            .sheet(isPresented: $viewModel.isOnboarding) {
+                NavigationView {
+                    OnboardingContainerView(
+                        viewModels: OnboardingStepViewModel.onboardingData,
+                        enableAppTP: enableAppTPFromOnboarding,
+                        isLoading: $isConnectingForOnboarding
+                    )
+                    .onChange(of: toggleViewModel.firewallStatus) { value in
+                        if value == .connected {
+                            viewModel.appTPUsed = true
+                        } else if value == .invalid {
+                            isConnectingForOnboarding = false
+                        }
+                    }
+                }
+                .accentColor(Color(scheme == .dark ? UIColor.lightMercury : UIColor.darkGreyish))
+            }
     }
 }
 
 private enum Const {
     enum Font {
-        static let sectionHeader = UIFont.semiBoldAppFont(ofSize: 15)
-        static let info = UIFont.appFont(ofSize: 16)
+        static let sectionHeader = UIFont.systemFont(ofSize: 12)
     }
     
     enum Size {
         static let cornerRadius: CGFloat = 12
         static let sectionIndentation: CGFloat = 16
-        static let sectionHeaderBottom: CGFloat = 6
+        static let sectionHeaderBottom: CGFloat = -2
         static let standardCellHeight: CGFloat = 44
+        static let sectionBottomPadding: CGFloat = 32
+        static let emptyStatePadding: CGFloat = 16
+        static let emptyStateSpacing: CGFloat = 8
     }
 }
 
 private extension Color {
     static let infoText = Color("AppTPDomainColor")
-    static let buttonColor = Color("AppTPToggleColor")
-    static let cellBackground = Color("AppTPCellBackgroundColor")
-    static let viewBackground = Color("AppTPViewBackgroundColor")
+    static let buttonColor = Color(designSystemColor: .accent)
+    static let cellBackground = Color(designSystemColor: .surface)
+    static let viewBackground = Color(designSystemColor: .background)
 }
 
 #endif

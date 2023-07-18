@@ -112,6 +112,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = UserText.autofillLoginListTitle
+        extendedLayoutIncludesOpaqueBars = true
         setupCancellables()
         installSubviews()
         installConstraints()
@@ -325,9 +326,14 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             navigationItem.rightBarButtonItems = [addBarButtonItem]
             addBarButtonItem.isEnabled = false
         case .authLocked:
-            navigationItem.rightBarButtonItems = [editButtonItem, addBarButtonItem]
-            addBarButtonItem.isEnabled = false
-            editButtonItem.isEnabled = false
+            if viewModel.hasAccountsSaved {
+                navigationItem.rightBarButtonItems = [editButtonItem, addBarButtonItem]
+                addBarButtonItem.isEnabled = false
+                editButtonItem.isEnabled = false
+            } else {
+                navigationItem.rightBarButtonItems = [addBarButtonItem]
+                addBarButtonItem.isEnabled = false
+            }
         case .empty:
             navigationItem.rightBarButtonItems = [addBarButtonItem]
             addBarButtonItem.isEnabled = true
@@ -346,7 +352,9 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             }
         case .searching, .searchingNoResults:
             navigationItem.searchController = searchController
-        case .empty, .authLocked, .noAuthAvailable:
+        case .authLocked:
+            navigationItem.searchController = viewModel.authenticationNotRequired && viewModel.hasAccountsSaved ? searchController : nil
+        case .empty, .noAuthAvailable:
             navigationItem.searchController = nil
         }
     }

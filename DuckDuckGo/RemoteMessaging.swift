@@ -24,6 +24,7 @@ import BackgroundTasks
 import BrowserServicesKit
 import Persistence
 import Bookmarks
+import RemoteMessaging
 
 struct RemoteMessaging {
 

@@ -2,12 +2,21 @@
   "object": {
     "pins": [
       {
+        "package": "BloomFilter",
+        "repositoryURL": "https://github.com/duckduckgo/bloom_cpp.git",
+        "state": {
+          "branch": null,
+          "revision": "8076199456290b61b4544bf2f4caf296759906a0",
+          "version": "3.0.0"
+        }
+      },
+      {
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": null,
-          "revision": "e0b5c953058227b060c935e8c8c006196918a5d1",
-          "version": "62.0.0"
+          "revision": "84cf076cb8b9b9d733c59a89ee5536296c38a7d2",
+          "version": "67.1.0"
         }
       },
       {
@@ -24,8 +33,8 @@
         "repositoryURL": "https://github.com/duckduckgo/content-scope-scripts",
         "state": {
           "branch": null,
-          "revision": "801b7f23476f797c6eaa72b070e6c80abb82801a",
-          "version": "4.4.4"
+          "revision": "0cfcedb9c8aefa52c7f3a36a2b3793a2c44de764",
+          "version": "4.22.5"
         }
       },
       {
@@ -51,8 +60,8 @@
         "repositoryURL": "https://github.com/duckduckgo/GRDB.swift.git",
         "state": {
           "branch": null,
-          "revision": "4475888676cfe1aabb1a35f379cd079ea692da1e",
-          "version": "2.1.1"
+          "revision": "77d9a83191a74e319a5cfa27b0e3145d15607573",
+          "version": "2.2.0"
         }
       },
       {
@@ -152,6 +161,15 @@
           "branch": null,
           "revision": "4684440d03304e7638a2c8086895367e90987463",
           "version": "1.2.1"
+        }
+      },
+      {
+        "package": "WireGuardKit",
+        "repositoryURL": "https://github.com/duckduckgo/wireguard-apple",
+        "state": {
+          "branch": null,
+          "revision": "cf3c0f5132dbb8de08c46155a1bbd5e5bb6a47c1",
+          "version": "1.1.0"
         }
       }
     ]

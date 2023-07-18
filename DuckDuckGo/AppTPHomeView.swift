@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
 #if APP_TRACKING_PROTECTION
 
@@ -32,9 +33,10 @@ struct AppTPHomeView: View {
                 .fontWeight(.semibold)
             + Text(UserText.appTPHomeBlockedSuffix)
         }
+        .foregroundColor(Color.fontColor)
+        .fixedSize(horizontal: false, vertical: true)
         .multilineTextAlignment(.leading)
-        .font(Font(uiFont: Const.Font.text))
-        .lineSpacing(Const.Spacing.line)
+        .daxSubheadRegular()
     }
     
     var disabledText: some View {
@@ -43,9 +45,10 @@ struct AppTPHomeView: View {
                 .fontWeight(.semibold)
             + Text(UserText.appTPHomeDisabledSuffix)
         }
+        .foregroundColor(Color.fontColor)
+        .fixedSize(horizontal: false, vertical: true)
         .multilineTextAlignment(.leading)
-        .font(Font(uiFont: Const.Font.text))
-        .lineSpacing(Const.Spacing.line)
+        .daxSubheadRegular()
     }
     
     var image: some View {
@@ -67,10 +70,8 @@ struct AppTPHomeView: View {
             Spacer()
             
             image
-                .scaledToFit()
                 .frame(width: 48, height: 48)
         }
-        .multilineTextAlignment(.leading)
         .padding()
         .background(RoundedRectangle(cornerRadius: Const.Radius.corner)
                         .fill(Color.background)
@@ -85,15 +86,12 @@ struct AppTPHomeView: View {
 }
 
 private extension Color {
-    static let background = Color("HomeMessageBackgroundColor")
+    static let background = Color(designSystemColor: .surface)
     static let shadow = Color("HomeMessageShadowColor")
+    static let fontColor = Color("AppTPDomainColor")
 }
 
 private enum Const {
-    enum Font {
-        static let text = UIFont.appFont(ofSize: 15)
-    }
-    
     enum Radius {
         static let shadow: CGFloat = 3
         static let corner: CGFloat = 8
@@ -101,7 +99,7 @@ private enum Const {
     
     enum Spacing {
         static let imageAndTitle: CGFloat = 4
-        static let line: CGFloat = 4
+        static let lineHeight: CGFloat = 20
     }
     
     enum Offset {

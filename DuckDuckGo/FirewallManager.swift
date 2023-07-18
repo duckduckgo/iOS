@@ -193,6 +193,11 @@ public class FirewallManager: FirewallManaging {
             Pixel.fire(pixel: .appTPFailedToAccessPreferencesDuringSetup, error: error)
 
             if let error = error as? NEVPNError {
+                // Trigger .invalid status when there's an error setting preferences
+                // This will notify viewModels there was a failure
+                manager = nil
+                statusDidChange()
+                
                 os_log("[ERROR] Error setting VPN enabled to %s %s",
                        log: FirewallManager.apptpLog, type: .debug, String(enabled), error.localizedDescription)
                 throw error

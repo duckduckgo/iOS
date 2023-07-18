@@ -19,6 +19,7 @@
 
 import Foundation
 import BrowserServicesKit
+import RemoteMessaging
 import Common
 import Core
 import Bookmarks
@@ -76,11 +77,7 @@ final class HomePageConfiguration {
     }
 
     private func remoteMessageToShow() -> HomeMessage? {
-        let experiement = MacPromoExperiment(remoteMessagingStore: remoteMessagingStore)
-        guard MacPromoExperiment(remoteMessagingStore: remoteMessagingStore).shouldShowMessage() else { return nil }
-
-        // Use the experiment's message property to make it easer to test
-        guard let remoteMessageToPresent = experiement.message else { return nil }
+        guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return nil }
         os_log("Remote message to show: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
         return .remoteMessage(remoteMessage: remoteMessageToPresent)
     }
@@ -97,5 +94,26 @@ final class HomePageConfiguration {
         default:
             break
         }
+    }
+
+    func didAppear(_ homeMessage: HomeMessage) {
+
+        switch homeMessage {
+        case .remoteMessage(let remoteMessage):
+            os_log("Remote message shown: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
+            Pixel.fire(pixel: .remoteMessageShown,
+                       withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+
+            if !remoteMessagingStore.hasShownRemoteMessage(withId: remoteMessage.id) {
+                os_log("Remote message shown for first time: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
+                Pixel.fire(pixel: .remoteMessageShownUnique,
+                           withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                remoteMessagingStore.updateRemoteMessage(withId: remoteMessage.id, asShown: true)
+            }
+
+        default:
+            break
+        }
+
     }
 }

@@ -420,7 +420,8 @@ class SettingsViewController: UITableViewController {
 #if NETWORK_PROTECTION
     private func showNetP() {
         let statusView = NetworkProtectionStatusView(
-            statusModel: NetworkProtectionStatusViewModel()
+            statusModel: NetworkProtectionStatusViewModel(),
+            inviteModel: NetworkProtectionInviteViewModel()
         )
         navigationController?.pushViewController(
             UIHostingController(rootView: statusView),

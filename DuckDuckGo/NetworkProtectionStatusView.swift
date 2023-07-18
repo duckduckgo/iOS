@@ -24,10 +24,12 @@ import NetworkProtection
 
 struct NetworkProtectionStatusView: View {
     @ObservedObject public var statusModel: NetworkProtectionStatusViewModel
+    @ObservedObject public var inviteModel: NetworkProtectionInviteViewModel
 
     var body: some View {
         List {
             toggle()
+            inviteCodeEntry()
         }
     }
 
@@ -54,13 +56,33 @@ struct NetworkProtectionStatusView: View {
             Text(UserText.netPCellDetail)
         }
     }
+
+    @ViewBuilder
+    func inviteCodeEntry() -> some View {
+        Section {
+            HStack {
+                TextField("Invite Code", text: $inviteModel.text)
+            }
+            Button("Submit") {
+                Task {
+                    await inviteModel.submit()
+                }
+            }
+            if let status = inviteModel.redeemedText {
+                Text(status)
+                    .foregroundColor(.green)
+            }
+            if let errorText = inviteModel.errorText {
+                Text(errorText)
+                    .foregroundColor(.red)
+            }
+        }
     }
 }
 
 struct NetworkProtectionStatusView_Previews: PreviewProvider {
     static var previews: some View {
-        NetworkProtectionStatusView()
-        NetworkProtectionStatusView(statusModel: NetworkProtectionStatusViewModel())
+        NetworkProtectionStatusView(statusModel: NetworkProtectionStatusViewModel(), inviteModel: NetworkProtectionInviteViewModel())
     }
 }
 

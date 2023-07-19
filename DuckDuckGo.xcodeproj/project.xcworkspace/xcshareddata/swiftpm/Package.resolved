@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "d2b6c76c8951bd838c92c26ee503be4def1711d7",
-          "version": "68.0.0"
+          "branch": "bartek/internal-user-toggle",
+          "revision": "ba85e14130772cc6190b13082e20522b9f3721da",
+          "version": null
         }
       },
       {

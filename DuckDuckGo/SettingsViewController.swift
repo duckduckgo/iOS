@@ -147,7 +147,11 @@ class SettingsViewController: UITableViewController {
         internalStateChangeCancellable = internalUserDecider.isInternalUserPublisher.dropFirst().sink(receiveValue: { [weak self] _ in
             self?.configureAutofillCell()
             self?.configureSyncCell()
+            self?.configureDebugCell()
             self?.tableView.reloadData()
+
+            // Scroll to force-redraw section headers and footers
+            self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
         })
     }
     

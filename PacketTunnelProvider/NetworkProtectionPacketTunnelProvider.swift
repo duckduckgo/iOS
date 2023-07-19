@@ -28,8 +28,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     @objc init() {
-        super.init(notificationCenter: NotificationCenter.default,
-                   notificationsPresenter: DefaultNotificationPresenter(),
+        super.init(notificationsPresenter: DefaultNotificationPresenter(),
+                   tunnelHealthStore: NetworkProtectionTunnelHealthStore(),
+                   controllerErrorStore: NetworkProtectionTunnelErrorStore(),
                    useSystemKeychain: false,
                    debugEvents: nil,
                    providerEvents: Self.packetTunnelProviderEvents)
@@ -51,12 +52,5 @@ final class DefaultNotificationPresenter: NetworkProtectionNotificationsPresente
     }
 
     func showSupersededNotification() {
-    }
-}
-
-// MARK: - NetworkProtectionNotificationPosting
-
-extension NotificationCenter: NetworkProtectionNotificationPosting {
-    public func post(_ networkProtectionNotification: NetworkProtection.NetworkProtectionNotification, object: String?, log: Common.OSLog) {
     }
 }

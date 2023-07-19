@@ -11,15 +11,6 @@
         }
       },
       {
-        "package": "BrowserServicesKit",
-        "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
-        "state": {
-          "branch": null,
-          "revision": "d2b6c76c8951bd838c92c26ee503be4def1711d7",
-          "version": "68.0.0"
-        }
-      },
-      {
         "package": "CocoaAsyncSocket",
         "repositoryURL": "https://github.com/robbiehanson/CocoaAsyncSocket",
         "state": {
@@ -50,8 +41,8 @@
         "package": "Autofill",
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
-          "branch": "shane/email-protection-saving",
-          "revision": "c1c18ca7589f61a092ff4b0cee45f1b82b0f1479",
+          "branch": "shane/email-saving-2",
+          "revision": "7cc75bc0da1e135577e394c9304f2f3bbcf1e24b",
           "version": null
         }
       },

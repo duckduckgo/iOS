@@ -1,5 +1,5 @@
 /* Description shown to the user when adding the Email Protection lock screen widget */
-"lock.screen.widget.email.description" = "Quickly enable or disable Email Protection.";
+"lock.screen.widget.email.description" = "Instantly generate a new private Duck Address.";
 
 /* Title shown to the user when adding the Email Protection lock screen widget */
 "lock.screen.widget.email.title" = "Email Protection";
@@ -17,13 +17,13 @@
 "lock.screen.widget.fire.title" = "Fire Button";
 
 /* Description shown to the user when adding the Search lock screen widget */
-"lock.screen.widget.search.description" = "Instantly open a private search in DuckDuckGo.";
+"lock.screen.widget.search.description" = "Instantly start a private search in DuckDuckGo.";
 
 /* Title shown to the user when adding the Search lock screen widget */
 "lock.screen.widget.search.title" = "Private Search";
 
 /* Description shown to the user when adding the Voice Search lock screen widget */
-"lock.screen.widget.voice.description" = "Instantly open a private voice search in DuckDuckGo.";
+"lock.screen.widget.voice.description" = "Instantly start a new private voice search in DuckDuckGo.";
 
 /* Title shown to the user when adding the Voice Search lock screen widget */
 "lock.screen.widget.voice.title" = "Voice Search";

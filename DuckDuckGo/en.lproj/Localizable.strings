@@ -572,7 +572,7 @@
 "autofill.password-generation-prompt.use-own-password.cta" = "Create My Own";
 
 /* Text for the confirmation message displayed when a user tries activate a Private Email Address */
-"autofill.private.email.mesage.activate.confirm.content" = "Emails sent to %@ will be forwarded to your inbox.";
+"autofill.private.email.mesage.activate.confirm.content" = "Emails sent to %@ will again be forwarded to your inbox.";
 
 /* Title for the confirmation message  displayed when a user tries activate a Private Email Address */
 "autofill.private.email.mesage.activate.confirm.title" = "Reactivate Private Duck Address?";
@@ -581,13 +581,13 @@
 "autofill.private.email.mesage.active" = "Active";
 
 /* Text for the confirmation message displayed when a user tries deactivate a Private Email Address */
-"autofill.private.email.mesage.deactivate.confirm.content" = "Emails sent to %@ will stop being forwarded to your inbox.";
+"autofill.private.email.mesage.deactivate.confirm.content" = "Emails sent to %@ will no longer be forwarded to your inbox.";
 
 /* Title for the confirmation message displayed when a user tries deactivate a Private Email Address */
 "autofill.private.email.mesage.deactivate.confirm.title" = "Deactivate Private Duck Address?";
 
 /* Mesasage displayed when a user tries to manage a private email address but the service is not available, returns an error or network is down */
-"autofill.private.email.mesage.error" = "Management of this address is temporarily unavailable.";
+"autofill.private.email.mesage.error" = "Management of this address is temporarily unavailable";
 
 /* Mesasage displayed when a private email address is inactive */
 "autofill.private.email.mesage.inactive" = "Deactivated";

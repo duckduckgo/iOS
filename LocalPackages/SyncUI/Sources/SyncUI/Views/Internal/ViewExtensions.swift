@@ -77,9 +77,10 @@ extension View {
     }
 
     @ViewBuilder
-    func applyUnderflowBackgroundOnPhone(isCompact: Bool) -> some View {
-        if UIDevice.current.userInterfaceIdiom == .phone && isCompact {
+    func applyUnderflowBackground(isOn: Bool) -> some View {
+        if isOn {
             self.thinMaterialBackground()
+                .padding(.top, 8)
         } else {
             self
         }

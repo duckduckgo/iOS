@@ -21,65 +21,28 @@ import SwiftUI
 
 struct UnderflowContainer<BackgroundContent: View, ForegroundContent: View>: View {
 
-    let space = CoordinateSpace.named("overContent")
-
-    @Environment(\.verticalSizeClass) var verticalSizeClass
-
-    var isCompact: Bool {
-        verticalSizeClass == .compact
-    }
-
-    @State var minHeight = 0.0
-
-    let background: () -> BackgroundContent
-    let foreground: () -> ForegroundContent
+    let container = CoordinateSpace.named("container")
+    let backgroundContent: () -> BackgroundContent
+    let foregroundContent: () -> ForegroundContent
 
     var body: some View {
-        ZStack {
+        if #available(iOS 16, *) {
+            VStack {
+                ScrollView {
+                    backgroundContent()
+                }
+                foregroundContent()
+            }
+        } else {
+
             ScrollView {
                 VStack {
-                    background()
+                    backgroundContent()
                     Spacer()
-                    ZStack {
-                        EmptyView()
-                    }
-                    .frame(minHeight: minHeight)
+                    foregroundContent()
                 }
             }
 
-            VStack {
-                Spacer()
-                foreground()
-                    .modifier(SizeModifier())
-                    .padding(.top, isCompact ? 8 : 0)
-                    .frame(maxWidth: .infinity)
-                    .ignoresSafeArea(.container)
-                    .applyUnderflowBackgroundOnPhone(isCompact: isCompact)
-            }
         }
-        .onPreferenceChange(SizePreferenceKey.self) { self.minHeight = $0.height + 8 }
-    }
-
-}
-
-struct SizePreferenceKey: PreferenceKey {
-    static var defaultValue: CGSize = .zero
-
-    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
-        if value.height == 0 || value.width == 0 {
-            value = nextValue()
-        }
-    }
-}
-
-struct SizeModifier: ViewModifier {
-    private var sizeView: some View {
-        GeometryReader { geometry in
-            Color.clear.preference(key: SizePreferenceKey.self, value: geometry.size)
-        }
-    }
-
-    func body(content: Content) -> some View {
-        content.background(sizeView)
     }
 }

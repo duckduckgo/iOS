@@ -468,8 +468,7 @@ class MainViewController: UIViewController {
         guard let controller = SettingsViewController(coder: coder,
                                                       appTPDatabase: appTrackingProtectionDatabase,
                                                       bookmarksDatabase: bookmarksDatabase,
-                                                      syncService: syncService,
-                                                      internalUserDecider: AppDependencyProvider.shared.internalUserDecider) else {
+                                                      syncService: syncService) else {
             fatalError("Failed to create controller")
         }
 

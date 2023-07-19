@@ -35,7 +35,6 @@ class RootDebugViewController: UITableViewController {
         case crashFatalError = 666
         case crashMemory = 667
         case toggleInspectableWebViews = 668
-        case toggleInternalUserState = 669
     }
 
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -48,16 +47,13 @@ class RootDebugViewController: UITableViewController {
 
     private let bookmarksDatabase: CoreDataDatabase
     private let sync: DDGSyncing
-    private let internalUserDecider: DefaultInternalUserDecider?
 
     init?(coder: NSCoder,
           sync: DDGSyncing,
-          bookmarksDatabase: CoreDataDatabase,
-          internalUserDecider: InternalUserDecider) {
+          bookmarksDatabase: CoreDataDatabase) {
 
         self.sync = sync
         self.bookmarksDatabase = bookmarksDatabase
-        self.internalUserDecider = internalUserDecider as? DefaultInternalUserDecider
         super.init(coder: coder)
     }
 
@@ -87,8 +83,6 @@ class RootDebugViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if cell.tag == Row.toggleInspectableWebViews.rawValue {
             cell.accessoryType = AppUserDefaults().inspectableWebViewEnabled ? .checkmark : .none
-        } else if cell.tag == Row.toggleInternalUserState.rawValue {
-            cell.accessoryType = (internalUserDecider?.isInternalUser ?? false) ? .checkmark : .none
         }
     }
 
@@ -117,15 +111,6 @@ class RootDebugViewController: UITableViewController {
             let defaults = AppUserDefaults()
             defaults.inspectableWebViewEnabled.toggle()
             cell.accessoryType = defaults.inspectableWebViewEnabled ? .checkmark : .none
-            NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.inspectableWebViewsToggled))
-        }
-
-        if let cell = tableView.cellForRow(at: indexPath), cell.tag == Row.toggleInternalUserState.rawValue {
-            tableView.deselectRow(at: indexPath, animated: true)
-
-            let newState = !(internalUserDecider?.isInternalUser ?? false)
-            internalUserDecider?.debugSetInternalUserState(newState)
-            cell.accessoryType = newState ? .checkmark : .none
             NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.inspectableWebViewsToggled))
         }
 

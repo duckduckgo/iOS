@@ -351,7 +351,6 @@ class SettingsViewController: UITableViewController {
         netPCell.isHidden = !shouldShowNetPCell
         netPCell.textLabel?.textColor = ThemeManager.shared.currentTheme.tableCellTextColor
         netPCell.detailTextLabel?.textColor = ThemeManager.shared.currentTheme.tableCellAccessoryTextColor
-        netPCell.detailTextLabel?.text = UserText.netPCellDetail
     }
 
     private func configureDebugCell() {

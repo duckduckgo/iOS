@@ -57,7 +57,7 @@ struct NetworkProtectionStatusView: View {
                 }
             }
         } footer: {
-            Text(UserText.netPCellDetail)
+            Text("Hide your location and conceal your online activity")
         }
     }
 

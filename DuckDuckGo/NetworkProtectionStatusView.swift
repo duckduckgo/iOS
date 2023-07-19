@@ -1,5 +1,5 @@
 //
-//  AppTPBreakageFormHeaderView.swift
+//  NetworkProtectionStatusView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -18,23 +18,21 @@
 //
 
 import SwiftUI
-import DesignResourcesKit
 
-struct AppTPBreakageFormHeaderView: View {
-    
-    let text: String
-    
+#if NETWORK_PROTECTION
+
+struct NetworkProtectionStatusView: View {
+
     var body: some View {
-        HStack {
-            Text(text)
-                .daxBodyRegular()
-                .foregroundColor(.infoText)
-            
-            Spacer()
-        }
+        return Text("Feature coming soon")
+            .navigationTitle(UserText.netPNavTitle)
     }
 }
 
-private extension Color {
-    static let infoText = Color("AppTPDomainColor")
+struct NetPActivityView_Previews: PreviewProvider {
+    static var previews: some View {
+        NetworkProtectionStatusView()
+    }
 }
+
+#endif

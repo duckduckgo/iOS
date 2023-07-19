@@ -56,6 +56,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var windowsBrowserWaitlistCell: UITableViewCell!
     @IBOutlet weak var windowsBrowserWaitlistAccessoryText: UILabel!
     @IBOutlet weak var appTPCell: UITableViewCell!
+    @IBOutlet weak var netPCell: UITableViewCell!
     @IBOutlet weak var longPressCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
     @IBOutlet weak var textSizeCell: UITableViewCell!
@@ -114,6 +115,14 @@ class SettingsViewController: UITableViewController {
 #endif
     }()
 
+    private lazy var shouldShowNetPCell: Bool = {
+#if NETWORK_PROTECTION
+        return featureFlagger.isFeatureOn(.networkProtection)
+#else
+        return false
+#endif
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -147,6 +156,7 @@ class SettingsViewController: UITableViewController {
         configureMacBrowserWaitlistCell()
         configureWindowsBrowserWaitlistCell()
         configureAppTPCell()
+        configureNetPCell()
         
         // Make sure multiline labels are correctly presented
         tableView.setNeedsLayout()
@@ -337,6 +347,13 @@ class SettingsViewController: UITableViewController {
 #endif
     }
 
+    private func configureNetPCell() {
+        netPCell.isHidden = !shouldShowNetPCell
+        netPCell.textLabel?.textColor = ThemeManager.shared.currentTheme.tableCellTextColor
+        netPCell.detailTextLabel?.textColor = ThemeManager.shared.currentTheme.tableCellAccessoryTextColor
+        netPCell.detailTextLabel?.text = UserText.netPCellDetail
+    }
+
     private func configureDebugCell() {
         debugCell.isHidden = !shouldShowDebugCell
     }
@@ -400,6 +417,15 @@ class SettingsViewController: UITableViewController {
     }
 #endif
 
+#if NETWORK_PROTECTION
+    private func showNetP() {
+        navigationController?.pushViewController(
+            UIHostingController(rootView: NetworkProtectionStatusView()),
+            animated: true
+        )
+    }
+#endif
+
     private func showWindowsBrowserWaitlistViewController() {
         navigationController?.pushViewController(WindowsWaitlistViewController(nibName: nil, bundle: nil), animated: true)
     }
@@ -438,6 +464,12 @@ class SettingsViewController: UITableViewController {
         case appTPCell:
 #if APP_TRACKING_PROTECTION
             showAppTP()
+#else
+            break
+#endif
+        case netPCell:
+#if NETWORK_PROTECTION
+            showNetP()
 #else
             break
 #endif
@@ -503,7 +535,7 @@ class SettingsViewController: UITableViewController {
             return CGFloat.leastNonzeroMagnitude
         } else if debugSectionIndex == section && !shouldShowDebugCell {
             return CGFloat.leastNonzeroMagnitude
-        } else if moreFromDDGSectionIndex == section && !shouldShowAppTPCell {
+        } else if moreFromDDGSectionIndex == section && !(shouldShowAppTPCell || shouldShowNetPCell) {
             return CGFloat.leastNonzeroMagnitude
         } else {
             return super.tableView(tableView, heightForFooterInSection: section)
@@ -518,11 +550,22 @@ class SettingsViewController: UITableViewController {
         let rows = super.tableView(tableView, numberOfRowsInSection: section)
         if section == appearanceSectionIndex && textSizeCell.isHidden {
             return rows - 1
-        } else if section == moreFromDDGSectionIndex && !shouldShowAppTPCell {
-            return rows - 1
+        } else if section == moreFromDDGSectionIndex {
+           return adaptNumberOfRowsForMoreFromDDGSection(rows)
         } else {
             return rows
         }
+    }
+
+    private func adaptNumberOfRowsForMoreFromDDGSection(_ rows: Int) -> Int {
+        var adaptedRows = rows
+        if !shouldShowNetPCell {
+            adaptedRows -= 1
+        }
+        if !shouldShowAppTPCell {
+            adaptedRows -= 1
+        }
+        return adaptedRows
     }
 
     @IBAction func onVoiceSearchToggled(_ sender: UISwitch) {

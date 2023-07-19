@@ -56,7 +56,7 @@ struct UserText {
 
     static let lockScreenSearchDescription = NSLocalizedString(
         "lock.screen.widget.search.description",
-        value: "Instantly open a private search in DuckDuckGo.",
+        value: "Instantly start a private search in DuckDuckGo.",
         comment: "Description shown to the user when adding the Search lock screen widget")
 
     static let lockScreenFavoritesTitle = NSLocalizedString(
@@ -76,7 +76,7 @@ struct UserText {
 
     static let lockScreenVoiceDescription = NSLocalizedString(
         "lock.screen.widget.voice.description",
-        value: "Instantly open a private voice search in DuckDuckGo.",
+        value: "Instantly start a new private voice search in DuckDuckGo.",
         comment: "Description shown to the user when adding the Voice Search lock screen widget")
 
     static let lockScreenEmailTitle = NSLocalizedString(
@@ -86,7 +86,7 @@ struct UserText {
 
     static let lockScreenEmailDescription = NSLocalizedString(
         "lock.screen.widget.email.description",
-        value: "Quickly enable or disable Email Protection.",
+        value: "Instantly generate a new private Duck Address.",
         comment: "Description shown to the user when adding the Email Protection lock screen widget")
 
     static let lockScreenFireTitle = NSLocalizedString(

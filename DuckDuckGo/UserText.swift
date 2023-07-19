@@ -608,7 +608,6 @@ In addition to the details entered into this form, your app issue report will co
     // MARK: Network Protection
 
     public static let netPNavTitle = NSLocalizedString("netP.title", value: "Network Protection", comment: "Title for the Network Protection feature")
-    public static let netPCellDetail = NSLocalizedString("netP.cell.detail", value: "Hide your location and conceal your online activity", comment: "Detail string describing what NetP is")
     
     // MARK: Notifications
     

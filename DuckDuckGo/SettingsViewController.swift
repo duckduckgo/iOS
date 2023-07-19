@@ -367,7 +367,6 @@ class SettingsViewController: UITableViewController {
         netPCell.isHidden = !shouldShowNetPCell
         netPCell.textLabel?.textColor = ThemeManager.shared.currentTheme.tableCellTextColor
         netPCell.detailTextLabel?.textColor = ThemeManager.shared.currentTheme.tableCellAccessoryTextColor
-        netPCell.detailTextLabel?.text = UserText.netPCellDetail
     }
 
     private func configureDebugCell() {
@@ -435,8 +434,12 @@ class SettingsViewController: UITableViewController {
 
 #if NETWORK_PROTECTION
     private func showNetP() {
+        let statusView = NetworkProtectionStatusView(
+            statusModel: NetworkProtectionStatusViewModel(),
+            inviteModel: NetworkProtectionInviteViewModel()
+        )
         navigationController?.pushViewController(
-            UIHostingController(rootView: NetworkProtectionStatusView()),
+            UIHostingController(rootView: statusView),
             animated: true
         )
     }

@@ -168,23 +168,23 @@
                                         </tableViewCellContentView>
                                         <listContentConfiguration key="contentConfiguration" text="Reset Autoconsent Settings"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" tag="669" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="haD-3N-N9b">
+                                    <tableViewCell clipsSubviews="YES" tag="668" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" id="f8n-C1-CnF">
                                         <rect key="frame" x="0.0" y="399" width="414" height="44.5"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="haD-3N-N9b" id="X81-J1-R6Y">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                        <listContentConfiguration key="contentConfiguration" text="Reset Email InContext Protection SignUp"/>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" tag="669" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" id="f8n-C1-CnF">
-                                        <rect key="frame" x="0.0" y="443.5" width="414" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="f8n-C1-CnF" id="Gna-nE-FtW">
                                             <rect key="frame" x="0.0" y="0.0" width="370" height="44.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <listContentConfiguration key="contentConfiguration" text="Enable Inspectable WebViews" secondaryText=""/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" tag="669" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" id="AgK-xW-xB6">
+                                        <rect key="frame" x="0.0" y="443.5" width="414" height="44.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AgK-xW-xB6" id="onY-PV-AQp">
+                                            <rect key="frame" x="0.0" y="0.0" width="370" height="44.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <listContentConfiguration key="contentConfiguration" text="Internal User State" secondaryText=""/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" tag="666" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Lqc-aq-UoJ">
                                         <rect key="frame" x="0.0" y="488" width="414" height="44.5"/>

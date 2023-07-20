@@ -106,7 +106,9 @@ public struct PixelParameters {
 
     public static let bookmarkErrorOrphanedFolderCount = "bookmark_error_orphaned_count"
 
-    public static let ctaShown = "cta"
+    // Remote messaging
+    public static let message = "message"
+    public static let sheetResult = "success"
 }
 
 public struct PixelValues {

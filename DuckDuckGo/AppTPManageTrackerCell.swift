@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
 struct AppTPManageTrackerCell: View {
     
@@ -58,7 +59,7 @@ struct AppTPManageTrackerCell: View {
                 
                 Toggle(isOn: $isBlocking) {
                     Text(trackerDomain)
-                        .font(Font(uiFont: Const.Font.info))
+                        .daxBodyRegular()
                         .foregroundColor(.infoText)
                 }
                 .toggleStyle(SwitchToggleStyle(tint: .toggleTint))
@@ -71,19 +72,16 @@ struct AppTPManageTrackerCell: View {
             
             if showDivider {
                 Divider()
-                    .padding(.leading, 44)
+                    .padding(.leading, Const.Size.dividerPadding)
             }
         }
     }
 }
 
 private enum Const {
-    enum Font {
-        static let info = UIFont.appFont(ofSize: 16)
-    }
-    
     enum Size {
         static let standardCellHeight: CGFloat = 44
+        static let dividerPadding: CGFloat = 44
         static let iconWidth: CGFloat = 25
     }
 }

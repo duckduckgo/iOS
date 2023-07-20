@@ -2362,7 +2362,7 @@ extension TabViewController: SecureVaultManagerDelegate {
                             promptUserToStoreAutofillData data: AutofillData,
                             withTrigger trigger: AutofillUserScript.GetTriggerType?) {
         
-        if var credentials = data.credentials,
+        if let credentials = data.credentials,
             AutofillSettingStatus.isAutofillEnabledInSettings,
             featureFlagger.isFeatureOn(.autofillCredentialsSaving) {
             if data.automaticallySavedCredentials, let trigger = trigger {
@@ -2376,18 +2376,6 @@ extension TabViewController: SecureVaultManagerDelegate {
                     self.autoSavedCredentialsId = ""
                     return
                 }
-            }
-
-            if !autoSavedCredentialsId.isEmpty {
-                if let accountIdInt = Int64(autoSavedCredentialsId) {
-                    /// generatedPassword has been modified by user so delete the autosaved credential from db and prompt to save login as new credentials
-                    deleteLoginFor(accountIdInt: accountIdInt)
-                    if credentials.account.id == autoSavedCredentialsId {
-                        credentials.account.id = nil
-                    }
-                }
-
-                self.autoSavedCredentialsId = ""
             }
 
             // Add a delay to allow propagation of pointer events to the page

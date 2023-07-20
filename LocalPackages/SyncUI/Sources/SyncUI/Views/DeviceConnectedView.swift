@@ -81,7 +81,7 @@ public struct DeviceConnectedView: View {
 
             }
             .padding(.horizontal, 20)
-        } foreground: {
+        } foregroundContent: {
             Button {
                 withAnimation {
                     self.showRecoveryPDF = true

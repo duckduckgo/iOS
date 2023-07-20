@@ -2526,7 +2526,11 @@ extension TabViewController: SecureVaultManagerDelegate {
               featureFlagger.isFeatureOn(.autofillPasswordGeneration) else { return false }
         return true
     }
-    
+
+    func secureVaultManagerShouldSaveData(_: SecureVaultManager) -> Bool {
+        true
+    }
+
     func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
         // We don't have auth yet
     }

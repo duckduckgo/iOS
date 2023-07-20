@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "BrowserServicesKit",
+        "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
+        "state": {
+          "branch": "daniel/private-email-autofill",
+          "revision": "d0834e7b0dd28bba27d36371570cc4bb9d90875e",
+          "version": null
+        }
+      },
+      {
         "package": "CocoaAsyncSocket",
         "repositoryURL": "https://github.com/robbiehanson/CocoaAsyncSocket",
         "state": {

@@ -77,16 +77,6 @@ extension View {
     }
 
     @ViewBuilder
-    func applyUnderflowBackground(isOn: Bool) -> some View {
-        if isOn {
-            self.thinMaterialBackground()
-                .padding(.top, 8)
-        } else {
-            self
-        }
-    }
-
-    @ViewBuilder
     func applyListStyle() -> some View {
         self
             .listStyle(.insetGrouped)
@@ -94,6 +84,15 @@ extension View {
             .hideScrollContentBackground()
             .background(
                 Rectangle().ignoresSafeArea().foregroundColor(Color.syncBackground))
+    }
+
+    @ViewBuilder
+    func applyViewModifier(_ modifier: some ViewModifier, if condition: Bool) -> some View {
+        if condition {
+            self.modifier(modifier)
+        } else {
+            self
+        }
     }
 
 }

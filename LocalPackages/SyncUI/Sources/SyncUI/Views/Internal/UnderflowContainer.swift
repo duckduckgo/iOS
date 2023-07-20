@@ -25,24 +25,106 @@ struct UnderflowContainer<BackgroundContent: View, ForegroundContent: View>: Vie
     let backgroundContent: () -> BackgroundContent
     let foregroundContent: () -> ForegroundContent
 
-    var body: some View {
-        if #available(iOS 16, *) {
-            VStack {
-                ScrollView {
-                    backgroundContent()
-                }
-                foregroundContent()
-            }
-        } else {
+    func calcIsUnderflowing() -> Bool {
+        guard contentSize != .zero && buttonsSize != .zero && foregroundContainerSize != .zero else {
+            return false
+        }
+        return buttonsSize.height + contentSize.height > foregroundContainerSize.height
+    }
 
+    @State var isUnderflowing = false
+    @State var contentSize: CGSize = .zero {
+        didSet {
+            isUnderflowing = calcIsUnderflowing()
+        }
+    }
+    @State var buttonsSize: CGSize = .zero {
+        didSet {
+            isUnderflowing = calcIsUnderflowing()
+        }
+    }
+    @State var foregroundContainerSize: CGSize = .zero {
+        didSet {
+            isUnderflowing = calcIsUnderflowing()
+        }
+    }
+
+    @ViewBuilder
+    func advancedView() -> some View {
+        let foreground = foregroundContent()
+
+        ZStack {
             ScrollView {
-                VStack {
+                VStack(spacing: 0) {
                     backgroundContent()
-                    Spacer()
-                    foregroundContent()
+                        .background(ViewGeometry().onPreferenceChange(ViewSizeKey.self) {
+                            contentSize = $0
+                        })
+
+                    // This is hidden so that we get the height we need to test for underscroll
+                    foreground
+                        .padding(.top, 8)
+                        .hidden()
                 }
             }
+
+            VStack(spacing: 0) {
+                Spacer()
+                foreground
+                    .padding(.top, 4)
+                    .frame(maxWidth: .infinity)
+                    .applyViewModifier(ThinMaterialBackgroundModifier(), if: isUnderflowing)
+                    .background(ViewGeometry().onPreferenceChange(ViewSizeKey.self) {
+                        buttonsSize = $0
+                    })
+            }
+            .background(ViewGeometry().onPreferenceChange(ViewSizeKey.self) {
+                foregroundContainerSize = $0
+            })
 
         }
+    }
+
+    func simpleView() -> some View {
+        ScrollView {
+            VStack {
+                backgroundContent()
+                Spacer()
+                foregroundContent()
+            }
+        }
+    }
+
+    var body: some View {
+        if #available(iOS 16, *) {
+            advancedView()
+        } else {
+            simpleView()
+        }
+    }
+
+}
+
+private struct ViewGeometry: View {
+    var body: some View {
+        GeometryReader { geometry in
+            Color.clear
+                .preference(key: ViewSizeKey.self, value: geometry.size)
+        }
+    }
+}
+
+private struct ViewSizeKey: PreferenceKey {
+    
+    static var defaultValue: CGSize = .zero
+    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
+        value = nextValue()
+    }
+
+}
+
+private struct ThinMaterialBackgroundModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content.thinMaterialBackground()
     }
 }

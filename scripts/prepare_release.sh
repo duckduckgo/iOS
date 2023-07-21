@@ -80,6 +80,7 @@ read_command_line_arguments() {
 	fi
 
 	branch_name="release"
+
 	while getopts 'hv' option; do
 		case "${option}" in
 			h)
@@ -108,6 +109,7 @@ read_command_line_arguments() {
 			arrIN=(${version//./ })
 			patch_number=$((arrIN[2]+1))
 			version="${arrIN[0]}.${arrIN[1]}.${patch_number}"
+		fi
 	fi
 
 	release_branch="${branch_name}/${version}"

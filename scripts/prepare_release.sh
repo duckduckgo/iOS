@@ -208,7 +208,13 @@ merge_fix_branch_if_necessary() {
 		return
 	fi
 
-	eval git pull "${fix_branch}" "$mute"
+	printf '%s' "Merging fix branch ... "
+	eval git checkout ${fix_branch} "$mute"
+	eval git pull "$mute"
+
+	eval git checkout -b "${changes_branch}" "$mute"
+	eval git merge "${fix_branch}" "$mute"
+	echo "✅"
 }
 
 create_pull_request() {

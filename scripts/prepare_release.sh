@@ -51,11 +51,11 @@ print_usage_and_exit() {
 
 	cat <<- EOF
 	Usage:
-	  $ $(basename "$0") <version> [-h] [-v]
+	  $ $(basename "$0") <version> [banch-with-hotfix] [-h] [-v]
 	  Current version: $(cut -d' ' -f3 < "${base_dir}/Configuration/Version.xcconfig")
 
 	Options:
-	  -h         Make hotfix release
+	  -h         Make hotfix release. Requires the version to be the one to hotfix, and a branch with the fix as the second parameter
 	  -v         Enable verbose mode
 
 	EOF

@@ -5,7 +5,8 @@ set -eo pipefail
 mute=">/dev/null 2>&1"
 version="$1"
 release_branch_parent="develop"
-hotfix_branch_parent="tags/${version}"
+tag=${version}
+hotfix_branch_parent="tags/${tag}"
 
 # Get the directory where the script is stored
 script_dir=$(dirname "$(readlink -f "$0")")
@@ -138,7 +139,7 @@ create_release_branch() {
 		printf '%s' "Creating hotfix branch ... "
 
 		# Make sure tags are up up to date
-		eval git fetch origin 'refs/tags/*:refs/tags/*'
+		eval git fetch origin "+refs/tags/${tag}:refs/tags/${tag}" "$mute"
 		eval git checkout ${hotfix_branch_parent} "$mute"
 	else
 		printf '%s' "Creating release branch ... "

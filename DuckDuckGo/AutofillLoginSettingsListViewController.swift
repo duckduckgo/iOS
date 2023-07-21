@@ -272,6 +272,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                                   presentationLocation: .withoutBottomBar,
                                   onAction: {
             self.viewModel.undoLastDelete()
+            self.syncService.scheduler.notifyDataChanged()
         }, onDidDismiss: {
             self.viewModel.clearUndoCache()
             NotificationCenter.default.post(name: FireproofFaviconUpdater.deleteFireproofFaviconNotification,
@@ -540,6 +541,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
 
                     presentDeleteConfirmation(for: title, domain: domain)
                 }
+                syncService.scheduler.notifyDataChanged()
             }
         default:
             break

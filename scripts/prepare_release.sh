@@ -136,12 +136,15 @@ assert_hotfix_tag_exists_if_necessary() {
 create_release_branch() {
 	if [[ ${is_hotfix} ]]; then
 		printf '%s' "Creating hotfix branch ... "
+
+		# Make sure tags are up up to date
+		eval git fetch origin 'refs/tags/*:refs/tags/*'
 		eval git checkout ${hotfix_branch_parent} "$mute"
 	else
 		printf '%s' "Creating release branch ... "
 		eval git checkout ${release_branch_parent} "$mute"
+		eval git pull "$mute"
 	fi
-	eval git pull "$mute"
 	eval git checkout -b "${release_branch}" "$mute"
 	eval git checkout -b "${changes_branch}" "$mute"
 	echo "✅"
@@ -223,7 +226,7 @@ main() {
 
 	read_command_line_arguments "$@"
 
-	#stash
+	stash
 	assert_clean_state
 	assert_hotfix_tag_exists_if_necessary
 

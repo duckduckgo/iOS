@@ -212,7 +212,7 @@ merge_fix_branch_if_necessary() {
 	eval git checkout ${fix_branch} "$mute"
 	eval git pull "$mute"
 
-	eval git checkout -b "${changes_branch}" "$mute"
+	eval git checkout "${changes_branch}" "$mute"
 	eval git merge "${fix_branch}" "$mute"
 	echo "✅"
 }

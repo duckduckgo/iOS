@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": "daniel/private-email-autofill",
-          "revision": "d0834e7b0dd28bba27d36371570cc4bb9d90875e",
+          "revision": "83ebb3c2a2a5fdb3fb7a4d133811bdebc2e03c3b",
           "version": null
         }
       },
@@ -50,8 +50,8 @@
         "package": "Autofill",
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
-          "branch": "shane/email-saving-2",
-          "revision": "7cc75bc0da1e135577e394c9304f2f3bbcf1e24b",
+          "branch": "8.0.0",
+          "revision": "b1160df954eea20cd4cdf9356afc369751981b16",
           "version": null
         }
       },

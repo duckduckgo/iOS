@@ -18,23 +18,13 @@
 //
 
 import UIKit
+import SwiftUI
 
 class ReportBrokenSiteViewController: UIViewController {
     
-    @IBOutlet var tableView: UITableView!
-    
-    @IBOutlet var headerView: UIView!
-    @IBOutlet var headerLabel: UILabel!
-    
-    @IBOutlet var submitButton: UIBarButtonItem!
-    
     public var brokenSiteInfo: BrokenSiteInfo?
     
-    private var selectedCategory: Int? {
-        didSet {
-            submitButton.isEnabled = true
-        }
-    }
+    private var reportView: ReportBrokenSiteView?
     
     private let categories: [BrokenSite.Category] = {
         var categories = BrokenSite.Category.allCases
@@ -47,9 +37,20 @@ class ReportBrokenSiteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        submitButton.isEnabled = false
-        headerLabel.setAttributedTextString(UserText.reportBrokenSiteHeader)
         applyTheme(ThemeManager.shared.currentTheme)
+        
+        reportView = ReportBrokenSiteView(categories: categories, submitReport: submitForm(category:description:))
+        let hc = UIHostingController(rootView: reportView)
+        
+        self.addChild(hc)
+        self.view.addSubview(hc.view)
+        hc.didMove(toParent: self)
+        
+        hc.view.translatesAutoresizingMaskIntoConstraints = false
+        hc.view.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        hc.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        hc.view.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        hc.view.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         
         DispatchQueue.main.async {
             self.view.setNeedsLayout()
@@ -60,70 +61,11 @@ class ReportBrokenSiteViewController: UIViewController {
     @IBAction func onClosePressed(sender: Any) {
         dismiss(animated: true)
     }
-
-    @IBAction func onSubmitPressed(sender: Any) {
-        guard let selectedCategory = selectedCategory else {
-            fatalError("Category should be selected!")
-        }
-        
-        brokenSiteInfo?.send(with: categories[selectedCategory].rawValue)
+    
+    func submitForm(category: BrokenSite.Category?, description: String) {
+        brokenSiteInfo?.send(with: category?.rawValue, description: description)
         ActionMessageView.present(message: UserText.feedbackSumbittedConfirmation)
         dismiss(animated: true)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        guard let headerView = tableView.tableHeaderView else {
-            return
-        }
-        
-        let size = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-        if headerView.frame.size.height != size.height {
-            headerView.frame.size.height = size.height
-            tableView.tableHeaderView = headerView
-            tableView.layoutIfNeeded()
-        }
-    }
-}
-
-extension ReportBrokenSiteViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "BrokenSiteCategoryCell") else {
-            fatalError("Failed to dequeue cell")
-        }
-        
-        let theme = ThemeManager.shared.currentTheme
-        cell.textLabel?.textColor = theme.tableCellTextColor
-        cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.tintColor = theme.buttonTintColor
-        
-        if let selectedIndex = selectedCategory, selectedIndex == indexPath.row {
-            cell.accessoryType = .checkmark
-        } else {
-            cell.accessoryType = .none
-        }
-        
-        cell.textLabel?.text = categories[indexPath.row].categoryText
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return UserText.brokenSiteSectionTitle
-    }
-}
-
-extension ReportBrokenSiteViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedCategory = indexPath.row
-        tableView.reloadData()
     }
 }
 
@@ -133,12 +75,5 @@ extension ReportBrokenSiteViewController: Themable {
         decorateNavigationBar(with: theme)
         
         view.backgroundColor = theme.backgroundColor
-        headerView.backgroundColor = theme.backgroundColor
-        headerLabel.textColor = theme.homeRowSecondaryTextColor
-        
-        tableView.separatorColor = theme.tableCellSeparatorColor
-        tableView.backgroundColor = theme.backgroundColor
-        
-        tableView.reloadData()
     }
 }

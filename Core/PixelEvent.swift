@@ -300,9 +300,11 @@ extension Pixel {
         case remoteMessageShown
         case remoteMessageShownUnique
         case remoteMessageDismissed
-        case remoteMessageShownPrimaryActionClicked
-        case remoteMessageShownSecondaryActionClicked
-        
+        case remoteMessageActionClicked
+        case remoteMessagePrimaryActionClicked
+        case remoteMessageSecondaryActionClicked
+        case remoteMessageSheet
+
         // MARK: debug pixels
         case dbCrashDetected
 
@@ -422,6 +424,7 @@ extension Pixel {
         case syncBookmarksFailed
         case syncCredentialsProviderInitializationFailed
         case syncCredentialsFailed
+        case credentialsDatabaseCleanupFailed
 
         case invalidPayload(Configuration)
     }
@@ -711,8 +714,10 @@ extension Pixel.Event {
         case .remoteMessageShown: return "m_remote_message_shown"
         case .remoteMessageShownUnique: return "m_remote_message_shown_unique"
         case .remoteMessageDismissed: return "m_remote_message_dismissed"
-        case .remoteMessageShownPrimaryActionClicked: return "m_remote_message_primary_action_clicked"
-        case .remoteMessageShownSecondaryActionClicked: return "m_remote_message_secondary_action_clicked"
+        case .remoteMessageActionClicked: return "m_remote_message_action_clicked"
+        case .remoteMessagePrimaryActionClicked: return "m_remote_message_primary_action_clicked"
+        case .remoteMessageSecondaryActionClicked: return "m_remote_message_secondary_action_clicked"
+        case .remoteMessageSheet: return "m_remote_message_sheet"
 
         // MARK: debug pixels
 
@@ -835,6 +840,7 @@ extension Pixel.Event {
         case .syncBookmarksFailed: return "m_d_sync_bookmarks_failed"
         case .syncCredentialsProviderInitializationFailed: return "m_d_sync_credentials_provider_initialization_failed"
         case .syncCredentialsFailed: return "m_d_sync_credentials_failed"
+        case .credentialsDatabaseCleanupFailed: return "m_d_credentials_database_cleanup_failed"
 
         case .invalidPayload(let configuration): return "m_d_\(configuration.rawValue)_invalid_payload".lowercased()
         }

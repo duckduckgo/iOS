@@ -103,10 +103,9 @@ class MainViewController: UIViewController {
     
     private let appTrackingProtectionDatabase: CoreDataDatabase
     private let bookmarksDatabase: CoreDataDatabase
-    private let bookmarksDatabaseCleaner: BookmarkDatabaseCleaner
+    private weak var bookmarksDatabaseCleaner: BookmarkDatabaseCleaner?
     private let favoritesViewModel: FavoritesListInteracting
     private let syncService: DDGSyncing
-    private var syncStateCancellable: AnyCancellable?
     private var localUpdatesCancellable: AnyCancellable?
     private var syncUpdatesCancellable: AnyCancellable?
 
@@ -140,15 +139,12 @@ class MainViewController: UIViewController {
 
     required init?(coder: NSCoder,
                    bookmarksDatabase: CoreDataDatabase,
+                   bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
                    appTrackingProtectionDatabase: CoreDataDatabase,
                    syncService: DDGSyncing) {
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
         self.bookmarksDatabase = bookmarksDatabase
-        self.bookmarksDatabaseCleaner = BookmarkDatabaseCleaner(
-            bookmarkDatabase: bookmarksDatabase,
-            errorEvents: BookmarksCleanupErrorHandling(),
-            log: .generalLog
-        )
+        self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
         self.syncService = syncService
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
@@ -331,19 +327,6 @@ class MainViewController: UIViewController {
     }
 
     private func bindSyncService() {
-        syncStateCancellable = syncService.authStatePublisher
-            .prepend(syncService.authState)
-            .map { $0 == .inactive }
-            .removeDuplicates()
-            .sink { [weak self] isSyncDisabled in
-                self?.bookmarksDatabaseCleaner.cleanUpDatabaseNow()
-                if isSyncDisabled {
-                    self?.bookmarksDatabaseCleaner.scheduleRegularCleaning()
-                } else {
-                    self?.bookmarksDatabaseCleaner.cancelCleaningSchedule()
-                }
-            }
-
         localUpdatesCancellable = favoritesViewModel.localUpdates
             .sink { [weak self] in
                 self?.syncService.scheduler.notifyDataChanged()
@@ -1874,7 +1857,7 @@ extension MainViewController: AutoClearWorker {
         DaxDialogs.shared.clearHeldURLData()
 
         if syncService.authState == .inactive {
-            bookmarksDatabaseCleaner.cleanUpDatabaseNow()
+            bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
         }
     }
     

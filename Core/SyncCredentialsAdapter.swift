@@ -27,11 +27,25 @@ import SyncDataProviders
 public final class SyncCredentialsAdapter {
 
     public private(set) var provider: CredentialsProvider?
-
+    public let databaseCleaner: CredentialsDatabaseCleaner
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
 
-    public init() {
+    public init(secureVaultFactory: SecureVaultFactory = .default) {
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
+        databaseCleaner = CredentialsDatabaseCleaner(
+            secureVaultFactory: secureVaultFactory,
+            errorEvents: CredentialsCleanupErrorHandling(),
+            log: .passwordManager
+        )
+    }
+
+    public func updateDatabaseCleanupSchedule(shouldEnable: Bool) {
+        databaseCleaner.cleanUpDatabaseNow()
+        if shouldEnable {
+            databaseCleaner.scheduleRegularCleaning()
+        } else {
+            databaseCleaner.cancelCleaningSchedule()
+        }
     }
 
     public func setUpProviderIfNeeded(secureVaultFactory: SecureVaultFactory, metadataStore: SyncMetadataStore) {

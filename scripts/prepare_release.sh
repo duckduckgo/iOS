@@ -81,7 +81,7 @@ read_command_line_arguments() {
 
 	branch_name="release"
 
-	while getopts 'hv' option; do
+	while getopts 'hcv' option; do
 		case "${option}" in
 			h)
 				is_hotfix=1

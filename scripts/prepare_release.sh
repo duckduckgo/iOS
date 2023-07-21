@@ -79,14 +79,17 @@ read_command_line_arguments() {
 		fi
 	fi
 
+	branch_name="release"
 	while getopts 'hv' option; do
 		case "${option}" in
 			h)
 				is_hotfix=1
+				branch_name="hotfix"
 				;;
 			c)
 				is_hotfix=1
 				is_coldfix=1
+				branch_name="coldfix"
 				;;
 			v)
 				mute=
@@ -98,8 +101,6 @@ read_command_line_arguments() {
 	done
 
 	shift $((OPTIND-1))
-
-	[[ $is_hotfix ]] && branch_name="hotfix" || branch_name="release"
 
 	if [[ $is_hotfix ]]; then
 		version_to_hotfix=${version}

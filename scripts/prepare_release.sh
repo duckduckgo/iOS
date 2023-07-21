@@ -209,7 +209,7 @@ merge_fix_branch_if_necessary() {
 	fi
 
 	printf '%s' "Merging fix branch ... "
-	eval git checkout ${fix_branch} "$mute"
+	eval git checkout "${fix_branch}" "$mute"
 	eval git pull "$mute"
 
 	eval git checkout "${changes_branch}" "$mute"

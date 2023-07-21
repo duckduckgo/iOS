@@ -239,13 +239,13 @@ main() {
 
 	create_release_branch
 
-	#update_marketing_version
-	#update_build_version
-	#update_embedded_files
-	#update_release_notes
+	update_marketing_version
+	update_build_version
+	update_embedded_files
+	update_release_notes
 	merge_fix_branch_if_necessary
 
-	#create_pull_request
+	create_pull_request
 }
 
 main "$@"

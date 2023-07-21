@@ -45,7 +45,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
     
     weak var delegate: AutofillLoginDetailsViewModelDelegate?
-    var account: SecureVaultModels.WebsiteAccount?
+    private(set) var account: SecureVaultModels.WebsiteAccount?
     private let tld: TLD
     private let autofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
     private let autofillDomainNameUrlSort = AutofillDomainNameUrlSort()
@@ -115,7 +115,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         }
     }
     
-    private func updateData(with account: SecureVaultModels.WebsiteAccount) {
+    func updateData(with account: SecureVaultModels.WebsiteAccount) {
         self.account = account
         username = account.username ?? ""
         address = account.domain ?? ""
@@ -205,8 +205,6 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     credential.account.notes = notes
                     credential.password = passwordData
 
-                    let didUpdateUsernameOrDomain = account?.username != credential.account.username || account?.domain != credential.account.domain
-
                     try vault.storeWebsiteCredentials(credential)
                     delegate?.autofillLoginDetailsViewModelDidSave()
                     
@@ -227,7 +225,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
             let credentials = SecureVaultModels.WebsiteCredentials(account: account, password: passwordData)
 
             do {
-                guard try vault.hasAccountFor(username: account.username, domain: account.domain) == false else {
+                guard try !vault.hasAccountFor(username: account.username, domain: account.domain) else {
                     delegate?.autofillLoginDetailsViewModelDidAttemptToSaveDuplicateLogin()
                     return
                 }

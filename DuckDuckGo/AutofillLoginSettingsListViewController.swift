@@ -38,6 +38,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }
 
     weak var delegate: AutofillLoginSettingsListViewControllerDelegate?
+    weak var detailsViewController: AutofillLoginDetailsViewController?
     private let viewModel: AutofillLoginListViewModel
     private let emptyView = AutofillItemsEmptyView()
     private let lockedView = AutofillItemsLockedView()
@@ -113,6 +114,9 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             .sink { [weak self] _ in
                 self?.viewModel.updateData()
                 self?.tableView.reloadData()
+                if let detailsViewController = self?.detailsViewController, let accountId = detailsViewController.account?.id.flatMap(Int64.init) {
+                    detailsViewController.account = try? secureVault?.websiteCredentialsFor(accountId: accountId)?.account
+                }
             }
     }
     
@@ -180,6 +184,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         detailsController.delegate = self
         let detailsNavigationController = UINavigationController(rootViewController: detailsController)
         navigationController?.present(detailsNavigationController, animated: true)
+        detailsViewController = detailsController
     }
 
     func makeAccountDetailsScreen(_ account: SecureVaultModels.WebsiteAccount) -> AutofillLoginDetailsViewController {
@@ -188,12 +193,14 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                                                                    tld: tld,
                                                                    authenticationNotRequired: viewModel.authenticationNotRequired)
         detailsController.delegate = self
+        detailsViewController = detailsController
         return detailsController
     }
     
     func showAccountDetails(_ account: SecureVaultModels.WebsiteAccount, animated: Bool = true) {
         let detailsController = makeAccountDetailsScreen(account)
         navigationController?.pushViewController(detailsController, animated: animated)
+        detailsViewController = detailsController
     }
     
     private func setupCancellables() {

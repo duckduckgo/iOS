@@ -241,7 +241,9 @@ main() {
 
 	update_marketing_version
 	update_build_version
-	update_embedded_files
+	if ! [ $is_hotfix ]; then
+		update_embedded_files
+	fi
 	update_release_notes
 	merge_fix_branch_if_necessary
 

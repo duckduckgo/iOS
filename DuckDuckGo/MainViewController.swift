@@ -1780,7 +1780,7 @@ extension MainViewController: BookmarksDelegate {
         }
     }
 }
-
+// DELETE THIS COMMENT, I ONLY ADDED IT TO TEST RELEASE SCRIPT. I NEEDED AN EASY TO SPOT CHANGE
 extension MainViewController: TabSwitcherButtonDelegate {
     
     func launchNewTab(_ button: TabSwitcherButton) {

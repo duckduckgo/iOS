@@ -1255,9 +1255,6 @@ https://duckduckgo.com/mac";
 /* Edit button */
 "navigation.title.edit" = "Edit";
 
-/* Detail string describing what NetP is */
-"netP.cell.detail" = "Hide your location and conceal your online activity";
-
 /* Title for the Network Protection feature */
 "netP.title" = "Network Protection";
 

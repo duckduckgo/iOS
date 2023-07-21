@@ -17,21 +17,85 @@
 //  limitations under the License.
 //
 
-import SwiftUI
-
 #if NETWORK_PROTECTION
 
+import SwiftUI
+import NetworkProtection
+
 struct NetworkProtectionStatusView: View {
+    @ObservedObject public var statusModel: NetworkProtectionStatusViewModel
+    @ObservedObject public var inviteModel: NetworkProtectionInviteViewModel
 
     var body: some View {
-        return Text("Feature coming soon")
-            .navigationTitle(UserText.netPNavTitle)
+        List {
+            toggle()
+            inviteCodeEntry()
+        }
+    }
+
+    @ViewBuilder
+    func toggle() -> some View {
+        Section {
+            HStack {
+                Text("Network Protection")
+
+                Toggle("", isOn: Binding(
+                    get: { statusModel.isNetPEnabled },
+                    set: { isOn in
+                        Task {
+                            await statusModel.didToggleNetP(to: isOn)
+                        }
+                    }
+                ))
+                .disabled(statusModel.shouldShowLoading)
+                .toggleStyle(SwitchToggleStyle(tint: Color(designSystemColor: .accent)))
+            }
+            HStack {
+                if let status = statusModel.statusMessage {
+                    Text(status)
+                        .foregroundColor(statusModel.isNetPEnabled ? .green : .red)
+                }
+            }
+        } footer: {
+            Text("Hide your location and conceal your online activity")
+        }
+    }
+
+    @ViewBuilder
+    func inviteCodeEntry() -> some View {
+        Section {
+            VStack(alignment: .leading) {
+                HStack {
+                    TextField("Invite Code", text: $inviteModel.text)
+                }
+                if let status = inviteModel.redeemedText {
+                    Text(status)
+                        .font(.caption)
+                        .foregroundColor(.green)
+                }
+            }
+            Button("Submit") {
+                Task {
+                    await inviteModel.submit()
+                }
+            }
+            Button("Clear") {
+                Task {
+                    await inviteModel.clear()
+                }
+            }
+            .foregroundColor(.red)
+            if let errorText = inviteModel.errorText {
+                Text(errorText)
+                    .foregroundColor(.red)
+            }
+        }
     }
 }
 
-struct NetPActivityView_Previews: PreviewProvider {
+struct NetworkProtectionStatusView_Previews: PreviewProvider {
     static var previews: some View {
-        NetworkProtectionStatusView()
+        NetworkProtectionStatusView(statusModel: NetworkProtectionStatusViewModel(), inviteModel: NetworkProtectionInviteViewModel())
     }
 }
 

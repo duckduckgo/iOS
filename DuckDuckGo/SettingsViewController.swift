@@ -24,6 +24,7 @@ import Persistence
 import SwiftUI
 import Common
 import DDGSync
+import Combine
 
 #if APP_TRACKING_PROTECTION
 import NetworkExtension
@@ -90,6 +91,8 @@ class SettingsViewController: UITableViewController {
     fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager
     fileprivate lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     fileprivate let syncService: DDGSyncing
+    fileprivate let internalUserDecider: InternalUserDecider
+    private var internalStateChangeCancellable: Cancellable?
 
     private var shouldShowDebugCell: Bool {
         return featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild
@@ -99,13 +102,13 @@ class SettingsViewController: UITableViewController {
         AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
     }
 
-    private lazy var shouldShowAutofillCell: Bool = {
+    private var shouldShowAutofillCell: Bool {
         return featureFlagger.isFeatureOn(.autofillAccessCredentialManagement)
-    }()
+    }
 
-    private lazy var shouldShowSyncCell: Bool = {
+    private var shouldShowSyncCell: Bool {
         return featureFlagger.isFeatureOn(.sync)
-    }()
+    }
     
     private lazy var shouldShowAppTPCell: Bool = {
 #if APP_TRACKING_PROTECTION
@@ -140,6 +143,16 @@ class SettingsViewController: UITableViewController {
         configureDebugCell()
         configureVoiceSearchCell()
         applyTheme(ThemeManager.shared.currentTheme)
+
+        internalStateChangeCancellable = internalUserDecider.isInternalUserPublisher.dropFirst().sink(receiveValue: { [weak self] _ in
+            self?.configureAutofillCell()
+            self?.configureSyncCell()
+            self?.configureDebugCell()
+            self?.tableView.reloadData()
+
+            // Scroll to force-redraw section headers and footers
+            self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -173,11 +186,13 @@ class SettingsViewController: UITableViewController {
     init?(coder: NSCoder,
           appTPDatabase: CoreDataDatabase,
           bookmarksDatabase: CoreDataDatabase,
-          syncService: DDGSyncing) {
+          syncService: DDGSyncing,
+          internalUserDecider: InternalUserDecider) {
 
         self.appTPDatabase = appTPDatabase
         self.bookmarksDatabase = bookmarksDatabase
         self.syncService = syncService
+        self.internalUserDecider = internalUserDecider
         super.init(coder: coder)
     }
 
@@ -206,7 +221,8 @@ class SettingsViewController: UITableViewController {
     @IBSegueAction func onCreateRootDebugScreen(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> RootDebugViewController {
         guard let controller = RootDebugViewController(coder: coder,
                                                        sync: syncService,
-                                                       bookmarksDatabase: bookmarksDatabase) else {
+                                                       bookmarksDatabase: bookmarksDatabase,
+                                                       internalUserDecider: AppDependencyProvider.shared.internalUserDecider) else {
             fatalError("Failed to create controller")
         }
 
@@ -351,7 +367,6 @@ class SettingsViewController: UITableViewController {
         netPCell.isHidden = !shouldShowNetPCell
         netPCell.textLabel?.textColor = ThemeManager.shared.currentTheme.tableCellTextColor
         netPCell.detailTextLabel?.textColor = ThemeManager.shared.currentTheme.tableCellAccessoryTextColor
-        netPCell.detailTextLabel?.text = UserText.netPCellDetail
     }
 
     private func configureDebugCell() {
@@ -419,8 +434,12 @@ class SettingsViewController: UITableViewController {
 
 #if NETWORK_PROTECTION
     private func showNetP() {
+        let statusView = NetworkProtectionStatusView(
+            statusModel: NetworkProtectionStatusViewModel(),
+            inviteModel: NetworkProtectionInviteViewModel()
+        )
         navigationController?.pushViewController(
-            UIHostingController(rootView: NetworkProtectionStatusView()),
+            UIHostingController(rootView: statusView),
             animated: true
         )
     }

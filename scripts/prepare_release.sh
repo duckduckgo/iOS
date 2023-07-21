@@ -86,11 +86,13 @@ read_command_line_arguments() {
 			h)
 				is_hotfix=1
 				branch_name="hotfix"
+				fix_type_name="hotfix"
 				;;
 			c)
 				is_hotfix=1
 				is_coldfix=1
 				branch_name="coldfix"
+				fix_type_name="coldfix"
 				;;
 			v)
 				mute=
@@ -135,7 +137,7 @@ assert_hotfix_tag_exists_if_necessary() {
 	if [[ ! $is_hotfix ]]; then
 		return
 	fi
-	printf '%s' "Checking tag to hotfix ... "
+	printf '%s' "Checking tag to ${fix_type_name} ... "
 	if [ $(git tag -l "$version_to_hotfix" "$mute") ]; then
 	    echo "✅"
 	else
@@ -145,7 +147,7 @@ assert_hotfix_tag_exists_if_necessary() {
 
 create_release_branch() {
 	if [[ ${is_hotfix} ]]; then
-		printf '%s' "Creating hotfix branch ... "
+		printf '%s' "Creating ${fix_type_name} branch ... "
 
 		# Make sure tags are up up to date
 		eval git fetch origin "+refs/tags/${tag}:refs/tags/${tag}" "$mute"

@@ -137,7 +137,7 @@ jobs:
     - name: Prepare fastlane
       run: bundle install
 
-    - name: Archive and upload the app
+    - name: Build the app
       env:
         APPLE_API_KEY_BASE64: ${{ secrets.APPLE_API_KEY_BASE64 }}
         APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}

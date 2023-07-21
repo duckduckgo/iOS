@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1689323504519,
+    "version": 1689939266068,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -121,6 +121,10 @@
                 },
                 {
                     "domain": "ksta.de",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/326"
+                },
+                {
+                    "domain": "motherdenim.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/326"
                 },
                 {
@@ -250,6 +254,10 @@
                 {
                     "domain": "granit.com",
                     "reason": "https://github.com/duckduckgo/autoconsent/issues/200"
+                },
+                {
+                    "domain": "kia.com",
+                    "reason": "https://github.com/duckduckgo/autoconsent/issues/210"
                 }
             ],
             "settings": {
@@ -259,7 +267,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "558792e54daecddf71939b03b238c49c"
+            "hash": "061ae814a3faa191155c79e8ead6a836"
         },
         "autofill": {
             "exceptions": [
@@ -1197,6 +1205,10 @@
                         "reason": "https://github.com/duckduckgo/privacy-configuration/issues/667"
                     },
                     {
+                        "domain": "nypost.com",
+                        "reason": "https://github.com/duckduckgo/privacy-configuration/issues/667"
+                    },
+                    {
                         "domain": "cvs.com",
                         "reason": "Navigation section at the top of the main page renders as text."
                     },
@@ -1229,7 +1241,7 @@
             },
             "exceptions": [],
             "state": "enabled",
-            "hash": "567a899425340aaf1022f5a5eb8294c6"
+            "hash": "a1e5a34a27bdeeb1cfc88a6c0c5a073f"
         },
         "duckPlayer": {
             "exceptions": [],
@@ -3198,6 +3210,17 @@
                             }
                         ]
                     },
+                    "adthrive.com": {
+                        "rules": [
+                            {
+                                "rule": "adthrive.com",
+                                "domains": [
+                                    "gardeningknowhow.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1122"
+                            }
+                        ]
+                    },
                     "ads-twitter.com": {
                         "rules": [
                             {
@@ -3597,17 +3620,6 @@
                             }
                         ]
                     },
-                    "quantcast.com": {
-                        "rules": [
-                            {
-                                "rule": "cmp.quantcast.com",
-                                "domains": [
-                                    "express.co.uk"
-                                ],
-                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1068"
-                            }
-                        ]
-                    },
                     "crisp.chat": {
                         "rules": [
                             {
@@ -3688,6 +3700,13 @@
                                 "rule": "e.cquotient.com/recs/",
                                 "domains": [
                                     "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/486"
+                            },
+                            {
+                                "rule": "p.cquotient.com/pebble",
+                                "domains": [
+                                    "scheels.com"
                                 ],
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/486"
                             }
@@ -3775,9 +3794,10 @@
                                 "domains": [
                                     "nhl.com",
                                     "viki.com",
-                                    "rocketnews24.com"
+                                    "rocketnews24.com",
+                                    "crunchyroll.com"
                                 ],
-                                "reason": "nhl.com - Videos show a spinner and never load. viki.com - after a video has played for a few seconds an adwall pops up. Clicking 'I've turned off my adblocker' resets the video, then after a few seconds the adwall pops up again. rocketnews24.com - https://github.com/duckduckgo/privacy-configuration/issues/846"
+                                "reason": "nhl.com - Videos show a spinner and never load. viki.com - after a video has played for a few seconds an adwall pops up. Clicking 'I've turned off my adblocker' resets the video, then after a few seconds the adwall pops up again. rocketnews24.com - https://github.com/duckduckgo/privacy-configuration/issues/846 crunchyroll.com - https://github.com/duckduckgo/privacy-configuration/issues/1140"
                             },
                             {
                                 "rule": "pubads.g.doubleclick.net/ssai/event/",
@@ -4229,6 +4249,17 @@
                                     "doterra.com"
                                 ],
                                 "reason": "For doterra.com/login/loading, the page shows a loading indicator and never redirects."
+                            }
+                        ]
+                    },
+                    "googleoptimize.com": {
+                        "rules": [
+                            {
+                                "rule": "googleoptimize.com/optimize.js",
+                                "domains": [
+                                    "motherdenim.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1117"
                             }
                         ]
                     },
@@ -4958,6 +4989,17 @@
                             }
                         ]
                     },
+                    "quantcast.com": {
+                        "rules": [
+                            {
+                                "rule": "cmp.quantcast.com",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1125"
+                            }
+                        ]
+                    },
                     "quantserve.com": {
                         "rules": [
                             {
@@ -5407,70 +5449,7 @@
                     "yotpo.com": {
                         "rules": [
                             {
-                                "rule": "api.yotpo.com/products/.*/.*/bottomline",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
-                            },
-                            {
-                                "rule": "api.yotpo.com/questions/send_confirmation_mail",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
-                            },
-                            {
-                                "rule": "api.yotpo.com/v1/widget/reviews",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
-                            },
-                            {
-                                "rule": "cdn-yotpo-images-production.yotpo.com",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
-                            },
-                            {
-                                "rule": "staticw2.yotpo.com/.*/widget.js",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
-                            },
-                            {
-                                "rule": "staticw2.yotpo.com/.*/widget.css",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
-                            },
-                            {
-                                "rule": "staticw2.yotpo.com/assets/yotpo-widget-font.woff",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
-                            },
-                            {
-                                "rule": "staticw2.yotpo.com/batch/",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
-                            },
-                            {
-                                "rule": "staticw2.yotpo.com/batch/app_key/.*/domain_key/.*/widget/main_widget",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
-                            },
-                            {
-                                "rule": "api.yotpo.com/reviews/.*/vote",
+                                "rule": "yotpo.com",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -5493,6 +5472,13 @@
                                     "<all>"
                                 ],
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/830"
+                            },
+                            {
+                                "rule": "rapid-cdn.yottaa.com/rapid/lib/ows8CdAyrC5lTw.js",
+                                "domains": [
+                                    "scheels.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/492"
                             }
                         ]
                     },
@@ -5572,7 +5558,7 @@
                 }
             },
             "exceptions": [],
-            "hash": "64a65dcc04da45e250c37fe25a48c09d"
+            "hash": "5403037a200cfe1c33ecbdb1c57240c2"
         },
         "trackingCookies1p": {
             "settings": {

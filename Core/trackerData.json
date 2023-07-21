@@ -11645,9 +11645,20 @@
                     "surrogate": "gtm.js",
                     "exceptions": {
                         "domains": [
+                            "aeromexico.com",
+                            "ah.nl",
+                            "al.com",
+                            "bbcgoodfood.com",
                             "bethesda.net",
+                            "dailyherald.com",
+                            "emirates.com",
                             "findmyformula.com",
+                            "garnethill.com",
+                            "iltalehti.fi",
+                            "kingarthurbaking.com",
                             "noaa.gov",
+                            "pickfu.com",
+                            "rbcroyalbank.com",
                             "redballoon.com.au",
                             "southbankresearch.com"
                         ]

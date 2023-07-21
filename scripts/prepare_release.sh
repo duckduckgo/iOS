@@ -163,6 +163,9 @@ create_release_branch() {
 }
 
 update_marketing_version() {
+	if [[ $is_coldfix ]]; then
+		return
+	fi
 	printf '%s' "Setting app version ... "
 	"$script_dir/set_version.sh" "${version}"
 	git add "${base_dir}/Configuration/Version.xcconfig" \

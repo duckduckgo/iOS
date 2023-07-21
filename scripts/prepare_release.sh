@@ -51,11 +51,12 @@ print_usage_and_exit() {
 
 	cat <<- EOF
 	Usage:
-	  $ $(basename "$0") <version> [banch-with-hotfix] [-h] [-v]
+	  $ $(basename "$0") <version> [banch-with-fix] [-h] [-v]
 	  Current version: $(cut -d' ' -f3 < "${base_dir}/Configuration/Version.xcconfig")
 
 	Options:
 	  -h         Make hotfix release. Requires the version to be the one to hotfix, and a branch with the fix as the second parameter
+	  -c         Make coldfix release (i.e. a new build number on an existing release). Requires the version to be the one to coldfix, and a branch with the fix as the second parameter
 	  -v         Enable verbose mode
 
 	EOF
@@ -83,6 +84,10 @@ read_command_line_arguments() {
 			h)
 				is_hotfix=1
 				;;
+			c)
+				is_hotfix=1
+				is_coldfix=1
+				;;
 			v)
 				mute=
 				;;
@@ -98,9 +103,10 @@ read_command_line_arguments() {
 
 	if [[ $is_hotfix ]]; then
 		version_to_hotfix=${version}
-		arrIN=(${version//./ })
-		patch_number=$((arrIN[2]+1))
-		version="${arrIN[0]}.${arrIN[1]}.${patch_number}"
+		if ! [[ $is_coldfix ]]; then
+			arrIN=(${version//./ })
+			patch_number=$((arrIN[2]+1))
+			version="${arrIN[0]}.${arrIN[1]}.${patch_number}"
 	fi
 
 	release_branch="${branch_name}/${version}"

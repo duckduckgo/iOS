@@ -19,7 +19,9 @@ on:
   pull_request:
     branches:
     - release/**
+    - hotfix/**
     - '!release/**-' # filter out PRs matching that pattern
+    - '!hotfix/**-'
     types: [closed]
 
 jobs:

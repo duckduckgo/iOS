@@ -255,7 +255,7 @@ main() {
 
 	update_marketing_version
 	update_build_version
-	if ! [[] $is_hotfix ]; then
+	if ! [[ $is_hotfix ]]; then
 		update_embedded_files
 	fi
 	update_release_notes

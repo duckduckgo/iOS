@@ -70,8 +70,8 @@ read_command_line_arguments() {
 		print_usage_and_exit "💥 Error: Wrong app version specified"
 	fi
 
-	if [ "$#" -ne 1 ]; then 
-		if [ $2 == -* ]; then
+	if [[ "$#" -ne 1 ]]; then 
+		if [[ $2 == -* ]]; then
 			shift 1
 		else
 			fix_branch=$2

@@ -3,7 +3,7 @@
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -31,7 +31,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Set as Default Browser" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xof-5k-PkI">
                                                     <rect key="frame" x="20" y="0.0" width="334" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -55,7 +55,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Add App to Your Dock" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yvj-LL-MiR">
                                                     <rect key="frame" x="20" y="0.0" width="334" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -79,7 +79,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Add Widget to Home Screen" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Fxu-zn-51Z">
                                                     <rect key="frame" x="20" y="0.0" width="334" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -110,7 +110,7 @@
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
                                                     </accessibility>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -138,7 +138,7 @@
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
                                                     </accessibility>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -161,16 +161,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Theme" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="f1O-6u-LFY">
-                                                    <rect key="frame" x="20" y="13.000000000000002" width="49" height="18.666666666666668"/>
+                                                    <rect key="frame" x="20.000000000000004" y="12.999999999999998" width="50.333333333333336" height="19.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Default" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gbx-kl-uOO">
-                                                    <rect key="frame" x="284.66666666666669" y="13.000000000000002" width="51" height="18.666666666666668"/>
+                                                    <rect key="frame" x="283.33333333333337" y="12.999999999999998" width="52.333333333333336" height="19.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.99999064209999999" green="0.9999936223" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -193,7 +193,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="eGn-w9-fNN"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -233,17 +233,17 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Animation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="AtR-nS-Gun" userLabel="Fire Button Accessory Label">
-                                                    <rect key="frame" x="263.66666666666669" y="13.000000000000002" width="72" height="18.666666666666671"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <rect key="frame" x="263" y="12.666666666666666" width="72.666666666666686" height="19.333333333333336"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.99999064209999999" green="0.9999936223" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Fire Button Animation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gBo-Cu-e2k">
-                                                    <rect key="frame" x="19.999999999999986" y="9.9999999999999982" width="223.66666666666663" height="24.333333333333329"/>
+                                                    <rect key="frame" x="20" y="9.9999999999999982" width="223" height="24.333333333333329"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="lET-gS-0lq"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <attributedString key="userComments">
@@ -274,16 +274,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Text Size" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9Ko-0g-T3h">
-                                                    <rect key="frame" x="20" y="13.000000000000002" width="64" height="18.666666666666668"/>
+                                                    <rect key="frame" x="20" y="12.999999999999998" width="65" height="19.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="100%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EB8-09-gt2">
-                                                    <rect key="frame" x="292.66666666666669" y="13.000000000000002" width="43" height="18.666666666666668"/>
+                                                    <rect key="frame" x="294.33333333333337" y="12.999999999999998" width="41.333333333333336" height="19.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.99999064209999999" green="0.9999936223" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -310,7 +310,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="2zu-Zv-RNU"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -354,7 +354,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="Vnd-Oc-mcF"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -396,7 +396,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Unprotected Sites" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FHC-1z-Z3v">
                                                     <rect key="frame" x="20" y="0.0" width="315.66666666666669" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -419,7 +419,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="lhy-SS-UWF"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -463,7 +463,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="CpU-SU-Iuu"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -507,7 +507,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="ptm-co-pYj"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -547,7 +547,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="Keyboard" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yoZ-jw-Cu3">
                                                     <rect key="frame" x="20" y="0.0" width="315.66666666666669" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -565,16 +565,16 @@
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="44.333332061767578"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Autocomplete Suggestions" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U8i-cQ-5WW">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" ambiguous="YES" text="Autocomplete Suggestions" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U8i-cQ-5WW">
                                                     <rect key="frame" x="20" y="9.9999999999999982" width="265" height="24.333333333333329"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="Vfa-Zm-4xi"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PNd-rx-En1">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PNd-rx-En1">
                                                     <rect key="frame" x="305" y="6.6666666666666679" width="51" height="31.000000000000004"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="r1b-Zu-6zr"/>
@@ -603,16 +603,16 @@
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="44.333332061767578"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Private Voice Search" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Swa-O7-n8W">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" ambiguous="YES" text="Private Voice Search" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Swa-O7-n8W">
                                                     <rect key="frame" x="20" y="9.9999999999999982" width="265" height="24.333333333333329"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="8aX-cO-6x4"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eaN-kY-P8L">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eaN-kY-P8L">
                                                     <rect key="frame" x="305" y="6.6666666666666679" width="51" height="31.000000000000004"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="ll4-W4-dJg"/>
@@ -635,22 +635,22 @@
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
                                     <tableViewCell hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="4cy-nR-Oqa">
-                                        <rect key="frame" x="20" y="1100" width="374" height="44.333332061767578"/>
+                                        <rect key="frame" x="20" y="1100.6666641235352" width="374" height="44.333332061767578"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="4cy-nR-Oqa" id="lje-xd-APn">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="44.333332061767578"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Long-Press Previews" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HLr-R8-xxF">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" ambiguous="YES" text="Long-Press Previews" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HLr-R8-xxF">
                                                     <rect key="frame" x="20" y="9.9999999999999982" width="265" height="24.333333333333329"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="Cry-oU-ivE"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z1R-um-rgF">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z1R-um-rgF">
                                                     <rect key="frame" x="305" y="6.6666666666666679" width="51" height="31.000000000000004"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="kdb-Px-qMr"/>
@@ -673,22 +673,22 @@
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="PlN-Mw-1PX" userLabel="OpenLinks Cell">
-                                        <rect key="frame" x="20" y="1144.3333320617676" width="374" height="44.333332061767578"/>
+                                        <rect key="frame" x="20" y="1144.9999961853027" width="374" height="44.333332061767578"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="PlN-Mw-1PX" id="buN-xv-p62">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="44.333332061767578"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="751" text="Open Links in Associated Apps" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a1T-ui-4Nw">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="751" ambiguous="YES" text="Open Links in Associated Apps" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a1T-ui-4Nw">
                                                     <rect key="frame" x="20" y="9.9999999999999982" width="265" height="24.333333333333329"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="xj0-Sm-ver"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cBU-D1-Ut8">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cBU-D1-Ut8">
                                                     <rect key="frame" x="305" y="6.6666666666666679" width="51" height="31.000000000000004"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="np7-A2-24E"/>
@@ -715,26 +715,26 @@
                             <tableViewSection headerTitle="More From DuckDuckGo" footerTitle="" id="OxE-MQ-uJk">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="azf-Nc-kvW" detailTextLabel="Y6Y-wA-n6Z" rowHeight="55" style="IBUITableViewCellStyleSubtitle" id="nAl-CW-4R7">
-                                        <rect key="frame" x="20" y="1279.9999961853027" width="374" height="55"/>
+                                        <rect key="frame" x="20" y="1280.6666603088379" width="374" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nAl-CW-4R7" id="eQZ-vi-vuJ">
                                             <rect key="frame" x="0.0" y="0.0" width="343.66666666666669" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="Email Protection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="azf-Nc-kvW">
-                                                    <rect key="frame" x="19.999999999999993" y="8.3333333333333339" width="117.33333333333333" height="18.666666666666668"/>
+                                                    <rect key="frame" x="20" y="7.3333333333333339" width="118" height="19.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
                                                     </accessibility>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" text="Block email trackers and hide your address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Y6Y-wA-n6Z">
-                                                    <rect key="frame" x="20.000000000000014" y="29.666666666666668" width="251.33333333333334" height="15.333333333333334"/>
+                                                    <rect key="frame" x="20" y="29.333333333333332" width="260" height="15.666666666666666"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="13"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -746,26 +746,26 @@
                                         </accessibility>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Yz9-17-qnn" detailTextLabel="P0F-ts-ekd" rowHeight="55" style="IBUITableViewCellStyleSubtitle" id="WpO-kq-QM6">
-                                        <rect key="frame" x="20" y="1334.9999961853027" width="374" height="55"/>
+                                        <rect key="frame" x="20" y="1335.6666603088379" width="374" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WpO-kq-QM6" id="jdM-R6-KZO">
                                             <rect key="frame" x="0.0" y="0.0" width="343.66666666666669" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="DuckDuckGo Mac App" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Yz9-17-qnn">
-                                                    <rect key="frame" x="20" y="8.3333333333333339" width="165" height="18.666666666666668"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="DuckDuckGo Mac App" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Yz9-17-qnn">
+                                                    <rect key="frame" x="20" y="7.3333333333333339" width="164.33333333333334" height="19.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
                                                     </accessibility>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Browse privately with our app for Mac " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="P0F-ts-ekd">
-                                                    <rect key="frame" x="19.999999999999986" y="29.666666666666668" width="224.66666666666666" height="15.333333333333334"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" text="Browse privately with our app for Mac " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="P0F-ts-ekd">
+                                                    <rect key="frame" x="20" y="29.333333333333332" width="232" height="15.666666666666666"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="13"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -777,26 +777,26 @@
                                         </accessibility>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="RQ8-H1-Ez1" detailTextLabel="hoT-Nu-KXP" rowHeight="55" style="IBUITableViewCellStyleSubtitle" id="ubu-Mf-iUH">
-                                        <rect key="frame" x="20" y="1389.9999961853027" width="374" height="55"/>
+                                        <rect key="frame" x="20" y="1390.6666603088379" width="374" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ubu-Mf-iUH" id="Sm8-Lv-wFY">
                                             <rect key="frame" x="0.0" y="0.0" width="343.66666666666669" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="DuckDuckGo Windows App" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RQ8-H1-Ez1">
-                                                    <rect key="frame" x="20" y="8.3333333333333339" width="200" height="18.666666666666668"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="DuckDuckGo Windows App" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RQ8-H1-Ez1">
+                                                    <rect key="frame" x="20" y="7.3333333333333339" width="199.33333333333334" height="19.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
                                                     </accessibility>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Browse privately with our app for Windows" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hoT-Nu-KXP">
-                                                    <rect key="frame" x="20.000000000000014" y="29.666666666666668" width="249.33333333333334" height="15.333333333333334"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" text="Browse privately with our app for Windows" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hoT-Nu-KXP">
+                                                    <rect key="frame" x="20" y="29.333333333333332" width="257.66666666666669" height="15.666666666666666"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="13"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -808,26 +808,26 @@
                                         </accessibility>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Laa-LS-Z5M" detailTextLabel="R2f-X7-ZEt" rowHeight="55" style="IBUITableViewCellStyleSubtitle" id="Vaa-S8-LVa">
-                                        <rect key="frame" x="20" y="1444.9999961853027" width="374" height="55"/>
+                                        <rect key="frame" x="20" y="1445.6666603088379" width="374" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Vaa-S8-LVa" id="CXa-n8-cJf">
                                             <rect key="frame" x="0.0" y="0.0" width="343.66666666666669" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="App Tracking Protection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Laa-LS-Z5M">
-                                                    <rect key="frame" x="20" y="8.3333333333333339" width="172" height="18.666666666666668"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="App Tracking Protection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Laa-LS-Z5M">
+                                                    <rect key="frame" x="20" y="7.3333333333333339" width="175" height="19.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
                                                     </accessibility>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Block app trackers on your device" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="R2f-X7-ZEt">
-                                                    <rect key="frame" x="20" y="29.666666666666668" width="198.66666666666666" height="15.333333333333334"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" text="Block app trackers on your device" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="R2f-X7-ZEt">
+                                                    <rect key="frame" x="20" y="29.333333333333332" width="205.33333333333334" height="15.666666666666666"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="13"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -839,26 +839,26 @@
                                         </accessibility>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="qah-gb-udB" detailTextLabel="Cyw-ir-cSK" rowHeight="55" style="IBUITableViewCellStyleSubtitle" id="7pF-cg-5QN">
-                                        <rect key="frame" x="20" y="1499.9999961853027" width="374" height="55"/>
+                                        <rect key="frame" x="20" y="1500.6666603088379" width="374" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7pF-cg-5QN" id="5Yk-5T-8YE">
                                             <rect key="frame" x="0.0" y="0.0" width="343.66666666666669" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Network Protection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qah-gb-udB" userLabel="Network Protection">
-                                                    <rect key="frame" x="20" y="8.3333333333333339" width="138.33333333333334" height="18.666666666666668"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="Network Protection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qah-gb-udB" userLabel="Network Protection">
+                                                    <rect key="frame" x="20" y="7.3333333333333339" width="140" height="19.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
                                                     </accessibility>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Hide your location and conceal your online activity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Cyw-ir-cSK">
-                                                    <rect key="frame" x="20" y="29.666666666666668" width="292.33333333333331" height="15.333333333333334"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" text="Hide your location and conceal your online activity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Cyw-ir-cSK">
+                                                    <rect key="frame" x="20" y="29.333333333333332" width="304.66666666666669" height="15.666666666666666"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="13"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -874,19 +874,19 @@
                             <tableViewSection headerTitle="About" footerTitle="" id="FpT-1C-xtx">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="oM7-1o-9oY" style="IBUITableViewCellStyleDefault" id="iy0-gV-9MR" userLabel="About Cell">
-                                        <rect key="frame" x="20" y="1622.3333282470703" width="374" height="43.666667938232422"/>
+                                        <rect key="frame" x="20" y="1622.9999923706055" width="374" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iy0-gV-9MR" id="Msh-jY-fMD">
                                             <rect key="frame" x="0.0" y="0.0" width="343.66666666666669" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="About DuckDuckGo" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oM7-1o-9oY">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="About DuckDuckGo" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oM7-1o-9oY">
                                                     <rect key="frame" x="20" y="0.0" width="315.66666666666669" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
                                                     </accessibility>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -901,23 +901,23 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="2ky-s9-1aZ" detailTextLabel="d5n-vG-8kF" style="IBUITableViewCellStyleValue1" id="TYF-GX-a3j">
-                                        <rect key="frame" x="20" y="1665.9999961853027" width="374" height="43.666667938232422"/>
+                                        <rect key="frame" x="20" y="1550.3333307902019" width="374" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TYF-GX-a3j" id="XV6-jV-uNS">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Version" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2ky-s9-1aZ">
-                                                    <rect key="frame" x="20" y="12" width="56" height="20"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="Version" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2ky-s9-1aZ">
+                                                    <rect key="frame" x="20.000000000000004" y="12.999999999999998" width="54.333333333333336" height="19.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="10.0.1 (Build 10005)" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d5n-vG-8kF">
-                                                    <rect key="frame" x="211.33333333333337" y="13.000000000000002" width="142.66666666666666" height="18.666666666666668"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="10.0.1 (Build 10005)" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d5n-vG-8kF">
+                                                    <rect key="frame" x="211.33333333333337" y="12.999999999999998" width="142.66666666666666" height="19.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.74509803919999995" green="0.76078431369999999" blue="0.79607843140000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -926,16 +926,16 @@
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="m23-t6-9cb" style="IBUITableViewCellStyleDefault" id="aJ8-VX-XrI" userLabel="Feedback Cell">
-                                        <rect key="frame" x="20" y="1709.6666641235352" width="374" height="43.666667938232422"/>
+                                        <rect key="frame" x="20" y="1710.3333282470703" width="374" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aJ8-VX-XrI" id="9Mf-ZL-aUg">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Share Feedback" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="m23-t6-9cb">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="Share Feedback" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="m23-t6-9cb">
                                                     <rect key="frame" x="20" y="0.0" width="334" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -954,19 +954,19 @@
                             <tableViewSection footerTitle="" id="uYI-vl-pMR" userLabel="Debug">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="A9G-5I-RSn" style="IBUITableViewCellStyleDefault" id="FqT-nq-YvQ" userLabel="Debug Cell">
-                                        <rect key="frame" x="20" y="1793.3333320617676" width="374" height="43.666667938232422"/>
+                                        <rect key="frame" x="20" y="1793.9999961853027" width="374" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FqT-nq-YvQ" id="DgP-Pj-wOt">
-                                            <rect key="frame" x="0.0" y="0.0" width="343.66666666666669" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="355.66666666666669" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Debug Menu" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="A9G-5I-RSn">
-                                                    <rect key="frame" x="20" y="0.0" width="315.66666666666669" height="43.666667938232422"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="Debug Menu" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="A9G-5I-RSn">
+                                                    <rect key="frame" x="8" y="0.0" width="339.66666666666669" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
                                                     </accessibility>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -1306,7 +1306,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfd-Kx-0gx" userLabel="About Details View">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="635.33333333333337"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="637"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoLightText" translatesAutoresizingMaskIntoConstraints="NO" id="iNd-oh-m3g">
                                                 <rect key="frame" x="87.666666666666686" y="32" width="239" height="160"/>
@@ -1321,16 +1321,16 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy, simplified. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gji-Fs-EET">
-                                                <rect key="frame" x="40" y="224" width="334" height="23.333333333333343"/>
-                                                <fontDescription key="fontDescription" type="system" weight="bold" pointSize="20"/>
+                                                <rect key="frame" x="40" y="224" width="334" height="24"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                                 <variation key="heightClass=regular-widthClass=regular">
-                                                    <fontDescription key="fontDescription" type="system" weight="bold" pointSize="30"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odm-6J-APs">
-                                                <rect key="frame" x="40" y="279.33333333333337" width="334" height="288.33333333333337"/>
+                                                <rect key="frame" x="40" y="280" width="334" height="288.33333333333326"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" priority="750" constant="480" id="nip-EV-w1g"/>
                                                 </constraints>
@@ -1351,12 +1351,12 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="7nt-uS-sOh">
-                                                <rect key="frame" x="40" y="583.66666666666663" width="334" height="31"/>
+                                                <rect key="frame" x="40" y="584.33333333333337" width="334" height="32"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="aboutPage"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="31" id="AIi-4Y-OcU"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <state key="normal" title="More at duckduckgo.com/about">
                                                     <color key="titleColor" red="0.31372549020000001" green="0.74901960779999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
@@ -1443,7 +1443,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="hdL-5z-Xdg"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -1483,7 +1483,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Clear Tabs and Data" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9fc-9r-4aA">
                                                     <rect key="frame" x="20" y="0.0" width="302" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -1504,7 +1504,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Clear Tabs Only" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3WZ-Fi-HIH">
                                                     <rect key="frame" x="20" y="0.0" width="334" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -1529,7 +1529,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="App Exit Only" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Fal-1Y-o2S">
                                                     <rect key="frame" x="20" y="0.0" width="302" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -1550,7 +1550,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="App Exit, Inactive for 5 Minutes" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ElX-yE-4PX">
                                                     <rect key="frame" x="20" y="0.0" width="334" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -1571,7 +1571,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="App Exit, Inactive for 15 Minutes" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="D0R-jp-UY8">
                                                     <rect key="frame" x="20" y="0.0" width="334" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -1592,7 +1592,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="App Exit, Inactive for 30 Minutes" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5Yd-7i-bey">
                                                     <rect key="frame" x="20" y="0.0" width="334" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -1613,7 +1613,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="App Exit, Inactive for 1 Hour" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9EC-lx-77p">
                                                     <rect key="frame" x="20" y="0.0" width="334" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -1767,11 +1767,11 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="2O5-p6-aW3">
-                                            <rect key="frame" x="36" y="12.666666666666666" width="302" height="18.666666666666671"/>
+                                            <rect key="frame" x="36" y="12.333333333333334" width="302" height="19.333333333333329"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EIq-Ev-nfj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="302" height="18.666666666666668"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="302" height="19.333333333333332"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -1798,8 +1798,8 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Protection enabled for all sites" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hu1-5i-vjL">
-                                            <rect key="frame" x="36" y="12.666666666666666" width="302" height="18.666666666666671"/>
-                                            <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                            <rect key="frame" x="36" y="12.333333333333334" width="302" height="19.333333333333329"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -1873,11 +1873,11 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="vtB-4n-8Qi">
-                                            <rect key="frame" x="20" y="12.666666666666666" width="334" height="18.666666666666671"/>
+                                            <rect key="frame" x="20" y="12.333333333333334" width="334" height="19.333333333333329"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qeN-SV-zy7">
-                                                    <rect key="frame" x="0.0" y="0.0" width="334" height="18.666666666666668"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="334" height="19.333333333333332"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -1931,7 +1931,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="QuK-lm-k2I"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -1980,7 +1980,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dud-qo-Ces">
                                                     <rect key="frame" x="28" y="0.0" width="306" height="16"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -2010,7 +2010,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="No Fireproof sites yet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OfP-Kw-IOk">
                                             <rect key="frame" x="20" y="0.0" width="334" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -2029,7 +2029,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Remove All Fireproof Sites" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UZx-52-aer">
                                             <rect key="frame" x="20" y="0.0" width="334" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.91400000000000003" green="0.35299999999999998" blue="0.29799999999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -2125,7 +2125,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="wCS-Ck-arm"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -2208,23 +2208,23 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                             <tableViewSection id="K8m-TC-mdC">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="kKj-Xe-Qhj">
-                                        <rect key="frame" x="20" y="148" width="374" height="57.666667938232422"/>
+                                        <rect key="frame" x="20" y="148" width="374" height="58.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kKj-Xe-Qhj" id="tRq-lA-dWq">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="57.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="58.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let DuckDuckGo manage cookie consent pop-ups" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nX1-F1-Frd">
-                                                    <rect key="frame" x="20" y="10" width="265" height="37.666666666666664"/>
+                                                    <rect key="frame" x="20" y="10" width="265" height="38.666666666666664"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="ZyV-ja-ame"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1qa-Ak-UMe">
-                                                    <rect key="frame" x="305" y="13.333333333333336" width="51" height="31"/>
+                                                    <rect key="frame" x="305" y="14" width="51" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="uvT-w5-yuK"/>
                                                     </constraints>
@@ -2285,7 +2285,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="AN5-oc-b3c"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -2319,7 +2319,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="DUk-lT-VML"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -2379,11 +2379,11 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Q28-3X-vN4">
-                                            <rect key="frame" x="20" y="12.666666666666666" width="334" height="18.666666666666671"/>
+                                            <rect key="frame" x="20" y="12.333333333333334" width="334" height="19.333333333333329"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CR5-Al-WIW">
-                                                    <rect key="frame" x="0.0" y="0.0" width="334" height="18.666666666666668"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="regular" pointSize="16"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="334" height="19.333333333333332"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>

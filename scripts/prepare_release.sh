@@ -138,7 +138,7 @@ assert_hotfix_tag_exists_if_necessary() {
 		return
 	fi
 	printf '%s' "Checking tag to ${fix_type_name} ... "
-	if [[] $(git tag -l "$version_to_hotfix" "$mute") ]]; then
+	if [[ $(git tag -l "$version_to_hotfix" "$mute") ]]; then
 	    echo "✅"
 	else
 	    die "💥 Error: Tag ${version_to_hotfix} does not exist"

@@ -71,7 +71,7 @@ read_command_line_arguments() {
 	fi
 
 	if [[ "$#" -ne 1 ]]; then 
-		if [[ $2 == -* ]]; then
+		if [[ "$2" == -* ]]; then
 			shift 1
 		else
 			fix_branch=$2

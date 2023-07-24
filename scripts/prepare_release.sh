@@ -138,7 +138,7 @@ assert_hotfix_tag_exists_if_necessary() {
 		return
 	fi
 	printf '%s' "Checking tag to ${fix_type_name} ... "
-	if [ $(git tag -l "$version_to_hotfix" "$mute") ]; then
+	if [[] $(git tag -l "$version_to_hotfix" "$mute") ]]; then
 	    echo "✅"
 	else
 	    die "💥 Error: Tag ${version_to_hotfix} does not exist"
@@ -151,7 +151,7 @@ create_release_branch() {
 
 		# Make sure tags are up up to date
 		eval git fetch origin "+refs/tags/${tag}:refs/tags/${tag}" "$mute"
-		eval git checkout ${hotfix_branch_parent} "$mute"
+		eval git checkout "${hotfix_branch_parent}" "$mute"
 	else
 		printf '%s' "Creating release branch ... "
 		eval git checkout ${release_branch_parent} "$mute"
@@ -255,7 +255,7 @@ main() {
 
 	update_marketing_version
 	update_build_version
-	if ! [ $is_hotfix ]; then
+	if ! [[] $is_hotfix ]; then
 		update_embedded_files
 	fi
 	update_release_notes

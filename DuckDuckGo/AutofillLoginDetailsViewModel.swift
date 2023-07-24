@@ -22,6 +22,7 @@ import BrowserServicesKit
 import Common
 import SwiftUI
 import Core
+import SecureStorage
 
 protocol AutofillLoginDetailsViewModelDelegate: AnyObject {
     func autofillLoginDetailsViewModelDidSave()
@@ -172,7 +173,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     private func setupPassword(with account: SecureVaultModels.WebsiteAccount) {
         do {
             if let accountID = account.id, let accountIdInt = Int64(accountID) {
-                let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
+                let vault = try AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared)
                 
                 if let credential = try
                     vault.websiteCredentialsFor(accountId: accountIdInt) {
@@ -185,7 +186,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
 
     func save() {
-        guard let vault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared) else {
+        guard let vault = try? AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared) else {
             return
         }
             
@@ -241,7 +242,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
 
     private func handleSecureVaultError(_ error: Error) {
-        if case SecureVaultError.duplicateRecord = error {
+        if case SecureStorageError.duplicateRecord = error {
             delegate?.autofillLoginDetailsViewModelDidAttemptToSaveDuplicateLogin()
         } else {
             Pixel.fire(pixel: .secureVaultError, error: error)

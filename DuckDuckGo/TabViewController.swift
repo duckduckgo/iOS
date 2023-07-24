@@ -32,6 +32,7 @@ import UserScript
 import ContentBlocking
 import TrackerRadarKit
 import Networking
+import SecureStorage
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -2382,7 +2383,7 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
     }
     
-    func secureVaultInitFailed(_ error: SecureVaultError) {
+    func secureVaultInitFailed(_ error: SecureStorageError) {
         SecureVaultErrorReporter.shared.secureVaultInitFailed(error)
     }
     
@@ -2438,7 +2439,7 @@ extension TabViewController: SecureVaultManagerDelegate {
 
     private func deleteLoginFor(accountIdInt: Int64) {
         do {
-            let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
+            let secureVault = try? AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared)
             if secureVault == nil {
                 os_log("Failed to make vault")
             }
@@ -2579,7 +2580,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
 
         do {
             let credentialID = try SaveAutofillLoginManager.saveCredentials(credentials,
-                                                                            with: SecureVaultFactory.default)
+                                                                            with: AutofillSecureVaultFactory)
             confirmSavedCredentialsFor(credentialID: credentialID, message: message)
         } catch {
             os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
@@ -2588,7 +2589,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
 
     private func confirmSavedCredentialsFor(credentialID: Int64, message: String) {
         do {
-            let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
+            let vault = try AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared)
             
             if let newCredential = try vault.websiteCredentialsFor(accountId: credentialID) {
                 DispatchQueue.main.async {

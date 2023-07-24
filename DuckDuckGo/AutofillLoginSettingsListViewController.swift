@@ -97,7 +97,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }()
 
     init(appSettings: AppSettings, currentTabUrl: URL? = nil) {
-        let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
+        let secureVault = try? AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared)
         if secureVault == nil {
             os_log("Failed to make vault")
         }

@@ -42,7 +42,7 @@ public final class SyncBookmarksAdapter {
             let provider = try BookmarksProvider(
                 database: database,
                 metadataStore: metadataStore,
-                reloadBookmarksAfterSync: { [syncDidCompleteSubject] in
+                syncDidUpdateData: { [syncDidCompleteSubject] in
                     syncDidCompleteSubject.send()
                 }
             )

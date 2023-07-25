@@ -23,15 +23,20 @@ import DDGSync
 import Foundation
 import Persistence
 import SyncDataProviders
+import WidgetKit
 
 public final class SyncBookmarksAdapter {
 
     public private(set) var provider: BookmarksProvider?
 
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
+    public let widgetRefreshCancellable: AnyCancellable
 
     public init() {
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
+        widgetRefreshCancellable = syncDidCompletePublisher.sink { _ in
+            WidgetCenter.shared.reloadAllTimelines()
+        }
     }
 
     public func setUpProviderIfNeeded(database: CoreDataDatabase, metadataStore: SyncMetadataStore) {

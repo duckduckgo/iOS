@@ -71,7 +71,7 @@ class TabSwitcherViewController: UIViewController {
     var currentSelection: Int?
     
     private var tabSwitcherSettings: TabSwitcherSettings = DefaultTabSwitcherSettings()
-    private var isProcessingUpdates = false
+    private var ignoreProcessingUpdates = false
 
     let favicons = Favicons.shared
     
@@ -332,6 +332,7 @@ class TabSwitcherViewController: UIViewController {
     }
 
     override func dismiss(animated: Bool, completion: (() -> Void)? = nil) {
+        ignoreProcessingUpdates = true
         tabsModel.tabs.forEach { $0.removeObserver(self) }
         super.dismiss(animated: animated, completion: completion)
     }
@@ -349,12 +350,12 @@ extension TabSwitcherViewController: TabViewCellDelegate {
             collectionView.reloadData()
         } else {
             collectionView.performBatchUpdates({
-                isProcessingUpdates = true
+                ignoreProcessingUpdates = true
                 delegate.tabSwitcher(self, didRemoveTab: tab)
                 currentSelection = tabsModel.currentIndex
                 collectionView.deleteItems(at: [IndexPath(row: index, section: 0)])
             }, completion: { _ in
-                self.isProcessingUpdates = false
+                self.ignoreProcessingUpdates = false
                 guard let current = self.currentSelection else { return }
                 self.refreshTitle()
                 self.collectionView.reloadItems(at: [IndexPath(row: current, section: 0)])
@@ -477,7 +478,7 @@ extension TabSwitcherViewController: TabObserver {
     
     func didChange(tab: Tab) {
         // Reloading when updates are processed will result in a crash
-        guard !isProcessingUpdates else { return }
+        guard !ignoreProcessingUpdates else { return }
 
         if let index = tabsModel.indexOf(tab: tab), index < collectionView.numberOfItems(inSection: 0) {
             if #available(iOS 15.0, *) {

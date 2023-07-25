@@ -263,6 +263,7 @@ extension Pixel {
         
         case adClickAttributionDetected
         case adClickAttributionActive
+        case adClickAttributionPageLoads
         
         // MARK: SERP pixels
         
@@ -676,6 +677,7 @@ extension Pixel.Event {
             
         case .adClickAttributionDetected: return "m_ad_click_detected"
         case .adClickAttributionActive: return "m_ad_click_active"
+        case .adClickAttributionPageLoads: return "m_pageloads_with_ad_attribution"
             
         // MARK: SERP pixels
             

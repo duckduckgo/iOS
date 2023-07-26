@@ -1,6 +1,36 @@
 /* No comment provided by engineer. */
 "Label" = "Etiķete";
 
+/* Description shown to the user when adding the Email Protection lock screen widget */
+"lock.screen.widget.email.description" = "Nekavējoties ģenerē jaunu privātu Duck adresi.";
+
+/* Title shown to the user when adding the Email Protection lock screen widget */
+"lock.screen.widget.email.title" = "E-pasta aizsardzība";
+
+/* Description shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.favorites.description" = "Ātri atver savas iecienītākās vietnes ar pieskārienu.";
+
+/* Title shown to the user when adding the favorites lock screen widget */
+"lock.screen.widget.favorites.title" = "Izlase";
+
+/* Description shown to the user when adding the Fire Button lock screen widget */
+"lock.screen.widget.fire.description" = "Nekavējoties dzēs savu pārlūkošanas vēsturi un sāc jaunu privātu meklēšanu pakalpojumā DuckDuckGo.";
+
+/* Title shown to the user when adding the Fire Button lock screen widget */
+"lock.screen.widget.fire.title" = "Fire Button";
+
+/* Description shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.search.description" = "Nekavējoties sāc privātu meklēšanu pakalpojumā DuckDuckGo.";
+
+/* Title shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.search.title" = "Privāta meklēšana";
+
+/* Description shown to the user when adding the Voice Search lock screen widget */
+"lock.screen.widget.voice.description" = "Nekavējoties sāc jaunu privātu balss meklēšanu pakalpojumā DuckDuckGo.";
+
+/* Title shown to the user when adding the Voice Search lock screen widget */
+"lock.screen.widget.voice.title" = "Balss meklēšana";
+
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Meklē vai atver savas iecienītākās vietnes konfidenciāli, veicot tikai vienu pieskārienu.";
 

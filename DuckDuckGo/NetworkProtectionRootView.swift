@@ -27,7 +27,7 @@ struct NetworkProtectionRootView: View {
     var body: some View {
         switch model.initialViewKind {
         case .invite:
-            Text("TODO")
+            NetworkProtectionInviteView(model: NetworkProtectionInviteViewModel())
         case .status:
             NetworkProtectionStatusView(
                 statusModel: NetworkProtectionStatusViewModel(), inviteModel: NetworkProtectionInviteViewModel()

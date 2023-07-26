@@ -1264,6 +1264,19 @@ https://duckduckgo.com/mac";
 /* Title for the Network Protection feature */
 "netP.title" = "Network Protection";
 
+/* Message for the network protection invite dialog */
+"network.protection.invite.dialog.message" = "Enter your invite code to get started.";
+
+/* Title for the network protection invite screen */
+"network.protection.invite.dialog.title" = "You're invited to try Network Protection";
+
+/* Prompt for the network protection invite code text field */
+"network.protection.invite.field.prompt" = "Invite Code";
+
+/* Message for the network protection invite success view
+   Title for the network protection invite success view */
+"network.protection.invite.success.title" = "Success! You’re in.";
+
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 

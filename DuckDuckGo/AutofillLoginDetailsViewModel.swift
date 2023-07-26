@@ -176,7 +176,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                 
                 if let credential = try
                     vault.websiteCredentialsFor(accountId: accountIdInt) {
-                    self.password = credential.password.flatMap { String(data: $0, encoding: .utf8)} ?? ""
+                    self.password = credential.password.flatMap { String(data: $0, encoding: .utf8) } ?? ""
                 }
             }
         } catch {

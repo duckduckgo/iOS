@@ -1,5 +1,5 @@
 //
-//  NetworkProtectionRootView.swift
+//  NetworkProtectionInviteView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -17,29 +17,20 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
-
 import SwiftUI
+import DesignResourcesKit
+import DuckUI
 
-struct NetworkProtectionRootView: View {
-    let model = NetworkProtectionRootViewModel()
+struct NetworkProtectionInviteView: View {
+    @ObservedObject var model: NetworkProtectionInviteViewModel
 
     var body: some View {
-        switch model.initialViewKind {
-        case .invite:
-            NetworkProtectionInviteView(model: NetworkProtectionInviteViewModel())
-        case .status:
-            NetworkProtectionStatusView(
-                statusModel: NetworkProtectionStatusViewModel(), inviteModel: NetworkProtectionInviteViewModel()
-            )
-        }
+        Text("Coming soon")
     }
 }
 
-struct NetworkProtectionRootView_Previews: PreviewProvider {
+struct NetworkProtectionInviteView_Previews: PreviewProvider {
     static var previews: some View {
-        NetworkProtectionRootView()
+        NetworkProtectionInviteView(model: NetworkProtectionInviteViewModel())
     }
 }
-
-#endif

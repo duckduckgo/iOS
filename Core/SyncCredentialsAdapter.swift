@@ -57,7 +57,7 @@ public final class SyncCredentialsAdapter {
             let provider = try CredentialsProvider(
                 secureVaultFactory: secureVaultFactory,
                 metadataStore: metadataStore,
-                reloadCredentialsAfterSync: { [weak self] in
+                syncDidUpdateData: { [weak self] in
                     self?.syncDidCompleteSubject.send()
                 }
             )

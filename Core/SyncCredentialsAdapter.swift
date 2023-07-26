@@ -30,10 +30,12 @@ public final class SyncCredentialsAdapter {
     public let databaseCleaner: CredentialsDatabaseCleaner
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
 
-    public init(secureVaultFactory: SecureVaultFactory = .default) {
+    public init(secureVaultFactory: SecureVaultFactory = .default, secureVaultErrorReporter: SecureVaultErrorReporting) {
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
+        self.secureVaultErrorReporter = secureVaultErrorReporter
         databaseCleaner = CredentialsDatabaseCleaner(
             secureVaultFactory: secureVaultFactory,
+            secureVaultErrorReporter: secureVaultErrorReporter,
             errorEvents: CredentialsCleanupErrorHandling(),
             log: .passwordManager
         )
@@ -56,6 +58,7 @@ public final class SyncCredentialsAdapter {
         do {
             let provider = try CredentialsProvider(
                 secureVaultFactory: secureVaultFactory,
+                secureVaultErrorReporter: secureVaultErrorReporter,
                 metadataStore: metadataStore,
                 syncDidUpdateData: { [weak self] in
                     self?.syncDidCompleteSubject.send()
@@ -89,4 +92,5 @@ public final class SyncCredentialsAdapter {
 
     private var syncDidCompleteSubject = PassthroughSubject<Void, Never>()
     private var syncErrorCancellable: AnyCancellable?
+    private let secureVaultErrorReporter: SecureVaultErrorReporting
 }

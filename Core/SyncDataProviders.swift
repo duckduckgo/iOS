@@ -45,11 +45,16 @@ public class SyncDataProviders: DataProvidersSource {
         return providers.compactMap { $0 as? DataProviding }
     }
 
-    public init(bookmarksDatabase: CoreDataDatabase, secureVaultFactory: SecureVaultFactory = .default) {
+    public init(
+        bookmarksDatabase: CoreDataDatabase,
+        secureVaultFactory: SecureVaultFactory = .default,
+        secureVaultErrorReporter: SecureVaultErrorReporting
+    ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.secureVaultFactory = secureVaultFactory
+        self.secureVaultErrorReporter = secureVaultErrorReporter
         bookmarksAdapter = SyncBookmarksAdapter(database: bookmarksDatabase)
-        credentialsAdapter = SyncCredentialsAdapter()
+        credentialsAdapter = SyncCredentialsAdapter(secureVaultFactory: secureVaultFactory, secureVaultErrorReporter: secureVaultErrorReporter)
     }
 
     private func initializeMetadataDatabaseIfNeeded() {
@@ -79,4 +84,5 @@ public class SyncDataProviders: DataProvidersSource {
     private let syncMetadataDatabase: CoreDataDatabase = SyncMetadataDatabase.make()
     private let bookmarksDatabase: CoreDataDatabase
     private let secureVaultFactory: SecureVaultFactory
+    private let secureVaultErrorReporter: SecureVaultErrorReporting
 }

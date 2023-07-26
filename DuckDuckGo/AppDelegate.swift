@@ -191,7 +191,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // MARK: Sync initialisation
 
-        syncDataProviders = SyncDataProviders(bookmarksDatabase: bookmarksDatabase)
+        syncDataProviders = SyncDataProviders(bookmarksDatabase: bookmarksDatabase, secureVaultErrorReporter: SecureVaultErrorReporter.shared)
         syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog)
         syncService.initializeIfNeeded(isInternalUser: InternalUserStore().isInternalUser)
         syncStateCancellable = syncService.authStatePublisher

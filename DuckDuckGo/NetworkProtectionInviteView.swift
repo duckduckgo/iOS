@@ -25,7 +25,47 @@ struct NetworkProtectionInviteView: View {
     @ObservedObject var model: NetworkProtectionInviteViewModel
 
     var body: some View {
-        Text("Coming soon")
+        GeometryReader { proxy in
+            ScrollView {
+                VStack(spacing: 16) {
+                    Image("InviteLock")
+                    Text(UserText.netPInviteTitle)
+                        .font(.system(size: 22, weight: .semibold))
+                        .multilineTextAlignment(.center)
+                    Text(UserText.netPInviteMessage)
+                        .font(.system(size: 16))
+                        .multilineTextAlignment(.center).foregroundColor(Color(designSystemColor: .textSecondary))
+                        .padding(.bottom, 32)
+                    // TODO: This type should be moved to DuckUI
+                    ClearTextField(placeholderText: UserText.netPInviteFieldPrompt, text: $model.text, keyboardType: .asciiCapable)
+                        .frame(height: 44)
+                        .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color(designSystemColor: .surface))
+                        )
+                        .padding(.bottom, 16)
+                    Button(action: {
+                        Task {
+                            await model.submit()
+                        }
+                    }, label: {
+                        Text(UserText.appTPReportSubmit)
+                    })
+                    .buttonStyle(PrimaryButtonStyle())
+                    .frame(height: 30)
+                    Spacer()
+                    Text(UserText.netPInviteOnlyMessage)
+                        .foregroundColor(Color(designSystemColor: .textSecondary))
+                        .font(.system(size: 13))
+                        .multilineTextAlignment(.center)
+                }
+                .padding(24)
+                .frame(minHeight: proxy.size.height)
+                .background(Color(designSystemColor: .background))
+            }
+        }
+        .background(Color(designSystemColor: .background))
     }
 }
 

@@ -457,12 +457,11 @@ class SettingsViewController: UITableViewController {
 
 #if NETWORK_PROTECTION
     private func showNetP() {
-        let statusView = NetworkProtectionStatusView(
-            statusModel: NetworkProtectionStatusViewModel(),
-            inviteModel: NetworkProtectionInviteViewModel()
-        )
+        let statusView = NetworkProtectionRootView()
+        let hostingController = UIHostingController(rootView: statusView)
+        hostingController.view.backgroundColor = UIColor(Color(designSystemColor: .background))
         navigationController?.pushViewController(
-            UIHostingController(rootView: statusView),
+            hostingController,
             animated: true
         )
     }

@@ -24,12 +24,14 @@ import DDGSync
 import Foundation
 import Persistence
 import SyncDataProviders
+import WidgetKit
 
 public final class SyncBookmarksAdapter {
 
     public private(set) var provider: BookmarksProvider?
     public let databaseCleaner: BookmarkDatabaseCleaner
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
+    public let widgetRefreshCancellable: AnyCancellable
 
     public init(database: CoreDataDatabase) {
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
@@ -38,6 +40,9 @@ public final class SyncBookmarksAdapter {
             errorEvents: BookmarksCleanupErrorHandling(),
             log: .generalLog
         )
+        widgetRefreshCancellable = syncDidCompletePublisher.sink { _ in
+            WidgetCenter.shared.reloadAllTimelines()
+        }
     }
 
     public func updateDatabaseCleanupSchedule(shouldEnable: Bool) {

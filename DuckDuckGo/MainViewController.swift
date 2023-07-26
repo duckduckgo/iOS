@@ -29,6 +29,7 @@ import BrowserServicesKit
 import Bookmarks
 import Persistence
 import PrivacyDashboard
+import Networking
 
 // swiftlint:disable type_body_length
 // swiftlint:disable file_length
@@ -91,7 +92,14 @@ class MainViewController: UIViewController {
     var contentUnderflow: CGFloat {
         return 3 + (allowContentUnderflow ? -customNavigationBar.frame.size.height : 0)
     }
-    
+
+    lazy var emailManager: EmailManager = {
+        let emailManager = EmailManager()
+        emailManager.aliasPermissionDelegate = self
+        emailManager.requestDelegate = self
+        return emailManager
+    }()
+
     var homeController: HomeViewController?
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
@@ -1041,7 +1049,7 @@ class MainViewController: UIViewController {
         toolbar.setItems(newItems, animated: false)
     }
 
-    func newTab(reuseExisting: Bool = false) {
+    func newTab(reuseExisting: Bool = false, allowingKeyboard: Bool = true) {
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
@@ -1055,7 +1063,7 @@ class MainViewController: UIViewController {
             tabManager.addHomeTab()
         }
         attachHomeScreen()
-        homeController?.openedAsNewTab()
+        homeController?.openedAsNewTab(allowingKeyboard: allowingKeyboard)
         tabsBarController?.refresh(tabsModel: tabManager.model)
     }
     
@@ -2063,6 +2071,5 @@ extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
         controller.dismiss(animated: true)
     }
 }
-
 
 // swiftlint:enable file_length

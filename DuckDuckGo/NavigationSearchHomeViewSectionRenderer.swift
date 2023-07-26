@@ -45,8 +45,8 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         }
     }
     
-    func openedAsNewTab() {
-        if KeyboardSettings().onNewTab {
+    func openedAsNewTab(allowingKeyboard: Bool) {
+        if allowingKeyboard && KeyboardSettings().onNewTab {
             launchNewSearch()
         }
     }

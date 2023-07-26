@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "dominik/first-sync-for-new-models",
-          "revision": "cfb26271234eaee4dbc7cd2e0028ff78ecd07e1e",
-          "version": null
+          "branch": null,
+          "revision": "188ba0cc3a6f5f6600318da948e8ad844d56de45",
+          "version": "69.0.0"
         }
       },
       {

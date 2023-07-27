@@ -19,11 +19,20 @@
 
 #if NETWORK_PROTECTION
 
-import NetworkProtection
 import Combine
-import Common
+import NetworkProtection
+
+enum NetworkProtectionInviteDialogKind {
+    case codeEntry, success
+}
+
+protocol NetworkProtectionInviteViewModelDelegate: AnyObject {
+    func didCancelInviteFlow()
+    func didCompleteInviteFlow()
+}
 
 final class NetworkProtectionInviteViewModel: ObservableObject {
+    @Published var currentDialog: NetworkProtectionInviteDialogKind? = .codeEntry
     @Published var text: String = "" {
         didSet {
             if oldValue != text {
@@ -31,26 +40,18 @@ final class NetworkProtectionInviteViewModel: ObservableObject {
             }
         }
     }
-    @Published var redeemedText: String?
     @Published var errorText: String?
 
-    private let tokenStore: NetworkProtectionTokenStore
     private let redemptionCoordinator: NetworkProtectionCodeRedeeming
-    private let featureVisibility: NetworkProtectionFeatureVisibility
+    private weak var delegate: NetworkProtectionInviteViewModelDelegate?
     private var textCancellable: AnyCancellable?
 
-    private static let errorEvents: EventMapping<NetworkProtectionError> = .init { _, _, _, _ in
-
-    }
-
-    init() {
-        let tokenStore = NetworkProtectionKeychainTokenStore(useSystemKeychain: false,
-                                                             errorEvents: nil)
-        self.tokenStore = tokenStore
-        self.redemptionCoordinator = NetworkProtectionCodeRedemptionCoordinator(tokenStore: tokenStore,
-                                                                                errorEvents: Self.errorEvents)
-        self.featureVisibility = tokenStore
-        updateAuthenticatedText()
+    init(delegate: NetworkProtectionInviteViewModelDelegate?, redemptionCoordinator: NetworkProtectionCodeRedeeming) {
+        self.delegate = delegate
+        self.redemptionCoordinator = redemptionCoordinator
+        textCancellable = $text.sink { [weak self] _ in
+            self?.errorText = nil
+        }
     }
 
     @MainActor
@@ -58,28 +59,40 @@ final class NetworkProtectionInviteViewModel: ObservableObject {
         errorText = nil
         do {
             try await redemptionCoordinator.redeem(text.trimmingWhitespace())
-            updateAuthenticatedText()
         } catch NetworkProtectionClientError.invalidInviteCode {
-            errorText = "Unrecognized invite code"
+            errorText = UserText.inviteDialogUnrecognizedCodeMessage
             return
         } catch {
-            errorText = "Error: try again"
+            errorText = UserText.unknownErrorTryAgainMessage
+            return
         }
+        currentDialog = .success
+    }
+
+    func getStarted() {
+        delegate?.didCompleteInviteFlow()
+    }
+
+    func cancel() {
+        delegate?.didCancelInviteFlow()
+        currentDialog = nil
     }
 
     @MainActor
     func clear() async {
         errorText = nil
         do {
-            try tokenStore.deleteToken()
+            try NetworkProtectionKeychainTokenStore().deleteToken()
             updateAuthenticatedText()
         } catch {
             errorText = "Could not clear token"
         }
     }
 
+    @Published var redeemedText: String?
+
     private func updateAuthenticatedText() {
-        redeemedText = featureVisibility.isFeatureActivated ? "Already redeemed" : nil
+        redeemedText = NetworkProtectionKeychainTokenStore().isFeatureActivated ? "Already redeemed" : nil
     }
 }
 

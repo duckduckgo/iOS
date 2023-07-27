@@ -20,17 +20,23 @@
 #if NETWORK_PROTECTION
 
 import SwiftUI
+import NetworkProtection
 
 struct NetworkProtectionRootView: View {
     let model = NetworkProtectionRootViewModel()
 
     var body: some View {
+        let inviteViewModel = NetworkProtectionInviteViewModel(
+            delegate: nil,
+            redemptionCoordinator: NetworkProtectionCodeRedemptionCoordinator()
+        )
         switch model.initialViewKind {
         case .invite:
-            NetworkProtectionInviteView(model: NetworkProtectionInviteViewModel())
+            NetworkProtectionInviteView(model: inviteViewModel)
         case .status:
             NetworkProtectionStatusView(
-                statusModel: NetworkProtectionStatusViewModel(), inviteModel: NetworkProtectionInviteViewModel()
+                statusModel: NetworkProtectionStatusViewModel(),
+                inviteModel: inviteViewModel
             )
         }
     }

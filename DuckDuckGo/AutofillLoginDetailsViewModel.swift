@@ -180,7 +180,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                 }
             }
         } catch {
-            Pixel.fire(pixel: .secureVaultError)
+            Pixel.fire(pixel: .secureVaultError, error: error)
         }
     }
 

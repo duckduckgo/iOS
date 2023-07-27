@@ -2330,7 +2330,7 @@ extension TabViewController: SecureVaultManagerDelegate {
             }
             try secureVault?.deleteWebsiteCredentialsFor(accountId: accountIdInt)
         } catch {
-            Pixel.fire(pixel: .secureVaultError)
+            Pixel.fire(pixel: .secureVaultError, error: error)
         }
     }
 

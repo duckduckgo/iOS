@@ -115,7 +115,11 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                 self?.viewModel.updateData()
                 self?.tableView.reloadData()
                 if let detailsViewController = self?.detailsViewController, let accountId = detailsViewController.account?.id.flatMap(Int64.init) {
-                    detailsViewController.account = try? secureVault?.websiteCredentialsFor(accountId: accountId)?.account
+                    do {
+                        detailsViewController.account = try secureVault?.websiteCredentialsFor(accountId: accountId)?.account
+                    } catch {
+                        Pixel.fire(pixel: .secureVaultError, error: error)
+                    }
                 }
             }
     }

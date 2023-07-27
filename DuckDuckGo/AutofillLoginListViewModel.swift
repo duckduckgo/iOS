@@ -300,7 +300,7 @@ final class AutofillLoginListViewModel: ObservableObject {
             try secureVault.deleteWebsiteCredentialsFor(accountId: accountIdInt)
             return true
         } catch {
-            Pixel.fire(pixel: .secureVaultError)
+            Pixel.fire(pixel: .secureVaultError, error: error)
             return false
         }
     }
@@ -319,7 +319,7 @@ final class AutofillLoginListViewModel: ObservableObject {
             clearUndoCache()
             updateData()
         } catch {
-            Pixel.fire(pixel: .secureVaultError)
+            Pixel.fire(pixel: .secureVaultError, error: error)
         }
     }
 }

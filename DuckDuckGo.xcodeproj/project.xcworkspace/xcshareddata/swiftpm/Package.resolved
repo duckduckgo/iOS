@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "tom/fire-window2",
-          "revision": "03148954fa83cee819c9310232568d3b6b073bf6",
-          "version": null
+          "branch": null,
+          "revision": "188ba0cc3a6f5f6600318da948e8ad844d56de45",
+          "version": "69.0.0"
         }
       },
       {

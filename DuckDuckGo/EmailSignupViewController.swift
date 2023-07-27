@@ -72,7 +72,7 @@ class EmailSignupViewController: UIViewController {
                 signupStage = .start
             } else if url.absoluteString.hasSuffix("email/choose-address") || url.absoluteString.hasSuffix("email/review") {
                 signupStage = .emailEntered
-            } else if url.absoluteString.hasSuffix("email/welcome") {
+            } else if url.absoluteString.hasSuffix("email/welcome") || url.absoluteString.hasSuffix("email/welcome-incontext") {
                 signupStage = .complete
             } else {
                 signupStage = .other
@@ -106,7 +106,7 @@ class EmailSignupViewController: UIViewController {
     }()
 
     private lazy var nextBarButtonItem: UIBarButtonItem = {
-        UIBarButtonItem(title: UserText.nextButtonTitle,
+        UIBarButtonItem(title: UserText.navigationTitleDone,
                         style: .plain,
                         target: self,
                         action: #selector(nextButtonPressed))
@@ -301,8 +301,10 @@ extension EmailSignupViewController: UIAdaptivePresentationControllerDelegate {
             alert.preferredAction = continueAction
 
             present(alert, animated: true)
+        } else if case .complete = signupStage {
+            completed(true)
         } else {
-            dismiss(animated: true)
+            completed(false)
         }
     }
 

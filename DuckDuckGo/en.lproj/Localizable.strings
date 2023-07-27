@@ -895,6 +895,18 @@
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Generate Private Duck Address";
 
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Generate Private Duck Address";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Block email trackers & hide address";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Select email address";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Block email trackers";
+
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Block email trackers with a Duck Address";
 

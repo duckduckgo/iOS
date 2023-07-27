@@ -28,7 +28,7 @@ struct AutofillViews {
     static let savePasswordMinHeight = 340.0
     static let updateUsernameMinHeight = 310.0
     static let passwordGenerationMinHeight: CGFloat = 310.0
-    static let emailSignupPromptMinHeight: CGFloat = 310.0
+    static let emailSignupPromptMinHeight: CGFloat = 260.0
 
     struct CloseButtonHeader: View {
         let action: () -> Void
@@ -76,7 +76,7 @@ struct AutofillViews {
         var body: some View {
             Text(title)
                 .daxTitle3()
-                .foregroundColor(.primary)
+                .foregroundColor(Color(designSystemColor: .textPrimary))
                 .frame(maxWidth: .infinity)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)

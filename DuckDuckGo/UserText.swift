@@ -308,6 +308,11 @@ public struct UserText {
 
     public static let emailBrowsingMenuUseNewDuckAddress = NSLocalizedString("email.browsingMenu.useNewDuckAddress", value: "Generate Private Duck Address", comment: "Email option title in the browsing menu")
     public static let emailBrowsingMenuAlert = NSLocalizedString("email.browsingMenu.alert", value: "New address copied to your clipboard", comment: "Title for the email copy browsing menu alert")
+    public static let emailAliasPromptTitle = NSLocalizedString("email.aliasAlert.prompt.title", value: "Select email address", comment: "Title for the email alias selection prompt")
+    public static let emailAliasPromptUseUserAddressSubtitle = NSLocalizedString("email.aliasAlert.prompt.useUserAddress.subtitle", value: "Block email trackers", comment: "Subtitle for choosing primary user email address")
+    public static let emailAliasPromptGeneratePrivateAddress = NSLocalizedString("email.aliasAlert.prompt.generatePrivateAddress", value: "Generate Private Duck Address", comment: "Option for generating a private email address")
+    public static let emailAliasPromptGeneratePrivateAddressSubtitle = NSLocalizedString("email.aliasAlert.prompt.generatePrivateAddress.subtitle", value: "Block email trackers & hide address", comment: "Subtitle for generating a private email address")
+
     public static let emailAliasAlertTitle = NSLocalizedString("email.aliasAlert.title", value: "Block email trackers with a Duck Address", comment: "Title for the email alias selection alert")
     public static let emailAliasAlertUseUserAddress = NSLocalizedString("email.aliasAlert.useUserAddress", value: "Use %@", comment: "Parameter is an email address (string)")
     public static let emailAliasAlertGeneratePrivateAddress = NSLocalizedString("email.aliasAlert.generatePrivateAddress", value: "Generate Private Duck Address", comment: "Option for generating a private email address")

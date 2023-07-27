@@ -28,7 +28,7 @@ extension HomeViewSectionRenderer {
 
     func omniBarCancelPressed() { }
 
-    func openedAsNewTab() { }
+    func openedAsNewTab(allowingKeyboard: Bool) { }
 
     func menuItemsFor(itemAt: Int) -> [UIMenuItem]? {
         return nil

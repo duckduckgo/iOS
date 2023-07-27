@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+#if NETWORK_PROTECTION
+
 import SwiftUI
 import DesignResourcesKit
 import DuckUI
@@ -69,8 +71,17 @@ struct NetworkProtectionInviteView: View {
     }
 }
 
+import NetworkProtection
+
 struct NetworkProtectionInviteView_Previews: PreviewProvider {
     static var previews: some View {
-        NetworkProtectionInviteView(model: NetworkProtectionInviteViewModel())
+        NetworkProtectionInviteView(
+            model: NetworkProtectionInviteViewModel(
+                delegate: nil,
+                redemptionCoordinator: NetworkProtectionCodeRedemptionCoordinator()
+            )
+        )
     }
 }
+
+#endif

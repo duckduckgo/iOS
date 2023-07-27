@@ -139,6 +139,63 @@
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Odblokuj DuckDuckGo.";
 
+/* Detail string describing what AppTP is */
+"appTP.cell.detail" = "Blokowanie skryptów śledzących aplikacji na urządzeniu";
+
+/* String indicating AppTP is disabled when viewed from the settings screen */
+"appTP.cell.disabled" = "Wyłączone";
+
+/* String indicating AppTP is enabled when viewed from the settings screen */
+"appTP.cell.enabled" = "Włączone";
+
+/* Info string informing the user what App Tracking Protection does. */
+"appTP.empty.disabled.info" = "Włącz ochronę przed śledzeniem w aplikacjach, aby zablokować natrętne mechanizmy śledzące w innych aplikacjach.";
+
+/* Do not translate. StringsDict entry -- Count part of string 'App Tracking Protection blocked x tracking attempts today' */
+"appTP.home.blockedCount" = "appTP.home.blockedCount";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the trailing space) */
+"appTP.home.blockedPrefix" = "Ochrona przed śledzeniem w aplikacji zablokowana ";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the leading space) */
+"appTP.home.blockedSuffix" = " w Twoich aplikacjach dzisiaj.";
+
+/* Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now' */
+"appTP.justNow" = "Teraz";
+
+/* View to manage trackers for AppTP. Allows the user to turn trackers on or off. */
+"appTP.manageTrackers" = "Zarządzaj mechanizmami śledzącymi";
+
+/* Breakage report category label */
+"appTP.report.categoryLabel" = "Co się dzieje?";
+
+/* Breakage report submit button */
+"appTP.report.submit" = "Prześlij";
+
+/* Breakage report succcess message */
+"appTP.report.toast" = "Dziękujemy! Informacje zostały przekazane.";
+
+/* Cancel button for 'Report an Issue' alert. */
+"appTP.reportAlert.cancel" = "Nie teraz";
+
+/* Confirm button for 'Report an Issue' alert. */
+"appTP.reportAlert.confirm" = "Zgłoś błąd";
+
+/* Button to restore the blocklist to its default state. */
+"appTP.restoreDefualts" = "Przywróć ustawienia domyślne";
+
+/* Title for the App Tracking Protection feature */
+"appTP.title" = "Ochrona przed śledzeniem przez aplikacje";
+
+/* Text indicating when the tracker was last allowed. Example: Last attempt allowed (timeString) */
+"appTP.trackerAllowedTimestamp" = "Ostatnia dopuszczona próba: %@";
+
+/* Text indicating when the tracker was last blocked. Example: Last attempt blocked (timeString) */
+"appTP.trackerBlockedTimestamp" = "Ostatnia zablokowana próba: % @";
+
+/* Do not translate. StringsDict entry -- Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts */
+"appTP.trackingattempts" = "appTP.trackingattempts";
+
 /* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Zaloguj się";
 
@@ -275,7 +332,7 @@
 "autofill.logins.empty-view.subtitle" = "Dane logowania są bezpiecznie przechowywane na Twoim urządzeniu.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Nie zapisano jeszcze żadnych loginów.";
+"autofill.logins.empty-view.title" = "Nie zapisano jeszcze żadnych loginów";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Anuluj";
@@ -499,8 +556,20 @@
 /* Broken Site Category */
 "brokensite.category.videos" = "Film nie został odtworzony";
 
+/* Broken Site Category Placeholder */
+"brokensite.categoryPlaceholder" = "Wybierz problem z listy...";
+
+/* Broken Site Category Section Title */
+"brokensite.categoryTitle" = "WYBIERZ KATEGORIĘ";
+
+/* Broken Site Comment Placeholder */
+"brokensite.commentPlaceholder" = "Udostępnienie szczegółowych informacji może pomóc nam rozwiązać ten problem";
+
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "OPISZ, CO SIĘ STAŁO";
+
+/* No comment provided by engineer. */
+"bucket: %@" = "Zbiór: %@";
 
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Ostatni miesiąc";
@@ -693,6 +762,9 @@
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Brak pasujących wyników";
+
+/* No comment provided by engineer. */
+"Error" = "Błąd";
 
 /* No comment provided by engineer. */
 "favorite" = "Ulubione";
@@ -979,14 +1051,14 @@
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "Aplikacja DuckDuckGo dla komputerów Mac zapewnia szybkość, której potrzebujesz, i niezbędne funkcje przeglądania. Ponadto jest wyposażona w najlepsze w swojej klasie narzędzia do ochrony prywatności.";
 
-/* Body text for the macOS waitlist notification */
-"mac-waitlist.available.notification.body" = "Otwórz zaproszenie";
-
 /* Title for the macOS waitlist notification */
 "mac-waitlist.available.notification.title" = "Przeglądarka DuckDuckGo dla komputerów Mac jest gotowa!";
 
 /* Title for the copy action */
 "mac-waitlist.copy" = "Kopiuj";
+
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-computer-go-to" = "Na komputerze z systemem Windows przejdź do:";
 
 /* Description text above the Share Link button */
 "mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Na komputerze Mac przejdź do:";
@@ -1000,6 +1072,9 @@
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Już wkrótce!";
 
+/* Title for the macOS waitlist button redirecting to Windows waitlist */
+"mac-waitlist.join-waitlist-screen.windows-waitlist" = "Szukasz wersji dla systemu Windows?";
+
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Przeglądaj prywatnie za pomocą aplikacji dla komputerów Mac";
 
@@ -1010,7 +1085,7 @@
 "mac-waitlist.share-sheet.title" = "DuckDuckGo na komputery Mac";
 
 /* Title for the Mac Waitlist feature */
-"mac-waitlist.title" = "Aplikacja komputerowa DuckDuckGo";
+"mac-waitlist.title" = "Aplikacja DuckDuckGo dla komputerów Mac";
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Dostępne opcje";
@@ -1023,6 +1098,9 @@
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"Ok" = "OK";
 
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Zarządzane pliki cookie";
@@ -1062,6 +1140,9 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Nie można znaleźć aplikacji wymaganej do otwarcia tego linku";
+
+/* No comment provided by engineer. */
+"Please enter which app on your device is broken." = "Podaj, która aplikacja znajdująca się na Twoim urządzeniu uległa uszkodzeniu.";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "W witrynach internetowych są wykorzystywane pliki cookie. Gdy użyjesz w witrynie funkcji zabezpieczenia, pliki cookie nie zostaną usunięte i pozostaniesz zalogowany(-a) nawet po użyciu przycisku Zabezpiecz. Nadal blokujemy narzędzia śledzące innych firm znalezione w zabezpieczonych witrynach.";
@@ -1153,6 +1234,9 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Która witryna nie działa poprawnie?";
 
+/* No comment provided by engineer. */
+"sync.remove-device.message" = "„%@” nie będzie już mieć dostępu do zsynchronizowanych danych.";
+
 /* Accessibility label on remove button */
 "tab.close.home" = "Zamknij kartę główną";
 
@@ -1225,6 +1309,57 @@
 /* Voice-search footer note with on-device privacy warning */
 "voiceSearch.footer.note" = "Dźwięk jest przetwarzany na urządzeniu. Dane nie są przechowywane ani udostępniane żadnym podmiotom, w tym DuckDuckGo.";
 
+/* Title for the button to enable push notifications in system settings */
+"waitlist.allow-notifications" = "Zezwalaj na powiadomienia";
+
+/* Body text for the waitlist notification */
+"waitlist.available.notification.body" = "Otwórz zaproszenie";
+
+/* Title for the copy action */
+"waitlist.copy" = "Kopiuj";
+
+/* Label text for the invite code */
+"waitlist.invite-code" = "Kod zaproszenia";
+
+/* Step title on the invite screen */
+"waitlist.invite-screen.step.title" = "Krok %d";
+
+/* Title for the invite code screen */
+"waitlist.invite-screen.youre-invited" = "Masz zaproszenie!";
+
+/* Title for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.join" = "Dołącz do prywatnej listy oczekujących";
+
+/* Temporary status text for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.joining" = "Dołączanie do listy oczekujących...";
+
+/* Title for the Share Link button */
+"waitlist.join-waitlist-screen.share-link" = "Udostępnij link";
+
+/* Notification text for the waitlist */
+"waitlist.joined.no-notification.get-notification" = "POWIADOM MNIE";
+
+/* Title for the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.get-notification-confirmation-title" = "Chcesz otrzymać powiadomienie, gdy przyjdzie na to pora?";
+
+/* Cancel button in the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.no-thanks" = "Nie, dziękuję";
+
+/* Text used for the Notifications Disabled state */
+"waitlist.notification.disabled" = "Możemy powiadomić Cię, gdy nadejdzie Twoja kolej, ale powiadomienia są obecnie wyłączone dla DuckDuckGo.";
+
+/* Privacy disclaimer for the Waitlist feature */
+"waitlist.privacy-disclaimer" = "Nie musisz udostępniać żadnych danych osobowych, aby dołączyć do listy oczekujących. Miejsce w kolejce zostanie zarezerwowane zgodnie z sygnaturą czasową przechowywaną wyłącznie na Twoim urządzeniu, aby umożliwić nam powiadomienie, gdy nadejdzie Twoja kolej.";
+
+/* Title for the queue screen */
+"waitlist.queue-screen.on-the-list" = "Jesteś na liście!";
+
+/* Title for the settings subtitle */
+"waitlist.settings.download-available" = "Możliwość pobrania";
+
+/* Title for the share sheet entry */
+"waitlist.share-sheet.title" = "Masz zaproszenie!";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Usunięto ulubione";
 
@@ -1248,4 +1383,49 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Wiadomość od %@:";
+
+/* Title for the Windows waitlist notification */
+"windows-waitlist.available.notification.title" = "Wypróbuj DuckDuckGo dla systemu Windows.";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-1.description" = "Wejdź pod ten adres na urządzeniu z systemem Windows, aby pobrać:";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-2.description" = "Uruchom plik instalacyjny DuckDuckGo znajdujący się w folderze z pobranymi plikami, wybierz opcję „Instaluj”, a następnie wprowadź swój kod zaproszenia.";
+
+/* Subtitle for the Windows Waitlist Invite screen */
+"windows-waitlist.invite-screen.subtitle" = "Chcesz zacząć korzystać z DuckDuckGo na urządzeniu z systemem Windows?";
+
+/* Title for the Windows waitlist button redirecting to Mac waitlist */
+"windows-waitlist.join-waitlist-screen.mac-waitlist" = "Szukasz wersji na komputer Mac?";
+
+/* Title for the Join Windows Waitlist screen */
+"windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Uzyskaj możliwość wcześniejszego wypróbowania DuckDuckGo dla systemu Windows!";
+
+/* Message for the alert to confirm enabling notifications */
+"windows-waitlist.joined.no-notification.get-notification-confirmation-message" = "Wyślemy Ci powiadomienie, gdy Twoja kopia DuckDuckGo dla komputerów z systemem Windows będzie gotowa do pobrania. ";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"windows-waitlist.joined.notifications-declined" = "Tutaj pojawi się Twoje zaproszenie do wypróbowania DuckDuckGo dla komputerów z systemem Windows. Zajrzyj tu wkrótce, możemy też wysłać Ci powiadomienie, gdy nadejdzie Twoja kolej.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"windows-waitlist.joined.notifications-enabled" = "Wyślemy Ci powiadomienie, gdy Twoja kopia DuckDuckGo dla komputerów z systemem Windows będzie gotowa do pobrania.";
+
+/* Title for the settings subtitle */
+"windows-waitlist.settings.browse-privately" = "Przeglądaj prywatnie za pomocą naszej aplikacji dla systemu Windows";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"windows-waitlist.share-sheet.invite-code-message" = "Masz zaproszenie!\n\nChcesz zacząć korzystać z DuckDuckGo na urządzeniu z systemem Windows?\n\nKrok 1\nOdwiedź ten adres na swoim urządzeniu z systemem Windows, aby pobrać aplikację: \nhttps://duckduckgo.com/windows\n\nKrok 2\nUruchom plik instalacyjny DuckDuckGo znajdujący się w folderze z pobranymi plikami, wybierz opcję „Instaluj”, a następnie wprowadź swój kod zaproszenia.\n\nKod zaproszenia: %@";
+
+/* Message used when sharing to iMessage */
+"windows-waitlist.share-sheet.message" = "Chcesz rozpocząć prywatne przeglądanie w systemie Windows?\n\nOdwiedź ten adres na komputerze, aby pobrać:\nhttps://duckduckgo.com/windows";
+
+/* Summary text for the Windows browser waitlist */
+"windows-waitlist.summary" = "DuckDuckGo dla systemu Windows ma wszystko, czego potrzebujesz, aby przeglądać strony internetowe, zachowując większą prywatność – prywatne wyszukiwanie, blokowanie śledzących, wymuszone szyfrowanie i blokowanie wyskakujących okienek z ciasteczkami, a w planach mamy jeszcze więcej najlepszych w swojej klasie zabezpieczeń.";
+
+/* Title for the Windows Waitlist feature */
+"windows-waitlist.title" = "Aplikacja DuckDuckGo dla systemu Windows";
+
+/* Title for the Windows browser download link page */
+"windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows" = "Pobierz DuckDuckGo dla systemu Windows.";
 

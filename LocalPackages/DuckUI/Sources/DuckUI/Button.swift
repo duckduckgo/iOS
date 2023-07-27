@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
 public struct PrimaryButtonStyle: ButtonStyle {
 
@@ -30,7 +31,7 @@ public struct PrimaryButtonStyle: ButtonStyle {
     }
     
     public func makeBody(configuration: Configuration) -> some View {
-        let standardBackgroundColor = Color.blueBase.opacity(configuration.isPressed ? Consts.pressedOpacity : 1)
+        let standardBackgroundColor = Color(designSystemColor: .accent).opacity(configuration.isPressed ? Consts.pressedOpacity : 1)
         let disabledBackgroundColor = Color.gray50
         let backgroundColor = disabled ? disabledBackgroundColor : standardBackgroundColor
 

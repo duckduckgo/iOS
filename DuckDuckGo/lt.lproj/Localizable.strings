@@ -139,6 +139,63 @@
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Atrakinti „DuckDuckGo“.";
 
+/* Detail string describing what AppTP is */
+"appTP.cell.detail" = "Blokuokite programėlių stebėjimo priemones savo įrenginyje";
+
+/* String indicating AppTP is disabled when viewed from the settings screen */
+"appTP.cell.disabled" = "Išjungta";
+
+/* String indicating AppTP is enabled when viewed from the settings screen */
+"appTP.cell.enabled" = "Įjungta";
+
+/* Info string informing the user what App Tracking Protection does. */
+"appTP.empty.disabled.info" = "Įjunkite apsaugą nuo programėlių sekimo, kad galėtume blokuoti įkyrius sekiklius kitose programėlėse.";
+
+/* Do not translate. StringsDict entry -- Count part of string 'App Tracking Protection blocked x tracking attempts today' */
+"appTP.home.blockedCount" = "appTP.home.blockedCount";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the trailing space) */
+"appTP.home.blockedPrefix" = "Apsauga nuo programėlių sekimo užblokuota ";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the leading space) */
+"appTP.home.blockedSuffix" = " jūsų programėlėse.";
+
+/* Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now' */
+"appTP.justNow" = "Ką tik";
+
+/* View to manage trackers for AppTP. Allows the user to turn trackers on or off. */
+"appTP.manageTrackers" = "Tvarkyti sekiklius";
+
+/* Breakage report category label */
+"appTP.report.categoryLabel" = "Kas vyksta?";
+
+/* Breakage report submit button */
+"appTP.report.submit" = "Pateikti";
+
+/* Breakage report succcess message */
+"appTP.report.toast" = "Dėkojame! Atsiliepimas pateiktas.";
+
+/* Cancel button for 'Report an Issue' alert. */
+"appTP.reportAlert.cancel" = "Ne dabar";
+
+/* Confirm button for 'Report an Issue' alert. */
+"appTP.reportAlert.confirm" = "Pranešti apie problemą";
+
+/* Button to restore the blocklist to its default state. */
+"appTP.restoreDefualts" = "Atkurti numatytąsias reikšmes";
+
+/* Title for the App Tracking Protection feature */
+"appTP.title" = "Programų sekimo apsauga";
+
+/* Text indicating when the tracker was last allowed. Example: Last attempt allowed (timeString) */
+"appTP.trackerAllowedTimestamp" = "Paskutinis bandymas leistas %@";
+
+/* Text indicating when the tracker was last blocked. Example: Last attempt blocked (timeString) */
+"appTP.trackerBlockedTimestamp" = "Paskutinis bandymas užblokuotas %@";
+
+/* Do not translate. StringsDict entry -- Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts */
+"appTP.trackingattempts" = "appTP.trackingattempts";
+
 /* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Prisijungti";
 
@@ -499,8 +556,20 @@
 /* Broken Site Category */
 "brokensite.category.videos" = "Vaizdo įrašas nepaleistas";
 
+/* Broken Site Category Placeholder */
+"brokensite.categoryPlaceholder" = "Pasirinkite problemą iš sąrašo...";
+
+/* Broken Site Category Section Title */
+"brokensite.categoryTitle" = "PASIRINKITE KATEGORIJĄ";
+
+/* Broken Site Comment Placeholder */
+"brokensite.commentPlaceholder" = "Jei pasidalinsime daugiau informacijos, galime padėti išspręsti šią problemą";
+
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "APRAŠYKITE, KAS ATSITIKO";
+
+/* No comment provided by engineer. */
+"bucket: %@" = "talpykla: %@";
 
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Praėjęs mėnuo";
@@ -693,6 +762,9 @@
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Atitikmenų nerasta";
+
+/* No comment provided by engineer. */
+"Error" = "Klaida";
 
 /* No comment provided by engineer. */
 "favorite" = "Mėgstamas";
@@ -979,14 +1051,14 @@
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "„Mac“ skirta „DuckDuckGo“ pasižymi jums reikiama sparta, naršymo funkcijomis ir aukščiausios klasės privatumo įrankiais.";
 
-/* Body text for the macOS waitlist notification */
-"mac-waitlist.available.notification.body" = "Atidaryti pakvietimą";
-
 /* Title for the macOS waitlist notification */
 "mac-waitlist.available.notification.title" = "„DuckDuckGo for Mac“ paruošta!";
 
 /* Title for the copy action */
 "mac-waitlist.copy" = "Kopijuoti";
+
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-computer-go-to" = "„Windows“ kompiuteryje eikite į:";
 
 /* Description text above the Share Link button */
 "mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "„Mac“ kompiuteryje eikite į:";
@@ -1000,6 +1072,9 @@
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "„Windows“ jau greitai!";
 
+/* Title for the macOS waitlist button redirecting to Windows waitlist */
+"mac-waitlist.join-waitlist-screen.windows-waitlist" = "Ieškote „Windows“ versijos?";
+
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Naršykite privačiai su mūsų „Mac“ skirta programa";
 
@@ -1010,7 +1085,7 @@
 "mac-waitlist.share-sheet.title" = "„Mac“ skirta „DuckDuckGo“";
 
 /* Title for the Mac Waitlist feature */
-"mac-waitlist.title" = "„DuckDuckGo“ darbalaukio programa";
+"mac-waitlist.title" = "„DuckDuckGo“ programa, skirta „Mac“";
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Naršymo meniu";
@@ -1023,6 +1098,9 @@
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"Ok" = "GERAI";
 
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Slapukai valdomi";
@@ -1062,6 +1140,9 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Negalima rasti programos, galinčios atidaryti šią nuorodą";
+
+/* No comment provided by engineer. */
+"Please enter which app on your device is broken." = "Įveskite, kuri programa jūsų įrenginyje sugedusi.";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Svetainės pagrįstos slapukais, kad liktumėte prisijungę. Apsaugojus svetainę, slapukai nėra ištrinami ir liksite prisijungę net paspaudę apsaugojimo mygtuką. Vis tiek blokuosime trečiųjų šalių stebėjimo priemones, randamas svetainėse, kuriose pasinaudosite parinktimi „Fireproof“.";
@@ -1153,6 +1234,9 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Kuri svetainė neveikia?";
 
+/* No comment provided by engineer. */
+"sync.remove-device.message" = "„%@“ nebegalės pasiekti jūsų sinchronizuotų duomenų.";
+
 /* Accessibility label on remove button */
 "tab.close.home" = "Uždaryti pagrindinio puslapio skirtuką";
 
@@ -1225,6 +1309,57 @@
 /* Voice-search footer note with on-device privacy warning */
 "voiceSearch.footer.note" = "Garsas apdorojamas įrenginyje. Jis nesaugomas ir su niekuo, įskaitant „DuckDuckGo“, nebendrinamas.";
 
+/* Title for the button to enable push notifications in system settings */
+"waitlist.allow-notifications" = "Leisti pranešimus";
+
+/* Body text for the waitlist notification */
+"waitlist.available.notification.body" = "Atidaryti pakvietimą";
+
+/* Title for the copy action */
+"waitlist.copy" = "Kopijuoti";
+
+/* Label text for the invite code */
+"waitlist.invite-code" = "Pakvietimo kodas";
+
+/* Step title on the invite screen */
+"waitlist.invite-screen.step.title" = "%d veiksmas";
+
+/* Title for the invite code screen */
+"waitlist.invite-screen.youre-invited" = "Esate pakviesti!";
+
+/* Title for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.join" = "Prisijungti prie privataus laukimo sąrašo";
+
+/* Temporary status text for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.joining" = "Prisijungiama prie laukimo sąrašo...";
+
+/* Title for the Share Link button */
+"waitlist.join-waitlist-screen.share-link" = "Bendrinti nuorodą";
+
+/* Notification text for the waitlist */
+"waitlist.joined.no-notification.get-notification" = "INFORMUOTI";
+
+/* Title for the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.get-notification-confirmation-title" = "Ar norite gauti pranešimą, kai ateis jūsų eilė?";
+
+/* Cancel button in the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.no-thanks" = "Ne, dėkoju";
+
+/* Text used for the Notifications Disabled state */
+"waitlist.notification.disabled" = "Galime jus informuoti, kai bus jūsų eilė, tačiau šiuo metu pranešimai yra išjungti „DuckDuckGo“.";
+
+/* Privacy disclaimer for the Waitlist feature */
+"waitlist.privacy-disclaimer" = "Jums nereikia dalintis savo asmenine informacija, kad prisijungtumėte prie laukimo sąrašo. Užsitikrinsite vietą eilėje laiko žyma, kuri egzistuoja tik jūsų įrenginyje, kad galėtume jus įspėti, kai ateis jūsų eilė.";
+
+/* Title for the queue screen */
+"waitlist.queue-screen.on-the-list" = "Esate sąraše!";
+
+/* Title for the settings subtitle */
+"waitlist.settings.download-available" = "Galima atsisiųsti";
+
+/* Title for the share sheet entry */
+"waitlist.share-sheet.title" = "Esate pakviesti!";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Mėgstamas pašalintas";
 
@@ -1248,4 +1383,49 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Pranešimas iš %@:";
+
+/* Title for the Windows waitlist notification */
+"windows-waitlist.available.notification.title" = "Išbandykite „DuckDuckGo“, skirtą „Windows“!";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-1.description" = "Jei norite atsisiųsti, apsilankykite šiuo URL adresu „Windows“ įrenginyje:";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-2.description" = "Atsidarykite „DuckDuckGo“ diegimo programą atsisiuntimų skiltyje, pasirinkite „Įdiegti“ ir įveskite pakvietimo kodą.";
+
+/* Subtitle for the Windows Waitlist Invite screen */
+"windows-waitlist.invite-screen.subtitle" = "Pasiruošę naudoti „DuckDuckGo“ sistemoje „Windows“?";
+
+/* Title for the Windows waitlist button redirecting to Mac waitlist */
+"windows-waitlist.join-waitlist-screen.mac-waitlist" = "Ieškote „Mac“ versijos?";
+
+/* Title for the Join Windows Waitlist screen */
+"windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Gaukite ankstyvą prieigą ir išbandykite „DuckDuckGo“, skirtą „Windows“!";
+
+/* Message for the alert to confirm enabling notifications */
+"windows-waitlist.joined.no-notification.get-notification-confirmation-message" = "Atsiųsime jums pranešimą, kai jūsų „DuckDuckGo“, skirta „Windows“, kopija bus paruošta atsisiųsti. ";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"windows-waitlist.joined.notifications-declined" = "Pakvietimą išbandyti „Mac“ skirtą „DuckDuckGo“ matysite čia. Netrukus patikrinkite arba galime jums atsiųsti pranešimą, kai bus jūsų eilė.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"windows-waitlist.joined.notifications-enabled" = "Atsiųsime jums pranešimą, kai jūsų „DuckDuckGo“, skirta „Windows“, kopija bus paruošta atsisiųsti.";
+
+/* Title for the settings subtitle */
+"windows-waitlist.settings.browse-privately" = "Naršykite privačiai naudodami mūsų programą, skirtą „Windows“";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"windows-waitlist.share-sheet.invite-code-message" = "Esate pakviesti!\n\nPasiruošę naudoti „DuckDuckGo“ sistemoje „Windows“?\n\n1 veiksmas\nNorėdami atsisiųsti, „Windows“ įrenginyje apsilankykite šiuo URL adresu:\nhttps://duckduckgo.com/windows\n\n<b>2 veiksmas</b><br/>Atsidarykite „DuckDuckGo“ diegimo programą atsisiuntimų skiltyje, pasirinkite „Įdiegti“ ir įveskite pakvietimo kodą.<br/><br/>Pakvietimo kodas: %@";
+
+/* Message used when sharing to iMessage */
+"windows-waitlist.share-sheet.message" = "Pasiruošę pradėti privačiai naršyti „Windows“?\n\nApsilankykite šiame URL savo kompiuteryje, kad atsisiųstumėte:\nhttps://duckduckgo.com/windows";
+
+/* Summary text for the Windows browser waitlist */
+"windows-waitlist.summary" = "„Windows“ skirta „DuckDuckGo“ turi viską, ko reikia norint naršyti dar privačiau – privačią paiešką, stebėjimo priemonių blokavimą, priverstinį šifravimą ir iššokančiųjų slapukų langų blokavimą bei dar daugiau geriausių savo klasėje apsaugos priemonių.";
+
+/* Title for the Windows Waitlist feature */
+"windows-waitlist.title" = "„DuckDuckGo“ programa, skirta „Windows“";
+
+/* Title for the Windows browser download link page */
+"windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows" = "Gaukite „DuckDuckGo“, skirtą „Windows“!";
 

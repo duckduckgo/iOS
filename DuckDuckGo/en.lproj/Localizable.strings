@@ -730,6 +730,9 @@
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "DESCRIBE WHAT HAPPENED";
 
+/* Broken Site send report button */
+"brokensite.sendReport" = "Send Report";
+
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Past month";
 

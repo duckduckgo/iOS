@@ -139,6 +139,63 @@
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Lås opp DuckDuckGo.";
 
+/* Detail string describing what AppTP is */
+"appTP.cell.detail" = "Blokker appsporere på enheten din";
+
+/* String indicating AppTP is disabled when viewed from the settings screen */
+"appTP.cell.disabled" = "Deaktivert";
+
+/* String indicating AppTP is enabled when viewed from the settings screen */
+"appTP.cell.enabled" = "Aktivert";
+
+/* Info string informing the user what App Tracking Protection does. */
+"appTP.empty.disabled.info" = "Aktiver App Tracking Protection, slik at vi kan blokkere lumske sporere i andre apper.";
+
+/* Do not translate. StringsDict entry -- Count part of string 'App Tracking Protection blocked x tracking attempts today' */
+"appTP.home.blockedCount" = "appTP.home.blockedCount";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the trailing space) */
+"appTP.home.blockedPrefix" = "App Tracking Protection blokkerte ";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the leading space) */
+"appTP.home.blockedSuffix" = " i appene dine i dag.";
+
+/* Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now' */
+"appTP.justNow" = "Akkurat nå";
+
+/* View to manage trackers for AppTP. Allows the user to turn trackers on or off. */
+"appTP.manageTrackers" = "Administrer sporere";
+
+/* Breakage report category label */
+"appTP.report.categoryLabel" = "Hva er det som skjer?";
+
+/* Breakage report submit button */
+"appTP.report.submit" = "Send";
+
+/* Breakage report succcess message */
+"appTP.report.toast" = "Takk! Tilbakemeldingen er sendt.";
+
+/* Cancel button for 'Report an Issue' alert. */
+"appTP.reportAlert.cancel" = "Ikke nå";
+
+/* Confirm button for 'Report an Issue' alert. */
+"appTP.reportAlert.confirm" = "Rapporter problem";
+
+/* Button to restore the blocklist to its default state. */
+"appTP.restoreDefualts" = "Gjenopprett standardinnstillinger";
+
+/* Title for the App Tracking Protection feature */
+"appTP.title" = "Beskyttelse mot appsporing";
+
+/* Text indicating when the tracker was last allowed. Example: Last attempt allowed (timeString) */
+"appTP.trackerAllowedTimestamp" = "Siste tillatte forsøk: %@";
+
+/* Text indicating when the tracker was last blocked. Example: Last attempt blocked (timeString) */
+"appTP.trackerBlockedTimestamp" = "Siste blokkerte forsøk: %@";
+
+/* Do not translate. StringsDict entry -- Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts */
+"appTP.trackingattempts" = "appTP.trackingattempts";
+
 /* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Logg inn";
 
@@ -499,8 +556,20 @@
 /* Broken Site Category */
 "brokensite.category.videos" = "Video ble ikke avspilt";
 
+/* Broken Site Category Placeholder */
+"brokensite.categoryPlaceholder" = "Velg problemet ditt fra listen …";
+
+/* Broken Site Category Section Title */
+"brokensite.categoryTitle" = "VELG EN KATEGORI";
+
+/* Broken Site Comment Placeholder */
+"brokensite.commentPlaceholder" = "Hvis du gir oss flere detaljer, kan det hjelpe oss å løse dette problemet";
+
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "BESKRIV HVA SOM SKJEDDE";
+
+/* No comment provided by engineer. */
+"bucket: %@" = "bucket: %@";
 
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Foregående måned";
@@ -693,6 +762,9 @@
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Ingen match ble funnet";
+
+/* No comment provided by engineer. */
+"Error" = "Feil";
 
 /* No comment provided by engineer. */
 "favorite" = "Favoritt";
@@ -979,14 +1051,14 @@
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo for Mac har hastigheten du trenger, nettleserfunksjonene du forventer, og er stappfull av våre førsteklasses personvernfunksjoner.";
 
-/* Body text for the macOS waitlist notification */
-"mac-waitlist.available.notification.body" = "Åpne invitasjonen din";
-
 /* Title for the macOS waitlist notification */
 "mac-waitlist.available.notification.title" = "DuckDuckGo for Mac er klar!";
 
 /* Title for the copy action */
 "mac-waitlist.copy" = "Kopier";
+
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-computer-go-to" = "På en Windows-datamaskin går du til:";
 
 /* Description text above the Share Link button */
 "mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "På Mac går du til:";
@@ -1000,6 +1072,9 @@
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Windows kommer snart!";
 
+/* Title for the macOS waitlist button redirecting to Windows waitlist */
+"mac-waitlist.join-waitlist-screen.windows-waitlist" = "Ser du etter Windows-versjonen?";
+
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Surf privat med vår app for Mac";
 
@@ -1010,7 +1085,7 @@
 "mac-waitlist.share-sheet.title" = "DuckDuckGo for Mac";
 
 /* Title for the Mac Waitlist feature */
-"mac-waitlist.title" = "DuckDuckGo skrivebordsapp";
+"mac-waitlist.title" = "DuckDuckGo-app for Mac";
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Alternativer";
@@ -1023,6 +1098,9 @@
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"Ok" = "OK";
 
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Informasjonskapsler administrert";
@@ -1062,6 +1140,9 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Appen som kreves for å åpne koblingen ble ikke funnet";
+
+/* No comment provided by engineer. */
+"Please enter which app on your device is broken." = "Angi hvilken app på enheten din som ikke virker som den skal.";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Nettsider anvender informasjonskapsler for å holde deg innlogget. Når du gjør en side brannsikker, slettes ikke informasjonskapslene, og du forblir innlogget, selv etter å ha brukt brannknappen. Vi blokkerer fortsatt tredjeparters sporingsanordninger som blir funnet på Brannsikre nettsteder.";
@@ -1153,6 +1234,9 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Hvilket nettsted fungerer ikke?";
 
+/* No comment provided by engineer. */
+"sync.remove-device.message" = "\"%@\" vil ikke lenger ha tilgang til dine synkroniserte data.";
+
 /* Accessibility label on remove button */
 "tab.close.home" = "Lukk hjem-fane";
 
@@ -1225,6 +1309,57 @@
 /* Voice-search footer note with on-device privacy warning */
 "voiceSearch.footer.note" = "Lyd behandles på enheten. Den lagres ikke og deles ikke med noen, heller ikke med DuckDuckGo.";
 
+/* Title for the button to enable push notifications in system settings */
+"waitlist.allow-notifications" = "Tillat varsler";
+
+/* Body text for the waitlist notification */
+"waitlist.available.notification.body" = "Åpne invitasjonen din";
+
+/* Title for the copy action */
+"waitlist.copy" = "Kopier";
+
+/* Label text for the invite code */
+"waitlist.invite-code" = "Invitasjonskode";
+
+/* Step title on the invite screen */
+"waitlist.invite-screen.step.title" = "Trinn %d";
+
+/* Title for the invite code screen */
+"waitlist.invite-screen.youre-invited" = "Du er invitert!";
+
+/* Title for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.join" = "Sett deg på den private ventelisten";
+
+/* Temporary status text for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.joining" = "Setter deg på ventelisten…";
+
+/* Title for the Share Link button */
+"waitlist.join-waitlist-screen.share-link" = "Del lenke";
+
+/* Notification text for the waitlist */
+"waitlist.joined.no-notification.get-notification" = "VARSLE MEG";
+
+/* Title for the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.get-notification-confirmation-title" = "Skal vi varsle deg når det er din tur?";
+
+/* Cancel button in the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.no-thanks" = "Nei takk";
+
+/* Text used for the Notifications Disabled state */
+"waitlist.notification.disabled" = "Vi kan varsle deg når det er din tur, men varsler er for øyeblikket deaktivert for DuckDuckGo.";
+
+/* Privacy disclaimer for the Waitlist feature */
+"waitlist.privacy-disclaimer" = "Du behøver ikke å dele noen personopplysninger for å sette deg på ventelisten. Du sikrer plassen din i køen med et tidsstempel som kun eksisterer på enheten din, så vi kan varsle deg når det er din tur.";
+
+/* Title for the queue screen */
+"waitlist.queue-screen.on-the-list" = "Du står på listen!";
+
+/* Title for the settings subtitle */
+"waitlist.settings.download-available" = "Nedlasting tilgjengelig";
+
+/* Title for the share sheet entry */
+"waitlist.share-sheet.title" = "Du er invitert!";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favoritt er fjernet";
 
@@ -1248,4 +1383,49 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "En melding fra %@:";
+
+/* Title for the Windows waitlist notification */
+"windows-waitlist.available.notification.title" = "Prøv DuckDuckGo for Windows!";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-1.description" = "Besøk denne URL-adressen på Windows-enheten din for å laste ned:";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-2.description" = "Åpne DuckDuckGo-installasjonsprogrammet i Nedlastinger, velg Installer og angi deretter invitasjonskoden.";
+
+/* Subtitle for the Windows Waitlist Invite screen */
+"windows-waitlist.invite-screen.subtitle" = "Klar for å bruke DuckDuckGo i Windows?\n\n";
+
+/* Title for the Windows waitlist button redirecting to Mac waitlist */
+"windows-waitlist.join-waitlist-screen.mac-waitlist" = "Ser du etter Mac-versjonen?";
+
+/* Title for the Join Windows Waitlist screen */
+"windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Få tidlig tilgang til å prøve DuckDuckGo for Windows!";
+
+/* Message for the alert to confirm enabling notifications */
+"windows-waitlist.joined.no-notification.get-notification-confirmation-message" = "Vi sender deg et varsel når din utgave av DuckDuckGo for Windows er klar til nedlasting. ";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"windows-waitlist.joined.notifications-declined" = "Invitasjonen din til å prøve DuckDuckGo for Mac kommer hit. Kom tilbake snart, eller vi kan sende deg et varsel når det er din tur.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"windows-waitlist.joined.notifications-enabled" = "Vi sender deg et varsel når du kan laste ned DuckDuckGo for Windows.";
+
+/* Title for the settings subtitle */
+"windows-waitlist.settings.browse-privately" = "Surf privat med vår app for Windows";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"windows-waitlist.share-sheet.invite-code-message" = "Du er invitert!\n\nKlar for å bruke DuckDuckGo i Windows?\n\nTrinn 1\nBesøk denne URL-adressen på Windows-enheten din for å laste ned:\nhttps://duckduckgo.com/windows\n\nTrinn 2\nÅpne DuckDuckGo-installasjonsprogrammet i Nedlastinger, velg Installer og angi deretter invitasjonskoden.\n\nInvitasjonskode: %@";
+
+/* Message used when sharing to iMessage */
+"windows-waitlist.share-sheet.message" = "Klar for å begynne å surfe privat i Windows?\n\nfBesøk denne URL-adressen på datamaskinen din for å laste ned:\nhttps://duckduckgo.com/windows";
+
+/* Summary text for the Windows browser waitlist */
+"windows-waitlist.summary" = "DuckDuckGo for Windows har det du trenger for å surfe med mer personvern – privat søk, sporingsblokkering, tvungen kryptering, blokkering av popup-vinduer om informasjonskapsler og enda flere førsteklasses beskyttelser som er på vei.";
+
+/* Title for the Windows Waitlist feature */
+"windows-waitlist.title" = "DuckDuckGo-app for Windows";
+
+/* Title for the Windows browser download link page */
+"windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows" = "Skaff deg DuckDuckGo for Windows!";
 

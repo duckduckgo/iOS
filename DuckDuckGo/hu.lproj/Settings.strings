@@ -73,6 +73,9 @@
 /* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "cW7-OM-2oW"; */
 "cW7-OM-2oW.text" = "Nemzetközi adatvédelmi szabályozás (Global Privacy Control, GPC)";
 
+/* Class = "UIBarButtonItem"; title = "Add"; ObjectID = "CxT-QK-iVn"; */
+"CxT-QK-iVn.title" = "Hozzáadás";
+
 /* Class = "UILabel"; text = "App Exit, Inactive for 15 Minutes"; ObjectID = "D0R-jp-UY8"; */
 "D0R-jp-UY8.text" = "Kilépés az alkalmazásból 15 perc inaktivitás után";
 
@@ -151,6 +154,9 @@
 /* Class = "UILabel"; text = "Long-Press Previews"; ObjectID = "HLr-R8-xxF"; */
 "HLr-R8-xxF.text" = "Hosszú lenyomásos előnézetek";
 
+/* Class = "UILabel"; text = "Browse privately with our app for Windows"; ObjectID = "hoT-Nu-KXP"; */
+"hoT-Nu-KXP.text" = "Privát böngészés windowsos alkalmazásunkkal";
+
 /* Class = "UILabel"; text = "Privacy Protection enabled for all sites"; ObjectID = "Hu1-5i-vjL"; */
 "Hu1-5i-vjL.text" = "Adatvédelem engedélyezve minden weboldalhoz";
 
@@ -159,6 +165,9 @@
 
 /* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
 "jbD-Oy-Cmw.title" = "Ikon";
+
+/* Class = "UILabel"; text = "App Tracking Protection"; ObjectID = "Laa-LS-Z5M"; */
+"Laa-LS-Z5M.text" = "Alkalmazáskövetés elleni védelem";
 
 /* Class = "UILabel"; text = "Share Feedback"; ObjectID = "m23-t6-9cb"; */
 "m23-t6-9cb.text" = "Visszajelzés megosztása";
@@ -178,11 +187,20 @@
 /* Class = "UITableViewSection"; headerTitle = "More From DuckDuckGo"; ObjectID = "OxE-MQ-uJk"; */
 "OxE-MQ-uJk.headerTitle" = "Továbbiak a DuckDuckGótól";
 
+/* Class = "UILabel"; text = "Sync"; ObjectID = "oXN-ez-gct"; */
+"oXN-ez-gct.text" = "Szinkronizálás";
+
 /* Class = "UILabel"; text = "Browse privately with our app for Mac "; ObjectID = "P0F-ts-ekd"; */
 "P0F-ts-ekd.text" = "Privát böngészés Maces alkalmazásunkkal ";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
 "qeN-SV-zy7.text" = "Címke";
+
+/* Class = "UILabel"; text = "Block app trackers on your device"; ObjectID = "R2f-X7-ZEt"; */
+"R2f-X7-ZEt.text" = "Alkalmazáskövetők letiltása az eszközödön";
+
+/* Class = "UILabel"; text = "DuckDuckGo Windows App"; ObjectID = "RQ8-H1-Ez1"; */
+"RQ8-H1-Ez1.text" = "DuckDuckGo Windows alkalmazás";
 
 /* Class = "UINavigationItem"; title = "Text Size"; ObjectID = "ssa-zd-L3T"; */
 "ssa-zd-L3T.title" = "Szövegméret";
@@ -232,8 +250,8 @@
 /* Class = "UILabel"; text = "Add App to Your Dock"; ObjectID = "yvj-LL-MiR"; */
 "yvj-LL-MiR.text" = "Alkalmazás hozzáadása a dokkodhoz";
 
-/* Class = "UILabel"; text = "DuckDuckGo Desktop App"; ObjectID = "Yz9-17-qnn"; */
-"Yz9-17-qnn.text" = "DuckDuckGo asztali alkalmazás";
+/* Class = "UILabel"; text = "DuckDuckGo Mac App"; ObjectID = "Yz9-17-qnn"; */
+"Yz9-17-qnn.text" = "DuckDuckGo Mac alkalmazás";
 
 /* Class = "UILabel"; text = "New Tab"; ObjectID = "Zpg-h0-rYv"; */
 "Zpg-h0-rYv.text" = "Új lap";

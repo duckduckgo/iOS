@@ -139,6 +139,63 @@
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Deblochează DuckDuckGo.";
 
+/* Detail string describing what AppTP is */
+"appTP.cell.detail" = "Blochează tehnologiile de urmărire pe dispozitivul tău";
+
+/* String indicating AppTP is disabled when viewed from the settings screen */
+"appTP.cell.disabled" = "Dezactivat";
+
+/* String indicating AppTP is enabled when viewed from the settings screen */
+"appTP.cell.enabled" = "Activat";
+
+/* Info string informing the user what App Tracking Protection does. */
+"appTP.empty.disabled.info" = "Activează App Tracking Protection pentru a putea bloca tehnologiile de urmărire deranjante din alte aplicații.";
+
+/* Do not translate. StringsDict entry -- Count part of string 'App Tracking Protection blocked x tracking attempts today' */
+"appTP.home.blockedCount" = "appTP.home.blockedCount";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the trailing space) */
+"appTP.home.blockedPrefix" = "App Tracking Protection a blocat ";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the leading space) */
+"appTP.home.blockedSuffix" = " în aplicațiile tale astăzi.";
+
+/* Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now' */
+"appTP.justNow" = "Chiar acum";
+
+/* View to manage trackers for AppTP. Allows the user to turn trackers on or off. */
+"appTP.manageTrackers" = "Gestionează tehnologiile de urmărire";
+
+/* Breakage report category label */
+"appTP.report.categoryLabel" = "Ce se întâmplă?";
+
+/* Breakage report submit button */
+"appTP.report.submit" = "Trimite";
+
+/* Breakage report succcess message */
+"appTP.report.toast" = "Mulțumesc! Feedback trimis.";
+
+/* Cancel button for 'Report an Issue' alert. */
+"appTP.reportAlert.cancel" = "Nu acum";
+
+/* Confirm button for 'Report an Issue' alert. */
+"appTP.reportAlert.confirm" = "Raportează problema";
+
+/* Button to restore the blocklist to its default state. */
+"appTP.restoreDefualts" = "Restabilește valorile implicite";
+
+/* Title for the App Tracking Protection feature */
+"appTP.title" = "Protecția la urmărirea aplicațiilor";
+
+/* Text indicating when the tracker was last allowed. Example: Last attempt allowed (timeString) */
+"appTP.trackerAllowedTimestamp" = "Ultima încercare a fost permisă la %@";
+
+/* Text indicating when the tracker was last blocked. Example: Last attempt blocked (timeString) */
+"appTP.trackerBlockedTimestamp" = "Ultima încercare a fost blocată la %@";
+
+/* Do not translate. StringsDict entry -- Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts */
+"appTP.trackingattempts" = "appTP.trackingattempts";
+
 /* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Autentificare";
 
@@ -499,8 +556,20 @@
 /* Broken Site Category */
 "brokensite.category.videos" = "Videoclipul nu s-a redat";
 
+/* Broken Site Category Placeholder */
+"brokensite.categoryPlaceholder" = "Alegeți problema ta din listă...";
+
+/* Broken Site Category Section Title */
+"brokensite.categoryTitle" = "SELECTEAZĂ O CATEGORIE";
+
+/* Broken Site Comment Placeholder */
+"brokensite.commentPlaceholder" = "Comunicarea mai multor detalii ne poate ajuta să rezolvăm această problemă";
+
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "DESCRIE CE S-A INTAMPLAT";
+
+/* No comment provided by engineer. */
+"bucket: %@" = "bucket: %@";
 
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Ultima lună";
@@ -693,6 +762,9 @@
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Nu s-au găsit potriviri";
+
+/* No comment provided by engineer. */
+"Error" = "Eroare";
 
 /* No comment provided by engineer. */
 "favorite" = "Preferință";
@@ -979,14 +1051,14 @@
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo pentru Mac are viteza de care ai nevoie, funcționalitățile de răsfoire pe care ți le dorești și este prevăzută cu cele mai bune caracteristici de bază în privința confidențialității din domeniu.";
 
-/* Body text for the macOS waitlist notification */
-"mac-waitlist.available.notification.body" = "Deschide invitația ta";
-
 /* Title for the macOS waitlist notification */
 "mac-waitlist.available.notification.title" = "DuckDuckGo pentru Mac este pregătită!";
 
 /* Title for the copy action */
 "mac-waitlist.copy" = "Copiere";
+
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-computer-go-to" = "Pe computerul tău Windows, accesează:";
 
 /* Description text above the Share Link button */
 "mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Pe dispozitivul tău Mac, accesează:";
@@ -1000,6 +1072,9 @@
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Va fi disponibil în curând și pentru Windows!";
 
+/* Title for the macOS waitlist button redirecting to Windows waitlist */
+"mac-waitlist.join-waitlist-screen.windows-waitlist" = "Cauți versiunea pentru Windows?";
+
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Răsfoiește în mod privat, cu aplicația noastră pentru Mac";
 
@@ -1010,7 +1085,7 @@
 "mac-waitlist.share-sheet.title" = "DuckDuckGo pentru Mac";
 
 /* Title for the Mac Waitlist feature */
-"mac-waitlist.title" = "Aplicația DuckDuckGo pentru desktop";
+"mac-waitlist.title" = "Aplicația DuckDuckGo pentru Mac";
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Meniul de navigare";
@@ -1023,6 +1098,9 @@
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"Ok" = "OK";
 
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Modulele cookie au fost gestionate";
@@ -1062,6 +1140,9 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Aplicația necesară pentru a deschide acel link nu poate fi găsită";
+
+/* No comment provided by engineer. */
+"Please enter which app on your device is broken." = "Menționează ce aplicație de pe dispozitivul tău este nefuncțională.";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Site-urile web se bazează pe cookie-uri pentru a te menține conectat. Atunci când ștergi activitatea și istoricul unui site, cookie-urile nu vor fi șterse și vei rămâne conectat, chiar și după utilizarea butonului Ștergere activitate și istoric. Blocăm totuși instrumentele de urmărire terțe găsite pe site-urile web cu ștergerea activității și istoricului din browser la ieșire.";
@@ -1153,6 +1234,9 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Ce site este defect?";
 
+/* No comment provided by engineer. */
+"sync.remove-device.message" = "„%@” nu va mai putea accesa datele tale sincronizate.";
+
 /* Accessibility label on remove button */
 "tab.close.home" = "Închide fila de pornire";
 
@@ -1225,6 +1309,57 @@
 /* Voice-search footer note with on-device privacy warning */
 "voiceSearch.footer.note" = "Componenta audio este prelucrată pe dispozitiv. Nu este stocată sau distribuită nimănui, nici DuckDuckGo.";
 
+/* Title for the button to enable push notifications in system settings */
+"waitlist.allow-notifications" = "Permite notificările";
+
+/* Body text for the waitlist notification */
+"waitlist.available.notification.body" = "Deschide invitația ta";
+
+/* Title for the copy action */
+"waitlist.copy" = "Copiere";
+
+/* Label text for the invite code */
+"waitlist.invite-code" = "Codul de invitație";
+
+/* Step title on the invite screen */
+"waitlist.invite-screen.step.title" = "Pasul %d";
+
+/* Title for the invite code screen */
+"waitlist.invite-screen.youre-invited" = "Ești invitat(ă)!";
+
+/* Title for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.join" = "Alătură-te listei de așteptare private";
+
+/* Temporary status text for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.joining" = "Te alături listei de așteptare...";
+
+/* Title for the Share Link button */
+"waitlist.join-waitlist-screen.share-link" = "Trimite linkul";
+
+/* Notification text for the waitlist */
+"waitlist.joined.no-notification.get-notification" = "DORESC SĂ PRIMESC NOTIFICĂRI";
+
+/* Title for the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.get-notification-confirmation-title" = "Primești o notificare când este rândul tău?";
+
+/* Cancel button in the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.no-thanks" = "Nu, mulțumesc";
+
+/* Text used for the Notifications Disabled state */
+"waitlist.notification.disabled" = "Te putem înștiința când este rândul tău, însă notificările sunt momentan dezactivate pentru DuckDuckGo.";
+
+/* Privacy disclaimer for the Waitlist feature */
+"waitlist.privacy-disclaimer" = "Nu va trebui să comunici informații personale, pentru a te înscrie pe lista de așteptare. Îți vei asigura locul la coadă, folosind o marcă de timp care există numai pe dispozitivul tău, astfel încât să te putem înștiința când ți-a sosit rândul.";
+
+/* Title for the queue screen */
+"waitlist.queue-screen.on-the-list" = "Ești pe listă!";
+
+/* Title for the settings subtitle */
+"waitlist.settings.download-available" = "Descărcare disponibilă";
+
+/* Title for the share sheet entry */
+"waitlist.share-sheet.title" = "Ești invitat(ă)!";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favorit eliminat";
 
@@ -1248,4 +1383,49 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Un mesaj de la %@:";
+
+/* Title for the Windows waitlist notification */
+"windows-waitlist.available.notification.title" = "Încearcă DuckDuckGo pentru Windows!";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-1.description" = "Accesează această adresă URL pe dispozitivul tău Windows pentru a descărca:";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-2.description" = "Deschide programul de instalare DuckDuckGo în Descărcări, selectează Instalează, apoi completează codul de invitație.";
+
+/* Subtitle for the Windows Waitlist Invite screen */
+"windows-waitlist.invite-screen.subtitle" = "Ești gata să folosești DuckDuckGo pe Windows?";
+
+/* Title for the Windows waitlist button redirecting to Mac waitlist */
+"windows-waitlist.join-waitlist-screen.mac-waitlist" = "Cauți versiunea pentru Mac?";
+
+/* Title for the Join Windows Waitlist screen */
+"windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Beneficiază de acces timpuriu pentru a încerca DuckDuckGo pentru Windows!";
+
+/* Message for the alert to confirm enabling notifications */
+"windows-waitlist.joined.no-notification.get-notification-confirmation-message" = "Îți vom trimite o notificare atunci când copia ta DuckDuckGo pentru Windows este gata pentru descărcare. ";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"windows-waitlist.joined.notifications-declined" = "Invitația ta de a încerca DuckDuckGo pentru Windows va sosi aici. Revino în curând sau îți putem trimite o notificare când este rândul tău.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"windows-waitlist.joined.notifications-enabled" = "Îți vom trimite o notificare atunci când copia ta DuckDuckGo pentru Windows este gata pentru descărcare.";
+
+/* Title for the settings subtitle */
+"windows-waitlist.settings.browse-privately" = "Navighează în mod privat cu aplicația noastră pentru Windows";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"windows-waitlist.share-sheet.invite-code-message" = "Ești invitat!\n\nEști gata să folosești DuckDuckGo pe Windows?\n\nPasul 1\nAccesează această adresă URL pe dispozitivul tău Windows pentru a descărca:\nhttps://duckduckgo.com/windows\n\nPasul 2\nDeschide programul de instalare DuckDuckGo în Descărcări, selectează Instalează, apoi completează codul de invitație.\n\nCod de invitație: %@";
+
+/* Message used when sharing to iMessage */
+"windows-waitlist.share-sheet.message" = "Ești gata să începi să navighezi în mod privat folosind Windows?\n\nVizitează această adresă URL pe computerul tău Windows pentru a descărca:\nhttps://duckduckgo.com/windows";
+
+/* Summary text for the Windows browser waitlist */
+"windows-waitlist.summary" = "DuckDuckGo pentru Windows are tot ceea ce îți trebuie pentru a naviga într-un mod mai confidențial – căutare privată, blocarea tehnologiilor de urmărire, criptare forțată și blocarea ferestrelor pop-up cookie, plus alte elemente de protecție de cel mai înalt nivel, în curs de implementare.";
+
+/* Title for the Windows Waitlist feature */
+"windows-waitlist.title" = "Aplicația DuckDuckGo pentru Windows";
+
+/* Title for the Windows browser download link page */
+"windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows" = "Descarcă DuckDuckGo pentru Windows!";
 

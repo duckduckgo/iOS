@@ -139,6 +139,63 @@
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Oldd fel a DuckDuckGo-t.";
 
+/* Detail string describing what AppTP is */
+"appTP.cell.detail" = "Alkalmazáskövetők letiltása az eszközödön";
+
+/* String indicating AppTP is disabled when viewed from the settings screen */
+"appTP.cell.disabled" = "Letiltva";
+
+/* String indicating AppTP is enabled when viewed from the settings screen */
+"appTP.cell.enabled" = "Engedélyezve";
+
+/* Info string informing the user what App Tracking Protection does. */
+"appTP.empty.disabled.info" = "Engedélyezd az App Tracking Protectiont, hogy blokkolhassuk a bosszantó nyomkövetőket más alkalmazásokban.";
+
+/* Do not translate. StringsDict entry -- Count part of string 'App Tracking Protection blocked x tracking attempts today' */
+"appTP.home.blockedCount" = "appTP.home.blockedCount";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the trailing space) */
+"appTP.home.blockedPrefix" = "Az App Tracking Protection blokkolt ";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the leading space) */
+"appTP.home.blockedSuffix" = " ma az alkalmazásokban.";
+
+/* Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now' */
+"appTP.justNow" = "Épp most";
+
+/* View to manage trackers for AppTP. Allows the user to turn trackers on or off. */
+"appTP.manageTrackers" = "Nyomkövetők kezelése";
+
+/* Breakage report category label */
+"appTP.report.categoryLabel" = "Mi történik?";
+
+/* Breakage report submit button */
+"appTP.report.submit" = "Elküldés";
+
+/* Breakage report succcess message */
+"appTP.report.toast" = "Köszönjük! Visszajelzés elküldve.";
+
+/* Cancel button for 'Report an Issue' alert. */
+"appTP.reportAlert.cancel" = "Most nem";
+
+/* Confirm button for 'Report an Issue' alert. */
+"appTP.reportAlert.confirm" = "Probléma jelentése";
+
+/* Button to restore the blocklist to its default state. */
+"appTP.restoreDefualts" = "Alapértelmezések visszaállítása";
+
+/* Title for the App Tracking Protection feature */
+"appTP.title" = "Alkalmazáskövetés elleni védelem";
+
+/* Text indicating when the tracker was last allowed. Example: Last attempt allowed (timeString) */
+"appTP.trackerAllowedTimestamp" = "Utolsó engedélyezett próbálkozás időpontja: %@";
+
+/* Text indicating when the tracker was last blocked. Example: Last attempt blocked (timeString) */
+"appTP.trackerBlockedTimestamp" = "Utolsó blokkolt próbálkozás időpontja: %@";
+
+/* Do not translate. StringsDict entry -- Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts */
+"appTP.trackingattempts" = "appTP.trackingattempts";
+
 /* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Bejelentkezés";
 
@@ -499,8 +556,20 @@
 /* Broken Site Category */
 "brokensite.category.videos" = "A videót nem játszotta le";
 
+/* Broken Site Category Placeholder */
+"brokensite.categoryPlaceholder" = "Válaszd ki a problémát a listából…";
+
+/* Broken Site Category Section Title */
+"brokensite.categoryTitle" = "VÁLASSZ KATEGÓRIÁT";
+
+/* Broken Site Comment Placeholder */
+"brokensite.commentPlaceholder" = "A további részletek segítségünkre lehetnek a probléma megoldásában";
+
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "ESEMÉNY LEÍRÁSA";
+
+/* No comment provided by engineer. */
+"bucket: %@" = "gyűjtő: %@";
 
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Elmúlt hónapban";
@@ -693,6 +762,9 @@
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Nincs találat";
+
+/* No comment provided by engineer. */
+"Error" = "Hiba";
 
 /* No comment provided by engineer. */
 "favorite" = "Kedvenc";
@@ -979,14 +1051,14 @@
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "A DuckDuckGo Mac verziója gyors, böngészési funkciókban gazdag, és kategóriája legjobb adatvédelmi megoldásait kínálja.";
 
-/* Body text for the macOS waitlist notification */
-"mac-waitlist.available.notification.body" = "Meghívó megnyitása";
-
 /* Title for the macOS waitlist notification */
 "mac-waitlist.available.notification.title" = "Elkészült a DuckDuckGo Maces verziója!";
 
 /* Title for the copy action */
 "mac-waitlist.copy" = "Másolás";
+
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-computer-go-to" = "Windowsos számítógépen lépj erre az oldalra:";
 
 /* Description text above the Share Link button */
 "mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Macen lépj a következőre:";
@@ -1000,6 +1072,9 @@
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Hamarosan érkezik a Windows verzió!";
 
+/* Title for the macOS waitlist button redirecting to Windows waitlist */
+"mac-waitlist.join-waitlist-screen.windows-waitlist" = "A Windowsra készült verziót keresed?";
+
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Privát böngészés Maces alkalmazásunkkal";
 
@@ -1010,7 +1085,7 @@
 "mac-waitlist.share-sheet.title" = "DuckDuckGo Mac verzió";
 
 /* Title for the Mac Waitlist feature */
-"mac-waitlist.title" = "DuckDuckGo asztali alkalmazás";
+"mac-waitlist.title" = "DuckDuckGo alkalmazás Machez";
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Tallózás a menüben";
@@ -1023,6 +1098,9 @@
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"Ok" = "OK";
 
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Kezelt sütik";
@@ -1062,6 +1140,9 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "A link megnyitásához szükséges alkalmazás nem található.";
+
+/* No comment provided by engineer. */
+"Please enter which app on your device is broken." = "Add meg, hogy melyik alkalmazás működik hibásan az eszközön.";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "A webhelyek sütik segítségével teszik lehetővé, hogy bejelentkezve maradhass. Ha tűzállóvá teszel egy weboldalt, a sütik nem törlődnek, és még a Tűz gomb használata után is bejelentkezve maradsz. A tűzálló webhelyeken a külső felek nyomkövetőit azonban blokkoljuk.";
@@ -1153,6 +1234,9 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Melyik weboldal nem működik?”";
 
+/* No comment provided by engineer. */
+"sync.remove-device.message" = "A(z) „%@” többé nem férhet hozzá a szinkronizált adatokhoz.";
+
 /* Accessibility label on remove button */
 "tab.close.home" = "Kezdőlap bezárása";
 
@@ -1225,6 +1309,57 @@
 /* Voice-search footer note with on-device privacy warning */
 "voiceSearch.footer.note" = "A hang feldolgozása az eszközön történik. Nem tároljuk és nem osztjuk meg senkivel, még a DuckDuckGóval sem.";
 
+/* Title for the button to enable push notifications in system settings */
+"waitlist.allow-notifications" = "Értesítések engedélyezése";
+
+/* Body text for the waitlist notification */
+"waitlist.available.notification.body" = "Meghívó megnyitása";
+
+/* Title for the copy action */
+"waitlist.copy" = "Másolás";
+
+/* Label text for the invite code */
+"waitlist.invite-code" = "Meghívókód";
+
+/* Step title on the invite screen */
+"waitlist.invite-screen.step.title" = "%d. lépés";
+
+/* Title for the invite code screen */
+"waitlist.invite-screen.youre-invited" = "Meghívót kaptál!";
+
+/* Title for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.join" = "Csatlakozz a privát várólistához";
+
+/* Temporary status text for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.joining" = "Csatlakozás a várólistához…";
+
+/* Title for the Share Link button */
+"waitlist.join-waitlist-screen.share-link" = "Link megosztása";
+
+/* Notification text for the waitlist */
+"waitlist.joined.no-notification.get-notification" = "ÉRTESÍTSETEK";
+
+/* Title for the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.get-notification-confirmation-title" = "Szeretnél értesítést kapni, ha sorra kerülsz?";
+
+/* Cancel button in the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.no-thanks" = "Nem, köszönöm";
+
+/* Text used for the Notifications Disabled state */
+"waitlist.notification.disabled" = "Értesíthetünk, ha sorra kerülsz, de a DuckDuckGo értesítései jelenleg le vannak tiltva.";
+
+/* Privacy disclaimer for the Waitlist feature */
+"waitlist.privacy-disclaimer" = "Nem kell megosztanod a személyes adataid a várólistához való csatlakozáshoz. A sorban elfoglalt helyedet egy olyan időbélyegző igazolja, amely kizárólag az eszközödön található meg, így értesíteni tudunk, amikor sorra kerülsz.";
+
+/* Title for the queue screen */
+"waitlist.queue-screen.on-the-list" = "Felkerültél a listára!";
+
+/* Title for the settings subtitle */
+"waitlist.settings.download-available" = "Letöltés elérhető";
+
+/* Title for the share sheet entry */
+"waitlist.share-sheet.title" = "Meghívót kaptál!";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Kedvenc eltávolítva";
 
@@ -1248,4 +1383,49 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "%@ üzenete:";
+
+/* Title for the Windows waitlist notification */
+"windows-waitlist.available.notification.title" = "Próbáld ki a DuckDuckGo Windowsos verzióját!";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-1.description" = "A letöltéshez látogass el erre a címre a windowsos eszközödön:";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-2.description" = "Nyisd meg a DuckDuckGo telepítőjét a Letöltésekben, válaszd a Telepítés lehetőséget, majd írd be a meghívókódot.";
+
+/* Subtitle for the Windows Waitlist Invite screen */
+"windows-waitlist.invite-screen.subtitle" = "Készen állsz a DuckDuckGo Windowson való használatára?";
+
+/* Title for the Windows waitlist button redirecting to Mac waitlist */
+"windows-waitlist.join-waitlist-screen.mac-waitlist" = "A Macre készült verziót keresed?";
+
+/* Title for the Join Windows Waitlist screen */
+"windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Szerezz korai hozzáférést a windowsos DuckDuckGo alkalmazáshoz.";
+
+/* Message for the alert to confirm enabling notifications */
+"windows-waitlist.joined.no-notification.get-notification-confirmation-message" = "Értesítést küldünk, ha a DuckDuckGo Windowsos verziója letölthetővé válik a számodra. ";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"windows-waitlist.joined.notifications-declined" = "A DuckDuckGo windowsos verziójának kipróbálására szóló meghívód ide fog érkezni. Látogass vissza mielőbb, vagy küldhetünk értesítést, ha sorra kerülsz.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"windows-waitlist.joined.notifications-enabled" = "Értesítést küldünk, ha a DuckDuckGo windowsos verziója letölthetővé válik a számodra.";
+
+/* Title for the settings subtitle */
+"windows-waitlist.settings.browse-privately" = "Privát böngészés windowsos alkalmazásunkkal";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"windows-waitlist.share-sheet.invite-code-message" = "Meghívót kaptál!\n\nKészen állsz a DuckDuckGo Windowson való használatára?1. lépés\nWindowsos eszközödön látogass el erre a címre a letöltéshez:\nhttps://duckduckgo.com/windows\n\n2. lépés\nNyisd meg a DuckDuckGo telepítőjét a Letöltésekben, válaszd a Telepítés lehetőséget, majd írd be a meghívókódot.\n\nMeghívókód: %@";
+
+/* Message used when sharing to iMessage */
+"windows-waitlist.share-sheet.message" = "Készen állsz a privát böngészésre a Windowson?\n\nSzámítógépen látogass el erre a címre a letöltéshez:\nhttps://duckduckgo.com/windows";
+
+/* Summary text for the Windows browser waitlist */
+"windows-waitlist.summary" = "A windowsos DuckDuckGo tartalmazza mindazt, ami a privát böngészéshez szükséges – támogatja a privát keresést, a nyomkövetők blokkolását, a kényszerített titkosítást és a felugró sütiablakok blokkolását, valamint további, a kategóriájában legjobb védelmet nyújtó megoldásokat kínál.";
+
+/* Title for the Windows Waitlist feature */
+"windows-waitlist.title" = "DuckDuckGo alkalmazás Windowshoz";
+
+/* Title for the Windows browser download link page */
+"windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows" = "Töltsd le a DuckDuckGo Windows verzióját!";
 

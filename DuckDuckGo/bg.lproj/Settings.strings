@@ -73,6 +73,9 @@
 /* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "cW7-OM-2oW"; */
 "cW7-OM-2oW.text" = "Глобален контрол на поверителността (GPC)";
 
+/* Class = "UIBarButtonItem"; title = "Add"; ObjectID = "CxT-QK-iVn"; */
+"CxT-QK-iVn.title" = "Добавяне";
+
 /* Class = "UILabel"; text = "App Exit, Inactive for 15 Minutes"; ObjectID = "D0R-jp-UY8"; */
 "D0R-jp-UY8.text" = "Изход от приложението, 15 минути без активност";
 
@@ -151,6 +154,9 @@
 /* Class = "UILabel"; text = "Long-Press Previews"; ObjectID = "HLr-R8-xxF"; */
 "HLr-R8-xxF.text" = "Прегледи с продължително натискане";
 
+/* Class = "UILabel"; text = "Browse privately with our app for Windows"; ObjectID = "hoT-Nu-KXP"; */
+"hoT-Nu-KXP.text" = "Сърфирайте поверително с нашето приложение за Windows";
+
 /* Class = "UILabel"; text = "Privacy Protection enabled for all sites"; ObjectID = "Hu1-5i-vjL"; */
 "Hu1-5i-vjL.text" = "Защитата на поверителността е активирана за всички сайтове";
 
@@ -159,6 +165,9 @@
 
 /* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
 "jbD-Oy-Cmw.title" = "Икона";
+
+/* Class = "UILabel"; text = "App Tracking Protection"; ObjectID = "Laa-LS-Z5M"; */
+"Laa-LS-Z5M.text" = "Защита от проследяване в приложения";
 
 /* Class = "UILabel"; text = "Share Feedback"; ObjectID = "m23-t6-9cb"; */
 "m23-t6-9cb.text" = "Споделяне на отзив";
@@ -178,11 +187,20 @@
 /* Class = "UITableViewSection"; headerTitle = "More From DuckDuckGo"; ObjectID = "OxE-MQ-uJk"; */
 "OxE-MQ-uJk.headerTitle" = "Още от DuckDuckGo";
 
+/* Class = "UILabel"; text = "Sync"; ObjectID = "oXN-ez-gct"; */
+"oXN-ez-gct.text" = "Синхронизиране";
+
 /* Class = "UILabel"; text = "Browse privately with our app for Mac "; ObjectID = "P0F-ts-ekd"; */
 "P0F-ts-ekd.text" = "Сърфирайте поверително с нашето приложение за Mac ";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
 "qeN-SV-zy7.text" = "Етикет";
+
+/* Class = "UILabel"; text = "Block app trackers on your device"; ObjectID = "R2f-X7-ZEt"; */
+"R2f-X7-ZEt.text" = "Блокиране на тракерите на Вашето устройство";
+
+/* Class = "UILabel"; text = "DuckDuckGo Windows App"; ObjectID = "RQ8-H1-Ez1"; */
+"RQ8-H1-Ez1.text" = "Приложение DuckDuckGo за Windows";
 
 /* Class = "UINavigationItem"; title = "Text Size"; ObjectID = "ssa-zd-L3T"; */
 "ssa-zd-L3T.title" = "Размер на текста";
@@ -232,8 +250,8 @@
 /* Class = "UILabel"; text = "Add App to Your Dock"; ObjectID = "yvj-LL-MiR"; */
 "yvj-LL-MiR.text" = "Добавяне на приложението към панела";
 
-/* Class = "UILabel"; text = "DuckDuckGo Desktop App"; ObjectID = "Yz9-17-qnn"; */
-"Yz9-17-qnn.text" = "Приложение DuckDuckGo за настолен компютър";
+/* Class = "UILabel"; text = "DuckDuckGo Mac App"; ObjectID = "Yz9-17-qnn"; */
+"Yz9-17-qnn.text" = "Приложение DuckDuckGo за Mac";
 
 /* Class = "UILabel"; text = "New Tab"; ObjectID = "Zpg-h0-rYv"; */
 "Zpg-h0-rYv.text" = "Нов раздел";

@@ -75,6 +75,7 @@ struct ReportBrokenSiteView: View {
                     }
                     .labelsHidden()
                     
+                    
                     Spacer()
                 }
                 .padding(.leading, Const.Size.pickerPadding)
@@ -107,12 +108,21 @@ struct ReportBrokenSiteView: View {
                 Button(action: {
                     submitForm()
                 }, label: {
-                    Text(UserText.appTPReportSubmit)
+                    Text(UserText.brokenSiteSendReport)
                 })
-                .buttonStyle(PrimaryButtonStyle())
+                .buttonStyle(PrimaryButtonStyle(disabled: false))
                 .listRowBackground(Color.clear)
             }
             .listRowInsets(EdgeInsets())
+            
+            Section {
+                Text(UserText.brokenSiteDisclaimer)
+                    .multilineTextAlignment(.center)
+                    .daxBodyRegular()
+                    .padding(.top, -10)
+                    .foregroundColor(Color(designSystemColor: .textSecondary))
+            }
+            .listRowBackground(Color.clear)
         }
     }
     

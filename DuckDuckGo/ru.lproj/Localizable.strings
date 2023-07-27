@@ -139,6 +139,63 @@
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Разблокируйте DuckDuckGo.";
 
+/* Detail string describing what AppTP is */
+"appTP.cell.detail" = "Блокируйте трекеры приложений на своем устройстве";
+
+/* String indicating AppTP is disabled when viewed from the settings screen */
+"appTP.cell.disabled" = "Отключено";
+
+/* String indicating AppTP is enabled when viewed from the settings screen */
+"appTP.cell.enabled" = "Включено";
+
+/* Info string informing the user what App Tracking Protection does. */
+"appTP.empty.disabled.info" = "Включите функцию защиты от слежки в приложениях, чтобы блокировать надоедливые трекеры в других программах.";
+
+/* Do not translate. StringsDict entry -- Count part of string 'App Tracking Protection blocked x tracking attempts today' */
+"appTP.home.blockedCount" = "appTP.home.blockedCount";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the trailing space) */
+"appTP.home.blockedPrefix" = "Сегодня функция защиты от слежки в приложениях заблокировала ";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the leading space) */
+"appTP.home.blockedSuffix" = " в ваших приложениях.";
+
+/* Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now' */
+"appTP.justNow" = "Только что";
+
+/* View to manage trackers for AppTP. Allows the user to turn trackers on or off. */
+"appTP.manageTrackers" = "Управление трекерами";
+
+/* Breakage report category label */
+"appTP.report.categoryLabel" = "Что не так?";
+
+/* Breakage report submit button */
+"appTP.report.submit" = "Отправить";
+
+/* Breakage report succcess message */
+"appTP.report.toast" = "Спасибо! Ваш отзыв отправлен.";
+
+/* Cancel button for 'Report an Issue' alert. */
+"appTP.reportAlert.cancel" = "Не сейчас";
+
+/* Confirm button for 'Report an Issue' alert. */
+"appTP.reportAlert.confirm" = "Сообщить о проблеме";
+
+/* Button to restore the blocklist to its default state. */
+"appTP.restoreDefualts" = "Вернуть настройки по умолчанию";
+
+/* Title for the App Tracking Protection feature */
+"appTP.title" = "Блокировка отслеживания приложениями";
+
+/* Text indicating when the tracker was last allowed. Example: Last attempt allowed (timeString) */
+"appTP.trackerAllowedTimestamp" = "Последний пропуск: %@";
+
+/* Text indicating when the tracker was last blocked. Example: Last attempt blocked (timeString) */
+"appTP.trackerBlockedTimestamp" = "Последняя блокировка: %@";
+
+/* Do not translate. StringsDict entry -- Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts */
+"appTP.trackingattempts" = "appTP.trackingattempts";
+
 /* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Войти";
 
@@ -499,8 +556,20 @@
 /* Broken Site Category */
 "brokensite.category.videos" = "Не воспроизводится видео";
 
+/* Broken Site Category Placeholder */
+"brokensite.categoryPlaceholder" = "Выберите проблему из списка...";
+
+/* Broken Site Category Section Title */
+"brokensite.categoryTitle" = "ВЫБЕРИТЕ КАТЕГОРИЮ";
+
+/* Broken Site Comment Placeholder */
+"brokensite.commentPlaceholder" = "Более подробная информация поможет нам быстрее найти решение";
+
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "ОПИШИТЕ, ЧТО СЛУЧИЛОСЬ";
+
+/* No comment provided by engineer. */
+"bucket: %@" = "контейнер: %@";
 
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "За последний месяц";
@@ -693,6 +762,9 @@
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Ничего не найдено";
+
+/* No comment provided by engineer. */
+"Error" = "Ошибка";
 
 /* No comment provided by engineer. */
 "favorite" = "Избранное";
@@ -979,14 +1051,14 @@
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "Приложение DuckDuckGo для Mac — это высокая скорость, функциональность и беспрецедентная конфиденциальность.";
 
-/* Body text for the macOS waitlist notification */
-"mac-waitlist.available.notification.body" = "Откройте приглашение";
-
 /* Title for the macOS waitlist notification */
 "mac-waitlist.available.notification.title" = "Приложение DuckDuckGo для Mac готово!";
 
 /* Title for the copy action */
 "mac-waitlist.copy" = "Копировать";
+
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-computer-go-to" = "Перейдите на компьютере Windows по ссылке:";
 
 /* Description text above the Share Link button */
 "mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Перейдите на компьютере Mac по ссылке:";
@@ -1000,6 +1072,9 @@
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Скоро — для Windows!";
 
+/* Title for the macOS waitlist button redirecting to Windows waitlist */
+"mac-waitlist.join-waitlist-screen.windows-waitlist" = "Ищете версию для Windows?";
+
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Полная конфиденциальность в Интернете, благодаря нашему приложению для Mac";
 
@@ -1010,7 +1085,7 @@
 "mac-waitlist.share-sheet.title" = "DuckDuckGo для Mac";
 
 /* Title for the Mac Waitlist feature */
-"mac-waitlist.title" = "Настольное приложение DuckDuckGo";
+"mac-waitlist.title" = "Приложение DuckDuckGo для Mac";
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Меню браузера";
@@ -1023,6 +1098,9 @@
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"Ok" = "Хорошо";
 
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Kуки-файлы выбраны";
@@ -1062,6 +1140,9 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Приложение для открытия этой ссылки не найдено";
+
+/* No comment provided by engineer. */
+"Please enter which app on your device is broken." = "Укажите, какое приложение на вашем устройстве работает со сбоями.";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Чтобы вам не приходилось каждый раз входить в свою учетную запись, сайты используют куки-файлы. Если сделать сайт огнеупорным, мы не будем стирать его куки-файлы, даже если вы воспользуетесь кнопкой «Огонь». Но мы по-прежнему будем блокировать сторонние трекеры, в том числе на огнеупорных сайтах.";
@@ -1153,6 +1234,9 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "На каком сайте возникает проблема?";
 
+/* No comment provided by engineer. */
+"sync.remove-device.message" = "«%@» утратит доступ к синхронизированным данным.";
+
 /* Accessibility label on remove button */
 "tab.close.home" = "Закрыть домашнюю вкладку";
 
@@ -1225,6 +1309,57 @@
 /* Voice-search footer note with on-device privacy warning */
 "voiceSearch.footer.note" = "Аудио обрабатывается непосредственно на устройстве, не хранится и не передается никому, даже DuckDuckGo.";
 
+/* Title for the button to enable push notifications in system settings */
+"waitlist.allow-notifications" = "Разрешить уведомления";
+
+/* Body text for the waitlist notification */
+"waitlist.available.notification.body" = "Откройте приглашение";
+
+/* Title for the copy action */
+"waitlist.copy" = "Копировать";
+
+/* Label text for the invite code */
+"waitlist.invite-code" = "Код приглашения";
+
+/* Step title on the invite screen */
+"waitlist.invite-screen.step.title" = "Шаг %d";
+
+/* Title for the invite code screen */
+"waitlist.invite-screen.youre-invited" = "Вас пригласили!";
+
+/* Title for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.join" = "Приглашаем встать в очередь";
+
+/* Temporary status text for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.joining" = "Добавление в список ожидания...";
+
+/* Title for the Share Link button */
+"waitlist.join-waitlist-screen.share-link" = "Поделиться ссылкой";
+
+/* Notification text for the waitlist */
+"waitlist.joined.no-notification.get-notification" = "ОПОВЕСТИТЬ";
+
+/* Title for the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.get-notification-confirmation-title" = "Сообщить, когда придет ваша очередь?";
+
+/* Cancel button in the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.no-thanks" = "Нет, спасибо";
+
+/* Text used for the Notifications Disabled state */
+"waitlist.notification.disabled" = "Мы можем уведомить вас, когда подойдет ваша очередь, но для этого нужно включить уведомления от DuckDuckGo.";
+
+/* Privacy disclaimer for the Waitlist feature */
+"waitlist.privacy-disclaimer" = "Чтобы записаться в список ожидания, не нужно делиться личной информацией. Временная метка, хранящаяся только на вашем устройстве, позволит нам определить, когда подойдет ваша очередь, о чем мы сообщим вам дополнительно.";
+
+/* Title for the queue screen */
+"waitlist.queue-screen.on-the-list" = "Вы в списке!";
+
+/* Title for the settings subtitle */
+"waitlist.settings.download-available" = "Готово к загрузке";
+
+/* Title for the share sheet entry */
+"waitlist.share-sheet.title" = "Вас пригласили!";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Страница удалена из избранного";
 
@@ -1248,4 +1383,49 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Сообщение от %@:";
+
+/* Title for the Windows waitlist notification */
+"windows-waitlist.available.notification.title" = "DuckDuckGo для Windows!";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-1.description" = "Чтобы загрузить DuckDuckGo для Windows, откройте эту ссылку:";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-2.description" = "Откройте установщик DuckDuckGo в «Загрузках», выберите «Установить» и введите пригласительный код.";
+
+/* Subtitle for the Windows Waitlist Invite screen */
+"windows-waitlist.invite-screen.subtitle" = "Хотите использовать DuckDuckGo на Windows?";
+
+/* Title for the Windows waitlist button redirecting to Mac waitlist */
+"windows-waitlist.join-waitlist-screen.mac-waitlist" = "Ищете версию для Mac?";
+
+/* Title for the Join Windows Waitlist screen */
+"windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Ранний доступ к DuckDuckGo для Windows";
+
+/* Message for the alert to confirm enabling notifications */
+"windows-waitlist.joined.no-notification.get-notification-confirmation-message" = "Когда ваш экземпляр будет готов к загрузке, мы отправим вам уведомление. ";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"windows-waitlist.joined.notifications-declined" = "Приглашение протестировать DuckDuckGo для Windows отобразится здесь. Зайдите сюда позже. Мы также можем отправить вам уведомление, когда придет ваша очередь.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"windows-waitlist.joined.notifications-enabled" = "Когда ваша копия будет готова к загрузке, мы отправим вам уведомление.";
+
+/* Title for the settings subtitle */
+"windows-waitlist.settings.browse-privately" = "Полная конфиденциальность в Интернете, благодаря нашему приложению для Windows";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"windows-waitlist.share-sheet.invite-code-message" = "Вас пригласили!\n\nХотите использовать DuckDuckGo на Windows?\n\nШаг 1\nЗагрузите файл, посетив эту страницу на устройстве Windows:\nhttps://duckduckgo.com/windows\n\nШаг 2\nОткройте установщик DuckDuckGo в «Загрузках», выберите «Установить» и введите пригласительный код.\n\nКод приглашения: %@";
+
+/* Message used when sharing to iMessage */
+"windows-waitlist.share-sheet.message" = "Конфиденциальность в интернете на Windows? Легко!\n\nЗагрузите наше приложение по ссылке:\nhttps://duckduckgo.com/windows";
+
+/* Summary text for the Windows browser waitlist */
+"windows-waitlist.summary" = "В DuckDuckGo для Windows есть все необходимое для защиты данных в Сети: приватный поиск, принудительное шифрование, блокировка трекеров и всплывающих куки, а также перспектива разработок передовых средств обеспечения безопасности.";
+
+/* Title for the Windows Waitlist feature */
+"windows-waitlist.title" = "Приложение DuckDuckGo для Windows";
+
+/* Title for the Windows browser download link page */
+"windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows" = "DuckDuckGo для Windows!";
 

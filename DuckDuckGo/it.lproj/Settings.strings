@@ -62,7 +62,7 @@
 "bIg-0T-UWq.text" = "Chiedi di rendere i siti web resistenti al fuoco al momento dell'accesso";
 
 /* Class = "UINavigationItem"; title = "Manage Cookie Pop-ups"; ObjectID = "btj-ri-kRr"; */
-"btj-ri-kRr.title" = "Gestione dei popup dei cookie";
+"btj-ri-kRr.title" = "Gestione popup dei cookie";
 
 /* Class = "UILabel"; text = "App Icon"; ObjectID = "cKo-er-HNj"; */
 "cKo-er-HNj.text" = "Icona dell'app";
@@ -72,6 +72,9 @@
 
 /* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "cW7-OM-2oW"; */
 "cW7-OM-2oW.text" = "Global Privacy Control (GPC)";
+
+/* Class = "UIBarButtonItem"; title = "Add"; ObjectID = "CxT-QK-iVn"; */
+"CxT-QK-iVn.title" = "Aggiungi";
 
 /* Class = "UILabel"; text = "App Exit, Inactive for 15 Minutes"; ObjectID = "D0R-jp-UY8"; */
 "D0R-jp-UY8.text" = "Uscita dall'app, inattività di 15 minuti";
@@ -143,13 +146,16 @@
 "gji-Fs-EET.text" = "La privacy semplificata. ";
 
 /* Class = "UILabel"; text = "Manage Cookie Pop-ups"; ObjectID = "GRv-M2-Kx1"; */
-"GRv-M2-Kx1.text" = "Gestione dei popup dei cookie";
+"GRv-M2-Kx1.text" = "Gestisci popup dei cookie";
 
 /* Class = "UINavigationItem"; title = "Theme"; ObjectID = "gS2-mg-l7R"; */
 "gS2-mg-l7R.title" = "Tema";
 
 /* Class = "UILabel"; text = "Long-Press Previews"; ObjectID = "HLr-R8-xxF"; */
 "HLr-R8-xxF.text" = "Anteprime con pressione prolungata";
+
+/* Class = "UILabel"; text = "Browse privately with our app for Windows"; ObjectID = "hoT-Nu-KXP"; */
+"hoT-Nu-KXP.text" = "Naviga privatamente con la nostra app per Windows";
 
 /* Class = "UILabel"; text = "Privacy Protection enabled for all sites"; ObjectID = "Hu1-5i-vjL"; */
 "Hu1-5i-vjL.text" = "Tutela della privacy attivata per tutti i siti";
@@ -159,6 +165,9 @@
 
 /* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
 "jbD-Oy-Cmw.title" = "Icona";
+
+/* Class = "UILabel"; text = "App Tracking Protection"; ObjectID = "Laa-LS-Z5M"; */
+"Laa-LS-Z5M.text" = "Protezione dal tracciamento delle app";
 
 /* Class = "UILabel"; text = "Share Feedback"; ObjectID = "m23-t6-9cb"; */
 "m23-t6-9cb.text" = "Condividi feedback";
@@ -178,11 +187,20 @@
 /* Class = "UITableViewSection"; headerTitle = "More From DuckDuckGo"; ObjectID = "OxE-MQ-uJk"; */
 "OxE-MQ-uJk.headerTitle" = "Ulteriori informazioni su DuckDuckGo";
 
+/* Class = "UILabel"; text = "Sync"; ObjectID = "oXN-ez-gct"; */
+"oXN-ez-gct.text" = "Sincronizzazione";
+
 /* Class = "UILabel"; text = "Browse privately with our app for Mac "; ObjectID = "P0F-ts-ekd"; */
 "P0F-ts-ekd.text" = "Naviga in privato con la nostra app per Mac ";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
 "qeN-SV-zy7.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Block app trackers on your device"; ObjectID = "R2f-X7-ZEt"; */
+"R2f-X7-ZEt.text" = "Blocca i sistemi di tracciamento delle app sul tuo dispositivo";
+
+/* Class = "UILabel"; text = "DuckDuckGo Windows App"; ObjectID = "RQ8-H1-Ez1"; */
+"RQ8-H1-Ez1.text" = "App Windows DuckDuckGo";
 
 /* Class = "UINavigationItem"; title = "Text Size"; ObjectID = "ssa-zd-L3T"; */
 "ssa-zd-L3T.title" = "Dimensione testo";
@@ -232,8 +250,8 @@
 /* Class = "UILabel"; text = "Add App to Your Dock"; ObjectID = "yvj-LL-MiR"; */
 "yvj-LL-MiR.text" = "Aggiungi app al tuo dock";
 
-/* Class = "UILabel"; text = "DuckDuckGo Desktop App"; ObjectID = "Yz9-17-qnn"; */
-"Yz9-17-qnn.text" = "App desktop DuckDuckGo";
+/* Class = "UILabel"; text = "DuckDuckGo Mac App"; ObjectID = "Yz9-17-qnn"; */
+"Yz9-17-qnn.text" = "App Mac DuckDuckGo";
 
 /* Class = "UILabel"; text = "New Tab"; ObjectID = "Zpg-h0-rYv"; */
 "Zpg-h0-rYv.text" = "Nuova scheda";

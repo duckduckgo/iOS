@@ -139,6 +139,63 @@
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Ξεκλείδωμα DuckDuckGo.";
 
+/* Detail string describing what AppTP is */
+"appTP.cell.detail" = "Αποκλείστε εφαρμογές παρακολούθησης στη συσκευή σας";
+
+/* String indicating AppTP is disabled when viewed from the settings screen */
+"appTP.cell.disabled" = "Απενεργοποιήθηκε";
+
+/* String indicating AppTP is enabled when viewed from the settings screen */
+"appTP.cell.enabled" = "Ενεργοποιήθηκε";
+
+/* Info string informing the user what App Tracking Protection does. */
+"appTP.empty.disabled.info" = "Ενεργοποιήστε την App Tracking Protection, ώστε να μπορούμε να αποκλείουμε ενοχλητικές εφαρμογές παρακολούθησης σε άλλες εφαρμογές.";
+
+/* Do not translate. StringsDict entry -- Count part of string 'App Tracking Protection blocked x tracking attempts today' */
+"appTP.home.blockedCount" = "appTP.home.blockedCount";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the trailing space) */
+"appTP.home.blockedPrefix" = "Η App Tracking Protection απέκλεισε ";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the leading space) */
+"appTP.home.blockedSuffix" = " στις εφαρμογές σας σήμερα.";
+
+/* Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now' */
+"appTP.justNow" = "Ακριβώς τώρα";
+
+/* View to manage trackers for AppTP. Allows the user to turn trackers on or off. */
+"appTP.manageTrackers" = "Διαχείριση εφαρμογών παρακολούθησης";
+
+/* Breakage report category label */
+"appTP.report.categoryLabel" = "Τι συμβαίνει;";
+
+/* Breakage report submit button */
+"appTP.report.submit" = "Υποβολή";
+
+/* Breakage report succcess message */
+"appTP.report.toast" = "Σας ευχαριστούμε! Το σχόλιο υποβλήθηκε.";
+
+/* Cancel button for 'Report an Issue' alert. */
+"appTP.reportAlert.cancel" = "Όχι τώρα";
+
+/* Confirm button for 'Report an Issue' alert. */
+"appTP.reportAlert.confirm" = "Αναφορά προβλήματος";
+
+/* Button to restore the blocklist to its default state. */
+"appTP.restoreDefualts" = "Επαναφορά προεπιλογών";
+
+/* Title for the App Tracking Protection feature */
+"appTP.title" = "Προστασία παρακολούθησης από εφαρμογές";
+
+/* Text indicating when the tracker was last allowed. Example: Last attempt allowed (timeString) */
+"appTP.trackerAllowedTimestamp" = "Τελευταία επιτρεπόμενη προσπάθεια %@";
+
+/* Text indicating when the tracker was last blocked. Example: Last attempt blocked (timeString) */
+"appTP.trackerBlockedTimestamp" = "Τελευταία αποκλεισμένη προσπάθεια %@";
+
+/* Do not translate. StringsDict entry -- Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts */
+"appTP.trackingattempts" = "appTP.trackingattempts";
+
 /* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Είσοδος";
 
@@ -499,8 +556,20 @@
 /* Broken Site Category */
 "brokensite.category.videos" = "Το βίντεο δεν αναπαράχθηκε";
 
+/* Broken Site Category Placeholder */
+"brokensite.categoryPlaceholder" = "Επιλέξτε το πρόβλημα που αντιμετωπίζετε, από τη λίστα...";
+
+/* Broken Site Category Section Title */
+"brokensite.categoryTitle" = "ΕΠΙΛΕΞΤΕ ΚΑΤΗΓΟΡΙΑ";
+
+/* Broken Site Comment Placeholder */
+"brokensite.commentPlaceholder" = "Η κοινοποίηση περισσότερων λεπτομερειών μπορεί να μας βοηθήσει να επιλύσουμε το πρόβλημα αυτό";
+
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "ΠΕΡΙΓΡΑΨΤΕ ΤΙ ΣΥΝΕΒΗ";
+
+/* No comment provided by engineer. */
+"bucket: %@" = "κάδος: %@";
 
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Προηγούμενος μήνας";
@@ -693,6 +762,9 @@
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Δεν βρέθηκαν αντιστοιχίες";
+
+/* No comment provided by engineer. */
+"Error" = "Σφάλμα";
 
 /* No comment provided by engineer. */
 "favorite" = "Αγαπημένο";
@@ -979,14 +1051,14 @@
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "Το DuckDuckGo για Mac έχει την ταχύτητα που χρειάζεστε, τις λειτουργίες περιήγησης που αναμένετε και περιλαμβάνει τις καλύτερες δυνατότητες απορρήτου στην κατηγορία μας.";
 
-/* Body text for the macOS waitlist notification */
-"mac-waitlist.available.notification.body" = "Ανοίξτε την πρόσκλησή σας";
-
 /* Title for the macOS waitlist notification */
 "mac-waitlist.available.notification.title" = "Το DuckDuckGo για Mac είναι έτοιμο!";
 
 /* Title for the copy action */
 "mac-waitlist.copy" = "Αντιγραφή";
+
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-computer-go-to" = "Στον υπολογιστή σας με Windows, μεταβείτε στη διεύθυνση:";
 
 /* Description text above the Share Link button */
 "mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Στον Mac σας, μεταβείτε στη διεύθυνση:";
@@ -1000,6 +1072,9 @@
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Έρχεται σύντομα για Windows!";
 
+/* Title for the macOS waitlist button redirecting to Windows waitlist */
+"mac-waitlist.join-waitlist-screen.windows-waitlist" = "Αναζητάτε την έκδοση των Windows;";
+
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Περιηγηθείτε ιδιωτικά με την εφαρμογή μας για Mac";
 
@@ -1010,7 +1085,7 @@
 "mac-waitlist.share-sheet.title" = "DuckDuckGo για Mac";
 
 /* Title for the Mac Waitlist feature */
-"mac-waitlist.title" = "Εφαρμογή DuckDuckGo για υπολογιστές";
+"mac-waitlist.title" = "Εφαρμογή DuckDuckGo για Mac";
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Μενού περιήγησης";
@@ -1023,6 +1098,9 @@
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"Ok" = "Εντάξει";
 
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Διαχειριζόμενα cookies";
@@ -1062,6 +1140,9 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Δεν είναι δυνατή η εύρεση της εφαρμογής που απαιτείται για άνοιγμα αυτού του συνδέσμου";
+
+/* No comment provided by engineer. */
+"Please enter which app on your device is broken." = "Εισαγάγετε ποια εφαρμογή δεν λειτουργεί σωστά στη συσκευή σας.";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Οι ιστότοποι βασίζονται σε cookies για να σας διατηρούν συνδεδεμένους. Όταν ενεργοποιείτε τη διαγραφή δραστηριότητας για έναν ιστότοπο, τα cookies δεν διαγράφονται και παραμένετε συνδεδεμένοι, ακόμα και μετά τη χρήση του Κουμπιού διαγραφής δραστηριότητας. Εξακολουθούμε να αποκλείουμε εφαρμογές παρακολούθησης από τρίτους που υπάρχουν σε ιστότοπους με διαγραφή δραστηριότητας.";
@@ -1153,6 +1234,9 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Ποιος ιστότοπος είναι κατεστραμμένος;";
 
+/* No comment provided by engineer. */
+"sync.remove-device.message" = "Το «%@» δεν θα μπορεί πλέον να έχει πρόσβαση στα συγχρονισμένα δεδομένα σας.";
+
 /* Accessibility label on remove button */
 "tab.close.home" = "Κλείσιμο αρχικής καρτέλας";
 
@@ -1225,6 +1309,57 @@
 /* Voice-search footer note with on-device privacy warning */
 "voiceSearch.footer.note" = "Η επεξεργασία του ήχου πραγματοποιείται στη συσκευή. Δεν αποθηκεύεται ούτε κοινοποιείται σε οποιονδήποτε, συμπεριλαμβανομένου του DuckDuckGo.";
 
+/* Title for the button to enable push notifications in system settings */
+"waitlist.allow-notifications" = "Επιτρέψτε ειδοποιήσεις";
+
+/* Body text for the waitlist notification */
+"waitlist.available.notification.body" = "Ανοίξτε την πρόσκλησή σας";
+
+/* Title for the copy action */
+"waitlist.copy" = "Αντιγραφή";
+
+/* Label text for the invite code */
+"waitlist.invite-code" = "Κωδικός πρόσκλησης";
+
+/* Step title on the invite screen */
+"waitlist.invite-screen.step.title" = "Βήμα %d";
+
+/* Title for the invite code screen */
+"waitlist.invite-screen.youre-invited" = "Έχετε προσκληθεί!";
+
+/* Title for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.join" = "Εγγραφείτε στην Ιδιωτική λίστα αναμονής";
+
+/* Temporary status text for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.joining" = "Εγγραφή στη λίστα αναμονής...";
+
+/* Title for the Share Link button */
+"waitlist.join-waitlist-screen.share-link" = "Κοινή χρήση συνδέσμου";
+
+/* Notification text for the waitlist */
+"waitlist.joined.no-notification.get-notification" = "ΝΑ ΕΙΔΟΠΟΙΗΘΩ";
+
+/* Title for the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.get-notification-confirmation-title" = "Θα θέλατε να λάβετε ειδοποίηση όταν έρθει η σειρά σας;";
+
+/* Cancel button in the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.no-thanks" = "Όχι, ευχαριστώ";
+
+/* Text used for the Notifications Disabled state */
+"waitlist.notification.disabled" = "Μπορούμε να σας ειδοποιήσουμε όταν έρθει η σειρά σας, ωστόσο οι ειδοποιήσεις είναι προς το παρόν απενεργοποιημένες για το DuckDuckGo.";
+
+/* Privacy disclaimer for the Waitlist feature */
+"waitlist.privacy-disclaimer" = "Δεν θα χρειαστεί να κοινοποιήσετε προσωπικά στοιχεία για εγγραφή στη λίστα αναμονής. Θα εξασφαλίσετε τη θέση σας στη λίστα αναμονής βάσει χρονικής σήμανσης που υπάρχει αποκλειστικά στη συσκευή σας, ώστε να μπορούμε να σας ειδοποιήσουμε μόλις έρθει η σειρά σας.";
+
+/* Title for the queue screen */
+"waitlist.queue-screen.on-the-list" = "Βρίσκεστε στη λίστα!";
+
+/* Title for the settings subtitle */
+"waitlist.settings.download-available" = "Διαθέσιμη λήψη";
+
+/* Title for the share sheet entry */
+"waitlist.share-sheet.title" = "Έχετε προσκληθεί!";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Το Αγαπημένο αφαιρέθηκε";
 
@@ -1248,4 +1383,49 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Μήνυμα από %@:";
+
+/* Title for the Windows waitlist notification */
+"windows-waitlist.available.notification.title" = "Δοκιμάστε το DuckDuckGo για Windows!";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-1.description" = "Επισκεφτείτε αυτήν τη διεύθυνση URL στη συσκευή Windows που διαθέτετε για να κάνετε λήψη:";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-2.description" = "Ανοίξτε το πρόγραμμα εγκατάστασης του DuckDuckGo στις Λήψεις, επιλέξτε Εγκατάσταση και έπειτα εισαγάγετε τον κωδικό πρόσκλησής σας.";
+
+/* Subtitle for the Windows Waitlist Invite screen */
+"windows-waitlist.invite-screen.subtitle" = "Είστε έτοιμοι να χρησιμοποιήσετε το DuckDuckGo σε Windows;";
+
+/* Title for the Windows waitlist button redirecting to Mac waitlist */
+"windows-waitlist.join-waitlist-screen.mac-waitlist" = "Αναζητάτε την έκδοση των Mac;";
+
+/* Title for the Join Windows Waitlist screen */
+"windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Αποκτήστε πρόωρη πρόσβαση για να δοκιμάσετε το DuckDuckGo για Windows!";
+
+/* Message for the alert to confirm enabling notifications */
+"windows-waitlist.joined.no-notification.get-notification-confirmation-message" = "Θα σας στείλουμε ειδοποίηση όταν θα είναι έτοιμο προς λήψη το αντίγραφό σας DuckDuckGo για Windows. ";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"windows-waitlist.joined.notifications-declined" = "Η πρόσκλησή σας για να δοκιμάσετε το DuckDuckGo για Windows θα σταλεί εδώ. Ελέγξτε πάλι σύντομα. Διαφορετικά, μπορούμε να σας στείλουμε ειδοποίηση όταν έρθει η σειρά σας.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"windows-waitlist.joined.notifications-enabled" = "Θα σας στείλουμε ειδοποίηση όταν θα είναι έτοιμο προς λήψη το αντίγραφό σας DuckDuckGo για Windows.";
+
+/* Title for the settings subtitle */
+"windows-waitlist.settings.browse-privately" = "Περιηγηθείτε ιδιωτικά με την εφαρμογή μας για Windows";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"windows-waitlist.share-sheet.invite-code-message" = "Έχετε προσκληθεί!\n\nΕίστε έτοιμοι να χρησιμοποιήσετε το DuckDuckGo σε Windows;\n\nΒήμα 1\nΕπισκεφθείτε αυτήν τη διεύθυνση URL στη συσκευή σας Windows για να πραγματοποιήσετε λήψη:\nhttps://duckduckgo.com/windows\n\nΒήμα 2\nΑνοίξτε το πρόγραμμα εγκατάστασης του DuckDuckGo στις Λήψεις, επιλέξτε Εγκατάσταση και έπειτα εισαγάγετε τον κωδικό πρόσκλησής σας.\n\nΚωδικός πρόσκλησης: %@";
+
+/* Message used when sharing to iMessage */
+"windows-waitlist.share-sheet.message" = "Είστε έτοιμοι να αρχίσετε μια ιδιωτική περιήγηση σε Windows;\n\nΕπισκεφθείτε αυτήν τη διεύθυνση URL στον υπολογιστή σας για να πραγματοποιήσετε λήψη:\nhttps://duckduckgo.com/windows";
+
+/* Summary text for the Windows browser waitlist */
+"windows-waitlist.summary" = "Το DuckDuckGo για Windows έχει ό,τι χρειάζεστε για να περιηγηθείτε με περισσότερη ιδιωτικότητα — ιδιωτική αναζήτηση, αποκλεισμός εφαρμογών παρακολούθησης, αναγκαστική κρυπτογράφηση και αποκλεισμός αναδυόμενων παραθύρων για cookie, ενώ έρχονται σύντομα και περισσότερες κορυφαίες προστασίες στην κατηγορία τους.";
+
+/* Title for the Windows Waitlist feature */
+"windows-waitlist.title" = "Εφαρμογή DuckDuckGo για Windows";
+
+/* Title for the Windows browser download link page */
+"windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows" = "Αποκτήστε το DuckDuckGo για Windows!";
 

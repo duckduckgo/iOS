@@ -73,6 +73,9 @@
 /* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "cW7-OM-2oW"; */
 "cW7-OM-2oW.text" = "Üleilmne privaatsuskontroll (Global Privacy Control (GPC))";
 
+/* Class = "UIBarButtonItem"; title = "Add"; ObjectID = "CxT-QK-iVn"; */
+"CxT-QK-iVn.title" = "Lisa";
+
 /* Class = "UILabel"; text = "App Exit, Inactive for 15 Minutes"; ObjectID = "D0R-jp-UY8"; */
 "D0R-jp-UY8.text" = "Rakendusest väljumisel, 15-minutilise passiivsuse järel";
 
@@ -151,6 +154,9 @@
 /* Class = "UILabel"; text = "Long-Press Previews"; ObjectID = "HLr-R8-xxF"; */
 "HLr-R8-xxF.text" = "Pika vajutusega eelvaated";
 
+/* Class = "UILabel"; text = "Browse privately with our app for Windows"; ObjectID = "hoT-Nu-KXP"; */
+"hoT-Nu-KXP.text" = "Sirvi privaatselt meie Windowsi rakendusega";
+
 /* Class = "UILabel"; text = "Privacy Protection enabled for all sites"; ObjectID = "Hu1-5i-vjL"; */
 "Hu1-5i-vjL.text" = "Privaatsuse kaitse on lubatud kõigil saitidel";
 
@@ -159,6 +165,9 @@
 
 /* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
 "jbD-Oy-Cmw.title" = "Ikoon";
+
+/* Class = "UILabel"; text = "App Tracking Protection"; ObjectID = "Laa-LS-Z5M"; */
+"Laa-LS-Z5M.text" = "Rakenduse jälgimise kaitse";
 
 /* Class = "UILabel"; text = "Share Feedback"; ObjectID = "m23-t6-9cb"; */
 "m23-t6-9cb.text" = "Jaga tagasisidet";
@@ -178,11 +187,20 @@
 /* Class = "UITableViewSection"; headerTitle = "More From DuckDuckGo"; ObjectID = "OxE-MQ-uJk"; */
 "OxE-MQ-uJk.headerTitle" = "Veel DuckDuckGo'lt";
 
+/* Class = "UILabel"; text = "Sync"; ObjectID = "oXN-ez-gct"; */
+"oXN-ez-gct.text" = "Sünkrooni";
+
 /* Class = "UILabel"; text = "Browse privately with our app for Mac "; ObjectID = "P0F-ts-ekd"; */
 "P0F-ts-ekd.text" = "Sirvi privaatselt meie Maci rakendusega ";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
 "qeN-SV-zy7.text" = "Silt";
+
+/* Class = "UILabel"; text = "Block app trackers on your device"; ObjectID = "R2f-X7-ZEt"; */
+"R2f-X7-ZEt.text" = "Blokeeri oma seadmes rakenduste jälgurid";
+
+/* Class = "UILabel"; text = "DuckDuckGo Windows App"; ObjectID = "RQ8-H1-Ez1"; */
+"RQ8-H1-Ez1.text" = "DuckDuckGo Windowsi rakendus";
 
 /* Class = "UINavigationItem"; title = "Text Size"; ObjectID = "ssa-zd-L3T"; */
 "ssa-zd-L3T.title" = "Teksti suurus";
@@ -232,8 +250,8 @@
 /* Class = "UILabel"; text = "Add App to Your Dock"; ObjectID = "yvj-LL-MiR"; */
 "yvj-LL-MiR.text" = "Lisa rakendus oma dokki";
 
-/* Class = "UILabel"; text = "DuckDuckGo Desktop App"; ObjectID = "Yz9-17-qnn"; */
-"Yz9-17-qnn.text" = "DuckDuckGo töölauarakendus";
+/* Class = "UILabel"; text = "DuckDuckGo Mac App"; ObjectID = "Yz9-17-qnn"; */
+"Yz9-17-qnn.text" = "DuckDuckGo Maci rakendus";
 
 /* Class = "UILabel"; text = "New Tab"; ObjectID = "Zpg-h0-rYv"; */
 "Zpg-h0-rYv.text" = "Uus vaheleht";

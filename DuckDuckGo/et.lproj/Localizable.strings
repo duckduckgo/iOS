@@ -139,6 +139,63 @@
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Vabasta DuckDuckGo.";
 
+/* Detail string describing what AppTP is */
+"appTP.cell.detail" = "Blokeeri oma seadmes rakenduste jälgurid";
+
+/* String indicating AppTP is disabled when viewed from the settings screen */
+"appTP.cell.disabled" = "Keelatud";
+
+/* String indicating AppTP is enabled when viewed from the settings screen */
+"appTP.cell.enabled" = "Lubatud";
+
+/* Info string informing the user what App Tracking Protection does. */
+"appTP.empty.disabled.info" = "Luba App Tracking Protection, et saaksime blokeerida tüütud jälgurid teistes rakendustes.";
+
+/* Do not translate. StringsDict entry -- Count part of string 'App Tracking Protection blocked x tracking attempts today' */
+"appTP.home.blockedCount" = "appTP.home.blockedCount";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the trailing space) */
+"appTP.home.blockedPrefix" = "App Tracking Protection blokeeris ";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the leading space) */
+"appTP.home.blockedSuffix" = " täna sinu rakendustes.";
+
+/* Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now' */
+"appTP.justNow" = "Just nüüd";
+
+/* View to manage trackers for AppTP. Allows the user to turn trackers on or off. */
+"appTP.manageTrackers" = "Halda jälgureid";
+
+/* Breakage report category label */
+"appTP.report.categoryLabel" = "Mis toimub?";
+
+/* Breakage report submit button */
+"appTP.report.submit" = "Esita";
+
+/* Breakage report succcess message */
+"appTP.report.toast" = "Aitäh! Tagasiside on esitatud.";
+
+/* Cancel button for 'Report an Issue' alert. */
+"appTP.reportAlert.cancel" = "Mitte praegu";
+
+/* Confirm button for 'Report an Issue' alert. */
+"appTP.reportAlert.confirm" = "Teata probleemist";
+
+/* Button to restore the blocklist to its default state. */
+"appTP.restoreDefualts" = "Taasta vaikesätted";
+
+/* Title for the App Tracking Protection feature */
+"appTP.title" = "Rakenduse jälgimise kaitse";
+
+/* Text indicating when the tracker was last allowed. Example: Last attempt allowed (timeString) */
+"appTP.trackerAllowedTimestamp" = "Viimane lubatud katse %@";
+
+/* Text indicating when the tracker was last blocked. Example: Last attempt blocked (timeString) */
+"appTP.trackerBlockedTimestamp" = "Viimane blokeeritud katse %@";
+
+/* Do not translate. StringsDict entry -- Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts */
+"appTP.trackingattempts" = "appTP.trackingattempts";
+
 /* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Sisselogimine";
 
@@ -499,8 +556,20 @@
 /* Broken Site Category */
 "brokensite.category.videos" = "Videot ei esitatud";
 
+/* Broken Site Category Placeholder */
+"brokensite.categoryPlaceholder" = "Vali loendist oma probleem...";
+
+/* Broken Site Category Section Title */
+"brokensite.categoryTitle" = "VALI KATEGOORIA";
+
+/* Broken Site Comment Placeholder */
+"brokensite.commentPlaceholder" = "Probleemi täpsem kirjeldamine võib meil aidata seda lahendada";
+
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "KIRJELDAGE TOIMUNUT";
+
+/* No comment provided by engineer. */
+"bucket: %@" = "andmekogum: %@";
 
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Viimane kuu";
@@ -693,6 +762,9 @@
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Ühtegi vastet ei leitud";
+
+/* No comment provided by engineer. */
+"Error" = "Viga";
 
 /* No comment provided by engineer. */
 "favorite" = "Lemmik";
@@ -979,14 +1051,14 @@
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo for Mac on just nii kiire, kui vajad, oodatud sirvimisfunktsioonidega ja tulvil meie oma klassi parimaid privaatsuselemente.";
 
-/* Body text for the macOS waitlist notification */
-"mac-waitlist.available.notification.body" = "Ava oma kutse";
-
 /* Title for the macOS waitlist notification */
 "mac-waitlist.available.notification.title" = "DuckDuckGo for Mac on valmis.";
 
 /* Title for the copy action */
 "mac-waitlist.copy" = "Kopeeri";
+
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-computer-go-to" = "Ava oma Windowsi arvutis:";
 
 /* Description text above the Share Link button */
 "mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Ava oma Macis:";
@@ -1000,6 +1072,9 @@
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Windowsi versioon tuleb varsti.";
 
+/* Title for the macOS waitlist button redirecting to Windows waitlist */
+"mac-waitlist.join-waitlist-screen.windows-waitlist" = "Kas otsid Windowsi versiooni?";
+
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Sirvi privaatselt meie Maci rakendusega";
 
@@ -1010,7 +1085,7 @@
 "mac-waitlist.share-sheet.title" = "DuckDuckGo for Mac";
 
 /* Title for the Mac Waitlist feature */
-"mac-waitlist.title" = "DuckDuckGo töölauarakendus";
+"mac-waitlist.title" = "DuckDuckGo rakendus Macile";
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Sirvimismenüü";
@@ -1023,6 +1098,9 @@
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"Ok" = "OK";
 
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Hallatavad küpsised";
@@ -1062,6 +1140,9 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Selle lingi avamiseks vajalikku rakendust ei leitud";
+
+/* No comment provided by engineer. */
+"Please enter which app on your device is broken." = "Kirjuta, milline rakendus on sinu seadmes katki.";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Veebisaidid kasutavad küpsiseid, et hoida sind sisse logitud. Kui teed saidi tulekindlaks, ei kustutata küpsiseid ja sa jääd sisse logituks isegi pärast tulenupu kasutamist. Me blokeerime endiselt kolmanda poole jälitajad, kelle me tulekindlatelt lehtedelt leiame.";
@@ -1153,6 +1234,9 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Milline veebisait on katki?";
 
+/* No comment provided by engineer. */
+"sync.remove-device.message" = "%@ ei pääse enam sinu sünkroonitud andmetele juurde.";
+
 /* Accessibility label on remove button */
 "tab.close.home" = "Sulge avalehe vahekaart";
 
@@ -1225,6 +1309,57 @@
 /* Voice-search footer note with on-device privacy warning */
 "voiceSearch.footer.note" = "Heli töödeldakse seadmes. Seda ei salvestata ega jagata kellegagi, sealhulgas DuckDuckGoga.";
 
+/* Title for the button to enable push notifications in system settings */
+"waitlist.allow-notifications" = "Luba teavitused";
+
+/* Body text for the waitlist notification */
+"waitlist.available.notification.body" = "Ava oma kutse";
+
+/* Title for the copy action */
+"waitlist.copy" = "Kopeeri";
+
+/* Label text for the invite code */
+"waitlist.invite-code" = "Kutsekood";
+
+/* Step title on the invite screen */
+"waitlist.invite-screen.step.title" = "Samm %d";
+
+/* Title for the invite code screen */
+"waitlist.invite-screen.youre-invited" = "Oled kutsutud!";
+
+/* Title for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.join" = "Liituge privaatse ootenimekirjaga";
+
+/* Temporary status text for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.joining" = "Ootenimekirjaga liitumine ...";
+
+/* Title for the Share Link button */
+"waitlist.join-waitlist-screen.share-link" = "Jaga linki";
+
+/* Notification text for the waitlist */
+"waitlist.joined.no-notification.get-notification" = "TEAVITAGE MIND";
+
+/* Title for the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.get-notification-confirmation-title" = "Kas soovid saada teavituse, kui on sinu kord?";
+
+/* Cancel button in the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.no-thanks" = "Ei aitäh";
+
+/* Text used for the Notifications Disabled state */
+"waitlist.notification.disabled" = "Võime sind teavitada, kui on sinu kord aga DuckDuckGo jaoks on teavitused praegu keelatud.";
+
+/* Privacy disclaimer for the Waitlist feature */
+"waitlist.privacy-disclaimer" = "Ootenimekirjaga liitumiseks ei pea isikuandmeid jagama. Sinu järjekorrakoht on kinnitatud ainult sinu seadmes oleva ajatempliga ja me teavitame sind, kui on sinu kord.";
+
+/* Title for the queue screen */
+"waitlist.queue-screen.on-the-list" = "Oled ootenimekirjas!";
+
+/* Title for the settings subtitle */
+"waitlist.settings.download-available" = "Saadaval on allalaadimine";
+
+/* Title for the share sheet entry */
+"waitlist.share-sheet.title" = "Oled kutsutud!";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Lemmik on eemaldatud";
 
@@ -1248,4 +1383,49 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Sõnum saatjalt %@:";
+
+/* Title for the Windows waitlist notification */
+"windows-waitlist.available.notification.title" = "Proovi rakendust DuckDuckGo for Windows!";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-1.description" = "Allalaadimiseks ava oma Windowsi seadmes see URL:";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-2.description" = "Ava allalaadimiste kaustas DuckDuckGo Installer, vali Installi ja sisesta seejärel oma kutsekood.";
+
+/* Subtitle for the Windows Waitlist Invite screen */
+"windows-waitlist.invite-screen.subtitle" = "Kas oled valmis kasutama DuckDuckGo Windowsi rakendust?";
+
+/* Title for the Windows waitlist button redirecting to Mac waitlist */
+"windows-waitlist.join-waitlist-screen.mac-waitlist" = "Kas otsid Maci versiooni?";
+
+/* Title for the Join Windows Waitlist screen */
+"windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Hangi varane juurdepääs, et proovida DuckDuckGo Windowsi rakendust!";
+
+/* Message for the alert to confirm enabling notifications */
+"windows-waitlist.joined.no-notification.get-notification-confirmation-message" = "Saadame sulle teavituse, kui sinu DuckDuckGo for Windows on allalaadimiseks valmis. ";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"windows-waitlist.joined.notifications-declined" = "Sinu kutse DuckDuckGo Maci rakenduse proovimiseks saabub siia. Vaata varsti tagasi või telli teavitus, millal on sinu kord.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"windows-waitlist.joined.notifications-enabled" = "Saadame sulle teavituse, kui sinu DuckDuckGo for Windows on allalaadimiseks valmis.";
+
+/* Title for the settings subtitle */
+"windows-waitlist.settings.browse-privately" = "Sirvi privaatselt meie Windowsi rakendusega";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"windows-waitlist.share-sheet.invite-code-message" = "Oled kutsutud!\n\nKas oled valmis kasutama DuckDuckGo Windowsi rakendust?Samm 1\nAva allalaadimiseks oma Windowsi seadmes see URL:\nhttps://duckduckgo.com/windows\n\nSamm 2\nAva allalaadimiste kaustas DuckDuckGo Installer, vali Installi ja sisesta seejärel oma kutsekood.\n\nKutsekood: %@";
+
+/* Message used when sharing to iMessage */
+"windows-waitlist.share-sheet.message" = "Kas oled valmis Windowsis privaatseks sirvimiseks?\n\nAllalaadimiseks ava oma Windowsi arvutis see URL:\nhttps://duckduckgo.com/windows";
+
+/* Summary text for the Windows browser waitlist */
+"windows-waitlist.summary" = "DuckDuckGo Windowsi rakendus sisaldab kõike vajalikku privaatsemaks sirvimiseks: privaatne otsing, jälgurite blokeerimine, sundkrüptimine ja küpsiste hüpikakende blokeerimine. Lisaks on tulemas veel täiendavaid tippklassi kaitsemeetmeid.";
+
+/* Title for the Windows Waitlist feature */
+"windows-waitlist.title" = "DuckDuckGo rakendus Windowsile";
+
+/* Title for the Windows browser download link page */
+"windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows" = "Hangi DuckDuckGo for Windows!";
 

@@ -139,6 +139,63 @@
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Odemkněte DuckDuckGo.";
 
+/* Detail string describing what AppTP is */
+"appTP.cell.detail" = "Blokuj trackery v aplikacích na svém zařízení";
+
+/* String indicating AppTP is disabled when viewed from the settings screen */
+"appTP.cell.disabled" = "Zakázáno";
+
+/* String indicating AppTP is enabled when viewed from the settings screen */
+"appTP.cell.enabled" = "Povoleno";
+
+/* Info string informing the user what App Tracking Protection does. */
+"appTP.empty.disabled.info" = "Když zapneš funkci App Tracking Protection, budeme blokovat otravné trackery v ostatních aplikacích.";
+
+/* Do not translate. StringsDict entry -- Count part of string 'App Tracking Protection blocked x tracking attempts today' */
+"appTP.home.blockedCount" = "appTP.home.blockedCount";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the trailing space) */
+"appTP.home.blockedPrefix" = "Díky funkci App Tracking Protection dnes došlo k zablokování ";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the leading space) */
+"appTP.home.blockedSuffix" = " ve tvých aplikacích.";
+
+/* Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now' */
+"appTP.justNow" = "Právě teď";
+
+/* View to manage trackers for AppTP. Allows the user to turn trackers on or off. */
+"appTP.manageTrackers" = "Správa trackerů";
+
+/* Breakage report category label */
+"appTP.report.categoryLabel" = "Co se stalo?";
+
+/* Breakage report submit button */
+"appTP.report.submit" = "Odeslat";
+
+/* Breakage report succcess message */
+"appTP.report.toast" = "Děkujeme! Zpětná vazba odeslána.";
+
+/* Cancel button for 'Report an Issue' alert. */
+"appTP.reportAlert.cancel" = "Teď ne";
+
+/* Confirm button for 'Report an Issue' alert. */
+"appTP.reportAlert.confirm" = "Nahlásit problém";
+
+/* Button to restore the blocklist to its default state. */
+"appTP.restoreDefualts" = "Obnovit výchozí nastavení";
+
+/* Title for the App Tracking Protection feature */
+"appTP.title" = "Ochrana před sledováním aplikace";
+
+/* Text indicating when the tracker was last allowed. Example: Last attempt allowed (timeString) */
+"appTP.trackerAllowedTimestamp" = "Poslední povolený pokus %@";
+
+/* Text indicating when the tracker was last blocked. Example: Last attempt blocked (timeString) */
+"appTP.trackerBlockedTimestamp" = "Poslední zablokovaný pokus %@";
+
+/* Do not translate. StringsDict entry -- Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts */
+"appTP.trackingattempts" = "appTP.trackingattempts";
+
 /* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Přihlásit";
 
@@ -317,7 +374,7 @@
 "autofill.logins.prompt.auth.reason" = "Jestli chceš použít uložené přihlašovací údaje, odemkni zařízení";
 
 /* Title for section of autofill logins that are an exact match to the current website */
-"autofill.logins.prompt.exact.match.title" = "Z tohoto webu";
+"autofill.logins.prompt.exact.match.title" = "Z tohoto webu";
 
 /* Button title for autofill login prompt if more options are available */
 "autofill.logins.prompt.more-options" = "Další možnosti";
@@ -350,7 +407,7 @@
 "autofill.password-generation-prompt.use-own-password.cta" = "Vytvořit vlastní";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Přihlašovací údaje se bezpečně ukládají do tvého zařízení a dají se spravovat v nabídce Přihlášení v Nastavení.";
+"autofill.save-login.new-user.message" = "Přihlašovací údaje se bezpečně ukládají do tvého zařízení a dají se spravovat v nabídce Přihlášení v Nastavení.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Má DuckDuckGo uložit přihlašovací údaje?";
@@ -499,8 +556,20 @@
 /* Broken Site Category */
 "brokensite.category.videos" = "Video se nepřehrálo";
 
+/* Broken Site Category Placeholder */
+"brokensite.categoryPlaceholder" = "Vyber problém ze seznamu...";
+
+/* Broken Site Category Section Title */
+"brokensite.categoryTitle" = "VYBER KATEGORII";
+
+/* Broken Site Comment Placeholder */
+"brokensite.commentPlaceholder" = "Tento problém snáz vyřešíme, když nám nasdílíš další informace";
+
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "POPIŠTE, CO SE STALO";
+
+/* No comment provided by engineer. */
+"bucket: %@" = "bucket: % @";
 
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Minulý měsíc";
@@ -693,6 +762,9 @@
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Nenalezeny žádné shody";
+
+/* No comment provided by engineer. */
+"Error" = "Chyba";
 
 /* No comment provided by engineer. */
 "favorite" = "Oblíbené";
@@ -979,14 +1051,14 @@
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "DuckDuckGo pro Mac má rychlost, kterou potřebuješ, funkce prohlížeče, které očekáváš, a obsahuje naše nejlepší nástroje na ochranu soukromí.";
 
-/* Body text for the macOS waitlist notification */
-"mac-waitlist.available.notification.body" = "Otevřít pozvánku";
-
 /* Title for the macOS waitlist notification */
 "mac-waitlist.available.notification.title" = "DuckDuckGo pro Mac už čeká!";
 
 /* Title for the copy action */
 "mac-waitlist.copy" = "Kopírovat";
+
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-computer-go-to" = "V počítači s Windows přejdi na:";
 
 /* Description text above the Share Link button */
 "mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Na Macu přejdi na:";
@@ -1000,6 +1072,9 @@
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Verze pro Windows bude už brzo.";
 
+/* Title for the macOS waitlist button redirecting to Windows waitlist */
+"mac-waitlist.join-waitlist-screen.windows-waitlist" = "Hledáš verzi pro Windows?";
+
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Zajisti si soukromí při prohlížení webu – v naší aplikaci pro Mac";
 
@@ -1010,7 +1085,7 @@
 "mac-waitlist.share-sheet.title" = "DuckDuckGo pro Mac";
 
 /* Title for the Mac Waitlist feature */
-"mac-waitlist.title" = "DuckDuckGo Desktop";
+"mac-waitlist.title" = "Aplikace DuckDuckGo pro Mac";
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Procházení nabídky";
@@ -1023,6 +1098,9 @@
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"Ok" = "DOBŘE";
 
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "O cookies je postaráno!";
@@ -1062,6 +1140,9 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Aplikaci nutnou k otevření tohoto odkazu nelze nalézt";
+
+/* No comment provided by engineer. */
+"Please enter which app on your device is broken." = "Prosíme o informaci, která aplikace ti na zařízení nefunguje.";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Webové stránky spoléhají na soubory cookie, aby vás udržely přihlášené. Když na webu zapnete ochranu, soubory cookie se nevymažou a zůstanete přihlášeni, a to i po použití tlačítka pro mazání. Stále přitom blokujeme sledovací programy třetích stran nalezené na webových stránkách s ochranou.";
@@ -1153,6 +1234,9 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Které webové stránky jsou poškozené?";
 
+/* No comment provided by engineer. */
+"sync.remove-device.message" = "„%@“ už nebude mít přístup k synchronizovaným datům.";
+
 /* Accessibility label on remove button */
 "tab.close.home" = "Zavřít kartu Domů";
 
@@ -1225,6 +1309,57 @@
 /* Voice-search footer note with on-device privacy warning */
 "voiceSearch.footer.note" = "Zvuk se zpracovává na zařízení. Nikde ho neukládáme a s nikým ho nesdílíme. Ani DuckDuckGo se k němu nedostane.";
 
+/* Title for the button to enable push notifications in system settings */
+"waitlist.allow-notifications" = "Povolit oznámení";
+
+/* Body text for the waitlist notification */
+"waitlist.available.notification.body" = "Otevřít pozvánku";
+
+/* Title for the copy action */
+"waitlist.copy" = "Kopírovat";
+
+/* Label text for the invite code */
+"waitlist.invite-code" = "Zvací kód";
+
+/* Step title on the invite screen */
+"waitlist.invite-screen.step.title" = "Krok %d";
+
+/* Title for the invite code screen */
+"waitlist.invite-screen.youre-invited" = "Zveme tě!";
+
+/* Title for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.join" = "Připojte se k soukromému pořadníku";
+
+/* Temporary status text for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.joining" = "Zapiš se do pořadníku...";
+
+/* Title for the Share Link button */
+"waitlist.join-waitlist-screen.share-link" = "Sdílet odkaz";
+
+/* Notification text for the waitlist */
+"waitlist.joined.no-notification.get-notification" = "UPOZORNĚTE MĚ";
+
+/* Title for the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.get-notification-confirmation-title" = "Chceš dostávat upozornění, když jsi na řadě?";
+
+/* Cancel button in the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.no-thanks" = "Ne, děkuji";
+
+/* Text used for the Notifications Disabled state */
+"waitlist.notification.disabled" = "Můžeme ti dát vědět, až budeš na řadě, ale aktuálně jsou oznámení pro DuckDuckGo vypnutá.";
+
+/* Privacy disclaimer for the Waitlist feature */
+"waitlist.privacy-disclaimer" = "Kvůli zařazení do pořadníku není nutné sdílet žádné osobní údaje. Tvé místo se určuje podle časového razítka uloženého jen ve tvém zařízení tak, abychom tě mohli upozornit, až budeš na řadě.";
+
+/* Title for the queue screen */
+"waitlist.queue-screen.on-the-list" = "Jsi v pořadníku!";
+
+/* Title for the settings subtitle */
+"waitlist.settings.download-available" = "Ke stažení";
+
+/* Title for the share sheet entry */
+"waitlist.share-sheet.title" = "Zveme tě!";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Oblíbená položka odstraněna";
 
@@ -1248,4 +1383,49 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Zpráva od %@:";
+
+/* Title for the Windows waitlist notification */
+"windows-waitlist.available.notification.title" = "Vyzkoušej DuckDuckGo pro Windows!";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-1.description" = "Aplikaci si do počítače s Windows stáhneš z téhle URL:";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-2.description" = "Otevři si ve Stažených souborech instalační program DuckDuckGo, klikni na Instalovat a pak zadej kód z pozvánky.";
+
+/* Subtitle for the Windows Waitlist Invite screen */
+"windows-waitlist.invite-screen.subtitle" = "Chceš mít ve Windows DuckDuckGo?";
+
+/* Title for the Windows waitlist button redirecting to Mac waitlist */
+"windows-waitlist.join-waitlist-screen.mac-waitlist" = "Hledáš verzi pro Mac?";
+
+/* Title for the Join Windows Waitlist screen */
+"windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Získej předběžný přístup a vyzkoušej DuckDuckGo pro Windows!";
+
+/* Message for the alert to confirm enabling notifications */
+"windows-waitlist.joined.no-notification.get-notification-confirmation-message" = "Dáme ti vědět, až bude tvoje kopie DuckDuckGo pro Windows připravená ke stažení. ";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"windows-waitlist.joined.notifications-declined" = "Sem dostaneš pozvánku k vyzkoušení DuckDuckGo pro Windows. Zkus se sem brzy podívat znovu. Nebo ti můžeme dát vědět, až na tebe vyjde řada.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"windows-waitlist.joined.notifications-enabled" = "Dáme ti vědět, až bude tvoje kopie DuckDuckGo pro Windows připravená ke stažení.";
+
+/* Title for the settings subtitle */
+"windows-waitlist.settings.browse-privately" = "Zajisti si soukromí na webu – v naší aplikaci pro Windows";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"windows-waitlist.share-sheet.invite-code-message" = "Zveme tě!\n\nChceš mít na Windows DuckDuckGo?\n\n1. krok\nPro stažení přejdi na počítači s Windows sem:\nhttps://duckduckgo.com/windows\n\n2. krok\nOtevři si ve Stažených souborech instalační program DuckDuckGo, klikni na Instalovat a pak zadej kód z pozvánky.\n\nZvací kód: %@";
+
+/* Message used when sharing to iMessage */
+"windows-waitlist.share-sheet.message" = "Cítíš se na to začít si ve Windows prohlížet web v naprostém soukromí?\n\nPro stažení přejdi na počítači s Windows sem:\nhttps://duckduckgo.com/windows";
+
+/* Summary text for the Windows browser waitlist */
+"windows-waitlist.summary" = "DuckDuckGo pro Windows nabízí všechno, co potřebuješ k většímu soukromí na webu – soukromé vyhledávání, blokování trackerů, vynucené šifrování, blokování vyskakovacích oken pro souhlas se soubory cookie a další ochranné funkce, které jsou nejlepší ve své třídě.";
+
+/* Title for the Windows Waitlist feature */
+"windows-waitlist.title" = "Aplikace DuckDuckGo pro Windows";
+
+/* Title for the Windows browser download link page */
+"windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows" = "Pořiď si DuckDuckGo pro Windows!";
 

@@ -139,6 +139,63 @@
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Otključaj DuckDuckGo.";
 
+/* Detail string describing what AppTP is */
+"appTP.cell.detail" = "Blokiraj aplikacija za praćenje na tvom uređaju";
+
+/* String indicating AppTP is disabled when viewed from the settings screen */
+"appTP.cell.disabled" = "Onemogućeno";
+
+/* String indicating AppTP is enabled when viewed from the settings screen */
+"appTP.cell.enabled" = "Omogućeno";
+
+/* Info string informing the user what App Tracking Protection does. */
+"appTP.empty.disabled.info" = "Omogući App Tracking Protection kako bismo mogli blokirati dosadne \"tragače\" u drugim aplikacijama.";
+
+/* Do not translate. StringsDict entry -- Count part of string 'App Tracking Protection blocked x tracking attempts today' */
+"appTP.home.blockedCount" = "appTP.home.blockedCount";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the trailing space) */
+"appTP.home.blockedPrefix" = "App Tracking Protection danas je blokirao ";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the leading space) */
+"appTP.home.blockedSuffix" = " u tvojim aplikacijama.";
+
+/* Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now' */
+"appTP.justNow" = "Upravo sada";
+
+/* View to manage trackers for AppTP. Allows the user to turn trackers on or off. */
+"appTP.manageTrackers" = "Upravljanje alatima za praćenje";
+
+/* Breakage report category label */
+"appTP.report.categoryLabel" = "Što se događa?";
+
+/* Breakage report submit button */
+"appTP.report.submit" = "Pošalji";
+
+/* Breakage report succcess message */
+"appTP.report.toast" = "Hvala! Povratne su informacije su poslane.";
+
+/* Cancel button for 'Report an Issue' alert. */
+"appTP.reportAlert.cancel" = "Ne sada";
+
+/* Confirm button for 'Report an Issue' alert. */
+"appTP.reportAlert.confirm" = "Prijavi problem";
+
+/* Button to restore the blocklist to its default state. */
+"appTP.restoreDefualts" = "Vrati zadano";
+
+/* Title for the App Tracking Protection feature */
+"appTP.title" = "Zaštita od praćenja aplikacija";
+
+/* Text indicating when the tracker was last allowed. Example: Last attempt allowed (timeString) */
+"appTP.trackerAllowedTimestamp" = "Zadnji pokušaj je dopušten %@";
+
+/* Text indicating when the tracker was last blocked. Example: Last attempt blocked (timeString) */
+"appTP.trackerBlockedTimestamp" = "Zadnji pokušaj je blokiran %@";
+
+/* Do not translate. StringsDict entry -- Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts */
+"appTP.trackingattempts" = "appTP.trackingattempts";
+
 /* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Prijava";
 
@@ -499,8 +556,20 @@
 /* Broken Site Category */
 "brokensite.category.videos" = "Videozapis se nije reproducirao";
 
+/* Broken Site Category Placeholder */
+"brokensite.categoryPlaceholder" = "Odaberi svoj problem s popisa...";
+
+/* Broken Site Category Section Title */
+"brokensite.categoryTitle" = "ODABERI KATEGORIJU";
+
+/* Broken Site Comment Placeholder */
+"brokensite.commentPlaceholder" = "Dijeljenje više pojedinosti može nam pomoći u rješavanju ovog problema";
+
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "OPIŠITE ŠTO SE DOGODILO";
+
+/* No comment provided by engineer. */
+"bucket: %@" = "bucket: %@";
 
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Prošli mjesec";
@@ -693,6 +762,9 @@
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Nema pronađenih rezultata";
+
+/* No comment provided by engineer. */
+"Error" = "Pogreška";
 
 /* No comment provided by engineer. */
 "favorite" = "Omiljeno";
@@ -979,14 +1051,14 @@
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "Aplikacija DuckDuckGo za Mac pruža ti potrebnu brzinu i značajke pretraživanja kakve očekuješ, a isporučuje se s našim najboljim alatima za privatnost u svojoj klasi - privacy essentials.";
 
-/* Body text for the macOS waitlist notification */
-"mac-waitlist.available.notification.body" = "Otvori svoju pozivnicu";
-
 /* Title for the macOS waitlist notification */
 "mac-waitlist.available.notification.title" = "DuckDuckGo za Mac je spreman!";
 
 /* Title for the copy action */
 "mac-waitlist.copy" = "Kopiraj";
+
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-computer-go-to" = "Na računalu sa sustavom Windows idi na:";
 
 /* Description text above the Share Link button */
 "mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Na Macu idi na:";
@@ -1000,6 +1072,9 @@
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Uskoro i za Windows!";
 
+/* Title for the macOS waitlist button redirecting to Windows waitlist */
+"mac-waitlist.join-waitlist-screen.windows-waitlist" = "Tražiš verziju za Windows?";
+
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Pretražujte privatno s našom aplikacijom za Mac";
 
@@ -1010,7 +1085,7 @@
 "mac-waitlist.share-sheet.title" = "DuckDuckGo za Mac";
 
 /* Title for the Mac Waitlist feature */
-"mac-waitlist.title" = "DuckDuckGo aplikacija za osobno računalo";
+"mac-waitlist.title" = "DuckDuckGo aplikacija za Mac";
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Izbornik pregledavanja";
@@ -1023,6 +1098,9 @@
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"Ok" = "U redu";
 
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Upravlja se kolačićima";
@@ -1062,6 +1140,9 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Nije moguće pronaći aplikaciju koja je potrebna za otvaranje te poveznice";
+
+/* No comment provided by engineer. */
+"Please enter which app on your device is broken." = "Navedi koja je aplikacija na tvom uređaju neispravna.";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Web-mjesta oslanjaju se na kolačiće kako bi te zadržala prijavljenim/om. Kada je web-mjesto označeno kao zaštićeno, kolačići neće biti izbrisani i ostat ćeš prijavljen/a čak i nakon upotrebe gumba Fire. I dalje blokiramo alate za praćenje trećih strana koje pronađemo na mrežnim mjestima označenim kao Fireproof.";
@@ -1153,6 +1234,9 @@
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Koje je web-mjesto neispravno?";
 
+/* No comment provided by engineer. */
+"sync.remove-device.message" = "\"%@\" više neće moći pristupiti tvojim sinkroniziranim podacima.";
+
 /* Accessibility label on remove button */
 "tab.close.home" = "Zatvori početnu karticu";
 
@@ -1225,6 +1309,57 @@
 /* Voice-search footer note with on-device privacy warning */
 "voiceSearch.footer.note" = "Zvuk se obrađuje na uređaju. Ne pohranjuje se i ne dijeli ni s kim, uključujući DuckDuckGo.";
 
+/* Title for the button to enable push notifications in system settings */
+"waitlist.allow-notifications" = "Dopusti obavijesti";
+
+/* Body text for the waitlist notification */
+"waitlist.available.notification.body" = "Otvori svoju pozivnicu";
+
+/* Title for the copy action */
+"waitlist.copy" = "Kopiraj";
+
+/* Label text for the invite code */
+"waitlist.invite-code" = "Pozivni kôd";
+
+/* Step title on the invite screen */
+"waitlist.invite-screen.step.title" = "Korak %d";
+
+/* Title for the invite code screen */
+"waitlist.invite-screen.youre-invited" = "Pozvani ste!";
+
+/* Title for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.join" = "Pridružite se privatnoj listi čekanja";
+
+/* Temporary status text for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.joining" = "Pridruživanje listi čekanja...";
+
+/* Title for the Share Link button */
+"waitlist.join-waitlist-screen.share-link" = "Podijeli poveznicu";
+
+/* Notification text for the waitlist */
+"waitlist.joined.no-notification.get-notification" = "OBAVIJESTI ME";
+
+/* Title for the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.get-notification-confirmation-title" = "Primi obavijest kada dođeš na red?";
+
+/* Cancel button in the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.no-thanks" = "Ne, hvala";
+
+/* Text used for the Notifications Disabled state */
+"waitlist.notification.disabled" = "Možemo vas obavijestiti kada dođete na red, ali obavijesti su trenutačno onemogućene za DuckDuckGo.";
+
+/* Privacy disclaimer for the Waitlist feature */
+"waitlist.privacy-disclaimer" = "Nećete morati podijeliti nikakve osobne podatke za pridruživanje listi čekanja. Svoje ćete mjesto osigurati u skladu s vremenskom oznakom koja postoji samo na vašem uređaju kako bismo vas mogli obavijestiti kada na vas dođe red.";
+
+/* Title for the queue screen */
+"waitlist.queue-screen.on-the-list" = "Na popisu ste!";
+
+/* Title for the settings subtitle */
+"waitlist.settings.download-available" = "Preuzimanje je dostupno";
+
+/* Title for the share sheet entry */
+"waitlist.share-sheet.title" = "Pozvani ste!";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Omiljena je stavka uklonjena";
 
@@ -1248,4 +1383,49 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Poruka od %@:";
+
+/* Title for the Windows waitlist notification */
+"windows-waitlist.available.notification.title" = "Nabavi DuckDuckGo za Windows!";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-1.description" = "Posjeti ovaj URL na svom Windows uređaju za preuzimanje:";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-2.description" = "Otvori instalacijsku datoteku za DuckDuckGo pod Preuzimanja, odaberi Instaliraj, zatim unesi svoju pozivnu šifru.";
+
+/* Subtitle for the Windows Waitlist Invite screen */
+"windows-waitlist.invite-screen.subtitle" = "Jesi li spreman koristiti DuckDuckGo u sustavu Windows?";
+
+/* Title for the Windows waitlist button redirecting to Mac waitlist */
+"windows-waitlist.join-waitlist-screen.mac-waitlist" = "Tražiš verziju za Mac?";
+
+/* Title for the Join Windows Waitlist screen */
+"windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Možeš dobiti rani pristup da isprobaš DuckDuckGo za Windows!";
+
+/* Message for the alert to confirm enabling notifications */
+"windows-waitlist.joined.no-notification.get-notification-confirmation-message" = "Poslat ćemo ti obavijest kad tvoj primjerak programa DuckDuckGo za Windows bude spreman za preuzimanje. ";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"windows-waitlist.joined.notifications-declined" = "Tvoja pozivnica da isprobaš DuckDuckGo za Windows stići će ovdje. Provjerite ponovno uskoro, ili vam možemo poslati obavijest kada dođete na red.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"windows-waitlist.joined.notifications-enabled" = "Poslat ćemo ti obavijest kad tvoj primjerak programa DuckDuckGo za Windows bude spreman za preuzimanje.";
+
+/* Title for the settings subtitle */
+"windows-waitlist.settings.browse-privately" = "Privatno pregledavanje s našom aplikacijom za Windows";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"windows-waitlist.share-sheet.invite-code-message" = "Imaš poziv!\n\nJesi li spreman koristiti DuckDuckGo u sustavu Windows?1. korak\n Posjeti ovaj URL na svom Windows uređaju za preuzimanje: \n https://duckduckgo.com/windows\n\n2. korak\nOtvori instalacijsku datoteku za DuckDuckGo pod Preuzimanja, odaberi Instaliraj, zatim unesi svoju pozivnu šifru.\n\nPozivna šifra: %@";
+
+/* Message used when sharing to iMessage */
+"windows-waitlist.share-sheet.message" = "Jesi li spreman za privatno pregledavanje u sustavu Windows?\n\nPosjeti ovaj URL na računalu za preuzimanje:\nhttps://duckduckgo.com/windows";
+
+/* Summary text for the Windows browser waitlist */
+"windows-waitlist.summary" = "DuckDuckGo za Windows ima sve što ti je potrebno za pregledavanje s više privatnosti - privatno pretraživanje, blokiranje praćenja, prisilno šifriranje i blokiranje skočnih prozora kolačića, a u skoroj budućnosti dodat ćemo još vrhunskih značajki zaštite.";
+
+/* Title for the Windows Waitlist feature */
+"windows-waitlist.title" = "Aplikacija DuckDuckGo za Windows";
+
+/* Title for the Windows browser download link page */
+"windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows" = "Nabavi DuckDuckGo za Windows!";
 

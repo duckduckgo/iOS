@@ -145,6 +145,7 @@ public final class ContentBlocking {
     }
     
     private let attributionEvents = EventMapping<AdClickAttributionEvents> { event, _, parameters, _ in
+        var shouldIncludeAppVersion = true
         let domainEvent: Pixel.Event
         switch event {
         case .adAttributionDetected:
@@ -153,9 +154,10 @@ public final class ContentBlocking {
             domainEvent = .adClickAttributionActive
         case .adAttributionPageLoads:
             domainEvent = .adClickAttributionPageLoads
+            shouldIncludeAppVersion = false
         }
         
-        Pixel.fire(pixel: domainEvent, withAdditionalParameters: parameters ?? [:], includedParameters: [.appVersion])
+        Pixel.fire(pixel: domainEvent, withAdditionalParameters: parameters ?? [:], includedParameters: shouldIncludeAppVersion ? [.appVersion] : [])
     }
     
     private let attributionDebugEvents = EventMapping<AdClickAttributionDebugEvents> { event, _, _, _ in

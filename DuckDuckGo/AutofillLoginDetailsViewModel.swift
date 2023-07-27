@@ -206,7 +206,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     credential.account.notes = notes
                     credential.password = passwordData
                     
-                    try vault.storeWebsiteCredentials(credential)
+                    _ = try vault.storeWebsiteCredentials(credential)
                     delegate?.autofillLoginDetailsViewModelDidSave()
                     
                     // Refetch after save to get updated properties like "lastUpdated"

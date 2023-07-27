@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1689939266068,
+    "version": 1690211959334,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -263,11 +263,12 @@
             "settings": {
                 "disabledCMPs": [
                     "Sourcepoint-top",
-                    "generic-cosmetic"
+                    "generic-cosmetic",
+                    "usercentrics-api"
                 ]
             },
             "state": "enabled",
-            "hash": "061ae814a3faa191155c79e8ead6a836"
+            "hash": "231f2748b3c017d9b1d8c99bd880151d"
         },
         "autofill": {
             "exceptions": [
@@ -1235,13 +1236,17 @@
                     {
                         "domain": "unclaimedmoneyinfo.com",
                         "reason": "https://github.com/duckduckgo/privacy-configuration/issues/667"
+                    },
+                    {
+                        "domain": "hulu.com",
+                        "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1145"
                     }
                 ],
                 "omitVersionSites": []
             },
             "exceptions": [],
             "state": "enabled",
-            "hash": "a1e5a34a27bdeeb1cfc88a6c0c5a073f"
+            "hash": "8719ef4adbbdb8859df8269065b0bfdf"
         },
         "duckPlayer": {
             "exceptions": [],
@@ -1284,6 +1289,14 @@
                 },
                 {
                     "domain": "bizjournals.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/592"
+                },
+                {
+                    "domain": "slate.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/592"
+                },
+                {
+                    "domain": "dailycaller.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/592"
                 }
             ],
@@ -2667,7 +2680,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "f9edd0eca02b28a0431e8a6a12495416"
+            "hash": "01473dc0d60a2117cd16c03fdd11d089"
         },
         "exceptionHandler": {
             "exceptions": [],
@@ -3726,11 +3739,25 @@
                     "cxense.com": {
                         "rules": [
                             {
-                                "rule": "api.cxense.com/public/widget/data",
+                                "rule": "cxense.com/public/widget",
                                 "domains": [
-                                    "wsj.com"
+                                    "<all>"
                                 ],
-                                "reason": "Opinion section article elements do not render. Note that Firefox Enhanced Tracking Protection may prevent mitigation from succeeding on Firefox."
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1143"
+                            },
+                            {
+                                "rule": "cxense.com/cx.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1143"
+                            },
+                            {
+                                "rule": "cxense.com/cx.cce.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1143"
                             }
                         ]
                     },
@@ -4249,6 +4276,13 @@
                                     "doterra.com"
                                 ],
                                 "reason": "For doterra.com/login/loading, the page shows a loading indicator and never redirects."
+                            },
+                            {
+                                "rule": "www.google-analytics.com/collect",
+                                "domains": [
+                                    "youmath.it"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1147"
                             }
                         ]
                     },
@@ -4301,23 +4335,6 @@
                                     "abril.com.br"
                                 ],
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/929"
-                            },
-                            {
-                                "rule": "googletagmanager.com/gtm.js",
-                                "domains": [
-                                    "aeromexico.com",
-                                    "ah.nl",
-                                    "al.com",
-                                    "bbcgoodfood.com",
-                                    "dailyherald.com",
-                                    "emirates.com",
-                                    "garnethill.com",
-                                    "iltalehti.fi",
-                                    "kingarthurbaking.com",
-                                    "pickfu.com",
-                                    "rbcroyalbank.com"
-                                ],
-                                "reason": "ah.nl - 'Bonus offer' elements do not render and are not clickable. aeromexico.com, al.com, bbcgoodfood.com, garnethill.com - https://github.com/duckduckgo/privacy-configuration/issues/921 dailyherald.com - Article images render as grey boxes. emirates.com - After filling out login details and clicking to proceed, a loading spinners shows on the proceed button and the login does not progress. iltalehti.fi - Article video renders as a blank box. kingarthurbaking.com - https://github.com/duckduckgo/privacy-configuration/issues/348 pickfu.com - https://github.com/duckduckgo/privacy-configuration/issues/346 rbcroyalbank.com - Investments page renders blank."
                             }
                         ]
                     },
@@ -5558,7 +5575,7 @@
                 }
             },
             "exceptions": [],
-            "hash": "5403037a200cfe1c33ecbdb1c57240c2"
+            "hash": "87307aff31af1726dab64f640ff77a63"
         },
         "trackingCookies1p": {
             "settings": {

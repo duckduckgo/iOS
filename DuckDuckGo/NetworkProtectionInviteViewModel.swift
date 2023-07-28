@@ -32,11 +32,13 @@ final class NetworkProtectionInviteViewModel: ObservableObject {
         didSet {
             if oldValue != text {
                 text = text.uppercased()
+                shouldDisableSubmit = text.count == 0
             }
         }
     }
     var errorText: String = ""
     @Published var shouldShowAlert: Bool = false
+    @Published var shouldDisableSubmit: Bool = true
 
     private let redemptionCoordinator: NetworkProtectionCodeRedeeming
     private let completion: () -> Void

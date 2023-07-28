@@ -22,17 +22,16 @@
 import Combine
 import NetworkProtection
 
-enum NetworkProtectionInviteDialogKind {
-    case codeEntry, success
-}
-
 protocol NetworkProtectionInviteViewModelDelegate: AnyObject {
-    func didCancelInviteFlow()
     func didCompleteInviteFlow()
 }
 
+enum NetworkProtectionInviteStep {
+    case codeEntry, success
+}
+
 final class NetworkProtectionInviteViewModel: ObservableObject {
-    @Published var currentDialog: NetworkProtectionInviteDialogKind? = .codeEntry
+    @Published var currentStep: NetworkProtectionInviteStep = .codeEntry
     @Published var text: String = "" {
         didSet {
             if oldValue != text {
@@ -40,47 +39,42 @@ final class NetworkProtectionInviteViewModel: ObservableObject {
             }
         }
     }
-    @Published var errorText: String?
+    var errorText: String = ""
+    @Published var shouldShowAlert: Bool = false
 
     private let redemptionCoordinator: NetworkProtectionCodeRedeeming
     private weak var delegate: NetworkProtectionInviteViewModelDelegate?
-    private var textCancellable: AnyCancellable?
 
     init(delegate: NetworkProtectionInviteViewModelDelegate?, redemptionCoordinator: NetworkProtectionCodeRedeeming) {
         self.delegate = delegate
         self.redemptionCoordinator = redemptionCoordinator
-        textCancellable = $text.sink { [weak self] _ in
-            self?.errorText = nil
-        }
     }
 
     @MainActor
     func submit() async {
-        errorText = nil
         do {
             try await redemptionCoordinator.redeem(text.trimmingWhitespace())
         } catch NetworkProtectionClientError.invalidInviteCode {
             errorText = UserText.inviteDialogUnrecognizedCodeMessage
+            shouldShowAlert = true
             return
         } catch {
             errorText = UserText.unknownErrorTryAgainMessage
+            shouldShowAlert = true
             return
         }
-        currentDialog = .success
+        currentStep = .success
     }
 
     func getStarted() {
         delegate?.didCompleteInviteFlow()
     }
 
-    func cancel() {
-        delegate?.didCancelInviteFlow()
-        currentDialog = nil
-    }
+    // TODO: Dev only. Not to be merged
 
     @MainActor
     func clear() async {
-        errorText = nil
+        errorText = ""
         do {
             try NetworkProtectionKeychainTokenStore().deleteToken()
             updateAuthenticatedText()

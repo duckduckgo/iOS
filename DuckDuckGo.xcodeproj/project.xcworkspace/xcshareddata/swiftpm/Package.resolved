@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "sam/secure-storage",
-          "revision": "e3905005c20af8f7dd568afd840cabf5d0ee6105",
-          "version": null
+          "branch": null,
+          "revision": "214db1a9aceb643cbb5bf070b61d8f65ec196e1c",
+          "version": "70.0.0"
         }
       },
       {

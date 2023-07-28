@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "bartek/attribution-pixels",
-          "revision": "1ea5d159eaca95b35eac267223e66227347c61a2",
-          "version": null
+          "branch": null,
+          "revision": "f255099c2c373d7b0c484849b8903831e7b717ce",
+          "version": "71.0.0"
         }
       },
       {

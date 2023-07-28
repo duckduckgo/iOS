@@ -20,19 +20,9 @@
 import XCTest
 @testable import DuckDuckGo
 import NetworkProtection
+import NetworkProtectionTestUtils
 
 final class NetworkProtectionInviteViewModelTests: XCTestCase {
-    private var delegate: MockNetworkProtectionInviteViewModelDelegate!
-
-    override func setUp() {
-        super.setUp()
-        delegate = MockNetworkProtectionInviteViewModelDelegate()
-    }
-
-    override func tearDown() {
-        delegate = nil
-        super.tearDown()
-    }
 
     func test_text_alwaysUppercased() {
         let viewModel = viewModel(withInjectedRedemptionCoordinator: .stubbed())
@@ -70,19 +60,15 @@ final class NetworkProtectionInviteViewModelTests: XCTestCase {
     }
 
     func test_getStarted_callsDidCompleteOnDelegate() async {
-        let viewModel = viewModel(withInjectedRedemptionCoordinator: .stubbed())
+        var didCallCompletion = false
+        let viewModel = viewModel(withInjectedRedemptionCoordinator: .stubbed()) {
+            didCallCompletion.toggle()
+        }
         viewModel.getStarted()
-        XCTAssertTrue(delegate.didCompleteInviteFlowCalled)
+        XCTAssertTrue(didCallCompletion)
     }
 
-    private func viewModel(withInjectedRedemptionCoordinator coordinator: NetworkProtectionCodeRedemptionCoordinator) -> NetworkProtectionInviteViewModel {
-        NetworkProtectionInviteViewModel(delegate: delegate, redemptionCoordinator: coordinator)
-    }
-}
-
-private final class MockNetworkProtectionInviteViewModelDelegate: NetworkProtectionInviteViewModelDelegate {
-    var didCompleteInviteFlowCalled = false
-    func didCompleteInviteFlow() {
-        didCompleteInviteFlowCalled = true
+    private func viewModel(withInjectedRedemptionCoordinator coordinator: NetworkProtectionCodeRedemptionCoordinator, completion: @escaping () -> Void = {}) -> NetworkProtectionInviteViewModel {
+        NetworkProtectionInviteViewModel(redemptionCoordinator: coordinator, completion: completion)
     }
 }

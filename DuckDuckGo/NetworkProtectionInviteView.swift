@@ -27,35 +27,81 @@ struct NetworkProtectionInviteView: View {
     @ObservedObject var model: NetworkProtectionInviteViewModel
 
     var body: some View {
+        switch model.currentStep {
+        case .codeEntry:
+            codeEntryView
+        case .success:
+            successView
+        }
+    }
+
+    @ViewBuilder
+    private var codeEntryView: some View {
+        let messageData = NetworkProtectionInviteMessageData(
+            imageIdentifier: "InviteLock",
+            title: UserText.netPInviteTitle,
+            message: UserText.netPInviteMessage
+        )
+
+        NetworkProtectionInviteMessageView(messageData: messageData) {
+            // TODO: This type should be moved to DuckUI
+            ClearTextField(placeholderText: UserText.netPInviteFieldPrompt, text: $model.text, keyboardType: .asciiCapable)
+                .frame(height: 44)
+                .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                .background(
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color(designSystemColor: .surface))
+                )
+                .padding(.bottom, 16)
+            Button(action: {
+                Task {
+                    await model.submit()
+                }
+            }, label: {
+                Text(UserText.appTPReportSubmit)
+            })
+            .buttonStyle(PrimaryButtonStyle())
+            .frame(height: 30)
+        }
+    }
+
+    @ViewBuilder
+    private var successView: some View {
+        let messageData = NetworkProtectionInviteMessageData(
+            imageIdentifier: "IntiveLockSuccess",
+            title: UserText.netPInviteSuccessTitle,
+            message: UserText.netPInviteSuccessMessage
+        )
+
+        NetworkProtectionInviteMessageView(messageData: messageData) {
+            Button(action: {
+                model.getStarted()
+            }, label: {
+                Text(UserText.inviteDialogGetStartedButton)
+            })
+            .buttonStyle(PrimaryButtonStyle())
+            .frame(height: 30)
+        }
+    }
+}
+
+private struct NetworkProtectionInviteMessageView<Content>: View where Content: View {
+    let messageData: NetworkProtectionInviteMessageData
+    @ViewBuilder let interactiveContent: () -> Content
+
+    var body: some View {
         GeometryReader { proxy in
             ScrollView {
                 VStack(spacing: 16) {
-                    Image("InviteLock")
-                    Text(UserText.netPInviteTitle)
+                    Image(messageData.imageIdentifier)
+                    Text(messageData.title)
                         .font(.system(size: 22, weight: .semibold))
                         .multilineTextAlignment(.center)
-                    Text(UserText.netPInviteMessage)
+                    Text(messageData.message)
                         .font(.system(size: 16))
                         .multilineTextAlignment(.center).foregroundColor(Color(designSystemColor: .textSecondary))
                         .padding(.bottom, 32)
-                    // TODO: This type should be moved to DuckUI
-                    ClearTextField(placeholderText: UserText.netPInviteFieldPrompt, text: $model.text, keyboardType: .asciiCapable)
-                        .frame(height: 44)
-                        .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(Color(designSystemColor: .surface))
-                        )
-                        .padding(.bottom, 16)
-                    Button(action: {
-                        Task {
-                            await model.submit()
-                        }
-                    }, label: {
-                        Text(UserText.appTPReportSubmit)
-                    })
-                    .buttonStyle(PrimaryButtonStyle())
-                    .frame(height: 30)
+                    interactiveContent()
                     Spacer()
                     Text(UserText.netPInviteOnlyMessage)
                         .foregroundColor(Color(designSystemColor: .textSecondary))
@@ -69,6 +115,13 @@ struct NetworkProtectionInviteView: View {
         }
         .background(Color(designSystemColor: .background))
     }
+}
+
+struct NetworkProtectionInviteMessageData {
+    let imageIdentifier: String
+    let title: String
+    let message: String
+    let footer = UserText.netPInviteOnlyMessage
 }
 
 import NetworkProtection

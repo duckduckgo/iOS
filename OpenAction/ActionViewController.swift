@@ -57,7 +57,7 @@ class ActionViewController: UIViewController {
     func launchBrowser(withUrl url: URL) {
 
         DispatchQueue.main.async {
-            let path = "\(AppDeepLinks.quickLink)\(url.absoluteString)"
+            let path = AppDeepLinkSchemes.quickLink.appending(url.absoluteString)
             guard let url = URL(string: path) else { return }
             var responder = self as UIResponder?
             let selectorOpenURL = sel_registerName("openURL:")

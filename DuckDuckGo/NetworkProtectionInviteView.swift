@@ -60,7 +60,7 @@ struct NetworkProtectionInviteView: View {
             }, label: {
                 Text(UserText.appTPReportSubmit)
             })
-            .buttonStyle(PrimaryButtonStyle())
+            .buttonStyle(PrimaryButtonStyle(disabled: model.shouldDisableSubmit))
             .frame(height: 30)
         }
         .alert(isPresented: $model.shouldShowAlert) {

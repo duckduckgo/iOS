@@ -53,7 +53,7 @@ class FireproofFaviconUpdater: NSObject, FaviconUserScriptDelegate {
     }
 
     let context: NSManagedObjectContext
-    var secureVault: SecureVault?
+    var secureVault: (any AutofillSecureVault)?
     let tab: TabNotifying
     let favicons: FaviconProviding
 
@@ -112,10 +112,10 @@ class FireproofFaviconUpdater: NSObject, FaviconUserScriptDelegate {
         return result
     }
 
-    private func initSecureVault() -> SecureVault? {
+    private func initSecureVault() -> (any AutofillSecureVault)? {
         if featureFlagger.isFeatureOn(.autofillCredentialInjecting) && AutofillSettingStatus.isAutofillEnabledInSettings {
             if secureVault == nil {
-                secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
+                secureVault = try? AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared)
             }
             return secureVault
         }

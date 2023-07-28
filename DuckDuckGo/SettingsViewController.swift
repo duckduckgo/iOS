@@ -30,6 +30,10 @@ import Combine
 import NetworkExtension
 #endif
 
+#if NETWORK_PROTECTION
+import NetworkProtection
+#endif
+
 // swiftlint:disable file_length type_body_length
 class SettingsViewController: UITableViewController {
 
@@ -92,7 +96,10 @@ class SettingsViewController: UITableViewController {
     fileprivate lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     fileprivate let syncService: DDGSyncing
     fileprivate let internalUserDecider: InternalUserDecider
-    private var internalStateChangeCancellable: Cancellable?
+#if NETWORK_PROTECTION
+    private let connectionObserver = ConnectionStatusObserverThroughSession()
+#endif
+    private var cancellables: Set<AnyCancellable> = []
 
     private var shouldShowDebugCell: Bool {
         return featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild
@@ -142,9 +149,10 @@ class SettingsViewController: UITableViewController {
         configureRememberLogins()
         configureDebugCell()
         configureVoiceSearchCell()
+        configureNetPCell()
         applyTheme(ThemeManager.shared.currentTheme)
 
-        internalStateChangeCancellable = internalUserDecider.isInternalUserPublisher.dropFirst().sink(receiveValue: { [weak self] _ in
+        internalUserDecider.isInternalUserPublisher.dropFirst().sink(receiveValue: { [weak self] _ in
             self?.configureAutofillCell()
             self?.configureSyncCell()
             self?.configureDebugCell()
@@ -153,6 +161,7 @@ class SettingsViewController: UITableViewController {
             // Scroll to force-redraw section headers and footers
             self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
         })
+        .store(in: &cancellables)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -169,8 +178,7 @@ class SettingsViewController: UITableViewController {
         configureMacBrowserWaitlistCell()
         configureWindowsBrowserWaitlistCell()
         configureAppTPCell()
-        configureNetPCell()
-        
+
         // Make sure multiline labels are correctly presented
         tableView.setNeedsLayout()
         tableView.layoutIfNeeded()
@@ -367,6 +375,21 @@ class SettingsViewController: UITableViewController {
         netPCell.isHidden = !shouldShowNetPCell
         netPCell.textLabel?.textColor = ThemeManager.shared.currentTheme.tableCellTextColor
         netPCell.detailTextLabel?.textColor = ThemeManager.shared.currentTheme.tableCellAccessoryTextColor
+#if NETWORK_PROTECTION
+        connectionObserver.publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] status in
+                let detailText: String
+                switch status {
+                case .connected:
+                    detailText = UserText.netPCellConnected
+                default:
+                    detailText = UserText.netPCellDisconnected
+                }
+                self?.netPCell.detailTextLabel?.text = detailText
+            }
+            .store(in: &cancellables)
+#endif
     }
 
     private func configureDebugCell() {

@@ -168,8 +168,8 @@ class HomeViewController: UIViewController {
         collectionView.omniBarCancelPressed()
     }
     
-    func openedAsNewTab() {
-        collectionView.openedAsNewTab()
+    func openedAsNewTab(allowingKeyboard: Bool) {
+        collectionView.openedAsNewTab(allowingKeyboard: allowingKeyboard)
         showNextDaxDialog()
     }
     

@@ -42,11 +42,60 @@ struct UserText {
                                                     comment: "Placeholder text in search field on the search and favorites widget")
 
     static let noFavoritesMessage = NSLocalizedString("widget.no.favorites.message",
-                                               value: "Quickly visit your favorite sites.",
-                                               comment: "Message shown in the favorites widget empty state.")
+                                                      value: "Quickly visit your favorite sites.",
+                                                      comment: "Message shown in the favorites widget empty state.")
 
     static let noFavoritesCTA = NSLocalizedString("widget.no.favorites.cta",
-                                               value: "Add Favorites",
-                                               comment: "CTA shown in the favorites widget empty state.")
+                                                  value: "Add Favorites",
+                                                  comment: "CTA shown in the favorites widget empty state.")
 
+    static let lockScreenSearchTitle = NSLocalizedString(
+        "lock.screen.widget.search.title",
+        value: "Private Search",
+        comment: "Title shown to the user when adding the Search lock screen widget")
+
+    static let lockScreenSearchDescription = NSLocalizedString(
+        "lock.screen.widget.search.description",
+        value: "Instantly start a private search in DuckDuckGo.",
+        comment: "Description shown to the user when adding the Search lock screen widget")
+
+    static let lockScreenFavoritesTitle = NSLocalizedString(
+        "lock.screen.widget.favorites.title",
+        value: "Favorites",
+        comment: "Title shown to the user when adding the favorites lock screen widget")
+
+    static let lockScreenFavoritesDescription = NSLocalizedString(
+        "lock.screen.widget.favorites.description",
+        value: "Quickly open your favorite websites with a tap.",
+        comment: "Description shown to the user when adding the Search lock screen widget")
+
+    static let lockScreenVoiceTitle = NSLocalizedString(
+        "lock.screen.widget.voice.title",
+        value: "Voice Search",
+        comment: "Title shown to the user when adding the Voice Search lock screen widget")
+
+    static let lockScreenVoiceDescription = NSLocalizedString(
+        "lock.screen.widget.voice.description",
+        value: "Instantly start a new private voice search in DuckDuckGo.",
+        comment: "Description shown to the user when adding the Voice Search lock screen widget")
+
+    static let lockScreenEmailTitle = NSLocalizedString(
+        "lock.screen.widget.email.title",
+        value: "Email Protection",
+        comment: "Title shown to the user when adding the Email Protection lock screen widget")
+
+    static let lockScreenEmailDescription = NSLocalizedString(
+        "lock.screen.widget.email.description",
+        value: "Instantly generate a new private Duck Address.",
+        comment: "Description shown to the user when adding the Email Protection lock screen widget")
+
+    static let lockScreenFireTitle = NSLocalizedString(
+        "lock.screen.widget.fire.title",
+        value: "Fire Button",
+        comment: "Title shown to the user when adding the Fire Button lock screen widget")
+
+    static let lockScreenFireDescription = NSLocalizedString(
+        "lock.screen.widget.fire.description",
+        value: "Instantly delete your browsing history and start a new private search in DuckDuckGo.",
+        comment: "Description shown to the user when adding the Fire Button lock screen widget")
 }

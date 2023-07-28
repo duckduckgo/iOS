@@ -31,7 +31,7 @@ protocol SaveAutofillLoginManagerProtocol {
     var hasSavedMatchingPasswordWithoutUsername: Bool { get }
     var hasSavedMatchingUsername: Bool { get }
     
-    static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws -> Int64
+    static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: AutofillVaultFactory) throws -> Int64
 }
 
 final class SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
@@ -135,9 +135,9 @@ final class SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
         domainStoredCredentials.count > 0
     }
     
-    static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws -> Int64 {
+    static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: AutofillVaultFactory) throws -> Int64 {
         do {
-            return try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared).storeWebsiteCredentials(credentials)
+            return try AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared).storeWebsiteCredentials(credentials)
         } catch {
             throw error
         }

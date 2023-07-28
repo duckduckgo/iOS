@@ -21,6 +21,7 @@ import BrowserServicesKit
 import Common
 import DDGSync
 import Persistence
+import SecureStorage
 import SyncDataProviders
 
 public class SyncDataProviders: DataProvidersSource {
@@ -38,7 +39,7 @@ public class SyncDataProviders: DataProvidersSource {
         credentialsAdapter.setUpProviderIfNeeded(secureVaultFactory: secureVaultFactory, metadataStore: syncMetadata)
 
         let providers: [Any] = [
-//            bookmarksAdapter.provider as Any,
+            bookmarksAdapter.provider as Any,
             credentialsAdapter.provider as Any
         ]
 
@@ -47,7 +48,7 @@ public class SyncDataProviders: DataProvidersSource {
 
     public init(
         bookmarksDatabase: CoreDataDatabase,
-        secureVaultFactory: SecureVaultFactory = .default,
+        secureVaultFactory: AutofillVaultFactory = AutofillSecureVaultFactory,
         secureVaultErrorReporter: SecureVaultErrorReporting
     ) {
         self.bookmarksDatabase = bookmarksDatabase
@@ -83,6 +84,6 @@ public class SyncDataProviders: DataProvidersSource {
 
     private let syncMetadataDatabase: CoreDataDatabase = SyncMetadataDatabase.make()
     private let bookmarksDatabase: CoreDataDatabase
-    private let secureVaultFactory: SecureVaultFactory
+    private let secureVaultFactory: AutofillVaultFactory
     private let secureVaultErrorReporter: SecureVaultErrorReporting
 }

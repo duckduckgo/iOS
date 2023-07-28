@@ -51,15 +51,21 @@ final class BrowsingMenuAnimator: NSObject, UIViewControllerAnimatedTransitionin
 
     func animatePresentation(from fromViewController: MainViewController, to toViewController: BrowsingMenuViewController, with transitionContext: UIViewControllerContextTransitioning) {
 
+        let fromSnapshot = fromViewController.view.snapshotView(afterScreenUpdates: false)
+
         toViewController.view.frame = transitionContext.containerView.bounds
         toViewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         transitionContext.containerView.addSubview(toViewController.view)
+
+        if let fromSnapshot {
+            transitionContext.containerView.addSubview(fromSnapshot)
+        }
 
         toViewController.bindConstraints(to: fromViewController.currentTab?.webView)
         toViewController.view.layoutIfNeeded()
 
         let snapshot = toViewController.menuView.snapshotView(afterScreenUpdates: true)
-        if let snapshot = snapshot {
+        if let snapshot {
             snapshot.frame = Self.menuOriginFrameForAnimation(for: toViewController)
             snapshot.alpha = 0
             toViewController.menuView.superview?.addSubview(snapshot)
@@ -70,6 +76,7 @@ final class BrowsingMenuAnimator: NSObject, UIViewControllerAnimatedTransitionin
         toViewController.menuView.isHidden = true
 
         UIView.animate(withDuration: Constants.appearAnimationDuration, delay: 0, options: .curveEaseOut) {
+            fromSnapshot?.removeFromSuperview()
             snapshot?.frame = toViewController.menuView.frame
             snapshot?.alpha = 1
         } completion: { _ in

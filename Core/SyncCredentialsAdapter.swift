@@ -22,6 +22,7 @@ import Combine
 import Common
 import DDGSync
 import Persistence
+import SecureStorage
 import SyncDataProviders
 
 public final class SyncCredentialsAdapter {
@@ -30,7 +31,7 @@ public final class SyncCredentialsAdapter {
     public let databaseCleaner: CredentialsDatabaseCleaner
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
 
-    public init(secureVaultFactory: SecureVaultFactory = .default, secureVaultErrorReporter: SecureVaultErrorReporting) {
+    public init(secureVaultFactory: AutofillVaultFactory = AutofillSecureVaultFactory, secureVaultErrorReporter: SecureVaultErrorReporting) {
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
         self.secureVaultErrorReporter = secureVaultErrorReporter
         databaseCleaner = CredentialsDatabaseCleaner(
@@ -50,7 +51,7 @@ public final class SyncCredentialsAdapter {
         }
     }
 
-    public func setUpProviderIfNeeded(secureVaultFactory: SecureVaultFactory, metadataStore: SyncMetadataStore) {
+    public func setUpProviderIfNeeded(secureVaultFactory: AutofillVaultFactory, metadataStore: SyncMetadataStore) {
         guard provider == nil else {
             return
         }

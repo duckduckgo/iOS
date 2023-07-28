@@ -44,22 +44,21 @@ struct NetworkProtectionInviteView: View {
         )
 
         NetworkProtectionInviteMessageView(messageData: messageData) {
-            // TODO: This type should be moved to DuckUI
-            ClearTextField(placeholderText: UserText.netPInviteFieldPrompt, text: $model.text, keyboardType: .asciiCapable)
-                .frame(height: 44)
-                .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                .background(
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(Color(designSystemColor: .surface))
-                )
-                .padding(.bottom, 16)
+            ClearTextField(
+                placeholderText: UserText.netPInviteFieldPrompt,
+                text: $model.text,
+                keyboardType: .asciiCapable
+            )
+            .frame(height: 44)
+            .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+            .background(Color.textFieldBackground)
+            .cornerRadius(10)
             Button(UserText.inviteDialogSubmitButton) {
                 Task {
                     await model.submit()
                 }
             }
             .buttonStyle(PrimaryButtonStyle(disabled: model.shouldDisableSubmit))
-            .frame(height: 30)
         }
         .alert(isPresented: $model.shouldShowAlert) {
             Alert(
@@ -78,13 +77,8 @@ struct NetworkProtectionInviteView: View {
         )
 
         NetworkProtectionInviteMessageView(messageData: messageData) {
-            Button(action: {
-                model.getStarted()
-            }, label: {
-                Text(UserText.inviteDialogGetStartedButton)
-            })
+            Button(UserText.inviteDialogGetStartedButton, action: model.getStarted)
             .buttonStyle(PrimaryButtonStyle())
-            .frame(height: 30)
         }
     }
 }
@@ -101,31 +95,41 @@ private struct NetworkProtectionInviteMessageView<Content>: View where Content: 
                     Text(messageData.title)
                         .font(.system(size: 22, weight: .semibold))
                         .multilineTextAlignment(.center)
+                        .foregroundColor(Color.titleText)
                     Text(messageData.message)
                         .font(.system(size: 16))
-                        .multilineTextAlignment(.center).foregroundColor(Color(designSystemColor: .textSecondary))
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(Color.messageText)
                         .padding(.bottom, 32)
                     interactiveContent()
                     Spacer()
                     Text(UserText.netPInviteOnlyMessage)
-                        .foregroundColor(Color(designSystemColor: .textSecondary))
+                        .foregroundColor(Color.messageText)
                         .font(.system(size: 13))
                         .multilineTextAlignment(.center)
                 }
                 .padding(24)
                 .frame(minHeight: proxy.size.height)
-                .background(Color(designSystemColor: .background))
+                .background(Color.viewBackground)
             }
         }
-        .background(Color(designSystemColor: .background))
+        .background(Color.viewBackground)
     }
 }
 
-struct NetworkProtectionInviteMessageData {
+private struct NetworkProtectionInviteMessageData {
     let imageIdentifier: String
     let title: String
     let message: String
     let footer = UserText.netPInviteOnlyMessage
+}
+
+private extension Color {
+    static let titleText = Color(designSystemColor: .textPrimary)
+    static let messageText = Color(designSystemColor: .textSecondary)
+    static let button = Color(designSystemColor: .accent)
+    static let textFieldBackground = Color(designSystemColor: .surface)
+    static let viewBackground = Color(designSystemColor: .background)
 }
 
 import NetworkProtection

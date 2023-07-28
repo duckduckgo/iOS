@@ -53,13 +53,11 @@ struct NetworkProtectionInviteView: View {
                         .fill(Color(designSystemColor: .surface))
                 )
                 .padding(.bottom, 16)
-            Button(action: {
+            Button(UserText.inviteDialogSubmitButton) {
                 Task {
                     await model.submit()
                 }
-            }, label: {
-                Text(UserText.appTPReportSubmit)
-            })
+            }
             .buttonStyle(PrimaryButtonStyle(disabled: model.shouldDisableSubmit))
             .frame(height: 30)
         }

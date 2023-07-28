@@ -731,6 +731,7 @@
 		EE0153EF2A70021E002A8B26 /* NetworkProtectionInviteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0153EE2A70021E002A8B26 /* NetworkProtectionInviteView.swift */; };
 		EE3B226B29DE0F110082298A /* MockInternalUserStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3B226A29DE0F110082298A /* MockInternalUserStoring.swift */; };
 		EE3B226C29DE0FD30082298A /* MockInternalUserStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3B226A29DE0F110082298A /* MockInternalUserStoring.swift */; };
+		EE41BD192A729E9C00546C57 /* NetworkProtectionInviteViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE41BD182A729E9C00546C57 /* NetworkProtectionInviteViewModelTests.swift */; };
 		EE41BD1B2A72AFDC00546C57 /* MockNetworkProtectionTokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE41BD1A2A72AFDC00546C57 /* MockNetworkProtectionTokenStore.swift */; };
 		EE41BD1D2A72B12F00546C57 /* MockNetworkProtectionClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE41BD1C2A72B12F00546C57 /* MockNetworkProtectionClient.swift */; };
 		EE41BD1F2A72B78400546C57 /* NetworkProtectionCodeRedemptionCoordinatorTestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE41BD1E2A72B78400546C57 /* NetworkProtectionCodeRedemptionCoordinatorTestExtensions.swift */; };
@@ -2293,6 +2294,7 @@
 		EE0153EC2A6FF9E6002A8B26 /* NetworkProtectionRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionRootView.swift; sourceTree = "<group>"; };
 		EE0153EE2A70021E002A8B26 /* NetworkProtectionInviteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionInviteView.swift; sourceTree = "<group>"; };
 		EE3B226A29DE0F110082298A /* MockInternalUserStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockInternalUserStoring.swift; sourceTree = "<group>"; };
+		EE41BD182A729E9C00546C57 /* NetworkProtectionInviteViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionInviteViewModelTests.swift; sourceTree = "<group>"; };
 		EE41BD1A2A72AFDC00546C57 /* MockNetworkProtectionTokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkProtectionTokenStore.swift; sourceTree = "<group>"; };
 		EE41BD1C2A72B12F00546C57 /* MockNetworkProtectionClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkProtectionClient.swift; sourceTree = "<group>"; };
 		EE41BD1E2A72B78400546C57 /* NetworkProtectionCodeRedemptionCoordinatorTestExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionCodeRedemptionCoordinatorTestExtensions.swift; sourceTree = "<group>"; };
@@ -4274,6 +4276,7 @@
 				EEFE9C722A603CE9005B0A26 /* NetworkProtectionStatusViewModelTests.swift */,
 				EEFE9C742A603DAD005B0A26 /* MockNetworkProtectionTunnelControlling.swift */,
 				EE0153EA2A6FF970002A8B26 /* NetworkProtectionRootViewModelTests.swift */,
+				EE41BD182A729E9C00546C57 /* NetworkProtectionInviteViewModelTests.swift */,
 				EE41BD1A2A72AFDC00546C57 /* MockNetworkProtectionTokenStore.swift */,
 				EE41BD1C2A72B12F00546C57 /* MockNetworkProtectionClient.swift */,
 				EE41BD1E2A72B78400546C57 /* NetworkProtectionCodeRedemptionCoordinatorTestExtensions.swift */,
@@ -6367,6 +6370,7 @@
 				C14882E727F20DAB00D59F0C /* HtmlTestDataLoader.swift in Sources */,
 				F17D72391E8B35C6003E8B0E /* AppURLsTests.swift in Sources */,
 				F1134ED61F40F29F00B73467 /* StatisticsUserDefaultsTests.swift in Sources */,
+				EE41BD192A729E9C00546C57 /* NetworkProtectionInviteViewModelTests.swift in Sources */,
 				0253A43329E5E393003697C1 /* AppTrackingProtectionAllowlistModelTests.swift in Sources */,
 				C1B7B53028944E390098FD6A /* RemoteMessagingStoreTests.swift in Sources */,
 				98EA2C3C218B9AAD0023E1DC /* ThemeManagerTests.swift in Sources */,

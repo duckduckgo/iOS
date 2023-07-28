@@ -735,6 +735,7 @@
 		EE41BD1B2A72AFDC00546C57 /* MockNetworkProtectionTokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE41BD1A2A72AFDC00546C57 /* MockNetworkProtectionTokenStore.swift */; };
 		EE41BD1D2A72B12F00546C57 /* MockNetworkProtectionClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE41BD1C2A72B12F00546C57 /* MockNetworkProtectionClient.swift */; };
 		EE41BD1F2A72B78400546C57 /* NetworkProtectionCodeRedemptionCoordinatorTestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE41BD1E2A72B78400546C57 /* NetworkProtectionCodeRedemptionCoordinatorTestExtensions.swift */; };
+		EE4BE0092A740BED00CD6AA8 /* ClearTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4BE0082A740BED00CD6AA8 /* ClearTextField.swift */; };
 		EE4FB1862A28CE7200E5CBA7 /* NetworkProtectionStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4FB1852A28CE7200E5CBA7 /* NetworkProtectionStatusView.swift */; };
 		EE4FB1882A28D11900E5CBA7 /* NetworkProtectionStatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4FB1872A28D11900E5CBA7 /* NetworkProtectionStatusViewModel.swift */; };
 		EE50052E29C369D300AE0773 /* FeatureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE50052D29C369D300AE0773 /* FeatureFlag.swift */; };
@@ -2298,6 +2299,7 @@
 		EE41BD1A2A72AFDC00546C57 /* MockNetworkProtectionTokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkProtectionTokenStore.swift; sourceTree = "<group>"; };
 		EE41BD1C2A72B12F00546C57 /* MockNetworkProtectionClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkProtectionClient.swift; sourceTree = "<group>"; };
 		EE41BD1E2A72B78400546C57 /* NetworkProtectionCodeRedemptionCoordinatorTestExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionCodeRedemptionCoordinatorTestExtensions.swift; sourceTree = "<group>"; };
+		EE4BE0082A740BED00CD6AA8 /* ClearTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearTextField.swift; sourceTree = "<group>"; };
 		EE4FB1852A28CE7200E5CBA7 /* NetworkProtectionStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionStatusView.swift; sourceTree = "<group>"; };
 		EE4FB1872A28D11900E5CBA7 /* NetworkProtectionStatusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionStatusViewModel.swift; sourceTree = "<group>"; };
 		EE50052D29C369D300AE0773 /* FeatureFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlag.swift; sourceTree = "<group>"; };
@@ -2868,6 +2870,7 @@
 				1E24295D293F57FA00584836 /* LottieView.swift */,
 				1E162604296840D80004127F /* Triangle.swift */,
 				1E1626062968413B0004127F /* ViewExtension.swift */,
+				EE4BE0082A740BED00CD6AA8 /* ClearTextField.swift */,
 			);
 			name = SwiftUI;
 			sourceTree = "<group>";
@@ -6188,6 +6191,7 @@
 				310D091D2799F57200DC0060 /* Download.swift in Sources */,
 				1EEF124E2850EADE003DDE57 /* PrivacyIconView.swift in Sources */,
 				37FCAAAB29911BF1000E420A /* WaitlistExtensions.swift in Sources */,
+				EE4BE0092A740BED00CD6AA8 /* ClearTextField.swift in Sources */,
 				F159BDA41F0BDB5A00B4A01D /* TabViewController.swift in Sources */,
 				F44D279C27F331BB0037F371 /* AutofillLoginPromptView.swift in Sources */,
 				CBD4F13E279EBFAB00B20FD7 /* HomeMessageView.swift in Sources */,

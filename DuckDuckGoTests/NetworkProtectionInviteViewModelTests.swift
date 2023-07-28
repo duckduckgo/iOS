@@ -25,9 +25,23 @@ import NetworkProtectionTestUtils
 final class NetworkProtectionInviteViewModelTests: XCTestCase {
 
     func test_text_alwaysUppercased() {
-        let viewModel = viewModel(withInjectedRedemptionCoordinator: .stubbed())
+        let viewModel = viewModel()
         viewModel.text = "abcdefg"
         XCTAssertEqual(viewModel.text, "ABCDEFG")
+    }
+
+    func test_text_emptyString_disableSubmit() {
+        let viewModel = viewModel()
+        viewModel.text = ""
+        XCTAssertTrue(viewModel.shouldDisableSubmit)
+    }
+
+    func test_text_nonEmptyString_enableSubmit() {
+        let viewModel = viewModel()
+        for _ in 0..<5 {
+            viewModel.text.append("D")
+            XCTAssertFalse(viewModel.shouldDisableSubmit)
+        }
     }
 
     func test_submit_successfulRedemption_changesCurrentStepToSuccess() async {
@@ -68,7 +82,7 @@ final class NetworkProtectionInviteViewModelTests: XCTestCase {
         XCTAssertTrue(didCallCompletion)
     }
 
-    private func viewModel(withInjectedRedemptionCoordinator coordinator: NetworkProtectionCodeRedemptionCoordinator, completion: @escaping () -> Void = {}) -> NetworkProtectionInviteViewModel {
+    private func viewModel(withInjectedRedemptionCoordinator coordinator: NetworkProtectionCodeRedemptionCoordinator = .stubbed(), completion: @escaping () -> Void = {}) -> NetworkProtectionInviteViewModel {
         NetworkProtectionInviteViewModel(redemptionCoordinator: coordinator, completion: completion)
     }
 }

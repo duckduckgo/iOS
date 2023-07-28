@@ -68,7 +68,7 @@ final class NetworkProtectionInviteViewModel: ObservableObject {
         completion()
     }
 
-    // TODO: Dev only. Not to be merged
+    // MARK: Dev only. Will be removed during https://app.asana.com/0/0/1205084446087078/f
 
     @MainActor
     func clear() async {

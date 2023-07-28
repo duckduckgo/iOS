@@ -27,9 +27,8 @@ struct NetworkProtectionRootView: View {
 
     var body: some View {
         let inviteViewModel = NetworkProtectionInviteViewModel(
-            delegate: nil,
             redemptionCoordinator: NetworkProtectionCodeRedemptionCoordinator()
-        )
+        ) { }
         switch model.initialViewKind {
         case .invite:
             NetworkProtectionInviteView(model: inviteViewModel)

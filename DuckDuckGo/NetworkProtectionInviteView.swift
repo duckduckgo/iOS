@@ -63,6 +63,12 @@ struct NetworkProtectionInviteView: View {
             .buttonStyle(PrimaryButtonStyle())
             .frame(height: 30)
         }
+        .alert(isPresented: $model.shouldShowAlert) {
+            Alert(
+                title: Text(model.errorText),
+                dismissButton: .default(Text(UserText.inviteDialogErrorAlertOKButton))
+            )
+        }
     }
 
     @ViewBuilder

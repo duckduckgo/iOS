@@ -77,9 +77,8 @@ struct NetworkProtectionStatusView: View {
 struct NetworkProtectionStatusView_Previews: PreviewProvider {
     static var previews: some View {
         let inviteViewModel = NetworkProtectionInviteViewModel(
-            delegate: nil,
             redemptionCoordinator: NetworkProtectionCodeRedemptionCoordinator()
-        )
+        ) { }
         NetworkProtectionStatusView(statusModel: NetworkProtectionStatusViewModel(), inviteModel: inviteViewModel)
     }
 }

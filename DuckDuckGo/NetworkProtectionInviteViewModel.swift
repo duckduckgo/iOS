@@ -22,10 +22,6 @@
 import Combine
 import NetworkProtection
 
-protocol NetworkProtectionInviteViewModelDelegate: AnyObject {
-    func didCompleteInviteFlow()
-}
-
 enum NetworkProtectionInviteStep {
     case codeEntry, success
 }
@@ -43,10 +39,10 @@ final class NetworkProtectionInviteViewModel: ObservableObject {
     @Published var shouldShowAlert: Bool = false
 
     private let redemptionCoordinator: NetworkProtectionCodeRedeeming
-    private weak var delegate: NetworkProtectionInviteViewModelDelegate?
+    private let completion: () -> Void
 
-    init(delegate: NetworkProtectionInviteViewModelDelegate?, redemptionCoordinator: NetworkProtectionCodeRedeeming) {
-        self.delegate = delegate
+    init(redemptionCoordinator: NetworkProtectionCodeRedeeming, completion: @escaping () -> Void) {
+        self.completion = completion
         self.redemptionCoordinator = redemptionCoordinator
     }
 
@@ -67,7 +63,7 @@ final class NetworkProtectionInviteViewModel: ObservableObject {
     }
 
     func getStarted() {
-        delegate?.didCompleteInviteFlow()
+        completion()
     }
 
     // TODO: Dev only. Not to be merged

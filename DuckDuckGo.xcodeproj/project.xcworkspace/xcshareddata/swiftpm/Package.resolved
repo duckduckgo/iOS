@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "f255099c2c373d7b0c484849b8903831e7b717ce",
-          "version": "71.0.0"
+          "branch": "graeme/network-protection-test-utils",
+          "revision": "9dfa4efc0f3dc7c6cf1d62457cc03195fe04d117",
+          "version": null
         }
       },
       {

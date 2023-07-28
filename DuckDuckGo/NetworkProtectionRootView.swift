@@ -24,11 +24,13 @@ import NetworkProtection
 
 struct NetworkProtectionRootView: View {
     let model = NetworkProtectionRootViewModel()
+    let inviteCompletion: () -> Void
 
     var body: some View {
         let inviteViewModel = NetworkProtectionInviteViewModel(
-            redemptionCoordinator: NetworkProtectionCodeRedemptionCoordinator()
-        ) { }
+            redemptionCoordinator: NetworkProtectionCodeRedemptionCoordinator(),
+            completion: inviteCompletion
+        )
         switch model.initialViewKind {
         case .invite:
             NetworkProtectionInviteView(model: inviteViewModel)
@@ -43,7 +45,7 @@ struct NetworkProtectionRootView: View {
 
 struct NetworkProtectionRootView_Previews: PreviewProvider {
     static var previews: some View {
-        NetworkProtectionRootView()
+        NetworkProtectionRootView { }
     }
 }
 

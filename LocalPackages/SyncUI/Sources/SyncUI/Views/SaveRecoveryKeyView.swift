@@ -109,7 +109,7 @@ public struct SaveRecoveryKeyView: View {
     public var body: some View {
         UnderflowContainer {
             mainContent()
-        } foreground: {
+        } foregroundContent: {
             buttons()
         }
     }

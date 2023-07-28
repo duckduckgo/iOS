@@ -1255,8 +1255,11 @@ https://duckduckgo.com/mac";
 /* Edit button */
 "navigation.title.edit" = "Edit";
 
-/* Detail string describing what NetP is */
-"netP.cell.detail" = "Hide your location and conceal your online activity";
+/* String indicating NetP is connected when viewed from the settings screen */
+"netP.cell.connected" = "Connected";
+
+/* String indicating NetP is disconnected when viewed from the settings screen */
+"netP.cell.disconnected" = "Not connected";
 
 /* Title for the Network Protection feature */
 "netP.title" = "Network Protection";

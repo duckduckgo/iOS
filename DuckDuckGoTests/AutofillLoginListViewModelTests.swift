@@ -30,7 +30,7 @@ class AutofillLoginListViewModelTests: XCTestCase {
 
     private let tld = TLD()
     private let appSettings = AppUserDefaults()
-    private let vault = MockSecureVault()
+    private let vault = (try? MockSecureVaultFactory.makeVault(errorReporter: nil))!
 
     func testWhenOneLoginDeletedWithNoSuggestionsThenAlphabeticalSectionIsDeleted() {
         let accountIdToDelete = "1"

@@ -76,7 +76,7 @@ class Provider: TimelineProvider {
                   let domain = url.host?.droppingWwwPrefix()
             else { return nil }
 
-            return Favorite(url: DeepLinks.createFavoriteLauncher(forUrl: url),
+            return Favorite(url: url,
                             domain: domain,
                             title: favorite.title ?? domain,
                             favicon: loadImageFromCache(forDomain: url.host) )
@@ -191,6 +191,15 @@ struct Widgets: WidgetBundle {
     var body: some Widget {
         SearchWidget()
         FavoritesWidget()
+
+        if #available(iOSApplicationExtension 16.0, *) {
+            SearchLockScreenWidget()
+            VoiceSearchLockScreenWidget()
+            EmailProtectionLockScreenWidget()
+            FireButtonLockScreenWidget()
+            FavoritesLockScreenWidget()
+        }
+
     }
 
 }

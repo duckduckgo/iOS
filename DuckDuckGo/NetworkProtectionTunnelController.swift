@@ -17,13 +17,11 @@
 //  limitations under the License.
 //
 
+#if NETWORK_PROTECTION
+
 import Foundation
 import Combine
 import Core
-import UIKit
-
-#if NETWORK_PROTECTION
-
 import NetworkExtension
 import NetworkProtection
 
@@ -36,8 +34,7 @@ public protocol NetworkProtectionTunnelControlling {
 final class NetworkProtectionTunnelController: NetworkProtectionTunnelControlling {
 
     private let tokenStore = NetworkProtectionKeychainTokenStore(useSystemKeychain: false, errorEvents: nil)
-    private let connectionObserver = ConnectionStatusObserverThroughSession(platformNotificationCenter: .default,
-                                                                            platformDidWakeNotification: UIApplication.didBecomeActiveNotification)
+    private let connectionObserver = ConnectionStatusObserverThroughSession()
 
     // MARK: - NetworkProtectionTunnelControlling
 

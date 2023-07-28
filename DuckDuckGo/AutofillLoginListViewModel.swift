@@ -65,7 +65,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     private var appSettings: AppSettings
     private let tld: TLD
     private var currentTabUrl: URL?
-    private let secureVault: SecureVault?
+    private let secureVault: (any AutofillSecureVault)?
     private var cachedDeletedCredentials: SecureVaultModels.WebsiteCredentials?
     private let autofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
     private let autofillDomainNameUrlSort = AutofillDomainNameUrlSort()
@@ -89,7 +89,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
     }
     
-    init(appSettings: AppSettings, tld: TLD, secureVault: SecureVault?, currentTabUrl: URL? = nil) {
+    init(appSettings: AppSettings, tld: TLD, secureVault: (any AutofillSecureVault)?, currentTabUrl: URL? = nil) {
         self.appSettings = appSettings
         self.tld = tld
         self.secureVault = secureVault

@@ -1150,6 +1150,9 @@
 /* Get Started button on an invite dialog */
 "invite.dialog.get.started.button" = "Get Started";
 
+/* Submit button on an invite dialog */
+"invite.dialog.submit.button" = "Submit";
+
 /* Message to show after user enters an unrecognized invite code */
 "invite.dialog.unrecognized.code.message" = "We didn’t recognize this Invite Code.";
 

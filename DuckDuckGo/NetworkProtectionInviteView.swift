@@ -92,6 +92,9 @@ private struct NetworkProtectionInviteMessageView<Content>: View where Content: 
             ScrollView {
                 VStack(spacing: 16) {
                     Image(messageData.imageIdentifier)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 102.5)
                     Text(messageData.title)
                         .font(.system(size: 22, weight: .semibold))
                         .multilineTextAlignment(.center)

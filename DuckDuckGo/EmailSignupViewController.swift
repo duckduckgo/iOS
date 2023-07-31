@@ -25,6 +25,7 @@ import Networking
 import UserScript
 import WebKit
 import DesignResourcesKit
+import SecureStorage
 
 // swiftlint:disable file_length
 class EmailSignupViewController: UIViewController {
@@ -377,7 +378,7 @@ extension EmailSignupViewController: EmailManagerRequestDelegate {
 
 extension EmailSignupViewController: SecureVaultManagerDelegate {
 
-    func secureVaultInitFailed(_ error: SecureVaultError) {
+    func secureVaultInitFailed(_ error: SecureStorageError) {
         SecureVaultErrorReporter.shared.secureVaultInitFailed(error)
     }
 
@@ -410,6 +411,10 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
     }
 
     func secureVaultManagerShouldSilentlySaveGeneratedPassword(_: SecureVaultManager) -> Bool {
+        return false
+    }
+
+    func secureVaultManagerShouldSaveData(_: BrowserServicesKit.SecureVaultManager) -> Bool {
         return false
     }
 

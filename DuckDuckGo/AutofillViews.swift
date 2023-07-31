@@ -44,7 +44,7 @@ struct AutofillViews {
                             .resizable()
                             .scaledToFit()
                             .frame(width: Const.Size.closeButtonSize, height: Const.Size.closeButtonSize)
-                            .foregroundColor(.primary)
+                            .foregroundColor(Color(designSystemColor: .textPrimary))
                     }
                     .frame(width: Const.Size.closeButtonTappableArea, height: Const.Size.closeButtonTappableArea)
                     .contentShape(Rectangle())

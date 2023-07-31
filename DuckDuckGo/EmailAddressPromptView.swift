@@ -61,9 +61,6 @@ struct EmailAddressPromptView: View {
                         viewModel.selectGeneratedEmailPressed()
                     }
                 }
-                .frame(minWidth: 288.0)
-                .frame(maxWidth: AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) ? 288.0 : .infinity)
-                .padding(.horizontal, AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) ? 0.0 : 72.0)
                 .padding(.bottom, 36.0)
             }
             .background(GeometryReader { proxy -> Color in

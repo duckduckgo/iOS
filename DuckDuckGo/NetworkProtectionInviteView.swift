@@ -103,7 +103,7 @@ private struct NetworkProtectionInviteMessageView<Content>: View where Content: 
                         .font(.system(size: 16))
                         .multilineTextAlignment(.center)
                         .foregroundColor(Color.messageText)
-                        .padding(.bottom, 32)
+                        .padding(.bottom, 16)
                     interactiveContent()
                     Spacer()
                     Text(UserText.netPInviteOnlyMessage)

@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "f255099c2c373d7b0c484849b8903831e7b717ce",
-          "version": "71.0.0"
+          "branch": "sabrina/add-new-tab-continue-set-up-privacy-feature",
+          "revision": "d40ac88b3c2c47e5fa8103b04544d7705934032a",
+          "version": null
         }
       },
       {

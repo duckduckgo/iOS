@@ -448,34 +448,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         mainViewController?.clearNavigationStack()
         autoClear?.applicationWillMoveToForeground()
         showKeyboardIfSettingOn = false
-        
-        if AppDeepLinks.isNewSearch(url: url) {
-            mainViewController?.newTab(reuseExisting: true)
-            if url.getParameter(named: "w") != nil {
-                Pixel.fire(pixel: .widgetNewSearch)
-                mainViewController?.enterSearch()
-            }
-        } else if AppDeepLinks.isLaunchFavorite(url: url) {
-            let query = AppDeepLinks.query(fromLaunchFavorite: url)
-            mainViewController?.loadQueryInNewTab(query, reuseExisting: true)
-            Pixel.fire(pixel: .widgetFavoriteLaunch)
-        } else if AppDeepLinks.isQuickLink(url: url) {
-            let query = AppDeepLinks.query(fromQuickLink: url)
-            mainViewController?.loadQueryInNewTab(query, reuseExisting: true)
-        } else if AppDeepLinks.isAddFavorite(url: url) {
-            mainViewController?.startAddFavoriteFlow()
-        } else if app.applicationState == .active,
-                  let currentTab = mainViewController?.currentTab {
-            // If app is in active state, treat this navigation as something initiated form the context of the current tab.
-            mainViewController?.tab(currentTab,
-                                    didRequestNewTabForUrl: url,
-                                    openedByPage: true,
-                                    inheritingAttribution: nil)
-        } else {
-            Pixel.fire(pixel: .defaultBrowserLaunch)
+
+        if !handleAppDeepLink(app, mainViewController, url) {
             mainViewController?.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil)
         }
-        
+
         return true
     }
 

@@ -613,6 +613,8 @@ In addition to the details entered into this form, your app issue report will co
     // MARK: Network Protection
 
     public static let netPNavTitle = NSLocalizedString("netP.title", value: "Network Protection", comment: "Title for the Network Protection feature")
+    public static let netPCellConnected = NSLocalizedString("netP.cell.connected", value: "Connected", comment: "String indicating NetP is connected when viewed from the settings screen")
+    public static let netPCellDisconnected = NSLocalizedString("netP.cell.disconnected", value: "Not connected", comment: "String indicating NetP is disconnected when viewed from the settings screen")
     
     // MARK: Notifications
     

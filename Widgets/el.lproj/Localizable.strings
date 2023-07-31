@@ -1,6 +1,36 @@
 /* No comment provided by engineer. */
 "Label" = "Label";
 
+/* Description shown to the user when adding the Email Protection lock screen widget */
+"lock.screen.widget.email.description" = "Δημιουργήστε αμέσως μια νέα ιδιωτική διεύθυνση Duck Address.";
+
+/* Title shown to the user when adding the Email Protection lock screen widget */
+"lock.screen.widget.email.title" = "Προστασία email";
+
+/* Description shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.favorites.description" = "Ανοίξτε γρήγορα τους αγαπημένους ιστότοπούς σας με ένα πάτημα.";
+
+/* Title shown to the user when adding the favorites lock screen widget */
+"lock.screen.widget.favorites.title" = "Αγαπημένα";
+
+/* Description shown to the user when adding the Fire Button lock screen widget */
+"lock.screen.widget.fire.description" = "Διαγράψτε άμεσα το ιστορικό περιήγησής σας και αρχίστε μια νέα ιδιωτική αναζήτηση στο DuckDuckGo.";
+
+/* Title shown to the user when adding the Fire Button lock screen widget */
+"lock.screen.widget.fire.title" = "Fire Button";
+
+/* Description shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.search.description" = "Αρχίστε αμέσως μια ιδιωτική αναζήτηση στο DuckDuckGo.";
+
+/* Title shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.search.title" = "ιδιωτική αναζήτηση";
+
+/* Description shown to the user when adding the Voice Search lock screen widget */
+"lock.screen.widget.voice.description" = "Αρχίστε αμέσως μια νέα ιδιωτική φωνητική αναζήτηση στο DuckDuckGo.";
+
+/* Title shown to the user when adding the Voice Search lock screen widget */
+"lock.screen.widget.voice.title" = "Φωνητική αναζήτηση";
+
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Κάντε αναζήτηση ή επισκεφτείτε τους αγαπημένους ιστότοπούς σας ιδιωτικά, με μόνο ένα πάτημα.";
 

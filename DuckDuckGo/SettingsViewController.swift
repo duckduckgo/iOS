@@ -458,19 +458,17 @@ class SettingsViewController: UITableViewController {
 #if NETWORK_PROTECTION
     private func showNetP() {
         // This will be tidied up as part of https://app.asana.com/0/0/1205084446087078/f
-        let rootView = NetworkProtectionRootView { [weak self] in
+        let rootViewController = NetworkProtectionRootViewController { [weak self] in
             self?.navigationController?.popViewController(animated: true)
-            let newRootView = NetworkProtectionRootView { }
-            self?.pushNetPRootView(newRootView)
+            let newRootViewController = NetworkProtectionRootViewController { }
+            self?.pushNetP(newRootViewController)
         }
-        pushNetPRootView(rootView)
+        pushNetP(rootViewController)
     }
 
-    private func pushNetPRootView(_ rootView: NetworkProtectionRootView) {
-        let hostingController = UIHostingController(rootView: rootView)
-        hostingController.view.backgroundColor = UIColor(Color(designSystemColor: .background))
+    private func pushNetP(_ rootViewController: NetworkProtectionRootViewController) {
         navigationController?.pushViewController(
-            hostingController,
+            rootViewController,
             animated: true
         )
     }

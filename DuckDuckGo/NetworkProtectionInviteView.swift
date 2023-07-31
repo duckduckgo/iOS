@@ -128,9 +128,6 @@ private struct NetworkProtectionInviteMessageData {
 }
 
 private extension Color {
-    static let titleText = Color(designSystemColor: .textPrimary)
-    static let messageText = Color(designSystemColor: .textSecondary)
-    static let button = Color(designSystemColor: .accent)
     static let textFieldBackground = Color(designSystemColor: .surface)
     static let viewBackground = Color(designSystemColor: .background)
 }

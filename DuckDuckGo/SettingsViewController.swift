@@ -373,8 +373,6 @@ class SettingsViewController: UITableViewController {
 
     private func configureNetPCell() {
         netPCell.isHidden = !shouldShowNetPCell
-        netPCell.textLabel?.textColor = ThemeManager.shared.currentTheme.tableCellTextColor
-        netPCell.detailTextLabel?.textColor = ThemeManager.shared.currentTheme.tableCellAccessoryTextColor
 #if NETWORK_PROTECTION
         connectionObserver.publisher
             .receive(on: DispatchQueue.main)

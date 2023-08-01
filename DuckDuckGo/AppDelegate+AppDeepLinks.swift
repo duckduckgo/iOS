@@ -22,6 +22,7 @@ import Core
 
 extension AppDelegate {
 
+    // swiftlint:disable cyclomatic_complexity
     func handleAppDeepLink(_ app: UIApplication, _ mainViewController: MainViewController?, _ url: URL) -> Bool {
         guard let mainViewController else { return false }
 
@@ -80,5 +81,6 @@ extension AppDelegate {
 
         return true
     }
+    // swiftlint:enable cyclomatic_complexity
 
 }

@@ -30,9 +30,15 @@ extension AppDelegate {
         case .newSearch:
             mainViewController.newTab(reuseExisting: true)
             mainViewController.enterSearch()
+            if url.getParameter(named: "ls") != nil {
+                Pixel.fire(pixel: .lockScreenWidgetNewSearch)
+            }
 
         case .favorites:
             mainViewController.newTab(reuseExisting: true, allowingKeyboard: false)
+            if url.getParameter(named: "ls") != nil {
+                Pixel.fire(pixel: .lockScreenWidgetFavorites)
+            }
 
         case .quickLink:
             let query = AppDeepLinkSchemes.query(fromQuickLink: url)
@@ -43,12 +49,21 @@ extension AppDelegate {
 
         case .fireButton:
             mainViewController.forgetAllWithAnimation()
+            if url.getParameter(named: "ls") != nil {
+                Pixel.fire(pixel: .lockScreenWidgetFireButton)
+            }
 
         case .voiceSearch:
             mainViewController.onVoiceSearchPressed()
+            if url.getParameter(named: "ls") != nil {
+                Pixel.fire(pixel: .lockScreenWidgetVoiceSearch)
+            }
 
         case .newEmail:
             mainViewController.newEmailAddress()
+            if url.getParameter(named: "ls") != nil {
+                Pixel.fire(pixel: .lockScreenWidgetNewEmail)
+            }
 
         default:
             guard app.applicationState == .active,

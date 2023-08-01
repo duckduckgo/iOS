@@ -194,7 +194,7 @@ struct AutofillViews {
 
     // We have specific layouts for the smaller iPhones
     static func isSmallFrame(_ frame: CGSize) -> Bool {
-        frame.width <= Const.Size.smallDevice || frame.height <= Const.Size.smallDevice
+        frame.width > 0 && frame.width <= Const.Size.smallDevice
     }
 
     static func contentHeightExceedsScreenHeight(_ contentHeight: CGFloat) -> Bool {

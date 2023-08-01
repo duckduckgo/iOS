@@ -60,7 +60,7 @@ struct EmailAddressPromptView: View {
                         viewModel.selectGeneratedEmailPressed()
                     }
                 }
-                .padding(.bottom, 36.0)
+                .padding(.bottom, Const.Size.bottomPadding)
             }
             .background(GeometryReader { proxy -> Color in
                 DispatchQueue.main.async { viewModel.contentHeight = proxy.size.height }
@@ -112,8 +112,8 @@ private struct EmailAddressRow: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: Const.Size.logoImage, height: Const.Size.logoImage)
-                    .padding(.horizontal, 16.0)
-                VStack(alignment: .leading, spacing: 3.0) {
+                    .padding(.horizontal, Const.Size.logoHorizontalPadding)
+                VStack(alignment: .leading, spacing: Const.Size.rowVerticalSpacing) {
                     Text(title)
                         .daxSubheadRegular()
                         .foregroundColor(Color(designSystemColor: .textPrimary))
@@ -125,14 +125,14 @@ private struct EmailAddressRow: View {
                         .multilineTextAlignment(.leading)
                         .fixedSize(horizontal: false, vertical: true)
                 }
-                .padding(.vertical, 11.0)
+                .padding(.vertical, Const.Size.rowVerticalPadding)
                 Spacer()
             }
 
         }
 
         .background(Color(designSystemColor: .container))
-        .cornerRadius(8.0)
+        .cornerRadius(Const.Size.cornerRadius)
     }
 
 }
@@ -148,12 +148,12 @@ private enum Const {
         static let topPadding: CGFloat = 56.0
         static let headlineTopPadding: CGFloat = 24.0
         static let ios15scrollOffset: CGFloat = 80.0
-        static let contentSpacerHeight: CGFloat = 24.0
-        static let contentSpacerHeightLandscape: CGFloat = 30.0
-        static let ctaVerticalSpacing: CGFloat = 8.0
-        static let bottomPadding: CGFloat = 12.0
-        static let bottomPaddingIPad: CGFloat = 24.0
+        static let bottomPadding: CGFloat = 36.0
         static let logoImage: CGFloat = 24.0
+        static let logoHorizontalPadding: CGFloat = 16.0
+        static let rowVerticalSpacing: CGFloat = 3.0
+        static let rowVerticalPadding: CGFloat = 11.0
+        static let cornerRadius: CGFloat = 8.0
     }
 }
 

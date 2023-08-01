@@ -31,7 +31,6 @@ import SecureStorage
 class EmailSignupViewController: UIViewController {
 
     private enum Constants {
-//        static let signUpUrl: String = "https://quack.duckduckgo.com/email/start-incontext"
         static let signUpUrl: String = "https://duckduckgo.com/email/start-incontext"
     }
 

@@ -4143,7 +4143,7 @@
 			isa = PBXGroup;
 			children = (
 				C1F341C32A6923D70032057B /* EmailAddressPrompt */,
-				C1CAA3D52A630ECB00807703 /* InContextSignup */,
+				C1CAA3D52A630ECB00807703 /* EmailSignup */,
 			);
 			name = EmailProtection;
 			sourceTree = "<group>";
@@ -4185,7 +4185,7 @@
 			name = AutofillLoginUI;
 			sourceTree = "<group>";
 		};
-		C1CAA3D52A630ECB00807703 /* InContextSignup */ = {
+		C1CAA3D52A630ECB00807703 /* EmailSignup */ = {
 			isa = PBXGroup;
 			children = (
 				C159DF062A430B60007834BB /* EmailSignupViewController.swift */,
@@ -4193,7 +4193,7 @@
 				C12726EF2A5FF89900215B02 /* EmailSignupPromptViewModel.swift */,
 				C12726F12A5FF8CB00215B02 /* EmailSignupPromptViewController.swift */,
 			);
-			name = InContextSignup;
+			name = EmailSignup;
 			sourceTree = "<group>";
 		};
 		C1F341C32A6923D70032057B /* EmailAddressPrompt */ = {

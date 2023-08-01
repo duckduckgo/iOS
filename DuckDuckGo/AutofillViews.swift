@@ -192,6 +192,11 @@ struct AutofillViews {
         verticalSizeClass == .regular && horizontalSizeClass == .regular
     }
 
+    // We have specific layouts for the smaller iPhones
+    static func isSmallFrame(_ frame: CGSize) -> Bool {
+        frame.width <= Const.Size.smallDevice || frame.height <= Const.Size.smallDevice
+    }
+
     static func contentHeightExceedsScreenHeight(_ contentHeight: CGFloat) -> Bool {
         if #available(iOS 16.0, *) {
             let topSafeAreaInset = UIApplication.shared.connectedScenes
@@ -228,6 +233,7 @@ private enum Const {
         static let logoImage: CGFloat = 20.0
         static let buttonCornerRadius: CGFloat = 8.0
         static let buttonBorderWidth: CGFloat = 1.0
+        static let smallDevice: CGFloat = 320.0
     }
 }
 

@@ -2,7 +2,7 @@ name: PR Checks
 
 on: 
   push:
-    branches: [ develop, "release/**", "michal/ci-failure-logs" ]
+    branches: [ develop, "release/**" ]
   pull_request:
     branches: [ develop, "release/**" ]
 

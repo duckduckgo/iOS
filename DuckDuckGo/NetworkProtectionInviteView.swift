@@ -72,7 +72,7 @@ struct NetworkProtectionInviteView: View {
     @ViewBuilder
     private var successView: some View {
         let messageData = NetworkProtectionInviteMessageData(
-            imageIdentifier: "IntiveLockSuccess",
+            imageIdentifier: "InviteLockSuccess",
             title: UserText.netPInviteSuccessTitle,
             message: UserText.netPInviteSuccessMessage
         )

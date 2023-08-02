@@ -32,7 +32,7 @@ class FileLoader {
         let baseName = fileUrl.deletingPathExtension().path
         let ext = fileUrl.pathExtension
 
-        guard let path = bundle.path(forResource: baseName, ofType: ext) else { throw  FileError.unknownFile }
+        let path = bundle.path(forResource: baseName, ofType: ext) ?? bundle.bundlePath + "/" + fileName // else { throw  FileError.unknownFile }
         let url = URL(fileURLWithPath: path)
         guard let data = try? Data(contentsOf: url, options: [.mappedIfSafe]) else { throw  FileError.invalidFileContents }
         return data

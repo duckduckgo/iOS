@@ -53,6 +53,7 @@ struct NetworkProtectionInviteView: View {
             .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
             .background(Color.textFieldBackground)
             .cornerRadius(10)
+            .disabled(model.shouldDisableTextField)
             Button(UserText.inviteDialogSubmitButton) {
                 Task {
                     await model.submit()

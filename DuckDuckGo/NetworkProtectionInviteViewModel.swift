@@ -39,6 +39,7 @@ final class NetworkProtectionInviteViewModel: ObservableObject {
     var errorText: String = ""
     @Published var shouldShowAlert: Bool = false
     @Published var shouldDisableSubmit: Bool = true
+    @Published var shouldDisableTextField: Bool = false
 
     private let redemptionCoordinator: NetworkProtectionCodeRedeeming
     private let completion: () -> Void
@@ -50,6 +51,12 @@ final class NetworkProtectionInviteViewModel: ObservableObject {
 
     @MainActor
     func submit() async {
+        shouldDisableSubmit = true
+        shouldDisableTextField = true
+        defer {
+            shouldDisableSubmit = false
+            shouldDisableTextField = false
+        }
         do {
             try await redemptionCoordinator.redeem(text.trimmingWhitespace())
         } catch NetworkProtectionClientError.invalidInviteCode {

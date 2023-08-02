@@ -80,7 +80,7 @@ jobs:
       run: |
         set -o pipefail && xcodebuild test \
           -scheme "DuckDuckGo" \
-          -destination "platform=iOS Simulator,name=iPhone 14" \
+          -destination "platform=iOS Simulator,name=iPhone 14,OS=16.4" \
           -derivedDataPath "DerivedData" \
           DDG_SLOW_COMPILE_CHECK_THRESHOLD=250 \
           | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml

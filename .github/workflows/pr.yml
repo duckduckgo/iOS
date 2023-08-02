@@ -90,3 +90,9 @@ jobs:
       with:
         report_paths: unittests.xml
 
+    - name: Upload failed test log
+      uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        path: DerivedData/Logs/Test/Test-DuckDuckGo-*.xcresult
+

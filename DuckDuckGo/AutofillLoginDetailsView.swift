@@ -22,14 +22,30 @@ import DuckUI
 import DesignResourcesKit
 
 // swiftlint:disable file_length
+// swiftlint:disable type_body_length
 
 struct AutofillLoginDetailsView: View {
     @ObservedObject var viewModel: AutofillLoginDetailsViewModel
     @State private var actionSheetConfirmDeletePresented: Bool = false
-    
+
     var body: some View {
         listWithBackground
+            .alert(isPresented: $viewModel.isShowingAddressUpdateConfirmAlert) {
+                let btnLabel = Text(viewModel.toggleConfirmationAlert.button)
+                let btnAction = viewModel.togglePrivateEmailStatus
+                let button = Alert.Button.default(btnLabel, action: btnAction)
+                let cancelBtnLabel = Text(UserText.autofillCancel)
+                let cancelBtnAction = { viewModel.refreshprivateEmailStatusBool() }
+                let cancelButton = Alert.Button.cancel(cancelBtnLabel, action: cancelBtnAction)
+                return Alert(
+                    title: Text(viewModel.toggleConfirmationAlert.title),
+                    message: Text(viewModel.toggleConfirmationAlert.message),
+                    primaryButton: button,
+                    secondaryButton: cancelButton)
+            }
+
     }
+
     
     @ViewBuilder
     private var listWithBackground: some View {
@@ -61,6 +77,7 @@ struct AutofillLoginDetailsView: View {
                 viewModel.selectedCell = nil
             }))
         .listStyle(.insetGrouped)
+        .animation(.easeInOut)
     }
     
     private var editingContentView: some View {
@@ -72,7 +89,7 @@ struct AutofillLoginDetailsView: View {
                              autoCapitalizationType: .words,
                              disableAutoCorrection: false)
             }
-    
+
             Section {
                 editableCell(UserText.autofillLoginDetailsUsername,
                              subtitle: $viewModel.username,
@@ -117,30 +134,12 @@ struct AutofillLoginDetailsView: View {
                 AutofillLoginDetailsHeaderView(viewModel: viewModel.headerViewModel)
             }
 
-            Section {
-                CopyableCell(title: UserText.autofillLoginDetailsUsername,
-                             subtitle: viewModel.usernameDisplayString,
-                             selectedCell: $viewModel.selectedCell,
-                             actionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsUsername),
-                             action: { viewModel.copyToPasteboard(.username) },
-                             buttonImageName: "Copy-24",
-                             buttonAccessibilityLabel: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsUsername),
-                             buttonAction: { viewModel.copyToPasteboard(.username) })
-                
-                CopyableCell(title: UserText.autofillLoginDetailsPassword,
-                             subtitle: viewModel.userVisiblePassword,
-                             selectedCell: $viewModel.selectedCell,
-                             isMonospaced: true,
-                             actionTitle: viewModel.isPasswordHidden ? UserText.autofillShowPassword : UserText.autofillHidePassword,
-                             action: { viewModel.isPasswordHidden.toggle() },
-                             secondaryActionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
-                             secondaryAction: { viewModel.copyToPasteboard(.password) },
-                             buttonImageName: "Copy-24",
-                             buttonAccessibilityLabel: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
-                             buttonAction: { viewModel.copyToPasteboard(.password) })
+            if viewModel.usernameIsPrivateEmail {
+                privateEmailCredentialsSection()
+            } else {
+                credentialsSection()
             }
 
-            
             Section {
                 CopyableCell(title: UserText.autofillLoginDetailsAddress,
                              subtitle: viewModel.address,
@@ -167,6 +166,72 @@ struct AutofillLoginDetailsView: View {
             Section {
                 deleteCell()
             }
+        }
+    }
+
+    private func credentialsSection() -> some View {
+        Section {
+            usernameCell()
+            passwordCell()
+        }
+    }
+
+    @ViewBuilder
+    private func privateEmailCredentialsSection() -> some View {
+
+        // If the user is not signed in, we should show the cells separately + the footer message
+        if !viewModel.isSignedIn {
+            Section {
+                usernameCell()
+            } footer: {
+                if !viewModel.isSignedIn {
+                    if #available(iOS 15, *) {
+                        var attributedString: AttributedString {
+                            let text = String(format: UserText.autofillSignInToManageEmail, UserText.autofillEnableEmailProtection)
+                            var attributedString = AttributedString(text)
+                            if let range = attributedString.range(of: UserText.autofillEnableEmailProtection) {
+                                attributedString[range].foregroundColor = Color(ThemeManager.shared.currentTheme.buttonTintColor)
+                            }
+                            return attributedString
+                        }
+                        Text(attributedString)
+                            .font(.footnote)
+                            .lineLimit(nil)
+                            .multilineTextAlignment(.leading)
+                            .fixedSize(horizontal: false, vertical: true)
+                    } else {
+                        Text(String(format: UserText.autofillSignInToManageEmail, UserText.autofillEnableEmailProtection))
+                            .font(.footnote)
+                            .lineLimit(nil)
+                            .multilineTextAlignment(.leading)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+            }
+            .onTapGesture {
+                viewModel.openPrivateEmailURL()
+            }
+
+            Section {
+                passwordCell()
+            }
+
+        // If signed in, we only show the separate sections if the email is manageable
+        } else if viewModel.shouldAllowManagePrivateAddress {
+            Group {
+                Section {
+                    usernameCell()
+                    privateEmailCell()
+                }
+                Section {
+                    passwordCell()
+                }
+            }.transition(.opacity)
+
+        } else {
+            Section {
+                credentialsSection()
+            }.transition(.opacity)
         }
     }
     
@@ -234,6 +299,59 @@ struct AutofillLoginDetailsView: View {
         }
         .listRowBackground(Color(designSystemColor: .surface))
     }
+
+    private func usernameCell() -> some View {
+        CopyableCell(title: UserText.autofillLoginDetailsUsername,
+                     subtitle: viewModel.usernameDisplayString,
+                     selectedCell: $viewModel.selectedCell,
+                     actionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsUsername),
+                     action: { viewModel.copyToPasteboard(.username) },
+                     buttonImageName: "Copy-24",
+                     buttonAccessibilityLabel: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsUsername),
+                     buttonAction: { viewModel.copyToPasteboard(.username) })
+
+    }
+
+    private func passwordCell() -> some View {
+        CopyableCell(title: UserText.autofillLoginDetailsPassword,
+                     subtitle: viewModel.userVisiblePassword,
+                     selectedCell: $viewModel.selectedCell,
+                     isMonospaced: true,
+                     actionTitle: viewModel.isPasswordHidden ? UserText.autofillShowPassword : UserText.autofillHidePassword,
+                     action: { viewModel.isPasswordHidden.toggle() },
+                     secondaryActionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
+                     secondaryAction: { viewModel.copyToPasteboard(.password) },
+                     buttonImageName: "Copy-24",
+                     buttonAccessibilityLabel: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
+                     buttonAction: { viewModel.copyToPasteboard(.password) })
+    }
+
+
+    private func privateEmailCell() -> some View {
+
+        HStack {
+            VStack(alignment: .leading, spacing: 3) {
+                Text("Duck Address").label4Style()
+                Text(viewModel.privateEmailMessage)
+                    .font(.footnote)
+                    .label4Style(design: .default, foregroundColorLight: .gray50, foregroundColorDark: .gray30)
+                
+            }
+            Spacer(minLength: Constants.textFieldImageSize)
+            if viewModel.privateEmailStatus == .active || viewModel.privateEmailStatus == .inactive {
+                Toggle("", isOn: $viewModel.privateEmailStatusBool)
+                    .frame(width: 80)
+                    .toggleStyle(SwitchToggleStyle(tint: Color(ThemeManager.shared.currentTheme.buttonTintColor)))
+            } else {
+                Image("Alert-Color-16")
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
+
+            }
+        }
+    }
+
 }
 
 private struct MultilineTextEditor: View {
@@ -480,3 +598,5 @@ private struct Constants {
     static let textFieldTapSize: CGFloat = 44
     static let insets = EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
 }
+
+// swiftlint:enable type_body_length

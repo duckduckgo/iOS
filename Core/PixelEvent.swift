@@ -302,6 +302,13 @@ extension Pixel {
         case remoteMessageSecondaryActionClicked
         case remoteMessageSheet
 
+        // MARK: Lock Screen widgets
+        case lockScreenWidgetNewSearch
+        case lockScreenWidgetFavorites
+        case lockScreenWidgetFireButton
+        case lockScreenWidgetVoiceSearch
+        case lockScreenWidgetNewEmail
+
         // MARK: debug pixels
         case dbCrashDetected
 
@@ -709,6 +716,13 @@ extension Pixel.Event {
         case .remoteMessagePrimaryActionClicked: return "m_remote_message_primary_action_clicked"
         case .remoteMessageSecondaryActionClicked: return "m_remote_message_secondary_action_clicked"
         case .remoteMessageSheet: return "m_remote_message_sheet"
+
+        // Lock Screen Widgets
+        case .lockScreenWidgetNewSearch: return "m_lockscreen_newsearch"
+        case .lockScreenWidgetFavorites: return "m_lockscreen_favorites"
+        case .lockScreenWidgetFireButton: return "m_lockscreen_fire"
+        case .lockScreenWidgetVoiceSearch: return "m_lockscreen_voicesearch"
+        case .lockScreenWidgetNewEmail: return "m_lockscreen_newemail"
 
         // MARK: debug pixels
 

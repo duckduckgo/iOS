@@ -103,7 +103,7 @@ extension MainViewController: EmailManagerRequestDelegate {
 extension MainViewController: EmailManagerAliasPermissionDelegate {
 
     func emailManager(_ emailManager: EmailManager,
-                      didRequestPermissionToProvideAliasWithCompletion completionHandler: @escaping (EmailManagerPermittedAddressType) -> Void) {
+                      didRequestPermissionToProvideAliasWithCompletion: @escaping (EmailManagerPermittedAddressType, Bool) -> Void) {
 
         DispatchQueue.main.async {
             let emailAddressPromptViewController = EmailAddressPromptViewController(emailManager) { addressType in

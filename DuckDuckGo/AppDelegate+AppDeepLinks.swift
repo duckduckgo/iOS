@@ -26,20 +26,23 @@ extension AppDelegate {
     func handleAppDeepLink(_ app: UIApplication, _ mainViewController: MainViewController?, _ url: URL) -> Bool {
         guard let mainViewController else { return false }
 
+        func firePixelIfLockScreen(_ pixelEvent: Pixel.Event) {
+            if url.getParameter(named: "ls") != nil {
+                Pixel.fire(pixel: pixelEvent)
+            }
+        }
+
         switch AppDeepLinkSchemes.fromURL(url) {
 
         case .newSearch:
             mainViewController.newTab(reuseExisting: true)
             mainViewController.enterSearch()
-            if url.getParameter(named: "ls") != nil {
-                Pixel.fire(pixel: .lockScreenWidgetNewSearch)
-            }
+            firePixelIfLockScreen(.lockScreenWidgetNewSearch)
+
 
         case .favorites:
             mainViewController.newTab(reuseExisting: true, allowingKeyboard: false)
-            if url.getParameter(named: "ls") != nil {
-                Pixel.fire(pixel: .lockScreenWidgetFavorites)
-            }
+            firePixelIfLockScreen(.lockScreenWidgetFavorites)
 
         case .quickLink:
             let query = AppDeepLinkSchemes.query(fromQuickLink: url)
@@ -50,21 +53,15 @@ extension AppDelegate {
 
         case .fireButton:
             mainViewController.forgetAllWithAnimation()
-            if url.getParameter(named: "ls") != nil {
-                Pixel.fire(pixel: .lockScreenWidgetFireButton)
-            }
+            firePixelIfLockScreen(.lockScreenWidgetFireButton)
 
         case .voiceSearch:
             mainViewController.onVoiceSearchPressed()
-            if url.getParameter(named: "ls") != nil {
-                Pixel.fire(pixel: .lockScreenWidgetVoiceSearch)
-            }
+            firePixelIfLockScreen(.lockScreenWidgetVoiceSearch)
 
         case .newEmail:
             mainViewController.newEmailAddress()
-            if url.getParameter(named: "ls") != nil {
-                Pixel.fire(pixel: .lockScreenWidgetNewEmail)
-            }
+            firePixelIfLockScreen(.lockScreenWidgetNewEmail)
 
         default:
             guard app.applicationState == .active,

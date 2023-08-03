@@ -922,6 +922,9 @@
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "No matches found";
 
+/* Generic error message on a dialog for when the cause is not known. */
+"error.unknown.try.again" = "An unknown error has occurred";
+
 /* No comment provided by engineer. */
 "favorite" = "Favorite";
 
@@ -1141,6 +1144,18 @@
 /* Home tab title */
 "homeTab.title" = "Home";
 
+/* OK title for invite screen alert dismissal button */
+"invite.alert.ok.button" = "OK";
+
+/* Get Started button on an invite dialog */
+"invite.dialog.get.started.button" = "Get Started";
+
+/* Submit button on an invite dialog */
+"invite.dialog.submit.button" = "Submit";
+
+/* Message to show after user enters an unrecognized invite code */
+"invite.dialog.unrecognized.code.message" = "We didn’t recognize this Invite Code.";
+
 /* No comment provided by engineer. */
 "keyCommandAddBookmark" = "Add Bookmark";
 
@@ -1273,8 +1288,13 @@ https://duckduckgo.com/mac";
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
 
-/* Message for the network protection invite success view
-   Title for the network protection invite success view */
+/* Message explaining that netP is invite only */
+"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
+
+/* Message for the network protection invite success view */
+"network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
+
+/* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
 
 /* Do not translate - stringsdict entry */

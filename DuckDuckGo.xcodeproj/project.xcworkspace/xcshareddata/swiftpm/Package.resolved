@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": "daniel/private-email-autofill",
-          "revision": "83ebb3c2a2a5fdb3fb7a4d133811bdebc2e03c3b",
+          "revision": "80e0d6f634c3775b2bee633462c6e2de5eba6c97",
           "version": null
         }
       },
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/duckduckgo/content-scope-scripts",
         "state": {
           "branch": null,
-          "revision": "0cfcedb9c8aefa52c7f3a36a2b3793a2c44de764",
-          "version": "4.22.5"
+          "revision": "a4f35ad23ac4a0eb9b36b94f1f2aa0f0ebf2855d",
+          "version": "4.30.0"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/duckduckgo/DesignResourcesKit",
         "state": {
           "branch": null,
-          "revision": "119efad12aa5d5917d10ee4492d40839848b3b3c",
-          "version": "1.1.0"
+          "revision": "5de78d59358ff60651b2cf9322c74a2297927b4e",
+          "version": "1.1.1"
         }
       },
       {

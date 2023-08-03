@@ -29,7 +29,6 @@ extension Pixel {
     public enum Event {
         
         case appLaunch
-        case defaultBrowserLaunch
         case refreshPressed
         
         case forgetAllPressedBrowsing
@@ -142,10 +141,7 @@ extension Pixel {
         case daxDialogsAutoconsentShown
         case daxDialogsAutoconsentConfirmed
         case daxDialogsAutoconsentCancelled
-        
-        case widgetFavoriteLaunch
-        case widgetNewSearch
-        
+
         case defaultBrowserButtonPressedSettings
         
         case widgetsOnboardingCTAPressed
@@ -263,6 +259,7 @@ extension Pixel {
         
         case adClickAttributionDetected
         case adClickAttributionActive
+        case adClickAttributionPageLoads
         
         // MARK: SERP pixels
         
@@ -435,7 +432,6 @@ extension Pixel.Event {
     public var name: String {
         switch self {
         case .appLaunch: return "ml"
-        case .defaultBrowserLaunch: return "m_dl"
         case .refreshPressed: return "m_r"
             
         case .forgetAllPressedBrowsing: return "mf_bp"
@@ -549,9 +545,6 @@ extension Pixel.Event {
         case .daxDialogsAutoconsentShown: return "m_dax_dialog_autoconsent_shown"
         case .daxDialogsAutoconsentConfirmed: return "m_dax_dialog_autoconsent_confirmed"
         case .daxDialogsAutoconsentCancelled: return "m_dax_dialog_autoconsent_cancelled"
-            
-        case .widgetFavoriteLaunch: return "m_w_fl"
-        case .widgetNewSearch: return "m_w_ns"
             
         case .defaultBrowserButtonPressedSettings: return "m_db_s"
             
@@ -676,6 +669,7 @@ extension Pixel.Event {
             
         case .adClickAttributionDetected: return "m_ad_click_detected"
         case .adClickAttributionActive: return "m_ad_click_active"
+        case .adClickAttributionPageLoads: return "m_pageloads_with_ad_attribution"
             
         // MARK: SERP pixels
             

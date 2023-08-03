@@ -72,6 +72,7 @@ class TabSwitcherViewController: UIViewController {
     
     private var tabSwitcherSettings: TabSwitcherSettings = DefaultTabSwitcherSettings()
     private var isProcessingUpdates = false
+    private var canUpdateCollection = true
 
     let favicons = Favicons.shared
     
@@ -295,6 +296,9 @@ class TabSwitcherViewController: UIViewController {
     }
     
     func markCurrentAsViewedAndDismiss() {
+        // Will be dismissed, so no need to process incoming updates
+        canUpdateCollection = false
+
         if let current = currentSelection {
             let tab = tabsModel.get(tabAt: current)
             tab.viewed = true
@@ -332,6 +336,7 @@ class TabSwitcherViewController: UIViewController {
     }
 
     override func dismiss(animated: Bool, completion: (() -> Void)? = nil) {
+        canUpdateCollection = false
         tabsModel.tabs.forEach { $0.removeObserver(self) }
         super.dismiss(animated: animated, completion: completion)
     }
@@ -343,6 +348,9 @@ extension TabSwitcherViewController: TabViewCellDelegate {
         guard let index = tabsModel.indexOf(tab: tab) else { return }
         let isLastTab = tabsModel.count == 1
         if isLastTab {
+            // Will be dismissed, so no need to process incoming updates
+            canUpdateCollection = false
+
             delegate.tabSwitcher(self, didRemoveTab: tab)
             currentSelection = tabsModel.currentIndex
             refreshTitle()
@@ -477,7 +485,9 @@ extension TabSwitcherViewController: TabObserver {
     
     func didChange(tab: Tab) {
         // Reloading when updates are processed will result in a crash
-        guard !isProcessingUpdates else { return }
+        guard !isProcessingUpdates, canUpdateCollection else {
+            return
+        }
 
         if let index = tabsModel.indexOf(tab: tab), index < collectionView.numberOfItems(inSection: 0) {
             if #available(iOS 15.0, *) {

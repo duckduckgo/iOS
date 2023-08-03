@@ -30,7 +30,7 @@ struct AutofillLoginDetailsView: View {
 
     var body: some View {
         listWithBackground
-            .background(EmptyView().alert(isPresented: $viewModel.isShowingAddressUpdateConfirmAlert) {
+            .alert(isPresented: $viewModel.isShowingAddressUpdateConfirmAlert) {
                 let btnLabel = Text(viewModel.toggleConfirmationAlert.button)
                 let btnAction = viewModel.togglePrivateEmailStatus
                 let button = Alert.Button.default(btnLabel, action: btnAction)
@@ -42,7 +42,7 @@ struct AutofillLoginDetailsView: View {
                     message: Text(viewModel.toggleConfirmationAlert.message),
                     primaryButton: button,
                     secondaryButton: cancelButton)
-            })
+            }
 
     }
 

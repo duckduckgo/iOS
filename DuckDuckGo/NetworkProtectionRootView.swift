@@ -1,5 +1,5 @@
 //
-//  NetworkProtectionConvenienceInitialisers.swift
+//  NetworkProtectionRootView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -19,20 +19,26 @@
 
 #if NETWORK_PROTECTION
 
-import NetworkProtection
-import UIKit
+import SwiftUI
 
-extension ConnectionStatusObserverThroughSession {
-    convenience init() {
-        self.init(platformNotificationCenter: .default,
-                  platformDidWakeNotification: UIApplication.didBecomeActiveNotification)
+struct NetworkProtectionRootView: View {
+    let model = NetworkProtectionRootViewModel()
+
+    var body: some View {
+        switch model.initialViewKind {
+        case .invite:
+            NetworkProtectionInviteView(model: NetworkProtectionInviteViewModel())
+        case .status:
+            NetworkProtectionStatusView(
+                statusModel: NetworkProtectionStatusViewModel(), inviteModel: NetworkProtectionInviteViewModel()
+            )
+        }
     }
 }
 
-extension NetworkProtectionKeychainTokenStore {
-    convenience init() {
-        // Error events to be added as part of https://app.asana.com/0/1203137811378537/1205112639044115/f
-        self.init(useSystemKeychain: false, errorEvents: nil)
+struct NetworkProtectionRootView_Previews: PreviewProvider {
+    static var previews: some View {
+        NetworkProtectionRootView()
     }
 }
 

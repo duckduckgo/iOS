@@ -354,43 +354,6 @@ struct AutofillLoginDetailsView: View {
 
 }
 
-struct ClearTextField: View {
-    var placeholderText: String
-    @Binding var text: String
-    var autoCapitalizationType: UITextAutocapitalizationType = .none
-    var disableAutoCorrection = true
-    var keyboardType: UIKeyboardType = .default
-    var secure = false
-
-    @State private var closeButtonVisible = false
-    
-    var body: some View {
-        HStack {
-            TextField(placeholderText, text: $text) { editing in
-                closeButtonVisible = editing
-            } onCommit: {
-                closeButtonVisible = false
-            }
-            .autocapitalization(autoCapitalizationType)
-            .disableAutocorrection(disableAutoCorrection)
-            .keyboardType(keyboardType)
-            .label4Style(design: secure && text.count > 0 ? .monospaced : .default)
-            
-            Spacer()
-            Image("Clear-16")
-                .opacity(closeButtonOpacity)
-                .onTapGesture { self.text = "" }
-        }
-    }
-    
-    private var closeButtonOpacity: Double {
-        if text == "" || !closeButtonVisible {
-            return 0
-        }
-        return 1
-    }
-}
-
 private struct MultilineTextEditor: View {
     @Binding var text: String
     

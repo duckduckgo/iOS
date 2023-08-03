@@ -610,6 +610,18 @@ In addition to the details entered into this form, your app issue report will co
     public static let netPNavTitle = NSLocalizedString("netP.title", value: "Network Protection", comment: "Title for the Network Protection feature")
     public static let netPCellConnected = NSLocalizedString("netP.cell.connected", value: "Connected", comment: "String indicating NetP is connected when viewed from the settings screen")
     public static let netPCellDisconnected = NSLocalizedString("netP.cell.disconnected", value: "Not connected", comment: "String indicating NetP is disconnected when viewed from the settings screen")
+    static let netPInviteTitle = NSLocalizedString("network.protection.invite.dialog.title", value: "You're invited to try Network Protection", comment: "Title for the network protection invite screen")
+    static let netPInviteMessage = NSLocalizedString("network.protection.invite.dialog.message", value: "Enter your invite code to get started.", comment: "Message for the network protection invite dialog")
+    static let netPInviteFieldPrompt = NSLocalizedString("network.protection.invite.field.prompt", value: "Invite Code", comment: "Prompt for the network protection invite code text field")
+    static let netPInviteSuccessTitle = NSLocalizedString("network.protection.invite.success.title", value: "Success! You’re in.", comment: "Title for the network protection invite success view")
+    static let netPInviteSuccessMessage = NSLocalizedString("network.protection.invite.success.message", value: "Hide your location from websites and conceal your online activity from Internet providers and others on your network.", comment: "Message for the network protection invite success view")
+    static let netPInviteOnlyMessage = NSLocalizedString("network.protection.invite.only.message", value: "DuckDuckGo Network Protection is currently invite-only.", comment: "Message explaining that netP is invite only")
+
+    static let inviteDialogSubmitButton = NSLocalizedString("invite.dialog.submit.button", value: "Submit", comment: "Submit button on an invite dialog")
+    static let inviteDialogGetStartedButton = NSLocalizedString("invite.dialog.get.started.button", value: "Get Started", comment: "Get Started button on an invite dialog")
+    static let inviteDialogUnrecognizedCodeMessage = NSLocalizedString("invite.dialog.unrecognized.code.message", value: "We didn’t recognize this Invite Code.", comment: "Message to show after user enters an unrecognized invite code")
+    static let inviteDialogErrorAlertOKButton = NSLocalizedString("invite.alert.ok.button", value: "OK", comment: "OK title for invite screen alert dismissal button")
+
     
     // MARK: Notifications
     
@@ -775,4 +787,13 @@ In addition to the details entered into this form, your app issue report will co
     public static let syncCodeCopied = "Recovery Code copied"
     public static let syncTitle = "Sync"
 
+    // Autofill Password Generation Prompt
+    public static let autofillPasswordGenerationPromptTitle = NSLocalizedString("autofill.password-generation-prompt.title", value:"Use generated password from DuckDuckGo?", comment: "Title for prompt to use suggested strong password for creating a login")
+    public static let autofillPasswordGenerationPromptSubtitle = NSLocalizedString("autofill.password-generation-prompt.subtitle", value:"Password will be saved in Logins.", comment: "Subtitle for prompt to use suggested strong password for creating a login")
+    public static let autofillPasswordGenerationPromptUseGeneratedPasswordCTA = NSLocalizedString("autofill.password-generation-prompt.use-generated-password.cta", value:"Use Generated Password", comment: "Button title choosing to use the suggested generated password for creating a login")
+    public static let autofillPasswordGenerationPromptUseOwnPasswordCTA = NSLocalizedString("autofill.password-generation-prompt.use-own-password.cta", value:"Create My Own", comment: "Button title choosing to use own password for creating a login")
+
+    // MARK: Errors
+
+    static let unknownErrorTryAgainMessage = NSLocalizedString("error.unknown.try.again", value: "An unknown error has occurred", comment: "Generic error message on a dialog for when the cause is not known.")
 }

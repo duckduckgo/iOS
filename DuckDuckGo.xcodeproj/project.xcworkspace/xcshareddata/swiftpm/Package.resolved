@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "sabrina/remove-www-dropping-from-suggestions",
-          "revision": "eb920f24ff516f90e2c37f536f0a0854943a9121",
-          "version": null
+          "branch": null,
+          "revision": "30aeb1c334fcac93366cb9642568c7bcd69cdbef",
+          "version": "71.2.1"
         }
       },
       {

@@ -261,8 +261,6 @@ class TabViewController: UIViewController {
         return controller
     }
 
-    private var autoSavedCredentialsId: String = ""
-
     private var userContentController: UserContentController {
         (webView.configuration.userContentController as? UserContentController)!
     }
@@ -1187,7 +1185,6 @@ extension TabViewController: WKNavigationDelegate {
            ?? false {
             detectedLoginURL = nil
             saveLoginPromptLastDismissed = nil
-            autoSavedCredentialsId = ""
         }
     }
     
@@ -2293,13 +2290,11 @@ extension TabViewController: SecureVaultManagerDelegate {
             featureFlagger.isFeatureOn(.autofillCredentialsSaving) {
             if data.automaticallySavedCredentials, let trigger = trigger {
                 if trigger == AutofillUserScript.GetTriggerType.passwordGeneration {
-                    autoSavedCredentialsId = credentials.account.id ?? ""
                     return
                 } else if trigger == AutofillUserScript.GetTriggerType.formSubmission {
                     guard let accountID = credentials.account.id,
                           let accountIdInt = Int64(accountID) else { return }
                     confirmSavedCredentialsFor(credentialID: accountIdInt, message: UserText.autofillLoginSavedToastMessage)
-                    self.autoSavedCredentialsId = ""
                     return
                 }
             }

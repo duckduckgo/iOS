@@ -11638,7 +11638,7 @@
                 "Audience Measurement",
                 "Third-Party Analytics Marketing"
             ],
-            "default": "block",
+            "default": "ignore",
             "rules": [
                 {
                     "rule": "googletagmanager\\.com/gtm\\.js",
@@ -11662,7 +11662,128 @@
                             "redballoon.com.au",
                             "southbankresearch.com"
                         ]
+                    },
+                    "options": {
+                        "domains": [
+                            "abbottnutrition.com",
+                            "abril.com.br",
+                            "alza.cz",
+                            "amateur.tv",
+                            "au.com",
+                            "autobodytoolmart.com",
+                            "autodesk.com",
+                            "autoscout24.be",
+                            "autoscout24.com",
+                            "autoscout24.de",
+                            "autoscout24.es",
+                            "autoscout24.it",
+                            "bfv.de",
+                            "blackwoods.com.au",
+                            "bloomberg.co.jp",
+                            "bradyid.com",
+                            "c-and-a.com",
+                            "cerdas.com",
+                            "coldwatercreek.com",
+                            "connectionsacademy.com",
+                            "dailypaws.com",
+                            "debijenkorf.nl",
+                            "deutschlandcard.de",
+                            "digitec.ch",
+                            "ensure.com",
+                            "eprice.it",
+                            "ew.com",
+                            "fanatec.com",
+                            "farrow-ball.com",
+                            "francebleu.fr",
+                            "galaxus.ch",
+                            "galaxus.de",
+                            "gardenista.com",
+                            "gereedschapcentrum.nl",
+                            "gobankingrates.com",
+                            "healthchoicesfirst.com",
+                            "hellooha.com",
+                            "henkel-adhesives.com",
+                            "hustlermoneyblog.com",
+                            "hut.de",
+                            "jetbrains.com",
+                            "joongang.co.kr",
+                            "kik.de",
+                            "kunzmann.de",
+                            "lectura-specs.com",
+                            "lectura.de",
+                            "marketwatch.com",
+                            "mediaexpert.pl",
+                            "midwestliving.com",
+                            "milanomalpensa-airport.com",
+                            "moneycrashers.com",
+                            "morbocornudos.com",
+                            "nordvpn.com",
+                            "notino.co.uk",
+                            "notino.pl",
+                            "notino.ro",
+                            "ntotank.com",
+                            "ozone.bg",
+                            "pajilleros.com",
+                            "parenting.com",
+                            "peacocks.co.uk",
+                            "plannedparenthood.org",
+                            "pmtonline.co.uk",
+                            "qbe.com",
+                            "qualys.com",
+                            "reclameaqui.com.br",
+                            "remax.com",
+                            "remodelista.com",
+                            "rotowire.com",
+                            "seaworld.com",
+                            "skincare-univ.com",
+                            "sotor.com",
+                            "specsavers.com.au",
+                            "straighttalk.com",
+                            "theindependentpharmacy.co.uk",
+                            "tiaabank.com",
+                            "todorelatos.com",
+                            "totalbyverizon.com",
+                            "tracfone.com",
+                            "urssaf.fr",
+                            "wallethacks.com",
+                            "webjet.com.au",
+                            "webteb.com",
+                            "xfinity.com"
+                        ]
                     }
+                },
+                {
+                    "rule": "googletagmanager\\.com/gtag/js"
+                },
+                {
+                    "rule": "googletagmanager\\.com/amp\\.json"
+                },
+                {
+                    "rule": "googletagmanager\\.com/a"
+                },
+                {
+                    "rule": "googletagmanager\\.com/gtag/destination"
+                },
+                {
+                    "rule": "googletagmanager\\.com/ns\\.html"
+                },
+                {
+                    "rule": "googletagmanager\\.com/td"
+                },
+                {
+                    "rule": "googletagmanager\\.com/dclk/ns/v1\\.js"
+                },
+                {
+                    "rule": "googletagmanager\\.com/gtag\\.js"
+                },
+                {
+                    "rule": "googletagmanager\\.com/gtag/amp"
+                },
+                {
+                    "rule": "googletagmanager\\.com/gtm/js"
+                },
+                {
+                    "rule": "googletagmanager\\.com/ns\\.twig"
                 }
             ]
         },

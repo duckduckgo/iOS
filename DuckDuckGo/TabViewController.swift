@@ -2281,6 +2281,10 @@ extension TabViewController: SecureVaultManagerDelegate {
         return isEnabled
     }
 
+    func secureVaultManagerShouldSaveData(_: SecureVaultManager) -> Bool {
+        true
+    }
+
     func secureVaultManager(_ vault: SecureVaultManager,
                             promptUserToStoreAutofillData data: AutofillData,
                             withTrigger trigger: AutofillUserScript.GetTriggerType?) {
@@ -2304,18 +2308,6 @@ extension TabViewController: SecureVaultManagerDelegate {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.presentSavePasswordModal(with: vault, credentials: credentials)
             }
-        }
-    }
-
-    private func deleteLoginFor(accountIdInt: Int64) {
-        do {
-            let secureVault = try? AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared)
-            if secureVault == nil {
-                os_log("Failed to make vault")
-            }
-            try secureVault?.deleteWebsiteCredentialsFor(accountId: accountIdInt)
-        } catch {
-            Pixel.fire(pixel: .secureVaultError)
         }
     }
 
@@ -2345,6 +2337,27 @@ extension TabViewController: SecureVaultManagerDelegate {
         } else {
             completionHandler(nil)
         }
+    }
+
+    func secureVaultManager(_: SecureVaultManager,
+                            promptUserWithGeneratedPassword password: String,
+                            completionHandler: @escaping (Bool) -> Void) {
+        let passwordGenerationPromptViewController = PasswordGenerationPromptViewController(generatedPassword: password) { useGeneratedPassword in
+                completionHandler(useGeneratedPassword)
+        }
+
+        if #available(iOS 15.0, *) {
+            if let presentationController = passwordGenerationPromptViewController.presentationController as? UISheetPresentationController {
+                if #available(iOS 16.0, *) {
+                    presentationController.detents = [.custom(resolver: { _ in
+                        AutofillViews.passwordGenerationMinHeight
+                    })]
+                } else {
+                    presentationController.detents = [.medium()]
+                }
+            }
+        }
+        self.present(passwordGenerationPromptViewController, animated: true)
     }
 
     /// Using Bool for detent size parameter to be backward compatible with iOS 14
@@ -2386,45 +2399,8 @@ extension TabViewController: SecureVaultManagerDelegate {
         // No-op, don't need to do anything here
     }
 
-    func secureVaultManagerShouldAutomaticallyUpdateCredentialsWithoutUsername(_: SecureVaultManager, shouldSilentlySave: Bool) -> Bool {
-        guard AutofillSettingStatus.isAutofillEnabledInSettings,
-              featureFlagger.isFeatureOn(.autofillPasswordGeneration) else { return false }
-        return shouldSilentlySave ? true : false
-    }
-
-    func secureVaultManagerShouldSilentlySaveGeneratedPassword(_: SecureVaultManager) -> Bool {
-        guard AutofillSettingStatus.isAutofillEnabledInSettings,
-              featureFlagger.isFeatureOn(.autofillPasswordGeneration) else { return false }
-        return true
-    }
-
-    func secureVaultManagerShouldSaveData(_: SecureVaultManager) -> Bool {
-        true
-    }
-
     func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
         // We don't have auth yet
-    }
-
-    func secureVaultManager(_: SecureVaultManager,
-                            promptUserWithGeneratedPassword password: String,
-                            completionHandler: @escaping (Bool) -> Void) {
-        let passwordGenerationPromptViewController = PasswordGenerationPromptViewController(generatedPassword: password) { useGeneratedPassword in
-                completionHandler(useGeneratedPassword)
-        }
-
-        if #available(iOS 15.0, *) {
-            if let presentationController = passwordGenerationPromptViewController.presentationController as? UISheetPresentationController {
-                if #available(iOS 16.0, *) {
-                    presentationController.detents = [.custom(resolver: { _ in
-                        AutofillViews.passwordGenerationMinHeight
-                    })]
-                } else {
-                    presentationController.detents = [.medium()]
-                }
-            }
-        }
-        self.present(passwordGenerationPromptViewController, animated: true)
     }
 
     func secureVaultManager(_: BrowserServicesKit.SecureVaultManager, didRequestCreditCardsManagerForDomain domain: String) {

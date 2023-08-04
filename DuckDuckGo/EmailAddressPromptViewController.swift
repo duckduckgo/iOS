@@ -24,7 +24,7 @@ import UIKit
 
 class EmailAddressPromptViewController: UIViewController {
 
-    typealias EmailAddressPromptViewControllerCompletion = (_ addressType: EmailManagerPermittedAddressType) -> Void
+    typealias EmailAddressPromptViewControllerCompletion = (_ addressType: EmailManagerPermittedAddressType, _ autosave: Bool) -> Void
     let completion: EmailAddressPromptViewControllerCompletion
 
     private var viewModel: EmailAddressPromptViewModel?
@@ -73,7 +73,7 @@ extension EmailAddressPromptViewController: UISheetPresentationControllerDelegat
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         Pixel.fire(pixel: .emailTooltipDismissed, withAdditionalParameters: pixelParameters, includedParameters: [])
 
-        completion(.none)
+        completion(.none, false)
     }
 }
 
@@ -85,7 +85,7 @@ extension EmailAddressPromptViewController: EmailAddressPromptViewModelDelegate 
 
         Pixel.fire(pixel: .emailUserPressedUseAddress, withAdditionalParameters: pixelParameters, includedParameters: [])
 
-        completion(.user)
+        completion(.user, false)
 
         dismiss(animated: true)
     }
@@ -96,7 +96,7 @@ extension EmailAddressPromptViewController: EmailAddressPromptViewModelDelegate 
 
         Pixel.fire(pixel: .emailUserPressedUseAlias, withAdditionalParameters: pixelParameters, includedParameters: [])
 
-        completion(.generated)
+        completion(.generated, true)
 
         dismiss(animated: true)
     }
@@ -104,7 +104,7 @@ extension EmailAddressPromptViewController: EmailAddressPromptViewModelDelegate 
     func emailAddressPromptViewModelDidClose(_ viewModel: EmailAddressPromptViewModel) {
         Pixel.fire(pixel: .emailTooltipDismissed, withAdditionalParameters: pixelParameters, includedParameters: [])
 
-        completion(.none)
+        completion(.none, false)
 
         dismiss(animated: true)
     }

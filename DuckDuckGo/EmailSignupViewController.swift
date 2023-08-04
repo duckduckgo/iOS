@@ -329,10 +329,6 @@ extension EmailSignupViewController: UserContentControllerDelegate {
 
 extension EmailSignupViewController: EmailManagerRequestDelegate {
 
-    func emailManagerIncontextPromotion() {
-        // no-op
-    }
-
     // swiftlint:disable function_parameter_count
     func emailManager(_ emailManager: EmailManager, requested url: URL, method: String, headers: [String: String], parameters: [String: String]?, httpBody: Data?, timeoutInterval: TimeInterval) async throws -> Data {
         let method = APIRequest.HTTPMethod(rawValue: method) ?? .post
@@ -386,9 +382,12 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
         return isEnabled
     }
 
+    func secureVaultManagerShouldSaveData(_: BrowserServicesKit.SecureVaultManager) -> Bool {
+        return false
+    }
+
     func secureVaultManager(_ vault: SecureVaultManager,
                             promptUserToStoreAutofillData data: AutofillData,
-                            hasGeneratedPassword generatedPassword: Bool,
                             withTrigger trigger: AutofillUserScript.GetTriggerType?) {
         // no-op
     }
@@ -401,29 +400,17 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
         // no-op
     }
 
+    func secureVaultManager(_: SecureVaultManager,
+                            promptUserWithGeneratedPassword password: String,
+                            completionHandler: @escaping (Bool) -> Void) {
+        // no-op
+    }
+
     func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: String) {
         // no-op
     }
 
-    func secureVaultManagerShouldAutomaticallyUpdateCredentialsWithoutUsername(_: SecureVaultManager, shouldSilentlySave: Bool) -> Bool {
-        return false
-    }
-
-    func secureVaultManagerShouldSilentlySaveGeneratedPassword(_: SecureVaultManager) -> Bool {
-        return false
-    }
-
-    func secureVaultManagerShouldSaveData(_: BrowserServicesKit.SecureVaultManager) -> Bool {
-        return false
-    }
-
     func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
-        // no-op
-    }
-
-    func secureVaultManager(_: SecureVaultManager,
-                            promptUserWithGeneratedPassword password: String,
-                            completionHandler: @escaping (Bool) -> Void) {
         // no-op
     }
 

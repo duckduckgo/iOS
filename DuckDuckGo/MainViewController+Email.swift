@@ -106,8 +106,8 @@ extension MainViewController: EmailManagerAliasPermissionDelegate {
                       didRequestPermissionToProvideAliasWithCompletion: @escaping (EmailManagerPermittedAddressType, Bool) -> Void) {
 
         DispatchQueue.main.async {
-            let emailAddressPromptViewController = EmailAddressPromptViewController(emailManager) { addressType in
-                completionHandler(addressType)
+            let emailAddressPromptViewController = EmailAddressPromptViewController(emailManager) { addressType, autosave in
+                didRequestPermissionToProvideAliasWithCompletion(addressType, autosave)
             }
 
             if #available(iOS 15.0, *) {

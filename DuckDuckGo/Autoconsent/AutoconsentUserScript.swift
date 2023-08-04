@@ -235,7 +235,8 @@ extension AutoconsentUserScript {
             return
         }
 
-        guard config.isFeature(.autoconsent, enabledForDomain: url.host) else {
+        let topURLDomain = message.webView?.url?.host
+        guard config.isFeature(.autoconsent, enabledForDomain: topURLDomain) else {
             os_log("disabled for site: %s", log: .autoconsentLog, type: .info, String(describing: url.absoluteString))
             replyHandler([ "type": "ok" ], nil) // this is just to prevent a Promise rejection
             return

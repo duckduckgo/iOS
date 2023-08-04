@@ -261,8 +261,6 @@ class TabViewController: UIViewController {
         return controller
     }
 
-    private var autoSavedCredentialsId: String = ""
-
     private var userContentController: UserContentController {
         (webView.configuration.userContentController as? UserContentController)!
     }
@@ -1187,7 +1185,6 @@ extension TabViewController: WKNavigationDelegate {
            ?? false {
             detectedLoginURL = nil
             saveLoginPromptLastDismissed = nil
-            autoSavedCredentialsId = ""
         }
     }
     
@@ -2286,34 +2283,20 @@ extension TabViewController: SecureVaultManagerDelegate {
 
     func secureVaultManager(_ vault: SecureVaultManager,
                             promptUserToStoreAutofillData data: AutofillData,
-                            hasGeneratedPassword generatedPassword: Bool,
                             withTrigger trigger: AutofillUserScript.GetTriggerType?) {
-        if var credentials = data.credentials,
+        
+        if let credentials = data.credentials,
             AutofillSettingStatus.isAutofillEnabledInSettings,
             featureFlagger.isFeatureOn(.autofillCredentialsSaving) {
-            if generatedPassword, let trigger = trigger {
+            if data.automaticallySavedCredentials, let trigger = trigger {
                 if trigger == AutofillUserScript.GetTriggerType.passwordGeneration {
-                    autoSavedCredentialsId = credentials.account.id ?? ""
                     return
                 } else if trigger == AutofillUserScript.GetTriggerType.formSubmission {
                     guard let accountID = credentials.account.id,
                           let accountIdInt = Int64(accountID) else { return }
                     confirmSavedCredentialsFor(credentialID: accountIdInt, message: UserText.autofillLoginSavedToastMessage)
-                    self.autoSavedCredentialsId = ""
                     return
                 }
-            }
-
-            if !autoSavedCredentialsId.isEmpty {
-                if let accountIdInt = Int64(autoSavedCredentialsId) {
-                    /// generatedPassword has been modified by user so delete the autosaved credential from db and prompt to save login as new credentials
-                    deleteLoginFor(accountIdInt: accountIdInt)
-                    if credentials.account.id == autoSavedCredentialsId {
-                        credentials.account.id = nil
-                    }
-                }
-
-                self.autoSavedCredentialsId = ""
             }
 
             // Add a delay to allow propagation of pointer events to the page

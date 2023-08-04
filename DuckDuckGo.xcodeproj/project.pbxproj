@@ -741,7 +741,6 @@
 		EE50053029C3BA0800AE0773 /* InternalUserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE50052F29C3BA0800AE0773 /* InternalUserStore.swift */; };
 		EE8594992A44791C008A6D06 /* NetworkProtectionTunnelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8594982A44791C008A6D06 /* NetworkProtectionTunnelController.swift */; };
 		EE8E568A2A56BCE400F11DCA /* NetworkProtection in Frameworks */ = {isa = PBXBuildFile; productRef = EE8E56892A56BCE400F11DCA /* NetworkProtection */; };
-		EED03B6F2A7D4CC2000C4457 /* PacketTunnelProvider.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 02025662298818B100E694E7 /* PacketTunnelProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EEEB80A32A421CE600386378 /* NetworkProtectionPacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB80A22A421CE600386378 /* NetworkProtectionPacketTunnelProvider.swift */; };
 		EEFAB4672A73C230008A38E4 /* NetworkProtectionTestUtils in Frameworks */ = {isa = PBXBuildFile; productRef = EEFAB4662A73C230008A38E4 /* NetworkProtectionTestUtils */; };
 		EEFD562F2A65B6CA00DAEC48 /* NetworkProtectionInviteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFD562E2A65B6CA00DAEC48 /* NetworkProtectionInviteViewModel.swift */; };
@@ -956,7 +955,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				EED03B6F2A7D4CC2000C4457 /* PacketTunnelProvider.appex in Embed App Extensions */,
 				85482D942462DCD100EDEDD1 /* OpenAction.appex in Embed App Extensions */,
 				8512EA5D24ED30D30073EE19 /* WidgetsExtension.appex in Embed App Extensions */,
 				8390447620BDCE10006461CD /* ShareExtension.appex in Embed App Extensions */,

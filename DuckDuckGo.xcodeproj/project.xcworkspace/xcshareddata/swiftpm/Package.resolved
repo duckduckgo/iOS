@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "f419ede296e0b30d680fcd80364962ea1c1b1365",
-          "version": "72.0.0"
+          "branch": "graeme/create-tunnelcontroller-mock",
+          "revision": "db3be3e0a561e104f5e24292a3fe454836fa43bd",
+          "version": null
         }
       },
       {

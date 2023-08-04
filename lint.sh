@@ -1,5 +1,7 @@
 #!/bin/bash
 
+FIX=false
+
 if [[ "$1" == "--fix" ]]; then
     FIX=true
 fi

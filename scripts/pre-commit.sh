@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # URL where the installation/uninstallation script is hosted
-SCRIPT_URL="https://raw.githubusercontent.com/duckduckgo/BrowserServicesKit/daniel/swiftlint-hook/scripts/swiftlint-hook.sh"
+SCRIPT_URL="https://raw.githubusercontent.com/duckduckgo/BrowserServicesKit/daniel/swiftlint-hook/scripts/pre-commit.sh"
 LOCAL_SCRIPT="local-install-pre-commit-hook.sh"
 
 # Check the argument for install or uninstall

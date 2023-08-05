@@ -32,10 +32,15 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
     @Published public var sections: [NSFetchedResultsSectionInfo] = []
 
     @Published public var debugModeEnabled = false
+    @Published public var isOnboarding = false
     
     // We only want to show "Manage Trackers" and "Report an issue" if the user has enabled AppTP at least once
     @UserDefaultsWrapper(key: .appTPUsed, defaultValue: false)
-    public var appTPUsed
+    public var appTPUsed {
+        didSet {
+            isOnboarding = !appTPUsed
+        }
+    }
 
     private let context: NSManagedObjectContext
 
@@ -133,6 +138,8 @@ public class AppTrackingProtectionListViewModel: NSObject, ObservableObject, NSF
         self.context.stalenessInterval = 0
 
         super.init()
+        
+        self.isOnboarding = !appTPUsed
 
         setupFetchedResultsController()
         registerForLifecycleEvents()

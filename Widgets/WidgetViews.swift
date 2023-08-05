@@ -35,27 +35,31 @@ struct FavoriteView: View {
 
                 Link(destination: favorite.url) {
 
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(favorite.needsColorBackground ? Color.forDomain(favorite.domain) : Color.widgetFavoritesBackground)
-                        .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 2)
-
-                    if let image = favorite.favicon {
-
-                        Image(uiImage: image)
-                            .scaleDown(image.size.width > 60)
-                            .cornerRadius(10)
-
-                    } else if favorite.isDuckDuckGo {
-
-                        Image("WidgetDaxLogo")
-                            .resizable()
-                            .frame(width: 45, height: 45, alignment: .center)
-
-                    } else {
-
-                        Text(favorite.domain.first?.uppercased() ?? "")
-                            .foregroundColor(Color.widgetFavoriteLetter)
-                            .font(.system(size: 42))
+                    ZStack {
+                        
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(favorite.needsColorBackground ? Color.forDomain(favorite.domain) : Color.widgetFavoritesBackground)
+                            .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 2)
+                        
+                        if let image = favorite.favicon {
+                            
+                            Image(uiImage: image)
+                                .scaleDown(image.size.width > 60)
+                                .cornerRadius(10)
+                            
+                        } else if favorite.isDuckDuckGo {
+                            
+                            Image("WidgetDaxLogo")
+                                .resizable()
+                                .frame(width: 45, height: 45, alignment: .center)
+                            
+                        } else {
+                            
+                            Text(favorite.domain.first?.uppercased() ?? "")
+                                .foregroundColor(Color.widgetFavoriteLetter)
+                                .font(.system(size: 42))
+                            
+                        }
 
                     }
 

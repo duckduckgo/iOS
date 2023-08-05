@@ -21,65 +21,110 @@ import SwiftUI
 
 struct UnderflowContainer<BackgroundContent: View, ForegroundContent: View>: View {
 
-    let space = CoordinateSpace.named("overContent")
+    let container = CoordinateSpace.named("container")
+    let backgroundContent: () -> BackgroundContent
+    let foregroundContent: () -> ForegroundContent
 
-    @Environment(\.verticalSizeClass) var verticalSizeClass
-
-    var isCompact: Bool {
-        verticalSizeClass == .compact
+    func calcIsUnderflowing() -> Bool {
+        guard contentSize != .zero && buttonsSize != .zero && foregroundContainerSize != .zero else {
+            return false
+        }
+        return buttonsSize.height + contentSize.height > foregroundContainerSize.height
     }
 
-    @State var minHeight = 0.0
+    @State var isUnderflowing = false
+    @State var contentSize: CGSize = .zero {
+        didSet {
+            isUnderflowing = calcIsUnderflowing()
+        }
+    }
+    @State var buttonsSize: CGSize = .zero {
+        didSet {
+            isUnderflowing = calcIsUnderflowing()
+        }
+    }
+    @State var foregroundContainerSize: CGSize = .zero {
+        didSet {
+            isUnderflowing = calcIsUnderflowing()
+        }
+    }
 
-    let background: () -> BackgroundContent
-    let foreground: () -> ForegroundContent
+    @ViewBuilder
+    func advancedView() -> some View {
+        let foreground = foregroundContent()
 
-    var body: some View {
         ZStack {
             ScrollView {
-                VStack {
-                    background()
-                    Spacer()
-                    ZStack {
-                        EmptyView()
-                    }
-                    .frame(minHeight: minHeight)
+                VStack(spacing: 0) {
+                    backgroundContent()
+                        .background(ViewGeometry().onPreferenceChange(ViewSizeKey.self) {
+                            contentSize = $0
+                        })
+
+                    // This is hidden so that we get the height we need to test for underscroll
+                    foreground
+                        .padding(.top, 8)
+                        .hidden()
                 }
             }
 
-            VStack {
+            VStack(spacing: 0) {
                 Spacer()
-                foreground()
-                    .modifier(SizeModifier())
-                    .padding(.top, isCompact ? 8 : 0)
+                foreground
+                    .padding(.top, 4)
                     .frame(maxWidth: .infinity)
-                    .ignoresSafeArea(.container)
-                    .applyUnderflowBackgroundOnPhone(isCompact: isCompact)
+                    .applyViewModifier(ThinMaterialBackgroundModifier(), if: isUnderflowing)
+                    .background(ViewGeometry().onPreferenceChange(ViewSizeKey.self) {
+                        buttonsSize = $0
+                    })
+            }
+            .background(ViewGeometry().onPreferenceChange(ViewSizeKey.self) {
+                foregroundContainerSize = $0
+            })
+
+        }
+    }
+
+    func simpleView() -> some View {
+        ScrollView {
+            VStack {
+                backgroundContent()
+                Spacer()
+                foregroundContent()
             }
         }
-        .onPreferenceChange(SizePreferenceKey.self) { self.minHeight = $0.height + 8 }
     }
 
-}
-
-struct SizePreferenceKey: PreferenceKey {
-    static var defaultValue: CGSize = .zero
-
-    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
-        if value.height == 0 || value.width == 0 {
-            value = nextValue()
+    var body: some View {
+        if #available(iOS 16, *) {
+            advancedView()
+        } else {
+            simpleView()
         }
     }
+
 }
 
-struct SizeModifier: ViewModifier {
-    private var sizeView: some View {
+private struct ViewGeometry: View {
+    var body: some View {
         GeometryReader { geometry in
-            Color.clear.preference(key: SizePreferenceKey.self, value: geometry.size)
+            Color.clear
+                .preference(key: ViewSizeKey.self, value: geometry.size)
         }
     }
+}
 
+private struct ViewSizeKey: PreferenceKey {
+    
+    static var defaultValue: CGSize = .zero
+    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
+        value = nextValue()
+    }
+
+}
+
+private struct ThinMaterialBackgroundModifier: ViewModifier {
     func body(content: Content) -> some View {
-        content.background(sizeView)
+        content.thinMaterialBackground()
     }
 }

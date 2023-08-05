@@ -24,9 +24,14 @@ import Persistence
 import SwiftUI
 import Common
 import DDGSync
+import Combine
 
 #if APP_TRACKING_PROTECTION
 import NetworkExtension
+#endif
+
+#if NETWORK_PROTECTION
+import NetworkProtection
 #endif
 
 // swiftlint:disable file_length type_body_length
@@ -56,6 +61,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var windowsBrowserWaitlistCell: UITableViewCell!
     @IBOutlet weak var windowsBrowserWaitlistAccessoryText: UILabel!
     @IBOutlet weak var appTPCell: UITableViewCell!
+    @IBOutlet weak var netPCell: UITableViewCell!
     @IBOutlet weak var longPressCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
     @IBOutlet weak var textSizeCell: UITableViewCell!
@@ -89,6 +95,11 @@ class SettingsViewController: UITableViewController {
     fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager
     fileprivate lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     fileprivate let syncService: DDGSyncing
+    fileprivate let internalUserDecider: InternalUserDecider
+#if NETWORK_PROTECTION
+    private let connectionObserver = ConnectionStatusObserverThroughSession()
+#endif
+    private var cancellables: Set<AnyCancellable> = []
 
     private var shouldShowDebugCell: Bool {
         return featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild
@@ -98,17 +109,25 @@ class SettingsViewController: UITableViewController {
         AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
     }
 
-    private lazy var shouldShowAutofillCell: Bool = {
+    private var shouldShowAutofillCell: Bool {
         return featureFlagger.isFeatureOn(.autofillAccessCredentialManagement)
-    }()
+    }
 
-    private lazy var shouldShowSyncCell: Bool = {
+    private var shouldShowSyncCell: Bool {
         return featureFlagger.isFeatureOn(.sync)
-    }()
+    }
     
     private lazy var shouldShowAppTPCell: Bool = {
 #if APP_TRACKING_PROTECTION
         return featureFlagger.isFeatureOn(.appTrackingProtection)
+#else
+        return false
+#endif
+    }()
+
+    private lazy var shouldShowNetPCell: Bool = {
+#if NETWORK_PROTECTION
+        return featureFlagger.isFeatureOn(.networkProtection)
 #else
         return false
 #endif
@@ -130,7 +149,19 @@ class SettingsViewController: UITableViewController {
         configureRememberLogins()
         configureDebugCell()
         configureVoiceSearchCell()
+        configureNetPCell()
         applyTheme(ThemeManager.shared.currentTheme)
+
+        internalUserDecider.isInternalUserPublisher.dropFirst().sink(receiveValue: { [weak self] _ in
+            self?.configureAutofillCell()
+            self?.configureSyncCell()
+            self?.configureDebugCell()
+            self?.tableView.reloadData()
+
+            // Scroll to force-redraw section headers and footers
+            self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        })
+        .store(in: &cancellables)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -147,7 +178,7 @@ class SettingsViewController: UITableViewController {
         configureMacBrowserWaitlistCell()
         configureWindowsBrowserWaitlistCell()
         configureAppTPCell()
-        
+
         // Make sure multiline labels are correctly presented
         tableView.setNeedsLayout()
         tableView.layoutIfNeeded()
@@ -163,11 +194,13 @@ class SettingsViewController: UITableViewController {
     init?(coder: NSCoder,
           appTPDatabase: CoreDataDatabase,
           bookmarksDatabase: CoreDataDatabase,
-          syncService: DDGSyncing) {
+          syncService: DDGSyncing,
+          internalUserDecider: InternalUserDecider) {
 
         self.appTPDatabase = appTPDatabase
         self.bookmarksDatabase = bookmarksDatabase
         self.syncService = syncService
+        self.internalUserDecider = internalUserDecider
         super.init(coder: coder)
     }
 
@@ -196,7 +229,8 @@ class SettingsViewController: UITableViewController {
     @IBSegueAction func onCreateRootDebugScreen(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> RootDebugViewController {
         guard let controller = RootDebugViewController(coder: coder,
                                                        sync: syncService,
-                                                       bookmarksDatabase: bookmarksDatabase) else {
+                                                       bookmarksDatabase: bookmarksDatabase,
+                                                       internalUserDecider: AppDependencyProvider.shared.internalUserDecider) else {
             fatalError("Failed to create controller")
         }
 
@@ -337,6 +371,25 @@ class SettingsViewController: UITableViewController {
 #endif
     }
 
+    private func configureNetPCell() {
+        netPCell.isHidden = !shouldShowNetPCell
+#if NETWORK_PROTECTION
+        connectionObserver.publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] status in
+                let detailText: String
+                switch status {
+                case .connected:
+                    detailText = UserText.netPCellConnected
+                default:
+                    detailText = UserText.netPCellDisconnected
+                }
+                self?.netPCell.detailTextLabel?.text = detailText
+            }
+            .store(in: &cancellables)
+#endif
+    }
+
     private func configureDebugCell() {
         debugCell.isHidden = !shouldShowDebugCell
     }
@@ -381,9 +434,39 @@ class SettingsViewController: UITableViewController {
     }
 
 #if APP_TRACKING_PROTECTION
+    func setNavColor(isOnboarding: Bool) {
+        let coloredAppearance = UINavigationBarAppearance()
+        coloredAppearance.configureWithTransparentBackground()
+        coloredAppearance.backgroundColor = UIColor(designSystemColor: isOnboarding ? .surface : .background)
+        
+        let navBar = self.navigationController?.navigationBar
+        navBar?.standardAppearance = coloredAppearance
+        navBar?.compactAppearance = coloredAppearance
+        navBar?.scrollEdgeAppearance = coloredAppearance
+    }
+    
     private func showAppTP() {
         navigationController?.pushViewController(
-            AppTPActivityHostingViewController(appTrackingProtectionDatabase: appTPDatabase),
+            AppTPActivityHostingViewController(appTrackingProtectionDatabase: appTPDatabase, setNavColor: setNavColor(isOnboarding:)),
+            animated: true
+        )
+    }
+#endif
+
+#if NETWORK_PROTECTION
+    private func showNetP() {
+        // This will be tidied up as part of https://app.asana.com/0/0/1205084446087078/f
+        let rootViewController = NetworkProtectionRootViewController { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+            let newRootViewController = NetworkProtectionRootViewController { }
+            self?.pushNetP(newRootViewController)
+        }
+        pushNetP(rootViewController)
+    }
+
+    private func pushNetP(_ rootViewController: NetworkProtectionRootViewController) {
+        navigationController?.pushViewController(
+            rootViewController,
             animated: true
         )
     }
@@ -427,6 +510,12 @@ class SettingsViewController: UITableViewController {
         case appTPCell:
 #if APP_TRACKING_PROTECTION
             showAppTP()
+#else
+            break
+#endif
+        case netPCell:
+#if NETWORK_PROTECTION
+            showNetP()
 #else
             break
 #endif
@@ -492,7 +581,7 @@ class SettingsViewController: UITableViewController {
             return CGFloat.leastNonzeroMagnitude
         } else if debugSectionIndex == section && !shouldShowDebugCell {
             return CGFloat.leastNonzeroMagnitude
-        } else if moreFromDDGSectionIndex == section && !shouldShowAppTPCell {
+        } else if moreFromDDGSectionIndex == section && !(shouldShowAppTPCell || shouldShowNetPCell) {
             return CGFloat.leastNonzeroMagnitude
         } else {
             return super.tableView(tableView, heightForFooterInSection: section)
@@ -507,11 +596,22 @@ class SettingsViewController: UITableViewController {
         let rows = super.tableView(tableView, numberOfRowsInSection: section)
         if section == appearanceSectionIndex && textSizeCell.isHidden {
             return rows - 1
-        } else if section == moreFromDDGSectionIndex && appTPCell.isHidden {
-            return rows - 1
+        } else if section == moreFromDDGSectionIndex {
+           return adaptNumberOfRowsForMoreFromDDGSection(rows)
         } else {
             return rows
         }
+    }
+
+    private func adaptNumberOfRowsForMoreFromDDGSection(_ rows: Int) -> Int {
+        var adaptedRows = rows
+        if !shouldShowNetPCell {
+            adaptedRows -= 1
+        }
+        if !shouldShowAppTPCell {
+            adaptedRows -= 1
+        }
+        return adaptedRows
     }
 
     @IBAction func onVoiceSearchToggled(_ sender: UISwitch) {

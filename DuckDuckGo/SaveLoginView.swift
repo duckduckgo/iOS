@@ -217,7 +217,7 @@ struct SaveLoginView_Previews: PreviewProvider {
         var hasSavedMatchingPasswordWithoutUsername: Bool { false }
         var hasSavedMatchingUsername: Bool { false }
         
-        static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws -> Int64 { return 0 }
+        static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: AutofillVaultFactory) throws -> Int64 { return 0 }
     }
     
     static var previews: some View {

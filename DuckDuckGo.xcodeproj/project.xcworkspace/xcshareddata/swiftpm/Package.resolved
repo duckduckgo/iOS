@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": null,
-          "revision": "763043e8de014a9a8d82829b618a1ca1e69ca5a3",
-          "version": "65.0.0"
+          "revision": "f419ede296e0b30d680fcd80364962ea1c1b1365",
+          "version": "72.0.0"
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/duckduckgo/content-scope-scripts",
         "state": {
           "branch": null,
-          "revision": "630eb2c4cf94055e630fd5b7daae71bed893ad0a",
-          "version": "4.22.4"
+          "revision": "a4f35ad23ac4a0eb9b36b94f1f2aa0f0ebf2855d",
+          "version": "4.30.0"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/duckduckgo/DesignResourcesKit",
         "state": {
           "branch": null,
-          "revision": "119efad12aa5d5917d10ee4492d40839848b3b3c",
-          "version": "1.1.0"
+          "revision": "5de78d59358ff60651b2cf9322c74a2297927b4e",
+          "version": "1.1.1"
         }
       },
       {
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
           "branch": null,
-          "revision": "44cd844b6bb5d8ccfefbd6e025817d800c26ad76",
-          "version": "7.2.0"
+          "revision": "b1160df954eea20cd4cdf9356afc369751981b16",
+          "version": "8.0.0"
         }
       },
       {
@@ -60,8 +60,8 @@
         "repositoryURL": "https://github.com/duckduckgo/GRDB.swift.git",
         "state": {
           "branch": null,
-          "revision": "4475888676cfe1aabb1a35f379cd079ea692da1e",
-          "version": "2.1.1"
+          "revision": "77d9a83191a74e319a5cfa27b0e3145d15607573",
+          "version": "2.2.0"
         }
       },
       {
@@ -161,6 +161,15 @@
           "branch": null,
           "revision": "4684440d03304e7638a2c8086895367e90987463",
           "version": "1.2.1"
+        }
+      },
+      {
+        "package": "WireGuardKit",
+        "repositoryURL": "https://github.com/duckduckgo/wireguard-apple",
+        "state": {
+          "branch": null,
+          "revision": "cf3c0f5132dbb8de08c46155a1bbd5e5bb6a47c1",
+          "version": "1.1.0"
         }
       }
     ]

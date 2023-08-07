@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": null,
-          "revision": "f419ede296e0b30d680fcd80364962ea1c1b1365",
-          "version": "72.0.0"
+          "revision": "cd75fd6ee42e599fd052fc6ba628bf273e155c3f",
+          "version": "72.0.1"
         }
       },
       {

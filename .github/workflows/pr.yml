@@ -83,7 +83,15 @@ jobs:
           -destination "platform=iOS Simulator,name=iPhone 14,OS=16.4" \
           -derivedDataPath "DerivedData" \
           DDG_SLOW_COMPILE_CHECK_THRESHOLD=250 \
+          | tee xcodebuild.log \
           | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml
+
+    - name: Upload logs if workflow failed
+      uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        name: xcodebuild.log
+        path: xcodebuild.log
 
     - name: Publish unit tests report
       uses: mikepenz/action-junit-report@v3

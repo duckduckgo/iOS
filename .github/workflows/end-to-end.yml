@@ -41,7 +41,8 @@ jobs:
         set -o pipefail && xcodebuild \
           -scheme "DuckDuckGo" \
           -destination "platform=iOS Simulator,name=iPhone 14,OS=16.4" \
-          -derivedDataPath "DerivedData"
+          -derivedDataPath "DerivedData" \
+        | tee xcodebuild.log
 
     - name: Setup tests
       run: bundle install && bundle exec fastlane setup_e2e_tests
@@ -83,4 +84,10 @@ jobs:
               "notes" : "The end to end workflow has failed. See https://github.com/duckduckgo/iOS/actions/runs/${{ github.run_id }}", \
             " \
           }'
-  
+
+    - name: Upload logs when workflow failed
+      uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        name: xcodebuild.log
+        path: xcodebuild.log

@@ -31,6 +31,8 @@ import PrivacyDashboard
 import UserScript
 import ContentBlocking
 import TrackerRadarKit
+import Networking
+import SecureStorage
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -258,8 +260,6 @@ class TabViewController: UIViewController {
         })
         return controller
     }
-
-    private var autoSavedCredentialsId: String = ""
 
     private var userContentController: UserContentController {
         (webView.configuration.userContentController as? UserContentController)!
@@ -1185,7 +1185,6 @@ extension TabViewController: WKNavigationDelegate {
            ?? false {
             detectedLoginURL = nil
             saveLoginPromptLastDismissed = nil
-            autoSavedCredentialsId = ""
         }
     }
     
@@ -2268,7 +2267,7 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
     }
     
-    func secureVaultInitFailed(_ error: SecureVaultError) {
+    func secureVaultInitFailed(_ error: SecureStorageError) {
         SecureVaultErrorReporter.shared.secureVaultInitFailed(error)
     }
     
@@ -2284,34 +2283,20 @@ extension TabViewController: SecureVaultManagerDelegate {
 
     func secureVaultManager(_ vault: SecureVaultManager,
                             promptUserToStoreAutofillData data: AutofillData,
-                            hasGeneratedPassword generatedPassword: Bool,
                             withTrigger trigger: AutofillUserScript.GetTriggerType?) {
-        if var credentials = data.credentials,
+        
+        if let credentials = data.credentials,
             AutofillSettingStatus.isAutofillEnabledInSettings,
             featureFlagger.isFeatureOn(.autofillCredentialsSaving) {
-            if generatedPassword, let trigger = trigger {
+            if data.automaticallySavedCredentials, let trigger = trigger {
                 if trigger == AutofillUserScript.GetTriggerType.passwordGeneration {
-                    autoSavedCredentialsId = credentials.account.id ?? ""
                     return
                 } else if trigger == AutofillUserScript.GetTriggerType.formSubmission {
                     guard let accountID = credentials.account.id,
                           let accountIdInt = Int64(accountID) else { return }
                     confirmSavedCredentialsFor(credentialID: accountIdInt, message: UserText.autofillLoginSavedToastMessage)
-                    self.autoSavedCredentialsId = ""
                     return
                 }
-            }
-
-            if !autoSavedCredentialsId.isEmpty {
-                if let accountIdInt = Int64(autoSavedCredentialsId) {
-                    /// generatedPassword has been modified by user so delete the autosaved credential from db and prompt to save login as new credentials
-                    deleteLoginFor(accountIdInt: accountIdInt)
-                    if credentials.account.id == autoSavedCredentialsId {
-                        credentials.account.id = nil
-                    }
-                }
-
-                self.autoSavedCredentialsId = ""
             }
 
             // Add a delay to allow propagation of pointer events to the page
@@ -2324,7 +2309,7 @@ extension TabViewController: SecureVaultManagerDelegate {
 
     private func deleteLoginFor(accountIdInt: Int64) {
         do {
-            let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
+            let secureVault = try? AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared)
             if secureVault == nil {
                 os_log("Failed to make vault")
             }
@@ -2412,7 +2397,11 @@ extension TabViewController: SecureVaultManagerDelegate {
               featureFlagger.isFeatureOn(.autofillPasswordGeneration) else { return false }
         return true
     }
-    
+
+    func secureVaultManagerShouldSaveData(_: SecureVaultManager) -> Bool {
+        true
+    }
+
     func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
         // We don't have auth yet
     }
@@ -2465,7 +2454,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
 
         do {
             let credentialID = try SaveAutofillLoginManager.saveCredentials(credentials,
-                                                                            with: SecureVaultFactory.default)
+                                                                            with: AutofillSecureVaultFactory)
             confirmSavedCredentialsFor(credentialID: credentialID, message: message)
         } catch {
             os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
@@ -2474,7 +2463,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
 
     private func confirmSavedCredentialsFor(credentialID: Int64, message: String) {
         do {
-            let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
+            let vault = try AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared)
             
             if let newCredential = try vault.websiteCredentialsFor(accountId: credentialID) {
                 DispatchQueue.main.async {

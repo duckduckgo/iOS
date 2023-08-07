@@ -874,7 +874,7 @@
                             <tableViewSection headerTitle="About" footerTitle="" id="FpT-1C-xtx">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="oM7-1o-9oY" style="IBUITableViewCellStyleDefault" id="iy0-gV-9MR" userLabel="About Cell">
-                                        <rect key="frame" x="20" y="1622.9999923706055" width="374" height="43.666667938232422"/>
+                                        <rect key="frame" x="20" y="1506.6666628519695" width="374" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iy0-gV-9MR" id="Msh-jY-fMD">
                                             <rect key="frame" x="0.0" y="0.0" width="343.66666666666669" height="43.666667938232422"/>
@@ -901,7 +901,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="2ky-s9-1aZ" detailTextLabel="d5n-vG-8kF" style="IBUITableViewCellStyleValue1" id="TYF-GX-a3j">
-                                        <rect key="frame" x="20" y="1550.3333307902019" width="374" height="43.666667938232422"/>
+                                        <rect key="frame" x="20" y="1666.6666603088379" width="374" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TYF-GX-a3j" id="XV6-jV-uNS">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="43.666667938232422"/>
@@ -933,7 +933,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="Share Feedback" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="m23-t6-9cb">
-                                                    <rect key="frame" x="20" y="0.0" width="334" height="43.666667938232422"/>
+                                                    <rect key="frame" x="8" y="0.0" width="358" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -1071,6 +1071,8 @@
                         <outletCollection property="labels" destination="And-cQ-SEu" collectionClass="NSMutableArray" id="3xO-1r-AVx"/>
                         <outletCollection property="labels" destination="Laa-LS-Z5M" collectionClass="NSMutableArray" id="6dB-nA-rY8"/>
                         <outletCollection property="accessoryLabels" destination="R2f-X7-ZEt" collectionClass="NSMutableArray" id="5YD-bU-lfV"/>
+                        <outletCollection property="labels" destination="qah-gb-udB" collectionClass="NSMutableArray" id="lxd-T4-3aq"/>
+                        <outletCollection property="accessoryLabels" destination="Cyw-ir-cSK" collectionClass="NSMutableArray" id="MLU-HW-Gmi"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C7u-7D-pid" userLabel="First Responder" sceneMemberID="firstResponder"/>

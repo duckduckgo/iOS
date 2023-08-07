@@ -57,6 +57,7 @@ jobs:
         path: |
           xcodebuild.log
           DerivedData/Logs/Test/*.xcresult
+        retention-days: 7
 
     - name: Publish unit tests report
       uses: mikepenz/action-junit-report@v3

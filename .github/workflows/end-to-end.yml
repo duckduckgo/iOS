@@ -93,3 +93,4 @@ jobs:
         path: |
           xcodebuild.log
           DerivedData/Logs/Test/*.xcresult
+        retention-days: 7

@@ -47,18 +47,12 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
         super.tearDown()
     }
 
-    func testStatusUpdate_connected_setsIsNetPEnabledToTrue() throws {
-        statusObserver.subject.send(.connected(connectedDate: Date()))
-        waitFor(condition: self.viewModel.isNetPEnabled)
+    func testStatusUpdate_connected_setsIsNetPEnabledToTrue() {
+        whenStatusUpdate_connected()
     }
 
-    func testStatusUpdate_notConnected_setsIsNetPEnabledToTrue() {
-        viewModel.isNetPEnabled = true
-        let nonConnectedCases: [ConnectionStatus] = [.connecting, .disconnected, .disconnecting, .notConfigured, .reasserting]
-        for current in nonConnectedCases {
-            statusObserver.subject.send(current)
-            waitFor(condition: !self.viewModel.isNetPEnabled)
-        }
+    func testStatusUpdate_notConnected_setsIsNetPEnabledToFalse() {
+        whenStatusUpdate_notConnected()
     }
 
     func testDidToggleNetPToTrue_setsTunnelControllerStateToTrue() async {
@@ -71,7 +65,44 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
         XCTAssertEqual(self.tunnelController.didCallStart, false)
     }
 
+    func testStatusUpdate_connected_setsHeaderTitleToOn() {
+        viewModel.headerTitle = ""
+        whenStatusUpdate_connected()
+        XCTAssertEqual(self.viewModel.headerTitle, UserText.netPStatusHeaderTitleOn)
+    }
+
+    func testStatusUpdate_notconnected_setsHeaderTitleToOff() {
+        viewModel.headerTitle = ""
+        whenStatusUpdate_notConnected()
+        XCTAssertEqual(self.viewModel.headerTitle, UserText.netPStatusHeaderTitleOff)
+    }
+
+    func testStatusUpdate_connected_setsStatusImageIDToVPN() {
+        viewModel.statusImageID = ""
+        whenStatusUpdate_connected()
+        XCTAssertEqual(self.viewModel.statusImageID, "VPN")
+    }
+
+    func testStatusUpdate_disconnected_setsStatusImageIDToVPNDisabled() {
+        viewModel.statusImageID = ""
+        whenStatusUpdate_notConnected()
+        XCTAssertEqual(self.viewModel.statusImageID, "VPNDisabled")
+    }
+
     // MARK: - Helpers
+
+    private func whenStatusUpdate_connected() {
+        statusObserver.subject.send(.connected(connectedDate: Date()))
+        waitFor(condition: self.viewModel.isNetPEnabled)
+    }
+
+    private func whenStatusUpdate_notConnected() {
+        let nonConnectedCases: [ConnectionStatus] = [.connecting, .disconnected, .disconnecting, .notConfigured, .reasserting]
+        for current in nonConnectedCases {
+            statusObserver.subject.send(current)
+            waitFor(condition: !self.viewModel.isNetPEnabled)
+        }
+    }
 
     private func waitFor(condition: @escaping @autoclosure () -> Bool) {
         let predicate = NSPredicate { _, _ in

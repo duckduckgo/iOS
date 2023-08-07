@@ -28,6 +28,10 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     private let statusObserver: ConnectionStatusObserver
     private var cancellables: Set<AnyCancellable> = []
 
+    // MARK: Header
+    @Published public var statusImageID: String
+    @Published public var headerTitle: String
+
     // MARK: Toggle Item
     @Published public var isNetPEnabled = false
     @Published public var statusMessage: String
@@ -45,8 +49,19 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         self.tunnelController = tunnelController
         self.statusObserver = statusObserver
         statusMessage = statusObserver.recentValue.message
+        self.headerTitle = Self.titleText(connected: statusObserver.recentValue.isConnected)
+        self.statusImageID = Self.statusImageID(connected: statusObserver.recentValue.isConnected)
+
         isConnectedPublisher
             .assign(to: \.isNetPEnabled, onWeaklyHeld: self)
+            .store(in: &cancellables)
+        isConnectedPublisher
+            .map(Self.titleText(connected:))
+            .assign(to: \.headerTitle, onWeaklyHeld: self)
+            .store(in: &cancellables)
+        isConnectedPublisher
+            .map(Self.statusImageID(connected:))
+            .assign(to: \.statusImageID, onWeaklyHeld: self)
             .store(in: &cancellables)
 
         statusObserver.publisher
@@ -78,6 +93,14 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     @MainActor
     private func disableNetP() async {
         await tunnelController.stop()
+    }
+
+    private class func titleText(connected isConnected: Bool) -> String {
+        isConnected ? UserText.netPStatusHeaderTitleOn : UserText.netPStatusHeaderTitleOff
+    }
+
+    private class func statusImageID(connected isConnected: Bool) -> String {
+        isConnected ? "VPN" : "VPNDisabled"
     }
 }
 

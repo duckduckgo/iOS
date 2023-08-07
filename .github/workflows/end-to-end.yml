@@ -89,5 +89,7 @@ jobs:
       uses: actions/upload-artifact@v3
       if: failure()
       with:
-        name: xcodebuild.log
-        path: xcodebuild.log
+        name: BuildLogs
+        path: |
+          xcodebuild.log
+          DerivedData/Logs/Test/*.xcresult

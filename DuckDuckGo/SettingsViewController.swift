@@ -373,8 +373,6 @@ class SettingsViewController: UITableViewController {
 
     private func configureNetPCell() {
         netPCell.isHidden = !shouldShowNetPCell
-        netPCell.textLabel?.textColor = ThemeManager.shared.currentTheme.tableCellTextColor
-        netPCell.detailTextLabel?.textColor = ThemeManager.shared.currentTheme.tableCellAccessoryTextColor
 #if NETWORK_PROTECTION
         connectionObserver.publisher
             .receive(on: DispatchQueue.main)
@@ -457,12 +455,18 @@ class SettingsViewController: UITableViewController {
 
 #if NETWORK_PROTECTION
     private func showNetP() {
-        let statusView = NetworkProtectionStatusView(
-            statusModel: NetworkProtectionStatusViewModel(),
-            inviteModel: NetworkProtectionInviteViewModel()
-        )
+        // This will be tidied up as part of https://app.asana.com/0/0/1205084446087078/f
+        let rootViewController = NetworkProtectionRootViewController { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+            let newRootViewController = NetworkProtectionRootViewController { }
+            self?.pushNetP(newRootViewController)
+        }
+        pushNetP(rootViewController)
+    }
+
+    private func pushNetP(_ rootViewController: NetworkProtectionRootViewController) {
         navigationController?.pushViewController(
-            UIHostingController(rootView: statusView),
+            rootViewController,
             animated: true
         )
     }

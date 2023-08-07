@@ -28,7 +28,7 @@ struct SearchLockScreenWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { _ in
             return LockScreenWidgetView(imageNamed: "LockScreenSearch")
-                .widgetURL(DeepLinks.newSearch)
+                .widgetURL(DeepLinks.newSearch.appendingParameter(name: "ls", value: "1"))
         }
         .configurationDisplayName(UserText.lockScreenSearchTitle)
         .description(UserText.lockScreenSearchDescription)
@@ -45,7 +45,7 @@ struct FavoritesLockScreenWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { _ in
             return LockScreenWidgetView(imageNamed: "LockScreenFavorites")
-                .widgetURL(DeepLinks.favorites)
+                .widgetURL(DeepLinks.favorites.appendingParameter(name: "ls", value: "1"))
         }
         .configurationDisplayName(UserText.lockScreenFavoritesTitle)
         .description(UserText.lockScreenFavoritesDescription)
@@ -61,7 +61,7 @@ struct VoiceSearchLockScreenWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { _ in
             return LockScreenWidgetView(imageNamed: "LockScreenVoice")
-                .widgetURL(DeepLinks.voiceSearch)
+                .widgetURL(DeepLinks.voiceSearch.appendingParameter(name: "ls", value: "1"))
         }
         .configurationDisplayName(UserText.lockScreenVoiceTitle)
         .description(UserText.lockScreenVoiceDescription)
@@ -78,7 +78,7 @@ struct EmailProtectionLockScreenWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { _ in
             return LockScreenWidgetView(imageNamed: "LockScreenEmail")
-                .widgetURL(DeepLinks.newEmail)
+                .widgetURL(DeepLinks.newEmail.appendingParameter(name: "ls", value: "1"))
         }
         .configurationDisplayName(UserText.lockScreenEmailTitle)
         .description(UserText.lockScreenEmailDescription)
@@ -95,7 +95,7 @@ struct FireButtonLockScreenWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { _ in
             return LockScreenWidgetView(imageNamed: "LockScreenFire")
-                .widgetURL(DeepLinks.fireButton)
+                .widgetURL(DeepLinks.fireButton.appendingParameter(name: "ls", value: "1"))
         }
         .configurationDisplayName(UserText.lockScreenFireTitle)
         .description(UserText.lockScreenFireDescription)

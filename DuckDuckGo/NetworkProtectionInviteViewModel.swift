@@ -19,67 +19,79 @@
 
 #if NETWORK_PROTECTION
 
-import NetworkProtection
 import Combine
-import Common
+import NetworkProtection
+
+enum NetworkProtectionInviteStep {
+    case codeEntry, success
+}
 
 final class NetworkProtectionInviteViewModel: ObservableObject {
+    @Published var currentStep: NetworkProtectionInviteStep = .codeEntry
     @Published var text: String = "" {
         didSet {
             if oldValue != text {
                 text = text.uppercased()
+                shouldDisableSubmit = text.count == 0
             }
         }
     }
-    @Published var redeemedText: String?
-    @Published var errorText: String?
+    var errorText: String = ""
+    @Published var shouldShowAlert: Bool = false
+    @Published var shouldDisableSubmit: Bool = true
+    @Published var shouldDisableTextField: Bool = false
 
-    private let tokenStore: NetworkProtectionTokenStore
     private let redemptionCoordinator: NetworkProtectionCodeRedeeming
-    private let featureVisibility: NetworkProtectionFeatureVisibility
-    private var textCancellable: AnyCancellable?
+    private let completion: () -> Void
 
-    private static let errorEvents: EventMapping<NetworkProtectionError> = .init { _, _, _, _ in
-
-    }
-
-    init() {
-        let tokenStore = NetworkProtectionKeychainTokenStore(useSystemKeychain: false,
-                                                             errorEvents: nil)
-        self.tokenStore = tokenStore
-        self.redemptionCoordinator = NetworkProtectionCodeRedemptionCoordinator(tokenStore: tokenStore,
-                                                                                errorEvents: Self.errorEvents)
-        self.featureVisibility = tokenStore
-        updateAuthenticatedText()
+    init(redemptionCoordinator: NetworkProtectionCodeRedeeming, completion: @escaping () -> Void) {
+        self.completion = completion
+        self.redemptionCoordinator = redemptionCoordinator
     }
 
     @MainActor
     func submit() async {
-        errorText = nil
+        shouldDisableSubmit = true
+        shouldDisableTextField = true
+        defer {
+            shouldDisableSubmit = false
+            shouldDisableTextField = false
+        }
         do {
             try await redemptionCoordinator.redeem(text.trimmingWhitespace())
-            updateAuthenticatedText()
         } catch NetworkProtectionClientError.invalidInviteCode {
-            errorText = "Unrecognized invite code"
+            errorText = UserText.inviteDialogUnrecognizedCodeMessage
+            shouldShowAlert = true
             return
         } catch {
-            errorText = "Error: try again"
+            errorText = UserText.unknownErrorTryAgainMessage
+            shouldShowAlert = true
+            return
         }
+        currentStep = .success
     }
+
+    func getStarted() {
+        completion()
+    }
+
+    // MARK: Dev only. Will be removed during https://app.asana.com/0/0/1205084446087078/f
 
     @MainActor
     func clear() async {
-        errorText = nil
+        errorText = ""
         do {
-            try tokenStore.deleteToken()
+            try NetworkProtectionKeychainTokenStore().deleteToken()
             updateAuthenticatedText()
         } catch {
             errorText = "Could not clear token"
         }
     }
 
+    @Published var redeemedText: String?
+
     private func updateAuthenticatedText() {
-        redeemedText = featureVisibility.isFeatureActivated ? "Already redeemed" : nil
+        redeemedText = NetworkProtectionKeychainTokenStore().isFeatureActivated ? "Already redeemed" : nil
     }
 }
 

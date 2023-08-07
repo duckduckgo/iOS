@@ -5142,6 +5142,7 @@
 				37B4F3D329D2C84400758752 /* Copy GRDB framework */,
 				F10307651E7D5B2C0059FEC7 /* Copy Frameworks */,
 				83E282AC20BC1840005FBE88 /* Embed App Extensions */,
+				EE9286812A812BD2002B7818 /* Embed PacketTunnelProvider */,
 			);
 			buildRules = (
 			);
@@ -5811,6 +5812,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"$SOURCE_ROOT/scripts/assert_xcode_version.sh\"\n";
+		};
+		EE9286812A812BD2002B7818 /* Embed PacketTunnelProvider */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Embed PacketTunnelProvider";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Conditionally embeds the PacketTunnelProvider extension for debug builds.\n# To be moved to the Embed App Extensions phase on release.\nif [ \"${CONFIGURATION}\" = \"Debug\" ]; then\n# Copy the extension\n    cp -R \"${BUILT_PRODUCTS_DIR}/PacketTunnelProvider.appex\" \"${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

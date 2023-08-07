@@ -21,59 +21,45 @@
 
 import Foundation
 import Combine
+import NetworkProtection
 
 final class NetworkProtectionStatusViewModel: ObservableObject {
-    private let tunnelController: NetworkProtectionTunnelControlling
+    private let tunnelController: TunnelController
+    private let statusObserver: ConnectionStatusObserver
     private var cancellables: Set<AnyCancellable> = []
+
+    // MARK: Toggle Item
     @Published public var isNetPEnabled = false
-    @Published public var statusMessage: String?
+    @Published public var statusMessage: String
     @Published public var shouldShowLoading: Bool = false
 
-    public init(tunnelController: NetworkProtectionTunnelControlling = NetworkProtectionTunnelController()) {
+    private var isConnectedPublisher: AnyPublisher<Bool, Never> {
+        statusObserver.publisher
+            .map { $0.isConnected }
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+
+    public init(tunnelController: TunnelController = NetworkProtectionTunnelController(),
+                statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession()) {
         self.tunnelController = tunnelController
-        tunnelController.statusPublisher.map {
-            switch $0 {
-            case .connected:
-                return true
-            default:
-                return false
-            }
-        }
-        .receive(on: DispatchQueue.main)
-        .assign(to: \.isNetPEnabled, onWeaklyHeld: self)
-        .store(in: &cancellables)
+        self.statusObserver = statusObserver
+        statusMessage = statusObserver.recentValue.message
+        isConnectedPublisher
+            .assign(to: \.isNetPEnabled, onWeaklyHeld: self)
+            .store(in: &cancellables)
 
-        tunnelController.statusPublisher.map {
-            switch $0 {
-            case .connecting, .reasserting, .disconnecting:
-                return true
-            default:
-                return false
-            }
-        }
-        .receive(on: DispatchQueue.main)
-        .assign(to: \.shouldShowLoading, onWeaklyHeld: self)
-        .store(in: &cancellables)
+        statusObserver.publisher
+            .map { $0.isLoading }
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.shouldShowLoading, onWeaklyHeld: self)
+            .store(in: &cancellables)
 
-        tunnelController.statusPublisher.map {
-            switch $0 {
-            case .notConfigured:
-                return "Not Configured"
-            case .disconnected:
-                return "Disconnected"
-            case .disconnecting:
-                return "Disconnecting"
-            case .connected(connectedDate: let connectedDate):
-                return "Connected since \(connectedDate)"
-            case .connecting:
-                return "Connecting"
-            case .reasserting:
-                return "Reasserting"
-            }
-        }
-        .receive(on: DispatchQueue.main)
-        .assign(to: \.statusMessage, onWeaklyHeld: self)
-        .store(in: &cancellables)
+        statusObserver.publisher
+            .map { $0.message }
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.statusMessage, onWeaklyHeld: self)
+            .store(in: &cancellables)
     }
 
     func didToggleNetP(to enabled: Bool) async {
@@ -86,20 +72,48 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     @MainActor
     private func enableNetP() async {
-        do {
-            try await tunnelController.setState(to: true)
-        } catch {
-            statusMessage = error.localizedDescription
-            isNetPEnabled = false
-        }
+        await tunnelController.start()
     }
 
     @MainActor
     private func disableNetP() async {
-        do {
-            try await tunnelController.setState(to: false)
-        } catch {
-            statusMessage = error.localizedDescription
+        await tunnelController.stop()
+    }
+}
+
+private extension ConnectionStatus {
+    var message: String {
+        switch self {
+        case .notConfigured:
+            return "Not Configured"
+        case .disconnected:
+            return "Disconnected"
+        case .disconnecting:
+            return "Disconnecting"
+        case .connected(connectedDate: let connectedDate):
+            return "Connected since \(connectedDate)"
+        case .connecting:
+            return "Connecting"
+        case .reasserting:
+            return "Reasserting"
+        }
+    }
+
+    var isConnected: Bool {
+        switch self {
+        case .connected:
+            return true
+        default:
+            return false
+        }
+    }
+
+    var isLoading: Bool {
+        switch self {
+        case .connecting, .reasserting, .disconnecting:
+            return true
+        default:
+            return false
         }
     }
 }

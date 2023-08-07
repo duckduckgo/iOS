@@ -25,36 +25,30 @@ import Core
 import NetworkExtension
 import NetworkProtection
 
-public protocol NetworkProtectionTunnelControlling {
-    var status: ConnectionStatus { get }
-    var statusPublisher: AnyPublisher<ConnectionStatus, Never> { get }
-    func setState(to enabled: Bool) async throws
-}
+final class NetworkProtectionTunnelController: TunnelController {
 
-final class NetworkProtectionTunnelController: NetworkProtectionTunnelControlling {
+    /// Starts the VPN connection used for Network Protection
+    ///
+    func start() async {
+        do {
+            try await startWithError()
+        } catch {
+            // Will handle this as part of https://app.asana.com/0/0/1205084446087081/f
+        }
+    }
+
+    func stop() async {
+        do {
+            try await ConnectionSessionUtilities.activeSession()?.stopVPNTunnel()
+        } catch {
+            // Will handle this as part of https://app.asana.com/0/0/1205084446087081/f
+        }
+    }
 
     private let tokenStore = NetworkProtectionKeychainTokenStore(useSystemKeychain: false, errorEvents: nil)
     private let connectionObserver = ConnectionStatusObserverThroughSession()
 
-    // MARK: - NetworkProtectionTunnelControlling
-
-    @Published var status: ConnectionStatus = .disconnected
-
-    var statusPublisher: AnyPublisher<ConnectionStatus, Never> {
-        connectionObserver.publisher.eraseToAnyPublisher()
-    }
-
-    func setState(to enabled: Bool) async throws {
-        if enabled {
-            try await start()
-        } else {
-            try await ConnectionSessionUtilities.activeSession()?.stopVPNTunnel()
-        }
-    }
-
-    /// Starts the VPN connection used for Network Protection
-    ///
-    private func start() async throws {
+    private func startWithError() async throws {
         let tunnelManager: NETunnelProviderManager
 
         do {
@@ -66,7 +60,7 @@ final class NetworkProtectionTunnelController: NetworkProtectionTunnelControllin
         switch tunnelManager.connection.status {
         case .invalid:
             reloadTunnelManager()
-            try await start()
+            try await startWithError()
         case .connected:
             // Intentional no-op
             break

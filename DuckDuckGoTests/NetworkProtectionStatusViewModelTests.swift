@@ -20,10 +20,12 @@
 import XCTest
 import NetworkProtection
 import NetworkExtension
+import NetworkProtectionTestUtils
 @testable import DuckDuckGo
 
 final class NetworkProtectionStatusViewModelTests: XCTestCase {
-    private var tunnelController: MockNetworkProtectionTunnelControlling!
+    private var tunnelController: MockTunnelController!
+    private var statusObserver: MockConnectionStatusObserver!
     private var viewModel: NetworkProtectionStatusViewModel!
 
     private var testError: Error {
@@ -33,18 +35,20 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        tunnelController = MockNetworkProtectionTunnelControlling()
-        viewModel = NetworkProtectionStatusViewModel(tunnelController: tunnelController)
+        tunnelController = MockTunnelController()
+        statusObserver = MockConnectionStatusObserver()
+        viewModel = NetworkProtectionStatusViewModel(tunnelController: tunnelController, statusObserver: statusObserver)
     }
 
     override func tearDown() {
+        statusObserver = nil
         tunnelController = nil
         viewModel = nil
         super.tearDown()
     }
 
     func testStatusUpdate_connected_setsIsNetPEnabledToTrue() throws {
-        tunnelController.statusSubject.send(.connected(connectedDate: Date()))
+        statusObserver.subject.send(.connected(connectedDate: Date()))
         waitFor(condition: self.viewModel.isNetPEnabled)
     }
 
@@ -52,37 +56,19 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
         viewModel.isNetPEnabled = true
         let nonConnectedCases: [ConnectionStatus] = [.connecting, .disconnected, .disconnecting, .notConfigured, .reasserting]
         for current in nonConnectedCases {
-            tunnelController.statusSubject.send(current)
+            statusObserver.subject.send(current)
             waitFor(condition: !self.viewModel.isNetPEnabled)
         }
     }
 
     func testDidToggleNetPToTrue_setsTunnelControllerStateToTrue() async {
         await viewModel.didToggleNetP(to: true)
-        XCTAssertEqual(self.tunnelController.spySetStateEnabled, true)
-    }
-
-    func testDidToggleNetPToTrue_tunnelControllerErrors_setsStatusMessage() async {
-        tunnelController.stubSetStateError = testError
-        await viewModel.didToggleNetP(to: true)
-        XCTAssertNotNil(self.viewModel.statusMessage)
-    }
-
-    func testDidToggleNetPToTrue_tunnelControllerErrors_setsIsNetPEnabledToFalse() async {
-        tunnelController.stubSetStateError = testError
-        await viewModel.didToggleNetP(to: true)
-        XCTAssertFalse(self.viewModel.isNetPEnabled)
-    }
-
-    func testDidToggleNetPToFalse_tunnelControllerErrors_setsStatusMessage() async {
-        tunnelController.stubSetStateError = testError
-        await viewModel.didToggleNetP(to: false)
-        XCTAssertNotNil(self.viewModel.statusMessage)
+        XCTAssertEqual(self.tunnelController.didCallStart, true)
     }
 
     func testDidToggleNetPToFalse_setsTunnelControllerStateToFalse() async {
         await viewModel.didToggleNetP(to: false)
-        XCTAssertEqual(self.tunnelController.spySetStateEnabled, false)
+        XCTAssertEqual(self.tunnelController.didCallStart, false)
     }
 
     // MARK: - Helpers

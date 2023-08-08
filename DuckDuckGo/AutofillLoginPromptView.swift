@@ -92,7 +92,7 @@ struct AutofillLoginPromptView: View {
     }
 
     private var horizontalPadding: CGFloat {
-        guard AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) else { 
+        guard AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) else {
             return Const.Size.closeButtonOffset
         }
 

@@ -92,14 +92,14 @@ struct AutofillLoginPromptView: View {
     }
 
     private var horizontalPadding: CGFloat {
-        if AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) {
-            if AutofillViews.isSmallFrame(frame) {
-                return Const.Size.closeButtonOffsetPortraitSmallFrame
-            } else {
-                return Const.Size.closeButtonOffsetPortrait
-            }
-        } else {
+        guard AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) else { 
             return Const.Size.closeButtonOffset
+        }
+
+        if AutofillViews.isSmallFrame(frame) {
+            return Const.Size.closeButtonOffsetPortraitSmallFrame
+        } else {
+            return Const.Size.closeButtonOffsetPortrait
         }
     }
 

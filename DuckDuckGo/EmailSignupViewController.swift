@@ -31,7 +31,17 @@ import SecureStorage
 class EmailSignupViewController: UIViewController {
 
     private enum Constants {
+        static let duckDuckGoTitle: String = "DuckDuckGo"
+        static let backImage = UIImage(systemName: "chevron.left")
+
         static let signUpUrl: String = "https://duckduckgo.com/email/start-incontext"
+
+        static let emailPath: String = "email/"
+        static let emailStartInContextPath: String = "email/start-incontext"
+        static let emailChooseAddressPath: String = "email/choose-address"
+        static let emailReviewPath: String = "email/review"
+        static let emailWelcomePath: String = "email/welcome"
+        static let emailWelcomeInContextPath: String = "email/welcome-incontext"
     }
 
     private enum SignupState {
@@ -68,11 +78,11 @@ class EmailSignupViewController: UIViewController {
                 navigationItem.rightBarButtonItems = []
                 return
             }
-            if url.absoluteString.hasSuffix("email/") || url.absoluteString.hasSuffix("email/start-incontext") {
+            if url.absoluteString.hasSuffix(Constants.emailPath) || url.absoluteString.hasSuffix(Constants.emailStartInContextPath) {
                 signupStage = .start
-            } else if url.absoluteString.hasSuffix("email/choose-address") || url.absoluteString.hasSuffix("email/review") {
+            } else if url.absoluteString.hasSuffix(Constants.emailChooseAddressPath) || url.absoluteString.hasSuffix(Constants.emailReviewPath) {
                 signupStage = .emailEntered
-            } else if url.absoluteString.hasSuffix("email/welcome") || url.absoluteString.hasSuffix("email/welcome-incontext") {
+            } else if url.absoluteString.hasSuffix(Constants.emailWelcomePath) || url.absoluteString.hasSuffix(Constants.emailWelcomeInContextPath) {
                 signupStage = .complete
             } else {
                 signupStage = .other
@@ -94,7 +104,7 @@ class EmailSignupViewController: UIViewController {
 
     private lazy var backBarButtonItem: UIBarButtonItem = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        button.setImage(Constants.backImage, for: .normal)
         button.setTitle(UserText.backButtonTitle, for: .normal)
         button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
         button.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
@@ -188,7 +198,7 @@ class EmailSignupViewController: UIViewController {
 
     private func setupNavigationBarTitle() {
         let titleLabel: UILabel = UILabel()
-        titleLabel.text = "DuckDuckGo"
+        titleLabel.text = Constants.duckDuckGoTitle
         titleLabel.font = .daxFootnoteRegular()
         titleLabel.textColor = UIColor(designSystemColor: .textSecondary)
 

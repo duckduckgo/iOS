@@ -73,7 +73,7 @@ class EmailSignupPromptViewController: UIViewController {
 
 extension EmailSignupPromptViewController: UISheetPresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-//            Pixel.fire(pixel: .autofillLoginsPasswordGenerationPromptDismissed)
+        // TODO - pixel
 
         completion(false)
     }

@@ -8244,7 +8244,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID)";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = com.duckduckgo.mobile.ios.alpha;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME)-Alpha";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "iOS Alpha TestFlight";
 				SWIFT_VERSION = 5.0;
 			};

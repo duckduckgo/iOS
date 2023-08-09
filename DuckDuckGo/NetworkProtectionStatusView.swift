@@ -56,7 +56,7 @@ struct NetworkProtectionStatusView: View {
                         }
                     }
                 ))
-                .disabled(statusModel.shouldShowLoading)
+                .disabled(statusModel.shouldDisableToggle)
                 .toggleStyle(SwitchToggleStyle(tint: .toggleColor))
             }
             .background(Color.cellBackground)

@@ -140,6 +140,24 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
         }
     }
 
+    func testStatusUpdate_notLoadingStates_enablesToggle() throws {
+        let notLoadingStates: [ConnectionStatus] = [.connected(connectedDate: Date()), .disconnected, .notConfigured]
+        for current in notLoadingStates {
+            viewModel.shouldDisableToggle = true
+            statusObserver.subject.send(current)
+            try awaitPublisher(viewModel.$shouldDisableToggle, toEmit: false)
+        }
+    }
+
+    func testStatusUpdate_loadingStates_disablesToggle() throws {
+        let toggleEnabledStates: [ConnectionStatus] = [.disconnecting, .connecting, .reasserting]
+        for current in toggleEnabledStates {
+            viewModel.shouldDisableToggle = false
+            statusObserver.subject.send(current)
+            try awaitPublisher(viewModel.$shouldDisableToggle, toEmit: true)
+        }
+    }
+
     // MARK: - Helpers
 
     private func whenStatusUpdate_connected() {

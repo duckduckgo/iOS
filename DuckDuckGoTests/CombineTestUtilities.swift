@@ -70,6 +70,21 @@ extension XCTestCase {
 
         return try unwrappedResult.get()
     }
+
+    @discardableResult
+    func awaitPublisher<T: Publisher>(
+        _ publisher: T,
+        timeout: TimeInterval = 10,
+        file: StaticString = #file,
+        line: UInt = #line,
+        toEmit value: T.Output
+    ) throws -> T.Output where T.Output: Equatable {
+        try awaitPublisher(
+            publisher.first {
+                value == $0
+            }
+        )
+    }
 }
 
 /*

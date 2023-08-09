@@ -42,7 +42,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     // MARK: Toggle Item
     @Published public var isNetPEnabled = false
     @Published public var statusMessage: String
-    @Published public var shouldShowLoading: Bool = false
+    @Published public var shouldDisableToggle: Bool = false
 
     public init(tunnelController: TunnelController = NetworkProtectionTunnelController(),
                 statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession()) {
@@ -54,12 +54,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
         setUpIsConnectedStatePublishers()
         setUpStatusMessagePublishers()
-
-        statusObserver.publisher
-            .map { $0.isLoading }
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.shouldShowLoading, onWeaklyHeld: self)
-            .store(in: &cancellables)
+        setUpDisableTogglePublisher()
     }
 
     private func setUpIsConnectedStatePublishers() {
@@ -98,6 +93,14 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             .switchToLatest()
             .receive(on: DispatchQueue.main)
             .assign(to: \.statusMessage, onWeaklyHeld: self)
+            .store(in: &cancellables)
+    }
+
+    private func setUpDisableTogglePublisher() {
+        statusObserver.publisher
+            .map { $0.isLoading }
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.shouldDisableToggle, onWeaklyHeld: self)
             .store(in: &cancellables)
     }
 

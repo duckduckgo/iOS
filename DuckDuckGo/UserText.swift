@@ -620,6 +620,13 @@ In addition to the details entered into this form, your app issue report will co
     static let netPStatusHeaderTitleOff = NSLocalizedString("network.protection.status.header.title.off", value: "Network Protection is Off", comment: "Header title label text for the status view when netP is disconnected")
     static let netPStatusHeaderTitleOn = NSLocalizedString("network.protection.status.header.title.on", value: "Network Protection is On", comment: "Header title label text for the status view when netP is connected")
     static let netPStatusHeaderMessage = NSLocalizedString("network.protection.status.header.message", value: "DuckDuckGo's VPN secures all of your device's Internet traffic anytime, anywhere.", comment: "Message label text for the netP status view")
+    static let netPStatusDisconnected = NSLocalizedString("network.protection.status.disconnected", value: "Not connected", comment: "The label for the NetP VPN when disconnected")
+    static let netPStatusDisconnecting = NSLocalizedString("network.protection.status.disconnecting", value: "Disconnecting...", comment: "The label for the NetP VPN when disconnecting")
+    static let netPStatusConnecting = NSLocalizedString("network.protection.status.connecting", value: "Connecting...", comment: "The label for the NetP VPN when connecting")
+    static func netPStatusConnected(since timeLapsedString: String) -> String {
+        let localized = NSLocalizedString("network.protection.status.connected.format", value: "Connected - %@", comment: "The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string")
+        return String(format: localized, timeLapsedString)
+    }
 
     static let inviteDialogSubmitButton = NSLocalizedString("invite.dialog.submit.button", value: "Submit", comment: "Submit button on an invite dialog")
     static let inviteDialogGetStartedButton = NSLocalizedString("invite.dialog.get.started.button", value: "Get Started", comment: "Get Started button on an invite dialog")

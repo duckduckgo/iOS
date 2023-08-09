@@ -739,6 +739,7 @@
 		EE4FB1882A28D11900E5CBA7 /* NetworkProtectionStatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4FB1872A28D11900E5CBA7 /* NetworkProtectionStatusViewModel.swift */; };
 		EE50052E29C369D300AE0773 /* FeatureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE50052D29C369D300AE0773 /* FeatureFlag.swift */; };
 		EE50053029C3BA0800AE0773 /* InternalUserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE50052F29C3BA0800AE0773 /* InternalUserStore.swift */; };
+		EE7917912A83DE93008DFF28 /* CombineTestUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7917902A83DE93008DFF28 /* CombineTestUtilities.swift */; };
 		EE8594992A44791C008A6D06 /* NetworkProtectionTunnelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8594982A44791C008A6D06 /* NetworkProtectionTunnelController.swift */; };
 		EE8E568A2A56BCE400F11DCA /* NetworkProtection in Frameworks */ = {isa = PBXBuildFile; productRef = EE8E56892A56BCE400F11DCA /* NetworkProtection */; };
 		EEEB80A32A421CE600386378 /* NetworkProtectionPacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB80A22A421CE600386378 /* NetworkProtectionPacketTunnelProvider.swift */; };
@@ -2302,6 +2303,7 @@
 		EE4FB1872A28D11900E5CBA7 /* NetworkProtectionStatusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionStatusViewModel.swift; sourceTree = "<group>"; };
 		EE50052D29C369D300AE0773 /* FeatureFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlag.swift; sourceTree = "<group>"; };
 		EE50052F29C3BA0800AE0773 /* InternalUserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalUserStore.swift; sourceTree = "<group>"; };
+		EE7917902A83DE93008DFF28 /* CombineTestUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineTestUtilities.swift; sourceTree = "<group>"; };
 		EE8594982A44791C008A6D06 /* NetworkProtectionTunnelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionTunnelController.swift; sourceTree = "<group>"; };
 		EEEB80A22A421CE600386378 /* NetworkProtectionPacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionPacketTunnelProvider.swift; sourceTree = "<group>"; };
 		EEFD562E2A65B6CA00DAEC48 /* NetworkProtectionInviteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionInviteViewModel.swift; sourceTree = "<group>"; };
@@ -4386,6 +4388,7 @@
 				C14882E627F20DAB00D59F0C /* TestDataLoader.swift */,
 				85449F0023FEAF3000512AAF /* UserDefaultsExtension.swift */,
 				31B1FA86286EFC5C00CA3C1C /* XCTestCaseExtension.swift */,
+				EE7917902A83DE93008DFF28 /* CombineTestUtilities.swift */,
 			);
 			name = TestUtils;
 			sourceTree = "<group>";
@@ -6399,6 +6402,7 @@
 				4B83397529AFBCE6003F7EA9 /* AppTrackingProtectionFeedbackModelTests.swift in Sources */,
 				851DFD8A212C5EE800D95F20 /* TabSwitcherButtonTests.swift in Sources */,
 				98983096255B5019003339A2 /* BookmarksCachingSearchTests.swift in Sources */,
+				EE7917912A83DE93008DFF28 /* CombineTestUtilities.swift in Sources */,
 				85480CB429226B3B007E8F13 /* CrashCollectionExtensionTests.swift in Sources */,
 				4B6484FC27FFD14F0050A7A1 /* WindowsBrowserWaitlistTests.swift in Sources */,
 				8540BD5223D8C2220057FDD2 /* PreserveLoginsTests.swift in Sources */,

@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "b01e0010c7c0618f7329184c11c85a3c64a4307f",
-          "version": "73.0.0"
+          "branch": "sam/netp-endpoint-change",
+          "revision": "9b0e69283f7786f053ddb15264286dab7f79a196",
+          "version": null
         }
       },
       {

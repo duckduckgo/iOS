@@ -658,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "%@ lejupielāde sākta";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "E-pasta aizsardzība";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Atcelt";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Ģenerēt privātu Duck adresi";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Ģenerēt privātu Duck adresi";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Bloķē e-pasta izsekotājus un paslēp adresi";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Izvēlies e-pasta adresi";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Bloķē e-pasta izsekotājus";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Bloķē e-pasta izsekotājus ar Duck adresi";
@@ -687,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Bloķē e-pasta izsekotājus un paslēp savu adresi";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Turpināt iestatīšanu";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Iziet no iestatīšanas";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Ja tagad iziesi, tava Duck adrese netiks saglabāta!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Turpmāk nerādīt";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Aizsargāt manu e-pastu";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Izveido unikālu, nejauši izvēlētu adresi, kas arī aizvāc slēptos izsekotājus un pārsūta e-pastus uz tavu pastkastīti.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Paslēp savu e-pastu un\nbloķē izsekotājus";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Vēl nav pievienota neviena grāmatzīme";
@@ -1014,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Pārlūkošanas izvēlne";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Atpakaļ";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Nākamais";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Gatavs";

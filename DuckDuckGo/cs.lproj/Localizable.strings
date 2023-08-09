@@ -658,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Stahování souboru %@ bylo zahájeno";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "Ochrana e-mailu";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Zrušit";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Vygenerovat soukromou adresu Duck";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Vygenerovat soukromou adresu Duck";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Blokuj e-mailové trackery a skryj svou adresu";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Vyber e-mailovou adresu";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Blokuj e-mailové trackery";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blokování e-mailových trackerů pomocí adresy Duck";
@@ -687,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blokování trackerů v e-mailu a skrytí adresy";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Pokračovat v nastavení";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Ukončit nastavení";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Pokud teď odejdeš, tvoje adresa Duck Address se neuloží.";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Znovu neukazovat";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Chránit můj e-mail";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Vytvoř si jedinečnou, náhodnou adresu, která bude odstraňovat skryté trackery a přeposílat e-maily do tvé schránky.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Skryj svůj e-mail\na blokuj trackery";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Zatím nebyly přidány žádné záložky.";
@@ -1014,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Procházení nabídky";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Zpět";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Další";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Hotovo";

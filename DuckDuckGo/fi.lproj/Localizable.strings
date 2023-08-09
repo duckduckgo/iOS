@@ -658,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Tiedoston %@ lataus aloitettu";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "Sähköpostisuojaus";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Peruuta";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Luo yksityinen Duck Address";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Luo yksityinen Duck Address";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Estä sähköpostin seurantaohjelmat ja piilota osoite";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Valitse sähköpostiosoite";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Estä sähköpostin seurantaohjelmat";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Estä sähköpostiseuranta Duck-osoitteella";
@@ -687,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Estä sähköpostiseuraajat ja piilota osoitteesi";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Jatka asennusta";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Poistu asennuksesta";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Jos poistut nyt, Duck Address -osoitettasi ei tallenneta!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Älä näytä uudelleen";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Suojaa sähköpostini";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Luo yksilöllinen, satunnainen osoite, joka lisäksi poistaa piilotetut seurantaohjelmat ja välittää sähköpostin omaan postilaatikkoosi.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Piilota sähköpostisi ja\nEstä seurantaohjelmat";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Kirjanmerkkejä ei ole vielä lisätty";
@@ -1014,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Selausvalikko";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Takaisin";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Seuraava";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Valmis";

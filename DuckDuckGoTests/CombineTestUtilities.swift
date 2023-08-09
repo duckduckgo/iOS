@@ -24,7 +24,7 @@ import Combine
  Code snippet from https://www.swiftbysundell.com/articles/unit-testing-combine-based-swift-code/
  */
 extension XCTestCase {
-    func awaitPublisher<T: Publisher>(
+    func waitForPublisher<T: Publisher>(
         _ publisher: T,
         timeout: TimeInterval = 10,
         file: StaticString = #file,
@@ -72,14 +72,14 @@ extension XCTestCase {
     }
 
     @discardableResult
-    func awaitPublisher<T: Publisher>(
+    func waitForPublisher<T: Publisher>(
         _ publisher: T,
         timeout: TimeInterval = 10,
         file: StaticString = #file,
         line: UInt = #line,
         toEmit value: T.Output
     ) throws -> T.Output where T.Output: Equatable {
-        try awaitPublisher(
+        try waitForPublisher(
             publisher.first {
                 value == $0
             }

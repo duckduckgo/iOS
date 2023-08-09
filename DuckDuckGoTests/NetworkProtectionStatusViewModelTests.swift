@@ -89,6 +89,57 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
         XCTAssertEqual(self.viewModel.statusImageID, "VPNDisabled")
     }
 
+    func testStatusUpdate_connected_updatesStatusMessageEverySecond_withTimeLapsed() throws {
+        statusObserver.subject.send(.connected(connectedDate: Date()))
+        // To make this more test stable, give it 3 seconds to give the initial and first updates
+        let collected = try awaitPublisher(viewModel.$statusMessage.collectNext(3))
+        let expectedMessages = ["Connected - 00:00:00", "Connected - 00:00:01"]
+        if #available(iOS 16.0, *) {
+            XCTAssertTrue(collected.contains(expectedMessages))
+        } else {
+            XCTAssertTrue(
+                collected.contains {
+                    $0 == expectedMessages.first!
+                }
+            )
+            XCTAssertTrue(
+                collected.contains {
+                    $0 == expectedMessages.last!
+                }
+            )
+        }
+    }
+
+    func testStatusUpdate_disconnecting_updateStatusToDisconnecting() throws {
+        viewModel.isNetPEnabled = true
+        statusObserver.subject.send(.disconnecting)
+        let statusMessage = try awaitPublisher(viewModel.$statusMessage.collectNext(2)).last
+        XCTAssertEqual(statusMessage, UserText.netPStatusDisconnecting)
+    }
+
+    func testStatusUpdate_connectingOrReasserting_updateStatusToConnecting() throws {
+        let connectingStates: [ConnectionStatus] = [.connecting, .reasserting]
+        // Collect the initial value first
+        _ = try awaitPublisher(viewModel.$statusMessage.collectNext(1)).last
+        for current in connectingStates {
+            statusObserver.subject.send(current)
+            let statusMessage = try awaitPublisher(viewModel.$statusMessage.collectNext(1)).last
+            XCTAssertEqual(statusMessage, UserText.netPStatusConnecting)
+        }
+    }
+
+    func testStatusUpdate_disconnectedOrNotConfigured_updateStatusToDisconnected() throws {
+        let disconnectedStates: [ConnectionStatus] = [.disconnected, .notConfigured]
+        // Collect the initial value first
+        _ = try awaitPublisher(viewModel.$statusMessage.collectNext(1)).last
+        for current in disconnectedStates {
+            viewModel.isNetPEnabled = true
+            statusObserver.subject.send(current)
+            let statusMessage = try awaitPublisher(viewModel.$statusMessage.collectNext(1)).last
+            XCTAssertEqual(statusMessage, UserText.netPStatusDisconnected)
+        }
+    }
+
     // MARK: - Helpers
 
     private func whenStatusUpdate_connected() {

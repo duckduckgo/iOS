@@ -47,11 +47,11 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
         super.tearDown()
     }
 
-    func testStatusUpdate_connected_setsIsNetPEnabledToTrue() {
+    func testStatusUpdate_connected_setsIsNetPEnabledToTrue() throws {
         whenStatusUpdate_connected()
     }
 
-    func testStatusUpdate_notConnected_setsIsNetPEnabledToFalse() {
+    func testStatusUpdate_notConnected_setsIsNetPEnabledToFalse() throws {
         whenStatusUpdate_notConnected()
     }
 
@@ -91,52 +91,32 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
 
     func testStatusUpdate_connected_updatesStatusMessageEverySecond_withTimeLapsed() throws {
         statusObserver.subject.send(.connected(connectedDate: Date()))
-        // To make this more test stable, give it 3 seconds to give the initial and first updates
-        let collected = try waitForPublisher(viewModel.$statusMessage.collectNext(3))
-        let expectedMessages = ["Connected - 00:00:00", "Connected - 00:00:01"]
-        if #available(iOS 16.0, *) {
-            XCTAssertTrue(collected.contains(expectedMessages))
-        } else {
-            XCTAssertTrue(
-                collected.contains {
-                    $0 == expectedMessages.first!
-                }
-            )
-            XCTAssertTrue(
-                collected.contains {
-                    $0 == expectedMessages.last!
-                }
-            )
-        }
+        try waitForPublisher(viewModel.$statusMessage, toEmit: "Connected - 00:00:00")
+        try waitForPublisher(viewModel.$statusMessage, toEmit: "Connected - 00:00:01")
     }
 
     func testStatusUpdate_disconnecting_updateStatusToDisconnecting() throws {
         viewModel.isNetPEnabled = true
         statusObserver.subject.send(.disconnecting)
-        let statusMessage = try waitForPublisher(viewModel.$statusMessage.collectNext(2)).last
-        XCTAssertEqual(statusMessage, UserText.netPStatusDisconnecting)
+        try waitForPublisher(viewModel.$statusMessage, toEmit: UserText.netPStatusDisconnecting)
     }
 
     func testStatusUpdate_connectingOrReasserting_updateStatusToConnecting() throws {
         let connectingStates: [ConnectionStatus] = [.connecting, .reasserting]
-        // Collect the initial value first
-        _ = try waitForPublisher(viewModel.$statusMessage.collectNext(1)).last
         for current in connectingStates {
             statusObserver.subject.send(current)
-            let statusMessage = try waitForPublisher(viewModel.$statusMessage.collectNext(1)).last
-            XCTAssertEqual(statusMessage, UserText.netPStatusConnecting)
+            try waitForPublisher(viewModel.$statusMessage, toEmit: UserText.netPStatusConnecting)
         }
     }
 
     func testStatusUpdate_disconnectedOrNotConfigured_updateStatusToDisconnected() throws {
         let disconnectedStates: [ConnectionStatus] = [.disconnected, .notConfigured]
-        // Collect the initial value first
-        _ = try waitForPublisher(viewModel.$statusMessage.collectNext(1)).last
+        // Wait for the initial value first
+        try waitForPublisher(viewModel.$statusMessage, toEmit: UserText.netPStatusDisconnected)
         for current in disconnectedStates {
-            viewModel.isNetPEnabled = true
+            viewModel.statusMessage = ""
             statusObserver.subject.send(current)
-            let statusMessage = try waitForPublisher(viewModel.$statusMessage.collectNext(1)).last
-            XCTAssertEqual(statusMessage, UserText.netPStatusDisconnected)
+            try waitForPublisher(viewModel.$statusMessage, toEmit: UserText.netPStatusDisconnected)
         }
     }
 

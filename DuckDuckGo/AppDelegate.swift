@@ -202,6 +202,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self?.syncDataProviders.credentialsAdapter.updateDatabaseCleanupSchedule(shouldEnable: isSyncDisabled)
                 self?.syncDataProviders.bookmarksAdapter.updateDatabaseCleanupSchedule(shouldEnable: isSyncDisabled)
             }
+        syncDataProviders.bookmarksAdapter.databaseCleaner.isSyncActive = { [weak self] in
+            self?.syncService.authState == .active
+        }
+        syncDataProviders.credentialsAdapter.databaseCleaner.isSyncActive = { [weak self] in
+            self?.syncService.authState == .active
+        }
+
 
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         

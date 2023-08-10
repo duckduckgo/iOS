@@ -36,8 +36,7 @@ struct NetworkProtectionRootView: View {
             NetworkProtectionInviteView(model: inviteViewModel)
         case .status:
             NetworkProtectionStatusView(
-                statusModel: NetworkProtectionStatusViewModel(),
-                inviteModel: inviteViewModel
+                statusModel: NetworkProtectionStatusViewModel()
             )
         }
     }

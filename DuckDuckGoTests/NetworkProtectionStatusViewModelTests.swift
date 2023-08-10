@@ -47,11 +47,11 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
         super.tearDown()
     }
 
-    func testStatusUpdate_connected_setsIsNetPEnabledToTrue() {
+    func testStatusUpdate_connected_setsIsNetPEnabledToTrue() throws {
         whenStatusUpdate_connected()
     }
 
-    func testStatusUpdate_notConnected_setsIsNetPEnabledToFalse() {
+    func testStatusUpdate_notConnected_setsIsNetPEnabledToFalse() throws {
         whenStatusUpdate_notConnected()
     }
 
@@ -87,6 +87,55 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
         viewModel.statusImageID = ""
         whenStatusUpdate_notConnected()
         XCTAssertEqual(self.viewModel.statusImageID, "VPNDisabled")
+    }
+
+    func testStatusUpdate_connected_updatesStatusMessageEverySecond_withTimeLapsed() throws {
+        statusObserver.subject.send(.connected(connectedDate: Date()))
+        try waitForPublisher(viewModel.$statusMessage, toEmit: "Connected - 00:00:00")
+        try waitForPublisher(viewModel.$statusMessage, toEmit: "Connected - 00:00:01")
+    }
+
+    func testStatusUpdate_disconnecting_updateStatusToDisconnecting() throws {
+        viewModel.isNetPEnabled = true
+        statusObserver.subject.send(.disconnecting)
+        try waitForPublisher(viewModel.$statusMessage, toEmit: UserText.netPStatusDisconnecting)
+    }
+
+    func testStatusUpdate_connectingOrReasserting_updateStatusToConnecting() throws {
+        let connectingStates: [ConnectionStatus] = [.connecting, .reasserting]
+        for current in connectingStates {
+            statusObserver.subject.send(current)
+            try waitForPublisher(viewModel.$statusMessage, toEmit: UserText.netPStatusConnecting)
+        }
+    }
+
+    func testStatusUpdate_disconnectedOrNotConfigured_updateStatusToDisconnected() throws {
+        let disconnectedStates: [ConnectionStatus] = [.disconnected, .notConfigured]
+        // Wait for the initial value first
+        try waitForPublisher(viewModel.$statusMessage, toEmit: UserText.netPStatusDisconnected)
+        for current in disconnectedStates {
+            viewModel.statusMessage = ""
+            statusObserver.subject.send(current)
+            try waitForPublisher(viewModel.$statusMessage, toEmit: UserText.netPStatusDisconnected)
+        }
+    }
+
+    func testStatusUpdate_notLoadingStates_enablesToggle() throws {
+        let notLoadingStates: [ConnectionStatus] = [.connected(connectedDate: Date()), .disconnected, .notConfigured]
+        for current in notLoadingStates {
+            viewModel.shouldDisableToggle = true
+            statusObserver.subject.send(current)
+            try waitForPublisher(viewModel.$shouldDisableToggle, toEmit: false)
+        }
+    }
+
+    func testStatusUpdate_loadingStates_disablesToggle() throws {
+        let toggleEnabledStates: [ConnectionStatus] = [.disconnecting, .connecting, .reasserting]
+        for current in toggleEnabledStates {
+            viewModel.shouldDisableToggle = false
+            statusObserver.subject.send(current)
+            try waitForPublisher(viewModel.$shouldDisableToggle, toEmit: true)
+        }
     }
 
     // MARK: - Helpers

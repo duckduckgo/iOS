@@ -24,6 +24,13 @@ import Combine
 import NetworkProtection
 
 final class NetworkProtectionStatusViewModel: ObservableObject {
+    private static var dateFormatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.zeroFormattingBehavior = .pad
+        return formatter
+    }()
+
     private let tunnelController: TunnelController
     private let statusObserver: ConnectionStatusObserver
     private var cancellables: Set<AnyCancellable> = []
@@ -35,23 +42,26 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     // MARK: Toggle Item
     @Published public var isNetPEnabled = false
     @Published public var statusMessage: String
-    @Published public var shouldShowLoading: Bool = false
-
-    private var isConnectedPublisher: AnyPublisher<Bool, Never> {
-        statusObserver.publisher
-            .map { $0.isConnected }
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-    }
+    @Published public var shouldDisableToggle: Bool = false
 
     public init(tunnelController: TunnelController = NetworkProtectionTunnelController(),
                 statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession()) {
         self.tunnelController = tunnelController
         self.statusObserver = statusObserver
-        statusMessage = statusObserver.recentValue.message
+        statusMessage = Self.message(for: statusObserver.recentValue)
         self.headerTitle = Self.titleText(connected: statusObserver.recentValue.isConnected)
         self.statusImageID = Self.statusImageID(connected: statusObserver.recentValue.isConnected)
 
+        setUpIsConnectedStatePublishers()
+        setUpStatusMessagePublishers()
+        setUpDisableTogglePublisher()
+    }
+
+    private func setUpIsConnectedStatePublishers() {
+        let isConnectedPublisher = statusObserver.publisher
+            .map { $0.isConnected }
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
         isConnectedPublisher
             .assign(to: \.isNetPEnabled, onWeaklyHeld: self)
             .store(in: &cancellables)
@@ -63,17 +73,34 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             .map(Self.statusImageID(connected:))
             .assign(to: \.statusImageID, onWeaklyHeld: self)
             .store(in: &cancellables)
+    }
 
+    private func setUpStatusMessagePublishers() {
+        statusObserver.publisher
+            .flatMap(maxPublishers: .max(1)) { status in
+                // As soon as the connection status changes, we should update the status message
+                var statusUpdatePublishers = [Just(Self.message(for: status)).eraseToAnyPublisher()]
+                switch status {
+                case .connected(let connectedDate):
+                    // In the case that the status is connected, we should then provide timed updates
+                    // If we rely on the timed updates alone, there will be a delay to the initial update
+                    statusUpdatePublishers.append(Self.timedConnectedStatusMessagePublisher(forConnectedDate: connectedDate))
+                default:
+                    break
+                }
+                return statusUpdatePublishers.publisher
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.statusMessage, onWeaklyHeld: self)
+            .store(in: &cancellables)
+    }
+
+    private func setUpDisableTogglePublisher() {
         statusObserver.publisher
             .map { $0.isLoading }
             .receive(on: DispatchQueue.main)
-            .assign(to: \.shouldShowLoading, onWeaklyHeld: self)
-            .store(in: &cancellables)
-
-        statusObserver.publisher
-            .map { $0.message }
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.statusMessage, onWeaklyHeld: self)
+            .assign(to: \.shouldDisableToggle, onWeaklyHeld: self)
             .store(in: &cancellables)
     }
 
@@ -102,26 +129,37 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     private class func statusImageID(connected isConnected: Bool) -> String {
         isConnected ? "VPN" : "VPNDisabled"
     }
-}
 
-private extension ConnectionStatus {
-    var message: String {
-        switch self {
-        case .notConfigured:
-            return "Not Configured"
-        case .disconnected:
-            return "Disconnected"
+    private static func timedConnectedStatusMessagePublisher(forConnectedDate connectedDate: Date) -> AnyPublisher<String, Never> {
+        Timer.publish(every: 1, on: .main, in: .default)
+            .autoconnect()
+            .map {
+                Self.connectedMessage(for: connectedDate, currentDate: $0)
+            }
+            .eraseToAnyPublisher()
+    }
+
+    private static func message(for status: ConnectionStatus) -> String {
+        switch status {
+        case .disconnected, .notConfigured:
+            return UserText.netPStatusDisconnected
         case .disconnecting:
-            return "Disconnecting"
+            return UserText.netPStatusDisconnecting
         case .connected(connectedDate: let connectedDate):
-            return "Connected since \(connectedDate)"
-        case .connecting:
-            return "Connecting"
-        case .reasserting:
-            return "Reasserting"
+            return connectedMessage(for: connectedDate)
+        case .connecting, .reasserting:
+            return UserText.netPStatusConnecting
         }
     }
 
+    private static func connectedMessage(for connectedDate: Date, currentDate: Date = Date()) -> String {
+        let timeLapsedInterval = currentDate.timeIntervalSince(connectedDate)
+        let timeLapsed = Self.dateFormatter.string(from: timeLapsedInterval) ?? "00:00:00"
+        return UserText.netPStatusConnected(since: timeLapsed)
+    }
+}
+
+private extension ConnectionStatus {
     var isConnected: Bool {
         switch self {
         case .connected:

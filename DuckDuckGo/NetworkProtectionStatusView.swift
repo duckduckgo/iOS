@@ -195,9 +195,6 @@ private extension Color {
 
 struct NetworkProtectionStatusView_Previews: PreviewProvider {
     static var previews: some View {
-        let inviteViewModel = NetworkProtectionInviteViewModel(
-            redemptionCoordinator: NetworkProtectionCodeRedemptionCoordinator()
-        ) { }
         NetworkProtectionStatusView(statusModel: NetworkProtectionStatusViewModel())
     }
 }

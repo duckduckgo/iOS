@@ -43,10 +43,10 @@ struct NetworkProtectionStatusView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(UserText.netPStatusViewTitle)
                         .font(.system(size: 16))
-                        .foregroundColor(.titleText)
+                        .foregroundColor(.primary)
                     Text(statusModel.statusMessage)
                         .font(.system(size: 13))
-                        .foregroundColor(.messageText)
+                        .foregroundColor(.secondary)
                 }
 
                 Toggle("", isOn: Binding(
@@ -60,7 +60,7 @@ struct NetworkProtectionStatusView: View {
                 .disabled(statusModel.shouldDisableToggle)
                 .toggleStyle(SwitchToggleStyle(tint: .toggleColor))
             }
-            .background(Color.cellBackground)
+            .listRowBackground(Color.cellBackground)
         } header: {
             header()
         } footer: {
@@ -83,11 +83,11 @@ struct NetworkProtectionStatusView: View {
                 Text(statusModel.headerTitle)
                     .font(.system(size: 17, weight: .semibold))
                     .multilineTextAlignment(.center)
-                    .foregroundColor(.titleText)
+                    .foregroundColor(.primary)
                 Text(UserText.netPStatusHeaderMessage)
                     .font(.system(size: 13))
                     .multilineTextAlignment(.center)
-                    .foregroundColor(.messageText)
+                    .foregroundColor(.secondary)
             }
             .padding(.bottom, 4)
             .background(Color.viewBackground)
@@ -113,7 +113,7 @@ struct NetworkProtectionStatusView: View {
                 )
             }
         } header: {
-            Text(UserText.netPStatusViewConnectionDetails).foregroundColor(.titleText)
+            Text(UserText.netPStatusViewConnectionDetails).foregroundColor(.primary)
         } footer: {
             inviteOnlyFooter()
         }
@@ -123,7 +123,7 @@ struct NetworkProtectionStatusView: View {
     private func inviteOnlyFooter() -> some View {
         // Needs to be inlined like this for the markdown parsing to work
         Text("\(UserText.netPInviteOnlyMessage) [\(UserText.netPStatusViewShareFeedback)](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)")
-            .foregroundColor(.messageText)
+            .foregroundColor(.secondary)
             .accentColor(.accentColor)
             .font(.system(size: 13))
             .padding(.top, 6)
@@ -140,13 +140,13 @@ private struct NetworkProtectionServerItemView: View {
             Image(imageID)
             Text(title)
                 .font(.system(size: 16))
-                .foregroundColor(.titleText)
+                .foregroundColor(.primary)
             Spacer()
             Text(value)
                 .font(.system(size: 16))
-                .foregroundColor(.messageText)
+                .foregroundColor(.secondary)
         }
-        .background(Color.cellBackground)
+        .listRowBackground(Color.cellBackground)
     }
 }
 

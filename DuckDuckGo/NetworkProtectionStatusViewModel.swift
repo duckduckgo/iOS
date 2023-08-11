@@ -36,6 +36,18 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     private let serverInfoObserver: ConnectionServerInfoObserver
     private var cancellables: Set<AnyCancellable> = []
 
+    // MARK: Error
+
+    struct ErrorItem {
+        let title: String
+        let message: String
+    }
+
+    @Published public var error: ErrorItem? = .init(
+        title: "Network Protection is borked",
+        message: "A VPN app on your device may have borked it. Use the toggle to un-bork."
+    )
+
     // MARK: Header
     @Published public var statusImageID: String
     @Published public var headerTitle: String

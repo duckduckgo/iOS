@@ -27,6 +27,12 @@ struct NetworkProtectionStatusView: View {
 
     var body: some View {
         List {
+            if let errorItem = statusModel.error {
+                NetworkProtectionErrorView(
+                    title: errorItem.title,
+                    message: errorItem.message
+                )
+            }
             toggle()
             if statusModel.shouldShowConnectionDetails {
                 connectionDetails()
@@ -80,6 +86,9 @@ struct NetworkProtectionStatusView: View {
                     .scaledToFit()
                     .frame(height: 96)
                     .padding(8)
+                    .if(statusModel.error != nil) {
+                        $0.rotationEffect(.degrees(180))
+                    }
                 Text(statusModel.headerTitle)
                     .font(.system(size: 17, weight: .semibold))
                     .multilineTextAlignment(.center)
@@ -127,6 +136,27 @@ struct NetworkProtectionStatusView: View {
             .accentColor(.accentColor)
             .font(.system(size: 13))
             .padding(.top, 6)
+    }
+}
+
+private struct NetworkProtectionErrorView: View {
+    let title: String
+    let message: String
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Image("Alert-Color-16")
+                Text(title)
+                    .font(.system(size: 16))
+                    .foregroundColor(.primary)
+                    .bold()
+            }
+            Text(message)
+                .font(.system(size: 16))
+                .foregroundColor(.primary)
+        }
+        .listRowBackground(Color.cellBackground)
     }
 }
 

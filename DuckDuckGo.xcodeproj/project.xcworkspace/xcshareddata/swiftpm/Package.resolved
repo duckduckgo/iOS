@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": "dominik/sync-logins",
-          "revision": "d36c7bbcbd184905c3e327ecdbc11ed2284b76fe",
+          "revision": "ed33c03f4e04dbc5c1c9d26975e909e62d5ab2ab",
           "version": null
         }
       },
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
           "branch": null,
-          "revision": "b1160df954eea20cd4cdf9356afc369751981b16",
-          "version": "8.0.0"
+          "revision": "40bcd0d347b51d14e8114f191df2817d8dcb4284",
+          "version": "8.1.2"
         }
       },
       {

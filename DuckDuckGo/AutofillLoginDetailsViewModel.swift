@@ -274,6 +274,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         }
     }
 
+    // swiftlint:disable:next cyclomatic_complexity
     func save() {
         guard let vault = try? AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared) else {
             return

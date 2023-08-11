@@ -95,7 +95,9 @@ final class SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
     }
 
     private var savedMatchingPasswordWithoutUsername: SecureVaultModels.WebsiteCredentials? {
-        let credentialsWithSamePassword = domainStoredCredentials.filter { $0.password == credentials.password && ($0.account.username?.count ?? 0) == 0 }
+        let credentialsWithSamePassword = domainStoredCredentials.filter { storedCredentials in
+            storedCredentials.password == credentials.password && (storedCredentials.account.username?.count ?? 0) == 0
+        }
         return credentialsWithSamePassword.first
     }
     

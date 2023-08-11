@@ -203,7 +203,11 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
 
         let suggestedAccounts = accounts.filter { account in
-            return autofillDomainNameUrlMatcher.isMatchingForAutofill(currentSite: currentUrl.absoluteString, savedSite: account.domain ?? "", tld: tld)
+            return autofillDomainNameUrlMatcher.isMatchingForAutofill(
+                currentSite: currentUrl.absoluteString,
+                savedSite: account.domain ?? "",
+                tld: tld
+            )
         }
 
         let sortedSuggestions = suggestedAccounts.sorted(by: {

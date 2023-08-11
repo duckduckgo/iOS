@@ -29,6 +29,14 @@ Fetches and updates certificates and provisioning profiles for App Store distrib
 
 Fetches and updates certificates and provisioning profiles for Ad-Hoc distribution
 
+### sync_signing_alpha
+
+```sh
+[bundle exec] fastlane sync_signing_alpha
+```
+
+
+
 ### adhoc
 
 ```sh
@@ -36,6 +44,14 @@ Fetches and updates certificates and provisioning profiles for Ad-Hoc distributi
 ```
 
 Makes Ad-Hoc build with a specified name in a given directory
+
+### alpha
+
+```sh
+[bundle exec] fastlane alpha
+```
+
+Makes Alpha release build and uploads it to App Store Connect (TestFlight)
 
 ### release_appstore
 

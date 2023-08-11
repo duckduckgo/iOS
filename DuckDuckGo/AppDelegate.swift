@@ -217,7 +217,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                bookmarksDatabase: self.bookmarksDatabase,
                                bookmarksDatabaseCleaner: self.syncDataProviders.bookmarksAdapter.databaseCleaner,
                                appTrackingProtectionDatabase: self.appTrackingProtectionDatabase,
-                               syncService: self.syncService)
+                               syncService: self.syncService,
+                               syncDataProviders: self.syncDataProviders)
         }) else {
             fatalError("Could not load MainViewController")
         }

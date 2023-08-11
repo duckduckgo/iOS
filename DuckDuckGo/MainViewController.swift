@@ -114,6 +114,7 @@ class MainViewController: UIViewController {
     private weak var bookmarksDatabaseCleaner: BookmarkDatabaseCleaner?
     private let favoritesViewModel: FavoritesListInteracting
     private let syncService: DDGSyncing
+    private let syncDataProviders: SyncDataProviders
     private var localUpdatesCancellable: AnyCancellable?
     private var syncUpdatesCancellable: AnyCancellable?
 
@@ -149,11 +150,14 @@ class MainViewController: UIViewController {
                    bookmarksDatabase: CoreDataDatabase,
                    bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
                    appTrackingProtectionDatabase: CoreDataDatabase,
-                   syncService: DDGSyncing) {
+                   syncService: DDGSyncing,
+                   syncDataProviders: SyncDataProviders
+    ) {
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
         self.syncService = syncService
+        self.syncDataProviders = syncDataProviders
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         super.init(coder: coder)
@@ -340,7 +344,7 @@ class MainViewController: UIViewController {
                 self?.syncService.scheduler.notifyDataChanged()
             }
 
-        syncUpdatesCancellable = (UIApplication.shared.delegate as? AppDelegate)?.syncDataProviders.bookmarksAdapter.syncDidCompletePublisher
+        syncUpdatesCancellable = syncDataProviders.bookmarksAdapter.syncDidCompletePublisher
             .sink { [weak self] _ in
                 self?.favoritesViewModel.reloadData()
                 DispatchQueue.main.async {
@@ -422,7 +426,8 @@ class MainViewController: UIViewController {
         guard let controller = BookmarksViewController(coder: coder,
                                                        bookmarksDatabase: self.bookmarksDatabase,
                                                        bookmarksSearch: bookmarksCachingSearch,
-                                                       syncService: syncService) else {
+                                                       syncService: syncService,
+                                                       syncDataProviders: syncDataProviders) else {
             fatalError("Failed to create controller")
         }
         controller.delegate = self
@@ -460,6 +465,7 @@ class MainViewController: UIViewController {
                                                       appTPDatabase: appTrackingProtectionDatabase,
                                                       bookmarksDatabase: bookmarksDatabase,
                                                       syncService: syncService,
+                                                      syncDataProviders: syncDataProviders,
                                                       internalUserDecider: AppDependencyProvider.shared.internalUserDecider) else {
             fatalError("Failed to create controller")
         }
@@ -948,7 +954,8 @@ class MainViewController: UIViewController {
         let autofillSettingsViewController = AutofillLoginSettingsListViewController(
             appSettings: appSettings,
             currentTabUrl: currentTabUrl,
-            syncService: syncService
+            syncService: syncService,
+            syncDataProviders: syncDataProviders
         )
         autofillSettingsViewController.delegate = self
         let navigationController = UINavigationController(rootViewController: autofillSettingsViewController)

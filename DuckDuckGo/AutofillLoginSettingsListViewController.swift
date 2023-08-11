@@ -100,7 +100,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                            constant: (tableView.frame.height / 2))
     }()
 
-    init(appSettings: AppSettings, currentTabUrl: URL? = nil, syncService: DDGSyncing) {
+    init(appSettings: AppSettings, currentTabUrl: URL? = nil, syncService: DDGSyncing, syncDataProviders: SyncDataProviders) {
         let secureVault = try? AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared)
         if secureVault == nil {
             os_log("Failed to make vault")
@@ -109,7 +109,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         self.syncService = syncService
         super.init(nibName: nil, bundle: nil)
 
-        syncUpdatesCancellable = (UIApplication.shared.delegate as? AppDelegate)?.syncDataProviders.credentialsAdapter.syncDidCompletePublisher
+        syncUpdatesCancellable = syncDataProviders.credentialsAdapter.syncDidCompletePublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.viewModel.updateData()

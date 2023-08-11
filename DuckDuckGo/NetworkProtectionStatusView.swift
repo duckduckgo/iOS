@@ -31,13 +31,22 @@ struct NetworkProtectionStatusView: View {
             toggle()
             inviteCodeEntry()
         }
+        .applyListStyle()
+        .navigationTitle(UserText.netPNavTitle)
     }
 
     @ViewBuilder
     func toggle() -> some View {
         Section {
             HStack {
-                Text("Network Protection")
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(UserText.netPStatusViewTitle)
+                        .font(.system(size: 16))
+                        .foregroundColor(.titleText)
+                    Text(statusModel.statusMessage)
+                        .font(.system(size: 13))
+                        .foregroundColor(.messageText)
+                }
 
                 Toggle("", isOn: Binding(
                     get: { statusModel.isNetPEnabled },
@@ -47,18 +56,33 @@ struct NetworkProtectionStatusView: View {
                         }
                     }
                 ))
-                .disabled(statusModel.shouldShowLoading)
-                .toggleStyle(SwitchToggleStyle(tint: Color(designSystemColor: .accent)))
+                .disabled(statusModel.shouldDisableToggle)
+                .toggleStyle(SwitchToggleStyle(tint: .toggleColor))
             }
+            .background(Color.cellBackground)
+        } header: {
             HStack {
-                if let status = statusModel.statusMessage {
-                    Text(status)
-                        .foregroundColor(statusModel.isNetPEnabled ? .green : .red)
+                Spacer()
+                VStack(alignment: .center, spacing: 16) {
+                    Image(statusModel.statusImageID)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 96)
+                        .padding(8)
+                    Text(statusModel.headerTitle)
+                        .font(.system(size: 17, weight: .semibold))
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.titleText)
+                    Text(UserText.netPStatusHeaderMessage)
+                        .font(.system(size: 13))
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.messageText)
                 }
+                .padding(.bottom, 4)
+                .background(Color.viewBackground)
+                Spacer()
             }
-        } footer: {
-            Text("Hide your location and conceal your online activity")
-        }
+        }.increaseHeaderProminence()
     }
 
     @ViewBuilder
@@ -72,6 +96,49 @@ struct NetworkProtectionStatusView: View {
             .foregroundColor(.red)
         }
     }
+}
+
+private extension View {
+    @ViewBuilder
+    func hideScrollContentBackground() -> some View {
+        if #available(iOS 16, *) {
+            self.scrollContentBackground(.hidden)
+        } else {
+            let originalBackgroundColor = UITableView.appearance().backgroundColor
+            self.onAppear {
+                UITableView.appearance().backgroundColor = .clear
+            }.onDisappear {
+                UITableView.appearance().backgroundColor = originalBackgroundColor
+            }
+        }
+    }
+
+    @ViewBuilder
+    func applyListStyle() -> some View {
+        self
+            .listStyle(.insetGrouped)
+            .listStyle(.insetGrouped)
+            .hideScrollContentBackground()
+            .background(
+                Rectangle().ignoresSafeArea().foregroundColor(Color.viewBackground))
+    }
+
+    @ViewBuilder
+    func increaseHeaderProminence() -> some View {
+        if #available(iOS 15, *) {
+            self.headerProminence(.increased)
+        } else {
+            self
+        }
+    }
+}
+
+private extension Color {
+    static let titleText = Color(designSystemColor: .textPrimary)
+    static let messageText = Color(designSystemColor: .textSecondary)
+    static let cellBackground = Color(designSystemColor: .surface)
+    static let viewBackground = Color(designSystemColor: .background)
+    static let toggleColor = Color(designSystemColor: .accent)
 }
 
 struct NetworkProtectionStatusView_Previews: PreviewProvider {

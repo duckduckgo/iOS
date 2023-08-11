@@ -20,10 +20,12 @@
 import XCTest
 import NetworkProtection
 import NetworkExtension
+import NetworkProtectionTestUtils
 @testable import DuckDuckGo
 
 final class NetworkProtectionStatusViewModelTests: XCTestCase {
-    private var tunnelController: MockNetworkProtectionTunnelControlling!
+    private var tunnelController: MockTunnelController!
+    private var statusObserver: MockConnectionStatusObserver!
     private var viewModel: NetworkProtectionStatusViewModel!
 
     private var testError: Error {
@@ -33,59 +35,123 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        tunnelController = MockNetworkProtectionTunnelControlling()
-        viewModel = NetworkProtectionStatusViewModel(tunnelController: tunnelController)
+        tunnelController = MockTunnelController()
+        statusObserver = MockConnectionStatusObserver()
+        viewModel = NetworkProtectionStatusViewModel(tunnelController: tunnelController, statusObserver: statusObserver)
     }
 
     override func tearDown() {
+        statusObserver = nil
         tunnelController = nil
         viewModel = nil
         super.tearDown()
     }
 
     func testStatusUpdate_connected_setsIsNetPEnabledToTrue() throws {
-        tunnelController.statusSubject.send(.connected(connectedDate: Date()))
-        waitFor(condition: self.viewModel.isNetPEnabled)
+        whenStatusUpdate_connected()
     }
 
-    func testStatusUpdate_notConnected_setsIsNetPEnabledToTrue() {
-        viewModel.isNetPEnabled = true
-        let nonConnectedCases: [ConnectionStatus] = [.connecting, .disconnected, .disconnecting, .notConfigured, .reasserting]
-        for current in nonConnectedCases {
-            tunnelController.statusSubject.send(current)
-            waitFor(condition: !self.viewModel.isNetPEnabled)
-        }
+    func testStatusUpdate_notConnected_setsIsNetPEnabledToFalse() throws {
+        whenStatusUpdate_notConnected()
     }
 
     func testDidToggleNetPToTrue_setsTunnelControllerStateToTrue() async {
         await viewModel.didToggleNetP(to: true)
-        XCTAssertEqual(self.tunnelController.spySetStateEnabled, true)
-    }
-
-    func testDidToggleNetPToTrue_tunnelControllerErrors_setsStatusMessage() async {
-        tunnelController.stubSetStateError = testError
-        await viewModel.didToggleNetP(to: true)
-        XCTAssertNotNil(self.viewModel.statusMessage)
-    }
-
-    func testDidToggleNetPToTrue_tunnelControllerErrors_setsIsNetPEnabledToFalse() async {
-        tunnelController.stubSetStateError = testError
-        await viewModel.didToggleNetP(to: true)
-        XCTAssertFalse(self.viewModel.isNetPEnabled)
-    }
-
-    func testDidToggleNetPToFalse_tunnelControllerErrors_setsStatusMessage() async {
-        tunnelController.stubSetStateError = testError
-        await viewModel.didToggleNetP(to: false)
-        XCTAssertNotNil(self.viewModel.statusMessage)
+        XCTAssertEqual(self.tunnelController.didCallStart, true)
     }
 
     func testDidToggleNetPToFalse_setsTunnelControllerStateToFalse() async {
         await viewModel.didToggleNetP(to: false)
-        XCTAssertEqual(self.tunnelController.spySetStateEnabled, false)
+        XCTAssertEqual(self.tunnelController.didCallStart, false)
+    }
+
+    func testStatusUpdate_connected_setsHeaderTitleToOn() {
+        viewModel.headerTitle = ""
+        whenStatusUpdate_connected()
+        XCTAssertEqual(self.viewModel.headerTitle, UserText.netPStatusHeaderTitleOn)
+    }
+
+    func testStatusUpdate_notconnected_setsHeaderTitleToOff() {
+        viewModel.headerTitle = ""
+        whenStatusUpdate_notConnected()
+        XCTAssertEqual(self.viewModel.headerTitle, UserText.netPStatusHeaderTitleOff)
+    }
+
+    func testStatusUpdate_connected_setsStatusImageIDToVPN() {
+        viewModel.statusImageID = ""
+        whenStatusUpdate_connected()
+        XCTAssertEqual(self.viewModel.statusImageID, "VPN")
+    }
+
+    func testStatusUpdate_disconnected_setsStatusImageIDToVPNDisabled() {
+        viewModel.statusImageID = ""
+        whenStatusUpdate_notConnected()
+        XCTAssertEqual(self.viewModel.statusImageID, "VPNDisabled")
+    }
+
+    func testStatusUpdate_connected_updatesStatusMessageEverySecond_withTimeLapsed() throws {
+        statusObserver.subject.send(.connected(connectedDate: Date()))
+        try waitForPublisher(viewModel.$statusMessage, toEmit: "Connected - 00:00:00")
+        try waitForPublisher(viewModel.$statusMessage, toEmit: "Connected - 00:00:01")
+    }
+
+    func testStatusUpdate_disconnecting_updateStatusToDisconnecting() throws {
+        viewModel.isNetPEnabled = true
+        statusObserver.subject.send(.disconnecting)
+        try waitForPublisher(viewModel.$statusMessage, toEmit: UserText.netPStatusDisconnecting)
+    }
+
+    func testStatusUpdate_connectingOrReasserting_updateStatusToConnecting() throws {
+        let connectingStates: [ConnectionStatus] = [.connecting, .reasserting]
+        for current in connectingStates {
+            statusObserver.subject.send(current)
+            try waitForPublisher(viewModel.$statusMessage, toEmit: UserText.netPStatusConnecting)
+        }
+    }
+
+    func testStatusUpdate_disconnectedOrNotConfigured_updateStatusToDisconnected() throws {
+        let disconnectedStates: [ConnectionStatus] = [.disconnected, .notConfigured]
+        // Wait for the initial value first
+        try waitForPublisher(viewModel.$statusMessage, toEmit: UserText.netPStatusDisconnected)
+        for current in disconnectedStates {
+            viewModel.statusMessage = ""
+            statusObserver.subject.send(current)
+            try waitForPublisher(viewModel.$statusMessage, toEmit: UserText.netPStatusDisconnected)
+        }
+    }
+
+    func testStatusUpdate_notLoadingStates_enablesToggle() throws {
+        let notLoadingStates: [ConnectionStatus] = [.connected(connectedDate: Date()), .disconnected, .notConfigured]
+        for current in notLoadingStates {
+            viewModel.shouldDisableToggle = true
+            statusObserver.subject.send(current)
+            try waitForPublisher(viewModel.$shouldDisableToggle, toEmit: false)
+        }
+    }
+
+    func testStatusUpdate_loadingStates_disablesToggle() throws {
+        let toggleEnabledStates: [ConnectionStatus] = [.disconnecting, .connecting, .reasserting]
+        for current in toggleEnabledStates {
+            viewModel.shouldDisableToggle = false
+            statusObserver.subject.send(current)
+            try waitForPublisher(viewModel.$shouldDisableToggle, toEmit: true)
+        }
     }
 
     // MARK: - Helpers
+
+    private func whenStatusUpdate_connected() {
+        statusObserver.subject.send(.connected(connectedDate: Date()))
+        waitFor(condition: self.viewModel.isNetPEnabled)
+    }
+
+    private func whenStatusUpdate_notConnected() {
+        let nonConnectedCases: [ConnectionStatus] = [.connecting, .disconnected, .disconnecting, .notConfigured, .reasserting]
+        for current in nonConnectedCases {
+            statusObserver.subject.send(current)
+            waitFor(condition: !self.viewModel.isNetPEnabled)
+        }
+    }
 
     private func waitFor(condition: @escaping @autoclosure () -> Bool) {
         let predicate = NSPredicate { _, _ in

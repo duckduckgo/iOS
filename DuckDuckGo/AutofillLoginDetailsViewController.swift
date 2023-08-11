@@ -74,11 +74,25 @@ class AutofillLoginDetailsViewController: UIViewController {
         self.authenticationNotRequired = authenticationNotRequired
         super.init(nibName: nil, bundle: nil)
         self.viewModel.delegate = self
-
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    var account: SecureVaultModels.WebsiteAccount? {
+        get {
+            viewModel.account
+        }
+        set {
+            if let newValue {
+                viewModel.updateData(with: newValue)
+            } else if viewModel.viewMode == .view {
+                navigationController?.dismiss(animated: true)
+            } else {
+                viewModel.viewMode = .new
+            }
+        }
     }
     
     override func viewDidLoad() {
@@ -198,7 +212,8 @@ class AutofillLoginDetailsViewController: UIViewController {
             viewModel.$title,
             viewModel.$username,
             viewModel.$password,
-            viewModel.$address)
+            viewModel.$address,
+            viewModel.$notes)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.setupNavigationBar()

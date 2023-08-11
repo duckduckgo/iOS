@@ -111,10 +111,10 @@ class MainViewController: UIViewController {
     
     private let appTrackingProtectionDatabase: CoreDataDatabase
     private let bookmarksDatabase: CoreDataDatabase
-    private let bookmarksDatabaseCleaner: BookmarkDatabaseCleaner
+    private weak var bookmarksDatabaseCleaner: BookmarkDatabaseCleaner?
     private let favoritesViewModel: FavoritesListInteracting
     private let syncService: DDGSyncing
-    private var syncStateCancellable: AnyCancellable?
+    private let syncDataProviders: SyncDataProviders
     private var localUpdatesCancellable: AnyCancellable?
     private var syncUpdatesCancellable: AnyCancellable?
 
@@ -148,16 +148,16 @@ class MainViewController: UIViewController {
 
     required init?(coder: NSCoder,
                    bookmarksDatabase: CoreDataDatabase,
+                   bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
                    appTrackingProtectionDatabase: CoreDataDatabase,
-                   syncService: DDGSyncing) {
+                   syncService: DDGSyncing,
+                   syncDataProviders: SyncDataProviders
+    ) {
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
         self.bookmarksDatabase = bookmarksDatabase
-        self.bookmarksDatabaseCleaner = BookmarkDatabaseCleaner(
-            bookmarkDatabase: bookmarksDatabase,
-            errorEvents: BookmarksCleanupErrorHandling(),
-            log: .generalLog
-        )
+        self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
         self.syncService = syncService
+        self.syncDataProviders = syncDataProviders
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         super.init(coder: coder)
@@ -339,25 +339,12 @@ class MainViewController: UIViewController {
     }
 
     private func bindSyncService() {
-        syncStateCancellable = syncService.authStatePublisher
-            .prepend(syncService.authState)
-            .map { $0 == .inactive }
-            .removeDuplicates()
-            .sink { [weak self] isSyncDisabled in
-                self?.bookmarksDatabaseCleaner.cleanUpDatabaseNow()
-                if isSyncDisabled {
-                    self?.bookmarksDatabaseCleaner.scheduleRegularCleaning()
-                } else {
-                    self?.bookmarksDatabaseCleaner.cancelCleaningSchedule()
-                }
-            }
-
         localUpdatesCancellable = favoritesViewModel.localUpdates
             .sink { [weak self] in
                 self?.syncService.scheduler.notifyDataChanged()
             }
 
-        syncUpdatesCancellable = (UIApplication.shared.delegate as? AppDelegate)?.syncDataProviders.bookmarksAdapter.syncDidCompletePublisher
+        syncUpdatesCancellable = syncDataProviders.bookmarksAdapter.syncDidCompletePublisher
             .sink { [weak self] _ in
                 self?.favoritesViewModel.reloadData()
                 DispatchQueue.main.async {
@@ -439,7 +426,8 @@ class MainViewController: UIViewController {
         guard let controller = BookmarksViewController(coder: coder,
                                                        bookmarksDatabase: self.bookmarksDatabase,
                                                        bookmarksSearch: bookmarksCachingSearch,
-                                                       syncService: syncService) else {
+                                                       syncService: syncService,
+                                                       syncDataProviders: syncDataProviders) else {
             fatalError("Failed to create controller")
         }
         controller.delegate = self
@@ -477,6 +465,7 @@ class MainViewController: UIViewController {
                                                       appTPDatabase: appTrackingProtectionDatabase,
                                                       bookmarksDatabase: bookmarksDatabase,
                                                       syncService: syncService,
+                                                      syncDataProviders: syncDataProviders,
                                                       internalUserDecider: AppDependencyProvider.shared.internalUserDecider) else {
             fatalError("Failed to create controller")
         }
@@ -962,7 +951,12 @@ class MainViewController: UIViewController {
     
     fileprivate func launchAutofillLogins(with currentTabUrl: URL? = nil) {
         let appSettings = AppDependencyProvider.shared.appSettings
-        let autofillSettingsViewController = AutofillLoginSettingsListViewController(appSettings: appSettings, currentTabUrl: currentTabUrl)
+        let autofillSettingsViewController = AutofillLoginSettingsListViewController(
+            appSettings: appSettings,
+            currentTabUrl: currentTabUrl,
+            syncService: syncService,
+            syncDataProviders: syncDataProviders
+        )
         autofillSettingsViewController.delegate = self
         let navigationController = UINavigationController(rootViewController: autofillSettingsViewController)
         autofillSettingsViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: UserText.autofillNavigationButtonItemTitleClose,
@@ -1879,7 +1873,7 @@ extension MainViewController: AutoClearWorker {
         DaxDialogs.shared.clearHeldURLData()
 
         if syncService.authState == .inactive {
-            bookmarksDatabaseCleaner.cleanUpDatabaseNow()
+            bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
         }
     }
     

@@ -62,6 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private(set) var syncService: DDGSyncing!
     private(set) var syncDataProviders: SyncDataProviders!
     private var syncDidFinishCancellable: AnyCancellable?
+    private var syncStateCancellable: AnyCancellable?
 
     // MARK: lifecycle
 
@@ -190,17 +191,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // MARK: Sync initialisation
 
-        syncDataProviders = SyncDataProviders(bookmarksDatabase: bookmarksDatabase)
+        syncDataProviders = SyncDataProviders(bookmarksDatabase: bookmarksDatabase, secureVaultErrorReporter: SecureVaultErrorReporter.shared)
         syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog)
         syncService.initializeIfNeeded(isInternalUser: InternalUserStore().isInternalUser)
+        syncStateCancellable = syncService.authStatePublisher
+            .prepend(syncService.authState)
+            .map { $0 == .inactive }
+            .removeDuplicates()
+            .sink { [weak self] isSyncDisabled in
+                self?.syncDataProviders.credentialsAdapter.updateDatabaseCleanupSchedule(shouldEnable: isSyncDisabled)
+                self?.syncDataProviders.bookmarksAdapter.updateDatabaseCleanupSchedule(shouldEnable: isSyncDisabled)
+            }
+        syncDataProviders.bookmarksAdapter.databaseCleaner.isSyncActive = { [weak self] in
+            self?.syncService.authState == .active
+        }
+        syncDataProviders.credentialsAdapter.databaseCleaner.isSyncActive = { [weak self] in
+            self?.syncService.authState == .active
+        }
+
 
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         
         guard let main = storyboard.instantiateInitialViewController(creator: { coder in
             MainViewController(coder: coder,
                                bookmarksDatabase: self.bookmarksDatabase,
+                               bookmarksDatabaseCleaner: self.syncDataProviders.bookmarksAdapter.databaseCleaner,
                                appTrackingProtectionDatabase: self.appTrackingProtectionDatabase,
-                               syncService: self.syncService)
+                               syncService: self.syncService,
+                               syncDataProviders: self.syncDataProviders)
         }) else {
             fatalError("Could not load MainViewController")
         }

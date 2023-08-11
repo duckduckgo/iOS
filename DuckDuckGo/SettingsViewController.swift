@@ -95,6 +95,7 @@ class SettingsViewController: UITableViewController {
     fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager
     fileprivate lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     fileprivate let syncService: DDGSyncing
+    fileprivate let syncDataProviders: SyncDataProviders
     fileprivate let internalUserDecider: InternalUserDecider
 #if NETWORK_PROTECTION
     private let connectionObserver = ConnectionStatusObserverThroughSession()
@@ -195,11 +196,13 @@ class SettingsViewController: UITableViewController {
           appTPDatabase: CoreDataDatabase,
           bookmarksDatabase: CoreDataDatabase,
           syncService: DDGSyncing,
+          syncDataProviders: SyncDataProviders,
           internalUserDecider: InternalUserDecider) {
 
         self.appTPDatabase = appTPDatabase
         self.bookmarksDatabase = bookmarksDatabase
         self.syncService = syncService
+        self.syncDataProviders = syncDataProviders
         self.internalUserDecider = internalUserDecider
         super.init(coder: coder)
     }
@@ -400,14 +403,22 @@ class SettingsViewController: UITableViewController {
     }
 
     private func showAutofill(animated: Bool = true) {
-        let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+        let autofillController = AutofillLoginSettingsListViewController(
+            appSettings: appSettings,
+            syncService: syncService,
+            syncDataProviders: syncDataProviders
+        )
         autofillController.delegate = self
         Pixel.fire(pixel: .autofillSettingsOpened)
         navigationController?.pushViewController(autofillController, animated: animated)
     }
     
     func showAutofillAccountDetails(_ account: SecureVaultModels.WebsiteAccount) {
-        let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+        let autofillController = AutofillLoginSettingsListViewController(
+            appSettings: appSettings,
+            syncService: syncService,
+            syncDataProviders: syncDataProviders
+        )
         autofillController.delegate = self
         let detailsController = autofillController.makeAccountDetailsScreen(account)
 

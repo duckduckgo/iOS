@@ -26,6 +26,7 @@ import NetworkProtectionTestUtils
 final class NetworkProtectionStatusViewModelTests: XCTestCase {
     private var tunnelController: MockTunnelController!
     private var statusObserver: MockConnectionStatusObserver!
+    private var serverInfoObserver: MockConnectionServerInfoObserver!
     private var viewModel: NetworkProtectionStatusViewModel!
 
     private var testError: Error {
@@ -37,10 +38,16 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
         super.setUp()
         tunnelController = MockTunnelController()
         statusObserver = MockConnectionStatusObserver()
-        viewModel = NetworkProtectionStatusViewModel(tunnelController: tunnelController, statusObserver: statusObserver)
+        serverInfoObserver = MockConnectionServerInfoObserver()
+        viewModel = NetworkProtectionStatusViewModel(
+            tunnelController: tunnelController,
+            statusObserver: statusObserver,
+            serverInfoObserver: serverInfoObserver
+        )
     }
 
     override func tearDown() {
+        serverInfoObserver = nil
         statusObserver = nil
         tunnelController = nil
         viewModel = nil
@@ -135,6 +142,39 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
             viewModel.shouldDisableToggle = false
             statusObserver.subject.send(current)
             try waitForPublisher(viewModel.$shouldDisableToggle, toEmit: true)
+        }
+    }
+
+    func testStatusUpdate_publishesLocation() throws {
+        let location = "SomeLocation"
+        let serverInfo = NetworkProtectionStatusServerInfo(serverLocation: location, serverAddress: nil)
+        serverInfoObserver.subject.send(serverInfo)
+        try waitForPublisher(viewModel.$location, toEmit: location)
+    }
+
+    func testStatusUpdate_publishesIPAddress() throws {
+        let ipAddress = "123.456.789.147"
+        let serverInfo = NetworkProtectionStatusServerInfo(serverLocation: nil, serverAddress: ipAddress)
+        serverInfoObserver.subject.send(serverInfo)
+        try waitForPublisher(viewModel.$ipAddress, toEmit: ipAddress)
+    }
+
+    func testStatusUpdate_nilServerLocationAndServerAddress_hidesConnectionDetails() throws {
+        let serverInfo = NetworkProtectionStatusServerInfo(serverLocation: nil, serverAddress: nil)
+        // Wait for initial value first
+        try waitForPublisher(viewModel.$shouldShowConnectionDetails, toEmit: false)
+        serverInfoObserver.subject.send(serverInfo)
+        try waitForPublisher(viewModel.$shouldShowConnectionDetails, toEmit: false)
+    }
+
+    func testStatusUpdate_anyServerInfoPropertiesNonNil_showsConnectionDetails() throws {
+        for serverInfo in [
+            NetworkProtectionStatusServerInfo(serverLocation: nil, serverAddress: "123.123.123.123"),
+            NetworkProtectionStatusServerInfo(serverLocation: "Antartica", serverAddress: nil),
+            NetworkProtectionStatusServerInfo(serverLocation: "Your Garden", serverAddress: "111.222.333.444")
+        ] {
+            serverInfoObserver.subject.send(serverInfo)
+            try waitForPublisher(viewModel.$shouldShowConnectionDetails, toEmit: true)
         }
     }
 

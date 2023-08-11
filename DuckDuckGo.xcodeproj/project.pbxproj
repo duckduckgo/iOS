@@ -5815,6 +5815,7 @@
 		};
 		EE9286812A812BD2002B7818 /* Embed PacketTunnelProvider */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);

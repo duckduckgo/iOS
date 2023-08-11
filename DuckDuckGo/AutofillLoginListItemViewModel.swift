@@ -40,7 +40,7 @@ final class AutofillLoginListItemViewModel: Identifiable, Hashable {
         self.tld = tld
         self.title = account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
         self.subtitle = account.username
-        self.preferredFaviconLetter = account.faviconLetter(tld: tld, autofillDomainNameUrlSort: autofillDomainNameUrlSort)
+        self.preferredFaviconLetter = account.firstTLDLetter(tld: tld, autofillDomainNameUrlSort: autofillDomainNameUrlSort)
 
         fetchImage()
     }

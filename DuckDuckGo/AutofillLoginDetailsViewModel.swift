@@ -456,7 +456,7 @@ final class AutofillLoginDetailsHeaderViewModel: ObservableObject {
         self.title = account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
         self.subtitle = UserText.autofillLoginDetailsLastUpdated(for: (dateFormatter.string(from: account.lastUpdated)))
         self.domain = account.domain
-        self.preferredFakeFaviconLetter = account.faviconLetter(tld: tld, autofillDomainNameUrlSort: autofillDomainNameUrlSort)
+        self.preferredFakeFaviconLetter = account.firstTLDLetter(tld: tld, autofillDomainNameUrlSort: autofillDomainNameUrlSort)
     }
 
 }

@@ -51,6 +51,7 @@ class FavoritesViewController: UIViewController {
     
     private let bookmarksDatabase: CoreDataDatabase
     private let syncService: DDGSyncing
+    private let syncDataProviders: SyncDataProviders
     
     fileprivate var viewModelCancellable: AnyCancellable?
     private var localUpdatesCancellable: AnyCancellable?
@@ -67,9 +68,10 @@ class FavoritesViewController: UIViewController {
         }
     }
     
-    init?(coder: NSCoder, bookmarksDatabase: CoreDataDatabase, syncService: DDGSyncing) {
+    init?(coder: NSCoder, bookmarksDatabase: CoreDataDatabase, syncService: DDGSyncing, syncDataProviders: SyncDataProviders) {
         self.bookmarksDatabase = bookmarksDatabase
         self.syncService = syncService
+        self.syncDataProviders = syncDataProviders
         super.init(coder: coder)
     }
 
@@ -119,7 +121,7 @@ class FavoritesViewController: UIViewController {
                 self?.syncService.scheduler.notifyDataChanged()
             }
 
-        syncUpdatesCancellable = (UIApplication.shared.delegate as? AppDelegate)?.syncDataProviders.bookmarksAdapter.syncDidCompletePublisher
+        syncUpdatesCancellable = syncDataProviders.bookmarksAdapter.syncDidCompletePublisher
             .sink { [weak self] _ in
                 self?.renderer.viewModel.reloadData()
                 DispatchQueue.main.async {

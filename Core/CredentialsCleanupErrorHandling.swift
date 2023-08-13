@@ -1,5 +1,5 @@
 //
-//  BookmarksCleanupErrorHandling.swift
+//  CredentialsCleanupErrorHandling.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -18,15 +18,15 @@
 //
 
 import Foundation
-import Bookmarks
+import BrowserServicesKit
 import Common
 import Persistence
 
-public class BookmarksCleanupErrorHandling: EventMapping<BookmarksCleanupError> {
+public class CredentialsCleanupErrorHandling: EventMapping<CredentialsCleanupError> {
 
     public init() {
         super.init { event, _, _, _ in
-            let domainEvent = Pixel.Event.bookmarksCleanupFailed
+            let domainEvent = Pixel.Event.credentialsDatabaseCleanupFailed
             let processedErrors = CoreDataErrorsParser.parse(error: event.cleanupError as NSError)
             let params = processedErrors.errorPixelParameters
 
@@ -34,7 +34,7 @@ public class BookmarksCleanupErrorHandling: EventMapping<BookmarksCleanupError> 
         }
     }
 
-    override init(mapping: @escaping EventMapping<BookmarksCleanupError>.Mapping) {
+    override init(mapping: @escaping EventMapping<CredentialsCleanupError>.Mapping) {
         fatalError("Use init()")
     }
 }

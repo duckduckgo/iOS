@@ -27,7 +27,7 @@ extension SecureVaultModels.WebsiteAccount {
         if let title = self.title, !title.isEmpty {
             return title
         } else {
-            return autofillDomainNameUrlMatcher.normalizeUrlForWeb(domain)
+            return autofillDomainNameUrlMatcher.normalizeUrlForWeb(domain ?? "")
         }
     }
 

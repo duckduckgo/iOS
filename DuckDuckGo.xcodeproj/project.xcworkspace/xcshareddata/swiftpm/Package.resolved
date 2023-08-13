@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "sam/netp-endpoint-change",
-          "revision": "af9c360bf69d0a62321e399bf81f5401907ad7d1",
-          "version": null
+          "branch": null,
+          "revision": "da6b1eac1d4b4416eb82fb5648519aa5cb363a17",
+          "version": "74.0.1"
         }
       },
       {
@@ -156,7 +156,7 @@
       },
       {
         "package": "TrackerRadarKit",
-        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit",
+        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
         "state": {
           "branch": null,
           "revision": "4684440d03304e7638a2c8086895367e90987463",

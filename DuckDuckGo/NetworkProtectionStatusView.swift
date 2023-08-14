@@ -38,6 +38,7 @@ struct NetworkProtectionStatusView: View {
                 connectionDetails()
             }
         }
+        .padding(.top, statusModel.error == nil ? 0 : -20)
         .applyListStyle()
         .navigationTitle(UserText.netPNavTitle)
     }

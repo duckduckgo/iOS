@@ -45,7 +45,6 @@ final class NetworkProtectionTunnelController: TunnelController {
         do {
             try await startWithError()
         } catch {
-            // Will handle this as part of https://app.asana.com/0/0/1205084446087081/f
         }
     }
 
@@ -53,7 +52,6 @@ final class NetworkProtectionTunnelController: TunnelController {
         do {
             try await ConnectionSessionUtilities.activeSession()?.stopVPNTunnel()
         } catch {
-            // Will handle this as part of https://app.asana.com/0/0/1205084446087081/f
         }
     }
 

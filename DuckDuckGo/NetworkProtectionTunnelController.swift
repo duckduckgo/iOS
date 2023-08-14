@@ -26,6 +26,13 @@ import NetworkExtension
 import NetworkProtection
 
 final class NetworkProtectionTunnelController: TunnelController {
+    static var simulationOptions = NetworkProtectionSimulationOptions()
+    // MARK: - Starting & Stopping the VPN
+
+    enum StartError: LocalizedError {
+        case connectionStatusInvalid
+        case simulateControllerFailureError
+    }
 
     /// Starts the VPN connection used for Network Protection
     ///
@@ -80,6 +87,16 @@ final class NetworkProtectionTunnelController: TunnelController {
 
         options["activationAttemptId"] = UUID().uuidString as NSString
         options["authToken"] = try tokenStore.fetchToken() as NSString?
+
+        if Self.simulationOptions.isEnabled(.tunnelFailure) {
+            Self.simulationOptions.setEnabled(false, option: .tunnelFailure)
+            options[NetworkProtectionOptionKey.tunnelFailureSimulation] = NetworkProtectionOptionValue.true
+        }
+
+        if Self.simulationOptions.isEnabled(.controllerFailure) {
+            Self.simulationOptions.setEnabled(false, option: .controllerFailure)
+            throw StartError.simulateControllerFailureError
+        }
 
         do {
             try tunnelManager.connection.startVPNTunnel(options: options)

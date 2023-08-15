@@ -56,7 +56,6 @@ final class NetworkProtectionTunnelController: TunnelController {
     }
 
     private let tokenStore = NetworkProtectionKeychainTokenStore(useSystemKeychain: false, errorEvents: nil)
-    private let connectionObserver = ConnectionStatusObserverThroughSession()
 
     private func startWithError() async throws {
         let tunnelManager: NETunnelProviderManager

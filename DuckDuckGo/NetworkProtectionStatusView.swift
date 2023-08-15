@@ -73,7 +73,7 @@ struct NetworkProtectionStatusView: View {
     @ViewBuilder
     private func header() -> some View {
         HStack {
-            Spacer()
+            Spacer(minLength: 0)
             VStack(alignment: .center, spacing: 16) {
                 Image(statusModel.statusImageID)
                     .resizable()
@@ -90,8 +90,10 @@ struct NetworkProtectionStatusView: View {
                     .foregroundColor(.secondary)
             }
             .padding(.bottom, 4)
+            // Pads beyond the default header inset
+            .padding(.horizontal, -16)
             .background(Color.viewBackground)
-            Spacer()
+            Spacer(minLength: 0)
         }
     }
 

@@ -61,28 +61,10 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         self.statusImageID = Self.statusImageID(connected: statusObserver.recentValue.isConnected)
 
         setUpIsConnectedStatePublishers()
+        setUpToggledStatePublisher()
         setUpStatusMessagePublishers()
         setUpDisableTogglePublisher()
-
-        serverInfoObserver.publisher
-            .map(\.serverLocation)
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.location, onWeaklyHeld: self)
-            .store(in: &cancellables)
-
-        serverInfoObserver.publisher
-            .map(\.serverAddress)
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.ipAddress, onWeaklyHeld: self)
-            .store(in: &cancellables)
-
-        serverInfoObserver.publisher
-            .map {
-                $0.serverAddress != nil || $0.serverLocation != nil
-            }
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.shouldShowConnectionDetails, onWeaklyHeld: self)
-            .store(in: &cancellables)
+        setUpServerInfoPublishers()
     }
 
     private func setUpIsConnectedStatePublishers() {
@@ -91,15 +73,28 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
         isConnectedPublisher
-            .assign(to: \.isNetPEnabled, onWeaklyHeld: self)
-            .store(in: &cancellables)
-        isConnectedPublisher
             .map(Self.titleText(connected:))
             .assign(to: \.headerTitle, onWeaklyHeld: self)
             .store(in: &cancellables)
         isConnectedPublisher
             .map(Self.statusImageID(connected:))
             .assign(to: \.statusImageID, onWeaklyHeld: self)
+            .store(in: &cancellables)
+    }
+
+    private func setUpToggledStatePublisher() {
+        statusObserver.publisher
+            .map {
+                switch $0 {
+                case .connected, .connecting:
+                    return true
+                default:
+                    return false
+                }
+            }
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+            .assign(to: \.isNetPEnabled, onWeaklyHeld: self)
             .store(in: &cancellables)
     }
 
@@ -129,6 +124,28 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             .map { $0.isLoading }
             .receive(on: DispatchQueue.main)
             .assign(to: \.shouldDisableToggle, onWeaklyHeld: self)
+            .store(in: &cancellables)
+    }
+
+    private func setUpServerInfoPublishers() {
+        serverInfoObserver.publisher
+            .map(\.serverLocation)
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.location, onWeaklyHeld: self)
+            .store(in: &cancellables)
+
+        serverInfoObserver.publisher
+            .map(\.serverAddress)
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.ipAddress, onWeaklyHeld: self)
+            .store(in: &cancellables)
+
+        serverInfoObserver.publisher
+            .map {
+                $0.serverAddress != nil || $0.serverLocation != nil
+            }
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.shouldShowConnectionDetails, onWeaklyHeld: self)
             .store(in: &cancellables)
     }
 

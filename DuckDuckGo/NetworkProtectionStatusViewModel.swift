@@ -34,6 +34,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     private let tunnelController: TunnelController
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
+    private let errorObserver: ConnectionErrorObserver
     private var cancellables: Set<AnyCancellable> = []
 
     // MARK: Error
@@ -66,10 +67,12 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     public init(tunnelController: TunnelController = NetworkProtectionTunnelController(),
                 statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
-                serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession()) {
+                serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
+                errorObserver: ConnectionErrorObserver = ConnectionErrorObserverThroughSession()) {
         self.tunnelController = tunnelController
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver
+        self.errorObserver = errorObserver
         statusMessage = Self.message(for: statusObserver.recentValue)
         self.headerTitle = Self.titleText(connected: statusObserver.recentValue.isConnected)
         self.statusImageID = Self.statusImageID(connected: statusObserver.recentValue.isConnected)
@@ -96,6 +99,19 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             }
             .receive(on: DispatchQueue.main)
             .assign(to: \.shouldShowConnectionDetails, onWeaklyHeld: self)
+            .store(in: &cancellables)
+
+        errorObserver.publisher
+            .map {
+                $0.map { _ in
+                    ErrorItem(
+                        title: UserText.netPStatusViewErrorConnectionFailedTitle,
+                        message: UserText.netPStatusViewErrorConnectionFailedMessage
+                    )
+                }
+            }
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.error, onWeaklyHeld: self)
             .store(in: &cancellables)
     }
 

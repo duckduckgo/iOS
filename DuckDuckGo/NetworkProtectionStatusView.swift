@@ -58,7 +58,7 @@ struct NetworkProtectionStatusView: View {
                     }
                 ))
                 .disabled(statusModel.shouldDisableToggle)
-                .toggleStyle(SwitchToggleStyle(tint: .toggleColor))
+                .toggleStyle(SwitchToggleStyle(tint: .controlColor))
             }
             .listRowBackground(Color.cellBackground)
         } header: {
@@ -124,7 +124,7 @@ struct NetworkProtectionStatusView: View {
         // Needs to be inlined like this for the markdown parsing to work
         Text("\(UserText.netPInviteOnlyMessage) [\(UserText.netPStatusViewShareFeedback)](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)")
             .foregroundColor(.secondary)
-            .accentColor(.accentColor)
+            .accentColor(Color.controlColor)
             .font(.system(size: 13))
             .padding(.top, 6)
     }
@@ -186,11 +186,9 @@ private extension View {
 }
 
 private extension Color {
-    static let titleText = Color(designSystemColor: .textPrimary)
-    static let messageText = Color(designSystemColor: .textSecondary)
     static let cellBackground = Color(designSystemColor: .surface)
     static let viewBackground = Color(designSystemColor: .background)
-    static let toggleColor = Color(designSystemColor: .accent)
+    static let controlColor = Color(designSystemColor: .accent)
 }
 
 struct NetworkProtectionStatusView_Previews: PreviewProvider {

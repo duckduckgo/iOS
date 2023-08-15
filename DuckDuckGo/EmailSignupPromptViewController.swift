@@ -19,6 +19,7 @@
 
 import UIKit
 import SwiftUI
+import Core
 
 class EmailSignupPromptViewController: UIViewController {
 
@@ -55,6 +56,8 @@ class EmailSignupPromptViewController: UIViewController {
         self.view.backgroundColor = UIColor(designSystemColor: .surface)
 
         setupEmailSignupPromptView()
+
+        Pixel.fire(pixel: .emailIncontextPromptDisplayed)
     }
 
     private func setupEmailSignupPromptView() {
@@ -73,7 +76,7 @@ class EmailSignupPromptViewController: UIViewController {
 
 extension EmailSignupPromptViewController: UISheetPresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        // TODO - pixel
+        Pixel.fire(pixel: .emailIncontextPromptDismissed)
 
         completion(false)
     }
@@ -82,19 +85,23 @@ extension EmailSignupPromptViewController: UISheetPresentationControllerDelegate
 extension EmailSignupPromptViewController: EmailSignupPromptViewModelDelegate {
 
     func emailSignupPromptViewModelDidSelect(_ viewModel: EmailSignupPromptViewModel) {
+        Pixel.fire(pixel: .emailIncontextPromptConfirmed)
+
         dismiss(animated: true)
         completion(true)
     }
 
     func emailSignupPromptViewModelDidReject(_ viewModel: EmailSignupPromptViewModel) {
-
         inContextEmailSignupPromptDismissedPermanentlyAt = Date().timeIntervalSince1970
+        Pixel.fire(pixel: .emailIncontextPromptDismissedPersistent)
 
         completion(false)
         dismiss(animated: true)
     }
 
     func emailSignupPromptViewModelDidClose(_ viewModel: EmailSignupPromptViewModel) {
+        Pixel.fire(pixel: .emailIncontextPromptDismissed)
+
         completion(false)
         dismiss(animated: true)
     }

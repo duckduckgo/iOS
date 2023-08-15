@@ -143,6 +143,8 @@ class EmailSignupViewController: UIViewController {
 
         isModalInPresentation = true
         navigationController?.presentationController?.delegate = self
+
+        Pixel.fire(pixel: .emailIncontextModalDisplayed)
     }
 
 
@@ -229,7 +231,6 @@ class EmailSignupViewController: UIViewController {
     @objc
     private func onDuckDuckGoEmailSignIn(_ notification: Notification) {
         if signupStage != .complete {
-            // TODO - pixel
             completed(true)
         }
     }
@@ -262,7 +263,7 @@ class EmailSignupViewController: UIViewController {
 
     @objc
     private func cancelButtonPressed() {
-        // TODO - pixel
+        Pixel.fire(pixel: .emailIncontextModalDismissed)
         completed(false)
     }
 
@@ -272,7 +273,6 @@ class EmailSignupViewController: UIViewController {
     }
 
     private func emailSignupCompleted() {
-        // TODO - pixel
         completed(true)
     }
 
@@ -300,9 +300,12 @@ extension EmailSignupViewController: UIAdaptivePresentationControllerDelegate {
         if case .emailEntered = signupStage {
             let alert = UIAlertController(title: UserText.emailSignupExitEarlyAlertTitle, message: nil, preferredStyle: .alert)
 
-            let continueAction = UIAlertAction(title: UserText.emailSignupExitEarlyActionContinue, style: .default, handler: nil)
+            let continueAction = UIAlertAction(title: UserText.emailSignupExitEarlyActionContinue, style: .default) { _ in
+                Pixel.fire(pixel: .emailIncontextModalExitEarlyContinue)
+            }
 
             let cancelAction = UIAlertAction(title: UserText.emailSignupExitEarlyActionExit, style: .default) { [weak self] _ in
+                Pixel.fire(pixel: .emailIncontextModalExitEarly)
                 self?.completed(false)
             }
 
@@ -314,6 +317,7 @@ extension EmailSignupViewController: UIAdaptivePresentationControllerDelegate {
         } else if case .complete = signupStage {
             completed(true)
         } else {
+            Pixel.fire(pixel: .emailIncontextModalDismissed)
             completed(false)
         }
     }

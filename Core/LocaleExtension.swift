@@ -29,6 +29,6 @@ extension Locale {
     }
 
     public var isEnglishLanguage: Bool {
-        return Locale.preferredLanguages.first?.starts(with: "en") ?? false
+        return Locale.preferredLanguages.first?.lowercased().starts(with: "en") ?? false
     }
 }

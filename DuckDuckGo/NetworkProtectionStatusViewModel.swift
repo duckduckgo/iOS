@@ -43,10 +43,12 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         let message: String
     }
 
-    @Published public var error: ErrorItem? = .init(
-        title: "Network Protection is borked",
-        message: "A VPN app on your device may have borked it. Use the toggle to un-bork."
-    )
+    @Published public var error: ErrorItem? {
+        didSet {
+            shouldShowError = error != nil
+        }
+    }
+    @Published public var shouldShowError: Bool = false
 
     // MARK: Header
     @Published public var statusImageID: String

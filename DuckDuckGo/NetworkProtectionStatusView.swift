@@ -38,7 +38,9 @@ struct NetworkProtectionStatusView: View {
                 connectionDetails()
             }
         }
+        .animation(.default, value: statusModel.shouldShowError)
         .padding(.top, statusModel.error == nil ? 0 : -20)
+        .animation(.default, value: statusModel.shouldShowConnectionDetails)
         .applyListStyle()
         .navigationTitle(UserText.netPNavTitle)
     }
@@ -87,8 +89,8 @@ struct NetworkProtectionStatusView: View {
                     .scaledToFit()
                     .frame(height: 96)
                     .padding(8)
-                    .if(statusModel.error != nil) {
-                        $0.rotationEffect(.degrees(180))
+                    .if(statusModel.shouldShowError) {
+                        $0.rotationEffect(Angle.degrees(statusModel.shouldShowError ? 180 : 0))
                     }
                 Text(statusModel.headerTitle)
                     .font(.system(size: 17, weight: .semibold))

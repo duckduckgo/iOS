@@ -118,7 +118,11 @@ class SettingsViewController: UITableViewController {
 
     private lazy var shouldShowNetPCell: Bool = {
 #if NETWORK_PROTECTION
-        return featureFlagger.isFeatureOn(.networkProtection)
+        if #available(iOS 15, *) {
+            return featureFlagger.isFeatureOn(.networkProtection)
+        } else {
+            return false
+        }
 #else
         return false
 #endif

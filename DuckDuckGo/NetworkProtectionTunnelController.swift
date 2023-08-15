@@ -28,10 +28,6 @@ import NetworkProtection
 final class NetworkProtectionTunnelController: TunnelController {
     static var simulationOptions = NetworkProtectionSimulationOptions()
 
-    init() {
-        errorReporter.report(error: nil)
-    }
-
     // MARK: - Starting & Stopping the VPN
 
     enum StartError: LocalizedError {

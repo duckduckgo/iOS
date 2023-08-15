@@ -658,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Prenos za %@ se je začel";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "Zaščita e-pošte";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Prekliči";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Ustvarjanje zasebnega naslova Duck";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Ustvarjanje zasebnega naslova Duck";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Blokirajte sledilnike e-pošte in skrijte naslov";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Izberite e-poštni naslov";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Blokirajte sledilnike e-pošte";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blokiraj sledilnike e-pošte z naslovom Duck";
@@ -687,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blokirajte sledilnike e-pošte in skrijte svoj naslov";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Nadaljujte nastavitev";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Izhod iz nastavitev";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Če zaprete zdaj, vaš naslov Duck Address ne bo shranjen.";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Ne prikaži več";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Zaščiti mojo e-pošto";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Ustvarite edinstven, naključen naslov, ki odstrani tudi skrite sledilnike in posreduje e-pošto v vaš e-poštni predal.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Skrijte svojo e-pošto in \nblokirajte sledilnike";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Zaznamki še niso dodani";
@@ -1014,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Brskanje po meniju";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Nazaj";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Naslednji";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Končano";

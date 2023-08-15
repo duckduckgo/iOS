@@ -174,7 +174,7 @@ private struct NetworkProtectionServerItemView: View {
             Text(title)
                 .font(.system(size: 16))
                 .foregroundColor(.primary)
-            Spacer()
+            Spacer(minLength: 2)
             Text(value)
                 .font(.system(size: 16))
                 .foregroundColor(.secondary)

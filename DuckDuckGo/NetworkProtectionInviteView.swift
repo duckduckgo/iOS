@@ -27,12 +27,16 @@ struct NetworkProtectionInviteView: View {
     @ObservedObject var model: NetworkProtectionInviteViewModel
 
     var body: some View {
-        switch model.currentStep {
-        case .codeEntry:
-            codeEntryView
-        case .success:
-            successView
+        Group {
+            switch model.currentStep {
+            case .codeEntry:
+                codeEntryView
+            case .success:
+                successView
+            }
         }
+        .transition(.slideFromRight)
+        .animation(.default, value: model.currentStep.isSuccess)
     }
 
     @ViewBuilder
@@ -126,6 +130,13 @@ private struct NetworkProtectionInviteMessageData {
     let title: String
     let message: String
     let footer = UserText.netPInviteOnlyMessage
+}
+
+extension AnyTransition {
+    static var slideFromRight: AnyTransition {
+        AnyTransition.asymmetric(
+            insertion: .move(edge: .trailing),
+            removal: .move(edge: .leading))}
 }
 
 private extension Color {

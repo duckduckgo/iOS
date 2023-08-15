@@ -24,6 +24,10 @@ import NetworkProtection
 
 enum NetworkProtectionInviteStep {
     case codeEntry, success
+
+    var isSuccess: Bool {
+        self == .success
+    }
 }
 
 final class NetworkProtectionInviteViewModel: ObservableObject {

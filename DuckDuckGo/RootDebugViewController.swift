@@ -85,6 +85,14 @@ class RootDebugViewController: UITableViewController {
         return controller
     }
 
+    @IBSegueAction func onCreateNetPDebugScreen(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> NetworkProtectionDebugViewController {
+        guard let controller = NetworkProtectionDebugViewController(coder: coder) else {
+            fatalError("Failed to create controller")
+        }
+
+        return controller
+    }
+
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if cell.tag == Row.toggleInspectableWebViews.rawValue {
             cell.accessoryType = AppUserDefaults().inspectableWebViewEnabled ? .checkmark : .none

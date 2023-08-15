@@ -410,7 +410,6 @@ extension Pixel {
         
         case bookmarksCouldNotLoadDatabase
         case bookmarksCouldNotPrepareDatabase
-        case bookmarksCleanupFailed
         case bookmarksMigrationAlreadyPerformed
         case bookmarksMigrationFailed
         case bookmarksMigrationCouldNotPrepareDatabase
@@ -426,6 +425,14 @@ extension Pixel {
         case syncMetadataCouldNotLoadDatabase
         case syncBookmarksProviderInitializationFailed
         case syncBookmarksFailed
+        case syncCredentialsProviderInitializationFailed
+        case syncCredentialsFailed
+
+        case bookmarksCleanupFailed
+        case bookmarksCleanupAttemptedWhileSyncWasEnabled
+
+        case credentialsDatabaseCleanupFailed
+        case credentialsCleanupAttemptedWhileSyncWasEnabled
 
         case invalidPayload(Configuration)
 
@@ -835,7 +842,6 @@ extension Pixel.Event {
             
         case .bookmarksCouldNotLoadDatabase: return "m_d_bookmarks_could_not_load_database"
         case .bookmarksCouldNotPrepareDatabase: return "m_d_bookmarks_could_not_prepare_database"
-        case .bookmarksCleanupFailed: return "m_d_bookmarks_cleanup_failed"
         case .bookmarksMigrationAlreadyPerformed: return "m_d_bookmarks_migration_already_performed"
         case .bookmarksMigrationFailed: return "m_d_bookmarks_migration_failed"
         case .bookmarksMigrationCouldNotPrepareDatabase: return "m_d_bookmarks_migration_could_not_prepare_database"
@@ -852,6 +858,14 @@ extension Pixel.Event {
         case .syncMetadataCouldNotLoadDatabase: return "m_d_sync_metadata_could_not_load_database"
         case .syncBookmarksProviderInitializationFailed: return "m_d_sync_bookmarks_provider_initialization_failed"
         case .syncBookmarksFailed: return "m_d_sync_bookmarks_failed"
+        case .syncCredentialsProviderInitializationFailed: return "m_d_sync_credentials_provider_initialization_failed"
+        case .syncCredentialsFailed: return "m_d_sync_credentials_failed"
+
+        case .bookmarksCleanupFailed: return "m_d_bookmarks_cleanup_failed"
+        case .bookmarksCleanupAttemptedWhileSyncWasEnabled: return "m_d_bookmarks_cleanup_attempted_while_sync_was_enabled"
+
+        case .credentialsDatabaseCleanupFailed: return "m_d_credentials_database_cleanup_failed"
+        case .credentialsCleanupAttemptedWhileSyncWasEnabled: return "m_d_credentials_cleanup_attempted_while_sync_was_enabled"
 
         case .invalidPayload(let configuration): return "m_d_\(configuration.rawValue)_invalid_payload".lowercased()
 

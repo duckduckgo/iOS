@@ -615,12 +615,29 @@ In addition to the details entered into this form, your app issue report will co
     public static let netPNavTitle = NSLocalizedString("netP.title", value: "Network Protection", comment: "Title for the Network Protection feature")
     public static let netPCellConnected = NSLocalizedString("netP.cell.connected", value: "Connected", comment: "String indicating NetP is connected when viewed from the settings screen")
     public static let netPCellDisconnected = NSLocalizedString("netP.cell.disconnected", value: "Not connected", comment: "String indicating NetP is disconnected when viewed from the settings screen")
+
     static let netPInviteTitle = NSLocalizedString("network.protection.invite.dialog.title", value: "You're invited to try Network Protection", comment: "Title for the network protection invite screen")
     static let netPInviteMessage = NSLocalizedString("network.protection.invite.dialog.message", value: "Enter your invite code to get started.", comment: "Message for the network protection invite dialog")
     static let netPInviteFieldPrompt = NSLocalizedString("network.protection.invite.field.prompt", value: "Invite Code", comment: "Prompt for the network protection invite code text field")
     static let netPInviteSuccessTitle = NSLocalizedString("network.protection.invite.success.title", value: "Success! You’re in.", comment: "Title for the network protection invite success view")
     static let netPInviteSuccessMessage = NSLocalizedString("network.protection.invite.success.message", value: "Hide your location from websites and conceal your online activity from Internet providers and others on your network.", comment: "Message for the network protection invite success view")
     static let netPInviteOnlyMessage = NSLocalizedString("network.protection.invite.only.message", value: "DuckDuckGo Network Protection is currently invite-only.", comment: "Message explaining that netP is invite only")
+    
+    static let netPStatusViewTitle = NSLocalizedString("network.protection.status.view.title", value: "Network Protection", comment: "Title label text for the status view when netP is disconnected")
+    static let netPStatusHeaderTitleOff = NSLocalizedString("network.protection.status.header.title.off", value: "Network Protection is Off", comment: "Header title label text for the status view when netP is disconnected")
+    static let netPStatusHeaderTitleOn = NSLocalizedString("network.protection.status.header.title.on", value: "Network Protection is On", comment: "Header title label text for the status view when netP is connected")
+    static let netPStatusHeaderMessage = NSLocalizedString("network.protection.status.header.message", value: "DuckDuckGo's VPN secures all of your device's Internet traffic anytime, anywhere.", comment: "Message label text for the netP status view")
+    static let netPStatusDisconnected = NSLocalizedString("network.protection.status.disconnected", value: "Not connected", comment: "The label for the NetP VPN when disconnected")
+    static let netPStatusDisconnecting = NSLocalizedString("network.protection.status.disconnecting", value: "Disconnecting...", comment: "The label for the NetP VPN when disconnecting")
+    static let netPStatusConnecting = NSLocalizedString("network.protection.status.connecting", value: "Connecting...", comment: "The label for the NetP VPN when connecting")
+    static func netPStatusConnected(since timeLapsedString: String) -> String {
+        let localized = NSLocalizedString("network.protection.status.connected.format", value: "Connected - %@", comment: "The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string")
+        return String(format: localized, timeLapsedString)
+    }
+    static let netPStatusViewLocation = NSLocalizedString("network.protection.status.view.location", value: "Location", comment: "Location label shown in NetworkProtection's status view.")
+    static let netPStatusViewIPAddress = NSLocalizedString("network.protection.status.view.ip.address", value: "IP Address", comment: "IP Address label shown in NetworkProtection's status view.")
+    static let netPStatusViewConnectionDetails = NSLocalizedString("network.protection.status.view.connection.details", value: "Connection Details", comment: "Connection details label shown in NetworkProtection's status view.")
+    static let netPStatusViewShareFeedback = NSLocalizedString("network.protection.status.menu.share.feedback", value: "Share Feedback", comment: "The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text")
 
     static let inviteDialogSubmitButton = NSLocalizedString("invite.dialog.submit.button", value: "Submit", comment: "Submit button on an invite dialog")
     static let inviteDialogGetStartedButton = NSLocalizedString("invite.dialog.get.started.button", value: "Get Started", comment: "Get Started button on an invite dialog")

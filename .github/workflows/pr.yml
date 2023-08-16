@@ -101,3 +101,24 @@ jobs:
       with:
         report_paths: unittests.xml
 
+  asana:
+    name: Create Asana Task
+    needs: [swiftlint, unit-tests, shellcheck]
+
+    if: failure() && github.ref_name == 'develop'
+    
+    env:
+      WORKFLOW_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create Asana Task
+        uses: malmstein/github-asana-action@master
+        with:
+          asana-pat: ${{ secrets.ASANA_ACCESS_TOKEN }}
+          asana-project: ${{ vars.APPLE_CI_FAILING_TESTS_PROJECT_ID }}
+          asana-section: ${{ vars.APPLE_CI_FAILING_TESTS_IOS_POST_MERGE_SECTION_ID }}
+          asana-task-name: 'PR Check is failing on develop'
+          action: create-asana-task
+          asana-task-description: PR Checks conducted after merging have failed.  See ${{ env.WORKFLOW_URL }}

@@ -1118,11 +1118,17 @@ class MainViewController: UIViewController {
     @objc
     private func onDuckDuckGoEmailSignIn(_ notification: Notification) {
         fireEmailPixel(.emailEnabled, notification: notification)
+        if let object = notification.object as? EmailManager, let emailManager = syncDataProviders.settingsAdapter.emailManager, object !== emailManager {
+            syncService.scheduler.notifyDataChanged()
+        }
     }
     
     @objc
     private func onDuckDuckGoEmailSignOut(_ notification: Notification) {
         fireEmailPixel(.emailDisabled, notification: notification)
+        if let object = notification.object as? EmailManager, let emailManager = syncDataProviders.settingsAdapter.emailManager, object !== emailManager {
+            syncService.scheduler.notifyDataChanged()
+        }
     }
     
     private func fireEmailPixel(_ pixel: Pixel.Event, notification: Notification) {

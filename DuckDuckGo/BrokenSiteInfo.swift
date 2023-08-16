@@ -86,21 +86,23 @@ public struct BrokenSiteInfo {
     
     func send(with category: String?, description: String) {
         
-        let parameters = [Keys.url: normalize(url),
-                          Keys.category: category ?? "",
-                          Keys.description: description,
-                          Keys.upgradedHttps: httpsUpgrade ? "true" : "false",
-                          Keys.siteType: isDesktop ? "desktop" : "mobile",
-                          Keys.tds: tdsETag?.trimmingCharacters(in: CharacterSet(charactersIn: "\"")) ?? "",
-                          Keys.blockedTrackers: blockedTrackerDomains.joined(separator: ","),
-                          Keys.surrogates: installedSurrogates.joined(separator: ","),
-                          Keys.atb: StatisticsUserDefaults().atb ?? "",
-                          Keys.os: systemVersion,
-                          Keys.manufacturer: manufacturer,
-                          Keys.model: model,
-                          Keys.gpc: gpc ? "true" : "false",
-                          Keys.ampUrl: ampUrl ?? "",
-                          Keys.urlParametersRemoved: urlParametersRemoved ? "true" : "false"]
+        let parameters: [String: String] = [
+            Keys.url: normalize(url),
+            Keys.category: category ?? "",
+            Keys.description: description,
+            Keys.upgradedHttps: httpsUpgrade ? "true" : "false",
+            Keys.siteType: isDesktop ? "desktop" : "mobile",
+            Keys.tds: tdsETag?.trimmingCharacters(in: CharacterSet(charactersIn: "\"")) ?? "",
+            Keys.blockedTrackers: blockedTrackerDomains.joined(separator: ","),
+            Keys.surrogates: installedSurrogates.joined(separator: ","),
+            Keys.atb: StatisticsUserDefaults().atb ?? "",
+            Keys.os: systemVersion,
+            Keys.manufacturer: manufacturer,
+            Keys.model: model,
+            Keys.gpc: gpc ? "true" : "false",
+            Keys.ampUrl: ampUrl ?? "",
+            Keys.urlParametersRemoved: urlParametersRemoved ? "true" : "false"
+        ]
         
         Pixel.fire(pixel: .brokenSiteReport,
                    withAdditionalParameters: parameters,

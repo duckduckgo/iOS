@@ -2315,7 +2315,7 @@ extension TabViewController: SecureVaultManagerDelegate {
             }
             try secureVault?.deleteWebsiteCredentialsFor(accountId: accountIdInt)
         } catch {
-            Pixel.fire(pixel: .secureVaultError)
+            Pixel.fire(pixel: .secureVaultError, error: error)
         }
     }
 
@@ -2456,6 +2456,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
             let credentialID = try SaveAutofillLoginManager.saveCredentials(credentials,
                                                                             with: AutofillSecureVaultFactory)
             confirmSavedCredentialsFor(credentialID: credentialID, message: message)
+            syncService.scheduler.notifyDataChanged()
         } catch {
             os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
         }

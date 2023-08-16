@@ -27,10 +27,10 @@ public class BookmarksCleanupErrorHandling: EventMapping<BookmarksCleanupError> 
     public init() {
         super.init { event, _, _, _ in
             let domainEvent = Pixel.Event.bookmarksCleanupFailed
-            let processedErrors = CoreDataErrorsParser.parse(error: event.coreDataError as NSError)
+            let processedErrors = CoreDataErrorsParser.parse(error: event.cleanupError as NSError)
             let params = processedErrors.errorPixelParameters
 
-            Pixel.fire(pixel: domainEvent, error: event.coreDataError, withAdditionalParameters: params)
+            Pixel.fire(pixel: domainEvent, error: event.cleanupError, withAdditionalParameters: params)
         }
     }
 

@@ -22,6 +22,7 @@ import Combine
 import Core
 import BrowserServicesKit
 import Common
+import DDGSync
 import DesignResourcesKit
 
 // swiftlint:disable file_length type_body_length
@@ -37,12 +38,15 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }
 
     weak var delegate: AutofillLoginSettingsListViewControllerDelegate?
+    weak var detailsViewController: AutofillLoginDetailsViewController?
     private let viewModel: AutofillLoginListViewModel
     private let emptyView = AutofillItemsEmptyView()
     private let lockedView = AutofillItemsLockedView()
     private let emptySearchView = AutofillEmptySearchView()
     private let noAuthAvailableView = AutofillNoAuthAvailableView()
     private let tld: TLD = AppDependencyProvider.shared.storageCache.tld
+    private let syncService: DDGSyncing
+    private var syncUpdatesCancellable: AnyCancellable?
 
     private lazy var addBarButtonItem: UIBarButtonItem = {
         UIBarButtonItem(image: UIImage(named: "Add-24"),
@@ -96,13 +100,28 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                            constant: (tableView.frame.height / 2))
     }()
 
-    init(appSettings: AppSettings, currentTabUrl: URL? = nil) {
+    init(appSettings: AppSettings, currentTabUrl: URL? = nil, syncService: DDGSyncing, syncDataProviders: SyncDataProviders) {
         let secureVault = try? AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared)
         if secureVault == nil {
             os_log("Failed to make vault")
         }
         self.viewModel = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: secureVault, currentTabUrl: currentTabUrl)
+        self.syncService = syncService
         super.init(nibName: nil, bundle: nil)
+
+        syncUpdatesCancellable = syncDataProviders.credentialsAdapter.syncDidCompletePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.viewModel.updateData()
+                self?.tableView.reloadData()
+                if let detailsViewController = self?.detailsViewController, let accountId = detailsViewController.account?.id.flatMap(Int64.init) {
+                    do {
+                        detailsViewController.account = try secureVault?.websiteCredentialsFor(accountId: accountId)?.account
+                    } catch {
+                        Pixel.fire(pixel: .secureVaultError, error: error)
+                    }
+                }
+            }
     }
     
     required init?(coder: NSCoder) {
@@ -169,6 +188,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         detailsController.delegate = self
         let detailsNavigationController = UINavigationController(rootViewController: detailsController)
         navigationController?.present(detailsNavigationController, animated: true)
+        detailsViewController = detailsController
     }
 
     func makeAccountDetailsScreen(_ account: SecureVaultModels.WebsiteAccount) -> AutofillLoginDetailsViewController {
@@ -177,12 +197,14 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                                                                    tld: tld,
                                                                    authenticationNotRequired: viewModel.authenticationNotRequired)
         detailsController.delegate = self
+        detailsViewController = detailsController
         return detailsController
     }
     
     func showAccountDetails(_ account: SecureVaultModels.WebsiteAccount, animated: Bool = true) {
         let detailsController = makeAccountDetailsScreen(account)
         navigationController?.pushViewController(detailsController, animated: animated)
+        detailsViewController = detailsController
     }
     
     private func setupCancellables() {
@@ -239,6 +261,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                 if error != .noAuthAvailable {
                     self.delegate?.autofillLoginSettingsListViewControllerDidFinish(self)
                 }
+            } else {
+                self.syncService.scheduler.requestSyncImmediately()
             }
         }
     }
@@ -252,6 +276,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                                   presentationLocation: .withoutBottomBar,
                                   onAction: {
             self.viewModel.undoLastDelete()
+            self.syncService.scheduler.notifyDataChanged()
         }, onDidDismiss: {
             self.viewModel.clearUndoCache()
             NotificationCenter.default.post(name: FireproofFaviconUpdater.deleteFireproofFaviconNotification,
@@ -501,7 +526,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
         case .credentials(_, let items):
             if editingStyle == .delete {
                 let title = items[indexPath.row].title
-                let domain = items[indexPath.row].account.domain
+                let domain = items[indexPath.row].account.domain ?? ""
                 let accountId = items[indexPath.row].account.id
 
                 let tableContentToDelete = viewModel.tableContentsToDelete(accountId: accountId)
@@ -520,6 +545,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
 
                     presentDeleteConfirmation(for: title, domain: domain)
                 }
+                syncService.scheduler.notifyDataChanged()
             }
         default:
             break
@@ -578,6 +604,7 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
     func autofillLoginDetailsViewControllerDidSave(_ controller: AutofillLoginDetailsViewController, account: SecureVaultModels.WebsiteAccount?) {
         viewModel.updateData()
         tableView.reloadData()
+        syncService.scheduler.notifyDataChanged()
 
         if let account = account {
             showAccountDetails(account)
@@ -590,7 +617,8 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
         if deletedSuccessfully {
             viewModel.updateData()
             tableView.reloadData()
-            presentDeleteConfirmation(for: title, domain: account.domain)
+            syncService.scheduler.notifyDataChanged()
+            presentDeleteConfirmation(for: title, domain: account.domain ?? "")
         }
     }
 }

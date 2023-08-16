@@ -17,3 +17,13 @@ for_lane :adhoc do
     type "adhoc"
     force_for_new_devices true
 end
+
+for_lane :sync_signing_alpha do
+    type "appstore"
+    app_identifier ["com.duckduckgo.mobile.ios.alpha", "com.duckduckgo.mobile.ios.alpha.ShareExtension", "com.duckduckgo.mobile.ios.alpha.OpenAction2", "com.duckduckgo.mobile.ios.alpha.Widgets", "com.duckduckgo.mobile.ios.alpha.NetworkExtension"]
+end
+
+for_lane :alpha do
+    type "appstore"
+    app_identifier ["com.duckduckgo.mobile.ios.alpha", "com.duckduckgo.mobile.ios.alpha.ShareExtension", "com.duckduckgo.mobile.ios.alpha.OpenAction2", "com.duckduckgo.mobile.ios.alpha.Widgets", "com.duckduckgo.mobile.ios.alpha.NetworkExtension"]
+end

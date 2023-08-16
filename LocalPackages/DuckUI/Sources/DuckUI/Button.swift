@@ -30,16 +30,19 @@ public struct PrimaryButtonStyle: ButtonStyle {
     }
     
     public func makeBody(configuration: Configuration) -> some View {
-        let standardBackgroundColor = Color.blueBase.opacity(configuration.isPressed ? Consts.pressedOpacity : 1)
-        let disabledBackgroundColor = Color.gray50
+        let standardBackgroundColor = Color("PrimaryButton", bundle: .module)
+        let disabledBackgroundColor = Color("PrimaryButtonDisabled", bundle: .module)
+        let standardForegroundColor = Color("PrimaryButtonText", bundle: .module)
+        let disabledForegroundColor = Color("PrimaryButtonDisabledText", bundle: .module)
         let backgroundColor = disabled ? disabledBackgroundColor : standardBackgroundColor
+        let foregroundColor = disabled ? disabledForegroundColor : standardForegroundColor
 
         configuration.label
             .font(Font(UIFont.boldAppFont(ofSize: compact ? Consts.fontSize - 1 : Consts.fontSize)))
-            .foregroundColor(configuration.isPressed ? .white.opacity(Consts.pressedOpacity) : .white.opacity(1))
+            .foregroundColor(configuration.isPressed ? foregroundColor.opacity(Consts.pressedOpacity) : foregroundColor)
             .padding()
             .frame(minWidth: 0, maxWidth: .infinity, maxHeight: compact ? Consts.height - 10 : Consts.height)
-            .background(backgroundColor)
+            .background(configuration.isPressed ? backgroundColor.opacity(Consts.pressedOpacity) : backgroundColor)
             .cornerRadius(Consts.cornerRadius)
     }
 }

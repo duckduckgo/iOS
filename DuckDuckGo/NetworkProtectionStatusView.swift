@@ -40,7 +40,6 @@ struct NetworkProtectionStatusView: View {
         }
         .animation(.default, value: statusModel.shouldShowError)
         .padding(.top, statusModel.error == nil ? 0 : -20)
-        .animation(.default, value: statusModel.shouldShowConnectionDetails)
         .applyListStyle()
         .navigationTitle(UserText.netPNavTitle)
     }

@@ -634,7 +634,7 @@ In addition to the details entered into this form, your app issue report will co
     static let netPStatusViewConnectionDetails = NSLocalizedString("network.protection.status.view.connection.details", value: "Connection Details", comment: "Connection details label shown in NetworkProtection's status view.")
     static let netPStatusViewShareFeedback = NSLocalizedString("network.protection.status.menu.share.feedback", value: "Share Feedback", comment: "The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text")
 
-    static let inviteDialogSubmitButton = NSLocalizedString("invite.dialog.submit.button", value: "Submit", comment: "Submit button on an invite dialog")
+    static let inviteDialogContinueButton = NSLocalizedString("invite.dialog.continue.button", value: "Continue", comment: "Continue button on an invite dialog")
     static let inviteDialogGetStartedButton = NSLocalizedString("invite.dialog.get.started.button", value: "Get Started", comment: "Get Started button on an invite dialog")
     static let inviteDialogUnrecognizedCodeMessage = NSLocalizedString("invite.dialog.unrecognized.code.message", value: "We didn’t recognize this Invite Code.", comment: "Message to show after user enters an unrecognized invite code")
     static let inviteDialogErrorAlertOKButton = NSLocalizedString("invite.alert.ok.button", value: "OK", comment: "OK title for invite screen alert dismissal button")

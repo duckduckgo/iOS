@@ -64,7 +64,6 @@ struct NetworkProtectionInviteView: View {
                 }
             }
             .buttonStyle(PrimaryButtonStyle(disabled: model.shouldDisableSubmit))
-            .disabled(model.shouldDisableSubmit)
         }
         .alert(isPresented: $model.shouldShowAlert) {
             Alert(

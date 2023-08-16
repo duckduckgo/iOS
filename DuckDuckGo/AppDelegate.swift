@@ -80,16 +80,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         #endif
 
-
-
-
         // Can be removed after a couple of versions
         cleanUpMacPromoExperiment2()
 
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
         Configuration.setURLProvider(AppConfigurationURLProvider())
 
-        CrashC ollection.start {
+        CrashCollection.start {
             Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: $0, includedParameters: [.appVersion])
         }
 

@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "6683dab521d5466350eca33399551965233e6bc2",
-          "version": "74.1.0"
+          "branch": "sam/fix-macos-xcode-15-builds",
+          "revision": "8d8cceadc916bca834410f24bf395a0ecae37e2a",
+          "version": null
         }
       },
       {
@@ -168,8 +168,8 @@
         "repositoryURL": "https://github.com/duckduckgo/wireguard-apple",
         "state": {
           "branch": null,
-          "revision": "cf3c0f5132dbb8de08c46155a1bbd5e5bb6a47c1",
-          "version": "1.1.0"
+          "revision": "2d8172c11478ab11b0f5ad49bdb4f93f4b3d5e0d",
+          "version": "1.1.1"
         }
       }
     ]

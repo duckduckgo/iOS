@@ -103,7 +103,7 @@ jobs:
 
   asana:
     name: Create Asana Task
-    needs: [swiftlint, unit-tests]
+    needs: [swiftlint, unit-tests, shellcheck]
 
     if: failure() && github.ref_name == 'develop'
     

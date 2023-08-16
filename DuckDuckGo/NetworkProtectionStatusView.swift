@@ -74,7 +74,7 @@ struct NetworkProtectionStatusView: View {
     private func header() -> some View {
         HStack {
             Spacer(minLength: 0)
-            VStack(alignment: .center, spacing: 16) {
+            VStack(alignment: .center, spacing: 8) {
                 Image(statusModel.statusImageID)
                     .resizable()
                     .scaledToFit()
@@ -88,6 +88,7 @@ struct NetworkProtectionStatusView: View {
                     .font(.system(size: 13))
                     .multilineTextAlignment(.center)
                     .foregroundColor(.textSecondary)
+                    .padding(.bottom, 8)
             }
             .padding(.bottom, 4)
             // Pads beyond the default header inset

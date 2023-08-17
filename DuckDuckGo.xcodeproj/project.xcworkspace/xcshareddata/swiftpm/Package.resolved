@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": "sam/fix-macos-xcode-15-builds",
-          "revision": "8d8cceadc916bca834410f24bf395a0ecae37e2a",
+          "revision": "707b682860f0f9094b77493b3e0aa272ace6473c",
           "version": null
         }
       },

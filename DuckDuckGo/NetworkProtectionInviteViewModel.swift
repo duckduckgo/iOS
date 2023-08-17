@@ -53,13 +53,18 @@ final class NetworkProtectionInviteViewModel: ObservableObject {
         self.redemptionCoordinator = redemptionCoordinator
     }
 
+    private var isLoading = false
+
     @MainActor
     func submit() async {
-        shouldDisableSubmit = true
+        guard !isLoading else {
+            return
+        }
+        isLoading = true
         shouldDisableTextField = true
         defer {
-            shouldDisableSubmit = false
             shouldDisableTextField = false
+            isLoading = false
         }
         do {
             try await redemptionCoordinator.redeem(text.trimmingWhitespace())

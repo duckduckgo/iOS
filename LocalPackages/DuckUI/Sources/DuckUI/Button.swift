@@ -41,10 +41,10 @@ public struct PrimaryButtonStyle: ButtonStyle {
 
         configuration.label
             .font(Font(UIFont.boldAppFont(ofSize: compact ? Consts.fontSize - 1 : Consts.fontSize)))
-            .foregroundColor(configuration.isPressed ? foregroundColor.opacity(Consts.pressedOpacity) : foregroundColor)
+            .foregroundColor(configuration.isPressed ? standardForegroundColor.opacity(Consts.pressedOpacity) : foregroundColor)
             .padding()
             .frame(minWidth: 0, maxWidth: .infinity, maxHeight: compact ? Consts.height - 10 : Consts.height)
-            .background(configuration.isPressed ? backgroundColor.opacity(Consts.pressedOpacity) : backgroundColor)
+            .background(configuration.isPressed ? standardBackgroundColor.opacity(Consts.pressedOpacity) : backgroundColor)
             .cornerRadius(Consts.cornerRadius)
     }
 }

@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "dominik/hotfix/74.0.1-1",
-          "revision": "cd7058f55c59ebe08dc721b8a0e3e342b56acf0c",
-          "version": null
+          "branch": null,
+          "revision": "9a0eb00f81caaa4a8670d67eb9d8dddb1d47835c",
+          "version": "75.0.0"
         }
       },
       {

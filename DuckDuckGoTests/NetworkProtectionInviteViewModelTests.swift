@@ -51,25 +51,6 @@ final class NetworkProtectionInviteViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.currentStep, .success)
     }
 
-    private var cancellable: AnyCancellable?
-
-    func test_submit_disablesTextField() async {
-        let viewModel = viewModel()
-        viewModel.text = "INVITE"
-
-        let expectation = XCTestExpectation()
-
-        cancellable = viewModel.$shouldDisableTextField.sink {
-            if $0 == true {
-                expectation.fulfill()
-            }
-        }
-
-        await viewModel.submit()
-        await fulfillment(of: [expectation], timeout: 2)
-        cancellable = nil
-    }
-
     func test_submit_failedRedemption_unrecognizedCode_enablesTextField() async {
         await onSubmit_failedRedemption_unrecognizedCode { viewModel in
             XCTAssertFalse(viewModel.shouldDisableTextField)

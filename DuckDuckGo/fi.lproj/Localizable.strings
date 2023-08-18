@@ -1078,7 +1078,7 @@
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Tee palonkestäväksi";
 
-/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+/* Parameter is a website URL. Message confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ on nyt palonkestävä";
 
 /* Deny fireproofing action */
@@ -1090,7 +1090,7 @@
 /* Enable fireproofing for site */
 "preserveLogins.menu.enable" = "Tee sivustosta palonkestäviä";
 
-/* Messege confirms that website is no longer fireproofed. */
+/* Message confirms that website is no longer fireproofed. */
 "preserveLogins.menu.removal.message" = "Palonkestävyys poistettu";
 
 /* Alert title */

@@ -1435,7 +1435,7 @@ https://duckduckgo.com/mac";
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Fireproof";
 
-/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+/* Parameter is a website URL. Message confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ is now Fireproof";
 
 /* Deny fireproofing action */
@@ -1447,7 +1447,7 @@ https://duckduckgo.com/mac";
 /* Enable fireproofing for site */
 "preserveLogins.menu.enable" = "Fireproof This Site";
 
-/*  Messege confirms that website is no longer fireproofed. */
+/*  Message confirms that website is no longer fireproofed. */
 "preserveLogins.menu.removal.message" = "Fireproofing removed";
 
 /* Alert title */

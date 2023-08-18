@@ -5838,7 +5838,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Conditionally embeds the PacketTunnelProvider extension for debug builds.\n# To be moved to the Embed App Extensions phase on release.\nif [ \"${CONFIGURATION}\" = \"Debug\" ]; then\n# Copy the extension\n    cp -R \"${BUILT_PRODUCTS_DIR}/PacketTunnelProvider.appex\" \"${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}\"\nfi\n";
+			shellScript = "# Conditionally embeds the PacketTunnelProvider extension for debug builds.\n# To be moved to the Embed App Extensions phase on release.\nif [ \"${CONFIGURATION}\" = \"Debug\" ] || [ \"${CONFIGURATION}\" = \"Alpha\" ]; then\n# Copy the extension\n    cp -R \"${BUILT_PRODUCTS_DIR}/PacketTunnelProvider.appex\" \"${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

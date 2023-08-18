@@ -101,3 +101,86 @@ jobs:
       with:
         report_paths: unittests.xml
 
+  release-build:
+
+    name: Make Release Build
+
+    runs-on: macos-13
+    timeout-minutes: 30
+
+    steps:
+
+    - name: Register SSH keys for access to certificates
+      uses: webfactory/ssh-agent@v0.7.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_FASTLANE_MATCH }}
+
+    - name: Check out the code
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Set cache key hash
+      run: |
+        has_only_tags=$(jq '[ .object.pins[].state | has("version") ] | all' DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
+        if [[ "$has_only_tags" == "true" ]]; then
+          echo "cache_key_hash=${{ hashFiles('DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}" >> $GITHUB_ENV
+        else
+          echo "Package.resolved contains dependencies specified by branch or commit, skipping cache."
+        fi
+
+    - name: Cache SPM
+      if: env.cache_key_hash
+      uses: actions/cache@v3
+      with:
+        path: DerivedData/SourcePackages
+        key: ${{ runner.os }}-spm-release-${{ env.cache_key_hash }}
+        restore-keys: |
+          ${{ runner.os }}-spm-release-
+
+    - name: Install xcbeautify
+      run: brew install xcbeautify
+
+    - name: Select Xcode
+      run: sudo xcode-select -s /Applications/Xcode_$(<.xcode-version).app/Contents/Developer
+
+    - name: Prepare fastlane
+      run: bundle install
+
+    - name: Build the app
+      env:
+        APPLE_API_KEY_BASE64: ${{ secrets.APPLE_API_KEY_BASE64 }}
+        APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+        APPLE_API_KEY_ISSUER: ${{ secrets.APPLE_API_KEY_ISSUER }}
+        MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      run: |
+        bundle exec fastlane sync_signing
+
+        set -o pipefail && xcodebuild \
+        -scheme "DuckDuckGo" \
+        -destination "platform=iOS Simulator,name=iPhone 14" \
+        -derivedDataPath "DerivedData" \
+        -configuration "Release" \
+        | xcbeautify
+
+  asana:
+    name: Create Asana Task
+    needs: [swiftlint, unit-tests, shellcheck, release-build]
+
+    if: failure() && github.ref_name == 'develop'
+    
+    env:
+      WORKFLOW_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create Asana Task
+        uses: malmstein/github-asana-action@master
+        with:
+          asana-pat: ${{ secrets.ASANA_ACCESS_TOKEN }}
+          asana-project: ${{ vars.APPLE_CI_FAILING_TESTS_PROJECT_ID }}
+          asana-section: ${{ vars.APPLE_CI_FAILING_TESTS_IOS_POST_MERGE_SECTION_ID }}
+          asana-task-name: 'PR Check is failing on develop'
+          action: create-asana-task
+          asana-task-description: PR Checks conducted after merging have failed.  See ${{ env.WORKFLOW_URL }}

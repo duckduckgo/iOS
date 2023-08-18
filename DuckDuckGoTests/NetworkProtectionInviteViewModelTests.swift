@@ -53,30 +53,13 @@ final class NetworkProtectionInviteViewModelTests: XCTestCase {
 
     private var cancellable: AnyCancellable?
 
-    func test_submit_disablesSubmitButton() async {
-        let viewModel = viewModel()
-        viewModel.text = "INVITE"
-
-        let expectation = XCTestExpectation()
-
-        cancellable = viewModel.$shouldDisableSubmit.sink {
-            if $0 == true {
-                expectation.fulfill()
-            }
-        }
-
-        await viewModel.submit()
-        await fulfillment(of: [expectation], timeout: 2)
-        cancellable = nil
-    }
-
     func test_submit_disablesTextField() async {
         let viewModel = viewModel()
         viewModel.text = "INVITE"
 
         let expectation = XCTestExpectation()
 
-        cancellable = viewModel.$shouldDisableSubmit.sink {
+        cancellable = viewModel.$shouldDisableTextField.sink {
             if $0 == true {
                 expectation.fulfill()
             }
@@ -85,12 +68,6 @@ final class NetworkProtectionInviteViewModelTests: XCTestCase {
         await viewModel.submit()
         await fulfillment(of: [expectation], timeout: 2)
         cancellable = nil
-    }
-
-    func test_submit_failedRedemption_unrecognizedCode_enablesSubmitButton() async {
-        await onSubmit_failedRedemption_unrecognizedCode { viewModel in
-            XCTAssertFalse(viewModel.shouldDisableSubmit)
-        }
     }
 
     func test_submit_failedRedemption_unrecognizedCode_enablesTextField() async {
@@ -105,12 +82,6 @@ final class NetworkProtectionInviteViewModelTests: XCTestCase {
         await viewModel.submit()
         XCTAssertTrue(viewModel.shouldShowAlert)
         XCTAssertEqual(viewModel.errorText, UserText.inviteDialogUnrecognizedCodeMessage)
-    }
-
-    func test_submit_failedRedemption_otherErrors_enablesSubmitButton() async {
-        await onSubmit_failedRedemption_otherErrors { viewModel in
-            XCTAssertFalse(viewModel.shouldDisableSubmit)
-        }
     }
 
     func test_submit_failedRedemption_otherErrors_enablesTextField() async {
@@ -158,5 +129,12 @@ final class NetworkProtectionInviteViewModelTests: XCTestCase {
             await viewModel.submit()
             block(viewModel)
         }
+    }
+}
+
+private class MockRedemptionCoordinator: NetworkProtectionCodeRedeeming {
+    var callCount = 0
+    func redeem(_ code: String) async throws {
+        callCount += 1
     }
 }

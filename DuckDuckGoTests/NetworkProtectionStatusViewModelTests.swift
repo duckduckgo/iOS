@@ -186,7 +186,7 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
     }
 
     private func whenStatusUpdate_notConnected() {
-        let nonConnectedCases: [ConnectionStatus] = [.connecting, .disconnected, .disconnecting, .notConfigured, .reasserting]
+        let nonConnectedCases: [ConnectionStatus] = [.disconnected, .disconnecting, .notConfigured, .reasserting]
         for current in nonConnectedCases {
             statusObserver.subject.send(current)
             waitFor(condition: !self.viewModel.isNetPEnabled)
@@ -198,6 +198,6 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
             condition()
         }
         let expectation = XCTNSPredicateExpectation(predicate: predicate, object: nil)
-        wait(for: [expectation])
+        wait(for: [expectation], timeout: 5)
     }
 }

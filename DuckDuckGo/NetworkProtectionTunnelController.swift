@@ -28,6 +28,9 @@ import NetworkProtection
 final class NetworkProtectionTunnelController: TunnelController {
     static var simulationOptions = NetworkProtectionSimulationOptions()
 
+    private let tokenStore = NetworkProtectionKeychainTokenStore(useSystemKeychain: false, errorEvents: nil)
+    private let errorStore = NetworkProtectionTunnelErrorStore()
+
     // MARK: - Starting & Stopping the VPN
 
     enum StartError: LocalizedError {
@@ -41,6 +44,9 @@ final class NetworkProtectionTunnelController: TunnelController {
         do {
             try await startWithError()
         } catch {
+            #if DEBUG
+            errorStore.lastErrorMessage = error.localizedDescription
+            #endif
         }
     }
 
@@ -48,10 +54,11 @@ final class NetworkProtectionTunnelController: TunnelController {
         do {
             try await ConnectionSessionUtilities.activeSession()?.stopVPNTunnel()
         } catch {
+            #if DEBUG
+            errorStore.lastErrorMessage = error.localizedDescription
+            #endif
         }
     }
-
-    private let tokenStore = NetworkProtectionKeychainTokenStore(useSystemKeychain: false, errorEvents: nil)
 
     private func startWithError() async throws {
         let tunnelManager: NETunnelProviderManager
@@ -82,6 +89,11 @@ final class NetworkProtectionTunnelController: TunnelController {
 
     private func start(_ tunnelManager: NETunnelProviderManager) throws {
         var options = [String: NSObject]()
+
+        if Self.simulationOptions.isEnabled(.controllerFailure) {
+            Self.simulationOptions.setEnabled(false, option: .controllerFailure)
+            throw StartError.simulateControllerFailureError
+        }
 
         options["activationAttemptId"] = UUID().uuidString as NSString
         options["authToken"] = try tokenStore.fetchToken() as NSString?

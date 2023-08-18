@@ -43,10 +43,10 @@ struct NetworkProtectionStatusView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(UserText.netPStatusViewTitle)
                         .font(.system(size: 16))
-                        .foregroundColor(.primary)
+                        .foregroundColor(.textPrimary)
                     Text(statusModel.statusMessage)
                         .font(.system(size: 13))
-                        .foregroundColor(.secondary)
+                        .foregroundColor(.textSecondary)
                 }
 
                 Toggle("", isOn: Binding(
@@ -58,7 +58,7 @@ struct NetworkProtectionStatusView: View {
                     }
                 ))
                 .disabled(statusModel.shouldDisableToggle)
-                .toggleStyle(SwitchToggleStyle(tint: .toggleColor))
+                .toggleStyle(SwitchToggleStyle(tint: .controlColor))
             }
             .listRowBackground(Color.cellBackground)
         } header: {
@@ -73,8 +73,8 @@ struct NetworkProtectionStatusView: View {
     @ViewBuilder
     private func header() -> some View {
         HStack {
-            Spacer()
-            VStack(alignment: .center, spacing: 16) {
+            Spacer(minLength: 0)
+            VStack(alignment: .center, spacing: 8) {
                 Image(statusModel.statusImageID)
                     .resizable()
                     .scaledToFit()
@@ -83,15 +83,18 @@ struct NetworkProtectionStatusView: View {
                 Text(statusModel.headerTitle)
                     .font(.system(size: 17, weight: .semibold))
                     .multilineTextAlignment(.center)
-                    .foregroundColor(.primary)
+                    .foregroundColor(.textPrimary)
                 Text(UserText.netPStatusHeaderMessage)
                     .font(.system(size: 13))
                     .multilineTextAlignment(.center)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.textSecondary)
+                    .padding(.bottom, 8)
             }
             .padding(.bottom, 4)
+            // Pads beyond the default header inset
+            .padding(.horizontal, -16)
             .background(Color.viewBackground)
-            Spacer()
+            Spacer(minLength: 0)
         }
     }
 
@@ -113,7 +116,7 @@ struct NetworkProtectionStatusView: View {
                 )
             }
         } header: {
-            Text(UserText.netPStatusViewConnectionDetails).foregroundColor(.primary)
+            Text(UserText.netPStatusViewConnectionDetails).foregroundColor(.textPrimary)
         } footer: {
             inviteOnlyFooter()
         }
@@ -123,8 +126,8 @@ struct NetworkProtectionStatusView: View {
     private func inviteOnlyFooter() -> some View {
         // Needs to be inlined like this for the markdown parsing to work
         Text("\(UserText.netPInviteOnlyMessage) [\(UserText.netPStatusViewShareFeedback)](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)")
-            .foregroundColor(.secondary)
-            .accentColor(.accentColor)
+            .foregroundColor(.textSecondary)
+            .accentColor(Color.controlColor)
             .font(.system(size: 13))
             .padding(.top, 6)
     }
@@ -140,11 +143,11 @@ private struct NetworkProtectionServerItemView: View {
             Image(imageID)
             Text(title)
                 .font(.system(size: 16))
-                .foregroundColor(.primary)
-            Spacer()
+                .foregroundColor(.textPrimary)
+            Spacer(minLength: 2)
             Text(value)
                 .font(.system(size: 16))
-                .foregroundColor(.secondary)
+                .foregroundColor(.textSecondary)
         }
         .listRowBackground(Color.cellBackground)
     }
@@ -186,11 +189,11 @@ private extension View {
 }
 
 private extension Color {
-    static let titleText = Color(designSystemColor: .textPrimary)
-    static let messageText = Color(designSystemColor: .textSecondary)
+    static let textPrimary = Color(designSystemColor: .textPrimary)
+    static let textSecondary = Color(designSystemColor: .textSecondary)
     static let cellBackground = Color(designSystemColor: .surface)
     static let viewBackground = Color(designSystemColor: .background)
-    static let toggleColor = Color(designSystemColor: .accent)
+    static let controlColor = Color(designSystemColor: .accent)
 }
 
 struct NetworkProtectionStatusView_Previews: PreviewProvider {

@@ -26,6 +26,17 @@ import NetworkExtension
 import NetworkProtection
 
 final class NetworkProtectionTunnelController: TunnelController {
+    static var simulationOptions = NetworkProtectionSimulationOptions()
+
+    private let tokenStore = NetworkProtectionKeychainTokenStore(useSystemKeychain: false, errorEvents: nil)
+    private let errorStore = NetworkProtectionTunnelErrorStore()
+
+    // MARK: - Starting & Stopping the VPN
+
+    enum StartError: LocalizedError {
+        case connectionStatusInvalid
+        case simulateControllerFailureError
+    }
 
     /// Starts the VPN connection used for Network Protection
     ///
@@ -33,7 +44,9 @@ final class NetworkProtectionTunnelController: TunnelController {
         do {
             try await startWithError()
         } catch {
-            // Will handle this as part of https://app.asana.com/0/0/1205084446087081/f
+            #if DEBUG
+            errorStore.lastErrorMessage = error.localizedDescription
+            #endif
         }
     }
 
@@ -41,12 +54,11 @@ final class NetworkProtectionTunnelController: TunnelController {
         do {
             try await ConnectionSessionUtilities.activeSession()?.stopVPNTunnel()
         } catch {
-            // Will handle this as part of https://app.asana.com/0/0/1205084446087081/f
+            #if DEBUG
+            errorStore.lastErrorMessage = error.localizedDescription
+            #endif
         }
     }
-
-    private let tokenStore = NetworkProtectionKeychainTokenStore(useSystemKeychain: false, errorEvents: nil)
-    private let connectionObserver = ConnectionStatusObserverThroughSession()
 
     private func startWithError() async throws {
         let tunnelManager: NETunnelProviderManager
@@ -78,8 +90,23 @@ final class NetworkProtectionTunnelController: TunnelController {
     private func start(_ tunnelManager: NETunnelProviderManager) throws {
         var options = [String: NSObject]()
 
+        if Self.simulationOptions.isEnabled(.controllerFailure) {
+            Self.simulationOptions.setEnabled(false, option: .controllerFailure)
+            throw StartError.simulateControllerFailureError
+        }
+
         options["activationAttemptId"] = UUID().uuidString as NSString
         options["authToken"] = try tokenStore.fetchToken() as NSString?
+
+        if Self.simulationOptions.isEnabled(.tunnelFailure) {
+            Self.simulationOptions.setEnabled(false, option: .tunnelFailure)
+            options[NetworkProtectionOptionKey.tunnelFailureSimulation] = NetworkProtectionOptionValue.true
+        }
+
+        if Self.simulationOptions.isEnabled(.controllerFailure) {
+            Self.simulationOptions.setEnabled(false, option: .controllerFailure)
+            throw StartError.simulateControllerFailureError
+        }
 
         do {
             try tunnelManager.connection.startVPNTunnel(options: options)

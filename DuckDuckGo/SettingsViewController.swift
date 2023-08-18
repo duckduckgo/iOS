@@ -30,6 +30,10 @@ import Combine
 import NetworkExtension
 #endif
 
+#if NETWORK_PROTECTION
+import NetworkProtection
+#endif
+
 // swiftlint:disable file_length type_body_length
 class SettingsViewController: UITableViewController {
 
@@ -91,8 +95,12 @@ class SettingsViewController: UITableViewController {
     fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager
     fileprivate lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     fileprivate let syncService: DDGSyncing
+    fileprivate let syncDataProviders: SyncDataProviders
     fileprivate let internalUserDecider: InternalUserDecider
-    private var internalStateChangeCancellable: Cancellable?
+#if NETWORK_PROTECTION
+    private let connectionObserver = ConnectionStatusObserverThroughSession()
+#endif
+    private var cancellables: Set<AnyCancellable> = []
 
     private var shouldShowDebugCell: Bool {
         return featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild
@@ -142,9 +150,10 @@ class SettingsViewController: UITableViewController {
         configureRememberLogins()
         configureDebugCell()
         configureVoiceSearchCell()
+        configureNetPCell()
         applyTheme(ThemeManager.shared.currentTheme)
 
-        internalStateChangeCancellable = internalUserDecider.isInternalUserPublisher.dropFirst().sink(receiveValue: { [weak self] _ in
+        internalUserDecider.isInternalUserPublisher.dropFirst().sink(receiveValue: { [weak self] _ in
             self?.configureAutofillCell()
             self?.configureSyncCell()
             self?.configureDebugCell()
@@ -153,6 +162,7 @@ class SettingsViewController: UITableViewController {
             // Scroll to force-redraw section headers and footers
             self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
         })
+        .store(in: &cancellables)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -169,8 +179,7 @@ class SettingsViewController: UITableViewController {
         configureMacBrowserWaitlistCell()
         configureWindowsBrowserWaitlistCell()
         configureAppTPCell()
-        configureNetPCell()
-        
+
         // Make sure multiline labels are correctly presented
         tableView.setNeedsLayout()
         tableView.layoutIfNeeded()
@@ -187,11 +196,13 @@ class SettingsViewController: UITableViewController {
           appTPDatabase: CoreDataDatabase,
           bookmarksDatabase: CoreDataDatabase,
           syncService: DDGSyncing,
+          syncDataProviders: SyncDataProviders,
           internalUserDecider: InternalUserDecider) {
 
         self.appTPDatabase = appTPDatabase
         self.bookmarksDatabase = bookmarksDatabase
         self.syncService = syncService
+        self.syncDataProviders = syncDataProviders
         self.internalUserDecider = internalUserDecider
         super.init(coder: coder)
     }
@@ -365,8 +376,21 @@ class SettingsViewController: UITableViewController {
 
     private func configureNetPCell() {
         netPCell.isHidden = !shouldShowNetPCell
-        netPCell.textLabel?.textColor = ThemeManager.shared.currentTheme.tableCellTextColor
-        netPCell.detailTextLabel?.textColor = ThemeManager.shared.currentTheme.tableCellAccessoryTextColor
+#if NETWORK_PROTECTION
+        connectionObserver.publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] status in
+                let detailText: String
+                switch status {
+                case .connected:
+                    detailText = UserText.netPCellConnected
+                default:
+                    detailText = UserText.netPCellDisconnected
+                }
+                self?.netPCell.detailTextLabel?.text = detailText
+            }
+            .store(in: &cancellables)
+#endif
     }
 
     private func configureDebugCell() {
@@ -379,14 +403,22 @@ class SettingsViewController: UITableViewController {
     }
 
     private func showAutofill(animated: Bool = true) {
-        let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+        let autofillController = AutofillLoginSettingsListViewController(
+            appSettings: appSettings,
+            syncService: syncService,
+            syncDataProviders: syncDataProviders
+        )
         autofillController.delegate = self
         Pixel.fire(pixel: .autofillSettingsOpened)
         navigationController?.pushViewController(autofillController, animated: animated)
     }
     
     func showAutofillAccountDetails(_ account: SecureVaultModels.WebsiteAccount) {
-        let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+        let autofillController = AutofillLoginSettingsListViewController(
+            appSettings: appSettings,
+            syncService: syncService,
+            syncDataProviders: syncDataProviders
+        )
         autofillController.delegate = self
         let detailsController = autofillController.makeAccountDetailsScreen(account)
 
@@ -434,12 +466,18 @@ class SettingsViewController: UITableViewController {
 
 #if NETWORK_PROTECTION
     private func showNetP() {
-        let statusView = NetworkProtectionStatusView(
-            statusModel: NetworkProtectionStatusViewModel(),
-            inviteModel: NetworkProtectionInviteViewModel()
-        )
+        // This will be tidied up as part of https://app.asana.com/0/0/1205084446087078/f
+        let rootViewController = NetworkProtectionRootViewController { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+            let newRootViewController = NetworkProtectionRootViewController { }
+            self?.pushNetP(newRootViewController)
+        }
+        pushNetP(rootViewController)
+    }
+
+    private func pushNetP(_ rootViewController: NetworkProtectionRootViewController) {
         navigationController?.pushViewController(
-            UIHostingController(rootView: statusView),
+            rootViewController,
             animated: true
         )
     }

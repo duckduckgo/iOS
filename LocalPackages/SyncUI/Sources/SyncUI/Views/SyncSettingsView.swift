@@ -176,7 +176,7 @@ public struct SyncSettingsView: View {
                     .foregroundColor(.black)
 
                 // swiftlint:disable line_length
-                Text("This feature is viewable to internal users only and is still being developed and tested. Currently you can create accounts, connect and manage devices, and sync bookmarks and favorites. **[More Info](https://app.asana.com/0/1201493110486074/1203756800930481/f)**")
+                Text("This feature is viewable to internal users only and is still being developed and tested. Currently you can create accounts, connect and manage devices, and sync bookmarks, favorites and Autofill logins. **[More Info](https://app.asana.com/0/1201493110486074/1203756800930481/f)**")
                     .foregroundColor(.black)
                     .font(.system(size: 11, weight: .regular))
                 // swiftlint:enable line_length

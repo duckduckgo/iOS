@@ -17,21 +17,41 @@
 //  limitations under the License.
 //
 
+import Bookmarks
 import Combine
 import Common
 import DDGSync
 import Foundation
 import Persistence
 import SyncDataProviders
+import WidgetKit
 
 public final class SyncBookmarksAdapter {
 
     public private(set) var provider: BookmarksProvider?
-
+    public let databaseCleaner: BookmarkDatabaseCleaner
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
+    public let widgetRefreshCancellable: AnyCancellable
 
-    public init() {
+    public init(database: CoreDataDatabase) {
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
+        databaseCleaner = BookmarkDatabaseCleaner(
+            bookmarkDatabase: database,
+            errorEvents: BookmarksCleanupErrorHandling(),
+            log: .generalLog
+        )
+        widgetRefreshCancellable = syncDidCompletePublisher.sink { _ in
+            WidgetCenter.shared.reloadAllTimelines()
+        }
+    }
+
+    public func updateDatabaseCleanupSchedule(shouldEnable: Bool) {
+        databaseCleaner.cleanUpDatabaseNow()
+        if shouldEnable {
+            databaseCleaner.scheduleRegularCleaning()
+        } else {
+            databaseCleaner.cancelCleaningSchedule()
+        }
     }
 
     public func setUpProviderIfNeeded(database: CoreDataDatabase, metadataStore: SyncMetadataStore) {
@@ -42,7 +62,7 @@ public final class SyncBookmarksAdapter {
             let provider = try BookmarksProvider(
                 database: database,
                 metadataStore: metadataStore,
-                reloadBookmarksAfterSync: { [syncDidCompleteSubject] in
+                syncDidUpdateData: { [syncDidCompleteSubject] in
                     syncDidCompleteSubject.send()
                 }
             )

@@ -80,16 +80,26 @@ jobs:
       run: |
         set -o pipefail && xcodebuild test \
           -scheme "DuckDuckGo" \
-          -destination "platform=iOS Simulator,name=iPhone 14" \
+          -destination "platform=iOS Simulator,name=iPhone 14,OS=16.4" \
           -derivedDataPath "DerivedData" \
           DDG_SLOW_COMPILE_CHECK_THRESHOLD=250 \
+          | tee xcodebuild.log \
           | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml
+
+    - name: Upload logs if workflow failed
+      uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        name: BuildLogs
+        path: |
+          xcodebuild.log
+          DerivedData/Logs/Test/*.xcresult
+        retention-days: 7
 
     - name: Publish unit tests report
       uses: mikepenz/action-junit-report@v3
       with:
         report_paths: unittests.xml
-
 
   release-build:
 
@@ -152,3 +162,25 @@ jobs:
         -derivedDataPath "DerivedData" \
         -configuration "Release" \
         | xcbeautify
+
+  asana:
+    name: Create Asana Task
+    needs: [swiftlint, unit-tests, shellcheck, release-build]
+
+    if: failure() && github.ref_name == 'develop'
+    
+    env:
+      WORKFLOW_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create Asana Task
+        uses: malmstein/github-asana-action@master
+        with:
+          asana-pat: ${{ secrets.ASANA_ACCESS_TOKEN }}
+          asana-project: ${{ vars.APPLE_CI_FAILING_TESTS_PROJECT_ID }}
+          asana-section: ${{ vars.APPLE_CI_FAILING_TESTS_IOS_POST_MERGE_SECTION_ID }}
+          asana-task-name: 'PR Check is failing on develop'
+          action: create-asana-task
+          asana-task-description: PR Checks conducted after merging have failed.  See ${{ env.WORKFLOW_URL }}

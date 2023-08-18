@@ -32,6 +32,7 @@ import UserScript
 import ContentBlocking
 import TrackerRadarKit
 import Networking
+import SecureStorage
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -196,13 +197,10 @@ class TabViewController: UIViewController {
         return activeLink.merge(with: storedLink)
     }
 
-    lazy var emailManager: EmailManager = {
-        let emailManager = EmailManager()
-        emailManager.aliasPermissionDelegate = self
-        emailManager.requestDelegate = self
-        return emailManager
-    }()
-    
+    var emailManager: EmailManager? {
+        return (parent as? MainViewController)?.emailManager
+    }
+
     lazy var vaultManager: SecureVaultManager = {
         let manager = SecureVaultManager(includePartialAccountMatches: true,
                                          tld: AppDependencyProvider.shared.storageCache.tld)
@@ -263,8 +261,6 @@ class TabViewController: UIViewController {
         return controller
     }
 
-    private var autoSavedCredentialsId: String = ""
-
     private var userContentController: UserContentController {
         (webView.configuration.userContentController as? UserContentController)!
     }
@@ -317,6 +313,9 @@ class TabViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        // The email manager is pulled from the main view controller, so reconnect it now, otherwise, it's nil
+        userScripts?.autofillUserScript.emailDelegate = emailManager
+
         woShownRecently = false // don't fire if the user goes somewhere else first
         resetNavigationBar()
         delegate?.tabDidRequestShowingMenuHighlighter(tab: self)
@@ -1186,7 +1185,6 @@ extension TabViewController: WKNavigationDelegate {
            ?? false {
             detectedLoginURL = nil
             saveLoginPromptLastDismissed = nil
-            autoSavedCredentialsId = ""
         }
     }
     
@@ -1960,14 +1958,6 @@ extension TabViewController: WKUIDelegate {
     
 }
 
-// MARK: - UIPopoverPresentationControllerDelegate
-extension TabViewController: UIPopoverPresentationControllerDelegate {
-
-    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
-        return .none
-    }
-}
-
 // MARK: - UIGestureRecognizerDelegate
 extension TabViewController: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -2217,111 +2207,6 @@ extension TabViewController: AdClickAttributionLogicDelegate {
 
 }
 
-// MARK: - EmailManagerAliasPermissionDelegate
-extension TabViewController: EmailManagerAliasPermissionDelegate {
-
-    func emailManager(_ emailManager: EmailManager,
-                      didRequestPermissionToProvideAliasWithCompletion completionHandler: @escaping (EmailManagerPermittedAddressType) -> Void) {
-
-        DispatchQueue.main.async {
-            let alert = UIAlertController(title: UserText.emailAliasAlertTitle, message: nil, preferredStyle: .actionSheet)
-            alert.overrideUserInterfaceStyle()
-
-            var pixelParameters: [String: String] = [:]
-
-            if let cohort = emailManager.cohort {
-                pixelParameters[PixelParameters.emailCohort] = cohort
-            }
-
-            if let userEmail = emailManager.userEmail {
-                let actionTitle = String(format: UserText.emailAliasAlertUseUserAddress, userEmail)
-                alert.addAction(title: actionTitle) {
-                    pixelParameters[PixelParameters.emailLastUsed] = emailManager.lastUseDate
-                    emailManager.updateLastUseDate()
-
-                    Pixel.fire(pixel: .emailUserPressedUseAddress, withAdditionalParameters: pixelParameters, includedParameters: [])
-
-                    completionHandler(.user)
-                }
-            }
-
-            alert.addAction(title: UserText.emailAliasAlertGeneratePrivateAddress) {
-                pixelParameters[PixelParameters.emailLastUsed] = emailManager.lastUseDate
-                emailManager.updateLastUseDate()
-
-                Pixel.fire(pixel: .emailUserPressedUseAlias, withAdditionalParameters: pixelParameters, includedParameters: [])
-
-                completionHandler(.generated)
-            }
-
-            alert.addAction(title: UserText.emailAliasAlertDecline) {
-                Pixel.fire(pixel: .emailTooltipDismissed, withAdditionalParameters: pixelParameters, includedParameters: [])
-
-                completionHandler(.none)
-            }
-
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                // make sure the completion handler is called if the alert is dismissed by tapping outside the alert
-                alert.addAction(title: "", style: .cancel) {
-                    Pixel.fire(pixel: .emailTooltipDismissed, withAdditionalParameters: pixelParameters)
-                    completionHandler(.none)
-                }
-            }
-
-            alert.popoverPresentationController?.permittedArrowDirections = []
-            alert.popoverPresentationController?.delegate = self
-            let bounds = self.view.bounds
-            let point = Point(x: Int((bounds.maxX - bounds.minX) / 2.0), y: Int(bounds.maxY))
-            self.present(controller: alert, fromView: self.view, atPoint: point)
-        }
-
-    }
-
-}
-
-// MARK: - EmailManagerRequestDelegate
-extension TabViewController: EmailManagerRequestDelegate {
-
-    // swiftlint:disable function_parameter_count
-    func emailManager(_ emailManager: EmailManager, requested url: URL, method: String, headers: HTTPHeaders, parameters: [String: String]?, httpBody: Data?, timeoutInterval: TimeInterval) async throws -> Data {
-        let method = APIRequest.HTTPMethod(rawValue: method) ?? .post
-        let configuration = APIRequest.Configuration(url: url,
-                                                     method: method,
-                                                     queryParameters: parameters ?? [:],
-                                                     headers: APIRequest.Headers(additionalHeaders: headers),
-                                                     body: httpBody,
-                                                     timeoutInterval: timeoutInterval)
-        let request = APIRequest(configuration: configuration, urlSession: .session())
-        return try await request.fetch().data ?? { throw AliasRequestError.noDataError }()
-    }
-    // swiftlint:enable function_parameter_count
-    
-    func emailManagerKeychainAccessFailed(accessType: EmailKeychainAccessType, error: EmailKeychainAccessError) {
-        var parameters = [
-            PixelParameters.emailKeychainAccessType: accessType.rawValue,
-            PixelParameters.emailKeychainError: error.errorDescription
-        ]
-        
-        if case let .keychainLookupFailure(status) = error {
-            parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
-            parameters[PixelParameters.emailKeychainKeychainOperation] = "lookup"
-        }
-        
-        if case let .keychainDeleteFailure(status) = error {
-            parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
-            parameters[PixelParameters.emailKeychainKeychainOperation] = "delete"
-        }
-        
-        if case let .keychainSaveFailure(status) = error {
-            parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
-            parameters[PixelParameters.emailKeychainKeychainOperation] = "save"
-        }
-        
-        Pixel.fire(pixel: .emailAutofillKeychainError, withAdditionalParameters: parameters)
-    }
-
-}
-
 // MARK: - Themable
 extension TabViewController: Themable {
 
@@ -2382,7 +2267,7 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
     }
     
-    func secureVaultInitFailed(_ error: SecureVaultError) {
+    func secureVaultInitFailed(_ error: SecureStorageError) {
         SecureVaultErrorReporter.shared.secureVaultInitFailed(error)
     }
     
@@ -2398,34 +2283,20 @@ extension TabViewController: SecureVaultManagerDelegate {
 
     func secureVaultManager(_ vault: SecureVaultManager,
                             promptUserToStoreAutofillData data: AutofillData,
-                            hasGeneratedPassword generatedPassword: Bool,
                             withTrigger trigger: AutofillUserScript.GetTriggerType?) {
-        if var credentials = data.credentials,
+        
+        if let credentials = data.credentials,
             AutofillSettingStatus.isAutofillEnabledInSettings,
             featureFlagger.isFeatureOn(.autofillCredentialsSaving) {
-            if generatedPassword, let trigger = trigger {
+            if data.automaticallySavedCredentials, let trigger = trigger {
                 if trigger == AutofillUserScript.GetTriggerType.passwordGeneration {
-                    autoSavedCredentialsId = credentials.account.id ?? ""
                     return
                 } else if trigger == AutofillUserScript.GetTriggerType.formSubmission {
                     guard let accountID = credentials.account.id,
                           let accountIdInt = Int64(accountID) else { return }
                     confirmSavedCredentialsFor(credentialID: accountIdInt, message: UserText.autofillLoginSavedToastMessage)
-                    self.autoSavedCredentialsId = ""
                     return
                 }
-            }
-
-            if !autoSavedCredentialsId.isEmpty {
-                if let accountIdInt = Int64(autoSavedCredentialsId) {
-                    /// generatedPassword has been modified by user so delete the autosaved credential from db and prompt to save login as new credentials
-                    deleteLoginFor(accountIdInt: accountIdInt)
-                    if credentials.account.id == autoSavedCredentialsId {
-                        credentials.account.id = nil
-                    }
-                }
-
-                self.autoSavedCredentialsId = ""
             }
 
             // Add a delay to allow propagation of pointer events to the page
@@ -2438,13 +2309,13 @@ extension TabViewController: SecureVaultManagerDelegate {
 
     private func deleteLoginFor(accountIdInt: Int64) {
         do {
-            let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
+            let secureVault = try? AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared)
             if secureVault == nil {
                 os_log("Failed to make vault")
             }
             try secureVault?.deleteWebsiteCredentialsFor(accountId: accountIdInt)
         } catch {
-            Pixel.fire(pixel: .secureVaultError)
+            Pixel.fire(pixel: .secureVaultError, error: error)
         }
     }
 
@@ -2526,7 +2397,11 @@ extension TabViewController: SecureVaultManagerDelegate {
               featureFlagger.isFeatureOn(.autofillPasswordGeneration) else { return false }
         return true
     }
-    
+
+    func secureVaultManagerShouldSaveData(_: SecureVaultManager) -> Bool {
+        true
+    }
+
     func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
         // We don't have auth yet
     }
@@ -2579,8 +2454,9 @@ extension TabViewController: SaveLoginViewControllerDelegate {
 
         do {
             let credentialID = try SaveAutofillLoginManager.saveCredentials(credentials,
-                                                                            with: SecureVaultFactory.default)
+                                                                            with: AutofillSecureVaultFactory)
             confirmSavedCredentialsFor(credentialID: credentialID, message: message)
+            syncService.scheduler.notifyDataChanged()
         } catch {
             os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
         }
@@ -2588,7 +2464,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
 
     private func confirmSavedCredentialsFor(credentialID: Int64, message: String) {
         do {
-            let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
+            let vault = try AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared)
             
             if let newCredential = try vault.websiteCredentialsFor(accountId: credentialID) {
                 DispatchQueue.main.async {

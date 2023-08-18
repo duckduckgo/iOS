@@ -283,34 +283,12 @@ extension TabViewController {
     }
     
     private func buildUseNewDuckAddressEntry(forLink link: Link) -> BrowsingMenuEntry? {
-        guard emailManager.isSignedIn else { return nil }
+        guard emailManager?.isSignedIn == true else { return nil }
         let title = UserText.emailBrowsingMenuUseNewDuckAddress
         let image = UIImage(named: "Email-16")!
 
         return BrowsingMenuEntry.regular(name: title, image: image) { [weak self] in
-            guard let emailManager = self?.emailManager else { return }
-
-            var pixelParameters: [String: String] = [:]
-
-            if let cohort = emailManager.cohort {
-                pixelParameters[PixelParameters.emailCohort] = cohort
-            }
-            pixelParameters[PixelParameters.emailLastUsed] = emailManager.lastUseDate
-            emailManager.updateLastUseDate()
-
-            Pixel.fire(pixel: .emailUserCreatedAlias, withAdditionalParameters: pixelParameters, includedParameters: [])
-
-            emailManager.getAliasIfNeededAndConsume { alias, _ in
-                Task { @MainActor in
-                    guard let alias = alias else {
-                        // we may want to communicate this failure to the user in the future
-                        return
-                    }
-                    let pasteBoard = UIPasteboard.general
-                    pasteBoard.string = emailManager.emailAddressFor(alias)
-                    ActionMessageView.present(message: UserText.emailBrowsingMenuAlert)
-                }
-            }
+            (self?.parent as? MainViewController)?.newEmailAddress()
         }
     }
 

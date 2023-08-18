@@ -29,7 +29,6 @@ extension Pixel {
     public enum Event {
         
         case appLaunch
-        case defaultBrowserLaunch
         case refreshPressed
         
         case forgetAllPressedBrowsing
@@ -142,10 +141,7 @@ extension Pixel {
         case daxDialogsAutoconsentShown
         case daxDialogsAutoconsentConfirmed
         case daxDialogsAutoconsentCancelled
-        
-        case widgetFavoriteLaunch
-        case widgetNewSearch
-        
+
         case defaultBrowserButtonPressedSettings
         
         case widgetsOnboardingCTAPressed
@@ -263,6 +259,7 @@ extension Pixel {
         
         case adClickAttributionDetected
         case adClickAttributionActive
+        case adClickAttributionPageLoads
         
         // MARK: SERP pixels
         
@@ -304,6 +301,13 @@ extension Pixel {
         case remoteMessagePrimaryActionClicked
         case remoteMessageSecondaryActionClicked
         case remoteMessageSheet
+
+        // MARK: Lock Screen widgets
+        case lockScreenWidgetNewSearch
+        case lockScreenWidgetFavorites
+        case lockScreenWidgetFireButton
+        case lockScreenWidgetVoiceSearch
+        case lockScreenWidgetNewEmail
 
         // MARK: debug pixels
         case dbCrashDetected
@@ -406,7 +410,6 @@ extension Pixel {
         
         case bookmarksCouldNotLoadDatabase
         case bookmarksCouldNotPrepareDatabase
-        case bookmarksCleanupFailed
         case bookmarksMigrationAlreadyPerformed
         case bookmarksMigrationFailed
         case bookmarksMigrationCouldNotPrepareDatabase
@@ -422,6 +425,14 @@ extension Pixel {
         case syncMetadataCouldNotLoadDatabase
         case syncBookmarksProviderInitializationFailed
         case syncBookmarksFailed
+        case syncCredentialsProviderInitializationFailed
+        case syncCredentialsFailed
+
+        case bookmarksCleanupFailed
+        case bookmarksCleanupAttemptedWhileSyncWasEnabled
+
+        case credentialsDatabaseCleanupFailed
+        case credentialsCleanupAttemptedWhileSyncWasEnabled
 
         case invalidPayload(Configuration)
     }
@@ -435,7 +446,6 @@ extension Pixel.Event {
     public var name: String {
         switch self {
         case .appLaunch: return "ml"
-        case .defaultBrowserLaunch: return "m_dl"
         case .refreshPressed: return "m_r"
             
         case .forgetAllPressedBrowsing: return "mf_bp"
@@ -549,9 +559,6 @@ extension Pixel.Event {
         case .daxDialogsAutoconsentShown: return "m_dax_dialog_autoconsent_shown"
         case .daxDialogsAutoconsentConfirmed: return "m_dax_dialog_autoconsent_confirmed"
         case .daxDialogsAutoconsentCancelled: return "m_dax_dialog_autoconsent_cancelled"
-            
-        case .widgetFavoriteLaunch: return "m_w_fl"
-        case .widgetNewSearch: return "m_w_ns"
             
         case .defaultBrowserButtonPressedSettings: return "m_db_s"
             
@@ -676,6 +683,7 @@ extension Pixel.Event {
             
         case .adClickAttributionDetected: return "m_ad_click_detected"
         case .adClickAttributionActive: return "m_ad_click_active"
+        case .adClickAttributionPageLoads: return "m_pageloads_with_ad_attribution"
             
         // MARK: SERP pixels
             
@@ -715,6 +723,13 @@ extension Pixel.Event {
         case .remoteMessagePrimaryActionClicked: return "m_remote_message_primary_action_clicked"
         case .remoteMessageSecondaryActionClicked: return "m_remote_message_secondary_action_clicked"
         case .remoteMessageSheet: return "m_remote_message_sheet"
+
+        // Lock Screen Widgets
+        case .lockScreenWidgetNewSearch: return "m_lockscreen_newsearch"
+        case .lockScreenWidgetFavorites: return "m_lockscreen_favorites"
+        case .lockScreenWidgetFireButton: return "m_lockscreen_fire"
+        case .lockScreenWidgetVoiceSearch: return "m_lockscreen_voicesearch"
+        case .lockScreenWidgetNewEmail: return "m_lockscreen_newemail"
 
         // MARK: debug pixels
 
@@ -818,7 +833,6 @@ extension Pixel.Event {
             
         case .bookmarksCouldNotLoadDatabase: return "m_d_bookmarks_could_not_load_database"
         case .bookmarksCouldNotPrepareDatabase: return "m_d_bookmarks_could_not_prepare_database"
-        case .bookmarksCleanupFailed: return "m_d_bookmarks_cleanup_failed"
         case .bookmarksMigrationAlreadyPerformed: return "m_d_bookmarks_migration_already_performed"
         case .bookmarksMigrationFailed: return "m_d_bookmarks_migration_failed"
         case .bookmarksMigrationCouldNotPrepareDatabase: return "m_d_bookmarks_migration_could_not_prepare_database"
@@ -835,6 +849,14 @@ extension Pixel.Event {
         case .syncMetadataCouldNotLoadDatabase: return "m_d_sync_metadata_could_not_load_database"
         case .syncBookmarksProviderInitializationFailed: return "m_d_sync_bookmarks_provider_initialization_failed"
         case .syncBookmarksFailed: return "m_d_sync_bookmarks_failed"
+        case .syncCredentialsProviderInitializationFailed: return "m_d_sync_credentials_provider_initialization_failed"
+        case .syncCredentialsFailed: return "m_d_sync_credentials_failed"
+
+        case .bookmarksCleanupFailed: return "m_d_bookmarks_cleanup_failed"
+        case .bookmarksCleanupAttemptedWhileSyncWasEnabled: return "m_d_bookmarks_cleanup_attempted_while_sync_was_enabled"
+
+        case .credentialsDatabaseCleanupFailed: return "m_d_credentials_database_cleanup_failed"
+        case .credentialsCleanupAttemptedWhileSyncWasEnabled: return "m_d_credentials_cleanup_attempted_while_sync_was_enabled"
 
         case .invalidPayload(let configuration): return "m_d_\(configuration.rawValue)_invalid_payload".lowercased()
         }

@@ -17,47 +17,38 @@
 //  limitations under the License.
 //
 
+#if NETWORK_PROTECTION
+
 import Foundation
 import Combine
 import Core
-import UIKit
-
-#if NETWORK_PROTECTION
-
 import NetworkExtension
 import NetworkProtection
 
-public protocol NetworkProtectionTunnelControlling {
-    var status: ConnectionStatus { get }
-    var statusPublisher: AnyPublisher<ConnectionStatus, Never> { get }
-    func setState(to enabled: Bool) async throws
-}
-
-final class NetworkProtectionTunnelController: NetworkProtectionTunnelControlling {
-
-    private let tokenStore = NetworkProtectionKeychainTokenStore(useSystemKeychain: false, errorEvents: nil)
-    private let connectionObserver = ConnectionStatusObserverThroughSession(platformNotificationCenter: .default,
-                                                                            platformDidWakeNotification: UIApplication.didBecomeActiveNotification)
-
-    // MARK: - NetworkProtectionTunnelControlling
-
-    @Published var status: ConnectionStatus = .disconnected
-
-    var statusPublisher: AnyPublisher<ConnectionStatus, Never> {
-        connectionObserver.publisher.eraseToAnyPublisher()
-    }
-
-    func setState(to enabled: Bool) async throws {
-        if enabled {
-            try await start()
-        } else {
-            try await ConnectionSessionUtilities.activeSession()?.stopVPNTunnel()
-        }
-    }
+final class NetworkProtectionTunnelController: TunnelController {
 
     /// Starts the VPN connection used for Network Protection
     ///
-    private func start() async throws {
+    func start() async {
+        do {
+            try await startWithError()
+        } catch {
+            // Will handle this as part of https://app.asana.com/0/0/1205084446087081/f
+        }
+    }
+
+    func stop() async {
+        do {
+            try await ConnectionSessionUtilities.activeSession()?.stopVPNTunnel()
+        } catch {
+            // Will handle this as part of https://app.asana.com/0/0/1205084446087081/f
+        }
+    }
+
+    private let tokenStore = NetworkProtectionKeychainTokenStore(useSystemKeychain: false, errorEvents: nil)
+    private let connectionObserver = ConnectionStatusObserverThroughSession()
+
+    private func startWithError() async throws {
         let tunnelManager: NETunnelProviderManager
 
         do {
@@ -69,7 +60,7 @@ final class NetworkProtectionTunnelController: NetworkProtectionTunnelControllin
         switch tunnelManager.connection.status {
         case .invalid:
             reloadTunnelManager()
-            try await start()
+            try await startWithError()
         case .connected:
             // Intentional no-op
             break

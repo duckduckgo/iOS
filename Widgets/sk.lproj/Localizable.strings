@@ -1,6 +1,36 @@
 /* No comment provided by engineer. */
 "Label" = "Označenie";
 
+/* Description shown to the user when adding the Email Protection lock screen widget */
+"lock.screen.widget.email.description" = "Okamžite vygenerujte novú súkromnú Duck adresu.";
+
+/* Title shown to the user when adding the Email Protection lock screen widget */
+"lock.screen.widget.email.title" = "Ochrana e-mailu";
+
+/* Description shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.favorites.description" = "Svoje obľúbené webové stránky otvoríte rýchlo jediným ťuknutím.";
+
+/* Title shown to the user when adding the favorites lock screen widget */
+"lock.screen.widget.favorites.title" = "Obľúbené položky";
+
+/* Description shown to the user when adding the Fire Button lock screen widget */
+"lock.screen.widget.fire.description" = "Okamžite vymažete históriu prehľadávania a spustíte nové súkromné vyhľadávanie v DuckDuckGo.";
+
+/* Title shown to the user when adding the Fire Button lock screen widget */
+"lock.screen.widget.fire.title" = "Fire Button";
+
+/* Description shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.search.description" = "Okamžite spustíte súkromné vyhľadávanie v DuckDuckGo.";
+
+/* Title shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.search.title" = "Súkromné vyhľadávanie";
+
+/* Description shown to the user when adding the Voice Search lock screen widget */
+"lock.screen.widget.voice.description" = "Okamžite spustíte nové súkromné hlasové vyhľadávanie v službe DuckDuckGo.";
+
+/* Title shown to the user when adding the Voice Search lock screen widget */
+"lock.screen.widget.voice.title" = "Hlasové vyhľadávanie";
+
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Vyhľadávajte alebo navštevujte svoje obľúbené stránky súkromne iba pomocou jedného kliknutia.";
 

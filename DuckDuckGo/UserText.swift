@@ -608,6 +608,37 @@ In addition to the details entered into this form, your app issue report will co
     // MARK: Network Protection
 
     public static let netPNavTitle = NSLocalizedString("netP.title", value: "Network Protection", comment: "Title for the Network Protection feature")
+    public static let netPCellConnected = NSLocalizedString("netP.cell.connected", value: "Connected", comment: "String indicating NetP is connected when viewed from the settings screen")
+    public static let netPCellDisconnected = NSLocalizedString("netP.cell.disconnected", value: "Not connected", comment: "String indicating NetP is disconnected when viewed from the settings screen")
+
+    static let netPInviteTitle = NSLocalizedString("network.protection.invite.dialog.title", value: "You're invited to try Network Protection", comment: "Title for the network protection invite screen")
+    static let netPInviteMessage = NSLocalizedString("network.protection.invite.dialog.message", value: "Enter your invite code to get started.", comment: "Message for the network protection invite dialog")
+    static let netPInviteFieldPrompt = NSLocalizedString("network.protection.invite.field.prompt", value: "Invite Code", comment: "Prompt for the network protection invite code text field")
+    static let netPInviteSuccessTitle = NSLocalizedString("network.protection.invite.success.title", value: "Success! You’re in.", comment: "Title for the network protection invite success view")
+    static let netPInviteSuccessMessage = NSLocalizedString("network.protection.invite.success.message", value: "Hide your location from websites and conceal your online activity from Internet providers and others on your network.", comment: "Message for the network protection invite success view")
+    static let netPInviteOnlyMessage = NSLocalizedString("network.protection.invite.only.message", value: "DuckDuckGo Network Protection is currently invite-only.", comment: "Message explaining that netP is invite only")
+    
+    static let netPStatusViewTitle = NSLocalizedString("network.protection.status.view.title", value: "Network Protection", comment: "Title label text for the status view when netP is disconnected")
+    static let netPStatusHeaderTitleOff = NSLocalizedString("network.protection.status.header.title.off", value: "Network Protection is Off", comment: "Header title label text for the status view when netP is disconnected")
+    static let netPStatusHeaderTitleOn = NSLocalizedString("network.protection.status.header.title.on", value: "Network Protection is On", comment: "Header title label text for the status view when netP is connected")
+    static let netPStatusHeaderMessage = NSLocalizedString("network.protection.status.header.message", value: "DuckDuckGo's VPN secures all of your device's Internet traffic anytime, anywhere.", comment: "Message label text for the netP status view")
+    static let netPStatusDisconnected = NSLocalizedString("network.protection.status.disconnected", value: "Not connected", comment: "The label for the NetP VPN when disconnected")
+    static let netPStatusDisconnecting = NSLocalizedString("network.protection.status.disconnecting", value: "Disconnecting...", comment: "The label for the NetP VPN when disconnecting")
+    static let netPStatusConnecting = NSLocalizedString("network.protection.status.connecting", value: "Connecting...", comment: "The label for the NetP VPN when connecting")
+    static func netPStatusConnected(since timeLapsedString: String) -> String {
+        let localized = NSLocalizedString("network.protection.status.connected.format", value: "Connected - %@", comment: "The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string")
+        return String(format: localized, timeLapsedString)
+    }
+    static let netPStatusViewLocation = NSLocalizedString("network.protection.status.view.location", value: "Location", comment: "Location label shown in NetworkProtection's status view.")
+    static let netPStatusViewIPAddress = NSLocalizedString("network.protection.status.view.ip.address", value: "IP Address", comment: "IP Address label shown in NetworkProtection's status view.")
+    static let netPStatusViewConnectionDetails = NSLocalizedString("network.protection.status.view.connection.details", value: "Connection Details", comment: "Connection details label shown in NetworkProtection's status view.")
+    static let netPStatusViewShareFeedback = NSLocalizedString("network.protection.status.menu.share.feedback", value: "Share Feedback", comment: "The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text")
+
+    static let inviteDialogSubmitButton = NSLocalizedString("invite.dialog.submit.button", value: "Submit", comment: "Submit button on an invite dialog")
+    static let inviteDialogGetStartedButton = NSLocalizedString("invite.dialog.get.started.button", value: "Get Started", comment: "Get Started button on an invite dialog")
+    static let inviteDialogUnrecognizedCodeMessage = NSLocalizedString("invite.dialog.unrecognized.code.message", value: "We didn’t recognize this Invite Code.", comment: "Message to show after user enters an unrecognized invite code")
+    static let inviteDialogErrorAlertOKButton = NSLocalizedString("invite.alert.ok.button", value: "OK", comment: "OK title for invite screen alert dismissal button")
+
     
     // MARK: Notifications
     
@@ -633,6 +664,8 @@ In addition to the details entered into this form, your app issue report will co
         Visit this URL on your Computer to download:
         https://duckduckgo.com/windows
         """, comment: "Message used when sharing to iMessage")
+
+    // MARK: Autofill
 
     public static let autofillLoginDetailsLoginName = NSLocalizedString("autofill.logins.details.login-name", value:"Login Title", comment: "Login name label for login details on autofill")
     public static let autofillLoginDetailsUsername = NSLocalizedString("autofill.logins.details.username", value:"Username", comment: "Username label for login details on autofill")
@@ -710,15 +743,51 @@ In addition to the details entered into this form, your app issue report will co
     public static let autofillLoginDetailsSaveDuplicateLoginAlertAction = NSLocalizedString("autofill.logins.details.save-duplicate-alert.action", value:"OK", comment: "Action text for alert when attempting to save a duplicate login")
 
     public static let autofillNavigationButtonItemTitleClose = NSLocalizedString("autofill.logins.list.close-title", value:"Close", comment: "Title for close navigation button")
+
+    // Autofill Password Generation Prompt
+    public static let autofillPasswordGenerationPromptTitle = NSLocalizedString("autofill.password-generation-prompt.title", value:"Use generated password from DuckDuckGo?", comment: "Title for prompt to use suggested strong password for creating a login")
+    public static let autofillPasswordGenerationPromptSubtitle = NSLocalizedString("autofill.password-generation-prompt.subtitle", value:"Password will be saved in Logins.", comment: "Subtitle for prompt to use suggested strong password for creating a login")
+    public static let autofillPasswordGenerationPromptUseGeneratedPasswordCTA = NSLocalizedString("autofill.password-generation-prompt.use-generated-password.cta", value:"Use Generated Password", comment: "Button title choosing to use the suggested generated password for creating a login")
+    public static let autofillPasswordGenerationPromptUseOwnPasswordCTA = NSLocalizedString("autofill.password-generation-prompt.use-own-password.cta", value:"Create My Own", comment: "Button title choosing to use own password for creating a login")
+
+    // Autofill Email Management
+    static let autofillPrivateEmailMessageError = NSLocalizedString("autofill.private.email.mesage.error", value: "Management of this address is temporarily unavailable", comment: "Mesasage displayed when a user tries to manage a private email address but the service is not available, returns an error or network is down")
+    static let autofillPrivateEmailMessageActive = NSLocalizedString("autofill.private.email.mesage.active", value: "Active", comment: "Mesasage displayed when a private email address is active")
+    static let autofillPrivateEmailMessageDeactivated = NSLocalizedString("autofill.private.email.mesage.inactive", value: "Deactivated", comment: "Mesasage displayed when a private email address is inactive")
+    static let autofillEnableEmailProtection = NSLocalizedString("autofill.enable.email.protection", value: "Enable Email Protection", comment: "Text link to email protection website")
+    static let autofillSignInToManageEmail = NSLocalizedString("autofill.signin.to.manage", value: "%@ to manage your Duck Addresses on this device.", comment: "Message displayed to the user when they are logged out of Email protection.")
+
+    static let autofillCancel = NSLocalizedString("pm.cancel", value: "Cancel", comment: "Cancel button")
+    static let autofillEmailActivateConfirmTitle = NSLocalizedString("autofill.private.email.mesage.activate.confirm.title", value: "Reactivate Private Duck Address?", comment: "Title for the confirmation message  displayed when a user tries activate a Private Email Address")
+    static let autofillEmailActivateConfirmContent = NSLocalizedString("autofill.private.email.mesage.activate.confirm.content", value: "Emails sent to %@ will again be forwarded to your inbox.", comment: "Text for the confirmation message displayed when a user tries activate a Private Email Address")
+    static let autofillEmailDeactivateConfirmTitle = NSLocalizedString("autofill.private.email.mesage.deactivate.confirm.title", value: "Deactivate Private Duck Address?", comment: "Title for the confirmation message displayed when a user tries deactivate a Private Email Address")
+    static let autofillEmailDeactivateConfirmContent = NSLocalizedString("autofill.private.email.mesage.deactivate.confirm.content", value: "Emails sent to %@ will no longer be forwarded to your inbox.", comment: "Text for the confirmation message displayed when a user tries deactivate a Private Email Address")
+    static let autofillRemovedDuckAddressTitle = NSLocalizedString("autofill.removed.duck.address.title", value: "Private Duck Address username was removed", comment: "Title for the alert dialog telling the user an updated username is no longer a private email address")
+    static let autofillRemovedDuckAddressContent = NSLocalizedString("autofill.removed.duck.address.content", value: "You can still manage this Duck Address from emails received from it in your personal inbox.", comment: "Content for the alert dialog telling the user an updated username is no longer a private email address")
+    static let autofillRemovedDuckAddressButton = NSLocalizedString("autofill.removed.duck.address.button", value: "Got it", comment: "Button text for the alert dialog telling the user an updated username is no longer a private email address")
+    static let autofillDeactivate = NSLocalizedString("pm.deactivate", value: "Deactivate", comment: "Deactivate button")
+    static let autofillActivate = NSLocalizedString("pm.activate", value: "Reactivate", comment: "Activate button")
+
+
+
+    
+    
+
+
+    // MARK: Omnibar
     
     public static let omnibarNotificationCookiesManaged = NSLocalizedString("omnibar.notification.cookies-managed", value:"Cookies Managed", comment: "Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it")
     public static let omnibarNotificationPopupHidden = NSLocalizedString("omnibar.notification.popup-hidden", value:"Pop-up Hidden", comment: "Text displayed on notification appearing in the address bar when the browser  hides a cookie popup")
+
+    // MARK: Dax Dialog
 
     public static let daxDialogCookieConsentFirst = NSLocalizedString("dax.cookie-consent.first", value:"Looks like this site has a cookie consent pop-up👇", comment: "First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature")
     public static let daxDialogCookieConsentSecond = NSLocalizedString("dax.cookie-consent.second", value:"Want me to handle these for you? I can try to minimize cookies, maximize privacy, and hide pop-ups like these.", comment: "Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature")
 
     public static let daxDialogCookieConsentAcceptButton = NSLocalizedString("dax.cookie-consent.button.accept", value:"Manage Cookie Pop-ups", comment: "Button title accepting to enable feature to automatically manage cookie popups")
     public static let daxDialogCookieConsentRejectButton = NSLocalizedString("dax.cookie-consent.button.reject", value:"No Thanks", comment: "Button title rejecting to enable feature to automatically manage cookie popups")
+
+    // MARK: Sync
 
     public static let syncTurnOffConfirmTitle = "Turn Off Sync?"
     public static let syncTurnOffConfirmMessage = "This Device will no longer be able to access your synced data."
@@ -735,9 +804,7 @@ In addition to the details entered into this form, your app issue report will co
     public static let syncCodeCopied = "Recovery Code copied"
     public static let syncTitle = "Sync"
 
-    // Autofill Password Generation Prompt
-    public static let autofillPasswordGenerationPromptTitle = NSLocalizedString("autofill.password-generation-prompt.title", value:"Use generated password from DuckDuckGo?", comment: "Title for prompt to use suggested strong password for creating a login")
-    public static let autofillPasswordGenerationPromptSubtitle = NSLocalizedString("autofill.password-generation-prompt.subtitle", value:"Password will be saved in Logins.", comment: "Subtitle for prompt to use suggested strong password for creating a login")
-    public static let autofillPasswordGenerationPromptUseGeneratedPasswordCTA = NSLocalizedString("autofill.password-generation-prompt.use-generated-password.cta", value:"Use Generated Password", comment: "Button title choosing to use the suggested generated password for creating a login")
-    public static let autofillPasswordGenerationPromptUseOwnPasswordCTA = NSLocalizedString("autofill.password-generation-prompt.use-own-password.cta", value:"Create My Own", comment: "Button title choosing to use own password for creating a login")
+    // MARK: Errors
+
+    static let unknownErrorTryAgainMessage = NSLocalizedString("error.unknown.try.again", value: "An unknown error has occurred", comment: "Generic error message on a dialog for when the cause is not known.")
 }

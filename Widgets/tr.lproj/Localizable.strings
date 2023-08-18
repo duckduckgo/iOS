@@ -1,6 +1,36 @@
 /* No comment provided by engineer. */
 "Label" = "Label";
 
+/* Description shown to the user when adding the Email Protection lock screen widget */
+"lock.screen.widget.email.description" = "Hemen yeni bir özel Duck Address oluşturun.";
+
+/* Title shown to the user when adding the Email Protection lock screen widget */
+"lock.screen.widget.email.title" = "E-posta Koruması";
+
+/* Description shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.favorites.description" = "Bir dokunuşla favori web sitelerinizi hızla açın.";
+
+/* Title shown to the user when adding the favorites lock screen widget */
+"lock.screen.widget.favorites.title" = "Favoriler";
+
+/* Description shown to the user when adding the Fire Button lock screen widget */
+"lock.screen.widget.fire.description" = "Tarama geçmişinizi hemen silin ve DuckDuckGo'da yeni bir özel arama yapın.";
+
+/* Title shown to the user when adding the Fire Button lock screen widget */
+"lock.screen.widget.fire.title" = "Fire Button";
+
+/* Description shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.search.description" = "DuckDuckGo'da hemen özel bir arama yapın.";
+
+/* Title shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.search.title" = "Gizli Arama";
+
+/* Description shown to the user when adding the Voice Search lock screen widget */
+"lock.screen.widget.voice.description" = "DuckDuckGo'da hemen yeni bir özel sesli arama yapın.";
+
+/* Title shown to the user when adding the Voice Search lock screen widget */
+"lock.screen.widget.voice.title" = "Sesli Arama";
+
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Tek bir dokunuşla favori sitelerinizi gizlice arayın veya ziyaret edin.";
 

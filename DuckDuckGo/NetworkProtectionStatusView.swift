@@ -24,20 +24,30 @@ import NetworkProtection
 
 struct NetworkProtectionStatusView: View {
     @ObservedObject public var statusModel: NetworkProtectionStatusViewModel
-    @ObservedObject public var inviteModel: NetworkProtectionInviteViewModel
 
     var body: some View {
         List {
             toggle()
-            inviteCodeEntry()
+            if statusModel.shouldShowConnectionDetails {
+                connectionDetails()
+            }
         }
+        .applyListStyle()
+        .navigationTitle(UserText.netPNavTitle)
     }
 
     @ViewBuilder
-    func toggle() -> some View {
+    private func toggle() -> some View {
         Section {
             HStack {
-                Text("Network Protection")
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(UserText.netPStatusViewTitle)
+                        .font(.system(size: 16))
+                        .foregroundColor(.primary)
+                    Text(statusModel.statusMessage)
+                        .font(.system(size: 13))
+                        .foregroundColor(.secondary)
+                }
 
                 Toggle("", isOn: Binding(
                     get: { statusModel.isNetPEnabled },
@@ -47,55 +57,145 @@ struct NetworkProtectionStatusView: View {
                         }
                     }
                 ))
-                .disabled(statusModel.shouldShowLoading)
-                .toggleStyle(SwitchToggleStyle(tint: Color(designSystemColor: .accent)))
+                .disabled(statusModel.shouldDisableToggle)
+                .toggleStyle(SwitchToggleStyle(tint: .toggleColor))
             }
-            HStack {
-                if let status = statusModel.statusMessage {
-                    Text(status)
-                        .foregroundColor(statusModel.isNetPEnabled ? .green : .red)
-                }
-            }
+            .listRowBackground(Color.cellBackground)
+        } header: {
+            header()
         } footer: {
-            Text("Hide your location and conceal your online activity")
+            if !statusModel.shouldShowConnectionDetails {
+                inviteOnlyFooter()
+            }
+        }.increaseHeaderProminence()
+    }
+
+    @ViewBuilder
+    private func header() -> some View {
+        HStack {
+            Spacer()
+            VStack(alignment: .center, spacing: 16) {
+                Image(statusModel.statusImageID)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 96)
+                    .padding(8)
+                Text(statusModel.headerTitle)
+                    .font(.system(size: 17, weight: .semibold))
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.primary)
+                Text(UserText.netPStatusHeaderMessage)
+                    .font(.system(size: 13))
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.secondary)
+            }
+            .padding(.bottom, 4)
+            .background(Color.viewBackground)
+            Spacer()
         }
     }
 
     @ViewBuilder
-    func inviteCodeEntry() -> some View {
+    private func connectionDetails() -> some View {
         Section {
-            VStack(alignment: .leading) {
-                HStack {
-                    TextField("Invite Code", text: $inviteModel.text)
-                }
-                if let status = inviteModel.redeemedText {
-                    Text(status)
-                        .font(.caption)
-                        .foregroundColor(.green)
-                }
+            if let location = statusModel.location {
+                NetworkProtectionServerItemView(
+                    imageID: "Server-Location-24",
+                    title: UserText.netPStatusViewLocation,
+                    value: location
+                )
             }
-            Button("Submit") {
-                Task {
-                    await inviteModel.submit()
-                }
+            if let ipAddress = statusModel.ipAddress {
+                NetworkProtectionServerItemView(
+                    imageID: "IP-24",
+                    title: UserText.netPStatusViewIPAddress,
+                    value: ipAddress
+                )
             }
-            Button("Clear") {
-                Task {
-                    await inviteModel.clear()
-                }
+        } header: {
+            Text(UserText.netPStatusViewConnectionDetails).foregroundColor(.primary)
+        } footer: {
+            inviteOnlyFooter()
+        }
+    }
+
+    @ViewBuilder
+    private func inviteOnlyFooter() -> some View {
+        // Needs to be inlined like this for the markdown parsing to work
+        Text("\(UserText.netPInviteOnlyMessage) [\(UserText.netPStatusViewShareFeedback)](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)")
+            .foregroundColor(.secondary)
+            .accentColor(.accentColor)
+            .font(.system(size: 13))
+            .padding(.top, 6)
+    }
+}
+
+private struct NetworkProtectionServerItemView: View {
+    let imageID: String
+    let title: String
+    let value: String
+
+    var body: some View {
+        HStack(spacing: 16) {
+            Image(imageID)
+            Text(title)
+                .font(.system(size: 16))
+                .foregroundColor(.primary)
+            Spacer()
+            Text(value)
+                .font(.system(size: 16))
+                .foregroundColor(.secondary)
+        }
+        .listRowBackground(Color.cellBackground)
+    }
+}
+
+private extension View {
+    @ViewBuilder
+    func hideScrollContentBackground() -> some View {
+        if #available(iOS 16, *) {
+            self.scrollContentBackground(.hidden)
+        } else {
+            let originalBackgroundColor = UITableView.appearance().backgroundColor
+            self.onAppear {
+                UITableView.appearance().backgroundColor = .clear
+            }.onDisappear {
+                UITableView.appearance().backgroundColor = originalBackgroundColor
             }
-            .foregroundColor(.red)
-            if let errorText = inviteModel.errorText {
-                Text(errorText)
-                    .foregroundColor(.red)
-            }
+        }
+    }
+
+    @ViewBuilder
+    func applyListStyle() -> some View {
+        self
+            .listStyle(.insetGrouped)
+            .hideScrollContentBackground()
+            .background(
+                Rectangle().ignoresSafeArea().foregroundColor(Color.viewBackground)
+            )
+    }
+
+    @ViewBuilder
+    func increaseHeaderProminence() -> some View {
+        if #available(iOS 15, *) {
+            self.headerProminence(.increased)
+        } else {
+            self
         }
     }
 }
 
+private extension Color {
+    static let titleText = Color(designSystemColor: .textPrimary)
+    static let messageText = Color(designSystemColor: .textSecondary)
+    static let cellBackground = Color(designSystemColor: .surface)
+    static let viewBackground = Color(designSystemColor: .background)
+    static let toggleColor = Color(designSystemColor: .accent)
+}
+
 struct NetworkProtectionStatusView_Previews: PreviewProvider {
     static var previews: some View {
-        NetworkProtectionStatusView(statusModel: NetworkProtectionStatusViewModel(), inviteModel: NetworkProtectionInviteViewModel())
+        NetworkProtectionStatusView(statusModel: NetworkProtectionStatusViewModel())
     }
 }
 

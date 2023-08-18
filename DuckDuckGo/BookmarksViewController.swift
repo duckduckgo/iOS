@@ -55,6 +55,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     private let bookmarksDatabase: CoreDataDatabase
     private let favicons: Favicons
     private let syncService: DDGSyncing
+    private let syncDataProviders: SyncDataProviders
     private var localUpdatesCancellable: AnyCancellable?
     private var syncUpdatesCancellable: AnyCancellable?
 
@@ -111,12 +112,15 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
           bookmarksSearch: BookmarksStringSearch,
           parentID: NSManagedObjectID? = nil,
           favicons: Favicons = Favicons.shared,
-          syncService: DDGSyncing) {
+          syncService: DDGSyncing,
+          syncDataProviders: SyncDataProviders
+    ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.searchDataSource = SearchBookmarksDataSource(searchEngine: bookmarksSearch)
         self.viewModel = BookmarkListViewModel(bookmarksDatabase: bookmarksDatabase, parentID: parentID, syncService: syncService)
         self.favicons = favicons
         self.syncService = syncService
+        self.syncDataProviders = syncDataProviders
         super.init(coder: coder)
 
         bindSyncService()
@@ -132,7 +136,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                 self?.syncService.scheduler.notifyDataChanged()
             }
 
-        syncUpdatesCancellable = (UIApplication.shared.delegate as? AppDelegate)?.syncDataProviders.bookmarksAdapter.syncDidCompletePublisher
+        syncUpdatesCancellable = syncDataProviders.bookmarksAdapter.syncDidCompletePublisher
             .sink { [weak self] _ in
                 self?.viewModel.reloadData()
                 DispatchQueue.main.async {
@@ -264,7 +268,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                                                      bookmarksDatabase: self.bookmarksDatabase,
                                                      bookmarksSearch: self.searchDataSource.searchEngine,
                                                      parentID: parent.objectID,
-                                                     syncService: self.syncService)
+                                                     syncService: self.syncService,
+                                                     syncDataProviders: self.syncDataProviders)
             controller?.delegate = self.delegate
             return controller
         })
@@ -560,7 +565,12 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
     
     @IBSegueAction func onCreateFavoritesView(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> FavoritesViewController {
-        guard let controller = FavoritesViewController(coder: coder, bookmarksDatabase: bookmarksDatabase, syncService: syncService) else {
+        guard let controller = FavoritesViewController(
+            coder: coder,
+            bookmarksDatabase: bookmarksDatabase,
+            syncService: syncService,
+            syncDataProviders: syncDataProviders
+        ) else {
             fatalError("Failed to create controller")
         }
 

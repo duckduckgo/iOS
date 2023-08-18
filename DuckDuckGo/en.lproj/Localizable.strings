@@ -391,6 +391,9 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "When DuckDuckGo detects cookie consent pop-ups on sites you visit, we can try to automatically set your cookie preferences to minimize cookies and maximize privacy, then close the pop-ups. Some sites don't provide an option to manage cookie preferences, so we can only hide pop-ups like these.";
 
+/* Text link to email protection website */
+"autofill.enable.email.protection" = "Enable Email Protection";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Hide Password";
 
@@ -568,6 +571,36 @@
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Create My Own";
 
+/* Text for the confirmation message displayed when a user tries activate a Private Email Address */
+"autofill.private.email.mesage.activate.confirm.content" = "Emails sent to %@ will again be forwarded to your inbox.";
+
+/* Title for the confirmation message  displayed when a user tries activate a Private Email Address */
+"autofill.private.email.mesage.activate.confirm.title" = "Reactivate Private Duck Address?";
+
+/* Mesasage displayed when a private email address is active */
+"autofill.private.email.mesage.active" = "Active";
+
+/* Text for the confirmation message displayed when a user tries deactivate a Private Email Address */
+"autofill.private.email.mesage.deactivate.confirm.content" = "Emails sent to %@ will no longer be forwarded to your inbox.";
+
+/* Title for the confirmation message displayed when a user tries deactivate a Private Email Address */
+"autofill.private.email.mesage.deactivate.confirm.title" = "Deactivate Private Duck Address?";
+
+/* Mesasage displayed when a user tries to manage a private email address but the service is not available, returns an error or network is down */
+"autofill.private.email.mesage.error" = "Management of this address is temporarily unavailable";
+
+/* Mesasage displayed when a private email address is inactive */
+"autofill.private.email.mesage.inactive" = "Deactivated";
+
+/* Button text for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.button" = "Got it";
+
+/* Content for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.content" = "You can still manage this Duck Address from emails received from it in your personal inbox.";
+
+/* Title for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.title" = "Private Duck Address username was removed";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.message" = "Logins are stored securely on your device, and can be managed from the Logins menu in Settings.";
 
@@ -591,6 +624,9 @@
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Show Password";
+
+/* Message displayed to the user when they are logged out of Email protection. */
+"autofill.signin.to.manage" = "%@ to manage your Duck Addresses on this device.";
 
 /* Message displayed on modal asking for the user to update the password */
 "autofill.update-password.message" = "DuckDuckGo will update this stored Login on your device.";
@@ -922,6 +958,9 @@
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "No matches found";
 
+/* Generic error message on a dialog for when the cause is not known. */
+"error.unknown.try.again" = "An unknown error has occurred";
+
 /* No comment provided by engineer. */
 "favorite" = "Favorite";
 
@@ -1141,6 +1180,18 @@
 /* Home tab title */
 "homeTab.title" = "Home";
 
+/* OK title for invite screen alert dismissal button */
+"invite.alert.ok.button" = "OK";
+
+/* Get Started button on an invite dialog */
+"invite.dialog.get.started.button" = "Get Started";
+
+/* Submit button on an invite dialog */
+"invite.dialog.submit.button" = "Submit";
+
+/* Message to show after user enters an unrecognized invite code */
+"invite.dialog.unrecognized.code.message" = "We didn’t recognize this Invite Code.";
+
 /* No comment provided by engineer. */
 "keyCommandAddBookmark" = "Add Bookmark";
 
@@ -1255,8 +1306,68 @@ https://duckduckgo.com/mac";
 /* Edit button */
 "navigation.title.edit" = "Edit";
 
+/* String indicating NetP is connected when viewed from the settings screen */
+"netP.cell.connected" = "Connected";
+
+/* String indicating NetP is disconnected when viewed from the settings screen */
+"netP.cell.disconnected" = "Not connected";
+
 /* Title for the Network Protection feature */
 "netP.title" = "Network Protection";
+
+/* Message for the network protection invite dialog */
+"network.protection.invite.dialog.message" = "Enter your invite code to get started.";
+
+/* Title for the network protection invite screen */
+"network.protection.invite.dialog.title" = "You're invited to try Network Protection";
+
+/* Prompt for the network protection invite code text field */
+"network.protection.invite.field.prompt" = "Invite Code";
+
+/* Message explaining that netP is invite only */
+"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
+
+/* Message for the network protection invite success view */
+"network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
+
+/* Title for the network protection invite success view */
+"network.protection.invite.success.title" = "Success! You’re in.";
+
+/* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
+"network.protection.status.connected.format" = "Connected - %@";
+
+/* The label for the NetP VPN when connecting */
+"network.protection.status.connecting" = "Connecting...";
+
+/* The label for the NetP VPN when disconnected */
+"network.protection.status.disconnected" = "Not connected";
+
+/* The label for the NetP VPN when disconnecting */
+"network.protection.status.disconnecting" = "Disconnecting...";
+
+/* Message label text for the netP status view */
+"network.protection.status.header.message" = "DuckDuckGo's VPN secures all of your device's Internet traffic anytime, anywhere.";
+
+/* Header title label text for the status view when netP is disconnected */
+"network.protection.status.header.title.off" = "Network Protection is Off";
+
+/* Header title label text for the status view when netP is connected */
+"network.protection.status.header.title.on" = "Network Protection is On";
+
+/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+"network.protection.status.menu.share.feedback" = "Share Feedback";
+
+/* Connection details label shown in NetworkProtection's status view. */
+"network.protection.status.view.connection.details" = "Connection Details";
+
+/* IP Address label shown in NetworkProtection's status view. */
+"network.protection.status.view.ip.address" = "IP Address";
+
+/* Location label shown in NetworkProtection's status view. */
+"network.protection.status.view.location" = "Location";
+
+/* Title label text for the status view when netP is disconnected */
+"network.protection.status.view.title" = "Network Protection";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
@@ -1299,6 +1410,15 @@ https://duckduckgo.com/mac";
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "The app required to open that link can’t be found";
+
+/* Activate button */
+"pm.activate" = "Reactivate";
+
+/* Cancel button */
+"pm.cancel" = "Cancel";
+
+/* Deactivate button */
+"pm.deactivate" = "Deactivate";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Websites rely on cookies to keep you signed in. When you Fireproof a site, cookies won’t be erased and you’ll stay signed in, even after using the Fire Button. We still block third-party trackers found on Fireproof websites.";

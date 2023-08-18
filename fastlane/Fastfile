@@ -18,6 +18,10 @@ lane :sync_signing_adhoc do |options|
   do_sync_signing(options)
 end
 
+lane :sync_signing_alpha do |options|
+  do_sync_signing(options)
+end
+
 desc 'Makes Ad-Hoc build with a specified name in a given directory'
 lane :adhoc do |options|
 
@@ -80,6 +84,11 @@ lane :adhoc do |options|
   Dir.chdir("..") do
     sh("open", "#{options[:output]}") unless is_ci
   end
+end
+
+desc 'Makes Alpha release build and uploads it to App Store Connect (TestFlight)'
+lane :alpha do |options|
+# TODO
 end
 
 desc 'Makes App Store release build and uploads it to App Store Connect'

@@ -18,7 +18,12 @@
 //
 
 import UIKit
+
+#if NETWORK_PROTECTION
+
 import NetworkProtection
+
+#endif
 
 final class NetworkProtectionDebugViewController: UITableViewController {
     private let titles = [
@@ -37,6 +42,15 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
     }
 
+    enum SimulateFailureRows: Int, CaseIterable {
+
+        case tunnelFailure
+        case controllerFailure
+
+    }
+
+#if NETWORK_PROTECTION
+
     private let tokenStore: NetworkProtectionTokenStore
 
     init?(coder: NSCoder,
@@ -50,6 +64,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     required convenience init?(coder: NSCoder) {
         self.init(coder: coder, tokenStore: NetworkProtectionKeychainTokenStore())
     }
+
+#endif
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return Sections.allCases.count
@@ -88,12 +104,13 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         }
     }
 
+    #if NETWORK_PROTECTION
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch Sections(rawValue: indexPath.section) {
         case .keychain:
             switch KeychainRows(rawValue: indexPath.row) {
-            case .clearAuthToken:
-                try? tokenStore.deleteToken()
+            case .clearAuthToken: clearAuthToken()
             default: break
             }
         default: break
@@ -102,4 +119,11 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
+    // MARK: Selection Actions
+
+    private func clearAuthToken() {
+        try? tokenStore.deleteToken()
+    }
+
+    #endif
 }

@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "daniel/autofill-icons-updates",
-          "revision": "0f1ff31fb599afc9e88a4da8d9f571b8b6905ff1",
-          "version": null
+          "branch": null,
+          "revision": "8d4c3d884762d954183a9496961b87d254b43539",
+          "version": "75.0.2"
         }
       },
       {

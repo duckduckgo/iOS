@@ -1208,6 +1208,7 @@
 		317045BF2858C6B90016ED1F /* AutofillInterfaceEmailTruncatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillInterfaceEmailTruncatorTests.swift; sourceTree = "<group>"; };
 		31794BFF2821DFB600F18633 /* DuckUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DuckUI; sourceTree = "<group>"; };
 		31951E8D2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginDetailsHeaderView.swift; sourceTree = "<group>"; };
+		31951E94282310FF00CAF535 /* WebsiteAccountExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteAccountExtension.swift; sourceTree = "<group>"; };
 		319A370F28299A850079FBCE /* PasswordHider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordHider.swift; sourceTree = "<group>"; };
 		319A37142829A55F0079FBCE /* AutofillListItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillListItemTableViewCell.swift; sourceTree = "<group>"; };
 		319A37162829C8AD0079FBCE /* UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
@@ -5025,6 +5026,7 @@
 				C13B32D12A0E750700A59236 /* AutofillSettingStatus.swift */,
 				319A370F28299A850079FBCE /* PasswordHider.swift */,
 				31C70B5428045E3500FB6AD1 /* SecureVaultErrorReporter.swift */,
+				31951E94282310FF00CAF535 /* WebsiteAccountExtension.swift */,
 				F407605328131910006B1E0B /* AutofillLoginUI */,
 				310C4B4A281B69BC00BA79A9 /* Management */,
 				C17B59552A03AAC40055F2D1 /* PasswordGeneration */,
@@ -5836,7 +5838,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Conditionally embeds the PacketTunnelProvider extension for debug builds.\n# To be moved to the Embed App Extensions phase on release.\nif [ \"${CONFIGURATION}\" = \"Debug\" ]; then\n# Copy the extension\n    cp -R \"${BUILT_PRODUCTS_DIR}/PacketTunnelProvider.appex\" \"${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}\"\nfi\n";
+			shellScript = "# Conditionally embeds the PacketTunnelProvider extension for debug builds.\n# To be moved to the Embed App Extensions phase on release.\nif [ \"${CONFIGURATION}\" = \"Debug\" ] || [ \"${CONFIGURATION}\" = \"Alpha\" ]; then\n# Copy the extension\n    cp -R \"${BUILT_PRODUCTS_DIR}/PacketTunnelProvider.appex\" \"${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -8227,7 +8229,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG APP_TRACKING_PROTECTION NETWORK_PROTECTION";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG NETWORK_PROTECTION";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "$(ARCHS_STANDARD_64_BIT)";
@@ -8808,7 +8810,7 @@
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = exactVersion;
-				version = 75.0.2;
+				version = 75.0.1;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

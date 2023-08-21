@@ -27,12 +27,16 @@ struct NetworkProtectionInviteView: View {
     @ObservedObject var model: NetworkProtectionInviteViewModel
 
     var body: some View {
-        switch model.currentStep {
-        case .codeEntry:
-            codeEntryView
-        case .success:
-            successView
+        Group {
+            switch model.currentStep {
+            case .codeEntry:
+                codeEntryView
+            case .success:
+                successView
+            }
         }
+        .transition(.slideFromRight)
+        .animation(.default, value: model.currentStep.isSuccess)
     }
 
     @ViewBuilder
@@ -54,12 +58,13 @@ struct NetworkProtectionInviteView: View {
             .background(Color.textFieldBackground)
             .cornerRadius(10)
             .disabled(model.shouldDisableTextField)
-            Button(UserText.inviteDialogSubmitButton) {
+            Button(UserText.inviteDialogContinueButton) {
                 Task {
                     await model.submit()
                 }
             }
             .buttonStyle(PrimaryButtonStyle(disabled: model.shouldDisableSubmit))
+            .disabled(model.shouldDisableSubmit)
         }
         .alert(isPresented: $model.shouldShowAlert) {
             Alert(
@@ -99,16 +104,16 @@ private struct NetworkProtectionInviteMessageView<Content>: View where Content: 
                     Text(messageData.title)
                         .font(.system(size: 22, weight: .semibold))
                         .multilineTextAlignment(.center)
-                        .foregroundColor(.primary)
+                        .foregroundColor(.textPrimary)
                     Text(messageData.message)
                         .font(.system(size: 16))
                         .multilineTextAlignment(.center)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(.textSecondary)
                         .padding(.bottom, 16)
                     interactiveContent()
                     Spacer()
                     Text(UserText.netPInviteOnlyMessage)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(.textSecondary)
                         .font(.system(size: 13))
                         .multilineTextAlignment(.center)
                 }
@@ -128,7 +133,16 @@ private struct NetworkProtectionInviteMessageData {
     let footer = UserText.netPInviteOnlyMessage
 }
 
+extension AnyTransition {
+    static var slideFromRight: AnyTransition {
+        AnyTransition.asymmetric(
+            insertion: .move(edge: .trailing),
+            removal: .move(edge: .leading))}
+}
+
 private extension Color {
+    static let textPrimary = Color(designSystemColor: .textPrimary)
+    static let textSecondary = Color(designSystemColor: .textSecondary)
     static let textFieldBackground = Color(designSystemColor: .surface)
     static let viewBackground = Color(designSystemColor: .background)
 }

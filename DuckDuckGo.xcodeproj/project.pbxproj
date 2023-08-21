@@ -8811,8 +8811,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "sabrina/extend-isValidURL-to-include-IPv6";
-				kind = branch;
+				kind = exactVersion;
+				version = 75.0.2;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

@@ -20,6 +20,7 @@
 import SwiftUI
 
 public struct PrimaryButtonStyle: ButtonStyle {
+    @Environment(\.colorScheme) private var colorScheme
 
     let disabled: Bool
     let compact: Bool
@@ -30,16 +31,20 @@ public struct PrimaryButtonStyle: ButtonStyle {
     }
     
     public func makeBody(configuration: Configuration) -> some View {
-        let standardBackgroundColor = Color.blueBase.opacity(configuration.isPressed ? Consts.pressedOpacity : 1)
-        let disabledBackgroundColor = Color.gray50
+        let isLight = colorScheme == .light
+        let standardBackgroundColor = isLight ? Color.blueBase : Color.blue30
+        let disabledBackgroundColor = isLight ? Color.black.opacity(0.06) : Color.white.opacity(0.18)
+        let standardForegroundColor = isLight ? Color.white : Color.black.opacity(0.84)
+        let disabledForegroundColor = isLight ? Color.black.opacity(0.36) : Color.white.opacity(0.36)
         let backgroundColor = disabled ? disabledBackgroundColor : standardBackgroundColor
+        let foregroundColor = disabled ? disabledForegroundColor : standardForegroundColor
 
         configuration.label
             .font(Font(UIFont.boldAppFont(ofSize: compact ? Consts.fontSize - 1 : Consts.fontSize)))
-            .foregroundColor(configuration.isPressed ? .white.opacity(Consts.pressedOpacity) : .white.opacity(1))
+            .foregroundColor(configuration.isPressed ? standardForegroundColor.opacity(Consts.pressedOpacity) : foregroundColor)
             .padding()
             .frame(minWidth: 0, maxWidth: .infinity, maxHeight: compact ? Consts.height - 10 : Consts.height)
-            .background(backgroundColor)
+            .background(configuration.isPressed ? standardBackgroundColor.opacity(Consts.pressedOpacity) : backgroundColor)
             .cornerRadius(Consts.cornerRadius)
     }
 }

@@ -30,6 +30,13 @@ extension ConnectionStatusObserverThroughSession {
     }
 }
 
+extension ConnectionErrorObserverThroughSession {
+    convenience init() {
+        self.init(platformNotificationCenter: .default,
+                  platformDidWakeNotification: UIApplication.didBecomeActiveNotification)
+    }
+}
+
 extension ConnectionServerInfoObserverThroughSession {
     convenience init() {
         self.init(platformNotificationCenter: .default,

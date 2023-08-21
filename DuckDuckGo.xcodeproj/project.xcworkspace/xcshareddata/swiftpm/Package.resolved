@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "dc8eba4271fbdb6fa9cf77798ee7cd1992ae8ec9",
-          "version": "74.2.0"
+          "branch": "daniel/autofill-icons-updates",
+          "revision": "0f1ff31fb599afc9e88a4da8d9f571b8b6905ff1",
+          "version": null
         }
       },
       {
@@ -35,15 +35,6 @@
           "branch": null,
           "revision": "8def15fe8a4c2fb76730f640507e9fd1d6c1f8a7",
           "version": "4.32.0"
-        }
-      },
-      {
-        "package": "DesignResourcesKit",
-        "repositoryURL": "https://github.com/duckduckgo/DesignResourcesKit",
-        "state": {
-          "branch": null,
-          "revision": "5de78d59358ff60651b2cf9322c74a2297927b4e",
-          "version": "1.1.1"
         }
       },
       {
@@ -156,7 +147,7 @@
       },
       {
         "package": "TrackerRadarKit",
-        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
+        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit",
         "state": {
           "branch": null,
           "revision": "4684440d03304e7638a2c8086895367e90987463",
@@ -168,8 +159,8 @@
         "repositoryURL": "https://github.com/duckduckgo/wireguard-apple",
         "state": {
           "branch": null,
-          "revision": "cf3c0f5132dbb8de08c46155a1bbd5e5bb6a47c1",
-          "version": "1.1.0"
+          "revision": "2d8172c11478ab11b0f5ad49bdb4f93f4b3d5e0d",
+          "version": "1.1.1"
         }
       }
     ]

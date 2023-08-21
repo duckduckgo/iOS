@@ -28,7 +28,7 @@ final class AutofillLoginListItemViewModel: Identifiable, Hashable {
     let account: SecureVaultModels.WebsiteAccount
     let title: String
     let subtitle: String
-    let preferredFaviconLetter: String?
+    let preferredFaviconLetters: String?
     let id = UUID()
     let tld: TLD
 
@@ -40,7 +40,7 @@ final class AutofillLoginListItemViewModel: Identifiable, Hashable {
         self.tld = tld
         self.title = account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
         self.subtitle = account.username ?? ""
-        self.preferredFaviconLetter = account.firstTLDLetter(tld: tld, autofillDomainNameUrlSort: autofillDomainNameUrlSort)
+        self.preferredFaviconLetters = account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
 
         fetchImage()
     }
@@ -49,7 +49,7 @@ final class AutofillLoginListItemViewModel: Identifiable, Hashable {
         FaviconsHelper.loadFaviconSync(forDomain: account.domain,
                                        usingCache: .fireproof,
                                        useFakeFavicon: true,
-                                       preferredFakeFaviconLetter: preferredFaviconLetter) { image, _ in
+                                       preferredFakeFaviconLetters: preferredFaviconLetters) { image, _ in
             if let image = image {
                 self.image = image
             } else {

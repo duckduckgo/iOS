@@ -26,7 +26,7 @@ struct FaviconsHelper {
     static func loadFaviconSync(forDomain domain: String?,
                                 usingCache cacheType: Favicons.CacheType,
                                 useFakeFavicon: Bool,
-                                preferredFakeFaviconLetter: String? = nil,
+                                preferredFakeFaviconLetters: String? = nil,
                                 completion: ((UIImage?, Bool) -> Void)? = nil) {
    
         func complete(_ image: UIImage?) {
@@ -38,7 +38,8 @@ struct FaviconsHelper {
             } else if useFakeFavicon, let domain = domain {
                 fake = true
                 resultImage = Self.createFakeFavicon(forDomain: domain,
-                                                     preferredFakeFaviconLetter: preferredFakeFaviconLetter)
+                                                     backgroundColor: UIColor.forDomain(domain),
+                                                     preferredFakeFaviconLetters: preferredFakeFaviconLetters)
             }
             completion?(resultImage, fake)
         }
@@ -92,12 +93,13 @@ struct FaviconsHelper {
                                   size: CGFloat = 192,
                                   backgroundColor: UIColor = UIColor.greyishBrown2,
                                   bold: Bool = true,
-                                  preferredFakeFaviconLetter: String? = nil) -> UIImage? {
+                                  preferredFakeFaviconLetters: String? = nil,
+                                  letterCount: Int = 2) -> UIImage? {
 
         let cornerRadius = size * 0.125
-        let fontSize = size * 0.76
-        
         let imageRect = CGRect(x: 0, y: 0, width: size, height: size)
+        let padding = size * 0.080
+        let labelFrame = CGRect(x: padding, y: padding, width: imageRect.width - (2 * padding), height: imageRect.height - (2 * padding))
 
         let renderer = UIGraphicsImageRenderer(size: imageRect.size)
         let icon = renderer.image { imageContext in
@@ -107,20 +109,24 @@ struct FaviconsHelper {
             context.addPath(CGPath(roundedRect: imageRect, cornerWidth: cornerRadius, cornerHeight: cornerRadius, transform: nil))
             context.fillPath()
              
-            let label = UILabel(frame: imageRect)
-            label.font = bold ? UIFont.boldAppFont(ofSize: fontSize) : UIFont.appFont(ofSize: fontSize)
+            let label = UILabel(frame: labelFrame)
+            label.numberOfLines = 1
+            label.adjustsFontSizeToFitWidth = true
+            label.minimumScaleFactor = 0.1
+            label.baselineAdjustment = .alignCenters
+            label.font = bold ? UIFont.boldAppFont(ofSize: size) : UIFont.appFont(ofSize: size)
             label.textColor = UIColor.white
             label.textAlignment = .center
-            label.text = preferredFakeFaviconLetter ?? String(domain.droppingWwwPrefix().prefix(1).uppercased())
-            label.sizeToFit()
-             
-            context.translateBy(x: (imageRect.width - label.bounds.width) / 2.0,
-                                y: (imageRect.height - label.font.ascender) / 2.0 - (label.font.ascender - label.font.capHeight) / 2.0)
-             
+            label.text = String(preferredFakeFaviconLetters?.prefix(letterCount).capitalized ??
+                                String(domain.droppingWwwPrefix().prefix(letterCount)).capitalized)
+           
+            context.translateBy(x: padding, y: padding)
+
             label.layer.draw(in: context)
         }
          
         return icon.withRenderingMode(.alwaysOriginal)
     }
+
     
 }

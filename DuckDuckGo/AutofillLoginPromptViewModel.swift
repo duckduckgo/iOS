@@ -46,10 +46,10 @@ struct AccountViewModel: Hashable {
     
     let account: SecureVaultModels.WebsiteAccount
     var displayString: String {
-        if account.username.count > 0 {
-            return AutofillInterfaceEmailTruncator.truncateEmail(account.username, maxLength: 36)
+        if let username = account.username, username.count > 0 {
+            return AutofillInterfaceEmailTruncator.truncateEmail(username, maxLength: 36)
         } else {
-            return UserText.autofillLoginPromptPasswordButtonTitle(for: account.domain)
+            return UserText.autofillLoginPromptPasswordButtonTitle(for: account.domain ?? "")
         }
     }
     

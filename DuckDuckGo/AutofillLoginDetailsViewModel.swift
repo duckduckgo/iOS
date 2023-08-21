@@ -163,11 +163,11 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     var shouldShowSaveButton: Bool {
         guard viewMode == .new else { return false }
         
-        return !username.isEmpty || !password.isEmpty || !address.isEmpty || !title.isEmpty
+        return !username.isEmpty || !password.isEmpty || !address.isEmpty || !title.isEmpty || !notes.isEmpty
     }
 
     var websiteIsValidUrl: Bool {
-        account?.domain.toTrimmedURL != nil
+        account?.domain?.toTrimmedURL != nil
     }
     
     var userVisiblePassword: String {
@@ -195,10 +195,10 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         }
     }
     
-    private func updateData(with account: SecureVaultModels.WebsiteAccount) {
+    func updateData(with account: SecureVaultModels.WebsiteAccount) {
         self.account = account
-        username = account.username
-        address = account.domain
+        username = account.username ?? ""
+        address = account.domain ?? ""
         title = account.title ?? ""
         notes = account.notes ?? ""
         headerViewModel.updateData(with: account,
@@ -266,14 +266,15 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                 
                 if let credential = try
                     vault.websiteCredentialsFor(accountId: accountIdInt) {
-                    self.password = String(data: credential.password, encoding: .utf8) ?? ""
+                    self.password = credential.password.flatMap { String(data: $0, encoding: .utf8) } ?? ""
                 }
             }
         } catch {
-            Pixel.fire(pixel: .secureVaultError)
+            Pixel.fire(pixel: .secureVaultError, error: error)
         }
     }
 
+    // swiftlint:disable:next cyclomatic_complexity
     func save() {
         guard let vault = try? AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared) else {
             return
@@ -294,7 +295,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     credential.account.domain = autofillDomainNameUrlMatcher.normalizeUrlForWeb(address)
                     credential.account.notes = notes
                     credential.password = passwordData
-                    
+
                     _ = try vault.storeWebsiteCredentials(credential)
                     delegate?.autofillLoginDetailsViewModelDidSave()
                     
@@ -317,6 +318,10 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
             let credentials = SecureVaultModels.WebsiteCredentials(account: account, password: passwordData)
 
             do {
+                guard try !vault.hasAccountFor(username: account.username, domain: account.domain) else {
+                    delegate?.autofillLoginDetailsViewModelDidAttemptToSaveDuplicateLogin()
+                    return
+                }
                 let id = try vault.storeWebsiteCredentials(credentials)
                 
                 delegate?.autofillLoginDetailsViewModelDidSave()
@@ -349,7 +354,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
 
     func openUrl() {
-        guard let url = account?.domain.toTrimmedURL else { return }
+        guard let url = account?.domain?.toTrimmedURL else { return }
 
         LaunchTabNotification.postLaunchTabNotification(urlString: url.absoluteString)
         delegate?.autofillLoginDetailsViewModelDismiss()
@@ -455,8 +460,8 @@ final class AutofillLoginDetailsHeaderViewModel: ObservableObject {
     func updateData(with account: SecureVaultModels.WebsiteAccount, tld: TLD, autofillDomainNameUrlMatcher: AutofillDomainNameUrlMatcher, autofillDomainNameUrlSort: AutofillDomainNameUrlSort) {
         self.title = account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
         self.subtitle = UserText.autofillLoginDetailsLastUpdated(for: (dateFormatter.string(from: account.lastUpdated)))
-        self.domain = account.domain
-        self.preferredFakeFaviconLetter = account.faviconLetter(tld: tld, autofillDomainNameUrlSort: autofillDomainNameUrlSort)
+        self.domain = account.domain ?? ""
+        self.preferredFakeFaviconLetter = account.firstTLDLetter(tld: tld, autofillDomainNameUrlSort: autofillDomainNameUrlSort)
     }
 
 }

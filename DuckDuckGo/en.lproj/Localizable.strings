@@ -1183,11 +1183,11 @@
 /* OK title for invite screen alert dismissal button */
 "invite.alert.ok.button" = "OK";
 
+/* Continue button on an invite dialog */
+"invite.dialog.continue.button" = "Continue";
+
 /* Get Started button on an invite dialog */
 "invite.dialog.get.started.button" = "Get Started";
-
-/* Submit button on an invite dialog */
-"invite.dialog.submit.button" = "Submit";
 
 /* Message to show after user enters an unrecognized invite code */
 "invite.dialog.unrecognized.code.message" = "We didn’t recognize this Invite Code.";
@@ -1353,6 +1353,18 @@ https://duckduckgo.com/mac";
 
 /* Header title label text for the status view when netP is connected */
 "network.protection.status.header.title.on" = "Network Protection is On";
+
+/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+"network.protection.status.menu.share.feedback" = "Share Feedback";
+
+/* Connection details label shown in NetworkProtection's status view. */
+"network.protection.status.view.connection.details" = "Connection Details";
+
+/* IP Address label shown in NetworkProtection's status view. */
+"network.protection.status.view.ip.address" = "IP Address";
+
+/* Location label shown in NetworkProtection's status view. */
+"network.protection.status.view.location" = "Location";
 
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "Network Protection";

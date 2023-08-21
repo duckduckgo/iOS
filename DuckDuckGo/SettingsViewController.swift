@@ -60,6 +60,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var macBrowserWaitlistAccessoryText: UILabel!
     @IBOutlet weak var windowsBrowserWaitlistCell: UITableViewCell!
     @IBOutlet weak var windowsBrowserWaitlistAccessoryText: UILabel!
+    // Removed from storyboard until AppTP comes back
     @IBOutlet weak var appTPCell: UITableViewCell!
     @IBOutlet weak var netPCell: UITableViewCell!
     @IBOutlet weak var longPressCell: UITableViewCell!
@@ -95,6 +96,7 @@ class SettingsViewController: UITableViewController {
     fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager
     fileprivate lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     fileprivate let syncService: DDGSyncing
+    fileprivate let syncDataProviders: SyncDataProviders
     fileprivate let internalUserDecider: InternalUserDecider
 #if NETWORK_PROTECTION
     private let connectionObserver = ConnectionStatusObserverThroughSession()
@@ -127,7 +129,11 @@ class SettingsViewController: UITableViewController {
 
     private lazy var shouldShowNetPCell: Bool = {
 #if NETWORK_PROTECTION
-        return featureFlagger.isFeatureOn(.networkProtection)
+        if #available(iOS 15, *) {
+            return featureFlagger.isFeatureOn(.networkProtection)
+        } else {
+            return false
+        }
 #else
         return false
 #endif
@@ -195,11 +201,13 @@ class SettingsViewController: UITableViewController {
           appTPDatabase: CoreDataDatabase,
           bookmarksDatabase: CoreDataDatabase,
           syncService: DDGSyncing,
+          syncDataProviders: SyncDataProviders,
           internalUserDecider: InternalUserDecider) {
 
         self.appTPDatabase = appTPDatabase
         self.bookmarksDatabase = bookmarksDatabase
         self.syncService = syncService
+        self.syncDataProviders = syncDataProviders
         self.internalUserDecider = internalUserDecider
         super.init(coder: coder)
     }
@@ -400,14 +408,22 @@ class SettingsViewController: UITableViewController {
     }
 
     private func showAutofill(animated: Bool = true) {
-        let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+        let autofillController = AutofillLoginSettingsListViewController(
+            appSettings: appSettings,
+            syncService: syncService,
+            syncDataProviders: syncDataProviders
+        )
         autofillController.delegate = self
         Pixel.fire(pixel: .autofillSettingsOpened)
         navigationController?.pushViewController(autofillController, animated: animated)
     }
     
     func showAutofillAccountDetails(_ account: SecureVaultModels.WebsiteAccount) {
-        let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+        let autofillController = AutofillLoginSettingsListViewController(
+            appSettings: appSettings,
+            syncService: syncService,
+            syncDataProviders: syncDataProviders
+        )
         autofillController.delegate = self
         let detailsController = autofillController.makeAccountDetailsScreen(account)
 
@@ -581,7 +597,7 @@ class SettingsViewController: UITableViewController {
             return CGFloat.leastNonzeroMagnitude
         } else if debugSectionIndex == section && !shouldShowDebugCell {
             return CGFloat.leastNonzeroMagnitude
-        } else if moreFromDDGSectionIndex == section && !(shouldShowAppTPCell || shouldShowNetPCell) {
+        } else if moreFromDDGSectionIndex == section && !shouldShowNetPCell {
             return CGFloat.leastNonzeroMagnitude
         } else {
             return super.tableView(tableView, heightForFooterInSection: section)
@@ -596,22 +612,11 @@ class SettingsViewController: UITableViewController {
         let rows = super.tableView(tableView, numberOfRowsInSection: section)
         if section == appearanceSectionIndex && textSizeCell.isHidden {
             return rows - 1
-        } else if section == moreFromDDGSectionIndex {
-           return adaptNumberOfRowsForMoreFromDDGSection(rows)
+        } else if section == moreFromDDGSectionIndex && !shouldShowNetPCell {
+            return rows - 1
         } else {
             return rows
         }
-    }
-
-    private func adaptNumberOfRowsForMoreFromDDGSection(_ rows: Int) -> Int {
-        var adaptedRows = rows
-        if !shouldShowNetPCell {
-            adaptedRows -= 1
-        }
-        if !shouldShowAppTPCell {
-            adaptedRows -= 1
-        }
-        return adaptedRows
     }
 
     @IBAction func onVoiceSearchToggled(_ sender: UISwitch) {

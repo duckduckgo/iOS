@@ -53,7 +53,7 @@ final class SecureVaultErrorReporter: SecureVaultErrorReporting {
         case .failedToOpenDatabase(let error):
             Pixel.fire(pixel: .secureVaultFailedToOpenDatabaseError, error: error, withAdditionalParameters: pixelParams)
         default:
-            Pixel.fire(pixel: .secureVaultError)
+            Pixel.fire(pixel: .secureVaultError, error: error)
 
         }
     }

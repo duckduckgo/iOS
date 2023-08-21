@@ -24,28 +24,29 @@ import NetworkProtection
 
 struct NetworkProtectionStatusView: View {
     @ObservedObject public var statusModel: NetworkProtectionStatusViewModel
-    @ObservedObject public var inviteModel: NetworkProtectionInviteViewModel
 
     var body: some View {
         List {
             toggle()
-            inviteCodeEntry()
+            if statusModel.shouldShowConnectionDetails {
+                connectionDetails()
+            }
         }
         .applyListStyle()
         .navigationTitle(UserText.netPNavTitle)
     }
 
     @ViewBuilder
-    func toggle() -> some View {
+    private func toggle() -> some View {
         Section {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(UserText.netPStatusViewTitle)
                         .font(.system(size: 16))
-                        .foregroundColor(.titleText)
+                        .foregroundColor(.textPrimary)
                     Text(statusModel.statusMessage)
                         .font(.system(size: 13))
-                        .foregroundColor(.messageText)
+                        .foregroundColor(.textSecondary)
                 }
 
                 Toggle("", isOn: Binding(
@@ -57,44 +58,98 @@ struct NetworkProtectionStatusView: View {
                     }
                 ))
                 .disabled(statusModel.shouldDisableToggle)
-                .toggleStyle(SwitchToggleStyle(tint: .toggleColor))
+                .toggleStyle(SwitchToggleStyle(tint: .controlColor))
             }
-            .background(Color.cellBackground)
+            .listRowBackground(Color.cellBackground)
         } header: {
-            HStack {
-                Spacer()
-                VStack(alignment: .center, spacing: 16) {
-                    Image(statusModel.statusImageID)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 96)
-                        .padding(8)
-                    Text(statusModel.headerTitle)
-                        .font(.system(size: 17, weight: .semibold))
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(.titleText)
-                    Text(UserText.netPStatusHeaderMessage)
-                        .font(.system(size: 13))
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(.messageText)
-                }
-                .padding(.bottom, 4)
-                .background(Color.viewBackground)
-                Spacer()
+            header()
+        } footer: {
+            if !statusModel.shouldShowConnectionDetails {
+                inviteOnlyFooter()
             }
         }.increaseHeaderProminence()
     }
 
     @ViewBuilder
-    func inviteCodeEntry() -> some View {
-        Section {
-            Button("Clear Invite Code") {
-                Task {
-                    await inviteModel.clear()
-                }
+    private func header() -> some View {
+        HStack {
+            Spacer(minLength: 0)
+            VStack(alignment: .center, spacing: 8) {
+                Image(statusModel.statusImageID)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 96)
+                    .padding(8)
+                Text(statusModel.headerTitle)
+                    .font(.system(size: 17, weight: .semibold))
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.textPrimary)
+                Text(UserText.netPStatusHeaderMessage)
+                    .font(.system(size: 13))
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.textSecondary)
+                    .padding(.bottom, 8)
             }
-            .foregroundColor(.red)
+            .padding(.bottom, 4)
+            // Pads beyond the default header inset
+            .padding(.horizontal, -16)
+            .background(Color.viewBackground)
+            Spacer(minLength: 0)
         }
+    }
+
+    @ViewBuilder
+    private func connectionDetails() -> some View {
+        Section {
+            if let location = statusModel.location {
+                NetworkProtectionServerItemView(
+                    imageID: "Server-Location-24",
+                    title: UserText.netPStatusViewLocation,
+                    value: location
+                )
+            }
+            if let ipAddress = statusModel.ipAddress {
+                NetworkProtectionServerItemView(
+                    imageID: "IP-24",
+                    title: UserText.netPStatusViewIPAddress,
+                    value: ipAddress
+                )
+            }
+        } header: {
+            Text(UserText.netPStatusViewConnectionDetails).foregroundColor(.textPrimary)
+        } footer: {
+            inviteOnlyFooter()
+        }
+    }
+
+    @ViewBuilder
+    private func inviteOnlyFooter() -> some View {
+        // Needs to be inlined like this for the markdown parsing to work
+        Text("\(UserText.netPInviteOnlyMessage) [\(UserText.netPStatusViewShareFeedback)](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)")
+            .foregroundColor(.textSecondary)
+            .accentColor(Color.controlColor)
+            .font(.system(size: 13))
+            .padding(.top, 6)
+    }
+}
+
+private struct NetworkProtectionServerItemView: View {
+    let imageID: String
+    let title: String
+    let value: String
+
+    var body: some View {
+        HStack(spacing: 16) {
+            Image(imageID)
+            Text(title)
+                .font(.system(size: 16))
+                .foregroundColor(.textPrimary)
+            Spacer(minLength: 2)
+            Text(value)
+                .font(.system(size: 16))
+                .foregroundColor(.textSecondary)
+        }
+        .listRowBackground(Color.cellBackground)
     }
 }
 
@@ -117,10 +172,10 @@ private extension View {
     func applyListStyle() -> some View {
         self
             .listStyle(.insetGrouped)
-            .listStyle(.insetGrouped)
             .hideScrollContentBackground()
             .background(
-                Rectangle().ignoresSafeArea().foregroundColor(Color.viewBackground))
+                Rectangle().ignoresSafeArea().foregroundColor(Color.viewBackground)
+            )
     }
 
     @ViewBuilder
@@ -134,19 +189,16 @@ private extension View {
 }
 
 private extension Color {
-    static let titleText = Color(designSystemColor: .textPrimary)
-    static let messageText = Color(designSystemColor: .textSecondary)
+    static let textPrimary = Color(designSystemColor: .textPrimary)
+    static let textSecondary = Color(designSystemColor: .textSecondary)
     static let cellBackground = Color(designSystemColor: .surface)
     static let viewBackground = Color(designSystemColor: .background)
-    static let toggleColor = Color(designSystemColor: .accent)
+    static let controlColor = Color(designSystemColor: .accent)
 }
 
 struct NetworkProtectionStatusView_Previews: PreviewProvider {
     static var previews: some View {
-        let inviteViewModel = NetworkProtectionInviteViewModel(
-            redemptionCoordinator: NetworkProtectionCodeRedemptionCoordinator()
-        ) { }
-        NetworkProtectionStatusView(statusModel: NetworkProtectionStatusViewModel(), inviteModel: inviteViewModel)
+        NetworkProtectionStatusView(statusModel: NetworkProtectionStatusViewModel())
     }
 }
 

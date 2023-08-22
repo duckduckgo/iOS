@@ -25,12 +25,18 @@ import Common
 final class AutofillLoginListItemViewModel: Identifiable, Hashable {
     @Published var image = UIImage(systemName: "globe")!
     
+    var preferredFaviconLetters: String {
+        let accountName = self.account.name(tld: tld, autofillDomainNameUrlMatcher: urlMatcher)
+        let accountTitle = (account.title?.isEmpty == false) ? account.title! : "#"       
+        return tld.eTLDplus1(accountName) ?? accountTitle
+    }
+    
     let account: SecureVaultModels.WebsiteAccount
     let title: String
     let subtitle: String
-    let preferredFaviconLetters: String?
     let id = UUID()
     let tld: TLD
+    let urlMatcher: AutofillDomainNameUrlMatcher
 
     internal init(account: SecureVaultModels.WebsiteAccount,
                   tld: TLD,
@@ -40,8 +46,7 @@ final class AutofillLoginListItemViewModel: Identifiable, Hashable {
         self.tld = tld
         self.title = account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
         self.subtitle = account.username ?? ""
-        self.preferredFaviconLetters = account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
-
+        self.urlMatcher = autofillDomainNameUrlMatcher
         fetchImage()
     }
     

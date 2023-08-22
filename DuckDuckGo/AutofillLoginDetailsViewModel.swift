@@ -461,7 +461,12 @@ final class AutofillLoginDetailsHeaderViewModel: ObservableObject {
         self.title = account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
         self.subtitle = UserText.autofillLoginDetailsLastUpdated(for: (dateFormatter.string(from: account.lastUpdated)))
         self.domain = account.domain ?? ""
-        self.preferredFakeFaviconLetters = account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
+        
+        // Update favicon
+        let accountName = account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
+        let accountTitle = (account.title?.isEmpty == false) ? account.title! : "#"
+        self.preferredFakeFaviconLetters = tld.eTLDplus1(accountName) ?? accountTitle
+        
     }
 
 }

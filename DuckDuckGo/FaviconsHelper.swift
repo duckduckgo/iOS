@@ -20,15 +20,18 @@
 import UIKit
 import Core
 import Kingfisher
+import Common
 
 struct FaviconsHelper {
-
+    
+    private static  let tld: TLD = AppDependencyProvider.shared.storageCache.tld
+    
     static func loadFaviconSync(forDomain domain: String?,
                                 usingCache cacheType: Favicons.CacheType,
                                 useFakeFavicon: Bool,
                                 preferredFakeFaviconLetters: String? = nil,
                                 completion: ((UIImage?, Bool) -> Void)? = nil) {
-   
+           
         func complete(_ image: UIImage?) {
             var fake = false
             var resultImage: UIImage?
@@ -108,7 +111,7 @@ struct FaviconsHelper {
             context.setFillColor(backgroundColor.cgColor)
             context.addPath(CGPath(roundedRect: imageRect, cornerWidth: cornerRadius, cornerHeight: cornerRadius, transform: nil))
             context.fillPath()
-             
+           
             let label = UILabel(frame: labelFrame)
             label.numberOfLines = 1
             label.adjustsFontSizeToFitWidth = true
@@ -117,8 +120,12 @@ struct FaviconsHelper {
             label.font = bold ? UIFont.boldAppFont(ofSize: size) : UIFont.appFont(ofSize: size)
             label.textColor = UIColor.white
             label.textAlignment = .center
-            label.text = String(preferredFakeFaviconLetters?.prefix(letterCount).capitalized ??
-                                String(domain.droppingWwwPrefix().prefix(letterCount)).capitalized)
+
+            if let prefferedPrefix = preferredFakeFaviconLetters?.prefix(letterCount).capitalized {
+                label.text = prefferedPrefix
+            } else {
+                label.text = String(tld.eTLDplus1(domain)?.prefix(letterCount) ?? "#").capitalized
+            }
            
             context.translateBy(x: padding, y: padding)
 

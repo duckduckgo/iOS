@@ -101,7 +101,7 @@ struct FaviconsHelper {
 
         let cornerRadius = size * 0.125
         let imageRect = CGRect(x: 0, y: 0, width: size, height: size)
-        let padding = size * 0.080
+        let padding = size * 0.090
         let labelFrame = CGRect(x: padding, y: padding, width: imageRect.width - (2 * padding), height: imageRect.height - (2 * padding))
 
         let renderer = UIGraphicsImageRenderer(size: imageRect.size)

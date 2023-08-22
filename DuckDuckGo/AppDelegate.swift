@@ -192,23 +192,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // MARK: Sync initialisation
 
         syncDataProviders = SyncDataProviders(bookmarksDatabase: bookmarksDatabase, secureVaultErrorReporter: SecureVaultErrorReporter.shared)
-        syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog)
+        let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog)
         syncService.initializeIfNeeded(isInternalUser: InternalUserStore().isInternalUser)
-        syncStateCancellable = syncService.authStatePublisher
-            .prepend(syncService.authState)
-            .map { $0 == .inactive }
-            .removeDuplicates()
-            .sink { [weak self] isSyncDisabled in
-                self?.syncDataProviders.credentialsAdapter.updateDatabaseCleanupSchedule(shouldEnable: isSyncDisabled)
-                self?.syncDataProviders.bookmarksAdapter.updateDatabaseCleanupSchedule(shouldEnable: isSyncDisabled)
-            }
-        syncDataProviders.bookmarksAdapter.databaseCleaner.isSyncActive = { [weak self] in
-            self?.syncService.authState == .active
-        }
-        syncDataProviders.credentialsAdapter.databaseCleaner.isSyncActive = { [weak self] in
-            self?.syncService.authState == .active
-        }
-
+        syncDataProviders.setUpDatabaseCleaners(syncService: syncService)
+        self.syncService = syncService
 
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         

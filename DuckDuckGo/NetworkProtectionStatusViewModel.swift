@@ -34,7 +34,22 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     private let tunnelController: TunnelController
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
+    private let errorObserver: ConnectionErrorObserver
     private var cancellables: Set<AnyCancellable> = []
+
+    // MARK: Error
+
+    struct ErrorItem {
+        let title: String
+        let message: String
+    }
+
+    @Published public var error: ErrorItem? {
+        didSet {
+            shouldShowError = error != nil
+        }
+    }
+    @Published public var shouldShowError: Bool = false
 
     // MARK: Header
     @Published public var statusImageID: String
@@ -52,10 +67,12 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     public init(tunnelController: TunnelController = NetworkProtectionTunnelController(),
                 statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
-                serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession()) {
+                serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
+                errorObserver: ConnectionErrorObserver = ConnectionErrorObserverThroughSession()) {
         self.tunnelController = tunnelController
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver
+        self.errorObserver = errorObserver
         statusMessage = Self.message(for: statusObserver.recentValue)
         self.headerTitle = Self.titleText(connected: statusObserver.recentValue.isConnected)
         self.statusImageID = Self.statusImageID(connected: statusObserver.recentValue.isConnected)
@@ -65,6 +82,19 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         setUpStatusMessagePublishers()
         setUpDisableTogglePublisher()
         setUpServerInfoPublishers()
+
+        errorObserver.publisher
+            .map {
+                $0.map { _ in
+                    ErrorItem(
+                        title: UserText.netPStatusViewErrorConnectionFailedTitle,
+                        message: UserText.netPStatusViewErrorConnectionFailedMessage
+                    )
+                }
+            }
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.error, onWeaklyHeld: self)
+            .store(in: &cancellables)
     }
 
     private func setUpIsConnectedStatePublishers() {

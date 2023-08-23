@@ -194,9 +194,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         syncDataProviders = SyncDataProviders(bookmarksDatabase: bookmarksDatabase, secureVaultErrorReporter: SecureVaultErrorReporter.shared)
         let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog)
         syncService.initializeIfNeeded(isInternalUser: InternalUserStore().isInternalUser)
-        if application.applicationState == .active {
-            syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: syncService)
-        }
         self.syncService = syncService
 
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)

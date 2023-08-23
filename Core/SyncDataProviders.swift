@@ -66,15 +66,13 @@ public class SyncDataProviders: DataProvidersSource {
 
         syncAuthStateDidChangeCancellable = syncAuthStateDidChangePublisher
             .sink { [weak self] isSyncDisabled in
-                self?.credentialsAdapter.updateDatabaseCleanupSchedule(shouldEnable: isSyncDisabled)
-                self?.bookmarksAdapter.updateDatabaseCleanupSchedule(shouldEnable: isSyncDisabled)
+                self?.credentialsAdapter.cleanUpDatabaseAndUpdateSchedule(shouldEnable: isSyncDisabled)
+                self?.bookmarksAdapter.cleanUpDatabaseAndUpdateSchedule(shouldEnable: isSyncDisabled)
             }
 
         if syncService.authState == .inactive {
-            bookmarksAdapter.databaseCleaner.cleanUpDatabaseNow()
-            bookmarksAdapter.databaseCleaner.scheduleRegularCleaning()
-            credentialsAdapter.databaseCleaner.cleanUpDatabaseNow()
-            credentialsAdapter.databaseCleaner.scheduleRegularCleaning()
+            credentialsAdapter.cleanUpDatabaseAndUpdateSchedule(shouldEnable: true)
+            bookmarksAdapter.cleanUpDatabaseAndUpdateSchedule(shouldEnable: true)
         }
 
         isDatabaseCleanersSetUp = true

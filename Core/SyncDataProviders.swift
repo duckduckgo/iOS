@@ -47,7 +47,11 @@ public class SyncDataProviders: DataProvidersSource {
         return providers.compactMap { $0 as? DataProviding }
     }
 
-    public func setUpDatabaseCleaners(syncService: DDGSync) {
+    public func setUpDatabaseCleanersIfNeeded(syncService: DDGSync) {
+        guard !isDatabaseCleanersSetUp else {
+            return
+        }
+
         bookmarksAdapter.databaseCleaner.isSyncActive = { [weak syncService] in
             syncService?.authState == .active
         }
@@ -72,6 +76,8 @@ public class SyncDataProviders: DataProvidersSource {
             credentialsAdapter.databaseCleaner.cleanUpDatabaseNow()
             credentialsAdapter.databaseCleaner.scheduleRegularCleaning()
         }
+
+        isDatabaseCleanersSetUp = true
     }
 
     public init(
@@ -108,6 +114,7 @@ public class SyncDataProviders: DataProvidersSource {
     }
 
     private var isSyncMetadaDatabaseLoaded: Bool = false
+    private var isDatabaseCleanersSetUp: Bool = false
     private var syncMetadata: SyncMetadataStore?
     private var syncAuthStateDidChangeCancellable: AnyCancellable?
 

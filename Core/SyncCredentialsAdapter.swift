@@ -38,7 +38,7 @@ public final class SyncCredentialsAdapter {
             secureVaultFactory: secureVaultFactory,
             secureVaultErrorReporter: secureVaultErrorReporter,
             errorEvents: CredentialsCleanupErrorHandling(),
-            log: .passwordManager
+            log: .generalLog
         )
     }
 

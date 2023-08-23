@@ -892,7 +892,7 @@
 /* Button for deleting all items on downloads list */
 "downloads.downloads-list.delete-all" = "Delete All";
 
-/* Empty downloads list placholder */
+/* Empty downloads list placeholder */
 "downloads.downloads-list.empty" = "No files downloaded yet";
 
 /* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
@@ -952,7 +952,7 @@
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Block email trackers and hide your address";
 
-/* Empty list state placholder */
+/* Empty list state placeholder */
 "empty.bookmarks" = "No bookmarks added yet";
 
 /* Empty search placeholder on bookmarks search */

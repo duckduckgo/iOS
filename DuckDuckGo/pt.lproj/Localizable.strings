@@ -628,7 +628,7 @@
 /* Button for deleting all items on downloads list */
 "downloads.downloads-list.delete-all" = "Eliminar tudo";
 
-/* Empty downloads list placholder */
+/* Empty downloads list placeholder */
 "downloads.downloads-list.empty" = "Ainda não foram transferidos ficheiros";
 
 /* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
@@ -688,7 +688,7 @@
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Bloqueie rastreadores de e-mail e oculte o seu endereço.";
 
-/* Empty list state placholder */
+/* Empty list state placeholder */
 "empty.bookmarks" = "Ainda não foram adicionados marcadores";
 
 /* Empty search placeholder on bookmarks search */

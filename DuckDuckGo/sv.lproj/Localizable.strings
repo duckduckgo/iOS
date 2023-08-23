@@ -628,7 +628,7 @@
 /* Button for deleting all items on downloads list */
 "downloads.downloads-list.delete-all" = "Radera allt";
 
-/* Empty downloads list placholder */
+/* Empty downloads list placeholder */
 "downloads.downloads-list.empty" = "Inga filer har laddats ner ännu";
 
 /* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
@@ -688,7 +688,7 @@
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blockera e-postspårare och dölj din adress";
 
-/* Empty list state placholder */
+/* Empty list state placeholder */
 "empty.bookmarks" = "Inga bokmärken har lagts till ännu";
 
 /* Empty search placeholder on bookmarks search */

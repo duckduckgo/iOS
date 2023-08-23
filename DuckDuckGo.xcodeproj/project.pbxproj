@@ -8809,8 +8809,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "dominik/fix-sync-metadata-cleanup";
-				kind = branch;
+				kind = exactVersion;
+				version = 75.0.4;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

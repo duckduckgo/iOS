@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "dominik/fix-sync-metadata-cleanup",
-          "revision": "82d5ff61312d535fc6df88f3a0ca28ec01420f9c",
-          "version": null
+          "branch": null,
+          "revision": "02e87697d9e8d897bde0a913b7ed5b0943cbe993",
+          "version": "75.0.4"
         }
       },
       {

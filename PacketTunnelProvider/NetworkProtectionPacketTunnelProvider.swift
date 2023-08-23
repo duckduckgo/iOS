@@ -31,7 +31,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         super.init(notificationsPresenter: DefaultNotificationPresenter(),
                    tunnelHealthStore: NetworkProtectionTunnelHealthStore(),
                    controllerErrorStore: NetworkProtectionTunnelErrorStore(),
-                   useSystemKeychain: false,
+                   keychainType: .dataProtection(.unspecified),
                    debugEvents: nil,
                    providerEvents: Self.packetTunnelProviderEvents)
     }

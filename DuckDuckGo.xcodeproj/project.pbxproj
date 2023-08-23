@@ -2301,6 +2301,9 @@
 		EE0153EE2A70021E002A8B26 /* NetworkProtectionInviteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionInviteView.swift; sourceTree = "<group>"; };
 		EE276BE92A77F823009167B6 /* NetworkProtectionRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionRootViewController.swift; sourceTree = "<group>"; };
 		EE3B226A29DE0F110082298A /* MockInternalUserStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockInternalUserStoring.swift; sourceTree = "<group>"; };
+		EE3B98EA2A9634CC002F63A0 /* DuckDuckGoAlpha.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DuckDuckGoAlpha.entitlements; sourceTree = "<group>"; };
+		EE3B98EB2A963515002F63A0 /* WidgetsExtensionAlpha.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetsExtensionAlpha.entitlements; sourceTree = "<group>"; };
+		EE3B98EC2A963538002F63A0 /* PacketTunnelProviderAlpha.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PacketTunnelProviderAlpha.entitlements; sourceTree = "<group>"; };
 		EE41BD182A729E9C00546C57 /* NetworkProtectionInviteViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionInviteViewModelTests.swift; sourceTree = "<group>"; };
 		EE4BE0082A740BED00CD6AA8 /* ClearTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearTextField.swift; sourceTree = "<group>"; };
 		EE4FB1852A28CE7200E5CBA7 /* NetworkProtectionStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionStatusView.swift; sourceTree = "<group>"; };
@@ -2565,6 +2568,7 @@
 		02025665298818B200E694E7 /* PacketTunnelProvider */ = {
 			isa = PBXGroup;
 			children = (
+				EE3B98EC2A963538002F63A0 /* PacketTunnelProviderAlpha.entitlements */,
 				02025670298818CB00E694E7 /* ProxyServer */,
 				02025666298818B200E694E7 /* AppTrackingProtectionPacketTunnelProvider.swift */,
 				02025B1429884EA500E694E7 /* DDGObserverFactory.swift */,
@@ -3457,6 +3461,7 @@
 		84E341891E2F7EFB00BDBA6F = {
 			isa = PBXGroup;
 			children = (
+				EE3B98EB2A963515002F63A0 /* WidgetsExtensionAlpha.entitlements */,
 				6FB030C7234331B400A10DB9 /* Configuration.xcconfig */,
 				84E341941E2F7EFB00BDBA6F /* DuckDuckGo */,
 				F143C2E51E4A4CD400CFDE3A /* Core */,
@@ -3501,6 +3506,7 @@
 		84E341941E2F7EFB00BDBA6F /* DuckDuckGo */ = {
 			isa = PBXGroup;
 			children = (
+				EE3B98EA2A9634CC002F63A0 /* DuckDuckGoAlpha.entitlements */,
 				CB258D1129A4F1BB00DEBA24 /* Configuration */,
 				1E908BED29827C480008C8F3 /* Autoconsent */,
 				3157B43627F4C8380042D3D7 /* Favicons */,
@@ -5781,7 +5787,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ -n \"$CI\" ]] || [[ -n \"$BITRISE_IO\" ]]; then\n    echo \"Skipping SwiftLint run in CI\"\n    exit 0\nfi\n\nif test -d \"/opt/homebrew/bin/\"; then\n    PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nif test -d \"$HOME/.mint/bin/\"; then\n    PATH=\"$HOME/.mint/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which swiftlint >/dev/null; then\n   if [ \"$CONFIGURATION\" = \"Release\" ]; then\n       swiftlint lint --strict\n       if [ $? -ne 0 ]; then\n           echo \"error: SwiftLint validation failed.\"\n           exit 1\n       fi\n   else\n       swiftlint lint\n   fi\nelse\n   echo \"error: SwiftLint not installed. Install using \\`brew install swiftlint\\`\"\n   exit 1\nfi\n";
+			shellScript = "./lint.sh\n";
 		};
 		98B0CE69251C937D003FB601 /* Update Localizable.strings */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -8241,7 +8247,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "DDG-AppIcon-Alpha";
-				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGo.entitlements;
+				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGoAlpha.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 0;
@@ -8335,7 +8341,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = Widgets/WidgetsExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = WidgetsExtensionAlpha.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
@@ -8371,7 +8377,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = PacketTunnelProvider/PacketTunnelProvider.entitlements;
+				CODE_SIGN_ENTITLEMENTS = PacketTunnelProvider/PacketTunnelProviderAlpha.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;

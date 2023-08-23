@@ -35,7 +35,7 @@ Fetches and updates certificates and provisioning profiles for Ad-Hoc distributi
 [bundle exec] fastlane sync_signing_alpha
 ```
 
-Fetches and updates certificates and provisioning profiles for Alpha TestFlight distribution
+
 
 ### adhoc
 

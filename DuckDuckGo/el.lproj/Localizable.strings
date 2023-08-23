@@ -1156,13 +1156,13 @@
 /* Accessibility label on remove button */
 "tab.close.home" = "Κλείσιμο αρχικής καρτέλας";
 
-/* Accesibility label: first string is website title, second is address */
+/* Accessibility label: first string is website title, second is address */
 "tab.close.with.title.and.address" = "Κλείσιμο \"%1$@\" στο %2$@";
 
 /* Accessibility label on tab cell */
 "tab.open.home" = "Άνοιγμα αρχικής καρτέλας";
 
-/* Accesibility label: first string is website title, second is address */
+/* Accessibility label: first string is website title, second is address */
 "tab.open.with.title.and.address" = "Άνοιγμα \"%1$@\" στο %2$@";
 
 /* Tab Switcher Accessibility Label */

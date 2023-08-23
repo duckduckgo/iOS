@@ -1516,13 +1516,13 @@ https://duckduckgo.com/mac";
 /* Accessibility label on remove button */
 "tab.close.home" = "Close home tab";
 
-/* Accesibility label: first string is website title, second is address */
+/* Accessibility label: first string is website title, second is address */
 "tab.close.with.title.and.address" = "Close \"%1$@\" at %2$@";
 
 /* Accessibility label on tab cell */
 "tab.open.home" = "Open home tab";
 
-/* Accesibility label: first string is website title, second is address */
+/* Accessibility label: first string is website title, second is address */
 "tab.open.with.title.and.address" = "Open \"%1$@\" at %2$@";
 
 /* Tab Switcher Accessibility Label */

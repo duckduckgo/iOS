@@ -1156,13 +1156,13 @@
 /* Accessibility label on remove button */
 "tab.close.home" = "Zatvori početnu karticu";
 
-/* Accesibility label: first string is website title, second is address */
+/* Accessibility label: first string is website title, second is address */
 "tab.close.with.title.and.address" = "Zatvorite „%1$@” na %2$@";
 
 /* Accessibility label on tab cell */
 "tab.open.home" = "Otvori početnu karticu";
 
-/* Accesibility label: first string is website title, second is address */
+/* Accessibility label: first string is website title, second is address */
 "tab.open.with.title.and.address" = "Otvorite „%1$@” na %2$@";
 
 /* Tab Switcher Accessibility Label */

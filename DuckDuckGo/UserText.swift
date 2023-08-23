@@ -213,7 +213,7 @@ public struct UserText {
     }
     
     public static func openTab(withTitle title: String, atAddress address: String) -> String {
-        let message = NSLocalizedString("tab.open.with.title.and.address", value: "Open \"%@\" at %@", comment: "Accesibility label: first string is website title, second is address")
+        let message = NSLocalizedString("tab.open.with.title.and.address", value: "Open \"%@\" at %@", comment: "Accessibility label: first string is website title, second is address")
         return message.format(arguments: title, address)
     }
 
@@ -221,7 +221,7 @@ public struct UserText {
     public static let closeHomeTab = NSLocalizedString("tab.close.home", value: "Close home tab", comment: "Accessibility label on remove button")
 
     public static func closeTab(withTitle title: String, atAddress address: String) -> String {
-        let message = NSLocalizedString("tab.close.with.title.and.address", value: "Close \"%@\" at %@", comment: "Accesibility label: first string is website title, second is address")
+        let message = NSLocalizedString("tab.close.with.title.and.address", value: "Close \"%@\" at %@", comment: "Accessibility label: first string is website title, second is address")
         return message.format(arguments: title, address)
     }
     

@@ -1156,13 +1156,13 @@
 /* Accessibility label on remove button */
 "tab.close.home" = "Закрыть домашнюю вкладку";
 
-/* Accesibility label: first string is website title, second is address */
+/* Accessibility label: first string is website title, second is address */
 "tab.close.with.title.and.address" = "Закрыть сайт «%1$@» по адресу %2$@";
 
 /* Accessibility label on tab cell */
 "tab.open.home" = "Открыть домашнюю вкладку";
 
-/* Accesibility label: first string is website title, second is address */
+/* Accessibility label: first string is website title, second is address */
 "tab.open.with.title.and.address" = "Открыть сайт «%1$@» по адресу %2$@";
 
 /* Tab Switcher Accessibility Label */

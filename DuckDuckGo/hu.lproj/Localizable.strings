@@ -1156,13 +1156,13 @@
 /* Accessibility label on remove button */
 "tab.close.home" = "Kezdőlap bezárása";
 
-/* Accesibility label: first string is website title, second is address */
+/* Accessibility label: first string is website title, second is address */
 "tab.close.with.title.and.address" = "\"%1$@\" bezárása itt: %2$@";
 
 /* Accessibility label on tab cell */
 "tab.open.home" = "Kezdőlap megnyitása";
 
-/* Accesibility label: first string is website title, second is address */
+/* Accessibility label: first string is website title, second is address */
 "tab.open.with.title.and.address" = "\"%1$@\" megnyitása itt: %2$@";
 
 /* Tab Switcher Accessibility Label */

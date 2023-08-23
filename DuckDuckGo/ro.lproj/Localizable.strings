@@ -1156,13 +1156,13 @@
 /* Accessibility label on remove button */
 "tab.close.home" = "Închide fila de pornire";
 
-/* Accesibility label: first string is website title, second is address */
+/* Accessibility label: first string is website title, second is address */
 "tab.close.with.title.and.address" = "Închideți \"%1$@\" la %2$@";
 
 /* Accessibility label on tab cell */
 "tab.open.home" = "Deschide fila de pornire";
 
-/* Accesibility label: first string is website title, second is address */
+/* Accessibility label: first string is website title, second is address */
 "tab.open.with.title.and.address" = "Deschide \"%1$@\" la %2$@";
 
 /* Tab Switcher Accessibility Label */

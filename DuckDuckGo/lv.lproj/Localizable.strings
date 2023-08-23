@@ -1156,13 +1156,13 @@
 /* Accessibility label on remove button */
 "tab.close.home" = "Aizvērt sākuma cilni";
 
-/* Accesibility label: first string is website title, second is address */
+/* Accessibility label: first string is website title, second is address */
 "tab.close.with.title.and.address" = "Aizvērt “%1$@” vietnē %2$@";
 
 /* Accessibility label on tab cell */
 "tab.open.home" = "Atvērt sākuma cilni";
 
-/* Accesibility label: first string is website title, second is address */
+/* Accessibility label: first string is website title, second is address */
 "tab.open.with.title.and.address" = "Atvērt “%1$@” vietnē %2$@";
 
 /* Tab Switcher Accessibility Label */

@@ -1156,13 +1156,13 @@
 /* Accessibility label on remove button */
 "tab.close.home" = "Zamknij kartę główną";
 
-/* Accesibility label: first string is website title, second is address */
+/* Accessibility label: first string is website title, second is address */
 "tab.close.with.title.and.address" = "Zamknij „%1$@” w %2$@";
 
 /* Accessibility label on tab cell */
 "tab.open.home" = "Otwórz kartę główną";
 
-/* Accesibility label: first string is website title, second is address */
+/* Accessibility label: first string is website title, second is address */
 "tab.open.with.title.and.address" = "Otwórz „%1$@” w %2$@";
 
 /* Tab Switcher Accessibility Label */

@@ -1156,13 +1156,13 @@
 /* Accessibility label on remove button */
 "tab.close.home" = "Fechar o separador inicial";
 
-/* Accesibility label: first string is website title, second is address */
+/* Accessibility label: first string is website title, second is address */
 "tab.close.with.title.and.address" = "Fechar \"%1$@\" at %2$@";
 
 /* Accessibility label on tab cell */
 "tab.open.home" = "Abrir o separador inicial";
 
-/* Accesibility label: first string is website title, second is address */
+/* Accessibility label: first string is website title, second is address */
 "tab.open.with.title.and.address" = "Abrir \"%1$@\" at %2$@";
 
 /* Tab Switcher Accessibility Label */

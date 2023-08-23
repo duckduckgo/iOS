@@ -1156,13 +1156,13 @@
 /* Accessibility label on remove button */
 "tab.close.home" = "Starttabblad sluiten";
 
-/* Accesibility label: first string is website title, second is address */
+/* Accessibility label: first string is website title, second is address */
 "tab.close.with.title.and.address" = "'%1$@' op %2$@ sluiten";
 
 /* Accessibility label on tab cell */
 "tab.open.home" = "Starttabblad openen";
 
-/* Accesibility label: first string is website title, second is address */
+/* Accessibility label: first string is website title, second is address */
 "tab.open.with.title.and.address" = "'%1$@' op %2$@ openen";
 
 /* Tab Switcher Accessibility Label */

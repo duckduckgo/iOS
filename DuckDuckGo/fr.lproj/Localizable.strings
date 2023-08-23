@@ -1156,13 +1156,13 @@
 /* Accessibility label on remove button */
 "tab.close.home" = "Fermer l'onglet d'accueil";
 
-/* Accesibility label: first string is website title, second is address */
+/* Accessibility label: first string is website title, second is address */
 "tab.close.with.title.and.address" = "Fermer « %1$@ » via %2$@";
 
 /* Accessibility label on tab cell */
 "tab.open.home" = "Ouvrir l'onglet d'accueil";
 
-/* Accesibility label: first string is website title, second is address */
+/* Accessibility label: first string is website title, second is address */
 "tab.open.with.title.and.address" = "Ouvrir « %1$@ » via %2$@";
 
 /* Tab Switcher Accessibility Label */

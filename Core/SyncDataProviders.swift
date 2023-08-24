@@ -18,6 +18,7 @@
 //
 
 import BrowserServicesKit
+import Combine
 import Common
 import DDGSync
 import Persistence
@@ -47,6 +48,37 @@ public class SyncDataProviders: DataProvidersSource {
         ]
 
         return providers.compactMap { $0 as? DataProviding }
+    }
+
+    public func setUpDatabaseCleanersIfNeeded(syncService: DDGSync) {
+        guard !isDatabaseCleanersSetUp else {
+            return
+        }
+
+        bookmarksAdapter.databaseCleaner.isSyncActive = { [weak syncService] in
+            syncService?.authState == .active
+        }
+        credentialsAdapter.databaseCleaner.isSyncActive = { [weak syncService] in
+            syncService?.authState == .active
+        }
+
+        let syncAuthStateDidChangePublisher = syncService.authStatePublisher
+            .dropFirst()
+            .map { $0 == .inactive }
+            .removeDuplicates()
+
+        syncAuthStateDidChangeCancellable = syncAuthStateDidChangePublisher
+            .sink { [weak self] isSyncDisabled in
+                self?.credentialsAdapter.cleanUpDatabaseAndUpdateSchedule(shouldEnable: isSyncDisabled)
+                self?.bookmarksAdapter.cleanUpDatabaseAndUpdateSchedule(shouldEnable: isSyncDisabled)
+            }
+
+        if syncService.authState == .inactive {
+            credentialsAdapter.cleanUpDatabaseAndUpdateSchedule(shouldEnable: true)
+            bookmarksAdapter.cleanUpDatabaseAndUpdateSchedule(shouldEnable: true)
+        }
+
+        isDatabaseCleanersSetUp = true
     }
 
     public init(
@@ -84,7 +116,9 @@ public class SyncDataProviders: DataProvidersSource {
     }
 
     private var isSyncMetadaDatabaseLoaded: Bool = false
+    private var isDatabaseCleanersSetUp: Bool = false
     private var syncMetadata: SyncMetadataStore?
+    private var syncAuthStateDidChangeCancellable: AnyCancellable?
 
     private let syncMetadataDatabase: CoreDataDatabase = SyncMetadataDatabase.make()
     private let bookmarksDatabase: CoreDataDatabase

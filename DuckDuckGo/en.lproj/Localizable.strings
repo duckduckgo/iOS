@@ -1183,11 +1183,11 @@
 /* OK title for invite screen alert dismissal button */
 "invite.alert.ok.button" = "OK";
 
+/* Continue button on an invite dialog */
+"invite.dialog.continue.button" = "Continue";
+
 /* Get Started button on an invite dialog */
 "invite.dialog.get.started.button" = "Get Started";
-
-/* Submit button on an invite dialog */
-"invite.dialog.submit.button" = "Submit";
 
 /* Message to show after user enters an unrecognized invite code */
 "invite.dialog.unrecognized.code.message" = "We didn’t recognize this Invite Code.";
@@ -1359,6 +1359,12 @@ https://duckduckgo.com/mac";
 
 /* Connection details label shown in NetworkProtection's status view. */
 "network.protection.status.view.connection.details" = "Connection Details";
+
+/* Generic connection failed error message shown in NetworkProtection's status view. */
+"network.protection.status.view.error.connection.failed.message" = "Please try again later.";
+
+/* Generic connection failed error title shown in NetworkProtection's status view. */
+"network.protection.status.view.error.connection.failed.title" = "Failed to Connect.";
 
 /* IP Address label shown in NetworkProtection's status view. */
 "network.protection.status.view.ip.address" = "IP Address";

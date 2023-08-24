@@ -1,35 +1,39 @@
 name: Make TestFlight Alpha Build
 
 on:
-  pull_request:
+  workflow_dispatch:
     branches:
     - develop
-    - graeme/ios-nightly-builds
+    - graeme/ios-nightly-builds # TODO: Remove this before merging
     #- '!develop' # filter out PRs matching that pattern
-    types: [closed]
+    inputs:
+      destination:
+        description: "TestFlight Group"
+        required: true
+        default: "Latest Alpha Group"
+        type: string
 
   push:
-    branches: [ develop, graeme/ios-nightly-builds ]
+    branches: [ graeme/ios-nightly-builds ]
 
 jobs:
-  make-release:
+  make-alpha:
     if: github.event.action == 0 || github.event.pull_request.merged == true # empty string returns 0; for case when workflow is triggered manually
     runs-on: macos-13
     name: Make TestFlight Alpha Build
 
     steps:
 
-    # - name: Set destination output
-    #   id: destination
-    #   run: |
-    #     INPUT_DESTINATION=${{ github.event.inputs.destination }}
-    #     echo "destination=${INPUT_DESTINATION:-"appstore"}" >> $GITHUB_OUTPUT
+    - name: Set destination output
+      id: destination
+      run: |
+        INPUT_DESTINATION=${{ github.event.inputs.destination }}
+        echo "destination=${INPUT_DESTINATION}" >> $GITHUB_OUTPUT
 
-    # - name: Assert develop branch
+    # - name: Assert develop branch TODO: Uncomment before merging
     #   run: |
     #     case "${{ github.ref }}" in
     #       *develop/*) ;;
-    #       graeme/ios-nightly-builds) ;;
     #       *) echo "👎 Not develop branch"; exit 1 ;;
     #     esac
 
@@ -75,26 +79,25 @@ jobs:
         MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       run: |
         app_version="$(cut -d ' ' -f 3 < Configuration/Version.xcconfig)"
-        bundle exec fastlane release_alpha
+        bundle exec fastlane release_alpha groups:${{ steps.destination.outputs.destination }}
         build_version="cat DuckDuckGo.xcodeproj/project.pbxproj | grep -m1 'CURRENT_PROJECT_VERSION' | cut -d'=' -f2 | tr -d ';' | tr -d ' '"
         echo "dsyms_path=${{ github.workspace }}/DuckDuckGo.app.dSYM.zip" >> $GITHUB_ENV
         echo "app_version=${app_version}" >> $GITHUB_ENV
         echo "build_version=${build_version}" >> $GITHUB_ENV
 
-    # - name: Upload dSYMs artifact
-    #   uses: actions/upload-artifact@v3
-    #   with:
-    #     name: DuckDuckGo-alpha-dSYM-${{ env.app_version }}
-    #     path: ${{ env.dsyms_path }}
+    - name: Upload dSYMs artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: DuckDuckGo-Alpha-dSYM-${{ env.app_version }}
+        path: ${{ env.dsyms_path }}
 
-    # - name: Upload debug symbols to Asana
-    #   if: github.event.inputs.asana-task-url
-    #   env:
-    #     ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
-    #   run: |
-    #     asana_dsyms_path="${{ github.workspace }}/DuckDuckGo-${{ env.app_version }}(${{ env.app_version }})-dSYM.zip"
-    #     mv -f "${{ env.dsyms_path }}" "$asana_dsyms_path"
+    - name: Upload debug symbols to Asana
+      env:
+        ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+      run: |
+        asana_dsyms_path="${{ github.workspace }}/DuckDuckGo-Alpha-${{ env.app_version }}(${{ env.app_version }})-dSYM.zip"
+        mv -f "${{ env.dsyms_path }}" "$asana_dsyms_path"
 
-    #     curl -s "https://app.asana.com/api/1.0/tasks/${{ steps.get-task-id.outputs.task_id }}/attachments" \
-    #       -H "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
-    #       --form "file=@${asana_dsyms_path};type=application/zip"
+        curl -s "https://app.asana.com/0/0/1205344386326139/f/attachments" \
+          -H "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
+          --form "file=@${asana_dsyms_path};type=application/zip"

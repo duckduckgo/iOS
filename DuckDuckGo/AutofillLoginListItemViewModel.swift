@@ -27,7 +27,7 @@ final class AutofillLoginListItemViewModel: Identifiable, Hashable {
     
     var preferredFaviconLetters: String {
         let accountName = self.account.name(tld: tld, autofillDomainNameUrlMatcher: urlMatcher)
-        let accountTitle = (account.title?.isEmpty == false) ? account.title! : "#"       
+        let accountTitle = (account.title?.isEmpty == false) ? account.title! : "#"
         return tld.eTLDplus1(accountName) ?? accountTitle
     }
     

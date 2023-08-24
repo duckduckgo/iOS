@@ -94,3 +94,8 @@ jobs:
       with:
         report_paths: unittests.xml
 
+  deploy-alpha:
+    name: Deploy Nightly Alpha Build
+    uses: ./.github/workflows/alpha.yml
+    with:
+      destination: "Nightly Alpha Group"

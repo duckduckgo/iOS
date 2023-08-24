@@ -4,16 +4,9 @@ git_branch "ios"
 platform "ios"
 
 type "appstore"
+app_identifier ["com.duckduckgo.mobile.ios", "com.duckduckgo.mobile.ios.ShareExtension", "com.duckduckgo.mobile.ios.OpenAction2", "com.duckduckgo.mobile.ios.Widgets", "com.duckduckgo.mobile.ios.NetworkExtension"]
 generate_apple_certs false
 template_name "Default Web Browser iOS (Dist)"
-
-for_lane :sync_signing do
-    app_identifier ["com.duckduckgo.mobile.ios", "com.duckduckgo.mobile.ios.ShareExtension", "com.duckduckgo.mobile.ios.OpenAction2", "com.duckduckgo.mobile.ios.Widgets", "com.duckduckgo.mobile.ios.NetworkExtension"]
-end
-
-for_lane :build_release do
-    app_identifier ["com.duckduckgo.mobile.ios", "com.duckduckgo.mobile.ios.ShareExtension", "com.duckduckgo.mobile.ios.OpenAction2", "com.duckduckgo.mobile.ios.Widgets", "com.duckduckgo.mobile.ios.NetworkExtension"]
-end
 
 for_lane :sync_signing_adhoc do
     type "adhoc"
@@ -30,5 +23,10 @@ for_lane :sync_signing_alpha do
 end
 
 for_lane :build_alpha do
+    app_identifier ["com.duckduckgo.mobile.ios.alpha", "com.duckduckgo.mobile.ios.alpha.ShareExtension", "com.duckduckgo.mobile.ios.alpha.OpenAction2", "com.duckduckgo.mobile.ios.alpha.Widgets", "com.duckduckgo.mobile.ios.alpha.NetworkExtension"]
+end
+
+for_lane :alpha do
+    type "appstore"
     app_identifier ["com.duckduckgo.mobile.ios.alpha", "com.duckduckgo.mobile.ios.alpha.ShareExtension", "com.duckduckgo.mobile.ios.alpha.OpenAction2", "com.duckduckgo.mobile.ios.alpha.Widgets", "com.duckduckgo.mobile.ios.alpha.NetworkExtension"]
 end

@@ -177,8 +177,43 @@ private_lane :build_release do |options|
 end
 
 private_lane :build_alpha do |options|
-  sync_signing_alpha(options)
+  # Workaround for match + gym failing at build phase https://forums.swift.org/t/xcode-14-beta-code-signing-issues-when-spm-targets-include-resources/59685/32
+  if is_ci
+    configurations = [
+      {
+        targets: ["DuckDuckGo"],
+        profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha"
+      },
+      {
+        targets: ["ShareExtension"],
+        profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.ShareExtension"
+      },
+      {
+        targets: ["OpenAction"],
+        profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.OpenAction2"
+      },
+      {
+        targets: ["WidgetsExtension"],
+        profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.Widgets"
+      },
+      {
+        targets: ["PacketTunnelProvider"],
+        profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.NetworkExtension"
+      }
+    ]
 
+    configurations.each do |config|
+      update_code_signing_settings(
+        use_automatic_signing: false,
+        build_configurations: ["Alpha"],
+        code_sign_identity: "iPhone Distribution",
+        **config
+      )
+    end
+  end
+
+  sync_signing_alpha(options)
+  
   build_app(
     export_method: "app-store",
     configuration: "Alpha",

@@ -441,6 +441,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         os_log("App launched with url %s", log: .lifecycleLog, type: .debug, url.absoluteString)
+
+        if handleEmailSignUpDeepLink(url) {
+            return true
+        }
+
         NotificationCenter.default.post(name: AutofillLoginListAuthenticator.Notifications.invalidateContext, object: nil)
         mainViewController?.clearNavigationStack()
         autoClear?.applicationWillMoveToForeground()
@@ -573,6 +578,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if !Database.shared.isDatabaseFileInitialized {
             try? autofillStorage.deleteAuthenticationState()
         }
+    }
+
+    private func handleEmailSignUpDeepLink(_ url: URL) -> Bool {
+        guard url.absoluteString.starts(with: URL.emailProtection.absoluteString),
+              let navViewController = mainViewController?.presentedViewController as? UINavigationController,
+              let emailSignUpViewController = navViewController.topViewController as? EmailSignupViewController else {
+            return false
+        }
+        emailSignUpViewController.loadUrl(url)
+        return true
     }
 
     private var mainViewController: MainViewController? {

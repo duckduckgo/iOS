@@ -658,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Download di %@ avviato";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "Protezione email";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Annulla";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Genera Duck Address privato";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Genera Duck Address privato";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Blocca i sistemi di tracciamento e-mail e nascondi il tuo indirizzo";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Seleziona l'indirizzo e-mail";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Blocca i sistemi di tracciamento e-mail";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blocca i sistemi di tracciamento e-mail con un indirizzo Duck";
@@ -687,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blocca i sistemi di tracciamento delle email e nascondi il tuo indirizzo";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Prosegui la configurazione";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Esci dalla configurazione";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Se esci ora, il tuo Duck Address non verrà salvato!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Non mostrare più";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Proteggi la mia e-mail";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Crea un indirizzo univoco e casuale che rimuove anche i sistemi di tracciamento nascosti e inoltra le e-mail alla tua casella di posta.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Nascondi il tuo indirizzo e-mail e \n blocca i sistemi di tracciamento";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Non è ancora stato aggiunto nessun segnalibro";
@@ -1014,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Menu di navigazione";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Indietro";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Successivo";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Fatto";

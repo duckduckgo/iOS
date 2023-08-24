@@ -658,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Стартирано изтегляне на %@";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "Защита на имейл";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Отмени";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Генериране на личен Duck Address";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Генериране на личен Duck Address";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Блокиране на имейл тракерите и скриване на адреса";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Изберете имейл адрес";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Блокиране на имейл тракери";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Блокирайте имейл тракерите с Duck адрес";
@@ -687,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Блокирайте имейл тракерите и скрийте своя адрес";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Продължаване с настройката";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Изход от настройката";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Ако излезете сега, Вашият Duck Address няма да бъде запазен!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Не показвай повече";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Защита на моя имейл";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Създайте уникален, произволен адрес, който премахва скритите тракери и препраща имейлите към пощенската Ви кутия.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Скрийте имейл адреса си и\nблокирайте тракерите";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Все още няма добавени отметки";
@@ -1014,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Меню за сърфиране";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Обратно";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Следващ";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Готово";

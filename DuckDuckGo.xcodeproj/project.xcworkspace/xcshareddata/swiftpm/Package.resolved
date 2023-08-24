@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "02e87697d9e8d897bde0a913b7ed5b0943cbe993",
-          "version": "75.0.4"
+          "branch": "daniel/autofill-settings-consistency",
+          "revision": "563c0935d6325f1ef802fa40240ec90ec260c55a",
+          "version": null
         }
       },
       {

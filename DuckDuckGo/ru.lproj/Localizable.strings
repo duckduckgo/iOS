@@ -658,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Началась загрузка файла %@";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "Защита электронной почты";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Отменить";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Создать адрес на Duck";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Создать адрес на Duck";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Скрывает ваш адрес и блокирует почтовые трекеры";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Выберите адрес электронной почты";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Для блокировки почтовых трекеров";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Блокировать почтовые трекеры с адресом Duck";
@@ -687,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Блокировка почтовых трекеров и скрытие адреса";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Продолжить настройку";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Выйти из настройки";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Если вы прервете настройку, ваш адрес Duck Address не сохранится!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Больше не показывать";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Защитить почту";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Создайте уникальный случайный адрес, который также удалит скрытые трекеры и перенаправит электронную почту на ваш ящик.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Скрытие адреса почты\nи блокировка трекеров";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Закладок пока нет";
@@ -1014,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Меню браузера";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Назад";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Далее";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Готово";

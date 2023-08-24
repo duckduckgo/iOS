@@ -658,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "%@ atsiusntimas prasidėjo.";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "El. pašto apsauga";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Atšaukti";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Generuoti privatų „Duck“ adresą";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Generuoti privatų „Duck“ adresą";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Blokuoti el. pašto stebėjimo priemones ir slėpti adresą";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Pasirinkite el. pašto adresą";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Blokuoti el. pašto sekimo priemones";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blokuoti el. pašto adresų stebėjimo priemones „Duck“ adresams";
@@ -687,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blokuokite el. laiškų sekimo priemones ir paslėpkite savo adresą";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Tęsti sąranką";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Išeiti iš sąrankos";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Jei išeisite dabar, jūsų „Duck“ adresas nebus išsaugotas!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Daugiau nerodyti";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Apsaugoti mano el. paštą";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Sukurkite unikalų atsitiktinį adresą, kuriuo taip pat pašalinamos slaptos sekimo priemonės ir el. laiškai persiunčiami į pašto dėžutę.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Paslėpkite savo el. paštą ir \n blokuokite stebėjimo priemones";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Žymių dar nepridėta";
@@ -1014,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Naršymo meniu";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Atgal";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Kitas";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Atlikta";

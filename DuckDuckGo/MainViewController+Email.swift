@@ -102,59 +102,57 @@ extension MainViewController: EmailManagerRequestDelegate {
 // MARK: - EmailManagerAliasPermissionDelegate
 extension MainViewController: EmailManagerAliasPermissionDelegate {
 
-    func emailManager(_ emailManager: BrowserServicesKit.EmailManager, didRequestPermissionToProvideAliasWithCompletion: @escaping (BrowserServicesKit.EmailManagerPermittedAddressType, Bool) -> Void) {
+    func emailManager(_ emailManager: EmailManager,
+                      didRequestPermissionToProvideAliasWithCompletion: @escaping (EmailManagerPermittedAddressType, Bool) -> Void) {
 
         DispatchQueue.main.async {
-            let alert = UIAlertController(title: UserText.emailAliasAlertTitle, message: nil, preferredStyle: .actionSheet)
-            alert.overrideUserInterfaceStyle()
-
-            var pixelParameters: [String: String] = [:]
-
-            if let cohort = emailManager.cohort {
-                pixelParameters[PixelParameters.emailCohort] = cohort
+            let emailAddressPromptViewController = EmailAddressPromptViewController(emailManager) { addressType, autosave in
+                didRequestPermissionToProvideAliasWithCompletion(addressType, autosave)
             }
 
-            if let userEmail = emailManager.userEmail {
-                let actionTitle = String(format: UserText.emailAliasAlertUseUserAddress, userEmail)
-                alert.addAction(title: actionTitle) {
-                    pixelParameters[PixelParameters.emailLastUsed] = emailManager.lastUseDate
-                    emailManager.updateLastUseDate()
-
-                    Pixel.fire(pixel: .emailUserPressedUseAddress, withAdditionalParameters: pixelParameters, includedParameters: [])
-
-                    didRequestPermissionToProvideAliasWithCompletion(.user, false)
+            if #available(iOS 15.0, *) {
+                if let presentationController = emailAddressPromptViewController.presentationController as? UISheetPresentationController {
+                    if #available(iOS 16.0, *) {
+                        presentationController.detents = [.custom(resolver: { _ in
+                            AutofillViews.emailSignupPromptMinHeight
+                        })]
+                    } else {
+                        presentationController.detents = [.medium()]
+                    }
                 }
             }
-
-            alert.addAction(title: UserText.emailAliasAlertGeneratePrivateAddress) {
-                pixelParameters[PixelParameters.emailLastUsed] = emailManager.lastUseDate
-                emailManager.updateLastUseDate()
-
-                Pixel.fire(pixel: .emailUserPressedUseAlias, withAdditionalParameters: pixelParameters, includedParameters: [])
-
-                didRequestPermissionToProvideAliasWithCompletion(.generated, true)
-            }
-
-            alert.addAction(title: UserText.emailAliasAlertDecline) {
-                Pixel.fire(pixel: .emailTooltipDismissed, withAdditionalParameters: pixelParameters, includedParameters: [])
-
-                didRequestPermissionToProvideAliasWithCompletion(.none, false)
-            }
-
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                // make sure the completion handler is called if the alert is dismissed by tapping outside the alert
-                alert.addAction(title: "", style: .cancel) {
-                    Pixel.fire(pixel: .emailTooltipDismissed, withAdditionalParameters: pixelParameters)
-                    didRequestPermissionToProvideAliasWithCompletion(.none, false)
-                }
-            }
-
-            alert.popoverPresentationController?.permittedArrowDirections = []
-            alert.popoverPresentationController?.delegate = self
-            let bounds = self.view.bounds
-            let point = Point(x: Int((bounds.maxX - bounds.minX) / 2.0), y: Int(bounds.maxY))
-            self.present(controller: alert, fromView: self.view, atPoint: point)
+            self.present(emailAddressPromptViewController, animated: true)
         }
+
+    }
+
+    func emailManager(_ emailManager: EmailManager, didRequestInContextSignUp completionHandler: @escaping (_ shouldContinue: Bool) -> Void) {
+
+        let emailSignupPromptViewController = EmailSignupPromptViewController { shouldContinue in
+            if shouldContinue {
+                let signupViewController = EmailSignupViewController { shouldContinue in
+                    completionHandler(shouldContinue)
+                }
+                let signupNavigationController = UINavigationController(rootViewController: signupViewController)
+                self.present(signupNavigationController, animated: true, completion: nil)
+            } else {
+                completionHandler(shouldContinue)
+            }
+        }
+
+        if #available(iOS 15.0, *) {
+            if let presentationController = emailSignupPromptViewController.presentationController as? UISheetPresentationController {
+                if #available(iOS 16.0, *) {
+                    presentationController.detents = [.custom(resolver: { _ in
+                        AutofillViews.emailSignupPromptMinHeight
+                    })]
+                } else {
+                    presentationController.detents = [.medium()]
+                }
+            }
+        }
+
+        self.present(emailSignupPromptViewController, animated: true)
 
     }
 

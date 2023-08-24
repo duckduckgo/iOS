@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var showKeyboardIfSettingOn = true
     private var lastBackgroundDate: Date?
 
-    private(set) var syncService: DDGSyncing!
+    private(set) var syncService: DDGSync!
     private(set) var syncDataProviders: SyncDataProviders!
     private var syncDidFinishCancellable: AnyCancellable?
     private var syncStateCancellable: AnyCancellable?
@@ -69,16 +69,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        #if targetEnvironment(simulator)
+#if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["UITESTING"] == "true" {
             // Disable hardware keyboards.
             let setHardwareLayout = NSSelectorFromString("setHardwareLayout:")
             UITextInputMode.activeInputModes
-                // Filter `UIKeyboardInputMode`s.
+            // Filter `UIKeyboardInputMode`s.
                 .filter({ $0.responds(to: setHardwareLayout) })
                 .forEach { $0.perform(setHardwareLayout, with: nil) }
         }
-        #endif
+#endif
 
         // Can be removed after a couple of versions
         cleanUpMacPromoExperiment2()
@@ -113,13 +113,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         removeEmailWaitlistState()
-                
+
         Database.shared.loadStore { context, error in
             guard let context = context else {
                 
                 let parameters = [PixelParameters.applicationState: "\(application.applicationState.rawValue)",
                                   PixelParameters.dataAvailability: "\(application.isProtectedDataAvailable)"]
-                        
+
                 switch error {
                 case .none:
                     fatalError("Could not create database stack: Unknown Error")
@@ -192,23 +192,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // MARK: Sync initialisation
 
         syncDataProviders = SyncDataProviders(bookmarksDatabase: bookmarksDatabase, secureVaultErrorReporter: SecureVaultErrorReporter.shared)
-        syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog)
+        let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog)
         syncService.initializeIfNeeded(isInternalUser: InternalUserStore().isInternalUser)
-        syncStateCancellable = syncService.authStatePublisher
-            .prepend(syncService.authState)
-            .map { $0 == .inactive }
-            .removeDuplicates()
-            .sink { [weak self] isSyncDisabled in
-                self?.syncDataProviders.credentialsAdapter.updateDatabaseCleanupSchedule(shouldEnable: isSyncDisabled)
-                self?.syncDataProviders.bookmarksAdapter.updateDatabaseCleanupSchedule(shouldEnable: isSyncDisabled)
-            }
-        syncDataProviders.bookmarksAdapter.databaseCleaner.isSyncActive = { [weak self] in
-            self?.syncService.authState == .active
-        }
-        syncDataProviders.credentialsAdapter.databaseCleaner.isSyncActive = { [weak self] in
-            self?.syncService.authState == .active
-        }
-
+        self.syncService = syncService
 
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         
@@ -275,6 +261,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard !testing else { return }
 
         syncService.initializeIfNeeded(isInternalUser: InternalUserStore().isInternalUser)
+        syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: syncService)
 
         if !(overlayWindow?.rootViewController is AuthenticationViewController) {
             removeOverlay()
@@ -454,6 +441,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         os_log("App launched with url %s", log: .lifecycleLog, type: .debug, url.absoluteString)
+
+        if handleEmailSignUpDeepLink(url) {
+            return true
+        }
+
         NotificationCenter.default.post(name: AutofillLoginListAuthenticator.Notifications.invalidateContext, object: nil)
         mainViewController?.clearNavigationStack()
         autoClear?.applicationWillMoveToForeground()
@@ -586,6 +578,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if !Database.shared.isDatabaseFileInitialized {
             try? autofillStorage.deleteAuthenticationState()
         }
+    }
+
+    private func handleEmailSignUpDeepLink(_ url: URL) -> Bool {
+        guard url.absoluteString.starts(with: URL.emailProtection.absoluteString),
+              let navViewController = mainViewController?.presentedViewController as? UINavigationController,
+              let emailSignUpViewController = navViewController.topViewController as? EmailSignupViewController else {
+            return false
+        }
+        emailSignUpViewController.loadUrl(url)
+        return true
     }
 
     private var mainViewController: MainViewController? {

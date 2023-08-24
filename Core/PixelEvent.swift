@@ -435,6 +435,15 @@ extension Pixel {
         case credentialsCleanupAttemptedWhileSyncWasEnabled
 
         case invalidPayload(Configuration)
+
+        case emailIncontextPromptDisplayed
+        case emailIncontextPromptConfirmed
+        case emailIncontextPromptDismissed
+        case emailIncontextPromptDismissedPersistent
+        case emailIncontextModalDisplayed
+        case emailIncontextModalDismissed
+        case emailIncontextModalExitEarly
+        case emailIncontextModalExitEarlyContinue
     }
     
 }
@@ -855,10 +864,20 @@ extension Pixel.Event {
         case .bookmarksCleanupFailed: return "m_d_bookmarks_cleanup_failed"
         case .bookmarksCleanupAttemptedWhileSyncWasEnabled: return "m_d_bookmarks_cleanup_attempted_while_sync_was_enabled"
 
-        case .credentialsDatabaseCleanupFailed: return "m_d_credentials_database_cleanup_failed"
+        case .credentialsDatabaseCleanupFailed: return "m_d_credentials_database_cleanup_failed_2"
         case .credentialsCleanupAttemptedWhileSyncWasEnabled: return "m_d_credentials_cleanup_attempted_while_sync_was_enabled"
 
         case .invalidPayload(let configuration): return "m_d_\(configuration.rawValue)_invalid_payload".lowercased()
+
+        // MARK: - InContext Email Protection
+        case .emailIncontextPromptDisplayed: return "m_email_incontext_prompt_displayed"
+        case .emailIncontextPromptConfirmed: return "m_email_incontext_prompt_confirmed"
+        case .emailIncontextPromptDismissed: return "m_email_incontext_prompt_dismissed"
+        case .emailIncontextPromptDismissedPersistent: return "m_email_incontext_prompt_dismissed_persisted"
+        case .emailIncontextModalDisplayed: return "m_email_incontext_modal_displayed"
+        case .emailIncontextModalDismissed: return "m_email_incontext_modal_dismissed"
+        case .emailIncontextModalExitEarly: return "m_email_incontext_modal_exit_early"
+        case .emailIncontextModalExitEarlyContinue: return "m_email_incontext_modal_exit_early_continue"
         }
         
     }

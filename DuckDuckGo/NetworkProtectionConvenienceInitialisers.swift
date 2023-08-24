@@ -30,6 +30,13 @@ extension ConnectionStatusObserverThroughSession {
     }
 }
 
+extension ConnectionErrorObserverThroughSession {
+    convenience init() {
+        self.init(platformNotificationCenter: .default,
+                  platformDidWakeNotification: UIApplication.didBecomeActiveNotification)
+    }
+}
+
 extension ConnectionServerInfoObserverThroughSession {
     convenience init() {
         self.init(platformNotificationCenter: .default,
@@ -40,7 +47,7 @@ extension ConnectionServerInfoObserverThroughSession {
 extension NetworkProtectionKeychainTokenStore {
     convenience init() {
         // Error events to be added as part of https://app.asana.com/0/1203137811378537/1205112639044115/f
-        self.init(useSystemKeychain: false, errorEvents: nil)
+        self.init(keychainType: .dataProtection(.unspecified), errorEvents: nil)
     }
 }
 

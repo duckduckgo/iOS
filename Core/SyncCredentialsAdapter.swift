@@ -38,11 +38,11 @@ public final class SyncCredentialsAdapter {
             secureVaultFactory: secureVaultFactory,
             secureVaultErrorReporter: secureVaultErrorReporter,
             errorEvents: CredentialsCleanupErrorHandling(),
-            log: .passwordManager
+            log: .generalLog
         )
     }
 
-    public func updateDatabaseCleanupSchedule(shouldEnable: Bool) {
+    public func cleanUpDatabaseAndUpdateSchedule(shouldEnable: Bool) {
         databaseCleaner.cleanUpDatabaseNow()
         if shouldEnable {
             databaseCleaner.scheduleRegularCleaning()

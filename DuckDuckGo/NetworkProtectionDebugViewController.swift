@@ -18,16 +18,23 @@
 //
 
 import UIKit
+
+#if NETWORK_PROTECTION
+
 import NetworkProtection
+
+#endif
 
 final class NetworkProtectionDebugViewController: UITableViewController {
     private let titles = [
-        Sections.keychain: "Keychain"
+        Sections.keychain: "Keychain",
+        Sections.simulateFailure: "Simulate Failure"
     ]
 
     enum Sections: Int, CaseIterable {
 
         case keychain
+        case simulateFailure
 
     }
 
@@ -36,6 +43,15 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case clearAuthToken
 
     }
+
+    enum SimulateFailureRows: Int, CaseIterable {
+
+        case tunnelFailure
+        case controllerFailure
+
+    }
+
+#if NETWORK_PROTECTION
 
     private let tokenStore: NetworkProtectionTokenStore
 
@@ -50,6 +66,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     required convenience init?(coder: NSCoder) {
         self.init(coder: coder, tokenStore: NetworkProtectionKeychainTokenStore())
     }
+
+#endif
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return Sections.allCases.count
@@ -75,7 +93,17 @@ final class NetworkProtectionDebugViewController: UITableViewController {
                 break
             }
 
-        default: break
+        case .simulateFailure:
+            switch SimulateFailureRows(rawValue: indexPath.row) {
+            case .controllerFailure:
+                cell.textLabel?.text = "Enable NetP > Controller Failure"
+            case .tunnelFailure:
+                cell.textLabel?.text = "Enable NetP > Tunnel Failure"
+            case .none:
+                break
+            }
+        case.none:
+            break
         }
 
         return cell
@@ -84,22 +112,47 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section) {
         case .keychain: return KeychainRows.allCases.count
+        case .simulateFailure: return SimulateFailureRows.allCases.count
         case .none: return 0
+
         }
     }
+
+    #if NETWORK_PROTECTION
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch Sections(rawValue: indexPath.section) {
         case .keychain:
             switch KeychainRows(rawValue: indexPath.row) {
-            case .clearAuthToken:
-                try? tokenStore.deleteToken()
+            case .clearAuthToken: clearAuthToken()
             default: break
             }
-        default: break
+        case .simulateFailure:
+            switch SimulateFailureRows(rawValue: indexPath.row) {
+            case .controllerFailure: simulateControllerFailure()
+            case .tunnelFailure: simulaterTunnelFailure()
+            case .none: return
+            }
+        case .none:
+            break
         }
 
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
+    // MARK: Selection Actions
+
+    private func clearAuthToken() {
+        try? tokenStore.deleteToken()
+    }
+
+    private func simulateControllerFailure() {
+        NetworkProtectionTunnelController.simulationOptions.setEnabled(true, option: .controllerFailure)
+    }
+
+    private func simulaterTunnelFailure() {
+        NetworkProtectionTunnelController.simulationOptions.setEnabled(true, option: .tunnelFailure)
+    }
+
+    #endif
 }

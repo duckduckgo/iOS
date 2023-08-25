@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1692659899657,
+    "version": 1692959990858,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -103,6 +103,10 @@
         },
         "autoconsent": {
             "exceptions": [
+                {
+                    "domain": "allocine.fr",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1241"
+                },
                 {
                     "domain": "bild.de",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/326"
@@ -250,7 +254,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "114934e1f0153202bf5e6f238b35ad88"
+            "hash": "9d382a6940e9ab8894d24533c4f0d543"
         },
         "autofill": {
             "exceptions": [
@@ -1077,6 +1081,10 @@
                 {
                     "domain": "freenom.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1109"
+                },
+                {
+                    "domain": "iamexpat.nl",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1247"
                 }
             ],
             "settings": {
@@ -1094,7 +1102,7 @@
                 }
             },
             "state": "disabled",
-            "hash": "0a080f38c1774ed81b4f93d2e593a669"
+            "hash": "747adbd628db0bccd219c15f29583d02"
         },
         "clickToPlay": {
             "exceptions": [],
@@ -3580,6 +3588,16 @@
             "state": "enabled",
             "hash": "831a734e08585b40a38556ad9d108e7b"
         },
+        "networkProtection": {
+            "state": "disabled",
+            "features": {
+                "waitlist": {
+                    "state": "disabled"
+                }
+            },
+            "exceptions": [],
+            "hash": "bf4c9cd751a7626bd89136f6cc98ccf1"
+        },
         "newTabContinueSetUp": {
             "exceptions": [],
             "state": "disabled",
@@ -5155,6 +5173,17 @@
                             }
                         ]
                     },
+                    "ipify.org": {
+                        "rules": [
+                            {
+                                "rule": "api.ipify.org/",
+                                "domains": [
+                                    "mass.gov"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1239"
+                            }
+                        ]
+                    },
                     "jimstatic.com": {
                         "rules": [
                             {
@@ -6305,7 +6334,7 @@
                 }
             },
             "exceptions": [],
-            "hash": "331ee3a6561d1cf6a042fd47770e0ceb"
+            "hash": "75921f8ca210af3c0aebe34d50c90e61"
         },
         "trackingCookies1p": {
             "settings": {
@@ -6367,6 +6396,11 @@
             "exceptions": [],
             "state": "disabled",
             "hash": "5d33a7d6a3f780d2e07076e209a5bccb"
+        },
+        "voiceSearch": {
+            "exceptions": [],
+            "state": "disabled",
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
         },
         "webCompat": {
             "exceptions": [],

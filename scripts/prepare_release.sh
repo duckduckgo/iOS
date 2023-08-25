@@ -108,10 +108,9 @@ read_command_line_arguments() {
 	if [[ $is_hotfix ]]; then
 		version_to_hotfix=${version}
 		if ! [[ $is_coldfix ]]; then
-			# shellcheck disable=SC2206
-			arrIN=(${version//./ })
-			patch_number=$((arrIN[2]+1))
-			version="${arrIN[0]}.${arrIN[1]}.${patch_number}"
+			IFS='.' read -ra arrIN <<< "$version"
+			patch_number=$((arrIN[2] + 1))
+			version="${arrIN[0]}.${arrIN[1]}.$patch_number"
 		fi
 	fi
 

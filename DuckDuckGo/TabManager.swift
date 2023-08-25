@@ -35,6 +35,9 @@ class TabManager {
     private var previewsSource: TabPreviewsSource
     weak var delegate: TabDelegate?
 
+    @UserDefaultsWrapper(key: .faviconTabsCacheNeedsCleanup, defaultValue: true)
+    var tabsCacheNeedsCleanup: Bool
+
     init(model: TabsModel,
          previewsSource: TabPreviewsSource,
          bookmarksDatabase: CoreDataDatabase,
@@ -238,6 +241,39 @@ class TabManager {
     
     func prepareCurrentTabForDataClearing() {
         current?.prepareForDataClearing()
+    }
+
+    func cleanupTabsFaviconCache() {
+        guard tabsCacheNeedsCleanup else { return }
+
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            guard let self = self,
+                  let tabsCacheUrl = Favicons.CacheType.tabs.cacheLocation()?.appendingPathComponent(Favicons.Constants.tabsCachePath),
+                  let contents = try? FileManager.default.contentsOfDirectory(at: tabsCacheUrl, includingPropertiesForKeys: nil, options: []),
+                    !contents.isEmpty else { return }
+
+            let imageDomainURLs = contents.compactMap({ $0.filename })
+
+            // create a Set of all unique hosts in case there are hundreds of tabs with many duplicate hosts
+            let tabLink = Set(self.model.tabs.compactMap { tab in
+                if let host = tab.link?.url.host {
+                    return host
+                }
+
+                return nil
+            })
+
+            // hash the unique tab hosts
+            let tabLinksHashed = tabLink.map { Favicons.createHash(ofDomain: $0) }
+
+            // filter images that don't have a corresponding tab
+            let toDelete = imageDomainURLs.filter { !tabLinksHashed.contains($0) }
+            toDelete.forEach {
+                Favicons.shared.removeTabFavicon(forCacheKey: $0)
+            }
+
+            self.tabsCacheNeedsCleanup = false
+        }
     }
 }
 

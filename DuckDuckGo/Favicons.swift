@@ -34,6 +34,7 @@ public class Favicons {
         static let fireproofCache = CacheType.fireproof.create()
         static let tabsCache = CacheType.tabs.create()
         static let targetImageSizePoints: CGFloat = 64
+        public static let tabsCachePath = "com.onevcat.Kingfisher.ImageCache.tabs"
         public static let maxFaviconSize: CGSize = CGSize(width: 192, height: 192)
         
         public static let caches = [

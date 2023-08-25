@@ -1,4 +1,8 @@
-//  Copyright © 2019 DuckDuckGo. All rights reserved.
+//
+//  Configuration-Alpha.xcconfig
+//  DuckDuckGo
+//
+//  Copyright © 2023 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -13,11 +17,12 @@
 //  limitations under the License.
 //
 
-// The Apple Developer account's Team ID
-DEVELOPMENT_TEAM = HKE973VLUW
+#include "DuckDuckGoDeveloper.xcconfig"
+#include? "ExternalDeveloper.xcconfig"
+#include? "Version.xcconfig"
 
-// The code signing style needs to be specified manually because the DDG team has multiple provisioning profiles that match the team and bundle identifier
-CODE_SIGN_STYLE = Manual
+// The app bundle identifier
+APP_ID = com.duckduckgo.mobile.ios.alpha
 
-// The manually specified provisioning profile
-PROVISIONING_PROFILE_SPECIFIER = Development - App
+// A prefix for group ids. Must start with "group.".
+GROUP_ID_PREFIX = group.com.duckduckgo.alpha

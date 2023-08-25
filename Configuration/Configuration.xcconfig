@@ -17,11 +17,5 @@
 #include? "ExternalDeveloper.xcconfig"
 #include? "Version.xcconfig"
 
-// The app bundle identifier
-APP_ID = com.duckduckgo.mobile.ios
-
-// A prefix for group ids. Must start with "group.".
-GROUP_ID_PREFIX = group.com.duckduckgo
-
 DDG_SLOW_COMPILE_CHECK_THRESHOLD = 100
 OTHER_SWIFT_FLAGS[config=Debug][arch=*][sdk=*] = $(inherited) -Xfrontend -warn-long-expression-type-checking=$(DDG_SLOW_COMPILE_CHECK_THRESHOLD) -Xfrontend -warn-long-function-bodies=$(DDG_SLOW_COMPILE_CHECK_THRESHOLD)

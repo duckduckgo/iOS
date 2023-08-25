@@ -51,7 +51,7 @@ print_usage_and_exit() {
 
 	cat <<- EOF
 	Usage:
-	  $ $(basename "$0") <version> [branch-with-fix] [-h] [-v]
+	  $ $(basename "$0") <version> <branch-with-fix> [-h] [-v]
 	  Current version: $(cut -d' ' -f3 < "${base_dir}/Configuration/Version.xcconfig")
 
 	Options:

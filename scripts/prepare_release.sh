@@ -65,6 +65,8 @@ print_usage_and_exit() {
 }
 
 read_command_line_arguments() {
+	number_of_arguments="$#"
+
 	local regexp="^[0-9]+(\.[0-9]+)*$"
 	if [[ ! "$1" =~ $regexp ]]; then
 		print_usage_and_exit "💥 Error: Wrong app version specified"
@@ -106,6 +108,10 @@ read_command_line_arguments() {
 	shift $((OPTIND-1))
 
 	if [[ $is_hotfix ]]; then
+		if [[ $number_of_arguments -ne 3 ]]; then
+			print_usage_and_exit "💥 Error: Wrong number of arguments. Did you specify a fix branch?"
+		fi
+
 		version_to_hotfix=${version}
 		if ! [[ $is_coldfix ]]; then
 			IFS='.' read -ra arrIN <<< "$version"

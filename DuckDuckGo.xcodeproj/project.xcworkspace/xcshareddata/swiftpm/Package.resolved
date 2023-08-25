@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": null,
-          "revision": "f419ede296e0b30d680fcd80364962ea1c1b1365",
-          "version": "72.0.0"
+          "revision": "f3e85b86d6369cb03bfaf66169057c6452aa751f",
+          "version": "75.1.0"
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/duckduckgo/content-scope-scripts",
         "state": {
           "branch": null,
-          "revision": "a4f35ad23ac4a0eb9b36b94f1f2aa0f0ebf2855d",
-          "version": "4.30.0"
+          "revision": "8def15fe8a4c2fb76730f640507e9fd1d6c1f8a7",
+          "version": "4.32.0"
         }
       },
       {
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
           "branch": null,
-          "revision": "b1160df954eea20cd4cdf9356afc369751981b16",
-          "version": "8.0.0"
+          "revision": "20a6aeddbd86b43fd83c42aa45fdd9ec6db0e0f7",
+          "version": "8.2.0"
         }
       },
       {
@@ -168,8 +168,8 @@
         "repositoryURL": "https://github.com/duckduckgo/wireguard-apple",
         "state": {
           "branch": null,
-          "revision": "cf3c0f5132dbb8de08c46155a1bbd5e5bb6a47c1",
-          "version": "1.1.0"
+          "revision": "2d8172c11478ab11b0f5ad49bdb4f93f4b3d5e0d",
+          "version": "1.1.1"
         }
       }
     ]

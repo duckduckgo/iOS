@@ -922,11 +922,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Download started for %@";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "Email Protection";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Cancel";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Generate Private Duck Address";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Generate Private Duck Address";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Block email trackers & hide address";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Select email address";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Block email trackers";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Block email trackers with a Duck Address";
@@ -951,6 +966,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Block email trackers and hide your address";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Continue Setup";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Exit Setup";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "If you exit now, your Duck Address will not be saved!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Don’t Show Again";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Protect My Email";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Create a unique, random address that also removes hidden trackers and forwards email to your inbox.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Hide Your Email and\nBlock Trackers";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "No bookmarks added yet";
@@ -1183,11 +1219,11 @@
 /* OK title for invite screen alert dismissal button */
 "invite.alert.ok.button" = "OK";
 
+/* Continue button on an invite dialog */
+"invite.dialog.continue.button" = "Continue";
+
 /* Get Started button on an invite dialog */
 "invite.dialog.get.started.button" = "Get Started";
-
-/* Submit button on an invite dialog */
-"invite.dialog.submit.button" = "Submit";
 
 /* Message to show after user enters an unrecognized invite code */
 "invite.dialog.unrecognized.code.message" = "We didn’t recognize this Invite Code.";
@@ -1300,6 +1336,12 @@ https://duckduckgo.com/mac";
 /* No comment provided by engineer. */
 "menu.button.hint" = "Browsing Menu";
 
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Back";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Next";
+
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Done";
 
@@ -1332,6 +1374,48 @@ https://duckduckgo.com/mac";
 
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
+
+/* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
+"network.protection.status.connected.format" = "Connected - %@";
+
+/* The label for the NetP VPN when connecting */
+"network.protection.status.connecting" = "Connecting...";
+
+/* The label for the NetP VPN when disconnected */
+"network.protection.status.disconnected" = "Not connected";
+
+/* The label for the NetP VPN when disconnecting */
+"network.protection.status.disconnecting" = "Disconnecting...";
+
+/* Message label text for the netP status view */
+"network.protection.status.header.message" = "DuckDuckGo's VPN secures all of your device's Internet traffic anytime, anywhere.";
+
+/* Header title label text for the status view when netP is disconnected */
+"network.protection.status.header.title.off" = "Network Protection is Off";
+
+/* Header title label text for the status view when netP is connected */
+"network.protection.status.header.title.on" = "Network Protection is On";
+
+/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+"network.protection.status.menu.share.feedback" = "Share Feedback";
+
+/* Connection details label shown in NetworkProtection's status view. */
+"network.protection.status.view.connection.details" = "Connection Details";
+
+/* Generic connection failed error message shown in NetworkProtection's status view. */
+"network.protection.status.view.error.connection.failed.message" = "Please try again later.";
+
+/* Generic connection failed error title shown in NetworkProtection's status view. */
+"network.protection.status.view.error.connection.failed.title" = "Failed to Connect.";
+
+/* IP Address label shown in NetworkProtection's status view. */
+"network.protection.status.view.ip.address" = "IP Address";
+
+/* Location label shown in NetworkProtection's status view. */
+"network.protection.status.view.location" = "Location";
+
+/* Title label text for the status view when netP is disconnected */
+"network.protection.status.view.title" = "Network Protection";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";

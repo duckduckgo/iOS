@@ -60,7 +60,6 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var macBrowserWaitlistAccessoryText: UILabel!
     @IBOutlet weak var windowsBrowserWaitlistCell: UITableViewCell!
     @IBOutlet weak var windowsBrowserWaitlistAccessoryText: UILabel!
-    @IBOutlet weak var appTPCell: UITableViewCell!
     @IBOutlet weak var netPCell: UITableViewCell!
     @IBOutlet weak var longPressCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
@@ -84,7 +83,6 @@ class SettingsViewController: UITableViewController {
     private let moreFromDDGSectionIndex = 6
     private let debugSectionIndex = 8
     
-    private let appTPDatabase: CoreDataDatabase
     private let bookmarksDatabase: CoreDataDatabase
 
     private lazy var emailManager = EmailManager()
@@ -95,6 +93,7 @@ class SettingsViewController: UITableViewController {
     fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager
     fileprivate lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     fileprivate let syncService: DDGSyncing
+    fileprivate let syncDataProviders: SyncDataProviders
     fileprivate let internalUserDecider: InternalUserDecider
 #if NETWORK_PROTECTION
     private let connectionObserver = ConnectionStatusObserverThroughSession()
@@ -116,18 +115,14 @@ class SettingsViewController: UITableViewController {
     private var shouldShowSyncCell: Bool {
         return featureFlagger.isFeatureOn(.sync)
     }
-    
-    private lazy var shouldShowAppTPCell: Bool = {
-#if APP_TRACKING_PROTECTION
-        return featureFlagger.isFeatureOn(.appTrackingProtection)
-#else
-        return false
-#endif
-    }()
 
     private lazy var shouldShowNetPCell: Bool = {
 #if NETWORK_PROTECTION
-        return featureFlagger.isFeatureOn(.networkProtection)
+        if #available(iOS 15, *) {
+            return featureFlagger.isFeatureOn(.networkProtection)
+        } else {
+            return false
+        }
 #else
         return false
 #endif
@@ -177,7 +172,6 @@ class SettingsViewController: UITableViewController {
         configureEmailProtectionAccessoryText()
         configureMacBrowserWaitlistCell()
         configureWindowsBrowserWaitlistCell()
-        configureAppTPCell()
 
         // Make sure multiline labels are correctly presented
         tableView.setNeedsLayout()
@@ -192,14 +186,14 @@ class SettingsViewController: UITableViewController {
     }
 
     init?(coder: NSCoder,
-          appTPDatabase: CoreDataDatabase,
           bookmarksDatabase: CoreDataDatabase,
           syncService: DDGSyncing,
+          syncDataProviders: SyncDataProviders,
           internalUserDecider: InternalUserDecider) {
 
-        self.appTPDatabase = appTPDatabase
         self.bookmarksDatabase = bookmarksDatabase
         self.syncService = syncService
+        self.syncDataProviders = syncDataProviders
         self.internalUserDecider = internalUserDecider
         super.init(coder: coder)
     }
@@ -350,26 +344,6 @@ class SettingsViewController: UITableViewController {
             windowsBrowserWaitlistCell.detailTextLabel?.text = WindowsBrowserWaitlist.shared.settingsSubtitle
         }
     }
-    
-    private func configureAppTPCell() {
-        appTPCell.isHidden = !shouldShowAppTPCell
-
-#if APP_TRACKING_PROTECTION
-        Task { @MainActor in
-            let fwm = FirewallManager()
-            await fwm.refreshManager()
-            if UserDefaults().bool(forKey: UserDefaultsWrapper<Any>.Key.appTPUsed.rawValue) {
-                if fwm.status() != .connected {
-                    appTPCell.detailTextLabel?.text = UserText.appTPCellDisabled
-                } else {
-                    appTPCell.detailTextLabel?.text = UserText.appTPCellEnabled
-                }
-            } else {
-                appTPCell.detailTextLabel?.text = UserText.appTPCellDetail
-            }
-        }
-#endif
-    }
 
     private func configureNetPCell() {
         netPCell.isHidden = !shouldShowNetPCell
@@ -400,14 +374,22 @@ class SettingsViewController: UITableViewController {
     }
 
     private func showAutofill(animated: Bool = true) {
-        let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+        let autofillController = AutofillLoginSettingsListViewController(
+            appSettings: appSettings,
+            syncService: syncService,
+            syncDataProviders: syncDataProviders
+        )
         autofillController.delegate = self
         Pixel.fire(pixel: .autofillSettingsOpened)
         navigationController?.pushViewController(autofillController, animated: animated)
     }
     
     func showAutofillAccountDetails(_ account: SecureVaultModels.WebsiteAccount) {
-        let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+        let autofillController = AutofillLoginSettingsListViewController(
+            appSettings: appSettings,
+            syncService: syncService,
+            syncDataProviders: syncDataProviders
+        )
         autofillController.delegate = self
         let detailsController = autofillController.makeAccountDetailsScreen(account)
 
@@ -432,26 +414,6 @@ class SettingsViewController: UITableViewController {
     private func showMacBrowserWaitlistViewController() {
         navigationController?.pushViewController(MacWaitlistViewController(nibName: nil, bundle: nil), animated: true)
     }
-
-#if APP_TRACKING_PROTECTION
-    func setNavColor(isOnboarding: Bool) {
-        let coloredAppearance = UINavigationBarAppearance()
-        coloredAppearance.configureWithTransparentBackground()
-        coloredAppearance.backgroundColor = UIColor(designSystemColor: isOnboarding ? .surface : .background)
-        
-        let navBar = self.navigationController?.navigationBar
-        navBar?.standardAppearance = coloredAppearance
-        navBar?.compactAppearance = coloredAppearance
-        navBar?.scrollEdgeAppearance = coloredAppearance
-    }
-    
-    private func showAppTP() {
-        navigationController?.pushViewController(
-            AppTPActivityHostingViewController(appTrackingProtectionDatabase: appTPDatabase, setNavColor: setNavColor(isOnboarding:)),
-            animated: true
-        )
-    }
-#endif
 
 #if NETWORK_PROTECTION
     private func showNetP() {
@@ -506,13 +468,7 @@ class SettingsViewController: UITableViewController {
 
         case syncCell:
             showSync()
-
-        case appTPCell:
-#if APP_TRACKING_PROTECTION
-            showAppTP()
-#else
-            break
-#endif
+            
         case netPCell:
 #if NETWORK_PROTECTION
             showNetP()
@@ -581,7 +537,7 @@ class SettingsViewController: UITableViewController {
             return CGFloat.leastNonzeroMagnitude
         } else if debugSectionIndex == section && !shouldShowDebugCell {
             return CGFloat.leastNonzeroMagnitude
-        } else if moreFromDDGSectionIndex == section && !(shouldShowAppTPCell || shouldShowNetPCell) {
+        } else if moreFromDDGSectionIndex == section && !shouldShowNetPCell {
             return CGFloat.leastNonzeroMagnitude
         } else {
             return super.tableView(tableView, heightForFooterInSection: section)
@@ -596,22 +552,11 @@ class SettingsViewController: UITableViewController {
         let rows = super.tableView(tableView, numberOfRowsInSection: section)
         if section == appearanceSectionIndex && textSizeCell.isHidden {
             return rows - 1
-        } else if section == moreFromDDGSectionIndex {
-           return adaptNumberOfRowsForMoreFromDDGSection(rows)
+        } else if section == moreFromDDGSectionIndex && !shouldShowNetPCell {
+            return rows - 1
         } else {
             return rows
         }
-    }
-
-    private func adaptNumberOfRowsForMoreFromDDGSection(_ rows: Int) -> Int {
-        var adaptedRows = rows
-        if !shouldShowNetPCell {
-            adaptedRows -= 1
-        }
-        if !shouldShowAppTPCell {
-            adaptedRows -= 1
-        }
-        return adaptedRows
     }
 
     @IBAction func onVoiceSearchToggled(_ sender: UISwitch) {

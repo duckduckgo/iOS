@@ -38,8 +38,7 @@ struct PasswordGenerationPromptView: View {
 
         return ZStack {
             AutofillViews.CloseButtonHeader(action: viewModel.cancelButtonPressed)
-                .offset(x: AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) ? Const.Size.closeButtonOffsetPortrait
-                                                                                                  : Const.Size.closeButtonOffset)
+                .offset(x: horizontalPadding)
                 .zIndex(1)
 
                 VStack {
@@ -66,8 +65,7 @@ struct PasswordGenerationPromptView: View {
                 .useScrollView(shouldUseScrollView(), minHeight: frame.height)
 
         }
-        .padding(.horizontal, AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) ? Const.Size.closeButtonOffsetPortrait
-                                                                                                     : Const.Size.closeButtonOffset)
+        .padding(.horizontal, horizontalPadding)
 
     }
 
@@ -138,6 +136,18 @@ struct PasswordGenerationPromptView: View {
                                          action: viewModel.cancelButtonPressed)
         }
     }
+
+    private var horizontalPadding: CGFloat {
+        if AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) {
+            if AutofillViews.isSmallFrame(frame) {
+                return Const.Size.closeButtonOffsetPortraitSmallFrame
+            } else {
+                return Const.Size.closeButtonOffsetPortrait
+            }
+        } else {
+            return Const.Size.closeButtonOffset
+        }
+    }
 }
 
 // MARK: - View Helpers
@@ -173,6 +183,7 @@ private enum Const {
     enum Size {
         static let closeButtonOffset: CGFloat = 48.0
         static let closeButtonOffsetPortrait: CGFloat = 44.0
+        static let closeButtonOffsetPortraitSmallFrame: CGFloat = 16.0
         static let topPadding: CGFloat = 56.0
         static let ios15scrollOffset: CGFloat = 80.0
         static let passwordButtonSpacing: CGFloat = 10.0

@@ -36,6 +36,7 @@ class RootDebugViewController: UITableViewController {
         case crashMemory = 667
         case toggleInspectableWebViews = 668
         case toggleInternalUserState = 669
+        case resetEmailProtectionInContextSignUp = 670
     }
 
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -78,6 +79,14 @@ class RootDebugViewController: UITableViewController {
         guard let controller = SyncDebugViewController(coder: coder,
                                                        sync: sync,
                                                        bookmarksDatabase: bookmarksDatabase) else {
+            fatalError("Failed to create controller")
+        }
+
+        return controller
+    }
+
+    @IBSegueAction func onCreateNetPDebugScreen(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> NetworkProtectionDebugViewController {
+        guard let controller = NetworkProtectionDebugViewController(coder: coder) else {
             fatalError("Failed to create controller")
         }
 
@@ -127,6 +136,11 @@ class RootDebugViewController: UITableViewController {
             internalUserDecider?.debugSetInternalUserState(newState)
             cell.accessoryType = newState ? .checkmark : .none
             NotificationCenter.default.post(Notification(name: AppUserDefaults.Notifications.inspectableWebViewsToggled))
+        }
+
+        if tableView.cellForRow(at: indexPath)?.tag == Row.resetEmailProtectionInContextSignUp.rawValue {
+            EmailManager().resetEmailProtectionInContextPrompt()
+            tableView.deselectRow(at: indexPath, animated: true)
         }
 
     }

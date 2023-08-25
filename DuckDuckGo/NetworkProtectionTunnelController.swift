@@ -25,36 +25,42 @@ import Core
 import NetworkExtension
 import NetworkProtection
 
-public protocol NetworkProtectionTunnelControlling {
-    var status: ConnectionStatus { get }
-    var statusPublisher: AnyPublisher<ConnectionStatus, Never> { get }
-    func setState(to enabled: Bool) async throws
-}
+final class NetworkProtectionTunnelController: TunnelController {
+    static var simulationOptions = NetworkProtectionSimulationOptions()
 
-final class NetworkProtectionTunnelController: NetworkProtectionTunnelControlling {
+    private let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified), errorEvents: nil)
+    private let errorStore = NetworkProtectionTunnelErrorStore()
 
-    private let tokenStore = NetworkProtectionKeychainTokenStore(useSystemKeychain: false, errorEvents: nil)
-    private let connectionObserver = ConnectionStatusObserverThroughSession()
+    // MARK: - Starting & Stopping the VPN
 
-    // MARK: - NetworkProtectionTunnelControlling
-
-    @Published var status: ConnectionStatus = .disconnected
-
-    var statusPublisher: AnyPublisher<ConnectionStatus, Never> {
-        connectionObserver.publisher.eraseToAnyPublisher()
-    }
-
-    func setState(to enabled: Bool) async throws {
-        if enabled {
-            try await start()
-        } else {
-            try await ConnectionSessionUtilities.activeSession()?.stopVPNTunnel()
-        }
+    enum StartError: LocalizedError {
+        case connectionStatusInvalid
+        case simulateControllerFailureError
     }
 
     /// Starts the VPN connection used for Network Protection
     ///
-    private func start() async throws {
+    func start() async {
+        do {
+            try await startWithError()
+        } catch {
+            #if DEBUG
+            errorStore.lastErrorMessage = error.localizedDescription
+            #endif
+        }
+    }
+
+    func stop() async {
+        do {
+            try await ConnectionSessionUtilities.activeSession()?.stopVPNTunnel()
+        } catch {
+            #if DEBUG
+            errorStore.lastErrorMessage = error.localizedDescription
+            #endif
+        }
+    }
+
+    private func startWithError() async throws {
         let tunnelManager: NETunnelProviderManager
 
         do {
@@ -66,7 +72,7 @@ final class NetworkProtectionTunnelController: NetworkProtectionTunnelControllin
         switch tunnelManager.connection.status {
         case .invalid:
             reloadTunnelManager()
-            try await start()
+            try await startWithError()
         case .connected:
             // Intentional no-op
             break
@@ -84,8 +90,23 @@ final class NetworkProtectionTunnelController: NetworkProtectionTunnelControllin
     private func start(_ tunnelManager: NETunnelProviderManager) throws {
         var options = [String: NSObject]()
 
+        if Self.simulationOptions.isEnabled(.controllerFailure) {
+            Self.simulationOptions.setEnabled(false, option: .controllerFailure)
+            throw StartError.simulateControllerFailureError
+        }
+
         options["activationAttemptId"] = UUID().uuidString as NSString
         options["authToken"] = try tokenStore.fetchToken() as NSString?
+
+        if Self.simulationOptions.isEnabled(.tunnelFailure) {
+            Self.simulationOptions.setEnabled(false, option: .tunnelFailure)
+            options[NetworkProtectionOptionKey.tunnelFailureSimulation] = NetworkProtectionOptionValue.true
+        }
+
+        if Self.simulationOptions.isEnabled(.controllerFailure) {
+            Self.simulationOptions.setEnabled(false, option: .controllerFailure)
+            throw StartError.simulateControllerFailureError
+        }
 
         do {
             try tunnelManager.connection.startVPNTunnel(options: options)

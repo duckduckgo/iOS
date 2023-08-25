@@ -152,4 +152,14 @@ public class TabsModel: NSObject, NSCoding {
         tabs.append(Tab())
         currentIndex = 0
     }
+    
+    func tabExists(withHost host: String) -> Bool {
+        return !tabs.filter {
+            if let tabHost = $0.link?.url.host {
+                return tabHost == host
+            }
+
+            return false
+        }.isEmpty
+    }
 }

@@ -17,10 +17,11 @@
 //  limitations under the License.
 //
 
+import Common
 import UIKit
 import Core
-import os.log
 import PrivacyDashboard
+import DesignResourcesKit
 
 extension OmniBar: NibLoading {}
 
@@ -295,24 +296,11 @@ class OmniBar: UIView {
         }
         
         updateOmniBarPadding()
-        updateSearchBarBorder()
     }
 
     private func updateOmniBarPadding() {
         omniBarLeadingConstraint.constant = (state.hasLargeWidth ? 24 : 8) + safeAreaInsets.left
         omniBarTrailingConstraint.constant = (state.hasLargeWidth ? 24 : 14) + safeAreaInsets.right
-    }
-    
-    private func updateSearchBarBorder() {
-        let theme = ThemeManager.shared.currentTheme
-        if state.showBackground {
-            editingBackground?.backgroundColor = theme.searchBarBackgroundColor
-            editingBackground?.borderColor = theme.searchBarBackgroundColor
-        } else {
-            editingBackground.borderWidth = 1.5
-            editingBackground.borderColor = theme.searchBarBorderColor
-            editingBackground.backgroundColor = UIColor.clear
-        }
     }
 
     /*
@@ -331,7 +319,6 @@ class OmniBar: UIView {
     }
 
     @discardableResult override func resignFirstResponder() -> Bool {
-        refreshState(state.onEditingStoppedState)
         return textField.resignFirstResponder()
     }
 
@@ -432,7 +419,6 @@ class OmniBar: UIView {
     }
     
     @IBAction func onCancelPressed(_ sender: Any) {
-        refreshState(state.onEditingStoppedState)
         omniDelegate?.onCancelPressed()
     }
     
@@ -486,7 +472,7 @@ extension OmniBar: UITextFieldDelegate {
         omniDelegate?.onTextFieldWillBeginEditing(self)
         return true
     }
-    
+
     func textFieldDidBeginEditing(_ textField: UITextField) {
         DispatchQueue.main.async {
             let highlightText = self.omniDelegate?.onTextFieldDidBeginEditing(self) ?? true
@@ -499,18 +485,20 @@ extension OmniBar: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        onQuerySubmitted()
         omniDelegate?.onEnterPressed()
-        refreshState(state.onEditingStoppedState)
         return true
     }
-    
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        omniDelegate?.onDismissed()
+        refreshState(state.onEditingStoppedState)
+    }
 }
 
 extension OmniBar: Themable {
     
     public func decorate(with theme: Theme) {
-        backgroundColor = theme.barBackgroundColor
+        backgroundColor = theme.omniBarBackgroundColor
         tintColor = theme.barTintColor
         
         configureTextField()
@@ -527,15 +515,14 @@ extension OmniBar: Themable {
             textField.attributedText = OmniBar.demphasisePath(forUrl: url)
         }
         textField.textColor = theme.searchBarTextColor
-        textField.tintColor = theme.searchBarTextColor
+        textField.tintColor = UIColor(designSystemColor: .accent)
         textField.keyboardAppearance = theme.keyboardAppearance
-        clearButton.tintColor = theme.searchBarClearTextIconColor
-        voiceSearchButton.tintColor = theme.searchBarVoiceSearchIconColor
+        clearButton.tintColor = UIColor(designSystemColor: .icons)
+        voiceSearchButton.tintColor = UIColor(designSystemColor: .icons)
         
-        searchLoupe.tintColor = theme.barTintColor
+        searchLoupe.tintColor = UIColor(designSystemColor: .icons)
+        searchLoupe.alpha = 0.5
         cancelButton.setTitleColor(theme.barTintColor, for: .normal)
-        
-        updateSearchBarBorder()
     }
 }
 // swiftlint:enable file_length

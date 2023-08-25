@@ -17,7 +17,7 @@
 "action.title.add" = "Toevoegen";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Login met automatisch invullen";
+"action.title.autofill.logins" = "Aanmeldgegevens";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Toevoegen aan bladwijzers";
@@ -179,13 +179,13 @@
 "autofill.keep-enabled.alert.disable" = "Uitschakelen";
 
 /* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Blijven gebruiken";
+"autofill.keep-enabled.alert.keep-using" = "Blijf opslaan";
 
 /* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "Je kunt Automatisch invullen op elk moment uitschakelen in de instellingen.";
+"autofill.keep-enabled.alert.message" = "Je kunt dit op elk moment uitschakelen in de instellingen.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Wil je Automatisch invullen blijven gebruiken?";
+"autofill.keep-enabled.alert.title" = "Wil je aanmeldgegevens blijven opslaan?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Weergeven";
@@ -268,26 +268,20 @@
 /* Title for alert when attempting to save a duplicate login */
 "autofill.logins.details.save-duplicate-alert.title" = "Dubbele aanmeldgegevens";
 
-/* Title for view displayed when autofill is locked */
-"autofill.logins.details.title" = "Automatisch invullen ontgrendelen";
-
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Gebruikersnaam";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Aanmeldgegevens worden alleen op dit apparaat veilig opgeslagen";
+"autofill.logins.empty-view.subtitle" = "Aanmeldgegevens worden veilig opgeslagen op je apparaat.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Nog geen aanmeldgegevens opgeslagen";
-
-/* Title for view displayed when autofill is disabled and has no items */
-"autofill.logins.empty-view.title-disabled" = "Schakel Automatisch invullen in om aanmeldgegevens op te slaan";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Annuleren";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Ontgrendelen om opgeslagen aanmeldgegevens te gebruiken";
+"autofill.logins.list.auth.reason" = "Ontgrendel het apparaat om toegang te krijgen tot opgeslagen aanmeldgegevens";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Sluiten";
@@ -298,6 +292,9 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Aanmeldgegevens voor %@ verwijderd";
 
+/* Toast message when a login item without a title is deleted */
+"autofill.logins.list.login-deleted-message-no-title" = "Aanmeldgegevens verwijderd";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Aanmeldgegevens zoeken";
 
@@ -305,13 +302,13 @@
 "autofill.logins.list.suggested" = "Aanbevolen";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Login met automatisch invullen";
+"autofill.logins.list.title" = "Aanmeldgegevens";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Er is een toegangscode vereist om je gegevens voor Automatisch invullen te beschermen. Ga naar de instellingen van het apparaat om een toegangscode in te stellen.";
+"autofill.logins.no-auth.subtitle" = "Er is een toegangscode vereist om je aanmeldgegevens te beschermen.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Stel de toegangscode van je apparaat in om Automatisch invullen te gebruiken";
+"autofill.logins.no-auth.title" = "Beveilig je apparaat om aanmeldgegevens op te slaan";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Annuleren";
@@ -328,6 +325,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "Van %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Wachtwoord voor %@";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Opgeslagen aanmeldgegevens gebruiken?";
 
@@ -337,11 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Geen resultaten";
 
-/* Message displayed on modal explaining that an additional login will be saved. */
-"autofill.save-login.additional-login.message" = "Dit bespaart een extra login voor deze site.";
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Wachtwoord wordt opgeslagen in aanmeldgegevens.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Gegenereerd wachtwoord van DuckDuckGo gebruiken?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Gegenereerd wachtwoord gebruiken";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Zelf wachtwoord aanmaken";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo slaat deze aanmeldgegevens veilig op je apparaat op. Je kunt opgeslagen aanmeldgegevens beheren in Instellingen.";
+"autofill.save-login.new-user.message" = "Aanmeldgegevens worden veilig opgeslagen op je apparaat en kunnen worden beheerd via het menu Aanmeldgegevens in Instellingen.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Wil je dat DuckDuckGo je login opslaat?";
@@ -364,14 +373,17 @@
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Wachtwoord weergeven";
 
-/* Confirm CTA displayed on modal asking for the user to update the login */
-"autofill.update-login.save.CTA" = "Login bijwerken";
+/* Message displayed on modal asking for the user to update the password */
+"autofill.update-password.message" = "DuckDuckGo werkt deze opgeslagen aanmeldgegevens op je apparaat bij.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Wachtwoord bijwerken";
 
 /* Title displayed on modal asking for the user to update the password */
-"autofill.update-password.title" = "Wachtwoord bijwerken?";
+"autofill.update-password.title" = "Wachtwoord bijwerken voor\n%@?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-username.save.CTA" = "Gebruikersnaam bijwerken";
 
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "Gebruikersnaam bijwerken?";
@@ -646,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Downloaden gestart voor %@";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "E-mailbescherming";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Annuleren";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Privé-Duck Address genereren";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Privé-Duck Address genereren";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "E-mailtrackers blokkeren en adres verbergen";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "E-mailadres selecteren";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "E-mailtrackers blokkeren";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "E-mailtrackers met een Duck-adres blokkeren";
@@ -675,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blokkeer e-mailtrackers en verberg je adres";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Doorgaan met instellen";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Instellen beëindigen";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Als je nu afsluit, wordt je Duck Address niet opgeslagen!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Niet meer weergeven";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Mijn e-mailadres beschermen";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Maak een uniek, willekeurig adres dat ook verborgen trackers verwijdert en e-mails doorstuurt naar je inbox.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Je e-mailadres verbergen en\n trackers blokkeren";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Nog geen bladwijzers toegevoegd";
@@ -1002,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Optiemenu";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Terug";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Volgende";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Klaar";

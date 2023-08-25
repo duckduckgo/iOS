@@ -17,7 +17,7 @@
 "action.title.add" = "Tilføj";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Automatisk udfyldning ved login";
+"action.title.autofill.logins" = "Logins";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Føj til bogmærker";
@@ -179,13 +179,13 @@
 "autofill.keep-enabled.alert.disable" = "Deaktiver";
 
 /* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Fortsæt med at bruge";
+"autofill.keep-enabled.alert.keep-using" = "Fortsæt med at gemme";
 
 /* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "Du kan til enhver tid deaktivere automatisk udfyldning i indstillinger.";
+"autofill.keep-enabled.alert.message" = "Du kan til enhver tid deaktivere automatisk udfyldning i Indstillinger.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Vil du fortsætte med at bruge automatisk udfyldning?";
+"autofill.keep-enabled.alert.title" = "Vil du fortsat gemme logins?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Se";
@@ -268,26 +268,20 @@
 /* Title for alert when attempting to save a duplicate login */
 "autofill.logins.details.save-duplicate-alert.title" = "Duplikeret login";
 
-/* Title for view displayed when autofill is locked */
-"autofill.logins.details.title" = "Lås op for automatisk udfyldning";
-
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Brugernavn";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Login gemmes kun sikkert på denne enhed";
+"autofill.logins.empty-view.subtitle" = "Login gemmes sikkert på din enhed.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Ingen logins gemt endnu";
-
-/* Title for view displayed when autofill is disabled and has no items */
-"autofill.logins.empty-view.title-disabled" = "Aktivér automatisk udfyldning for at begynde at gemme logins";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Annullér";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Lås op for at bruge gemte logins";
+"autofill.logins.list.auth.reason" = "Lås enheden op for at få adgang til gemte logins";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Luk";
@@ -298,6 +292,9 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Login til %@ slettet";
 
+/* Toast message when a login item without a title is deleted */
+"autofill.logins.list.login-deleted-message-no-title" = "Login slettet";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Søg logins";
 
@@ -305,13 +302,13 @@
 "autofill.logins.list.suggested" = "Foreslået";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Automatisk udfyldning ved login";
+"autofill.logins.list.title" = "Logins";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Der kræves en adgangskode for at beskytte dine oplysninger ved automatisk udfyldning. Gå til enhedens sindstillinger for at konfigurere en adgangskode.";
+"autofill.logins.no-auth.subtitle" = "En adgangskode er påkrævet for at beskytte dine logins.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Konfigurer din enheds adgangskode for at bruge automatisk udfyldning.";
+"autofill.logins.no-auth.title" = "Beskyt din enhed for at gemme logins";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Annullér";
@@ -328,8 +325,11 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "Fra %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Adgangskode til %@";
+
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Brug et gemt login?";
+"autofill.logins.prompt.title" = "Vil du bruge et gemt login?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "for '%@'";
@@ -337,11 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Ingen resultater";
 
-/* Message displayed on modal explaining that an additional login will be saved. */
-"autofill.save-login.additional-login.message" = "Dette vil gemme et ekstra login for dette websted.";
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Adgangskoden vil blive gemt i logins.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Brug genereret adgangskode fra DuckDuckGo?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Brug genereret adgangskode";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Opret min egen";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo gemmer dette login sikkert på din enhed. Du kan administrere gemte logins i Indstillinger.";
+"autofill.save-login.new-user.message" = "Logins gemmes sikkert på din enhed og kan administreres fra menuen Logins i Indstillinger.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Skal DuckDuckGo gemme dit login?";
@@ -364,14 +373,17 @@
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Vis adgangskode";
 
-/* Confirm CTA displayed on modal asking for the user to update the login */
-"autofill.update-login.save.CTA" = "Opdater login";
+/* Message displayed on modal asking for the user to update the password */
+"autofill.update-password.message" = "DuckDuckGo opdaterer dette gemte login på din enhed.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Opdater adgangskode";
 
 /* Title displayed on modal asking for the user to update the password */
-"autofill.update-password.title" = "Opdater adgangskode?";
+"autofill.update-password.title" = "Opdater adgangskode til\n%@?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-username.save.CTA" = "Opdater brugernavn";
 
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "Opdater brugernavn?";
@@ -646,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Download startet for %@";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "E-mailbeskyttelse";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Annullér";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Opret privat Duck-adresse";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Opret privat Duck-adresse";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Bloker e-mailtrackere og skjul adresse";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Vælg e-mailadresse";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Blokerer e-mailtrackere";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blokér e-mailtrackere med en Duck-adresse";
@@ -675,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Bloker e-mailtrackere, og skjul din adresse";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Fortsæt opsætning";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Afslut opsætning";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Hvis du afslutter nu, vil din Duck Address ikke blive gemt!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Vis ikke igen";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Beskyt min e-mail";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Opret en unik, tilfældig adresse, der også fjerner skjulte trackere og videresender e-mails til din indbakke.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Skjul din e-mail og \n bloker trackere";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Ingen bogmærker tilføjet endnu";
@@ -1002,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Browsingmenu";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Tilbage";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Næste";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Færdig";

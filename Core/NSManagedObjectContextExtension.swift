@@ -20,23 +20,6 @@
 import CoreData
 import Persistence
 
-protocol Managed: NSFetchRequestResult {
-    static var entityName: String { get }
-}
-
-extension Managed where Self: NSManagedObject {
-    static var entityName: String { return entity().name! }
-}
-
-extension NSManagedObjectContext {
-    func insertObject<A: NSManagedObject>() -> A where A: Managed {
-        guard let obj = NSEntityDescription.insertNewObject(forEntityName: A.entityName, into: self) as? A else {
-            fatalError("Wrong object type")
-        }
-        return obj
-    }
-}
-
 extension Array where Element == CoreDataErrorsParser.ErrorInfo {
     
     var errorPixelParameters: [String: String] {

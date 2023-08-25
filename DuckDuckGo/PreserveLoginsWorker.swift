@@ -21,48 +21,74 @@ import UIKit
 import Core
 
 struct PreserveLoginsWorker {
-    
+
+    private struct Constants {
+        static let timeForAutofillToBlockFireproofPrompt = 10.0
+    }
+
     weak var controller: UIViewController?
-    
-    func handleLoginDetection(detectedURL: URL?, currentURL: URL?) -> Bool {
+
+    func handleLoginDetection(detectedURL: URL?, currentURL: URL?, isAutofillEnabled: Bool, saveLoginPromptLastDismissed: Date?) -> Bool {
         guard let detectedURL = detectedURL, let currentURL = currentURL else { return false }
         guard let domain = detectedURL.host, domainOrPathDidChange(detectedURL, currentURL) else { return false }
         guard !PreserveLogins.shared.isAllowed(fireproofDomain: domain) else { return false }
-        promptToFireproof(domain)
+        if isAutofillEnabled && autofillShouldBlockPrompt(saveLoginPromptLastDismissed) {
+            return false
+        }
+        if let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first, window.subviews.contains(where: { $0 is ActionMessageView }) {
+            /// if an ActionMessageView is currently displayed wait before prompting to fireproof
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                self.promptToFireproof(domain)
+            }
+        } else {
+            promptToFireproof(domain)
+        }
         return true
     }
-    
+
+    /// Block prompt if SaveLoginViewController is currently presented or has been presented in the last 10 seconds
+    func autofillShouldBlockPrompt(_ saveLoginPromptLastDismissed: Date?) -> Bool {
+        if controller?.presentedViewController is SaveLoginViewController {
+            return true
+        }
+        if let saveLoginPromptLastDismissed = saveLoginPromptLastDismissed,
+           Date().timeIntervalSince(saveLoginPromptLastDismissed) < Constants.timeForAutofillToBlockFireproofPrompt {
+            return true
+        }
+        return false
+    }
+
     func handleUserEnablingFireproofing(forDomain domain: String) {
         addDomain(domain)
     }
-    
+
     func handleUserDisablingFireproofing(forDomain domain: String) {
         removeDomain(domain)
     }
-    
+
     private func domainOrPathDidChange(_ detectedURL: URL, _ currentURL: URL) -> Bool {
         return currentURL.host != detectedURL.host || currentURL.path != detectedURL.path
     }
-    
+
     private func promptToFireproof(_ domain: String) {
         guard let controller = controller else { return }
         PreserveLoginsAlert.showFireproofWebsitePrompt(usingController: controller, forDomain: domain) {
             self.addDomain(domain)
         }
     }
-    
+
     private func addDomain(_ domain: String) {
         guard let controller = controller else { return }
         PreserveLogins.shared.addToAllowed(domain: domain)
-        Favicons.shared.loadFavicon(forDomain: domain, intoCache: .bookmarks, fromCache: .tabs)
+        Favicons.shared.loadFavicon(forDomain: domain, intoCache: .fireproof, fromCache: .tabs)
         PreserveLoginsAlert.showFireproofEnabledMessage(usingController: controller, worker: self, forDomain: domain)
     }
-    
+
     private func removeDomain(_ domain: String) {
         guard let controller = controller else { return }
         PreserveLogins.shared.remove(domain: domain)
         Favicons.shared.removeFireproofFavicon(forDomain: domain)
         PreserveLoginsAlert.showFireproofDisabledMessage(usingController: controller, worker: self, forDomain: domain)
     }
-    
+
 }

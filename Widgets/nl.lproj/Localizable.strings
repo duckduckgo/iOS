@@ -1,6 +1,36 @@
 /* No comment provided by engineer. */
 "Label" = "Label";
 
+/* Description shown to the user when adding the Email Protection lock screen widget */
+"lock.screen.widget.email.description" = "Maak meteen een nieuw privaat Duck Address aan.";
+
+/* Title shown to the user when adding the Email Protection lock screen widget */
+"lock.screen.widget.email.title" = "E-mailbescherming";
+
+/* Description shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.favorites.description" = "Open snel je favoriete websites met één tik.";
+
+/* Title shown to the user when adding the favorites lock screen widget */
+"lock.screen.widget.favorites.title" = "Favorieten";
+
+/* Description shown to the user when adding the Fire Button lock screen widget */
+"lock.screen.widget.fire.description" = "Verwijder onmiddellijk je zoekgeschiedenis en begin een nieuwe privézoekopdracht in DuckDuckGo.";
+
+/* Title shown to the user when adding the Fire Button lock screen widget */
+"lock.screen.widget.fire.title" = "Fire Button";
+
+/* Description shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.search.description" = "Start direct een private zoekopdracht in DuckDuckGo.";
+
+/* Title shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.search.title" = "Privé-zoekopdracht";
+
+/* Description shown to the user when adding the Voice Search lock screen widget */
+"lock.screen.widget.voice.description" = "Start meteen een nieuwe private spraakzoekopdracht in DuckDuckGo.";
+
+/* Title shown to the user when adding the Voice Search lock screen widget */
+"lock.screen.widget.voice.title" = "Zoeken via spraak";
+
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Zoek of bezoek je favoriete sites in de privémodus met één tik.";
 

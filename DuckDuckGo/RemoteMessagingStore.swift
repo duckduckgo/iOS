@@ -18,10 +18,11 @@
 //
 
 import Foundation
+import Common
 import CoreData
-import os.log
 import Core
 import BrowserServicesKit
+import RemoteMessaging
 
 final class RemoteMessagingStore: RemoteMessagingStoring {
 
@@ -247,7 +248,7 @@ extension RemoteMessagingStore {
                 let results = try context.fetch(fetchRequest)
                 dismissedMessageIds = results.compactMap { $0.id }
             } catch {
-                os_log("Failed to fetch dismissed remote messages: %@", log: OSLog.remoteMessaging, type: .error, error.localizedDescription)
+                os_log("Failed to fetch dismissed remote messages: %@", log: .remoteMessaging, type: .error, error.localizedDescription)
             }
         }
         return dismissedMessageIds

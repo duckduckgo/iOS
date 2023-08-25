@@ -18,9 +18,10 @@
 //
 
 import UIKit
+import Combine
+import Common
 import Core
 import UserNotifications
-import os.log
 import Kingfisher
 import WidgetKit
 import BackgroundTasks
@@ -31,6 +32,7 @@ import Crashes
 import Configuration
 import Networking
 import DDGSync
+import SyncDataProviders
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -52,29 +54,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private lazy var privacyStore = PrivacyUserDefaults()
     private var bookmarksDatabase: CoreDataDatabase = BookmarksDatabase.make()
+    private var appTrackingProtectionDatabase: CoreDataDatabase = AppTrackingProtectionDatabase.make()
     private var autoClear: AutoClear?
     private var showKeyboardIfSettingOn = true
     private var lastBackgroundDate: Date?
 
-    private(set) var syncService: DDGSyncing!
-    private(set) var syncPersistence: SyncDataPersistor!
+    private(set) var syncService: DDGSync!
+    private(set) var syncDataProviders: SyncDataProviders!
+    private var syncDidFinishCancellable: AnyCancellable?
+    private var syncStateCancellable: AnyCancellable?
 
     // MARK: lifecycle
 
-    // swiftlint:disable function_body_length
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        #if targetEnvironment(simulator)
+#if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["UITESTING"] == "true" {
             // Disable hardware keyboards.
             let setHardwareLayout = NSSelectorFromString("setHardwareLayout:")
             UITextInputMode.activeInputModes
-                // Filter `UIKeyboardInputMode`s.
+            // Filter `UIKeyboardInputMode`s.
                 .filter({ $0.responds(to: setHardwareLayout) })
                 .forEach { $0.perform(setHardwareLayout, with: nil) }
         }
-        #endif
-        
+#endif
+
+        // Can be removed after a couple of versions
+        cleanUpMacPromoExperiment2()
+
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
         Configuration.setURLProvider(AppConfigurationURLProvider())
 
@@ -105,13 +113,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         removeEmailWaitlistState()
-                
+
         Database.shared.loadStore { context, error in
             guard let context = context else {
                 
                 let parameters = [PixelParameters.applicationState: "\(application.applicationState.rawValue)",
                                   PixelParameters.dataAvailability: "\(application.isProtectedDataAvailable)"]
-                        
+
                 switch error {
                 case .none:
                     fatalError("Could not create database stack: Unknown Error")
@@ -150,9 +158,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
                                                   to: context)
             legacyStorage?.removeStore()
+
             WidgetCenter.shared.reloadAllTimelines()
         }
-        
+
+        appTrackingProtectionDatabase.loadStore { context, error in
+            guard context != nil else {
+                if let error = error {
+                    Pixel.fire(pixel: .appTPCouldNotLoadDatabase, error: error)
+                } else {
+                    Pixel.fire(pixel: .appTPCouldNotLoadDatabase)
+                }
+
+                Thread.sleep(forTimeInterval: 1)
+                fatalError("Could not create AppTP database stack: \(error?.localizedDescription ?? "err")")
+            }
+        }
+
         Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
             WidgetCenter.shared.reloadAllTimelines()
         }
@@ -167,10 +189,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DaxDialogs.shared.primeForUse()
         }
 
+        // MARK: Sync initialisation
+
+        syncDataProviders = SyncDataProviders(bookmarksDatabase: bookmarksDatabase, secureVaultErrorReporter: SecureVaultErrorReporter.shared)
+        let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog)
+        syncService.initializeIfNeeded(isInternalUser: InternalUserStore().isInternalUser)
+        self.syncService = syncService
+
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         
         guard let main = storyboard.instantiateInitialViewController(creator: { coder in
-            MainViewController(coder: coder, bookmarksDatabase: self.bookmarksDatabase)
+            MainViewController(coder: coder,
+                               bookmarksDatabase: self.bookmarksDatabase,
+                               bookmarksDatabaseCleaner: self.syncDataProviders.bookmarksAdapter.databaseCleaner,
+                               appTrackingProtectionDatabase: self.appTrackingProtectionDatabase,
+                               syncService: self.syncService,
+                               syncDataProviders: self.syncDataProviders)
         }) else {
             fatalError("Could not load MainViewController")
         }
@@ -197,14 +231,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.windowScene?.screenshotService?.delegate = self
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
-        // MARK: Sync initialisation
-        syncPersistence = SyncDataPersistor()
-        syncService = DDGSync(persistence: syncPersistence)
-
         appIsLaunching = true
         return true
     }
-    // swiftlint:enable function_body_length
+
+    private func cleanUpMacPromoExperiment2() {
+        UserDefaults.standard.removeObject(forKey: "com.duckduckgo.ios.macPromoMay23.exp2.cohort")
+    }
 
     private func clearTmp() {
         let tmp = FileManager.default.temporaryDirectory
@@ -227,6 +260,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 
+        syncService.initializeIfNeeded(isInternalUser: InternalUserStore().isInternalUser)
+        syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: syncService)
+
         if !(overlayWindow?.rootViewController is AuthenticationViewController) {
             removeOverlay()
         }
@@ -234,14 +270,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         StatisticsLoader.shared.load {
             StatisticsLoader.shared.refreshAppRetentionAtb()
             self.fireAppLaunchPixel()
+            self.fireAppTPActiveUserPixel()
         }
         
         if appIsLaunching {
             appIsLaunching = false
             onApplicationLaunch(application)
         }
-        
-        FireButtonExperiment.restartFireButtonEducationIfNeeded()
 
         mainViewController?.showBars()
         mainViewController?.didReturnFromBackground()
@@ -272,6 +307,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
             }
         }
+
+        syncService.scheduler.notifyAppLifecycleEvent()
     }
 
     private func fireAppLaunchPixel() {
@@ -303,6 +340,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
         }
+    }
+
+    private func fireAppTPActiveUserPixel() {
+#if APP_TRACKING_PROTECTION
+        guard AppDependencyProvider.shared.featureFlagger.isFeatureOn(.appTrackingProtection) else {
+            return
+        }
+        
+        let manager = FirewallManager()
+
+        Task {
+            await manager.refreshManager()
+            let date = Date()
+            let key = "appTPActivePixelFired"
+
+            // Make sure we don't fire this pixel multiple times a day
+            let dayStart = Calendar.current.startOfDay(for: date)
+            let fireDate = UserDefaults.standard.object(forKey: key) as? Date
+            if fireDate == nil || fireDate! < dayStart, manager.status() == .connected {
+                Pixel.fire(pixel: .appTPActiveUser)
+                UserDefaults.standard.set(date, forKey: key)
+            }
+        }
+#endif
     }
     
     private func shouldShowKeyboardOnLaunch() -> Bool {
@@ -339,6 +400,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         beginAuthentication()
         autoClear?.applicationWillMoveToForeground()
         showKeyboardIfSettingOn = true
+        syncService.scheduler.resumeSyncQueue()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -346,6 +408,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         autoClear?.applicationDidEnterBackground()
         lastBackgroundDate = Date()
         AppDependencyProvider.shared.autofillLoginSession.endSession()
+        suspendSync()
+    }
+
+    private func suspendSync() {
+        if syncService.isSyncInProgress {
+            os_log(.debug, log: .syncLog, "Sync is in progress. Starting background task to allow it to gracefully complete.")
+
+            var taskID: UIBackgroundTaskIdentifier!
+            taskID = UIApplication.shared.beginBackgroundTask(withName: "Cancelled Sync Completion Task") {
+                os_log(.debug, log: .syncLog, "Forcing background task completion")
+                UIApplication.shared.endBackgroundTask(taskID)
+            }
+            syncDidFinishCancellable?.cancel()
+            syncDidFinishCancellable = syncService.isSyncInProgressPublisher.filter { !$0 }
+                .prefix(1)
+                .receive(on: DispatchQueue.main)
+                .sink { _ in
+                    os_log(.debug, log: .syncLog, "Ending background task")
+                    UIApplication.shared.endBackgroundTask(taskID)
+                }
+        }
+
+        syncService.scheduler.cancelSyncAndSuspendSyncQueue()
     }
 
     func application(_ application: UIApplication,
@@ -356,38 +441,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         os_log("App launched with url %s", log: .lifecycleLog, type: .debug, url.absoluteString)
+
+        if handleEmailSignUpDeepLink(url) {
+            return true
+        }
+
         NotificationCenter.default.post(name: AutofillLoginListAuthenticator.Notifications.invalidateContext, object: nil)
         mainViewController?.clearNavigationStack()
         autoClear?.applicationWillMoveToForeground()
         showKeyboardIfSettingOn = false
-        
-        if AppDeepLinks.isNewSearch(url: url) {
-            mainViewController?.newTab(reuseExisting: true)
-            if url.getParameter(named: "w") != nil {
-                Pixel.fire(pixel: .widgetNewSearch)
-                mainViewController?.enterSearch()
-            }
-        } else if AppDeepLinks.isLaunchFavorite(url: url) {
-            let query = AppDeepLinks.query(fromLaunchFavorite: url)
-            mainViewController?.loadQueryInNewTab(query, reuseExisting: true)
-            Pixel.fire(pixel: .widgetFavoriteLaunch)
-        } else if AppDeepLinks.isQuickLink(url: url) {
-            let query = AppDeepLinks.query(fromQuickLink: url)
-            mainViewController?.loadQueryInNewTab(query, reuseExisting: true)
-        } else if AppDeepLinks.isAddFavorite(url: url) {
-            mainViewController?.startAddFavoriteFlow()
-        } else if app.applicationState == .active,
-                  let currentTab = mainViewController?.currentTab {
-            // If app is in active state, treat this navigation as something initiated form the context of the current tab.
-            mainViewController?.tab(currentTab,
-                                    didRequestNewTabForUrl: url,
-                                    openedByPage: true,
-                                    inheritingAttribution: nil)
-        } else {
-            Pixel.fire(pixel: .defaultBrowserLaunch)
+
+        if !handleAppDeepLink(app, mainViewController, url) {
             mainViewController?.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil)
         }
-        
+
         return true
     }
 
@@ -511,6 +578,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if !Database.shared.isDatabaseFileInitialized {
             try? autofillStorage.deleteAuthenticationState()
         }
+    }
+
+    private func handleEmailSignUpDeepLink(_ url: URL) -> Bool {
+        guard url.absoluteString.starts(with: URL.emailProtection.absoluteString),
+              let navViewController = mainViewController?.presentedViewController as? UINavigationController,
+              let emailSignUpViewController = navViewController.topViewController as? EmailSignupViewController else {
+            return false
+        }
+        emailSignUpViewController.loadUrl(url)
+        return true
     }
 
     private var mainViewController: MainViewController? {

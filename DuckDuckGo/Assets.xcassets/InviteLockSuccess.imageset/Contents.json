@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "lock-success-100.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

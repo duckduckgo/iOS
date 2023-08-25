@@ -17,7 +17,7 @@
 "action.title.add" = "Añadir";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Autocompletar inicios de sesión";
+"action.title.autofill.logins" = "Inicios de sesión";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Añadir a marcadores";
@@ -179,13 +179,13 @@
 "autofill.keep-enabled.alert.disable" = "Deshabilitar";
 
 /* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Seguir utilizando";
+"autofill.keep-enabled.alert.keep-using" = "Seguir guardando";
 
 /* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "Puedes desactivar Autocompletar en cualquier momento en Configuración.";
+"autofill.keep-enabled.alert.message" = "Puedes desactivar esta opción en cualquier momento en Configuración.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "¿Quieres seguir usando Autocompletar?";
+"autofill.keep-enabled.alert.title" = "¿Deseas seguir guardando inicios de sesión?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Ver";
@@ -268,26 +268,20 @@
 /* Title for alert when attempting to save a duplicate login */
 "autofill.logins.details.save-duplicate-alert.title" = "Inicio de sesión duplicado";
 
-/* Title for view displayed when autofill is locked */
-"autofill.logins.details.title" = "Desbloquear Autocompletar";
-
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Nombre de usuario";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Los inicios de sesión se almacenan de forma segura solo en este dispositivo";
+"autofill.logins.empty-view.subtitle" = "Los inicios de sesión se almacenan de forma segura en tu dispositivo.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Aún no hay inicios de sesión guardados";
-
-/* Title for view displayed when autofill is disabled and has no items */
-"autofill.logins.empty-view.title-disabled" = "Habilitar Autocompletar para comenzar a guardar inicios de sesión";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Cancelar";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Desbloquear para usar el inicio de sesión guardado";
+"autofill.logins.list.auth.reason" = "Desbloquea el dispositivo para acceder a los inicios de sesión guardados";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Cerrar";
@@ -298,6 +292,9 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Inicio de sesión para %@ eliminado";
 
+/* Toast message when a login item without a title is deleted */
+"autofill.logins.list.login-deleted-message-no-title" = "Inicio de sesión eliminado";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Buscar inicios de sesión";
 
@@ -305,13 +302,13 @@
 "autofill.logins.list.suggested" = "Sugerencias";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Autocompletar inicios de sesión";
+"autofill.logins.list.title" = "Inicios de sesión";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Para proteger tus datos de Autocompletar, necesitas una contraseña. Ve a Ajustes del dispositivo para configurar una contraseña.";
+"autofill.logins.no-auth.subtitle" = "Se requiere un código de acceso para proteger tus inicios de sesión.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Configura la contraseña del dispositivo para utilizar Autocompletar";
+"autofill.logins.no-auth.title" = "Protege tu dispositivo para guardar los inicios de sesión";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Cancelar";
@@ -328,6 +325,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "Desde %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Contraseña para %@";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "¿Usar un inicio de sesión guardado?";
 
@@ -337,11 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Sin resultados";
 
-/* Message displayed on modal explaining that an additional login will be saved. */
-"autofill.save-login.additional-login.message" = "Esto guardará un inicio de sesión adicional para este sitio.";
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "La contraseña se guardará en Inicios de sesión.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "¿Usar contraseña generada por DuckDuckGo?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Usar contraseña generada";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Crear la mía propia";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo almacenará este inicio de sesión en tu dispositivo de forma segura. Puedes gestionar los inicios de sesión guardados en Ajustes.";
+"autofill.save-login.new-user.message" = "Los inicios de sesión se almacenan de forma segura en tu dispositivo y se pueden administrar desde el menú de Inicios de Sesión en Ajustes.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "¿Quieres que DuckDuckGo guarde tu inicio de sesión?";
@@ -364,14 +373,17 @@
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Mostrar contraseña";
 
-/* Confirm CTA displayed on modal asking for the user to update the login */
-"autofill.update-login.save.CTA" = "Actualizar inicio de sesión";
+/* Message displayed on modal asking for the user to update the password */
+"autofill.update-password.message" = "DuckDuckGo actualizará este inicio de sesión almacenado en tu dispositivo.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Actualizar contraseña";
 
 /* Title displayed on modal asking for the user to update the password */
-"autofill.update-password.title" = "¿Actualizar contraseña?";
+"autofill.update-password.title" = "¿Actualizar contraseña para\n%@?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-username.save.CTA" = "Actualizar nombre de usuario";
 
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "¿Actualizar nombre de usuario?";
@@ -646,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Descarga de %@ iniciada";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "Protección del correo electrónico";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Cancelar";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Generar Duck Address privada";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Generar Duck Address privada";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Bloquear rastreadores de correo electrónico y ocultar dirección";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Seleccionar dirección de correo electrónico";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Bloquear rastreadores de correo electrónico";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Bloquea los rastreadores de correo electrónico con una dirección de Duck";
@@ -675,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Bloquea los rastreadores de correo electrónico y oculta tu dirección";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Continuar con la configuración";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Salir de Configuración";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Si sales ahora, no se guardará tu Duck Address.";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "No volver a mostrar";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Proteger mi correo electrónico";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Crea una dirección aleatoria única que también elimine los rastreadores ocultos y reenvíe el correo electrónico a tu bandeja de entrada.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Ocultar tu correo electrónico y\nbloquear rastreadores";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Aún no se han añadido marcadores";
@@ -1002,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Menú de navegación";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Volver";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Siguiente";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Hecho";

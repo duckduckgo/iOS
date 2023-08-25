@@ -24,6 +24,7 @@ import BrowserServicesKit
 import Common
 import PrivacyDashboard
 
+// swiftlint:disable file_length
 // swiftlint:disable type_body_length
 
 protocol EntityProviding {
@@ -163,6 +164,9 @@ final class DaxDialogs {
     private let variantManager: VariantManager
 
     private var nextHomeScreenMessageOverride: HomeScreenSpec?
+    
+    // So we can avoid showing two dialogs for the same page
+    private var lastURLDaxDialogReturnedFor: URL?
 
     /// Use singleton accessor, this is only accessible for tests
     init(settings: DaxDialogsSettings = DefaultDaxDialogsSettings(),
@@ -229,6 +233,10 @@ final class DaxDialogs {
         nextHomeScreenMessageOverride = nil
     }
     
+    func clearHeldURLData() {
+        lastURLDaxDialogReturnedFor = nil
+    }
+    
     private var fireButtonPulseTimer: Timer?
     private static let timeToFireButtonExpire: TimeInterval = 1 * 60 * 60
     
@@ -257,8 +265,19 @@ final class DaxDialogs {
         settings.fireButtonEducationShownOrExpired = true
         return ActionSheetSpec.fireButtonEducation
     }
+    
+    func nextBrowsingMessageIfShouldShow(for privacyInfo: PrivacyInfo) -> BrowsingSpec? {
+        guard privacyInfo.url != lastURLDaxDialogReturnedFor else { return nil }
+        
+        let message = nextBrowsingMessage(privacyInfo: privacyInfo)
+        if message != nil {
+            lastURLDaxDialogReturnedFor = privacyInfo.url
+        }
+        
+        return message
+    }
 
-    func nextBrowsingMessage(privacyInfo: PrivacyInfo) -> BrowsingSpec? {
+    private func nextBrowsingMessage(privacyInfo: PrivacyInfo) -> BrowsingSpec? {
         guard isEnabled, nextHomeScreenMessageOverride == nil else { return nil }
         guard let host = privacyInfo.domain else { return nil }
         
@@ -386,3 +405,4 @@ final class DaxDialogs {
     }
 }
 // swiftlint:enable type_body_length
+// swiftlint:enable file_length

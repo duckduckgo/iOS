@@ -4,6 +4,7 @@ disabled_rules:
   - orphaned_doc_comment
   - todo
   - unused_capture_list
+  - trailing_comma
 
 opt_in_rules:
   - closure_end_indentation
@@ -12,6 +13,16 @@ opt_in_rules:
   - overridden_super_call
   - fatal_error_message
   - file_header
+
+custom_rules:
+  enforce_os_log_wrapper:
+    included: ".*\\.swift"
+    excluded: ".*Tests.*"
+    name: "Use `import Common` for os_log instead of `import os.log`"
+    regex: "^(import (?:os\\.log|os|OSLog))$"
+    capture_group: 0
+    message: "os_log wrapper ensures log args are @autoclosures (computed when needed) and to be able to use String Interpolation."
+    severity: error
 
 analyzer_rules:
   - unused_import
@@ -76,7 +87,9 @@ file_header:
 # General Config
 excluded:
   - Carthage
+  - DerivedData
   - DuckDuckGo/UserText.swift
   - fastlane/SnapshotHelper.swift
   - vendor
   - LocalPackages/*/Package.swift
+  - PacketTunnelProvider/ProxyServer

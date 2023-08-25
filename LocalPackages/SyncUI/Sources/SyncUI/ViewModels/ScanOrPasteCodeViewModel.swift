@@ -64,10 +64,10 @@ public class ScanOrPasteCodeViewModel: ObservableObject {
 
     var showQRCodeModel: ShowQRCodeViewModel?
 
-    let isInRecoveryMode: Bool
+    let showConnectMode: Bool
 
-    public init(isInRecoveryMode: Bool) {
-        self.isInRecoveryMode = isInRecoveryMode
+    public init(showConnectMode: Bool) {
+        self.showConnectMode = showConnectMode
     }
 
     func codeScanned(_ code: String) async -> Bool {
@@ -82,8 +82,9 @@ public class ScanOrPasteCodeViewModel: ObservableObject {
         guard let string = delegate?
             .pasteboardString?
             .trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: " ", with: "")
             .replacingOccurrences(of: "\n", with: "") else { return }
-        
+
         self.manuallyEnteredCode = string
         invalidCode = false
         isValidating = true

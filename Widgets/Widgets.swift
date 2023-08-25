@@ -17,13 +17,13 @@
 //  limitations under the License.
 //
 
+import Common
 import WidgetKit
 import SwiftUI
 import Core
 import CoreData
 import Kingfisher
 import Bookmarks
-import os
 import Persistence
 
 struct Favorite {
@@ -76,7 +76,7 @@ class Provider: TimelineProvider {
                   let domain = url.host?.droppingWwwPrefix()
             else { return nil }
 
-            return Favorite(url: DeepLinks.createFavoriteLauncher(forUrl: url),
+            return Favorite(url: url,
                             domain: domain,
                             title: favorite.title ?? domain,
                             favicon: loadImageFromCache(forDomain: url.host) )
@@ -131,11 +131,11 @@ class Provider: TimelineProvider {
         guard let domain = domain else { return nil }
 
         let key = Favicons.createHash(ofDomain: domain)
-        guard let cacheUrl = Favicons.CacheType.bookmarks.cacheLocation() else { return nil }
+        guard let cacheUrl = Favicons.CacheType.fireproof.cacheLocation() else { return nil }
 
         // Slight leap here to avoid loading Kingisher as a library for the widgets.
         // Once dependency management is fixed, link it and use Favicons directly.
-        let imageUrl = cacheUrl.appendingPathComponent("com.onevcat.Kingfisher.ImageCache.bookmarks").appendingPathComponent(key)
+        let imageUrl = cacheUrl.appendingPathComponent("com.onevcat.Kingfisher.ImageCache.fireproof").appendingPathComponent(key)
 
         guard let data = (try? Data(contentsOf: imageUrl)) else { return nil }
 
@@ -191,6 +191,15 @@ struct Widgets: WidgetBundle {
     var body: some Widget {
         SearchWidget()
         FavoritesWidget()
+
+        if #available(iOSApplicationExtension 16.0, *) {
+            SearchLockScreenWidget()
+            VoiceSearchLockScreenWidget()
+            EmailProtectionLockScreenWidget()
+            FireButtonLockScreenWidget()
+            FavoritesLockScreenWidget()
+        }
+
     }
 
 }

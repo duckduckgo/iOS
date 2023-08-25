@@ -25,10 +25,10 @@ struct UserText {
 
     static let turnOnTitle = "Turn on Sync?"
     static let turnOnButton = "Turn on Sync"
-    static let turnOnMessage = "This will save an encrypted backup of your bookmarks on DuckDuckGo’s servers, which can be synced with your other devices.\n\nThe decryption key is stored on your device and cannot be read by DuckDuckGo."
+    static let turnOnMessage = "This will save an encrypted backup of your bookmarks and Autofill logins on DuckDuckGo’s servers, which can be synced with your other devices.\n\nThe decryption key is stored on your device and cannot be read by DuckDuckGo."
 
     static let syncWithAnotherDeviceTitle = "Sync Another Device?"
-    static let syncWithAnotherDeviceMessage = "Your bookmarks will be backed up! Would you like to sync another device now?\n\nIf you’ve already set up Sync on another device, this will allow you to combine bookmarks from both devices into a single backup."
+    static let syncWithAnotherDeviceMessage = "Your bookmarks and Autofill logins will be backed up! Would you like to sync another device now?\n\nIf you’ve already set up Sync on another device, this will allow you to combine bookmarks and Autofill logins from both devices into a single backup."
     static let syncWithAnotherDeviceButton = "Sync Another Device"
 
     static let recoveryMessage = "If you lose access to your devices, you will need this code to recover your synced data."
@@ -46,7 +46,7 @@ struct UserText {
     static let viewQRCodeTitle = "QR Code"
 
     static let deviceSyncedTitle = "Device Synced!"
-    static let deviceSyncedMessage = "Your bookmarks are now syncing with this device."
+    static let deviceSyncedMessage = "Your bookmarks and Autofill logins are now syncing with this device."
 
     static let saveRecoveryTitle = "Save Recovery Key"
     static let saveRecoveryButton = "Save As PDF"
@@ -58,7 +58,7 @@ struct UserText {
     static let goToSettingsButton = "Go to Settings"
 
     static let syncTitle = "Sync"
-    static let syncSettingsInfo = "Sync your bookmarks across your devices and save an encrypted backup on DuckDuckGo’s servers."
+    static let syncSettingsInfo = "Sync your bookmarks and Autofill logins across your devices and save an encrypted backup on DuckDuckGo’s servers."
 
     static let thisDevice = "This Device"
     static let connectedDevicesTitle = "Synced Devices"
@@ -82,12 +82,20 @@ struct UserText {
 
     static let removeButton = "Remove"
     static let cancelButton = "Cancel"
+    static let doneButton = "Done"
     static let nextButton = "Next"
     static let notNowButton = "Not Now"
     static let backButton = "Back"
 
-    static func editDevice(named name: String) -> String {
+    static let editDeviceLabel = "Device Name"
+    static func editDevice(_ name: String) -> String {
         return "Edit \(name)"
+    }
+
+    static let removeDeviceTitle = "Remove Device?"
+    static let removeDeviceButton = "Remove Device"
+    static func removeDeviceMessage(_ name: String) -> String {
+        return "\"\(name)\" will no longer be able to access your synced data."
     }
 
 }

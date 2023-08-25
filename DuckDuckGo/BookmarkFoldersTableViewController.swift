@@ -20,6 +20,7 @@
 import UIKit
 import Core
 import Bookmarks
+import DesignResourcesKit
 
 protocol BookmarkFoldersViewControllerDelegate: AnyObject {
 
@@ -39,6 +40,11 @@ class BookmarkFoldersViewController: UITableViewController {
     var locationCount: Int {
         guard let viewModel = viewModel else { return 0 }
         return viewModel.locations.count
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.backgroundColor = UIColor(designSystemColor: .background)
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -91,6 +97,11 @@ class BookmarkFoldersViewController: UITableViewController {
                 fatalError("Unexpected section")
             }
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        cell.backgroundColor = UIColor(designSystemColor: .surface)
     }
 
     func folderSelectorCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> UITableViewCell {
@@ -172,7 +183,7 @@ class BookmarkFoldersViewController: UITableViewController {
         cell.urlTextField.addTarget(self, action: #selector(urlTextFieldDidChange(_:)), for: .editingChanged)
         cell.urlTextField.addTarget(self, action: #selector(urlTextFieldDidReturn), for: .editingDidEndOnExit)
 
-        cell.faviconImageView.loadFavicon(forDomain: viewModel?.bookmark.urlObject?.host, usingCache: .bookmarks)
+        cell.faviconImageView.loadFavicon(forDomain: viewModel?.bookmark.urlObject?.host, usingCache: .fireproof)
 
         cell.selectionStyle = .none
         cell.title = viewModel?.bookmark.title

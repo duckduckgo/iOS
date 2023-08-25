@@ -29,11 +29,12 @@ public extension URL {
 
     static let autocomplete = URL(string: "\(base)/ac/")!
     static let emailProtection = URL(string: "\(base)/email")!
-    static let emailProtectionQuickLink = URL(string: "ddgQuickLink://\(base)/email")!
+    static let emailProtectionQuickLink = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/email"))!
+    static let aboutLink = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/about"))!
 
     static let surrogates = URL(string: "\(staticBase)/surrogates.txt")!
-    static let privacyConfig = URL(string: "\(staticBase)/trackerblocking/config/v2/ios-config.json")!
-    static let trackerDataSet = URL(string: "\(staticBase)/trackerblocking/v3/apple-tds.json")!
+    static let privacyConfig = URL(string: "\(staticBase)/trackerblocking/config/v3/ios-config.json")!
+    static let trackerDataSet = URL(string: "\(staticBase)/trackerblocking/v5/current/ios-tds.json")!
     static let bloomFilter = URL(string: "\(staticBase)/https/https-mobile-v2-bloom.bin")!
     static let bloomFilterSpec = URL(string: "\(staticBase)/https/https-mobile-v2-bloom-spec.json")!
     static let bloomFilterExcludedDomains = URL(string: "\(staticBase)/https/https-mobile-v2-false-positives.json")!

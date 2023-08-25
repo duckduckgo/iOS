@@ -17,10 +17,10 @@
 //  limitations under the License.
 //
 
+import Common
 import Foundation
 import Core
 import WebKit
-import os.log
 import UniformTypeIdentifiers
 
 class DownloadManager {
@@ -171,7 +171,7 @@ class DownloadManager {
 
 extension DownloadManager {
     
-    private func convertToUniqueFilename(_ filename: String, counter: Int = 0) -> String {
+    private func convertToUniqueFilename(_ filename: String) -> String {
         let downloadingFilenames = Set(downloadList.map { $0.filename })
         let downloadedFilenames = Set(downloadsDirectoryFiles.map { $0.lastPathComponent })
         let list = downloadingFilenames.union(downloadedFilenames)
@@ -181,14 +181,15 @@ extension DownloadManager {
         
         let filePrefix = filename.dropping(suffix: fileExtension)
 
-        let newFilename = counter > 0 ? "\(filePrefix) \(counter)\(fileExtension)" : filename
-        
-        if list.contains(newFilename) {
-            let newSuffix = counter + 1
-            return convertToUniqueFilename(filename, counter: newSuffix)
-        } else {
-            return newFilename
-        }
+        var counter: Int = 0
+        var newFilename: String
+
+        repeat {
+            newFilename = counter > 0 ? "\(filePrefix) \(counter)\(fileExtension)" : filename
+            counter += 1
+        } while list.contains(newFilename)
+
+        return newFilename
     }
     
     private func filename(forSuggestedFilename suggestedFilename: String?, mimeType: String?) -> String {

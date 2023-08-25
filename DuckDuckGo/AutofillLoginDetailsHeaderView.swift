@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
 struct AutofillLoginDetailsHeaderView: View {
     @Environment(\.colorScheme) private var colorScheme
@@ -26,7 +27,8 @@ struct AutofillLoginDetailsHeaderView: View {
     var body: some View {
         HStack(spacing: Constants.horizontalStackSpacing) {
             FaviconView(viewModel: FaviconViewModel(domain: viewModel.domain,
-                                                    preferredFakeFaviconLetter: viewModel.preferredFakeFaviconLetter))
+                                                    cacheType: .fireproof,
+                                                    preferredFakeFaviconLetters: viewModel.preferredFakeFaviconLetters))
                 .scaledToFit()
                 .frame(width: Constants.imageSize, height: Constants.imageSize)
                 .accessibilityHidden(true)
@@ -48,7 +50,7 @@ struct AutofillLoginDetailsHeaderView: View {
         .frame(minHeight: Constants.viewHeight)
         .frame(maxWidth: .infinity)
         .contentShape(Rectangle())
-        .listRowBackground(Color("AutofillCellBackground"))
+        .listRowBackground(Color(designSystemColor: .surface))
         .listRowInsets(Constants.insets)
     }
 }

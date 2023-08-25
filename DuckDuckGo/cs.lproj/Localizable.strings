@@ -17,7 +17,7 @@
 "action.title.add" = "Přidat";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Automatické vyplňování přihlašovacích údajů";
+"action.title.autofill.logins" = "Přihlášení";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Přidat do záložek";
@@ -179,13 +179,13 @@
 "autofill.keep-enabled.alert.disable" = "Vypnout";
 
 /* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Používat dál";
+"autofill.keep-enabled.alert.keep-using" = "Dál ukládat";
 
 /* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "Automatické vyplňování můžeš kdykoli vypnout v Nastavení.";
+"autofill.keep-enabled.alert.message" = "Funkci můžeš kdykoli vypnout v Nastaveních.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Chceš dál používat automatické vyplňování?";
+"autofill.keep-enabled.alert.title" = "Chceš dál ukládat přihlašovací údaje?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Zobrazit";
@@ -268,26 +268,20 @@
 /* Title for alert when attempting to save a duplicate login */
 "autofill.logins.details.save-duplicate-alert.title" = "Duplicitní přihlášení";
 
-/* Title for view displayed when autofill is locked */
-"autofill.logins.details.title" = "Odemknout automatické vyplňování";
-
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Uživatelské jméno";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Přihlašovací údaje jsou bezpečně uložené jen v tomhle zařízení";
+"autofill.logins.empty-view.subtitle" = "Přihlašovací údaje se bezpečně ukládají do tvého zařízení.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Zatím nemáš uložené žádné přihlašovací údaje";
-
-/* Title for view displayed when autofill is disabled and has no items */
-"autofill.logins.empty-view.title-disabled" = "Zapni automatické vyplňování a začni ukládat přihlašovací údaje";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Zrušit";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Jestli chceš použít uložené přihlašovací údaje, odemkni zařízení";
+"autofill.logins.list.auth.reason" = "Pro přístup k uloženým přihlášením odemkni zařízení";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Zavřít";
@@ -298,6 +292,9 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Přihlašovací údaje pro %@ se smazaly";
 
+/* Toast message when a login item without a title is deleted */
+"autofill.logins.list.login-deleted-message-no-title" = "Přihlašovací údaje smazány";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Hledání přihlašovacích údajů";
 
@@ -305,13 +302,13 @@
 "autofill.logins.list.suggested" = "Navrhované";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Automatické vyplňování přihlašovacích údajů";
+"autofill.logins.list.title" = "Přihlášení";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "K ochraně údajů se při automatickém vyplňování požaduje heslo. Přejdi do Nastavení a heslo si vytvoř.";
+"autofill.logins.no-auth.subtitle" = "K ochraně přihlašovacích údajů je nutné heslo.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Nastav si na zařízení heslo, ať můžeš používat automatické vyplňování";
+"autofill.logins.no-auth.title" = "Zabezpeč si zařízení, ať si můžeš ukládat přihlašovací údaje";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Zrušit";
@@ -328,6 +325,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "Z %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Heslo pro %@";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Použít uložené přihlášení?";
 
@@ -337,11 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Žádné výsledky";
 
-/* Message displayed on modal explaining that an additional login will be saved. */
-"autofill.save-login.additional-login.message" = "Uloží se další přihlašovací údaje pro tenhle web.";
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Heslo se uloží do části Přihlášení.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Použít heslo vygenerované DuckDuckGo?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Použít vygenerované heslo";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Vytvořit vlastní";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo tyto přihlašovací údaje bezpečně uloží do tvého zařízení. Uložená přihlášení můžeš spravovat v Nastaveních.";
+"autofill.save-login.new-user.message" = "Přihlašovací údaje se bezpečně ukládají do tvého zařízení a dají se spravovat v nabídce Přihlášení v Nastavení.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Má DuckDuckGo uložit přihlašovací údaje?";
@@ -364,14 +373,17 @@
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Zobrazit heslo";
 
-/* Confirm CTA displayed on modal asking for the user to update the login */
-"autofill.update-login.save.CTA" = "Aktualizovat přihlašovací údaje";
+/* Message displayed on modal asking for the user to update the password */
+"autofill.update-password.message" = "DuckDuckGo zaktualizuje toto uložené přihlášení ve tvém zařízení.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Aktualizuj si heslo";
 
 /* Title displayed on modal asking for the user to update the password */
-"autofill.update-password.title" = "Aktualizovat heslo?";
+"autofill.update-password.title" = "Změnit heslo pro\n%@?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-username.save.CTA" = "Aktualizovat uživatelské jméno";
 
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "Aktualizovat uživatelské jméno?";
@@ -646,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Stahování souboru %@ bylo zahájeno";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "Ochrana e-mailu";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Zrušit";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Vygenerovat soukromou adresu Duck";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Vygenerovat soukromou adresu Duck";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Blokuj e-mailové trackery a skryj svou adresu";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Vyber e-mailovou adresu";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Blokuj e-mailové trackery";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blokování e-mailových trackerů pomocí adresy Duck";
@@ -675,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blokování trackerů v e-mailu a skrytí adresy";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Pokračovat v nastavení";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Ukončit nastavení";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Pokud teď odejdeš, tvoje adresa Duck Address se neuloží.";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Znovu neukazovat";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Chránit můj e-mail";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Vytvoř si jedinečnou, náhodnou adresu, která bude odstraňovat skryté trackery a přeposílat e-maily do tvé schránky.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Skryj svůj e-mail\na blokuj trackery";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Zatím nebyly přidány žádné záložky.";
@@ -1002,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Procházení nabídky";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Zpět";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Další";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Hotovo";

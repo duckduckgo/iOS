@@ -25,6 +25,7 @@ protocol AutofillLoginPromptViewModelDelegate: AnyObject {
     func autofillLoginPromptViewModel(_ viewModel: AutofillLoginPromptViewModel, didSelectAccount account: SecureVaultModels.WebsiteAccount)
     func autofillLoginPromptViewModelDidCancel(_ viewModel: AutofillLoginPromptViewModel)
     func autofillLoginPromptViewModelDidRequestExpansion(_ viewModel: AutofillLoginPromptViewModel)
+    func autofillLoginPromptViewModelDidResizeContent(_ viewModel: AutofillLoginPromptViewModel, contentHeight: CGFloat)
 }
 
 struct AccountMatchesViewModel {
@@ -45,12 +46,10 @@ struct AccountViewModel: Hashable {
     
     let account: SecureVaultModels.WebsiteAccount
     var displayString: String {
-        if account.username.count > 0 {
-            return AutofillInterfaceEmailTruncator.truncateEmail(account.username, maxLength: 36)
+        if let username = account.username, username.count > 0 {
+            return AutofillInterfaceEmailTruncator.truncateEmail(username, maxLength: 36)
         } else {
-            let urlString = URL(string: account.domain)?.absoluteString.droppingWwwPrefix()
-            let string = urlString ?? account.domain
-            return "Login for \(string)"
+            return UserText.autofillLoginPromptPasswordButtonTitle(for: account.domain ?? "")
         }
     }
     
@@ -70,13 +69,24 @@ class AutofillLoginPromptViewModel: ObservableObject {
     @Published var accountMatchesViewModels: [AccountMatchesViewModel] = []
     @Published var showMoreOptions = false
     @Published var shouldUseScrollView = false
-    
+
+    var containsPartialMatches: Bool {
+        return accounts.partialMatches.count > 0
+    }
+
     private(set) var domain: String
     private var accounts: AccountMatches
 
     private(set) var expanded = false {
         didSet {
             setUpAccountsViewModels(accounts: accounts)
+        }
+    }
+
+    var contentHeight: CGFloat = AutofillViews.loginPromptMinHeight {
+        didSet {
+            guard contentHeight != oldValue, contentHeight > 0 else { return }
+            delegate?.autofillLoginPromptViewModelDidResizeContent(self, contentHeight: max(contentHeight, AutofillViews.loginPromptMinHeight))
         }
     }
     

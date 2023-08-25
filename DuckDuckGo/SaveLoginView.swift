@@ -20,13 +20,13 @@
 import SwiftUI
 import DuckUI
 import BrowserServicesKit
+import DesignResourcesKit
 
 struct SaveLoginView: View {
     enum LayoutType {
         case newUser
         case saveLogin
         case savePassword
-        case saveAdditionalLogin
         case updateUsername
         case updatePassword
     }
@@ -36,33 +36,35 @@ struct SaveLoginView: View {
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @State private var orientation = UIDevice.current.orientation
 
-    var layoutType: LayoutType {
+    private var layoutType: LayoutType {
         viewModel.layoutType
     }
-    
+
+    private var usernameDisplayString: String {
+        AutofillInterfaceUsernameTruncator.truncateUsername(viewModel.username, maxLength: 50)
+    }
+
     private var title: String {
         switch layoutType {
         case .newUser, .saveLogin:
             return UserText.autofillSaveLoginTitleNewUser
-        case .saveAdditionalLogin:
-            return UserText.autofillSaveLoginTitle
         case .savePassword:
             return UserText.autofillSavePasswordTitle
         case .updateUsername:
             return UserText.autofillUpdateUsernameTitle
         case .updatePassword:
-            return UserText.autofillUpdatePasswordTitle
+            return UserText.autofillUpdatePassword(for: usernameDisplayString)
         }
     }
     
     private var confirmButton: String {
         switch layoutType {
-        case .newUser, .saveLogin, .saveAdditionalLogin:
+        case .newUser, .saveLogin:
             return UserText.autofillSaveLoginSaveCTA
         case .savePassword:
             return UserText.autofillSavePasswordSaveCTA
         case .updateUsername:
-            return UserText.autofillUpdateLoginSaveCTA
+            return UserText.autofillUpdateUsernameSaveCTA
         case .updatePassword:
             return UserText.autofillUpdatePasswordSaveCTA
         }
@@ -72,196 +74,145 @@ struct SaveLoginView: View {
         GeometryReader { geometry in
             makeBodyView(geometry)
         }
-        .padding(.horizontal, isIPhonePortrait ? 16 : 48)
-        .ignoresSafeArea(edges: [.top, .bottom])
         .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
             orientation = UIDevice.current.orientation
         }
     }
     
     private func makeBodyView(_ geometry: GeometryProxy) -> some View {
-        // Workaround for the isSmallFrame property to return the correct value
-        // .async to fix the "Modifying state during view update, this will cause undefined behavior." issue
-        // TODO remove this for V2
         DispatchQueue.main.async { self.frame = geometry.size }
         
         return ZStack {
-            closeButtonHeader
-                .offset(x: isIPhonePortrait ? 16 : 48)
+            AutofillViews.CloseButtonHeader(action: viewModel.cancelButtonPressed)
+                .offset(x: horizontalPadding)
+                .zIndex(1)
 
-            VStack(spacing: 0) {
-                titleHeaderView
-                contentViewTopSpacer
-                contentView
-                contentViewBottomSpacer
+            VStack {
+                Spacer()
+                    .frame(height: Const.Size.topPadding)
+                AutofillViews.WebsiteWithFavicon(accountDomain: viewModel.accountDomain)
+                Spacer()
+                    .frame(height: Const.Size.headlineTopPadding)
+                AutofillViews.Headline(title: title)
+                if #available(iOS 16.0, *) {
+                    contentView
+                        .padding([.top, .bottom], contentPadding)
+                } else {
+                    Spacer()
+                    contentView
+                    Spacer()
+                }
                 ctaView
                 bottomSpacer
             }
+            .background(GeometryReader { proxy -> Color in
+                DispatchQueue.main.async { viewModel.contentHeight = proxy.size.height }
+                return Color.clear
+            })
+            .useScrollView(shouldUseScrollView(), minHeight: frame.height)
         }
-    }
-    
-    var closeButtonHeader: some View {
-        VStack {
-            HStack {
-                Spacer()
-                closeButton
-                    .padding(5)
-            }
-            Spacer()
-        }
-    }
-    
-    private var closeButton: some View {
-        Button {
-            viewModel.cancelButtonPressed()
-        } label: {
-            Image(systemName: "xmark")
-                .resizable()
-                .scaledToFit()
-                .frame(width: Const.Size.closeButtonSize, height: Const.Size.closeButtonSize)
-                .foregroundColor(.primary)
-        }
-        .frame(width: Const.Size.closeButtonTappableArea, height: Const.Size.closeButtonTappableArea)
-        .contentShape(Rectangle())
-    }
-    
-    var titleHeaderView: some View {
-        VStack(spacing: 0) {
-            HStack {
-                FaviconView(viewModel: FaviconViewModel(domain: viewModel.accountDomain))
-                    .scaledToFit()
-                    .frame(width: Const.Size.logoImage, height: Const.Size.logoImage)
-                Text(viewModel.accountDomain)
-                    .secondaryTextStyle()
-                    .font(Const.Fonts.titleCaption)
-            }
-
-            Text(title)
-                .font(Const.Fonts.title)
-                .frame(maxWidth: .infinity)
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.top, isSmallFrame ? 2 : (isIPhonePortrait ? 25 : 29))
-        }
-        .frame(width: isIPhone ? Const.Size.contentWidth : frame.width)
-        .padding(.top, isSmallFrame ? 20 : (isIPhonePortrait ? 40 : 54))
+        .padding(.horizontal, horizontalPadding)
     }
 
-    var contentViewTopSpacer: some View {
-        VStack {
-            if isIPad {
-                Spacer()
-            } else if layoutType == .newUser || layoutType == .saveLogin {
-                Spacer()
-                    .frame(maxHeight: isSmallFrame ? 8 : 24)
+    private func shouldUseScrollView() -> Bool {
+        var useScrollView: Bool = false
+
+        if #available(iOS 16.0, *) {
+            useScrollView = AutofillViews.contentHeightExceedsScreenHeight(viewModel.contentHeight)
+        } else {
+            useScrollView = viewModel.contentHeight > frame.height + Const.Size.ios15scrollOffset
+        }
+
+        return useScrollView
+    }
+
+    private var contentPadding: CGFloat {
+        if AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) {
+            return Const.Size.contentSpacerHeight
+        } else if AutofillViews.isIPad(verticalSizeClass, horizontalSizeClass) {
+            return Const.Size.contentSpacerHeightIPad
+        } else {
+            return Const.Size.contentSpacerHeightLandscape
+        }
+    }
+
+    private var ctaView: some View {
+        VStack(spacing: Const.Size.ctaVerticalSpacing) {
+            AutofillViews.PrimaryButton(title: confirmButton,
+                                        action: viewModel.save)
+
+            AutofillViews.TertiaryButton(title: UserText.autofillSaveLoginNotNowCTA,
+                                         action: viewModel.cancelButtonPressed)
+        }
+    }
+
+    private var horizontalPadding: CGFloat {
+        if AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) {
+            if AutofillViews.isSmallFrame(frame) {
+                return Const.Size.closeButtonOffsetPortraitSmallFrame
             } else {
-                Spacer()
-                    .frame(maxHeight: isSmallFrame ? 24 : 56)
+                return Const.Size.closeButtonOffsetPortrait
             }
+        } else {
+            return Const.Size.closeButtonOffset
         }
     }
 
-    var contentViewBottomSpacer: some View {
+    private var bottomSpacer: some View {
         VStack {
-            if isIPad {
-                Spacer()
-            } else if layoutType == .newUser || layoutType == .saveLogin {
-                Spacer()
-                    .frame(maxHeight: isSmallFrame ? 24 : 40)
+            if AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) {
+                AutofillViews.LegacySpacerView(height: Const.Size.bottomSpacerHeight, legacyHeight: Const.Size.bottomSpacerLegacyHeight)
+            } else if AutofillViews.isIPad(verticalSizeClass, horizontalSizeClass) {
+                AutofillViews.LegacySpacerView(height: Const.Size.bottomSpacerHeightIPad,
+                                               legacyHeight: orientation == .portrait ? Const.Size.bottomSpacerHeightIPad
+                                                                                      : Const.Size.bottomSpacerLegacyHeightIPad)
             } else {
-                Spacer()
-                    .frame(maxHeight: isSmallFrame ? 24 : 56)
+                AutofillViews.LegacySpacerView(height: Const.Size.bottomSpacerHeight,
+                                               legacyHeight: Const.Size.bottomSpacerLegacyHeightLandscape)
             }
         }
     }
 
-    var ctaView: some View {
-        VStack(spacing: 8) {
-            Button {
-                viewModel.save()
-            } label: {
-                Text(confirmButton)
-            }.buttonStyle(PrimaryButtonStyle())
-            
-            Button {
-                viewModel.cancelButtonPressed()
-            } label: {
-                Text(UserText.autofillSaveLoginNotNowCTA)
-            }
-            .buttonStyle(SecondaryButtonStyle())
-        }
-        .frame(width: isIPhonePortrait ? Const.Size.contentWidth : frame.width)
-    }
-
-    var bottomSpacer: some View {
-        VStack {
-            if isIPhonePortrait {
-                Spacer()
-            } else if isIPad {
-                Spacer()
-                    .frame(height: orientation == .portrait ? 24 : 64)
-            } else {
-                Spacer()
-                    .frame(height: 44)
-            }
-        }
-    }
-    
     @ViewBuilder
     private var contentView: some View {
         switch layoutType {
-        case .newUser, .saveLogin, .savePassword:
-            newUserContentView
-        case .saveAdditionalLogin:
-            additionalLoginContentView
-        case .updateUsername, .updatePassword:
-            updateContentView
+        case .newUser, .saveLogin, .savePassword, .updatePassword:
+            let text = layoutType == .updatePassword ? UserText.autoUpdatePasswordMessage : UserText.autofillSaveLoginMessageNewUser
+            AutofillViews.Description(text: text)
+        case .updateUsername:
+            updateUsernameContentView
         }
     }
-    
-    private var newUserContentView: some View {
-        Text(UserText.autofillSaveLoginMessageNewUser)
-            .font(Const.Fonts.subtitle)
-            .secondaryTextStyle()
-            .multilineTextAlignment(.center)
-            .padding(.horizontal, isSmallFrame ? Const.Size.paddingSmallDevice : Const.Size.paddingDefault)
-            .frame(width: isIPhonePortrait ? Const.Size.contentWidth : frame.width)
-            .fixedSize(horizontal: false, vertical: true)
-    }
-    
-    private var updateContentView: some View {
-        Text(verbatim: layoutType == .updatePassword ? viewModel.hiddenPassword : viewModel.username)
+
+    private var updateUsernameContentView: some View {
+        Text(verbatim: viewModel.usernameTruncated)
             .font(Const.Fonts.userInfo)
             .lineLimit(1)
-            .frame(maxWidth: .infinity)
             .multilineTextAlignment(.center)
-            .padding(.horizontal, isSmallFrame ? Const.Size.paddingSmallDevice : Const.Size.paddingDefault)
     }
-    
-    private var additionalLoginContentView: some View {
-        Text(verbatim: UserText.autofillAdditionalLoginInfoMessage)
-            .font(Const.Fonts.subtitle)
-            .secondaryTextStyle()
-            .frame(maxWidth: .infinity)
-            .multilineTextAlignment(.center)
-            .padding(.horizontal, isSmallFrame ? Const.Size.paddingSmallDevice : Const.Size.paddingDefault)
-    }
-    
-    // We have specific layouts for the smaller iPhones
-    private var isSmallFrame: Bool {
-        frame.width <= Const.Size.smallDevice || frame.height <= Const.Size.smallDevice
+}
+
+private enum Const {
+    enum Fonts {
+        static let userInfo = Font.system(.footnote).weight(.bold)
     }
 
-    private var isIPhonePortrait: Bool {
-        verticalSizeClass == .regular && horizontalSizeClass == .compact
-    }
-
-    private var isIPhone: Bool {
-        verticalSizeClass == .compact || horizontalSizeClass == .compact
-    }
-
-    private var isIPad: Bool {
-        verticalSizeClass == .regular && horizontalSizeClass == .regular
+    enum Size {
+        static let closeButtonOffset: CGFloat = 48.0
+        static let closeButtonOffsetPortrait: CGFloat = 44.0
+        static let closeButtonOffsetPortraitSmallFrame: CGFloat = 16.0
+        static let topPadding: CGFloat = 56.0
+        static let headlineTopPadding: CGFloat = 24.0
+        static let ios15scrollOffset: CGFloat = 80.0
+        static let contentSpacerHeight: CGFloat = 24.0
+        static let contentSpacerHeightIPad: CGFloat = 34.0
+        static let contentSpacerHeightLandscape: CGFloat = 44.0
+        static let ctaVerticalSpacing: CGFloat = 8.0
+        static let bottomSpacerHeight: CGFloat = 12.0
+        static let bottomSpacerHeightIPad: CGFloat = 24.0
+        static let bottomSpacerLegacyHeight: CGFloat = 16.0
+        static let bottomSpacerLegacyHeightIPad: CGFloat = 64.0
+        static let bottomSpacerLegacyHeightLandscape: CGFloat = 44.0
     }
 }
 
@@ -277,7 +228,7 @@ struct SaveLoginView_Previews: PreviewProvider {
         var hasSavedMatchingPasswordWithoutUsername: Bool { false }
         var hasSavedMatchingUsername: Bool { false }
         
-        static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws -> Int64 { return 0 }
+        static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: AutofillVaultFactory) throws -> Int64 { return 0 }
     }
     
     static var previews: some View {
@@ -314,7 +265,7 @@ struct SaveLoginView_Previews: PreviewProvider {
             VStack {
                 let viewModelAdditionalLogin = SaveLoginViewModel(credentialManager: MockManager(),
                                                                   appSettings: AppDependencyProvider.shared.appSettings,
-                                                                  layoutType: .saveAdditionalLogin)
+                                                                  layoutType: .saveLogin)
                 SaveLoginView(viewModel: viewModelAdditionalLogin)
                 
                 let viewModelSavePassword = SaveLoginViewModel(credentialManager: MockManager(),
@@ -323,35 +274,5 @@ struct SaveLoginView_Previews: PreviewProvider {
                 SaveLoginView(viewModel: viewModelSavePassword)
             }
         }
-        
-    }
-}
-
-private enum Const {
-    enum Fonts {
-        static let title = Font.system(.title3).weight(.bold)
-        static let subtitle = Font.system(.footnote)
-        static let updatedInfo = Font.system(.callout)
-        static let titleCaption = Font.system(.footnote)
-        static let userInfo = Font.system(.footnote).weight(.bold)
-    }
-
-    enum Margin {
-        static var closeButtonMargin: CGFloat {
-            Const.Size.closeButtonOffset - 21
-        }
-    }
-    
-    enum Size {
-        static let contentWidth: CGFloat = 286
-        static let closeButtonSize: CGFloat = 13
-        static let closeButtonTappableArea: CGFloat = 44
-        static let logoImage: CGFloat = 20
-        static let smallDevice: CGFloat = 320
-        static var closeButtonOffset: CGFloat {
-            closeButtonTappableArea - closeButtonSize
-        }
-        static let paddingSmallDevice: CGFloat = 28
-        static let paddingDefault: CGFloat = 30
     }
 }

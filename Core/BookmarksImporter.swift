@@ -17,11 +17,11 @@
 //  limitations under the License.
 //
 
+import Common
 import Foundation
 import SwiftSoup
 import Bookmarks
 import Persistence
-import os.log
 
 public enum BookmarksImportError: Error {
     case invalidHtmlNoDLTag

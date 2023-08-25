@@ -20,7 +20,6 @@
 import Foundation
 import BrowserServicesKit
 import Combine
-import os.log
 import Common
 
 public final class ContentBlocking {
@@ -37,12 +36,16 @@ public final class ContentBlocking {
 
 
     private init(privacyConfigurationManager: PrivacyConfigurationManaging? = nil) {
+        let internalUserDecider = DefaultInternalUserDecider(store: InternalUserStore())
+        let statisticsStore = StatisticsUserDefaults()
         let privacyConfigurationManager = privacyConfigurationManager
             ?? PrivacyConfigurationManager(fetchedETag: UserDefaultsETagStorage().loadEtag(for: .privacyConfiguration),
                                            fetchedData: FileStore().loadAsData(for: .privacyConfiguration),
                                            embeddedDataProvider: AppPrivacyConfigurationDataProvider(),
                                            localProtection: DomainsProtectionUserDefaultsStore(),
-                                           errorReporting: Self.debugEvents)
+                                           errorReporting: Self.debugEvents,
+                                           internalUserDecider: internalUserDecider,
+                                           installDate: statisticsStore.installDate)
         self.privacyConfigurationManager = privacyConfigurationManager
 
         trackerDataManager = TrackerDataManager(etag: UserDefaultsETagStorage().loadEtag(for: .trackerDataSet),
@@ -61,7 +64,7 @@ public final class ContentBlocking {
                                                             exceptionsSource: exceptionsSource,
                                                             lastCompiledRulesStore: lastCompiledRulesStore,
                                                             errorReporting: Self.debugEvents,
-                                                            logger: .contentBlockingLog)
+                                                            log: .contentBlockingLog)
 
         adClickAttributionRulesProvider = AdClickAttributionRulesProvider(config: adClickAttribution,
                                                                           compiledRulesSource: contentBlockingManager,
@@ -144,15 +147,19 @@ public final class ContentBlocking {
     }
     
     private let attributionEvents = EventMapping<AdClickAttributionEvents> { event, _, parameters, _ in
+        var shouldIncludeAppVersion = true
         let domainEvent: Pixel.Event
         switch event {
         case .adAttributionDetected:
             domainEvent = .adClickAttributionDetected
         case .adAttributionActive:
             domainEvent = .adClickAttributionActive
+        case .adAttributionPageLoads:
+            domainEvent = .adClickAttributionPageLoads
+            shouldIncludeAppVersion = false
         }
         
-        Pixel.fire(pixel: domainEvent, withAdditionalParameters: parameters ?? [:], includedParameters: [.appVersion])
+        Pixel.fire(pixel: domainEvent, withAdditionalParameters: parameters ?? [:], includedParameters: shouldIncludeAppVersion ? [.appVersion] : [])
     }
     
     private let attributionDebugEvents = EventMapping<AdClickAttributionDebugEvents> { event, _, _, _ in

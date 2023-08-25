@@ -18,11 +18,21 @@
 //
 
 import UIKit
-import MessageUI
 import Core
 import BrowserServicesKit
+import Persistence
 import SwiftUI
 import Common
+import DDGSync
+import Combine
+
+#if APP_TRACKING_PROTECTION
+import NetworkExtension
+#endif
+
+#if NETWORK_PROTECTION
+import NetworkProtection
+#endif
 
 // swiftlint:disable file_length type_body_length
 class SettingsViewController: UITableViewController {
@@ -50,6 +60,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var macBrowserWaitlistAccessoryText: UILabel!
     @IBOutlet weak var windowsBrowserWaitlistCell: UITableViewCell!
     @IBOutlet weak var windowsBrowserWaitlistAccessoryText: UILabel!
+    @IBOutlet weak var netPCell: UITableViewCell!
     @IBOutlet weak var longPressCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
     @IBOutlet weak var textSizeCell: UITableViewCell!
@@ -60,13 +71,19 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var debugCell: UITableViewCell!
     @IBOutlet weak var voiceSearchCell: UITableViewCell!
     @IBOutlet weak var voiceSearchToggle: UISwitch!
+
+    fileprivate var onDidAppearAction: () -> Void = {}
     
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
     
     private let syncSectionIndex = 1
     private let autofillSectionIndex = 2
+    private let appearanceSectionIndex = 3
+    private let moreFromDDGSectionIndex = 6
     private let debugSectionIndex = 8
+    
+    private let bookmarksDatabase: CoreDataDatabase
 
     private lazy var emailManager = EmailManager()
     
@@ -75,26 +92,41 @@ class SettingsViewController: UITableViewController {
     fileprivate lazy var appSettings = AppDependencyProvider.shared.appSettings
     fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager
     fileprivate lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
+    fileprivate let syncService: DDGSyncing
+    fileprivate let syncDataProviders: SyncDataProviders
+    fileprivate let internalUserDecider: InternalUserDecider
+#if NETWORK_PROTECTION
+    private let connectionObserver = ConnectionStatusObserverThroughSession()
+#endif
+    private var cancellables: Set<AnyCancellable> = []
 
     private var shouldShowDebugCell: Bool {
-        return featureFlagger.isFeatureOn(.debugMenu)
+        return featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild
     }
     
     private var shouldShowVoiceSearchCell: Bool {
         AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
     }
 
-    private lazy var shouldShowAutofillCell: Bool = {
+    private var shouldShowAutofillCell: Bool {
         return featureFlagger.isFeatureOn(.autofillAccessCredentialManagement)
-    }()
-
-    private lazy var shouldShowSyncCell: Bool = {
-        return featureFlagger.isFeatureOn(.sync)
-    }()
-
-    static func loadFromStoryboard() -> UIViewController {
-        return UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()!
     }
+
+    private var shouldShowSyncCell: Bool {
+        return featureFlagger.isFeatureOn(.sync)
+    }
+
+    private lazy var shouldShowNetPCell: Bool = {
+#if NETWORK_PROTECTION
+        if #available(iOS 15, *) {
+            return featureFlagger.isFeatureOn(.networkProtection)
+        } else {
+            return false
+        }
+#else
+        return false
+#endif
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,7 +144,19 @@ class SettingsViewController: UITableViewController {
         configureRememberLogins()
         configureDebugCell()
         configureVoiceSearchCell()
+        configureNetPCell()
         applyTheme(ThemeManager.shared.currentTheme)
+
+        internalUserDecider.isInternalUserPublisher.dropFirst().sink(receiveValue: { [weak self] _ in
+            self?.configureAutofillCell()
+            self?.configureSyncCell()
+            self?.configureDebugCell()
+            self?.tableView.reloadData()
+
+            // Scroll to force-redraw section headers and footers
+            self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        })
+        .store(in: &cancellables)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -128,10 +172,63 @@ class SettingsViewController: UITableViewController {
         configureEmailProtectionAccessoryText()
         configureMacBrowserWaitlistCell()
         configureWindowsBrowserWaitlistCell()
-        
-        // Make sure muliline labels are correctly presented
+
+        // Make sure multiline labels are correctly presented
         tableView.setNeedsLayout()
         tableView.layoutIfNeeded()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        onDidAppearAction()
+        onDidAppearAction = {}
+    }
+
+    init?(coder: NSCoder,
+          bookmarksDatabase: CoreDataDatabase,
+          syncService: DDGSyncing,
+          syncDataProviders: SyncDataProviders,
+          internalUserDecider: InternalUserDecider) {
+
+        self.bookmarksDatabase = bookmarksDatabase
+        self.syncService = syncService
+        self.syncDataProviders = syncDataProviders
+        self.internalUserDecider = internalUserDecider
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("Not implemented")
+    }
+
+    func openLoginsWhenPresented() {
+        onDidAppearAction = { [weak self] in
+            self?.showAutofill()
+        }
+    }
+
+    func openLoginsWhenPresented(accountDetails: SecureVaultModels.WebsiteAccount) {
+        onDidAppearAction = { [weak self] in
+            self?.showAutofillAccountDetails(accountDetails)
+        }
+    }
+
+    func openCookiePopupManagementWhenPresented() {
+        onDidAppearAction = { [weak self] in
+            self?.showCookiePopupManagement(animated: true)
+        }
+    }
+
+    @IBSegueAction func onCreateRootDebugScreen(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> RootDebugViewController {
+        guard let controller = RootDebugViewController(coder: coder,
+                                                       sync: syncService,
+                                                       bookmarksDatabase: bookmarksDatabase,
+                                                       internalUserDecider: AppDependencyProvider.shared.internalUserDecider) else {
+            fatalError("Failed to create controller")
+        }
+
+        return controller
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -248,6 +345,25 @@ class SettingsViewController: UITableViewController {
         }
     }
 
+    private func configureNetPCell() {
+        netPCell.isHidden = !shouldShowNetPCell
+#if NETWORK_PROTECTION
+        connectionObserver.publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] status in
+                let detailText: String
+                switch status {
+                case .connected:
+                    detailText = UserText.netPCellConnected
+                default:
+                    detailText = UserText.netPCellDisconnected
+                }
+                self?.netPCell.detailTextLabel?.text = detailText
+            }
+            .store(in: &cancellables)
+#endif
+    }
+
     private func configureDebugCell() {
         debugCell.isHidden = !shouldShowDebugCell
     }
@@ -258,17 +374,29 @@ class SettingsViewController: UITableViewController {
     }
 
     private func showAutofill(animated: Bool = true) {
-        let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+        let autofillController = AutofillLoginSettingsListViewController(
+            appSettings: appSettings,
+            syncService: syncService,
+            syncDataProviders: syncDataProviders
+        )
         autofillController.delegate = self
         Pixel.fire(pixel: .autofillSettingsOpened)
         navigationController?.pushViewController(autofillController, animated: animated)
     }
     
-    func showAutofillAccountDetails(_ account: SecureVaultModels.WebsiteAccount, animated: Bool = true) {
-        let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+    func showAutofillAccountDetails(_ account: SecureVaultModels.WebsiteAccount) {
+        let autofillController = AutofillLoginSettingsListViewController(
+            appSettings: appSettings,
+            syncService: syncService,
+            syncDataProviders: syncDataProviders
+        )
         autofillController.delegate = self
-        navigationController?.pushViewController(autofillController, animated: animated)
-        autofillController.showAccountDetails(account, animated: animated)
+        let detailsController = autofillController.makeAccountDetailsScreen(account)
+
+        var controllers = navigationController?.viewControllers ?? []
+        controllers.append(autofillController)
+        controllers.append(detailsController)
+        navigationController?.viewControllers = controllers
     }
     
     private func configureEmailProtectionAccessoryText() {
@@ -286,6 +414,25 @@ class SettingsViewController: UITableViewController {
     private func showMacBrowserWaitlistViewController() {
         navigationController?.pushViewController(MacWaitlistViewController(nibName: nil, bundle: nil), animated: true)
     }
+
+#if NETWORK_PROTECTION
+    private func showNetP() {
+        // This will be tidied up as part of https://app.asana.com/0/0/1205084446087078/f
+        let rootViewController = NetworkProtectionRootViewController { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+            let newRootViewController = NetworkProtectionRootViewController { }
+            self?.pushNetP(newRootViewController)
+        }
+        pushNetP(rootViewController)
+    }
+
+    private func pushNetP(_ rootViewController: NetworkProtectionRootViewController) {
+        navigationController?.pushViewController(
+            rootViewController,
+            animated: true
+        )
+    }
+#endif
 
     private func showWindowsBrowserWaitlistViewController() {
         navigationController?.pushViewController(WindowsWaitlistViewController(nibName: nil, bundle: nil), animated: true)
@@ -321,7 +468,14 @@ class SettingsViewController: UITableViewController {
 
         case syncCell:
             showSync()
-
+            
+        case netPCell:
+#if NETWORK_PROTECTION
+            showNetP()
+#else
+            break
+#endif
+            
         default: break
         }
         
@@ -383,6 +537,8 @@ class SettingsViewController: UITableViewController {
             return CGFloat.leastNonzeroMagnitude
         } else if debugSectionIndex == section && !shouldShowDebugCell {
             return CGFloat.leastNonzeroMagnitude
+        } else if moreFromDDGSectionIndex == section && !shouldShowNetPCell {
+            return CGFloat.leastNonzeroMagnitude
         } else {
             return super.tableView(tableView, heightForFooterInSection: section)
         }
@@ -390,6 +546,17 @@ class SettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return super.tableView(tableView, titleForFooterInSection: section)
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let rows = super.tableView(tableView, numberOfRowsInSection: section)
+        if section == appearanceSectionIndex && textSizeCell.isHidden {
+            return rows - 1
+        } else if section == moreFromDDGSectionIndex && !shouldShowNetPCell {
+            return rows - 1
+        } else {
+            return rows
+        }
     }
 
     @IBAction func onVoiceSearchToggled(_ sender: UISwitch) {
@@ -438,6 +605,8 @@ class SettingsViewController: UITableViewController {
 extension SettingsViewController: Themable {
     
     func decorate(with theme: Theme) {
+        view.backgroundColor = theme.backgroundColor
+
         decorateNavigationBar(with: theme)
         configureThemeCellAccessory()
         
@@ -465,18 +634,6 @@ extension SettingsViewController: Themable {
                           options: .transitionCrossDissolve, animations: {
                             self.tableView.reloadData()
         }, completion: nil)
-    }
-}
-
-extension SettingsViewController: MFMailComposeViewControllerDelegate {
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        dismiss(animated: true, completion: nil)
-    }
-}
-
-extension MFMailComposeViewController {
-    static func create() -> MFMailComposeViewController? {
-        return MFMailComposeViewController()
     }
 }
 

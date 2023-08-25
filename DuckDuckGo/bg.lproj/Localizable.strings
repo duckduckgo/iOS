@@ -17,7 +17,7 @@
 "action.title.add" = "Добавяне";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Автоматично попълване на данни за вход";
+"action.title.autofill.logins" = "Данни за вход";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Добавяне към отметки";
@@ -179,13 +179,13 @@
 "autofill.keep-enabled.alert.disable" = "Забрани";
 
 /* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Продължи да използваш";
+"autofill.keep-enabled.alert.keep-using" = "Продължаване на запазването";
 
 /* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "Можете да деактивирате автоматичното попълване по всяко време в Настройки.";
+"autofill.keep-enabled.alert.message" = "Можете да деактивирате тази функция по всяко време в Настройки.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Искате ли да продължите да използвате автоматично попълване?";
+"autofill.keep-enabled.alert.title" = "Искате ли да продължите да запазвате данни за вход?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Преглед";
@@ -268,26 +268,20 @@
 /* Title for alert when attempting to save a duplicate login */
 "autofill.logins.details.save-duplicate-alert.title" = "Дублирани данни за вход";
 
-/* Title for view displayed when autofill is locked */
-"autofill.logins.details.title" = "Отключете автоматичното попълване";
-
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Потребителско име";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Данните за вход се съхраняват на сигурно място само на това устройство";
+"autofill.logins.empty-view.subtitle" = "Данните за вход се съхраняват сигурно на Вашето устройство.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Все още няма запазени данни за вход";
-
-/* Title for view displayed when autofill is disabled and has no items */
-"autofill.logins.empty-view.title-disabled" = "Активирайте автоматичното попълване, за да започнете да запазвате данни за вход";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Отмени";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Отключване за използване на запазени данни за вход";
+"autofill.logins.list.auth.reason" = "Отключете устройството, за да получите достъп до запазените данни за вход";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Затваряне";
@@ -298,6 +292,9 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Данните за вход за %@ са изтрити";
 
+/* Toast message when a login item without a title is deleted */
+"autofill.logins.list.login-deleted-message-no-title" = "Данните за вход са изтрити";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Търсене на данни за вход";
 
@@ -305,13 +302,13 @@
 "autofill.logins.list.suggested" = "Предложения";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Автоматично попълване на данни за вход";
+"autofill.logins.list.title" = "Данни за вход";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "За защита на данните за автоматично попълване се изисква парола. Влезте в настройките на устройството, за да зададете парола.";
+"autofill.logins.no-auth.subtitle" = "За защита на данните за вход се изисква парола.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Задайте паролата на устройството, за да използвате автоматично попълване";
+"autofill.logins.no-auth.title" = "Защитете устройството, за да можете да запазвате данни за вход";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Отмени";
@@ -328,6 +325,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "От %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Парола за %@";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Да се използват ли запазените данни за вход?";
 
@@ -337,11 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Няма резултати";
 
-/* Message displayed on modal explaining that an additional login will be saved. */
-"autofill.save-login.additional-login.message" = "Това действие ще запази допълнителни данни за вход за този сайт.";
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Паролата ще бъде запазена в „Данни за вход“.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Използване на парола, генерирана от DuckDuckGo?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Използване на генерирана парола";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Създаване на собствена";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo ще съхранява тези данни за вход на сигурно място на Вашето устройство. Можете да управлявате запазените данни за вход в Настройки.";
+"autofill.save-login.new-user.message" = "Данните за вход са сигурно съхранени само на Вашето устройство и могат да се управляват от менюто Данни за вход в Настройки.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Искате ли DuckDuckGo да запази данните за вход?";
@@ -364,14 +373,17 @@
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Показване на паролата";
 
-/* Confirm CTA displayed on modal asking for the user to update the login */
-"autofill.update-login.save.CTA" = "Актуализиране на данните за вход";
+/* Message displayed on modal asking for the user to update the password */
+"autofill.update-password.message" = "DuckDuckGo ще актуализира запазените данни за вход във Вашето устройство.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Актуализиране на паролата";
 
 /* Title displayed on modal asking for the user to update the password */
-"autofill.update-password.title" = "Актуализиране на паролата?";
+"autofill.update-password.title" = "Актуализиране на паролата за \n %@?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-username.save.CTA" = "Актуализиране на потребителското име";
 
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "Актуализиране на потребителското име?";
@@ -646,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Стартирано изтегляне на %@";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "Защита на имейл";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Отмени";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Генериране на личен Duck Address";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Генериране на личен Duck Address";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Блокиране на имейл тракерите и скриване на адреса";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Изберете имейл адрес";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Блокиране на имейл тракери";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Блокирайте имейл тракерите с Duck адрес";
@@ -675,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Блокирайте имейл тракерите и скрийте своя адрес";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Продължаване с настройката";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Изход от настройката";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Ако излезете сега, Вашият Duck Address няма да бъде запазен!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Не показвай повече";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Защита на моя имейл";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Създайте уникален, произволен адрес, който премахва скритите тракери и препраща имейлите към пощенската Ви кутия.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Скрийте имейл адреса си и\nблокирайте тракерите";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Все още няма добавени отметки";
@@ -1002,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Меню за сърфиране";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Обратно";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Следващ";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Готово";

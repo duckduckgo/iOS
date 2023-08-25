@@ -50,16 +50,18 @@ final class AutoconsentBackgroundTests: XCTestCase {
         let manager = PrivacyConfigurationManager(fetchedETag: nil,
                                                   fetchedData: nil,
                                                   embeddedDataProvider: mockEmbeddedData,
-                                                  localProtection: MockDomainsProtectionStore())
+                                                  localProtection: MockDomainsProtectionStore(),
+                                                  internalUserDecider: DefaultInternalUserDecider())
         return AutoconsentUserScript(config: manager.privacyConfig,
                                      preferences: MockAutoconsentPreferences(),
                                      ignoreNonHTTPURLs: false)
     }()
-    
+
+    @MainActor
     func testUserscriptIntegration() {
         let configuration = WKWebViewConfiguration()
 
-        configuration.userContentController.addUserScript(autoconsentUserScript.makeWKUserScript())
+        configuration.userContentController.addUserScript(autoconsentUserScript.makeWKUserScriptSync())
         
         for messageName in autoconsentUserScript.messageNames {
             let contentWorld: WKContentWorld = autoconsentUserScript.getContentWorld()
@@ -92,11 +94,12 @@ final class AutoconsentBackgroundTests: XCTestCase {
         }
         waitForExpectations(timeout: 4)
     }
-    
+
+    @MainActor
     func testCosmeticRule() {
         let configuration = WKWebViewConfiguration()
 
-        configuration.userContentController.addUserScript(autoconsentUserScript.makeWKUserScript())
+        configuration.userContentController.addUserScript(autoconsentUserScript.makeWKUserScriptSync())
         
         for messageName in autoconsentUserScript.messageNames {
             let contentWorld: WKContentWorld = autoconsentUserScript.getContentWorld()
@@ -113,7 +116,7 @@ final class AutoconsentBackgroundTests: XCTestCase {
         waitForExpectations(timeout: 4)
 
         let expectation = expectation(description: "Async call")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             webview.evaluateJavaScript("window.getComputedStyle(banner).display === 'none'", in: nil, in: .page,
                                        completionHandler: { result in
                 switch result {

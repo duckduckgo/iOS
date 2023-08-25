@@ -22,7 +22,6 @@ import BrowserServicesKit
 import Common
 import UIKit
 import Combine
-import os.log
 import Core
 
 internal enum AutofillLoginListSectionType: Comparable {
@@ -66,7 +65,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     private var appSettings: AppSettings
     private let tld: TLD
     private var currentTabUrl: URL?
-    private let secureVault: SecureVault?
+    private let secureVault: (any AutofillSecureVault)?
     private var cachedDeletedCredentials: SecureVaultModels.WebsiteCredentials?
     private let autofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
     private let autofillDomainNameUrlSort = AutofillDomainNameUrlSort()
@@ -90,7 +89,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
     }
     
-    init(appSettings: AppSettings, tld: TLD, secureVault: SecureVault?, currentTabUrl: URL? = nil) {
+    init(appSettings: AppSettings, tld: TLD, secureVault: (any AutofillSecureVault)?, currentTabUrl: URL? = nil) {
         self.appSettings = appSettings
         self.tld = tld
         self.secureVault = secureVault
@@ -172,8 +171,8 @@ final class AutofillLoginListViewModel: ObservableObject {
         if let query = query, query.count > 0 {
             filteredAccounts = filteredAccounts.filter { account in
                 if !account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher).lowercased().contains(query.lowercased()) &&
-                    !account.domain.lowercased().contains(query.lowercased()) &&
-                    !account.username.lowercased().contains(query.lowercased()) {
+                    !(account.domain ?? "").lowercased().contains(query.lowercased()) &&
+                    !(account.username ?? "").lowercased().contains(query.lowercased()) {
                     return false
                 }
                 return true
@@ -204,10 +203,18 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
 
         let suggestedAccounts = accounts.filter { account in
-            return autofillDomainNameUrlMatcher.isMatchingForAutofill(currentSite: currentUrl.absoluteString, savedSite: account.domain, tld: tld)
+            return autofillDomainNameUrlMatcher.isMatchingForAutofill(
+                currentSite: currentUrl.absoluteString,
+                savedSite: account.domain ?? "",
+                tld: tld
+            )
         }
 
-        return suggestedAccounts
+        let sortedSuggestions = suggestedAccounts.sorted(by: {
+            autofillDomainNameUrlSort.compareAccountsForSortingAutofill(lhs: $0, rhs: $1, tld: tld) == .orderedAscending
+        })
+
+        return sortedSuggestions
     }
 
     private func makeSections(with accounts: [SecureVaultModels.WebsiteAccount]) -> [AutofillLoginListSectionType] {
@@ -297,7 +304,7 @@ final class AutofillLoginListViewModel: ObservableObject {
             try secureVault.deleteWebsiteCredentialsFor(accountId: accountIdInt)
             return true
         } catch {
-            Pixel.fire(pixel: .secureVaultError)
+            Pixel.fire(pixel: .secureVaultError, error: error)
             return false
         }
     }
@@ -316,7 +323,7 @@ final class AutofillLoginListViewModel: ObservableObject {
             clearUndoCache()
             updateData()
         } catch {
-            Pixel.fire(pixel: .secureVaultError)
+            Pixel.fire(pixel: .secureVaultError, error: error)
         }
     }
 }

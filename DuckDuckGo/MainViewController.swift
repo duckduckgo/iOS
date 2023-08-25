@@ -19,14 +19,17 @@
 
 import UIKit
 import WebKit
+import Combine
+import Common
 import Core
+import DDGSync
 import Lottie
 import Kingfisher
-import os.log
 import BrowserServicesKit
 import Bookmarks
 import Persistence
 import PrivacyDashboard
+import Networking
 
 // swiftlint:disable type_body_length
 // swiftlint:disable file_length
@@ -48,7 +51,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var suggestionTrayContainer: UIView!
     @IBOutlet weak var customNavigationBar: UIView!
     @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var fireButton: FireBarButtonItem!
+    @IBOutlet weak var fireButton: UIBarButtonItem!
     @IBOutlet weak var lastToolbarButton: UIBarButtonItem!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
@@ -66,14 +69,14 @@ class MainViewController: UIViewController {
     @IBOutlet weak var notificationContainerHeight: NSLayoutConstraint!
     
     @IBOutlet weak var statusBarBackground: UIView!
-    @IBOutlet weak var findInPageView: FindInPageView!
-    @IBOutlet weak var findInPageHeightLayoutConstraint: NSLayoutConstraint!
-    @IBOutlet weak var findInPageBottomLayoutConstraint: NSLayoutConstraint!
-    @IBOutlet weak var findInPageInnerContainerView: UIView!
 
     @IBOutlet weak var logoContainer: UIView!
     @IBOutlet weak var logo: UIImageView!
     @IBOutlet weak var logoText: UIImageView!
+
+    weak var findInPageView: FindInPageView!
+    weak var findInPageHeightLayoutConstraint: NSLayoutConstraint!
+    weak var findInPageBottomLayoutConstraint: NSLayoutConstraint!
 
     weak var notificationView: NotificationView?
 
@@ -89,7 +92,14 @@ class MainViewController: UIViewController {
     var contentUnderflow: CGFloat {
         return 3 + (allowContentUnderflow ? -customNavigationBar.frame.size.height : 0)
     }
-    
+
+    lazy var emailManager: EmailManager = {
+        let emailManager = EmailManager()
+        emailManager.aliasPermissionDelegate = self
+        emailManager.requestDelegate = self
+        return emailManager
+    }()
+
     var homeController: HomeViewController?
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
@@ -99,10 +109,16 @@ class MainViewController: UIViewController {
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private var launchTabObserver: LaunchTabNotification.Observer?
     
+    private let appTrackingProtectionDatabase: CoreDataDatabase
     private let bookmarksDatabase: CoreDataDatabase
+    private weak var bookmarksDatabaseCleaner: BookmarkDatabaseCleaner?
     private let favoritesViewModel: FavoritesListInteracting
-    
-    lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase)
+    private let syncService: DDGSyncing
+    private let syncDataProviders: SyncDataProviders
+    private var localUpdatesCancellable: AnyCancellable?
+    private var syncUpdatesCancellable: AnyCancellable?
+
+    lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
 
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
@@ -129,46 +145,58 @@ class MainViewController: UIViewController {
     
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
-    
-    private enum Constants {
-                
-        // Environment Keys/Values
-        static let environmentOnboardingKey = "ONBOARDING"
-        static let environmentOnboardingKeytrue = "true"
-        static let environmentOnboardingKeyfalse = "false"
-        
-        static let onboardingFlow = "DaxOnboarding"
-        static let bookmarksImage = "Bookmarks"
-        
-        // Segue Identifiers
-        static let bookmarksSegue = "Bookmarks"
-        static let bookmarksEditSegue = "BookmarksEdit"
-        static let bookmarksEditCurrentSegue = "BookmarksEditCurrent"
-        static let instructionsSegue = "instructions"
-        static let downloadsSegue = "Downloads"
-        static let reportBrokenSiteSegue = "ReportBrokenSite"
-        static let actionSheetDaxDialogSegue = "ActionSheetDaxDialog"
-        static let settingsSegue = "Settings"
-        static let showTabsSegue = "ShowTabs"
-    }
-    
+
     required init?(coder: NSCoder,
-                   bookmarksDatabase: CoreDataDatabase) {
+                   bookmarksDatabase: CoreDataDatabase,
+                   bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
+                   appTrackingProtectionDatabase: CoreDataDatabase,
+                   syncService: DDGSyncing,
+                   syncDataProviders: SyncDataProviders
+    ) {
+        self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
         self.bookmarksDatabase = bookmarksDatabase
+        self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
+        self.syncService = syncService
+        self.syncDataProviders = syncDataProviders
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         super.init(coder: coder)
+        bindSyncService()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("Use init?(code:")
     }
 
     fileprivate var tabCountInfo: TabCountInfo?
 
+    func loadFindInPage() {
+
+        let view = FindInPageView.loadFromXib()
+        self.view.addSubview(view)
+
+        // Avoids coercion swiftlint warnings
+        let superview = self.view!
+
+        let height = view.constrainAttribute(.height, to: view.frame.height)
+        let bottom = superview.constrainView(view, by: .bottom, to: .bottom)
+
+        NSLayoutConstraint.activate([
+            bottom,
+            superview.constrainView(view, by: .width, to: .width),
+            height,
+            superview.constrainView(view, by: .centerX, to: .centerX)
+        ])
+
+        findInPageView = view
+        findInPageBottomLayoutConstraint = bottom
+        findInPageHeightLayoutConstraint = height
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+
+        loadFindInPage()
         attachOmniBar()
 
         view.addInteraction(UIDropInteraction(delegate: self))
@@ -219,7 +247,7 @@ class MainViewController: UIViewController {
     
     func startOnboardingFlowIfNotSeenBefore() {
         
-        guard ProcessInfo.processInfo.environment[Constants.environmentOnboardingKey] != Constants.environmentOnboardingKeyfalse else {
+        guard ProcessInfo.processInfo.environment["ONBOARDING"] != "false" else {
             // explicitly skip onboarding, e.g. for integration tests
             return
         }
@@ -227,10 +255,10 @@ class MainViewController: UIViewController {
         let settings = DefaultTutorialSettings()
         let showOnboarding = !settings.hasSeenOnboarding ||
             // explicitly show onboarding, can be set in the scheme > Run > Environment Variables
-        ProcessInfo.processInfo.environment[Constants.environmentOnboardingKey] == Constants.environmentOnboardingKeyfalse
+            ProcessInfo.processInfo.environment["ONBOARDING"] == "true"
         guard showOnboarding else { return }
 
-        let onboardingFlow = Constants.onboardingFlow
+        let onboardingFlow = "DaxOnboarding"
 
         performSegue(withIdentifier: onboardingFlow, sender: self)
     }
@@ -240,23 +268,6 @@ class MainViewController: UIViewController {
                                                selector: #selector(keyboardWillChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
-
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillHide),
-                                               name: UIResponder.keyboardWillHideNotification,
-                                               object: nil)
-    }
-
-    /// This is only really for iOS 10 devices that don't properly support the change frame approach.
-    @objc private func keyboardWillHide(_ notification: Notification) {
-
-        guard findInPageBottomLayoutConstraint.constant > 0,
-            let userInfo = notification.userInfo else {
-            return
-        }
-
-        findInPageBottomLayoutConstraint.constant = 0
-        animateForKeyboard(userInfo: userInfo, y: view.frame.height)
     }
 
     /// Based on https://stackoverflow.com/a/46117073/73479
@@ -324,9 +335,24 @@ class MainViewController: UIViewController {
         omniBar.bookmarksButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
                                                                                   action: #selector(quickSaveBookmarkLongPress(gesture:))))
         gestureBookmarksButton.delegate = self
-        gestureBookmarksButton.image = UIImage(named: Constants.bookmarksImage)
+        gestureBookmarksButton.image = UIImage(named: "Bookmarks")
     }
-    
+
+    private func bindSyncService() {
+        localUpdatesCancellable = favoritesViewModel.localUpdates
+            .sink { [weak self] in
+                self?.syncService.scheduler.notifyDataChanged()
+            }
+
+        syncUpdatesCancellable = syncDataProviders.bookmarksAdapter.syncDidCompletePublisher
+            .sink { [weak self] _ in
+                self?.favoritesViewModel.reloadData()
+                DispatchQueue.main.async {
+                    self?.homeController?.collectionView.reloadData()
+                }
+            }
+    }
+
     @objc func quickSaveBookmarkLongPress(gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
             quickSaveBookmark()
@@ -356,13 +382,14 @@ class MainViewController: UIViewController {
             return
         }
         
-        if let navController = segue.destination as? UINavigationController,
-            let brokenSiteScreen = navController.topViewController as? ReportBrokenSiteViewController {
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                segue.destination.modalPresentationStyle = .formSheet
+        if let navController = segue.destination as? UINavigationController {
+            if let brokenSiteScreen = navController.topViewController as? ReportBrokenSiteViewController {
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    segue.destination.modalPresentationStyle = .formSheet
+                }
+                
+                brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
             }
-            
-            brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
         }
 
         if var onboarding = segue.destination as? Onboarding {
@@ -398,16 +425,18 @@ class MainViewController: UIViewController {
     @IBSegueAction func onCreateBookmarksList(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> BookmarksViewController {
         guard let controller = BookmarksViewController(coder: coder,
                                                        bookmarksDatabase: self.bookmarksDatabase,
-                                                       bookmarksSearch: bookmarksCachingSearch) else {
+                                                       bookmarksSearch: bookmarksCachingSearch,
+                                                       syncService: syncService,
+                                                       syncDataProviders: syncDataProviders) else {
             fatalError("Failed to create controller")
         }
         controller.delegate = self
         
-        if segueIdentifier == Constants.bookmarksEditCurrentSegue,
+        if segueIdentifier == "BookmarksEditCurrent",
             let link = currentTab?.link,
             let bookmark = menuBookmarksViewModel.favorite(for: link.url) ?? menuBookmarksViewModel.bookmark(for: link.url) {
             controller.openEditFormWhenPresented(bookmark: bookmark)
-        } else if segueIdentifier == Constants.bookmarksEditSegue,
+        } else if segueIdentifier == "BookmarksEdit",
                   let bookmark = sender as? BookmarkEntity {
             controller.openEditFormWhenPresented(bookmark: bookmark)
         }
@@ -417,7 +446,8 @@ class MainViewController: UIViewController {
     
     @IBSegueAction func onCreateTabSwitcher(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> TabSwitcherViewController {
         guard let controller = TabSwitcherViewController(coder: coder,
-                                                         bookmarksDatabase: bookmarksDatabase) else {
+                                                         bookmarksDatabase: bookmarksDatabase,
+                                                         syncService: syncService) else {
             fatalError("Failed to create controller")
         }
         
@@ -430,6 +460,28 @@ class MainViewController: UIViewController {
         return controller
     }
     
+    @IBSegueAction func onCreateSettings(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> SettingsViewController {
+        guard let controller = SettingsViewController(coder: coder,
+                                                      bookmarksDatabase: bookmarksDatabase,
+                                                      syncService: syncService,
+                                                      syncDataProviders: syncDataProviders,
+                                                      internalUserDecider: AppDependencyProvider.shared.internalUserDecider) else {
+            fatalError("Failed to create controller")
+        }
+
+        if segueIdentifier == "SettingsToLogins" {
+            if let account = sender as? SecureVaultModels.WebsiteAccount {
+                controller.openLoginsWhenPresented(accountDetails: account)
+            } else {
+                controller.openLoginsWhenPresented()
+            }
+        } else if segueIdentifier == "SettingsToCookiePopupManagement" {
+            controller.openCookiePopupManagementWhenPresented()
+        }
+
+        return controller
+    }
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
@@ -439,6 +491,9 @@ class MainViewController: UIViewController {
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if let presentedViewController {
+            return presentedViewController.supportedInterfaceOrientations
+        }
         return DefaultTutorialSettings().hasSeenOnboarding ? [.allButUpsideDown] : [.portrait]
     }
 
@@ -472,6 +527,7 @@ class MainViewController: UIViewController {
         tabManager = TabManager(model: tabsModel,
                                 previewsSource: previewsSource,
                                 bookmarksDatabase: bookmarksDatabase,
+                                syncService: syncService,
                                 delegate: self)
     }
 
@@ -524,9 +580,13 @@ class MainViewController: UIViewController {
         
         currentTab?.dismiss()
         removeHomeScreen()
+        AppDependencyProvider.shared.homePageConfiguration.refresh()
 
         let tabModel = currentTab?.tabModel
-        let controller = HomeViewController.loadFromStoryboard(model: tabModel!, favoritesViewModel: favoritesViewModel)
+        let controller = HomeViewController.loadFromStoryboard(model: tabModel!,
+                                                               favoritesViewModel: favoritesViewModel,
+                                                               appTPDatabase: appTrackingProtectionDatabase)
+        
         homeController = controller
 
         controller.chromeDelegate = self
@@ -535,6 +595,7 @@ class MainViewController: UIViewController {
         addToView(controller: controller)
 
         refreshControls()
+        syncService.scheduler.requestSyncImmediately()
     }
 
     fileprivate func removeHomeScreen() {
@@ -545,15 +606,11 @@ class MainViewController: UIViewController {
 
     @IBAction func onFirePressed() {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
-        DailyPixel.fire(pixel: .experimentDailyFireButtonTapped)
-        FireButton.stopAllFireButtonAnimations()
-        
-        FireButtonExperiment.storeThatFireButtonWasTapped()
         
         wakeLazyFireButtonAnimator()
         
         if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
-            performSegue(withIdentifier: Constants.actionSheetDaxDialogSegue, sender: spec)
+            performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
         } else {
             let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
                 self?.forgetAllWithAnimation {}
@@ -567,7 +624,6 @@ class MainViewController: UIViewController {
         
         self.forgetAllWithAnimation {}
         self.dismiss(animated: true)
-        dismissOmniBar()
         if KeyboardSettings().onAppLaunch {
             self.enterSearch()
         }
@@ -582,13 +638,11 @@ class MainViewController: UIViewController {
     @IBAction func onBackPressed() {
         Pixel.fire(pixel: .tabBarBackPressed)
         currentTab?.goBack()
-        dismissOmniBar()
         refreshOmniBar()
     }
 
     @IBAction func onForwardPressed() {
         Pixel.fire(pixel: .tabBarForwardPressed)
-        dismissOmniBar()
         currentTab?.goForward()
     }
     
@@ -596,8 +650,6 @@ class MainViewController: UIViewController {
         skipSERPFlow = true
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             showFireButtonPulse()
-            
-            tabSwitcherController?.viewDidAppear(false)
         }
     }
 
@@ -889,16 +941,21 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func launchReportBrokenSite() {
-        performSegue(withIdentifier: Constants.reportBrokenSiteSegue, sender: self)
+        performSegue(withIdentifier: "ReportBrokenSite", sender: self)
     }
     
     fileprivate func launchDownloads() {
-        performSegue(withIdentifier: Constants.downloadsSegue, sender: self)
+        performSegue(withIdentifier: "Downloads", sender: self)
     }
     
     fileprivate func launchAutofillLogins(with currentTabUrl: URL? = nil) {
         let appSettings = AppDependencyProvider.shared.appSettings
-        let autofillSettingsViewController = AutofillLoginSettingsListViewController(appSettings: appSettings, currentTabUrl: currentTabUrl)
+        let autofillSettingsViewController = AutofillLoginSettingsListViewController(
+            appSettings: appSettings,
+            currentTabUrl: currentTabUrl,
+            syncService: syncService,
+            syncDataProviders: syncDataProviders
+        )
         autofillSettingsViewController.delegate = self
         let navigationController = UINavigationController(rootViewController: autofillSettingsViewController)
         autofillSettingsViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: UserText.autofillNavigationButtonItemTitleClose,
@@ -917,21 +974,15 @@ class MainViewController: UIViewController {
     }
     
     func launchSettings() {
-        performSegue(withIdentifier: Constants.settingsSegue, sender: self)
+        performSegue(withIdentifier: "Settings", sender: self)
     }
     
     func launchCookiePopupManagementSettings() {
-        if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
-           let settingsController = navController.topViewController as? SettingsViewController {
-            settingsController.loadViewIfNeeded()
-            
-            settingsController.showCookiePopupManagement(animated: false)
-            self.present(navController, animated: true)
-        }
+        performSegue(withIdentifier: "SettingsToCookiePopupManagement", sender: self)
     }
 
     fileprivate func launchInstructions() {
-        performSegue(withIdentifier: Constants.instructionsSegue, sender: self)
+        performSegue(withIdentifier: "instructions", sender: self)
     }
 
     override func viewDidLayoutSubviews() {
@@ -1004,7 +1055,7 @@ class MainViewController: UIViewController {
         toolbar.setItems(newItems, animated: false)
     }
 
-    func newTab(reuseExisting: Bool = false) {
+    func newTab(reuseExisting: Bool = false, allowingKeyboard: Bool = true) {
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
@@ -1018,7 +1069,7 @@ class MainViewController: UIViewController {
             tabManager.addHomeTab()
         }
         attachHomeScreen()
-        homeController?.openedAsNewTab()
+        homeController?.openedAsNewTab(allowingKeyboard: allowingKeyboard)
         tabsBarController?.refresh(tabsModel: tabManager.model)
     }
     
@@ -1081,14 +1132,6 @@ class MainViewController: UIViewController {
         }
         
         Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters, includedParameters: [.atb])
-    }
-    
-    private func installFavoritesOverlay() {
-        let favoritesOverlay = FavoritesOverlay(favoritesViewModel: favoritesViewModel)
-        favoritesOverlay.delegate = self
-        addChild(favoritesOverlay)
-        favoritesOverlay.view.frame = containerView.bounds
-        containerView.addSubview(favoritesOverlay.view)
     }
     
 }
@@ -1184,7 +1227,7 @@ extension MainViewController: BrowserChromeDelegate {
         bottomHeight += view.safeAreaInsets.bottom
         let multiplier = toolbar.isHidden ? 1.0 : 1.0 - ratio
         toolbarBottom.constant = bottomHeight * multiplier
-        findInPageHeightLayoutConstraint.constant = findInPageInnerContainerView.frame.height + view.safeAreaInsets.bottom
+        findInPageHeightLayoutConstraint.constant = findInPageView.container.frame.height + view.safeAreaInsets.bottom
     }
 
     // 1.0 - full size, 0.0 - hidden
@@ -1246,7 +1289,6 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onMenuPressed() {
-        dismissOmniBar()
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
@@ -1281,17 +1323,18 @@ extension MainViewController: OmniBarDelegate {
             ViewHighlighter.hideAll()
         }
         hideSuggestionTray()
-        performSegue(withIdentifier: Constants.bookmarksSegue, sender: self)
+        performSegue(withIdentifier: "Bookmarks", sender: self)
     }
     
     func onBookmarkEdit() {
         ViewHighlighter.hideAll()
         hideSuggestionTray()
-        performSegue(withIdentifier: Constants.bookmarksEditCurrentSegue, sender: self)
+        performSegue(withIdentifier: "BookmarksEditCurrent", sender: self)
     }
     
     func onEnterPressed() {
         guard !suggestionTrayContainer.isHidden else { return }
+        
         suggestionTrayController?.willDismiss(with: omniBar.textField.text ?? "")
     }
 
@@ -1371,17 +1414,13 @@ extension MainViewController: FavoritesOverlayDelegate {
         Pixel.fire(pixel: .homeScreenFavouriteLaunched)
         homeController?.chromeDelegate = nil
         dismissOmniBar()
-        Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .bookmarks, fromCache: .tabs)
+        Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .fireproof, fromCache: .tabs)
         if url.isBookmarklet() {
             executeBookmarklet(url)
         } else {
             loadUrl(url)
         }
         showHomeRowReminder()
-    }
-    
-    func favoritesOverlay(_ controller: FavoritesOverlay, didRequestEditFavorite favorite: BookmarkEntity) {
-        performSegue(withIdentifier: Constants.bookmarksEditSegue, sender: favorite)
     }
 }
 
@@ -1454,7 +1493,7 @@ extension MainViewController: HomeControllerDelegate {
     }
     
     func home(_ home: HomeViewController, didRequestEdit favorite: BookmarkEntity) {
-        performSegue(withIdentifier: Constants.bookmarksEditSegue, sender: favorite)
+        performSegue(withIdentifier: "BookmarksEdit", sender: favorite)
     }
     
     func home(_ home: HomeViewController, didRequestContentOverflow shouldOverflow: Bool) -> CGFloat {
@@ -1596,6 +1635,11 @@ extension MainViewController: TabDelegate {
     
     func tabDidRequestSettings(tab: TabViewController) {
         launchSettings()
+    }
+
+    func tab(_ tab: TabViewController,
+             didRequestSettingsToLogins account: SecureVaultModels.WebsiteAccount?) {
+        performSegue(withIdentifier: "SettingsToLogins", sender: account)
     }
 
     func tabContentProcessDidTerminate(tab: TabViewController) {
@@ -1759,7 +1803,7 @@ extension MainViewController: TabSwitcherButtonDelegate {
                     
                 }
                 ViewHighlighter.hideAll()
-                self.performSegue(withIdentifier: Constants.showTabsSegue, sender: self)
+                self.performSegue(withIdentifier: "ShowTabs", sender: self)
             })
         }
     }
@@ -1825,6 +1869,11 @@ extension MainViewController: AutoClearWorker {
         }
         
         AutoconsentManagement.shared.clearCache()
+        DaxDialogs.shared.clearHeldURLData()
+
+        if syncService.authState == .inactive {
+            bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
+        }
     }
     
     func stopAllOngoingDownloads() {
@@ -1834,7 +1883,6 @@ extension MainViewController: AutoClearWorker {
     func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil, showNextDaxDialog: Bool = false) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
-        DailyPixel.fire(pixel: .experimentDailyFireButtonDataCleared)
         
         self.tabCountInfo = tabManager.makeTabCountInfo()
         
@@ -1879,10 +1927,6 @@ extension MainViewController: AutoClearWorker {
         if !ViewHighlighter.highlightedViews.contains(where: { $0.view == view }) {
             ViewHighlighter.hideAll()
             ViewHighlighter.showIn(window, focussedOnView: view)
-            
-            if let fireButton = view as? FireButton {
-                FireButtonExperiment.playFireButtonForOnboarding(fireButton: fireButton)
-            }
         }
     }
     
@@ -1896,10 +1940,10 @@ extension MainViewController: Themable {
         if AppWidthObserver.shared.isLargeWidth {
             statusBarBackground.backgroundColor = theme.tabsBarBackgroundColor
         } else {
-            statusBarBackground.backgroundColor = theme.barBackgroundColor
+            statusBarBackground.backgroundColor = theme.omniBarBackgroundColor
         }
 
-        view.backgroundColor = theme.backgroundColor
+        view.backgroundColor = theme.mainViewBackgroundColor
 
         customNavigationBar?.backgroundColor = theme.barBackgroundColor
         customNavigationBar?.tintColor = theme.barTintColor
@@ -1910,7 +1954,6 @@ extension MainViewController: Themable {
         toolbar?.barTintColor = theme.barBackgroundColor
         toolbar?.tintColor = theme.barTintColor
         
-        fireButton.decorate(with: theme)
         tabSwitcherButton.decorate(with: theme)
         gestureBookmarksButton.decorate(with: theme)
         tabsButton.tintColor = theme.barTintColor
@@ -1922,8 +1965,6 @@ extension MainViewController: Themable {
         findInPageView.decorate(with: theme)
         
         logoText.tintColor = theme.ddgTextTintColor
-        
-        FireButtonExperiment.decorateFireButton(fireButton: fireButton, for: theme)
     }
     
 }
@@ -2036,6 +2077,5 @@ extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
         controller.dismiss(animated: true)
     }
 }
-
 
 // swiftlint:enable file_length

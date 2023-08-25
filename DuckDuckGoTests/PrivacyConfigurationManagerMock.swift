@@ -29,7 +29,8 @@ class PrivacyConfigurationMock: PrivacyConfiguration {
 
     var tempUnprotectedDomains: [String] = []
 
-    var trackerAllowlist: PrivacyConfigurationData.TrackerAllowlistData = [:]
+    var trackerAllowlist: PrivacyConfigurationData.TrackerAllowlist = .init(entries: [:],
+                                                                            state: PrivacyConfigurationData.State.enabled)
 
     var exceptionList: [PrivacyFeature: [String]] = [:]
     func exceptionsList(forFeature featureKey: PrivacyFeature) -> [String] {
@@ -47,7 +48,7 @@ class PrivacyConfigurationMock: PrivacyConfiguration {
     }
 
     var enabledSubfeaturesForVersions: [String: Set<String>] = [:]
-    func isSubfeatureEnabled(_ subfeature: any PrivacySubfeature, versionProvider: AppVersionProvider) -> Bool {
+    func isSubfeatureEnabled(_ subfeature: any PrivacySubfeature, versionProvider: AppVersionProvider, randomizer: (Range<Double>) -> Double) -> Bool {
         return enabledSubfeaturesForVersions[subfeature.rawValue]?.contains(versionProvider.appVersion() ?? "") ?? false
     }
 

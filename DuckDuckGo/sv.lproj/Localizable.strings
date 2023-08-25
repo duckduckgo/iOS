@@ -17,7 +17,7 @@
 "action.title.add" = "Lägg till";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Fyll i inloggningar automatiskt";
+"action.title.autofill.logins" = "Inloggningar";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Lägg till i bokmärken";
@@ -179,13 +179,13 @@
 "autofill.keep-enabled.alert.disable" = "Inaktivera";
 
 /* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Fortsätt använda";
+"autofill.keep-enabled.alert.keep-using" = "Fortsätt att spara";
 
 /* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "Du kan inaktivera automatisk ifyllning när som helst i inställningarna.";
+"autofill.keep-enabled.alert.message" = "Du kan inaktivera det här när som helst i inställningarna.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Vill du fortsätta att använda automatisk ifyllning?";
+"autofill.keep-enabled.alert.title" = "Vill du fortsätta att spara inloggningar?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Visa";
@@ -268,26 +268,20 @@
 /* Title for alert when attempting to save a duplicate login */
 "autofill.logins.details.save-duplicate-alert.title" = "Duplicerad inloggning";
 
-/* Title for view displayed when autofill is locked */
-"autofill.logins.details.title" = "Lås upp automatisk ifyllning";
-
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Användarnamn";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Inloggningar lagras säkert endast på den här enheten";
+"autofill.logins.empty-view.subtitle" = "Inloggningar lagras säkert på din enhet.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Inga inloggningar sparade ännu";
-
-/* Title for view displayed when autofill is disabled and has no items */
-"autofill.logins.empty-view.title-disabled" = "Aktivera automatisk ifyllning för att börja spara inloggningar";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Avbryt";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Lås upp för att använda sparad inloggning";
+"autofill.logins.list.auth.reason" = "Lås upp enheten för att komma åt sparade inloggningar.";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Stäng";
@@ -298,6 +292,9 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Inloggning till %@ raderad";
 
+/* Toast message when a login item without a title is deleted */
+"autofill.logins.list.login-deleted-message-no-title" = "Inloggning raderad";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Sök inloggningar";
 
@@ -305,13 +302,13 @@
 "autofill.logins.list.suggested" = "Förslag";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Fyll i inloggningar automatiskt";
+"autofill.logins.list.title" = "Inloggningar";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "En lösenkod krävs för att skydda dina uppgifter för automatisk ifyllning. Gå till inställningarna för din enhet för att ställa in en lösenkod.";
+"autofill.logins.no-auth.subtitle" = "En lösenkod krävs för att skydda dina inloggningar.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Ställ in en lösenkod för din enhet för att använda automatisk ifyllning";
+"autofill.logins.no-auth.title" = "Säkra din enhet för att spara inloggningar";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Avbryt";
@@ -328,8 +325,11 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "Från %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Lösenord för %@";
+
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Använd en sparad inloggning?";
+"autofill.logins.prompt.title" = "Använd sparad inloggning?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "för ”%@”";
@@ -337,11 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Inga resultat";
 
-/* Message displayed on modal explaining that an additional login will be saved. */
-"autofill.save-login.additional-login.message" = "Ytterligare en inloggning kommer att sparas för den här webbplatsen.";
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Lösenordet sparas i Inloggningar.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Använd genererat lösenord från DuckDuckGo?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Använd genererat lösenord";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Skapa mitt eget";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo lagrar denna inloggning säkert på din enhet. Du kan hantera sparade inloggningar i Inställningar.";
+"autofill.save-login.new-user.message" = "Inloggningar lagras säkert på din enhet, och kan hanteras genom menyn Inloggningar i inställningarna.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vill du att DuckDuckGo ska spara din inloggning?";
@@ -364,14 +373,17 @@
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Visa lösenord";
 
-/* Confirm CTA displayed on modal asking for the user to update the login */
-"autofill.update-login.save.CTA" = "Uppdatera inloggning";
+/* Message displayed on modal asking for the user to update the password */
+"autofill.update-password.message" = "DuckDuckGo uppdaterar den här lagrade inloggningen på din enhet.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Uppdatera lösenord";
 
 /* Title displayed on modal asking for the user to update the password */
-"autofill.update-password.title" = "Uppdatera lösenord?";
+"autofill.update-password.title" = "Uppdatera lösenordet för\n%@?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-username.save.CTA" = "Uppdatera användarnamn";
 
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "Uppdatera användarnamn?";
@@ -646,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Nerladdning påbörjad för %@";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "E-postskydd";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Avbryt";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Generera privat Duck Address";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Generera privat Duck Address";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Blockera e-postspårare och dölj din adress";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Välj e-postadress";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Blockera e-postspårare";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blockera e-postspårare med en Duck-adress";
@@ -675,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blockera e-postspårare och dölj din adress";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Fortsätt inställningen";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Avsluta inställningen";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Om du avslutar nu kommer din Duck Address inte att sparas!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Visa inte igen";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Skydda min e-postadress";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Skapa en unik, slumpmässig adress som också tar bort dolda spårare och vidarebefordrar e-post till din inkorg.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Dölj din e-postadress och\nblockera spårare";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Inga bokmärken har lagts till ännu";
@@ -1002,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Bläddra-meny";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Tillbaka";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Nästa";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Klart";

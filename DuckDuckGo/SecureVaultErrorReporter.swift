@@ -21,12 +21,13 @@ import Foundation
 import BrowserServicesKit
 import Core
 import Common
+import SecureStorage
 
 final class SecureVaultErrorReporter: SecureVaultErrorReporting {
     static let shared = SecureVaultErrorReporter()
     private init() {}
 
-    func secureVaultInitFailed(_ error: SecureVaultError) {
+    func secureVaultInitFailed(_ error: SecureStorageError) {
 #if DEBUG
         guard !ProcessInfo().arguments.contains("testing") else { return }
 #endif
@@ -36,11 +37,23 @@ final class SecureVaultErrorReporter: SecureVaultErrorReporting {
                            PixelParameters.appVersion: AppVersion.shared.versionAndBuildNumber]
         switch error {
         case .initFailed(let error):
+            // Silencing pixel reporting for error -25308 (attempt to access keychain while the device was locked)
+            // as per https://app.asana.com/0/30173902528854/1204557908133145/f, at least temporarily
+            if isBackgrounded,
+               let secureVaultError = error as? SecureStorageError,
+               let userInfo = secureVaultError.errorUserInfo["NSUnderlyingError"] as? NSError,
+               userInfo.code == -25308 {
+                os_log("SecureVault attempt to access keystore while device is locked: %@",
+                       log: .generalLog,
+                       type: .debug,
+                       error.localizedDescription)
+                return
+            }
             Pixel.fire(pixel: .secureVaultInitFailedError, error: error, withAdditionalParameters: pixelParams)
         case .failedToOpenDatabase(let error):
             Pixel.fire(pixel: .secureVaultFailedToOpenDatabaseError, error: error, withAdditionalParameters: pixelParams)
         default:
-            Pixel.fire(pixel: .secureVaultError)
+            Pixel.fire(pixel: .secureVaultError, error: error)
 
         }
     }

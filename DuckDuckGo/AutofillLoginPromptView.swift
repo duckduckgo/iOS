@@ -21,114 +21,112 @@ import SwiftUI
 import BrowserServicesKit
 
 struct AutofillLoginPromptView: View {
+
+    @State var frame: CGSize = .zero
     @ObservedObject var viewModel: AutofillLoginPromptViewModel
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
     
     var body: some View {
-        mainView()
-            .ignoresSafeArea()
-    }
-                    
-    private func mainView() -> some View {
-        ZStack {
-            closeButtonHeader
-            
-            VStack {
-                VStack(spacing: 0) {
-                    titleHeaderView
-                    Spacer()
-                    accountButtonsContainer
-                    Spacer()
-                }
-                .padding(.top, 43)
-                    
-                footer
-            }
-        }
-    }
-    
-    var closeButtonHeader: some View {
-        VStack {
-            HStack {
-                Spacer()
-                closeButton
-                    .padding(5)
-            }
-            Spacer()
-        }
-    }
-    
-    private var closeButton: some View {
-        Button {
-            viewModel.dismissView()
-        } label: {
-            Image(systemName: "xmark")
-                .resizable()
-                .scaledToFit()
-                .frame(width: Const.Size.closeButtonSize, height: Const.Size.closeButtonSize)
-                .foregroundColor(.primary)
-        }
-        .frame(width: Const.Size.closeButtonTappableArea, height: Const.Size.closeButtonTappableArea)
-        .contentShape(Rectangle())
-    }
-    
-    var titleHeaderView: some View {
-        VStack(spacing: 12) {
-            HStack {
-                FaviconView(viewModel: FaviconViewModel(domain: viewModel.domain))
-                    .scaledToFit()
-                    .frame(width: 20, height: 20)
-                Text(viewModel.domain)
-                    .font(Const.Fonts.titleCaption)
-                    .foregroundColor(Const.Colors.SecondaryTextColor)
-            }
-            
-            VStack {
-                messageView
-            }
-        }
-    }
-    
-    var messageView: some View {
-        Text(viewModel.message)
-            .font(Const.Fonts.title)
-            .minimumScaleFactor(0.5)
-            .foregroundColor(Const.Colors.PrimaryTextColor)
-            .padding()
-            .lineLimit(1)
-            .frame(minWidth: 0, maxWidth: .infinity)
-            .foregroundColor(.primary)
-            .cornerRadius(Const.Size.CTAButtonCornerRadius)
-    }
-    
-    var accountButtonsContainer: some View {
         GeometryReader { geometry in
-            ScrollView(showsIndicators: viewModel.shouldUseScrollView) {
-                VStack {
-                    accountButtons
-                    if viewModel.expanded {
-                        Spacer()
-                    } else {
-                        Spacer()
-                            .frame(height: 44)
-                    }
-                }
-                .frame(minHeight: geometry.size.height)
-            }
-            .padding(.trailing, 8 + Const.Size.buttonBorderWidth)
-            .padding(.leading, 8 + Const.Size.buttonBorderWidth)
+            mainView(geometry)
         }
     }
-    
-    var accountButtons: some View {
+                    
+    private func mainView(_ geometry: GeometryProxy) -> some View {
+        DispatchQueue.main.async { self.frame = geometry.size }
+
+        return ZStack {
+            AutofillViews.CloseButtonHeader(action: viewModel.dismissView)
+                .offset(x: horizontalPadding)
+                .zIndex(1)
+            
+            VStack {
+                Spacer()
+                    .frame(height: Const.Size.topPadding)
+                AutofillViews.WebsiteWithFavicon(accountDomain: viewModel.domain)
+                Spacer()
+                    .frame(height: Const.Size.headlineTopPadding)
+                AutofillViews.Headline(title: viewModel.message)
+                contentSpacer
+                accountButtons
+                bottomSpacer
+            }
+            .background(GeometryReader { proxy -> Color in
+                DispatchQueue.main.async { viewModel.contentHeight = proxy.size.height }
+                return Color.clear
+            })
+            .useScrollView(shouldUseScrollView(), minHeight: frame.height)
+
+        }
+        .padding(.horizontal, horizontalPadding)
+
+    }
+
+    private func shouldUseScrollView() -> Bool {
+        var useScrollView: Bool = false
+
+        if AutofillViews.isIPad(verticalSizeClass, horizontalSizeClass) {
+            useScrollView = viewModel.contentHeight > frame.height
+        } else if #available(iOS 16.0, *) {
+            useScrollView = AutofillViews.contentHeightExceedsScreenHeight(viewModel.contentHeight)
+        } else {
+            useScrollView = viewModel.contentHeight > frame.height + Const.Size.ios15scrollOffset
+        }
+
+        return useScrollView
+    }
+
+    private var contentSpacer: some View {
+        VStack {
+            if AutofillViews.isIPhoneLandscape(verticalSizeClass) {
+                Spacer(minLength: Const.Size.contentSpacerHeight)
+            } else {
+                if viewModel.expanded {
+                    AutofillViews.LegacySpacerView(height: Const.Size.contentSpacerHeight, legacyHeight: Const.Size.contentSpacerHeight)
+                } else {
+                    AutofillViews.LegacySpacerView(height: Const.Size.contentSpacerHeight)
+                }
+            }
+        }
+    }
+
+    private var horizontalPadding: CGFloat {
+        guard AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) else {
+            return Const.Size.closeButtonOffset
+        }
+
+        if AutofillViews.isSmallFrame(frame) {
+            return Const.Size.closeButtonOffsetPortraitSmallFrame
+        } else {
+            return Const.Size.closeButtonOffsetPortrait
+        }
+    }
+
+    private var bottomSpacer: some View {
+        VStack {
+            if AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) {
+                AutofillViews.LegacySpacerView(height: Const.Size.bottomSpacerHeight)
+            } else if AutofillViews.isIPad(verticalSizeClass, horizontalSizeClass) {
+                AutofillViews.LegacySpacerView(height: Const.Size.bottomSpacerHeightIPad)
+            } else {
+                AutofillViews.LegacySpacerView()
+            }
+        }
+    }
+
+    private var accountButtons: some View {
         Group {
+            let containsPartialMatches = viewModel.containsPartialMatches
             ForEach(viewModel.accountMatchesViewModels.indices, id: \.self) { group in
-                VStack(spacing: 12) {
-                    buttonGroupTitle(for: viewModel.accountMatchesViewModels[group])
+                VStack(spacing: Const.Size.buttonVerticalSpacing) {
+                    if containsPartialMatches {
+                        buttonGroupTitle(for: viewModel.accountMatchesViewModels[group], groupIndex: group)
+                    }
                     ForEach(viewModel.accountMatchesViewModels[group].accounts.indices, id: \.self) { index in
                         let accountViewModel = viewModel.accountMatchesViewModels[group].accounts[index]
-                        let isPerfectMatch = viewModel.accountMatchesViewModels[group].isPerfectMatch
                         accountButton(for: accountViewModel,
-                                      style: index == 0 && isPerfectMatch ? .primary : .secondary)
+                                      style: index == 0 && group == 0 ? .primary : .secondary)
                     }
                 }
             }
@@ -138,105 +136,56 @@ struct AutofillLoginPromptView: View {
         }
     }
 
-    private func buttonGroupTitle(for accountViewModelGroup: AccountMatchesViewModel) -> some View {
-        VStack {
-            HStack(alignment: .bottom) {
-                Text(accountViewModelGroup.title)
-                        .font(Const.Fonts.titleCaption)
-                        .foregroundColor(Const.Colors.SecondaryTextColor)
-                        .truncationMode(.middle)
-                        .frame(width: Const.Size.contentWidth - 64)
-                        .lineLimit(1)
-            }
+    private func buttonGroupTitle(for accountViewModelGroup: AccountMatchesViewModel, groupIndex: Int) -> some View {
+        HStack(alignment: .bottom) {
+            Text(accountViewModelGroup.title)
+                .daxFootnoteRegular()
+                .foregroundColor(Color(designSystemColor: .textSecondary))
+                .truncationMode(.middle)
+                .lineLimit(1)
         }
-        .padding(.top, viewModel.expanded ? 22 : 0)
+        .padding(.top, groupIndex == 0 ? 0 : Const.Size.buttonGroupTitleTopPadding)
     }
 
     private enum AccountButtonStyle {
         case primary
         case secondary
     }
-    
+
+    @ViewBuilder
     private func accountButton(for accountViewModel: AccountViewModel, style: AccountButtonStyle) -> some View {
-        HStack {
-            Spacer()
-            
-            Button {
-                viewModel.didSelectAccount(accountViewModel.account)
-            } label: {
-                Text(accountViewModel.displayString)
-                    .font(Const.Fonts.CTA)
-                    .minimumScaleFactor(0.7)
-                    .foregroundColor(style == .primary ? Const.Colors.CTAPrimaryForeground : Const.Colors.CTASecondaryForeground)
-                    .padding()
-                    .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight - Const.Size.buttonBorderWidth)
-                    .background(style == .primary ? Const.Colors.CTAPrimaryBackground : Const.Colors.CTASecondaryBackground)
-                    .foregroundColor(.primary)
-                    .cornerRadius(Const.Size.CTAButtonCornerRadius)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: Const.Size.CTAButtonCornerRadius)
-                            .stroke(style == .primary ? Const.Colors.CTAPrimaryBackground : Const.Colors.CTASecondaryBorder,
-                                    lineWidth: Const.Size.buttonBorderWidth)
-                    )
-            }
-            .frame(width: Const.Size.contentWidth - Const.Size.buttonBorderWidth)
-            .padding(EdgeInsets(top: 1, leading: 0, bottom: 1, trailing: 0))
-            
-            Spacer()
+
+        switch style {
+        case .primary:
+            AutofillViews.PrimaryButton(title: accountViewModel.displayString,
+                                        action: { viewModel.didSelectAccount(accountViewModel.account) })
+        case .secondary:
+            AutofillViews.SecondaryButton(title: accountViewModel.displayString,
+                                          action: { viewModel.didSelectAccount(accountViewModel.account) })
         }
     }
-    
-    var moreOptionsButton: some View {
-        Button {
-            viewModel.didExpand()
-        } label: {
-            Text(viewModel.moreOptionsButtonString)
-                .font(Const.Fonts.CTA)
-                .foregroundColor(Const.Colors.CTASecondaryForeground)
-                .padding()
-                .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight)
-                .background(Const.Colors.CTATertiaryBackground)
-                .foregroundColor(.primary)
-                .cornerRadius(Const.Size.CTAButtonCornerRadius)
-        }
-        .frame(width: Const.Size.contentWidth - Const.Size.buttonBorderWidth)
-    }
-    
-    var footer: some View {
-        HStack {
-            Spacer()
-                .padding(.bottom, 44)
-        }
+
+    private var moreOptionsButton: some View {
+        AutofillViews.TertiaryButton(title: viewModel.moreOptionsButtonString, action: viewModel.didExpand)
     }
 }
 
 // MARK: - Constants
 
 private enum Const {
-    enum Fonts {
-        static let title = Font.system(.title3).weight(.bold)
-        static let titleCaption = Font.system(.footnote)
-        static let CTA = Font(UIFont.boldAppFont(ofSize: 16))
-    }
-    
-    enum Colors {
-        static let CTAPrimaryBackground = Color("CTAPrimaryBackground")
-        static let CTASecondaryBackground = Color("CTASecondaryBackground")
-        static let CTATertiaryBackground = Color("CTATertiaryBackground")
-        static let CTAPrimaryForeground = Color("CTAPrimaryForeground")
-        static let CTASecondaryForeground = Color("CTASecondaryForeground")
-        static let PrimaryTextColor = Color("PrimaryTextColor")
-        static let SecondaryTextColor = Color("SecondaryTextColor")
-        static let CTASecondaryBorder = Color("CTASecondaryBorder")
-    }
-    
     enum Size {
-        static let CTAButtonCornerRadius: CGFloat = 12
-        static let CTAButtonMaxHeight: CGFloat = 50
-        static let contentWidth: CGFloat = 286
-        static let closeButtonSize: CGFloat = 13
-        static let closeButtonTappableArea: CGFloat = 44
-        static let buttonBorderWidth: CGFloat = 2
+        static let closeButtonOffset: CGFloat = 48.0
+        static let closeButtonOffsetPortrait: CGFloat = 44.0
+        static let closeButtonOffsetPortraitSmallFrame: CGFloat = 16.0
+        static let topPadding: CGFloat = 56.0
+        static let headlineTopPadding: CGFloat = 24.0
+        static let ios15scrollOffset: CGFloat = 80.0
+        static let contentSpacerHeight: CGFloat = 40.0
+        static let contentSpacerHeightLandscape: CGFloat = 24.0
+        static let buttonVerticalSpacing: CGFloat = 12.0
+        static let buttonGroupTitleTopPadding: CGFloat = 22.0
+        static let bottomSpacerHeight: CGFloat = 40.0
+        static let bottomSpacerHeightIPad: CGFloat = 60.0
     }
 }
 

@@ -21,6 +21,8 @@ import UIKit
 import Core
 import WidgetKit
 import Bookmarks
+import CoreData
+import Persistence
 
 class ImageCacheDebugViewController: UITableViewController {
 
@@ -40,9 +42,20 @@ class ImageCacheDebugViewController: UITableViewController {
     let imageError = UIImage(systemName: "exclamationmark.triangle")
     let tabsModel = TabsModel.get() ?? TabsModel(desktop: false)
 
-    private let bookmarksContext = BookmarksDatabase.globalReferenceForDebug!.makeContext(concurrencyType: .mainQueueConcurrencyType)
+    private let bookmarksContext: NSManagedObjectContext
 
     private var bookmarksAndFavorites = [BookmarkEntity]()
+
+    init?(coder: NSCoder,
+          bookmarksDatabase: CoreDataDatabase) {
+
+        bookmarksContext = bookmarksDatabase.makeContext(concurrencyType: .mainQueueConcurrencyType)
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("Not implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +95,7 @@ class ImageCacheDebugViewController: UITableViewController {
         case .bookmarks:
             let bookmark = bookmarksAndFavorites[indexPath.row]
             cell.textLabel?.text = bookmark.urlObject?.host
-            cell.imageView?.loadFavicon(forDomain: bookmark.urlObject?.host, usingCache: .bookmarks) {
+            cell.imageView?.loadFavicon(forDomain: bookmark.urlObject?.host, usingCache: .fireproof) {
                 cell.imageView?.image = $1 ? self.imageNotFound : $0 ?? self.imageError
                 cell.detailTextLabel?.text = self.describe($1 ? nil : $0)
             }

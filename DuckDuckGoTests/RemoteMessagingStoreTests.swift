@@ -20,10 +20,10 @@
 import XCTest
 import Foundation
 import CoreData
-import os.log
 @testable import DuckDuckGo
 @testable import Core
 @testable import BrowserServicesKit
+@testable import RemoteMessaging
 
 class RemoteMessagingStoreTests: XCTestCase {
 

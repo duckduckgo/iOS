@@ -17,7 +17,7 @@
 "action.title.add" = "Aggiungi";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Compilazione automatica dei dati di accesso";
+"action.title.autofill.logins" = "Dati di accesso";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Aggiungi ai segnalibri";
@@ -179,13 +179,13 @@
 "autofill.keep-enabled.alert.disable" = "Disabilita";
 
 /* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Continua a utilizzare";
+"autofill.keep-enabled.alert.keep-using" = "Continua a salvare";
 
 /* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "La funzione di riempimento automatico può essere disattivata in qualsiasi momento in Impostazioni.";
+"autofill.keep-enabled.alert.message" = "Puoi disattivare questa funzione in qualsiasi momento in Impostazioni.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Continuare a utilizzare il riempimento automatico?";
+"autofill.keep-enabled.alert.title" = "Vuoi continuare a salvare i dati di accesso?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Visualizza";
@@ -268,26 +268,20 @@
 /* Title for alert when attempting to save a duplicate login */
 "autofill.logins.details.save-duplicate-alert.title" = "Dati di accesso duplicati";
 
-/* Title for view displayed when autofill is locked */
-"autofill.logins.details.title" = "Sblocca la compilazione automatica";
-
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Nome utente";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "I dati di accesso vengono salvati in modo sicuro solo su questo dispositivo";
+"autofill.logins.empty-view.subtitle" = "I dati di accesso sono archiviati in modo sicuro sul tuo dispositivo.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Non ci sono ancora dati di accesso salvati";
-
-/* Title for view displayed when autofill is disabled and has no items */
-"autofill.logins.empty-view.title-disabled" = "Attiva il riempimento automatico per iniziare a salvare i dati di accesso";
+"autofill.logins.empty-view.title" = "Non vi sono ancora dati di accesso salvati";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Annulla";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Sblocca per utilizzare i dati di accesso salvati";
+"autofill.logins.list.auth.reason" = "Sblocca il dispositivo per accedere ai dati di accesso salvati";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Chiudi";
@@ -298,6 +292,9 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Dati di accesso per %@ eliminati";
 
+/* Toast message when a login item without a title is deleted */
+"autofill.logins.list.login-deleted-message-no-title" = "Dati di accesso eliminati";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Cerca dati di accesso";
 
@@ -305,13 +302,13 @@
 "autofill.logins.list.suggested" = "Suggerimenti";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Accessi compilazione automatica";
+"autofill.logins.list.title" = "Dati di accesso";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Per proteggere i dati del riempimento automatico è necessario un codice di accesso. Accedi alle impostazioni del dispositivo per impostarne uno.";
+"autofill.logins.no-auth.subtitle" = "Per proteggere i dati di accesso è necessario impostare un passcode.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Imposta il codice di accesso del tuo dispositivo per utilizzare la funzione di riempimento automatico";
+"autofill.logins.no-auth.title" = "Proteggi il tuo dispositivo per salvare i dati di accesso";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Annulla";
@@ -328,6 +325,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "Da %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Password per %@";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Usare i dati di accesso salvati?";
 
@@ -337,11 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Nessun risultato";
 
-/* Message displayed on modal explaining that an additional login will be saved. */
-"autofill.save-login.additional-login.message" = "In questo modo vengono salvati ulteriori dati di accesso per questo sito.";
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "La password verrà salvata in Accessi.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Usare la password generata da DuckDuckGo?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Usa password generata";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Crea la mia";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo salverà in modo sicuro questi dati di accesso sul tuo dispositivo. Puoi gestire i dati di accesso salvati in Impostazioni.";
+"autofill.save-login.new-user.message" = "I dati di accesso sono archiviati in modo sicuro sul tuo dispositivo e possono essere gestiti dal menu Accessi, in Impostazioni.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vuoi che DuckDuckGo salvi i dati di accesso?";
@@ -364,14 +373,17 @@
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Mostra password";
 
-/* Confirm CTA displayed on modal asking for the user to update the login */
-"autofill.update-login.save.CTA" = "Aggiorna dati di accesso";
+/* Message displayed on modal asking for the user to update the password */
+"autofill.update-password.message" = "DuckDuckGo aggiornerà questi dati di accesso memorizzati sul tuo dispositivo.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Aggiorna password";
 
 /* Title displayed on modal asking for the user to update the password */
-"autofill.update-password.title" = "Aggiornare password?";
+"autofill.update-password.title" = "Aggiornare la password per\n%@?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-username.save.CTA" = "Aggiorna nome utente";
 
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "Aggiornare nome utente?";
@@ -646,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Download di %@ avviato";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "Protezione email";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Annulla";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Genera Duck Address privato";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Genera Duck Address privato";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Blocca i sistemi di tracciamento e-mail e nascondi il tuo indirizzo";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Seleziona l'indirizzo e-mail";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Blocca i sistemi di tracciamento e-mail";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blocca i sistemi di tracciamento e-mail con un indirizzo Duck";
@@ -675,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blocca i sistemi di tracciamento delle email e nascondi il tuo indirizzo";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Prosegui la configurazione";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Esci dalla configurazione";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Se esci ora, il tuo Duck Address non verrà salvato!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Non mostrare più";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Proteggi la mia e-mail";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Crea un indirizzo univoco e casuale che rimuove anche i sistemi di tracciamento nascosti e inoltra le e-mail alla tua casella di posta.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Nascondi il tuo indirizzo e-mail e \n blocca i sistemi di tracciamento";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Non è ancora stato aggiunto nessun segnalibro";
@@ -1002,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Menu di navigazione";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Indietro";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Successivo";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Fatto";

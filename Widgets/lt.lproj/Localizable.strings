@@ -1,6 +1,36 @@
 /* No comment provided by engineer. */
 "Label" = "Etiketė";
 
+/* Description shown to the user when adding the Email Protection lock screen widget */
+"lock.screen.widget.email.description" = "Nedelsiant sugeneruokite naują privatų „Duck Address“.";
+
+/* Title shown to the user when adding the Email Protection lock screen widget */
+"lock.screen.widget.email.title" = "El. pašto apsauga";
+
+/* Description shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.favorites.description" = "Greitai atidarykite mėgstamas svetaines bakstelėdami.";
+
+/* Title shown to the user when adding the favorites lock screen widget */
+"lock.screen.widget.favorites.title" = "Mėgstami";
+
+/* Description shown to the user when adding the Fire Button lock screen widget */
+"lock.screen.widget.fire.description" = "Akimirksniu ištrinkite naršymo istoriją ir pradėkite naują privačią paiešką „DuckDuckGo“.";
+
+/* Title shown to the user when adding the Fire Button lock screen widget */
+"lock.screen.widget.fire.title" = "Mygtukas „Fire“";
+
+/* Description shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.search.description" = "Akimirksniu pradėkite privačią paiešką „DuckDuckGo“.";
+
+/* Title shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.search.title" = "privati paieška";
+
+/* Description shown to the user when adding the Voice Search lock screen widget */
+"lock.screen.widget.voice.description" = "Akimirksniu pradėkite naują privačią paiešką balsu „DuckDuckGo“.";
+
+/* Title shown to the user when adding the Voice Search lock screen widget */
+"lock.screen.widget.voice.title" = "Paieška balsu";
+
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Ieškokite arba lankykitės savo mėgstamose svetainėse privačiai vienu bakstelėjimu.";
 

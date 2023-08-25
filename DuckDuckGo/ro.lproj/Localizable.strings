@@ -17,7 +17,7 @@
 "action.title.add" = "Adăugați";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Completare automată la autentificare";
+"action.title.autofill.logins" = "Conectări";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Adaugă la marcaje";
@@ -179,13 +179,13 @@
 "autofill.keep-enabled.alert.disable" = "Dezactivează";
 
 /* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Continuă să utilizezi";
+"autofill.keep-enabled.alert.keep-using" = "Continuă să salvezi";
 
 /* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "Poți dezactiva oricând completarea automată din Setări.";
+"autofill.keep-enabled.alert.message" = "Poți dezactiva oricând acest lucru din Setări.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Dorești să continui să utilizezi completarea automată?";
+"autofill.keep-enabled.alert.title" = "Vrei să salvezi în continuare datele de conectare?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Vezi";
@@ -268,26 +268,20 @@
 /* Title for alert when attempting to save a duplicate login */
 "autofill.logins.details.save-duplicate-alert.title" = "Date de autentificare duplicate";
 
-/* Title for view displayed when autofill is locked */
-"autofill.logins.details.title" = "Deblochează completarea automată";
-
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Nume utilizator";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Datele de autentificare sunt stocate în siguranță numai pe acest dispozitiv";
+"autofill.logins.empty-view.subtitle" = "Datele de conectare sunt stocate în siguranță pe dispozitivul tău.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Nu au fost salvate încă date de autentificare";
-
-/* Title for view displayed when autofill is disabled and has no items */
-"autofill.logins.empty-view.title-disabled" = "Activează Completarea automată pentru a începe salvarea autentificărilor";
+"autofill.logins.empty-view.title" = "Nu au fost salvate încă date de conectare";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Renunță";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Deblochează pentru a utiliza Datele de autentificare salvate";
+"autofill.logins.list.auth.reason" = "Deblochează dispozitivul pentru a accesa datele de conectare salvate";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Închidere";
@@ -298,6 +292,9 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "S-a șters autentificarea pentru %@";
 
+/* Toast message when a login item without a title is deleted */
+"autofill.logins.list.login-deleted-message-no-title" = "Date de conectare șterse";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Date de autentificare pentru căutare";
 
@@ -305,13 +302,13 @@
 "autofill.logins.list.suggested" = "Sugerat";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Completare automată la autentificare";
+"autofill.logins.list.title" = "Conectări";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Este necesară o parolă pentru a-ți proteja detaliile de completare automată. Accesează Setările dispozitivului pentru a configura o parolă.";
+"autofill.logins.no-auth.subtitle" = "Este necesară o parolă pentru a-ți proteja datele de conectare.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Configurează parola dispozitivului pentru a utiliza completarea automată";
+"autofill.logins.no-auth.title" = "Securizează-ți dispozitivul pentru a salva conectările";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Renunță";
@@ -328,6 +325,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "De la %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Parola pentru %@";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Folosești datele de conectare salvate?";
 
@@ -337,11 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Niciun rezultat";
 
-/* Message displayed on modal explaining that an additional login will be saved. */
-"autofill.save-login.additional-login.message" = "Aceasta va salva o autentificare suplimentară pentru acest site.";
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Parola va fi salvată în Datele de conectare.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Vrei să folosești parola generată de DuckDuckGo?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Folosește parola generată";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Îmi creez propria parolă";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo va stoca în siguranță aceste date de conectare pe dispozitivul tău. Din Setări poți gestiona datele de conectare salvate.";
+"autofill.save-login.new-user.message" = "Datele de conectare sunt stocate în siguranță pe dispozitivul tău și pot fi gestionate din Setări, meniul Date de conectare.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Dorești ca DuckDuckGo să îți salveze datele de autentificare?";
@@ -364,14 +373,17 @@
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Arată parola";
 
-/* Confirm CTA displayed on modal asking for the user to update the login */
-"autofill.update-login.save.CTA" = "Actualizează autentificarea";
+/* Message displayed on modal asking for the user to update the password */
+"autofill.update-password.message" = "DuckDuckGo va actualiza aceste date de conectare stocate pe dispozitivul tău.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Actualizează parola";
 
 /* Title displayed on modal asking for the user to update the password */
-"autofill.update-password.title" = "Actualizezi parola?";
+"autofill.update-password.title" = "Actualizezi parola pentru\n%@?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-username.save.CTA" = "Actualizează numele de utilizator";
 
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "Actualizezi numele de utilizator?";
@@ -646,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Descărcarea a început pentru %@";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "Protecția comunicațiilor prin e-mail";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Renunță";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Generează o Duck Address privată";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Generează o Duck Address privată";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Blochează tehnologiile de urmărire din e-mailuri și ascunde adresa";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Selectează adresa de e-mail";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Blochează tehnologiile de urmărire din e-mail";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blochează instrumentele de urmărire a e-mailului cu o adresă Duck";
@@ -675,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blochează tehnologiile de urmărire prin e-mail și ascunde-ți adresa";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Continuă configurarea";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Ieși din configurare";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Dacă ieși acum, Duck Address nu va fi salvată!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Nu mai afișa din nou";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Protejează-mi adresa de e-mail";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Creează o adresă unică, aleatorie, care elimină și tehnologiile de urmărire ascunse și redirecționează e-mailurile către căsuța ta de inbox.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Ascunde-ți e-mailul și blochează tehnologiile de urmărire";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Nu s-a adăugat niciun semn de carte";
@@ -1002,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Meniul de navigare";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Înapoi";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Următorul";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Terminat";

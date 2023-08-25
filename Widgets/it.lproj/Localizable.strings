@@ -1,6 +1,36 @@
 /* No comment provided by engineer. */
 "Label" = "Etichetta";
 
+/* Description shown to the user when adding the Email Protection lock screen widget */
+"lock.screen.widget.email.description" = "Genera istantaneamente un nuovo Duck Address privato.";
+
+/* Title shown to the user when adding the Email Protection lock screen widget */
+"lock.screen.widget.email.title" = "Protezione email";
+
+/* Description shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.favorites.description" = "Apri rapidamente i tuoi siti web preferiti con un semplice tocco.";
+
+/* Title shown to the user when adding the favorites lock screen widget */
+"lock.screen.widget.favorites.title" = "Preferiti";
+
+/* Description shown to the user when adding the Fire Button lock screen widget */
+"lock.screen.widget.fire.description" = "Elimina istantaneamente la cronologia di navigazione e inizia una nuova ricerca privata in DuckDuckGo.";
+
+/* Title shown to the user when adding the Fire Button lock screen widget */
+"lock.screen.widget.fire.title" = "Fire Button";
+
+/* Description shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.search.description" = "Inizia subito una ricerca privata in DuckDuckGo.";
+
+/* Title shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.search.title" = "Ricerca privata";
+
+/* Description shown to the user when adding the Voice Search lock screen widget */
+"lock.screen.widget.voice.description" = "Inizia subito una nuova ricerca vocale privata in DuckDuckGo.";
+
+/* Title shown to the user when adding the Voice Search lock screen widget */
+"lock.screen.widget.voice.title" = "Ricerca vocale";
+
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Effettua ricerche o visita i tuoi siti preferiti in incognito con un solo tocco.";
 

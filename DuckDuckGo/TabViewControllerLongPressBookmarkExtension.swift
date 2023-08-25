@@ -19,7 +19,6 @@
 
 import Foundation
 import Core
-import os.log
 import Bookmarks
 import WidgetKit
 
@@ -33,12 +32,15 @@ extension TabViewController {
         if favorite && nil == viewModel.favorite(for: link.url) {
             viewModel.createOrToggleFavorite(title: link.displayTitle, url: link.url)
             WidgetCenter.shared.reloadAllTimelines()
-            
+            syncService.scheduler.notifyDataChanged()
+
             DispatchQueue.main.async {
                 ActionMessageView.present(message: UserText.webSaveFavoriteDone)
             }
         } else if nil == viewModel.bookmark(for: link.url) {
             viewModel.createBookmark(title: link.displayTitle, url: link.url)
+            syncService.scheduler.notifyDataChanged()
+
             DispatchQueue.main.async {
                 ActionMessageView.present(message: UserText.webSaveBookmarkDone)
             }

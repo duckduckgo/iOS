@@ -17,7 +17,7 @@
 "action.title.add" = "Pievienot";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Automātiski aizpildīt pieteikšanās datus";
+"action.title.autofill.logins" = "Pieteikšanās dati";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Pievienot grāmatzīmēm";
@@ -179,13 +179,13 @@
 "autofill.keep-enabled.alert.disable" = "Atslēgt";
 
 /* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Turpināt lietot";
+"autofill.keep-enabled.alert.keep-using" = "Turpināt saglabāt";
 
 /* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "Atspējot automātisko aizpildīšanu jebkurā laikā vari Iestatījumos.";
+"autofill.keep-enabled.alert.message" = "Vari to jebkurā laikā atspējot iestatījumos.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Vai vēlies turpināt lietot automātisko aizpildīšanu?";
+"autofill.keep-enabled.alert.title" = "Vai vēlies turpināt saglabāt pieteikšanās datus?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Skatīt";
@@ -268,26 +268,20 @@
 /* Title for alert when attempting to save a duplicate login */
 "autofill.logins.details.save-duplicate-alert.title" = "Dublēti pieteikšanās dati";
 
-/* Title for view displayed when autofill is locked */
-"autofill.logins.details.title" = "Atbloķēt automātisko aizpildi";
-
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Lietotājvārds";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Pieteikšanās dati tiek droši glabāti tikai šajā ierīcē";
+"autofill.logins.empty-view.subtitle" = "Pieteikšanās dati tiek droši saglabāti tavā ierīcē.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Vēl nav saglabāti nekādi pieteikšanās dati";
-
-/* Title for view displayed when autofill is disabled and has no items */
-"autofill.logins.empty-view.title-disabled" = "Iespējo automātisko aizpildīšanu, lai sāktu saglabāt pieteikšanās datus";
+"autofill.logins.empty-view.title" = "Nav saglabātu pieteikšanās datu";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Atcelt";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Atbloķē, lai izmantotu saglabātos pieteikšanās datus";
+"autofill.logins.list.auth.reason" = "Atbloķē ierīci, lai piekļūtu saglabātajiem pieteikšanās datiem";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Aizvērt";
@@ -298,6 +292,9 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "%@ pieteikšanās dati izdzēsti";
 
+/* Toast message when a login item without a title is deleted */
+"autofill.logins.list.login-deleted-message-no-title" = "Pieteikšanās dati izdzēsti";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Meklēt pieteikšanās datus";
 
@@ -305,13 +302,13 @@
 "autofill.logins.list.suggested" = "Ieteikts";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Automātiski aizpildīt pieteikšanās datus";
+"autofill.logins.list.title" = "Pieteikšanās dati";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Lai aizsargātu automātiskās aizpildīšanas informāciju, ir nepieciešams piekļuves kods. Dodies uz ierīces iestatījumiem, lai iestatītu piekļuves kodu.";
+"autofill.logins.no-auth.subtitle" = "Lai aizsargātu tavus pieteikšanās datus, ir nepieciešams piekļuves kods.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Iestati ierīces piekļuves kodu, lai izmantotu automātisko aizpildīšanu";
+"autofill.logins.no-auth.title" = "Aizsargājiet savu ierīci, lai saglabātu pieteikšanās datus";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Atcelt";
@@ -328,6 +325,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "No %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "%@ parole";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Vai izmantot saglabātos pieteikšanās datus?";
 
@@ -337,11 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Nav rezultātu";
 
-/* Message displayed on modal explaining that an additional login will be saved. */
-"autofill.save-login.additional-login.message" = "Tas saglabās papildu pieteikšanās datus šai vietnei.";
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Parole tiks saglabāta Pieteikšanās datos.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Vai izmantot DuckDuckGo ģenerētu paroli?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Izmantot ģenerētu paroli";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Izveidot savu";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo droši saglabās šos pieteikšanās datus tavā ierīcē. Saglabātos pieteikšanās datus vari pārvaldīt sadaļā Iestatījumi.";
+"autofill.save-login.new-user.message" = "Pieteikšanās dati tiek droši saglabāti tavā ierīcē, un tos var pārvaldīt no iestatījumu izvēlnes Pieteikšanās dati.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vai vēlies, lai DuckDuckGo saglabātu tavus pieteikšanās datus?";
@@ -364,14 +373,17 @@
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Rādīt paroli";
 
-/* Confirm CTA displayed on modal asking for the user to update the login */
-"autofill.update-login.save.CTA" = "Atjaunināt pieteikšanās datus";
+/* Message displayed on modal asking for the user to update the password */
+"autofill.update-password.message" = "DuckDuckGo atjauninās šos saglabātos pieteikšanās datus tavā ierīcē.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Atjaunināt paroli";
 
 /* Title displayed on modal asking for the user to update the password */
-"autofill.update-password.title" = "Atjaunināt paroli?";
+"autofill.update-password.title" = "Atjaunināt paroli\n%@?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-username.save.CTA" = "Atjaunināt lietotājvārdu";
 
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "Atjaunināt lietotājvārdu?";
@@ -646,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "%@ lejupielāde sākta";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "E-pasta aizsardzība";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Atcelt";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Ģenerēt privātu Duck adresi";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Ģenerēt privātu Duck adresi";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Bloķē e-pasta izsekotājus un paslēp adresi";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Izvēlies e-pasta adresi";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Bloķē e-pasta izsekotājus";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Bloķē e-pasta izsekotājus ar Duck adresi";
@@ -675,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Bloķē e-pasta izsekotājus un paslēp savu adresi";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Turpināt iestatīšanu";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Iziet no iestatīšanas";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Ja tagad iziesi, tava Duck adrese netiks saglabāta!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Turpmāk nerādīt";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Aizsargāt manu e-pastu";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Izveido unikālu, nejauši izvēlētu adresi, kas arī aizvāc slēptos izsekotājus un pārsūta e-pastus uz tavu pastkastīti.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Paslēp savu e-pastu un\nbloķē izsekotājus";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Vēl nav pievienota neviena grāmatzīme";
@@ -1002,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Pārlūkošanas izvēlne";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Atpakaļ";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Nākamais";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Gatavs";

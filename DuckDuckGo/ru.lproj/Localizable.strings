@@ -17,7 +17,7 @@
 "action.title.add" = "Добавить";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Автозаполнение логинов";
+"action.title.autofill.logins" = "Логины";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Добавить в закладки";
@@ -179,13 +179,13 @@
 "autofill.keep-enabled.alert.disable" = "Выключить";
 
 /* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Оставить";
+"autofill.keep-enabled.alert.keep-using" = "Сохранять";
 
 /* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "Вы можете в любой момент отказаться от автозаполнения в «Настройках».";
+"autofill.keep-enabled.alert.message" = "Этот параметр всегда можно выключить в «Настройках».";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Оставить автозаполнение?";
+"autofill.keep-enabled.alert.title" = "Сохранять логины в дальнейшем?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Просмотр";
@@ -268,26 +268,20 @@
 /* Title for alert when attempting to save a duplicate login */
 "autofill.logins.details.save-duplicate-alert.title" = "Дубликат логина";
 
-/* Title for view displayed when autofill is locked */
-"autofill.logins.details.title" = "Разблокировать автозаполнение";
-
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Имя пользователя";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Логины надежно хранятся только на этом устройстве";
+"autofill.logins.empty-view.subtitle" = "Учетные данные сохранены и защищены на вашем устройстве.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Сохраненных логинов пока нет";
-
-/* Title for view displayed when autofill is disabled and has no items */
-"autofill.logins.empty-view.title-disabled" = "Включите автозаполнение логинов для их сохранения";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Отменить";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Разблокируйте, чтобы использовать сохраненный логин";
+"autofill.logins.list.auth.reason" = "Чтобы открыть сохраненные логины, разблокируйте устройство";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Закрыть";
@@ -298,6 +292,9 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Логин для %@ удален";
 
+/* Toast message when a login item without a title is deleted */
+"autofill.logins.list.login-deleted-message-no-title" = "Логин удален";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Поиск логинов";
 
@@ -305,13 +302,13 @@
 "autofill.logins.list.suggested" = "Рекомендации";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Автозаполнение логинов";
+"autofill.logins.list.title" = "Логины";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Для защиты ваших учетных данных при автозаполнении запрашивается код-пароль. Задайте его в «Настройках» устройства.";
+"autofill.logins.no-auth.subtitle" = "Код-пароль нужен для защиты ваших логинов.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Чтобы использовать автозаполнение, задайте код-пароль";
+"autofill.logins.no-auth.title" = "Защитите свое устройство, чтобы сохранять логины";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Отменить";
@@ -328,6 +325,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "Из %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Пароль %@";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Использовать сохраненный логин?";
 
@@ -337,11 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Нет результатов";
 
-/* Message displayed on modal explaining that an additional login will be saved. */
-"autofill.save-login.additional-login.message" = "Будет сохранен дополнительный логин для входа на этом сайте.";
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Пароль будет сохранен в разделе «Логины».";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Использовать пароль, сгенерированный DuckDuckGo?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Использовать предложенный";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Создать собственный";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo безопасно сохранит этот логин на вашем устройстве. Сохраненными учетными данными можно управлять в «Настройках».";
+"autofill.save-login.new-user.message" = "Учетные данные надежно хранятся на вашем устройстве, а проконтролировать их можно в меню «Логины» в «Настройках».";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Хотите, чтобы DuckDuckGo сохранил логин?";
@@ -364,14 +373,17 @@
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Показать пароль";
 
-/* Confirm CTA displayed on modal asking for the user to update the login */
-"autofill.update-login.save.CTA" = "Обновить логин";
+/* Message displayed on modal asking for the user to update the password */
+"autofill.update-password.message" = "DuckDuckGo обновит логин, сохраненный на вашем устройстве.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Обновить пароль";
 
 /* Title displayed on modal asking for the user to update the password */
-"autofill.update-password.title" = "Обновить пароль?";
+"autofill.update-password.title" = "Обновить пароль для \n%@?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-username.save.CTA" = "Обновить имя пользователя";
 
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "Обновить имя пользователя?";
@@ -646,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Началась загрузка файла %@";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "Защита электронной почты";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Отменить";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Создать адрес на Duck";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Создать адрес на Duck";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Скрывает ваш адрес и блокирует почтовые трекеры";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Выберите адрес электронной почты";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Для блокировки почтовых трекеров";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Блокировать почтовые трекеры с адресом Duck";
@@ -675,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Блокировка почтовых трекеров и скрытие адреса";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Продолжить настройку";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Выйти из настройки";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Если вы прервете настройку, ваш адрес Duck Address не сохранится!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Больше не показывать";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Защитить почту";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Создайте уникальный случайный адрес, который также удалит скрытые трекеры и перенаправит электронную почту на ваш ящик.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Скрытие адреса почты\nи блокировка трекеров";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Закладок пока нет";
@@ -1002,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Меню браузера";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Назад";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Далее";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Готово";

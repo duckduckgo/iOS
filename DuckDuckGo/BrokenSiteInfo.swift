@@ -27,6 +27,7 @@ public struct BrokenSiteInfo {
     private struct Keys {
         static let url = "siteUrl"
         static let category = "category"
+        static let description = "description"
         static let upgradedHttps = "upgradedHttps"
         static let tds = "tds"
         static let blockedTrackers = "blockedTrackers"
@@ -83,22 +84,25 @@ public struct BrokenSiteInfo {
         }
     }
     
-    func send(with category: String) {
+    func send(with category: String?, description: String) {
         
-        let parameters = [Keys.url: normalize(url),
-                          Keys.category: category,
-                          Keys.upgradedHttps: httpsUpgrade ? "true" : "false",
-                          Keys.siteType: isDesktop ? "desktop" : "mobile",
-                          Keys.tds: tdsETag?.trimmingCharacters(in: CharacterSet(charactersIn: "\"")) ?? "",
-                          Keys.blockedTrackers: blockedTrackerDomains.joined(separator: ","),
-                          Keys.surrogates: installedSurrogates.joined(separator: ","),
-                          Keys.atb: StatisticsUserDefaults().atb ?? "",
-                          Keys.os: systemVersion,
-                          Keys.manufacturer: manufacturer,
-                          Keys.model: model,
-                          Keys.gpc: gpc ? "true" : "false",
-                          Keys.ampUrl: ampUrl ?? "",
-                          Keys.urlParametersRemoved: urlParametersRemoved ? "true" : "false"]
+        let parameters: [String: String] = [
+            Keys.url: normalize(url),
+            Keys.category: category ?? "",
+            Keys.description: description,
+            Keys.upgradedHttps: httpsUpgrade ? "true" : "false",
+            Keys.siteType: isDesktop ? "desktop" : "mobile",
+            Keys.tds: tdsETag?.trimmingCharacters(in: CharacterSet(charactersIn: "\"")) ?? "",
+            Keys.blockedTrackers: blockedTrackerDomains.joined(separator: ","),
+            Keys.surrogates: installedSurrogates.joined(separator: ","),
+            Keys.atb: StatisticsUserDefaults().atb ?? "",
+            Keys.os: systemVersion,
+            Keys.manufacturer: manufacturer,
+            Keys.model: model,
+            Keys.gpc: gpc ? "true" : "false",
+            Keys.ampUrl: ampUrl ?? "",
+            Keys.urlParametersRemoved: urlParametersRemoved ? "true" : "false"
+        ]
         
         Pixel.fire(pixel: .brokenSiteReport,
                    withAdditionalParameters: parameters,

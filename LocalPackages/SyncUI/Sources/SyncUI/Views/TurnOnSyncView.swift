@@ -150,11 +150,12 @@ private struct CTAView: View {
             hero(imageName: imageName,
                  title: title,
                  text: message)
-        } foreground: {
+        } foregroundContent: {
             buttons(primaryLabel: primaryButtonLabel,
                     secondaryLabel: secondaryButtonLabel,
                     primaryAction: primaryAction,
                     secondaryAction: secondaryAction)
+            .padding(.horizontal, 8)
         }
     }
 

@@ -29,7 +29,6 @@ extension Pixel {
     public enum Event {
         
         case appLaunch
-        case defaultBrowserLaunch
         case refreshPressed
         
         case forgetAllPressedBrowsing
@@ -142,10 +141,7 @@ extension Pixel {
         case daxDialogsAutoconsentShown
         case daxDialogsAutoconsentConfirmed
         case daxDialogsAutoconsentCancelled
-        
-        case widgetFavoriteLaunch
-        case widgetNewSearch
-        
+
         case defaultBrowserButtonPressedSettings
         
         case widgetsOnboardingCTAPressed
@@ -242,7 +238,11 @@ extension Pixel {
         case autofillLoginsSettingsEnabled
         case autofillLoginsSettingsDisabled
         case autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate
-        
+
+        case autofillLoginsPasswordGenerationPromptDisplayed
+        case autofillLoginsPasswordGenerationPromptConfirmed
+        case autofillLoginsPasswordGenerationPromptDismissed
+
         case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
         
         case secureVaultInitError
@@ -259,20 +259,56 @@ extension Pixel {
         
         case adClickAttributionDetected
         case adClickAttributionActive
+        case adClickAttributionPageLoads
         
         // MARK: SERP pixels
         
         case serpRequerySame
         case serpRequeryNew
+        
+        // MARK: AppTP
+        case appTPBreakageReport
+
+        case appTPFailedToCreateProxyServer
+        case appTPFailedToSetTunnelNetworkSettings
+        case appTPFailedToAccessPreferences
+        case appTPFailedToAccessPreferencesDuringSetup
+        case appTPFailedToStartTunnel
+
+        case appTPVPNCrash
+        case appTPVPNDisconnect
+        case appTPVPNMemoryWarning
+        case appTPVPNMemoryCritical
+        
+        case appTPBlocklistParseFailed
+        case appTPActiveUser
+        
+        case appTPDBLocationFailed
+        case appTPDBStoreLoadFailure
+        case appTPDBPersistentStoreLoadFailure
+        case appTPDBHistoryFailure
+        case appTPDBHistoryFetchFailure
+        case appTPDBFeedbackTrackerFetchFailed
+        case appTPDBTrackerStoreFailure
+        case appTPCouldNotLoadDatabase
 
         // MARK: remote messaging pixels
 
         case remoteMessageShown
         case remoteMessageShownUnique
         case remoteMessageDismissed
-        case remoteMessageShownPrimaryActionClicked
-        case remoteMessageShownSecondaryActionClicked
-        
+        case remoteMessageActionClicked
+        case remoteMessagePrimaryActionClicked
+        case remoteMessageSecondaryActionClicked
+        case remoteMessageSheet
+
+        // MARK: Lock Screen widgets
+        case lockScreenWidgetNewSearch
+        case lockScreenWidgetFavorites
+        case lockScreenWidgetFireButton
+        case lockScreenWidgetVoiceSearch
+        case lockScreenWidgetNewEmail
+
         // MARK: debug pixels
         case dbCrashDetected
 
@@ -309,9 +345,7 @@ extension Pixel {
         case contentBlockingCompilationTime
         
         case ampBlockingRulesCompilationFailed
-        
-        case contentBlockingIdentifierError
-        
+
         case webKitDidTerminate
         case webKitTerminationDidReloadCurrentTab
         
@@ -359,6 +393,8 @@ extension Pixel {
         case debugMissingTopFolderFixHasBookmarks
         
         case debugCantSaveBookmarkFix
+
+        case debugCannotClearObservationsDatabase
         
         // Errors from Bookmarks Module
         case bookmarkFolderExpected
@@ -370,6 +406,7 @@ extension Pixel {
         case indexOutOfRange(BookmarksModelError.ModelType)
         case saveFailed(BookmarksModelError.ModelType)
         case missingParent(BookmarksModelError.ObjectType)
+        case orphanedBookmarksPresent
         
         case bookmarksCouldNotLoadDatabase
         case bookmarksCouldNotPrepareDatabase
@@ -379,14 +416,34 @@ extension Pixel {
         case bookmarksMigrationCouldNotPrepareDatabaseOnFailedMigration
         case bookmarksMigrationCouldNotValidateDatabase
         case bookmarksMigrationCouldNotRemoveOldStore
-        
+
+        case syncFailedToMigrate
+        case syncFailedToLoadAccount
+        case syncFailedToSetupEngine
+
+        case syncSentUnauthenticatedRequest
+        case syncMetadataCouldNotLoadDatabase
+        case syncBookmarksProviderInitializationFailed
+        case syncBookmarksFailed
+        case syncCredentialsProviderInitializationFailed
+        case syncCredentialsFailed
+
+        case bookmarksCleanupFailed
+        case bookmarksCleanupAttemptedWhileSyncWasEnabled
+
+        case credentialsDatabaseCleanupFailed
+        case credentialsCleanupAttemptedWhileSyncWasEnabled
+
         case invalidPayload(Configuration)
-      
-        case experimentDailyFireButtonTapped
-        case experimentDailyFireButtonDataCleared
-        
-        case experimentFireButtonAnimationTriggeredOnTabSwitcher
-        case experimentFireButtonEducationRestarted
+
+        case emailIncontextPromptDisplayed
+        case emailIncontextPromptConfirmed
+        case emailIncontextPromptDismissed
+        case emailIncontextPromptDismissedPersistent
+        case emailIncontextModalDisplayed
+        case emailIncontextModalDismissed
+        case emailIncontextModalExitEarly
+        case emailIncontextModalExitEarlyContinue
     }
     
 }
@@ -398,7 +455,6 @@ extension Pixel.Event {
     public var name: String {
         switch self {
         case .appLaunch: return "ml"
-        case .defaultBrowserLaunch: return "m_dl"
         case .refreshPressed: return "m_r"
             
         case .forgetAllPressedBrowsing: return "mf_bp"
@@ -513,9 +569,6 @@ extension Pixel.Event {
         case .daxDialogsAutoconsentConfirmed: return "m_dax_dialog_autoconsent_confirmed"
         case .daxDialogsAutoconsentCancelled: return "m_dax_dialog_autoconsent_cancelled"
             
-        case .widgetFavoriteLaunch: return "m_w_fl"
-        case .widgetNewSearch: return "m_w_ns"
-            
         case .defaultBrowserButtonPressedSettings: return "m_db_s"
             
         case .widgetsOnboardingCTAPressed: return "m_o_w_a"
@@ -619,7 +672,11 @@ extension Pixel.Event {
         case .autofillLoginsSettingsDisabled: return "m_autofill_logins_settings_disabled"
         case .autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate:
             return "m_autofill_logins_settings_add-new-login_error_attempted-to-create-duplicate"
-            
+
+        case .autofillLoginsPasswordGenerationPromptDisplayed: return "m_autofill_logins_password_generation_prompt_displayed"
+        case .autofillLoginsPasswordGenerationPromptConfirmed: return "m_autofill_logins_password_generation_prompt_confirmed"
+        case .autofillLoginsPasswordGenerationPromptDismissed: return "m_autofill_logins_password_generation_prompt_dismissed"
+
         case .autofillJSPixelFired(let pixel):
             return "m_ios_\(pixel.pixelName)"
             
@@ -635,19 +692,53 @@ extension Pixel.Event {
             
         case .adClickAttributionDetected: return "m_ad_click_detected"
         case .adClickAttributionActive: return "m_ad_click_active"
+        case .adClickAttributionPageLoads: return "m_pageloads_with_ad_attribution"
             
         // MARK: SERP pixels
             
         case .serpRequerySame: return "rq_0"
         case .serpRequeryNew: return "rq_1"
+            
+        // MARK: AppTP pixels
+
+        case .appTPBreakageReport: return "m_apptp_breakage_report"
+        case .appTPFailedToCreateProxyServer: return "m_apptp_failed_to_create_proxy_server"
+        case .appTPFailedToSetTunnelNetworkSettings: return "m_apptp_failed_to_set_tunnel_network_settings"
+        case .appTPFailedToAccessPreferences: return "m_apptp_failed_to_access_preferences"
+        case .appTPFailedToAccessPreferencesDuringSetup: return "m_apptp_failed_to_access_preferences_during_setup"
+        case .appTPFailedToStartTunnel: return "m_apptp_failed_to_start_tunnel"
+        case .appTPVPNCrash: return "m_apptp_vpn_crash"
+        case .appTPVPNDisconnect: return "m_apptp_vpn_disconnect"
+        case .appTPVPNMemoryWarning: return "m_apptp_vpn_memory_warning"
+        case .appTPVPNMemoryCritical: return "m_apptp_vpn_memory_critical"
+
+        case .appTPBlocklistParseFailed: return "m_apptp_blocklist_parse_failed"
+        case .appTPActiveUser: return "m_apptp_active_user"
+        case .appTPDBLocationFailed: return "m_apptp_db_location_not_found"
+        case .appTPDBStoreLoadFailure: return "m_apptp_db_store_load_failure"
+        case .appTPDBPersistentStoreLoadFailure: return "m_apptp_db_persistent_store_load_failure"
+        case .appTPDBHistoryFailure: return "m_apptp_db_history_failure"
+        case .appTPDBHistoryFetchFailure: return "m_apptp_db_history_fetch_failure"
+        case .appTPDBFeedbackTrackerFetchFailed: return "m_apptp_db_feedback_tracker_fetch_failed"
+        case .appTPDBTrackerStoreFailure: return "m_apptp_db_tracker_store_failure"
+        case .appTPCouldNotLoadDatabase: return "m_apptp_could_not_load_database"
 
         // MARK: remote messaging pixels
 
         case .remoteMessageShown: return "m_remote_message_shown"
         case .remoteMessageShownUnique: return "m_remote_message_shown_unique"
         case .remoteMessageDismissed: return "m_remote_message_dismissed"
-        case .remoteMessageShownPrimaryActionClicked: return "m_remote_message_primary_action_clicked"
-        case .remoteMessageShownSecondaryActionClicked: return "m_remote_message_secondary_action_clicked"
+        case .remoteMessageActionClicked: return "m_remote_message_action_clicked"
+        case .remoteMessagePrimaryActionClicked: return "m_remote_message_primary_action_clicked"
+        case .remoteMessageSecondaryActionClicked: return "m_remote_message_secondary_action_clicked"
+        case .remoteMessageSheet: return "m_remote_message_sheet"
+
+        // Lock Screen Widgets
+        case .lockScreenWidgetNewSearch: return "m_lockscreen_newsearch"
+        case .lockScreenWidgetFavorites: return "m_lockscreen_favorites"
+        case .lockScreenWidgetFireButton: return "m_lockscreen_fire"
+        case .lockScreenWidgetVoiceSearch: return "m_lockscreen_voicesearch"
+        case .lockScreenWidgetNewEmail: return "m_lockscreen_newemail"
 
         // MARK: debug pixels
 
@@ -685,9 +776,7 @@ extension Pixel.Event {
         case .contentBlockingCompilationTime: return "m_content_blocking_compilation_time"
             
         case .ampBlockingRulesCompilationFailed: return "m_debug_amp_rules_compilation_failed"
-            
-        case .contentBlockingIdentifierError: return "m_d_cb_ie"
-            
+
         case .webKitDidTerminate: return "m_d_wkt"
         case .webKitTerminationDidReloadCurrentTab: return "m_d_wktct"
             
@@ -722,6 +811,8 @@ extension Pixel.Event {
         case .debugMissingTopFolderFixHasFavorites: return "m_d_missing_top_folder_has_favorites"
             
         case .debugCantSaveBookmarkFix: return "m_d_cant_save_bookmark_fix"
+
+        case .debugCannotClearObservationsDatabase: return "m_d_cannot_clear_observations_database"
             
         
         // MARK: Ad Attribution
@@ -747,6 +838,7 @@ extension Pixel.Event {
         case .indexOutOfRange(let modelType): return "m_d_bookmarks_index_out_of_range_\(modelType.rawValue)"
         case .saveFailed(let modelType): return "m_d_bookmarks_view_model_save_failed_\(modelType.rawValue)"
         case .missingParent(let objectType): return "m_d_bookmark_model_missing_parent_\(objectType.rawValue)"
+        case .orphanedBookmarksPresent: return "m_d_bookmarks_orphans_present"
             
         case .bookmarksCouldNotLoadDatabase: return "m_d_bookmarks_could_not_load_database"
         case .bookmarksCouldNotPrepareDatabase: return "m_d_bookmarks_could_not_prepare_database"
@@ -758,13 +850,34 @@ extension Pixel.Event {
         case .bookmarksMigrationCouldNotValidateDatabase: return "m_d_bookmarks_migration_could_not_validate_database"
         case .bookmarksMigrationCouldNotRemoveOldStore: return "m_d_bookmarks_migration_could_not_remove_old_store"
 
-        case .invalidPayload(let configuration): return "m_d_\(configuration.rawValue)_invalid_payload".lowercased()
-            
-        case .experimentDailyFireButtonTapped: return "m_d_experiment_daily_fire_button_tapped"
-        case .experimentDailyFireButtonDataCleared: return "m_d_experiment_daily_fire_button_data_cleared"
+        case .syncFailedToMigrate: return "m_d_sync_failed_to_migrate"
+        case .syncFailedToLoadAccount: return "m_d_sync_failed_to_load_account"
+        case .syncFailedToSetupEngine: return "m_d_sync_failed_to_setup_engine"
 
-        case .experimentFireButtonAnimationTriggeredOnTabSwitcher: return "m_d_experiment_fire_button_animation_triggered_on_tab_switcher"
-        case .experimentFireButtonEducationRestarted: return "m_d_experiment_fire_button_education_restarted"
+        case .syncSentUnauthenticatedRequest: return "m_d_sync_sent_unauthenticated_request"
+        case .syncMetadataCouldNotLoadDatabase: return "m_d_sync_metadata_could_not_load_database"
+        case .syncBookmarksProviderInitializationFailed: return "m_d_sync_bookmarks_provider_initialization_failed"
+        case .syncBookmarksFailed: return "m_d_sync_bookmarks_failed"
+        case .syncCredentialsProviderInitializationFailed: return "m_d_sync_credentials_provider_initialization_failed"
+        case .syncCredentialsFailed: return "m_d_sync_credentials_failed"
+
+        case .bookmarksCleanupFailed: return "m_d_bookmarks_cleanup_failed"
+        case .bookmarksCleanupAttemptedWhileSyncWasEnabled: return "m_d_bookmarks_cleanup_attempted_while_sync_was_enabled"
+
+        case .credentialsDatabaseCleanupFailed: return "m_d_credentials_database_cleanup_failed_2"
+        case .credentialsCleanupAttemptedWhileSyncWasEnabled: return "m_d_credentials_cleanup_attempted_while_sync_was_enabled"
+
+        case .invalidPayload(let configuration): return "m_d_\(configuration.rawValue)_invalid_payload".lowercased()
+
+        // MARK: - InContext Email Protection
+        case .emailIncontextPromptDisplayed: return "m_email_incontext_prompt_displayed"
+        case .emailIncontextPromptConfirmed: return "m_email_incontext_prompt_confirmed"
+        case .emailIncontextPromptDismissed: return "m_email_incontext_prompt_dismissed"
+        case .emailIncontextPromptDismissedPersistent: return "m_email_incontext_prompt_dismissed_persisted"
+        case .emailIncontextModalDisplayed: return "m_email_incontext_modal_displayed"
+        case .emailIncontextModalDismissed: return "m_email_incontext_modal_dismissed"
+        case .emailIncontextModalExitEarly: return "m_email_incontext_modal_exit_early"
+        case .emailIncontextModalExitEarlyContinue: return "m_email_incontext_modal_exit_early_continue"
         }
         
     }

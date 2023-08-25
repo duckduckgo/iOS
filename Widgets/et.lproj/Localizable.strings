@@ -1,6 +1,36 @@
 /* No comment provided by engineer. */
 "Label" = "Silt";
 
+/* Description shown to the user when adding the Email Protection lock screen widget */
+"lock.screen.widget.email.description" = "Loo hetkega uus privaatne Duck Address.";
+
+/* Title shown to the user when adding the Email Protection lock screen widget */
+"lock.screen.widget.email.title" = "E-posti kaitse";
+
+/* Description shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.favorites.description" = "Ava oma lemmikveebisaidid kiiresti vaid ühe puudutusega.";
+
+/* Title shown to the user when adding the favorites lock screen widget */
+"lock.screen.widget.favorites.title" = "Lemmikud";
+
+/* Description shown to the user when adding the Fire Button lock screen widget */
+"lock.screen.widget.fire.description" = "Kustuta hetkega oma sirvimisajalugu ja alusta uut privaatset otsingut DuckDuckGos.";
+
+/* Title shown to the user when adding the Fire Button lock screen widget */
+"lock.screen.widget.fire.title" = "Fire Button";
+
+/* Description shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.search.description" = "Alusta hetkega DuckDuckGos privaatset otsingut.";
+
+/* Title shown to the user when adding the Search lock screen widget */
+"lock.screen.widget.search.title" = "Privaatne otsing";
+
+/* Description shown to the user when adding the Voice Search lock screen widget */
+"lock.screen.widget.voice.description" = "Alusta hetkega DuckDuckGos uut privaatset häälotsingut.";
+
+/* Title shown to the user when adding the Voice Search lock screen widget */
+"lock.screen.widget.voice.title" = "Häälotsing";
+
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Otsi või külasta oma lemmiksaite privaatselt vaid ühe puudutusega.";
 

@@ -31,7 +31,7 @@ protocol SaveAutofillLoginManagerProtocol {
     var hasSavedMatchingPasswordWithoutUsername: Bool { get }
     var hasSavedMatchingUsername: Bool { get }
     
-    static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws -> Int64
+    static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: AutofillVaultFactory) throws -> Int64
 }
 
 final class SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
@@ -59,11 +59,11 @@ final class SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
     }
     
     var username: String {
-        credentials.account.username
+        credentials.account.username ?? ""
     }
     
     var visiblePassword: String {
-        String(data: credentials.password, encoding: .utf8) ?? ""
+        credentials.password.flatMap { String(data: $0, encoding: .utf8) } ?? ""
     }
     
     var isNewAccount: Bool {
@@ -71,7 +71,7 @@ final class SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
     }
     
     var accountDomain: String {
-        credentials.account.domain
+        credentials.account.domain ?? ""
     }
 
     var isPasswordOnlyAccount: Bool {
@@ -95,7 +95,9 @@ final class SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
     }
 
     private var savedMatchingPasswordWithoutUsername: SecureVaultModels.WebsiteCredentials? {
-        let credentialsWithSamePassword = domainStoredCredentials.filter { $0.password == credentials.password && $0.account.username.count == 0 }
+        let credentialsWithSamePassword = domainStoredCredentials.filter { storedCredentials in
+            storedCredentials.password == credentials.password && (storedCredentials.account.username?.count ?? 0) == 0
+        }
         return credentialsWithSamePassword.first
     }
     
@@ -135,9 +137,9 @@ final class SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
         domainStoredCredentials.count > 0
     }
     
-    static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws -> Int64 {
+    static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: AutofillVaultFactory) throws -> Int64 {
         do {
-            return try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared).storeWebsiteCredentials(credentials)
+            return try AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared).storeWebsiteCredentials(credentials)
         } catch {
             throw error
         }

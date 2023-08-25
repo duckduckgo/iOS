@@ -17,9 +17,9 @@
 //  limitations under the License.
 //
 
+import Common
 import UIKit
 import Core
-import os.log
 
 class AppIconManager {
 

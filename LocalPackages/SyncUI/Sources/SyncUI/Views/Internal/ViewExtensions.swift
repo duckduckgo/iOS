@@ -77,15 +77,6 @@ extension View {
     }
 
     @ViewBuilder
-    func applyUnderflowBackgroundOnPhone(isCompact: Bool) -> some View {
-        if UIDevice.current.userInterfaceIdiom == .phone && isCompact {
-            self.thinMaterialBackground()
-        } else {
-            self
-        }
-    }
-
-    @ViewBuilder
     func applyListStyle() -> some View {
         self
             .listStyle(.insetGrouped)
@@ -93,6 +84,15 @@ extension View {
             .hideScrollContentBackground()
             .background(
                 Rectangle().ignoresSafeArea().foregroundColor(Color.syncBackground))
+    }
+
+    @ViewBuilder
+    func applyViewModifier(_ modifier: some ViewModifier, if condition: Bool) -> some View {
+        if condition {
+            self.modifier(modifier)
+        } else {
+            self
+        }
     }
 
 }

@@ -141,7 +141,9 @@ class BookmarksImporterTests: XCTestCase {
         try await importer.saveBookmarks(initialBookmarks)
         
         let countRequest = BookmarkEntity.fetchRequest()
-        countRequest.predicate = NSPredicate(format: "%K == false", #keyPath(BookmarkEntity.isFolder))
+        countRequest.predicate = NSPredicate(format: "%K == false AND %K == false",
+                                             #keyPath(BookmarkEntity.isFolder),
+                                             #keyPath(BookmarkEntity.isPendingDeletion))
         
         let count = try storage.makeContext(concurrencyType: .mainQueueConcurrencyType).count(for: countRequest)
         XCTAssertEqual(count, 2)

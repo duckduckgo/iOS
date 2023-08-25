@@ -25,13 +25,16 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
     func showSyncSetup()
     func showRecoverData()
     func showSyncWithAnotherDevice()
-    func showDeviceConnected()
     func showRecoveryPDF()
+    func shareRecoveryPDF()
     func createAccountAndStartSyncing()
     func confirmAndDisableSync() async -> Bool
     func confirmAndDeleteAllData() async -> Bool
     func copyCode()
     func confirmRemoveDevice(_ device: SyncSettingsViewModel.Device) async -> Bool
+    func removeDevice(_ device: SyncSettingsViewModel.Device)
+    func updateDeviceName(_ name: String)
+    func refreshDevices(clearDevices: Bool)
 
 }
 
@@ -62,9 +65,16 @@ public class SyncSettingsViewModel: ObservableObject {
         case valid
     }
 
-    @Published public var isSyncEnabled = false
+    @Published public var isSyncEnabled = false {
+        didSet {
+            if !isSyncEnabled {
+                devices = []
+            }
+        }
+    }
+
+    @Published public var devices = [Device]()
     @Published var isBusy = false
-    @Published var devices = [Device]()
     @Published var recoveryCode = ""
 
     var setupFinishedState: TurnOnSyncViewModel.Result?
@@ -103,7 +113,7 @@ public class SyncSettingsViewModel: ObservableObject {
     }
 
     func saveRecoveryPDF() {
-        delegate?.showRecoveryPDF()
+        delegate?.shareRecoveryPDF()
     }
 
     func scanQRCode() {
@@ -111,21 +121,14 @@ public class SyncSettingsViewModel: ObservableObject {
     }
 
     func createEditDeviceModel(_ device: Device) -> EditDeviceViewModel {
-        return EditDeviceViewModel(device: device) { newValue in
+        return EditDeviceViewModel(device: device) { [weak self] newValue in
+            self?.delegate?.updateDeviceName(newValue.name)
+        }
+    }
 
-            self.devices = self.devices.map {
-                if $0.id == newValue.id {
-                    return newValue
-                }
-                return $0
-            }
-
-        } remove: { @MainActor in
-            if await self.delegate?.confirmRemoveDevice(device) == true {
-                self.devices = self.devices.filter { $0.id != device.id }
-                return true
-            }
-            return false
+    func createRemoveDeviceModel(_ device: Device) -> RemoveDeviceViewModel {
+        return RemoveDeviceViewModel(device: device) { [weak self] device in
+            self?.delegate?.removeDevice(device)
         }
     }
 
@@ -135,14 +138,6 @@ public class SyncSettingsViewModel: ObservableObject {
         isBusy = false
         isSyncEnabled = true
         self.recoveryCode = recoveryCode
-        devices = [
-            Device(id: UUID().uuidString, name: UIDevice.current.name, type: "phone", isThisDevice: true)
-        ]
-    }
-
-    public func appendDevice(_ device: Device) {
-        devices.append(device)
-        objectWillChange.send()
     }
 
     public func setupFinished(_ model: TurnOnSyncViewModel) {

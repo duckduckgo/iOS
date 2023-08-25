@@ -17,7 +17,7 @@
 "action.title.add" = "Ekle";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Girişleri Otomatik Doldur";
+"action.title.autofill.logins" = "Giriş bilgileri";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Yer İmlerine Ekle";
@@ -179,13 +179,13 @@
 "autofill.keep-enabled.alert.disable" = "Devre dışı bırak";
 
 /* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Kullanmaya Devam Edin";
+"autofill.keep-enabled.alert.keep-using" = "Kaydetmeye Devam Et";
 
 /* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "Otomatik Doldurmayı istediğiniz zaman Ayarlar'dan devre dışı bırakabilirsiniz.";
+"autofill.keep-enabled.alert.message" = "Bunu dilediğiniz zaman Ayarlar'dan devre dışı bırakabilirsiniz.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Otomatik Doldurma özelliğini kullanmaya devam etmek istiyor musunuz?";
+"autofill.keep-enabled.alert.title" = "Giriş bilgilerini kaydetmeye devam etmek istiyor musunuz?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Görüntüle";
@@ -268,26 +268,20 @@
 /* Title for alert when attempting to save a duplicate login */
 "autofill.logins.details.save-duplicate-alert.title" = "Yinelenen Giriş";
 
-/* Title for view displayed when autofill is locked */
-"autofill.logins.details.title" = "Otomatik Doldurmayı Aç";
-
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Kullanıcı adı";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Girişler yalnızca bu cihazda güvenli bir şekilde saklanır";
+"autofill.logins.empty-view.subtitle" = "Giriş bilgileri cihazınızda güvenli bir şekilde saklanır.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Henüz kaydedilmiş giriş yok";
-
-/* Title for view displayed when autofill is disabled and has no items */
-"autofill.logins.empty-view.title-disabled" = "Girişleri kaydetmeye başlamak için Otomatik Doldurmayı etkinleştirin";
+"autofill.logins.empty-view.title" = "Henüz kaydedilmiş Giriş yok";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "İptal";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Kayıtlı Girişi Kullanmak İçin Kilidi Açın";
+"autofill.logins.list.auth.reason" = "Kayıtlı Giriş bilgilerine erişmek için cihazın kilidini açın";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Kapat";
@@ -298,6 +292,9 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "%@ için giriş silindi";
 
+/* Toast message when a login item without a title is deleted */
+"autofill.logins.list.login-deleted-message-no-title" = "Giriş bilgileri silindi";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Giriş Ara";
 
@@ -305,13 +302,13 @@
 "autofill.logins.list.suggested" = "Önerilen";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Girişleri Otomatik Doldur";
+"autofill.logins.list.title" = "Giriş bilgileri";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Otomatik Doldurma bilgilerinizi korumak için parola gerekir. Parola ayarlamak için cihaz Ayarlarına gidin.";
+"autofill.logins.no-auth.subtitle" = "Giriş bilgilerinizi korumak için parola gereklidir.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Otomatik Doldur özelliğini kullanmak için cihazınızın parolasını ayarlayın";
+"autofill.logins.no-auth.title" = "Giriş bilgilerini kaydetmek için cihazınızın güvenliğini sağlayın";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "İptal";
@@ -320,13 +317,16 @@
 "autofill.logins.prompt.auth.reason" = "Kayıtlı Girişi Kullanmak İçin Kilidi Açın";
 
 /* Title for section of autofill logins that are an exact match to the current website */
-"autofill.logins.prompt.exact.match.title" = "Bu Web Sitesinden";
+"autofill.logins.prompt.exact.match.title" = "Bu web sitesinden";
 
 /* Button title for autofill login prompt if more options are available */
 "autofill.logins.prompt.more-options" = "Diğer Seçenekler";
 
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "%@ sitesinden";
+
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "%@ için parola";
 
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Kayıtlı Giriş kullanılsın mı?";
@@ -337,11 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Sonuç yok";
 
-/* Message displayed on modal explaining that an additional login will be saved. */
-"autofill.save-login.additional-login.message" = "Bu, bu site için ek bir Giriş kaydedecektir.";
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Şifre, Girişlere kaydedilecektir.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "DuckDuckGo'dan oluşturulan şifre kullanılsın mı?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Oluşturulan Şifreyi Kullan";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Kendiminkini Oluştur";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo bu Girişi cihazınızda güvenli bir şekilde saklayacaktır. Kayıtlı Girişleri Ayarlar'dan yönetebilirsiniz.";
+"autofill.save-login.new-user.message" = "Giriş bilgileri yalnızca bu cihazda güvenli bir şekilde saklanır ve Ayarlar'daki Giriş Bilgileri menüsünden yönetilebilir.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "DuckDuckGo'nun Girişinizi kaydetmesini istiyor musunuz?";
@@ -364,14 +373,17 @@
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Parolayı göster";
 
-/* Confirm CTA displayed on modal asking for the user to update the login */
-"autofill.update-login.save.CTA" = "Girişi Güncelle";
+/* Message displayed on modal asking for the user to update the password */
+"autofill.update-password.message" = "DuckDuckGo, cihazınızdaki bu kayıtlı Giriş bilgisini güncelleyecektir.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Şifreyi Güncelle";
 
 /* Title displayed on modal asking for the user to update the password */
-"autofill.update-password.title" = "Şifre Güncellensin mi?";
+"autofill.update-password.title" = "%@ için şifre güncellensin mi?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-username.save.CTA" = "Kullanıcı Adını Güncelle";
 
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "Kullanıcı Adı Güncellensin mi?";
@@ -646,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "%@ için indirme başlatıldı";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "E-posta Koruması";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "İptal";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Özel Duck Address Oluştur";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Özel Duck Address Oluştur";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "E-posta izleyicileri engelleyin ve adresi gizleyin";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "E-posta adresini seçin";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "E-posta izleyicileri engelleyin";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Duck Adresi ile e-posta izleyicileri engelleyin";
@@ -675,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "E-posta izleyicileri engelleyin ve adresinizi gizleyin";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Kuruluma Devam Et";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Kurulumdan Çık";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Şimdi çıkarsanız Duck Address kaydedilmez.";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Bir Daha Gösterme";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "E-postamı Koru";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Gizli izleyicileri de kaldıran ve e-postaları gelen kutunuza ileten benzersiz, rastgele bir adres oluşturun.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "E-postanızı Gizleyin ve \n İzleyicileri Engelleyin";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Henüz yer imi eklenmedi";
@@ -1002,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Göz Atma Menüsü";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Geri";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Sonraki";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Bitti";

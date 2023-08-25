@@ -88,6 +88,11 @@ class AppUserDefaultsTests: XCTestCase {
         
         XCTAssertEqual(appUserDefaults.currentThemeName, .systemDefault)
     }
+
+    func testDefaultAutofillStateIsFalse() {
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        XCTAssertFalse(appUserDefaults.autofillCredentialsEnabled)
+    }
     
     /*
      These tests aren't required until we make autofill default to off, and then enable turning it on automatically

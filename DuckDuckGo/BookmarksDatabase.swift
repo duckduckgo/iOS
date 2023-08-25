@@ -17,20 +17,17 @@
 //  limitations under the License.
 //
 
+import Common
 import Foundation
 import CoreData
 import Persistence
 import Bookmarks
-import os
 
 public class BookmarksDatabase {
 
     public enum Constants {
         public static let bookmarksGroupID = "\(Global.groupIdPrefix).bookmarks"
     }
-
-    // Used only in debug screen
-    public static var globalReferenceForDebug: CoreDataDatabase?
 
     private init() { }
     
@@ -43,7 +40,7 @@ public class BookmarksDatabase {
     }()
 
     public static func make(location: URL = defaultDBLocation, readOnly: Bool = false) -> CoreDataDatabase {
-        os_log("BookmarksDatabase.make - IN - %@", location as CVarArg)
+        os_log("BookmarksDatabase.make - IN - %s", location.absoluteString)
         let bundle = Bookmarks.bundle
         guard let model = CoreDataDatabase.loadModel(from: bundle, named: "BookmarksModel") else {
             os_log("BookmarksDatabase.make - OUT, failed to loadModel")
@@ -55,8 +52,6 @@ public class BookmarksDatabase {
                                   model: model,
                                   readOnly: readOnly)
         os_log("BookmarksDatabase.make - OUT")
-        globalReferenceForDebug = db
         return db
     }
-
 }

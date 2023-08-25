@@ -17,7 +17,7 @@
 "action.title.add" = "Dodaj";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Samodejno izpolnjevanje obrazcev za prijavo";
+"action.title.autofill.logins" = "Prijave";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Dodaj med zaznamke";
@@ -179,13 +179,13 @@
 "autofill.keep-enabled.alert.disable" = "Onemogoči";
 
 /* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Uporabljaj še naprej";
+"autofill.keep-enabled.alert.keep-using" = "Shranjujte še naprej";
 
 /* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "Samodejno izpolnjevanje lahko kadar koli onemogočite v nastavitvah.";
+"autofill.keep-enabled.alert.message" = "To lahko kadar koli onemogočite v nastavitvah.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Ali želite še naprej uporabljati samodejno izpolnjevanje?";
+"autofill.keep-enabled.alert.title" = "Ali želite še naprej shranjevati prijave?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Oglejte si";
@@ -268,26 +268,20 @@
 /* Title for alert when attempting to save a duplicate login */
 "autofill.logins.details.save-duplicate-alert.title" = "Podvojeni podatki za prijavo";
 
-/* Title for view displayed when autofill is locked */
-"autofill.logins.details.title" = "Odkleni samodejno izpolnjevanje";
-
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Uporabniško ime";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Podatki za prijavo so varno shranjeni samo v tej napravi";
+"autofill.logins.empty-view.subtitle" = "Prijave so varno shranjene v vaši napravi.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Podatki za prijavo še niso shranjeni";
-
-/* Title for view displayed when autofill is disabled and has no items */
-"autofill.logins.empty-view.title-disabled" = "Omogočite samodejno izpolnjevanje, da začnete shranjevati podatke za prijavo";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Prekliči";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Odklenite za uporabo shranjenih podatkov za prijavo";
+"autofill.logins.list.auth.reason" = "Za dostop do shranjenih prijav odklenite napravo";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Zapri";
@@ -298,6 +292,9 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Prijavni podatki za %@ so bili izbrisani";
 
+/* Toast message when a login item without a title is deleted */
+"autofill.logins.list.login-deleted-message-no-title" = "Prijava je izbrisana";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Iskanje podatkov za prijavo";
 
@@ -305,13 +302,13 @@
 "autofill.logins.list.suggested" = "Predlagano";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Samodejno izpolnjevanje obrazcev za prijavo";
+"autofill.logins.list.title" = "Prijave";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Za zaščito podatkov samodejnega izpolnjevanja je potrebna koda za dostop. Odprite nastavitve naprave in nastavite kodo za dostop.";
+"autofill.logins.no-auth.subtitle" = "Za zaščito vaših prijav je zahtevano geslo.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Za uporabo samodejnega izpolnjevanja nastavite kodo za dostop do naprave";
+"autofill.logins.no-auth.title" = "Zavarujte svojo napravo, če želite shraniti prijave";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Prekliči";
@@ -328,6 +325,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "S spletnega mesta %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Geslo za %@";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Želite uporabiti shranjene podatke za prijavo?";
 
@@ -337,11 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Ni rezultatov";
 
-/* Message displayed on modal explaining that an additional login will be saved. */
-"autofill.save-login.additional-login.message" = "To bo prihranilo dodatno prijavo za to spletno mesto.";
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Geslo bo shranjeno v razdelku Prijave.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Želite uporabiti geslo, ki ga je ustvaril DuckDuckGo?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Uporabi ustvarjeno geslo";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Ustvari svoje";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "DuckDuckGo bo te podatke za prijavo varno shranil v vaši napravi. Shranjene podatke za prijavo lahko upravljate v nastavitvah.";
+"autofill.save-login.new-user.message" = "Prijave so varno shranjene v tej napravi in jih lahko upravljate v razdelku Prijave v nastavitvah.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Ali želite, da DuckDuckGo shrani vašo prijavo?";
@@ -364,14 +373,17 @@
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Prikaži geslo";
 
-/* Confirm CTA displayed on modal asking for the user to update the login */
-"autofill.update-login.save.CTA" = "Posodobitev prijave";
+/* Message displayed on modal asking for the user to update the password */
+"autofill.update-password.message" = "DuckDuckGo bo posodobil to shranjeno prijavo v vaši napravi.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Posodobitev gesla";
 
 /* Title displayed on modal asking for the user to update the password */
-"autofill.update-password.title" = "Želite posodobiti geslo?";
+"autofill.update-password.title" = "Želite posodobiti geslo za\n%@?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-username.save.CTA" = "Posodobi uporabniško ime";
 
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "Želite posodobiti uporabniško ime?";
@@ -646,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Prenos za %@ se je začel";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "Zaščita e-pošte";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Prekliči";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Ustvarjanje zasebnega naslova Duck";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Ustvarjanje zasebnega naslova Duck";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Blokirajte sledilnike e-pošte in skrijte naslov";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Izberite e-poštni naslov";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Blokirajte sledilnike e-pošte";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blokiraj sledilnike e-pošte z naslovom Duck";
@@ -675,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blokirajte sledilnike e-pošte in skrijte svoj naslov";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Nadaljujte nastavitev";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Izhod iz nastavitev";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Če zaprete zdaj, vaš naslov Duck Address ne bo shranjen.";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Ne prikaži več";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Zaščiti mojo e-pošto";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Ustvarite edinstven, naključen naslov, ki odstrani tudi skrite sledilnike in posreduje e-pošto v vaš e-poštni predal.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Skrijte svojo e-pošto in \nblokirajte sledilnike";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Zaznamki še niso dodani";
@@ -1002,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Brskanje po meniju";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Nazaj";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Naslednji";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Končano";

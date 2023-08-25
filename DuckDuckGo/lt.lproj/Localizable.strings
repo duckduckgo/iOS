@@ -17,7 +17,7 @@
 "action.title.add" = "Papildyti";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Automatiškai užpildyti prisijungimus";
+"action.title.autofill.logins" = "Prisijungimai";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Pridėti prie žymų";
@@ -179,13 +179,13 @@
 "autofill.keep-enabled.alert.disable" = "Išjungti";
 
 /* Confirm action for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.keep-using" = "Naudoti toliau";
+"autofill.keep-enabled.alert.keep-using" = "Toliau įrašyti";
 
 /* Message for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.message" = "Automatinį užpildymą galite bet kada išjungti nustatymuose.";
+"autofill.keep-enabled.alert.message" = "Tai galite bet kada išjungti nustatymuose.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Ar norite ir toliau naudoti automatinį užpildymą?";
+"autofill.keep-enabled.alert.title" = "Ar norite toliau įrašyti prisijungimus?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Peržiūrėti";
@@ -268,26 +268,20 @@
 /* Title for alert when attempting to save a duplicate login */
 "autofill.logins.details.save-duplicate-alert.title" = "Dvigubas prisijungimas";
 
-/* Title for view displayed when autofill is locked */
-"autofill.logins.details.title" = "Atrakinti automatinį pildymą";
-
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Naudotojo vardas";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Prisijungimai saugiai saugomi tik šiame įrenginyje";
+"autofill.logins.empty-view.subtitle" = "Prisijungimai saugiai laikomi jūsų įrenginyje.";
 
 /* Title for view displayed when autofill has no items */
 "autofill.logins.empty-view.title" = "Dar nėra išsaugotų prisijungimų";
-
-/* Title for view displayed when autofill is disabled and has no items */
-"autofill.logins.empty-view.title-disabled" = "Įgalinkite automatinį užpildymą, kad pradėtumėte išsaugoti prisijungimus";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Atšaukti";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Atrakinkite norėdami naudoti išsaugotą prisijungimą";
+"autofill.logins.list.auth.reason" = "Atrakinkite įrenginį, kad pasiektumėte įrašytus prisijungimus";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Uždaryti";
@@ -298,6 +292,9 @@
 /* Toast message when a login item is deleted */
 "autofill.logins.list.login-deleted-message" = "Prisijungimas prie %@ ištrintas";
 
+/* Toast message when a login item without a title is deleted */
+"autofill.logins.list.login-deleted-message-no-title" = "Prisijungimas ištrintas";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Ieškoti prisijungimų";
 
@@ -305,13 +302,13 @@
 "autofill.logins.list.suggested" = "Siūloma";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Automatiškai užpildyti prisijungimus";
+"autofill.logins.list.title" = "Prisijungimai";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Norint apsaugoti automatinio pildymo duomenis, reikia įvesti prieigos kodą. Eikite į įrenginio nustatymus, kad nustatytumėte prieigos kodą.";
+"autofill.logins.no-auth.subtitle" = "Norint apsaugoti prisijungimus, reikalingas slaptažodis.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Nustatykite savo įrenginio prieigos kodą, kad galėtumėte naudoti automatinį pildymą";
+"autofill.logins.no-auth.title" = "Apsaugokite įrenginį, kad išsaugotumėte prisijungimus";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Atšaukti";
@@ -328,6 +325,9 @@
 /* Title for section of autofill logins that are an approximate match to the current website */
 "autofill.logins.prompt.partial.match.title" = "Iš %@";
 
+/* Title of button for autofill login prompt to use a saved password for a website */
+"autofill.logins.prompt.password.button.title" = "Slaptažodis, skirtas %@";
+
 /* Title for autofill login prompt */
 "autofill.logins.prompt.title" = "Naudoti išsaugotą prisijungimą?";
 
@@ -337,11 +337,20 @@
 /* Title displayed when there are no results on Autofill search */
 "autofill.logins.search.no-results.title" = "Rezultatų nerasta";
 
-/* Message displayed on modal explaining that an additional login will be saved. */
-"autofill.save-login.additional-login.message" = "Taip bus išsaugotas papildomas prisijungimas prie šios svetainės.";
+/* Subtitle for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.subtitle" = "Slaptažodis bus išsaugotas prisijungimų lange.";
+
+/* Title for prompt to use suggested strong password for creating a login */
+"autofill.password-generation-prompt.title" = "Naudoti sugeneruotą slaptažodį iš „DuckDuckGo“?";
+
+/* Button title choosing to use the suggested generated password for creating a login */
+"autofill.password-generation-prompt.use-generated-password.cta" = "Naudoti sugeneruotą slaptažodį";
+
+/* Button title choosing to use own password for creating a login */
+"autofill.password-generation-prompt.use-own-password.cta" = "Sukurti savo";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "„DuckDuckGo“ saugiai išsaugos šį prisijungimą jūsų įrenginyje. Išsaugotus prisijungimus galite tvarkyti nustatymuose.";
+"autofill.save-login.new-user.message" = "Prisijungimai saugiai laikomi tik šiame įrenginyje, o juos galima tvarkyti nustatymuose, prisijungimų meniu.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Ar norite, kad „DuckDuckGo“ išsaugotų jūsų prisijungimą?";
@@ -364,14 +373,17 @@
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Rodyti slaptažodį";
 
-/* Confirm CTA displayed on modal asking for the user to update the login */
-"autofill.update-login.save.CTA" = "Atnaujinti prisijungimą";
+/* Message displayed on modal asking for the user to update the password */
+"autofill.update-password.message" = "„DuckDuckGo“ atnaujins šį jūsų įrenginyje įrašytą prisijungimą.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Atnaujinti slaptažodį";
 
 /* Title displayed on modal asking for the user to update the password */
-"autofill.update-password.title" = "Atnaujinti slaptažodį?";
+"autofill.update-password.title" = "Atnaujinti slaptažodį\n%@?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-username.save.CTA" = "Atnaujinti naudotojo vardą";
 
 /* Title displayed on modal asking for the user to update the username */
 "autofill.update-usernamr.title" = "Atnaujinti naudotojo vardą?";
@@ -646,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "%@ atsiusntimas prasidėjo.";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "El. pašto apsauga";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Atšaukti";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Generuoti privatų „Duck“ adresą";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Generuoti privatų „Duck“ adresą";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Blokuoti el. pašto stebėjimo priemones ir slėpti adresą";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Pasirinkite el. pašto adresą";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Blokuoti el. pašto sekimo priemones";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blokuoti el. pašto adresų stebėjimo priemones „Duck“ adresams";
@@ -675,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blokuokite el. laiškų sekimo priemones ir paslėpkite savo adresą";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Tęsti sąranką";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Išeiti iš sąrankos";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Jei išeisite dabar, jūsų „Duck“ adresas nebus išsaugotas!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Daugiau nerodyti";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Apsaugoti mano el. paštą";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Sukurkite unikalų atsitiktinį adresą, kuriuo taip pat pašalinamos slaptos sekimo priemonės ir el. laiškai persiunčiami į pašto dėžutę.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Paslėpkite savo el. paštą ir \n blokuokite stebėjimo priemones";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Žymių dar nepridėta";
@@ -1002,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Naršymo meniu";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Atgal";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Kitas";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Atlikta";

@@ -17,13 +17,14 @@
 //  limitations under the License.
 //
 
+import Common
 import Foundation
 import Core
 import BackgroundTasks
 import BrowserServicesKit
-import os.log
 import Persistence
 import Bookmarks
+import RemoteMessaging
 
 struct RemoteMessaging {
 
@@ -103,15 +104,17 @@ struct RemoteMessaging {
         let context = bookmarksDatabase.makeContext(concurrencyType: .privateQueueConcurrencyType)
         context.performAndWait {
             let bookmarksCountRequest = BookmarkEntity.fetchRequest()
-            bookmarksCountRequest.predicate = NSPredicate(format: "%K == false AND %K == false",
-                                                 #keyPath(BookmarkEntity.isFavorite),
-                                                 #keyPath(BookmarkEntity.isFolder))
+            bookmarksCountRequest.predicate = NSPredicate(format: "%K == nil AND %K == false AND %K == false",
+                                                 #keyPath(BookmarkEntity.favoriteFolder),
+                                                 #keyPath(BookmarkEntity.isFolder),
+                                                 #keyPath(BookmarkEntity.isPendingDeletion))
             bookmarksCount = (try? context.count(for: bookmarksCountRequest)) ?? 0
             
             let favoritesCountRequest = BookmarkEntity.fetchRequest()
-            bookmarksCountRequest.predicate = NSPredicate(format: "%K == true AND %K == false",
-                                                 #keyPath(BookmarkEntity.isFavorite),
-                                                 #keyPath(BookmarkEntity.isFolder))
+            bookmarksCountRequest.predicate = NSPredicate(format: "%K != nil AND %K == false AND %K == false",
+                                                 #keyPath(BookmarkEntity.favoriteFolder),
+                                                 #keyPath(BookmarkEntity.isFolder),
+                                                 #keyPath(BookmarkEntity.isPendingDeletion))
             favoritesCount = (try? context.count(for: favoritesCountRequest)) ?? 0
         }
         

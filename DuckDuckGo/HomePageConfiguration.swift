@@ -19,8 +19,9 @@
 
 import Foundation
 import BrowserServicesKit
+import RemoteMessaging
+import Common
 import Core
-import os.log
 import Bookmarks
 
 final class HomePageConfiguration {
@@ -29,6 +30,7 @@ final class HomePageConfiguration {
         case navigationBarSearch(fixed: Bool)
         case favorites
         case homeMessage
+        case appTrackingProtection
     }
 
     func components(favoritesViewModel: FavoritesListInteracting) -> [Component] {
@@ -36,6 +38,7 @@ final class HomePageConfiguration {
         return [
             .navigationBarSearch(fixed: fixed),
             .homeMessage,
+            .appTrackingProtection,
             .favorites
         ]
     }
@@ -48,7 +51,7 @@ final class HomePageConfiguration {
     var homeMessages: [HomeMessage] = []
 
     init(variantManager: VariantManager? = nil,
-         remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore()) {
+         remoteMessagingStore: RemoteMessagingStore = AppDependencyProvider.shared.remoteMessagingStore) {
         homeMessageStorage = HomeMessageStorage(variantManager: variantManager)
         self.remoteMessagingStore = remoteMessagingStore
         homeMessages = buildHomeMessages()
@@ -75,18 +78,7 @@ final class HomePageConfiguration {
 
     private func remoteMessageToShow() -> HomeMessage? {
         guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return nil }
-
         os_log("Remote message to show: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
-        Pixel.fire(pixel: .remoteMessageShown,
-                   withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessageToPresent.id)"])
-
-        if !remoteMessagingStore.hasShownRemoteMessage(withId: remoteMessageToPresent.id) {
-            os_log("Remote message shown for first time: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
-            Pixel.fire(pixel: .remoteMessageShownUnique,
-                       withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessageToPresent.id)"])
-            remoteMessagingStore.updateRemoteMessage(withId: remoteMessageToPresent.id, asShown: true)
-        }
-
         return .remoteMessage(remoteMessage: remoteMessageToPresent)
     }
 
@@ -102,5 +94,26 @@ final class HomePageConfiguration {
         default:
             break
         }
+    }
+
+    func didAppear(_ homeMessage: HomeMessage) {
+
+        switch homeMessage {
+        case .remoteMessage(let remoteMessage):
+            os_log("Remote message shown: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
+            Pixel.fire(pixel: .remoteMessageShown,
+                       withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+
+            if !remoteMessagingStore.hasShownRemoteMessage(withId: remoteMessage.id) {
+                os_log("Remote message shown for first time: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
+                Pixel.fire(pixel: .remoteMessageShownUnique,
+                           withAdditionalParameters: [PixelParameters.message: "\(remoteMessage.id)"])
+                remoteMessagingStore.updateRemoteMessage(withId: remoteMessage.id, asShown: true)
+            }
+
+        default:
+            break
+        }
+
     }
 }

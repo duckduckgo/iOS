@@ -20,6 +20,7 @@
 import Foundation
 import Core
 import BrowserServicesKit
+import DDGSync
 @testable import DuckDuckGo
 
 class MockDependencyProvider: DependencyProvider {

@@ -87,7 +87,7 @@ public class StatisticsLoader {
             return
         }
 
-        fireDailyActiveUser()
+        SetAsDefaultStatistics().fireDailyActiveUser()
 
         let configuration = APIRequest.Configuration(url: url)
         let request = APIRequest(configuration: configuration, urlSession: .session())
@@ -112,8 +112,8 @@ public class StatisticsLoader {
             return
         }
 
-        fireDailyActiveUser()
-        
+        SetAsDefaultStatistics().fireDailyActiveUser()
+
         let configuration = APIRequest.Configuration(url: url)
         let request = APIRequest(configuration: configuration, urlSession: .session())
         
@@ -129,12 +129,6 @@ public class StatisticsLoader {
             }
             completion()
         }
-    }
-
-    public func fireDailyActiveUser() {
-        DailyPixel.fire(pixel: .dailyActiveUser, withAdditionalParameters: [
-            PixelParameters.defaultBrowser: "\(SetAsDefaultStatistics().isDefault)"
-        ])
     }
 
     public func storeUpdateVersionIfPresent(_ atb: Atb) {

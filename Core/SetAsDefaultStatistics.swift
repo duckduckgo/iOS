@@ -19,6 +19,7 @@
 
 import Foundation
 
+/// Measuring set as default usage.  To be removed mid-end October.
 public class SetAsDefaultStatistics {
 
     @UserDefaultsWrapper(key: .defaultBrowserUsageLastSeen, defaultValue: nil)
@@ -43,6 +44,12 @@ public class SetAsDefaultStatistics {
 
     public func setAsDefaultSkipped() {
         Pixel.fire(pixel: .onboardingSetDefaultSkipped)
+    }
+
+    public func fireDailyActiveUser() {
+        DailyPixel.fire(pixel: .dailyActiveUser, withAdditionalParameters: [
+            PixelParameters.defaultBrowser: "\(isDefault)"
+        ])
     }
 
 }

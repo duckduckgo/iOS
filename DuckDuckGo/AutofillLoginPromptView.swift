@@ -38,8 +38,7 @@ struct AutofillLoginPromptView: View {
 
         return ZStack {
             AutofillViews.CloseButtonHeader(action: viewModel.dismissView)
-                .offset(x: AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) ? Const.Size.closeButtonOffsetPortrait
-                                                                                                  : Const.Size.closeButtonOffset)
+                .offset(x: horizontalPadding)
                 .zIndex(1)
             
             VStack {
@@ -60,8 +59,7 @@ struct AutofillLoginPromptView: View {
             .useScrollView(shouldUseScrollView(), minHeight: frame.height)
 
         }
-        .padding(.horizontal, AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) ? Const.Size.closeButtonOffsetPortrait
-                                                                                                     : Const.Size.closeButtonOffset)
+        .padding(.horizontal, horizontalPadding)
 
     }
 
@@ -90,6 +88,18 @@ struct AutofillLoginPromptView: View {
                     AutofillViews.LegacySpacerView(height: Const.Size.contentSpacerHeight)
                 }
             }
+        }
+    }
+
+    private var horizontalPadding: CGFloat {
+        guard AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) else {
+            return Const.Size.closeButtonOffset
+        }
+
+        if AutofillViews.isSmallFrame(frame) {
+            return Const.Size.closeButtonOffsetPortraitSmallFrame
+        } else {
+            return Const.Size.closeButtonOffsetPortrait
         }
     }
 
@@ -166,6 +176,7 @@ private enum Const {
     enum Size {
         static let closeButtonOffset: CGFloat = 48.0
         static let closeButtonOffsetPortrait: CGFloat = 44.0
+        static let closeButtonOffsetPortraitSmallFrame: CGFloat = 16.0
         static let topPadding: CGFloat = 56.0
         static let headlineTopPadding: CGFloat = 24.0
         static let ios15scrollOffset: CGFloat = 80.0

@@ -658,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Άρχισε η λήψη για το αρχείο %@";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "Προστασία email";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Ακύρωση";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Δημιουργήστε ιδιωτική Duck Address";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Δημιουργήστε ιδιωτική Duck Address";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Αποκλεισμός εφαρμογών παρακολούθησης email και απόκρυψη διεύθυνσης";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Επιλογή διεύθυνσης email";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Αποκλεισμός εφαρμογών παρακολούθησης email";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Αποκλείστε εφαρμογές παρακολούθησης email με μια Διεύθυνση Duck";
@@ -687,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Αποκλείστε εφαρμογές παρακολούθησης email και αποκρύψτε τη διεύθυνσή σας";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Συνέχιση εγκατάστασης";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Έξοδος από την εγκατάσταση";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Εάν εξέλθετε τώρα, η Duck Address δεν θα αποθηκευτεί!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Να μην εμφανιστεί ξανά";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Προστασία του email μου";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Δημιουργήστε μια μοναδική, τυχαία διεύθυνση η οποία αφαιρεί επίσης κρυφές εφαρμογές παρακολούθησης και προωθεί email στα εισερχόμενά σας.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Απόκρυψη του email σας και \n αποκλεισμός εφαρμογών παρακολούθησης";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Δεν προστέθηκαν σελιδοδείκτες ακόμα";
@@ -1014,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Μενού περιήγησης";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Πίσω";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Επόμενο";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Ολοκληρώθηκε";

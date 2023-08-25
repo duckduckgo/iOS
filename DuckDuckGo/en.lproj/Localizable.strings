@@ -922,11 +922,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Download started for %@";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "Email Protection";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Cancel";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Generate Private Duck Address";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Generate Private Duck Address";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Block email trackers & hide address";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Select email address";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Block email trackers";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Block email trackers with a Duck Address";
@@ -951,6 +966,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Block email trackers and hide your address";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Continue Setup";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Exit Setup";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "If you exit now, your Duck Address will not be saved!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Don’t Show Again";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Protect My Email";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Create a unique, random address that also removes hidden trackers and forwards email to your inbox.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Hide Your Email and\nBlock Trackers";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "No bookmarks added yet";
@@ -1299,6 +1335,12 @@ https://duckduckgo.com/mac";
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Browsing Menu";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Back";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Next";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Done";

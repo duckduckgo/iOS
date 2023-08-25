@@ -37,13 +37,15 @@ public final class ContentBlocking {
 
     private init(privacyConfigurationManager: PrivacyConfigurationManaging? = nil) {
         let internalUserDecider = DefaultInternalUserDecider(store: InternalUserStore())
+        let statisticsStore = StatisticsUserDefaults()
         let privacyConfigurationManager = privacyConfigurationManager
             ?? PrivacyConfigurationManager(fetchedETag: UserDefaultsETagStorage().loadEtag(for: .privacyConfiguration),
                                            fetchedData: FileStore().loadAsData(for: .privacyConfiguration),
                                            embeddedDataProvider: AppPrivacyConfigurationDataProvider(),
                                            localProtection: DomainsProtectionUserDefaultsStore(),
                                            errorReporting: Self.debugEvents,
-                                           internalUserDecider: internalUserDecider)
+                                           internalUserDecider: internalUserDecider,
+                                           installDate: statisticsStore.installDate)
         self.privacyConfigurationManager = privacyConfigurationManager
 
         trackerDataManager = TrackerDataManager(etag: UserDefaultsETagStorage().loadEtag(for: .trackerDataSet),

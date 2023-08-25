@@ -658,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Preuzimanje je počelo za %@";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "Zaštita e-pošte";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Otkaži";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Generiraj privatnu adresu Duck Address";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Generiraj privatnu adresu Duck Address";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Blokiraj praćenje e-pošte i sakrij adresu";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Odabir adrese e-pošte";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Blokiranje alata za praćenje e-pošte";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blokirajte praćenje e-pošte s Duck adresom";
@@ -687,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blokiraj programe za praćenje e-pošte i sakrij svoju adresu";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Nastavi s postavljanjem";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Izađi iz postavljanja";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Ako izađeš sada, tvoja adresa Duck Address neće biti spremljena!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Ne prikazuj ponovno";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Zaštiti moju e-poštu";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Izradi jedinstvenu, nasumičnu adresu koja također uklanja skrivene alate za praćenje (\"tragače\") i prosljeđuje e-poštu u tvoj sandučić za pristiglu poštu.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Sakrij svoju e-poštu i \n blokiraj tragače";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Još nema dodanih knjižnih oznaka";
@@ -1014,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Izbornik pregledavanja";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Natrag";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Dalje";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Gotovo";

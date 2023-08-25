@@ -26,11 +26,15 @@ public class CredentialsCleanupErrorHandling: EventMapping<CredentialsCleanupErr
 
     public init() {
         super.init { event, _, _, _ in
-            let domainEvent = Pixel.Event.credentialsDatabaseCleanupFailed
-            let processedErrors = CoreDataErrorsParser.parse(error: event.cleanupError as NSError)
-            let params = processedErrors.errorPixelParameters
+            if event.cleanupError is CredentialsCleanupCancelledError {
+                Pixel.fire(pixel: .credentialsCleanupAttemptedWhileSyncWasEnabled)
+            } else {
+                let domainEvent = Pixel.Event.credentialsDatabaseCleanupFailed
+                let processedErrors = CoreDataErrorsParser.parse(error: event.cleanupError as NSError)
+                let params = processedErrors.errorPixelParameters
 
-            Pixel.fire(pixel: domainEvent, error: event.cleanupError, withAdditionalParameters: params)
+                Pixel.fire(pixel: domainEvent, error: event.cleanupError, withAdditionalParameters: params)
+            }
         }
     }
 

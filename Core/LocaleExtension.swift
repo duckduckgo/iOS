@@ -27,4 +27,8 @@ extension Locale {
          "MC", "MD", "ME", "MK", "MT", "NL", "NO", "PL", "PT", "RO", "RS", "RU", "SE", "SI", "SK",
          "SM", "TR", "UA", "GB", "VA"].contains(regionCode)
     }
+
+    public var isEnglishLanguage: Bool {
+        return Locale.preferredLanguages.first?.lowercased().starts(with: "en") ?? false
+    }
 }

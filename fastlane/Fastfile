@@ -182,23 +182,23 @@ private_lane :build_alpha do |options|
     configurations = [
       {
         targets: ["DuckDuckGo"],
-        profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha"
+        profile_name: "match AppStore Hoc com.duckduckgo.mobile.ios.alpha"
       },
       {
         targets: ["ShareExtension"],
-        profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.ShareExtension"
+        profile_name: "match AppStore com.duckduckgo.mobile.ios.alpha.ShareExtension"
       },
       {
         targets: ["OpenAction"],
-        profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.OpenAction2"
+        profile_name: "match AppStore com.duckduckgo.mobile.ios.alpha.OpenAction2"
       },
       {
         targets: ["WidgetsExtension"],
-        profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.Widgets"
+        profile_name: "match AppStore com.duckduckgo.mobile.ios.alpha.Widgets"
       },
       {
         targets: ["PacketTunnelProvider"],
-        profile_name: "match AdHoc com.duckduckgo.mobile.ios.alpha.NetworkExtension"
+        profile_name: "match AppStore com.duckduckgo.mobile.ios.alpha.NetworkExtension"
       }
     ]
 
@@ -213,7 +213,7 @@ private_lane :build_alpha do |options|
   end
 
   sync_signing_alpha(options)
-  
+
   build_app(
     export_method: "app-store",
     configuration: "Alpha",

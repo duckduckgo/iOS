@@ -60,8 +60,6 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var macBrowserWaitlistAccessoryText: UILabel!
     @IBOutlet weak var windowsBrowserWaitlistCell: UITableViewCell!
     @IBOutlet weak var windowsBrowserWaitlistAccessoryText: UILabel!
-    // Removed from storyboard until AppTP comes back
-    @IBOutlet weak var appTPCell: UITableViewCell!
     @IBOutlet weak var netPCell: UITableViewCell!
     @IBOutlet weak var longPressCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
@@ -85,7 +83,6 @@ class SettingsViewController: UITableViewController {
     private let moreFromDDGSectionIndex = 6
     private let debugSectionIndex = 8
     
-    private let appTPDatabase: CoreDataDatabase
     private let bookmarksDatabase: CoreDataDatabase
 
     private lazy var emailManager = EmailManager()
@@ -118,14 +115,6 @@ class SettingsViewController: UITableViewController {
     private var shouldShowSyncCell: Bool {
         return featureFlagger.isFeatureOn(.sync)
     }
-    
-    private lazy var shouldShowAppTPCell: Bool = {
-#if APP_TRACKING_PROTECTION
-        return featureFlagger.isFeatureOn(.appTrackingProtection)
-#else
-        return false
-#endif
-    }()
 
     private lazy var shouldShowNetPCell: Bool = {
 #if NETWORK_PROTECTION
@@ -183,7 +172,6 @@ class SettingsViewController: UITableViewController {
         configureEmailProtectionAccessoryText()
         configureMacBrowserWaitlistCell()
         configureWindowsBrowserWaitlistCell()
-        configureAppTPCell()
 
         // Make sure multiline labels are correctly presented
         tableView.setNeedsLayout()
@@ -198,13 +186,11 @@ class SettingsViewController: UITableViewController {
     }
 
     init?(coder: NSCoder,
-          appTPDatabase: CoreDataDatabase,
           bookmarksDatabase: CoreDataDatabase,
           syncService: DDGSyncing,
           syncDataProviders: SyncDataProviders,
           internalUserDecider: InternalUserDecider) {
 
-        self.appTPDatabase = appTPDatabase
         self.bookmarksDatabase = bookmarksDatabase
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
@@ -358,26 +344,6 @@ class SettingsViewController: UITableViewController {
             windowsBrowserWaitlistCell.detailTextLabel?.text = WindowsBrowserWaitlist.shared.settingsSubtitle
         }
     }
-    
-    private func configureAppTPCell() {
-        appTPCell.isHidden = !shouldShowAppTPCell
-
-#if APP_TRACKING_PROTECTION
-        Task { @MainActor in
-            let fwm = FirewallManager()
-            await fwm.refreshManager()
-            if UserDefaults().bool(forKey: UserDefaultsWrapper<Any>.Key.appTPUsed.rawValue) {
-                if fwm.status() != .connected {
-                    appTPCell.detailTextLabel?.text = UserText.appTPCellDisabled
-                } else {
-                    appTPCell.detailTextLabel?.text = UserText.appTPCellEnabled
-                }
-            } else {
-                appTPCell.detailTextLabel?.text = UserText.appTPCellDetail
-            }
-        }
-#endif
-    }
 
     private func configureNetPCell() {
         netPCell.isHidden = !shouldShowNetPCell
@@ -449,26 +415,6 @@ class SettingsViewController: UITableViewController {
         navigationController?.pushViewController(MacWaitlistViewController(nibName: nil, bundle: nil), animated: true)
     }
 
-#if APP_TRACKING_PROTECTION
-    func setNavColor(isOnboarding: Bool) {
-        let coloredAppearance = UINavigationBarAppearance()
-        coloredAppearance.configureWithTransparentBackground()
-        coloredAppearance.backgroundColor = UIColor(designSystemColor: isOnboarding ? .surface : .background)
-        
-        let navBar = self.navigationController?.navigationBar
-        navBar?.standardAppearance = coloredAppearance
-        navBar?.compactAppearance = coloredAppearance
-        navBar?.scrollEdgeAppearance = coloredAppearance
-    }
-    
-    private func showAppTP() {
-        navigationController?.pushViewController(
-            AppTPActivityHostingViewController(appTrackingProtectionDatabase: appTPDatabase, setNavColor: setNavColor(isOnboarding:)),
-            animated: true
-        )
-    }
-#endif
-
 #if NETWORK_PROTECTION
     private func showNetP() {
         // This will be tidied up as part of https://app.asana.com/0/0/1205084446087078/f
@@ -522,13 +468,7 @@ class SettingsViewController: UITableViewController {
 
         case syncCell:
             showSync()
-
-        case appTPCell:
-#if APP_TRACKING_PROTECTION
-            showAppTP()
-#else
-            break
-#endif
+            
         case netPCell:
 #if NETWORK_PROTECTION
             showNetP()

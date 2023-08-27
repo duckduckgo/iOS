@@ -232,7 +232,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
         appIsLaunching = true
+
+        testCodeQL()
+
         return true
+    }
+
+    private func testCodeQL() {
+        // swiftlint:disable:next force_try
+        let tainted = try! String(contentsOf: URL(string: "http://example.com")!)
+
+        let a = String("abc") // GOOD: not a format string
+        let b = String(tainted) // GOOD: not a format string
+
+        let c = String(format: "abc") // GOOD: not tainted
+        let d = String(format: tainted) // BAD
     }
 
     private func cleanUpMacPromoExperiment2() {

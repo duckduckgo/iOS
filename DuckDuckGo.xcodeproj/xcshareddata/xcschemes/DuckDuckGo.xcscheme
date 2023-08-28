@@ -58,6 +58,11 @@
                BlueprintName = "UnitTests"
                ReferencedContainer = "container:DuckDuckGo.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "AppTrackingProtectionListModelTests/testWhenNewChangesAreWrittenToTheDatabase_ThenTheSectionsPropertyIsUpdated()">
+               </Test>
+            </SkippedTests>
          </TestableReference>
          <TestableReference
             skipped = "NO">

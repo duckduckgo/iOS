@@ -309,6 +309,10 @@ extension Pixel {
         case lockScreenWidgetVoiceSearch
         case lockScreenWidgetNewEmail
 
+        // MARK: Set as Default
+        case onboardingSetDefaultOpened
+        case onboardingSetDefaultSkipped
+
         // MARK: debug pixels
         case dbCrashDetected
 
@@ -435,6 +439,17 @@ extension Pixel {
         case credentialsCleanupAttemptedWhileSyncWasEnabled
 
         case invalidPayload(Configuration)
+
+        case dailyActiveUser
+
+        case emailIncontextPromptDisplayed
+        case emailIncontextPromptConfirmed
+        case emailIncontextPromptDismissed
+        case emailIncontextPromptDismissedPersistent
+        case emailIncontextModalDisplayed
+        case emailIncontextModalDismissed
+        case emailIncontextModalExitEarly
+        case emailIncontextModalExitEarlyContinue
     }
     
 }
@@ -724,12 +739,16 @@ extension Pixel.Event {
         case .remoteMessageSecondaryActionClicked: return "m_remote_message_secondary_action_clicked"
         case .remoteMessageSheet: return "m_remote_message_sheet"
 
-        // Lock Screen Widgets
+        // MARK: Lock Screen Widgets
         case .lockScreenWidgetNewSearch: return "m_lockscreen_newsearch"
         case .lockScreenWidgetFavorites: return "m_lockscreen_favorites"
         case .lockScreenWidgetFireButton: return "m_lockscreen_fire"
         case .lockScreenWidgetVoiceSearch: return "m_lockscreen_voicesearch"
         case .lockScreenWidgetNewEmail: return "m_lockscreen_newemail"
+
+        // MARK: Set as default measuring
+        case .onboardingSetDefaultOpened: return "m_onboarding_set-default-opened"
+        case .onboardingSetDefaultSkipped: return "m_onboarding_set-default-skipped"
 
         // MARK: debug pixels
 
@@ -855,10 +874,22 @@ extension Pixel.Event {
         case .bookmarksCleanupFailed: return "m_d_bookmarks_cleanup_failed"
         case .bookmarksCleanupAttemptedWhileSyncWasEnabled: return "m_d_bookmarks_cleanup_attempted_while_sync_was_enabled"
 
-        case .credentialsDatabaseCleanupFailed: return "m_d_credentials_database_cleanup_failed"
+        case .credentialsDatabaseCleanupFailed: return "m_d_credentials_database_cleanup_failed_2"
         case .credentialsCleanupAttemptedWhileSyncWasEnabled: return "m_d_credentials_cleanup_attempted_while_sync_was_enabled"
 
         case .invalidPayload(let configuration): return "m_d_\(configuration.rawValue)_invalid_payload".lowercased()
+
+        case .dailyActiveUser: return "m_daily_active_user"
+
+        // MARK: - InContext Email Protection
+        case .emailIncontextPromptDisplayed: return "m_email_incontext_prompt_displayed"
+        case .emailIncontextPromptConfirmed: return "m_email_incontext_prompt_confirmed"
+        case .emailIncontextPromptDismissed: return "m_email_incontext_prompt_dismissed"
+        case .emailIncontextPromptDismissedPersistent: return "m_email_incontext_prompt_dismissed_persisted"
+        case .emailIncontextModalDisplayed: return "m_email_incontext_modal_displayed"
+        case .emailIncontextModalDismissed: return "m_email_incontext_modal_dismissed"
+        case .emailIncontextModalExitEarly: return "m_email_incontext_modal_exit_early"
+        case .emailIncontextModalExitEarlyContinue: return "m_email_incontext_modal_exit_early_continue"
         }
         
     }

@@ -455,13 +455,18 @@ final class AutofillLoginDetailsHeaderViewModel: ObservableObject {
     @Published var title: String = ""
     @Published var subtitle: String = ""
     @Published var domain: String = ""
-    @Published var preferredFakeFaviconLetter: String?
+    @Published var preferredFakeFaviconLetters: String?
     
     func updateData(with account: SecureVaultModels.WebsiteAccount, tld: TLD, autofillDomainNameUrlMatcher: AutofillDomainNameUrlMatcher, autofillDomainNameUrlSort: AutofillDomainNameUrlSort) {
         self.title = account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
         self.subtitle = UserText.autofillLoginDetailsLastUpdated(for: (dateFormatter.string(from: account.lastUpdated)))
         self.domain = account.domain ?? ""
-        self.preferredFakeFaviconLetter = account.firstTLDLetter(tld: tld, autofillDomainNameUrlSort: autofillDomainNameUrlSort)
+        
+        // Update favicon
+        let accountName = account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
+        let accountTitle = (account.title?.isEmpty == false) ? account.title! : "#"
+        self.preferredFakeFaviconLetters = tld.eTLDplus1(accountName) ?? accountTitle
+        
     }
 
 }

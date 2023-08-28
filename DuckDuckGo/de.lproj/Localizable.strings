@@ -658,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Download von %@ gestartet";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "E-Mail-Schutz";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Abbrechen";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Private Duck-Adresse generieren";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Private Duck-Adresse generieren";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "E-Mail-Tracker blockieren & Adresse verbergen";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "E-Mail-Adresse auswählen";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "E-Mail-Tracker blockieren";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "E-Mail-Tracker mit einer Duck-Adresse blockieren";
@@ -687,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "E-Mail-Tracker blockieren und deine Adresse verbergen";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Einrichtung fortsetzen";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Einrichtung beenden";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Wenn du jetzt beendest, wird deine Duck Address nicht gespeichert!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Nicht erneut anzeigen";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Meine E-Mail-Adresse schützen";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Einmalige, zufällige Adresse erstellen, die versteckte Tracker entfernt und E-Mails an deinen Posteingang weiterleitet.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "E-Mail-Adresse verbergen und Tracker blockieren";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Noch keine Lesezeichen hinzugefügt";
@@ -1014,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Browsing-Optionen";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Zurück";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Weiter";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Fertig";

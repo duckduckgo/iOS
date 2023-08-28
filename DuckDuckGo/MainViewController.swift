@@ -1111,14 +1111,21 @@ class MainViewController: UIViewController {
     }
     
     private func addDuckDuckGoEmailAuthenticationObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(onDuckDuckGoEmailSignIn), name: .emailDidSignIn, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(onDuckDuckGoEmailSignOut), name: .emailDidSignOut, object: nil)
+        NotificationCenter.default.addObserver(forName: .emailDidSignIn, object: nil, queue: .main) { [weak self] notification in
+            self?.onDuckDuckGoEmailSignIn(notification)
+        }
+        NotificationCenter.default.addObserver(forName: .emailDidSignOut, object: nil, queue: .main) { [weak self] notification in
+            self?.onDuckDuckGoEmailSignOut(notification)
+        }
     }
 
     @objc
     private func onDuckDuckGoEmailSignIn(_ notification: Notification) {
         fireEmailPixel(.emailEnabled, notification: notification)
-        if let object = notification.object as? EmailManager, let emailManager = syncDataProviders.settingsAdapter.emailManager, object !== emailManager {
+        if let object = notification.object as? EmailManager,
+           let emailManager = syncDataProviders.settingsAdapter.emailManager,
+           object !== emailManager {
+
             syncService.scheduler.notifyDataChanged()
         }
     }
@@ -1126,7 +1133,10 @@ class MainViewController: UIViewController {
     @objc
     private func onDuckDuckGoEmailSignOut(_ notification: Notification) {
         fireEmailPixel(.emailDisabled, notification: notification)
-        if let object = notification.object as? EmailManager, let emailManager = syncDataProviders.settingsAdapter.emailManager, object !== emailManager {
+        if let object = notification.object as? EmailManager,
+           let emailManager = syncDataProviders.settingsAdapter.emailManager,
+           object !== emailManager {
+
             syncService.scheduler.notifyDataChanged()
         }
     }

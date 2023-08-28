@@ -22,7 +22,6 @@ import UIKit
 
 public protocol SyncManagementViewModelDelegate: AnyObject {
 
-    func showSyncSetup()
     func showRecoverData()
     func showSyncWithAnotherDevice()
     func showRecoveryPDF()
@@ -60,6 +59,48 @@ public class SyncSettingsViewModel: ObservableObject {
 
     }
 
+    public enum InitialCardType {
+        case newBackup
+        case connectDevice
+
+        var title: String {
+            switch self {
+            case .newBackup:
+                return "Start New Backup"
+            case .connectDevice:
+                return "Connect to Existing Data"
+            }
+        }
+
+
+        var description: String {
+            switch self {
+            case .newBackup:
+                return "Save a new copy of your current bookmarks and logins"
+            case .connectDevice:
+                return "Access and sync with previously saved bookmarks and logins"
+            }
+        }
+
+        var actionTitle: String {
+            switch self {
+            case .newBackup:
+                return "Start Backup"
+            case .connectDevice:
+                return "Connect Now"
+            }
+        }
+
+        var imageTitle: String {
+            switch self {
+            case .newBackup:
+                return "SyncTurnOnSyncHero"
+            case .connectDevice:
+                return "SyncWithAnotherDeviceHero"
+            }
+        }
+    }
+
     enum ScannedCodeValidity {
         case invalid
         case valid
@@ -77,15 +118,26 @@ public class SyncSettingsViewModel: ObservableObject {
     @Published var isBusy = false
     @Published var recoveryCode = ""
 
-    var setupFinishedState: TurnOnSyncViewModel.Result?
-
     public weak var delegate: SyncManagementViewModelDelegate?
 
     public init() { }
 
+    func action(for card: InitialCardType) -> (() -> Void) {
+        switch card {
+        case .newBackup:
+            return { self.enableSync() }
+        case .connectDevice:
+            return { self.syncAnotherDevice() }
+        }
+    }
+
     func enableSync() {
         isBusy = true
-        delegate!.showSyncSetup()
+        delegate?.createAccountAndStartSyncing()
+    }
+
+    func syncAnotherDevice() {
+        delegate?.showSyncWithAnotherDevice()
     }
 
     func disableSync() {
@@ -138,31 +190,6 @@ public class SyncSettingsViewModel: ObservableObject {
         isBusy = false
         isSyncEnabled = true
         self.recoveryCode = recoveryCode
-    }
-
-    public func setupFinished(_ model: TurnOnSyncViewModel) {
-        setupFinishedState = model.state
-        switch model.state {
-        case .turnOn:
-            delegate?.createAccountAndStartSyncing()
-
-        case .syncWithAnotherDevice:
-            delegate?.showSyncWithAnotherDevice()
-
-        case .recoverData:
-            delegate?.showRecoverData()
-
-        default:
-            isBusy = false
-        }
-    }
-
-    public func codeCollectionCancelled() {
-        if setupFinishedState == .syncWithAnotherDevice {
-            delegate?.createAccountAndStartSyncing()
-        } else {
-            isBusy = false
-        }
     }
 
 }

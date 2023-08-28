@@ -116,7 +116,7 @@ class SettingsViewController: UITableViewController {
     }
 
     private var shouldShowSyncCell: Bool {
-        return featureFlagger.isFeatureOn(.sync)
+        return true
     }
     
     private lazy var shouldShowAppTPCell: Bool = {

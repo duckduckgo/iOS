@@ -33,7 +33,7 @@ public struct SyncSettingsView: View {
     func syncToggle() -> some View {
         Section {
             HStack {
-                Text(UserText.syncTitle)
+                Text("Sync & Backup")
                 Spacer()
 
                 if model.isBusy {
@@ -52,6 +52,19 @@ public struct SyncSettingsView: View {
             }
         } footer: {
             Text(UserText.syncSettingsInfo)
+        }
+        if !model.isSyncEnabled {
+            Section {
+                HStack {
+                    Text("Scan Or Enter a Sync Code")
+                        .foregroundColor(.blueBase)
+                        .onTapGesture {
+                            model.enableSync()
+                        }
+                }
+            } footer: {
+                Text(UserText.syncSettingsInfo)
+            }
         }
     }
 
@@ -190,11 +203,19 @@ public struct SyncSettingsView: View {
 
     public var body: some View {
         List {
+            
             workInProgress()
 
-            syncToggle()
+            if !model.isSyncEnabled {
+                syncExplanation()
 
-            if model.isSyncEnabled {
+                startNewBackup()
+
+                connectToExistingData()
+
+            } else {
+                syncToggle()
+
                 devices()
 
                 syncNewDevice()
@@ -211,11 +232,89 @@ public struct SyncSettingsView: View {
 
     }
 
+    @ViewBuilder
+    func syncExplanation() -> some View {
+        Section {
+            EmptyView()
+        } footer: {
+            Text(UserText.syncSettingsInfo)
+                .font(.system(size: 10, weight: .regular))
+                .foregroundColor(.gray)
+        }
+    }
+
+    @ViewBuilder
+    func startNewBackup() -> some View {
+        let cardType = SyncSettingsViewModel.InitialCardType.newBackup
+        Section {
+            CardItemView(
+                title: cardType.title,
+                description: cardType.description,
+                imageTitle: cardType.imageTitle,
+                actionTitle: cardType.actionTitle,
+                action: model.action(for: .newBackup),
+                isLoading: $model.isBusy)
+        }
+    }
+
+    @ViewBuilder
+    func connectToExistingData() -> some View {
+        let cardType = SyncSettingsViewModel.InitialCardType.connectDevice
+        Section {
+            CardItemView(
+                title: cardType.title,
+                description: cardType.description,
+                imageTitle: cardType.imageTitle,
+                actionTitle: cardType.actionTitle,
+                action: model.action(for: .connectDevice),
+                isLoading: $model.isBusy)
+        }
+    }
+
 }
 
 // Extension to apply custom view modifier
 extension View {
     @ViewBuilder func modifier(@ViewBuilder _ closure: (Self) -> some View) -> some View {
         closure(self)
+    }
+}
+
+
+public struct CardItemView: View {
+    let title: String
+    let description: String
+    let imageTitle: String
+    let actionTitle: String
+    let action: () -> Void
+    let isLoading: Binding<Bool>
+
+    public var body: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 8) {
+                Text(title)
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundColor(.black)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text(description)
+                    .font(.system(size: 12, weight: .regular))
+                    .foregroundColor(.gray)
+                    .lineLimit(nil)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            Image(imageTitle)
+        }
+        HStack {
+            Text(actionTitle)
+                .font(.system(size: 12, weight: .regular))
+                .foregroundColor(.blue)
+                .onTapGesture {
+                    action()
+                }
+            Spacer()
+            if isLoading.wrappedValue {
+                SwiftUI.ProgressView()
+            }
+        }
     }
 }

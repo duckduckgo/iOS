@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "dominik/credentials-deduplication-fix",
-          "revision": "2f3e29c667c21df9ec9602c3072c8974ccdeea9d",
-          "version": null
+          "branch": null,
+          "revision": "61947c2a53c43bd388f84001981e106c93775add",
+          "version": "75.2.1"
         }
       },
       {

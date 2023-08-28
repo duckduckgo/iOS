@@ -36,17 +36,13 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
         XCTAssertTrue(model.isBusy)
 
         // You can either test one individual call was made x number of times or check for a whole number of calls
-        monitor.assert(#selector(showSyncSetup).description, calls: 1)
+        monitor.assert(#selector(createAccountAndStartSyncing).description, calls: 1)
         monitor.assertCalls([
-            #selector(showSyncSetup).description: 1
+            #selector(createAccountAndStartSyncing).description: 1
         ])
     }
 
     // MARK: Delegate functions
-
-    func showSyncSetup() {
-        monitor.incrementCalls(function: #function.cleaningFunctionName())
-    }
 
     func showRecoverData() {
         monitor.incrementCalls(function: #function.cleaningFunctionName())

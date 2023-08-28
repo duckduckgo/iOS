@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/duckduckgo/fastlane.git
-  revision: 703457ce14f68ee2e8934399920e28e94d18d130
-  tag: 2.214.0
+  revision: b4de9a502e69ff304bf30a0943c00ad8a09951ab
+  tag: 2.214.0+ddg
   specs:
     fastlane (2.214.0)
       CFPropertyList (>= 2.3, < 4.0.0)
@@ -53,7 +53,7 @@ GEM
     artifactory (3.0.15)
     atomos (0.1.3)
     aws-eventstream (1.2.0)
-    aws-partitions (1.809.0)
+    aws-partitions (1.812.0)
     aws-sdk-core (3.181.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.651.0)
@@ -62,7 +62,7 @@ GEM
     aws-sdk-kms (1.71.0)
       aws-sdk-core (~> 3, >= 3.177.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-s3 (1.133.0)
+    aws-sdk-s3 (1.134.0)
       aws-sdk-core (~> 3, >= 3.181.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.6)
@@ -112,7 +112,7 @@ GEM
       faraday (~> 1.0)
     fastimage (2.2.7)
     gh_inspector (1.1.3)
-    google-apis-androidpublisher_v3 (0.48.0)
+    google-apis-androidpublisher_v3 (0.49.0)
       google-apis-core (>= 0.11.0, < 2.a)
     google-apis-core (0.11.1)
       addressable (~> 2.5, >= 2.5.1)

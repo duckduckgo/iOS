@@ -658,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "%@ allalaadimine algas";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "E-posti kaitse";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Tühista";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Loo privaatne Duck Address";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Loo privaatne Duck Address";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Blokeeri e-posti jälgijad ja peida aadress";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Vali e-posti aadress";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Blokeeri e-posti jälgijad";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blokeerige e-posti jälgijad Ducki aadressiga";
@@ -687,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blokeeri meilijälgurid ja peida oma aadress";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Jätka seadistamist";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Välju seadistusest";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Kui sa praegu väljud, siis sinu Duck Addressi ei salvestata!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Ära näita uuesti";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Kaitse minu e-posti aadressi";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Loo unikaalne, juhuslik aadress, mis eemaldab ka varjatud jäglijad ja edastab e-kirjad sinu postkasti.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Peida oma e-post ja\nblokeeri jälgijad";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Järjehoidjaid pole veel lisatud";
@@ -1014,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Sirvimismenüü";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Tagasi";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Järgmine";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Valmis";

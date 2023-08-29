@@ -462,7 +462,6 @@ class MainViewController: UIViewController {
     
     @IBSegueAction func onCreateSettings(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> SettingsViewController {
         guard let controller = SettingsViewController(coder: coder,
-                                                      appTPDatabase: appTrackingProtectionDatabase,
                                                       bookmarksDatabase: bookmarksDatabase,
                                                       syncService: syncService,
                                                       syncDataProviders: syncDataProviders,

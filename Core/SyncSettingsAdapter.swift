@@ -61,7 +61,7 @@ public final class SyncSettingsAdapter {
                     let underlyingError = settingsMetadataError.underlyingError
                     let processedErrors = CoreDataErrorsParser.parse(error: underlyingError as NSError)
                     let params = processedErrors.errorPixelParameters
-                    Pixel.fire(pixel: .syncSettingsMetadataUpdateFailed, error: underlyingError)
+                    Pixel.fire(pixel: .syncSettingsMetadataUpdateFailed, error: underlyingError, withAdditionalParameters: params)
                 default:
                     let nsError = error as NSError
                     if nsError.domain != NSURLErrorDomain {

@@ -12,8 +12,6 @@
 name: "CodeQL"
 
 on:
-  push:
-    branches: [ "sam/codeql" ]
   schedule:
     - cron: '0 2 * * *' # Run at 2 AM UTC
 

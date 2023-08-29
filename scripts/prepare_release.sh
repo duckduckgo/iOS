@@ -5,7 +5,8 @@ set -eo pipefail
 mute=">/dev/null 2>&1"
 version="$1"
 release_branch_parent="develop"
-hotfix_branch_parent="main"
+tag=${version}
+hotfix_branch_parent="tags/${tag}"
 
 # Get the directory where the script is stored
 script_dir=$(dirname "$(readlink -f "$0")")
@@ -50,11 +51,12 @@ print_usage_and_exit() {
 
 	cat <<- EOF
 	Usage:
-	  $ $(basename "$0") <version> [-h] [-v]
+	  $ $(basename "$0") <version> <branch-with-fix> [-h] [-v]
 	  Current version: $(cut -d' ' -f3 < "${base_dir}/Configuration/Version.xcconfig")
 
 	Options:
-	  -h         Make hotfix release
+	  -h         Make hotfix release. Requires the version to be the one to hotfix, and a branch with the fix as the second parameter
+	  -c         Make coldfix release (i.e. a new build number on an existing release). Requires the version to be the one to coldfix, and a branch with the fix as the second parameter
 	  -v         Enable verbose mode
 
 	EOF
@@ -63,17 +65,36 @@ print_usage_and_exit() {
 }
 
 read_command_line_arguments() {
+	number_of_arguments="$#"
+
 	local regexp="^[0-9]+(\.[0-9]+)*$"
 	if [[ ! "$1" =~ $regexp ]]; then
 		print_usage_and_exit "💥 Error: Wrong app version specified"
 	fi
 
-	shift 1
+	if [[ "$#" -ne 1 ]]; then 
+		if [[ "$2" == -* ]]; then
+			shift 1
+		else
+			fix_branch=$2
+			shift 2
+		fi
+	fi
 
-	while getopts 'hv' option; do
+	branch_name="release"
+
+	while getopts 'hcv' option; do
 		case "${option}" in
 			h)
 				is_hotfix=1
+				branch_name="hotfix"
+				fix_type_name="hotfix"
+				;;
+			c)
+				is_hotfix=1
+				is_coldfix=1
+				branch_name="coldfix"
+				fix_type_name="coldfix"
 				;;
 			v)
 				mute=
@@ -86,7 +107,19 @@ read_command_line_arguments() {
 
 	shift $((OPTIND-1))
 
-	[[ $is_hotfix ]] && branch_name="hotfix" || branch_name="release"
+	if [[ $is_hotfix ]]; then
+		if [[ $number_of_arguments -ne 3 ]]; then
+			print_usage_and_exit "💥 Error: Wrong number of arguments. Did you specify a fix branch?"
+		fi
+
+		version_to_hotfix=${version}
+		if ! [[ $is_coldfix ]]; then
+			IFS='.' read -ra arrIN <<< "$version"
+			patch_number=$((arrIN[2] + 1))
+			version="${arrIN[0]}.${arrIN[1]}.$patch_number"
+		fi
+	fi
+
 	release_branch="${branch_name}/${version}"
 	changes_branch="${release_branch}-changes"
 }
@@ -106,21 +139,41 @@ assert_clean_state() {
 	fi
 }
 
+assert_hotfix_tag_exists_if_necessary() {
+	if [[ ! $is_hotfix ]]; then
+		return
+	fi
+	printf '%s' "Checking tag to ${fix_type_name} ... "
+
+	# Make sure tag is available locally if it exists
+	eval git fetch origin "+refs/tags/${tag}:refs/tags/${tag}" "$mute"
+
+	if [[ $(git tag -l "$version_to_hotfix" "$mute") ]]; then
+	    echo "✅"
+	else
+	    die "💥 Error: Tag ${version_to_hotfix} does not exist"
+	fi
+}
+
 create_release_branch() {
 	if [[ ${is_hotfix} ]]; then
-		printf '%s' "Creating hotfix branch ... "
-		eval git checkout ${hotfix_branch_parent} "$mute"
+		printf '%s' "Creating ${fix_type_name} branch ... "
+
+		eval git checkout "${hotfix_branch_parent}" "$mute"
 	else
 		printf '%s' "Creating release branch ... "
 		eval git checkout ${release_branch_parent} "$mute"
+		eval git pull "$mute"
 	fi
-	eval git pull "$mute"
 	eval git checkout -b "${release_branch}" "$mute"
 	eval git checkout -b "${changes_branch}" "$mute"
 	echo "✅"
 }
 
 update_marketing_version() {
+	if [[ $is_coldfix ]]; then
+		return
+	fi
 	printf '%s' "Setting app version ... "
 	"$script_dir/set_version.sh" "${version}"
 	git add "${base_dir}/Configuration/Version.xcconfig" \
@@ -172,6 +225,20 @@ update_release_notes() {
 	fi
 }
 
+merge_fix_branch_if_necessary() {
+	if [[ ! $is_hotfix ]]; then
+		return
+	fi
+
+	printf '%s' "Merging fix branch ... "
+	eval git checkout "${fix_branch}" "$mute"
+	eval git pull "$mute"
+
+	eval git checkout "${changes_branch}" "$mute"
+	eval git merge "${fix_branch}" "$mute"
+	echo "✅"
+}
+
 create_pull_request() {
 	printf '%s' "Creating PR ... "
 	eval git push origin "${release_branch}" "$mute"
@@ -185,14 +252,23 @@ main() {
 	assert_ios_directory
 	assert_fastlane_installed
 	assert_gh_installed_and_authenticated
+
 	read_command_line_arguments "$@"
+
 	stash
 	assert_clean_state
+	assert_hotfix_tag_exists_if_necessary
+
 	create_release_branch
+
 	update_marketing_version
 	update_build_version
-	update_embedded_files
+	if ! [[ $is_hotfix ]]; then
+		update_embedded_files
+	fi
 	update_release_notes
+	merge_fix_branch_if_necessary
+
 	create_pull_request
 }
 

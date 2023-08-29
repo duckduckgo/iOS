@@ -19,7 +19,11 @@ on:
   pull_request:
     branches:
     - release/**
+    - hotfix/**
+    - coldfix/**
     - '!release/**-' # filter out PRs matching that pattern
+    - '!hotfix/**-'
+    - '!coldfix/**-'
     types: [closed]
 
 jobs:
@@ -42,7 +46,8 @@ jobs:
         case "${{ github.ref }}" in
           *release/*) ;;
           *hotfix/*) ;;
-          *) echo "👎 Not a release or hotfix branch"; exit 1 ;;
+          *coldfix/*) ;;
+          *) echo "👎 Not a release, hotfix, or coldfix branch"; exit 1 ;;
         esac
 
     - name: Register SSH keys for access to certificates

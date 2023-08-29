@@ -658,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "%@ için indirme başlatıldı";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "E-posta Koruması";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "İptal";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Özel Duck Address Oluştur";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Özel Duck Address Oluştur";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "E-posta izleyicileri engelleyin ve adresi gizleyin";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "E-posta adresini seçin";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "E-posta izleyicileri engelleyin";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Duck Adresi ile e-posta izleyicileri engelleyin";
@@ -687,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "E-posta izleyicileri engelleyin ve adresinizi gizleyin";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Kuruluma Devam Et";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Kurulumdan Çık";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Şimdi çıkarsanız Duck Address kaydedilmez.";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Bir Daha Gösterme";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "E-postamı Koru";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Gizli izleyicileri de kaldıran ve e-postaları gelen kutunuza ileten benzersiz, rastgele bir adres oluşturun.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "E-postanızı Gizleyin ve \n İzleyicileri Engelleyin";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Henüz yer imi eklenmedi";
@@ -1014,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Göz Atma Menüsü";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Geri";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Sonraki";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Bitti";

@@ -658,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Descărcarea a început pentru %@";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "Protecția comunicațiilor prin e-mail";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Renunță";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Generează o Duck Address privată";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Generează o Duck Address privată";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Blochează tehnologiile de urmărire din e-mailuri și ascunde adresa";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Selectează adresa de e-mail";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Blochează tehnologiile de urmărire din e-mail";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blochează instrumentele de urmărire a e-mailului cu o adresă Duck";
@@ -687,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blochează tehnologiile de urmărire prin e-mail și ascunde-ți adresa";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Continuă configurarea";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Ieși din configurare";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Dacă ieși acum, Duck Address nu va fi salvată!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Nu mai afișa din nou";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Protejează-mi adresa de e-mail";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Creează o adresă unică, aleatorie, care elimină și tehnologiile de urmărire ascunse și redirecționează e-mailurile către căsuța ta de inbox.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Ascunde-ți e-mailul și blochează tehnologiile de urmărire";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Nu s-a adăugat niciun semn de carte";
@@ -1014,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Meniul de navigare";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Înapoi";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Următorul";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Terminat";

@@ -35,9 +35,15 @@ class OnboardingDefaultBroswerViewController: OnboardingContentViewController {
     }
     
     override func onContinuePressed(navigationHandler: @escaping () -> Void) {
+        SetAsDefaultStatistics().setAsDefaultOpened()
         if let url = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(url)
         }
         super.onContinuePressed(navigationHandler: navigationHandler)
+    }
+
+    override func onSkipPressed(navigationHandler: @escaping () -> Void) {
+        SetAsDefaultStatistics().setAsDefaultSkipped()
+        super.onSkipPressed(navigationHandler: navigationHandler)
     }
 }

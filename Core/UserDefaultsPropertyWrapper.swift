@@ -93,7 +93,8 @@ public struct UserDefaultsWrapper<T> {
 
         case lastAppTrackingProtectionHistoryFetchTimestamp = "com.duckduckgo.ios.appTrackingProtection.lastTrackerHistoryFetchTimestamp"
         case appTPUsed = "com.duckduckgo.ios.appTrackingProtection.appTPUsed"
-        
+
+        case defaultBrowserUsageLastSeen = "com.duckduckgo.ios.default-browser-usage-last-seen"
     }
 
     private let key: Key

@@ -28,7 +28,7 @@ import NetworkProtection
 final class NetworkProtectionTunnelController: TunnelController {
     static var simulationOptions = NetworkProtectionSimulationOptions()
 
-    private let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified), errorEvents: nil)
+    private let tokenStore = NetworkProtectionKeychainTokenStore()
     private let errorStore = NetworkProtectionTunnelErrorStore()
 
     // MARK: - Starting & Stopping the VPN

@@ -2394,6 +2394,13 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
         self.present(autofillPromptViewController, animated: true, completion: nil)
     }
+    
+    // Used on macOS to request authentication for individual autofill items
+    func secureVaultManager(_: BrowserServicesKit.SecureVaultManager,
+                            isAuthenticatedFor type: BrowserServicesKit.AutofillType,
+                            completionHandler: @escaping (Bool) -> Void) {
+        completionHandler(true)
+    }
 
     func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: String) {
         // No-op, don't need to do anything here

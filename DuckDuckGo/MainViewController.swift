@@ -117,6 +117,7 @@ class MainViewController: UIViewController {
     private let syncDataProviders: SyncDataProviders
     private var localUpdatesCancellable: AnyCancellable?
     private var syncUpdatesCancellable: AnyCancellable?
+    private var emailCancellables = Set<AnyCancellable>()
 
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
 
@@ -210,7 +211,7 @@ class MainViewController: UIViewController {
         loadInitialView()
         previewsSource.prepare()
         addLaunchTabNotificationObserver()
-        addDuckDuckGoEmailAuthenticationObservers()
+        subscribeToEmailProtectionStatusNotifications()
 
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
@@ -1109,13 +1110,20 @@ class MainViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    private func addDuckDuckGoEmailAuthenticationObservers() {
-        NotificationCenter.default.addObserver(forName: .emailDidSignIn, object: nil, queue: .main) { [weak self] notification in
-            self?.onDuckDuckGoEmailSignIn(notification)
-        }
-        NotificationCenter.default.addObserver(forName: .emailDidSignOut, object: nil, queue: .main) { [weak self] notification in
-            self?.onDuckDuckGoEmailSignOut(notification)
-        }
+    private func subscribeToEmailProtectionStatusNotifications() {
+        NotificationCenter.default.publisher(for: .emailDidSignIn)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                self?.onDuckDuckGoEmailSignIn(notification)
+            }
+            .store(in: &emailCancellables)
+
+        NotificationCenter.default.publisher(for: .emailDidSignOut)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                self?.onDuckDuckGoEmailSignOut(notification)
+            }
+            .store(in: &emailCancellables)
     }
 
     @objc

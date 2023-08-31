@@ -259,39 +259,59 @@
         <!--Image Cache-->
         <scene sceneID="v5n-aA-b7n">
             <objects>
-                <tableViewController id="Hg0-3R-I9z" customClass="ImageCacheDebugViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ImageCacheDebugViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Hg0-3R-I9z" customClass="ImageCacheDebugViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="EC4-uX-0by">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="k5K-Zd-Jy4" detailTextLabel="5Gi-Ua-Zze" imageView="Lm7-B1-TT3" style="IBUITableViewCellStyleSubtitle" id="Gx3-eB-cJr">
-                                <rect key="frame" x="0.0" y="55.5" width="414" height="55.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImageDebugFaviconTableViewCell" rowHeight="119" id="zsc-EN-N2t" customClass="ImageDebugFaviconTableViewCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="119"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Gx3-eB-cJr" id="FZh-hD-tym">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="55.5"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zsc-EN-N2t" id="QKA-3Y-0bL">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="119"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" id="k5K-Zd-Jy4">
-                                            <rect key="frame" x="91" y="10" width="33" height="20.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="CEs-qD-H1t">
+                                            <rect key="frame" x="20" y="19" width="374" height="57"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="tPo-2r-Ivi">
+                                                    <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="44" id="aBl-Su-Wir"/>
+                                                        <constraint firstAttribute="height" constant="44" id="vp1-Ss-eFP"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ap-fn-blo">
+                                                    <rect key="frame" x="52" y="0.0" width="322" height="19.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cache" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oIo-bO-bgn">
+                                            <rect key="frame" x="20" y="84" width="374" height="16"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5Gi-Ua-Zze">
-                                            <rect key="frame" x="91" y="31.5" width="44" height="14.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" insetsLayoutMarginsFromSafeArea="NO" image="Logo" id="Lm7-B1-TT3">
-                                            <rect key="frame" x="20" y="0.0" width="56" height="55.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </imageView>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="CEs-qD-H1t" firstAttribute="leading" secondItem="QKA-3Y-0bL" secondAttribute="leadingMargin" id="6l3-GS-xan"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="CEs-qD-H1t" secondAttribute="trailing" id="7RN-e4-rn0"/>
+                                        <constraint firstItem="oIo-bO-bgn" firstAttribute="trailing" secondItem="QKA-3Y-0bL" secondAttribute="trailingMargin" id="LHa-te-5yD"/>
+                                        <constraint firstItem="CEs-qD-H1t" firstAttribute="top" secondItem="QKA-3Y-0bL" secondAttribute="topMargin" constant="8" id="PP2-A0-zje"/>
+                                        <constraint firstItem="oIo-bO-bgn" firstAttribute="leading" secondItem="QKA-3Y-0bL" secondAttribute="leadingMargin" id="QoP-d1-CmZ"/>
+                                        <constraint firstItem="oIo-bO-bgn" firstAttribute="top" secondItem="CEs-qD-H1t" secondAttribute="bottom" constant="8" symbolic="YES" id="WAp-S8-Bxg"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="oIo-bO-bgn" secondAttribute="bottom" constant="8" id="h02-5n-1IQ"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="cacheKey" destination="oIo-bO-bgn" id="Qun-Me-Hl9"/>
+                                    <outlet property="details" destination="3ap-fn-blo" id="J7B-YH-yFA"/>
+                                    <outlet property="faviconImageView" destination="tPo-2r-Ivi" id="cMa-V2-Uon"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -303,7 +323,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U37-TE-Pdd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1249" y="968"/>
+            <point key="canvasLocation" x="-1249.2753623188407" y="967.63392857142856"/>
         </scene>
         <!--Cookie Debug View Controller-->
         <scene sceneID="Shh-jq-wVK">

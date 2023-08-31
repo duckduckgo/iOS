@@ -52,6 +52,7 @@ public struct UserDefaultsWrapper<T> {
 
         case notFoundCache = "com.duckduckgo.ios.favicons.notFoundCache"
         case faviconSizeNeedsMigration = "com.duckduckgo.ios.favicons.sizeNeedsMigration"
+        case faviconTabsCacheNeedsCleanup = "com.duckduckgo.ios.favicons.tabsCacheNeedsCleanup"
 
         case legacyCovidInfo = "com.duckduckgo.ios.home.covidInfo"
         

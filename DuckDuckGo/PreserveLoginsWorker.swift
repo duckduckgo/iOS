@@ -28,15 +28,15 @@ struct PreserveLoginsWorker {
 
     weak var controller: UIViewController?
 
-    func handleLoginDetection(detectedURL: URL?, currentURL: URL?, isAutofillEnabled: Bool, saveLoginPromptLastDismissed: Date?) -> Bool {
+    func handleLoginDetection(detectedURL: URL?, currentURL: URL?, isAutofillEnabled: Bool, saveLoginPromptLastDismissed: Date?, saveLoginPromptIsPresenting: Bool) -> Bool {
         guard let detectedURL = detectedURL, let currentURL = currentURL else { return false }
         guard let domain = detectedURL.host, domainOrPathDidChange(detectedURL, currentURL) else { return false }
         guard !PreserveLogins.shared.isAllowed(fireproofDomain: domain) else { return false }
-        if isAutofillEnabled && autofillShouldBlockPrompt(saveLoginPromptLastDismissed) {
+        if isAutofillEnabled && autofillShouldBlockPrompt(saveLoginPromptLastDismissed, saveLoginPromptIsPresenting: saveLoginPromptIsPresenting) {
             return false
         }
         if let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first, window.subviews.contains(where: { $0 is ActionMessageView }) {
-            /// if an ActionMessageView is currently displayed wait before prompting to fireproof
+            // if an ActionMessageView is currently displayed wait before prompting to fireproof
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
                 self.promptToFireproof(domain)
             }
@@ -46,9 +46,9 @@ struct PreserveLoginsWorker {
         return true
     }
 
-    /// Block prompt if SaveLoginViewController is currently presented or has been presented in the last 10 seconds
-    func autofillShouldBlockPrompt(_ saveLoginPromptLastDismissed: Date?) -> Bool {
-        if controller?.presentedViewController is SaveLoginViewController {
+    /// Block prompt if SaveLoginViewController is currently (or about to be) presented or has been presented in the last 10 seconds
+    func autofillShouldBlockPrompt(_ saveLoginPromptLastDismissed: Date?, saveLoginPromptIsPresenting: Bool) -> Bool {
+        if controller?.presentedViewController is SaveLoginViewController || saveLoginPromptIsPresenting {
             return true
         }
         if let saveLoginPromptLastDismissed = saveLoginPromptLastDismissed,

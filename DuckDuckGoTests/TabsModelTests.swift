@@ -181,4 +181,11 @@ class TabsModelTests: XCTestCase {
         XCTAssertEqual(1, testee.count)
         XCTAssertEqual(0, testee.currentIndex)
     }
+    
+    func testWhenTabExistsThenReturnTrue() throws {
+        let currentHost = try XCTUnwrap(filledModel.tabs[1].link?.url.host)
+        XCTAssertTrue(filledModel.tabExists(withHost: currentHost))
+        XCTAssertFalse(filledModel.tabExists(withHost: "domaindoesnotexist"))
+    }
+
 }

@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "4fabb845513db67f47af428efcad6265fedaddf2",
-          "version": "75.3.0"
+          "branch": "sam/remove-incremental-test-pixel",
+          "revision": "6cbd1c26b19458b78a91493f8dc7333466d2f2d0",
+          "version": null
         }
       },
       {

@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "cbf3c0667f212faf5f815e2b8437b5cc6131c135",
-          "version": "75.2.4"
+          "branch": "daniel/bitwarden-save-fix",
+          "revision": "2e8ccb956f3b2638816b5b4ba100ee9a67bf0adc",
+          "version": null
         }
       },
       {

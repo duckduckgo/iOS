@@ -27,6 +27,8 @@ private struct KeychainItem {
     let service: String?
     let account: String?
     let valueData: Data?
+    let creationDate: Any?
+    let modificationDate: Any?
     
     var value: String? {
         guard let valueData = valueData else { return nil }
@@ -39,6 +41,8 @@ private struct KeychainItem {
         Account: \(account ?? "nil")
         Value as String: \(value ?? "nil")
         Value data: \(String(describing: valueData))
+        Creation date: \(String(describing: creationDate))
+        Modification date: \(String(describing: modificationDate))
         """
     }
 }
@@ -82,10 +86,12 @@ private enum SecClass: CaseIterable {
     }
     
     var items: [KeychainItem]? {
-        let query: [String: Any] = [kSecClass as String: secClassCFString,
-                                    kSecMatchLimit as String: kSecMatchLimitAll,
-                                    kSecReturnAttributes as String: true,
-                                    kSecReturnRef as String: true]
+        let query: [String: Any] = [
+            kSecClass as String: secClassCFString,
+            kSecMatchLimit as String: kSecMatchLimitAll,
+            kSecReturnAttributes as String: true,
+            kSecReturnRef as String: true,
+        ]
         
         var returnArrayRef: CFTypeRef?
         let status = SecItemCopyMatching(query as CFDictionary, &returnArrayRef)
@@ -100,7 +106,9 @@ private enum SecClass: CaseIterable {
             KeychainItem(secClass: self,
                          service: $0[kSecAttrService as String] as? String,
                          account: $0[kSecAttrAccount as String] as? String,
-                         valueData: $0[kSecValueData as String] as? Data)
+                         valueData: $0[kSecValueData as String] as? Data,
+                         creationDate: $0[kSecAttrCreationDate as String, default: "no creation"],
+                         modificationDate: $0[kSecAttrModificationDate as String, default: "no modification"])
         }
     }
 }

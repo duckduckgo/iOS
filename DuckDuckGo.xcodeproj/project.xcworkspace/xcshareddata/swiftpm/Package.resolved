@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": "sam/remove-incremental-test-pixel",
-          "revision": "6cbd1c26b19458b78a91493f8dc7333466d2f2d0",
+          "revision": "b9976b684a7116d0e2c20d1a340f97724c69bc8b",
           "version": null
         }
       },

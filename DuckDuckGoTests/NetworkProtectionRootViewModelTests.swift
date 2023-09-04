@@ -25,20 +25,20 @@ import NetworkProtection
 final class NetworkProtectionRootViewModelTests: XCTestCase {
 
     func test_initialViewKind_featureVisibilityFalse_isInvite() {
-        let featureVisibility = MockNetworkProtectionFeatureVisibility()
-        featureVisibility.isFeatureActivated = false
-        let viewModel = NetworkProtectionRootViewModel(featureVisibility: featureVisibility)
+        let featureActivation = MockNetworkProtectionFeatureActivation()
+        featureActivation.isFeatureActivated = false
+        let viewModel = NetworkProtectionRootViewModel(featureActivation: featureActivation)
         XCTAssertEqual(viewModel.initialViewKind, .invite)
     }
 
     func test_initialViewKind_featureVisibilityTrue_isStatus() {
-        let featureVisibility = MockNetworkProtectionFeatureVisibility()
-        featureVisibility.isFeatureActivated = true
-        let viewModel = NetworkProtectionRootViewModel(featureVisibility: featureVisibility)
+        let featureActivation = MockNetworkProtectionFeatureActivation()
+        featureActivation.isFeatureActivated = true
+        let viewModel = NetworkProtectionRootViewModel(featureActivation: featureActivation)
         XCTAssertEqual(viewModel.initialViewKind, .status)
     }
 }
 
-final class MockNetworkProtectionFeatureVisibility: NetworkProtectionFeatureVisibility {
+final class MockNetworkProtectionFeatureActivation: NetworkProtectionFeatureActivation {
     var isFeatureActivated: Bool = false
 }

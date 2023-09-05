@@ -48,6 +48,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
         case tunnelFailure
         case controllerFailure
+        case crashFatalError
+        case crashMemory
 
     }
 
@@ -99,6 +101,10 @@ final class NetworkProtectionDebugViewController: UITableViewController {
                 cell.textLabel?.text = "Enable NetP > Controller Failure"
             case .tunnelFailure:
                 cell.textLabel?.text = "Enable NetP > Tunnel Failure"
+            case .crashFatalError:
+                cell.textLabel?.text = "Tunnel: Crash (Fatal Error)"
+            case .crashMemory:
+                cell.textLabel?.text = "Tunnel: Crash (CPU/Memory)"
             case .none:
                 break
             }
@@ -129,8 +135,10 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             }
         case .simulateFailure:
             switch SimulateFailureRows(rawValue: indexPath.row) {
-            case .controllerFailure: simulateControllerFailure()
-            case .tunnelFailure: simulaterTunnelFailure()
+            case .controllerFailure: simulateFailure(option: .controllerFailure)
+            case .tunnelFailure: simulateFailure(option: .tunnelFailure)
+            case .crashFatalError: simulateFailure(option: .crashFatalError)
+            case .crashMemory: simulateFailure(option: .crashMemory)
             case .none: return
             }
         case .none:
@@ -147,11 +155,15 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     }
 
     private func simulateControllerFailure() {
-        NetworkProtectionTunnelController.simulationOptions.setEnabled(true, option: .controllerFailure)
+        NetworkProtectionTunnelController.enabledSimulationOption = .controllerFailure
     }
 
     private func simulaterTunnelFailure() {
-        NetworkProtectionTunnelController.simulationOptions.setEnabled(true, option: .tunnelFailure)
+        NetworkProtectionTunnelController.enabledSimulationOption = .crashFatalError
+    }
+
+    private func simulateFailure(option: NetworkProtectionSimulationOption) {
+        NetworkProtectionTunnelController.enabledSimulationOption = .crashMemory
     }
 
     #endif

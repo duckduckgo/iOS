@@ -692,7 +692,7 @@ extension Pixel.Event {
         case .secureVaultInitFailedError: return "m_secure-vault_error_init-failed"
         case .secureVaultFailedToOpenDatabaseError: return "m_secure-vault_error_failed-to-open-database"
             
-        case .secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded: return "m_secure-vault_is-enabled-checked_when-enabled-and-backgrounded"
+        case .secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded: return "m_secure-vault_is-enabled-checked_when-enabled-and-backgrounded_2"
             
         // MARK: Ad Click Attribution pixels
             

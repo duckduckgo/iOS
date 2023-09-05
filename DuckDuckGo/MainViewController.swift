@@ -225,6 +225,7 @@ class MainViewController: UIViewController {
         
         registerForApplicationEvents()
         registerForCookiesManagedNotification()
+        tabManager.cleanupTabsFaviconCache()
     }
 
     override func viewDidAppear(_ animated: Bool) {

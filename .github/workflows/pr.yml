@@ -181,4 +181,4 @@ jobs:
           asana-section: ${{ vars.APPLE_CI_FAILING_TESTS_IOS_POST_MERGE_SECTION_ID }}
           asana-task-name: 'PR Check is failing on develop'
           action: create-asana-task
-          asana-task-description: PR Checks conducted after merging have failed.  See ${{ env.WORKFLOW_URL }}
+          asana-task-description: PR Checks conducted after merging have failed. See ${{ env.WORKFLOW_URL }}. Follow the steps on https://app.asana.com/0/1202500774821704/1205317064731691 to resolve this issue.

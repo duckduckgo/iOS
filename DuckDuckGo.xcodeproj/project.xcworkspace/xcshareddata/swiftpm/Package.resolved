@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "fd65ad9ec0427df218b40caaa4404c31a1cee3e5",
-          "version": "76.1.0"
+          "branch": "daniel/autofill-selection-fix",
+          "revision": "6484c10c8766daf498f5d8e608700c2027ef2046",
+          "version": null
         }
       },
       {

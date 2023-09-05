@@ -49,7 +49,7 @@ class VariantManagerTests: XCTestCase {
         let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: 0))
 
         // temporarily use this feature name
-        XCTAssertTrue(subject.isSupported(feature: .dummy))
+        XCTAssertFalse(subject.isSupported(feature: .dummy))
 
     }
 

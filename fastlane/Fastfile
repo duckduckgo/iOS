@@ -128,7 +128,7 @@ end
 
 desc 'Makes Alpha release build and uploads it to TestFlight'
 lane :release_alpha do |options|
-  build_alpha
+  build_alpha(options)
 
   upload_to_testflight(
     api_key: get_api_key,

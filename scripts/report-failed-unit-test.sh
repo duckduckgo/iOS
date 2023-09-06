@@ -95,9 +95,10 @@ update_task() {
 create_task() {
 	local task_name=$1
 	local workflow_url=$2
-	local message="${3//\"/\\\"}"
+	local message
 	local occurrences=1
 	local task_id
+	message=$(sed -E -e 's/\\/\\\\/g' -e 's/"/\\"/g' <<< "$3")
 
 	task_id=$(curl -X POST -s "${asana_api_url}/tasks?opt_fields=gid" \
 		-H "Authorization: Bearer ${asana_personal_access_token}" \

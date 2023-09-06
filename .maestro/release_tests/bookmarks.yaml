@@ -10,7 +10,7 @@ appId: com.duckduckgo.mobile.ios
       visible: 
         text: "Let’s Do It!"
         index: 0
-    file: ./shared/onboarding.yaml
+    file: ../shared/onboarding.yaml
 
 # Load Site
 - assertVisible:
@@ -26,7 +26,7 @@ appId: com.duckduckgo.mobile.ios
       visible:
         text: "Got It"
         index: 0
-    file: ./shared/onboarding_browsing.yaml
+    file: ../shared/onboarding_browsing.yaml
     
 # Bookmark site
 - assertVisible: "Browsing menu"

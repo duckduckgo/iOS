@@ -11,14 +11,14 @@ appId: com.duckduckgo.mobile.ios
       visible: 
         text: "Let’s Do It!"
         index: 0
-    file: ./shared/onboarding.yaml
+    file: ../shared/onboarding.yaml
 
 # Load Site
 - assertVisible:
     id: "searchEntry"
 - tapOn: 
     id: "searchEntry"
-- inputText: "https://www.search-company.site/"
+- inputText: "https://www.search-company.site/#ad-id-4"
 - pressKey: Enter
 
 # Manage onboarding
@@ -27,15 +27,8 @@ appId: com.duckduckgo.mobile.ios
       visible:
         text: "Got It"
         index: 0
-    file: ./shared/onboarding_browsing.yaml
+    file: ../shared/onboarding_browsing.yaml
 
-- assertVisible: "Search engine"
-
-# Test Ad4
-- swipe:
-    start: 400, 200
-    end: 400, 0
-    duration: 200
 - assertVisible:
     text: "[Ad 4] Shopping Tab Ad (heuristic)"
 - tapOn:

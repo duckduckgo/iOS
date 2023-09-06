@@ -10,7 +10,7 @@ appId: com.duckduckgo.mobile.ios
       visible: 
         text: "Let’s Do It!"
         index: 0
-    file: ./shared/onboarding.yaml
+    file: ../shared/onboarding.yaml
 
 # Load Site
 - assertVisible:

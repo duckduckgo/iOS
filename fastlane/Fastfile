@@ -217,7 +217,7 @@ private_lane :build_alpha do |options|
   build_app(
     export_method: "app-store",
     configuration: "Alpha",
-    scheme: "DuckDuckGo",
+    scheme: "DuckDuckGo-Alpha",
     export_options: "alphaExportOptions.plist",
     derived_data_path: "DerivedData"
   )

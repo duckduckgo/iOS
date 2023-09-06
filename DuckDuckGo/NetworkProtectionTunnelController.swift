@@ -27,6 +27,7 @@ import NetworkProtection
 
 final class NetworkProtectionTunnelController: TunnelController {
     static var simulationOptions = NetworkProtectionSimulationOptions()
+    static var enabledSimulationOption: NetworkProtectionSimulationOption?
 
     private let tokenStore = NetworkProtectionKeychainTokenStore()
     private let errorStore = NetworkProtectionTunnelErrorStore()
@@ -98,14 +99,9 @@ final class NetworkProtectionTunnelController: TunnelController {
         options["activationAttemptId"] = UUID().uuidString as NSString
         options["authToken"] = try tokenStore.fetchToken() as NSString?
 
-        if Self.simulationOptions.isEnabled(.tunnelFailure) {
-            Self.simulationOptions.setEnabled(false, option: .tunnelFailure)
-            options[NetworkProtectionOptionKey.tunnelFailureSimulation] = NetworkProtectionOptionValue.true
-        }
-
-        if Self.simulationOptions.isEnabled(.controllerFailure) {
-            Self.simulationOptions.setEnabled(false, option: .controllerFailure)
-            throw StartError.simulateControllerFailureError
+        if let optionKey = Self.enabledSimulationOption?.optionKey {
+            options[optionKey] = NetworkProtectionOptionValue.true
+            Self.enabledSimulationOption = nil
         }
 
         do {
@@ -176,6 +172,21 @@ final class NetworkProtectionTunnelController: TunnelController {
 
         // reconnect on reboot
         tunnelManager.onDemandRules = [NEOnDemandRuleConnect()]
+    }
+}
+
+private extension NetworkProtectionSimulationOption {
+    var optionKey: String? {
+        switch self {
+        case .crashFatalError:
+            return NetworkProtectionOptionKey.tunnelFatalErrorCrashSimulation
+        case .crashMemory:
+            return NetworkProtectionOptionKey.tunnelMemoryCrashSimulation
+        case .tunnelFailure:
+            return NetworkProtectionOptionKey.tunnelFailureSimulation
+        default:
+            return nil
+        }
     }
 }
 

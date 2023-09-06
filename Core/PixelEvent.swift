@@ -424,6 +424,8 @@ extension Pixel {
         case syncBookmarksFailed
         case syncCredentialsProviderInitializationFailed
         case syncCredentialsFailed
+        case syncSettingsFailed
+        case syncSettingsMetadataUpdateFailed
 
         case bookmarksCleanupFailed
         case bookmarksCleanupAttemptedWhileSyncWasEnabled
@@ -856,6 +858,9 @@ extension Pixel.Event {
         case .syncBookmarksFailed: return "m_d_sync_bookmarks_failed"
         case .syncCredentialsProviderInitializationFailed: return "m_d_sync_credentials_provider_initialization_failed"
         case .syncCredentialsFailed: return "m_d_sync_credentials_failed"
+        case .syncSettingsFailed: return "m_d_sync_settings_failed"
+        case .syncSettingsMetadataUpdateFailed: return "m_d_sync_settings_metadata_update_failed"
+
 
         case .bookmarksCleanupFailed: return "m_d_bookmarks_cleanup_failed"
         case .bookmarksCleanupAttemptedWhileSyncWasEnabled: return "m_d_bookmarks_cleanup_attempted_while_sync_was_enabled"

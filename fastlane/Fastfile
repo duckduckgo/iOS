@@ -145,18 +145,6 @@ lane :increment_build_number_for_version do |options|
   })
 end
 
-desc 'Setup Maestro e2e tests'
-lane :setup_e2e_tests do |options|
-  shared_folder = 'shared'
-  e2e_test_folders = [
-    'release_tests',
-    'privacy_tests',
-    'ad_click_detection_flow_tests'
-  ]
-
-  e2e_test_folders.each { | test_folder | FileUtils.copy_entry "../.maestro/#{shared_folder}", "../.maestro/#{test_folder}/#{shared_folder}" }
-end
-
 #################################################
 # Private lanes
 #################################################

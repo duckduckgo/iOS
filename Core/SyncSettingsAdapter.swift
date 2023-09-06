@@ -1,5 +1,5 @@
 //
-//  SyncBookmarksAdapter.swift
+//  SyncSettingsAdapter.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -17,53 +17,38 @@
 //  limitations under the License.
 //
 
-import Bookmarks
+import BrowserServicesKit
 import Combine
 import Common
 import DDGSync
-import Foundation
 import Persistence
 import SyncDataProviders
-import WidgetKit
 
-public final class SyncBookmarksAdapter {
+public final class SyncSettingsAdapter {
 
-    public private(set) var provider: BookmarksProvider?
-    public let databaseCleaner: BookmarkDatabaseCleaner
+    public private(set) var provider: SettingsProvider?
+    public private(set) var emailManager: EmailManager?
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
-    public let widgetRefreshCancellable: AnyCancellable
 
-    public init(database: CoreDataDatabase) {
+    public init() {
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
-        databaseCleaner = BookmarkDatabaseCleaner(
-            bookmarkDatabase: database,
-            errorEvents: BookmarksCleanupErrorHandling(),
-            log: .generalLog
-        )
-        widgetRefreshCancellable = syncDidCompletePublisher.sink { _ in
-            WidgetCenter.shared.reloadAllTimelines()
-        }
     }
 
-    public func cleanUpDatabaseAndUpdateSchedule(shouldEnable: Bool) {
-        databaseCleaner.cleanUpDatabaseNow()
-        if shouldEnable {
-            databaseCleaner.scheduleRegularCleaning()
-        } else {
-            databaseCleaner.cancelCleaningSchedule()
-        }
+    public func updateDatabaseCleanupSchedule(shouldEnable: Bool) {
     }
 
-    public func setUpProviderIfNeeded(database: CoreDataDatabase, metadataStore: SyncMetadataStore) {
+    public func setUpProviderIfNeeded(metadataDatabase: CoreDataDatabase, metadataStore: SyncMetadataStore) {
         guard provider == nil else {
             return
         }
+        let emailManager = EmailManager()
 
-        let provider = BookmarksProvider(
-            database: database,
+        let provider = SettingsProvider(
+            metadataDatabase: metadataDatabase,
             metadataStore: metadataStore,
-            syncDidUpdateData: { [syncDidCompleteSubject] in
-                syncDidCompleteSubject.send()
+            emailManager: emailManager,
+            syncDidUpdateData: { [weak self] in
+                self?.syncDidCompleteSubject.send()
             }
         )
 
@@ -71,19 +56,25 @@ public final class SyncBookmarksAdapter {
             .sink { error in
                 switch error {
                 case let syncError as SyncError:
-                    Pixel.fire(pixel: .syncBookmarksFailed, error: syncError)
+                    Pixel.fire(pixel: .syncSettingsFailed, error: syncError)
+                case let settingsMetadataError as SettingsSyncMetadataSaveError:
+                    let underlyingError = settingsMetadataError.underlyingError
+                    let processedErrors = CoreDataErrorsParser.parse(error: underlyingError as NSError)
+                    let params = processedErrors.errorPixelParameters
+                    Pixel.fire(pixel: .syncSettingsMetadataUpdateFailed, error: underlyingError, withAdditionalParameters: params)
                 default:
                     let nsError = error as NSError
                     if nsError.domain != NSURLErrorDomain {
                         let processedErrors = CoreDataErrorsParser.parse(error: error as NSError)
                         let params = processedErrors.errorPixelParameters
-                        Pixel.fire(pixel: .syncBookmarksFailed, error: error, withAdditionalParameters: params)
+                        Pixel.fire(pixel: .syncSettingsFailed, error: error, withAdditionalParameters: params)
                     }
                 }
-                os_log(.error, log: OSLog.syncLog, "Bookmarks Sync error: %{public}s", String(reflecting: error))
+                os_log(.error, log: OSLog.syncLog, "Settings Sync error: %{public}s", String(reflecting: error))
             }
 
         self.provider = provider
+        self.emailManager = emailManager
     }
 
     private var syncDidCompleteSubject = PassthroughSubject<Void, Never>()

@@ -3,7 +3,7 @@
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -32,7 +32,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No favorites added yet" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y8y-oO-xBm">
-                                        <rect key="frame" x="0.0" y="375.5" width="375" height="20"/>
+                                        <rect key="frame" x="0.0" y="375.5" width="375" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -203,10 +203,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xfD-A4-SRJ">
-                                                    <rect key="frame" x="16" y="12.5" width="311" height="19"/>
+                                                    <rect key="frame" x="16" y="12.5" width="311" height="19.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="744" text="No matches found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hqG-b3-Fq3">
-                                                            <rect key="frame" x="0.0" y="0.0" width="311" height="19"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="311" height="19.5"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                             <color key="textColor" name="AlertButtonDestructiveTitleColor"/>
                                                             <nil key="highlightedColor"/>
@@ -291,13 +291,13 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No bookmarks added yet" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jdA-wE-Hkh">
-                                        <rect key="frame" x="91" y="353.5" width="193" height="20"/>
+                                        <rect key="frame" x="92" y="353.5" width="191" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="R7T-q4-qHz">
-                                        <rect key="frame" x="0.0" y="395.5" width="375" height="29"/>
+                                        <rect key="frame" x="0.0" y="396" width="375" height="29"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Import bookmark file from another browser"/>
@@ -507,8 +507,31 @@
                                     <outlet property="textField" destination="KiU-Wb-7jj" id="hO7-0f-faW"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarksDeleteButtonCell" id="9HA-wp-hud">
+                                <rect key="frame" x="16" y="143.5" width="343" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9HA-wp-hud" id="c4D-ft-gHh">
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hEJ-T8-Tdl">
+                                            <rect key="frame" x="148" y="12" width="47" height="19.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" name="AlertButtonDestructiveTitleColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="hEJ-T8-Tdl" firstAttribute="centerY" secondItem="c4D-ft-gHh" secondAttribute="centerY" id="8qP-tM-Fgc"/>
+                                        <constraint firstItem="hEJ-T8-Tdl" firstAttribute="centerX" secondItem="c4D-ft-gHh" secondAttribute="centerX" id="RJR-1Y-DQx"/>
+                                        <constraint firstItem="hEJ-T8-Tdl" firstAttribute="centerX" secondItem="c4D-ft-gHh" secondAttribute="centerX" id="tDn-GD-Ldd"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" name="surface"/>
+                                <color key="tintColor" name="AlertButtonDestructiveTitleColor"/>
+                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="BookmarkDetailsCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkDetailsCell" id="bR7-2A-BiO" customClass="BookmarkDetailsCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="16" y="143.5" width="343" height="88.5"/>
+                                <rect key="frame" x="16" y="187" width="343" height="88.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bR7-2A-BiO" id="8Dz-o3-ykG">
                                     <rect key="frame" x="0.0" y="0.0" width="343" height="88.5"/>
@@ -570,7 +593,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="AddFolderCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddFolderCell" id="oXz-7u-Skm">
-                                <rect key="frame" x="16" y="232" width="343" height="43.5"/>
+                                <rect key="frame" x="16" y="275.5" width="343" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oXz-7u-Skm" id="xfk-px-QiT">
                                     <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
@@ -606,14 +629,14 @@
                                 <color key="backgroundColor" name="surface"/>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FavoriteCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="FavoriteCell" id="Uew-BN-bP6" userLabel="FavoriteFolderCell" customClass="FavoriteCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="16" y="275.5" width="343" height="43.5"/>
+                                <rect key="frame" x="16" y="319" width="343" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Uew-BN-bP6" id="Kwd-kN-eFx">
                                     <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorite" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mRK-XI-Rr8">
-                                            <rect key="frame" x="56" y="12.5" width="214" height="19"/>
+                                            <rect key="frame" x="56" y="12" width="214" height="19.5"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                             <color key="textColor" name="BookmarksCellLabelColor"/>
                                             <nil key="highlightedColor"/>

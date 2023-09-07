@@ -162,6 +162,11 @@ extension AddOrEditBookmarkViewController: BookmarkFoldersViewControllerDelegate
         performSegue(withIdentifier: "AddFolder", sender: nil)
     }
 
+    func deleteBookmark(_ controller: BookmarkFoldersViewController) {
+        print("*** delete bookmark")
+        
+    }
+
 }
 
 extension AddOrEditBookmarkViewController: AddOrEditBookmarkViewControllerDelegate {

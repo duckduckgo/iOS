@@ -35,6 +35,7 @@ public struct UserText {
     public static let actionAdd = NSLocalizedString("action.title.add", value: "Add", comment: "Add action - button shown in alert")
     public static let actionSave = NSLocalizedString("action.title.save", value: "Save", comment: "Save action - button shown in alert")
     public static let actionCancel = NSLocalizedString("action.title.cancel", value: "Cancel", comment: "Cancel action - button shown in alert")
+    public static let actionDelete = NSLocalizedString("action.title.delete", value: "Delete", comment: "Delete action - button shown in alert")
     public static let actionBookmark = NSLocalizedString("action.title.bookmark", value: "Bookmark", comment: "Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert")
     public static let actionNewTab = NSLocalizedString("action.title.newTabAction", value: "New", comment: "Create New Tab action")
     public static let actionNewTabForUrl = NSLocalizedString("action.title.newTabForUrl", value: "Open in New Tab", comment: "Open in New Tab action")
@@ -132,6 +133,10 @@ public struct UserText {
     public static let bookmarkAddressPlaceholder = NSLocalizedString("bookmark.address.placeholder", value: "www.example.com", comment: "Placeholder in the add bookmark form")
     public static let bookmarkFolderSelectTitle = NSLocalizedString("bookmark.folderSelect.title", value: "Location", comment: "Header for folder selection for bookmarks")
     public static let bookmarkTopLevelFolderTitle = NSLocalizedString("bookmark.topLevelFolder.title", value: "Bookmarks", comment: "Top level bookmarks folder title")
+
+    public static let deleteBookmarkAlertTitle = NSLocalizedString("bookmark.delete.alert.title", value: "Delete?", comment: "Delete bookmark alert title")
+    public static let deleteBookmarkAlertMessage = NSLocalizedString("bookmark.delete.alert.message", value: "This will delete your bookmark for \"%@\"", comment: "Delete bookmark alert message")
+
     public static let deleteBookmarkFolderAlertTitle = NSLocalizedString("bookmark.deleteFolderAlert.title", value: "Delete %@?", comment: "Delete bookmark folder alert title")
     
     public static func deleteBookmarkFolderAlertMessage(numberOfChildren: Int) -> String {

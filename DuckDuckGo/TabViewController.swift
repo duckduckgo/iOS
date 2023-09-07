@@ -18,6 +18,7 @@
 //
 
 import WebKit
+import Combine
 import Core
 import StoreKit
 import LocalAuthentication
@@ -107,6 +108,7 @@ class TabViewController: UIViewController {
     private var shouldReloadOnError = false
     private var failingUrls = Set<String>()
     private var urlProvidedBasicAuthCredential: (credential: URLCredential, url: URL)?
+    private var emailProtectionSignOutCancellable: AnyCancellable?
 
     private var detectedLoginURL: URL?
     private var preserveLoginsWorker: PreserveLoginsWorker?
@@ -116,14 +118,16 @@ class TabViewController: UIViewController {
     // Required to know when to disable autofill, see SaveLoginViewModel for details
     // Stored in memory on TabViewController for privacy reasons
     private var domainSaveLoginPromptLastShownOn: String?
+    // Required to prevent fireproof prompt presenting before autofill save login prompt
     private var saveLoginPromptLastDismissed: Date?
+    private var saveLoginPromptIsPresenting: Bool = false
 
     // If no trackers dax dialog was shown recently in this tab, ie without the user navigating somewhere else, e.g. backgrounding or tab switcher
     private var woShownRecently = false
 
     // Temporary to gather some data.  Fire a follow up if no trackers dax dialog was shown and then trackers appear.
     private var fireWoFollowUp = false
-    
+
     // In certain conditions we try to present a dax dialog when one is already showing, so check to ensure we don't
     var isShowingFullScreenDaxDialog = false
     
@@ -286,7 +290,8 @@ class TabViewController: UIViewController {
         initAttributionLogic()
         applyTheme(ThemeManager.shared.currentTheme)
         addTextSizeObserver()
-        addDuckDuckGoEmailSignOutObserver()
+        subscribeToEmailProtectionSignOutNotification()
+
         registerForDownloadsNotifications()
 
         if #available(iOS 16.4, *) {
@@ -699,11 +704,13 @@ class TabViewController: UIViewController {
                                                object: nil)
     }
 
-    private func addDuckDuckGoEmailSignOutObserver() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(onDuckDuckGoEmailSignOut),
-                                               name: .emailDidSignOut,
-                                               object: nil)
+
+    private func subscribeToEmailProtectionSignOutNotification() {
+        emailProtectionSignOutCancellable = NotificationCenter.default.publisher(for: .emailDidSignOut)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                self?.onDuckDuckGoEmailSignOut(notification)
+            }
     }
 
     @objc func onTextSizeChange() {
@@ -1181,10 +1188,12 @@ extension TabViewController: WKNavigationDelegate {
         if preserveLoginsWorker?.handleLoginDetection(detectedURL: detectedLoginURL,
                                                       currentURL: url,
                                                       isAutofillEnabled: AutofillSettingStatus.isAutofillEnabledInSettings,
-                                                      saveLoginPromptLastDismissed: saveLoginPromptLastDismissed)
+                                                      saveLoginPromptLastDismissed: saveLoginPromptLastDismissed,
+                                                      saveLoginPromptIsPresenting: saveLoginPromptIsPresenting)
            ?? false {
             detectedLoginURL = nil
             saveLoginPromptLastDismissed = nil
+            saveLoginPromptIsPresenting = false
         }
     }
     
@@ -2281,6 +2290,10 @@ extension TabViewController: SecureVaultManagerDelegate {
         return isEnabled
     }
 
+    func secureVaultManagerShouldSaveData(_: SecureVaultManager) -> Bool {
+        true
+    }
+
     func secureVaultManager(_ vault: SecureVaultManager,
                             promptUserToStoreAutofillData data: AutofillData,
                             withTrigger trigger: AutofillUserScript.GetTriggerType?) {
@@ -2299,23 +2312,13 @@ extension TabViewController: SecureVaultManagerDelegate {
                 }
             }
 
+            saveLoginPromptIsPresenting = true
+
             // Add a delay to allow propagation of pointer events to the page
             // see https://app.asana.com/0/1202427674957632/1202532842924584/f
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.presentSavePasswordModal(with: vault, credentials: credentials)
             }
-        }
-    }
-
-    private func deleteLoginFor(accountIdInt: Int64) {
-        do {
-            let secureVault = try? AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared)
-            if secureVault == nil {
-                os_log("Failed to make vault")
-            }
-            try secureVault?.deleteWebsiteCredentialsFor(accountId: accountIdInt)
-        } catch {
-            Pixel.fire(pixel: .secureVaultError, error: error)
         }
     }
 
@@ -2345,6 +2348,27 @@ extension TabViewController: SecureVaultManagerDelegate {
         } else {
             completionHandler(nil)
         }
+    }
+
+    func secureVaultManager(_: SecureVaultManager,
+                            promptUserWithGeneratedPassword password: String,
+                            completionHandler: @escaping (Bool) -> Void) {
+        let passwordGenerationPromptViewController = PasswordGenerationPromptViewController(generatedPassword: password) { useGeneratedPassword in
+                completionHandler(useGeneratedPassword)
+        }
+
+        if #available(iOS 15.0, *) {
+            if let presentationController = passwordGenerationPromptViewController.presentationController as? UISheetPresentationController {
+                if #available(iOS 16.0, *) {
+                    presentationController.detents = [.custom(resolver: { _ in
+                        AutofillViews.passwordGenerationMinHeight
+                    })]
+                } else {
+                    presentationController.detents = [.medium()]
+                }
+            }
+        }
+        self.present(passwordGenerationPromptViewController, animated: true)
     }
 
     /// Using Bool for detent size parameter to be backward compatible with iOS 14
@@ -2381,50 +2405,20 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
         self.present(autofillPromptViewController, animated: true, completion: nil)
     }
+    
+    // Used on macOS to request authentication for individual autofill items
+    func secureVaultManager(_: BrowserServicesKit.SecureVaultManager,
+                            isAuthenticatedFor type: BrowserServicesKit.AutofillType,
+                            completionHandler: @escaping (Bool) -> Void) {
+        completionHandler(true)
+    }
 
     func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: String) {
         // No-op, don't need to do anything here
     }
 
-    func secureVaultManagerShouldAutomaticallyUpdateCredentialsWithoutUsername(_: SecureVaultManager, shouldSilentlySave: Bool) -> Bool {
-        guard AutofillSettingStatus.isAutofillEnabledInSettings,
-              featureFlagger.isFeatureOn(.autofillPasswordGeneration) else { return false }
-        return shouldSilentlySave ? true : false
-    }
-
-    func secureVaultManagerShouldSilentlySaveGeneratedPassword(_: SecureVaultManager) -> Bool {
-        guard AutofillSettingStatus.isAutofillEnabledInSettings,
-              featureFlagger.isFeatureOn(.autofillPasswordGeneration) else { return false }
-        return true
-    }
-
-    func secureVaultManagerShouldSaveData(_: SecureVaultManager) -> Bool {
-        true
-    }
-
     func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
         // We don't have auth yet
-    }
-
-    func secureVaultManager(_: SecureVaultManager,
-                            promptUserWithGeneratedPassword password: String,
-                            completionHandler: @escaping (Bool) -> Void) {
-        let passwordGenerationPromptViewController = PasswordGenerationPromptViewController(generatedPassword: password) { useGeneratedPassword in
-                completionHandler(useGeneratedPassword)
-        }
-
-        if #available(iOS 15.0, *) {
-            if let presentationController = passwordGenerationPromptViewController.presentationController as? UISheetPresentationController {
-                if #available(iOS 16.0, *) {
-                    presentationController.detents = [.custom(resolver: { _ in
-                        AutofillViews.passwordGenerationMinHeight
-                    })]
-                } else {
-                    presentationController.detents = [.medium()]
-                }
-            }
-        }
-        self.present(passwordGenerationPromptViewController, animated: true)
     }
 
     func secureVaultManager(_: BrowserServicesKit.SecureVaultManager, didRequestCreditCardsManagerForDomain domain: String) {
@@ -2451,6 +2445,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
 
     private func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, withSuccessMessage message: String) {
         saveLoginPromptLastDismissed = Date()
+        saveLoginPromptIsPresenting = false
 
         do {
             let credentialID = try SaveAutofillLoginManager.saveCredentials(credentials,
@@ -2494,6 +2489,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
     func saveLoginViewControllerDidCancel(_ viewController: SaveLoginViewController) {
         viewController.dismiss(animated: true)
         saveLoginPromptLastDismissed = Date()
+        saveLoginPromptIsPresenting = false
     }
     
     func saveLoginViewController(_ viewController: SaveLoginViewController,

@@ -117,6 +117,7 @@ class MainViewController: UIViewController {
     private let syncDataProviders: SyncDataProviders
     private var localUpdatesCancellable: AnyCancellable?
     private var syncUpdatesCancellable: AnyCancellable?
+    private var emailCancellables = Set<AnyCancellable>()
 
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
 
@@ -210,7 +211,7 @@ class MainViewController: UIViewController {
         loadInitialView()
         previewsSource.prepare()
         addLaunchTabNotificationObserver()
-        addDuckDuckGoEmailAuthenticationObservers()
+        subscribeToEmailProtectionStatusNotifications()
 
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
@@ -225,6 +226,7 @@ class MainViewController: UIViewController {
         
         registerForApplicationEvents()
         registerForCookiesManagedNotification()
+        tabManager.cleanupTabsFaviconCache()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -462,7 +464,6 @@ class MainViewController: UIViewController {
     
     @IBSegueAction func onCreateSettings(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> SettingsViewController {
         guard let controller = SettingsViewController(coder: coder,
-                                                      appTPDatabase: appTrackingProtectionDatabase,
                                                       bookmarksDatabase: bookmarksDatabase,
                                                       syncService: syncService,
                                                       syncDataProviders: syncDataProviders,
@@ -1110,19 +1111,42 @@ class MainViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    private func addDuckDuckGoEmailAuthenticationObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(onDuckDuckGoEmailSignIn), name: .emailDidSignIn, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(onDuckDuckGoEmailSignOut), name: .emailDidSignOut, object: nil)
+    private func subscribeToEmailProtectionStatusNotifications() {
+        NotificationCenter.default.publisher(for: .emailDidSignIn)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                self?.onDuckDuckGoEmailSignIn(notification)
+            }
+            .store(in: &emailCancellables)
+
+        NotificationCenter.default.publisher(for: .emailDidSignOut)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                self?.onDuckDuckGoEmailSignOut(notification)
+            }
+            .store(in: &emailCancellables)
     }
 
     @objc
     private func onDuckDuckGoEmailSignIn(_ notification: Notification) {
         fireEmailPixel(.emailEnabled, notification: notification)
+        if let object = notification.object as? EmailManager,
+           let emailManager = syncDataProviders.settingsAdapter.emailManager,
+           object !== emailManager {
+
+            syncService.scheduler.notifyDataChanged()
+        }
     }
     
     @objc
     private func onDuckDuckGoEmailSignOut(_ notification: Notification) {
         fireEmailPixel(.emailDisabled, notification: notification)
+        if let object = notification.object as? EmailManager,
+           let emailManager = syncDataProviders.settingsAdapter.emailManager,
+           object !== emailManager {
+
+            syncService.scheduler.notifyDataChanged()
+        }
     }
     
     private func fireEmailPixel(_ pixel: Pixel.Event, notification: Notification) {

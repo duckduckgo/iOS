@@ -658,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Download startet for %@";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "E-mailbeskyttelse";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Annullér";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Opret privat Duck-adresse";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Opret privat Duck-adresse";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Bloker e-mailtrackere og skjul adresse";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Vælg e-mailadresse";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Blokerer e-mailtrackere";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blokér e-mailtrackere med en Duck-adresse";
@@ -687,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Bloker e-mailtrackere, og skjul din adresse";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Fortsæt opsætning";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Afslut opsætning";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Hvis du afslutter nu, vil din Duck Address ikke blive gemt!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Vis ikke igen";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Beskyt min e-mail";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Opret en unik, tilfældig adresse, der også fjerner skjulte trackere og videresender e-mails til din indbakke.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Skjul din e-mail og \n bloker trackere";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Ingen bogmærker tilføjet endnu";
@@ -1014,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Browsingmenu";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Tilbage";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Næste";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Færdig";

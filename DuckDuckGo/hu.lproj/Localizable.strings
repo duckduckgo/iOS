@@ -658,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "A letöltés elindult: %@";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "E-mail védelem";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Mégsem";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Privát Duck-cím generálása";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Privát Duck-cím létrehozása";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "E-mail-nyomkövetők blokkolása, és a cím elrejtése";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "E-mail-cím kiválasztása";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "E-mail-nyomkövetők blokkolása";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "E-mail nyomkövetők letiltása Duck-címmel";
@@ -687,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "E-mail nyomkövetők letiltása, és a cím elrejtése";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Beállítás folytatása";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Kilépés a beállításokból";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Ha most kilépsz, a Duck-cím nem lesz mentve!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Ne jelenjen meg újra";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "E-mail védelme";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Hozz létre egy egyedi, véletlenszerű címet, amely eltávolítja a rejtett nyomkövetőket is, és a postafiókodba továbbítja az e-maileket.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "E-mail elrejtése és\nnyomkövetők blokkolása";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Még nincsenek könyvjelzők hozzáadva";
@@ -1014,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Tallózás a menüben";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Vissza";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Következő";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Kész";

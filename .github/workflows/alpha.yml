@@ -79,9 +79,8 @@ jobs:
         MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       run: |
         app_version="$(cut -d ' ' -f 3 < Configuration/Version.xcconfig)"
-        bundle exec fastlane sync_signing_alpha
-        bundle exec fastlane release_alpha groups:"${{ steps.destination.outputs.destination }}"
-        build_version="cat DuckDuckGo.xcodeproj/project.pbxproj | grep -m1 'CURRENT_PROJECT_VERSION' | cut -d'=' -f2 | tr -d ';' | tr -d ' '"
+        FASTLANE_DISABLE_OUTPUT_FORMAT=true bundle exec fastlane release_alpha groups:"${{ steps.destination.outputs.destination }}"
+        build_version="cat DuckDuckGo.xcodeproj/project.pbxproj | grep -m1 'CURRENT_PROJ  ECT_VERSION' | cut -d'=' -f2 | tr -d ';' | tr -d ' '"
         echo "dsyms_path=${{ github.workspace }}/DuckDuckGo.app.dSYM.zip" >> $GITHUB_ENV
         echo "app_version=${app_version}" >> $GITHUB_ENV
         echo "build_version=${build_version}" >> $GITHUB_ENV

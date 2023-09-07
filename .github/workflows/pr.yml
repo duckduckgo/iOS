@@ -99,6 +99,19 @@ jobs:
       with:
         report_paths: unittests.xml
 
+    - name: Update Asana with failed unit tests
+      if: always() # always run even if the previous step fails
+      env:
+        ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+        WORKFLOW_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      run: |
+        # Extract failed tests from the junit report
+        # Only keep failures unique by classname and name (column 1 and 2 of the yq output)
+        yq < unittests.xml -p xml -o json -r \
+          $'[.testsuites.testsuite[].testcase] | flatten | map(select(.failure) | .+@classname + " " + .+@name + " \'" + .failure.+@message + "\' ${{ env.WORKFLOW_URL }}") | .[]' \
+          | sort -u -k 1,2 \
+          | xargs -L 1 ./scripts/report-failed-unit-test.sh -s ${{ vars.APPLE_CI_FAILING_TESTS_FAILED_TESTS_SECTION_ID }}
+
   release-build:
 
     name: Make Release Build

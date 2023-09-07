@@ -2280,7 +2280,7 @@ extension TabViewController: SecureVaultManagerDelegate {
         SecureVaultErrorReporter.shared.secureVaultInitFailed(error)
     }
     
-    func secureVaultManagerIsEnabledStatus(_: SecureVaultManager) -> Bool {
+    func secureVaultManagerIsEnabledStatus(_ manager: SecureVaultManager, forType type: AutofillType?) -> Bool {
         let isEnabled = AutofillSettingStatus.isAutofillEnabledInSettings && featureFlagger.isFeatureOn(.autofillCredentialInjecting)
         let isBackgrounded = UIApplication.shared.applicationState == .background
         if isEnabled && isBackgrounded {

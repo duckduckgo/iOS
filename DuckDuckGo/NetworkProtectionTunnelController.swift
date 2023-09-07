@@ -27,6 +27,7 @@ import NetworkProtection
 
 final class NetworkProtectionTunnelController: TunnelController {
     static var simulationOptions = NetworkProtectionSimulationOptions()
+    static var enabledSimulationOption: NetworkProtectionSimulationOption?
 
     private let tokenStore = NetworkProtectionKeychainTokenStore()
     private let errorStore = NetworkProtectionTunnelErrorStore()
@@ -104,14 +105,13 @@ final class NetworkProtectionTunnelController: TunnelController {
         options["activationAttemptId"] = UUID().uuidString as NSString
         options["authToken"] = try tokenStore.fetchToken() as NSString?
 
-        if Self.simulationOptions.isEnabled(.tunnelFailure) {
-            Self.simulationOptions.setEnabled(false, option: .tunnelFailure)
-            options[NetworkProtectionOptionKey.tunnelFailureSimulation] = NetworkProtectionOptionValue.true
-        }
+        // Temporary investigation to see if connection tester is causing energy use issues
+        // To be removed with https://app.asana.com/0/0/1205418028628990/f
+        options[NetworkProtectionOptionKey.connectionTesterEnabled] = "false" as NSString
 
-        if Self.simulationOptions.isEnabled(.controllerFailure) {
-            Self.simulationOptions.setEnabled(false, option: .controllerFailure)
-            throw StartError.simulateControllerFailureError
+        if let optionKey = Self.enabledSimulationOption?.optionKey {
+            options[optionKey] = NetworkProtectionOptionValue.true
+            Self.enabledSimulationOption = nil
         }
 
         try tunnelManager.connection.startVPNTunnel(options: options)
@@ -202,6 +202,21 @@ final class NetworkProtectionTunnelController: TunnelController {
         tunnelManager.isOnDemandEnabled = false
 
         try await tunnelManager.saveToPreferences()
+    }
+}
+
+private extension NetworkProtectionSimulationOption {
+    var optionKey: String? {
+        switch self {
+        case .crashFatalError:
+            return NetworkProtectionOptionKey.tunnelFatalErrorCrashSimulation
+        case .crashMemory:
+            return NetworkProtectionOptionKey.tunnelMemoryCrashSimulation
+        case .tunnelFailure:
+            return NetworkProtectionOptionKey.tunnelFailureSimulation
+        default:
+            return nil
+        }
     }
 }
 

@@ -25,23 +25,15 @@ extension AppDelegate {
     func handleAppDeepLink(_ app: UIApplication, _ mainViewController: MainViewController?, _ url: URL) -> Bool {
         guard let mainViewController else { return false }
 
-        func firePixelIfLockScreen(_ pixelEvent: Pixel.Event) {
-            if url.getParameter(named: "ls") != nil {
-                Pixel.fire(pixel: pixelEvent)
-            }
-        }
-
         switch AppDeepLinkSchemes.fromURL(url) {
 
         case .newSearch:
             mainViewController.newTab(reuseExisting: true)
             mainViewController.enterSearch()
-            firePixelIfLockScreen(.lockScreenWidgetNewSearch)
 
 
         case .favorites:
             mainViewController.newTab(reuseExisting: true, allowingKeyboard: false)
-            firePixelIfLockScreen(.lockScreenWidgetFavorites)
 
         case .quickLink:
             let query = AppDeepLinkSchemes.query(fromQuickLink: url)
@@ -52,15 +44,12 @@ extension AppDelegate {
 
         case .fireButton:
             mainViewController.forgetAllWithAnimation()
-            firePixelIfLockScreen(.lockScreenWidgetFireButton)
 
         case .voiceSearch:
             mainViewController.onVoiceSearchPressed()
-            firePixelIfLockScreen(.lockScreenWidgetVoiceSearch)
 
         case .newEmail:
             mainViewController.newEmailAddress()
-            firePixelIfLockScreen(.lockScreenWidgetNewEmail)
 
         default:
             guard app.applicationState == .active,

@@ -99,9 +99,13 @@ final class NetworkProtectionTunnelController: TunnelController {
         options["activationAttemptId"] = UUID().uuidString as NSString
         options["authToken"] = try tokenStore.fetchToken() as NSString?
 
-        if let optionKey = Self.enabledSimulationOption?.optionKey {
-            options[optionKey] = NetworkProtectionOptionValue.true
-            Self.enabledSimulationOption = nil
+        // Temporary investigation to see if connection tester is causing energy use issues
+        // To be removed with https://app.asana.com/0/0/1205418028628990/f
+        options[NetworkProtectionOptionKey.connectionTesterEnabled] = "false" as NSString
+
+        if Self.simulationOptions.isEnabled(.tunnelFailure) {
+            Self.simulationOptions.setEnabled(false, option: .tunnelFailure)
+            options[NetworkProtectionOptionKey.tunnelFailureSimulation] = NetworkProtectionOptionValue.true
         }
 
         do {

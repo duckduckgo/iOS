@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": "daniel/remove-www-from-title-migration",
-          "revision": "3858173486a12ef44b7c3cbadbaa3ecabf72de79",
+          "revision": "6b329a01b78b3975c6dc9164811959c2686dbf76",
           "version": null
         }
       },

@@ -43,9 +43,6 @@ jobs:
           -derivedDataPath "DerivedData" \
         | tee xcodebuild.log
 
-    - name: Setup tests
-      run: bundle install && bundle exec fastlane setup_e2e_tests
-
     - name: Release tests
       uses: mobile-dev-inc/action-maestro-cloud@v1.2.3
       with:
@@ -76,14 +73,14 @@ jobs:
           --header "Content-Type: application/json" \
           --data ' \
           { \
-            data: " \
+            data: " { \
               "name": "GH Workflow Failure - End to end tests", \
               "workspace": ${{ vars.GH_ASANA_WORKSPACE_ID }}, \
               "projects": [ \
                 ${{ vars.GH_ASANA_IOS_APP_PROJECT_ID }} \
               ], \
               "notes" : "The end to end workflow has failed. See https://github.com/duckduckgo/iOS/actions/runs/${{ github.run_id }}", \
-            " \
+            }" \
           }'
 
     - name: Upload logs when workflow failed

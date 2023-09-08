@@ -20,7 +20,7 @@ end
 
 desc 'Fetches and updates certificates and provisioning profiles for Alpha distribution'
 lane :sync_signing_alpha do |options|
-  println("Fastfile: Sync signing alpha")
+  println(message: "Fastfile: Sync signing alpha")
   do_sync_signing(options)
   # sync_code_signing(
   #   api_key: get_api_key,

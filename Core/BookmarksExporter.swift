@@ -64,7 +64,7 @@ public struct BookmarksExporter {
                 content.append(Template.bookmark(level: level,
                                                  title: entity.title!.escapedForHTML,
                                                  url: entity.url!,
-                                                 isFavorite: entity.isFavorite))
+                                                 isFavorite: entity.isFavorite(on: .mobile)))
             }
         }
         return content

@@ -103,18 +103,23 @@ struct RemoteMessaging {
         var favoritesCount = 0
         let context = bookmarksDatabase.makeContext(concurrencyType: .privateQueueConcurrencyType)
         context.performAndWait {
+            // todo
+            let mobileFavoritesFolder = BookmarkUtils.fetchFavoritesFolder(withUUID: FavoritesPlatform.mobile.rawValue, in: context)!
+
             let bookmarksCountRequest = BookmarkEntity.fetchRequest()
-            bookmarksCountRequest.predicate = NSPredicate(format: "%K == nil AND %K == false AND %K == false",
-                                                 #keyPath(BookmarkEntity.favoriteFolder),
-                                                 #keyPath(BookmarkEntity.isFolder),
-                                                 #keyPath(BookmarkEntity.isPendingDeletion))
+            bookmarksCountRequest.predicate = NSPredicate(format: "!(ANY %K CONTAINS %@) AND %K == false AND %K == false",
+                                                          #keyPath(BookmarkEntity.favoriteFolders),
+                                                          mobileFavoritesFolder,
+                                                          #keyPath(BookmarkEntity.isFolder),
+                                                          #keyPath(BookmarkEntity.isPendingDeletion))
             bookmarksCount = (try? context.count(for: bookmarksCountRequest)) ?? 0
             
             let favoritesCountRequest = BookmarkEntity.fetchRequest()
-            bookmarksCountRequest.predicate = NSPredicate(format: "%K != nil AND %K == false AND %K == false",
-                                                 #keyPath(BookmarkEntity.favoriteFolder),
-                                                 #keyPath(BookmarkEntity.isFolder),
-                                                 #keyPath(BookmarkEntity.isPendingDeletion))
+            favoritesCountRequest.predicate = NSPredicate(format: "ANY %K CONTAINS %@ AND %K == false AND %K == false",
+                                                          #keyPath(BookmarkEntity.favoriteFolders),
+                                                          mobileFavoritesFolder,
+                                                          #keyPath(BookmarkEntity.isFolder),
+                                                          #keyPath(BookmarkEntity.isPendingDeletion))
             favoritesCount = (try? context.count(for: favoritesCountRequest)) ?? 0
         }
         

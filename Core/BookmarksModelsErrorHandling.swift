@@ -85,6 +85,7 @@ public extension BookmarkEditorViewModel {
                      syncService: DDGSyncing?) {
         self.init(editingEntityID: editingEntityID,
                   bookmarksDatabase: bookmarksDatabase,
+                  favoritesConfiguration: .displayNative(.mobile),
                   errorEvents: BookmarksModelsErrorHandling(syncService: syncService))
         
     }
@@ -94,6 +95,7 @@ public extension BookmarkEditorViewModel {
                      syncService: DDGSyncing?) {
         self.init(creatingFolderWithParentID: parentFolderID,
                   bookmarksDatabase: bookmarksDatabase,
+                  favoritesConfiguration: .displayNative(.mobile),
                   errorEvents: BookmarksModelsErrorHandling(syncService: syncService))
     }
 }
@@ -104,6 +106,7 @@ public extension BookmarkListViewModel {
                      parentID: NSManagedObjectID?,
                      syncService: DDGSyncing?) {
         self.init(bookmarksDatabase: bookmarksDatabase,
+                  favoritesConfiguration: .displayNative(.mobile),
                   parentID: parentID,
                   errorEvents: BookmarksModelsErrorHandling(syncService: syncService))
     }
@@ -113,6 +116,7 @@ public extension FavoritesListViewModel {
     
     convenience init(bookmarksDatabase: CoreDataDatabase) {
         self.init(bookmarksDatabase: bookmarksDatabase,
+                  favoritesConfiguration: .displayNative(.mobile),
                   errorEvents: BookmarksModelsErrorHandling())
     }
 }
@@ -121,6 +125,7 @@ public extension MenuBookmarksViewModel {
     
     convenience init(bookmarksDatabase: CoreDataDatabase, syncService: DDGSyncing?) {
         self.init(bookmarksDatabase: bookmarksDatabase,
+                  favoritesConfiguration: .displayNative(.mobile),
                   errorEvents: BookmarksModelsErrorHandling(syncService: syncService))
     }
 }

@@ -286,8 +286,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.tintColor = .black
 
-        let title = bookmark.isFavorite ? UserText.actionRemoveFavorite : UserText.favorite
-        let iconName = bookmark.isFavorite ? "Favorite-Remove-24" : "Favorite-24"
+        let title = bookmark.isFavorite(on: .mobile) ? UserText.actionRemoveFavorite : UserText.favorite
+        let iconName = bookmark.isFavorite(on: .mobile) ? "Favorite-Remove-24" : "Favorite-24"
 
         let toggleFavoriteAction = UIContextualAction(style: .normal, title: title) { [weak self] (_, _, completionHandler) in
             completionHandler(true)

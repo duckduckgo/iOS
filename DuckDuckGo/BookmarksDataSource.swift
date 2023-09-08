@@ -52,7 +52,7 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
             let cell = BookmarksViewControllerCellFactory.makeBookmarkCell(tableView, forIndexPath: indexPath)
             cell.faviconImageView.loadFavicon(forDomain: bookmark.urlObject?.host, usingCache: .fireproof)
             cell.titleLabel.text = bookmark.title
-            cell.favoriteImageViewContainer.isHidden = !bookmark.isFavorite
+            cell.favoriteImageViewContainer.isHidden = !bookmark.isFavorite(on: .mobile)
             return cell
         }
     }

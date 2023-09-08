@@ -43,7 +43,7 @@ final public class BookmarksImporter {
     private(set) var coreDataStorage: BookmarkCoreDataImporter
 
     public init(coreDataStore: CoreDataDatabase) {
-        coreDataStorage = BookmarkCoreDataImporter(database: coreDataStore)
+        coreDataStorage = BookmarkCoreDataImporter(database: coreDataStore, favoritesConfiguration: .displayNative(.mobile))
     }
 
     func isDocumentInSafariFormat(_ document: Document) -> Bool {

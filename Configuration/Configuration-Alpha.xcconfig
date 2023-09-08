@@ -1,5 +1,5 @@
 //
-//  NetworkProtectionRootViewModel.swift
+//  Configuration-Alpha.xcconfig
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -17,22 +17,12 @@
 //  limitations under the License.
 //
 
-#if NETWORK_PROTECTION
+#include "DuckDuckGoDeveloper.xcconfig"
+#include? "ExternalDeveloper.xcconfig"
+#include? "Version.xcconfig"
 
-import Foundation
-import NetworkProtection
+// The app bundle identifier
+APP_ID = com.duckduckgo.mobile.ios.alpha
 
-enum NetworkProtectionInitialViewKind {
-    case invite
-    case status
-}
-
-final class NetworkProtectionRootViewModel: ObservableObject {
-    var initialViewKind: NetworkProtectionInitialViewKind
-
-    init(featureActivation: NetworkProtectionFeatureActivation = NetworkProtectionKeychainTokenStore()) {
-        initialViewKind = featureActivation.isFeatureActivated ? .status : .invite
-    }
-}
-
-#endif
+// A prefix for group ids. Must start with "group.".
+GROUP_ID_PREFIX = group.com.duckduckgo.alpha

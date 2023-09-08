@@ -80,7 +80,9 @@ lane :adhoc do |options|
     derived_data_path: "DerivedData"
   )
 
-  sh("echo output_name=#{output_name} >> $GITHUB_ENV")
+  if is_ci
+    sh("echo output_name=#{output_name} >> $GITHUB_ENV")
+  end
 
   Dir.chdir("..") do
     sh("open", "#{options[:output]}") unless is_ci

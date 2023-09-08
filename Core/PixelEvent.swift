@@ -302,12 +302,9 @@ extension Pixel {
         case remoteMessageSecondaryActionClicked
         case remoteMessageSheet
 
-        // MARK: Lock Screen widgets
-        case lockScreenWidgetNewSearch
-        case lockScreenWidgetFavorites
-        case lockScreenWidgetFireButton
-        case lockScreenWidgetVoiceSearch
-        case lockScreenWidgetNewEmail
+        // MARK: Set as Default
+        case onboardingSetDefaultOpened
+        case onboardingSetDefaultSkipped
 
         // MARK: debug pixels
         case dbCrashDetected
@@ -427,6 +424,8 @@ extension Pixel {
         case syncBookmarksFailed
         case syncCredentialsProviderInitializationFailed
         case syncCredentialsFailed
+        case syncSettingsFailed
+        case syncSettingsMetadataUpdateFailed
 
         case bookmarksCleanupFailed
         case bookmarksCleanupAttemptedWhileSyncWasEnabled
@@ -435,6 +434,8 @@ extension Pixel {
         case credentialsCleanupAttemptedWhileSyncWasEnabled
 
         case invalidPayload(Configuration)
+
+        case dailyActiveUser
 
         case emailIncontextPromptDisplayed
         case emailIncontextPromptConfirmed
@@ -686,7 +687,7 @@ extension Pixel.Event {
         case .secureVaultInitFailedError: return "m_secure-vault_error_init-failed"
         case .secureVaultFailedToOpenDatabaseError: return "m_secure-vault_error_failed-to-open-database"
             
-        case .secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded: return "m_secure-vault_is-enabled-checked_when-enabled-and-backgrounded"
+        case .secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded: return "m_secure-vault_is-enabled-checked_when-enabled-and-backgrounded_2"
             
         // MARK: Ad Click Attribution pixels
             
@@ -733,12 +734,9 @@ extension Pixel.Event {
         case .remoteMessageSecondaryActionClicked: return "m_remote_message_secondary_action_clicked"
         case .remoteMessageSheet: return "m_remote_message_sheet"
 
-        // Lock Screen Widgets
-        case .lockScreenWidgetNewSearch: return "m_lockscreen_newsearch"
-        case .lockScreenWidgetFavorites: return "m_lockscreen_favorites"
-        case .lockScreenWidgetFireButton: return "m_lockscreen_fire"
-        case .lockScreenWidgetVoiceSearch: return "m_lockscreen_voicesearch"
-        case .lockScreenWidgetNewEmail: return "m_lockscreen_newemail"
+        // MARK: Set as default measuring
+        case .onboardingSetDefaultOpened: return "m_onboarding_set-default-opened"
+        case .onboardingSetDefaultSkipped: return "m_onboarding_set-default-skipped"
 
         // MARK: debug pixels
 
@@ -860,6 +858,9 @@ extension Pixel.Event {
         case .syncBookmarksFailed: return "m_d_sync_bookmarks_failed"
         case .syncCredentialsProviderInitializationFailed: return "m_d_sync_credentials_provider_initialization_failed"
         case .syncCredentialsFailed: return "m_d_sync_credentials_failed"
+        case .syncSettingsFailed: return "m_d_sync_settings_failed"
+        case .syncSettingsMetadataUpdateFailed: return "m_d_sync_settings_metadata_update_failed"
+
 
         case .bookmarksCleanupFailed: return "m_d_bookmarks_cleanup_failed"
         case .bookmarksCleanupAttemptedWhileSyncWasEnabled: return "m_d_bookmarks_cleanup_attempted_while_sync_was_enabled"
@@ -868,6 +869,8 @@ extension Pixel.Event {
         case .credentialsCleanupAttemptedWhileSyncWasEnabled: return "m_d_credentials_cleanup_attempted_while_sync_was_enabled"
 
         case .invalidPayload(let configuration): return "m_d_\(configuration.rawValue)_invalid_payload".lowercased()
+
+        case .dailyActiveUser: return "m_daily_active_user"
 
         // MARK: - InContext Email Protection
         case .emailIncontextPromptDisplayed: return "m_email_incontext_prompt_displayed"

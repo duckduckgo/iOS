@@ -391,7 +391,7 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
         SecureVaultErrorReporter.shared.secureVaultInitFailed(error)
     }
 
-    func secureVaultManagerIsEnabledStatus(_: SecureVaultManager) -> Bool {
+    func secureVaultManagerIsEnabledStatus(_ manager: SecureVaultManager, forType type: AutofillType?) -> Bool {
         let isEnabled = AutofillSettingStatus.isAutofillEnabledInSettings && featureFlagger.isFeatureOn(.autofillCredentialInjecting)
         return isEnabled
     }
@@ -418,6 +418,13 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
                             promptUserWithGeneratedPassword password: String,
                             completionHandler: @escaping (Bool) -> Void) {
         // no-op
+    }
+    
+    // Used on macOS to request authentication for individual autofill items
+    func secureVaultManager(_: BrowserServicesKit.SecureVaultManager,
+                            isAuthenticatedFor type: BrowserServicesKit.AutofillType,
+                            completionHandler: @escaping (Bool) -> Void) {
+        completionHandler(true)
     }
 
     func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: String) {

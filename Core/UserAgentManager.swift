@@ -125,6 +125,19 @@ struct UserAgent {
         return omitApplicationObjs.map { $0[Constants.uaOmitDomainConfigKey] ?? "" }
     }
     
+    private static func defaultSafariUserAgent(baseAgent: String, isDesktop: Bool) -> String {
+        if isDesktop {
+            return "Mozilla/5.0 (Macintosh; Intel Mac OS X 13_5_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15"
+        }
+        var deviceProfile = "iPhone; CPU iPhone OS 16_6 like Mac OS X"
+        if baseAgent.contains("iPad") {
+            deviceProfile = "iPad; CPU OS 16_6 like Mac OS X"
+        } else if baseAgent.contains("iPod") {
+            deviceProfile = "iPod touch; CPU iPhone 16_6 like Mac OS X"
+        }
+        return "Mozilla/5.0 (" + deviceProfile + ") AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1"
+    }
+
     public func agent(forUrl url: URL?, isDesktop: Bool,
                       privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig) -> String {
         let omittedSites = omitApplicationSites(forConfig: privacyConfig)
@@ -135,6 +148,19 @@ struct UserAgent {
         }
         
         let resolvedApplicationComponent = !omitApplicationComponent ? applicationComponent : nil
+
+        // TODO - This will be the enrollment testing for a variant.
+        if true {
+            var defaultSafari = UserAgent.defaultSafariUserAgent(baseAgent: baseAgent, isDesktop: isDesktop)
+            // If the UA should have DuckDuckGo append it prior to Safari
+            if let appComponent = resolvedApplicationComponent {
+                if let index = defaultSafari.range(of: "Safari")?.lowerBound {
+                    defaultSafari.insert(contentsOf: appComponent + " ", at: index)
+                }
+            }
+            return defaultSafari
+        }
+
         if isDesktop {
             return concatWithSpaces(baseDesktopAgent, resolvedApplicationComponent, safariComponent)
         } else {

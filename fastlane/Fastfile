@@ -20,17 +20,19 @@ end
 
 desc 'Fetches and updates certificates and provisioning profiles for Alpha distribution'
 lane :sync_signing_alpha do |options|
-  sync_code_signing(
-    api_key: get_api_key,
-    username: get_username(options),
-	  readonly: is_ci,
-    app_identifier: ["com.duckduckgo.mobile.ios.alpha", "com.duckduckgo.mobile.ios.alpha.ShareExtension", "com.duckduckgo.mobile.ios.alpha.OpenAction2", "com.duckduckgo.mobile.ios.alpha.Widgets", "com.duckduckgo.mobile.ios.alpha.NetworkExtension"],
-    storage_mode: "git",
-    git_url: "git@github.com:duckduckgo/Apple-certificates.git",
-    git_branch: "ios",
-    platform: "ios",
-    verbose: true
-  )
+  println("Fastfile: Sync signing alpha")
+  do_sync_signing(options)
+  # sync_code_signing(
+  #   api_key: get_api_key,
+  #   username: get_username(options),
+	#   readonly: is_ci,
+  #   app_identifier: ["com.duckduckgo.mobile.ios.alpha", "com.duckduckgo.mobile.ios.alpha.ShareExtension", "com.duckduckgo.mobile.ios.alpha.OpenAction2", "com.duckduckgo.mobile.ios.alpha.Widgets", "com.duckduckgo.mobile.ios.alpha.NetworkExtension"],
+  #   storage_mode: "git",
+  #   git_url: "git@github.com:duckduckgo/Apple-certificates.git",
+  #   git_branch: "ios",
+  #   platform: "ios",
+  #   verbose: true
+  # )
 end
 
 desc 'Makes Ad-Hoc build with a specified name in a given directory'
@@ -189,7 +191,6 @@ private_lane :build_release do |options|
 end
 
 private_lane :build_alpha do |options|
-  # Workaround for match + gym failing at build phase https://forums.swift.org/t/xcode-14-beta-code-signing-issues-when-spm-targets-include-resources/59685/32
   sync_signing_alpha(options)
 
   build_app(
@@ -238,7 +239,7 @@ private_lane :do_sync_signing do |options|
   sync_code_signing(
     api_key: get_api_key,
     username: get_username(options),
-	readonly: is_ci && !is_adhoc
+	  readonly: is_ci && !is_adhoc
   )
 end
 

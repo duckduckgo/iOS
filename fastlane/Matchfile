@@ -8,25 +8,35 @@ generate_apple_certs false
 template_name "Default Web Browser iOS (Dist)"
 
 for_lane :sync_signing_adhoc do
+    println("Matchfile: Sync signing adhoc")
     app_identifier ["com.duckduckgo.mobile.ios", "com.duckduckgo.mobile.ios.ShareExtension", "com.duckduckgo.mobile.ios.OpenAction2", "com.duckduckgo.mobile.ios.Widgets", "com.duckduckgo.mobile.ios.NetworkExtension"]
     type "adhoc"
     force_for_new_devices true
 end
 
 for_lane :adhoc do
+    println("Matchfile: adhoc")
     app_identifier ["com.duckduckgo.mobile.ios", "com.duckduckgo.mobile.ios.ShareExtension", "com.duckduckgo.mobile.ios.OpenAction2", "com.duckduckgo.mobile.ios.Widgets", "com.duckduckgo.mobile.ios.NetworkExtension"]
     type "adhoc"
     force_for_new_devices true
 end
 
 for_lane :sync_signing_alpha do
+    println("Matchfile: Sync signing alpha")
     app_identifier ["com.duckduckgo.mobile.ios.alpha", "com.duckduckgo.mobile.ios.alpha.ShareExtension", "com.duckduckgo.mobile.ios.alpha.OpenAction2", "com.duckduckgo.mobile.ios.alpha.Widgets", "com.duckduckgo.mobile.ios.alpha.NetworkExtension"]
 end
 
 for_lane :build_alpha do
+    println("Matchfile: Build alpha")
+    app_identifier ["com.duckduckgo.mobile.ios.alpha", "com.duckduckgo.mobile.ios.alpha.ShareExtension", "com.duckduckgo.mobile.ios.alpha.OpenAction2", "com.duckduckgo.mobile.ios.alpha.Widgets", "com.duckduckgo.mobile.ios.alpha.NetworkExtension"]
+end
+
+for_lane :release_alpha do
+    println("Matchfile: Release alpha")
     app_identifier ["com.duckduckgo.mobile.ios.alpha", "com.duckduckgo.mobile.ios.alpha.ShareExtension", "com.duckduckgo.mobile.ios.alpha.OpenAction2", "com.duckduckgo.mobile.ios.alpha.Widgets", "com.duckduckgo.mobile.ios.alpha.NetworkExtension"]
 end
 
 for_lane :build_release do
+    println("Matchfile: Build release")
     app_identifier ["com.duckduckgo.mobile.ios", "com.duckduckgo.mobile.ios.ShareExtension", "com.duckduckgo.mobile.ios.OpenAction2", "com.duckduckgo.mobile.ios.Widgets", "com.duckduckgo.mobile.ios.NetworkExtension"]
 end

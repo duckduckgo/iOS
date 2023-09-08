@@ -80,7 +80,7 @@ jobs:
               "projects": [ \
                 ${{ vars.GH_ASANA_IOS_APP_PROJECT_ID }} \
               ], \
-              "notes" : "The end to end workflow has failed. See https://github.com/duckduckgo/iOS/actions/runs/${{ github.run_id }}", \
+              "notes" : "The end to end workflow has failed. See https://github.com/duckduckgo/iOS/actions/runs/${{ github.run_id }}" \
             }" \
           }'
 

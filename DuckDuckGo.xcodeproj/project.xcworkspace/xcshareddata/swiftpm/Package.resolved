@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "42b073f8a26165e8b328a5f72501abfecdd4c666",
-          "version": "77.2.0"
+          "branch": "shane/catalina-fixes",
+          "revision": "7a10832328a0681bf1852272d151a7ce35563cf0",
+          "version": null
         }
       },
       {
@@ -32,9 +32,9 @@
         "package": "ContentScopeScripts",
         "repositoryURL": "https://github.com/duckduckgo/content-scope-scripts",
         "state": {
-          "branch": null,
-          "revision": "8def15fe8a4c2fb76730f640507e9fd1d6c1f8a7",
-          "version": "4.32.0"
+          "branch": "09-08-temp_bundled_assets",
+          "revision": "938585ba34dfaac240e0bd422acef7266a3b2183",
+          "version": null
         }
       },
       {
@@ -156,7 +156,7 @@
       },
       {
         "package": "TrackerRadarKit",
-        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit",
+        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
         "state": {
           "branch": null,
           "revision": "4684440d03304e7638a2c8086895367e90987463",

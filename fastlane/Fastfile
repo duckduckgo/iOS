@@ -20,7 +20,17 @@ end
 
 desc 'Fetches and updates certificates and provisioning profiles for Alpha distribution'
 lane :sync_signing_alpha do |options|
-  do_sync_signing(options)
+  sync_code_signing(
+    api_key: get_api_key,
+    username: get_username(options),
+	  readonly: is_ci,
+    app_identifier: ["com.duckduckgo.mobile.ios.alpha", "com.duckduckgo.mobile.ios.alpha.ShareExtension", "com.duckduckgo.mobile.ios.alpha.OpenAction2", "com.duckduckgo.mobile.ios.alpha.Widgets", "com.duckduckgo.mobile.ios.alpha.NetworkExtension"],
+    storage_mode: "git",
+    git_url: "git@github.com:duckduckgo/Apple-certificates.git",
+    git_branch: "ios",
+    platform: "ios",
+    verbose: true
+  )
 end
 
 desc 'Makes Ad-Hoc build with a specified name in a given directory'
@@ -180,40 +190,6 @@ end
 
 private_lane :build_alpha do |options|
   # Workaround for match + gym failing at build phase https://forums.swift.org/t/xcode-14-beta-code-signing-issues-when-spm-targets-include-resources/59685/32
-  if is_ci
-    configurations = [
-      {
-        targets: ["DuckDuckGo"],
-        profile_name: "match AppStore Hoc com.duckduckgo.mobile.ios.alpha"
-      },
-      {
-        targets: ["ShareExtension"],
-        profile_name: "match AppStore com.duckduckgo.mobile.ios.alpha.ShareExtension"
-      },
-      {
-        targets: ["OpenAction"],
-        profile_name: "match AppStore com.duckduckgo.mobile.ios.alpha.OpenAction2"
-      },
-      {
-        targets: ["WidgetsExtension"],
-        profile_name: "match AppStore com.duckduckgo.mobile.ios.alpha.Widgets"
-      },
-      {
-        targets: ["PacketTunnelProvider"],
-        profile_name: "match AppStore com.duckduckgo.mobile.ios.alpha.NetworkExtension"
-      }
-    ]
-
-    configurations.each do |config|
-      update_code_signing_settings(
-        use_automatic_signing: false,
-        build_configurations: ["Alpha"],
-        code_sign_identity: "iPhone Distribution",
-        **config
-      )
-    end
-  end
-
   sync_signing_alpha(options)
 
   build_app(

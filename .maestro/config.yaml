@@ -3,6 +3,4 @@ appStartup:
 appSize:
   enabled: false
 flows:
-  - privacy_tests/*
-  - release_tests/*
-  - ad_click_detection_flow_tests/*
+  - "**"

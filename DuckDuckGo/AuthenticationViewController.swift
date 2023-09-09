@@ -61,7 +61,7 @@ class AuthenticationViewController: UIViewController {
     
     class Authenticator {
         func canAuthenticate() -> Bool {
-            return true // Replace with your logic
+            return true
         }
 
         func authenticate(reason: String) async throws -> Bool {
@@ -70,7 +70,7 @@ class AuthenticationViewController: UIViewController {
         }
     }
 
-
+// Added Async/Await
     private func authenticate() {
         hideUnlockInstructions()
         Task {

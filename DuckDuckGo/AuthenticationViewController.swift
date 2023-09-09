@@ -58,17 +58,36 @@ class AuthenticationViewController: UIViewController {
             onCouldNotAuthenticate()
         }
     }
+    
+    class Authenticator {
+        func canAuthenticate() -> Bool {
+            return true // Replace with your logic
+        }
+
+        func authenticate(reason: String) async throws -> Bool {
+            
+            return true
+        }
+    }
+
 
     private func authenticate() {
         hideUnlockInstructions()
-        authenticator.authenticate { (success, _) in
-            if success {
-                self.onAuthenticationSucceeded()
-            } else {
-                self.onAuthenticationFailed()
+        Task {
+            do {
+                let success = try await authenticator.authenticate(reason: "Authentication required")
+                if success {
+                    onAuthenticationSucceeded()
+                } else {
+                    onAuthenticationFailed()
+                }
+            } catch {
+                
+                onAuthenticationFailed()
             }
         }
     }
+
 
     @IBAction func onTap(_ sender: Any) {
         authenticate()

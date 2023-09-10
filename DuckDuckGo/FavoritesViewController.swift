@@ -93,14 +93,11 @@ class FavoritesViewController: UIViewController {
         collectionView.backgroundColor = .clear
 
         view.addSubview(collectionView)
-        
-        renderer = FavoritesHomeViewSectionRenderer(
-            allowsEditing: true,
-            viewModel: FavoritesListViewModel(
-                bookmarksDatabase: bookmarksDatabase,
-                favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
-            )
-        )
+
+        let favoritesListViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
+        favoritesListViewModel.favoritesDisplayMode = AppDependencyProvider.shared.appSettings.favoritesDisplayMode
+
+        renderer = FavoritesHomeViewSectionRenderer(allowsEditing: true, viewModel: favoritesListViewModel)
         renderer.install(into: self)
 
         // Has to happen after the renderer is installed

@@ -117,18 +117,14 @@ public extension BookmarkListViewModel {
 
 public extension FavoritesListViewModel {
     
-    convenience init(bookmarksDatabase: CoreDataDatabase, favoritesDisplayMode: FavoritesDisplayMode) {
-        self.init(bookmarksDatabase: bookmarksDatabase,
-                  favoritesDisplayMode: favoritesDisplayMode,
-                  errorEvents: BookmarksModelsErrorHandling())
+    convenience init(bookmarksDatabase: CoreDataDatabase) {
+        self.init(bookmarksDatabase: bookmarksDatabase, errorEvents: BookmarksModelsErrorHandling())
     }
 }
 
 public extension MenuBookmarksViewModel {
     
-    convenience init(bookmarksDatabase: CoreDataDatabase, favoritesDisplayMode: FavoritesDisplayMode, syncService: DDGSyncing?) {
-        self.init(bookmarksDatabase: bookmarksDatabase,
-                  favoritesDisplayMode: favoritesDisplayMode,
-                  errorEvents: BookmarksModelsErrorHandling(syncService: syncService))
+    convenience init(bookmarksDatabase: CoreDataDatabase, syncService: DDGSyncing?) {
+        self.init(bookmarksDatabase: bookmarksDatabase, errorEvents: BookmarksModelsErrorHandling(syncService: syncService))
     }
 }

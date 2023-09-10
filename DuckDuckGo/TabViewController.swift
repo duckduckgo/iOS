@@ -328,11 +328,9 @@ class TabViewController: UIViewController {
     }
 
     override func buildActivities() -> [UIActivity] {
-        let viewModel = MenuBookmarksViewModel(
-            bookmarksDatabase: bookmarksDatabase,
-            favoritesDisplayMode: appSettings.favoritesDisplayMode,
-            syncService: syncService
-        )
+        let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
+        viewModel.favoritesDisplayMode = appSettings.favoritesDisplayMode
+
         var activities: [UIActivity] = [SaveBookmarkActivity(controller: self,
                                                              viewModel: viewModel)]
 

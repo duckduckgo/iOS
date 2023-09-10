@@ -112,18 +112,19 @@ class MainViewController: UIViewController {
     private let appTrackingProtectionDatabase: CoreDataDatabase
     private let bookmarksDatabase: CoreDataDatabase
     private weak var bookmarksDatabaseCleaner: BookmarkDatabaseCleaner?
-    private let favoritesViewModel: FavoritesListInteracting
+    private var favoritesViewModel: FavoritesListInteracting
     private let syncService: DDGSyncing
     private let syncDataProviders: SyncDataProviders
     private var localUpdatesCancellable: AnyCancellable?
     private var syncUpdatesCancellable: AnyCancellable?
+    private var favoritesDisplayModeCancellable: AnyCancellable?
     private var emailCancellables = Set<AnyCancellable>()
 
-    lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(
-        bookmarksDatabase: bookmarksDatabase,
-        favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode,
-        syncService: syncService
-    )
+    lazy var menuBookmarksViewModel: MenuBookmarksInteracting = {
+        let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
+        viewModel.favoritesDisplayMode = appSettings.favoritesDisplayMode
+        return viewModel
+    }()
 
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
@@ -163,12 +164,13 @@ class MainViewController: UIViewController {
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
-        self.favoritesViewModel = FavoritesListViewModel(
-            bookmarksDatabase: bookmarksDatabase,
-            favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
-        )
+        self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         super.init(coder: coder)
+
+        favoritesViewModel.favoritesDisplayMode = appSettings.favoritesDisplayMode
+
+        bindFavoritesDisplayMode()
         bindSyncService()
     }
 
@@ -345,6 +347,19 @@ class MainViewController: UIViewController {
                                                                                   action: #selector(quickSaveBookmarkLongPress(gesture:))))
         gestureBookmarksButton.delegate = self
         gestureBookmarksButton.image = UIImage(named: "Bookmarks")
+    }
+
+    private func bindFavoritesDisplayMode() {
+        favoritesDisplayModeCancellable = NotificationCenter.default.publisher(for: AppUserDefaults.Notifications.favoritesDisplayModeChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self else {
+                    return
+                }
+                self.menuBookmarksViewModel.favoritesDisplayMode = self.appSettings.favoritesDisplayMode
+                self.favoritesViewModel.favoritesDisplayMode = self.appSettings.favoritesDisplayMode
+                self.homeController?.collectionView.reloadData()
+            }
     }
 
     private func bindSyncService() {

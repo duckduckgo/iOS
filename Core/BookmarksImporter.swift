@@ -42,8 +42,8 @@ final public class BookmarksImporter {
     private(set) var importedBookmarks: [BookmarkOrFolder] = []
     private(set) var coreDataStorage: BookmarkCoreDataImporter
 
-    public init(coreDataStore: CoreDataDatabase) {
-        coreDataStorage = BookmarkCoreDataImporter(database: coreDataStore, favoritesConfiguration: .displayNative(.mobile))
+    public init(coreDataStore: CoreDataDatabase, favoritesDisplayMode: FavoritesDisplayMode) {
+        coreDataStorage = BookmarkCoreDataImporter(database: coreDataStore, favoritesDisplayMode: favoritesDisplayMode)
     }
 
     func isDocumentInSafariFormat(_ document: Document) -> Bool {

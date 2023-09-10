@@ -119,7 +119,11 @@ class MainViewController: UIViewController {
     private var syncUpdatesCancellable: AnyCancellable?
     private var emailCancellables = Set<AnyCancellable>()
 
-    lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
+    lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(
+        bookmarksDatabase: bookmarksDatabase,
+        favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode,
+        syncService: syncService
+    )
 
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
@@ -159,7 +163,10 @@ class MainViewController: UIViewController {
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
-        self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
+        self.favoritesViewModel = FavoritesListViewModel(
+            bookmarksDatabase: bookmarksDatabase,
+            favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
+        )
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         super.init(coder: coder)
         bindSyncService()

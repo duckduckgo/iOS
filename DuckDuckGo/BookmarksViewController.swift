@@ -117,7 +117,12 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.searchDataSource = SearchBookmarksDataSource(searchEngine: bookmarksSearch)
-        self.viewModel = BookmarkListViewModel(bookmarksDatabase: bookmarksDatabase, parentID: parentID, syncService: syncService)
+        self.viewModel = BookmarkListViewModel(
+            bookmarksDatabase: bookmarksDatabase,
+            parentID: parentID,
+            favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode,
+            syncService: syncService
+        )
         self.favicons = favicons
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
@@ -601,7 +606,10 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         let bookmarksDatabase = bookmarksDatabase
         Task {
 
-            let result = await BookmarksImporter(coreDataStore: bookmarksDatabase).parseAndSave(html: html)
+            let result = await BookmarksImporter(
+                coreDataStore: bookmarksDatabase,
+                favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
+            ).parseAndSave(html: html)
             switch result {
             case .success:
                 WidgetCenter.shared.reloadAllTimelines()

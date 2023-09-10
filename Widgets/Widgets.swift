@@ -112,7 +112,7 @@ class Provider: TimelineProvider {
         
         if maxFavorites > 0,
            let db = bookmarksDB {
-            let model = FavoritesListViewModel(bookmarksDatabase: db)
+            let model = FavoritesListViewModel(bookmarksDatabase: db, favoritesDisplayMode: .displayNative(.mobile))
             os_log("model created")
             let dbFavorites = model.favorites
             os_log("dbFavorites loaded %d", dbFavorites.count)

@@ -82,20 +82,22 @@ public extension BookmarkEditorViewModel {
     
     convenience init(editingEntityID: NSManagedObjectID,
                      bookmarksDatabase: CoreDataDatabase,
+                     favoritesDisplayMode: FavoritesDisplayMode,
                      syncService: DDGSyncing?) {
         self.init(editingEntityID: editingEntityID,
                   bookmarksDatabase: bookmarksDatabase,
-                  favoritesConfiguration: .displayNative(.mobile),
+                  favoritesDisplayMode: favoritesDisplayMode,
                   errorEvents: BookmarksModelsErrorHandling(syncService: syncService))
         
     }
     
     convenience init(creatingFolderWithParentID parentFolderID: NSManagedObjectID?,
                      bookmarksDatabase: CoreDataDatabase,
+                     favoritesDisplayMode: FavoritesDisplayMode,
                      syncService: DDGSyncing?) {
         self.init(creatingFolderWithParentID: parentFolderID,
                   bookmarksDatabase: bookmarksDatabase,
-                  favoritesConfiguration: .displayNative(.mobile),
+                  favoritesDisplayMode: favoritesDisplayMode,
                   errorEvents: BookmarksModelsErrorHandling(syncService: syncService))
     }
 }
@@ -104,9 +106,10 @@ public extension BookmarkListViewModel {
     
     convenience init(bookmarksDatabase: CoreDataDatabase,
                      parentID: NSManagedObjectID?,
+                     favoritesDisplayMode: FavoritesDisplayMode,
                      syncService: DDGSyncing?) {
         self.init(bookmarksDatabase: bookmarksDatabase,
-                  favoritesConfiguration: .displayNative(.mobile),
+                  favoritesDisplayMode: favoritesDisplayMode,
                   parentID: parentID,
                   errorEvents: BookmarksModelsErrorHandling(syncService: syncService))
     }
@@ -114,18 +117,18 @@ public extension BookmarkListViewModel {
 
 public extension FavoritesListViewModel {
     
-    convenience init(bookmarksDatabase: CoreDataDatabase) {
+    convenience init(bookmarksDatabase: CoreDataDatabase, favoritesDisplayMode: FavoritesDisplayMode) {
         self.init(bookmarksDatabase: bookmarksDatabase,
-                  favoritesConfiguration: .displayNative(.mobile),
+                  favoritesDisplayMode: favoritesDisplayMode,
                   errorEvents: BookmarksModelsErrorHandling())
     }
 }
 
 public extension MenuBookmarksViewModel {
     
-    convenience init(bookmarksDatabase: CoreDataDatabase, syncService: DDGSyncing?) {
+    convenience init(bookmarksDatabase: CoreDataDatabase, favoritesDisplayMode: FavoritesDisplayMode, syncService: DDGSyncing?) {
         self.init(bookmarksDatabase: bookmarksDatabase,
-                  favoritesConfiguration: .displayNative(.mobile),
+                  favoritesDisplayMode: favoritesDisplayMode,
                   errorEvents: BookmarksModelsErrorHandling(syncService: syncService))
     }
 }

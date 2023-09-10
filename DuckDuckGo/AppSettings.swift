@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+import Bookmarks
+
 protocol AppSettings: AnyObject {
     var autocomplete: Bool { get set }
     var currentThemeName: ThemeName { get set }
@@ -33,6 +35,8 @@ protocol AppSettings: AnyObject {
     var currentFireButtonAnimation: FireButtonAnimationType { get set }
     
     var textSize: Int { get set }
+
+    var favoritesDisplayMode: FavoritesDisplayMode { get set }
     
     var autofillCredentialsEnabled: Bool { get set }
     var autofillCredentialsSavePromptShowAtLeastOnce: Bool { get set }

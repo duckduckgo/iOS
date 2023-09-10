@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Bookmarks
 import Core
 import WidgetKit
 
@@ -27,6 +28,7 @@ public class AppUserDefaults: AppSettings {
         public static let doNotSellStatusChange = Notification.Name("com.duckduckgo.app.DoNotSellStatusChange")
         public static let currentFireButtonAnimationChange = Notification.Name("com.duckduckgo.app.CurrentFireButtonAnimationChange")
         public static let textSizeChange = Notification.Name("com.duckduckgo.app.TextSizeChange")
+        public static let favoritesDisplayModeChange = Notification.Name("com.duckduckgo.app.FavoritesDisplayModeChange")
         public static let autofillEnabledChange = Notification.Name("com.duckduckgo.app.AutofillEnabledChange")
         public static let didVerifyInternalUser = Notification.Name("com.duckduckgo.app.DidVerifyInternalUser")
         public static let inspectableWebViewsToggled = Notification.Name("com.duckduckgo.app.DidToggleInspectableWebViews")
@@ -60,6 +62,8 @@ public class AppUserDefaults: AppSettings {
         static let currentFireButtonAnimationKey = "com.duckduckgo.app.currentFireButtonAnimationKey"
         
         static let autofillCredentialsEnabled = "com.duckduckgo.ios.autofillCredentialsEnabled"
+
+        static let favoritesDisplayMode = "com.duckduckgo.ios.favoritesDisplayMode"
     }
 
     private struct DebugKeys {
@@ -176,6 +180,21 @@ public class AppUserDefaults: AppSettings {
     
     @UserDefaultsWrapper(key: .textSize, defaultValue: 100)
     var textSize: Int
+
+    var favoritesDisplayMode: FavoritesDisplayMode {
+        get {
+            if let string = userDefaults?.string(forKey: Keys.favoritesDisplayMode),
+               let favoritesDisplayMode = FavoritesDisplayMode(rawValue: string) {
+
+                return favoritesDisplayMode
+            } else {
+                return .displayNative(.mobile)
+            }
+        }
+        set {
+            userDefaults?.setValue(newValue.rawValue, forKey: Keys.favoritesDisplayMode)
+        }
+    }
 
     private func setAutofillCredentialsEnabledAutomaticallyIfNecessary() {
         if autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary {
@@ -301,6 +320,41 @@ extension AppUserDefaults: AppConfigurationFetchStatistics {
         }
         set {
             userDefaults?.setValue(newValue, forKey: Keys.backgroundFetchTaskExpirationCount)
+        }
+    }
+}
+
+extension FavoritesDisplayMode {
+    static let availableConfigurations = [FavoritesDisplayMode.displayNative(.mobile), .displayAll(native: .mobile)]
+
+    var rawValue: String? {
+        switch self {
+        case .displayNative:
+            return "displayNative"
+        case .displayAll:
+            return "displayAll"
+        default:
+            return nil
+        }
+    }
+
+    init?(rawValue: String) {
+        switch rawValue {
+        case "displayNative":
+            self = .displayNative(.mobile)
+        case "displayAll":
+            self = .displayAll(native: .mobile)
+        default:
+            return nil
+        }
+    }
+
+    var displayString: String {
+        switch self {
+        case .displayNative:
+            return "Mobile Favorites Only"
+        case .displayAll:
+            return "All Device Favorites"
         }
     }
 }

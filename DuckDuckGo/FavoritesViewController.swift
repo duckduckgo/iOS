@@ -94,8 +94,13 @@ class FavoritesViewController: UIViewController {
 
         view.addSubview(collectionView)
         
-        renderer = FavoritesHomeViewSectionRenderer(allowsEditing: true,
-                                                    viewModel: FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase))
+        renderer = FavoritesHomeViewSectionRenderer(
+            allowsEditing: true,
+            viewModel: FavoritesListViewModel(
+                bookmarksDatabase: bookmarksDatabase,
+                favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
+            )
+        )
         renderer.install(into: self)
 
         // Has to happen after the renderer is installed

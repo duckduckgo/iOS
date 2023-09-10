@@ -65,6 +65,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var versionCell: UITableViewCell!
     @IBOutlet weak var textSizeCell: UITableViewCell!
     @IBOutlet weak var textSizeAccessoryText: UILabel!
+    @IBOutlet weak var favoritesCell: UITableViewCell!
+    @IBOutlet weak var favoritesAccessoryText: UILabel!
     @IBOutlet weak var widgetEducationCell: UITableViewCell!
     @IBOutlet weak var syncCell: UITableViewCell!
     @IBOutlet weak var autofillCell: UITableViewCell!
@@ -136,6 +138,7 @@ class SettingsViewController: UITableViewController {
         configureThemeCellAccessory()
         configureFireButtonAnimationCellAccessory()
         configureTextSizeCell()
+        configureFavoritesCell()
         configureDisableAutocompleteToggle()
         configureSecurityToggles()
         configureVersionText()
@@ -164,6 +167,7 @@ class SettingsViewController: UITableViewController {
         
         configureFireButtonAnimationCellAccessory()
         configureTextSizeCell()
+        configureFavoritesCell()
         configureAutoClearCellAccessory()
         configureRememberLogins()
         configureDoNotSell()
@@ -282,6 +286,10 @@ class SettingsViewController: UITableViewController {
     private func configureTextSizeCell() {
         textSizeCell.isHidden = UIDevice.current.userInterfaceIdiom == .pad
         textSizeAccessoryText.text = "\(appSettings.textSize)%"
+    }
+
+    private func configureFavoritesCell() {
+        favoritesAccessoryText.text = appSettings.favoritesDisplayMode.displayString
     }
 
     private func configureIconViews() {

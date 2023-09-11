@@ -159,6 +159,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                   to: context)
             legacyStorage?.removeStore()
 
+            do {
+                BookmarkUtils.migrateToFormFactorSpecificFavorites(byCopyingExistingTo: .mobile, in: context)
+                if context.hasChanges {
+                    try context.save()
+                }
+            } catch {
+                Thread.sleep(forTimeInterval: 1)
+                fatalError("Could not prepare Bookmarks DB structure")
+            }
+
             WidgetCenter.shared.reloadAllTimelines()
         }
 

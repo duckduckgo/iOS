@@ -655,7 +655,11 @@ In addition to the details entered into this form, your app issue report will co
     
     public static let emailSettingsSubtitle = NSLocalizedString("email.settings.subtitle", value: "Block email trackers and hide your address", comment: "Subtitle for the email settings cell")
     public static let macWaitlistBrowsePrivately = NSLocalizedString("mac-waitlist.settings.browse-privately", value: "Browse privately with our app for Mac", comment: "Title for the settings subtitle")
-    
+    public static let favoritesDisplayPreferencesHeader = NSLocalizedString("favorites.settings.header", value: "Display Preferences", comment: "Header of the favorites settings table")
+    public static let favoritesDisplayPreferencesFooter = NSLocalizedString("favorites.settings.footer", value: "Choose which favorites to display on a new tab based on their origin.", comment: "Footer of the favorites settings table")
+    public static let favoritesDisplayPreferencesMobileOnly = NSLocalizedString("favorites.settings.mobile-only", value: "Mobile Favorites Only", comment: "Display Mode for favorites")
+    public static let favoritesDisplayPreferencesAllDevices = NSLocalizedString("favorites.settings.all-devices", value: "All Device Favorites", comment: "Display Mode for favorites")
+
     // MARK: Share Sheet
     
     public static let macWaitlistShareSheetTitle = NSLocalizedString("mac-waitlist.share-sheet.title", value: "DuckDuckGo for Mac", comment: "Title for the share sheet entry")

@@ -1006,6 +1006,18 @@
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Remove";
 
+/* Display Mode for favorites */
+"favorites.settings.all-devices" = "All Device Favorites";
+
+/* Footer of the favorites settings table */
+"favorites.settings.footer" = "Choose which favorites to display on a new tab based on their origin.";
+
+/* Header of the favorites settings table */
+"favorites.settings.header" = "Display Preferences";
+
+/* Display Mode for favorites */
+"favorites.settings.mobile-only" = "Mobile Favorites Only";
+
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Ad and pop-up blocking";
 

@@ -33,6 +33,14 @@ class FavoritesDisplayModeSettingsViewController: UITableViewController {
         applyTheme(ThemeManager.shared.currentTheme)
     }
 
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return UserText.favoritesDisplayPreferencesHeader
+    }
+
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return UserText.favoritesDisplayPreferencesFooter
+    }
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return availableDisplayModes.count
     }
@@ -42,9 +50,6 @@ class FavoritesDisplayModeSettingsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let cell = cell as? FavoritesDisplayModeCell else {
-            fatalError("Expected FavoritesDisplayModeCell")
-        }
 
         let theme = ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor
@@ -52,10 +57,13 @@ class FavoritesDisplayModeSettingsViewController: UITableViewController {
 
         // Checkmark color
         cell.tintColor = theme.buttonTintColor
-        cell.nameLabel.textColor = theme.tableCellTextColor
+        cell.imageView?.tintColor = theme.ddgTextTintColor
+        cell.textLabel?.textColor = theme.tableCellTextColor
+        cell.textLabel?.font = UIFont.appFont(ofSize: 16)
 
         let displayMode = availableDisplayModes[indexPath.row]
-        cell.name = displayMode.displayString
+        cell.textLabel?.text = displayMode.displayString
+        cell.imageView?.image = displayMode.image
 
         cell.accessoryType = displayMode == appSettings.favoritesDisplayMode ? .checkmark : .none
     }
@@ -67,20 +75,6 @@ class FavoritesDisplayModeSettingsViewController: UITableViewController {
         appSettings.favoritesDisplayMode = displayMode
         NotificationCenter.default.post(name: AppUserDefaults.Notifications.favoritesDisplayModeChange, object: self)
         tableView.reloadData()
-    }
-}
-
-class FavoritesDisplayModeCell: UITableViewCell {
-
-    @IBOutlet weak var nameLabel: UILabel!
-
-    var name: String? {
-        get {
-            return nameLabel.text
-        }
-        set {
-            nameLabel.text = newValue
-        }
     }
 }
 

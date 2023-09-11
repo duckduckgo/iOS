@@ -327,14 +327,12 @@ extension AppUserDefaults: AppConfigurationFetchStatistics {
 extension FavoritesDisplayMode {
     static let availableConfigurations = [FavoritesDisplayMode.displayNative(.mobile), .displayAll(native: .mobile)]
 
-    var rawValue: String? {
+    var rawValue: String {
         switch self {
         case .displayNative:
             return "displayNative"
         case .displayAll:
             return "displayAll"
-        default:
-            return nil
         }
     }
 
@@ -352,9 +350,18 @@ extension FavoritesDisplayMode {
     var displayString: String {
         switch self {
         case .displayNative:
-            return "Mobile Favorites Only"
+            return UserText.favoritesDisplayPreferencesMobileOnly
         case .displayAll:
-            return "All Device Favorites"
+            return UserText.favoritesDisplayPreferencesAllDevices
+        }
+    }
+
+    var image: UIImage {
+        switch self {
+        case .displayNative:
+            return #imageLiteral(resourceName: "MobileDevices")
+        case .displayAll:
+            return #imageLiteral(resourceName: "AllDevices")
         }
     }
 }

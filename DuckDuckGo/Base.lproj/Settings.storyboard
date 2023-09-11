@@ -2431,39 +2431,27 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                         <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="separatorColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FavoritesDisplayModeCell" id="rWA-m1-MMC" userLabel="FavoritesDisplayModeCell" customClass="FavoritesDisplayModeCell" customModule="DuckDuckGo" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FavoritesDisplayModeCell" textLabel="fHW-GZ-B9n" style="IBUITableViewCellStyleDefault" id="rWA-m1-MMC" userLabel="FavoritesDisplayModeCell">
                                 <rect key="frame" x="20" y="55.333332061767578" width="374" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rWA-m1-MMC" id="2ui-hr-3XA">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="1Jf-pu-Ius">
-                                            <rect key="frame" x="20" y="12.333333333333334" width="334" height="19.333333333333329"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uoq-5n-ke6">
-                                                    <rect key="frame" x="0.0" y="0.0" width="334" height="19.333333333333332"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </stackView>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fHW-GZ-B9n">
+                                            <rect key="frame" x="20" y="0.0" width="334" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstItem="1Jf-pu-Ius" firstAttribute="leading" secondItem="2ui-hr-3XA" secondAttribute="leadingMargin" id="RjP-VL-YHM"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="1Jf-pu-Ius" secondAttribute="trailing" id="Uaj-0m-vzY"/>
-                                        <constraint firstItem="1Jf-pu-Ius" firstAttribute="centerY" secondItem="2ui-hr-3XA" secondAttribute="centerY" id="kmk-n0-qzM"/>
-                                    </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" button="YES"/>
                                 </accessibility>
-                                <connections>
-                                    <outlet property="nameLabel" destination="uoq-5n-ke6" id="ANA-g8-LKN"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

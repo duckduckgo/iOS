@@ -109,7 +109,7 @@ class AutofillLoginDetailsViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if !authenticationNotRequired && authenticator.state == .loggedIn {
+        if !authenticationNotRequired {
             authenticator.authenticate()
         }
     }
@@ -118,7 +118,7 @@ class AutofillLoginDetailsViewController: UIViewController {
         super.viewWillDisappear(animated)
         if isMovingFromParent {
             AppDependencyProvider.shared.autofillLoginSession.lastAccessedAccount = nil
-        } else if authenticator.canAuthenticate() {
+        } else if authenticator.canAuthenticate() && authenticator.state == .loggedIn {
             AppDependencyProvider.shared.autofillLoginSession.startSession()
         }
     }

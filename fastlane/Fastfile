@@ -147,6 +147,7 @@ lane :increment_build_number_for_version do |options|
   increment_build_number({
     build_number: 
       latest_testflight_build_number(
+        api_key: get_api_key,
         version: options[:version],
         app_identifier: app_identifier, 
         initial_build_number: -1,

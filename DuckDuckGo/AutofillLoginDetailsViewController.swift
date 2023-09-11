@@ -109,7 +109,7 @@ class AutofillLoginDetailsViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if !authenticationNotRequired {
+        if !authenticationNotRequired && authenticator.state == .loggedIn {
             authenticator.authenticate()
         }
     }

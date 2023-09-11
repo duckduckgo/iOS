@@ -29,6 +29,7 @@ import WidgetKit
 protocol AddOrEditBookmarkViewControllerDelegate: AnyObject {
 
     func finishedEditing(_: AddOrEditBookmarkViewController, entityID: NSManagedObjectID)
+    func deleteBookmark(_: AddOrEditBookmarkViewController, entityID: NSManagedObjectID)
 
 }
 
@@ -163,8 +164,8 @@ extension AddOrEditBookmarkViewController: BookmarkFoldersViewControllerDelegate
     }
 
     func deleteBookmark(_ controller: BookmarkFoldersViewController) {
-        print("*** delete bookmark")
-        
+        self.delegate?.deleteBookmark(self, entityID: viewModel.bookmark.objectID)
+        dismiss(animated: true, completion: nil)
     }
 
 }
@@ -174,6 +175,11 @@ extension AddOrEditBookmarkViewController: AddOrEditBookmarkViewControllerDelega
     func finishedEditing(_ controller: AddOrEditBookmarkViewController, entityID: NSManagedObjectID) {
         viewModel.setParentWithID(entityID)
         foldersViewController?.refresh()
+    }
+
+    func deleteBookmark(_: AddOrEditBookmarkViewController, entityID: NSManagedObjectID) {
+        // TODO
+        print("***", #function)
     }
 
 }

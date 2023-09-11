@@ -391,7 +391,7 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
         SecureVaultErrorReporter.shared.secureVaultInitFailed(error)
     }
 
-    func secureVaultManagerIsEnabledStatus(_: SecureVaultManager) -> Bool {
+    func secureVaultManagerIsEnabledStatus(_ manager: SecureVaultManager, forType type: AutofillType?) -> Bool {
         let isEnabled = AutofillSettingStatus.isAutofillEnabledInSettings && featureFlagger.isFeatureOn(.autofillCredentialInjecting)
         return isEnabled
     }

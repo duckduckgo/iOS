@@ -266,7 +266,8 @@ extension AutoconsentUserScript {
                 // the very first time (autoconsentEnabled = nil), make sure the popup is visible
                 "enablePrehide": preferences.autoconsentPromptSeen,
                 "enableCosmeticRules": true,
-                "detectRetries": 20
+                "detectRetries": 20,
+                "isMainWorld": false
             ] as [String: Any?]
         ] as [String: Any?], nil)
     }

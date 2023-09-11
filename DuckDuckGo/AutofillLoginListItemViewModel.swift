@@ -23,7 +23,6 @@ import UIKit
 import Common
 
 final class AutofillLoginListItemViewModel: Identifiable, Hashable {
-    @Published var image = UIImage(systemName: "globe")!
     
     var preferredFaviconLetters: String {
         let accountName = self.account.name(tld: tld, autofillDomainNameUrlMatcher: urlMatcher)
@@ -47,20 +46,6 @@ final class AutofillLoginListItemViewModel: Identifiable, Hashable {
         self.title = account.name(tld: tld, autofillDomainNameUrlMatcher: autofillDomainNameUrlMatcher)
         self.subtitle = account.username ?? ""
         self.urlMatcher = autofillDomainNameUrlMatcher
-        fetchImage()
-    }
-    
-    private func fetchImage() {
-        FaviconsHelper.loadFaviconSync(forDomain: account.domain,
-                                       usingCache: .fireproof,
-                                       useFakeFavicon: true,
-                                       preferredFakeFaviconLetters: preferredFaviconLetters) { image, _ in
-            if let image = image {
-                self.image = image
-            } else {
-                self.image = UIImage(systemName: "globe")!
-            }
-        }
     }
     
     static func == (lhs: AutofillLoginListItemViewModel, rhs: AutofillLoginListItemViewModel) -> Bool {

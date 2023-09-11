@@ -19,6 +19,7 @@
 
 import UIKit
 import WebKit
+import WidgetKit
 import Combine
 import Common
 import Core
@@ -359,6 +360,7 @@ class MainViewController: UIViewController {
                 self.menuBookmarksViewModel.favoritesDisplayMode = self.appSettings.favoritesDisplayMode
                 self.favoritesViewModel.favoritesDisplayMode = self.appSettings.favoritesDisplayMode
                 self.homeController?.collectionView.reloadData()
+                WidgetCenter.shared.reloadAllTimelines()
             }
     }
 

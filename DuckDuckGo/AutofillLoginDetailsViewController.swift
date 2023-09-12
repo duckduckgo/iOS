@@ -99,7 +99,6 @@ class AutofillLoginDetailsViewController: UIViewController {
         super.viewDidLoad()
         
         installSubviews()
-        setupNavigationBar()
         setupCancellables()
         setupTableViewAppearance()
         applyTheme(ThemeManager.shared.currentTheme)
@@ -112,6 +111,7 @@ class AutofillLoginDetailsViewController: UIViewController {
         if !authenticationNotRequired {
             authenticator.authenticate()
         }
+        setupNavigationBar()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -189,7 +189,7 @@ class AutofillLoginDetailsViewController: UIViewController {
     }
 
     @objc private func appWillMoveToBackgroundCallback() {
-        if viewModel.viewMode != .new || viewModel.shouldShowSaveButton {
+        if viewModel.viewMode != .new || viewModel.canSave {
             authenticationNotRequired = false
         }
         authenticator.logOut()
@@ -267,25 +267,17 @@ class AutofillLoginDetailsViewController: UIViewController {
     private func setupNavigationBar() {
         title = viewModel.navigationTitle
         switch viewModel.viewMode {
-        case .edit:
+        case .edit, .new:
             navigationItem.rightBarButtonItem = saveBarButtonItem
+            navigationItem.rightBarButtonItem?.isEnabled = viewModel.canSave
             navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
 
         case .view:
             navigationItem.rightBarButtonItem = editBarButtonItem
             navigationItem.leftBarButtonItem = nil
-        
-        case .new:
-            if viewModel.shouldShowSaveButton {
-                navigationItem.rightBarButtonItem = saveBarButtonItem
-            } else {
-                navigationItem.rightBarButtonItem = nil
-            }
-            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         }
     }
-    
-    
+
     @objc private func toggleEditMode() {
         viewModel.toggleEditMode()
     }

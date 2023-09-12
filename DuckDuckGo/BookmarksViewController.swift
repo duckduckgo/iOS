@@ -550,6 +550,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                 return nil
             }
             
+            controller.delegate = self
             return controller
         } else {
             guard let controller = AddOrEditBookmarkViewController(coder: coder,
@@ -875,6 +876,53 @@ extension BookmarksViewController: FavoritesViewControllerDelegate {
 
     func favoritesViewController(_ controller: FavoritesViewController, didRequestEditFavorite favorite: BookmarkEntity) {
         performSegue(withIdentifier: "AddOrEditBookmarkFolder", sender: favorite.objectID)
+    }
+
+}
+
+extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
+
+    func finishedEditing(_: AddOrEditBookmarkViewController, entityID: NSManagedObjectID) {
+        // no-op
+    }
+
+    func deleteBookmark(_: AddOrEditBookmarkViewController, entityID: NSManagedObjectID) {
+
+        // capture the required details
+        guard let bookmark = viewModel.bookmark(with: entityID),
+              let parent = bookmark.parent,
+              let index = parent.childrenArray.firstIndex(of: bookmark),
+              let title = bookmark.title,
+              let url = bookmark.url else {
+            assertionFailure()
+            return
+        }
+
+        // capture the optional details
+        let favoritesFolder = bookmark.favoriteFolder
+        let favoritesIndex = favoritesFolder?.favoritesArray.firstIndex(of: bookmark)
+
+        // delete it
+        viewModel.softDeleteBookmark(bookmark)
+
+        // reload the UI
+        tableView.reloadData()
+
+        // capture this stuff locally because this VC might have been closed when undo gets pressed
+        let localViewModel = self.viewModel
+        ActionMessageView.present(message: UserText.bookmarkDeleted, actionTitle: UserText.actionGenericUndo) { [weak self] in
+            // re-create it
+            localViewModel.createBookmark(title: title,
+                                          url: url,
+                                          folder: parent,
+                                          folderIndex: index,
+                                          favoritesFolder: favoritesFolder,
+                                          favoritesIndex: favoritesIndex)
+
+            self?.tableView.reloadData()
+        } onDidDismiss: {
+            // no-op
+        }
     }
 
 }

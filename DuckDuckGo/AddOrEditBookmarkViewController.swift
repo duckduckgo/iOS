@@ -178,8 +178,7 @@ extension AddOrEditBookmarkViewController: AddOrEditBookmarkViewControllerDelega
     }
 
     func deleteBookmark(_: AddOrEditBookmarkViewController, entityID: NSManagedObjectID) {
-        // TODO
-        print("***", #function)
+        self.delegate?.deleteBookmark(self, entityID: entityID)
     }
 
 }

@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1693815553365,
+    "version": 1694438116129,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -1136,9 +1136,193 @@
                 {
                     "domain": "welt.de",
                     "reason": "Video pauses at about 13-15 seconds in. Playing the video again results in a single frame rendering without progressing to the next frame."
+                },
+                {
+                    "domain": "bank.marksandspencer.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
+                },
+                {
+                    "domain": "www7.marksandspencer.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
+                },
+                {
+                    "domain": "fidelity.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
+                },
+                {
+                    "domain": "citi.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
+                },
+                {
+                    "domain": "americanexpress.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "capitalone.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "marcus.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "bankofamerica.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "wellsfargo.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "usbank.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "citizensbankonline.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "sofi.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "regions.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "usaa.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "boh.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "santander.com.br",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "pnc.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "edwardjones.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "ally.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "metrobank.com.ph",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "key.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "synchronybank.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "oldglorybank.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "santander.com.mx",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "secureinternetbank.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "bankfirst.com.au",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "fnbo.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "salliemae.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "bnc.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "kanza.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "prosperity.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "firstwestern.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "penncrest.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "northwest.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "bell.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "dollar.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "dellsbank.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "rcbbank.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "ebt.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "mybct.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "wells.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "365.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "atom.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "ibanking-services.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "bmo.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "tsb.co.uk",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
                 }
             ],
-            "hash": "8d35648bb7862913ed30243074e6b6f1"
+            "hash": "cf151652887581963aad69e4e04fdaab"
         },
         "cookie": {
             "settings": {
@@ -1220,6 +1404,10 @@
                         "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1145"
                     },
                     {
+                        "domain": "vsp.com",
+                        "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1292"
+                    },
+                    {
                         "domain": "cvs.com",
                         "reason": "Navigation section at the top of the main page renders as text."
                     },
@@ -1261,7 +1449,7 @@
             },
             "exceptions": [],
             "state": "enabled",
-            "hash": "936f08e59caeb11ccab5691f1bcf1360"
+            "hash": "aa5caf459578f576616d84a1631dc44a"
         },
         "duckPlayer": {
             "exceptions": [],
@@ -1273,7 +1461,9 @@
                         "selectors": {
                             "thumbLink": "a[href^='/watch']",
                             "excludedRegions": [
-                                "#playlist"
+                                "#playlist",
+                                "ytd-movie-renderer",
+                                "ytd-grid-movie-renderer"
                             ],
                             "videoElement": "#player video",
                             "videoElementContainer": "#player .html5-video-player",
@@ -1325,7 +1515,7 @@
                 ]
             },
             "state": "disabled",
-            "hash": "cd5c420d948ff708f93d17ad2e55cd1b"
+            "hash": "04c97c3c7425cc18984dd34eda95a112"
         },
         "elementHiding": {
             "exceptions": [
@@ -1786,13 +1976,13 @@
                     300,
                     500,
                     1000,
-                    3000,
-                    5000
+                    2000,
+                    3000
                 ],
                 "unhideTimeouts": [
                     1250,
-                    3250,
-                    5250
+                    2250,
+                    3000
                 ],
                 "mediaAndFormSelectors": "video,canvas,embed,object,audio,map,form,input,textarea,select,option",
                 "adLabelStrings": [
@@ -2676,6 +2866,23 @@
                         ]
                     },
                     {
+                        "domain": "polygon.com",
+                        "rules": [
+                            {
+                                "selector": "[class*='ad_unit']",
+                                "type": "override"
+                            },
+                            {
+                                "selector": "[id*='gpt-']",
+                                "type": "override"
+                            },
+                            {
+                                "selector": ".m-ad",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "popsci.com",
                         "rules": [
                             {
@@ -3176,7 +3383,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "8e8243a91c69f2ead8bf4ad86c4a1af1"
+            "hash": "d0256677d082637af536e6c25e94a51a"
         },
         "exceptionHandler": {
             "exceptions": [],
@@ -3351,10 +3558,194 @@
                 {
                     "domain": "hyatt.com",
                     "reason": "Site loads blank and does not proceed."
+                },
+                {
+                    "domain": "bank.marksandspencer.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
+                },
+                {
+                    "domain": "www7.marksandspencer.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
+                },
+                {
+                    "domain": "fidelity.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
+                },
+                {
+                    "domain": "citi.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
+                },
+                {
+                    "domain": "americanexpress.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "capitalone.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "marcus.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "bankofamerica.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "wellsfargo.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "usbank.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "citizensbankonline.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "sofi.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "regions.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "usaa.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "boh.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "santander.com.br",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "pnc.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "edwardjones.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "ally.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "metrobank.com.ph",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "key.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "synchronybank.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "oldglorybank.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "santander.com.mx",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "secureinternetbank.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "bankfirst.com.au",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "fnbo.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "salliemae.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "bnc.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "kanza.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "prosperity.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "firstwestern.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "penncrest.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "northwest.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "bell.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "dollar.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "dellsbank.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "rcbbank.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "ebt.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "mybct.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "wells.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "365.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "atom.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "ibanking-services.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "bmo.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "tsb.co.uk",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
                 }
             ],
             "state": "enabled",
-            "hash": "6ed61290086daac4afe05039c188918c"
+            "hash": "0f915a6f428b0f2f26abe67f91e7380f"
         },
         "fingerprintingScreenSize": {
             "settings": {
@@ -3395,10 +3786,194 @@
                 {
                     "domain": "secureserver.net",
                     "reason": "After entering login details and clicking to log in, the site shows an adwall and prevents login."
+                },
+                {
+                    "domain": "bank.marksandspencer.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
+                },
+                {
+                    "domain": "www7.marksandspencer.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
+                },
+                {
+                    "domain": "fidelity.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
+                },
+                {
+                    "domain": "citi.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
+                },
+                {
+                    "domain": "americanexpress.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "capitalone.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "marcus.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "bankofamerica.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "wellsfargo.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "usbank.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "citizensbankonline.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "sofi.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "regions.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "usaa.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "boh.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "santander.com.br",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "pnc.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "edwardjones.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "ally.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "metrobank.com.ph",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "key.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "synchronybank.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "oldglorybank.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "santander.com.mx",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "secureinternetbank.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "bankfirst.com.au",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "fnbo.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "salliemae.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "bnc.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "kanza.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "prosperity.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "firstwestern.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "penncrest.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "northwest.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "bell.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "dollar.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "dellsbank.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "rcbbank.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "ebt.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "mybct.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "wells.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "365.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "atom.bank",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "ibanking-services.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "bmo.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
+                },
+                {
+                    "domain": "tsb.co.uk",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
                 }
             ],
             "state": "enabled",
-            "hash": "e1ffe29047b2f96b52fd59399b7f034b"
+            "hash": "4fb28f374e51f1660b657f5c38d8cad2"
         },
         "fingerprintingTemporaryStorage": {
             "exceptions": [
@@ -3443,14 +4018,6 @@
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/620"
                 },
                 {
-                    "domain": "walmart.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1198"
-                },
-                {
-                    "domain": "myaccountaccess.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1253"
-                },
-                {
                     "domain": "verizon.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1282"
                 }
@@ -3464,7 +4031,7 @@
                     "privacy-test-pages.glitch.me"
                 ]
             },
-            "hash": "d957f04019743f1d9f443df45184bbdd"
+            "hash": "04dba37a9d5743fade31b9339f53f654"
         },
         "harmfulApis": {
             "settings": {
@@ -3581,8 +4148,12 @@
         },
         "incontextSignup": {
             "exceptions": [],
-            "state": "disabled",
-            "hash": "728493ef7a1488e4781656d3f9db84aa"
+            "state": "enabled",
+            "minSupportedVersion": "7.87.0",
+            "settings": {
+                "installedDays": 21
+            },
+            "hash": "32608df14a6d195edcea38c1b1a73816"
         },
         "incrementalRolloutTest": {
             "state": "disabled",
@@ -4721,6 +5292,17 @@
                                     "tvp.pl"
                                 ],
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/376"
+                            }
+                        ]
+                    },
+                    "geoip-js.com": {
+                        "rules": [
+                            {
+                                "rule": "geoip-js.com/js/apis/geoip2/v2.1/geoip2.js",
+                                "domains": [
+                                    "yourrewardcard.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1288"
                             }
                         ]
                     },
@@ -6414,7 +6996,7 @@
                 }
             },
             "exceptions": [],
-            "hash": "0a04522a36d7fc7f849eb766402d89bc"
+            "hash": "e9428e3e89692861648df2b817e87406"
         },
         "trackingCookies1p": {
             "settings": {
@@ -6534,14 +7116,6 @@
     },
     "unprotectedTemporary": [
         {
-            "domain": "fidelity.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
-        },
-        {
-            "domain": "citi.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
-        },
-        {
             "domain": "earth.google.com",
             "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1099"
         },
@@ -6554,184 +7128,8 @@
             "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
         },
         {
-            "domain": "bank.marksandspencer.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
-        },
-        {
-            "domain": "www7.marksandspencer.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/794"
-        },
-        {
             "domain": "paramountplus.com",
             "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
-        },
-        {
-            "domain": "americanexpress.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "capitalone.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "marcus.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "bankofamerica.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "wellsfargo.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "usbank.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "citizensbankonline.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "sofi.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "regions.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "usaa.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "boh.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "santander.com.br",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "pnc.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "edwardjones.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "ally.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "metrobank.com.ph",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "key.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "synchronybank.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "oldglorybank.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "santander.com.mx",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "secureinternetbank.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "bankfirst.com.au",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "fnbo.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "salliemae.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "bnc.bank",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "kanza.bank",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "prosperity.bank",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "firstwestern.bank",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "penncrest.bank",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "northwest.bank",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "bell.bank",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "dollar.bank",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "dellsbank.bank",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "rcbbank.bank",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "ebt.bank",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "mybct.bank",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "wells.bank",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "365.bank",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "atom.bank",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "ibanking-services.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "bmo.com",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
-        },
-        {
-            "domain": "tsb.co.uk",
-            "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1265"
         },
         {
             "domain": "vinted.fr",

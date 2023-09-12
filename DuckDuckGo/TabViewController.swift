@@ -18,6 +18,7 @@
 //
 
 import WebKit
+import Combine
 import Core
 import StoreKit
 import LocalAuthentication
@@ -107,6 +108,7 @@ class TabViewController: UIViewController {
     private var shouldReloadOnError = false
     private var failingUrls = Set<String>()
     private var urlProvidedBasicAuthCredential: (credential: URLCredential, url: URL)?
+    private var emailProtectionSignOutCancellable: AnyCancellable?
 
     private var detectedLoginURL: URL?
     private var preserveLoginsWorker: PreserveLoginsWorker?
@@ -125,7 +127,7 @@ class TabViewController: UIViewController {
 
     // Temporary to gather some data.  Fire a follow up if no trackers dax dialog was shown and then trackers appear.
     private var fireWoFollowUp = false
-    
+
     // In certain conditions we try to present a dax dialog when one is already showing, so check to ensure we don't
     var isShowingFullScreenDaxDialog = false
     
@@ -288,7 +290,8 @@ class TabViewController: UIViewController {
         initAttributionLogic()
         applyTheme(ThemeManager.shared.currentTheme)
         addTextSizeObserver()
-        addDuckDuckGoEmailSignOutObserver()
+        subscribeToEmailProtectionSignOutNotification()
+
         registerForDownloadsNotifications()
 
         if #available(iOS 16.4, *) {
@@ -701,11 +704,13 @@ class TabViewController: UIViewController {
                                                object: nil)
     }
 
-    private func addDuckDuckGoEmailSignOutObserver() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(onDuckDuckGoEmailSignOut),
-                                               name: .emailDidSignOut,
-                                               object: nil)
+
+    private func subscribeToEmailProtectionSignOutNotification() {
+        emailProtectionSignOutCancellable = NotificationCenter.default.publisher(for: .emailDidSignOut)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                self?.onDuckDuckGoEmailSignOut(notification)
+            }
     }
 
     @objc func onTextSizeChange() {
@@ -2275,8 +2280,10 @@ extension TabViewController: SecureVaultManagerDelegate {
         SecureVaultErrorReporter.shared.secureVaultInitFailed(error)
     }
     
-    func secureVaultManagerIsEnabledStatus(_: SecureVaultManager) -> Bool {
-        let isEnabled = AutofillSettingStatus.isAutofillEnabledInSettings && featureFlagger.isFeatureOn(.autofillCredentialInjecting)
+    func secureVaultManagerIsEnabledStatus(_ manager: SecureVaultManager, forType type: AutofillType?) -> Bool {
+        let isEnabled = AutofillSettingStatus.isAutofillEnabledInSettings &&
+                        featureFlagger.isFeatureOn(.autofillCredentialInjecting) &&
+                        !isLinkPreview
         let isBackgrounded = UIApplication.shared.applicationState == .background
         if isEnabled && isBackgrounded {
             Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded,

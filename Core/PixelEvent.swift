@@ -302,13 +302,6 @@ extension Pixel {
         case remoteMessageSecondaryActionClicked
         case remoteMessageSheet
 
-        // MARK: Lock Screen widgets
-        case lockScreenWidgetNewSearch
-        case lockScreenWidgetFavorites
-        case lockScreenWidgetFireButton
-        case lockScreenWidgetVoiceSearch
-        case lockScreenWidgetNewEmail
-
         // MARK: Set as Default
         case onboardingSetDefaultOpened
         case onboardingSetDefaultSkipped
@@ -431,6 +424,8 @@ extension Pixel {
         case syncBookmarksFailed
         case syncCredentialsProviderInitializationFailed
         case syncCredentialsFailed
+        case syncSettingsFailed
+        case syncSettingsMetadataUpdateFailed
 
         case bookmarksCleanupFailed
         case bookmarksCleanupAttemptedWhileSyncWasEnabled
@@ -739,13 +734,6 @@ extension Pixel.Event {
         case .remoteMessageSecondaryActionClicked: return "m_remote_message_secondary_action_clicked"
         case .remoteMessageSheet: return "m_remote_message_sheet"
 
-        // MARK: Lock Screen Widgets
-        case .lockScreenWidgetNewSearch: return "m_lockscreen_newsearch"
-        case .lockScreenWidgetFavorites: return "m_lockscreen_favorites"
-        case .lockScreenWidgetFireButton: return "m_lockscreen_fire"
-        case .lockScreenWidgetVoiceSearch: return "m_lockscreen_voicesearch"
-        case .lockScreenWidgetNewEmail: return "m_lockscreen_newemail"
-
         // MARK: Set as default measuring
         case .onboardingSetDefaultOpened: return "m_onboarding_set-default-opened"
         case .onboardingSetDefaultSkipped: return "m_onboarding_set-default-skipped"
@@ -870,6 +858,9 @@ extension Pixel.Event {
         case .syncBookmarksFailed: return "m_d_sync_bookmarks_failed"
         case .syncCredentialsProviderInitializationFailed: return "m_d_sync_credentials_provider_initialization_failed"
         case .syncCredentialsFailed: return "m_d_sync_credentials_failed"
+        case .syncSettingsFailed: return "m_d_sync_settings_failed"
+        case .syncSettingsMetadataUpdateFailed: return "m_d_sync_settings_metadata_update_failed"
+
 
         case .bookmarksCleanupFailed: return "m_d_bookmarks_cleanup_failed"
         case .bookmarksCleanupAttemptedWhileSyncWasEnabled: return "m_d_bookmarks_cleanup_attempted_while_sync_was_enabled"

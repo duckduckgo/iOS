@@ -99,6 +99,6 @@ jobs:
         asana_dsyms_path="${{ github.workspace }}/DuckDuckGo-Alpha-${{ env.app_version }}(${{ env.build_version }})-dSYM.zip"
         mv -f "${{ env.dsyms_path }}" "$asana_dsyms_path"
 
-        curl -s "https://app.asana.com/0/0/1205344386326139/f/attachments" \
+        curl -s "https://app.asana.com/api/1.0/tasks/1205344386326139/attachments" \
           -H "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
           --form "file=@${asana_dsyms_path};type=application/zip"

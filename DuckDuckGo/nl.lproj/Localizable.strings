@@ -658,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Downloaden gestart voor %@";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "E-mailbescherming";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Annuleren";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Privé-Duck Address genereren";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Privé-Duck Address genereren";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "E-mailtrackers blokkeren en adres verbergen";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "E-mailadres selecteren";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "E-mailtrackers blokkeren";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "E-mailtrackers met een Duck-adres blokkeren";
@@ -687,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blokkeer e-mailtrackers en verberg je adres";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Doorgaan met instellen";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Instellen beëindigen";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Als je nu afsluit, wordt je Duck Address niet opgeslagen!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Niet meer weergeven";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Mijn e-mailadres beschermen";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Maak een uniek, willekeurig adres dat ook verborgen trackers verwijdert en e-mails doorstuurt naar je inbox.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Je e-mailadres verbergen en\n trackers blokkeren";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Nog geen bladwijzers toegevoegd";
@@ -1014,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Optiemenu";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Terug";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Volgende";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Klaar";

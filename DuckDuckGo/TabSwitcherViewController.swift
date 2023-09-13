@@ -355,6 +355,9 @@ extension TabSwitcherViewController: TabViewCellDelegate {
             currentSelection = tabsModel.currentIndex
             refreshTitle()
             collectionView.reloadData()
+            DispatchQueue.global(qos: .background).async {
+                Favicons.shared.clearCache(.tabs, clearMemoryCache: true)
+            }
         } else {
             collectionView.performBatchUpdates({
                 isProcessingUpdates = true
@@ -366,12 +369,24 @@ extension TabSwitcherViewController: TabViewCellDelegate {
                 guard let current = self.currentSelection else { return }
                 self.refreshTitle()
                 self.collectionView.reloadItems(at: [IndexPath(row: current, section: 0)])
+                
+                // remove favicon from tabs cache when no other tabs have that domain
+                self.removeFavicon(forTab: tab)
             })
         }
     }
     
     func isCurrent(tab: Tab) -> Bool {
         return currentSelection == tabsModel.indexOf(tab: tab)
+    }
+
+    private func removeFavicon(forTab tab: Tab) {
+        DispatchQueue.global(qos: .background).async {
+            if let currentHost = tab.link?.url.host,
+               !self.tabsModel.tabExists(withHost: currentHost) {
+                Favicons.shared.removeTabFavicon(forDomain: currentHost)
+            }
+        }
     }
 
 }

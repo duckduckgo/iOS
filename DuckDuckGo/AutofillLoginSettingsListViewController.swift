@@ -149,7 +149,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if viewModel.authenticator.canAuthenticate() {
+        if viewModel.authenticator.canAuthenticate() && viewModel.authenticator.state == .loggedIn {
             AppDependencyProvider.shared.autofillLoginSession.startSession()
         }
     }
@@ -677,6 +677,7 @@ extension AutofillLoginSettingsListViewController: UISearchResultsUpdating {
         if let query = searchController.searchBar.text {
             viewModel.filterData(with: query)
             emptySearchView.query = query
+            tableView.reloadData()
         }
     }
 }

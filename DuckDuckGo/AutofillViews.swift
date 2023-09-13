@@ -28,6 +28,7 @@ struct AutofillViews {
     static let savePasswordMinHeight = 340.0
     static let updateUsernameMinHeight = 310.0
     static let passwordGenerationMinHeight: CGFloat = 310.0
+    static let emailSignupPromptMinHeight: CGFloat = 260.0
 
     struct CloseButtonHeader: View {
         let action: () -> Void
@@ -43,7 +44,7 @@ struct AutofillViews {
                             .resizable()
                             .scaledToFit()
                             .frame(width: Const.Size.closeButtonSize, height: Const.Size.closeButtonSize)
-                            .foregroundColor(.primary)
+                            .foregroundColor(Color(designSystemColor: .textPrimary))
                     }
                     .frame(width: Const.Size.closeButtonTappableArea, height: Const.Size.closeButtonTappableArea)
                     .contentShape(Rectangle())
@@ -75,7 +76,7 @@ struct AutofillViews {
         var body: some View {
             Text(title)
                 .daxTitle3()
-                .foregroundColor(.primary)
+                .foregroundColor(Color(designSystemColor: .textPrimary))
                 .frame(maxWidth: .infinity)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
@@ -191,6 +192,11 @@ struct AutofillViews {
         verticalSizeClass == .regular && horizontalSizeClass == .regular
     }
 
+    // We have specific layouts for the smaller iPhones
+    static func isSmallFrame(_ frame: CGSize) -> Bool {
+        frame.width > 0 && frame.width <= Const.Size.smallDevice
+    }
+
     static func contentHeightExceedsScreenHeight(_ contentHeight: CGFloat) -> Bool {
         if #available(iOS 16.0, *) {
             let topSafeAreaInset = UIApplication.shared.connectedScenes
@@ -227,6 +233,7 @@ private enum Const {
         static let logoImage: CGFloat = 20.0
         static let buttonCornerRadius: CGFloat = 8.0
         static let buttonBorderWidth: CGFloat = 1.0
+        static let smallDevice: CGFloat = 320.0
     }
 }
 

@@ -658,11 +658,26 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Nerladdning påbörjad för %@";
 
+/* Email protection service offered by DuckDuckGo */
+"email-protection" = "E-postskydd";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Avbryt";
 
 /* Option for generating a private email address */
 "email.aliasAlert.generatePrivateAddress" = "Generera privat Duck Address";
+
+/* Option for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress" = "Generera privat Duck Address";
+
+/* Subtitle for generating a private email address */
+"email.aliasAlert.prompt.generatePrivateAddress.subtitle" = "Blockera e-postspårare och dölj din adress";
+
+/* Title for the email alias selection prompt */
+"email.aliasAlert.prompt.title" = "Välj e-postadress";
+
+/* Subtitle for choosing primary user email address */
+"email.aliasAlert.prompt.useUserAddress.subtitle" = "Blockera e-postspårare";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blockera e-postspårare med en Duck-adress";
@@ -687,6 +702,27 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blockera e-postspårare och dölj din adress";
+
+/* Option to continue the Email Protection signup */
+"email.signup-prompt.alert.continue" = "Fortsätt inställningen";
+
+/* Option to exit the Email Protection signup */
+"email.signup-prompt.alert.exit" = "Avsluta inställningen";
+
+/* Title for exiting the Email Protection signup early alert */
+"email.signup-prompt.alert.title" = "Om du avslutar nu kommer din Duck Address inte att sparas!";
+
+/* Button title choosing not to sign up for email protection and not to be prompted again */
+"email.signup-prompt.do-not-signup-button.cta" = "Visa inte igen";
+
+/* Button title choosing to sign up for email protection */
+"email.signup-prompt.signup-button.cta" = "Skydda min e-postadress";
+
+/* Subtitle for prompt to sign up for email protection */
+"email.signup-prompt.subtitle" = "Skapa en unik, slumpmässig adress som också tar bort dolda spårare och vidarebefordrar e-post till din inkorg.";
+
+/* Title for prompt to sign up for email protection */
+"email.signup-prompt.title" = "Dölj din e-postadress och\nblockera spårare";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Inga bokmärken har lagts till ännu";
@@ -1014,6 +1050,12 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Bläddra-meny";
+
+/* Title for back button in navigation bar */
+"navbar.back-button.title" = "Tillbaka";
+
+/* Title for next button in navigation bar to progress forward */
+"navbar.next-button.title" = "Nästa";
 
 /* Finish editing bookmarks button */
 "navigation.title.done" = "Klart";

@@ -109,6 +109,8 @@ public struct PixelParameters {
     // Remote messaging
     public static let message = "message"
     public static let sheetResult = "success"
+
+    public static let defaultBrowser = "default_browser"
 }
 
 public struct PixelValues {

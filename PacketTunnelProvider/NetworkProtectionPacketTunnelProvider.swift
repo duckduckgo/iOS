@@ -28,10 +28,14 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     }
 
     @objc init() {
+        let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
+                                                             errorEvents: nil)
+
         super.init(notificationsPresenter: DefaultNotificationPresenter(),
                    tunnelHealthStore: NetworkProtectionTunnelHealthStore(),
                    controllerErrorStore: NetworkProtectionTunnelErrorStore(),
-                   useSystemKeychain: false,
+                   keychainType: .dataProtection(.unspecified),
+                   tokenStore: tokenStore,
                    debugEvents: nil,
                    providerEvents: Self.packetTunnelProviderEvents)
     }

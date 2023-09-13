@@ -257,6 +257,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
     }
 
+    // Temporary feature flag tester, to validate that phased rollouts are working as intended.
+     // This is to be removed before the end of August 2023.
+     lazy var featureFlagTester: PhasedRolloutFeatureFlagTester = {
+         return PhasedRolloutFeatureFlagTester()
+     }()
+
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 
@@ -309,6 +315,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         syncService.scheduler.notifyAppLifecycleEvent()
+
+        featureFlagTester.sendFeatureFlagEnabledPixelIfNecessary()
     }
 
     private func fireAppLaunchPixel() {

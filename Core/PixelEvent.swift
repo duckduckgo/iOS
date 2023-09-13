@@ -445,6 +445,8 @@ extension Pixel {
         case emailIncontextModalDismissed
         case emailIncontextModalExitEarly
         case emailIncontextModalExitEarlyContinue
+
+        case incrementalRolloutTest
     }
     
 }
@@ -881,6 +883,8 @@ extension Pixel.Event {
         case .emailIncontextModalDismissed: return "m_email_incontext_modal_dismissed"
         case .emailIncontextModalExitEarly: return "m_email_incontext_modal_exit_early"
         case .emailIncontextModalExitEarlyContinue: return "m_email_incontext_modal_exit_early_continue"
+
+        case .incrementalRolloutTest: return "m_autofill_incremental_rollout_test"
         }
         
     }

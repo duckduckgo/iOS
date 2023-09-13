@@ -1,5 +1,9 @@
 appId: com.duckduckgo.mobile.ios
+tags:
+    - adClick
+
 ---
+
 - clearState
 - launchApp
 - runFlow: 

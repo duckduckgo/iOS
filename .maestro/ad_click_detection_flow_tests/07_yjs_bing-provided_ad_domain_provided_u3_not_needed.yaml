@@ -1,4 +1,7 @@
 appId: com.duckduckgo.mobile.ios
+tags:
+    - adClick
+
 ---
 - clearState
 - launchApp
@@ -24,7 +27,7 @@ appId: com.duckduckgo.mobile.ios
         text: "Got It"
         index: 0
     file: ../shared/onboarding_browsing.yaml
-    
+
 - assertVisible:
     text: "[Ad 7] SERP Ad (SERP-provided)"
 - tapOn:

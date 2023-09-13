@@ -48,21 +48,24 @@ jobs:
       with:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
         app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
-        workspace: .maestro/release_tests
+        workspace: .maestro
+        include-tags: release
 
     - name: Privacy tests
       uses: mobile-dev-inc/action-maestro-cloud@v1.4.1
       with:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
         app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
-        workspace: .maestro/privacy_tests
+        workspace: .maestro
+        include-tags: privacy
     
     - name: Ad Click Detection Flow tests
       uses: mobile-dev-inc/action-maestro-cloud@v1.4.1
       with:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
         app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
-        workspace: .maestro/privacy_tests
+        workspace: .maestro
+        include-tags: adClick
 
     - name: Create Asana task when workflow failed
       if: ${{ failure() }}

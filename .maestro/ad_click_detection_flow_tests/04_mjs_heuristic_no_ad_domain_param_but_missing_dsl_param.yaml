@@ -1,6 +1,7 @@
-# _mjs_heuristic_no_ad_domain_param_but_missing_dsl_param.yaml
-
 appId: com.duckduckgo.mobile.ios
+tags:
+    - adClick
+
 ---
 
 # Set up 

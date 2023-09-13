@@ -1,6 +1,7 @@
-# yjs_heuristic_no_ad_domain_param_u3_param_included.yaml
-
 appId: com.duckduckgo.mobile.ios
+tags:
+    - adClick
+
 ---
 
 # Set up 

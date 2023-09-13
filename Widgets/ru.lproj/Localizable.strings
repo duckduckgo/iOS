@@ -17,7 +17,7 @@
 "lock.screen.widget.fire.description" = "Моментальное удаление истории просмотров и запуск нового приватного поиска в DuckDuckGo.";
 
 /* Title shown to the user when adding the Fire Button lock screen widget */
-"lock.screen.widget.fire.title" = "Fire Button";
+"lock.screen.widget.fire.title" = "Кнопка «Тревога»";
 
 /* Description shown to the user when adding the Search lock screen widget */
 "lock.screen.widget.search.description" = "Моментальный запуск приватного поиска в DuckDuckGo.";
@@ -38,7 +38,7 @@
 "widget.gallery.search.and.favorites.display.name" = "Поиск и избранное";
 
 /* Description of search only widget in widget gallery */
-"widget.gallery.search.description" = "Конфиденциальный поиск через DuckDuckGo в два счета.";
+"widget.gallery.search.description" = "Конфиденциальный поиск через DuckDuckGo в два счёта.";
 
 /* Display name for search only widget in widget gallery */
 "widget.gallery.search.display.name" = "Поиск";

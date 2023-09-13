@@ -46,7 +46,8 @@ class AutofillLoginDetailsViewController: UIViewController {
     private lazy var saveBarButtonItem: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
         let attributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline)]
-        barButtonItem.setTitleTextAttributes(attributes, for: .normal)
+        barButtonItem.setTitleTextAttributes(attributes, for: [.normal])
+        barButtonItem.setTitleTextAttributes(attributes, for: [.disabled])
         return barButtonItem
     }()
 
@@ -104,6 +105,7 @@ class AutofillLoginDetailsViewController: UIViewController {
         applyTheme(ThemeManager.shared.currentTheme)
         installConstraints()
         configureNotifications()
+        setupNavigationBar()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -111,7 +113,6 @@ class AutofillLoginDetailsViewController: UIViewController {
         if !authenticationNotRequired {
             authenticator.authenticate()
         }
-        setupNavigationBar()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -249,11 +250,13 @@ class AutofillLoginDetailsViewController: UIViewController {
     private func updateNavigationBarButtons() {
         switch authenticator.state {
         case .loggedOut:
-            navigationItem.rightBarButtonItems?.forEach { $0.isEnabled = authenticationNotRequired }
+            saveBarButtonItem.isEnabled = authenticationNotRequired && viewModel.canSave
+            editBarButtonItem.isEnabled = authenticationNotRequired
         case .notAvailable:
             navigationItem.rightBarButtonItems?.forEach { $0.isEnabled = false }
         case .loggedIn:
-            navigationItem.rightBarButtonItems?.forEach { $0.isEnabled = true }
+            saveBarButtonItem.isEnabled = viewModel.canSave
+            editBarButtonItem.isEnabled = true
         }
     }
     
@@ -268,8 +271,8 @@ class AutofillLoginDetailsViewController: UIViewController {
         title = viewModel.navigationTitle
         switch viewModel.viewMode {
         case .edit, .new:
+            saveBarButtonItem.isEnabled = viewModel.canSave
             navigationItem.rightBarButtonItem = saveBarButtonItem
-            navigationItem.rightBarButtonItem?.isEnabled = viewModel.canSave
             navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
 
         case .view:

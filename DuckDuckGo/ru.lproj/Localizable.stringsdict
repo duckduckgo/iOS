@@ -33,25 +33,25 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* и еще *1 сервис* пытались вести за вами слежку.
+			<string>*%2$@, %3$@* и ещё *1 сервис* пытались вести за вами слежку.
 
 Но мы их заблокировали!
 
 ☝️ Заходя на новый сайт, вы всегда можете проверить, шпионит ли он за вами: просто загляните в адресную строку.</string>
 			<key>few</key>
-			<string>*%2$@, %3$@* и еще *%1$d сервиса* пытались вести за вами слежку.
+			<string>*%2$@, %3$@* и ещё *%1$d сервиса* пытались вести за вами слежку.
 
 Но мы их заблокировали!
 
 ☝️ Заходя на новый сайт, вы всегда можете проверить, шпионит ли он за вами: просто загляните в адресную строку.</string>
 			<key>many</key>
-			<string>*%2$@, %3$@* и еще *%1$d сервисов* пытались вести за вами слежку.
+			<string>*%2$@, %3$@* и ещё *%1$d сервисов* пытались вести за вами слежку.
 
 Но мы их заблокировали!
 
 ☝️ Заходя на новый сайт, вы всегда можете проверить, шпионит ли он за вами: просто загляните в адресную строку.</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* и другие сервисы *(еще %1$d)* пытались вести за вами слежку.
+			<string>*%2$@, %3$@* и другие сервисы *(ещё %1$d)* пытались вести за вами слежку.
 
 Но мы их заблокировали!
 
@@ -167,9 +167,13 @@
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
 			<key>other</key>
-			<string>%d tracking attempts</string>
+			<string>Попыток отслеживания: %d</string>
 			<key>one</key>
-			<string>%d tracking attempt</string>
+			<string>%d попытка отслеживания</string>
+			<key>few</key>
+			<string>%d попытки отслеживания</string>
+			<key>many</key>
+			<string>%d попыток отслеживания</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 		</dict>
@@ -183,9 +187,13 @@
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
 			<key>other</key>
-			<string>%d tracking attempts</string>
+			<string>Попыток отслеживания: %d</string>
 			<key>one</key>
-			<string>%d tracking attempt</string>
+			<string>%d попытка отслеживания</string>
+			<key>few</key>
+			<string>%d попытки отслеживания</string>
+			<key>many</key>
+			<string>%d попыток отслеживания</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 		</dict>

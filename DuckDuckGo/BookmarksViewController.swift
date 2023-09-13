@@ -406,7 +406,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             let count = countAllChildrenInFolder(bookmark)
             let message = UserText.deleteBookmarkFolderAlertMessage(numberOfChildren: count)
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alertController.addAction(title: UserText.deleteBookmarkFolderAlertDeleteButton, style: .default) {
+            alertController.addAction(title: UserText.deleteBookmarkFolderAlertDeleteButton, style: .destructive) {
                 delete()
                 completion(true)
             }

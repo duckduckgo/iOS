@@ -131,6 +131,31 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    tokenStore: tokenStore,
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents)
+        startMonitoringMemoryPressureEvents()
+    }
+
+    private func startMonitoringMemoryPressureEvents() {
+        let source = DispatchSource.makeMemoryPressureSource(eventMask: .all, queue: nil)
+
+        let queue = DispatchQueue.init(label: "com.duckduckgo.mobile.ios.alpha.NetworkExtension.memoryPressure")
+        queue.async {
+            source.setEventHandler {
+                let event: DispatchSource.MemoryPressureEvent  = source.mask
+                print(event)
+                switch event {
+                case DispatchSource.MemoryPressureEvent.normal:
+                    break
+                case DispatchSource.MemoryPressureEvent.warning:
+                    Pixel.fire(pixel: .networkProtectionMemoryWarning)
+                case DispatchSource.MemoryPressureEvent.critical:
+                    Pixel.fire(pixel: .networkProtectionMemoryCritical)
+                default:
+                    break
+                }
+
+            }
+            source.resume()
+        }
     }
 }
 

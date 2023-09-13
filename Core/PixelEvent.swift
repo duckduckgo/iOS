@@ -336,6 +336,9 @@ extension Pixel {
 
         case networkProtectionNoAuthTokenFoundError
 
+        case networkProtectionMemoryWarning
+        case networkProtectionMemoryCritical
+
         case networkProtectionUnhandledError
 
         // MARK: remote messaging pixels
@@ -806,6 +809,8 @@ extension Pixel.Event {
         case .networkProtectionFailedToStartTunnel: return "m_netp_failed_to_start_tunnel"
         case .networkProtectionDisconnected: return "m_netp_vpn_disconnect"
         case .networkProtectionNoAuthTokenFoundError: return "m_netp_no_auth_token_found_error"
+        case .networkProtectionMemoryWarning: return "m_netp_vpn_memory_warning"
+        case .networkProtectionMemoryCritical: return "m_netp_vpn_memory_critical"
         case .networkProtectionUnhandledError: return "m_netp_unhandled_error"
 
         // MARK: remote messaging pixels

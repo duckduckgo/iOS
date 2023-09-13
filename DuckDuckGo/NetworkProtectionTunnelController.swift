@@ -111,6 +111,7 @@ final class NetworkProtectionTunnelController: TunnelController {
         do {
             try tunnelManager.connection.startVPNTunnel(options: options)
         } catch {
+            Pixel.fire(pixel: .networkProtectionActivationRequestFailed, error: error)
             throw error
         }
     }
@@ -152,15 +153,33 @@ final class NetworkProtectionTunnelController: TunnelController {
     }
 
     private func setupAndSave(_ tunnelManager: NETunnelProviderManager) async throws {
-        try await setup(tunnelManager)
+        setup(tunnelManager)
         try await tunnelManager.saveToPreferences()
         try await tunnelManager.loadFromPreferences()
         try await tunnelManager.saveToPreferences()
     }
 
+    private func saveToPreferences(_ tunnelManager: NETunnelProviderManager) async throws {
+        do {
+            try await tunnelManager.saveToPreferences()
+        } catch {
+            Pixel.fire(pixel: .networkProtectionFailedToSaveToPreferences, error: error)
+            throw error
+        }
+    }
+
+    private func loadFromPreferences(_ tunnelManager: NETunnelProviderManager) async throws {
+        do {
+            try await tunnelManager.loadFromPreferences()
+        } catch {
+            Pixel.fire(pixel: .networkProtectionFailedToLoadFromPreferences, error: error)
+            throw error
+        }
+    }
+
     /// Setups the tunnel manager if it's not set up already.
     ///
-    private func setup(_ tunnelManager: NETunnelProviderManager) async throws {
+    private func setup(_ tunnelManager: NETunnelProviderManager) {
         tunnelManager.localizedDescription = "DuckDuckGo Network Protection"
         tunnelManager.isEnabled = true
 

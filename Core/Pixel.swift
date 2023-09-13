@@ -117,6 +117,7 @@ public struct PixelParameters {
     public static let keychainErrorCode = errorCode
     public static let function = "function"
     public static let line = "line"
+    public static let reason = "reason"
 }
 
 public struct PixelValues {

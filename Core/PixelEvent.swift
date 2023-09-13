@@ -321,6 +321,13 @@ extension Pixel {
         case networkProtectionKeychainWriteError
         case networkProtectionKeychainDeleteError
 
+        case networkProtectionFailedToLoadFromPreferences
+        case networkProtectionFailedToSaveToPreferences
+        case networkProtectionActivationRequestFailed
+        case networkProtectionFailedToStartTunnel
+
+        case networkProtectionDisconnected
+
         case networkProtectionNoAuthTokenFoundError
 
         case networkProtectionUnhandledError
@@ -782,6 +789,11 @@ extension Pixel.Event {
         case .networkProtectionKeychainReadError: return "m_netp_keychain_error_read_failed"
         case .networkProtectionKeychainWriteError: return "m_netp_keychain_error_write_failed"
         case .networkProtectionKeychainDeleteError: return "m_netp_keychain_error_delete_failed"
+        case .networkProtectionFailedToLoadFromPreferences: return "m_netp_network_extension_error_failed_to_load_from_preferences"
+        case .networkProtectionFailedToSaveToPreferences: return "m_netp_network_extension_error_failed_to_save_to_preferences"
+        case .networkProtectionActivationRequestFailed: return "m_netp_network_extension_error_activation_request_failed"
+        case .networkProtectionFailedToStartTunnel: return "m_netp_failed_to_start_tunnel"
+        case .networkProtectionDisconnected: return "m_netp_vpn_disconnect"
         case .networkProtectionNoAuthTokenFoundError: return "m_netp_no_auth_token_found_error"
         case .networkProtectionUnhandledError: return "m_netp_unhandled_error"
 
@@ -942,6 +954,7 @@ extension Pixel.Event {
         case .emailIncontextModalDismissed: return "m_email_incontext_modal_dismissed"
         case .emailIncontextModalExitEarly: return "m_email_incontext_modal_exit_early"
         case .emailIncontextModalExitEarlyContinue: return "m_email_incontext_modal_exit_early_continue"
+
         }
         
     }

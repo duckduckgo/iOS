@@ -112,6 +112,14 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         }
     }
 
+    public override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
+        super.startTunnel(options: options) { error in
+            Pixel.fire(pixel: .networkProtectionFailedToStartTunnel, error: error)
+            DailyPixel.fire(pixel: .networkProtectionFailedToStartTunnel)
+            completionHandler(error)
+        }
+    }
+
     @objc init() {
         let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
                                                              errorEvents: nil)

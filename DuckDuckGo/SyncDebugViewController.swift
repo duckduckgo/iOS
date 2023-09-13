@@ -29,13 +29,15 @@ class SyncDebugViewController: UITableViewController {
 
     private let titles = [
         Sections.info: "Info",
-        Sections.models: "Models"
+        Sections.models: "Models",
+        Sections.environment: "Environment"
     ]
 
     enum Sections: Int, CaseIterable {
 
         case info
         case models
+        case environment
 
     }
 
@@ -48,6 +50,12 @@ class SyncDebugViewController: UITableViewController {
     enum ModelRows: Int, CaseIterable {
 
         case bookmarks
+
+    }
+
+    enum EnvironmentRows: Int, CaseIterable {
+
+        case toggle
 
     }
 
@@ -85,6 +93,7 @@ class SyncDebugViewController: UITableViewController {
         return titles[section]
     }
 
+    // swiftlint:disable:next cyclomatic_complexity
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
@@ -120,6 +129,17 @@ class SyncDebugViewController: UITableViewController {
                 break
             }
 
+        case .environment:
+            switch EnvironmentRows(rawValue: indexPath.row) {
+            case .toggle:
+                let targetEnvironment: ServerEnvironment = sync.serverEnvironment == .production ? .development : .production
+                cell.textLabel?.text = sync.serverEnvironment.description
+                cell.detailTextLabel?.text = "Click to switch to \(targetEnvironment)"
+
+            case .none:
+                break
+            }
+
         default: break
         }
 
@@ -130,6 +150,7 @@ class SyncDebugViewController: UITableViewController {
         switch Sections(rawValue: section) {
         case .info: return InfoRows.allCases.count
         case .models: return ModelRows.allCases.count
+        case .environment: return EnvironmentRows.allCases.count
         case .none: return 0
         }
     }
@@ -142,10 +163,29 @@ class SyncDebugViewController: UITableViewController {
                 sync.scheduler.requestSyncImmediately()
             default: break
             }
+        case .environment:
+            switch EnvironmentRows(rawValue: indexPath.row) {
+            case .toggle:
+                let targetEnvironment: ServerEnvironment = sync.serverEnvironment == .production ? .development : .production
+                sync.updateServerEnvironment(targetEnvironment)
+                tableView.reloadSections(.init(integer: indexPath.section), with: .automatic)
+            default: break
+            }
         default: break
         }
 
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
+}
+
+extension ServerEnvironment: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .development:
+            return "Development"
+        case .production:
+            return "Production"
+        }
+    }
 }

@@ -86,7 +86,7 @@
 "dj9-vh-Rig.headerTitle" = "Внешний вид";
 
 /* Class = "UITableViewSection"; footerTitle = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening."; ObjectID = "dOj-jn-mSN"; */
-"dOj-jn-mSN.footerTitle" = "Если система защищена технологией Touch ID или Face ID либо кодом доступа, при запуске вам придется разблокировать приложение.";
+"dOj-jn-mSN.footerTitle" = "Если система защищена технологией Touch ID или Face ID либо кодом доступа, при запуске вам придётся разблокировать приложение.";
 
 /* Class = "UITableViewSection"; headerTitle = "Privacy"; ObjectID = "dOj-jn-mSN"; */
 "dOj-jn-mSN.headerTitle" = "Настройки конфиденциальности";
@@ -122,7 +122,7 @@
 "fdJ-b1-Des.title" = "Автоудаление данных";
 
 /* Class = "UILabel"; text = "Unprotected Sites"; ObjectID = "FHC-1z-Z3v"; */
-"FHC-1z-Z3v.text" = "Незащищенные сайты";
+"FHC-1z-Z3v.text" = "Незащищённые сайты";
 
 /* Class = "UITableViewSection"; headerTitle = "About"; ObjectID = "FpT-1C-xtx"; */
 "FpT-1C-xtx.headerTitle" = "О нас";
@@ -131,7 +131,7 @@
 "fV3-86-QQj.title" = "Глобальный контроль конфиденциальности (GPC)";
 
 /* Class = "UILabel"; text = "Add Widget to Home Screen"; ObjectID = "Fxu-zn-51Z"; */
-"Fxu-zn-51Z.text" = "Добавьте виджет на домашний экран";
+"Fxu-zn-51Z.text" = "Добавьте виджет на главный экран";
 
 /* Class = "UILabel"; text = "Fire Button Animation"; ObjectID = "gBo-Cu-e2k"; Note = "Fire button animation settings item"; */
 "gBo-Cu-e2k.text" = "Aнимация кнопки «Огонь»";
@@ -170,7 +170,7 @@
 "OfP-Kw-IOk.text" = "Огнеупорных сайтов нет";
 
 /* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
-"OHV-qC-tL9.title" = "Незащищенные сайты";
+"OHV-qC-tL9.title" = "Незащищённые сайты";
 
 /* Class = "UILabel"; text = "About DuckDuckGo"; ObjectID = "oM7-1o-9oY"; */
 "oM7-1o-9oY.text" = "Несколько слов о DuckDuckGo";
@@ -212,7 +212,7 @@
 "vPz-uO-6gB.text" = "Глобальный контроль конфиденциальности (GPC)";
 
 /* Class = "UITableViewSection"; footerTitle = "App exit is defined by swiping the app to close it while inactivity is when the app is in the background."; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
-"vSJ-YJ-bBs.footerTitle" = "Под выходом из приложения подразумевается закрытие свайпом, а под бездействием — работа в фоновом режиме.";
+"vSJ-YJ-bBs.footerTitle" = "Под выходом из приложения подразумевается закрытие проводя пальцем, а под бездействием — работа в фоновом режиме.";
 
 /* Class = "UITableViewSection"; headerTitle = "Desired timing"; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
 "vSJ-YJ-bBs.headerTitle" = "Предпочитаемое время";
@@ -242,8 +242,8 @@
 "zvh-2e-Wmz.text" = "Сайты без защиты конфиденциальности.";
 
 /* Class = "UITableViewController"; title = "Home Screen"; ObjectID = "zWP-d3-nVc"; */
-"zWP-d3-nVc.title" = "Домашний экран";
+"zWP-d3-nVc.title" = "Главный экран";
 
 /* Class = "UINavigationItem"; title = "Add Widget to Home Screen"; ObjectID = "zZa-pF-SHk"; */
-"zZa-pF-SHk.title" = "Добавьте виджет на домашний экран";
+"zZa-pF-SHk.title" = "Добавьте виджет на главный экран";
 

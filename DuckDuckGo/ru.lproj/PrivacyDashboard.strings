@@ -65,7 +65,7 @@
 "F5w-e3-JfY.text" = "www.example.com";
 
 /* Class = "UIButton"; normalTitle = "Unprotected Sites"; ObjectID = "fqL-1Q-ilH"; */
-"fqL-1Q-ilH.normalTitle" = "Незащищенные сайты";
+"fqL-1Q-ilH.normalTitle" = "Незащищённые сайты";
 
 /* Class = "UILabel"; text = "Networks Blocked"; ObjectID = "Ge6-9h-2z5"; */
 "Ge6-9h-2z5.text" = "Заблокированы сети трекеров";
@@ -86,10 +86,10 @@
 "J3L-KE-1Vb.text" = "Метка";
 
 /* Class = "UILabel"; text = "No privacy practices found"; ObjectID = "k0S-dU-EUe"; */
-"k0S-dU-EUe.text" = "Уровень конфиденциальности не определен";
+"k0S-dU-EUe.text" = "Уровень конфиденциальности не определён";
 
 /* Class = "UIButton"; normalTitle = "Unprotected Sites"; ObjectID = "Kme-pZ-l7N"; */
-"Kme-pZ-l7N.normalTitle" = "Незащищенные сайты";
+"Kme-pZ-l7N.normalTitle" = "Незащищённые сайты";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "Mv2-oP-SQd"; */
 "Mv2-oP-SQd.text" = "Метка";
@@ -122,7 +122,7 @@
 "Y3q-u7-IeX.text" = "ЧАСТОТА БЛОКИРОВАНИЯ";
 
 /* Class = "UILabel"; text = "8 Other Domains Loaded"; ObjectID = "YDP-RX-LaV"; */
-"YDP-RX-LaV.text" = "Загружено еще 8 доменов";
+"YDP-RX-LaV.text" = "Загружено ещё 8 доменов";
 
 /* Class = "UILabel"; text = "Encrypted Connection"; ObjectID = "zz1-Q4-Fxr"; */
 "zz1-Q4-Fxr.text" = "Зашифрованное соединение";

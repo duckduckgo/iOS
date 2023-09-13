@@ -2,10 +2,6 @@ name: Make TestFlight Alpha Build
 
 on:
   workflow_dispatch:
-    branches:
-    - develop
-    - graeme/ios-nightly-alphas # TODO: Remove this before merging
-    #- '!develop' # filter out PRs matching that pattern
     inputs:
       destination:
         description: "TestFlight Group"
@@ -14,7 +10,7 @@ on:
         type: string
 
   push:
-    branches: [ graeme/ios-nightly-alphas ]
+    branches: [ graeme/ios-nightly-alphas ] # TODO: Remove this before merging
 
 jobs:
   make-alpha:

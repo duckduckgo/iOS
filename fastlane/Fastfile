@@ -97,7 +97,8 @@ desc 'Makes App Store release build and uploads it to App Store Connect'
 lane :release_appstore do |options|
   build_release(options)
 
-  deliver(common_deliver_arguments.merge(options))
+  raise "We stop here"
+  # deliver(common_deliver_arguments.merge(options))
 
   begin
     upload_metadata(options)

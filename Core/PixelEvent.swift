@@ -321,6 +321,12 @@ extension Pixel {
         case networkProtectionKeychainWriteError
         case networkProtectionKeychainDeleteError
 
+        case networkProtectionWireguardErrorCannotLocateTunnelFileDescriptor
+        case networkProtectionWireguardErrorInvalidState
+        case networkProtectionWireguardErrorFailedDNSResolution
+        case networkProtectionWireguardErrorCannotSetNetworkSettings
+        case networkProtectionWireguardErrorCannotStartWireguardBackend
+
         case networkProtectionFailedToLoadFromPreferences
         case networkProtectionFailedToSaveToPreferences
         case networkProtectionActivationRequestFailed
@@ -789,6 +795,11 @@ extension Pixel.Event {
         case .networkProtectionKeychainReadError: return "m_netp_keychain_error_read_failed"
         case .networkProtectionKeychainWriteError: return "m_netp_keychain_error_write_failed"
         case .networkProtectionKeychainDeleteError: return "m_netp_keychain_error_delete_failed"
+        case .networkProtectionWireguardErrorCannotLocateTunnelFileDescriptor: return "m_netp_wireguard_error_cannot_locate_tunnel_file_descriptor"
+        case .networkProtectionWireguardErrorInvalidState: return "m_netp_wireguard_error_invalid_state"
+        case .networkProtectionWireguardErrorFailedDNSResolution: return "m_netp_wireguard_error_failed_dns_resolution"
+        case .networkProtectionWireguardErrorCannotSetNetworkSettings: return "m_netp_wireguard_error_cannot_set_network_settings"
+        case .networkProtectionWireguardErrorCannotStartWireguardBackend: return "m_netp_wireguard_error_cannot_start_wireguard_backend"
         case .networkProtectionFailedToLoadFromPreferences: return "m_netp_network_extension_error_failed_to_load_from_preferences"
         case .networkProtectionFailedToSaveToPreferences: return "m_netp_network_extension_error_failed_to_save_to_preferences"
         case .networkProtectionActivationRequestFailed: return "m_netp_network_extension_error_activation_request_failed"

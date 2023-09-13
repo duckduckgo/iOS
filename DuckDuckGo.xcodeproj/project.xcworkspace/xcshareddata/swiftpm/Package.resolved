@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "42b073f8a26165e8b328a5f72501abfecdd4c666",
-          "version": "77.2.0"
+          "branch": "anya/ios-phased-rollout-feature-flag-dry-run",
+          "revision": "dc5296e73c58596285ccad6303c9e6335d9fbec5",
+          "version": null
         }
       },
       {

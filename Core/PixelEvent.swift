@@ -292,6 +292,39 @@ extension Pixel {
         case appTPDBTrackerStoreFailure
         case appTPCouldNotLoadDatabase
 
+        // MARK: Network Protection
+
+        case networkProtectionTunnelConfigurationNoServerRegistrationInfo
+        case networkProtectionTunnelConfigurationCouldNotSelectClosestServer
+        case networkProtectionTunnelConfigurationCouldNotGetPeerPublicKey
+        case networkProtectionTunnelConfigurationCouldNotGetPeerHostName
+        case networkProtectionTunnelConfigurationCouldNotGetInterfaceAddressRange
+
+        case networkProtectionClientFailedToFetchServerList
+        case networkProtectionClientFailedToParseServerListResponse
+        case networkProtectionClientFailedToEncodeRegisterKeyRequest
+        case networkProtectionClientFailedToFetchRegisteredServers
+        case networkProtectionClientFailedToParseRegisteredServersResponse
+        case networkProtectionClientFailedToEncodeRedeemRequest
+        case networkProtectionClientInvalidInviteCode
+        case networkProtectionClientFailedToRedeemInviteCode
+        case networkProtectionClientFailedToParseRedeemResponse
+        case networkProtectionClientInvalidAuthToken
+
+        case networkProtectionServerListStoreFailedToEncodeServerList
+        case networkProtectionServerListStoreFailedToDecodeServerList
+        case networkProtectionServerListStoreFailedToWriteServerList
+        case networkProtectionServerListStoreFailedToReadServerList
+
+        case networkProtectionKeychainErrorFailedToCastKeychainValueToData
+        case networkProtectionKeychainReadError
+        case networkProtectionKeychainWriteError
+        case networkProtectionKeychainDeleteError
+
+        case networkProtectionNoAuthTokenFoundError
+
+        case networkProtectionUnhandledError
+
         // MARK: remote messaging pixels
 
         case remoteMessageShown
@@ -723,6 +756,34 @@ extension Pixel.Event {
         case .appTPDBFeedbackTrackerFetchFailed: return "m_apptp_db_feedback_tracker_fetch_failed"
         case .appTPDBTrackerStoreFailure: return "m_apptp_db_tracker_store_failure"
         case .appTPCouldNotLoadDatabase: return "m_apptp_could_not_load_database"
+
+        // MARK: Network Protection pixels
+
+        case .networkProtectionTunnelConfigurationNoServerRegistrationInfo: return "m_netp_tunnel_config_error_no_server_registration_info"
+        case .networkProtectionTunnelConfigurationCouldNotSelectClosestServer: return "m_netp_tunnel_config_error_could_not_select_closest_server"
+        case .networkProtectionTunnelConfigurationCouldNotGetPeerPublicKey: return "m_netp_tunnel_config_error_could_not_get_peer_public_key"
+        case .networkProtectionTunnelConfigurationCouldNotGetPeerHostName: return "m_netp_tunnel_config_error_could_not_get_peer_host_name"
+        case .networkProtectionTunnelConfigurationCouldNotGetInterfaceAddressRange: return "m_netp_tunnel_config_error_could_not_get_interface_address_range"
+        case .networkProtectionClientFailedToFetchServerList: return "m_netp_backend_api_error_failed_to_fetch_server_list"
+        case .networkProtectionClientFailedToParseServerListResponse: return "m_netp_backend_api_error_parsing_server_list_response_failed"
+        case .networkProtectionClientFailedToEncodeRegisterKeyRequest: return "m_netp_backend_api_error_encoding_register_request_body_failed"
+        case .networkProtectionClientFailedToFetchRegisteredServers: return "m_netp_backend_api_error_failed_to_fetch_registered_servers"
+        case .networkProtectionClientFailedToParseRegisteredServersResponse: return "m_netp_backend_api_error_parsing_device_registration_response_failed"
+        case .networkProtectionClientFailedToEncodeRedeemRequest: return "m_netp_backend_api_error_encoding_redeem_request_body_failed"
+        case .networkProtectionClientInvalidInviteCode: return "m_netp_backend_api_error_invalid_invite_code"
+        case .networkProtectionClientFailedToRedeemInviteCode: return "m_netp_backend_api_error_failed_to_redeem_invite_code"
+        case .networkProtectionClientFailedToParseRedeemResponse: return "m_netp_backend_api_error_parsing_redeem_response_failed"
+        case .networkProtectionClientInvalidAuthToken: return "m_netp_backend_api_error_invalid_auth_token"
+        case .networkProtectionServerListStoreFailedToEncodeServerList: return "m_netp_storage_error_failed_to_encode_server_list"
+        case .networkProtectionServerListStoreFailedToDecodeServerList: return "m_netp_storage_error_failed_to_decode_server_list"
+        case .networkProtectionServerListStoreFailedToWriteServerList: return "m_netp_storage_error_server_list_file_system_write_failed"
+        case .networkProtectionServerListStoreFailedToReadServerList: return "m_netp_storage_error_server_list_file_system_read_failed"
+        case .networkProtectionKeychainErrorFailedToCastKeychainValueToData: return "m_netp_keychain_error_failed_to_cast_keychain_value_to_data"
+        case .networkProtectionKeychainReadError: return "m_netp_keychain_error_read_failed"
+        case .networkProtectionKeychainWriteError: return "m_netp_keychain_error_write_failed"
+        case .networkProtectionKeychainDeleteError: return "m_netp_keychain_error_delete_failed"
+        case .networkProtectionNoAuthTokenFoundError: return "m_netp_no_auth_token_found_error"
+        case .networkProtectionUnhandledError: return "m_netp_unhandled_error"
 
         // MARK: remote messaging pixels
 

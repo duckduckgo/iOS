@@ -1,7 +1,10 @@
 # bookmarks.yaml
-
 appId: com.duckduckgo.mobile.ios
+tags:
+    - release
+
 ---
+
 # Set up 
 - clearState
 - launchApp

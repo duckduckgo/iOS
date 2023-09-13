@@ -1,6 +1,7 @@
-# single_site-single_tab.yaml
-
 appId: com.duckduckgo.mobile.ios
+tags:
+    - privacy
+
 ---
 
 # Set up 

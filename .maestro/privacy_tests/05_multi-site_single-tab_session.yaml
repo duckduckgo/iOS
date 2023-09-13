@@ -1,4 +1,7 @@
 appId: com.duckduckgo.mobile.ios
+tags:
+    - privacy
+
 ---
 
 # Set up 
@@ -28,7 +31,6 @@ appId: com.duckduckgo.mobile.ios
     file: ../shared/onboarding_browsing.yaml
 
 # Test
-- scroll
 - assertVisible: "[Ad 5] SERP Ad (heuristic)"
 - tapOn: "[Ad 5] SERP Ad (heuristic)"
 - assertVisible:

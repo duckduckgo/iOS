@@ -14,7 +14,6 @@ on:
 
 jobs:
   make-alpha:
-    if: github.event.action == 0 || github.event.pull_request.merged == true # empty string returns 0; for case when workflow is triggered manually
     runs-on: macos-13
     name: Make TestFlight Alpha Build
 

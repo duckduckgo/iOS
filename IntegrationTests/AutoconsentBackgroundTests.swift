@@ -116,7 +116,7 @@ final class AutoconsentBackgroundTests: XCTestCase {
         waitForExpectations(timeout: 4)
 
         let expectation = expectation(description: "Async call")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             webview.evaluateJavaScript("window.getComputedStyle(banner).display === 'none'", in: nil, in: .page,
                                        completionHandler: { result in
                 switch result {

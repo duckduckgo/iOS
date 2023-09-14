@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": "dominik/sync-env-switcher",
-          "revision": "1804e7d6cfe6700da6bd2686492eb14cc143138e",
+          "revision": "db20d70b9ab2cbe3747fd83768cde9edf71798cc",
           "version": null
         }
       },

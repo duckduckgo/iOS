@@ -110,7 +110,7 @@ public class DefaultVariantManager: VariantManager {
             variants: VariantIOS.defaultVariants,
             storage: StatisticsUserDefaults(),
             rng: Arc4RandomUniformVariantRNG(),
-            returningUserMeasurement: ReturnUserMeasurement()
+            returningUserMeasurement: KeychainReturnUserMeasurement()
         )
     }
 
@@ -142,7 +142,7 @@ public class DefaultVariantManager: VariantManager {
     }
     
     private func selectVariant() -> Variant? {
-        if ReturnUserMeasurement().isReturningUser {
+        if returningUserMeasurement.isReturningUser {
             return VariantIOS.returningUser
         }
 

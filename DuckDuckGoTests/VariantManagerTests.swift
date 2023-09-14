@@ -34,7 +34,7 @@ class VariantManagerTests: XCTestCase {
     func testWhenVariantIsExcludedThenItIsNotInVariantList() {
         
         let subject = DefaultVariantManager(variants: testVariants, storage: MockStatisticsStore(), rng: MockVariantRNG(returnValue: 500),
-                                            returningUserMeasurement: ReturnUserMeasurement())
+                                            returningUserMeasurement: MockReturningUserMeasurement())
         XCTAssertTrue(!subject.isSupported(feature: .dummy))
         
     }
@@ -48,7 +48,7 @@ class VariantManagerTests: XCTestCase {
         let mockStore = MockStatisticsStore()
         mockStore.variant = "test"
         let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: 0),
-                                            returningUserMeasurement: ReturnUserMeasurement())
+                                            returningUserMeasurement: MockReturningUserMeasurement())
 
         // temporarily use this feature name
         XCTAssertTrue(subject.isSupported(feature: .dummy))
@@ -65,7 +65,7 @@ class VariantManagerTests: XCTestCase {
         for i in 0 ..< 100 {
             
             let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: i),
-                                                returningUserMeasurement: ReturnUserMeasurement())
+                                                returningUserMeasurement: MockReturningUserMeasurement())
             subject.assignVariantIfNeeded { _ in }
             XCTAssertNotEqual("mt", subject.currentVariant?.name)
 
@@ -79,7 +79,7 @@ class VariantManagerTests: XCTestCase {
         mockStore.atb = "atb"
 
         let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: 0),
-                                            returningUserMeasurement: ReturnUserMeasurement())
+                                            returningUserMeasurement: MockReturningUserMeasurement())
         subject.assignVariantIfNeeded { _ in }
         XCTAssertNil(subject.currentVariant)
 
@@ -89,7 +89,7 @@ class VariantManagerTests: XCTestCase {
 
         let variant = VariantIOS(name: "anything", weight: 100, isIncluded: VariantIOS.When.always, features: [])
         let subject = DefaultVariantManager(variants: [variant], storage: MockStatisticsStore(), rng: MockVariantRNG(returnValue: 0),
-                                            returningUserMeasurement: ReturnUserMeasurement())
+                                            returningUserMeasurement: MockReturningUserMeasurement())
         subject.assignVariantIfNeeded { _ in }
         XCTAssertEqual(variant.name, subject.currentVariant?.name)
 
@@ -100,7 +100,7 @@ class VariantManagerTests: XCTestCase {
         let mockStore = MockStatisticsStore()
         mockStore.variant = "mb"
         let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: 0),
-                                            returningUserMeasurement: ReturnUserMeasurement())
+                                            returningUserMeasurement: MockReturningUserMeasurement())
         XCTAssertEqual("mb", subject.currentVariant?.name)
         XCTAssertEqual("mb", mockStore.variant)
 
@@ -119,7 +119,7 @@ class VariantManagerTests: XCTestCase {
 
         let mockStore = MockStatisticsStore()
         let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: 0),
-                                            returningUserMeasurement: ReturnUserMeasurement())
+                                            returningUserMeasurement: MockReturningUserMeasurement())
         subject.assignVariantIfNeeded { _ in }
         XCTAssertEqual("mb", subject.currentVariant?.name)
         XCTAssertEqual("mb", mockStore.variant)
@@ -130,20 +130,20 @@ class VariantManagerTests: XCTestCase {
 
         let mockStore = MockStatisticsStore()
         let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: 0),
-                                            returningUserMeasurement: ReturnUserMeasurement())
+                                            returningUserMeasurement: MockReturningUserMeasurement())
         XCTAssertNil(subject.currentVariant)
 
     }
 
     func testWhenNoVariantsThenAssignsNothing() {
         let subject = DefaultVariantManager(variants: [], storage: MockStatisticsStore(), rng: MockVariantRNG(returnValue: 0),
-                                            returningUserMeasurement: ReturnUserMeasurement())
+                                            returningUserMeasurement: MockReturningUserMeasurement())
         XCTAssertNil(subject.currentVariant)
     }
 
     private func assignedVariantManager(withRNG rng: VariantRNG) -> VariantManager {
         let variantManager = DefaultVariantManager(variants: testVariants, storage: MockStatisticsStore(), rng: rng,
-                                                   returningUserMeasurement: ReturnUserMeasurement())
+                                                   returningUserMeasurement: MockReturningUserMeasurement())
         variantManager.assignVariantIfNeeded { _ in }
         return variantManager
     }
@@ -158,4 +158,12 @@ struct MockVariantRNG: VariantRNG {
         return returnValue
     }
     
+}
+
+fileprivate class MockReturningUserMeasurement: ReturnUserMeasurement {
+    var isReturningUser: Bool = false
+    func installCompletedWithATB(_ atb: Core.Atb) {
+    }
+    func updateStoredATB(_ atb: Core.Atb) {
+    }
 }

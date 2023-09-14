@@ -33,7 +33,7 @@ public class StatisticsLoader {
     private let parser = AtbParser()
     
     init(statisticsStore: StatisticsStore = StatisticsUserDefaults(),
-         returnUserMeasurement: ReturnUserMeasurement = ReturnUserMeasurement()) {
+         returnUserMeasurement: ReturnUserMeasurement = KeychainReturnUserMeasurement()) {
         self.statisticsStore = statisticsStore
         self.returnUserMeasurement = returnUserMeasurement
     }

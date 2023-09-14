@@ -20,7 +20,15 @@
 import Foundation
 import BrowserServicesKit
 
-class ReturnUserMeasurement {
+protocol ReturnUserMeasurement {
+
+    var isReturningUser: Bool { get }
+    func installCompletedWithATB(_ atb: Atb)
+    func updateStoredATB(_ atb: Atb)
+
+}
+
+class KeychainReturnUserMeasurement: ReturnUserMeasurement {
 
     static let SecureATBKeychainName = "returning-user-atb"
 

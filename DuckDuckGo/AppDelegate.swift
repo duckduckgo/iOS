@@ -309,6 +309,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         syncService.scheduler.notifyAppLifecycleEvent()
+        fireFailedCompilationsPixelIfNeeded()
     }
 
     private func fireAppLaunchPixel() {
@@ -364,6 +365,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 #endif
+    }
+
+    private func fireFailedCompilationsPixelIfNeeded() {
+        let store = FailedCompilationsStore()
+        if store.hasAnyFailures {
+            DailyPixel.fire(pixel: .compilationFailed, withAdditionalParameters: store.summary) { error in
+                if error == nil {
+                    store.cleanup()
+                }
+            }
+        }
     }
     
     private func shouldShowKeyboardOnLaunch() -> Bool {

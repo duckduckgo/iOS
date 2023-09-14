@@ -51,7 +51,23 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
     // For some reason, on iOS 14, the viewDidLoad wasn't getting called so do some setup here
     convenience init() {
-        self.init(rootView: SyncSettingsView(model: SyncSettingsViewModel()))
+        let appSettings = AppDependencyProvider.shared.appSettings
+        let viewModel = SyncSettingsViewModel()
+
+        self.init(rootView: SyncSettingsView(model: viewModel))
+
+        viewModel.isUnifiedFavoritesEnabled = {
+            if case .displayAll = appSettings.favoritesDisplayMode {
+                return true
+            }
+            return false
+        }()
+
+        viewModel.$isUnifiedFavoritesEnabled.dropFirst()
+            .sink { isEnabled in
+                appSettings.favoritesDisplayMode = isEnabled ? .displayAll(native: .mobile) : .displayNative(.mobile)
+            }
+            .store(in: &cancellables)
 
         refreshForState(syncService.authState)
 

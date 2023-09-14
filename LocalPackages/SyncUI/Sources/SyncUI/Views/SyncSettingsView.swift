@@ -146,6 +146,35 @@ public struct SyncSettingsView: View {
     }
 
     @ViewBuilder
+    func options() -> some View {
+        Section {
+
+            Toggle(isOn: $model.isFaviconsSyncEnabled) {
+                HStack(spacing: 16) {
+                    Image("SyncFavicons")
+                    Text("Sync Bookmark Icons").foregroundColor(.primary)
+                }
+            }
+
+            Toggle(isOn: $model.isUnifiedFavoritesEnabled) {
+                HStack(spacing: 16) {
+                    Image("SyncAllDevices")
+                    VStack(alignment: .leading) {
+                        Text("Unified favorites")
+                            .foregroundColor(.primary)
+                        Text("Use the same favorites on all devices. Switch off to maintain separate favorites for mobile and desktop.")
+                            .font(.system(size: 13))
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
+
+        } header: {
+            Text("Options")
+        }
+    }
+
+    @ViewBuilder
     func saveRecoveryPDF() -> some View {
         Section {
             Button(UserText.settingsSaveRecoveryPDFButton) {
@@ -198,6 +227,8 @@ public struct SyncSettingsView: View {
                 devices()
 
                 syncNewDevice()
+
+                options()
 
                 saveRecoveryPDF()
 

@@ -258,10 +258,9 @@ public class WebCacheManager {
 
         let databaseURLs = [
             FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
-                       .appendingPathComponent("WebKit/WebsiteData/ResourceLoadStatistics/observations.db",
-           FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
-                       .appendingPathComponent("WebKit/\(bundleID)/WebsiteData/ResourceLoadStatistics/observations.db"),
-            )
+                       .appendingPathComponent("WebKit/WebsiteData/ResourceLoadStatistics/observations.db"),
+            FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
+                       .appendingPathComponent("WebKit/\(bundleID)/WebsiteData/ResourceLoadStatistics/observations.db")
         ]
 
         return databaseURLs.lazy.compactMap({ try? DatabasePool(path: $0.absoluteString) }).first

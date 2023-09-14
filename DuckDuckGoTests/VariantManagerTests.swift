@@ -160,7 +160,7 @@ struct MockVariantRNG: VariantRNG {
     
 }
 
-fileprivate class MockReturningUserMeasurement: ReturnUserMeasurement {
+class MockReturningUserMeasurement: ReturnUserMeasurement {
     var isReturningUser: Bool = false
     func installCompletedWithATB(_ atb: Core.Atb) {
     }

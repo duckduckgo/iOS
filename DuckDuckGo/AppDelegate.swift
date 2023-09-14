@@ -201,12 +201,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // MARK: Sync initialisation
 
+#if DEBUG
+        let defaultEnvironment = ServerEnvironment.development
+#else
+        let defaultEnvironment = ServerEnvironment.production
+#endif
+
         let environment = ServerEnvironment(
             UserDefaultsWrapper(
                 key: .syncEnvironment,
-                defaultValue: ServerEnvironment.production.description
+                defaultValue: defaultEnvironment.description
             ).wrappedValue
-        ) ?? .production
+        ) ?? defaultEnvironment
 
         syncDataProviders = SyncDataProviders(bookmarksDatabase: bookmarksDatabase, secureVaultErrorReporter: SecureVaultErrorReporter.shared)
         let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog, environment: environment)

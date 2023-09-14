@@ -55,7 +55,13 @@ class ReturnUserMeasurement {
         var query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: Self.SecureATBKeychainName,
-            kSecValueData as String: data
+            kSecValueData as String: data,
+
+            // We expect to only need access when the app is in the foreground and we want it to be migrated to new devices.
+            kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlocked,
+
+            // Just to be explicit that we don't want this stored in the cloud
+            kSecAttrSynchronizable as String: false
         ]
 
         var status = SecItemAdd(query as CFDictionary, nil)
@@ -65,10 +71,10 @@ class ReturnUserMeasurement {
             ]
             query.removeValue(forKey: kSecValueData as String)
             status = SecItemUpdate(query as CFDictionary, attributesToUpdate as CFDictionary)
-            if status != noErr {
+            if status != errSecSuccess {
                 fireDebugPixel(.debugReturnUserUpdateATB, errorCode: status)
             }
-        } else if status != noErr {
+        } else if status != errSecSuccess {
             fireDebugPixel(.debugReturnUserAddATB, errorCode: status)
         }
 
@@ -84,7 +90,7 @@ class ReturnUserMeasurement {
 
         var dataTypeRef: AnyObject?
         let status: OSStatus = SecItemCopyMatching(query as CFDictionary, &dataTypeRef)
-        if ![noErr, errSecItemNotFound].contains(status) {
+        if ![errSecSuccess, errSecItemNotFound].contains(status) {
             fireDebugPixel(.debugReturnUserReadATB, errorCode: status)
         }
 

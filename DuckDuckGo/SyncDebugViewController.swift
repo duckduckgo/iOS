@@ -168,6 +168,7 @@ class SyncDebugViewController: UITableViewController {
             case .toggle:
                 let targetEnvironment: ServerEnvironment = sync.serverEnvironment == .production ? .development : .production
                 sync.updateServerEnvironment(targetEnvironment)
+                UserDefaults.standard.set(targetEnvironment.description, forKey: UserDefaultsWrapper<String>.Key.syncEnvironment.rawValue)
                 tableView.reloadSections(.init(integer: indexPath.section), with: .automatic)
             default: break
             }
@@ -177,15 +178,4 @@ class SyncDebugViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
-}
-
-extension ServerEnvironment: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .development:
-            return "Development"
-        case .production:
-            return "Production"
-        }
-    }
 }

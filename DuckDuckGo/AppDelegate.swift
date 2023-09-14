@@ -200,7 +200,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         syncDataProviders = SyncDataProviders(bookmarksDatabase: bookmarksDatabase, secureVaultErrorReporter: SecureVaultErrorReporter.shared)
         let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog, environment: environment)
-        syncService.initializeIfNeeded(isInternalUser: InternalUserStore().isInternalUser)
+        syncService.initializeIfNeeded()
         self.syncService = syncService
 
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
@@ -267,7 +267,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 
-        syncService.initializeIfNeeded(isInternalUser: InternalUserStore().isInternalUser)
+        syncService.initializeIfNeeded()
         syncDataProviders.setUpDatabaseCleanersIfNeeded(syncService: syncService)
 
         if !(overlayWindow?.rootViewController is AuthenticationViewController) {

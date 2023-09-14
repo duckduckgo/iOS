@@ -200,7 +200,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let environment = ServerEnvironment(
             UserDefaultsWrapper(
                 key: .syncEnvironment,
-                defaultValue: ServerEnvironment.production.description
+                defaultValue: defaultEnvironment.description
             ).wrappedValue
         ) ?? defaultEnvironment
 

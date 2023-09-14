@@ -66,7 +66,7 @@ class ReturnUserMeasurement {
 
         var status = SecItemAdd(query as CFDictionary, nil)
         if status == errSecDuplicateItem {
-            let attributesToUpdate = [
+            let attributesToUpdate: [String: Any] = [
                 kSecValueData as String: data
             ]
             query.removeValue(forKey: kSecValueData as String)

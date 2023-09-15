@@ -30,7 +30,8 @@ public final class SyncSettingsAdapter {
     public private(set) var emailManager: EmailManager?
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
 
-    public init() {
+    public init(settingHandlers: [SettingSyncHandler]) {
+        self.settingHandlers = settingHandlers
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
     }
 
@@ -47,6 +48,7 @@ public final class SyncSettingsAdapter {
             metadataDatabase: metadataDatabase,
             metadataStore: metadataStore,
             emailManager: emailManager,
+            userDefaultsHandlers: settingHandlers,
             syncDidUpdateData: { [weak self] in
                 self?.syncDidCompleteSubject.send()
             }
@@ -77,6 +79,7 @@ public final class SyncSettingsAdapter {
         self.emailManager = emailManager
     }
 
+    private let settingHandlers: [SettingSyncHandler]
     private var syncDidCompleteSubject = PassthroughSubject<Void, Never>()
     private var syncErrorCancellable: AnyCancellable?
 }

@@ -36,7 +36,7 @@ public class AppUserDefaults: AppSettings {
 
     private let groupName: String
 
-    private struct Keys {
+    struct Keys {
         static let autocompleteKey = "com.duckduckgo.app.autocompleteDisabledKey"
         static let currentThemeNameKey = "com.duckduckgo.app.currentThemeNameKey"
         
@@ -183,16 +183,13 @@ public class AppUserDefaults: AppSettings {
 
     var favoritesDisplayMode: FavoritesDisplayMode {
         get {
-            if let string = userDefaults?.string(forKey: Keys.favoritesDisplayMode),
-               let favoritesDisplayMode = FavoritesDisplayMode(rawValue: string) {
-
-                return favoritesDisplayMode
-            } else {
-                return .displayNative(.mobile)
+            guard let string = userDefaults?.string(forKey: Keys.favoritesDisplayMode), let favoritesDisplayMode = FavoritesDisplayMode(string) else {
+                return .default
             }
+            return favoritesDisplayMode
         }
         set {
-            userDefaults?.setValue(newValue.rawValue, forKey: Keys.favoritesDisplayMode)
+            userDefaults?.setValue(newValue.description, forKey: Keys.favoritesDisplayMode)
         }
     }
 
@@ -324,10 +321,10 @@ extension AppUserDefaults: AppConfigurationFetchStatistics {
     }
 }
 
-extension FavoritesDisplayMode {
-    static let availableConfigurations = [FavoritesDisplayMode.displayNative(.mobile), .displayAll(native: .mobile)]
+extension FavoritesDisplayMode: LosslessStringConvertible {
+    static let `default` = FavoritesDisplayMode.displayNative(.mobile)
 
-    var rawValue: String {
+    public var description: String {
         switch self {
         case .displayNative:
             return "displayNative"
@@ -336,32 +333,14 @@ extension FavoritesDisplayMode {
         }
     }
 
-    init?(rawValue: String) {
-        switch rawValue {
+    public init?(_ description: String) {
+        switch description {
         case "displayNative":
             self = .displayNative(.mobile)
         case "displayAll":
             self = .displayAll(native: .mobile)
         default:
             return nil
-        }
-    }
-
-    var displayString: String {
-        switch self {
-        case .displayNative:
-            return UserText.favoritesDisplayPreferencesMobileOnly
-        case .displayAll:
-            return UserText.favoritesDisplayPreferencesAllDevices
-        }
-    }
-
-    var image: UIImage {
-        switch self {
-        case .displayNative:
-            return #imageLiteral(resourceName: "MobileDevices")
-        case .displayAll:
-            return #imageLiteral(resourceName: "AllDevices")
         }
     }
 }

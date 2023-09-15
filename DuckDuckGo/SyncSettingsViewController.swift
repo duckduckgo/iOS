@@ -50,25 +50,12 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     var cancellables = Set<AnyCancellable>()
 
     // For some reason, on iOS 14, the viewDidLoad wasn't getting called so do some setup here
-    convenience init() {
-        let appSettings = AppDependencyProvider.shared.appSettings
+    convenience init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
         let viewModel = SyncSettingsViewModel()
 
         self.init(rootView: SyncSettingsView(model: viewModel))
 
-        viewModel.isUnifiedFavoritesEnabled = {
-            if case .displayAll = appSettings.favoritesDisplayMode {
-                return true
-            }
-            return false
-        }()
-
-        viewModel.$isUnifiedFavoritesEnabled.dropFirst()
-            .sink { isEnabled in
-                appSettings.favoritesDisplayMode = isEnabled ? .displayAll(native: .mobile) : .displayNative(.mobile)
-            }
-            .store(in: &cancellables)
-
+        setUpFavoritesDisplayModeSwitch(viewModel, appSettings)
         refreshForState(syncService.authState)
 
         syncService.authStatePublisher
@@ -83,6 +70,31 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         navigationItem.title = UserText.syncTitle
     }
 
+    private func setUpFavoritesDisplayModeSwitch(_ viewModel: SyncSettingsViewModel, _ appSettings: AppSettings) {
+        viewModel.isUnifiedFavoritesEnabled = appSettings.favoritesDisplayMode.isDisplayAll
+
+        viewModel.$isUnifiedFavoritesEnabled.dropFirst()
+            .sink { [weak self] isEnabled in
+                appSettings.favoritesDisplayMode = isEnabled ? .displayAll(native: .mobile) : .displayNative(.mobile)
+                NotificationCenter.default.post(name: AppUserDefaults.Notifications.favoritesDisplayModeChange, object: self)
+                self?.syncService.scheduler.notifyDataChanged()
+            }
+            .store(in: &cancellables)
+
+        NotificationCenter.default.publisher(for: AppUserDefaults.Notifications.favoritesDisplayModeChange)
+            .filter { [weak self] notification in
+                guard let viewController = notification.object as? SyncSettingsViewController else {
+                    return true
+                }
+                return viewController !== self
+            }
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                viewModel.isUnifiedFavoritesEnabled = appSettings.favoritesDisplayMode.isDisplayAll
+            }
+            .store(in: &cancellables)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         applyTheme(ThemeManager.shared.currentTheme)
@@ -91,6 +103,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         connector = nil
+        syncService.scheduler.requestSyncImmediately()
     }
 
     func refreshForState(_ authState: SyncAuthState) {

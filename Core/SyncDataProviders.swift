@@ -84,14 +84,15 @@ public class SyncDataProviders: DataProvidersSource {
     public init(
         bookmarksDatabase: CoreDataDatabase,
         secureVaultFactory: AutofillVaultFactory = AutofillSecureVaultFactory,
-        secureVaultErrorReporter: SecureVaultErrorReporting
+        secureVaultErrorReporter: SecureVaultErrorReporting,
+        settingHandlers: [SettingSyncHandler]
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.secureVaultFactory = secureVaultFactory
         self.secureVaultErrorReporter = secureVaultErrorReporter
         bookmarksAdapter = SyncBookmarksAdapter(database: bookmarksDatabase)
         credentialsAdapter = SyncCredentialsAdapter(secureVaultFactory: secureVaultFactory, secureVaultErrorReporter: secureVaultErrorReporter)
-        settingsAdapter = SyncSettingsAdapter()
+        settingsAdapter = SyncSettingsAdapter(settingHandlers: settingHandlers)
     }
 
     private func initializeMetadataDatabaseIfNeeded() {

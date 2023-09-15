@@ -214,7 +214,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ).wrappedValue
         ) ?? defaultEnvironment
 
-        syncDataProviders = SyncDataProviders(bookmarksDatabase: bookmarksDatabase, secureVaultErrorReporter: SecureVaultErrorReporter.shared)
+        syncDataProviders = SyncDataProviders(
+            bookmarksDatabase: bookmarksDatabase,
+            secureVaultErrorReporter: SecureVaultErrorReporter.shared,
+            settingHandlers: [FavoritesDisplayModeSyncHandler()]
+        )
         let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog, environment: environment)
         syncService.initializeIfNeeded()
         self.syncService = syncService

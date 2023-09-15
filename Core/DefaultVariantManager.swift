@@ -46,21 +46,32 @@ public struct VariantIOS: Variant {
             return false
         }
     }
-    
+
+    /// This variant is used for returning users to separate them from really new users.
+    static let returningUser = VariantIOS(name: "ru", weight: doNotAllocate, isIncluded: When.always, features: [])
+
     static let doNotAllocate = 0
-    
-    // Note: Variants with `doNotAllocate` weight, should always be included so that previous installations are unaffected
+
+    /// The list of cohorts in active ATB experiments.
+    ///
+    /// Variants set to `doNotAllocate` are active, but not adding users to a new cohort, do not change them unless you're sure the experiment is finished.
     public static let defaultVariants: [Variant] = [
-        // SERP testing
         VariantIOS(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
-        VariantIOS(name: "se", weight: doNotAllocate, isIncluded: When.always, features: [])
-        
+        VariantIOS(name: "se", weight: doNotAllocate, isIncluded: When.always, features: []),
+        returningUser
     ]
-    
+
+    /// The name of the variant.  Shuld be a two character string like `ma` or `mb`
     public var name: String
+
+    /// The relative weight of this variant, e.g. if two variants have the same weight they will get 50% of the cohorts each.
     public var weight: Int
+
+    /// Function to determine inclusion, e.g. if you want to only run an experiment on English users use `When.inEnglish`
     public var isIncluded: () -> Bool
+
+    /// The experimental feature(s) being tested.
     public var features: [FeatureName]
 
 }
@@ -81,13 +92,26 @@ public class DefaultVariantManager: VariantManager {
     private let variants: [Variant]
     private let storage: StatisticsStore
     private let rng: VariantRNG
+    private let returningUserMeasurement: ReturnUserMeasurement
     
-    public init(variants: [Variant] = VariantIOS.defaultVariants,
-                storage: StatisticsStore = StatisticsUserDefaults(),
-                rng: VariantRNG = Arc4RandomUniformVariantRNG()) {
+    init(variants: [Variant],
+         storage: StatisticsStore,
+         rng: VariantRNG,
+         returningUserMeasurement: ReturnUserMeasurement) {
+
         self.variants = variants
         self.storage = storage
         self.rng = rng
+        self.returningUserMeasurement = returningUserMeasurement
+    }
+
+    public convenience init() {
+        self.init(
+            variants: VariantIOS.defaultVariants,
+            storage: StatisticsUserDefaults(),
+            rng: Arc4RandomUniformVariantRNG(),
+            returningUserMeasurement: KeychainReturnUserMeasurement()
+        )
     }
 
     public func isSupported(feature: FeatureName) -> Bool {
@@ -118,6 +142,10 @@ public class DefaultVariantManager: VariantManager {
     }
     
     private func selectVariant() -> Variant? {
+        if returningUserMeasurement.isReturningUser {
+            return VariantIOS.returningUser
+        }
+
         let totalWeight = variants.reduce(0, { $0 + $1.weight })
         let randomPercent = rng.nextInt(upperBound: totalWeight)
         

@@ -908,9 +908,11 @@ extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
         // reload the UI
         tableView.reloadData()
 
+        let message = UserText.bookmarkDeleted.format(arguments: title)
+
         // capture this stuff locally because this VC might have been closed when undo gets pressed
         let localViewModel = self.viewModel
-        ActionMessageView.present(message: UserText.bookmarkDeleted, actionTitle: UserText.actionGenericUndo) { [weak self] in
+        ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo) { [weak self] in
             // re-create it
             localViewModel.createBookmark(title: title,
                                           url: url,

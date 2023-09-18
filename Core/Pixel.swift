@@ -210,20 +210,25 @@ extension Pixel {
                             onComplete: @escaping (Error?) -> Void = { _ in }) {
         var newParams = params
         if let error {
-            let nsError = error as NSError
-
-            newParams[PixelParameters.errorCode] = "\(nsError.code)"
-            newParams[PixelParameters.errorDomain] = nsError.domain
-
-            if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError {
-                newParams[PixelParameters.underlyingErrorCode] = "\(underlyingError.code)"
-                newParams[PixelParameters.underlyingErrorDomain] = underlyingError.domain
-            } else if let sqlErrorCode = nsError.userInfo["NSSQLiteErrorDomain"] as? NSNumber {
-                newParams[PixelParameters.underlyingErrorCode] = "\(sqlErrorCode.intValue)"
-                newParams[PixelParameters.underlyingErrorDomain] = "NSSQLiteErrorDomain"
-            }
+            newParams.appendErrorPixelParams(error: error)
         }
-        
         fire(pixel: pixel, withAdditionalParameters: newParams, includedParameters: [], onComplete: onComplete)
+    }
+}
+
+extension Dictionary where Key == String, Value == String {
+    mutating func appendErrorPixelParams(error: Error) {
+        let nsError = error as NSError
+
+        self[PixelParameters.errorCode] = "\(nsError.code)"
+        self[PixelParameters.errorDomain] = nsError.domain
+
+        if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError {
+            self[PixelParameters.underlyingErrorCode] = "\(underlyingError.code)"
+            self[PixelParameters.underlyingErrorDomain] = underlyingError.domain
+        } else if let sqlErrorCode = nsError.userInfo["NSSQLiteErrorDomain"] as? NSNumber {
+            self[PixelParameters.underlyingErrorCode] = "\(sqlErrorCode.intValue)"
+            self[PixelParameters.underlyingErrorDomain] = "NSSQLiteErrorDomain"
+        }
     }
 }

@@ -65,6 +65,7 @@ public final class DailyPixel {
     /// This means a pixel will get sent twice the first time it is called per-day, and subsequent calls that day will only send the `_c` variant.
     /// This is useful in situations where pixels receive spikes in volume, as the daily pixel can be used to determine how many users are actually affected.
     public static func fireDailyAndCount(pixel: Pixel.Event,
+                                         error: Swift.Error? = nil,
                                          withAdditionalParameters params: [String: String] = [:],
                                          onDailyComplete: @escaping (Swift.Error?) -> Void = { _ in },
                                          onCountComplete: @escaping (Swift.Error?) -> Void = { _ in }) {
@@ -74,7 +75,11 @@ public final class DailyPixel {
             onDailyComplete(Error.alreadyFired)
         }
         updatePixelLastFireDate(pixel: pixel)
-        Pixel.fire(pixelNamed: pixel.name + "_c", withAdditionalParameters: params, onComplete: onCountComplete)
+        var newParams = params
+        if let error {
+            newParams.appendErrorPixelParams(error: error)
+        }
+        Pixel.fire(pixelNamed: pixel.name + "_c", withAdditionalParameters: newParams, onComplete: onCountComplete)
     }
     
     private static func updatePixelLastFireDate(pixel: Pixel.Event) {

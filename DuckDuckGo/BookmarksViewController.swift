@@ -367,8 +367,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                                           _ completion: @escaping (Bool) -> Void) {
 
         func delete() {
+            showBookmarkDeletedMessage(bookmark)
             let domains = domainsInBookmarkTree(bookmark)
-
             let oldCount = viewModel.bookmarks.count
             viewModel.softDeleteBookmark(bookmark)
             let newCount = viewModel.bookmarks.count
@@ -379,7 +379,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             } else {
                 tableView.reloadSections([indexPath.section], with: .none)
             }
-            refreshFooterView()
+            refreshAll()
 
             removeUnusedFaviconsForDomains(domains)
         }
@@ -773,6 +773,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         emptyStateContainer.isHidden = true
         importFooterButton.isHidden = true
         importFooterButton.isEnabled = false
+        tableView.addSubview(searchBar)
         tableView.tableHeaderView = searchBar
     }
 
@@ -887,10 +888,18 @@ extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
     }
 
     func deleteBookmark(_: AddOrEditBookmarkViewController, entityID: NSManagedObjectID) {
+        guard let bookmark = viewModel.bookmark(with: entityID) else {
+            assertionFailure()
+            return
+        }
+        showBookmarkDeletedMessage(bookmark)
+        viewModel.softDeleteBookmark(bookmark)
+        refreshFooterView()
+        tableView.reloadData()
+    }
 
-        // capture the required details
-        guard let bookmark = viewModel.bookmark(with: entityID),
-              let parent = bookmark.parent,
+    func showBookmarkDeletedMessage(_ bookmark: BookmarkEntity) {
+        guard let parent = bookmark.parent,
               let index = parent.childrenArray.firstIndex(of: bookmark),
               let title = bookmark.title,
               let url = bookmark.url else {
@@ -902,16 +911,9 @@ extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
         let favoritesFolder = bookmark.favoriteFolder
         let favoritesIndex = favoritesFolder?.favoritesArray.firstIndex(of: bookmark)
 
-        // delete it
-        viewModel.softDeleteBookmark(bookmark)
-
-        // reload the UI
-        tableView.reloadData()
-
-        let message = UserText.bookmarkDeleted
-
-        // capture this stuff locally because this VC might have been closed when undo gets pressed
+        // capture this locally because this VC might have been closed when undo gets pressed
         let localViewModel = self.viewModel
+        let message = UserText.bookmarkDeleted
         ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo) { [weak self] in
             // re-create it
             localViewModel.createBookmark(title: title,
@@ -922,6 +924,7 @@ extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
                                           favoritesIndex: favoritesIndex)
 
             self?.tableView.reloadData()
+            self?.refreshAll()
         } onDidDismiss: {
             // no-op
         }

@@ -42,6 +42,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private let viewModel: AutofillLoginListViewModel
     private let emptyView = AutofillItemsEmptyView()
     private let lockedView = AutofillItemsLockedView()
+    private let enableAutofillFooterView = AutofillSettingsEnableFooterView()
     private let emptySearchView = AutofillEmptySearchView()
     private let noAuthAvailableView = AutofillNoAuthAvailableView()
     private let tld: TLD = AppDependencyProvider.shared.storageCache.tld
@@ -73,6 +74,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.estimatedRowHeight = 60
+        tableView.estimatedSectionFooterHeight = 40
         tableView.registerCell(ofType: AutofillListItemTableViewCell.self)
         tableView.registerCell(ofType: EnableAutofillSettingsTableViewCell.self)
         // Have to set tableHeaderView height otherwise tableView content will jump when adding / removing searchController due to tableView insetGrouped style
@@ -479,6 +481,8 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
         switch viewModel.viewState {
         case .empty:
             return emptyView
+        case .showItems:
+            return viewModel.sections[section] == .enableAutofill ? enableAutofillFooterView : nil
         default:
             return nil
         }
@@ -489,7 +493,10 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
         case .empty:
             return max(tableView.bounds.height - tableView.contentSize.height, 250)
         case .showItems:
-            return 10
+            if viewModel.sections[section] == .enableAutofill {
+                return enableAutofillFooterView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+            }
+            return 10.0
         default:
             return 0
         }

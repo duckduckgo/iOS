@@ -306,6 +306,9 @@ extension Pixel {
         case onboardingSetDefaultOpened
         case onboardingSetDefaultSkipped
 
+        // MARK: Return user measurement
+        case returnUser
+
         // MARK: debug pixels
         case dbCrashDetected
 
@@ -392,7 +395,12 @@ extension Pixel {
         case debugCantSaveBookmarkFix
 
         case debugCannotClearObservationsDatabase
-        
+
+        // Return user measurement
+        case debugReturnUserReadATB
+        case debugReturnUserAddATB
+        case debugReturnUserUpdateATB
+
         // Errors from Bookmarks Module
         case bookmarkFolderExpected
         case bookmarksListIndexNotMatchingBookmark
@@ -445,6 +453,8 @@ extension Pixel {
         case emailIncontextModalDismissed
         case emailIncontextModalExitEarly
         case emailIncontextModalExitEarlyContinue
+
+        case incrementalRolloutTest
     }
     
 }
@@ -881,6 +891,14 @@ extension Pixel.Event {
         case .emailIncontextModalDismissed: return "m_email_incontext_modal_dismissed"
         case .emailIncontextModalExitEarly: return "m_email_incontext_modal_exit_early"
         case .emailIncontextModalExitEarlyContinue: return "m_email_incontext_modal_exit_early_continue"
+
+        // MARK: - Return user measurement
+        case .returnUser: return "m_return_user"
+        case .debugReturnUserAddATB: return "m_debug_return_user_add_atb"
+        case .debugReturnUserReadATB: return "m_debug_return_user_read_atb"
+        case .debugReturnUserUpdateATB: return "m_debug_return_user_update_atb"
+
+        case .incrementalRolloutTest: return "m_autofill_incremental_rollout_test"
         }
         
     }

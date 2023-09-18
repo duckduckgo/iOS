@@ -668,7 +668,7 @@
 "bookmark.delete.alert.title" = "Delete?";
 
 /* The message shown after a bookmark has been deleted */
-"bookmark.deleted.toast" = "Deleted \"%@\"";
+"bookmark.deleted.toast" = "Bookmark deleted";
 
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Delete";

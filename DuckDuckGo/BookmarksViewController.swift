@@ -908,7 +908,7 @@ extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
         // reload the UI
         tableView.reloadData()
 
-        let message = UserText.bookmarkDeleted.format(arguments: title)
+        let message = UserText.bookmarkDeleted
 
         // capture this stuff locally because this VC might have been closed when undo gets pressed
         let localViewModel = self.viewModel

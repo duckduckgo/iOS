@@ -8893,8 +8893,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "anya/ios-phased-rollout-feature-flag-dry-run";
-				kind = branch;
+				kind = exactVersion;
+				version = 78.2.0;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

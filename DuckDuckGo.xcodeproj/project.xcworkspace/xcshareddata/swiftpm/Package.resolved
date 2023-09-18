@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "anya/autofill-ios-prompt-deduplication",
-          "revision": "d7d074305845d89cdfad5d99c0d0aa41f8528aa5",
-          "version": null
+          "branch": null,
+          "revision": "8ba1d3b7f3e2291fc344cd5b83b66c1336e35a32",
+          "version": "78.2.0"
         }
       },
       {

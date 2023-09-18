@@ -8,6 +8,13 @@ on:
         required: true
         default: "Latest Alpha Group"
         type: string
+  workflow_call:
+    inputs:
+      destination:
+        description: "TestFlight Group"
+        required: true
+        default: "Latest Alpha Group"
+        type: string
 
 jobs:
   make-alpha:

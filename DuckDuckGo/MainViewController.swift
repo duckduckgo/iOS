@@ -1908,31 +1908,38 @@ extension MainViewController: AutoClearWorker {
     func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil, showNextDaxDialog: Bool = false) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
-        
-        self.tabCountInfo = tabManager.makeTabCountInfo()
-        
-        tabManager.prepareAllTabsExceptCurrentForDataClearing()
-        
-        fireButtonAnimator.animate {
-            self.tabManager.prepareCurrentTabForDataClearing()
-            
-            self.stopAllOngoingDownloads()
-            self.forgetData()
-            DaxDialogs.shared.resumeRegularFlow()
-            self.forgetTabs()
-        } onTransitionCompleted: {
-            ActionMessageView.present(message: UserText.actionForgetAllDone)
-            transitionCompletion?()
-        } completion: {
-            Instruments.shared.endTimedEvent(for: spid)
-            if showNextDaxDialog {
-                self.homeController?.showNextDaxDialog()
-            } else if KeyboardSettings().onNewTab {
-                let showKeyboardAfterFireButton = DispatchWorkItem {
-                    self.enterSearch()
+
+        for tab in tabManager.model.tabs {
+            closeTab(tab)
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+
+            self.tabCountInfo = self.tabManager.makeTabCountInfo()
+
+            self.tabManager.prepareAllTabsExceptCurrentForDataClearing()
+
+            self.fireButtonAnimator.animate {
+                self.tabManager.prepareCurrentTabForDataClearing()
+
+                self.stopAllOngoingDownloads()
+                self.forgetData()
+                DaxDialogs.shared.resumeRegularFlow()
+                self.forgetTabs()
+            } onTransitionCompleted: {
+                ActionMessageView.present(message: UserText.actionForgetAllDone)
+                transitionCompletion?()
+            } completion: {
+                Instruments.shared.endTimedEvent(for: spid)
+                if showNextDaxDialog {
+                    self.homeController?.showNextDaxDialog()
+                } else if KeyboardSettings().onNewTab {
+                    let showKeyboardAfterFireButton = DispatchWorkItem {
+                        self.enterSearch()
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: showKeyboardAfterFireButton)
+                    self.showKeyboardAfterFireButton = showKeyboardAfterFireButton
                 }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: showKeyboardAfterFireButton)
-                self.showKeyboardAfterFireButton = showKeyboardAfterFireButton
             }
         }
     }

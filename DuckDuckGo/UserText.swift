@@ -398,7 +398,7 @@ public struct UserText {
     public static let autofillSaveLoginTitle = NSLocalizedString("autofill.save-login.title", value: "Save Login?", comment: "Title displayed on modal asking for the user to save the login")
     public static let autofillUpdateUsernameTitle = NSLocalizedString("autofill.update-usernamr.title", value: "Update username?", comment: "Title displayed on modal asking for the user to update the username")
 
-    public static let autofillSaveLoginMessageNewUser = NSLocalizedString("autofill.save-login.new-user.message", value: "Logins are stored securely on your device, and can be managed from the Logins menu in Settings.", comment: "Message displayed on modal asking for the user to save the login for the first time")
+    public static let autofillSaveLoginMessageNewUser = NSLocalizedString("autofill.save-login.new-user.message", value: "Logins are stored securely on your device in the Logins menu.", comment: "Message displayed on modal asking for the user to save the login for the first time")
     public static let autofillSaveLoginNotNowCTA = NSLocalizedString("autofill.save-login.not-now.CTA", value: "Not Now", comment: "Cancel CTA displayed on modal asking for the user to save the login")
    
     public static let autofillSavePasswordTitle = NSLocalizedString("autofill.save-password.title", value: "Save Password?", comment: "Title displayed on modal asking for the user to save the password")
@@ -752,9 +752,9 @@ In addition to the details entered into this form, your app issue report will co
     public static let autofillNavigationButtonItemTitleClose = NSLocalizedString("autofill.logins.list.close-title", value:"Close", comment: "Title for close navigation button")
 
     // Autofill Password Generation Prompt
-    public static let autofillPasswordGenerationPromptTitle = NSLocalizedString("autofill.password-generation-prompt.title", value:"Use generated password from DuckDuckGo?", comment: "Title for prompt to use suggested strong password for creating a login")
-    public static let autofillPasswordGenerationPromptSubtitle = NSLocalizedString("autofill.password-generation-prompt.subtitle", value:"Password will be saved in Logins.", comment: "Subtitle for prompt to use suggested strong password for creating a login")
-    public static let autofillPasswordGenerationPromptUseGeneratedPasswordCTA = NSLocalizedString("autofill.password-generation-prompt.use-generated-password.cta", value:"Use Generated Password", comment: "Button title choosing to use the suggested generated password for creating a login")
+    public static let autofillPasswordGenerationPromptTitle = NSLocalizedString("autofill.password-generation-prompt.title", value:"Use a strong password from DuckDuckGo?", comment: "Title for prompt to use suggested strong password for creating a login")
+    public static let autofillPasswordGenerationPromptSubtitle = NSLocalizedString("autofill.password-generation-prompt.subtitle", value:"Passwords are stored securely on your device in the Logins menu.", comment: "Subtitle for prompt to use suggested strong password for creating a login")
+    public static let autofillPasswordGenerationPromptUseGeneratedPasswordCTA = NSLocalizedString("autofill.password-generation-prompt.use-generated-password.cta", value:"Use Strong Password", comment: "Button title choosing to use the suggested generated password for creating a login")
     public static let autofillPasswordGenerationPromptUseOwnPasswordCTA = NSLocalizedString("autofill.password-generation-prompt.use-own-password.cta", value:"Create My Own", comment: "Button title choosing to use own password for creating a login")
 
     // Autofill Email Management

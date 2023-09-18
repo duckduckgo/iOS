@@ -107,15 +107,13 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 params[PixelParameters.line] = String(line)
                 pixelError = error
             }
-            Pixel.fire(pixel: pixelEvent, error: pixelError, withAdditionalParameters: params)
-            DailyPixel.fire(pixel: pixelEvent, withAdditionalParameters: params)
+            DailyPixel.fireDailyAndCount(pixel: pixelEvent, error: pixelError, withAdditionalParameters: params)
         }
     }
 
     public override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
         super.startTunnel(options: options) { error in
-            Pixel.fire(pixel: .networkProtectionFailedToStartTunnel, error: error)
-            DailyPixel.fire(pixel: .networkProtectionFailedToStartTunnel)
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionFailedToStartTunnel, error: error)
             completionHandler(error)
         }
     }

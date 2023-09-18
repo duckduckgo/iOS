@@ -83,8 +83,7 @@ extension EventMapping where Event == NetworkProtectionError {
             pixelEvent = .networkProtectionUnhandledError
         }
 
-        Pixel.fire(pixel: pixelEvent, error: pixelError, withAdditionalParameters: params)
-        DailyPixel.fire(pixel: pixelEvent, withAdditionalParameters: params)
+        DailyPixel.fireDailyAndCount(pixel: pixelEvent, error: pixelError, withAdditionalParameters: params)
     }
 }
 

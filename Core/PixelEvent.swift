@@ -400,7 +400,7 @@ extension Pixel {
         case debugReturnUserReadATB
         case debugReturnUserAddATB
         case debugReturnUserUpdateATB
-        
+
         // Errors from Bookmarks Module
         case bookmarkFolderExpected
         case bookmarksListIndexNotMatchingBookmark
@@ -453,6 +453,8 @@ extension Pixel {
         case emailIncontextModalDismissed
         case emailIncontextModalExitEarly
         case emailIncontextModalExitEarlyContinue
+
+        case incrementalRolloutTest
     }
     
 }
@@ -896,6 +898,7 @@ extension Pixel.Event {
         case .debugReturnUserReadATB: return "m_debug_return_user_read_atb"
         case .debugReturnUserUpdateATB: return "m_debug_return_user_update_atb"
 
+        case .incrementalRolloutTest: return "m_autofill_incremental_rollout_test"
         }
         
     }

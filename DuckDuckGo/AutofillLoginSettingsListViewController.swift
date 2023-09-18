@@ -149,7 +149,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if viewModel.authenticator.canAuthenticate() {
+        if viewModel.authenticator.canAuthenticate() && viewModel.authenticator.state == .loggedIn {
             AppDependencyProvider.shared.autofillLoginSession.startSession()
         }
     }

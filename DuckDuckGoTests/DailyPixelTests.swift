@@ -92,10 +92,179 @@ final class DailyPixelTests: XCTestCase {
         
         wait(for: [expectation], timeout: 3.0)
     }
+
+    func testThatDailyPixelWithCountFiresCorrectlyForTheFirstTime() {
+        let countExpectation = XCTestExpectation()
+        let dailyExpectation = XCTestExpectation()
+
+        stub(condition: isHost(host)) { _ -> HTTPStubsResponse in
+            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+        }
+
+        DailyPixel.fireDailyAndCount(
+            pixel: .forgetAllPressedBrowsing,
+            onDailyComplete: { error in
+                XCTAssertNil(error)
+                dailyExpectation.fulfill()
+
+            },
+            onCountComplete: { error in
+                XCTAssertNil(error)
+                countExpectation.fulfill()
+            }
+        )
+
+        wait(for: [countExpectation, dailyExpectation], timeout: 3.0)
+    }
+
+    func testThatDailyPixelWithCount_DailyFiresForTheFirstTimeButNotForTheSecond() {
+        let expectation = XCTestExpectation()
+        expectation.expectedFulfillmentCount = 2
+
+        stub(condition: isHost(host)) { _ -> HTTPStubsResponse in
+            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+        }
+
+        DailyPixel.fireDailyAndCount(
+            pixel: .forgetAllPressedBrowsing,
+            onDailyComplete: { error in
+                XCTAssertNil(error)
+                expectation.fulfill()
+            }
+        )
+
+        DailyPixel.fireDailyAndCount(
+            pixel: .forgetAllPressedBrowsing,
+            onDailyComplete: { error in
+                XCTAssertNotNil(error)
+                XCTAssertEqual(error as? DailyPixel.Error, .alreadyFired)
+                expectation.fulfill()
+            }
+        )
+
+        wait(for: [expectation], timeout: 3.0)
+    }
+
+    func testThatDailyPixelWithCountBubblesUpNetworkErrors() {
+        let countExpectation = XCTestExpectation()
+        let dailyExpectation = XCTestExpectation()
+
+        stub(condition: isHost(host)) { _ -> HTTPStubsResponse in
+            return HTTPStubsResponse(error: TestError.testError)
+        }
+
+        DailyPixel.fireDailyAndCount(
+            pixel: .forgetAllPressedBrowsing,
+            onDailyComplete: { error in
+                XCTAssertNotNil(error)
+                dailyExpectation.fulfill()
+            },
+            onCountComplete: { error in
+                XCTAssertNotNil(error)
+                countExpectation.fulfill()
+            }
+        )
+
+        wait(for: [countExpectation, dailyExpectation], timeout: 3.0)
+    }
+
+    func testThatDailyPixelWithCount_CountFiresBothTimes() {
+        let expectation = XCTestExpectation()
+        expectation.expectedFulfillmentCount = 2
+
+        stub(condition: isHost(host)) { _ -> HTTPStubsResponse in
+            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+        }
+
+        DailyPixel.fireDailyAndCount(
+            pixel: .forgetAllPressedBrowsing,
+            onCountComplete: { error in
+                XCTAssertNil(error)
+                expectation.fulfill()
+            }
+        )
+
+        DailyPixel.fireDailyAndCount(
+            pixel: .forgetAllPressedBrowsing,
+            onCountComplete: { error in
+                XCTAssertNil(error)
+                expectation.fulfill()
+            }
+        )
+
+        wait(for: [expectation], timeout: 3.0)
+    }
+
+    func testThatDailyPixelWithCountWillFireIfFiredPreviouslyOnDifferentDay() {
+        let expectation = XCTestExpectation()
+
+        stub(condition: isHost(host)) { _ -> HTTPStubsResponse in
+            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+        }
+
+        updateLastFireDateToYesterday(for: .forgetAllPressedBrowsing)
+
+        DailyPixel.fireDailyAndCount(
+            pixel: .forgetAllPressedBrowsing,
+            onDailyComplete: { error in
+                XCTAssertNil(error)
+                expectation.fulfill()
+            }
+        )
+
+        wait(for: [expectation], timeout: 3.0)
+    }
+
+    func testThatDailyPixelWithCountWillAppendDToPixelNameForDaily() {
+        let expectation = XCTestExpectation()
+
+        stub { request in
+            request.url?.absoluteString.contains(Pixel.Event.forgetAllPressedBrowsing.name + "_d") == true
+        } response: { _ in
+            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+        }
+
+        updateLastFireDateToYesterday(for: .forgetAllPressedBrowsing)
+
+        DailyPixel.fireDailyAndCount(
+            pixel: .forgetAllPressedBrowsing,
+            onCountComplete: { error in
+                XCTAssertNil(error)
+                expectation.fulfill()
+            }
+        )
+
+        wait(for: [expectation], timeout: 3.0)
+    }
+
+    func testThatDailyPixelWithCountWillAppendCToPixelNameForCount() {
+        let expectation = XCTestExpectation()
+
+        stub { request in
+            request.url?.absoluteString.contains(Pixel.Event.forgetAllPressedBrowsing.name + "_c") == true
+        } response: { _ in
+            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+        }
+
+        updateLastFireDateToYesterday(for: .forgetAllPressedBrowsing)
+
+        DailyPixel.fireDailyAndCount(
+            pixel: .forgetAllPressedBrowsing,
+            onDailyComplete: { error in
+                XCTAssertNil(error)
+                expectation.fulfill()
+            }
+        )
+
+        wait(for: [expectation], timeout: 3.0)
+    }
     
     private func updateLastFireDateToYesterday(for pixel: Pixel.Event) {
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())
         dailyPixelStorage.set(yesterday, forKey: pixel.name)
     }
-    
+
+    private enum TestError: Error {
+        case testError
+    }
 }

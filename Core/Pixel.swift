@@ -150,7 +150,24 @@ public class Pixel {
                             withHeaders headers: APIRequest.Headers = APIRequest.Headers(),
                             includedParameters: [QueryParameters] = [.atb, .appVersion],
                             onComplete: @escaping (Error?) -> Void = { _ in }) {
-        
+        fire(
+            pixelNamed: pixel.name,
+            forDeviceType: deviceType,
+            withAdditionalParameters: params,
+            allowedQueryReservedCharacters: allowedQueryReservedCharacters,
+            withHeaders: headers,
+            includedParameters: includedParameters,
+            onComplete: onComplete
+        )
+    }
+
+    public static func fire(pixelNamed pixelName: String,
+                            forDeviceType deviceType: UIUserInterfaceIdiom? = UIDevice.current.userInterfaceIdiom,
+                            withAdditionalParameters params: [String: String] = [:],
+                            allowedQueryReservedCharacters: CharacterSet? = nil,
+                            withHeaders headers: APIRequest.Headers = APIRequest.Headers(),
+                            includedParameters: [QueryParameters] = [.atb, .appVersion],
+                            onComplete: @escaping (Error?) -> Void = { _ in }) {
         var newParams = params
         if includedParameters.contains(.appVersion) {
             newParams[PixelParameters.appVersion] = AppVersion.shared.versionAndBuildNumber
@@ -161,24 +178,24 @@ public class Pixel {
         if isInternalUser {
             newParams[PixelParameters.isInternalUser] = "true"
         }
-        
+
         let url: URL
         if let deviceType = deviceType {
             let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
-            url = URL.makePixelURL(pixelName: pixel.name,
+            url = URL.makePixelURL(pixelName: pixelName,
                                    formFactor: formFactor,
                                    includeATB: includedParameters.contains(.atb))
         } else {
-            url = URL.makePixelURL(pixelName: pixel.name, includeATB: includedParameters.contains(.atb) )
+            url = URL.makePixelURL(pixelName: pixelName, includeATB: includedParameters.contains(.atb) )
         }
-        
+
         let configuration = APIRequest.Configuration(url: url,
                                                      queryParameters: newParams,
                                                      allowedQueryReservedCharacters: allowedQueryReservedCharacters,
                                                      headers: headers)
         let request = APIRequest(configuration: configuration, urlSession: .session(useMainThreadCallbackQueue: true))
         request.fetch { _, error in
-            os_log("Pixel fired %s %s", log: .generalLog, type: .debug, pixel.name, "\(params)")
+            os_log("Pixel fired %s %s", log: .generalLog, type: .debug, pixelName, "\(params)")
             onComplete(error)
         }
     }

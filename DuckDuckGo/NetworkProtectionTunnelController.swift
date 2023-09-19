@@ -29,6 +29,7 @@ final class NetworkProtectionTunnelController: TunnelController {
     static var simulationOptions = NetworkProtectionSimulationOptions()
     static var enabledSimulationOption: NetworkProtectionSimulationOption?
 
+    private let debugFeatures = NetworkProtectionDebugFeatures()
     private let tokenStore = NetworkProtectionKeychainTokenStore()
     private let errorStore = NetworkProtectionTunnelErrorStore()
 
@@ -116,8 +117,10 @@ final class NetworkProtectionTunnelController: TunnelController {
 
         try tunnelManager.connection.startVPNTunnel(options: options)
 
-        Task {
-            try await enableOnDemand(tunnelManager: tunnelManager)
+        if debugFeatures.alwaysOnEnabled {
+            Task {
+                try await enableOnDemand(tunnelManager: tunnelManager)
+            }
         }
     }
 

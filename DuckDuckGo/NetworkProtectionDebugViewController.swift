@@ -28,12 +28,14 @@ import NetworkProtection
 final class NetworkProtectionDebugViewController: UITableViewController {
     private let titles = [
         Sections.keychain: "Keychain",
+        Sections.debugFeature: "Debug Features",
         Sections.simulateFailure: "Simulate Failure"
     ]
 
     enum Sections: Int, CaseIterable {
 
         case keychain
+        case debugFeature
         case simulateFailure
 
     }
@@ -42,6 +44,10 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
         case clearAuthToken
 
+    }
+
+    enum DebugFeatureRows: Int, CaseIterable {
+        case enableAlwaysOn
     }
 
     enum SimulateFailureRows: Int, CaseIterable {
@@ -55,11 +61,14 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
 #if NETWORK_PROTECTION
 
+    private let debugFeatures: NetworkProtectionDebugFeatures
     private let tokenStore: NetworkProtectionTokenStore
 
     init?(coder: NSCoder,
-          tokenStore: NetworkProtectionTokenStore) {
+          tokenStore: NetworkProtectionTokenStore,
+          debugFeatures: NetworkProtectionDebugFeatures = NetworkProtectionDebugFeatures()) {
 
+        self.debugFeatures = debugFeatures
         self.tokenStore = tokenStore
 
         super.init(coder: coder)
@@ -95,6 +104,20 @@ final class NetworkProtectionDebugViewController: UITableViewController {
                 break
             }
 
+        case .debugFeature:
+            switch DebugFeatureRows(rawValue: indexPath.row) {
+            case .enableAlwaysOn:
+                cell.textLabel?.text = "Enable Always On"
+
+                if debugFeatures.alwaysOnEnabled {
+                    cell.accessoryType = .checkmark
+                } else {
+                    cell.accessoryType = .none
+                }
+            default:
+                break
+            }
+
         case .simulateFailure:
             switch SimulateFailureRows(rawValue: indexPath.row) {
             case .controllerFailure:
@@ -118,6 +141,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section) {
         case .keychain: return KeychainRows.allCases.count
+        case .debugFeature: return DebugFeatureRows.allCases.count
         case .simulateFailure: return SimulateFailureRows.allCases.count
         case .none: return 0
 
@@ -132,6 +156,14 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             switch KeychainRows(rawValue: indexPath.row) {
             case .clearAuthToken: clearAuthToken()
             default: break
+            }
+        case .debugFeature:
+            switch DebugFeatureRows(rawValue: indexPath.row) {
+            case .enableAlwaysOn:
+                debugFeatures.alwaysOnEnabled.toggle()
+                tableView.reloadRows(at: [indexPath], with: .none)
+            default:
+                break
             }
         case .simulateFailure:
             switch SimulateFailureRows(rawValue: indexPath.row) {

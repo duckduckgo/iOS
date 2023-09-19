@@ -118,6 +118,11 @@ public struct PixelParameters {
     public static let function = "function"
     public static let line = "line"
     public static let reason = "reason"
+  
+    // Return user
+    public static let returnUserErrorCode = "error_code"
+    public static let returnUserOldATB = "old_atb"
+    public static let returnUserNewATB = "new_atb"
 }
 
 public struct PixelValues {

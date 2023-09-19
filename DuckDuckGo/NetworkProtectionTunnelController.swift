@@ -101,10 +101,10 @@ final class NetworkProtectionTunnelController: TunnelController {
 
         // Temporary investigation to see if connection tester is causing energy use issues
         // To be removed with https://app.asana.com/0/0/1205418028628990/f
-        options[NetworkProtectionOptionKey.connectionTesterEnabled] = "false" as NSString
+        options[NetworkProtectionOptionKey.connectionTesterEnabled] = NSNumber(value: false)
 
         if let optionKey = Self.enabledSimulationOption?.optionKey {
-            options[optionKey] = NetworkProtectionOptionValue.true
+            options[optionKey] = NSNumber(value: true)
             Self.enabledSimulationOption = nil
         }
 

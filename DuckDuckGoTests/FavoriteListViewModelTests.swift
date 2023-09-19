@@ -175,6 +175,7 @@ class FavoriteListViewModelTests: XCTestCase {
         try context.save()
         
         let expectation = expectation(description: "Error reported")
+        expectation.assertForOverFulfill = false
         _ = FavoritesListViewModel(bookmarksDatabase: db,
                                    errorEvents: .init(mapping: { event, _, _, _ in
             XCTAssertEqual(event, .fetchingRootItemFailed(.favorites))

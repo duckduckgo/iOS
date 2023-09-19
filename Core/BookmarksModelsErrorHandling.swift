@@ -109,8 +109,8 @@ public extension BookmarkListViewModel {
                      favoritesDisplayMode: FavoritesDisplayMode,
                      syncService: DDGSyncing?) {
         self.init(bookmarksDatabase: bookmarksDatabase,
-                  favoritesDisplayMode: favoritesDisplayMode,
                   parentID: parentID,
+                  favoritesDisplayMode: favoritesDisplayMode,
                   errorEvents: BookmarksModelsErrorHandling(syncService: syncService))
     }
 }

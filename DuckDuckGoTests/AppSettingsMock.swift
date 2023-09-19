@@ -17,10 +17,12 @@
 //  limitations under the License.
 //
 
+import Bookmarks
 import Foundation
 @testable import DuckDuckGo
 
 class AppSettingsMock: AppSettings {
+
     var autofillCredentialsEnabled: Bool = false
     
     var autofillCredentialsSavePromptShowAtLeastOnce: Bool = false
@@ -44,6 +46,8 @@ class AppSettingsMock: AppSettings {
     var currentFireButtonAnimation: DuckDuckGo.FireButtonAnimationType = .fireRising
 
     var textSize: Int = 14
+
+    var favoritesDisplayMode: FavoritesDisplayMode = .displayNative(.mobile)
 
     var autofill: Bool = false
 

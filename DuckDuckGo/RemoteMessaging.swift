@@ -44,14 +44,17 @@ struct RemoteMessaging {
         return Date().timeIntervalSince(Self.lastRemoteMessagingRefreshDate) > Constants.minimumConfigurationRefreshInterval
     }
 
-    static func registerBackgroundRefreshTaskHandler(bookmarksDatabase: CoreDataDatabase) {
+    static func registerBackgroundRefreshTaskHandler(
+        bookmarksDatabase: CoreDataDatabase,
+        favoritesDisplayMode: @escaping @autoclosure () -> FavoritesDisplayMode
+    ) {
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.backgroundRefreshTaskIdentifier, using: nil) { task in
             guard shouldRefresh else {
                 task.setTaskCompleted(success: true)
                 scheduleBackgroundRefreshTask()
                 return
             }
-            backgroundRefreshTaskHandler(bgTask: task, bookmarksDatabase: bookmarksDatabase)
+            backgroundRefreshTaskHandler(bgTask: task, bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: favoritesDisplayMode())
         }
     }
 
@@ -77,10 +80,14 @@ struct RemoteMessaging {
         #endif
     }
 
-    static func backgroundRefreshTaskHandler(bgTask: BGTask, bookmarksDatabase: CoreDataDatabase) {
+    static func backgroundRefreshTaskHandler(
+        bgTask: BGTask,
+        bookmarksDatabase: CoreDataDatabase,
+        favoritesDisplayMode: @escaping @autoclosure () -> FavoritesDisplayMode
+    ) {
         let fetchAndProcessTask = Task {
             do {
-                try await Self.fetchAndProcess(bookmarksDatabase: bookmarksDatabase)
+                try await Self.fetchAndProcess(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: favoritesDisplayMode())
                 Self.lastRemoteMessagingRefreshDate = Date()
                 scheduleBackgroundRefreshTask()
                 bgTask.setTaskCompleted(success: true)
@@ -97,14 +104,13 @@ struct RemoteMessaging {
     }
 
     /// Convenience function
-    static func fetchAndProcess(bookmarksDatabase: CoreDataDatabase) async throws {
+    static func fetchAndProcess(bookmarksDatabase: CoreDataDatabase, favoritesDisplayMode: FavoritesDisplayMode) async throws {
         
         var bookmarksCount = 0
         var favoritesCount = 0
         let context = bookmarksDatabase.makeContext(concurrencyType: .privateQueueConcurrencyType)
         context.performAndWait {
-            // todo
-            let mobileFavoritesFolder = BookmarkUtils.fetchFavoritesFolder(withUUID: FavoritesPlatform.mobile.rawValue, in: context)!
+            let mobileFavoritesFolder = BookmarkUtils.fetchFavoritesFolder(withUUID: favoritesDisplayMode.displayedPlatform.rawValue, in: context)!
 
             let bookmarksCountRequest = BookmarkEntity.fetchRequest()
             bookmarksCountRequest.predicate = NSPredicate(format: "!(ANY %K CONTAINS %@) AND %K == false AND %K == false",

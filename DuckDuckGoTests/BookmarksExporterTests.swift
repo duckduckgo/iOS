@@ -33,7 +33,7 @@ class BookmarksExporterTests: XCTestCase {
 
         htmlLoader = HtmlTestDataLoader()
 
-        importer = BookmarksImporter(coreDataStore: storage)
+        importer = BookmarksImporter(coreDataStore: storage, favoritesDisplayMode: .displayNative(.mobile))
         exporter = BookmarksExporter(coreDataStore: storage)
     }
 

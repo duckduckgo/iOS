@@ -251,7 +251,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
         WindowsBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
-        RemoteMessaging.registerBackgroundRefreshTaskHandler(bookmarksDatabase: bookmarksDatabase)
+        RemoteMessaging.registerBackgroundRefreshTaskHandler(
+            bookmarksDatabase: bookmarksDatabase,
+            favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
+        )
 
         UNUserNotificationCenter.current().delegate = self
         
@@ -425,7 +428,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func refreshRemoteMessages() {
         Task {
-            try? await RemoteMessaging.fetchAndProcess(bookmarksDatabase: self.bookmarksDatabase)
+            try? await RemoteMessaging.fetchAndProcess(
+                bookmarksDatabase: self.bookmarksDatabase,
+                favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
+            )
         }
     }
 

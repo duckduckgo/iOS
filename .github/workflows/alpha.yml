@@ -15,6 +15,19 @@ on:
         required: true
         default: "Latest Alpha Group"
         type: string
+    secrets:
+      SSH_PRIVATE_KEY_FASTLANE_MATCH:
+        required: true
+      APPLE_API_KEY_BASE64:
+        required: true
+      APPLE_API_KEY_ID:
+        required: true
+      APPLE_API_KEY_ISSUER:
+        required: true
+      MATCH_PASSWORD:
+        required: true
+      ASANA_ACCESS_TOKEN:
+        required: true
 
 jobs:
   make-alpha:

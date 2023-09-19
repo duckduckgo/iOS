@@ -105,32 +105,10 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             }
 
         case .debugFeature:
-            switch DebugFeatureRows(rawValue: indexPath.row) {
-            case .enableAlwaysOn:
-                cell.textLabel?.text = "Enable Always On"
-
-                if debugFeatures.alwaysOnEnabled {
-                    cell.accessoryType = .checkmark
-                } else {
-                    cell.accessoryType = .none
-                }
-            default:
-                break
-            }
+            configure(cell, forDebugFeatureAtRow: indexPath.row)
 
         case .simulateFailure:
-            switch SimulateFailureRows(rawValue: indexPath.row) {
-            case .controllerFailure:
-                cell.textLabel?.text = "Enable NetP > Controller Failure"
-            case .tunnelFailure:
-                cell.textLabel?.text = "Enable NetP > Tunnel Failure"
-            case .crashFatalError:
-                cell.textLabel?.text = "Tunnel: Crash (Fatal Error)"
-            case .crashMemory:
-                cell.textLabel?.text = "Tunnel: Crash (CPU/Memory)"
-            case .none:
-                break
-            }
+            configure(cell, forSimulateFailureAtRow: indexPath.row)
         case.none:
             break
         }
@@ -158,26 +136,68 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             default: break
             }
         case .debugFeature:
-            switch DebugFeatureRows(rawValue: indexPath.row) {
-            case .enableAlwaysOn:
-                debugFeatures.alwaysOnEnabled.toggle()
-                tableView.reloadRows(at: [indexPath], with: .none)
-            default:
-                break
-            }
+            didSelectDebugFeature(at: indexPath)
         case .simulateFailure:
-            switch SimulateFailureRows(rawValue: indexPath.row) {
-            case .controllerFailure: simulateFailure(option: .controllerFailure)
-            case .tunnelFailure: simulateFailure(option: .tunnelFailure)
-            case .crashFatalError: simulateFailure(option: .crashFatalError)
-            case .crashMemory: simulateFailure(option: .crashMemory)
-            case .none: return
-            }
+            didSelectSimulateFailure(at: indexPath)
         case .none:
             break
         }
 
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+    // MARK: Simulate Failures
+
+    private func configure(_ cell: UITableViewCell, forSimulateFailureAtRow row: Int) {
+        switch SimulateFailureRows(rawValue: row) {
+        case .controllerFailure:
+            cell.textLabel?.text = "Enable NetP > Controller Failure"
+        case .tunnelFailure:
+            cell.textLabel?.text = "Enable NetP > Tunnel Failure"
+        case .crashFatalError:
+            cell.textLabel?.text = "Tunnel: Crash (Fatal Error)"
+        case .crashMemory:
+            cell.textLabel?.text = "Tunnel: Crash (CPU/Memory)"
+        case .none:
+            break
+        }
+    }
+
+    private func didSelectSimulateFailure(at indexPath: IndexPath) {
+        switch SimulateFailureRows(rawValue: indexPath.row) {
+        case .controllerFailure: simulateFailure(option: .controllerFailure)
+        case .tunnelFailure: simulateFailure(option: .tunnelFailure)
+        case .crashFatalError: simulateFailure(option: .crashFatalError)
+        case .crashMemory: simulateFailure(option: .crashMemory)
+        case .none: return
+        }
+    }
+
+    // MARK: Debug Features
+
+    private func configure(_ cell: UITableViewCell, forDebugFeatureAtRow row: Int) {
+        switch DebugFeatureRows(rawValue: row) {
+        case .enableAlwaysOn:
+            cell.textLabel?.text = "Enable Always On"
+
+            if debugFeatures.alwaysOnEnabled {
+                cell.accessoryType = .checkmark
+            } else {
+                cell.accessoryType = .none
+            }
+        default:
+            break
+        }
+    }
+
+    private func didSelectDebugFeature(at indexPath: IndexPath) {
+        switch DebugFeatureRows(rawValue: indexPath.row) {
+        case .enableAlwaysOn:
+            debugFeatures.alwaysOnEnabled.toggle()
+            tableView.reloadRows(at: [indexPath], with: .none)
+        default:
+            break
+        }
     }
 
     // MARK: Selection Actions

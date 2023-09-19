@@ -1,4 +1,4 @@
-name: Nightly Integration Tests
+name: Nightly Test and Deploy
 
 on:
   schedule:

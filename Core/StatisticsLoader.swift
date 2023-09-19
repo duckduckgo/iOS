@@ -91,8 +91,6 @@ public class StatisticsLoader {
             return
         }
 
-        SetAsDefaultStatistics().fireDailyActiveUser()
-
         let configuration = APIRequest.Configuration(url: url)
         let request = APIRequest(configuration: configuration, urlSession: .session())
         
@@ -115,8 +113,6 @@ public class StatisticsLoader {
             requestInstallStatistics(completion: completion)
             return
         }
-
-        SetAsDefaultStatistics().fireDailyActiveUser()
 
         let configuration = APIRequest.Configuration(url: url)
         let request = APIRequest(configuration: configuration, urlSession: .session())

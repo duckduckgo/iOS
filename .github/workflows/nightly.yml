@@ -3,6 +3,8 @@ name: Nightly Integration Tests
 on:
   schedule:
     - cron: '0 2 * * *' # Run at 2 AM UTC
+  push:
+    branches: [ graeme/ios-nightly-alphas ] # TODO: Remove this before merging
 
 jobs:
   atb-ui-tests:

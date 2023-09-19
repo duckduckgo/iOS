@@ -113,7 +113,7 @@ struct LockScreenWidgetView: View {
                 .resizable()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Rectangle().foregroundColor(.white.opacity(0.3)))
+        .background(Circle().foregroundColor(.white.opacity(0.3)))
     }
 
 }

@@ -121,7 +121,7 @@ struct FaviconsHelper {
             label.textColor = UIColor.white
             label.textAlignment = .center
 
-            if let prefferedPrefix = preferredFakeFaviconLetters?.prefix(letterCount).capitalized {
+            if let prefferedPrefix = preferredFakeFaviconLetters?.droppingWwwPrefix().prefix(letterCount).capitalized {
                 label.text = prefferedPrefix
             } else {
                 label.text = String(tld.eTLDplus1(domain)?.prefix(letterCount) ?? "#").capitalized

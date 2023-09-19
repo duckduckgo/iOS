@@ -2342,7 +2342,7 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
 
         if accounts.count > 0 {
-            let accountMatches = autofillWebsiteAccountMatcher.findMatchesSortedByLastUpdated(accounts: accounts, for: domain)
+            let accountMatches = autofillWebsiteAccountMatcher.findDeduplicatedSortedMatches(accounts: accounts, for: domain)
 
             presentAutofillPromptViewController(accountMatches: accountMatches, domain: domain, trigger: trigger, useLargeDetent: false) { account in
                 completionHandler(account)

@@ -39,7 +39,7 @@ jobs:
     - name: Set destination output
       id: destination
       run: |
-        INPUT_DESTINATION=${{ github.event.inputs.destination }}
+        INPUT_DESTINATION=${{ github.event.inputs.destination || inputs.destination }}
         echo "destination=${INPUT_DESTINATION}" >> $GITHUB_OUTPUT
 
     - name: Assert develop branch

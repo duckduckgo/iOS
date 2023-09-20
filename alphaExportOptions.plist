@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>teamID</key>
+	<string>HKE973VLUW</string>
+	<key>method</key>
+	<string>app-store</string>
+	<key>provisioningProfiles</key>
+	<dict>
+		<key>com.duckduckgo.mobile.ios.alpha</key>
+		<string>match AppStore com.duckduckgo.mobile.ios.alpha</string>
+		<key>com.duckduckgo.mobile.ios.alpha.ShareExtension</key>
+		<string>match AppStore com.duckduckgo.mobile.ios.alpha.ShareExtension</string>
+		<key>com.duckduckgo.mobile.ios.alpha.OpenAction2</key>
+		<string>match AppStore com.duckduckgo.mobile.ios.alpha.OpenAction2</string>
+		<key>com.duckduckgo.mobile.ios.alpha.Widgets</key>
+		<string>match AppStore com.duckduckgo.mobile.ios.alpha.Widgets</string>
+		<key>com.duckduckgo.mobile.ios.alpha.NetworkExtension</key>
+		<string>match AppStore com.duckduckgo.mobile.ios.alpha.NetworkExtension</string>
+	</dict>
+</dict>
+</plist>

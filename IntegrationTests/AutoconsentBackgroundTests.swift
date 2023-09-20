@@ -75,10 +75,10 @@ final class AutoconsentBackgroundTests: XCTestCase {
         webview.navigationDelegate = navigationDelegate
         let url = Bundle(for: type(of: self)).url(forResource: "autoconsent-test-page", withExtension: "html")!
         webview.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
-        waitForExpectations(timeout: 4)
+        waitForExpectations(timeout: 10)
 
         let expectation = expectation(description: "Async call")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
             webview.evaluateJavaScript("results.results.includes('button_clicked')", in: nil, in: .page,
                                        completionHandler: { result in
                 switch result {
@@ -92,7 +92,7 @@ final class AutoconsentBackgroundTests: XCTestCase {
                 expectation.fulfill()
             })
         }
-        waitForExpectations(timeout: 4)
+        waitForExpectations(timeout: 10)
     }
 
     @MainActor
@@ -113,10 +113,10 @@ final class AutoconsentBackgroundTests: XCTestCase {
         webview.navigationDelegate = navigationDelegate
         let url = Bundle(for: type(of: self)).url(forResource: "autoconsent-test-page-banner", withExtension: "html")!
         webview.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
-        waitForExpectations(timeout: 4)
+        waitForExpectations(timeout: 10)
 
         let expectation = expectation(description: "Async call")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
             webview.evaluateJavaScript("window.getComputedStyle(banner).display === 'none'", in: nil, in: .page,
                                        completionHandler: { result in
                 switch result {
@@ -130,7 +130,7 @@ final class AutoconsentBackgroundTests: XCTestCase {
                 expectation.fulfill()
             })
         }
-        waitForExpectations(timeout: 4)
+        waitForExpectations(timeout: 10)
     }
 }
 

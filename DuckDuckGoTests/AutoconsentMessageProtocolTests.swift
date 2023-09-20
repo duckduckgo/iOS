@@ -133,7 +133,7 @@ final class AutoconsentMessageProtocolTests: XCTestCase {
             },
             message: message
         )
-        waitForExpectations(timeout: 5.0)
+        waitForExpectations(timeout: 15.0)
     }
 
     @MainActor

@@ -783,12 +783,14 @@ extension Pixel.Event {
         case .networkProtectionTunnelConfigurationCouldNotSelectClosestServer: return "m_netp_tunnel_config_error_could_not_select_closest_server"
         case .networkProtectionTunnelConfigurationCouldNotGetPeerPublicKey: return "m_netp_tunnel_config_error_could_not_get_peer_public_key"
         case .networkProtectionTunnelConfigurationCouldNotGetPeerHostName: return "m_netp_tunnel_config_error_could_not_get_peer_host_name"
-        case .networkProtectionTunnelConfigurationCouldNotGetInterfaceAddressRange: return "m_netp_tunnel_config_error_could_not_get_interface_address_range"
+        case .networkProtectionTunnelConfigurationCouldNotGetInterfaceAddressRange:
+            return "m_netp_tunnel_config_error_could_not_get_interface_address_range"
         case .networkProtectionClientFailedToFetchServerList: return "m_netp_backend_api_error_failed_to_fetch_server_list"
         case .networkProtectionClientFailedToParseServerListResponse: return "m_netp_backend_api_error_parsing_server_list_response_failed"
         case .networkProtectionClientFailedToEncodeRegisterKeyRequest: return "m_netp_backend_api_error_encoding_register_request_body_failed"
         case .networkProtectionClientFailedToFetchRegisteredServers: return "m_netp_backend_api_error_failed_to_fetch_registered_servers"
-        case .networkProtectionClientFailedToParseRegisteredServersResponse: return "m_netp_backend_api_error_parsing_device_registration_response_failed"
+        case .networkProtectionClientFailedToParseRegisteredServersResponse:
+            return "m_netp_backend_api_error_parsing_device_registration_response_failed"
         case .networkProtectionClientFailedToEncodeRedeemRequest: return "m_netp_backend_api_error_encoding_redeem_request_body_failed"
         case .networkProtectionClientInvalidInviteCode: return "m_netp_backend_api_error_invalid_invite_code"
         case .networkProtectionClientFailedToRedeemInviteCode: return "m_netp_backend_api_error_failed_to_redeem_invite_code"

@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+import Bookmarks
 import BrowserServicesKit
 import Combine
 import Common
@@ -71,6 +72,9 @@ public class SyncDataProviders: DataProvidersSource {
             .sink { [weak self] isSyncDisabled in
                 self?.credentialsAdapter.cleanUpDatabaseAndUpdateSchedule(shouldEnable: isSyncDisabled)
                 self?.bookmarksAdapter.cleanUpDatabaseAndUpdateSchedule(shouldEnable: isSyncDisabled)
+                if isSyncDisabled {
+                    self?.bookmarksAdapter.handleFavoritesAfterDisablingSync()
+                }
             }
 
         if syncService.authState == .inactive {
@@ -85,12 +89,13 @@ public class SyncDataProviders: DataProvidersSource {
         bookmarksDatabase: CoreDataDatabase,
         secureVaultFactory: AutofillVaultFactory = AutofillSecureVaultFactory,
         secureVaultErrorReporter: SecureVaultErrorReporting,
-        settingHandlers: [SettingSyncHandler]
+        settingHandlers: [SettingSyncHandler],
+        favoritesDisplayModeStorage: FavoritesDisplayModeStoring
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.secureVaultFactory = secureVaultFactory
         self.secureVaultErrorReporter = secureVaultErrorReporter
-        bookmarksAdapter = SyncBookmarksAdapter(database: bookmarksDatabase)
+        bookmarksAdapter = SyncBookmarksAdapter(database: bookmarksDatabase, favoritesDisplayModeStorage: favoritesDisplayModeStorage)
         credentialsAdapter = SyncCredentialsAdapter(secureVaultFactory: secureVaultFactory, secureVaultErrorReporter: secureVaultErrorReporter)
         settingsAdapter = SyncSettingsAdapter(settingHandlers: settingHandlers)
     }

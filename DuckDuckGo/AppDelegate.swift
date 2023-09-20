@@ -217,7 +217,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         syncDataProviders = SyncDataProviders(
             bookmarksDatabase: bookmarksDatabase,
             secureVaultErrorReporter: SecureVaultErrorReporter.shared,
-            settingHandlers: [FavoritesDisplayModeSyncHandler()]
+            settingHandlers: [FavoritesDisplayModeSyncHandler()],
+            favoritesDisplayModeStorage: FavoritesDisplayModeStorage()
         )
         let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog, environment: environment)
         syncService.initializeIfNeeded()

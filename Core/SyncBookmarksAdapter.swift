@@ -26,6 +26,10 @@ import Persistence
 import SyncDataProviders
 import WidgetKit
 
+public protocol FavoritesDisplayModeStoring: AnyObject {
+    var favoritesDisplayMode: FavoritesDisplayMode { get set }
+}
+
 public final class SyncBookmarksAdapter {
 
     public private(set) var provider: BookmarksProvider?
@@ -33,7 +37,9 @@ public final class SyncBookmarksAdapter {
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
     public let widgetRefreshCancellable: AnyCancellable
 
-    public init(database: CoreDataDatabase) {
+    public init(database: CoreDataDatabase, favoritesDisplayModeStorage: FavoritesDisplayModeStoring) {
+        self.database = database
+        self.favoritesDisplayModeStorage = favoritesDisplayModeStorage
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
         databaseCleaner = BookmarkDatabaseCleaner(
             bookmarkDatabase: database,
@@ -51,6 +57,27 @@ public final class SyncBookmarksAdapter {
             databaseCleaner.scheduleRegularCleaning()
         } else {
             databaseCleaner.cancelCleaningSchedule()
+        }
+    }
+
+    public func handleFavoritesAfterDisablingSync() {
+        let context = database.makeContext(concurrencyType: .privateQueueConcurrencyType)
+
+        context.performAndWait {
+            do {
+                if favoritesDisplayModeStorage.favoritesDisplayMode.isDisplayAll {
+                    BookmarkUtils.copyFavorites(from: .unified, to: .mobile, removingNonNativeFavoritesFrom: .desktop, in: context)
+                    favoritesDisplayModeStorage.favoritesDisplayMode = .displayNative(.mobile)
+                } else {
+                    BookmarkUtils.copyFavorites(from: .mobile, to: .unified, removingNonNativeFavoritesFrom: .desktop, in: context)
+                }
+                try context.save()
+            } catch {
+                let nsError = error as NSError
+                let processedErrors = CoreDataErrorsParser.parse(error: nsError)
+                let params = processedErrors.errorPixelParameters
+                Pixel.fire(pixel: .favoritesCleanupFailed, error: error, withAdditionalParameters: params)
+            }
         }
     }
 
@@ -88,4 +115,6 @@ public final class SyncBookmarksAdapter {
 
     private var syncDidCompleteSubject = PassthroughSubject<Void, Never>()
     private var syncErrorCancellable: AnyCancellable?
+    private let database: CoreDataDatabase
+    private let favoritesDisplayModeStorage: FavoritesDisplayModeStoring
 }

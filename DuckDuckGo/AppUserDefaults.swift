@@ -181,7 +181,7 @@ public class AppUserDefaults: AppSettings {
     @UserDefaultsWrapper(key: .textSize, defaultValue: 100)
     var textSize: Int
 
-    var favoritesDisplayMode: FavoritesDisplayMode {
+    public var favoritesDisplayMode: FavoritesDisplayMode {
         get {
             guard let string = userDefaults?.string(forKey: Keys.favoritesDisplayMode), let favoritesDisplayMode = FavoritesDisplayMode(string) else {
                 return .default

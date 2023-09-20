@@ -608,7 +608,7 @@
 "autofill.save-login.new-user.title" = "Do you want DuckDuckGo to save your Login?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.not-now.CTA" = "Not Now";
+"autofill.save-login.not-now.CTA" = "Don’t Save";
 
 /* Confirm CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.save.CTA" = "Save Login";

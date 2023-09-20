@@ -19,11 +19,15 @@
 
 import UIKit
 
-#if NETWORK_PROTECTION
+#if !NETWORK_PROTECTION
+
+final class NetworkProtectionDebugViewController: UITableViewController {
+    // Just an empty VC
+}
+
+#else
 
 import NetworkProtection
-
-#endif
 
 final class NetworkProtectionDebugViewController: UITableViewController {
     private let titles = [
@@ -59,8 +63,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
     }
 
-#if NETWORK_PROTECTION
-
     private let debugFeatures: NetworkProtectionDebugFeatures
     private let tokenStore: NetworkProtectionTokenStore
 
@@ -77,8 +79,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     required convenience init?(coder: NSCoder) {
         self.init(coder: coder, tokenStore: NetworkProtectionKeychainTokenStore())
     }
-
-#endif
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return Sections.allCases.count
@@ -125,8 +125,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
         }
     }
-
-    #if NETWORK_PROTECTION
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch Sections(rawValue: indexPath.section) {
@@ -217,6 +215,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     private func simulateFailure(option: NetworkProtectionSimulationOption) {
         NetworkProtectionTunnelController.enabledSimulationOption = .crashMemory
     }
-
-    #endif
 }
+
+#endif

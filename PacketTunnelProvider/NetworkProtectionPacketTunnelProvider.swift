@@ -113,7 +113,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
     public override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
         super.startTunnel(options: options) { error in
-            DailyPixel.fireDailyAndCount(pixel: .networkProtectionFailedToStartTunnel, error: error)
+            if error != nil {
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionFailedToStartTunnel, error: error)
+            }
             completionHandler(error)
         }
     }

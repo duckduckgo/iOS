@@ -117,8 +117,8 @@ public extension BookmarkListViewModel {
 
 public extension FavoritesListViewModel {
     
-    convenience init(bookmarksDatabase: CoreDataDatabase) {
-        self.init(bookmarksDatabase: bookmarksDatabase, errorEvents: BookmarksModelsErrorHandling())
+    convenience init(bookmarksDatabase: CoreDataDatabase, favoritesDisplayMode: FavoritesDisplayMode) {
+        self.init(bookmarksDatabase: bookmarksDatabase, errorEvents: BookmarksModelsErrorHandling(), favoritesDisplayMode: favoritesDisplayMode)
     }
 }
 

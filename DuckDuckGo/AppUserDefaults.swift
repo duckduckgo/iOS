@@ -320,27 +320,3 @@ extension AppUserDefaults: AppConfigurationFetchStatistics {
         }
     }
 }
-
-extension FavoritesDisplayMode: LosslessStringConvertible {
-    static let `default` = FavoritesDisplayMode.displayNative(.mobile)
-
-    public var description: String {
-        switch self {
-        case .displayNative:
-            return "displayNative"
-        case .displayAll:
-            return "displayAll"
-        }
-    }
-
-    public init?(_ description: String) {
-        switch description {
-        case "displayNative":
-            self = .displayNative(.mobile)
-        case "displayAll":
-            self = .displayAll(native: .mobile)
-        default:
-            return nil
-        }
-    }
-}

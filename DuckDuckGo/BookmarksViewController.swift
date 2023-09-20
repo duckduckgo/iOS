@@ -56,8 +56,10 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     private let favicons: Favicons
     private let syncService: DDGSyncing
     private let syncDataProviders: SyncDataProviders
+    private let appSettings: AppSettings
     private var localUpdatesCancellable: AnyCancellable?
     private var syncUpdatesCancellable: AnyCancellable?
+    private var favoritesDisplayModeCancellable: AnyCancellable?
 
     /// Creating left and right toolbar UIBarButtonItems with customView so that 'Edit' button is centered
     private lazy var addFolderButton: UIButton = {
@@ -113,7 +115,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
           parentID: NSManagedObjectID? = nil,
           favicons: Favicons = Favicons.shared,
           syncService: DDGSyncing,
-          syncDataProviders: SyncDataProviders
+          syncDataProviders: SyncDataProviders,
+          appSettings: AppSettings
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.searchDataSource = SearchBookmarksDataSource(searchEngine: bookmarksSearch)
@@ -126,6 +129,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         self.favicons = favicons
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
+        self.appSettings = appSettings
         super.init(coder: coder)
 
         bindSyncService()
@@ -147,6 +151,17 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
                 }
+            }
+    }
+
+    private func bindFavoritesDisplayMode() {
+        favoritesDisplayModeCancellable = NotificationCenter.default.publisher(for: AppUserDefaults.Notifications.favoritesDisplayModeChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self else {
+                    return
+                }
+                self.viewModel.favoritesDisplayMode = self.appSettings.favoritesDisplayMode
             }
     }
 
@@ -274,7 +289,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                                                      bookmarksSearch: self.searchDataSource.searchEngine,
                                                      parentID: parent.objectID,
                                                      syncService: self.syncService,
-                                                     syncDataProviders: self.syncDataProviders)
+                                                     syncDataProviders: self.syncDataProviders,
+                                                     appSettings: self.appSettings)
             controller?.delegate = self.delegate
             return controller
         })
@@ -574,7 +590,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             coder: coder,
             bookmarksDatabase: bookmarksDatabase,
             syncService: syncService,
-            syncDataProviders: syncDataProviders
+            syncDataProviders: syncDataProviders,
+            appSettings: appSettings
         ) else {
             fatalError("Failed to create controller")
         }

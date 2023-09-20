@@ -107,7 +107,7 @@ class MainViewController: UIViewController {
 
     var tabManager: TabManager!
     private let previewsSource = TabPreviewsSource()
-    fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
+    fileprivate var appSettings: AppSettings
     private var launchTabObserver: LaunchTabNotification.Observer?
     
     private let appTrackingProtectionDatabase: CoreDataDatabase
@@ -158,18 +158,18 @@ class MainViewController: UIViewController {
                    bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
                    appTrackingProtectionDatabase: CoreDataDatabase,
                    syncService: DDGSyncing,
-                   syncDataProviders: SyncDataProviders
+                   syncDataProviders: SyncDataProviders,
+                   appSettings: AppSettings = AppUserDefaults()
     ) {
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
-        self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
+        self.appSettings = appSettings
+        self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         super.init(coder: coder)
-
-        favoritesViewModel.favoritesDisplayMode = appSettings.favoritesDisplayMode
 
         bindFavoritesDisplayMode()
         bindSyncService()
@@ -453,7 +453,8 @@ class MainViewController: UIViewController {
                                                        bookmarksDatabase: self.bookmarksDatabase,
                                                        bookmarksSearch: bookmarksCachingSearch,
                                                        syncService: syncService,
-                                                       syncDataProviders: syncDataProviders) else {
+                                                       syncDataProviders: syncDataProviders,
+                                                       appSettings: appSettings) else {
             fatalError("Failed to create controller")
         }
         controller.delegate = self

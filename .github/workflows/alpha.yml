@@ -34,13 +34,15 @@ jobs:
     runs-on: macos-13
     name: Make TestFlight Alpha Build
 
+    env:
+      destination: ${{ github.event.inputs.destination || inputs.destination }}
+
     steps:
 
     - name: Set destination output
       id: destination
       run: |
-        INPUT_DESTINATION=${{ github.event.inputs.destination || inputs.destination }}
-        echo "destination=${INPUT_DESTINATION}" >> $GITHUB_OUTPUT
+        echo "destination=${{ env.destination }}" >> $GITHUB_OUTPUT
 
     # - name: Assert develop branch TODO: Uncomment before merging
     #   run: |

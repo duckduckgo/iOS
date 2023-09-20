@@ -112,18 +112,7 @@ class Provider: TimelineProvider {
         
         if maxFavorites > 0,
            let db = bookmarksDB {
-
-            let userDefaults = UserDefaults(suiteName: "group.com.duckduckgo.app")
-            let displayModeDescription = userDefaults?.string(forKey: "com.duckduckgo.ios.favoritesDisplayMode")
-            let favoritesDisplayMode: FavoritesDisplayMode = {
-                if let displayModeDescription, let displayMode = FavoritesDisplayMode(displayModeDescription) {
-                    return displayMode
-                }
-                return .displayNative(.mobile)
-            }()
-            os_log("display mode: %{public}s -> %{public}s", displayModeDescription ?? "unknown", favoritesDisplayMode.description)
-
-            let model = FavoritesListViewModel(bookmarksDatabase: db, favoritesDisplayMode: favoritesDisplayMode)
+            let model = FavoritesListViewModel(bookmarksDatabase: db, favoritesDisplayMode: fetchFavoritesDisplayMode())
             os_log("model created")
             let dbFavorites = model.favorites
             os_log("dbFavorites loaded %d", dbFavorites.count)
@@ -136,6 +125,16 @@ class Provider: TimelineProvider {
             let entry = FavoritesEntry(date: Date(), favorites: [], isPreview: context.isPreview)
             completion(entry)
         }
+    }
+
+    private func fetchFavoritesDisplayMode() -> FavoritesDisplayMode {
+        let userDefaults = UserDefaults(suiteName: "group.com.duckduckgo.bookmarks")
+        let displayModeDescription = userDefaults?.string(forKey: "com.duckduckgo.ios.favoritesDisplayMode")
+
+        if let displayModeDescription, let displayMode = FavoritesDisplayMode(displayModeDescription) {
+            return displayMode
+        }
+        return .displayNative(.mobile)
     }
 
     private func loadImageFromCache(forDomain domain: String?) -> UIImage? {

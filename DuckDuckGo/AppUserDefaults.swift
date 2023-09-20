@@ -74,6 +74,10 @@ public class AppUserDefaults: AppSettings {
         return UserDefaults(suiteName: groupName)
     }
 
+    private var bookmarksUserDefaults: UserDefaults? {
+        UserDefaults(suiteName: "group.com.duckduckgo.bookmarks")
+    }
+
     init(groupName: String = "group.com.duckduckgo.app") {
         self.groupName = groupName
     }
@@ -190,6 +194,7 @@ public class AppUserDefaults: AppSettings {
         }
         set {
             userDefaults?.setValue(newValue.description, forKey: Keys.favoritesDisplayMode)
+            bookmarksUserDefaults?.setValue(newValue.description, forKey: Keys.favoritesDisplayMode)
         }
     }
 

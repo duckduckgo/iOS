@@ -25,7 +25,22 @@ import Core
 // Initial implementation for initial Network Protection tests. Will be fleshed out with https://app.asana.com/0/1203137811378537/1204630829332227/f
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
 
-    private static var packetTunnelProviderEvents: EventMapping<PacketTunnelProvider.Event> = .init { _, _, _, _ in
+    // MARK: - PacketTunnelProvider.Event reporting
+
+    private static var packetTunnelProviderEvents: EventMapping<PacketTunnelProvider.Event> = .init { event, _, _, _ in
+        switch event {
+        case .userBecameActive:
+            DailyPixel.fire(pixel: .networkProtectionActiveUser)
+        case .reportLatency(ms: let ms, server: let server, networkType: let networkType):
+            let params = [
+                PixelParameters.latency: String(ms),
+                PixelParameters.server: server,
+                PixelParameters.networkType: networkType.rawValue
+            ]
+            Pixel.fire(pixel: .networkProtectionLatency)
+        case .rekeyCompleted:
+            Pixel.fire(pixel: .networkProtectionRekeyCompleted)
+        }
     }
 
     // MARK: - Error Reporting

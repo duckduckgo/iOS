@@ -110,8 +110,6 @@ public struct PixelParameters {
     public static let message = "message"
     public static let sheetResult = "success"
 
-    public static let defaultBrowser = "default_browser"
-
     // Network Protection
     public static let keychainFieldName = "fieldName"
     public static let keychainErrorCode = errorCode

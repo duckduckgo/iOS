@@ -95,6 +95,7 @@ public struct PixelParameters {
     public static let bookmarkCount = "bco"
     
     public static let isBackgrounded = "is_backgrounded"
+    public static let isDataProtected = "is_data_protected"
     
     public static let isInternalUser = "is_internal_user"
     

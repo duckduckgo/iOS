@@ -302,9 +302,8 @@ extension Pixel {
         case remoteMessageSecondaryActionClicked
         case remoteMessageSheet
 
-        // MARK: Set as Default
-        case onboardingSetDefaultOpened
-        case onboardingSetDefaultSkipped
+        // MARK: Return user measurement
+        case returnUser
 
         // MARK: debug pixels
         case dbCrashDetected
@@ -392,7 +391,12 @@ extension Pixel {
         case debugCantSaveBookmarkFix
 
         case debugCannotClearObservationsDatabase
-        
+
+        // Return user measurement
+        case debugReturnUserReadATB
+        case debugReturnUserAddATB
+        case debugReturnUserUpdateATB
+
         // Errors from Bookmarks Module
         case bookmarkFolderExpected
         case bookmarksListIndexNotMatchingBookmark
@@ -435,8 +439,6 @@ extension Pixel {
 
         case invalidPayload(Configuration)
 
-        case dailyActiveUser
-
         case emailIncontextPromptDisplayed
         case emailIncontextPromptConfirmed
         case emailIncontextPromptDismissed
@@ -445,6 +447,8 @@ extension Pixel {
         case emailIncontextModalDismissed
         case emailIncontextModalExitEarly
         case emailIncontextModalExitEarlyContinue
+
+        case incrementalRolloutTest
     }
     
 }
@@ -734,10 +738,6 @@ extension Pixel.Event {
         case .remoteMessageSecondaryActionClicked: return "m_remote_message_secondary_action_clicked"
         case .remoteMessageSheet: return "m_remote_message_sheet"
 
-        // MARK: Set as default measuring
-        case .onboardingSetDefaultOpened: return "m_onboarding_set-default-opened"
-        case .onboardingSetDefaultSkipped: return "m_onboarding_set-default-skipped"
-
         // MARK: debug pixels
 
         case .dbCrashDetected: return "m_d_crash"
@@ -870,8 +870,6 @@ extension Pixel.Event {
 
         case .invalidPayload(let configuration): return "m_d_\(configuration.rawValue)_invalid_payload".lowercased()
 
-        case .dailyActiveUser: return "m_daily_active_user"
-
         // MARK: - InContext Email Protection
         case .emailIncontextPromptDisplayed: return "m_email_incontext_prompt_displayed"
         case .emailIncontextPromptConfirmed: return "m_email_incontext_prompt_confirmed"
@@ -881,6 +879,14 @@ extension Pixel.Event {
         case .emailIncontextModalDismissed: return "m_email_incontext_modal_dismissed"
         case .emailIncontextModalExitEarly: return "m_email_incontext_modal_exit_early"
         case .emailIncontextModalExitEarlyContinue: return "m_email_incontext_modal_exit_early_continue"
+
+        // MARK: - Return user measurement
+        case .returnUser: return "m_return_user"
+        case .debugReturnUserAddATB: return "m_debug_return_user_add_atb"
+        case .debugReturnUserReadATB: return "m_debug_return_user_read_atb"
+        case .debugReturnUserUpdateATB: return "m_debug_return_user_update_atb"
+
+        case .incrementalRolloutTest: return "m_autofill_incremental_rollout_test"
         }
         
     }

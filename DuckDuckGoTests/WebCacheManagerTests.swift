@@ -149,6 +149,11 @@ class WebCacheManagerTests: XCTestCase {
         
         XCTAssertEqual(dataStore.removeAllDataCalledCount, 1)
     }
+
+    func testWhenAccessingObservationsDbThenValidDatabasePoolIsReturned() {
+        let pool = WebCacheManager.shared.getValidDatabasePool()
+        XCTAssertNotNil(pool, "DatabasePool should not be nil")
+    }
             
     // MARK: Mocks
     

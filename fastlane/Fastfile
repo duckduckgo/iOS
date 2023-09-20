@@ -18,6 +18,7 @@ lane :sync_signing_adhoc do |options|
   do_sync_signing(options)
 end
 
+desc 'Fetches and updates certificates and provisioning profiles for Alpha distribution'
 lane :sync_signing_alpha do |options|
   do_sync_signing(options)
 end
@@ -88,11 +89,6 @@ lane :adhoc do |options|
   end
 end
 
-desc 'Makes Alpha release build and uploads it to App Store Connect (TestFlight)'
-lane :alpha do |options|
-# TODO
-end
-
 desc 'Makes App Store release build and uploads it to App Store Connect'
 lane :release_appstore do |options|
   build_release(options)
@@ -132,13 +128,29 @@ lane :release_testflight do
   )
 end
 
+desc 'Makes Alpha release build and uploads it to TestFlight'
+lane :release_alpha do |options|
+  build_alpha(options)
+
+  upload_to_testflight(
+    api_key: get_api_key,
+    groups: options[:groups],
+    skip_waiting_for_build_processing: true
+  )
+end
+
 desc 'Increment build number based on version in App Store Connect'
 lane :increment_build_number_for_version do |options|
+  app_identifier = "com.duckduckgo.mobile.ios"
+  if options[:app_identifier]
+    app_identifier = options[:app_identifier]
+  end
   increment_build_number({
     build_number: 
       latest_testflight_build_number(
+        api_key: get_api_key,
         version: options[:version],
-        app_identifier: "com.duckduckgo.mobile.ios", 
+        app_identifier: app_identifier, 
         initial_build_number: -1,
         username: get_username(options)) + 1,
     skip_info_plist: "true"
@@ -168,6 +180,18 @@ private_lane :build_release do |options|
     export_method: "app-store",
     scheme: "DuckDuckGo",
     export_options: "appStoreExportOptions.plist",
+    derived_data_path: "DerivedData"
+  )
+end
+
+private_lane :build_alpha do |options|
+  sync_signing_alpha(options)
+
+  build_app(
+    export_method: "app-store",
+    configuration: "Alpha",
+    scheme: "DuckDuckGo-Alpha",
+    export_options: "alphaExportOptions.plist",
     derived_data_path: "DerivedData"
   )
 end
@@ -209,7 +233,7 @@ private_lane :do_sync_signing do |options|
   sync_code_signing(
     api_key: get_api_key,
     username: get_username(options),
-	readonly: is_ci && !is_adhoc
+	  readonly: is_ci && !is_adhoc
   )
 end
 

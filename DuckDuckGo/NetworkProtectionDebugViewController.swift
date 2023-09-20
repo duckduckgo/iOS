@@ -19,21 +19,27 @@
 
 import UIKit
 
-#if NETWORK_PROTECTION
+#if !NETWORK_PROTECTION
+
+final class NetworkProtectionDebugViewController: UITableViewController {
+    // Just an empty VC
+}
+
+#else
 
 import NetworkProtection
-
-#endif
 
 final class NetworkProtectionDebugViewController: UITableViewController {
     private let titles = [
         Sections.keychain: "Keychain",
+        Sections.debugFeature: "Debug Features",
         Sections.simulateFailure: "Simulate Failure"
     ]
 
     enum Sections: Int, CaseIterable {
 
         case keychain
+        case debugFeature
         case simulateFailure
 
     }
@@ -42,6 +48,10 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
         case clearAuthToken
 
+    }
+
+    enum DebugFeatureRows: Int, CaseIterable {
+        case enableAlwaysOn
     }
 
     enum SimulateFailureRows: Int, CaseIterable {
@@ -53,13 +63,14 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
     }
 
-#if NETWORK_PROTECTION
-
+    private let debugFeatures: NetworkProtectionDebugFeatures
     private let tokenStore: NetworkProtectionTokenStore
 
     init?(coder: NSCoder,
-          tokenStore: NetworkProtectionTokenStore) {
+          tokenStore: NetworkProtectionTokenStore,
+          debugFeatures: NetworkProtectionDebugFeatures = NetworkProtectionDebugFeatures()) {
 
+        self.debugFeatures = debugFeatures
         self.tokenStore = tokenStore
 
         super.init(coder: coder)
@@ -68,8 +79,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     required convenience init?(coder: NSCoder) {
         self.init(coder: coder, tokenStore: NetworkProtectionKeychainTokenStore())
     }
-
-#endif
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return Sections.allCases.count
@@ -95,19 +104,11 @@ final class NetworkProtectionDebugViewController: UITableViewController {
                 break
             }
 
+        case .debugFeature:
+            configure(cell, forDebugFeatureAtRow: indexPath.row)
+
         case .simulateFailure:
-            switch SimulateFailureRows(rawValue: indexPath.row) {
-            case .controllerFailure:
-                cell.textLabel?.text = "Enable NetP > Controller Failure"
-            case .tunnelFailure:
-                cell.textLabel?.text = "Enable NetP > Tunnel Failure"
-            case .crashFatalError:
-                cell.textLabel?.text = "Tunnel: Crash (Fatal Error)"
-            case .crashMemory:
-                cell.textLabel?.text = "Tunnel: Crash (CPU/Memory)"
-            case .none:
-                break
-            }
+            configure(cell, forSimulateFailureAtRow: indexPath.row)
         case.none:
             break
         }
@@ -118,13 +119,12 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section) {
         case .keychain: return KeychainRows.allCases.count
+        case .debugFeature: return DebugFeatureRows.allCases.count
         case .simulateFailure: return SimulateFailureRows.allCases.count
         case .none: return 0
 
         }
     }
-
-    #if NETWORK_PROTECTION
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch Sections(rawValue: indexPath.section) {
@@ -133,19 +133,69 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             case .clearAuthToken: clearAuthToken()
             default: break
             }
+        case .debugFeature:
+            didSelectDebugFeature(at: indexPath)
         case .simulateFailure:
-            switch SimulateFailureRows(rawValue: indexPath.row) {
-            case .controllerFailure: simulateFailure(option: .controllerFailure)
-            case .tunnelFailure: simulateFailure(option: .tunnelFailure)
-            case .crashFatalError: simulateFailure(option: .crashFatalError)
-            case .crashMemory: simulateFailure(option: .crashMemory)
-            case .none: return
-            }
+            didSelectSimulateFailure(at: indexPath)
         case .none:
             break
         }
 
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+    // MARK: Simulate Failures
+
+    private func configure(_ cell: UITableViewCell, forSimulateFailureAtRow row: Int) {
+        switch SimulateFailureRows(rawValue: row) {
+        case .controllerFailure:
+            cell.textLabel?.text = "Enable NetP > Controller Failure"
+        case .tunnelFailure:
+            cell.textLabel?.text = "Enable NetP > Tunnel Failure"
+        case .crashFatalError:
+            cell.textLabel?.text = "Tunnel: Crash (Fatal Error)"
+        case .crashMemory:
+            cell.textLabel?.text = "Tunnel: Crash (CPU/Memory)"
+        case .none:
+            break
+        }
+    }
+
+    private func didSelectSimulateFailure(at indexPath: IndexPath) {
+        switch SimulateFailureRows(rawValue: indexPath.row) {
+        case .controllerFailure: simulateFailure(option: .controllerFailure)
+        case .tunnelFailure: simulateFailure(option: .tunnelFailure)
+        case .crashFatalError: simulateFailure(option: .crashFatalError)
+        case .crashMemory: simulateFailure(option: .crashMemory)
+        case .none: return
+        }
+    }
+
+    // MARK: Debug Features
+
+    private func configure(_ cell: UITableViewCell, forDebugFeatureAtRow row: Int) {
+        switch DebugFeatureRows(rawValue: row) {
+        case .enableAlwaysOn:
+            cell.textLabel?.text = "Enable Always On"
+
+            if debugFeatures.alwaysOnEnabled {
+                cell.accessoryType = .checkmark
+            } else {
+                cell.accessoryType = .none
+            }
+        default:
+            break
+        }
+    }
+
+    private func didSelectDebugFeature(at indexPath: IndexPath) {
+        switch DebugFeatureRows(rawValue: indexPath.row) {
+        case .enableAlwaysOn:
+            debugFeatures.alwaysOnEnabled.toggle()
+            tableView.reloadRows(at: [indexPath], with: .none)
+        default:
+            break
+        }
     }
 
     // MARK: Selection Actions
@@ -165,6 +215,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     private func simulateFailure(option: NetworkProtectionSimulationOption) {
         NetworkProtectionTunnelController.enabledSimulationOption = .crashMemory
     }
-
-    #endif
 }
+
+#endif

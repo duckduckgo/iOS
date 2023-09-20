@@ -39,11 +39,6 @@ jobs:
 
     steps:
 
-    - name: Set destination output
-      id: destination
-      run: |
-        echo "destination=${{ env.destination }}" >> $GITHUB_OUTPUT
-
     # - name: Assert develop branch TODO: Uncomment before merging
     #   run: |
     #     case "${{ github.ref }}" in

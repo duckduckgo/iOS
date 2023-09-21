@@ -162,7 +162,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             do {
                 BookmarkUtils.migrateToFormFactorSpecificFavorites(byCopyingExistingTo: .mobile, in: context)
                 if context.hasChanges {
-                    try context.save()
+                    try context.save(onErrorFire: .bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders)
                 }
             } catch {
                 Thread.sleep(forTimeInterval: 1)

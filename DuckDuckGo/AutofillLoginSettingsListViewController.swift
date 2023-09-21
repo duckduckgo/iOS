@@ -160,7 +160,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         super.viewDidLayoutSubviews()
 
         guard viewModel.viewState == .empty else { return }
-        updateEmptyView()
+        adjustEmptyViewFooterSize()
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -168,6 +168,9 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
         coordinator.animate(alongsideTransition: { _ in
             self.updateConstraintConstants()
+            if self.viewModel.viewState == .empty {
+                self.emptyView.refreshConstraints()
+            }
             if self.view.subviews.contains(self.noAuthAvailableView) {
                 self.noAuthAvailableView.refreshConstraints()
             }
@@ -317,6 +320,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             noAuthAvailableView.isHidden = true
             emptySearchView.isHidden = true
         case .empty:
+            tableView.tableFooterView = emptyView
             tableView.isHidden = false
             setEditing(false, animated: false)
             lockedView.isHidden = true
@@ -438,27 +442,13 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         }
     }
 
-    private func updateEmptyView() {
-        let enableAutofillSectionHeight = heightOfSection(0)
-        emptyView.frame = CGRect(x: 0,
-                                 y: enableAutofillSectionHeight,
-                                 width: tableView.frame.width,
-                                 height: view.frame.height - enableAutofillSectionHeight)
-
-        if tableView.tableFooterView != emptyView {
-            tableView.tableFooterView = emptyView
-        }
-
-        emptyView.refreshConstraints()
-    }
-
-    private func heightOfSection(_ section: Int) -> CGFloat {
-        let numRows = tableView.numberOfRows(inSection: section)
-        let rowHeight = tableView.rowHeight
-        let headerHeight = tableView.sectionHeaderHeight
-        let footerHeight = tableView.sectionFooterHeight
-
-        return CGFloat(numRows) * rowHeight + headerHeight + footerHeight
+    // Adjust the footer size based on remaining space
+    private func adjustEmptyViewFooterSize() {
+        // Temporarily remove the footer
+        tableView.tableFooterView = nil
+        let remainingHeight = tableView.frame.height - tableView.contentSize.height - view.safeAreaInsets.bottom - view.safeAreaInsets.top
+        emptyView.adjustHeight(to: max(remainingHeight, 0))
+        tableView.tableFooterView = emptyView
     }
 
     // MARK: Cell Methods

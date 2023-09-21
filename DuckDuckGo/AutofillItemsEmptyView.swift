@@ -26,7 +26,7 @@ class AutofillItemsEmptyView: UIView {
         static let imageHeight: CGFloat = 170.0
         static let imageWidth: CGFloat = 220.0
         static let maxWidth: CGFloat = 250.0
-        static let topPadding: CGFloat = -164.0
+        static let topPadding: CGFloat = -64
     }
 
     override init(frame: CGRect) {
@@ -74,7 +74,7 @@ class AutofillItemsEmptyView: UIView {
                            relatedBy: .equal,
                            toItem: stackContentView,
                            attribute: .centerY,
-                           multiplier: 1,
+                           multiplier: 1.1,
                            constant: 0)
     }()
 
@@ -108,6 +108,10 @@ class AutofillItemsEmptyView: UIView {
 
         centerYConstraint.isActive = !isIPhonePortrait
         topConstraintIPhonePortrait.isActive = isIPhonePortrait
+    }
+
+    func adjustHeight(to newHeight: CGFloat) {
+        frame.size.height = newHeight
     }
 }
 

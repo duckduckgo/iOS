@@ -136,13 +136,13 @@ lane :release_alpha do |options|
     api_key: get_api_key,
     groups: options[:groups],
     skip_waiting_for_build_processing: true,
-    submit_beta_review: false
+    submit_beta_review: true
   )
 end
 
 desc 'Increment build number based on version in App Store Connect'
 lane :increment_build_number_for_version do |options|
-  app_identifier = "com.duckduckgo.mobile.ios"
+  app_identifier = "com.duckduckgo.mobile.ios" 
   if options[:app_identifier]
     app_identifier = options[:app_identifier]
   end

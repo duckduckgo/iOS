@@ -22,15 +22,7 @@ import Combine
 import Foundation
 import SyncDataProviders
 
-extension SettingsProvider.Setting {
-    static let favoritesDisplayMode = SettingsProvider.Setting(key: "favorites_display_mode")
-}
-
-final class FavoritesDisplayModeSyncHandler: SettingSyncHandler {
-
-    override var setting: SettingsProvider.Setting {
-        .favoritesDisplayMode
-    }
+final class FavoritesDisplayModeSyncHandler: FavoritesDisplayModeSyncHandlerBase {
 
     override func getValue() throws -> String? {
         appSettings.favoritesDisplayMode.description

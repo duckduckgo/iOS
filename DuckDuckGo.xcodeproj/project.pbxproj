@@ -753,6 +753,7 @@
 		EE3B226B29DE0F110082298A /* MockInternalUserStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3B226A29DE0F110082298A /* MockInternalUserStoring.swift */; };
 		EE3B226C29DE0FD30082298A /* MockInternalUserStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3B226A29DE0F110082298A /* MockInternalUserStoring.swift */; };
 		EE41BD192A729E9C00546C57 /* NetworkProtectionInviteViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE41BD182A729E9C00546C57 /* NetworkProtectionInviteViewModelTests.swift */; };
+		EE458D0D2AB1DA4600FC651A /* EventMapping+NetworkProtectionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE458D0C2AB1DA4600FC651A /* EventMapping+NetworkProtectionError.swift */; };
 		EE4BE0092A740BED00CD6AA8 /* ClearTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4BE0082A740BED00CD6AA8 /* ClearTextField.swift */; };
 		EE4FB1862A28CE7200E5CBA7 /* NetworkProtectionStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4FB1852A28CE7200E5CBA7 /* NetworkProtectionStatusView.swift */; };
 		EE4FB1882A28D11900E5CBA7 /* NetworkProtectionStatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4FB1872A28D11900E5CBA7 /* NetworkProtectionStatusViewModel.swift */; };
@@ -2340,6 +2341,7 @@
 		EE3B98EB2A963515002F63A0 /* WidgetsExtensionAlpha.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetsExtensionAlpha.entitlements; sourceTree = "<group>"; };
 		EE3B98EC2A963538002F63A0 /* PacketTunnelProviderAlpha.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PacketTunnelProviderAlpha.entitlements; sourceTree = "<group>"; };
 		EE41BD182A729E9C00546C57 /* NetworkProtectionInviteViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionInviteViewModelTests.swift; sourceTree = "<group>"; };
+		EE458D0C2AB1DA4600FC651A /* EventMapping+NetworkProtectionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventMapping+NetworkProtectionError.swift"; sourceTree = "<group>"; };
 		EE4BE0082A740BED00CD6AA8 /* ClearTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearTextField.swift; sourceTree = "<group>"; };
 		EE4FB1852A28CE7200E5CBA7 /* NetworkProtectionStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionStatusView.swift; sourceTree = "<group>"; };
 		EE4FB1872A28D11900E5CBA7 /* NetworkProtectionStatusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionStatusViewModel.swift; sourceTree = "<group>"; };
@@ -4344,6 +4346,7 @@
 			isa = PBXGroup;
 			children = (
 				EE0153E02A6EABE0002A8B26 /* NetworkProtectionConvenienceInitialisers.swift */,
+				EE458D0C2AB1DA4600FC651A /* EventMapping+NetworkProtectionError.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -6080,6 +6083,7 @@
 				CB258D1229A4F24900DEBA24 /* ConfigurationManager.swift in Sources */,
 				8546A54A2A672959003929BF /* MainViewController+Email.swift in Sources */,
 				F4F6DFB226E6AEC100ED7E12 /* AddOrEditBookmarkViewController.swift in Sources */,
+				EE458D0D2AB1DA4600FC651A /* EventMapping+NetworkProtectionError.swift in Sources */,
 				85047C752A0D3C2900D2FF3F /* SyncSettingsViewController+Themable.swift in Sources */,
 				F44D279F27F331BB0037F371 /* AutofillLoginPromptViewController.swift in Sources */,
 				C1BF0BA529B63D7200482B73 /* AutofillLoginPromptHelper.swift in Sources */,

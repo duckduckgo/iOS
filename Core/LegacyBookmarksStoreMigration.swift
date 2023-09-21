@@ -179,7 +179,7 @@ public class LegacyBookmarksStoreMigration {
         } catch {
             destination.reset()
             
-            BookmarkUtils.prepareFoldersStructure(in: destination)
+            BookmarkUtils.prepareLegacyFoldersStructure(in: destination)
             do {
                 try destination.save(onErrorFire: .bookmarksMigrationCouldNotPrepareDatabaseOnFailedMigration)
             } catch {

@@ -42,7 +42,7 @@ jobs:
     - name: Assert develop branch
       run: |
         case "${{ github.ref }}" in
-          *develop/*) ;;
+          *develop) ;;
           *) echo "👎 Not develop branch"; exit 1 ;;
         esac
 

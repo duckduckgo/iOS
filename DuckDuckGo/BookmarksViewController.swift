@@ -123,7 +123,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         self.viewModel = BookmarkListViewModel(
             bookmarksDatabase: bookmarksDatabase,
             parentID: parentID,
-            favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode,
+            favoritesDisplayMode: appSettings.favoritesDisplayMode,
             syncService: syncService
         )
         self.favicons = favicons
@@ -627,7 +627,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
             let result = await BookmarksImporter(
                 coreDataStore: bookmarksDatabase,
-                favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
+                favoritesDisplayMode: appSettings.favoritesDisplayMode
             ).parseAndSave(html: html)
             switch result {
             case .success:

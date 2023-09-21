@@ -110,7 +110,7 @@ struct RemoteMessaging {
         var favoritesCount = 0
         let context = bookmarksDatabase.makeContext(concurrencyType: .privateQueueConcurrencyType)
         context.performAndWait {
-            let mobileFavoritesFolder = BookmarkUtils.fetchFavoritesFolder(withUUID: favoritesDisplayMode.displayedPlatform.rawValue, in: context)!
+            let mobileFavoritesFolder = BookmarkUtils.fetchFavoritesFolder(withUUID: favoritesDisplayMode.displayedFolder.rawValue, in: context)!
 
             let bookmarksCountRequest = BookmarkEntity.fetchRequest()
             bookmarksCountRequest.predicate = NSPredicate(format: "!(ANY %K CONTAINS %@) AND %K == false AND %K == false",

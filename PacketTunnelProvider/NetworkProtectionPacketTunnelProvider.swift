@@ -37,7 +37,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 PixelParameters.server: server,
                 PixelParameters.networkType: networkType.rawValue
             ]
-            Pixel.fire(pixel: .networkProtectionLatency)
+            Pixel.fire(pixel: .networkProtectionLatency, withAdditionalParameters: params)
         case .rekeyCompleted:
             Pixel.fire(pixel: .networkProtectionRekeyCompleted)
         }

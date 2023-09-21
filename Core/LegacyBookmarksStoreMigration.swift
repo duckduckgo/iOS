@@ -39,7 +39,7 @@ public class LegacyBookmarksStoreMigration {
             }
         } else {
             // Initialize structure if needed
-            BookmarkUtils.prepareFoldersStructure(in: context)
+            BookmarkUtils.prepareLegacyFoldersStructure(in: context)
             if context.hasChanges {
                 do {
                     try context.save(onErrorFire: .bookmarksCouldNotPrepareDatabase)

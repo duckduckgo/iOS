@@ -51,7 +51,12 @@ final class FireButtonReferenceTests: XCTestCase {
     }
     
     private func sanitizedSite(_ site: String) -> String {
-        let url = URL(string: site)!
+        let url: URL
+        if site.hasPrefix("http") {
+            url = URL(string: site)!
+        } else {
+            url = URL(string: "https://" + site)!
+        }
         return url.host!
     }
 

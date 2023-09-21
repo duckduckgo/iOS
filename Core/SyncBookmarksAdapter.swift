@@ -65,7 +65,7 @@ public final class SyncBookmarksAdapter {
 
         context.performAndWait {
             do {
-                if favoritesDisplayModeStorage.favoritesDisplayMode.isDisplayAll {
+                if favoritesDisplayModeStorage.favoritesDisplayMode.isDisplayUnified {
                     BookmarkUtils.copyFavorites(from: .unified, to: .mobile, removingNonNativeFavoritesFrom: .desktop, in: context)
                     favoritesDisplayModeStorage.favoritesDisplayMode = .displayNative(.mobile)
                 } else {

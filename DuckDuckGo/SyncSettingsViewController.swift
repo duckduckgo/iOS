@@ -71,11 +71,11 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     }
 
     private func setUpFavoritesDisplayModeSwitch(_ viewModel: SyncSettingsViewModel, _ appSettings: AppSettings) {
-        viewModel.isUnifiedFavoritesEnabled = appSettings.favoritesDisplayMode.isDisplayAll
+        viewModel.isUnifiedFavoritesEnabled = appSettings.favoritesDisplayMode.isDisplayUnified
 
         viewModel.$isUnifiedFavoritesEnabled.dropFirst()
             .sink { [weak self] isEnabled in
-                appSettings.favoritesDisplayMode = isEnabled ? .displayAll(native: .mobile) : .displayNative(.mobile)
+                appSettings.favoritesDisplayMode = isEnabled ? .displayUnified(native: .mobile) : .displayNative(.mobile)
                 NotificationCenter.default.post(name: AppUserDefaults.Notifications.favoritesDisplayModeChange, object: self)
                 self?.syncService.scheduler.notifyDataChanged()
             }
@@ -90,7 +90,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
             }
             .receive(on: DispatchQueue.main)
             .sink { _ in
-                viewModel.isUnifiedFavoritesEnabled = appSettings.favoritesDisplayMode.isDisplayAll
+                viewModel.isUnifiedFavoritesEnabled = appSettings.favoritesDisplayMode.isDisplayUnified
             }
             .store(in: &cancellables)
     }

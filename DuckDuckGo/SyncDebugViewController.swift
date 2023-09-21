@@ -176,10 +176,10 @@ class SyncDebugViewController: UITableViewController {
                 Task { @MainActor in
                     try await Task.sleep(nanoseconds: UInt64(10e9))
                     var displayMode = AppDependencyProvider.shared.appSettings.favoritesDisplayMode
-                    if displayMode.isDisplayAll {
+                    if displayMode.isDisplayUnified {
                         displayMode = .displayNative(.mobile)
                     } else {
-                        displayMode = .displayAll(native: .mobile)
+                        displayMode = .displayUnified(native: .mobile)
                     }
                     AppDependencyProvider.shared.appSettings.favoritesDisplayMode = displayMode
                     NotificationCenter.default.post(name: AppUserDefaults.Notifications.favoritesDisplayModeChange, object: nil)

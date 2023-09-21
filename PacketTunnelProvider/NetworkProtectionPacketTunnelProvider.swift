@@ -99,6 +99,18 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             case .keychainDeleteError(let status): // TODO: Check whether field needed here
                 pixelEvent = .networkProtectionKeychainDeleteError
                 params[PixelParameters.keychainErrorCode] = String(status)
+            case .wireGuardCannotLocateTunnelFileDescriptor:
+                pixelEvent = .networkProtectionWireguardErrorCannotLocateTunnelFileDescriptor
+            case .wireGuardInvalidState:
+                pixelEvent = .networkProtectionWireguardErrorInvalidState
+            case .wireGuardDnsResolution:
+                pixelEvent = .networkProtectionWireguardErrorFailedDNSResolution
+            case .wireGuardSetNetworkSettings(let error):
+                pixelEvent = .networkProtectionWireguardErrorCannotSetNetworkSettings
+                pixelError = error
+            case .startWireGuardBackend(let code):
+                pixelEvent = .networkProtectionWireguardErrorCannotStartWireguardBackend
+                params[PixelParameters.wireguardErrorCode] = String(code)
             case .noAuthTokenFound:
                 pixelEvent = .networkProtectionNoAuthTokenFoundError
             case .unhandledError(function: let function, line: let line, error: let error):

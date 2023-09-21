@@ -23,20 +23,11 @@ import Foundation
 extension FavoritesDisplayMode: LosslessStringConvertible {
     static let `default` = FavoritesDisplayMode.displayNative(.mobile)
 
-    public var description: String {
-        switch self {
-        case .displayNative:
-            return "display_native"
-        case .displayUnified:
-            return "display_all"
-        }
-    }
-
     public init?(_ description: String) {
         switch description {
-        case "display_native":
+        case FavoritesDisplayMode.displayNative(.mobile).description:
             self = .displayNative(.mobile)
-        case "display_all":
+        case FavoritesDisplayMode.displayUnified(native: .mobile).description:
             self = .displayUnified(native: .mobile)
         default:
             return nil

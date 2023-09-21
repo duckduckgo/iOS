@@ -566,7 +566,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             guard let controller = AddOrEditBookmarkViewController(coder: coder,
                                                                    editingEntityID: id,
                                                                    bookmarksDatabase: bookmarksDatabase,
-                                                                   syncService: syncService) else {
+                                                                   syncService: syncService,
+                                                                   appSettings: appSettings) else {
                 assertionFailure("Failed to create controller")
                 return nil
             }
@@ -576,7 +577,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             guard let controller = AddOrEditBookmarkViewController(coder: coder,
                                                                    parentFolderID: viewModel.currentFolder?.objectID,
                                                                    bookmarksDatabase: bookmarksDatabase,
-                                                                   syncService: syncService) else {
+                                                                   syncService: syncService,
+                                                                   appSettings: appSettings) else {
                 assertionFailure("Failed to create controller")
                 return nil
             }

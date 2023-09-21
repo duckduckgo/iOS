@@ -21,6 +21,7 @@ import Foundation
 import NetworkProtection
 import Common
 import Core
+import Networking
 
 // Initial implementation for initial Network Protection tests. Will be fleshed out with https://app.asana.com/0/1203137811378537/1204630829332227/f
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
@@ -159,6 +160,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents)
         startMonitoringMemoryPressureEvents()
+        APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
     }
 
     private func startMonitoringMemoryPressureEvents() {

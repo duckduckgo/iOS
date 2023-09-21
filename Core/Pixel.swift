@@ -110,8 +110,6 @@ public struct PixelParameters {
     public static let message = "message"
     public static let sheetResult = "success"
 
-    public static let defaultBrowser = "default_browser"
-
     // Return user
     public static let returnUserErrorCode = "error_code"
     public static let returnUserOldATB = "old_atb"

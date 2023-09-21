@@ -494,7 +494,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         showKeyboardIfSettingOn = false
 
         if !handleAppDeepLink(app, mainViewController, url) {
-            SetAsDefaultStatistics().openedAsDefault()
             mainViewController?.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil)
         }
 

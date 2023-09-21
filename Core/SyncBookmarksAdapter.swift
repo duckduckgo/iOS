@@ -55,29 +55,9 @@ public final class SyncBookmarksAdapter {
         databaseCleaner.cleanUpDatabaseNow()
         if shouldEnable {
             databaseCleaner.scheduleRegularCleaning()
+            handleFavoritesAfterDisablingSync()
         } else {
             databaseCleaner.cancelCleaningSchedule()
-        }
-    }
-
-    public func handleFavoritesAfterDisablingSync() {
-        let context = database.makeContext(concurrencyType: .privateQueueConcurrencyType)
-
-        context.performAndWait {
-            do {
-                if favoritesDisplayModeStorage.favoritesDisplayMode.isDisplayUnified {
-                    BookmarkUtils.copyFavorites(from: .unified, to: .mobile, clearingNonNativeFavoritesFolder: .desktop, in: context)
-                    favoritesDisplayModeStorage.favoritesDisplayMode = .displayNative(.mobile)
-                } else {
-                    BookmarkUtils.copyFavorites(from: .mobile, to: .unified, clearingNonNativeFavoritesFolder: .desktop, in: context)
-                }
-                try context.save()
-            } catch {
-                let nsError = error as NSError
-                let processedErrors = CoreDataErrorsParser.parse(error: nsError)
-                let params = processedErrors.errorPixelParameters
-                Pixel.fire(pixel: .favoritesCleanupFailed, error: error, withAdditionalParameters: params)
-            }
         }
     }
 
@@ -111,6 +91,27 @@ public final class SyncBookmarksAdapter {
             }
 
         self.provider = provider
+    }
+
+    private func handleFavoritesAfterDisablingSync() {
+        let context = database.makeContext(concurrencyType: .privateQueueConcurrencyType)
+
+        context.performAndWait {
+            do {
+                if favoritesDisplayModeStorage.favoritesDisplayMode.isDisplayUnified {
+                    BookmarkUtils.copyFavorites(from: .unified, to: .mobile, clearingNonNativeFavoritesFolder: .desktop, in: context)
+                    favoritesDisplayModeStorage.favoritesDisplayMode = .displayNative(.mobile)
+                } else {
+                    BookmarkUtils.copyFavorites(from: .mobile, to: .unified, clearingNonNativeFavoritesFolder: .desktop, in: context)
+                }
+                try context.save()
+            } catch {
+                let nsError = error as NSError
+                let processedErrors = CoreDataErrorsParser.parse(error: nsError)
+                let params = processedErrors.errorPixelParameters
+                Pixel.fire(pixel: .favoritesCleanupFailed, error: error, withAdditionalParameters: params)
+            }
+        }
     }
 
     private var syncDidCompleteSubject = PassthroughSubject<Void, Never>()

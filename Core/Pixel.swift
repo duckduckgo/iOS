@@ -114,6 +114,9 @@ public struct PixelParameters {
     public static let keychainFieldName = "fieldName"
     public static let keychainErrorCode = errorCode
     public static let wireguardErrorCode = errorCode
+    public static let latency = "latency"
+    public static let server = "server"
+    public static let networkType = "network_type"
     public static let function = "function"
     public static let line = "line"
     public static let reason = "reason"

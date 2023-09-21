@@ -33,7 +33,9 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     private let titles = [
         Sections.keychain: "Keychain",
         Sections.debugFeature: "Debug Features",
-        Sections.simulateFailure: "Simulate Failure"
+        Sections.simulateFailure: "Simulate Failure",
+        Sections.registrationKey: "Registration Key"
+
     ]
 
     enum Sections: Int, CaseIterable {
@@ -41,6 +43,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case keychain
         case debugFeature
         case simulateFailure
+        case registrationKey
 
     }
 
@@ -60,6 +63,12 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case controllerFailure
         case crashFatalError
         case crashMemory
+
+    }
+
+    enum RegistrationKeyRows: Int, CaseIterable {
+
+        case expireNow
 
     }
 
@@ -109,6 +118,10 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
         case .simulateFailure:
             configure(cell, forSimulateFailureAtRow: indexPath.row)
+
+        case .registrationKey:
+            configure(cell, forRegistrationKeyRow: indexPath.row)
+
         case.none:
             break
         }
@@ -121,6 +134,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .keychain: return KeychainRows.allCases.count
         case .debugFeature: return DebugFeatureRows.allCases.count
         case .simulateFailure: return SimulateFailureRows.allCases.count
+        case .registrationKey: return RegistrationKeyRows.allCases.count
         case .none: return 0
 
         }
@@ -137,6 +151,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             didSelectDebugFeature(at: indexPath)
         case .simulateFailure:
             didSelectSimulateFailure(at: indexPath)
+        case .registrationKey:
+            didSelectRegistationKeyAction(at: indexPath)
         case .none:
             break
         }
@@ -194,6 +210,28 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             debugFeatures.alwaysOnEnabled.toggle()
             tableView.reloadRows(at: [indexPath], with: .none)
         default:
+            break
+        }
+    }
+
+    // MARK: Registration Key
+
+    private func configure(_ cell: UITableViewCell, forRegistrationKeyRow row: Int) {
+        switch RegistrationKeyRows(rawValue: row) {
+        case .expireNow:
+            cell.textLabel?.text = "Expire Now"
+        case .none:
+            break
+        }
+    }
+
+    private func didSelectRegistationKeyAction(at indexPath: IndexPath) {
+        switch RegistrationKeyRows(rawValue: indexPath.row) {
+        case .expireNow:
+            Task {
+                await NetworkProtectionDebugUtilities().expireRegistrationKeyNow()
+            }
+        case .none:
             break
         }
     }

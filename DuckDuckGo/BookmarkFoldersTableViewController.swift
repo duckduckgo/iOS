@@ -159,7 +159,7 @@ class BookmarkFoldersViewController: UITableViewController {
             fatalError("Failed to dequeue \(FavoriteCell.reuseIdentifier) as FavoriteCell")
         }
 
-        cell.favoriteToggle.isOn = viewModel?.bookmark.isFavorite(on: .mobile) == true
+        cell.favoriteToggle.isOn = viewModel?.bookmark.isFavorite(on: viewModel.favoritesDisplayMode.displayedFolder) == true
         cell.favoriteToggle.removeTarget(self, action: #selector(favoriteToggleDidChange(_:)), for: .valueChanged)
         cell.favoriteToggle.addTarget(self, action: #selector(favoriteToggleDidChange(_:)), for: .valueChanged)
         cell.favoriteToggle.onTintColor = ThemeManager.shared.currentTheme.buttonTintColor

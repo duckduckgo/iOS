@@ -29,9 +29,11 @@ public enum BookmarksExporterError: Error {
 public struct BookmarksExporter {
 
     private(set) var coreDataStorage: CoreDataDatabase
+    private let favoritesDisplayMode: FavoritesDisplayMode
 
-    public init(coreDataStore: CoreDataDatabase) {
+    public init(coreDataStore: CoreDataDatabase, favoritesDisplayMode: FavoritesDisplayMode) {
         coreDataStorage = coreDataStore
+        self.favoritesDisplayMode = favoritesDisplayMode
     }
 
     public func exportBookmarksTo(url: URL) throws {
@@ -64,7 +66,7 @@ public struct BookmarksExporter {
                 content.append(Template.bookmark(level: level,
                                                  title: entity.title!.escapedForHTML,
                                                  url: entity.url!,
-                                                 isFavorite: entity.isFavorite(on: .mobile)))
+                                                 isFavorite: entity.isFavorite(on: favoritesDisplayMode.displayedFolder)))
             }
         }
         return content

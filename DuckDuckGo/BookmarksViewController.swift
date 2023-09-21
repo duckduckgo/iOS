@@ -661,7 +661,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         // create file to export
         let tempFileUrl = FileManager.default.temporaryDirectory.appendingPathComponent(Constants.bookmarksFileName)
         do {
-            try BookmarksExporter(coreDataStore: bookmarksDatabase).exportBookmarksTo(url: tempFileUrl)
+            try BookmarksExporter(coreDataStore: bookmarksDatabase, favoritesDisplayMode: viewModel.favoritesDisplayMode)
+                .exportBookmarksTo(url: tempFileUrl)
         } catch {
             os_log("bookmarks failed to export %s", type: .debug, error.localizedDescription)
             ActionMessageView.present(message: UserText.exportBookmarksFailedMessage)

@@ -100,10 +100,7 @@ class BookmarksMigrationTests: XCTestCase {
         LegacyBookmarksStoreMigration.migrate(from: nil, to: context)
         
         XCTAssertNotNil(BookmarkUtils.fetchRootFolder(context))
-        XCTAssertEqual(
-            BookmarkUtils.fetchFavoritesFolders(withUUIDs: Set(FavoritesFolderID.allCases.map(\.rawValue)), in: context).count,
-            FavoritesFolderID.allCases.count
-        )
+        XCTAssertEqual(BookmarkUtils.fetchFavoritesFolders(withUUIDs: Set(FavoritesFolderID.allCases.map(\.rawValue)), in: context).count, 1)
         
         // Simulate subsequent app instantiations
         LegacyBookmarksStoreMigration.migrate(from: nil, to: context)
@@ -113,7 +110,7 @@ class BookmarksMigrationTests: XCTestCase {
         countRequest.predicate = NSPredicate(value: true)
         
         let count = try context.count(for: countRequest)
-        XCTAssertEqual(count, 4)
+        XCTAssertEqual(count, 2)
     }
     
     func testWhenRegularMigrationIsNeededThenItIsDoneAndDataIsDeduplicated() {

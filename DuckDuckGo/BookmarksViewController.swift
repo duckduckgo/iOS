@@ -940,8 +940,10 @@ extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
         }
 
         // capture the optional details
-        let favoritesFolder = bookmark.favoriteFolder
-        let favoritesIndex = favoritesFolder?.favoritesArray.firstIndex(of: bookmark)
+        var favoritesFoldersAndIndexes: [BookmarkEntity: Int] = [:]
+        for favoritesFolder in bookmark.favoriteFoldersSet {
+            favoritesFoldersAndIndexes[favoritesFolder] = favoritesFolder.favoritesArray.firstIndex(of: bookmark) ?? 0
+        }
 
         // capture this locally because this VC might have been closed when undo gets pressed
         let localViewModel = self.viewModel
@@ -952,8 +954,7 @@ extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
                                           url: url,
                                           folder: parent,
                                           folderIndex: index,
-                                          favoritesFolder: favoritesFolder,
-                                          favoritesIndex: favoritesIndex)
+                                          favoritesFoldersAndIndexes: favoritesFoldersAndIndexes)
 
             self?.tableView.reloadData()
             self?.refreshAll()

@@ -192,7 +192,8 @@ public class AppUserDefaults: AppSettings {
             // In future, we'll use setAutofillCredentialsEnabledAutomaticallyIfNecessary() here to automatically turn on autofill for people
             // That haven't seen the save prompt before.
             // For now, whilst internal testing is still happening, it's still set to default to be enabled
-            return userDefaults?.object(forKey: Keys.autofillCredentialsEnabled) as? Bool ?? false
+            #warning("This is temporarily defaulted to true for ship review - undo before merging!")
+            return userDefaults?.object(forKey: Keys.autofillCredentialsEnabled) as? Bool ?? true
         }
         
         set {

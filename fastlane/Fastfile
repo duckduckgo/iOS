@@ -135,8 +135,7 @@ lane :release_alpha do |options|
   upload_to_testflight(
     api_key: get_api_key,
     groups: options[:groups],
-    skip_waiting_for_build_processing: true,
-    submit_beta_review: true
+    skip_waiting_for_build_processing: true
   )
 end
 

@@ -29,8 +29,8 @@ class FileLoader {
     func load(fileName: String, fromBundle bundle: Bundle) throws -> Data {
 
         let fileUrl = URL(fileURLWithPath: fileName)
+        let baseName = fileUrl.deletingPathExtension().path
         let ext = fileUrl.pathExtension
-        let baseName = fileName.dropping(suffix: ".\(ext)")
 
         var path = bundle.path(forResource: baseName, ofType: ext)
         if path == nil {

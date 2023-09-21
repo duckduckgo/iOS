@@ -24,6 +24,6 @@ public class InternalUserStore: InternalUserStoring {
     public init() {
     }
     
-    @UserDefaultsWrapper(key: .featureFlaggingDidVerifyInternalUser, defaultValue: true)
+    @UserDefaultsWrapper(key: .featureFlaggingDidVerifyInternalUser, defaultValue: false)
     public var isInternalUser: Bool
 }

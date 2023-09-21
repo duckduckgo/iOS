@@ -42,13 +42,14 @@ public final class SyncSettingsAdapter {
         guard provider == nil else {
             return
         }
+
         let emailManager = EmailManager()
+        let emailProtectionSyncHandler = EmailProtectionSyncHandler(emailManager: emailManager)
 
         let provider = SettingsProvider(
             metadataDatabase: metadataDatabase,
             metadataStore: metadataStore,
-            emailManager: emailManager,
-            settingsHandlers: settingHandlers,
+            settingsHandlers: settingHandlers + [emailProtectionSyncHandler],
             syncDidUpdateData: { [weak self] in
                 self?.syncDidCompleteSubject.send()
             }

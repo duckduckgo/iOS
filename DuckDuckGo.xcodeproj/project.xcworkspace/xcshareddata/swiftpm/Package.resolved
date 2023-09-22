@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": "dominik/sync-logout-unauthorized-sync-operation",
-          "revision": "c307c1860bfd571db2ab5bd76df196dec0a3c804",
+          "revision": "2521f21cedd6341d8452afdf978c030f717c3a02",
           "version": null
         }
       },

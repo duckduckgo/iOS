@@ -21,6 +21,11 @@ import UIKit
 
 class AutofillSettingsEnableFooterView: UIView {
 
+    private enum Constants {
+        static let topPadding: CGFloat = 8
+        static let defaultPadding: CGFloat = 16
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         installSubviews()
@@ -51,10 +56,10 @@ class AutofillSettingsEnableFooterView: UIView {
         title.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            title.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
-            title.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
-            title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
-            title.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -8)
+            title.topAnchor.constraint(equalTo: self.topAnchor, constant: Constants.topPadding),
+            title.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Constants.defaultPadding),
+            title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constants.defaultPadding),
+            title.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -Constants.defaultPadding)
         ])
     }
 }

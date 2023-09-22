@@ -22,6 +22,7 @@ import NetworkProtection
 import Common
 import Core
 import Networking
+import NetworkExtension
 
 // Initial implementation for initial Network Protection tests. Will be fleshed out with https://app.asana.com/0/1203137811378537/1204630829332227/f
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
@@ -148,6 +149,19 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         }
     }
 
+    public override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
+        switch reason {
+        case .appUpdate, .userInitiated:
+            break
+        default:
+            DailyPixel.fireDailyAndCount(
+                pixel: .networkProtectionDisconnected,
+                withAdditionalParameters: [PixelParameters.reason: String(reason.rawValue)]
+            )
+        }
+        super.stopTunnel(with: reason, completionHandler: completionHandler)
+    }
+
     @objc init() {
         let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
                                                              errorEvents: nil)
@@ -175,9 +189,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 case DispatchSource.MemoryPressureEvent.normal:
                     break
                 case DispatchSource.MemoryPressureEvent.warning:
-                    Pixel.fire(pixel: .networkProtectionMemoryWarning)
+                    DailyPixel.fire(pixel: .networkProtectionMemoryWarning)
                 case DispatchSource.MemoryPressureEvent.critical:
-                    Pixel.fire(pixel: .networkProtectionMemoryCritical)
+                    DailyPixel.fire(pixel: .networkProtectionMemoryCritical)
                 default:
                     break
                 }

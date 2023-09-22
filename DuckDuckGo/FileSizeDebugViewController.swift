@@ -20,6 +20,7 @@
 import Foundation
 import UIKit
 import Core
+import GRDB
 
 struct FileItem {
     let url: URL
@@ -125,7 +126,8 @@ class FileSizeDebugViewController: UITableViewController {
 
         return cell
     }
-    
+
+    // swiftlint:disable:next cyclomatic_complexity function_body_length
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = model[indexPath.row]
         
@@ -137,7 +139,75 @@ class FileSizeDebugViewController: UITableViewController {
                 viewController.navigationItem.title = item.name
                 navigationController?.pushViewController(viewController, animated: true)
             }
+        } else {
+            if item.name.hasSuffix("db") || item.name.hasSuffix("sqlite") || item.name.hasSuffix("sqlite3") {
+                do {
+                    let dbPool = try DatabasePool(path: item.url.absoluteString)
+                    var fileContent: String = ""
+                    var tableNames: [String] = []
+
+                    try dbPool.read { db in
+                        let rows = try Row.fetchCursor(db, sql: "SELECT name FROM sqlite_master WHERE type='table'")
+                        while let row = try rows.next() {
+                            if let name = row["name"] as String? {
+                                tableNames.append(name)
+                            }
+                        }
+                    }
+
+                    for table in tableNames {
+                        fileContent.append("Contents of table: \(table)\n")
+                        try dbPool.read { db in
+                            let rows = try Row.fetchAll(db, sql: "SELECT * FROM \(table)")
+                            if rows.isEmpty {
+                                fileContent.append("Table is empty")
+                            } else {
+                                for row in rows {
+                                    fileContent.append("\(row.description)\n\n")
+                                }
+                            }
+                        }
+                        fileContent.append("\n\n")
+                    }
+
+                    previewFileContents(fileContent, itemName: item.name)
+
+                } catch {
+                    previewFileContents(error.localizedDescription, itemName: item.name)
+                }
+            } else if item.name.hasSuffix("plist") {
+                guard let data = try? Data(contentsOf: item.url.absoluteURL) else {
+                    previewFileContents("No content", itemName: item.name)
+                    return
+                }
+
+                var fileContent: String = ""
+
+                if let plistArray = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [AnyObject] {
+                    for item in plistArray {
+                        print(item)
+                        fileContent.append("\(item) \n")
+                    }
+                } else if let plist = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: AnyObject] {
+                    for (key, value) in plist {
+                        print("\(key) : \(value)")
+                        fileContent.append("\(key) : \(value) \n")
+                    }
+                }
+
+                previewFileContents(fileContent, itemName: item.name)
+            }
         }
+    }
+
+    private func previewFileContents(_ text: String, itemName: String) {
+        let storyboard = UIStoryboard(name: "Debug", bundle: Bundle.main)
+        if let viewController = storyboard.instantiateViewController(identifier: "FileTextPreviewDebug") as? FileTextPreviewDebugViewController {
+            viewController.textContent = text
+            viewController.navigationItem.title = itemName
+            navigationController?.pushViewController(viewController, animated: true)
+        }
+
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

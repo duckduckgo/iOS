@@ -74,12 +74,12 @@ class SaveLoginViewController: UIViewController {
             return
         }
         switch viewModel.layoutType {
-        case .newUser:
-            Pixel.fire(pixel: .autofillLoginsSaveLoginModalDismissed)
-        case .saveLogin:
-            Pixel.fire(pixel: .autofillLoginsSaveLoginModalDismissed)
+        case .newUser, .saveLogin:
+            Pixel.fire(pixel: .autofillLoginsSaveLoginModalDismissed,
+                       withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
         case .savePassword:
-            Pixel.fire(pixel: .autofillLoginsSavePasswordModalDismissed)
+            Pixel.fire(pixel: .autofillLoginsSavePasswordModalDismissed,
+                       withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
         case .updateUsername:
             Pixel.fire(pixel: .autofillLoginsUpdateUsernameModalDismissed)
         case .updatePassword:
@@ -100,12 +100,12 @@ class SaveLoginViewController: UIViewController {
         installChildViewController(controller)
         
         switch saveViewModel.layoutType {
-        case .newUser:
-            Pixel.fire(pixel: .autofillLoginsSaveLoginModalDisplayed)
-        case .saveLogin:
-            Pixel.fire(pixel: .autofillLoginsSaveLoginModalDisplayed)
+        case .newUser, .saveLogin:
+            Pixel.fire(pixel: .autofillLoginsSaveLoginModalDisplayed,
+                       withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
         case .savePassword:
-            Pixel.fire(pixel: .autofillLoginsSavePasswordModalDisplayed)
+            Pixel.fire(pixel: .autofillLoginsSavePasswordModalDisplayed,
+                       withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
         case .updateUsername:
             Pixel.fire(pixel: .autofillLoginsUpdateUsernameModalDisplayed)
         case .updatePassword:
@@ -119,9 +119,11 @@ extension SaveLoginViewController: SaveLoginViewModelDelegate {
         switch viewModel.layoutType {
         case .saveLogin, .savePassword, .newUser:
             if viewModel.layoutType == .savePassword {
-                Pixel.fire(pixel: .autofillLoginsSavePasswordModalConfirmed)
+                Pixel.fire(pixel: .autofillLoginsSavePasswordModalConfirmed,
+                           withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
             } else {
-                Pixel.fire(pixel: .autofillLoginsSaveLoginModalConfirmed)
+                Pixel.fire(pixel: .autofillLoginsSaveLoginModalConfirmed,
+                           withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
             }
             delegate?.saveLoginViewController(self, didSaveCredentials: credentialManager.credentials)
         case .updatePassword, .updateUsername:
@@ -148,7 +150,8 @@ extension SaveLoginViewController: SaveLoginViewModelDelegate {
         alertController.overrideUserInterfaceStyle()
 
         let disableAction = UIAlertAction(title: UserText.autofillKeepEnabledAlertDisableAction, style: .cancel) { _ in
-            Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptAutofillDisabled)
+            Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptAutofillDisabled,
+                       withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
             if isSelfPresentingAlert {
                 self.delegate?.saveLoginViewControllerDidCancel(self)
             }
@@ -156,7 +159,8 @@ extension SaveLoginViewController: SaveLoginViewModelDelegate {
         }
 
         let keepUsingAction = UIAlertAction(title: UserText.autofillKeepEnabledAlertKeepUsingAction, style: .default) { _ in
-            Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptAutofillKept)
+            Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptAutofillKept,
+                       withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
             if isSelfPresentingAlert {
                 self.delegate?.saveLoginViewControllerDidCancel(self)
             }
@@ -170,7 +174,8 @@ extension SaveLoginViewController: SaveLoginViewModelDelegate {
         if isAlreadyDismissed {
             delegate?.saveLoginViewController(self, didRequestPresentConfirmKeepUsingAlertController: alertController)
         } else {
-            Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptShown)
+            Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptShown,
+                       withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
             present(alertController, animated: true)
         }
     }

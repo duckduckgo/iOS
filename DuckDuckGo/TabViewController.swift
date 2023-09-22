@@ -2496,7 +2496,8 @@ extension TabViewController: SaveLoginViewControllerDelegate {
     
     func saveLoginViewController(_ viewController: SaveLoginViewController,
                                  didRequestPresentConfirmKeepUsingAlertController alertController: UIAlertController) {
-        Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptShown)
+        Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptShown,
+                   withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
         present(alertController, animated: true)
     }
 }

@@ -175,9 +175,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 case DispatchSource.MemoryPressureEvent.normal:
                     break
                 case DispatchSource.MemoryPressureEvent.warning:
-                    Pixel.fire(pixel: .networkProtectionMemoryWarning)
+                    DailyPixel.fire(pixel: .networkProtectionMemoryWarning)
                 case DispatchSource.MemoryPressureEvent.critical:
-                    Pixel.fire(pixel: .networkProtectionMemoryCritical)
+                    DailyPixel.fire(pixel: .networkProtectionMemoryCritical)
                 default:
                     break
                 }

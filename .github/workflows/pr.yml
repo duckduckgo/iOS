@@ -103,7 +103,7 @@ jobs:
       if: always() # always run even if the previous step fails
       env:
         ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
-        WORKFLOW_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        WORKFLOW_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/attempts/${{ github.run_attempt }}
       run: |
         # Extract failed tests from the junit report
         # Only keep failures unique by classname and name (column 1 and 2 of the yq output)

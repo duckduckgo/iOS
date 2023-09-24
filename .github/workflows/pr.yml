@@ -44,6 +44,9 @@ jobs:
     runs-on: macos-13
     timeout-minutes: 30
 
+    outputs:
+      commit_author: ${{ steps.fetch_commit_author.outputs.commit_author }}
+
     steps:
     - name: Check out the code
       uses: actions/checkout@v3
@@ -112,6 +115,16 @@ jobs:
           | sort -u -k 1,2 \
           | xargs -L 1 ./scripts/report-failed-unit-test.sh -s ${{ vars.APPLE_CI_FAILING_TESTS_FAILED_TESTS_SECTION_ID }}
 
+    - name: Fetch latest commit author
+      if: always() && github.ref_name == 'develop'
+      id: fetch_commit_author
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        head_commit=$(git rev-parse HEAD)
+        author=$(gh api https://api.github.com/repos/${{ github.repository }}/commits/${head_commit} --jq .author.login)
+        echo "commit_author=${author}" >> $GITHUB_OUTPUT
+
   release-build:
 
     name: Make Release Build
@@ -174,24 +187,35 @@ jobs:
         -configuration "Release" \
         | xcbeautify
 
-  asana:
+  create-asana-task:
     name: Create Asana Task
     needs: [swiftlint, unit-tests, shellcheck, release-build]
 
-    if: failure() && github.ref_name == 'develop'
-    
-    env:
-      WORKFLOW_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-    
+    if: failure() && github.ref_name == 'develop' && github.run_attempt == 1
+
     runs-on: ubuntu-latest
 
     steps:
       - name: Create Asana Task
-        uses: malmstein/github-asana-action@master
+        uses: duckduckgo/BrowserServicesKit/.github/actions/asana-failed-pr-checks@dominik/gha-pr-check-failed-improvements
         with:
-          asana-pat: ${{ secrets.ASANA_ACCESS_TOKEN }}
-          asana-project: ${{ vars.APPLE_CI_FAILING_TESTS_PROJECT_ID }}
-          asana-section: ${{ vars.APPLE_CI_FAILING_TESTS_IOS_POST_MERGE_SECTION_ID }}
-          asana-task-name: 'PR Check is failing on develop'
-          action: create-asana-task
-          asana-task-description: PR Checks conducted after merging have failed. See ${{ env.WORKFLOW_URL }}. Follow the steps on https://app.asana.com/0/1202500774821704/1205317064731691 to resolve this issue.
+          action: create-task
+          asana-access-token: ${{ secrets.ASANA_ACCESS_TOKEN }}
+          asana-section-id: ${{ vars.APPLE_CI_FAILING_TESTS_IOS_POST_MERGE_SECTION_ID }}
+          commit-author: ${{ needs.unit-tests.outputs.commit_author }}
+
+  close-asana-task:
+    name: Close Asana Task
+    needs: [swiftlint, unit-tests, shellcheck, release-build]
+
+    if: success() && github.ref_name == 'develop' && github.run_attempt > 1
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Close Asana Task
+        uses: duckduckgo/BrowserServicesKit/.github/actions/asana-failed-pr-checks@dominik/gha-pr-check-failed-improvements
+        with:
+          action: close-task
+          asana-access-token: ${{ secrets.ASANA_ACCESS_TOKEN }}
+          asana-section-id: ${{ vars.APPLE_CI_FAILING_TESTS_IOS_POST_MERGE_SECTION_ID }}

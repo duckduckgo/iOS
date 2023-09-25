@@ -391,9 +391,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let store = FailedCompilationsStore()
         if store.hasAnyFailures {
             DailyPixel.fire(pixel: .compilationFailed, withAdditionalParameters: store.summary) { error in
-                if error == nil {
-                    store.cleanup()
-                }
+                guard error != nil else { return }
+                store.cleanup()
             }
         }
     }

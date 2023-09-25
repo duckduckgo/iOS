@@ -2281,11 +2281,13 @@ extension TabViewController: SecureVaultManagerDelegate {
     }
     
     func secureVaultManagerIsEnabledStatus(_ manager: SecureVaultManager, forType type: AutofillType?) -> Bool {
-        let isEnabled = AutofillSettingStatus.isAutofillEnabledInSettings && featureFlagger.isFeatureOn(.autofillCredentialInjecting)
-        let isBackgrounded = UIApplication.shared.applicationState == .background
-        if isEnabled && isBackgrounded {
-            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded,
-                       withAdditionalParameters: [PixelParameters.isBackgrounded: "true"])
+        let isEnabled = AutofillSettingStatus.isAutofillEnabledInSettings &&
+                        featureFlagger.isFeatureOn(.autofillCredentialInjecting) &&
+                        !isLinkPreview
+        let isDataProtected = !UIApplication.shared.isProtectedDataAvailable
+        if isEnabled && isDataProtected {
+            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabledAndDataProtected,
+                       withAdditionalParameters: [PixelParameters.isDataProtected: "true"])
         }
         return isEnabled
     }
@@ -2340,7 +2342,7 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
 
         if accounts.count > 0 {
-            let accountMatches = autofillWebsiteAccountMatcher.findMatchesSortedByLastUpdated(accounts: accounts, for: domain)
+            let accountMatches = autofillWebsiteAccountMatcher.findDeduplicatedSortedMatches(accounts: accounts, for: domain)
 
             presentAutofillPromptViewController(accountMatches: accountMatches, domain: domain, trigger: trigger, useLargeDetent: false) { account in
                 completionHandler(account)

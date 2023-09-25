@@ -95,6 +95,10 @@ public struct UserDefaultsWrapper<T> {
         case appTPUsed = "com.duckduckgo.ios.appTrackingProtection.appTPUsed"
 
         case defaultBrowserUsageLastSeen = "com.duckduckgo.ios.default-browser-usage-last-seen"
+
+        case syncEnvironment = "com.duckduckgo.ios.sync-environment"
+
+        case networkProtectionDebugOptionAlwaysOnEnabled = "com.duckduckgo.network-protection.always-on.enabled"
     }
 
     private let key: Key

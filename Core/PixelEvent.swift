@@ -251,9 +251,8 @@ extension Pixel {
         case secureVaultInitFailedError
         case secureVaultFailedToOpenDatabaseError
         
-        // The pixels are for debugging a specific problem and should be removed when resolved
-        // https://app.asana.com/0/0/1202498365125439/f
-        case secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded
+        // Replacing secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded with data protection check
+        case secureVaultIsEnabledCheckedWhenEnabledAndDataProtected
         
         // MARK: Ad Click Attribution pixels
         
@@ -292,6 +291,60 @@ extension Pixel {
         case appTPDBTrackerStoreFailure
         case appTPCouldNotLoadDatabase
 
+        // MARK: Network Protection
+
+        case networkProtectionActiveUser
+
+        case networkProtectionRekeyCompleted
+        case networkProtectionLatency
+
+        case networkProtectionTunnelConfigurationNoServerRegistrationInfo
+        case networkProtectionTunnelConfigurationCouldNotSelectClosestServer
+        case networkProtectionTunnelConfigurationCouldNotGetPeerPublicKey
+        case networkProtectionTunnelConfigurationCouldNotGetPeerHostName
+        case networkProtectionTunnelConfigurationCouldNotGetInterfaceAddressRange
+
+        case networkProtectionClientFailedToFetchServerList
+        case networkProtectionClientFailedToParseServerListResponse
+        case networkProtectionClientFailedToEncodeRegisterKeyRequest
+        case networkProtectionClientFailedToFetchRegisteredServers
+        case networkProtectionClientFailedToParseRegisteredServersResponse
+        case networkProtectionClientFailedToEncodeRedeemRequest
+        case networkProtectionClientInvalidInviteCode
+        case networkProtectionClientFailedToRedeemInviteCode
+        case networkProtectionClientFailedToParseRedeemResponse
+        case networkProtectionClientInvalidAuthToken
+
+        case networkProtectionServerListStoreFailedToEncodeServerList
+        case networkProtectionServerListStoreFailedToDecodeServerList
+        case networkProtectionServerListStoreFailedToWriteServerList
+        case networkProtectionServerListStoreFailedToReadServerList
+
+        case networkProtectionKeychainErrorFailedToCastKeychainValueToData
+        case networkProtectionKeychainReadError
+        case networkProtectionKeychainWriteError
+        case networkProtectionKeychainDeleteError
+
+        case networkProtectionWireguardErrorCannotLocateTunnelFileDescriptor
+        case networkProtectionWireguardErrorInvalidState
+        case networkProtectionWireguardErrorFailedDNSResolution
+        case networkProtectionWireguardErrorCannotSetNetworkSettings
+        case networkProtectionWireguardErrorCannotStartWireguardBackend
+
+        case networkProtectionFailedToLoadFromPreferences
+        case networkProtectionFailedToSaveToPreferences
+        case networkProtectionActivationRequestFailed
+        case networkProtectionFailedToStartTunnel
+
+        case networkProtectionDisconnected
+
+        case networkProtectionNoAuthTokenFoundError
+
+        case networkProtectionMemoryWarning
+        case networkProtectionMemoryCritical
+
+        case networkProtectionUnhandledError
+
         // MARK: remote messaging pixels
 
         case remoteMessageShown
@@ -302,9 +355,8 @@ extension Pixel {
         case remoteMessageSecondaryActionClicked
         case remoteMessageSheet
 
-        // MARK: Set as Default
-        case onboardingSetDefaultOpened
-        case onboardingSetDefaultSkipped
+        // MARK: Return user measurement
+        case returnUser
 
         // MARK: debug pixels
         case dbCrashDetected
@@ -392,7 +444,12 @@ extension Pixel {
         case debugCantSaveBookmarkFix
 
         case debugCannotClearObservationsDatabase
-        
+
+        // Return user measurement
+        case debugReturnUserReadATB
+        case debugReturnUserAddATB
+        case debugReturnUserUpdateATB
+
         // Errors from Bookmarks Module
         case bookmarkFolderExpected
         case bookmarksListIndexNotMatchingBookmark
@@ -435,8 +492,6 @@ extension Pixel {
 
         case invalidPayload(Configuration)
 
-        case dailyActiveUser
-
         case emailIncontextPromptDisplayed
         case emailIncontextPromptConfirmed
         case emailIncontextPromptDismissed
@@ -447,6 +502,7 @@ extension Pixel {
         case emailIncontextModalExitEarlyContinue
 
         case compilationFailed
+        case incrementalRolloutTest
     }
     
 }
@@ -689,7 +745,7 @@ extension Pixel.Event {
         case .secureVaultInitFailedError: return "m_secure-vault_error_init-failed"
         case .secureVaultFailedToOpenDatabaseError: return "m_secure-vault_error_failed-to-open-database"
             
-        case .secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded: return "m_secure-vault_is-enabled-checked_when-enabled-and-backgrounded_2"
+        case .secureVaultIsEnabledCheckedWhenEnabledAndDataProtected: return "m_secure-vault_is-enabled-checked_when-enabled-and-data-protected"
             
         // MARK: Ad Click Attribution pixels
             
@@ -726,6 +782,51 @@ extension Pixel.Event {
         case .appTPDBTrackerStoreFailure: return "m_apptp_db_tracker_store_failure"
         case .appTPCouldNotLoadDatabase: return "m_apptp_could_not_load_database"
 
+        // MARK: Network Protection pixels
+
+        case .networkProtectionActiveUser: return "m_netp_daily_active_d"
+        case .networkProtectionRekeyCompleted: return "m_netp_rekey_completed"
+        case .networkProtectionLatency: return "m_netp_latency"
+        case .networkProtectionTunnelConfigurationNoServerRegistrationInfo: return "m_netp_tunnel_config_error_no_server_registration_info"
+        case .networkProtectionTunnelConfigurationCouldNotSelectClosestServer: return "m_netp_tunnel_config_error_could_not_select_closest_server"
+        case .networkProtectionTunnelConfigurationCouldNotGetPeerPublicKey: return "m_netp_tunnel_config_error_could_not_get_peer_public_key"
+        case .networkProtectionTunnelConfigurationCouldNotGetPeerHostName: return "m_netp_tunnel_config_error_could_not_get_peer_host_name"
+        case .networkProtectionTunnelConfigurationCouldNotGetInterfaceAddressRange:
+            return "m_netp_tunnel_config_error_could_not_get_interface_address_range"
+        case .networkProtectionClientFailedToFetchServerList: return "m_netp_backend_api_error_failed_to_fetch_server_list"
+        case .networkProtectionClientFailedToParseServerListResponse: return "m_netp_backend_api_error_parsing_server_list_response_failed"
+        case .networkProtectionClientFailedToEncodeRegisterKeyRequest: return "m_netp_backend_api_error_encoding_register_request_body_failed"
+        case .networkProtectionClientFailedToFetchRegisteredServers: return "m_netp_backend_api_error_failed_to_fetch_registered_servers"
+        case .networkProtectionClientFailedToParseRegisteredServersResponse:
+            return "m_netp_backend_api_error_parsing_device_registration_response_failed"
+        case .networkProtectionClientFailedToEncodeRedeemRequest: return "m_netp_backend_api_error_encoding_redeem_request_body_failed"
+        case .networkProtectionClientInvalidInviteCode: return "m_netp_backend_api_error_invalid_invite_code"
+        case .networkProtectionClientFailedToRedeemInviteCode: return "m_netp_backend_api_error_failed_to_redeem_invite_code"
+        case .networkProtectionClientFailedToParseRedeemResponse: return "m_netp_backend_api_error_parsing_redeem_response_failed"
+        case .networkProtectionClientInvalidAuthToken: return "m_netp_backend_api_error_invalid_auth_token"
+        case .networkProtectionServerListStoreFailedToEncodeServerList: return "m_netp_storage_error_failed_to_encode_server_list"
+        case .networkProtectionServerListStoreFailedToDecodeServerList: return "m_netp_storage_error_failed_to_decode_server_list"
+        case .networkProtectionServerListStoreFailedToWriteServerList: return "m_netp_storage_error_server_list_file_system_write_failed"
+        case .networkProtectionServerListStoreFailedToReadServerList: return "m_netp_storage_error_server_list_file_system_read_failed"
+        case .networkProtectionKeychainErrorFailedToCastKeychainValueToData: return "m_netp_keychain_error_failed_to_cast_keychain_value_to_data"
+        case .networkProtectionKeychainReadError: return "m_netp_keychain_error_read_failed"
+        case .networkProtectionKeychainWriteError: return "m_netp_keychain_error_write_failed"
+        case .networkProtectionKeychainDeleteError: return "m_netp_keychain_error_delete_failed"
+        case .networkProtectionWireguardErrorCannotLocateTunnelFileDescriptor: return "m_netp_wireguard_error_cannot_locate_tunnel_file_descriptor"
+        case .networkProtectionWireguardErrorInvalidState: return "m_netp_wireguard_error_invalid_state"
+        case .networkProtectionWireguardErrorFailedDNSResolution: return "m_netp_wireguard_error_failed_dns_resolution"
+        case .networkProtectionWireguardErrorCannotSetNetworkSettings: return "m_netp_wireguard_error_cannot_set_network_settings"
+        case .networkProtectionWireguardErrorCannotStartWireguardBackend: return "m_netp_wireguard_error_cannot_start_wireguard_backend"
+        case .networkProtectionFailedToLoadFromPreferences: return "m_netp_network_extension_error_failed_to_load_from_preferences"
+        case .networkProtectionFailedToSaveToPreferences: return "m_netp_network_extension_error_failed_to_save_to_preferences"
+        case .networkProtectionActivationRequestFailed: return "m_netp_network_extension_error_activation_request_failed"
+        case .networkProtectionFailedToStartTunnel: return "m_netp_failed_to_start_tunnel"
+        case .networkProtectionDisconnected: return "m_netp_vpn_disconnect"
+        case .networkProtectionNoAuthTokenFoundError: return "m_netp_no_auth_token_found_error"
+        case .networkProtectionMemoryWarning: return "m_netp_vpn_memory_warning"
+        case .networkProtectionMemoryCritical: return "m_netp_vpn_memory_critical"
+        case .networkProtectionUnhandledError: return "m_netp_unhandled_error"
+
         // MARK: remote messaging pixels
 
         case .remoteMessageShown: return "m_remote_message_shown"
@@ -735,10 +836,6 @@ extension Pixel.Event {
         case .remoteMessagePrimaryActionClicked: return "m_remote_message_primary_action_clicked"
         case .remoteMessageSecondaryActionClicked: return "m_remote_message_secondary_action_clicked"
         case .remoteMessageSheet: return "m_remote_message_sheet"
-
-        // MARK: Set as default measuring
-        case .onboardingSetDefaultOpened: return "m_onboarding_set-default-opened"
-        case .onboardingSetDefaultSkipped: return "m_onboarding_set-default-skipped"
 
         // MARK: debug pixels
 
@@ -872,8 +969,6 @@ extension Pixel.Event {
 
         case .invalidPayload(let configuration): return "m_d_\(configuration.rawValue)_invalid_payload".lowercased()
 
-        case .dailyActiveUser: return "m_daily_active_user"
-
         // MARK: - InContext Email Protection
         case .emailIncontextPromptDisplayed: return "m_email_incontext_prompt_displayed"
         case .emailIncontextPromptConfirmed: return "m_email_incontext_prompt_confirmed"
@@ -885,6 +980,13 @@ extension Pixel.Event {
         case .emailIncontextModalExitEarlyContinue: return "m_email_incontext_modal_exit_early_continue"
 
         case .compilationFailed: return "m_d_compilation_failed"
+        // MARK: - Return user measurement
+        case .returnUser: return "m_return_user"
+        case .debugReturnUserAddATB: return "m_debug_return_user_add_atb"
+        case .debugReturnUserReadATB: return "m_debug_return_user_read_atb"
+        case .debugReturnUserUpdateATB: return "m_debug_return_user_update_atb"
+
+        case .incrementalRolloutTest: return "m_autofill_incremental_rollout_test"
         }
         
     }

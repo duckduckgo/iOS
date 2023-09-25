@@ -44,7 +44,11 @@ public final class DailyPixel {
     }
 
     private static let storage: UserDefaults = UserDefaults(suiteName: Constant.dailyPixelStorageIdentifier)!
-    
+
+    /// Sends a given Pixel once per day.
+    /// This means a pixel will get sent twice the first time it is called per-day.
+    /// This is useful in situations where pixels receive spikes in volume, as the daily pixel can be used to determine how many users are actually affected.
+    /// Does not append any suffix unlike the alternative function below
     public static func fire(pixel: Pixel.Event,
                             withAdditionalParameters params: [String: String] = [:],
                             onComplete: @escaping (Swift.Error?) -> Void = { _ in }) {
@@ -55,6 +59,27 @@ public final class DailyPixel {
         } else {
             onComplete(Error.alreadyFired)
         }
+    }
+
+    /// Sends a given Pixel once per day with a `_d` suffix, in addition to every time it is called with a `_c` suffix.
+    /// This means a pixel will get sent twice the first time it is called per-day, and subsequent calls that day will only send the `_c` variant.
+    /// This is useful in situations where pixels receive spikes in volume, as the daily pixel can be used to determine how many users are actually affected.
+    public static func fireDailyAndCount(pixel: Pixel.Event,
+                                         error: Swift.Error? = nil,
+                                         withAdditionalParameters params: [String: String] = [:],
+                                         onDailyComplete: @escaping (Swift.Error?) -> Void = { _ in },
+                                         onCountComplete: @escaping (Swift.Error?) -> Void = { _ in }) {
+        if !pixel.hasBeenFiredToday(dailyPixelStorage: storage) {
+            Pixel.fire(pixelNamed: pixel.name + "_d", withAdditionalParameters: params, onComplete: onDailyComplete)
+        } else {
+            onDailyComplete(Error.alreadyFired)
+        }
+        updatePixelLastFireDate(pixel: pixel)
+        var newParams = params
+        if let error {
+            newParams.appendErrorPixelParams(error: error)
+        }
+        Pixel.fire(pixelNamed: pixel.name + "_c", withAdditionalParameters: newParams, onComplete: onCountComplete)
     }
     
     private static func updatePixelLastFireDate(pixel: Pixel.Event) {

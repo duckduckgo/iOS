@@ -160,9 +160,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         }
     }
     
-    var shouldShowSaveButton: Bool {
-        guard viewMode == .new else { return false }
-        
+    var canSave: Bool {
         return !username.isEmpty || !password.isEmpty || !address.isEmpty || !title.isEmpty || !notes.isEmpty
     }
 

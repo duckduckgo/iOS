@@ -27,12 +27,6 @@ extension URL {
         (try? resourceValues(forKeys: [.creationDateKey]))?.creationDate
     }
     
-    /// The time at which the resource was most recently modified.
-    /// This key corresponds to an Date value, or nil if the volume doesn't support modification dates.
-    public var contentModification: Date? {
-        (try? resourceValues(forKeys: [.contentModificationDateKey]))?.contentModificationDate
-    }
-    
     /// The time at which the resource was most recently accessed.
     /// This key corresponds to an Date value, or nil if the volume doesn't support access dates.
     ///  When you set the contentAccessDateKey for a resource, also set contentModificationDateKey in the same call to the setResourceValues(_:) method. Otherwise, the file system may set the contentAccessDateKey value to the current contentModificationDateKey value.

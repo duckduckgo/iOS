@@ -29,10 +29,13 @@ public class StatisticsLoader {
     public static let shared = StatisticsLoader()
     
     private let statisticsStore: StatisticsStore
+    private let returnUserMeasurement: ReturnUserMeasurement
     private let parser = AtbParser()
     
-    init(statisticsStore: StatisticsStore = StatisticsUserDefaults()) {
+    init(statisticsStore: StatisticsStore = StatisticsUserDefaults(),
+         returnUserMeasurement: ReturnUserMeasurement = KeychainReturnUserMeasurement()) {
         self.statisticsStore = statisticsStore
+        self.returnUserMeasurement = returnUserMeasurement
     }
     
     public func load(completion: @escaping Completion = {}) {
@@ -77,6 +80,7 @@ public class StatisticsLoader {
             }
             self.statisticsStore.installDate = Date()
             self.statisticsStore.atb = atb.version
+            self.returnUserMeasurement.installCompletedWithATB(atb)
             completion()
         }
     }
@@ -86,8 +90,6 @@ public class StatisticsLoader {
             requestInstallStatistics(completion: completion)
             return
         }
-
-        SetAsDefaultStatistics().fireDailyActiveUser()
 
         let configuration = APIRequest.Configuration(url: url)
         let request = APIRequest(configuration: configuration, urlSession: .session())
@@ -112,8 +114,6 @@ public class StatisticsLoader {
             return
         }
 
-        SetAsDefaultStatistics().fireDailyActiveUser()
-
         let configuration = APIRequest.Configuration(url: url)
         let request = APIRequest(configuration: configuration, urlSession: .session())
         
@@ -134,6 +134,7 @@ public class StatisticsLoader {
     public func storeUpdateVersionIfPresent(_ atb: Atb) {
         if let updateVersion = atb.updateVersion {
             statisticsStore.atb = updateVersion
+            returnUserMeasurement.updateStoredATB(atb)
         }
     }
 }

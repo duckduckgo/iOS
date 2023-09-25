@@ -34,6 +34,9 @@
 /* Floating message indicating URL has been copied */
 "action.title.copy.message" = "Адрес скопирован";
 
+/* Delete action - button shown in alert */
+"action.title.delete" = "Delete";
+
 /* Disable protection action */
 "action.title.disable.protection" = "Отключить защиту конфиденциальности";
 

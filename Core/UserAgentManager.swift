@@ -85,8 +85,16 @@ public class DefaultUserAgentManager: UserAgentManager {
 }
 
 struct UserAgent {
+
+    private enum DefaultPolicy: String {
+
+        case ddg
+        case ddgFixed
+        case closest
+
+    }
     
-    private struct Constants {
+    private enum Constants {
         // swiftlint:disable line_length
         static let fallbackWekKitVersion = "605.1.15"
         static let fallbackSafariComponent = "Safari/\(fallbackWekKitVersion)"
@@ -96,6 +104,10 @@ struct UserAgent {
         
         static let uaOmitSitesConfigKey = "omitApplicationSites"
         static let uaOmitDomainConfigKey = "domain"
+
+        static let defaultPolicyConfigKey = "defaultPolicy"
+        static let ddgDefaultSitesConfigKey = "ddgDefaultSites"
+        static let ddgFixedSitesConfigKey = "ddgFixedSites"
         // swiftlint:enable line_length
     }
     
@@ -124,22 +136,100 @@ struct UserAgent {
         
         return omitApplicationObjs.map { $0[Constants.uaOmitDomainConfigKey] ?? "" }
     }
-    
-    public func agent(forUrl url: URL?, isDesktop: Bool,
+
+    private func defaultPolicy(forConfig config: PrivacyConfiguration) -> DefaultPolicy {
+        let uaSettings = config.settings(for: .customUserAgent)
+        guard let policy = uaSettings[Constants.defaultPolicyConfigKey] as? String else { return .ddg }
+
+        return DefaultPolicy(rawValue: policy) ?? .ddg
+    }
+
+    private func ddgDefaultSites(forConfig config: PrivacyConfiguration) -> [String] {
+        let uaSettings = config.settings(for: .customUserAgent)
+        let defaultSitesObjs = uaSettings[Constants.ddgDefaultSitesConfigKey] as? [[String: String]] ?? []
+
+        return defaultSitesObjs.map { $0[Constants.uaOmitDomainConfigKey] ?? "" }
+    }
+
+    private func ddgFixedSites(forConfig config: PrivacyConfiguration) -> [String] {
+        let uaSettings = config.settings(for: .customUserAgent)
+        let fixedSitesObjs = uaSettings[Constants.ddgFixedSitesConfigKey] as? [[String: String]] ?? []
+
+        return fixedSitesObjs.map { $0[Constants.uaOmitDomainConfigKey] ?? "" }
+    }
+
+    public func agent(forUrl url: URL?,
+                      isDesktop: Bool,
                       privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig) -> String {
+
+        guard privacyConfig.isEnabled(featureKey: .customUserAgent) else { return oldLogic(forUrl: url, isDesktop: isDesktop) }
+
+        if ddgDefaultSites(forConfig: privacyConfig).contains(where: { domain in
+            url?.isPart(ofDomain: domain) ?? false
+        }) { return oldLogic(forUrl: url, isDesktop: isDesktop) }
+
+        if ddgFixedSites(forConfig: privacyConfig).contains(where: { domain in
+            url?.isPart(ofDomain: domain) ?? false
+        }) { return ddgFixedLogic(isDesktop: isDesktop) }
+
+        switch defaultPolicy(forConfig: privacyConfig) {
+        case .ddg: return oldLogic(forUrl: url, isDesktop: isDesktop)
+        case .ddgFixed: return ddgFixedLogic(isDesktop: isDesktop)
+        case .closest: return closestLogic(forUrl: url, isDesktop: isDesktop)
+        }
+
+    }
+
+    private func oldLogic(forUrl url: URL?,
+                          isDesktop: Bool,
+                          privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig) -> String {
         let omittedSites = omitApplicationSites(forConfig: privacyConfig)
         let customUAEnabled = privacyConfig.isEnabled(featureKey: .customUserAgent)
 
         let omitApplicationComponent = !customUAEnabled || omittedSites.contains { domain in
             url?.isPart(ofDomain: domain) ?? false
         }
-        
+
         let resolvedApplicationComponent = !omitApplicationComponent ? applicationComponent : nil
+
         if isDesktop {
             return concatWithSpaces(baseDesktopAgent, resolvedApplicationComponent, safariComponent)
         } else {
             return concatWithSpaces(baseAgent, resolvedApplicationComponent, safariComponent)
         }
+    }
+
+    private func closestLogic(forUrl url: URL?,
+                              isDesktop: Bool,
+                              privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig) -> String {
+        let customUAEnabled = privacyConfig.isEnabled(featureKey: .customUserAgent)
+        let omittedSites = omitApplicationSites(forConfig: privacyConfig)
+        let omitApplicationComponent = !customUAEnabled || omittedSites.contains { domain in
+            url?.isPart(ofDomain: domain) ?? false
+        }
+        let resolvedApplicationComponent = !omitApplicationComponent ? applicationComponent : nil
+
+        var defaultSafari = ddgFixedLogic(isDesktop: isDesktop)
+        // If the UA should have DuckDuckGo append it prior to Safari
+        if let resolvedApplicationComponent {
+            if let index = defaultSafari.range(of: "Safari")?.lowerBound {
+                defaultSafari.insert(contentsOf: resolvedApplicationComponent + " ", at: index)
+            }
+        }
+        return defaultSafari
+    }
+
+    private func ddgFixedLogic(isDesktop: Bool) -> String {
+        if isDesktop {
+            return "Mozilla/5.0 (Macintosh; Intel Mac OS X 13_5_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15"
+        }
+        var deviceProfile = "iPhone; CPU iPhone OS 16_6 like Mac OS X"
+        if baseAgent.contains("iPad") {
+            deviceProfile = "iPad; CPU OS 16_6 like Mac OS X"
+        } else if baseAgent.contains("iPod") {
+            deviceProfile = "iPod touch; CPU iPhone 16_6 like Mac OS X"
+        }
+        return "Mozilla/5.0 (" + deviceProfile + ") AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1"
     }
     
     private func concatWithSpaces(_ elements: String?...) -> String {

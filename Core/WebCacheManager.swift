@@ -263,7 +263,12 @@ public class WebCacheManager {
                        .appendingPathComponent("WebKit/\(bundleID)/WebsiteData/ResourceLoadStatistics/observations.db")
         ]
 
-        return databaseURLs.lazy.compactMap({ try? DatabasePool(path: $0.absoluteString) }).first
+        guard let validURL = databaseURLs.first(where: { FileManager.default.fileExists(atPath: $0.path) }),
+              let pool = try? DatabasePool(path: validURL.absoluteString) else {
+            return nil
+        }
+
+        return pool
     }
 
 

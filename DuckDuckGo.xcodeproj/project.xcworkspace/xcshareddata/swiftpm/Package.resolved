@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": null,
-          "revision": "8ba1d3b7f3e2291fc344cd5b83b66c1336e35a32",
-          "version": "78.2.0"
+          "revision": "2bc934304fd9d5e2b51dfe78a0c95ba10f1ab5a5",
+          "version": "80.2.0"
         }
       },
       {
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
           "branch": null,
-          "revision": "20a6aeddbd86b43fd83c42aa45fdd9ec6db0e0f7",
-          "version": "8.2.0"
+          "revision": "f3eccad8647fdba2b5d180a02a0513c61375b8fb",
+          "version": "8.4.0"
         }
       },
       {
@@ -156,7 +156,7 @@
       },
       {
         "package": "TrackerRadarKit",
-        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
+        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit",
         "state": {
           "branch": null,
           "revision": "4684440d03304e7638a2c8086895367e90987463",

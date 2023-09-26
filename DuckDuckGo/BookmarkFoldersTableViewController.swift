@@ -27,6 +27,7 @@ protocol BookmarkFoldersViewControllerDelegate: AnyObject {
     func textDidChange(_ controller: BookmarkFoldersViewController)
     func textDidReturn(_ controller: BookmarkFoldersViewController)
     func addFolder(_ controller: BookmarkFoldersViewController)
+    func deleteBookmark(_ controller: BookmarkFoldersViewController)
 
 }
 
@@ -65,6 +66,10 @@ class BookmarkFoldersViewController: UITableViewController {
                 ], with: .automatic)
             }
         }
+
+        if tableView.cellForRow(at: indexPath)?.reuseIdentifier == "BookmarksDeleteButtonCell" {
+            confirmDelete()
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -93,12 +98,39 @@ class BookmarkFoldersViewController: UITableViewController {
                     tableView.dequeueReusableCell(withIdentifier: "AddFolderCell")! :
                     folderSelectorCell(tableView, forIndexPath: indexPath)
 
+            case 3:
+                return deleteCell(tableView)
+
             default:
                 fatalError("Unexpected section")
             }
         }
     }
-    
+
+    func deleteCell(_ tableView: UITableView) -> UITableViewCell {
+        return tableView.dequeueReusableCell(withIdentifier: "BookmarksDeleteButtonCell")!
+    }
+
+    private func confirmDelete() {
+        guard let title = viewModel?.bookmark.title ?? viewModel?.bookmark.url?.droppingWwwPrefix() else {
+            assertionFailure()
+            return
+        }
+
+        let controller = UIAlertController(title: UserText.deleteBookmarkAlertTitle,
+                                           message: UserText.deleteBookmarkAlertMessage.format(arguments: title),
+                                           preferredStyle: .alert)
+        controller.addAction(UIAlertAction(title: UserText.actionDelete, style: .destructive) { [weak self] _ in
+            self?.performDelete()
+        })
+        controller.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
+        present(controller, animated: true)
+    }
+
+    func performDelete() {
+        delegate?.deleteBookmark(self)
+    }
+
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
         cell.backgroundColor = UIColor(designSystemColor: .surface)
@@ -120,7 +152,8 @@ class BookmarkFoldersViewController: UITableViewController {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel?.bookmark.isFolder == true ? 2 : 3
+        let extraSectionsForBookmark = (viewModel?.isNew ?? true) ? 0 : 1
+        return viewModel?.bookmark.isFolder == true ? 2 : 3 + extraSectionsForBookmark
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -130,20 +163,13 @@ class BookmarkFoldersViewController: UITableViewController {
         }
 
         let locationCount = self.locationCount + (viewModel.canAddNewFolder ? 1 : 0)
-        if viewModel.bookmark.isFolder {
-            switch section {
-            case 0: return 1
-            case 1: return locationCount
-            default: fatalError("Unexpected section")
-            }
-        } else {
-            switch section {
-            case 0: return 1
-            case 1: return 1
-            case 2: return locationCount
-            default: fatalError("Unexpected section")
-            }
+        if viewModel.bookmark.isFolder && section == 1 {
+            return locationCount
+        } else if section == 2 {
+            return locationCount
         }
+
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

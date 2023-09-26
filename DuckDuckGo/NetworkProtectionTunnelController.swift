@@ -29,6 +29,7 @@ final class NetworkProtectionTunnelController: TunnelController {
     static var simulationOptions = NetworkProtectionSimulationOptions()
     static var enabledSimulationOption: NetworkProtectionSimulationOption?
 
+    private let debugFeatures = NetworkProtectionDebugFeatures()
     private let tokenStore = NetworkProtectionKeychainTokenStore()
     private let errorStore = NetworkProtectionTunnelErrorStore()
 
@@ -52,13 +53,19 @@ final class NetworkProtectionTunnelController: TunnelController {
     }
 
     func stop() async {
+        guard let tunnelManager = await loadTunnelManager() else {
+            return
+        }
+
         do {
-            try await ConnectionSessionUtilities.activeSession()?.stopVPNTunnel()
+            try await disableOnDemand(tunnelManager: tunnelManager)
         } catch {
             #if DEBUG
             errorStore.lastErrorMessage = error.localizedDescription
             #endif
         }
+
+        tunnelManager.connection.stopVPNTunnel()
     }
 
     private func startWithError() async throws {
@@ -99,10 +106,6 @@ final class NetworkProtectionTunnelController: TunnelController {
         options["activationAttemptId"] = UUID().uuidString as NSString
         options["authToken"] = try tokenStore.fetchToken() as NSString?
 
-        // Temporary investigation to see if connection tester is causing energy use issues
-        // To be removed with https://app.asana.com/0/0/1205418028628990/f
-        options[NetworkProtectionOptionKey.connectionTesterEnabled] = NSNumber(value: false)
-
         if let optionKey = Self.enabledSimulationOption?.optionKey {
             options[optionKey] = NSNumber(value: true)
             Self.enabledSimulationOption = nil
@@ -111,7 +114,14 @@ final class NetworkProtectionTunnelController: TunnelController {
         do {
             try tunnelManager.connection.startVPNTunnel(options: options)
         } catch {
+            Pixel.fire(pixel: .networkProtectionActivationRequestFailed, error: error)
             throw error
+        }
+
+        if !debugFeatures.alwaysOnDisabled {
+            Task {
+                try await enableOnDemand(tunnelManager: tunnelManager)
+            }
         }
     }
 
@@ -152,15 +162,33 @@ final class NetworkProtectionTunnelController: TunnelController {
     }
 
     private func setupAndSave(_ tunnelManager: NETunnelProviderManager) async throws {
-        try await setup(tunnelManager)
+        setup(tunnelManager)
         try await tunnelManager.saveToPreferences()
         try await tunnelManager.loadFromPreferences()
         try await tunnelManager.saveToPreferences()
     }
 
+    private func saveToPreferences(_ tunnelManager: NETunnelProviderManager) async throws {
+        do {
+            try await tunnelManager.saveToPreferences()
+        } catch {
+            Pixel.fire(pixel: .networkProtectionFailedToSaveToPreferences, error: error)
+            throw error
+        }
+    }
+
+    private func loadFromPreferences(_ tunnelManager: NETunnelProviderManager) async throws {
+        do {
+            try await tunnelManager.loadFromPreferences()
+        } catch {
+            Pixel.fire(pixel: .networkProtectionFailedToLoadFromPreferences, error: error)
+            throw error
+        }
+    }
+
     /// Setups the tunnel manager if it's not set up already.
     ///
-    private func setup(_ tunnelManager: NETunnelProviderManager) async throws {
+    private func setup(_ tunnelManager: NETunnelProviderManager) {
         tunnelManager.localizedDescription = "DuckDuckGo Network Protection"
         tunnelManager.isEnabled = true
 
@@ -176,6 +204,26 @@ final class NetworkProtectionTunnelController: TunnelController {
 
         // reconnect on reboot
         tunnelManager.onDemandRules = [NEOnDemandRuleConnect()]
+    }
+
+    // MARK: - On Demand
+
+    @MainActor
+    func enableOnDemand(tunnelManager: NETunnelProviderManager) async throws {
+        let rule = NEOnDemandRuleConnect()
+        rule.interfaceTypeMatch = .any
+
+        tunnelManager.onDemandRules = [rule]
+        tunnelManager.isOnDemandEnabled = true
+
+        try await tunnelManager.saveToPreferences()
+    }
+
+    @MainActor
+    func disableOnDemand(tunnelManager: NETunnelProviderManager) async throws {
+        tunnelManager.isOnDemandEnabled = false
+
+        try await tunnelManager.saveToPreferences()
     }
 }
 

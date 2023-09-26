@@ -2284,10 +2284,10 @@ extension TabViewController: SecureVaultManagerDelegate {
         let isEnabled = AutofillSettingStatus.isAutofillEnabledInSettings &&
                         featureFlagger.isFeatureOn(.autofillCredentialInjecting) &&
                         !isLinkPreview
-        let isBackgrounded = UIApplication.shared.applicationState == .background
-        if isEnabled && isBackgrounded {
-            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded,
-                       withAdditionalParameters: [PixelParameters.isBackgrounded: "true"])
+        let isDataProtected = !UIApplication.shared.isProtectedDataAvailable
+        if isEnabled && isDataProtected {
+            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabledAndDataProtected,
+                       withAdditionalParameters: [PixelParameters.isDataProtected: "true"])
         }
         return isEnabled
     }

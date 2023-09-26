@@ -126,6 +126,7 @@ class FavoritesViewController: UIViewController {
                     return
                 }
                 self.renderer.viewModel.favoritesDisplayMode = self.appSettings.favoritesDisplayMode
+                self.collectionView.reloadData()
             }
 
         registerForKeyboardNotifications()

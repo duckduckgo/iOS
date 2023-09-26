@@ -162,6 +162,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                     return
                 }
                 self.viewModel.favoritesDisplayMode = self.appSettings.favoritesDisplayMode
+                self.tableView.reloadData()
             }
     }
 
@@ -172,6 +173,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             self?.tableView.reloadData()
             self?.refreshAll()
         }
+        bindFavoritesDisplayMode()
 
         syncService.scheduler.requestSyncImmediately()
 

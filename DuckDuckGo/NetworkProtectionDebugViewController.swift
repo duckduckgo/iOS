@@ -54,7 +54,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     }
 
     enum DebugFeatureRows: Int, CaseIterable {
-        case enableAlwaysOn
+        case toggleAlwaysOn
     }
 
     enum SimulateFailureRows: Int, CaseIterable {
@@ -191,13 +191,13 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
     private func configure(_ cell: UITableViewCell, forDebugFeatureAtRow row: Int) {
         switch DebugFeatureRows(rawValue: row) {
-        case .enableAlwaysOn:
-            cell.textLabel?.text = "Enable Always On"
+        case .toggleAlwaysOn:
+            cell.textLabel?.text = "Always On"
 
-            if debugFeatures.alwaysOnEnabled {
-                cell.accessoryType = .checkmark
-            } else {
+            if debugFeatures.alwaysOnDisabled {
                 cell.accessoryType = .none
+            } else {
+                cell.accessoryType = .checkmark
             }
         default:
             break
@@ -206,8 +206,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
     private func didSelectDebugFeature(at indexPath: IndexPath) {
         switch DebugFeatureRows(rawValue: indexPath.row) {
-        case .enableAlwaysOn:
-            debugFeatures.alwaysOnEnabled.toggle()
+        case .toggleAlwaysOn:
+            debugFeatures.alwaysOnDisabled.toggle()
             tableView.reloadRows(at: [indexPath], with: .none)
         default:
             break

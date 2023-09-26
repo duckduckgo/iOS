@@ -118,7 +118,7 @@ final class NetworkProtectionTunnelController: TunnelController {
             throw error
         }
 
-        if debugFeatures.alwaysOnEnabled {
+        if !debugFeatures.alwaysOnDisabled {
             Task {
                 try await enableOnDemand(tunnelManager: tunnelManager)
             }

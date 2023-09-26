@@ -260,9 +260,8 @@ class MainViewController: UIViewController {
             ProcessInfo.processInfo.environment["ONBOARDING"] == "true"
         guard showOnboarding else { return }
 
-        let onboardingFlow = "DaxOnboarding"
+        segueToDaxOnboarding()
 
-        performSegue(withIdentifier: onboardingFlow, sender: self)
     }
     
     private func registerForKeyboardNotifications() {

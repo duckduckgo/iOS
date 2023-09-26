@@ -24,7 +24,7 @@ import Core
 extension MainViewController {
 
     func segueToDaxOnboarding() {
-        os_log("segueToDaxOnboarding", log: .generalLog, type: .debug)
+        os_log(#function, log: .generalLog, type: .debug)
 
         let storyboard = UIStoryboard(name: "DaxOnboarding", bundle: nil)
         guard let controller = storyboard.instantiateInitialViewController(creator: { coder in
@@ -35,8 +35,19 @@ extension MainViewController {
         }
         controller.delegate = self
         controller.modalPresentationStyle = .overFullScreen
-        // TODO transition type same as destination
         present(controller, animated: false)
+    }
+
+    func segueToHomeRow() {
+        os_log(#function, log: .generalLog, type: .debug)
+
+        let storyboard = UIStoryboard(name: "HomeRow", bundle: nil)
+        guard let controller = storyboard.instantiateInitialViewController() else {
+            assertionFailure()
+            return
+        }
+        controller.modalPresentationStyle = .overCurrentContext
+        present(controller, animated: true)
     }
 
 }

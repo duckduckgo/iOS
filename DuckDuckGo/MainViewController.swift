@@ -982,10 +982,6 @@ class MainViewController: UIViewController {
         performSegue(withIdentifier: "SettingsToCookiePopupManagement", sender: self)
     }
 
-    fileprivate func launchInstructions() {
-        performSegue(withIdentifier: "instructions", sender: self)
-    }
-
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         notificationView?.layoutSubviews()
@@ -1032,7 +1028,7 @@ class MainViewController: UIViewController {
         if feature.showNow() {
             showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
                 if tapped {
-                    self.launchInstructions()
+                    self.segueToHomeRow()
                 }
                 self.hideNotification()
             }

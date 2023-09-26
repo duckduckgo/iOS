@@ -21,6 +21,6 @@ import Foundation
 import Core
 
 final class NetworkProtectionDebugFeatures {
-    @UserDefaultsWrapper(key: .networkProtectionDebugOptionAlwaysOnEnabled, defaultValue: false)
-    var alwaysOnEnabled
+    @UserDefaultsWrapper(key: .networkProtectionDebugOptionAlwaysOnDisabled, defaultValue: false)
+    var alwaysOnDisabled
 }

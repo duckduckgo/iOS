@@ -87,7 +87,9 @@ class HomeCollectionView: UICollectionView {
                 renderers.install(renderer: FavoritesHomeViewSectionRenderer(viewModel: favoritesViewModel))
                 
             case .homeMessage:
-                renderers.install(renderer: HomeMessageViewSectionRenderer(homePageConfiguration: homePageConfiguration))
+                if #available(iOS 16.0, *) {
+                    renderers.install(renderer: HomeMessageViewSectionRenderer(homePageConfiguration: homePageConfiguration))
+                }
 
             case .appTrackingProtection:
 #if APP_TRACKING_PROTECTION

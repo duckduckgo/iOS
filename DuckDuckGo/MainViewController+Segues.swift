@@ -54,7 +54,7 @@ extension MainViewController {
         os_log(#function, log: .generalLog, type: .debug)
         let storyboard = UIStoryboard(name: "Bookmarks", bundle: nil)
         let controller = storyboard.instantiateInitialViewController(creator: { coder in
-            BookmarksViewController(coder: coder,
+            return BookmarksViewController(coder: coder,
                                     bookmarksDatabase: self.bookmarksDatabase,
                                     bookmarksSearch: self.bookmarksCachingSearch,
                                     syncService: self.syncService,

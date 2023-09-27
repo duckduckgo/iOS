@@ -107,13 +107,13 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     fileprivate var onDidAppearAction: () -> Void = {}
 
-    init?(coder: NSCoder,
-          bookmarksDatabase: CoreDataDatabase,
-          bookmarksSearch: BookmarksStringSearch,
-          parentID: NSManagedObjectID? = nil,
-          favicons: Favicons = Favicons.shared,
-          syncService: DDGSyncing,
-          syncDataProviders: SyncDataProviders
+    required init?(coder: NSCoder,
+                   bookmarksDatabase: CoreDataDatabase,
+                   bookmarksSearch: BookmarksStringSearch,
+                   parentID: NSManagedObjectID? = nil,
+                   favicons: Favicons = Favicons.shared,
+                   syncService: DDGSyncing,
+                   syncDataProviders: SyncDataProviders
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.searchDataSource = SearchBookmarksDataSource(searchEngine: bookmarksSearch)

@@ -105,8 +105,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     var favoritesController: FavoritesViewController?
 
-    fileprivate var onDidAppearAction: () -> Void = {}
-
     required init?(coder: NSCoder,
                    bookmarksDatabase: CoreDataDatabase,
                    bookmarksSearch: BookmarksStringSearch,
@@ -181,10 +179,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
-        onDidAppearAction()
-        onDidAppearAction = {}
-
         tableView.reloadData()
     }
 
@@ -226,10 +220,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         refreshAll()
     }
 
-    func openEditFormWhenPresented(bookmark: BookmarkEntity) {
-        onDidAppearAction = { [weak self] in
-            self?.performSegue(withIdentifier: "AddOrEditBookmarkFolder", sender: bookmark.objectID)
-        }
+    func openEditFormForBookmark(_ bookmark: BookmarkEntity) {
+        performSegue(withIdentifier: "AddOrEditBookmarkFolder", sender: bookmark.objectID)
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

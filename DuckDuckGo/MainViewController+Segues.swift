@@ -20,6 +20,7 @@
 import UIKit
 import Common
 import Core
+import Bookmarks
 
 extension MainViewController {
 
@@ -52,6 +53,28 @@ extension MainViewController {
 
     func segueToBookmarks() {
         os_log(#function, log: .generalLog, type: .debug)
+        launchBookmarksViewController()
+    }
+
+    func segueToEditCurrentBookmark() {
+        os_log(#function, log: .generalLog, type: .debug)
+
+        guard let link = currentTab?.link,
+              let bookmark = menuBookmarksViewModel.favorite(for: link.url) ?? menuBookmarksViewModel.bookmark(for: link.url) else {
+            assertionFailure()
+            return
+        }
+        segueToEditBookmark(bookmark)
+    }
+
+    func segueToEditBookmark(_ bookmark: BookmarkEntity) {
+        os_log(#function, log: .generalLog, type: .debug)
+        launchBookmarksViewController {
+            $0.openEditFormForBookmark(bookmark)
+        }
+    }
+
+    private func launchBookmarksViewController(completion: ((BookmarksViewController) -> Void)? = nil) {
         let storyboard = UIStoryboard(name: "Bookmarks", bundle: nil)
 
         let bookmarks = storyboard.instantiateViewController(identifier: "BookmarksViewController") { coder in
@@ -64,7 +87,9 @@ extension MainViewController {
 
         let controller = ThemableNavigationController(rootViewController: bookmarks)
         controller.modalPresentationStyle = .automatic
-        present(controller, animated: true)
+        present(controller, animated: true) {
+            completion?(bookmarks)
+        }
     }
 
 }

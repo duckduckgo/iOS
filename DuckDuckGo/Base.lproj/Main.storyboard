@@ -194,10 +194,7 @@
                         <outlet property="toolbarBottom" destination="UsQ-i7-pjr" id="nwd-gZ-QEh"/>
                         <segue destination="xj8-BF-A9c" kind="presentation" identifier="Settings" id="URp-Fv-PV5"/>
                         <segue destination="Idd-9P-bE6" kind="presentation" identifier="ReportBrokenSite" modalPresentationStyle="pageSheet" id="Igb-19-s0y"/>
-                        <segue destination="0sP-vt-2ZT" kind="presentation" identifier="Bookmarks" id="jTg-q6-spe"/>
                         <segue destination="CeD-SH-IsP" kind="presentation" identifier="ActionSheetDaxDialog" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="PjE-Cf-1P2"/>
-                        <segue destination="0sP-vt-2ZT" kind="presentation" identifier="BookmarksEditCurrent" id="lgJ-lb-xgS"/>
-                        <segue destination="0sP-vt-2ZT" kind="presentation" identifier="BookmarksEdit" id="IrO-EU-EzF"/>
                         <segue destination="ER6-yn-Oo2" kind="presentation" identifier="Downloads" id="mfy-s9-JEe"/>
                         <segue destination="xj8-BF-A9c" kind="presentation" identifier="SettingsToLogins" id="20e-p4-Vk3"/>
                         <segue destination="xj8-BF-A9c" kind="presentation" identifier="SettingsToCookiePopupManagement" id="PBD-dW-rld"/>
@@ -206,14 +203,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2QN-Mc-SXu" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="218.40000000000001" y="-6.746626686656672"/>
-        </scene>
-        <!--Bookmarks-->
-        <scene sceneID="538-OF-E2q">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Bookmarks" id="0sP-vt-2ZT" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1kp-XV-T5D" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-491" y="467"/>
         </scene>
         <!--TabsBar-->
         <scene sceneID="Pln-26-dMp">
@@ -314,7 +303,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="PBD-dW-rld"/>
-        <segue reference="IrO-EU-EzF"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Add-24" width="24" height="24"/>

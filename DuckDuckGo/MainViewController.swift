@@ -419,29 +419,6 @@ class MainViewController: UIViewController {
         return controller
     }
     
-    @IBSegueAction func onCreateBookmarksList(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> BookmarksViewController {
-        guard
-            let controller = BookmarksViewController(coder: coder,
-                                                       bookmarksDatabase: self.bookmarksDatabase,
-                                                       bookmarksSearch: bookmarksCachingSearch,
-                                                       syncService: syncService,
-                                                       syncDataProviders: syncDataProviders) else {
-            fatalError("Failed to create controller")
-        }
-        controller.delegate = self
-        
-        if segueIdentifier == "BookmarksEditCurrent",
-            let link = currentTab?.link,
-            let bookmark = menuBookmarksViewModel.favorite(for: link.url) ?? menuBookmarksViewModel.bookmark(for: link.url) {
-            controller.openEditFormWhenPresented(bookmark: bookmark)
-        } else if segueIdentifier == "BookmarksEdit",
-                  let bookmark = sender as? BookmarkEntity {
-            controller.openEditFormWhenPresented(bookmark: bookmark)
-        }
-        
-        return controller
-    }
-    
     @IBSegueAction func onCreateTabSwitcher(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> TabSwitcherViewController {
         guard let controller = TabSwitcherViewController(coder: coder,
                                                          bookmarksDatabase: bookmarksDatabase,
@@ -1346,7 +1323,7 @@ extension MainViewController: OmniBarDelegate {
     func onBookmarkEdit() {
         ViewHighlighter.hideAll()
         hideSuggestionTray()
-        performSegue(withIdentifier: "BookmarksEditCurrent", sender: self)
+        segueToEditCurrentBookmark()
     }
     
     func onEnterPressed() {
@@ -1510,7 +1487,7 @@ extension MainViewController: HomeControllerDelegate {
     }
     
     func home(_ home: HomeViewController, didRequestEdit favorite: BookmarkEntity) {
-        performSegue(withIdentifier: "BookmarksEdit", sender: favorite)
+        segueToEditBookmark(favorite)
     }
     
     func home(_ home: HomeViewController, didRequestContentOverflow shouldOverflow: Bool) -> CGFloat {

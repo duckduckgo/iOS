@@ -1341,7 +1341,6 @@ extension MainViewController: OmniBarDelegate {
         }
         hideSuggestionTray()
         segueToBookmarks()
-        // performSegue(withIdentifier: "Bookmarks", sender: self)
     }
     
     func onBookmarkEdit() {

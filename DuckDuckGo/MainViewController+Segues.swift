@@ -53,14 +53,17 @@ extension MainViewController {
     func segueToBookmarks() {
         os_log(#function, log: .generalLog, type: .debug)
         let storyboard = UIStoryboard(name: "Bookmarks", bundle: nil)
-        let controller = storyboard.instantiateInitialViewController(creator: { coder in
-            return BookmarksViewController(coder: coder,
+
+        let bookmarks = storyboard.instantiateViewController(identifier: "BookmarksViewController") { coder in
+            BookmarksViewController(coder: coder,
                                     bookmarksDatabase: self.bookmarksDatabase,
                                     bookmarksSearch: self.bookmarksCachingSearch,
                                     syncService: self.syncService,
                                     syncDataProviders: self.syncDataProviders)
-        })!
-        controller.modalPresentationStyle = .overCurrentContext
+        }
+
+        let controller = ThemableNavigationController(rootViewController: bookmarks)
+        controller.modalPresentationStyle = .automatic
         present(controller, animated: true)
     }
 

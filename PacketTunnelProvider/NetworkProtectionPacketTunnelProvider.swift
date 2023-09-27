@@ -166,7 +166,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
                                                              errorEvents: nil)
         let errorStore = NetworkProtectionTunnelErrorStore()
-        super.init(notificationsPresenter: DefaultNotificationPresenter(),
+        let notificationsPresenter = DefaultNotificationPresenter()
+        notificationsPresenter.requestAuthorization()
+        super.init(notificationsPresenter: notificationsPresenter,
                    tunnelHealthStore: NetworkProtectionTunnelHealthStore(),
                    controllerErrorStore: errorStore,
                    keychainType: .dataProtection(.unspecified),

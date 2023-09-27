@@ -242,6 +242,11 @@ class MainViewController: UIViewController {
         }
     }
 
+    override func performSegue(withIdentifier identifier: String, sender: Any?) {
+        assertionFailure()
+        super.performSegue(withIdentifier: identifier, sender: sender)
+    }
+
     func loadSuggestionTray() {
         let storyboard = UIStoryboard(name: "SuggestionTray", bundle: nil)
 

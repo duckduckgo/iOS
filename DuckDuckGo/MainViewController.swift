@@ -372,10 +372,6 @@ class MainViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-        if !DaxDialogs.shared.shouldShowFireButtonPulse {
-            ViewHighlighter.hideAll()
-        }
         
         if let controller = segue.destination as? TabsBarViewController {
             controller.delegate = self
@@ -397,28 +393,6 @@ class MainViewController: UIViewController {
         controller.favoritesOverlayDelegate = self
         suggestionTrayController = controller
         
-        return controller
-    }
-    
-    @IBSegueAction func onCreateSettings(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> SettingsViewController {
-        guard let controller = SettingsViewController(coder: coder,
-                                                      bookmarksDatabase: bookmarksDatabase,
-                                                      syncService: syncService,
-                                                      syncDataProviders: syncDataProviders,
-                                                      internalUserDecider: AppDependencyProvider.shared.internalUserDecider) else {
-            fatalError("Failed to create controller")
-        }
-
-        if segueIdentifier == "SettingsToLogins" {
-            if let account = sender as? SecureVaultModels.WebsiteAccount {
-                controller.openLoginsWhenPresented(accountDetails: account)
-            } else {
-                controller.openLoginsWhenPresented()
-            }
-        } else if segueIdentifier == "SettingsToCookiePopupManagement" {
-            controller.openCookiePopupManagementWhenPresented()
-        }
-
         return controller
     }
     
@@ -904,14 +878,6 @@ class MainViewController: UIViewController {
     @objc private func closeAutofillModal() {
         dismiss(animated: true)
     }
-    
-    func launchSettings() {
-        performSegue(withIdentifier: "Settings", sender: self)
-    }
-    
-    func launchCookiePopupManagementSettings() {
-        performSegue(withIdentifier: "SettingsToCookiePopupManagement", sender: self)
-    }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -1297,7 +1263,7 @@ extension MainViewController: OmniBarDelegate {
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
-        launchSettings()
+        segueToSettings()
     }
     
     func onCancelPressed() {
@@ -1458,7 +1424,7 @@ extension MainViewController: HomeControllerDelegate {
     }
     
     func showSettings(_ home: HomeViewController) {
-        launchSettings()
+        segueToSettings()
     }
     
     func home(_ home: HomeViewController, didRequestHideLogo hidden: Bool) {
@@ -1585,12 +1551,16 @@ extension MainViewController: TabDelegate {
     }
     
     func tabDidRequestSettings(tab: TabViewController) {
-        launchSettings()
+        segueToSettings()
     }
 
     func tab(_ tab: TabViewController,
              didRequestSettingsToLogins account: SecureVaultModels.WebsiteAccount?) {
-        performSegue(withIdentifier: "SettingsToLogins", sender: account)
+        if let account {
+            segueToSettingsLoginsWithAccount(account)
+        } else {
+            segueToSettingsLogins()
+        }
     }
 
     func tabContentProcessDidTerminate(tab: TabViewController) {

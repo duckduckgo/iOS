@@ -197,6 +197,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        loadTabsBarIfNeeded()
         loadFindInPage()
         attachOmniBar()
 
@@ -238,6 +239,17 @@ class MainViewController: UIViewController {
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             showFireButtonPulse()
         }
+    }
+
+    func loadTabsBarIfNeeded() {
+        guard isPad else { return }
+
+        let storyboard = UIStoryboard(name: "TabSwitcher", bundle: nil)
+        let controller: TabsBarViewController = storyboard.instantiateViewController(identifier: "TabsBar")
+        controller.view.frame = tabsBar.bounds
+        controller.delegate = self
+        tabsBar.addSubview(controller.view)
+        tabsBarController = controller
     }
 
     func startAddFavoriteFlow() {
@@ -369,16 +381,6 @@ class MainViewController: UIViewController {
         
         Pixel.fire(pixel: .tabBarBookmarksLongPressed)
         currentTab?.saveAsBookmark(favorite: true, viewModel: menuBookmarksViewModel)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if let controller = segue.destination as? TabsBarViewController {
-            controller.delegate = self
-            tabsBarController = controller
-            return
-        }
-        
     }
     
     @IBSegueAction func onCreateSuggestionTray(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> SuggestionTrayViewController {

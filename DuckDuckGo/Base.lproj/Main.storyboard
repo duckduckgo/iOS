@@ -64,9 +64,6 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="vZY-9N-j4a"/>
                                 </constraints>
-                                <connections>
-                                    <segue destination="CcV-Al-EGm" kind="embed" id="Xv7-qN-uE5"/>
-                                </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nQT-PV-ULm" userLabel="Navigation Bar">
                                 <rect key="frame" x="0.0" y="48" width="414" height="52"/>
@@ -194,14 +191,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2QN-Mc-SXu" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="218.40000000000001" y="-6.746626686656672"/>
-        </scene>
-        <!--TabsBar-->
-        <scene sceneID="Pln-26-dMp">
-            <objects>
-                <viewControllerPlaceholder storyboardName="TabSwitcher" referencedIdentifier="TabsBar" id="CcV-Al-EGm" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fQ6-fK-eXA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="988" y="-68"/>
         </scene>
         <!--Suggestion Tray View Controller-->
         <scene sceneID="3rT-8z-smY">

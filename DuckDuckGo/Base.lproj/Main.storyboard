@@ -193,7 +193,6 @@
                         <outlet property="toolbar" destination="Krm-hA-s9u" id="JHv-PZ-ILs"/>
                         <outlet property="toolbarBottom" destination="UsQ-i7-pjr" id="nwd-gZ-QEh"/>
                         <segue destination="xj8-BF-A9c" kind="presentation" identifier="Settings" id="URp-Fv-PV5"/>
-                        <segue destination="Idd-9P-bE6" kind="presentation" identifier="ReportBrokenSite" modalPresentationStyle="pageSheet" id="Igb-19-s0y"/>
                         <segue destination="ER6-yn-Oo2" kind="presentation" identifier="Downloads" id="mfy-s9-JEe"/>
                         <segue destination="xj8-BF-A9c" kind="presentation" identifier="SettingsToLogins" id="20e-p4-Vk3"/>
                         <segue destination="xj8-BF-A9c" kind="presentation" identifier="SettingsToCookiePopupManagement" id="PBD-dW-rld"/>
@@ -217,7 +216,7 @@
                 <viewControllerPlaceholder storyboardName="Settings" id="xj8-BF-A9c" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AdC-gU-UaA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="376" y="537"/>
+            <point key="canvasLocation" x="199" y="536"/>
         </scene>
         <!--Downloads-->
         <scene sceneID="5x5-HW-CdZ">
@@ -225,15 +224,7 @@
                 <viewControllerPlaceholder storyboardName="Downloads" id="ER6-yn-Oo2" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lvu-5o-UKv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1018" y="536"/>
-        </scene>
-        <!--Feedback-->
-        <scene sceneID="DKk-fR-oH5">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Feedback" id="Idd-9P-bE6" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SaV-O6-7VA" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="661" y="537"/>
+            <point key="canvasLocation" x="478" y="536"/>
         </scene>
         <!--TabSwitcher-->
         <scene sceneID="ylt-D6-E7x">
@@ -241,7 +232,7 @@
                 <viewControllerPlaceholder storyboardName="TabSwitcher" id="p9L-cF-4aL" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X9j-nR-zze" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-203" y="537"/>
+            <point key="canvasLocation" x="729" y="536"/>
         </scene>
         <!--Suggestion Tray View Controller-->
         <scene sceneID="3rT-8z-smY">

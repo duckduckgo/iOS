@@ -383,16 +383,6 @@ class MainViewController: UIViewController {
             return
         }
         
-        if let navController = segue.destination as? UINavigationController {
-            if let brokenSiteScreen = navController.topViewController as? ReportBrokenSiteViewController {
-                if UIDevice.current.userInterfaceIdiom == .pad {
-                    segue.destination.modalPresentationStyle = .formSheet
-                }
-                
-                brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
-            }
-        }
-
     }
     
     @IBSegueAction func onCreateSuggestionTray(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> SuggestionTrayViewController {
@@ -904,10 +894,6 @@ class MainViewController: UIViewController {
         suggestionTrayContainer.isHidden = true
         currentTab?.webView.accessibilityElementsHidden = false
         suggestionTrayController?.didHide()
-    }
-    
-    fileprivate func launchReportBrokenSite() {
-        performSegue(withIdentifier: "ReportBrokenSite", sender: self)
     }
     
     fileprivate func launchDownloads() {
@@ -1597,7 +1583,7 @@ extension MainViewController: TabDelegate {
     }
 
     func tabDidRequestReportBrokenSite(tab: TabViewController) {
-        launchReportBrokenSite()
+        segueToReportBrokenSite()
     }
     
     func tabDidRequestBookmarks(tab: TabViewController) {

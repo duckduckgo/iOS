@@ -111,4 +111,23 @@ extension MainViewController {
         present(controller, animated: true)
     }
 
+    func segueToReportBrokenSite() {
+        let storyboard = UIStoryboard(name: "Feedback", bundle: nil)
+        guard let controller: UINavigationController = storyboard.instantiateInitialViewController(),
+              let brokenSiteScreen = controller.topViewController as? ReportBrokenSiteViewController else {
+            assertionFailure()
+            return
+        }
+
+        brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
+
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            controller.modalPresentationStyle = .formSheet
+        } else {
+            controller.modalPresentationStyle = .pageSheet
+        }
+
+        present(controller, animated: true)
+    }
+
 }

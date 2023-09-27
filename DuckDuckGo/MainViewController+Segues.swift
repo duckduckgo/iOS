@@ -112,6 +112,8 @@ extension MainViewController {
     }
 
     func segueToReportBrokenSite() {
+        os_log(#function, log: .generalLog, type: .debug)
+
         let storyboard = UIStoryboard(name: "Feedback", bundle: nil)
         guard let controller: UINavigationController = storyboard.instantiateInitialViewController(),
               let brokenSiteScreen = controller.topViewController as? ReportBrokenSiteViewController else {
@@ -127,6 +129,17 @@ extension MainViewController {
             controller.modalPresentationStyle = .pageSheet
         }
 
+        present(controller, animated: true)
+    }
+
+    func segueToDownloads() {
+        os_log(#function, log: .generalLog, type: .debug)
+
+        let storyboard = UIStoryboard(name: "Downloads", bundle: nil)
+        guard let controller = storyboard.instantiateInitialViewController() else {
+            assertionFailure()
+            return
+        }
         present(controller, animated: true)
     }
 

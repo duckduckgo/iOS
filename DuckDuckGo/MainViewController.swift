@@ -896,10 +896,6 @@ class MainViewController: UIViewController {
         suggestionTrayController?.didHide()
     }
     
-    fileprivate func launchDownloads() {
-        performSegue(withIdentifier: "Downloads", sender: self)
-    }
-    
     fileprivate func launchAutofillLogins(with currentTabUrl: URL? = nil) {
         let appSettings = AppDependencyProvider.shared.appSettings
         let autofillSettingsViewController = AutofillLoginSettingsListViewController(
@@ -1597,7 +1593,7 @@ extension MainViewController: TabDelegate {
     }
     
     func tabDidRequestDownloads(tab: TabViewController) {
-        launchDownloads()
+        segueToDownloads()
     }
     
     func tabDidRequestAutofillLogins(tab: TabViewController) {

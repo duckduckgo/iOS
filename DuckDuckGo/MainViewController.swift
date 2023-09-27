@@ -392,15 +392,6 @@ class MainViewController: UIViewController {
                 brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
             }
         }
-        
-        if let controller = segue.destination as? ActionSheetDaxDialogViewController {
-            let spec = sender as? DaxDialogs.ActionSheetSpec
-            if spec == DaxDialogs.ActionSheetSpec.fireButtonEducation {
-                ViewHighlighter.hideAll()
-            }
-            controller.spec = spec
-            controller.delegate = self
-        }
 
     }
     
@@ -585,7 +576,7 @@ class MainViewController: UIViewController {
         wakeLazyFireButtonAnimator()
         
         if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
-            performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
+            segueToActionSheetDaxDialogWithSpec(spec)
         } else {
             let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
                 self?.forgetAllWithAnimation {}

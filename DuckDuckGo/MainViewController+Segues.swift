@@ -75,6 +75,7 @@ extension MainViewController {
     }
 
     private func launchBookmarksViewController(completion: ((BookmarksViewController) -> Void)? = nil) {
+        os_log(#function, log: .generalLog, type: .debug)
         let storyboard = UIStoryboard(name: "Bookmarks", bundle: nil)
 
         let bookmarks = storyboard.instantiateViewController(identifier: "BookmarksViewController") { coder in
@@ -90,6 +91,24 @@ extension MainViewController {
         present(controller, animated: true) {
             completion?(bookmarks)
         }
+    }
+
+    func segueToActionSheetDaxDialogWithSpec(_ spec: DaxDialogs.ActionSheetSpec) {
+        os_log(#function, log: .generalLog, type: .debug)
+
+        if spec == DaxDialogs.ActionSheetSpec.fireButtonEducation {
+            ViewHighlighter.hideAll()
+        }
+
+        let storyboard = UIStoryboard(name: "DaxOnboarding", bundle: nil)
+        let controller = storyboard.instantiateViewController(identifier: "ActionSheetDaxDialog", creator: { coder in
+            ActionSheetDaxDialogViewController(coder: coder)
+        })
+        controller.spec = spec
+        controller.delegate = self
+        controller.modalTransitionStyle = .crossDissolve
+        controller.modalPresentationStyle = .overFullScreen
+        present(controller, animated: true)
     }
 
 }

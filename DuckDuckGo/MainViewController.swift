@@ -110,11 +110,11 @@ class MainViewController: UIViewController {
     private var launchTabObserver: LaunchTabNotification.Observer?
     
     private let appTrackingProtectionDatabase: CoreDataDatabase
-    private let bookmarksDatabase: CoreDataDatabase
+    let bookmarksDatabase: CoreDataDatabase
     private weak var bookmarksDatabaseCleaner: BookmarkDatabaseCleaner?
     private let favoritesViewModel: FavoritesListInteracting
-    private let syncService: DDGSyncing
-    private let syncDataProviders: SyncDataProviders
+    let syncService: DDGSyncing
+    let syncDataProviders: SyncDataProviders
     private var localUpdatesCancellable: AnyCancellable?
     private var syncUpdatesCancellable: AnyCancellable?
     private var emailCancellables = Set<AnyCancellable>()
@@ -134,7 +134,7 @@ class MainViewController: UIViewController {
     
     private lazy var fireButtonAnimator: FireButtonAnimator = FireButtonAnimator(appSettings: appSettings)
     
-    private var bookmarksCachingSearch: BookmarksCachingSearch
+    let bookmarksCachingSearch: BookmarksCachingSearch
 
     fileprivate lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
@@ -392,10 +392,6 @@ class MainViewController: UIViewController {
                 brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
             }
         }
-
-        if var onboarding = segue.destination as? Onboarding {
-            onboarding.delegate = self
-        }
         
         if let controller = segue.destination as? ActionSheetDaxDialogViewController {
             let spec = sender as? DaxDialogs.ActionSheetSpec
@@ -424,7 +420,8 @@ class MainViewController: UIViewController {
     }
     
     @IBSegueAction func onCreateBookmarksList(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> BookmarksViewController {
-        guard let controller = BookmarksViewController(coder: coder,
+        guard
+            let controller = BookmarksViewController(coder: coder,
                                                        bookmarksDatabase: self.bookmarksDatabase,
                                                        bookmarksSearch: bookmarksCachingSearch,
                                                        syncService: syncService,
@@ -1343,7 +1340,8 @@ extension MainViewController: OmniBarDelegate {
             ViewHighlighter.hideAll()
         }
         hideSuggestionTray()
-        performSegue(withIdentifier: "Bookmarks", sender: self)
+        segueToBookmarks()
+        // performSegue(withIdentifier: "Bookmarks", sender: self)
     }
     
     func onBookmarkEdit() {

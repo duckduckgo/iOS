@@ -50,4 +50,18 @@ extension MainViewController {
         present(controller, animated: true)
     }
 
+    func segueToBookmarks() {
+        os_log(#function, log: .generalLog, type: .debug)
+        let storyboard = UIStoryboard(name: "Bookmarks", bundle: nil)
+        let controller = storyboard.instantiateInitialViewController(creator: { coder in
+            BookmarksViewController(coder: coder,
+                                    bookmarksDatabase: self.bookmarksDatabase,
+                                    bookmarksSearch: self.bookmarksCachingSearch,
+                                    syncService: self.syncService,
+                                    syncDataProviders: self.syncDataProviders)
+        })!
+        controller.modalPresentationStyle = .overCurrentContext
+        present(controller, animated: true)
+    }
+
 }

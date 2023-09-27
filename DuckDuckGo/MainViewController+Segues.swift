@@ -189,14 +189,6 @@ extension MainViewController {
         }
     }
 
-    func segueToSettingsLogins() {
-        os_log(#function, log: .generalLog, type: .debug)
-        hideAllHilightsIfNeeded()
-        launchSettings {
-            $0.openLogins()
-        }
-    }
-
     func segueToSettingsLoginsWithAccount(_ account: SecureVaultModels.WebsiteAccount) {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHilightsIfNeeded()

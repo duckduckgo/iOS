@@ -1555,12 +1555,8 @@ extension MainViewController: TabDelegate {
     }
 
     func tab(_ tab: TabViewController,
-             didRequestSettingsToLogins account: SecureVaultModels.WebsiteAccount?) {
-        if let account {
-            segueToSettingsLoginsWithAccount(account)
-        } else {
-            segueToSettingsLogins()
-        }
+             didRequestSettingsToLogins account: SecureVaultModels.WebsiteAccount) {
+        segueToSettingsLoginsWithAccount(account)
     }
 
     func tabContentProcessDidTerminate(tab: TabViewController) {

@@ -143,4 +143,28 @@ extension MainViewController {
         present(controller, animated: true)
     }
 
+    func segueToTabSwitcher() {
+        os_log(#function, log: .generalLog, type: .debug)
+
+        let storyboard = UIStoryboard(name: "TabSwitcher", bundle: nil)
+        guard let controller = storyboard.instantiateInitialViewController(creator: { coder in
+            TabSwitcherViewController(coder: coder,
+                                      bookmarksDatabase: self.bookmarksDatabase,
+                                      syncService: self.syncService)
+        }) else {
+            assertionFailure()
+            return
+        }
+
+        controller.transitioningDelegate = tabSwitcherTransition
+        controller.delegate = self
+        controller.tabsModel = tabManager.model
+        controller.previewsSource = previewsSource
+        controller.modalPresentationStyle = .overCurrentContext
+
+        tabSwitcherController = controller
+
+        present(controller, animated: true)
+    }
+
 }

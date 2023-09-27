@@ -105,7 +105,7 @@ class MainViewController: UIViewController {
     var suggestionTrayController: SuggestionTrayViewController?
 
     var tabManager: TabManager!
-    private let previewsSource = TabPreviewsSource()
+    let previewsSource = TabPreviewsSource()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private var launchTabObserver: LaunchTabNotification.Observer?
     
@@ -136,7 +136,7 @@ class MainViewController: UIViewController {
     
     let bookmarksCachingSearch: BookmarksCachingSearch
 
-    fileprivate lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
+    lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
         return tabManager?.current
     }
@@ -396,22 +396,6 @@ class MainViewController: UIViewController {
         controller.autocompleteDelegate = self
         controller.favoritesOverlayDelegate = self
         suggestionTrayController = controller
-        
-        return controller
-    }
-    
-    @IBSegueAction func onCreateTabSwitcher(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> TabSwitcherViewController {
-        guard let controller = TabSwitcherViewController(coder: coder,
-                                                         bookmarksDatabase: bookmarksDatabase,
-                                                         syncService: syncService) else {
-            fatalError("Failed to create controller")
-        }
-        
-        controller.transitioningDelegate = tabSwitcherTransition
-        controller.delegate = self
-        controller.tabsModel = tabManager.model
-        controller.previewsSource = previewsSource
-        tabSwitcherController = controller
         
         return controller
     }
@@ -1770,7 +1754,7 @@ extension MainViewController: TabSwitcherButtonDelegate {
                     
                 }
                 ViewHighlighter.hideAll()
-                self.performSegue(withIdentifier: "ShowTabs", sender: self)
+                self.segueToTabSwitcher()
             })
         }
     }

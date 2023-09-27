@@ -41,7 +41,4 @@ class OnboardingDefaultBroswerViewController: OnboardingContentViewController {
         super.onContinuePressed(navigationHandler: navigationHandler)
     }
 
-    override func onSkipPressed(navigationHandler: @escaping () -> Void) {
-        super.onSkipPressed(navigationHandler: navigationHandler)
-    }
 }

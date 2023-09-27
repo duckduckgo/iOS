@@ -33,14 +33,6 @@ class PrivacyIconLogicTests: XCTestCase {
     static let ddgMainURL = URL(string: "https://duckduckgo.com")!
     static let ddgSupportURL = URL(string: "https://duckduckgo.com/email/settings/support")!
     
-    override func setUp() {
-        super.setUp()
-    }
-
-    override func tearDown() {
-        super.tearDown()
-    }
-    
     func testPrivacyIconIsShieldForPageURL() {
         let url = PrivacyIconLogicTests.insecurePageURL
         let icon = PrivacyIconLogic.privacyIcon(for: url)

@@ -37,6 +37,46 @@ final class NetworkProtectionDebugUtilities {
 
         try? activeSession.sendProviderMessage(.expireRegistrationKey)
     }
+
+    // MARK: - Notifications
+
+    func sendTestNotificationRequest() async throws {
+        guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
+            return
+        }
+
+        try? activeSession.sendProviderMessage(.triggerTestNotification)
+    }
+
+    // MARK: - Failure Simulation
+
+    func triggerSimulation(_ option: NetworkProtectionSimulationOption) async {
+        guard let activeSession = try? await ConnectionSessionUtilities.activeSession() else {
+            return
+        }
+
+        guard let message = option.extensionMessage else {
+            return
+        }
+        try? activeSession.sendProviderMessage(message)
+    }
+}
+
+private extension NetworkProtectionSimulationOption {
+    var extensionMessage: ExtensionMessage? {
+        switch self {
+        case .crashFatalError:
+            return .simulateTunnelFatalError
+        case .crashMemory:
+            return .simulateTunnelMemoryOveruse
+        case .tunnelFailure:
+            return .simulateTunnelFailure
+        case .controllerFailure:
+            return nil
+        case .connectionInterruption:
+            return .simulateConnectionInterruption
+        }
+    }
 }
 
 #endif

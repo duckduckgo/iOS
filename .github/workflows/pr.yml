@@ -2,7 +2,7 @@ name: PR Checks
 
 on: 
   push:
-    branches: [ develop, "release/**" ]
+    branches: [ develop, "release/**", dominik/gha-pr-check-failed-improvements ]
   pull_request:
 
 jobs:
@@ -55,6 +55,7 @@ jobs:
 
     - name: Set cache key hash
       run: |
+        exit 1
          has_only_tags=$(jq '[ .object.pins[].state | has("version") ] | all' DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
          if [[ "$has_only_tags" == "true" ]]; then
            echo "cache_key_hash=${{ hashFiles('DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}" >> $GITHUB_ENV
@@ -116,7 +117,7 @@ jobs:
           | xargs -L 1 ./scripts/report-failed-unit-test.sh -s ${{ vars.APPLE_CI_FAILING_TESTS_FAILED_TESTS_SECTION_ID }}
 
     - name: Fetch latest commit author
-      if: always() && github.ref_name == 'develop'
+      if: always()
       id: fetch_commit_author
       env:
         GH_TOKEN: ${{ github.token }}
@@ -146,6 +147,7 @@ jobs:
 
     - name: Set cache key hash
       run: |
+        exit 1
         has_only_tags=$(jq '[ .object.pins[].state | has("version") ] | all' DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
         if [[ "$has_only_tags" == "true" ]]; then
           echo "cache_key_hash=${{ hashFiles('DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}" >> $GITHUB_ENV
@@ -191,7 +193,7 @@ jobs:
     name: Create Asana Task
     needs: [swiftlint, unit-tests, shellcheck, release-build]
 
-    if: failure() && github.ref_name == 'develop' && github.run_attempt == 1
+    if: failure() && github.run_attempt == 1
 
     runs-on: ubuntu-latest
 
@@ -208,7 +210,7 @@ jobs:
     name: Close Asana Task
     needs: [swiftlint, unit-tests, shellcheck, release-build]
 
-    if: success() && github.ref_name == 'develop' && github.run_attempt > 1
+    if: always() && github.run_attempt > 1
 
     runs-on: ubuntu-latest
 

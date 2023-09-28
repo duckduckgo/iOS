@@ -328,7 +328,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         syncService.scheduler.notifyAppLifecycleEvent()
-
+        fireFailedCompilationsPixelIfNeeded()
         featureFlagTester.sendFeatureFlagEnabledPixelIfNecessary()
     }
 
@@ -385,6 +385,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 #endif
+    }
+
+    private func fireFailedCompilationsPixelIfNeeded() {
+        let store = FailedCompilationsStore()
+        if store.hasAnyFailures {
+            DailyPixel.fire(pixel: .compilationFailed, withAdditionalParameters: store.summary) { error in
+                guard error != nil else { return }
+                store.cleanup()
+            }
+        }
     }
     
     private func shouldShowKeyboardOnLaunch() -> Bool {

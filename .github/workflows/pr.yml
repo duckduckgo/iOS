@@ -197,7 +197,7 @@ jobs:
 
     steps:
       - name: Create Asana Task
-        uses: duckduckgo/BrowserServicesKit/.github/actions/asana-failed-pr-checks@dominik/gha-pr-check-failed-improvements
+        uses: duckduckgo/BrowserServicesKit/.github/actions/asana-failed-pr-checks@main
         with:
           action: create-task
           asana-access-token: ${{ secrets.ASANA_ACCESS_TOKEN }}

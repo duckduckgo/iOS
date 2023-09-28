@@ -826,7 +826,7 @@ In addition to the details entered into this form, your app issue report will co
     }
     public static let syncRemoveDeviceConfirmAction = "Remove"
     public static let syncCodeCopied = "Recovery Code copied"
-    public static let syncTitle = "Sync"
+    public static let syncTitle = "Sync & Back Up"
 
     // MARK: Errors
 

@@ -221,7 +221,16 @@ public struct SyncSettingsView: View {
         List {
             workInProgress()
 
-            syncToggle()
+            syncWithAnotherDeviceView()
+
+            singleDeviceSetUpView()
+
+            recoverYourDataView()
+
+            footerView()
+
+
+//            syncToggle()
 
             if model.isSyncEnabled {
                 devices()
@@ -240,6 +249,70 @@ public struct SyncSettingsView: View {
         .applyListStyle()
         .environmentObject(model)
 
+    }
+
+    @ViewBuilder
+    func syncWithAnotherDeviceView() -> some View {
+        let linkBlue: Color = Color(red: 0.22, green: 0.41, blue: 0.94)
+        Section {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Sync with Another Device")
+                        .font(.system(size: 15, weight: .bold))
+                    Text("Securely sync bookmarks and Logins between your devices.")
+                        .font(.system(size: 15, weight: .regular))
+                }
+                Spacer()
+                Image("Sync-Pair-96")
+                
+            }
+            Text("Scan QR Code")
+                .font(.system(size: 15, weight: .regular))
+                .foregroundColor(linkBlue)
+            Text("Enter Text Code")
+                .font(.system(size: 15, weight: .regular))
+                .foregroundColor(linkBlue)
+        }
+    }
+
+    @ViewBuilder
+    func singleDeviceSetUpView() -> some View {
+        let linkBlue: Color = Color(red: 0.22, green: 0.41, blue: 0.94)
+        Section {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Single-Device Setup")
+                        .font(.system(size: 15, weight: .bold))
+                    Text("Set up this device now, sync with other devices later.")
+                        .font(.system(size: 15, weight: .regular))
+                }
+                Spacer()
+                Image("Device-Mobile-Upload-96")
+
+            }
+            Text("Start Sync & Back Up")
+                .font(.system(size: 15, weight: .regular))
+                .foregroundColor(linkBlue)
+        }
+    }
+
+    @ViewBuilder
+    func recoverYourDataView() -> some View {
+        let linkBlue: Color = Color(red: 0.22, green: 0.41, blue: 0.94)
+        Section {
+            Text("Recover Your Data")
+                .font(.system(size: 15, weight: .regular))
+                .foregroundColor(linkBlue)
+        }
+    }
+
+    @ViewBuilder
+    func footerView() -> some View {
+        Section {} footer: {
+            Text("Your data is end-to-end encrypted, and DuckDuckGo does not have access to the decryption key.")
+                .font(.system(size: 12, weight: .regular))
+                .foregroundColor(.secondary)
+        }
     }
 
 }

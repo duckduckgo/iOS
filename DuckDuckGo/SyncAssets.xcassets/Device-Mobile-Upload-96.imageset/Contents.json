@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Device-Mobile-Upload-96.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

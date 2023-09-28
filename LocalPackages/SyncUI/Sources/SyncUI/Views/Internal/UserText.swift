@@ -57,7 +57,7 @@ struct UserText {
 
     static let goToSettingsButton = "Go to Settings"
 
-    static let syncTitle = "Sync"
+    static let syncTitle = "Sync & Back Up"
     static let syncSettingsInfo = "Sync your bookmarks and Autofill logins across your devices and save an encrypted backup on DuckDuckGo’s servers."
 
     static let thisDevice = "This Device"

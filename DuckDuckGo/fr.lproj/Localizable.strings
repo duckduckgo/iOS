@@ -34,6 +34,9 @@
 /* Floating message indicating URL has been copied */
 "action.title.copy.message" = "URL copiée";
 
+/* Delete action - button shown in alert */
+"action.title.delete" = "Delete";
+
 /* Disable protection action */
 "action.title.disable.protection" = "Désactiver la protection de la confidentialité";
 
@@ -402,6 +405,15 @@
 
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.exemple.com";
+
+/* Delete bookmark alert message */
+"bookmark.delete.alert.message" = "Cela supprimera votre signet pour « %@ »";
+
+/* Delete bookmark alert title */
+"bookmark.delete.alert.title" = "Delete?";
+
+/* The message shown after a bookmark has been deleted */
+"bookmark.deleted.toast" = "Signet supprimé";
 
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Supprimer";

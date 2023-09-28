@@ -367,8 +367,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                                           _ completion: @escaping (Bool) -> Void) {
 
         func delete() {
-            let domains = domainsInBookmarkTree(bookmark)
-
             let oldCount = viewModel.bookmarks.count
             viewModel.softDeleteBookmark(bookmark)
             let newCount = viewModel.bookmarks.count
@@ -379,9 +377,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             } else {
                 tableView.reloadSections([indexPath.section], with: .none)
             }
-            refreshFooterView()
-
-            removeUnusedFaviconsForDomains(domains)
+            refreshAll()
         }
 
         func countAllChildrenInFolder(_ folder: BookmarkEntity) -> Int {
@@ -395,6 +391,12 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             return count
         }
 
+        func deleteFolder() {
+            let domains = domainsInBookmarkTree(bookmark)
+            removeUnusedFaviconsForDomains(domains)
+            delete()
+        }
+
         if let dataSource = tableView.dataSource as? SearchBookmarksDataSource {
             dataSource.results.remove(at: indexPath.row)
             delete()
@@ -406,8 +408,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             let count = countAllChildrenInFolder(bookmark)
             let message = UserText.deleteBookmarkFolderAlertMessage(numberOfChildren: count)
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alertController.addAction(title: UserText.deleteBookmarkFolderAlertDeleteButton, style: .default) {
-                delete()
+            alertController.addAction(title: UserText.deleteBookmarkFolderAlertDeleteButton, style: .destructive) {
+                deleteFolder()
                 completion(true)
             }
             alertController.addAction(title: UserText.actionCancel, style: .cancel) {
@@ -415,6 +417,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             }
             present(alertController, animated: true)
         } else {
+            showBookmarkDeletedMessage(bookmark)
             delete()
             completion(true)
         }
@@ -550,6 +553,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                 return nil
             }
             
+            controller.delegate = self
             return controller
         } else {
             guard let controller = AddOrEditBookmarkViewController(coder: coder,
@@ -772,6 +776,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         emptyStateContainer.isHidden = true
         importFooterButton.isHidden = true
         importFooterButton.isEnabled = false
+        tableView.addSubview(searchBar)
         tableView.tableHeaderView = searchBar
     }
 
@@ -875,6 +880,60 @@ extension BookmarksViewController: FavoritesViewControllerDelegate {
 
     func favoritesViewController(_ controller: FavoritesViewController, didRequestEditFavorite favorite: BookmarkEntity) {
         performSegue(withIdentifier: "AddOrEditBookmarkFolder", sender: favorite.objectID)
+    }
+
+}
+
+extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
+
+    func finishedEditing(_: AddOrEditBookmarkViewController, entityID: NSManagedObjectID) {
+        // no-op
+    }
+
+    func deleteBookmark(_: AddOrEditBookmarkViewController, entityID: NSManagedObjectID) {
+        guard let bookmark = viewModel.bookmark(with: entityID) else {
+            assertionFailure()
+            return
+        }
+        showBookmarkDeletedMessage(bookmark)
+        viewModel.softDeleteBookmark(bookmark)
+        refreshFooterView()
+        tableView.reloadData()
+    }
+
+    func showBookmarkDeletedMessage(_ bookmark: BookmarkEntity) {
+        guard let parent = bookmark.parent,
+              let index = parent.childrenArray.firstIndex(of: bookmark),
+              let domain = bookmark.urlObject?.host,
+              let title = bookmark.title,
+              let url = bookmark.url else {
+            assertionFailure()
+            return
+        }
+
+        // capture the optional details
+        let favoritesFolder = bookmark.favoriteFolder
+        let favoritesIndex = favoritesFolder?.favoritesArray.firstIndex(of: bookmark)
+
+        // capture this locally because this VC might have been closed when undo gets pressed
+        let localViewModel = self.viewModel
+        let message = UserText.bookmarkDeleted
+        ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo) { [weak self] in
+            // re-create it
+            localViewModel.createBookmark(title: title,
+                                          url: url,
+                                          folder: parent,
+                                          folderIndex: index,
+                                          favoritesFolder: favoritesFolder,
+                                          favoritesIndex: favoritesIndex)
+
+            self?.tableView.reloadData()
+            self?.refreshAll()
+        } onDidDismiss: {
+            NotificationCenter.default.post(name: FireproofFaviconUpdater.deleteFireproofFaviconNotification,
+                                            object: nil,
+                                            userInfo: [FireproofFaviconUpdater.UserInfoKeys.faviconDomain: domain])
+        }
     }
 
 }

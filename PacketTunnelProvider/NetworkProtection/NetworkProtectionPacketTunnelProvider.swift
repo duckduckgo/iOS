@@ -166,7 +166,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
                                                              errorEvents: nil)
         let errorStore = NetworkProtectionTunnelErrorStore()
-        let notificationsPresenter = DefaultNotificationPresenter()
+        let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
         notificationsPresenter.requestAuthorization()
         super.init(notificationsPresenter: notificationsPresenter,
                    tunnelHealthStore: NetworkProtectionTunnelHealthStore(),
@@ -202,98 +202,4 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             source.resume()
         }
     }
-}
-
-/// This class takes care of requesting the presentation of notifications using UNNotificationCenter
-///
-final class DefaultNotificationPresenter: NSObject, NetworkProtectionNotificationsPresenter {
-
-    private let userNotificationCenter: UNUserNotificationCenter
-
-    private var threadIdentifier: String {
-        let bundleId = Bundle(for: Self.self).bundleIdentifier ?? "com.duckduckgo.mobile.ios.NetworkExtension"
-        return bundleId + ".threadIdentifier"
-    }
-
-    init(userNotificationCenter: UNUserNotificationCenter = .current()) {
-        self.userNotificationCenter = userNotificationCenter
-
-        super.init()
-    }
-
-    // MARK: - Setup
-
-    func requestAuthorization() {
-        userNotificationCenter.delegate = self
-        requestAlertAuthorization()
-    }
-
-    // MARK: - Notification Utility methods
-
-    private func requestAlertAuthorization(completionHandler: ((Bool) -> Void)? = nil) {
-        let options: UNAuthorizationOptions = .alert
-
-        userNotificationCenter.requestAuthorization(options: options) { authorized, _ in
-            completionHandler?(authorized)
-        }
-    }
-
-    private func notificationContent(body: String) -> UNNotificationContent {
-        let content = UNMutableNotificationContent()
-
-        content.threadIdentifier = threadIdentifier
-        content.title = UserText.networkProtectionNotificationsTitle
-        content.body = body
-
-        if #available(iOSApplicationExtension 15.0, *) {
-            content.interruptionLevel = .timeSensitive
-            content.relevanceScore = 0
-        }
-
-        return content
-    }
-
-    func showTestNotification() {
-        // Debug only string. Doesn't need localized
-        let content = notificationContent(body: "Test notification")
-        showNotification(content)
-    }
-
-    func showReconnectedNotification() {
-        let content = notificationContent(body: UserText.networkProtectionConnectionSuccessNotificationBody)
-        showNotification(content)
-    }
-
-    func showReconnectingNotification() {
-        let content = notificationContent(body: UserText.networkProtectionConnectionInterruptedNotificationBody)
-        showNotification(content)
-    }
-
-    func showConnectionFailureNotification() {
-        let content = notificationContent(body: UserText.networkProtectionConnectionFailureNotificationBody)
-        showNotification(content)
-    }
-
-    func showSupersededNotification() {
-    }
-
-    private func showNotification(_ content: UNNotificationContent) {
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: .none)
-
-        requestAlertAuthorization { authorized in
-            guard authorized else {
-                return
-            }
-
-            self.userNotificationCenter.add(request)
-        }
-    }
-}
-
-extension DefaultNotificationPresenter: UNUserNotificationCenterDelegate {
-
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
-        return .banner
-    }
-
 }

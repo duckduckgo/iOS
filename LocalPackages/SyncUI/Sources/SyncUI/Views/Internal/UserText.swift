@@ -33,17 +33,17 @@ struct UserText {
 
     static let recoveryMessage = "If you lose access to your devices, you will need this code to recover your synced data."
 
-    static let connectDeviceInstructions = "Go to Settings > Sync in the DuckDuckGo App on a different device and scan the QR code to sync."
+    static let connectDeviceInstructions = "Go to Settings > Sync & Back Up in the DuckDuckGo App on a different device and scan the QR code to sync."
 
     static let recoveryModeInstructions = "Scan the QR code on your Recovery PDF, or another synced device, to recover your synced data."
 
     static let validatingCode = "Validating code"
-    static let validatingCodeFailed = "That code does not appear to be valid.  Please try copying it again."
+    static let validatingCodeFailed = "Invalid code."
 
-    static let pasteCodeInstructions = "Copy the code from the Settings > Sync page in the DuckDuckGo App on another synced device and paste it here to sync this device."
+    static let pasteCodeInstructions = "Copy the code from the\n Settings > Sync & Back Up page in the DuckDuckGo App on another synced device and paste it here to sync this device."
 
-    static let viewQRCodeInstructions = "Go to Settings > Sync in the DuckDuckGo App on a different device and scan this QR code to sync."
-    static let viewQRCodeTitle = "QR Code"
+    static let viewQRCodeInstructions = "Open the DuckDuckGo app on another device. Navigate to Settings > Sync & Back Up and scan this QR code."
+    static let viewQRCodeTitle = "Your Sync Code"
 
     static let deviceSyncedTitle = "Device Synced!"
     static let deviceSyncedMessage = "Your bookmarks and Autofill logins are now syncing with this device."
@@ -66,8 +66,8 @@ struct UserText {
     static let pasteLabel = "Paste"
     static let copyCodeLabel = "Copy Code"
 
-    static let manuallyEnterCodeLabel = "Manually Enter Code"
-    static let manuallyEnterCodeTitle = "Manually Enter Code"
+    static let manuallyEnterCodeLabel = "Enter Text Code"
+    static let manuallyEnterCodeTitle = "Enter Text Code"
 
     static let showQRCodeLabel = "Show QR Code"
 

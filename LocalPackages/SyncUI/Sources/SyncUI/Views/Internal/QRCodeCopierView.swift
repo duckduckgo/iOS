@@ -59,6 +59,8 @@ struct QRCodeCopierView: View {
 
         if model.code != nil {
             Text(UserText.viewQRCodeInstructions)
+                .font(.system(size: 12, weight: .regular))
+                .foregroundColor(.secondary)
                 .lineLimit(nil)
                 .multilineTextAlignment(.center)
         }

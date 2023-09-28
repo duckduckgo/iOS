@@ -230,7 +230,7 @@ public struct SyncSettingsView: View {
             footerView()
 
 
-//            syncToggle()
+            syncToggle()
 
             if model.isSyncEnabled {
                 devices()
@@ -269,6 +269,9 @@ public struct SyncSettingsView: View {
             Text("Scan QR Code")
                 .font(.system(size: 15, weight: .regular))
                 .foregroundColor(linkBlue)
+                .onTapGesture {
+                    model.delegate?.showSyncWithAnotherDevice()
+                }
             Text("Enter Text Code")
                 .font(.system(size: 15, weight: .regular))
                 .foregroundColor(linkBlue)

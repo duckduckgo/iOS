@@ -42,7 +42,7 @@ public struct DeviceConnectedView: View {
     func deviceSyncedView() -> some View {
         UnderflowContainer {
             VStack(spacing: 0) {
-                Image("SyncSuccess")
+                Image("Sync-Start-128")
                     .padding(.bottom, 20)
 
                 Text(UserText.deviceSyncedTitle)

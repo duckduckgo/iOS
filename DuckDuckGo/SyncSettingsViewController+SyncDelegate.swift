@@ -107,6 +107,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         ? PortraitNavigationController(rootViewController: controller)
         : UINavigationController(rootViewController: controller)
 
+//        navController.navigationBar.tintColor = .black
         navController.overrideUserInterfaceStyle = .dark
         navController.modalPresentationStyle = .fullScreen
         navigationController?.present(navController, animated: true) {

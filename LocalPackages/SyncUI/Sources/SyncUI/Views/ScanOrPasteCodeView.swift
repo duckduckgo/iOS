@@ -124,7 +124,7 @@ public struct ScanOrPasteCodeView: View {
         Text(model.showConnectMode ? UserText.connectDeviceInstructions : UserText.recoveryModeInstructions)
             .lineLimit(nil)
             .multilineTextAlignment(.center)
-            .font(.system(size: 16, weight: .regular))
+            .font(.system(size: 12, weight: .regular))
             .padding(.vertical)
 
     }
@@ -132,14 +132,15 @@ public struct ScanOrPasteCodeView: View {
     @ViewBuilder
     func buttons() -> some View {
 
-        Section {
-            Group {
+        Group {
+            Section {
                 NavigationLink {
                     PasteCodeView(model: model)
                 } label: {
                     Label(UserText.manuallyEnterCodeLabel, image: "SyncKeyboardIcon")
                 }
-
+            }
+            Section {
                 if model.showConnectMode {
                     NavigationLink {
                         ConnectModeView(model: model)
@@ -148,13 +149,12 @@ public struct ScanOrPasteCodeView: View {
                     }
                 }
             }
-            .frame(height: 40)
-            .foregroundColor(.primary)
-            .onAppear {
-                model.endConnectMode()
-            }
         }
-
+        .frame(height: 40)
+        .foregroundColor(.primary)
+        .onAppear {
+            model.endConnectMode()
+        }
     }
 
     @ViewBuilder

@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "2bc934304fd9d5e2b51dfe78a0c95ba10f1ab5a5",
-          "version": "80.2.0"
+          "branch": "sam/use-correct-crash-report-app-version",
+          "revision": "e44d43f1f4bb13d6447c26ea111789af7bbfccfc",
+          "version": null
         }
       },
       {

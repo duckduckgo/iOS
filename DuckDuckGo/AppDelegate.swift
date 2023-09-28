@@ -87,7 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Configuration.setURLProvider(AppConfigurationURLProvider())
 
         CrashCollection.start {
-            Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: $0, includedParameters: [.appVersion])
+            Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: $0, includedParameters: [])
         }
 
         clearTmp()

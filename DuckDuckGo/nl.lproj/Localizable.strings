@@ -338,19 +338,19 @@
 "autofill.logins.search.no-results.title" = "Geen resultaten";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Wachtwoord wordt opgeslagen in aanmeldgegevens.";
+"autofill.password-generation-prompt.subtitle" = "Wachtwoorden worden veilig opgeslagen op je apparaat in het menu 'Aanmeldingen'.";
 
 /* Title for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.title" = "Gegenereerd wachtwoord van DuckDuckGo gebruiken?";
+"autofill.password-generation-prompt.title" = "Een sterk wachtwoord van DuckDuckGo gebruiken?";
 
 /* Button title choosing to use the suggested generated password for creating a login */
-"autofill.password-generation-prompt.use-generated-password.cta" = "Gegenereerd wachtwoord gebruiken";
+"autofill.password-generation-prompt.use-generated-password.cta" = "Sterk wachtwoord gebruiken";
 
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Zelf wachtwoord aanmaken";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Aanmeldgegevens worden veilig opgeslagen op je apparaat en kunnen worden beheerd via het menu Aanmeldgegevens in Instellingen.";
+"autofill.save-login.new-user.message" = "Aanmeldgegevens worden veilig opgeslagen op je apparaat in het menu 'Aanmeldingen'.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Wil je dat DuckDuckGo je login opslaat?";

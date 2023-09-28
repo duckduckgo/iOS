@@ -338,19 +338,19 @@
 "autofill.logins.search.no-results.title" = "Нет результатов";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Пароль будет сохранен в разделе «Логины».";
+"autofill.password-generation-prompt.subtitle" = "Пароли надежно хранятся на вашем устройстве в меню «Логины».";
 
 /* Title for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.title" = "Использовать пароль, сгенерированный DuckDuckGo?";
+"autofill.password-generation-prompt.title" = "Как насчет надежного пароля от DuckDuckGo?";
 
 /* Button title choosing to use the suggested generated password for creating a login */
-"autofill.password-generation-prompt.use-generated-password.cta" = "Использовать предложенный";
+"autofill.password-generation-prompt.use-generated-password.cta" = "Применить надежный пароль";
 
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Создать собственный";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Учетные данные надежно хранятся на вашем устройстве, а проконтролировать их можно в меню «Логины» в «Настройках».";
+"autofill.save-login.new-user.message" = "Учетные данные надежно хранятся на вашем устройстве в меню «Логины».";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Хотите, чтобы DuckDuckGo сохранил логин?";

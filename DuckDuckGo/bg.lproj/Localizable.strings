@@ -338,19 +338,19 @@
 "autofill.logins.search.no-results.title" = "Няма резултати";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Паролата ще бъде запазена в „Данни за вход“.";
+"autofill.password-generation-prompt.subtitle" = "Паролите се съхраняват на сигурно място в менюто Данни за вход на Вашето устройство.";
 
 /* Title for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.title" = "Използване на парола, генерирана от DuckDuckGo?";
+"autofill.password-generation-prompt.title" = "Използване на силна парола от DuckDuckGo?";
 
 /* Button title choosing to use the suggested generated password for creating a login */
-"autofill.password-generation-prompt.use-generated-password.cta" = "Използване на генерирана парола";
+"autofill.password-generation-prompt.use-generated-password.cta" = "Използване на силна парола";
 
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Създаване на собствена";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Данните за вход са сигурно съхранени само на Вашето устройство и могат да се управляват от менюто Данни за вход в Настройки.";
+"autofill.save-login.new-user.message" = "Данните за вход се съхраняват на сигурно място в менюто Данни за вход на Вашето устройство.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Искате ли DuckDuckGo да запази данните за вход?";

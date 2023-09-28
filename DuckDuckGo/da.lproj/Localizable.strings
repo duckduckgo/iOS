@@ -338,19 +338,19 @@
 "autofill.logins.search.no-results.title" = "Ingen resultater";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Adgangskoden vil blive gemt i logins.";
+"autofill.password-generation-prompt.subtitle" = "Adgangskoder gemmes sikkert på din enhed i menuen Logins.";
 
 /* Title for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.title" = "Brug genereret adgangskode fra DuckDuckGo?";
+"autofill.password-generation-prompt.title" = "Brug en stærk adgangskode fra DuckDuckGo?";
 
 /* Button title choosing to use the suggested generated password for creating a login */
-"autofill.password-generation-prompt.use-generated-password.cta" = "Brug genereret adgangskode";
+"autofill.password-generation-prompt.use-generated-password.cta" = "Brug en stærk adgangskode";
 
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Opret min egen";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Logins gemmes sikkert på din enhed og kan administreres fra menuen Logins i Indstillinger.";
+"autofill.save-login.new-user.message" = "Logins gemmes sikkert på din enhed i menuen Logins.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Skal DuckDuckGo gemme dit login?";

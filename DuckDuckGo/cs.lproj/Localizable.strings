@@ -338,19 +338,19 @@
 "autofill.logins.search.no-results.title" = "Žádné výsledky";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Heslo se uloží do části Přihlášení.";
+"autofill.password-generation-prompt.subtitle" = "Hesla jsou bezpečně uložená v zařízení v nabídce Přihlášení.";
 
 /* Title for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.title" = "Použít heslo vygenerované DuckDuckGo?";
+"autofill.password-generation-prompt.title" = "Použít silné heslo od DuckDuckGo?";
 
 /* Button title choosing to use the suggested generated password for creating a login */
-"autofill.password-generation-prompt.use-generated-password.cta" = "Použít vygenerované heslo";
+"autofill.password-generation-prompt.use-generated-password.cta" = "Použít silné heslo";
 
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Vytvořit vlastní";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Přihlašovací údaje se bezpečně ukládají do tvého zařízení a dají se spravovat v nabídce Přihlášení v Nastavení.";
+"autofill.save-login.new-user.message" = "Přihlašovací údaje jsou bezpečně uložené v zařízení v nabídce Přihlášení.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Má DuckDuckGo uložit přihlašovací údaje?";

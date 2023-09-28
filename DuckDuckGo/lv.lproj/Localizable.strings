@@ -338,19 +338,19 @@
 "autofill.logins.search.no-results.title" = "Nav rezultātu";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Parole tiks saglabāta Pieteikšanās datos.";
+"autofill.password-generation-prompt.subtitle" = "Paroles tiek droši saglabātas tavā ierīcē, izvēlnē Pieteikšanās dati.";
 
 /* Title for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.title" = "Vai izmantot DuckDuckGo ģenerētu paroli?";
+"autofill.password-generation-prompt.title" = "Vai izmantot spēcīgu DuckDuckGo paroli?";
 
 /* Button title choosing to use the suggested generated password for creating a login */
-"autofill.password-generation-prompt.use-generated-password.cta" = "Izmantot ģenerētu paroli";
+"autofill.password-generation-prompt.use-generated-password.cta" = "Izmantot spēcīgu paroli";
 
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Izveidot savu";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Pieteikšanās dati tiek droši saglabāti tavā ierīcē, un tos var pārvaldīt no iestatījumu izvēlnes Pieteikšanās dati.";
+"autofill.save-login.new-user.message" = "Pieteikšanās dati tiek droši saglabāti tavā ierīcē, izvēlnē Pieteikšanās dati.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vai vēlies, lai DuckDuckGo saglabātu tavus pieteikšanās datus?";

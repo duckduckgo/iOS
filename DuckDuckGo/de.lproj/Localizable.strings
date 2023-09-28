@@ -338,19 +338,19 @@
 "autofill.logins.search.no-results.title" = "Keine Ergebnisse";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Das Passwort wird in den Anmeldedaten gespeichert.";
+"autofill.password-generation-prompt.subtitle" = "Passwörter werden sicher auf deinem Gerät im Anmeldedaten-Menü gespeichert.";
 
 /* Title for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.title" = "Generiertes Passwort von DuckDuckGo verwenden?";
+"autofill.password-generation-prompt.title" = "Ein sicheres Passwort von DuckDuckGo verwenden?";
 
 /* Button title choosing to use the suggested generated password for creating a login */
-"autofill.password-generation-prompt.use-generated-password.cta" = "Generiertes Passwort verwenden";
+"autofill.password-generation-prompt.use-generated-password.cta" = "Sicheres Passwort verwenden";
 
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Eigenes erstellen";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Die Anmeldedaten werden auf diesem Gerät sicher gespeichert und können über das Anmeldedaten-Menü in den Einstellungen verwaltet werden.";
+"autofill.save-login.new-user.message" = "Anmeldedaten werden sicher auf deinem Gerät im Anmeldedaten-Menü gespeichert.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Möchtest du, dass DuckDuckGo deine Anmeldedaten speichert?";

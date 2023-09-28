@@ -338,19 +338,19 @@
 "autofill.logins.search.no-results.title" = "Sonuç yok";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Şifre, Girişlere kaydedilecektir.";
+"autofill.password-generation-prompt.subtitle" = "Şifreler cihazınızdaki Oturum Açma menüsünde güvenli bir şekilde saklanır.";
 
 /* Title for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.title" = "DuckDuckGo'dan oluşturulan şifre kullanılsın mı?";
+"autofill.password-generation-prompt.title" = "DuckDuckGo'nun oluşturduğu güçlü bir şifre kullanmak ister misiniz?";
 
 /* Button title choosing to use the suggested generated password for creating a login */
-"autofill.password-generation-prompt.use-generated-password.cta" = "Oluşturulan Şifreyi Kullan";
+"autofill.password-generation-prompt.use-generated-password.cta" = "Güçlü Şifre Kullan";
 
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Kendiminkini Oluştur";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Giriş bilgileri yalnızca bu cihazda güvenli bir şekilde saklanır ve Ayarlar'daki Giriş Bilgileri menüsünden yönetilebilir.";
+"autofill.save-login.new-user.message" = "Giriş bilgileri cihazınızdaki Giriş Bilgileri menüsünde güvenli bir şekilde saklanır.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "DuckDuckGo'nun Girişinizi kaydetmesini istiyor musunuz?";

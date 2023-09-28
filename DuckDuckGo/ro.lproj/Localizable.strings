@@ -338,19 +338,19 @@
 "autofill.logins.search.no-results.title" = "Niciun rezultat";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Parola va fi salvată în Datele de conectare.";
+"autofill.password-generation-prompt.subtitle" = "Parolele sunt stocate în siguranță pe dispozitivul dvs. în meniul Autentificări.";
 
 /* Title for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.title" = "Vrei să folosești parola generată de DuckDuckGo?";
+"autofill.password-generation-prompt.title" = "Folosiți o parolă puternică de la DuckDuckGo?";
 
 /* Button title choosing to use the suggested generated password for creating a login */
-"autofill.password-generation-prompt.use-generated-password.cta" = "Folosește parola generată";
+"autofill.password-generation-prompt.use-generated-password.cta" = "Utilizați o parolă puternică";
 
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Îmi creez propria parolă";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Datele de conectare sunt stocate în siguranță pe dispozitivul tău și pot fi gestionate din Setări, meniul Date de conectare.";
+"autofill.save-login.new-user.message" = "Conexiunile sunt stocate în siguranță pe dispozitivul dvs. în meniul Conectări.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Dorești ca DuckDuckGo să îți salveze datele de autentificare?";

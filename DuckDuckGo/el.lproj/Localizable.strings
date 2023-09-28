@@ -338,19 +338,19 @@
 "autofill.logins.search.no-results.title" = "Κανένα αποτέλεσμα";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Ο κωδικός πρόσβασης θα αποθηκευτεί στις Συνδέσεις.";
+"autofill.password-generation-prompt.subtitle" = "Οι κωδικοί πρόσβασης αποθηκεύονται με ασφάλεια στη συσκευή σας στο μενού Συνδέσεις.";
 
 /* Title for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.title" = "Χρήση κωδικού πρόσβασης που δημιουργήθηκε από το DuckDuckGo;";
+"autofill.password-generation-prompt.title" = "Χρησιμοποιείτε ισχυρό κωδικό πρόσβασης από το DuckDuckGo;";
 
 /* Button title choosing to use the suggested generated password for creating a login */
-"autofill.password-generation-prompt.use-generated-password.cta" = "Χρήση του κωδικού πρόσβασης που δημιουργήθηκε";
+"autofill.password-generation-prompt.use-generated-password.cta" = "Χρησιμοποιήστε ισχυρό κωδικό πρόσβασης";
 
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Δημιουργία δικού μου";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Οι συνδέσεις αποθηκεύονται με ασφάλεια στη συσκευή σας και η διαχείρισή τους γίνεται από το μενού Συνδέσεις, στις Ρυθμίσεις.";
+"autofill.save-login.new-user.message" = "Οι συνδέσεις αποθηκεύονται με ασφάλεια στη συσκευή σας στο μενού Συνδέσεις.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Θέλετε να αποθηκεύσει το DuckDuckGo τη σύνδεσή σας;";

@@ -338,19 +338,19 @@
 "autofill.logins.search.no-results.title" = "Ei tuloksia";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Salasana tallennetaan Kirjautumiset-osioon.";
+"autofill.password-generation-prompt.subtitle" = "Salasanat tallennetaan turvallisesti laitteellesi kirjautumistiedot-valikkoon.";
 
 /* Title for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.title" = "Haluatko käyttää DuckDuckGon luomaa salasanaa?";
+"autofill.password-generation-prompt.title" = "Käytetäänkö DuckDuckGon vahvaa salasanaa?";
 
 /* Button title choosing to use the suggested generated password for creating a login */
-"autofill.password-generation-prompt.use-generated-password.cta" = "Käytä luotua salasanaa";
+"autofill.password-generation-prompt.use-generated-password.cta" = "Käytä vahvaa salasanaa";
 
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Luo oma";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Kirjautumistiedot tallennetaan turvallisesti laitteellesi. Niitä voi hallita asetusten kirjautumistiedot-valikosta.";
+"autofill.save-login.new-user.message" = "Kirjautumistiedot tallennetaan turvallisesti laitteellesi kirjautumistiedot-valikkoon.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Haluatko, että DuckDuckGo tallentaa kirjautumistietosi?";

@@ -338,19 +338,19 @@
 "autofill.logins.search.no-results.title" = "Rezultatų nerasta";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Slaptažodis bus išsaugotas prisijungimų lange.";
+"autofill.password-generation-prompt.subtitle" = "Slaptažodžiai saugiai saugomi jūsų įrenginio meniu „Prisijungimai“.";
 
 /* Title for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.title" = "Naudoti sugeneruotą slaptažodį iš „DuckDuckGo“?";
+"autofill.password-generation-prompt.title" = "Naudoti stiprų „DuckDuckGo“ slaptažodį?";
 
 /* Button title choosing to use the suggested generated password for creating a login */
-"autofill.password-generation-prompt.use-generated-password.cta" = "Naudoti sugeneruotą slaptažodį";
+"autofill.password-generation-prompt.use-generated-password.cta" = "Naudoti stiprų slaptažodį";
 
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Sukurti savo";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Prisijungimai saugiai laikomi tik šiame įrenginyje, o juos galima tvarkyti nustatymuose, prisijungimų meniu.";
+"autofill.save-login.new-user.message" = "Prisijungimai saugiai saugomi jūsų įrenginio meniu „Prisijungimai“.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Ar norite, kad „DuckDuckGo“ išsaugotų jūsų prisijungimą?";

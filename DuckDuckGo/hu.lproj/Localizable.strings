@@ -338,19 +338,19 @@
 "autofill.logins.search.no-results.title" = "Nincs találat";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "A jelszó mentve lesz a Bejelentkezésekben.";
+"autofill.password-generation-prompt.subtitle" = "A rendszer biztonságosan tárolja az eszköz Bejelentkezés menüjében elérhető jelszavakat.";
 
 /* Title for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.title" = "DuckDuckGo által generált jelszó használata?";
+"autofill.password-generation-prompt.title" = "A DuckDuckGo által kínált erős jelszót kívánsz használni?";
 
 /* Button title choosing to use the suggested generated password for creating a login */
-"autofill.password-generation-prompt.use-generated-password.cta" = "Generált jelszó használata";
+"autofill.password-generation-prompt.use-generated-password.cta" = "Erős jelszó használata";
 
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Saját létrehozása";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "A bejelentkezési adatokat az eszközöd biztonságosan tárolja, ezen adatok pedig a Beállítások > Bejelentkezések menüpontban kezelhetők.";
+"autofill.save-login.new-user.message" = "A rendszer biztonságosan tárolja az eszköz Bejelentkezés menüjében elérhető bejelentkezési adatokat.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "A DuckDuckGo mentse a bejelentkezést?";

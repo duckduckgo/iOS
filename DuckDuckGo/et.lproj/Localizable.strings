@@ -338,19 +338,19 @@
 "autofill.logins.search.no-results.title" = "Tulemusi pole";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Parool salvestatakse sisselogimisandmetesse.";
+"autofill.password-generation-prompt.subtitle" = "Paroole hoitakse turvaliselt sinu seadmes sisselogimisandmete menüüs.";
 
 /* Title for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.title" = "Kas kasutada DuckDuckGo loodud parooli?";
+"autofill.password-generation-prompt.title" = "Kas kasutada DuckDuckGo tugevat parooli?";
 
 /* Button title choosing to use the suggested generated password for creating a login */
-"autofill.password-generation-prompt.use-generated-password.cta" = "Kasuta loodud parooli";
+"autofill.password-generation-prompt.use-generated-password.cta" = "Kasuta tugevat parooli";
 
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Loon selle ise";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Sisselogimisandmed salvestatakse turvaliselt selles seadmes ja neid saab hallata sätete menüüst Sisselogimisandmed.";
+"autofill.save-login.new-user.message" = "Logisid hoitakse turvaliselt sinu seadmes logide menüüs.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Kas soovid, et DuckDuckGo salvestaks sinu sisselogimisandmed?";

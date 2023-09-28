@@ -260,17 +260,17 @@ final class DefaultNotificationPresenter: NSObject, NetworkProtectionNotificatio
     }
 
     func showReconnectedNotification() {
-        let content = notificationContent(body: UserText.networkProtectionConnectionSuccessNotificationSubtitle)
+        let content = notificationContent(body: UserText.networkProtectionConnectionSuccessNotificationBody)
         showNotification(content)
     }
 
     func showReconnectingNotification() {
-        let content = notificationContent(body: UserText.networkProtectionConnectionInterruptedNotificationSubtitle)
+        let content = notificationContent(body: UserText.networkProtectionConnectionInterruptedNotificationBody)
         showNotification(content)
     }
 
     func showConnectionFailureNotification() {
-        let content = notificationContent(body: UserText.networkProtectionConnectionFailureNotificationSubtitle)
+        let content = notificationContent(body: UserText.networkProtectionConnectionFailureNotificationBody)
         showNotification(content)
     }
 

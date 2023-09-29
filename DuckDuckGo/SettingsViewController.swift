@@ -544,10 +544,6 @@ class SettingsViewController: UITableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return super.tableView(tableView, titleForFooterInSection: section)
-    }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let rows = super.tableView(tableView, numberOfRowsInSection: section)
         if section == appearanceSectionIndex && textSizeCell.isHidden {

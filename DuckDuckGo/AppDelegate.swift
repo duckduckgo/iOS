@@ -677,8 +677,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
-            if response.notification.request.identifier == WindowsBrowserWaitlist.notificationIdentitier {
+            let identifier = response.notification.request.identifier
+            if identifier == WindowsBrowserWaitlist.notificationIdentitier {
                 presentWindowsBrowserWaitlistSettingsModal()
+            } else if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
+                presentNetworkProtectionStatusSettingsModal()
             }
         }
 
@@ -689,7 +692,12 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let waitlistViewController = WindowsWaitlistViewController(nibName: nil, bundle: nil)
         presentSettings(with: waitlistViewController)
     }
-    
+
+    private func presentNetworkProtectionStatusSettingsModal() {
+        let networkProtectionRoot = NetworkProtectionRootViewController()
+        presentSettings(with: networkProtectionRoot)
+    }
+
     private func presentSettings(with viewController: UIViewController) {
         guard let window = window, let rootViewController = window.rootViewController as? MainViewController else { return }
 
@@ -703,5 +711,4 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             navigationController?.pushViewController(viewController, animated: true)
         }
     }
-
 }

@@ -19,23 +19,17 @@
 
 import UIKit
 
-protocol MainViewCoordinator {
-
-    func decorateWithTheme(_ theme: Theme)
-
-}
-
 // swiftlint:disable line_length
 class MainViewFactory {
 
-    private let coordinator: Coordinator
+    private let coordinator: MainViewCoordinator
 
     var superview: UIView {
         coordinator.superview
     }
 
     private init(_ superview: UIView) {
-        coordinator = Coordinator(superview: superview)
+        coordinator = MainViewCoordinator(superview: superview)
     }
 
     static func createViewHierarchy(_ superview: UIView) -> MainViewCoordinator {
@@ -110,14 +104,31 @@ extension MainViewFactory {
     class SuggestionTrayContainer: UIView { }
     private func createSuggestionTrayContainer() {
         coordinator.suggestionTrayContainer = SuggestionTrayContainer()
-//        coordinator.suggestionTrayContainer.backgroundColor = .clear
-//        coordinator.suggestionTrayContainer.isHidden = true
+        coordinator.suggestionTrayContainer.isHidden = true
+        coordinator.suggestionTrayContainer.backgroundColor = .clear
         superview.addSubview(coordinator.suggestionTrayContainer)
     }
 
     private func createToolbar() {
-        coordinator.toolbar = UIToolbar()
+        coordinator.toolbar = HitTestingToolbar()
+        coordinator.toolbarBackButton = UIBarButtonItem(title: "Browse Back", image: UIImage(named: "BrowsePrevious"), primaryAction: nil, menu: nil)
+        coordinator.toolbarForwardButton = UIBarButtonItem(title: "Browse Forward", image: UIImage(named: "BrowseNext"), primaryAction: nil, menu: nil)
+        coordinator.toolbarFireButton = UIBarButtonItem(title: "Close all tabs and clear data", image: UIImage(named: "Fire"), primaryAction: nil, menu: nil)
+        coordinator.toolbarTabSwitcherButton = UIBarButtonItem(title: "Tab Switcher", image: UIImage(named: "Add-24"), primaryAction: nil, menu: nil)
+        coordinator.toolbarBookmarksButton = UIBarButtonItem(title: "Bookmarks", image: UIImage(named: "Book-24"), primaryAction: nil, menu: nil)
         superview.addSubview(coordinator.toolbar)
+
+        coordinator.toolbar.setItems([
+            coordinator.toolbarBackButton!,
+            .flexibleSpace(),
+            coordinator.toolbarForwardButton!,
+            .flexibleSpace(),
+            coordinator.toolbarFireButton!,
+            .flexibleSpace(),
+            coordinator.toolbarTabSwitcherButton!,
+            .flexibleSpace(),
+            coordinator.toolbarBookmarksButton!,
+        ], animated: true)
     }
 
     class LogoBackgroundView: UIView { }
@@ -200,7 +211,7 @@ extension MainViewFactory {
         NSLayoutConstraint.activate([
             .init(item: notificationBarContainer, attribute: .width, relatedBy: .equal, toItem: superview, attribute: .width, multiplier: 1, constant: 0),
             .init(item: notificationBarContainer, attribute: .centerX, relatedBy: .equal, toItem: superview, attribute: .centerX, multiplier: 1, constant: 0),
-            .init(item: notificationBarContainer, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 5), // Initial height is zero
+            .init(item: notificationBarContainer, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 0),
             .init(item: notificationBarContainer, attribute: .bottom, relatedBy: .equal, toItem: contentContainer, attribute: .top, multiplier: 1, constant: 0),
             .init(item: notificationBarContainer, attribute: .top, relatedBy: .equal, toItem: navigationBarContainer, attribute: .bottom, multiplier: 1, constant: 0),
         ])
@@ -260,7 +271,7 @@ extension MainViewFactory {
 }
 // swiftlint:enable line_length
 
-private class Coordinator: MainViewCoordinator {
+class MainViewCoordinator {
 
     let superview: UIView
 
@@ -275,6 +286,11 @@ private class Coordinator: MainViewCoordinator {
     var tabsContainer: UIView!
     var navigationBarContainer: UIView!
     var progress: UIView!
+    var toolbarBackButton: UIBarButtonItem!
+    var toolbarForwardButton: UIBarButtonItem!
+    var toolbarFireButton: UIBarButtonItem!
+    var toolbarTabSwitcherButton: UIBarButtonItem!
+    var toolbarBookmarksButton: UIBarButtonItem!
 
     init(superview: UIView) {
         self.superview = superview
@@ -283,6 +299,11 @@ private class Coordinator: MainViewCoordinator {
     func decorateWithTheme(_ theme: Theme) {
         superview.backgroundColor = theme.mainViewBackgroundColor
         logoText.tintColor = theme.ddgTextTintColor
+    }
+
+    func hideSuggestionTray() {
+        suggestionTrayContainer.isHidden = true
+        suggestionTrayContainer.backgroundColor = .clear
     }
 
 }

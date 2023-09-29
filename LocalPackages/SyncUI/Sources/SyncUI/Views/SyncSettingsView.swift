@@ -275,6 +275,9 @@ public struct SyncSettingsView: View {
             Text("Enter Text Code")
                 .font(.system(size: 15, weight: .regular))
                 .foregroundColor(linkBlue)
+                .onTapGesture {
+                    model.delegate?.showSyncWithAnotherDeviceEnterText()
+                }
         }
     }
 

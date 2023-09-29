@@ -225,7 +225,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
     }
 
     func codeCollectionCancelled() {
-        assert(navigationController?.visibleViewController is UIHostingController<ScanOrPasteCodeView>)
+        assert(navigationController?.visibleViewController is UIHostingController<AnyView>)
         dismissPresentedViewController()
         rootView.model.codeCollectionCancelled()
     }

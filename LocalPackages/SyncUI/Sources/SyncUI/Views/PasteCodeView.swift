@@ -20,7 +20,7 @@
 import SwiftUI
 import DuckUI
 
-struct PasteCodeView: View {
+public struct PasteCodeView: View {
 
     static let codeFontSize = 18.0
     static let codeLines = 10
@@ -28,6 +28,13 @@ struct PasteCodeView: View {
     @ObservedObject var model: ScanOrPasteCodeViewModel
 
     @State var isEditingCode = false
+
+    var isFirstScreen: Bool
+
+    public init(model: ScanOrPasteCodeViewModel, isfirstScreen: Bool = false) {
+        self.model = model
+        self.isFirstScreen = isfirstScreen
+    }
 
     @ViewBuilder
     func pasteButton() -> some View {
@@ -96,7 +103,8 @@ struct PasteCodeView: View {
             .padding()
     }
 
-    var body: some View {
+    @ViewBuilder
+    func pastCodeWiewWithNoModifier() -> some View {
         ZStack(alignment: .top) {
             VStack(spacing: 20) {
                 codeEntrySection()
@@ -106,8 +114,17 @@ struct PasteCodeView: View {
         }
         .padding(.horizontal, 20)
         .navigationTitle(UserText.manuallyEnterCodeTitle)
-        .modifier(BackButtonModifier())
         .ignoresSafeArea(.keyboard)
+    }
+
+    public var body: some View {
+        if isFirstScreen {
+            pastCodeWiewWithNoModifier()
+                .modifier(CancelButtonModifier(action: model.cancel))
+        } else {
+            pastCodeWiewWithNoModifier()
+                .modifier(BackButtonModifier())
+        }
     }
 
 }

@@ -74,6 +74,10 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         collectCode(showConnectMode: syncService.account == nil)
     }
 
+    func showSyncWithAnotherDeviceEnterText() {
+        collectCode(showConnectMode: syncService.account == nil, showEnterTextCode: true)
+    }
+
     func showRecoverData() {
         collectCode(showConnectMode: true)
     }
@@ -97,17 +101,21 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         navigationController?.present(controller, animated: true)
     }
 
-    private func collectCode(showConnectMode: Bool) {
+    private func collectCode(showConnectMode: Bool, showEnterTextCode: Bool = false) {
         let model = ScanOrPasteCodeViewModel(showConnectMode: showConnectMode)
         model.delegate = self
 
-        let controller = UIHostingController(rootView: ScanOrPasteCodeView(model: model))
+        var controller: UIHostingController<AnyView>
+        if showEnterTextCode {
+            controller = UIHostingController(rootView: AnyView(PasteCodeView(model: model, isfirstScreen: true)))
+        } else {
+            controller = UIHostingController(rootView: AnyView(ScanOrPasteCodeView(model: model)))
+        }
 
         let navController = UIDevice.current.userInterfaceIdiom == .phone
         ? PortraitNavigationController(rootViewController: controller)
         : UINavigationController(rootViewController: controller)
 
-//        navController.navigationBar.tintColor = .black
         navController.overrideUserInterfaceStyle = .dark
         navController.modalPresentationStyle = .fullScreen
         navigationController?.present(navController, animated: true) {

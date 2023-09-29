@@ -46,7 +46,7 @@ struct UserText {
     static let viewQRCodeTitle = "Your Sync Code"
 
     static let deviceSyncedTitle = "Device Synced!"
-    static let deviceSyncedMessage = "Your bookmarks and Autofill logins are now syncing with this device."
+    static let deviceSyncedMessage = "Your bookmarks and Logins are now syncing with "
 
     static let saveRecoveryTitle = "Save Recovery Key"
     static let saveRecoveryButton = "Save As PDF"

@@ -209,19 +209,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         syncService.initializeIfNeeded()
         self.syncService = syncService
 
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        
-        guard let main = storyboard.instantiateInitialViewController(creator: { coder in
-            MainViewController(coder: coder,
-                               bookmarksDatabase: self.bookmarksDatabase,
-                               bookmarksDatabaseCleaner: self.syncDataProviders.bookmarksAdapter.databaseCleaner,
-                               appTrackingProtectionDatabase: self.appTrackingProtectionDatabase,
-                               syncService: self.syncService,
-                               syncDataProviders: self.syncDataProviders)
-        }) else {
-            fatalError("Could not load MainViewController")
-        }
-        
+//        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+//        guard let main = storyboard.instantiateInitialViewController(creator: { coder in
+//            MainViewController(coder: coder,
+//                               bookmarksDatabase: self.bookmarksDatabase,
+//                               bookmarksDatabaseCleaner: self.syncDataProviders.bookmarksAdapter.databaseCleaner,
+//                               appTrackingProtectionDatabase: self.appTrackingProtectionDatabase,
+//                               syncService: self.syncService,
+//                               syncDataProviders: self.syncDataProviders)
+//        }) else {
+//            fatalError("Could not load MainViewController")
+//        }
+        let main = TempMainViewController()
+        main.loadViewIfNeeded()
+
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = main
         window?.makeKeyAndVisible()

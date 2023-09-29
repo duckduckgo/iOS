@@ -31,8 +31,36 @@ import Persistence
 import PrivacyDashboard
 import Networking
 
-// swiftlint:disable type_body_length
+// TODO remove this, just temporary to build a working UI
+class TempMainViewController: UIViewController, AutoClearWorker, ActionSheetDaxDialogDelegate {
+
+    var viewCoordinator: MainViewCoordinator!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        print(self.view.frame)
+
+        viewCoordinator = MainViewFactory.createViewHierarchy(self.view)
+        viewCoordinator.decorateWithTheme(ThemeManager.shared.currentTheme)
+    }
+ 
+    func clearNavigationStack() {
+    }
+    
+    func forgetData() {
+    }
+    
+    func forgetTabs() {
+    }
+    
+    func actionSheetDaxDialogDidConfirmAction(controller: ActionSheetDaxDialogViewController) {
+    }
+    
+}
+
 // swiftlint:disable file_length
+// swiftlint:disable type_body_length
 class MainViewController: UIViewController {
 // swiftlint:enable type_body_length
 
@@ -408,21 +436,6 @@ class MainViewController: UIViewController {
         
         Pixel.fire(pixel: .tabBarBookmarksLongPressed)
         currentTab?.saveAsBookmark(favorite: true, viewModel: menuBookmarksViewModel)
-    }
-
-    @IBSegueAction func onCreateSuggestionTray(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> SuggestionTrayViewController {
-        guard let controller = SuggestionTrayViewController(coder: coder,
-                                                            favoritesViewModel: favoritesViewModel,
-                                                            bookmarksSearch: bookmarksCachingSearch) else {
-            fatalError("Failed to create controller")
-        }
-        
-        controller.dismissHandler = dismissSuggestionTray
-        controller.autocompleteDelegate = self
-        controller.favoritesOverlayDelegate = self
-        suggestionTrayController = controller
-        
-        return controller
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

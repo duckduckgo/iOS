@@ -101,7 +101,7 @@ final class NetworkProtectionUNNotificationPresenter: NSObject, NetworkProtectio
             guard authorized else {
                 return
             }
-
+            self.userNotificationCenter.removeDeliveredNotifications(withIdentifiers: [identifier.rawValue])
             self.userNotificationCenter.add(request)
         }
     }

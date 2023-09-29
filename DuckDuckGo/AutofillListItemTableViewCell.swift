@@ -118,10 +118,6 @@ class AutofillListItemTableViewCell: UITableViewCell {
             contentStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor)
         ])
     }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
 
     private func setupContentView(with item: AutofillLoginListItemViewModel) {
         titleLabel.text = item.title

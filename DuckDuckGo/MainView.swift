@@ -166,30 +166,30 @@ extension MainViewFactory {
         let progress = coordinator.progress!
         let navigationBarContainer = coordinator.navigationBarContainer!
         NSLayoutConstraint.activate([
-            .init(item: progress, attribute: .trailing, relatedBy: .equal, toItem: navigationBarContainer, attribute: .trailing, multiplier: 1, constant: 0),
-            .init(item: progress, attribute: .leading, relatedBy: .equal, toItem: navigationBarContainer, attribute: .leading, multiplier: 1, constant: 0),
-            .init(item: progress, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 3),
-            .init(item: progress, attribute: .top, relatedBy: .equal, toItem: navigationBarContainer, attribute: .bottom, multiplier: 1, constant: 0),
+            progress.constrainView(navigationBarContainer, by: .trailing),
+            progress.constrainView(navigationBarContainer, by: .leading),
+            progress.constrainAttribute(.height, to: 3),
+            progress.constrainView(navigationBarContainer, by: .top, to: .bottom),
         ])
     }
 
     private func constrainNavigationBarContainer() {
         let navigationBarContainer = coordinator.navigationBarContainer!
         NSLayoutConstraint.activate([
-            .init(item: navigationBarContainer, attribute: .centerX, relatedBy: .equal, toItem: superview, attribute: .centerX, multiplier: 1, constant: 0),
-            .init(item: navigationBarContainer, attribute: .width, relatedBy: .equal, toItem: superview, attribute: .width, multiplier: 1, constant: 0),
-            .init(item: navigationBarContainer, attribute: .top, relatedBy: .equal, toItem: superview.safeAreaLayoutGuide, attribute: .top, multiplier: 1, constant: 0),
-            .init(item: navigationBarContainer, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 52),
+            navigationBarContainer.constrainView(superview, by: .centerX),
+            navigationBarContainer.constrainView(superview, by: .width),
+            navigationBarContainer.constrainView(superview.safeAreaLayoutGuide, by: .top),
+            navigationBarContainer.constrainAttribute(.height, to: 52),
         ])
     }
 
     private func constrainTabsContainer() {
         let tabsContainer = coordinator.tabsContainer!
         NSLayoutConstraint.activate([
-            .init(item: tabsContainer, attribute: .leading, relatedBy: .equal, toItem: superview, attribute: .leading, multiplier: 1, constant: 0),
-            .init(item: tabsContainer, attribute: .trailing, relatedBy: .equal, toItem: superview, attribute: .trailing, multiplier: 1, constant: 0),
-            .init(item: tabsContainer, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 40),
-            .init(item: tabsContainer, attribute: .top, relatedBy: .equal, toItem: superview.safeAreaLayoutGuide, attribute: .top, multiplier: 1, constant: 0),
+            tabsContainer.constrainView(superview, by: .leading),
+            tabsContainer.constrainView(superview, by: .trailing),
+            tabsContainer.constrainAttribute(.height, to: 40),
+            tabsContainer.constrainView(superview.safeAreaLayoutGuide, by: .top),
         ])
     }
 
@@ -197,10 +197,10 @@ extension MainViewFactory {
         let statusBackground = coordinator.statusBackground!
         let navigationBarContainer = coordinator.navigationBarContainer!
         NSLayoutConstraint.activate([
-            .init(item: statusBackground, attribute: .width, relatedBy: .equal, toItem: superview, attribute: .width, multiplier: 1, constant: 0),
-            .init(item: statusBackground, attribute: .centerX, relatedBy: .equal, toItem: superview, attribute: .centerX, multiplier: 1, constant: 0),
-            .init(item: statusBackground, attribute: .top, relatedBy: .equal, toItem: superview, attribute: .top, multiplier: 1, constant: 0),
-            .init(item: statusBackground, attribute: .bottom, relatedBy: .equal, toItem: navigationBarContainer, attribute: .bottom, multiplier: 1, constant: 0),
+            statusBackground.constrainView(superview, by: .width),
+            statusBackground.constrainView(superview, by: .centerX),
+            statusBackground.constrainView(superview, by: .top),
+            statusBackground.constrainView(navigationBarContainer, by: .bottom),
         ])
     }
 
@@ -209,11 +209,11 @@ extension MainViewFactory {
         let contentContainer = coordinator.contentContainer!
         let navigationBarContainer = coordinator.navigationBarContainer!
         NSLayoutConstraint.activate([
-            .init(item: notificationBarContainer, attribute: .width, relatedBy: .equal, toItem: superview, attribute: .width, multiplier: 1, constant: 0),
-            .init(item: notificationBarContainer, attribute: .centerX, relatedBy: .equal, toItem: superview, attribute: .centerX, multiplier: 1, constant: 0),
-            .init(item: notificationBarContainer, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 0),
-            .init(item: notificationBarContainer, attribute: .bottom, relatedBy: .equal, toItem: contentContainer, attribute: .top, multiplier: 1, constant: 0),
-            .init(item: notificationBarContainer, attribute: .top, relatedBy: .equal, toItem: navigationBarContainer, attribute: .bottom, multiplier: 1, constant: 0),
+            notificationBarContainer.constrainView(superview, by: .width),
+            notificationBarContainer.constrainView(superview, by: .centerX),
+            notificationBarContainer.constrainAttribute(.height, to: 0),
+            notificationBarContainer.constrainView(contentContainer, by: .bottom, to: .top),
+            notificationBarContainer.constrainView(navigationBarContainer, by: .top, to: .bottom),
         ])
     }
 
@@ -222,20 +222,20 @@ extension MainViewFactory {
         let toolbar = coordinator.toolbar!
         let notificationBarContainer = coordinator.notificationBarContainer!
         NSLayoutConstraint.activate([
-            .init(item: contentContainer, attribute: .leading, relatedBy: .equal, toItem: superview, attribute: .leading, multiplier: 1, constant: 0),
-            .init(item: contentContainer, attribute: .trailing, relatedBy: .equal, toItem: superview, attribute: .trailing, multiplier: 1, constant: 0),
-            .init(item: contentContainer, attribute: .bottom, relatedBy: .equal, toItem: toolbar, attribute: .top, multiplier: 1, constant: 0),
-            .init(item: contentContainer, attribute: .top, relatedBy: .equal, toItem: notificationBarContainer, attribute: .bottom, multiplier: 1, constant: 0),
+            contentContainer.constrainView(superview, by: .leading),
+            contentContainer.constrainView(superview, by: .trailing),
+            contentContainer.constrainView(toolbar, by: .bottom, to: .top),
+            contentContainer.constrainView(notificationBarContainer, by: .top, to: .bottom),
         ])
     }
 
     private func constrainToolbar() {
         let toolbar = coordinator.toolbar!
         NSLayoutConstraint.activate([
-            .init(item: toolbar, attribute: .width, relatedBy: .equal, toItem: superview, attribute: .width, multiplier: 1, constant: 0),
-            .init(item: toolbar, attribute: .centerX, relatedBy: .equal, toItem: superview, attribute: .centerX, multiplier: 1, constant: 0),
-            .init(item: toolbar, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 49),
-            .init(item: toolbar, attribute: .bottom, relatedBy: .equal, toItem: superview.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0),
+            toolbar.constrainView(superview, by: .width),
+            toolbar.constrainView(superview, by: .centerX),
+            toolbar.constrainAttribute(.height, to: 49),
+            toolbar.constrainView(superview.safeAreaLayoutGuide, by: .bottom),
         ])
     }
 
@@ -243,10 +243,10 @@ extension MainViewFactory {
         let suggestionTrayContainer = coordinator.suggestionTrayContainer!
         let contentContainer = coordinator.contentContainer!
         NSLayoutConstraint.activate([
-            .init(item: suggestionTrayContainer, attribute: .width, relatedBy: .equal, toItem: contentContainer, attribute: .width, multiplier: 1, constant: 0),
-            .init(item: suggestionTrayContainer, attribute: .height, relatedBy: .equal, toItem: contentContainer, attribute: .height, multiplier: 1, constant: 0),
-            .init(item: suggestionTrayContainer, attribute: .centerX, relatedBy: .equal, toItem: contentContainer, attribute: .centerX, multiplier: 1, constant: 0),
-            .init(item: suggestionTrayContainer, attribute: .centerY, relatedBy: .equal, toItem: contentContainer, attribute: .centerY, multiplier: 1, constant: 0),
+            suggestionTrayContainer.constrainView(contentContainer, by: .width),
+            suggestionTrayContainer.constrainView(contentContainer, by: .height),
+            suggestionTrayContainer.constrainView(contentContainer, by: .centerX),
+            suggestionTrayContainer.constrainView(contentContainer, by: .centerY),
         ])
     }
 
@@ -255,16 +255,16 @@ extension MainViewFactory {
         let logo = coordinator.logo!
         let text = coordinator.logoText!
         NSLayoutConstraint.activate([
-            .init(item: logoContainer, attribute: .height, relatedBy: .equal, toItem: superview, attribute: .height, multiplier: 1, constant: 0),
-            .init(item: logoContainer, attribute: .width, relatedBy: .equal, toItem: superview, attribute: .width, multiplier: 1, constant: 0),
-            .init(item: logoContainer, attribute: .centerX, relatedBy: .equal, toItem: superview, attribute: .centerX, multiplier: 1, constant: 0),
-            .init(item: logoContainer, attribute: .centerY, relatedBy: .equal, toItem: superview, attribute: .centerY, multiplier: 1, constant: 0),
-            .init(item: logo, attribute: .centerX, relatedBy: .equal, toItem: logoContainer, attribute: .centerX, multiplier: 1, constant: 0),
-            .init(item: logo, attribute: .centerY, relatedBy: .equal, toItem: logoContainer, attribute: .centerY, multiplier: 1, constant: -72),
-            .init(item: logo, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 96),
-            .init(item: logo, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 96),
-            .init(item: text, attribute: .top, relatedBy: .equal, toItem: logo, attribute: .bottom, multiplier: 1, constant: 12),
-            .init(item: text, attribute: .centerX, relatedBy: .equal, toItem: logo, attribute: .centerX, multiplier: 1, constant: 0),
+            logoContainer.constrainView(superview, by: .height),
+            logoContainer.constrainView(superview, by: .width),
+            logoContainer.constrainView(superview, by: .centerX),
+            logoContainer.constrainView(superview, by: .centerY),
+            logo.constrainView(logoContainer, by: .centerX),
+            logo.constrainView(logoContainer, by: .centerY, constant: -72),
+            logo.constrainAttribute(.width, to: 96),
+            logo.constrainAttribute(.height, to: 96),
+            text.constrainView(logo, by: .top, to: .bottom),
+            text.constrainView(logo, by: .centerX),
         ])
     }
 

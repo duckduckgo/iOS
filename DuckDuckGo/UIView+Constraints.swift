@@ -21,9 +21,9 @@ import UIKit
 
 extension UIView {
 
-    func constrainView(_ other: UIView,
+    func constrainView(_ other: Any,
                        by attribute: NSLayoutConstraint.Attribute,
-                       to otherAttribute: NSLayoutConstraint.Attribute,
+                       to otherAttribute: NSLayoutConstraint.Attribute? = nil,
                        relatedBy relation: NSLayoutConstraint.Relation = .equal,
                        multiplier: Double = 1.0,
                        constant: Double = 0.0) -> NSLayoutConstraint {
@@ -32,7 +32,7 @@ extension UIView {
                                   attribute: attribute,
                                   relatedBy: relation,
                                   toItem: other,
-                                  attribute: otherAttribute,
+                                  attribute: otherAttribute ?? attribute,
                                   multiplier: multiplier,
                                   constant: constant)
 

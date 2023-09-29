@@ -87,7 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Configuration.setURLProvider(AppConfigurationURLProvider())
 
         CrashCollection.start {
-            Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: $0, includedParameters: [.appVersion])
+            Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: $0, includedParameters: [])
         }
 
         clearTmp()
@@ -698,7 +698,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
         // Give the `clearNavigationStack` call time to complete.
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-            rootViewController.performSegue(withIdentifier: "Settings", sender: nil)
+            rootViewController.segueToSettings()
             let navigationController = rootViewController.presentedViewController as? UINavigationController
             navigationController?.popToRootViewController(animated: false)
             navigationController?.pushViewController(viewController, animated: true)

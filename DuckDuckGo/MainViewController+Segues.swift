@@ -27,7 +27,7 @@ extension MainViewController {
 
     func segueToDaxOnboarding() {
         os_log(#function, log: .generalLog, type: .debug)
-        hideAllHilightsIfNeeded()
+        hideAllHighlightsIfNeeded()
         let storyboard = UIStoryboard(name: "DaxOnboarding", bundle: nil)
         guard let controller = storyboard.instantiateInitialViewController(creator: { coder in
             DaxOnboardingViewController(coder: coder)
@@ -42,7 +42,7 @@ extension MainViewController {
 
     func segueToHomeRow() {
         os_log(#function, log: .generalLog, type: .debug)
-        hideAllHilightsIfNeeded()
+        hideAllHighlightsIfNeeded()
         let storyboard = UIStoryboard(name: "HomeRow", bundle: nil)
         guard let controller = storyboard.instantiateInitialViewController() else {
             assertionFailure()
@@ -54,13 +54,13 @@ extension MainViewController {
 
     func segueToBookmarks() {
         os_log(#function, log: .generalLog, type: .debug)
-        hideAllHilightsIfNeeded()
+        hideAllHighlightsIfNeeded()
         launchBookmarksViewController()
     }
 
     func segueToEditCurrentBookmark() {
         os_log(#function, log: .generalLog, type: .debug)
-        hideAllHilightsIfNeeded()
+        hideAllHighlightsIfNeeded()
         guard let link = currentTab?.link,
               let bookmark = menuBookmarksViewModel.favorite(for: link.url) ??
                 menuBookmarksViewModel.bookmark(for: link.url) else {
@@ -72,7 +72,7 @@ extension MainViewController {
 
     func segueToEditBookmark(_ bookmark: BookmarkEntity) {
         os_log(#function, log: .generalLog, type: .debug)
-        hideAllHilightsIfNeeded()
+        hideAllHighlightsIfNeeded()
         launchBookmarksViewController {
             $0.openEditFormForBookmark(bookmark)
         }
@@ -89,6 +89,7 @@ extension MainViewController {
                                     syncService: self.syncService,
                                     syncDataProviders: self.syncDataProviders)
         }
+        bookmarks.delegate = self
 
         let controller = ThemableNavigationController(rootViewController: bookmarks)
         controller.modalPresentationStyle = .automatic
@@ -99,7 +100,7 @@ extension MainViewController {
 
     func segueToActionSheetDaxDialogWithSpec(_ spec: DaxDialogs.ActionSheetSpec) {
         os_log(#function, log: .generalLog, type: .debug)
-        hideAllHilightsIfNeeded()
+        hideAllHighlightsIfNeeded()
 
         if spec == DaxDialogs.ActionSheetSpec.fireButtonEducation {
             ViewHighlighter.hideAll()
@@ -118,7 +119,7 @@ extension MainViewController {
 
     func segueToReportBrokenSite() {
         os_log(#function, log: .generalLog, type: .debug)
-        hideAllHilightsIfNeeded()
+        hideAllHighlightsIfNeeded()
 
         let storyboard = UIStoryboard(name: "Feedback", bundle: nil)
         guard let controller: UINavigationController = storyboard.instantiateInitialViewController(),
@@ -140,7 +141,7 @@ extension MainViewController {
 
     func segueToDownloads() {
         os_log(#function, log: .generalLog, type: .debug)
-        hideAllHilightsIfNeeded()
+        hideAllHighlightsIfNeeded()
 
         let storyboard = UIStoryboard(name: "Downloads", bundle: nil)
         guard let controller = storyboard.instantiateInitialViewController() else {
@@ -152,7 +153,7 @@ extension MainViewController {
 
     func segueToTabSwitcher() {
         os_log(#function, log: .generalLog, type: .debug)
-        hideAllHilightsIfNeeded()
+        hideAllHighlightsIfNeeded()
 
         let storyboard = UIStoryboard(name: "TabSwitcher", bundle: nil)
         guard let controller = storyboard.instantiateInitialViewController(creator: { coder in
@@ -177,13 +178,13 @@ extension MainViewController {
 
     func segueToSettings() {
         os_log(#function, log: .generalLog, type: .debug)
-        hideAllHilightsIfNeeded()
+        hideAllHighlightsIfNeeded()
         launchSettings()
     }
 
     func segueToSettingsCookiePopupManagement() {
         os_log(#function, log: .generalLog, type: .debug)
-        hideAllHilightsIfNeeded()
+        hideAllHighlightsIfNeeded()
         launchSettings {
             $0.openCookiePopupManagement()
         }
@@ -191,7 +192,7 @@ extension MainViewController {
 
     func segueToSettingsLoginsWithAccount(_ account: SecureVaultModels.WebsiteAccount) {
         os_log(#function, log: .generalLog, type: .debug)
-        hideAllHilightsIfNeeded()
+        hideAllHighlightsIfNeeded()
         launchSettings {
             $0.openLogins(accountDetails: account)
         }
@@ -216,7 +217,7 @@ extension MainViewController {
         }
     }
 
-    private func hideAllHilightsIfNeeded() {
+    private func hideAllHighlightsIfNeeded() {
         os_log(#function, log: .generalLog, type: .debug)
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()

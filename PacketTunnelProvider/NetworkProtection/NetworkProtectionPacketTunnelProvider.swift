@@ -166,7 +166,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         let tokenStore = NetworkProtectionKeychainTokenStore(keychainType: .dataProtection(.unspecified),
                                                              errorEvents: nil)
         let errorStore = NetworkProtectionTunnelErrorStore()
-        super.init(notificationsPresenter: DefaultNotificationPresenter(),
+        let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
+        notificationsPresenter.requestAuthorization()
+        super.init(notificationsPresenter: notificationsPresenter,
                    tunnelHealthStore: NetworkProtectionTunnelHealthStore(),
                    controllerErrorStore: errorStore,
                    keychainType: .dataProtection(.unspecified),
@@ -199,23 +201,5 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             }
             source.resume()
         }
-    }
-}
-
-final class DefaultNotificationPresenter: NetworkProtectionNotificationsPresenter {
-
-    func showTestNotification() {
-    }
-
-    func showReconnectedNotification() {
-    }
-
-    func showReconnectingNotification() {
-    }
-
-    func showConnectionFailureNotification() {
-    }
-
-    func showSupersededNotification() {
     }
 }

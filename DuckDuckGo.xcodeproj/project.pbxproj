@@ -759,6 +759,7 @@
 		EE50053029C3BA0800AE0773 /* InternalUserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE50052F29C3BA0800AE0773 /* InternalUserStore.swift */; };
 		EE72CA852A862D000043B5B3 /* NetworkProtectionDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE72CA842A862D000043B5B3 /* NetworkProtectionDebugViewController.swift */; };
 		EE7917912A83DE93008DFF28 /* CombineTestUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7917902A83DE93008DFF28 /* CombineTestUtilities.swift */; };
+		EE7A92872AC6DE4700832A36 /* NetworkProtectionNotificationIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7A92862AC6DE4700832A36 /* NetworkProtectionNotificationIdentifier.swift */; };
 		EE8594992A44791C008A6D06 /* NetworkProtectionTunnelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8594982A44791C008A6D06 /* NetworkProtectionTunnelController.swift */; };
 		EE8E568A2A56BCE400F11DCA /* NetworkProtection in Frameworks */ = {isa = PBXBuildFile; productRef = EE8E56892A56BCE400F11DCA /* NetworkProtection */; };
 		EEEB80A32A421CE600386378 /* NetworkProtectionPacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB80A22A421CE600386378 /* NetworkProtectionPacketTunnelProvider.swift */; };
@@ -2349,6 +2350,7 @@
 		EE50052F29C3BA0800AE0773 /* InternalUserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalUserStore.swift; sourceTree = "<group>"; };
 		EE72CA842A862D000043B5B3 /* NetworkProtectionDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionDebugViewController.swift; sourceTree = "<group>"; };
 		EE7917902A83DE93008DFF28 /* CombineTestUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineTestUtilities.swift; sourceTree = "<group>"; };
+		EE7A92862AC6DE4700832A36 /* NetworkProtectionNotificationIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionNotificationIdentifier.swift; sourceTree = "<group>"; };
 		EE8594982A44791C008A6D06 /* NetworkProtectionTunnelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionTunnelController.swift; sourceTree = "<group>"; };
 		EEB8FDB92A990AEE00EBEDCF /* Configuration-Alpha.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Configuration-Alpha.xcconfig"; path = "Configuration/Configuration-Alpha.xcconfig"; sourceTree = "<group>"; };
 		EEEB80A22A421CE600386378 /* NetworkProtectionPacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionPacketTunnelProvider.swift; sourceTree = "<group>"; };
@@ -4394,6 +4396,14 @@
 			name = NetworkProtection;
 			sourceTree = "<group>";
 		};
+		EE7A92852AC6DE2500832A36 /* NetworkProtection */ = {
+			isa = PBXGroup;
+			children = (
+				EE7A92862AC6DE4700832A36 /* NetworkProtectionNotificationIdentifier.swift */,
+			);
+			name = NetworkProtection;
+			sourceTree = "<group>";
+		};
 		EECD94B22A28B8580085C66E /* NetworkProtection */ = {
 			isa = PBXGroup;
 			children = (
@@ -4669,6 +4679,7 @@
 		F143C2E51E4A4CD400CFDE3A /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				EE7A92852AC6DE2500832A36 /* NetworkProtection */,
 				4B470ED4299C484B0086EBDC /* AppTrackingProtection */,
 				F1CE42A71ECA0A520074A8DF /* Bookmarks */,
 				837774491F8E1ECE00E17A29 /* ContentBlocker */,
@@ -6693,6 +6704,7 @@
 				85F21DC621145DD5002631A6 /* global.swift in Sources */,
 				F41C2DA326C1925700F9A760 /* BookmarksAndFolders.xcdatamodeld in Sources */,
 				F4F6DFBA26EFF28A00ED7E12 /* BookmarkObjects.swift in Sources */,
+				EE7A92872AC6DE4700832A36 /* NetworkProtectionNotificationIdentifier.swift in Sources */,
 				836A941D247F23C600BF8EF5 /* UserAgentManager.swift in Sources */,
 				4B83397329AFB8D2003F7EA9 /* AppTrackingProtectionFeedbackModel.swift in Sources */,
 				85CA53A824BB343700A6288C /* Favicons.swift in Sources */,

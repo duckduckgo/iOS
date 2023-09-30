@@ -420,7 +420,7 @@ class SettingsViewController: UITableViewController {
         // This will be tidied up as part of https://app.asana.com/0/0/1205084446087078/f
         let rootViewController = NetworkProtectionRootViewController { [weak self] in
             self?.navigationController?.popViewController(animated: true)
-            let newRootViewController = NetworkProtectionRootViewController { }
+            let newRootViewController = NetworkProtectionRootViewController()
             self?.pushNetP(newRootViewController)
         }
         pushNetP(rootViewController)

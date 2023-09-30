@@ -681,7 +681,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             if identifier == WindowsBrowserWaitlist.notificationIdentitier {
                 presentWindowsBrowserWaitlistSettingsModal()
             }
-            
+
 #if NETWORK_PROTECTION
             if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
                 presentNetworkProtectionStatusSettingsModal()

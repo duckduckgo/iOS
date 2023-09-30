@@ -50,7 +50,7 @@ class MainViewFactory {
 
 }
 
-/// Create functions
+/// Create functions.  The lightweight subclases of UView make it easier to debug to the UI.
 extension MainViewFactory {
 
     private func createViews() {
@@ -59,7 +59,7 @@ extension MainViewFactory {
         createSuggestionTrayContainer()
         createNotificationBarContainer()
         createStatusBackground()
-        createTabsContainer()
+        createTabBarContainer()
         createNavigationBarContainer()
         createProgressView()
         createToolbar()
@@ -94,10 +94,10 @@ extension MainViewFactory {
         superview.addSubview(coordinator.statusBackground)
     }
 
-    class TabsContainer: UIView { }
-    private func createTabsContainer() {
-        coordinator.tabsContainer = TabsContainer()
-        superview.addSubview(coordinator.tabsContainer)
+    class TabBarContainer: UIView { }
+    private func createTabBarContainer() {
+        coordinator.tabBarContainer = TabBarContainer()
+        superview.addSubview(coordinator.tabBarContainer)
     }
 
     class SuggestionTrayContainer: UIView { }
@@ -156,7 +156,7 @@ extension MainViewFactory {
         constrainSuggestionTrayContainer()
         constrainNotificationBarContainer()
         constrainStatusBackground()
-        constrainTabsContainer()
+        constrainTabBarContainer()
         constrainNavigationBarContainer()
         constrainProgress()
         constrainToolbar()
@@ -186,16 +186,16 @@ extension MainViewFactory {
         ])
     }
 
-    private func constrainTabsContainer() {
-        let tabsContainer = coordinator.tabsContainer!
+    private func constrainTabBarContainer() {
+        let tabBarContainer = coordinator.tabBarContainer!
         
-        coordinator.constraints.tabsContainerTop = tabsContainer.constrainView(superview.safeAreaLayoutGuide, by: .top)
+        coordinator.constraints.tabBarContainerTop = tabBarContainer.constrainView(superview.safeAreaLayoutGuide, by: .top)
 
         NSLayoutConstraint.activate([
-            tabsContainer.constrainView(superview, by: .leading),
-            tabsContainer.constrainView(superview, by: .trailing),
-            tabsContainer.constrainAttribute(.height, to: 40),
-            coordinator.constraints.tabsContainerTop,
+            tabBarContainer.constrainView(superview, by: .leading),
+            tabBarContainer.constrainView(superview, by: .trailing),
+            tabBarContainer.constrainAttribute(.height, to: 40),
+            coordinator.constraints.tabBarContainerTop,
         ])
     }
 
@@ -296,7 +296,7 @@ class MainViewCoordinator {
     var contentContainer: UIView!
     var notificationBarContainer: UIView!
     var statusBackground: UIView!
-    var tabsContainer: UIView!
+    var tabBarContainer: UIView! // TODO rename this
     var navigationBarContainer: UIView!
     var progress: ProgressView!
     var toolbarBackButton: UIBarButtonItem!
@@ -326,7 +326,7 @@ class MainViewCoordinator {
         var navigationBarContainerTop: NSLayoutConstraint!
         var toolbarBottom: NSLayoutConstraint!
         var contentContainerTop: NSLayoutConstraint!
-        var tabsContainerTop: NSLayoutConstraint!
+        var tabBarContainerTop: NSLayoutConstraint!
         var notificationContainerTop: NSLayoutConstraint!
         var notificationContainerHeight: NSLayoutConstraint!
 

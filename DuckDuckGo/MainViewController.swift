@@ -74,33 +74,93 @@ class MainViewController: UIViewController {
         return isIPad ? [.left, .right] : []
     }
     
-    @IBOutlet weak var progressView: ProgressView!
+    var progressView: ProgressView {
+        viewCoordinator.progress
+    }
 
-    @IBOutlet weak var suggestionTrayContainer: UIView!
-    @IBOutlet weak var customNavigationBar: UIView!
-    @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var fireButton: UIBarButtonItem!
-    @IBOutlet weak var lastToolbarButton: UIBarButtonItem!
-    @IBOutlet weak var backButton: UIBarButtonItem!
-    @IBOutlet weak var forwardButton: UIBarButtonItem!
-    @IBOutlet weak var tabsButton: UIBarButtonItem!
-    @IBOutlet weak var toolbar: UIToolbar!
-    @IBOutlet weak var navBarTop: NSLayoutConstraint!
-    @IBOutlet weak var toolbarBottom: NSLayoutConstraint!
-    @IBOutlet weak var containerViewTop: NSLayoutConstraint!
-    
-    @IBOutlet weak var tabsBar: UIView!
-    @IBOutlet weak var tabsBarTop: NSLayoutConstraint!
+    var suggestionTrayContainer: UIView {
+        viewCoordinator.suggestionTrayContainer
+    }
 
-    @IBOutlet weak var notificationContainer: UIView!
-    @IBOutlet weak var notificationContainerTop: NSLayoutConstraint!
-    @IBOutlet weak var notificationContainerHeight: NSLayoutConstraint!
-    
-    @IBOutlet weak var statusBarBackground: UIView!
+    var customNavigationBar: UIView {
+        viewCoordinator.navigationBarContainer
+    }
 
-    @IBOutlet weak var logoContainer: UIView!
-    @IBOutlet weak var logo: UIImageView!
-    @IBOutlet weak var logoText: UIImageView!
+    var containerView: UIView {
+        viewCoordinator.contentContainer
+    }
+
+    var fireButton: UIBarButtonItem {
+        viewCoordinator.toolbarFireButton
+    }
+
+    var lastToolbarButton: UIBarButtonItem {
+        viewCoordinator.lastToolbarButton
+    }
+
+    var backButton: UIBarButtonItem {
+        viewCoordinator.toolbarBackButton
+    }
+
+    var forwardButton: UIBarButtonItem {
+        viewCoordinator.toolbarForwardButton
+    }
+
+    var tabsButton: UIBarButtonItem {
+        viewCoordinator.toolbarTabSwitcherButton
+    }
+
+    var toolbar: UIToolbar {
+        viewCoordinator.toolbar
+    }
+
+    var navBarTop: NSLayoutConstraint {
+        viewCoordinator.constraints.navigationBarContainerTop
+    }
+
+    var toolbarBottom: NSLayoutConstraint {
+        viewCoordinator.constraints.toolbarBottom
+    }
+
+    var containerViewTop: NSLayoutConstraint {
+        viewCoordinator.constraints.contentContainerTop
+    }
+
+    var tabsBar: UIView {
+        viewCoordinator.tabsContainer
+    }
+
+    var tabsBarTop: NSLayoutConstraint {
+        viewCoordinator.constraints.tabsContainerTop
+    }
+
+    var notificationContainer: UIView {
+        viewCoordinator.notificationBarContainer
+    }
+
+    var notificationContainerTop: NSLayoutConstraint {
+        viewCoordinator.constraints.notificationContainerTop
+    }
+
+    var notificationContainerHeight: NSLayoutConstraint {
+        viewCoordinator.constraints.notificationContainerHeight
+    }
+
+    var statusBarBackground: UIView {
+        viewCoordinator.statusBackground
+    }
+
+    var logoContainer: UIView {
+        viewCoordinator.logoContainer
+    }
+
+    var logo: UIImageView {
+        viewCoordinator.logo
+    }
+
+    var logoText: UIImageView {
+        viewCoordinator.logoText
+    }
 
     weak var findInPageView: FindInPageView!
     weak var findInPageHeightLayoutConstraint: NSLayoutConstraint!
@@ -175,12 +235,18 @@ class MainViewController: UIViewController {
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
 
-    required init?(coder: NSCoder,
-                   bookmarksDatabase: CoreDataDatabase,
-                   bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
-                   appTrackingProtectionDatabase: CoreDataDatabase,
-                   syncService: DDGSyncing,
-                   syncDataProviders: SyncDataProviders
+    required init?(coder: NSCoder) {
+        fatalError("Use init?(code:")
+    }
+
+    var viewCoordinator: MainViewCoordinator!
+
+    init(
+        bookmarksDatabase: CoreDataDatabase,
+        bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
+        appTrackingProtectionDatabase: CoreDataDatabase,
+        syncService: DDGSyncing,
+        syncDataProviders: SyncDataProviders
     ) {
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
         self.bookmarksDatabase = bookmarksDatabase
@@ -189,12 +255,10 @@ class MainViewController: UIViewController {
         self.syncDataProviders = syncDataProviders
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
-        super.init(coder: coder)
-        bindSyncService()
-    }
 
-    required init?(coder: NSCoder) {
-        fatalError("Use init?(code:")
+        super.init(nibName: nil, bundle: nil)
+
+        bindSyncService()
     }
 
     fileprivate var tabCountInfo: TabCountInfo?
@@ -224,6 +288,8 @@ class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        viewCoordinator = MainViewFactory.createViewHierarchy(self.view)
 
         loadSuggestionTray()
         loadTabsBarIfNeeded()
@@ -1478,8 +1544,8 @@ extension MainViewController: HomeControllerDelegate {
     }
     
     func home(_ home: HomeViewController, searchTransitionUpdated percent: CGFloat) {
-        statusBarBackground?.alpha = percent
-        customNavigationBar?.alpha = percent
+        statusBarBackground.alpha = percent
+        customNavigationBar.alpha = percent
     }
     
 }
@@ -1904,14 +1970,14 @@ extension MainViewController: Themable {
 
         view.backgroundColor = theme.mainViewBackgroundColor
 
-        customNavigationBar?.backgroundColor = theme.barBackgroundColor
-        customNavigationBar?.tintColor = theme.barTintColor
+        customNavigationBar.backgroundColor = theme.barBackgroundColor
+        customNavigationBar.tintColor = theme.barTintColor
         
-        omniBar?.decorate(with: theme)
-        progressView?.decorate(with: theme)
+        omniBar.decorate(with: theme)
+        progressView.decorate(with: theme)
         
-        toolbar?.barTintColor = theme.barBackgroundColor
-        toolbar?.tintColor = theme.barTintColor
+        toolbar.barTintColor = theme.barBackgroundColor
+        toolbar.tintColor = theme.barTintColor
         
         tabSwitcherButton.decorate(with: theme)
         gestureBookmarksButton.decorate(with: theme)

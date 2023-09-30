@@ -115,7 +115,7 @@ extension MainViewFactory {
         coordinator.toolbarForwardButton = UIBarButtonItem(title: "Browse Forward", image: UIImage(named: "BrowseNext"), primaryAction: nil, menu: nil)
         coordinator.toolbarFireButton = UIBarButtonItem(title: "Close all tabs and clear data", image: UIImage(named: "Fire"), primaryAction: nil, menu: nil)
         coordinator.toolbarTabSwitcherButton = UIBarButtonItem(title: "Tab Switcher", image: UIImage(named: "Add-24"), primaryAction: nil, menu: nil)
-        coordinator.toolbarBookmarksButton = UIBarButtonItem(title: "Bookmarks", image: UIImage(named: "Book-24"), primaryAction: nil, menu: nil)
+        coordinator.lastToolbarButton = UIBarButtonItem(title: "Bookmarks", image: UIImage(named: "Book-24"), primaryAction: nil, menu: nil)
         superview.addSubview(coordinator.toolbar)
 
         coordinator.toolbar.setItems([
@@ -127,7 +127,7 @@ extension MainViewFactory {
             .flexibleSpace(),
             coordinator.toolbarTabSwitcherButton!,
             .flexibleSpace(),
-            coordinator.toolbarBookmarksButton!,
+            coordinator.lastToolbarButton!,
         ], animated: true)
     }
 
@@ -175,21 +175,27 @@ extension MainViewFactory {
 
     private func constrainNavigationBarContainer() {
         let navigationBarContainer = coordinator.navigationBarContainer!
+
+        coordinator.constraints.navigationBarContainerTop = navigationBarContainer.constrainView(superview.safeAreaLayoutGuide, by: .top)
+
         NSLayoutConstraint.activate([
             navigationBarContainer.constrainView(superview, by: .centerX),
             navigationBarContainer.constrainView(superview, by: .width),
-            navigationBarContainer.constrainView(superview.safeAreaLayoutGuide, by: .top),
+            coordinator.constraints.navigationBarContainerTop,
             navigationBarContainer.constrainAttribute(.height, to: 52),
         ])
     }
 
     private func constrainTabsContainer() {
         let tabsContainer = coordinator.tabsContainer!
+        
+        coordinator.constraints.tabsContainerTop = tabsContainer.constrainView(superview.safeAreaLayoutGuide, by: .top)
+
         NSLayoutConstraint.activate([
             tabsContainer.constrainView(superview, by: .leading),
             tabsContainer.constrainView(superview, by: .trailing),
             tabsContainer.constrainAttribute(.height, to: 40),
-            tabsContainer.constrainView(superview.safeAreaLayoutGuide, by: .top),
+            coordinator.constraints.tabsContainerTop,
         ])
     }
 
@@ -208,12 +214,16 @@ extension MainViewFactory {
         let notificationBarContainer = coordinator.notificationBarContainer!
         let contentContainer = coordinator.contentContainer!
         let navigationBarContainer = coordinator.navigationBarContainer!
+
+        coordinator.constraints.notificationContainerTop = notificationBarContainer.constrainView(navigationBarContainer, by: .top, to: .bottom)
+        coordinator.constraints.notificationContainerHeight = notificationBarContainer.constrainAttribute(.height, to: 0)
+
         NSLayoutConstraint.activate([
             notificationBarContainer.constrainView(superview, by: .width),
             notificationBarContainer.constrainView(superview, by: .centerX),
-            notificationBarContainer.constrainAttribute(.height, to: 0),
+            coordinator.constraints.notificationContainerHeight,
             notificationBarContainer.constrainView(contentContainer, by: .bottom, to: .top),
-            notificationBarContainer.constrainView(navigationBarContainer, by: .top, to: .bottom),
+            coordinator.constraints.notificationContainerTop,
         ])
     }
 
@@ -221,21 +231,25 @@ extension MainViewFactory {
         let contentContainer = coordinator.contentContainer!
         let toolbar = coordinator.toolbar!
         let notificationBarContainer = coordinator.notificationBarContainer!
+
+        coordinator.constraints.contentContainerTop = contentContainer.constrainView(notificationBarContainer, by: .top, to: .bottom)
+
         NSLayoutConstraint.activate([
             contentContainer.constrainView(superview, by: .leading),
             contentContainer.constrainView(superview, by: .trailing),
             contentContainer.constrainView(toolbar, by: .bottom, to: .top),
-            contentContainer.constrainView(notificationBarContainer, by: .top, to: .bottom),
+            coordinator.constraints.contentContainerTop,
         ])
     }
 
     private func constrainToolbar() {
         let toolbar = coordinator.toolbar!
+        coordinator.constraints.toolbarBottom = toolbar.constrainView(superview.safeAreaLayoutGuide, by: .bottom)
         NSLayoutConstraint.activate([
             toolbar.constrainView(superview, by: .width),
             toolbar.constrainView(superview, by: .centerX),
             toolbar.constrainAttribute(.height, to: 49),
-            toolbar.constrainView(superview.safeAreaLayoutGuide, by: .bottom),
+            coordinator.constraints.toolbarBottom,
         ])
     }
 
@@ -285,12 +299,14 @@ class MainViewCoordinator {
     var statusBackground: UIView!
     var tabsContainer: UIView!
     var navigationBarContainer: UIView!
-    var progress: UIView!
+    var progress: ProgressView!
     var toolbarBackButton: UIBarButtonItem!
     var toolbarForwardButton: UIBarButtonItem!
     var toolbarFireButton: UIBarButtonItem!
     var toolbarTabSwitcherButton: UIBarButtonItem!
-    var toolbarBookmarksButton: UIBarButtonItem!
+    var lastToolbarButton: UIBarButtonItem!
+
+    let constraints = Constraints()
 
     init(superview: UIView) {
         self.superview = superview
@@ -304,6 +320,17 @@ class MainViewCoordinator {
     func hideSuggestionTray() {
         suggestionTrayContainer.isHidden = true
         suggestionTrayContainer.backgroundColor = .clear
+    }
+
+    class Constraints {
+
+        var navigationBarContainerTop: NSLayoutConstraint!
+        var toolbarBottom: NSLayoutConstraint!
+        var contentContainerTop: NSLayoutConstraint!
+        var tabsContainerTop: NSLayoutConstraint!
+        var notificationContainerTop: NSLayoutConstraint!
+        var notificationContainerHeight: NSLayoutConstraint!
+
     }
 
 }

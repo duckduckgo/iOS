@@ -31,34 +31,6 @@ import Persistence
 import PrivacyDashboard
 import Networking
 
-// TODO remove this, just temporary to build a working UI
-class TempMainViewController: UIViewController, AutoClearWorker, ActionSheetDaxDialogDelegate {
-
-    var viewCoordinator: MainViewCoordinator!
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        print(self.view.frame)
-
-        viewCoordinator = MainViewFactory.createViewHierarchy(self.view)
-        viewCoordinator.decorateWithTheme(ThemeManager.shared.currentTheme)
-    }
- 
-    func clearNavigationStack() {
-    }
-    
-    func forgetData() {
-    }
-    
-    func forgetTabs() {
-    }
-    
-    func actionSheetDaxDialogDidConfirmAction(controller: ActionSheetDaxDialogViewController) {
-    }
-    
-}
-
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
 class MainViewController: UIViewController {

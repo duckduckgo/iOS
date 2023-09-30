@@ -35,13 +35,13 @@ class MainViewFactory {
         let factory = MainViewFactory(superview)
 
         factory.createViews()
-        factory.disableAutoresizingOnViewAndSubviews(superview)
+        factory.disableAutoresizingOnViewAndImmediateSubviews(superview)
         factory.constrainViews()
 
         return factory.coordinator
     }
 
-    private func disableAutoresizingOnViewAndSubviews(_ view: UIView) {
+    private func disableAutoresizingOnViewAndImmediateSubviews(_ view: UIView) {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.subviews.forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -50,7 +50,7 @@ class MainViewFactory {
 
 }
 
-/// Create functions.  The lightweight subclases of UView make it easier to debug to the UI.
+/// Create functions.  The lightweight subclases of UIView make it easier to debug to the UI.
 extension MainViewFactory {
 
     private func createViews() {
@@ -142,7 +142,7 @@ extension MainViewFactory {
         coordinator.logoContainer.addSubview(coordinator.logoText)
         superview.addSubview(coordinator.logoContainer)
 
-        disableAutoresizingOnViewAndSubviews(coordinator.logoContainer)
+        disableAutoresizingOnViewAndImmediateSubviews(coordinator.logoContainer)
     }
 
 }

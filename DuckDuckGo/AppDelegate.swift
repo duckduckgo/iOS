@@ -680,9 +680,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             let identifier = response.notification.request.identifier
             if identifier == WindowsBrowserWaitlist.notificationIdentitier {
                 presentWindowsBrowserWaitlistSettingsModal()
-            } else if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
+            }
+
+#if NETWORK_PROTECTION
+            if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
                 presentNetworkProtectionStatusSettingsModal()
             }
+#endif
         }
 
         completionHandler()
@@ -693,10 +697,12 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         presentSettings(with: waitlistViewController)
     }
 
+#if NETWORK_PROTECTION
     private func presentNetworkProtectionStatusSettingsModal() {
         let networkProtectionRoot = NetworkProtectionRootViewController()
         presentSettings(with: networkProtectionRoot)
     }
+#endif
 
     private func presentSettings(with viewController: UIViewController) {
         guard let window = window, let rootViewController = window.rootViewController as? MainViewController else { return }

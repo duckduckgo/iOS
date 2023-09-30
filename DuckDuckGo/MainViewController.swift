@@ -219,6 +219,9 @@ class MainViewController: UIViewController {
         startOnboardingFlowIfNotSeenBefore()
         tabsBarController?.refresh(tabsModel: tabManager.model)
         
+        _ = AppWidthObserver.shared.willResize(toWidth: view.frame.width)
+        applyWidth()
+
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             showFireButtonPulse()
         }

@@ -19,7 +19,6 @@
 
 import UIKit
 
-// swiftlint:disable line_length
 class MainViewFactory {
 
     private let coordinator: MainViewCoordinator
@@ -110,12 +109,13 @@ extension MainViewFactory {
     }
 
     private func createToolbar() {
+
         coordinator.toolbar = HitTestingToolbar()
-        coordinator.toolbarBackButton = UIBarButtonItem(title: "Browse Back", image: UIImage(named: "BrowsePrevious"), primaryAction: nil, menu: nil)
-        coordinator.toolbarForwardButton = UIBarButtonItem(title: "Browse Forward", image: UIImage(named: "BrowseNext"), primaryAction: nil, menu: nil)
-        coordinator.toolbarFireButton = UIBarButtonItem(title: "Close all tabs and clear data", image: UIImage(named: "Fire"), primaryAction: nil, menu: nil)
-        coordinator.toolbarTabSwitcherButton = UIBarButtonItem(title: "Tab Switcher", image: UIImage(named: "Add-24"), primaryAction: nil, menu: nil)
-        coordinator.lastToolbarButton = UIBarButtonItem(title: "Bookmarks", image: UIImage(named: "Book-24"), primaryAction: nil, menu: nil)
+        coordinator.toolbarBackButton = UIBarButtonItem(title: "Browse Back", image: UIImage(named: "BrowsePrevious"))
+        coordinator.toolbarForwardButton = UIBarButtonItem(title: "Browse Forward", image: UIImage(named: "BrowseNext"))
+        coordinator.toolbarFireButton = UIBarButtonItem(title: "Close all tabs and clear data", image: UIImage(named: "Fire"))
+        coordinator.toolbarTabSwitcherButton = UIBarButtonItem(title: "Tab Switcher", image: UIImage(named: "Add-24"))
+        coordinator.lastToolbarButton = UIBarButtonItem(title: "Bookmarks", image: UIImage(named: "Book-24"))
         superview.addSubview(coordinator.toolbar)
 
         coordinator.toolbar.setItems([
@@ -269,21 +269,20 @@ extension MainViewFactory {
         let logo = coordinator.logo!
         let text = coordinator.logoText!
         NSLayoutConstraint.activate([
-            logoContainer.constrainView(superview, by: .height),
             logoContainer.constrainView(superview, by: .width),
+            logoContainer.constrainView(superview, by: .height),
             logoContainer.constrainView(superview, by: .centerX),
             logoContainer.constrainView(superview, by: .centerY),
             logo.constrainView(logoContainer, by: .centerX),
             logo.constrainView(logoContainer, by: .centerY, constant: -72),
             logo.constrainAttribute(.width, to: 96),
             logo.constrainAttribute(.height, to: 96),
-            text.constrainView(logo, by: .top, to: .bottom),
+            text.constrainView(logo, by: .top, to: .bottom, constant: 12),
             text.constrainView(logo, by: .centerX),
         ])
     }
 
 }
-// swiftlint:enable line_length
 
 class MainViewCoordinator {
 
@@ -308,7 +307,7 @@ class MainViewCoordinator {
 
     let constraints = Constraints()
 
-    init(superview: UIView) {
+    fileprivate init(superview: UIView) {
         self.superview = superview
     }
 

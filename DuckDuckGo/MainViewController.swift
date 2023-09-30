@@ -290,6 +290,10 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
 
         viewCoordinator = MainViewFactory.createViewHierarchy(self.view)
+        
+        backButton.action = #selector(onBackPressed)
+        forwardButton.action = #selector(onForwardPressed)
+        fireButton.action = #selector(onFirePressed)
 
         loadSuggestionTray()
         loadTabsBarIfNeeded()

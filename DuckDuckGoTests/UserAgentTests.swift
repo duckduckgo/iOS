@@ -22,7 +22,8 @@ import XCTest
 import BrowserServicesKit
 @testable import Core
 
-class UserAgentTests: XCTestCase {
+// swiftlint:disable file_length type_body_length
+final class UserAgentTests: XCTestCase {
     
     private struct DefaultAgent {
         static let mobile = "Mozilla/5.0 (iPhone; CPU iPhone OS 12_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148"
@@ -360,6 +361,57 @@ class UserAgentTests: XCTestCase {
         let testee = UserAgent(defaultAgent: DefaultAgent.mobile)
         let config = makePrivacyConfig(from: closestConfig)
         XCTAssertEqual(ExpectedAgent.mobileFixed, testee.agent(forUrl: Constants.ddgFixedUrl, isDesktop: false, privacyConfig: config))
+    }
+
+    let configWithVersions = """
+    {
+        "features": {
+            "customUserAgent": {
+                "state": "enabled",
+                "settings": {
+                    "defaultPolicy": "ddg",
+                    "omitApplicationSites": [
+                        {
+                            "domain": "cvs.com",
+                            "reason": "Site reports browser not supported"
+                        }
+                    ],
+                    "closestUserAgent": {
+                        "versions": ["v350-1", "v360-1"]
+                    },
+                    "ddgFixedUserAgent": {
+                        "versions": ["v351-1", "v361-1"]
+                    }
+                },
+                "exceptions": []
+            }
+        },
+        "unprotectedTemporary": []
+    }
+    """.data(using: .utf8)!
+
+    func testWhenAtbDoesNotMatchVersionFromConfigThenDefaultUAIsUsed() {
+        let statisticsStore = MockStatisticsStore()
+        statisticsStore.atb = "v300-1"
+        let testee = UserAgent(defaultAgent: DefaultAgent.mobile, statistics: statisticsStore)
+        let config = makePrivacyConfig(from: configWithVersions)
+        XCTAssertEqual(ExpectedAgent.mobile, testee.agent(forUrl: Constants.url, isDesktop: false, privacyConfig: config))
+    }
+
+    func testWhenAtbMatchesVersionInClosestUserAgentThenClosestUAIsUsed() {
+        let statisticsStore = MockStatisticsStore()
+        statisticsStore.atb = "v360-1"
+        let testee = UserAgent(defaultAgent: DefaultAgent.mobile, statistics: statisticsStore)
+        let config = makePrivacyConfig(from: configWithVersions)
+        XCTAssertEqual(ExpectedAgent.mobileClosest, testee.agent(forUrl: Constants.url, isDesktop: false, privacyConfig: config))
+    }
+
+    func testWhenAtbMatchesVersionInDDGFixedUserAgentThenDDGFixedUAIsUsed() {
+        let statisticsStore = MockStatisticsStore()
+        statisticsStore.atb = "v361-1"
+        let testee = UserAgent(defaultAgent: DefaultAgent.mobile, statistics: statisticsStore)
+        let config = makePrivacyConfig(from: configWithVersions)
+        XCTAssertEqual(ExpectedAgent.mobileFixed, testee.agent(forUrl: Constants.url, isDesktop: false, privacyConfig: config))
     }
 
 }

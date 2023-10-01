@@ -113,7 +113,7 @@ struct UserAgent {
         static let ddgFixedUserAgentConfigKey = "ddgFixedUserAgent"
 
         static let uaVersionsKey = "versions"
-        static let uaStateKey = "state" // todo: do we need it?
+        static let uaStateKey = "state"
         // swiftlint:enable line_length
     }
     
@@ -128,14 +128,15 @@ struct UserAgent {
     private let versionComponent: String
     private let safariComponent: String
     private let applicationComponent = "DuckDuckGo/\(AppVersion.shared.majorVersionNumber)"
-    private let statistics: StatisticsUserDefaults = StatisticsUserDefaults()
+    private let statistics: StatisticsStore
     private let isTesting: Bool = ProcessInfo().arguments.contains("testing")
     
-    init(defaultAgent: String = Constants.fallbackDefaultAgent) {
+    init(defaultAgent: String = Constants.fallbackDefaultAgent, statistics: StatisticsStore = StatisticsUserDefaults()) {
         versionComponent = UserAgent.createVersionComponent(fromAgent: defaultAgent)
         baseAgent = UserAgent.createBaseAgent(fromAgent: defaultAgent, versionComponent: versionComponent)
         baseDesktopAgent = UserAgent.createBaseDesktopAgent(fromAgent: defaultAgent, versionComponent: versionComponent)
         safariComponent = UserAgent.createSafariComponent(fromAgent: baseAgent)
+        self.statistics = statistics
     }
     
     private func omitApplicationSites(forConfig config: PrivacyConfiguration) -> [String] {
@@ -168,16 +169,16 @@ struct UserAgent {
 
     private func closestUserAgentVersions(forConfig config: PrivacyConfiguration) -> [String] {
         let uaSettings = config.settings(for: .customUserAgent)
-        let closestUserAgentObjs = uaSettings[Constants.closestUserAgentConfigKey] as? [[String: String]] ?? []
-        return [""]
-//        return  closestUserAgentObjs.map { $0[Constants.uaOmitDomainConfigKey] ?? "" }
+        let closestUserAgent = uaSettings[Constants.closestUserAgentConfigKey] as? [String: Any] ?? [:]
+        let versions = closestUserAgent[Constants.uaVersionsKey] as? [String] ?? []
+        return versions
     }
 
     private func ddgFixedUserAgentVersions(forConfig config: PrivacyConfiguration) -> [String] {
         let uaSettings = config.settings(for: .customUserAgent)
-        let closestUserAgentObjs = uaSettings[Constants.closestUserAgentConfigKey] as? [[String: String]] ?? []
-        return [""]
-//        return  closestUserAgentObjs.map { $0[Constants.uaOmitDomainConfigKey] ?? "" }
+        let fixedUserAgent = uaSettings[Constants.ddgFixedUserAgentConfigKey] as? [String: Any] ?? [:]
+        let versions = fixedUserAgent[Constants.uaVersionsKey] as? [String] ?? []
+        return versions
     }
 
     public func agent(forUrl url: URL?,
@@ -195,6 +196,14 @@ struct UserAgent {
         if ddgFixedSites(forConfig: privacyConfig).contains(where: { domain in
             url?.isPart(ofDomain: domain) ?? false
         }) { return ddgFixedLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig) }
+
+        if closestUserAgentVersions(forConfig: privacyConfig).contains(statistics.atb ?? "") {
+            return closestLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+        }
+
+        if ddgFixedUserAgentVersions(forConfig: privacyConfig).contains(statistics.atb ?? "") {
+            return ddgFixedLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+        }
 
         switch defaultPolicy(forConfig: privacyConfig) {
         case .ddg: return oldLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)

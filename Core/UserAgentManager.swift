@@ -162,27 +162,28 @@ struct UserAgent {
                       isDesktop: Bool,
                       privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig) -> String {
 
-        guard privacyConfig.isEnabled(featureKey: .customUserAgent) else { return oldLogic(forUrl: url, isDesktop: isDesktop) }
+        guard privacyConfig.isEnabled(featureKey: .customUserAgent) else { return oldLogic(forUrl: url,
+                                                                                           isDesktop: isDesktop,
+                                                                                           privacyConfig: privacyConfig) }
 
         if ddgDefaultSites(forConfig: privacyConfig).contains(where: { domain in
             url?.isPart(ofDomain: domain) ?? false
-        }) { return oldLogic(forUrl: url, isDesktop: isDesktop) }
+        }) { return oldLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig) }
 
         if ddgFixedSites(forConfig: privacyConfig).contains(where: { domain in
             url?.isPart(ofDomain: domain) ?? false
-        }) { return ddgFixedLogic(isDesktop: isDesktop) }
+        }) { return ddgFixedLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig) }
 
         switch defaultPolicy(forConfig: privacyConfig) {
-        case .ddg: return oldLogic(forUrl: url, isDesktop: isDesktop)
-        case .ddgFixed: return ddgFixedLogic(isDesktop: isDesktop)
-        case .closest: return closestLogic(forUrl: url, isDesktop: isDesktop)
+        case .ddg: return oldLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+        case .ddgFixed: return ddgFixedLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+        case .closest: return closestLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
         }
-
     }
 
     private func oldLogic(forUrl url: URL?,
                           isDesktop: Bool,
-                          privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig) -> String {
+                          privacyConfig: PrivacyConfiguration) -> String {
         let omittedSites = omitApplicationSites(forConfig: privacyConfig)
         let customUAEnabled = privacyConfig.isEnabled(featureKey: .customUserAgent)
 
@@ -199,17 +200,16 @@ struct UserAgent {
         }
     }
 
-    private func closestLogic(forUrl url: URL?,
-                              isDesktop: Bool,
-                              privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig) -> String {
-        let customUAEnabled = privacyConfig.isEnabled(featureKey: .customUserAgent)
+    private func ddgFixedLogic(forUrl url: URL?,
+                               isDesktop: Bool,
+                               privacyConfig: PrivacyConfiguration) -> String {
         let omittedSites = omitApplicationSites(forConfig: privacyConfig)
-        let omitApplicationComponent = !customUAEnabled || omittedSites.contains { domain in
+        let omitApplicationComponent = omittedSites.contains { domain in
             url?.isPart(ofDomain: domain) ?? false
         }
         let resolvedApplicationComponent = !omitApplicationComponent ? applicationComponent : nil
 
-        var defaultSafari = ddgFixedLogic(isDesktop: isDesktop)
+        var defaultSafari = closestLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
         // If the UA should have DuckDuckGo append it prior to Safari
         if let resolvedApplicationComponent {
             if let index = defaultSafari.range(of: "Safari")?.lowerBound {
@@ -219,7 +219,13 @@ struct UserAgent {
         return defaultSafari
     }
 
-    private func ddgFixedLogic(isDesktop: Bool) -> String {
+    private func closestLogic(forUrl url: URL?,
+                              isDesktop: Bool,
+                              privacyConfig: PrivacyConfiguration) -> String {
+        guard #available(iOS 16.6, *) else {
+            return oldLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+        }
+
         if isDesktop {
             return "Mozilla/5.0 (Macintosh; Intel Mac OS X 13_5_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15"
         }

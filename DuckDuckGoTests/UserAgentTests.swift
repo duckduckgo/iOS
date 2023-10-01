@@ -42,6 +42,14 @@ class UserAgentTests: XCTestCase {
         // Based on fallback constants in UserAgent
         static let mobileFallback = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.5 Mobile/15E148 DuckDuckGo/7 Safari/605.1.15"
         static let desktopFallback = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.5 DuckDuckGo/7 Safari/605.1.15"
+
+        static let mobileFixed = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 DuckDuckGo/7 Safari/604.1"
+        static let tabletFixed = "Mozilla/5.0 (iPad; CPU OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 DuckDuckGo/7 Safari/604.1"
+        static let desktopFixed = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 DuckDuckGo/7 Safari/605.1.15"
+
+        static let mobileClosest = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1"
+        static let tabletClosest = "Mozilla/5.0 (iPad; CPU OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1"
+        static let desktopClosest = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15"
         
         // swiftlint:enable line_length
     }
@@ -50,6 +58,8 @@ class UserAgentTests: XCTestCase {
         static let url = URL(string: "http://example.com/index.html")
         static let noAppUrl = URL(string: "http://cvs.com/index.html")
         static let noAppSubdomainUrl = URL(string: "http://subdomain.cvs.com/index.html")
+        static let ddgFixedUrl = URL(string: "http://test2.com/index.html")
+        static let ddgDefaultUrl = URL(string: "http://test3.com/index.html")
     }
     
     let testConfig = """
@@ -73,7 +83,7 @@ class UserAgentTests: XCTestCase {
     """.data(using: .utf8)!
     
     private var privacyConfig: PrivacyConfiguration!
-    
+
     override func setUp() {
         super.setUp()
         
@@ -164,4 +174,192 @@ class UserAgentTests: XCTestCase {
         XCTAssertEqual(ExpectedAgent.mobileNoApplication, testee.agent(forUrl: Constants.url, isDesktop: false,
                                                                        privacyConfig: manager.privacyConfig))
     }
+
+    /// Experimental config
+
+    func makePrivacyConfig(from rawConfig: Data) -> PrivacyConfiguration {
+        let mockEmbeddedData = MockEmbeddedDataProvider(data: rawConfig, etag: "test")
+        let mockProtectionStore = MockDomainsProtectionStore()
+
+        let manager = PrivacyConfigurationManager(fetchedETag: nil,
+                                                  fetchedData: nil,
+                                                  embeddedDataProvider: mockEmbeddedData,
+                                                  localProtection: mockProtectionStore,
+                                                  internalUserDecider: DefaultInternalUserDecider())
+        return manager.privacyConfig
+    }
+
+    let ddgConfig = """
+    {
+        "features": {
+            "customUserAgent": {
+                "defaultPolicy": "ddg",
+                "state": "enabled",
+                "settings": {
+                    "omitApplicationSites": [
+                        {
+                            "domain": "cvs.com",
+                            "reason": "Site reports browser not supported"
+                        }
+                    ],
+                    "ddgFixedSites": [
+                        {
+                            "domain": "test2.com"
+                        }
+                    ]
+                },
+                "exceptions": []
+            }
+        },
+        "unprotectedTemporary": []
+    }
+    """.data(using: .utf8)!
+
+    func testWhenMobileUaAndDesktopFalseAndDomainSupportsFixedUAThenFixedMobileAgentUsed() {
+        let testee = UserAgent(defaultAgent: DefaultAgent.mobile)
+        let config = makePrivacyConfig(from: ddgConfig)
+        XCTAssertEqual(ExpectedAgent.mobileFixed, testee.agent(forUrl: Constants.ddgFixedUrl, isDesktop: false, privacyConfig: config))
+    }
+
+    func testWhenMobileUaAndDesktopTrueAndDomainSupportsFixedUAThenFixedMobileAgentUsed() {
+        let testee = UserAgent(defaultAgent: DefaultAgent.mobile)
+        let config = makePrivacyConfig(from: ddgConfig)
+        XCTAssertEqual(ExpectedAgent.desktopFixed, testee.agent(forUrl: Constants.ddgFixedUrl, isDesktop: true, privacyConfig: config))
+    }
+
+    func testWhenTabletUaAndDesktopFalseAndDomainSupportsFixedUAThenFixedMobileAgentUsed() {
+        let testee = UserAgent(defaultAgent: DefaultAgent.tablet)
+        let config = makePrivacyConfig(from: ddgConfig)
+        XCTAssertEqual(ExpectedAgent.tabletFixed, testee.agent(forUrl: Constants.ddgFixedUrl, isDesktop: false, privacyConfig: config))
+    }
+
+    func testWhenTabletUaAndDesktopTrueAndDomainSupportsFixedUAThenFixedMobileAgentUsed() {
+        let testee = UserAgent(defaultAgent: DefaultAgent.tablet)
+        let config = makePrivacyConfig(from: ddgConfig)
+        XCTAssertEqual(ExpectedAgent.desktopFixed, testee.agent(forUrl: Constants.ddgFixedUrl, isDesktop: true, privacyConfig: config))
+    }
+
+    let ddgFixedConfig = """
+    {
+        "features": {
+            "customUserAgent": {
+                "state": "enabled",
+                "settings": {
+                    "defaultPolicy": "ddgFixed",
+                    "omitApplicationSites": [
+                        {
+                            "domain": "cvs.com",
+                            "reason": "Site reports browser not supported"
+                        }
+                    ],
+                    "ddgDefaultSites": [
+                        {
+                            "domain": "test3.com"
+                        }
+                    ]
+                },
+                "exceptions": []
+            }
+        },
+        "unprotectedTemporary": []
+    }
+    """.data(using: .utf8)!
+
+    func testWhenMobileUaAndDesktopFalseAndDefaultPolicyFixedThenFixedMobileAgentUsed() {
+        let testee = UserAgent(defaultAgent: DefaultAgent.mobile)
+        let config = makePrivacyConfig(from: ddgFixedConfig)
+        XCTAssertEqual(ExpectedAgent.mobileFixed, testee.agent(forUrl: Constants.url, isDesktop: false, privacyConfig: config))
+    }
+
+    func testWhenMobileUaAndDesktopTrueAndDefaultPolicyFixedThenFixedMobileAgentUsed() {
+        let testee = UserAgent(defaultAgent: DefaultAgent.mobile)
+        let config = makePrivacyConfig(from: ddgFixedConfig)
+        XCTAssertEqual(ExpectedAgent.desktopFixed, testee.agent(forUrl: Constants.url, isDesktop: true, privacyConfig: config))
+    }
+
+    func testWhenTabletUaAndDesktopFalseAndDefaultPolicyFixedThenFixedMobileAgentUsed() {
+        let testee = UserAgent(defaultAgent: DefaultAgent.tablet)
+        let config = makePrivacyConfig(from: ddgFixedConfig)
+        XCTAssertEqual(ExpectedAgent.tabletFixed, testee.agent(forUrl: Constants.url, isDesktop: false, privacyConfig: config))
+    }
+
+    func testWhenTabletUaAndDesktopTrueAndDefaultPolicyFixedThenFixedMobileAgentUsed() {
+        let testee = UserAgent(defaultAgent: DefaultAgent.tablet)
+        let config = makePrivacyConfig(from: ddgFixedConfig)
+        XCTAssertEqual(ExpectedAgent.desktopFixed, testee.agent(forUrl: Constants.url, isDesktop: true, privacyConfig: config))
+    }
+
+    func testWhenDefaultPolicyFixedAndDomainIsOnDefaultListThenDefaultAgentUsed() {
+        let testee = UserAgent(defaultAgent: DefaultAgent.mobile)
+        let config = makePrivacyConfig(from: ddgFixedConfig)
+        XCTAssertEqual(ExpectedAgent.mobile, testee.agent(forUrl: Constants.ddgDefaultUrl, isDesktop: false, privacyConfig: config))
+    }
+
+    let closestConfig = """
+    {
+        "features": {
+            "customUserAgent": {
+                "state": "enabled",
+                "settings": {
+                    "defaultPolicy": "closest",
+                    "omitApplicationSites": [
+                        {
+                            "domain": "cvs.com",
+                            "reason": "Site reports browser not supported"
+                        }
+                    ],
+                    "ddgFixedSites": [
+                        {
+                            "domain": "test2.com"
+                        }
+                    ],
+                    "ddgDefaultSites": [
+                        {
+                            "domain": "test3.com"
+                        }
+                    ]
+                },
+                "exceptions": []
+            }
+        },
+        "unprotectedTemporary": []
+    }
+    """.data(using: .utf8)!
+
+    func testWhenMobileUaAndDesktopFalseAndDefaultPolicyClosestThenClosestMobileAgentUsed() {
+        let testee = UserAgent(defaultAgent: DefaultAgent.mobile)
+        let config = makePrivacyConfig(from: closestConfig)
+        XCTAssertEqual(ExpectedAgent.mobileClosest, testee.agent(forUrl: Constants.url, isDesktop: false, privacyConfig: config))
+    }
+
+    func testWhenMobileUaAndDesktopTrueAndDefaultPolicyClosestThenFixedMobileAgentUsed() {
+        let testee = UserAgent(defaultAgent: DefaultAgent.mobile)
+        let config = makePrivacyConfig(from: closestConfig)
+        XCTAssertEqual(ExpectedAgent.desktopClosest, testee.agent(forUrl: Constants.url, isDesktop: true, privacyConfig: config))
+    }
+
+    func testWhenTabletUaAndDesktopFalseAndDefaultPolicyClosestThenFixedMobileAgentUsed() {
+        let testee = UserAgent(defaultAgent: DefaultAgent.tablet)
+        let config = makePrivacyConfig(from: closestConfig)
+        XCTAssertEqual(ExpectedAgent.tabletClosest, testee.agent(forUrl: Constants.url, isDesktop: false, privacyConfig: config))
+    }
+
+    func testWhenTabletUaAndDesktopTrueAndDefaultPolicyClosestThenFixedMobileAgentUsed() {
+        let testee = UserAgent(defaultAgent: DefaultAgent.tablet)
+        let config = makePrivacyConfig(from: closestConfig)
+        XCTAssertEqual(ExpectedAgent.desktopClosest, testee.agent(forUrl: Constants.url, isDesktop: true, privacyConfig: config))
+    }
+
+    func testWhenDefaultPolicyClosestAndDomainIsOnDefaultListThenDefaultAgentUsed() {
+        let testee = UserAgent(defaultAgent: DefaultAgent.mobile)
+        let config = makePrivacyConfig(from: closestConfig)
+        XCTAssertEqual(ExpectedAgent.mobile, testee.agent(forUrl: Constants.ddgDefaultUrl, isDesktop: false, privacyConfig: config))
+    }
+
+    func testWhenDefaultPolicyClosestAndDomainIsOnFixedListThenFixedAgentUsed() {
+        let testee = UserAgent(defaultAgent: DefaultAgent.mobile)
+        let config = makePrivacyConfig(from: closestConfig)
+        XCTAssertEqual(ExpectedAgent.mobileFixed, testee.agent(forUrl: Constants.ddgFixedUrl, isDesktop: false, privacyConfig: config))
+    }
+
 }

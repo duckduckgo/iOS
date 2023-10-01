@@ -108,6 +108,12 @@ struct UserAgent {
         static let defaultPolicyConfigKey = "defaultPolicy"
         static let ddgDefaultSitesConfigKey = "ddgDefaultSites"
         static let ddgFixedSitesConfigKey = "ddgFixedSites"
+
+        static let closestUserAgentConfigKey = "closestUserAgent"
+        static let ddgFixedUserAgentConfigKey = "ddgFixedUserAgent"
+
+        static let uaVersionsKey = "versions"
+        static let uaStateKey = "state" // todo: do we need it?
         // swiftlint:enable line_length
     }
     
@@ -122,6 +128,8 @@ struct UserAgent {
     private let versionComponent: String
     private let safariComponent: String
     private let applicationComponent = "DuckDuckGo/\(AppVersion.shared.majorVersionNumber)"
+    private let statistics: StatisticsUserDefaults = StatisticsUserDefaults()
+    private let isTesting: Bool = ProcessInfo().arguments.contains("testing")
     
     init(defaultAgent: String = Constants.fallbackDefaultAgent) {
         versionComponent = UserAgent.createVersionComponent(fromAgent: defaultAgent)
@@ -156,6 +164,20 @@ struct UserAgent {
         let fixedSitesObjs = uaSettings[Constants.ddgFixedSitesConfigKey] as? [[String: String]] ?? []
 
         return fixedSitesObjs.map { $0[Constants.uaOmitDomainConfigKey] ?? "" }
+    }
+
+    private func closestUserAgentVersions(forConfig config: PrivacyConfiguration) -> [String] {
+        let uaSettings = config.settings(for: .customUserAgent)
+        let closestUserAgentObjs = uaSettings[Constants.closestUserAgentConfigKey] as? [[String: String]] ?? []
+        return [""]
+//        return  closestUserAgentObjs.map { $0[Constants.uaOmitDomainConfigKey] ?? "" }
+    }
+
+    private func ddgFixedUserAgentVersions(forConfig config: PrivacyConfiguration) -> [String] {
+        let uaSettings = config.settings(for: .customUserAgent)
+        let closestUserAgentObjs = uaSettings[Constants.closestUserAgentConfigKey] as? [[String: String]] ?? []
+        return [""]
+//        return  closestUserAgentObjs.map { $0[Constants.uaOmitDomainConfigKey] ?? "" }
     }
 
     public func agent(forUrl url: URL?,
@@ -222,12 +244,12 @@ struct UserAgent {
     private func closestLogic(forUrl url: URL?,
                               isDesktop: Bool,
                               privacyConfig: PrivacyConfiguration) -> String {
-        guard #available(iOS 16.6, *) else {
+        guard shouldUseUpdateLogic else {
             return oldLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
         }
 
         if isDesktop {
-            return "Mozilla/5.0 (Macintosh; Intel Mac OS X 13_5_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15"
+            return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15"
         }
         var deviceProfile = "iPhone; CPU iPhone OS 16_6 like Mac OS X"
         if baseAgent.contains("iPad") {
@@ -236,6 +258,16 @@ struct UserAgent {
             deviceProfile = "iPod touch; CPU iPhone 16_6 like Mac OS X"
         }
         return "Mozilla/5.0 (" + deviceProfile + ") AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1"
+    }
+
+    private var shouldUseUpdateLogic: Bool {
+        // Unfortunately you can't combine #available with any other condition in the same line
+        if isTesting {
+            return true
+        } else if #available(iOS 16.6, *) {
+            return true
+        }
+        return false
     }
     
     private func concatWithSpaces(_ elements: String?...) -> String {

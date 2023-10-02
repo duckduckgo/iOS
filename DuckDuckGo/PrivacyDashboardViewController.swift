@@ -150,9 +150,9 @@ extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
         dismiss(animated: true) {
             switch target {
             case .cookiePopupManagement:
-                mainViewController.launchCookiePopupManagementSettings()
+                mainViewController.segueToSettingsCookiePopupManagement()
             default:
-                mainViewController.launchSettings()
+                mainViewController.segueToSettings()
             }
         }
     }

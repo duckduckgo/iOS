@@ -105,16 +105,16 @@ class MainViewController: UIViewController {
     var suggestionTrayController: SuggestionTrayViewController?
 
     var tabManager: TabManager!
-    private let previewsSource = TabPreviewsSource()
+    let previewsSource = TabPreviewsSource()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private var launchTabObserver: LaunchTabNotification.Observer?
     
     private let appTrackingProtectionDatabase: CoreDataDatabase
-    private let bookmarksDatabase: CoreDataDatabase
+    let bookmarksDatabase: CoreDataDatabase
     private weak var bookmarksDatabaseCleaner: BookmarkDatabaseCleaner?
     private let favoritesViewModel: FavoritesListInteracting
-    private let syncService: DDGSyncing
-    private let syncDataProviders: SyncDataProviders
+    let syncService: DDGSyncing
+    let syncDataProviders: SyncDataProviders
     private var localUpdatesCancellable: AnyCancellable?
     private var syncUpdatesCancellable: AnyCancellable?
     private var emailCancellables = Set<AnyCancellable>()
@@ -134,9 +134,9 @@ class MainViewController: UIViewController {
     
     private lazy var fireButtonAnimator: FireButtonAnimator = FireButtonAnimator(appSettings: appSettings)
     
-    private var bookmarksCachingSearch: BookmarksCachingSearch
+    let bookmarksCachingSearch: BookmarksCachingSearch
 
-    fileprivate lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
+    lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
         return tabManager?.current
     }
@@ -197,6 +197,8 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        loadSuggestionTray()
+        loadTabsBarIfNeeded()
         loadFindInPage()
         attachOmniBar()
 
@@ -240,6 +242,43 @@ class MainViewController: UIViewController {
         }
     }
 
+    override func performSegue(withIdentifier identifier: String, sender: Any?) {
+        assertionFailure()
+        super.performSegue(withIdentifier: identifier, sender: sender)
+    }
+
+    func loadSuggestionTray() {
+        let storyboard = UIStoryboard(name: "SuggestionTray", bundle: nil)
+
+        guard let controller = storyboard.instantiateInitialViewController(creator: { coder in
+            SuggestionTrayViewController(coder: coder,
+                                         favoritesViewModel: self.favoritesViewModel,
+                                         bookmarksSearch: self.bookmarksCachingSearch)
+        }) else {
+            assertionFailure()
+            return
+        }
+
+        controller.view.frame = suggestionTrayContainer.bounds
+        suggestionTrayContainer.addSubview(controller.view)
+
+        controller.dismissHandler = dismissSuggestionTray
+        controller.autocompleteDelegate = self
+        controller.favoritesOverlayDelegate = self
+        suggestionTrayController = controller
+    }
+
+    func loadTabsBarIfNeeded() {
+        guard isPad else { return }
+
+        let storyboard = UIStoryboard(name: "TabSwitcher", bundle: nil)
+        let controller: TabsBarViewController = storyboard.instantiateViewController(identifier: "TabsBar")
+        controller.view.frame = tabsBar.bounds
+        controller.delegate = self
+        tabsBar.addSubview(controller.view)
+        tabsBarController = controller
+    }
+
     func startAddFavoriteFlow() {
         DaxDialogs.shared.enableAddFavoriteFlow()
         if DefaultTutorialSettings().hasSeenOnboarding {
@@ -260,9 +299,8 @@ class MainViewController: UIViewController {
             ProcessInfo.processInfo.environment["ONBOARDING"] == "true"
         guard showOnboarding else { return }
 
-        let onboardingFlow = "DaxOnboarding"
+        segueToDaxOnboarding()
 
-        performSegue(withIdentifier: onboardingFlow, sender: self)
     }
     
     private func registerForKeyboardNotifications() {
@@ -371,44 +409,7 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: .tabBarBookmarksLongPressed)
         currentTab?.saveAsBookmark(favorite: true, viewModel: menuBookmarksViewModel)
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
-        if !DaxDialogs.shared.shouldShowFireButtonPulse {
-            ViewHighlighter.hideAll()
-        }
-        
-        if let controller = segue.destination as? TabsBarViewController {
-            controller.delegate = self
-            tabsBarController = controller
-            return
-        }
-        
-        if let navController = segue.destination as? UINavigationController {
-            if let brokenSiteScreen = navController.topViewController as? ReportBrokenSiteViewController {
-                if UIDevice.current.userInterfaceIdiom == .pad {
-                    segue.destination.modalPresentationStyle = .formSheet
-                }
-                
-                brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
-            }
-        }
-
-        if var onboarding = segue.destination as? Onboarding {
-            onboarding.delegate = self
-        }
-        
-        if let controller = segue.destination as? ActionSheetDaxDialogViewController {
-            let spec = sender as? DaxDialogs.ActionSheetSpec
-            if spec == DaxDialogs.ActionSheetSpec.fireButtonEducation {
-                ViewHighlighter.hideAll()
-            }
-            controller.spec = spec
-            controller.delegate = self
-        }
-
-    }
-    
     @IBSegueAction func onCreateSuggestionTray(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> SuggestionTrayViewController {
         guard let controller = SuggestionTrayViewController(coder: coder,
                                                             favoritesViewModel: favoritesViewModel,
@@ -421,66 +422,6 @@ class MainViewController: UIViewController {
         controller.favoritesOverlayDelegate = self
         suggestionTrayController = controller
         
-        return controller
-    }
-    
-    @IBSegueAction func onCreateBookmarksList(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> BookmarksViewController {
-        guard let controller = BookmarksViewController(coder: coder,
-                                                       bookmarksDatabase: self.bookmarksDatabase,
-                                                       bookmarksSearch: bookmarksCachingSearch,
-                                                       syncService: syncService,
-                                                       syncDataProviders: syncDataProviders) else {
-            fatalError("Failed to create controller")
-        }
-        controller.delegate = self
-        
-        if segueIdentifier == "BookmarksEditCurrent",
-            let link = currentTab?.link,
-            let bookmark = menuBookmarksViewModel.favorite(for: link.url) ?? menuBookmarksViewModel.bookmark(for: link.url) {
-            controller.openEditFormWhenPresented(bookmark: bookmark)
-        } else if segueIdentifier == "BookmarksEdit",
-                  let bookmark = sender as? BookmarkEntity {
-            controller.openEditFormWhenPresented(bookmark: bookmark)
-        }
-        
-        return controller
-    }
-    
-    @IBSegueAction func onCreateTabSwitcher(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> TabSwitcherViewController {
-        guard let controller = TabSwitcherViewController(coder: coder,
-                                                         bookmarksDatabase: bookmarksDatabase,
-                                                         syncService: syncService) else {
-            fatalError("Failed to create controller")
-        }
-        
-        controller.transitioningDelegate = tabSwitcherTransition
-        controller.delegate = self
-        controller.tabsModel = tabManager.model
-        controller.previewsSource = previewsSource
-        tabSwitcherController = controller
-        
-        return controller
-    }
-    
-    @IBSegueAction func onCreateSettings(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> SettingsViewController {
-        guard let controller = SettingsViewController(coder: coder,
-                                                      bookmarksDatabase: bookmarksDatabase,
-                                                      syncService: syncService,
-                                                      syncDataProviders: syncDataProviders,
-                                                      internalUserDecider: AppDependencyProvider.shared.internalUserDecider) else {
-            fatalError("Failed to create controller")
-        }
-
-        if segueIdentifier == "SettingsToLogins" {
-            if let account = sender as? SecureVaultModels.WebsiteAccount {
-                controller.openLoginsWhenPresented(accountDetails: account)
-            } else {
-                controller.openLoginsWhenPresented()
-            }
-        } else if segueIdentifier == "SettingsToCookiePopupManagement" {
-            controller.openCookiePopupManagementWhenPresented()
-        }
-
         return controller
     }
     
@@ -612,7 +553,7 @@ class MainViewController: UIViewController {
         wakeLazyFireButtonAnimator()
         
         if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
-            performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
+            segueToActionSheetDaxDialogWithSpec(spec)
         } else {
             let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
                 self?.forgetAllWithAnimation {}
@@ -942,14 +883,6 @@ class MainViewController: UIViewController {
         suggestionTrayController?.didHide()
     }
     
-    fileprivate func launchReportBrokenSite() {
-        performSegue(withIdentifier: "ReportBrokenSite", sender: self)
-    }
-    
-    fileprivate func launchDownloads() {
-        performSegue(withIdentifier: "Downloads", sender: self)
-    }
-    
     fileprivate func launchAutofillLogins(with currentTabUrl: URL? = nil) {
         let appSettings = AppDependencyProvider.shared.appSettings
         let autofillSettingsViewController = AutofillLoginSettingsListViewController(
@@ -973,18 +906,6 @@ class MainViewController: UIViewController {
     
     @objc private func closeAutofillModal() {
         dismiss(animated: true)
-    }
-    
-    func launchSettings() {
-        performSegue(withIdentifier: "Settings", sender: self)
-    }
-    
-    func launchCookiePopupManagementSettings() {
-        performSegue(withIdentifier: "SettingsToCookiePopupManagement", sender: self)
-    }
-
-    fileprivate func launchInstructions() {
-        performSegue(withIdentifier: "instructions", sender: self)
     }
 
     override func viewDidLayoutSubviews() {
@@ -1033,7 +954,7 @@ class MainViewController: UIViewController {
         if feature.showNow() {
             showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
                 if tapped {
-                    self.launchInstructions()
+                    self.segueToHomeRow()
                 }
                 self.hideNotification()
             }
@@ -1348,13 +1269,13 @@ extension MainViewController: OmniBarDelegate {
             ViewHighlighter.hideAll()
         }
         hideSuggestionTray()
-        performSegue(withIdentifier: "Bookmarks", sender: self)
+        segueToBookmarks()
     }
     
     func onBookmarkEdit() {
         ViewHighlighter.hideAll()
         hideSuggestionTray()
-        performSegue(withIdentifier: "BookmarksEditCurrent", sender: self)
+        segueToEditCurrentBookmark()
     }
     
     func onEnterPressed() {
@@ -1371,7 +1292,7 @@ extension MainViewController: OmniBarDelegate {
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
-        launchSettings()
+        segueToSettings()
     }
     
     func onCancelPressed() {
@@ -1518,7 +1439,7 @@ extension MainViewController: HomeControllerDelegate {
     }
     
     func home(_ home: HomeViewController, didRequestEdit favorite: BookmarkEntity) {
-        performSegue(withIdentifier: "BookmarksEdit", sender: favorite)
+        segueToEditBookmark(favorite)
     }
     
     func home(_ home: HomeViewController, didRequestContentOverflow shouldOverflow: Bool) -> CGFloat {
@@ -1532,7 +1453,7 @@ extension MainViewController: HomeControllerDelegate {
     }
     
     func showSettings(_ home: HomeViewController) {
-        launchSettings()
+        segueToSettings()
     }
     
     func home(_ home: HomeViewController, didRequestHideLogo hidden: Bool) {
@@ -1637,7 +1558,7 @@ extension MainViewController: TabDelegate {
     }
 
     func tabDidRequestReportBrokenSite(tab: TabViewController) {
-        launchReportBrokenSite()
+        segueToReportBrokenSite()
     }
     
     func tabDidRequestBookmarks(tab: TabViewController) {
@@ -1651,7 +1572,7 @@ extension MainViewController: TabDelegate {
     }
     
     func tabDidRequestDownloads(tab: TabViewController) {
-        launchDownloads()
+        segueToDownloads()
     }
     
     func tabDidRequestAutofillLogins(tab: TabViewController) {
@@ -1659,12 +1580,12 @@ extension MainViewController: TabDelegate {
     }
     
     func tabDidRequestSettings(tab: TabViewController) {
-        launchSettings()
+        segueToSettings()
     }
 
     func tab(_ tab: TabViewController,
-             didRequestSettingsToLogins account: SecureVaultModels.WebsiteAccount?) {
-        performSegue(withIdentifier: "SettingsToLogins", sender: account)
+             didRequestSettingsToLogins account: SecureVaultModels.WebsiteAccount) {
+        segueToSettingsLoginsWithAccount(account)
     }
 
     func tabContentProcessDidTerminate(tab: TabViewController) {
@@ -1828,7 +1749,7 @@ extension MainViewController: TabSwitcherButtonDelegate {
                     
                 }
                 ViewHighlighter.hideAll()
-                self.performSegue(withIdentifier: "ShowTabs", sender: self)
+                self.segueToTabSwitcher()
             })
         }
     }

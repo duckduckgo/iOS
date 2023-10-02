@@ -711,7 +711,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
         // Give the `clearNavigationStack` call time to complete.
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-            rootViewController.performSegue(withIdentifier: "Settings", sender: nil)
+            rootViewController.segueToSettings()
             let navigationController = rootViewController.presentedViewController as? UINavigationController
             navigationController?.popToRootViewController(animated: false)
             navigationController?.pushViewController(viewController, animated: true)

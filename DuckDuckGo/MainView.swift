@@ -296,7 +296,7 @@ class MainViewCoordinator {
     var contentContainer: UIView!
     var notificationBarContainer: UIView!
     var statusBackground: UIView!
-    var tabBarContainer: UIView! // TODO rename this
+    var tabBarContainer: UIView!
     var navigationBarContainer: UIView!
     var progress: ProgressView!
     var toolbarBackButton: UIBarButtonItem!

@@ -87,7 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Configuration.setURLProvider(AppConfigurationURLProvider())
 
         CrashCollection.start {
-            Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: $0, includedParameters: [.appVersion])
+            Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: $0, includedParameters: [])
         }
 
         clearTmp()
@@ -683,9 +683,16 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
-            if response.notification.request.identifier == WindowsBrowserWaitlist.notificationIdentitier {
+            let identifier = response.notification.request.identifier
+            if identifier == WindowsBrowserWaitlist.notificationIdentitier {
                 presentWindowsBrowserWaitlistSettingsModal()
             }
+
+#if NETWORK_PROTECTION
+            if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
+                presentNetworkProtectionStatusSettingsModal()
+            }
+#endif
         }
 
         completionHandler()
@@ -695,7 +702,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let waitlistViewController = WindowsWaitlistViewController(nibName: nil, bundle: nil)
         presentSettings(with: waitlistViewController)
     }
-    
+
+#if NETWORK_PROTECTION
+    private func presentNetworkProtectionStatusSettingsModal() {
+        let networkProtectionRoot = NetworkProtectionRootViewController()
+        presentSettings(with: networkProtectionRoot)
+    }
+#endif
+
     private func presentSettings(with viewController: UIViewController) {
         guard let window = window, let rootViewController = window.rootViewController as? MainViewController else { return }
 
@@ -709,5 +723,4 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             navigationController?.pushViewController(viewController, animated: true)
         }
     }
-
 }

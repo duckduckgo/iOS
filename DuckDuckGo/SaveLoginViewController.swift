@@ -61,10 +61,6 @@ class SaveLoginViewController: UIViewController {
         viewModel?.viewControllerDidAppear()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         

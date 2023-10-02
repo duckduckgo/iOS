@@ -421,7 +421,7 @@ class SettingsViewController: UITableViewController {
         // This will be tidied up as part of https://app.asana.com/0/0/1205084446087078/f
         let rootViewController = NetworkProtectionRootViewController { [weak self] in
             self?.navigationController?.popViewController(animated: true)
-            let newRootViewController = NetworkProtectionRootViewController { }
+            let newRootViewController = NetworkProtectionRootViewController()
             self?.pushNetP(newRootViewController)
         }
         pushNetP(rootViewController)
@@ -543,10 +543,6 @@ class SettingsViewController: UITableViewController {
         } else {
             return super.tableView(tableView, heightForFooterInSection: section)
         }
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return super.tableView(tableView, titleForFooterInSection: section)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

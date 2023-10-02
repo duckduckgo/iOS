@@ -73,7 +73,7 @@ final class DaxDialogs {
         case .siteIsMajorTracker, .siteOwnedByMajorTracker:
             settings.browsingMajorTrackingSiteShown = flag
             settings.browsingWithoutTrackersShown = flag
-         }
+        }
     }
     
     struct BrowsingSpec: Equatable {

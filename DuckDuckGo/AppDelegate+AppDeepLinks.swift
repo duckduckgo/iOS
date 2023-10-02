@@ -35,7 +35,8 @@ extension AppDelegate {
             mainViewController.newTab(reuseExisting: true, allowingKeyboard: false)
 
         case .quickLink:
-            handleQuickLink(url, mainViewController)
+            let query = AppDeepLinkSchemes.query(fromQuickLink: url)
+            mainViewController.loadQueryInNewTab(query, reuseExisting: true)
 
         case .addFavorite:
             mainViewController.startAddFavoriteFlow()
@@ -64,14 +65,4 @@ extension AppDelegate {
 
         return true
     }
-
-    private func handleQuickLink(_ url: URL, _ mainViewController: MainViewController) {
-        let query = AppDeepLinkSchemes.query(fromQuickLink: url)
-        if let url = URL(string: query) {
-            mainViewController.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil)
-        } else {
-            mainViewController.loadQueryInNewTab(query, reuseExisting: true)
-        }
-    }
-
 }

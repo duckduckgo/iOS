@@ -111,11 +111,11 @@ extension MainViewFactory {
     private func createToolbar() {
 
         coordinator.toolbar = HitTestingToolbar()
-        coordinator.toolbarBackButton = UIBarButtonItem(title: "Browse Back", image: UIImage(named: "BrowsePrevious"))
-        coordinator.toolbarForwardButton = UIBarButtonItem(title: "Browse Forward", image: UIImage(named: "BrowseNext"))
-        coordinator.toolbarFireButton = UIBarButtonItem(title: "Close all tabs and clear data", image: UIImage(named: "Fire"))
-        coordinator.toolbarTabSwitcherButton = UIBarButtonItem(title: "Tab Switcher", image: UIImage(named: "Add-24"))
-        coordinator.lastToolbarButton = UIBarButtonItem(title: "Bookmarks", image: UIImage(named: "Book-24"))
+        coordinator.toolbarBackButton = UIBarButtonItem(title: UserText.keyCommandBrowserBack, image: UIImage(named: "BrowsePrevious"))
+        coordinator.toolbarForwardButton = UIBarButtonItem(title: UserText.keyCommandBrowserForward, image: UIImage(named: "BrowseNext"))
+        coordinator.toolbarFireButton = UIBarButtonItem(title: UserText.actionForgetAll, image: UIImage(named: "Fire"))
+        coordinator.toolbarTabSwitcherButton = UIBarButtonItem(title: UserText.tabSwitcherAccessibilityLabel, image: UIImage(named: "Add-24"))
+        coordinator.lastToolbarButton = UIBarButtonItem(title: UserText.actionOpenBookmarks, image: UIImage(named: "Book-24"))
         superview.addSubview(coordinator.toolbar)
 
         coordinator.toolbar.setItems([

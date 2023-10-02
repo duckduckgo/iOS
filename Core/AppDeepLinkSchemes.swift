@@ -45,10 +45,21 @@ public enum AppDeepLinkSchemes: String, CaseIterable {
     }
 
     public static func query(fromQuickLink url: URL) -> String {
-        return url.absoluteString
+        let query = url.absoluteString
             .replacingOccurrences(of: AppDeepLinkSchemes.quickLink.url.absoluteString,
                                   with: "",
                                   options: .caseInsensitive)
+
+        return AppDeepLinkSchemes.fixURLScheme(query)
     }
 
+    private static func fixURLScheme(_ urlString: String) -> String {
+        let pattern = "^https?//"
+
+        if urlString.range(of: pattern, options: .regularExpression) != nil {
+            return urlString.replacingOccurrences(of: "//", with: "://")
+        } else {
+            return urlString
+        }
+    }
 }

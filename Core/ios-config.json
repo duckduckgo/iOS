@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1694791154730,
+    "version": 1695742642039,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -276,6 +276,10 @@
                     "reason": "https://github.com/duckduckgo/autoconsent/issues/254"
                 },
                 {
+                    "domain": "yum.com",
+                    "reason": "https://github.com/duckduckgo/autoconsent/issues/259"
+                },
+                {
                     "domain": "earth.google.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1099"
                 },
@@ -298,7 +302,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "d28139f3a183492cd9cb6d16e1430a36"
+            "hash": "6b201ccc9308a1e9b574b8a7da5a9b52"
         },
         "autofill": {
             "exceptions": [
@@ -3348,11 +3352,32 @@
                                 "type": "override"
                             }
                         ]
+                    },
+                    {
+                        "domain": "privacy-test-pages.site",
+                        "rules": [
+                            {
+                                "selector": ".hide-test",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": ".hide-empty-test",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".closest-empty-test",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": "[class^='ad-container']",
+                                "type": "override"
+                            }
+                        ]
                     }
                 ]
             },
             "state": "enabled",
-            "hash": "32323481fe1e33412ae1671360a8ff50"
+            "hash": "d0034c140c0ee9ce9015b74b428523b3"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -4145,10 +4170,11 @@
                     "globalprivacycontrol.org",
                     "washingtonpost.com",
                     "nytimes.com",
-                    "privacy-test-pages.glitch.me"
+                    "privacy-test-pages.glitch.me",
+                    "privacy-test-pages.site"
                 ]
             },
-            "hash": "8bbdafd961fcd054b37c6367c472f387"
+            "hash": "9962dbae2a6a668fbdae3b20f02bcbad"
         },
         "harmfulApis": {
             "settings": {
@@ -4427,8 +4453,8 @@
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
-            "state": "enabled",
-            "hash": "b3ae340e95ffb663509c48505ddad990"
+            "state": "disabled",
+            "hash": "6fb4590e0f11214e27a5386f24f1962f"
         },
         "requestFilterer": {
             "state": "disabled",
@@ -7465,6 +7491,16 @@
             "exceptions": [],
             "state": "enabled",
             "hash": "52857469413a66e8b0c7b00de5589162"
+        },
+        "incrementalRolloutTest2": {
+            "state": "enabled",
+            "features": {
+                "rollout": {
+                    "state": "disabled"
+                }
+            },
+            "exceptions": [],
+            "hash": "54776d4aa010391dc14a53ad69cd1777"
         }
     },
     "unprotectedTemporary": [

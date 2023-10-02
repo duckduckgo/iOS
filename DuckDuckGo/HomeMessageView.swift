@@ -46,9 +46,7 @@ struct HomeMessageView: View {
     @State var activityItem: ShareItem?
 
     var body: some View {
-        ZStack {
-            closeButtonHeader
-
+        ZStack(alignment: .topTrailing) {
             VStack(spacing: 8) {
                 Group {
                     topText
@@ -78,6 +76,11 @@ struct HomeMessageView: View {
             .multilineTextAlignment(.center)
             .padding(.vertical)
             .padding(.horizontal, 8)
+
+            closeButtonHeader
+                .alignmentGuide(.top) { dimension in
+                    dimension[.top]
+                }
         }
         .background(RoundedRectangle(cornerRadius: Const.Radius.corner)
                         .fill(Color.background)
@@ -97,7 +100,6 @@ struct HomeMessageView: View {
                 closeButton
                     .padding(0)
             }
-            Spacer()
         }
     }
     

@@ -87,7 +87,7 @@ class AppTPHomeViewModel: ObservableObject {
         guard let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first,
                 let rootViewController = window.rootViewController as? MainViewController else { return }
 
-        rootViewController.performSegue(withIdentifier: "Settings", sender: nil)
+        rootViewController.segueToSettings()
         let navigationController = rootViewController.presentedViewController as? UINavigationController
         navigationController?.popToRootViewController(animated: false)
         navigationController?.pushViewController(AppTPActivityHostingViewController(appTrackingProtectionDatabase: self.appTPDatabase),

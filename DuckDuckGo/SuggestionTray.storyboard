@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="GVY-7c-Fnx">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Suggestion Tray View Controller-->
+        <scene sceneID="P3F-C5-tXu">
+            <objects>
+                <viewController id="GVY-7c-Fnx" customClass="SuggestionTrayViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="j0c-gb-rpc">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vmf-xs-TwY" userLabel="Background View">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="64L-Y0-7ie">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="999" constant="908" id="1GN-2u-5xs"/>
+                                    <constraint firstAttribute="width" priority="999" constant="1366" id="ywM-Lu-N4B"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ki7-21-ggp"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="vmf-xs-TwY" firstAttribute="centerX" secondItem="64L-Y0-7ie" secondAttribute="centerX" id="8jz-Ms-6u3"/>
+                            <constraint firstItem="64L-Y0-7ie" firstAttribute="top" secondItem="j0c-gb-rpc" secondAttribute="top" id="FqW-UB-Q8G"/>
+                            <constraint firstItem="vmf-xs-TwY" firstAttribute="centerY" secondItem="64L-Y0-7ie" secondAttribute="centerY" id="Ggk-fs-YmX"/>
+                            <constraint firstItem="64L-Y0-7ie" firstAttribute="height" secondItem="j0c-gb-rpc" secondAttribute="height" id="NXP-DI-dU8"/>
+                            <constraint firstItem="64L-Y0-7ie" firstAttribute="width" secondItem="j0c-gb-rpc" secondAttribute="width" id="OLF-Z3-QnI"/>
+                            <constraint firstItem="vmf-xs-TwY" firstAttribute="width" secondItem="64L-Y0-7ie" secondAttribute="width" id="Xqu-w2-wf9"/>
+                            <constraint firstItem="vmf-xs-TwY" firstAttribute="height" secondItem="64L-Y0-7ie" secondAttribute="height" id="ebY-43-deK"/>
+                            <constraint firstItem="64L-Y0-7ie" firstAttribute="centerX" secondItem="j0c-gb-rpc" secondAttribute="centerX" id="rtq-3b-s1Z"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="backgroundView" destination="vmf-xs-TwY" id="WO1-hH-7rb"/>
+                        <outlet property="containerView" destination="64L-Y0-7ie" id="Kko-7I-nlY"/>
+                        <outlet property="fullHeightConstraint" destination="NXP-DI-dU8" id="etw-6r-Ygd"/>
+                        <outlet property="fullWidthConstraint" destination="OLF-Z3-QnI" id="r8w-cl-frK"/>
+                        <outlet property="topConstraint" destination="FqW-UB-Q8G" id="QxI-zE-Vdh"/>
+                        <outlet property="variableHeightConstraint" destination="1GN-2u-5xs" id="Qfp-QI-KaB"/>
+                        <outlet property="variableWidthConstraint" destination="ywM-Lu-N4B" id="cfE-Wh-pAR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zkh-30-c2N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-949" y="-93"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

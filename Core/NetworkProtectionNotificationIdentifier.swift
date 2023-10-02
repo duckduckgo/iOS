@@ -1,5 +1,5 @@
 //
-//  NetworkProtectionDebugFeatures.swift
+//  NetworkProtectionNotificationIdentifier.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -18,9 +18,11 @@
 //
 
 import Foundation
-import Core
 
-final class NetworkProtectionDebugFeatures {
-    @UserDefaultsWrapper(key: .networkProtectionDebugOptionAlwaysOnDisabled, defaultValue: false)
-    var alwaysOnDisabled
+public enum NetworkProtectionNotificationIdentifier: String {
+    case reconnecting = "network-protection.notification.reconnecting"
+    case reconnected = "network-protection.notification.reconnected"
+    case connectionFailure = "network-protection.notification.connection-failure"
+    case superseded = "network-protection.notification.superseded"
+    case test = "network-protection.notification.test"
 }

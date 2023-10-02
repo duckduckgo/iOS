@@ -253,32 +253,44 @@ struct UserAgent {
     private func closestLogic(forUrl url: URL?,
                               isDesktop: Bool,
                               privacyConfig: PrivacyConfiguration) -> String {
-        guard shouldUseUpdateLogic else {
+        guard shouldUseUpdatedLogic else {
             return oldLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
         }
 
         if isDesktop {
             return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15"
         }
-        var deviceProfile = "iPhone; CPU iPhone OS 16_6 like Mac OS X"
-        if baseAgent.contains("iPad") {
-            deviceProfile = "iPad; CPU OS 16_6 like Mac OS X"
-        } else if baseAgent.contains("iPod") {
-            deviceProfile = "iPod touch; CPU iPhone 16_6 like Mac OS X"
-        }
+
         return "Mozilla/5.0 (" + deviceProfile + ") AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1"
     }
 
-    private var shouldUseUpdateLogic: Bool {
-        // Unfortunately you can't combine #available with any other condition in the same line
-        if isTesting {
-            return true
-        } else if #available(iOS 16.6, *) {
-            return true
-        }
-        return false
+    private var shouldUseUpdatedLogic: Bool {
+        guard let webKitVersion else { return false }
+        return webKitVersion.versionCompare("605.1.15") != .orderedAscending
     }
-    
+
+    private var webKitVersion: String? {
+        let components = baseAgent.components(separatedBy: "AppleWebKit/")
+
+        if components.count > 1 {
+            let versionComponents = components[1].components(separatedBy: " ")
+            return versionComponents.first
+        }
+
+        return nil
+    }
+
+    var deviceProfile: String {
+        let regex = try? NSRegularExpression(pattern: "\\((.*?)\\)")
+        if let match = regex?.firstMatch(in: baseAgent, range: NSRange(baseAgent.startIndex..., in: baseAgent)) {
+            let range = Range(match.range(at: 1), in: baseAgent)
+            if let range = range {
+                return String(baseAgent[range])
+            }
+        }
+        return "iPhone; CPU iPhone OS 16_6 like Mac OS X"
+    }
+
     private func concatWithSpaces(_ elements: String?...) -> String {
         return elements
             .compactMap { $0 }
@@ -354,6 +366,14 @@ private extension StatisticsStore {
         } else {
             return trimmed
         }
+    }
+
+}
+
+private extension String {
+
+    func versionCompare(_ otherVersion: String) -> ComparisonResult {
+        compare(otherVersion, options: .numeric)
     }
 
 }

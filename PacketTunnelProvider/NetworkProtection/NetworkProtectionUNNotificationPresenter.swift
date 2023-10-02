@@ -19,6 +19,7 @@
 
 import UIKit
 import NetworkProtection
+import Core
 
 /// This class takes care of requesting the presentation of notifications using UNNotificationCenter
 ///
@@ -72,44 +73,42 @@ final class NetworkProtectionUNNotificationPresenter: NSObject, NetworkProtectio
     func showTestNotification() {
         // Debug only string. Doesn't need localized
         let content = notificationContent(body: "Test notification")
-        showNotification(content)
+        showNotification(.test, content)
     }
 
     func showReconnectedNotification() {
         let content = notificationContent(body: UserText.networkProtectionConnectionSuccessNotificationBody)
-        showNotification(content)
+        showNotification(.reconnected, content)
     }
 
     func showReconnectingNotification() {
         let content = notificationContent(body: UserText.networkProtectionConnectionInterruptedNotificationBody)
-        showNotification(content)
+        showNotification(.reconnecting, content)
     }
 
     func showConnectionFailureNotification() {
         let content = notificationContent(body: UserText.networkProtectionConnectionFailureNotificationBody)
-        showNotification(content)
+        showNotification(.connectionFailure, content)
     }
 
     func showSupersededNotification() {
     }
 
-    private func showNotification(_ content: UNNotificationContent) {
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: .none)
+    private func showNotification(_ identifier: NetworkProtectionNotificationIdentifier, _ content: UNNotificationContent) {
+        let request = UNNotificationRequest(identifier: identifier.rawValue, content: content, trigger: .none)
 
         requestAlertAuthorization { authorized in
             guard authorized else {
                 return
             }
-
+            self.userNotificationCenter.removeDeliveredNotifications(withIdentifiers: [identifier.rawValue])
             self.userNotificationCenter.add(request)
         }
     }
 }
 
 extension NetworkProtectionUNNotificationPresenter: UNUserNotificationCenterDelegate {
-
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
         return .banner
     }
-
 }

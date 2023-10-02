@@ -198,7 +198,11 @@ struct UserAgent {
         }) { return ddgFixedLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig) }
 
         if closestUserAgentVersions(forConfig: privacyConfig).contains(statistics.atbWeek ?? "") {
-            return closestLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+            if canUseClosestLogic {
+                return closestLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+            } else {
+                return oldLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+            }
         }
 
         if ddgFixedUserAgentVersions(forConfig: privacyConfig).contains(statistics.atbWeek ?? "") {
@@ -208,7 +212,12 @@ struct UserAgent {
         switch defaultPolicy(forConfig: privacyConfig) {
         case .ddg: return oldLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
         case .ddgFixed: return ddgFixedLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
-        case .closest: return closestLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+        case .closest:
+            if canUseClosestLogic {
+                return closestLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+            } else {
+                return oldLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+            }
         }
     }
 
@@ -240,31 +249,30 @@ struct UserAgent {
         }
         let resolvedApplicationComponent = !omitApplicationComponent ? applicationComponent : nil
 
-        var defaultSafari = closestLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
-        // If the UA should have DuckDuckGo append it prior to Safari
-        if let resolvedApplicationComponent {
-            if let index = defaultSafari.range(of: "Safari")?.lowerBound {
-                defaultSafari.insert(contentsOf: resolvedApplicationComponent + " ", at: index)
+        if canUseClosestLogic {
+            var defaultSafari = closestLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+            // If the UA should have DuckDuckGo append it prior to Safari
+            if let resolvedApplicationComponent {
+                if let index = defaultSafari.range(of: "Safari")?.lowerBound {
+                    defaultSafari.insert(contentsOf: resolvedApplicationComponent + " ", at: index)
+                }
             }
+            return defaultSafari
+        } else {
+            return oldLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
         }
-        return defaultSafari
     }
 
     private func closestLogic(forUrl url: URL?,
                               isDesktop: Bool,
                               privacyConfig: PrivacyConfiguration) -> String {
-        guard shouldUseUpdatedLogic else {
-            return oldLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
-        }
-
         if isDesktop {
             return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15"
         }
-
         return "Mozilla/5.0 (" + deviceProfile + ") AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1"
     }
 
-    private var shouldUseUpdatedLogic: Bool {
+    private var canUseClosestLogic: Bool {
         guard let webKitVersion else { return false }
         return webKitVersion.versionCompare("605.1.15") != .orderedAscending
     }

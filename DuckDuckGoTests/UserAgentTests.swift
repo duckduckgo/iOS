@@ -377,10 +377,10 @@ final class UserAgentTests: XCTestCase {
                         }
                     ],
                     "closestUserAgent": {
-                        "versions": ["v350-1", "v360-1"]
+                        "versions": ["350", "360"]
                     },
                     "ddgFixedUserAgent": {
-                        "versions": ["v351-1", "v361-1"]
+                        "versions": ["351", "361"]
                     }
                 },
                 "exceptions": []
@@ -409,6 +409,14 @@ final class UserAgentTests: XCTestCase {
     func testWhenAtbMatchesVersionInDDGFixedUserAgentThenDDGFixedUAIsUsed() {
         let statisticsStore = MockStatisticsStore()
         statisticsStore.atb = "v361-1"
+        let testee = UserAgent(defaultAgent: DefaultAgent.mobile, statistics: statisticsStore)
+        let config = makePrivacyConfig(from: configWithVersions)
+        XCTAssertEqual(ExpectedAgent.mobileFixed, testee.agent(forUrl: Constants.url, isDesktop: false, privacyConfig: config))
+    }
+
+    func testWhenAtbWithoutDayComponentMatchesVersionInDDGFixedUserAgentThenDDGFixedUAIsUsed() {
+        let statisticsStore = MockStatisticsStore()
+        statisticsStore.atb = "v361"
         let testee = UserAgent(defaultAgent: DefaultAgent.mobile, statistics: statisticsStore)
         let config = makePrivacyConfig(from: configWithVersions)
         XCTAssertEqual(ExpectedAgent.mobileFixed, testee.agent(forUrl: Constants.url, isDesktop: false, privacyConfig: config))

@@ -197,11 +197,11 @@ struct UserAgent {
             url?.isPart(ofDomain: domain) ?? false
         }) { return ddgFixedLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig) }
 
-        if closestUserAgentVersions(forConfig: privacyConfig).contains(statistics.atb ?? "") {
+        if closestUserAgentVersions(forConfig: privacyConfig).contains(statistics.atbWeek ?? "") {
             return closestLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
         }
 
-        if ddgFixedUserAgentVersions(forConfig: privacyConfig).contains(statistics.atb ?? "") {
+        if ddgFixedUserAgentVersions(forConfig: privacyConfig).contains(statistics.atbWeek ?? "") {
             return ddgFixedLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
         }
 
@@ -341,4 +341,19 @@ struct UserAgent {
         return "\(Constants.desktopPrefixComponent) \(suffix) \(versionComponent)"
     }
     
+}
+
+private extension StatisticsStore {
+
+    var atbWeek: String? {
+        guard let atb else { return nil }
+        let trimmed = String(atb.dropFirst())
+
+        if let hyphenIndex = trimmed.firstIndex(of: "-") {
+            return String(trimmed.prefix(upTo: hyphenIndex))
+        } else {
+            return trimmed
+        }
+    }
+
 }

@@ -115,10 +115,6 @@ private enum SecClass: CaseIterable {
 
 class KeychainItemsDebugViewController: UITableViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         return SecClass.allCases.count
     }

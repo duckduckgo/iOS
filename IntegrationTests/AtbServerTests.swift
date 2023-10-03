@@ -37,11 +37,7 @@ class AtbServerTests: XCTestCase {
         loader = StatisticsLoader(statisticsStore: store)
         
     }
-    
-    override func tearDown() {
-        super.tearDown()
-    }
-    
+     
     func testExtiCall() {
 
         let waitForCompletion = expectation(description: "wait for completion")

@@ -71,8 +71,6 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var debugCell: UITableViewCell!
     @IBOutlet weak var voiceSearchCell: UITableViewCell!
     @IBOutlet weak var voiceSearchToggle: UISwitch!
-
-    fileprivate var onDidAppearAction: () -> Void = {}
     
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
@@ -178,13 +176,6 @@ class SettingsViewController: UITableViewController {
         tableView.layoutIfNeeded()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        onDidAppearAction()
-        onDidAppearAction = {}
-    }
-
     init?(coder: NSCoder,
           bookmarksDatabase: CoreDataDatabase,
           syncService: DDGSyncing,
@@ -202,22 +193,16 @@ class SettingsViewController: UITableViewController {
         fatalError("Not implemented")
     }
 
-    func openLoginsWhenPresented() {
-        onDidAppearAction = { [weak self] in
-            self?.showAutofill()
-        }
+    func openLogins() {
+        showAutofill()
     }
 
-    func openLoginsWhenPresented(accountDetails: SecureVaultModels.WebsiteAccount) {
-        onDidAppearAction = { [weak self] in
-            self?.showAutofillAccountDetails(accountDetails)
-        }
+    func openLogins(accountDetails: SecureVaultModels.WebsiteAccount) {
+        showAutofillAccountDetails(accountDetails)
     }
 
-    func openCookiePopupManagementWhenPresented() {
-        onDidAppearAction = { [weak self] in
-            self?.showCookiePopupManagement(animated: true)
-        }
+    func openCookiePopupManagement() {
+        showCookiePopupManagement(animated: true)
     }
 
     @IBSegueAction func onCreateRootDebugScreen(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> RootDebugViewController {
@@ -420,7 +405,7 @@ class SettingsViewController: UITableViewController {
         // This will be tidied up as part of https://app.asana.com/0/0/1205084446087078/f
         let rootViewController = NetworkProtectionRootViewController { [weak self] in
             self?.navigationController?.popViewController(animated: true)
-            let newRootViewController = NetworkProtectionRootViewController { }
+            let newRootViewController = NetworkProtectionRootViewController()
             self?.pushNetP(newRootViewController)
         }
         pushNetP(rootViewController)
@@ -542,10 +527,6 @@ class SettingsViewController: UITableViewController {
         } else {
             return super.tableView(tableView, heightForFooterInSection: section)
         }
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return super.tableView(tableView, titleForFooterInSection: section)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

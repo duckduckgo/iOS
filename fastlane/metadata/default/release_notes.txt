@@ -1,3 +1,4 @@
-Bug fixes and other improvements.
+- Fix issue that caused crashes for some iOS 15 users
+- Improved credential autofill on websites in Dutch, French, German, Italian, Spanish, and Swedish, making logging into accounts easier. More languages coming soon.
 
 Join our fully distributed team and help raise the standard of trust online! https://duckduckgo.com/hiring

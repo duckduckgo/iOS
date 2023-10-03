@@ -181,5 +181,5 @@ private class BrowserChromeDelegateMock: BrowserChromeDelegate {
 
     var omniBar: OmniBar! = OmniBar(frame: CGRect(x: 0, y: 0, width: 300, height: 30))
 
-    var tabsBar: UIView! = UIView()
+    var tabBarContainer: UIView = UIView()
 }

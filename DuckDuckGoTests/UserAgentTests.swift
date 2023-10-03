@@ -30,6 +30,8 @@ final class UserAgentTests: XCTestCase {
         static let tablet = "Mozilla/5.0 (iPad; CPU OS 12_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148"
         static let oldWebkitVersionMobile = "Mozilla/5.0 (iPhone; CPU iPhone OS 12_4 like Mac OS X) AppleWebKit/605.1.14 (KHTML, like Gecko) Mobile/15E148"
         static let newWebkitVersionMobile = "Mozilla/5.0 (iPhone; CPU iPhone OS 12_4 like Mac OS X) AppleWebKit/605.1.16 (KHTML, like Gecko) Mobile/15E148"
+        static let sameWebkitVersionMobile = "Mozilla/5.0 (iPhone; CPU iPhone OS 12_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148"
+
     }
     
     private struct ExpectedAgent {
@@ -41,6 +43,7 @@ final class UserAgentTests: XCTestCase {
         static let desktop = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.4 DuckDuckGo/7 Safari/605.1.15"
         static let oldWebkitVersionMobile = "Mozilla/5.0 (iPhone; CPU iPhone OS 12_4 like Mac OS X) AppleWebKit/605.1.14 (KHTML, like Gecko) Version/12.4 Mobile/15E148 DuckDuckGo/7 Safari/605.1.14"
         static let newWebkitVersionMobile = "Mozilla/5.0 (iPhone; CPU iPhone OS 12_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 DuckDuckGo/7 Safari/604.1"
+        static let sameWebkitVersionMobile = "Mozilla/5.0 (iPhone; CPU iPhone OS 12_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 DuckDuckGo/7 Safari/604.1"
 
         static let mobileNoApplication = "Mozilla/5.0 (iPhone; CPU iPhone OS 12_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.4 Mobile/15E148 Safari/605.1.15"
         
@@ -437,6 +440,12 @@ final class UserAgentTests: XCTestCase {
         let testee = UserAgent(defaultAgent: DefaultAgent.newWebkitVersionMobile)
         let config = makePrivacyConfig(from: ddgFixedConfig)
         XCTAssertEqual(ExpectedAgent.newWebkitVersionMobile, testee.agent(forUrl: Constants.url, isDesktop: false, privacyConfig: config))
+    }
+
+    func testWhenSameWebKitVersionThenFixedAgentUsed() {
+        let testee = UserAgent(defaultAgent: DefaultAgent.sameWebkitVersionMobile)
+        let config = makePrivacyConfig(from: ddgFixedConfig)
+        XCTAssertEqual(ExpectedAgent.sameWebkitVersionMobile, testee.agent(forUrl: Constants.url, isDesktop: false, privacyConfig: config))
     }
 
 }

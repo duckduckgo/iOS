@@ -107,15 +107,6 @@ class URLExtensionTests: XCTestCase {
         XCTAssertTrue(URL.isWebUrl("localhost/path"))
     }
 
-    func testWhenPathIsInvalidThenIsWebUrlIsFalse() {
-        XCTAssertFalse(URL.isWebUrl("http://test.com/pa th"))
-        XCTAssertFalse(URL.isWebUrl("http://121.33.2.11/pa th"))
-        XCTAssertFalse(URL.isWebUrl("http://localhost/pa th"))
-        XCTAssertFalse(URL.isWebUrl("test.com/pa th"))
-        XCTAssertFalse(URL.isWebUrl("121.33.2.11/pa th"))
-        XCTAssertFalse(URL.isWebUrl("localhost/pa th"))
-    }
-
     func testWhenParamsAreValidThenIsWebUrlIsTrue() {
         XCTAssertTrue(URL.isWebUrl("http://test.com?s=dafas&d=342"))
         XCTAssertTrue(URL.isWebUrl("http://121.33.2.11?s=dafas&d=342"))

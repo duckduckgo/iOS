@@ -312,8 +312,9 @@ extension MainViewController: TabsBarDelegate {
     }
     
     func tabsBarDidRequestFireEducationDialog(_ controller: TabsBarViewController) {
-        let spec = DaxDialogs.shared.fireButtonEducationMessage()
-        performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
+        if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
+            segueToActionSheetDaxDialogWithSpec(spec)
+        }
     }
     
     func tabsBarDidRequestTabSwitcher(_ controller: TabsBarViewController) {

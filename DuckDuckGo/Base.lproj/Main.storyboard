@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="C1X-Zd-UbA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="C1X-Zd-UbA">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -44,9 +43,6 @@
                             </containerView>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0vw-jR-X6Q" userLabel="Suggestion Tray">
                                 <rect key="frame" x="0.0" y="100" width="414" height="713"/>
-                                <connections>
-                                    <segue destination="j6c-LM-dZE" kind="embed" destinationCreationSelector="onCreateSuggestionTray:sender:segueIdentifier:" id="1ri-Fa-CEp"/>
-                                </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lJT-0B-l2J">
                                 <rect key="frame" x="0.0" y="100" width="414" height="0.0"/>
@@ -64,9 +60,6 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="vZY-9N-j4a"/>
                                 </constraints>
-                                <connections>
-                                    <segue destination="CcV-Al-EGm" kind="embed" id="Xv7-qN-uE5"/>
-                                </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nQT-PV-ULm" userLabel="Navigation Bar">
                                 <rect key="frame" x="0.0" y="48" width="414" height="52"/>
@@ -115,9 +108,6 @@
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Tabs"/>
                                         </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <segue destination="p9L-cF-4aL" kind="presentation" identifier="ShowTabs" destinationCreationSelector="onCreateTabSwitcher:sender:segueIdentifier:" modalPresentationStyle="overCurrentContext" id="v48-wg-SoN"/>
-                                        </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="hL8-s1-UNT"/>
                                     <barButtonItem title="Bookmarks" image="Book-24" id="M7u-mw-fly">
@@ -192,148 +182,13 @@
                         <outlet property="tabsButton" destination="K7o-WL-SC5" id="K5w-s3-8x3"/>
                         <outlet property="toolbar" destination="Krm-hA-s9u" id="JHv-PZ-ILs"/>
                         <outlet property="toolbarBottom" destination="UsQ-i7-pjr" id="nwd-gZ-QEh"/>
-                        <segue destination="Lcg-P1-w26" kind="presentation" identifier="instructions" modalPresentationStyle="overCurrentContext" id="vjb-jn-qZe"/>
-                        <segue destination="xj8-BF-A9c" kind="presentation" identifier="Settings" id="URp-Fv-PV5"/>
-                        <segue destination="Idd-9P-bE6" kind="presentation" identifier="ReportBrokenSite" modalPresentationStyle="pageSheet" id="Igb-19-s0y"/>
-                        <segue destination="0sP-vt-2ZT" kind="presentation" identifier="Bookmarks" id="jTg-q6-spe"/>
-                        <segue destination="HTt-o2-2gp" kind="presentation" identifier="DaxOnboarding" animates="NO" modalPresentationStyle="overFullScreen" id="eix-GD-QaT"/>
-                        <segue destination="CeD-SH-IsP" kind="presentation" identifier="ActionSheetDaxDialog" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="PjE-Cf-1P2"/>
-                        <segue destination="0sP-vt-2ZT" kind="presentation" identifier="BookmarksEditCurrent" id="lgJ-lb-xgS"/>
-                        <segue destination="0sP-vt-2ZT" kind="presentation" identifier="BookmarksEdit" id="IrO-EU-EzF"/>
-                        <segue destination="ER6-yn-Oo2" kind="presentation" identifier="Downloads" id="mfy-s9-JEe"/>
-                        <segue destination="xj8-BF-A9c" kind="presentation" identifier="SettingsToLogins" id="20e-p4-Vk3"/>
-                        <segue destination="xj8-BF-A9c" kind="presentation" identifier="SettingsToCookiePopupManagement" id="PBD-dW-rld"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2QN-Mc-SXu" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="218.40000000000001" y="-6.746626686656672"/>
         </scene>
-        <!--Bookmarks-->
-        <scene sceneID="538-OF-E2q">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Bookmarks" id="0sP-vt-2ZT" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1kp-XV-T5D" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-491" y="467"/>
-        </scene>
-        <!--TabsBar-->
-        <scene sceneID="Pln-26-dMp">
-            <objects>
-                <viewControllerPlaceholder storyboardName="TabSwitcher" referencedIdentifier="TabsBar" id="CcV-Al-EGm" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fQ6-fK-eXA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="815" y="-707"/>
-        </scene>
-        <!--HomeRow-->
-        <scene sceneID="ct1-fI-xYV">
-            <objects>
-                <viewControllerPlaceholder storyboardName="HomeRow" id="Lcg-P1-w26" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ymt-iC-XRD" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="826" y="-7"/>
-        </scene>
-        <!--DaxOnboarding-->
-        <scene sceneID="xHc-Wl-NUA">
-            <objects>
-                <viewControllerPlaceholder storyboardName="DaxOnboarding" id="HTt-o2-2gp" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tVd-3C-mpV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="941" y="83"/>
-        </scene>
-        <!--ActionSheetDaxDialog-->
-        <scene sceneID="Mey-L0-qHE">
-            <objects>
-                <viewControllerPlaceholder storyboardName="DaxOnboarding" referencedIdentifier="ActionSheetDaxDialog" id="CeD-SH-IsP" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zEK-ZP-MaO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="839" y="152"/>
-        </scene>
-        <!--Settings-->
-        <scene sceneID="bSV-mo-fgW">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Settings" id="xj8-BF-A9c" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="AdC-gU-UaA" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="376" y="537"/>
-        </scene>
-        <!--Downloads-->
-        <scene sceneID="5x5-HW-CdZ">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Downloads" id="ER6-yn-Oo2" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Lvu-5o-UKv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1018" y="536"/>
-        </scene>
-        <!--Feedback-->
-        <scene sceneID="DKk-fR-oH5">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Feedback" id="Idd-9P-bE6" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SaV-O6-7VA" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="661" y="537"/>
-        </scene>
-        <!--TabSwitcher-->
-        <scene sceneID="ylt-D6-E7x">
-            <objects>
-                <viewControllerPlaceholder storyboardName="TabSwitcher" id="p9L-cF-4aL" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="X9j-nR-zze" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-203" y="537"/>
-        </scene>
-        <!--Suggestion Tray View Controller-->
-        <scene sceneID="3rT-8z-smY">
-            <objects>
-                <viewController id="j6c-LM-dZE" customClass="SuggestionTrayViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="jEf-yR-5Dz">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="713"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IT2-Wd-hHA" userLabel="Background View">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="713"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TFZ-vQ-cny">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="713"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" priority="999" constant="908" id="Jcf-as-Vyd"/>
-                                    <constraint firstAttribute="width" priority="999" constant="1366" id="WZ3-ov-mqO"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="wcx-Zr-iiL"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="TFZ-vQ-cny" firstAttribute="centerX" secondItem="jEf-yR-5Dz" secondAttribute="centerX" id="CJK-qB-84i"/>
-                            <constraint firstItem="IT2-Wd-hHA" firstAttribute="centerY" secondItem="TFZ-vQ-cny" secondAttribute="centerY" id="IG8-Ea-7XE"/>
-                            <constraint firstItem="IT2-Wd-hHA" firstAttribute="height" secondItem="TFZ-vQ-cny" secondAttribute="height" id="NZg-Po-gRb"/>
-                            <constraint firstItem="IT2-Wd-hHA" firstAttribute="centerX" secondItem="TFZ-vQ-cny" secondAttribute="centerX" id="X4c-Xk-iK7"/>
-                            <constraint firstItem="IT2-Wd-hHA" firstAttribute="width" secondItem="TFZ-vQ-cny" secondAttribute="width" id="aDy-rO-vTf"/>
-                            <constraint firstItem="TFZ-vQ-cny" firstAttribute="height" secondItem="jEf-yR-5Dz" secondAttribute="height" id="gKT-Zt-2zV"/>
-                            <constraint firstItem="TFZ-vQ-cny" firstAttribute="top" secondItem="jEf-yR-5Dz" secondAttribute="top" id="hvs-HM-K9E"/>
-                            <constraint firstItem="TFZ-vQ-cny" firstAttribute="width" secondItem="jEf-yR-5Dz" secondAttribute="width" id="jpO-aL-TY6"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="backgroundView" destination="IT2-Wd-hHA" id="Trh-LE-XRH"/>
-                        <outlet property="containerView" destination="TFZ-vQ-cny" id="4LO-aD-chc"/>
-                        <outlet property="fullHeightConstraint" destination="gKT-Zt-2zV" id="nd3-q7-WXU"/>
-                        <outlet property="fullWidthConstraint" destination="jpO-aL-TY6" id="FTs-AN-EbR"/>
-                        <outlet property="topConstraint" destination="hvs-HM-K9E" id="6py-Of-EXG"/>
-                        <outlet property="variableHeightConstraint" destination="Jcf-as-Vyd" id="T4u-Od-GpQ"/>
-                        <outlet property="variableWidthConstraint" destination="WZ3-ov-mqO" id="hYf-8N-rhM"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wGS-tb-jWH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1400" y="-130"/>
-        </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="PBD-dW-rld"/>
-        <segue reference="IrO-EU-EzF"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="Add-24" width="24" height="24"/>
         <image name="Book-24" width="24" height="24"/>
@@ -342,8 +197,5 @@
         <image name="Fire" width="19" height="24"/>
         <image name="Logo" width="128" height="128"/>
         <image name="TextDuckDuckGo" width="162" height="21"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

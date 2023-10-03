@@ -1,6 +1,6 @@
 name: PR Checks
 
-on: 
+on:
   push:
     branches: [ develop, "release/**" ]
   pull_request:
@@ -13,13 +13,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out the code
-      uses: actions/checkout@v3
-
-    - name: Run SwiftLint on all files
-      uses: norio-nomura/action-swiftlint@3.2.1
+    - uses: actions/checkout@v3
+    - name: SwiftLint
+      uses: docker://norionomura/swiftlint:0.53.0
       with:
-        args: --strict --force-exclude
+        args: swiftlint --reporter github-actions-logging --strict
 
   shellcheck:
 

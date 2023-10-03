@@ -175,6 +175,9 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "Όταν το DuckDuckGo εντοπίζει αναδυόμενα παράθυρα συναίνεσης για cookies σε ιστότοπους που επισκέπτεστε, μπορούμε να προσπαθήσουμε να ρυθμίσουμε αυτόματα τις προτιμήσεις σας για τα cookies ώστε να ελαχιστοποιήσετε τα cookies και να μεγιστοποιήσετε το απόρρητο. Έπειτα μπορείτε να κλείσετε τα αναδυόμενα παράθυρα. Ορισμένοι ιστότοποι δεν παρέχουν επιλογή για διαχείριση των προτιμήσεων cookies, οπότε μπορούμε μόνο να αποκρύψουμε αναδυόμενα παράθυρα όπως αυτά.";
 
+/* Text link to email protection website */
+"autofill.enable.email.protection" = "Ενεργοποίηση Email Protection";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Απόκρυψη κωδικού πρόσβασης";
 
@@ -352,6 +355,36 @@
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Δημιουργία δικού μου";
 
+/* Text for the confirmation message displayed when a user tries activate a Private Email Address */
+"autofill.private.email.mesage.activate.confirm.content" = "Τα email που αποστέλλονται στο %@ θα προωθούνται ξανά στα εισερχόμενά σας.";
+
+/* Title for the confirmation message  displayed when a user tries activate a Private Email Address */
+"autofill.private.email.mesage.activate.confirm.title" = "Εκ νέου ενεργοποίηση της ιδιωτικής Duck Address;";
+
+/* Mesasage displayed when a private email address is active */
+"autofill.private.email.mesage.active" = "Ενεργό";
+
+/* Text for the confirmation message displayed when a user tries deactivate a Private Email Address */
+"autofill.private.email.mesage.deactivate.confirm.content" = "Τα email που αποστέλλονται στο %@ δεν θα προωθούνται πλέον στα εισερχόμενά σας.";
+
+/* Title for the confirmation message displayed when a user tries deactivate a Private Email Address */
+"autofill.private.email.mesage.deactivate.confirm.title" = "Απενεργοποίηση της ιδιωτικής Duck Address;";
+
+/* Mesasage displayed when a user tries to manage a private email address but the service is not available, returns an error or network is down */
+"autofill.private.email.mesage.error" = "Η διαχείριση της διεύθυνσης αυτής δεν είναι διαθέσιμη προσωρινά";
+
+/* Mesasage displayed when a private email address is inactive */
+"autofill.private.email.mesage.inactive" = "Απενεργοποιήθηκε";
+
+/* Button text for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.button" = "Κατάλαβα";
+
+/* Content for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.content" = "Μπορείτε ακόμα να διαχειρίζεστε αυτήν τη διεύθυνση Duck Address από τα email που λαμβάνετε από αυτήν στα προσωπικά εισερχόμενά σας.";
+
+/* Title for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.title" = "Το ιδιωτικό όνομα χρήστη Duck Address καταργήθηκε";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.message" = "Οι συνδέσεις αποθηκεύονται με ασφάλεια στη συσκευή σας στο μενού Συνδέσεις.";
 
@@ -359,7 +392,7 @@
 "autofill.save-login.new-user.title" = "Θέλετε να αποθηκεύσει το DuckDuckGo τη σύνδεσή σας;";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.not-now.CTA" = "Όχι τώρα";
+"autofill.save-login.not-now.CTA" = "Να μην αποθηκευτεί";
 
 /* Confirm CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.save.CTA" = "Αποθήκευση σύνδεσης";
@@ -375,6 +408,9 @@
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Εμφάνιση κωδικού πρόσβασης";
+
+/* Message displayed to the user when they are logged out of Email protection. */
+"autofill.signin.to.manage" = "%@ για διαχείριση των διευθύνσεών σας Duck Address σε αυτήν τη συσκευή.";
 
 /* Message displayed on modal asking for the user to update the password */
 "autofill.update-password.message" = "Το DuckDuckGo θα ενημερώσει αυτήν την αποθηκευμένη σύνδεση στη συσκευή σας.";
@@ -669,6 +705,9 @@
 
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Άρχισε η λήψη για το αρχείο %@";
+
+/* No comment provided by engineer. */
+"Duck Address" = "Duck Address";
 
 /* Email protection service offered by DuckDuckGo */
 "email-protection" = "Προστασία email";

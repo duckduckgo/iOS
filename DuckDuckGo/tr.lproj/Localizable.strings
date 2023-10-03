@@ -175,6 +175,9 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "DuckDuckGo ziyaret ettiğiniz sitelerde çerez onayı açılır pencereleri tespit ederse çerez tercihlerinizi çerezleri en aza indirecek ve gizliliği en üst düzeye çıkaracak şekilde otomatik olarak ayarlayabilir ve ardından açılır pencereleri kapatabiliriz. Bazı siteler çerez tercihlerini yönetmek için bir seçenek sunmaz. Bu nedenle yalnızca bu gibi açılır pencereleri gizleyebiliriz.";
 
+/* Text link to email protection website */
+"autofill.enable.email.protection" = "Email Protection'ı Etkinleştir";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Parolayı gizle";
 
@@ -352,6 +355,36 @@
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Kendiminkini Oluştur";
 
+/* Text for the confirmation message displayed when a user tries activate a Private Email Address */
+"autofill.private.email.mesage.activate.confirm.content" = "%@ adresine gönderilen e-postalar tekrar gelen kutunuza yönlendirilecektir.";
+
+/* Title for the confirmation message  displayed when a user tries activate a Private Email Address */
+"autofill.private.email.mesage.activate.confirm.title" = "Özel Duck Address yeniden etkinleştirilsin mi?";
+
+/* Mesasage displayed when a private email address is active */
+"autofill.private.email.mesage.active" = "Aktif";
+
+/* Text for the confirmation message displayed when a user tries deactivate a Private Email Address */
+"autofill.private.email.mesage.deactivate.confirm.content" = "%@ adresine gönderilen e-postalar artık gelen kutunuza yönlendirilmeyecektir.";
+
+/* Title for the confirmation message displayed when a user tries deactivate a Private Email Address */
+"autofill.private.email.mesage.deactivate.confirm.title" = "Özel Duck Address devre dışı bırakılsın mı?";
+
+/* Mesasage displayed when a user tries to manage a private email address but the service is not available, returns an error or network is down */
+"autofill.private.email.mesage.error" = "Bu adresin yönetimi geçici olarak kullanılamıyor";
+
+/* Mesasage displayed when a private email address is inactive */
+"autofill.private.email.mesage.inactive" = "Devre dışı bırakıldı";
+
+/* Button text for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.button" = "Anladım";
+
+/* Content for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.content" = "Bu Duck Address'i kişisel hesabınıza gönderilen e-postalardan yönetmeye devam edebilirsiniz.";
+
+/* Title for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.title" = "Özel Duck Address kullanıcı adı kaldırıldı";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.message" = "Giriş bilgileri cihazınızdaki Giriş Bilgileri menüsünde güvenli bir şekilde saklanır.";
 
@@ -359,7 +392,7 @@
 "autofill.save-login.new-user.title" = "DuckDuckGo'nun Girişinizi kaydetmesini istiyor musunuz?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.not-now.CTA" = "Şimdi Değil";
+"autofill.save-login.not-now.CTA" = "Kaydetme";
 
 /* Confirm CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.save.CTA" = "Girişi Kaydet";
@@ -376,6 +409,9 @@
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Parolayı göster";
 
+/* Message displayed to the user when they are logged out of Email protection. */
+"autofill.signin.to.manage" = "Bu cihazdaki Duck Address'leri yönetmek için %@.";
+
 /* Message displayed on modal asking for the user to update the password */
 "autofill.update-password.message" = "DuckDuckGo, cihazınızdaki bu kayıtlı Giriş bilgisini güncelleyecektir.";
 
@@ -389,7 +425,7 @@
 "autofill.update-username.save.CTA" = "Kullanıcı Adını Güncelle";
 
 /* Title displayed on modal asking for the user to update the username */
-"autofill.update-usernamr.title" = "Kullanıcı Adı Güncellensin mi?";
+"autofill.update-usernamr.title" = "Kullanıcı adı güncellensin mi?";
 
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Yer İmi ekle";
@@ -660,6 +696,9 @@
 
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "%@ için indirme başlatıldı";
+
+/* No comment provided by engineer. */
+"Duck Address" = "Duck Address";
 
 /* Email protection service offered by DuckDuckGo */
 "email-protection" = "E-posta Koruması";

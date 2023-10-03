@@ -398,7 +398,7 @@
 "autoconsent.info.header" = "Når DuckDuckGo registrerer pop op-vinduer med samtykke til brug af cookies på websteder, du besøger, kan vi automatisk indstille dine cookiepræferencer til at minimere cookies og maksimere privatlivets fred og derefter lukke pop op-vinduer. Nogle websteder giver ikke mulighed for at administrere cookiepræferencer, så vi kan kun skjule pop op-vinduer som disse.";
 
 /* Text link to email protection website */
-"autofill.enable.email.protection" = "Enable Email Protection";
+"autofill.enable.email.protection" = "Aktivér Email Protection";
 
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Skjul adgangskode";
@@ -578,34 +578,34 @@
 "autofill.password-generation-prompt.use-own-password.cta" = "Opret min egen";
 
 /* Text for the confirmation message displayed when a user tries activate a Private Email Address */
-"autofill.private.email.mesage.activate.confirm.content" = "Emails sent to %@ will again be forwarded to your inbox.";
+"autofill.private.email.mesage.activate.confirm.content" = "E-mails sendt til %@ vil igen blive videresendt til din indbakke.";
 
 /* Title for the confirmation message  displayed when a user tries activate a Private Email Address */
-"autofill.private.email.mesage.activate.confirm.title" = "Reactivate Private Duck Address?";
+"autofill.private.email.mesage.activate.confirm.title" = "Genaktivere privat Duck Address?";
 
 /* Mesasage displayed when a private email address is active */
-"autofill.private.email.mesage.active" = "Active";
+"autofill.private.email.mesage.active" = "Aktiv";
 
 /* Text for the confirmation message displayed when a user tries deactivate a Private Email Address */
-"autofill.private.email.mesage.deactivate.confirm.content" = "Emails sent to %@ will no longer be forwarded to your inbox.";
+"autofill.private.email.mesage.deactivate.confirm.content" = "E-mails sendt til %@ vil ikke længere blive videresendt til din indbakke.";
 
 /* Title for the confirmation message displayed when a user tries deactivate a Private Email Address */
-"autofill.private.email.mesage.deactivate.confirm.title" = "Deactivate Private Duck Address?";
+"autofill.private.email.mesage.deactivate.confirm.title" = "Deaktiver privat Duck Address?";
 
 /* Mesasage displayed when a user tries to manage a private email address but the service is not available, returns an error or network is down */
-"autofill.private.email.mesage.error" = "Management of this address is temporarily unavailable";
+"autofill.private.email.mesage.error" = "Administration af denne adresse er midlertidigt utilgængelig.";
 
 /* Mesasage displayed when a private email address is inactive */
-"autofill.private.email.mesage.inactive" = "Deactivated";
+"autofill.private.email.mesage.inactive" = "Deaktiveret";
 
 /* Button text for the alert dialog telling the user an updated username is no longer a private email address */
-"autofill.removed.duck.address.button" = "Got it";
+"autofill.removed.duck.address.button" = "Forstået";
 
 /* Content for the alert dialog telling the user an updated username is no longer a private email address */
-"autofill.removed.duck.address.content" = "You can still manage this Duck Address from emails received from it in your personal inbox.";
+"autofill.removed.duck.address.content" = "Du kan stadig administrere denne Duck Address fra e-mails modtaget fra den i din personlige indbakke.";
 
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
-"autofill.removed.duck.address.title" = "Private Duck Address username was removed";
+"autofill.removed.duck.address.title" = "Privat Duck Address-brugernavn blev fjernet";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.message" = "Logins gemmes sikkert på din enhed i menuen Logins.";
@@ -614,7 +614,7 @@
 "autofill.save-login.new-user.title" = "Skal DuckDuckGo gemme dit login?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.not-now.CTA" = "Ikke nu";
+"autofill.save-login.not-now.CTA" = "Gem ikke";
 
 /* Confirm CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.save.CTA" = "Gem login";
@@ -632,7 +632,7 @@
 "autofill.show-password" = "Vis adgangskode";
 
 /* Message displayed to the user when they are logged out of Email protection. */
-"autofill.signin.to.manage" = "%@ to manage your Duck Addresses on this device.";
+"autofill.signin.to.manage" = "%@ for at administrere dine Duck-adresser på denne enhed.";
 
 /* Message displayed on modal asking for the user to update the password */
 "autofill.update-password.message" = "DuckDuckGo opdaterer dette gemte login på din enhed.";

@@ -363,7 +363,7 @@ class MainViewController: UIViewController {
         let frame = self.findInPageView.frame
         UIView.animate(withDuration: duration, delay: 0, options: animationCurve, animations: {
             self.findInPageView.frame = CGRect(x: 0, y: y - frame.height, width: frame.width, height: frame.height)
-            self.viewCoordinator.navigationBarContainer.updateConstraintsIfNeeded()
+            self.view.layoutIfNeeded()
         }, completion: nil)
 
     }
@@ -920,11 +920,9 @@ class MainViewController: UIViewController {
         notificationView.setTitle(text: title)
         notificationView.setMessage(text: message)
         viewCoordinator.notificationBarContainer.addSubview(notificationView)
-        // TODO viewCoordinator.constraints.notificationContainerTop.constant = -notificationView.frame.size.height
         self.notificationView = notificationView
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            // TODO self.viewCoordinator.constraints.notificationContainerTop.constant = 0
             self.viewCoordinator.constraints.notificationContainerHeight.constant = notificationView.frame.size.height
             UIView.animate(withDuration: 0.3) {
                 self.view.layoutIfNeeded()
@@ -935,12 +933,11 @@ class MainViewController: UIViewController {
 
     func hideNotification() {
 
-        // TODO viewCoordinator.constraints.notificationContainerTop.constant = -(notificationView?.frame.size.height ?? 0)
         viewCoordinator.constraints.notificationContainerHeight.constant = 0
         UIView.animate(withDuration: 0.5, animations: {
-            self.view.layoutIfNeeded()
+            self.notificationView?.frame = self.notificationView?.frame.offsetBy(dx: 0, dy: -100) ?? .zero
+            self.view.layoutSubviews()
         }, completion: { _ in
-            // TODO self.viewCoordinator.constraints.notificationContainerTop.constant = 0
             self.notificationView?.removeFromSuperview()
         })
 

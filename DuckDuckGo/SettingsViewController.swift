@@ -40,6 +40,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var defaultBrowserCell: UITableViewCell!
     @IBOutlet weak var themeAccessoryText: UILabel!
     @IBOutlet weak var fireButtonAnimationAccessoryText: UILabel!
+    @IBOutlet weak var addressBarPositionCell: UITableViewCell!
     @IBOutlet weak var addressBarPositionAccessoryText: UILabel!
     @IBOutlet weak var appIconCell: UITableViewCell!
     @IBOutlet weak var appIconImageView: UIImageView!
@@ -120,6 +121,10 @@ class SettingsViewController: UITableViewController {
         return UIDevice.current.userInterfaceIdiom != .pad
     }
 
+    private var shouldShowAddressBarPositionCell: Bool {
+        return UIDevice.current.userInterfaceIdiom != .pad
+    }
+
     private lazy var shouldShowNetPCell: Bool = {
 #if NETWORK_PROTECTION
         if #available(iOS 15, *) {
@@ -139,7 +144,7 @@ class SettingsViewController: UITableViewController {
         configureSyncCell()
         configureThemeCellAccessory()
         configureFireButtonAnimationCellAccessory()
-        configureAddressBarPositionCellAccessory()
+        configureAddressBarPositionCell()
         configureTextSizeCell()
         configureDisableAutocompleteToggle()
         configureShowFullSiteAddressToggle()
@@ -169,7 +174,7 @@ class SettingsViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         configureFireButtonAnimationCellAccessory()
-        configureAddressBarPositionCellAccessory()
+        configureAddressBarPositionCell()
         configureTextSizeCell()
         configureAutoClearCellAccessory()
         configureRememberLogins()
@@ -273,7 +278,8 @@ class SettingsViewController: UITableViewController {
         fireButtonAnimationAccessoryText.text = appSettings.currentFireButtonAnimation.descriptionText
     }
 
-    private func configureAddressBarPositionCellAccessory() {
+    private func configureAddressBarPositionCell() {
+        addressBarPositionCell.isHidden = !shouldShowAddressBarPositionCell
         addressBarPositionAccessoryText.text = appSettings.currentAddressBarPosition.descriptionText
     }
 

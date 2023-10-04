@@ -1046,6 +1046,7 @@
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="addressBarPositionAccessoryText" destination="opn-JO-idF" id="Njn-dO-8L9"/>
+                        <outlet property="addressBarPositionCell" destination="nRo-eV-ONw" id="kas-7F-lYp"/>
                         <outlet property="appIconCell" destination="Cx1-3k-5Be" id="K1h-fS-Pyl"/>
                         <outlet property="appIconImageView" destination="TR8-uN-EC6" id="dSq-qP-rWl"/>
                         <outlet property="authenticationToggle" destination="24S-Ml-5cq" id="5By-WD-2tX"/>

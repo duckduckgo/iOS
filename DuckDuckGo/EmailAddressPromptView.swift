@@ -130,9 +130,9 @@ private struct EmailAddressRow: View {
             }
 
         }
-
         .background(Color(designSystemColor: .container))
         .cornerRadius(Const.Size.cornerRadius)
+        .frame(maxWidth: Const.Size.maxWidth)
     }
 
 }
@@ -154,6 +154,7 @@ private enum Const {
         static let rowVerticalSpacing: CGFloat = 3.0
         static let rowVerticalPadding: CGFloat = 11.0
         static let cornerRadius: CGFloat = 8.0
+        static let maxWidth: CGFloat = 480.0
     }
 }
 

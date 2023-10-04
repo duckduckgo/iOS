@@ -49,7 +49,7 @@ final class SaveLoginViewModel: ObservableObject {
     @UserDefaultsWrapper(key: .autofillFirstTimeUser, defaultValue: true)
     private var autofillFirstTimeUser: Bool
 
-    private let numberOfRejectionsToTurnOffAutofill = 3
+    private let numberOfRejectionsToTurnOffAutofill = 2
     private let maximumPasswordDisplayCount = 40
     private let credentialManager: SaveAutofillLoginManagerProtocol
     private let appSettings: AppSettings

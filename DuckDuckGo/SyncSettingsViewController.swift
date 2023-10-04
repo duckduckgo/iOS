@@ -48,6 +48,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     }
 
     var cancellables = Set<AnyCancellable>()
+    
 
     // For some reason, on iOS 14, the viewDidLoad wasn't getting called so do some setup here
     convenience init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
@@ -174,7 +175,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
         mapDevices(registeredDevices)
         dismissPresentedViewController()
         let devices = self.rootView.model.devices.filter { !knownDevices.contains($0.id) && !$0.isThisDevice }
-        showDeviceConnected(devices)
+        showDeviceConnected(devices, optionsModel: self.rootView.model)
     }
 
     func startPolling() {
@@ -211,8 +212,9 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                     .dropFirst()
                     .prefix(1)
                     .sink { [weak self] devices in
-                        self?.dismissPresentedViewController()
-                        self?.showDeviceConnected(devices.filter { !$0.isThisDevice })
+                        guard let self else { return }
+                        self.dismissPresentedViewController()
+                        self.showDeviceConnected(devices.filter { !$0.isThisDevice }, optionsModel: self.rootView.model)
                     }.store(in: &cancellables)
                 try await syncService.transmitRecoveryKey(connectKey)
                 return true

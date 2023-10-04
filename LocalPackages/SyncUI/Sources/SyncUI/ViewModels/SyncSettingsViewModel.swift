@@ -28,7 +28,7 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
     func showSyncWithAnotherDeviceEnterText()
     func showRecoveryPDF()
     func shareRecoveryPDF()
-    func createAccountAndStartSyncing()
+    func createAccountAndStartSyncing(optionsViewModel: SyncSettingsViewModel)
     func confirmAndDisableSync() async -> Bool
     func confirmAndDeleteAllData() async -> Bool
     func copyCode()
@@ -149,7 +149,7 @@ public class SyncSettingsViewModel: ObservableObject {
         setupFinishedState = model.state
         switch model.state {
         case .turnOn:
-            delegate?.createAccountAndStartSyncing()
+            delegate?.createAccountAndStartSyncing(optionsViewModel: self)
 
         case .syncWithAnotherDevice:
             delegate?.showSyncWithAnotherDevice()
@@ -164,7 +164,7 @@ public class SyncSettingsViewModel: ObservableObject {
 
     public func codeCollectionCancelled() {
         if setupFinishedState == .syncWithAnotherDevice {
-            delegate?.createAccountAndStartSyncing()
+            delegate?.createAccountAndStartSyncing(optionsViewModel: self)
         } else {
             isBusy = false
         }
@@ -172,7 +172,7 @@ public class SyncSettingsViewModel: ObservableObject {
 
     public func startSyncPressed() {
         isBusy = true
-        delegate?.createAccountAndStartSyncing()
+        delegate?.createAccountAndStartSyncing(optionsViewModel: self)
     }
 
 }

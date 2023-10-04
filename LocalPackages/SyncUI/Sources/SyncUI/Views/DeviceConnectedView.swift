@@ -30,11 +30,13 @@ public struct DeviceConnectedView: View {
     @State var showRecoveryPDF = false
 
     let saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel
+    @ObservedObject var optionsViewModel: SyncSettingsViewModel
     let devices: [SyncSettingsViewModel.Device]
 
-    public init(_ saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel, devices: [SyncSettingsViewModel.Device]) {
+    public init(_ saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel, optionsViewModel: SyncSettingsViewModel, devices: [SyncSettingsViewModel.Device]) {
         self.saveRecoveryKeyViewModel = saveRecoveryKeyViewModel
         self.devices = devices
+        self.optionsViewModel = optionsViewModel
     }
 
     var title: String {
@@ -78,7 +80,25 @@ public struct DeviceConnectedView: View {
                 Text("\(message) \(Text(devicesOnMessageText).bold())")
                     .multilineTextAlignment(.center)
 
-//                OptionsView(isUnifiedFavoritesEnabled: isUnifiedFavoritesEnabled)
+                VStack {
+                    Spacer(minLength: 71)
+                    Text("Options".capitalized)
+                        .font(.system(size: 12))
+                    Toggle(isOn: $optionsViewModel.isUnifiedFavoritesEnabled) {
+                        HStack(spacing: 16) {
+                            Image("SyncAllDevices")
+                            VStack(alignment: .leading) {
+                                Text("Unified favorites")
+                                    .foregroundColor(.primary)
+                                Text("Use the same favorites on all devices. Switch off to maintain separate favorites for mobile and desktop.")
+                                    .font(.system(size: 13))
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                    .padding(16)
+                    .background(RoundedRectangle(cornerRadius: 10).foregroundColor(.black.opacity(0.10)))
+                }
             }
             .padding(.horizontal, 20)
         } foregroundContent: {

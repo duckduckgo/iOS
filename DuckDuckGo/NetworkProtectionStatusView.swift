@@ -89,9 +89,6 @@ struct NetworkProtectionStatusView: View {
                     .scaledToFit()
                     .frame(height: 96)
                     .padding(8)
-                    .if(statusModel.shouldShowError) {
-                        $0.rotationEffect(Angle.degrees(statusModel.shouldShowError ? 180 : 0))
-                    }
                 Text(statusModel.headerTitle)
                     .font(.system(size: 17, weight: .semibold))
                     .multilineTextAlignment(.center)

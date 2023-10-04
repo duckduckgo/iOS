@@ -115,6 +115,10 @@ class SettingsViewController: UITableViewController {
         return featureFlagger.isFeatureOn(.sync)
     }
 
+    private var shouldShowTextSizeCell: Bool {
+        return UIDevice.current.userInterfaceIdiom != .pad
+    }
+
     private lazy var shouldShowNetPCell: Bool = {
 #if NETWORK_PROTECTION
         if #available(iOS 15, *) {
@@ -272,7 +276,7 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configureTextSizeCell() {
-        textSizeCell.isHidden = UIDevice.current.userInterfaceIdiom == .pad
+        textSizeCell.isHidden = !shouldShowTextSizeCell
         textSizeAccessoryText.text = "\(appSettings.textSize)%"
     }
 
@@ -510,6 +514,7 @@ class SettingsViewController: UITableViewController {
         return UITableView.automaticDimension
     }
     
+    /// Only use this to hide the header if the entire section can be conditionally hidden.
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if syncSectionIndex == section && !shouldShowSyncCell {
             return CGFloat.leastNonzeroMagnitude
@@ -522,6 +527,7 @@ class SettingsViewController: UITableViewController {
         }
     }
     
+    /// Only use this to hide the footer if the entire section can be conditionally hidden.
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if syncSectionIndex == section && !shouldShowSyncCell {
             return CGFloat.leastNonzeroMagnitude
@@ -529,18 +535,16 @@ class SettingsViewController: UITableViewController {
             return CGFloat.leastNonzeroMagnitude
         } else if debugSectionIndex == section && !shouldShowDebugCell {
             return CGFloat.leastNonzeroMagnitude
-        } else if moreFromDDGSectionIndex == section && !shouldShowNetPCell {
-            return CGFloat.leastNonzeroMagnitude
         } else {
             return super.tableView(tableView, heightForFooterInSection: section)
         }
     }
     
+    /// Only use this if the *last cell* in the section is to be conditionally hidden in order to retain the section rounding.
+    ///  If your cell is not the last you don't need to modify the number of rows.
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let rows = super.tableView(tableView, numberOfRowsInSection: section)
-        if section == appearanceSectionIndex && textSizeCell.isHidden {
-            return rows - 1
-        } else if section == moreFromDDGSectionIndex && !shouldShowNetPCell {
+        if section == moreFromDDGSectionIndex && !shouldShowNetPCell {
             return rows - 1
         } else {
             return rows

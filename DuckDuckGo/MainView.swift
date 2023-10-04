@@ -360,8 +360,6 @@ class MainViewCoordinator {
 
     func moveAddressBarToPosition(_ position: AddressBarPosition) {
         guard position != addressBarPosition else { return }
-
-        print(#function, position.rawValue)
         switch position {
         case .top:
             toggleAddressBar(true)

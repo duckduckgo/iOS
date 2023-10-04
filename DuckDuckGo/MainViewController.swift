@@ -311,6 +311,7 @@ class MainViewController: UIViewController {
 
     @objc func onAddressBarPositionChanged() {
         viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
+        // TODO update any other view elements
     }
 
     @objc func onShowFullSiteAddressChanged() {
@@ -347,6 +348,9 @@ class MainViewController: UIViewController {
             }
         }
 
+        let navBarOffset = max(0, intersection.height - toolbarHeight)
+        self.viewCoordinator.constraints.navigationBarContainerBottom.constant = -navBarOffset
+
         animateForKeyboard(userInfo: userInfo, y: view.frame.height - height)
     }
     
@@ -359,6 +363,7 @@ class MainViewController: UIViewController {
         let frame = self.findInPageView.frame
         UIView.animate(withDuration: duration, delay: 0, options: animationCurve, animations: {
             self.findInPageView.frame = CGRect(x: 0, y: y - frame.height, width: frame.width, height: frame.height)
+            self.viewCoordinator.navigationBarContainer.updateConstraintsIfNeeded()
         }, completion: nil)
 
     }
@@ -507,7 +512,7 @@ class MainViewController: UIViewController {
         omniBar.frame = viewCoordinator.navigationBarContainer.bounds
         viewCoordinator.navigationBarContainer.addSubview(omniBar)
     }
-
+    
     fileprivate func attachHomeScreen() {
         viewCoordinator.logoContainer.isHidden = false
         findInPageView.isHidden = true
@@ -915,11 +920,11 @@ class MainViewController: UIViewController {
         notificationView.setTitle(text: title)
         notificationView.setMessage(text: message)
         viewCoordinator.notificationBarContainer.addSubview(notificationView)
-        viewCoordinator.constraints.notificationContainerTop.constant = -notificationView.frame.size.height
+        // TODO viewCoordinator.constraints.notificationContainerTop.constant = -notificationView.frame.size.height
         self.notificationView = notificationView
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.viewCoordinator.constraints.notificationContainerTop.constant = 0
+            // TODO self.viewCoordinator.constraints.notificationContainerTop.constant = 0
             self.viewCoordinator.constraints.notificationContainerHeight.constant = notificationView.frame.size.height
             UIView.animate(withDuration: 0.3) {
                 self.view.layoutIfNeeded()
@@ -930,12 +935,12 @@ class MainViewController: UIViewController {
 
     func hideNotification() {
 
-        viewCoordinator.constraints.notificationContainerTop.constant = -(notificationView?.frame.size.height ?? 0)
+        // TODO viewCoordinator.constraints.notificationContainerTop.constant = -(notificationView?.frame.size.height ?? 0)
         viewCoordinator.constraints.notificationContainerHeight.constant = 0
         UIView.animate(withDuration: 0.5, animations: {
             self.view.layoutIfNeeded()
         }, completion: { _ in
-            self.viewCoordinator.constraints.notificationContainerTop.constant = 0
+            // TODO self.viewCoordinator.constraints.notificationContainerTop.constant = 0
             self.notificationView?.removeFromSuperview()
         })
 

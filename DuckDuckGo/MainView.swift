@@ -19,6 +19,8 @@
 
 import UIKit
 
+// swiftlint:disable line_length
+
 class MainViewFactory {
 
     private let coordinator: MainViewCoordinator
@@ -167,18 +169,24 @@ extension MainViewFactory {
     private func constrainProgress() {
         let progress = coordinator.progress!
         let navigationBarContainer = coordinator.navigationBarContainer!
+
+        coordinator.constraints.progressBarTop = progress.constrainView(navigationBarContainer, by: .top, to: .bottom)
+        coordinator.constraints.progressBarBottom = progress.constrainView(navigationBarContainer, by: .bottom, to: .top)
+
         NSLayoutConstraint.activate([
             progress.constrainView(navigationBarContainer, by: .trailing),
             progress.constrainView(navigationBarContainer, by: .leading),
             progress.constrainAttribute(.height, to: 3),
-            progress.constrainView(navigationBarContainer, by: .top, to: .bottom),
+            coordinator.constraints.progressBarTop,
         ])
     }
 
     private func constrainNavigationBarContainer() {
         let navigationBarContainer = coordinator.navigationBarContainer!
+        let toolbar = coordinator.toolbar!
 
         coordinator.constraints.navigationBarContainerTop = navigationBarContainer.constrainView(superview.safeAreaLayoutGuide, by: .top)
+        coordinator.constraints.navigationBarContainerBottom = navigationBarContainer.constrainView(toolbar, by: .bottom, to: .top)
 
         NSLayoutConstraint.activate([
             navigationBarContainer.constrainView(superview, by: .centerX),
@@ -204,11 +212,16 @@ extension MainViewFactory {
     private func constrainStatusBackground() {
         let statusBackground = coordinator.statusBackground!
         let navigationBarContainer = coordinator.navigationBarContainer!
+
+        coordinator.constraints.statusBackgroundToNavigationBarContainerBottom = statusBackground.constrainView(navigationBarContainer, by: .bottom)
+
+        coordinator.constraints.statusBackgroundBottomToSafeAreaTop = statusBackground.constrainView(coordinator.superview.safeAreaLayoutGuide, by: .bottom, to: .top)
+
         NSLayoutConstraint.activate([
             statusBackground.constrainView(superview, by: .width),
             statusBackground.constrainView(superview, by: .centerX),
             statusBackground.constrainView(superview, by: .top),
-            statusBackground.constrainView(navigationBarContainer, by: .bottom),
+            coordinator.constraints.statusBackgroundToNavigationBarContainerBottom,
         ])
     }
 
@@ -216,8 +229,10 @@ extension MainViewFactory {
         let notificationBarContainer = coordinator.notificationBarContainer!
         let contentContainer = coordinator.contentContainer!
         let navigationBarContainer = coordinator.navigationBarContainer!
+        let statusBackground = coordinator.statusBackground!
 
-        coordinator.constraints.notificationContainerTop = notificationBarContainer.constrainView(navigationBarContainer, by: .top, to: .bottom)
+        coordinator.constraints.notificationContainerTopToNavigationBar = notificationBarContainer.constrainView(navigationBarContainer, by: .top, to: .bottom)
+        coordinator.constraints.notificationContainerTopToStatusBackground = notificationBarContainer.constrainView(statusBackground, by: .top, to: .bottom)
         coordinator.constraints.notificationContainerHeight = notificationBarContainer.constrainAttribute(.height, to: 0)
 
         NSLayoutConstraint.activate([
@@ -225,7 +240,7 @@ extension MainViewFactory {
             notificationBarContainer.constrainView(superview, by: .centerX),
             coordinator.constraints.notificationContainerHeight,
             notificationBarContainer.constrainView(contentContainer, by: .bottom, to: .top),
-            coordinator.constraints.notificationContainerTop,
+            coordinator.constraints.notificationContainerTopToNavigationBar,
         ])
     }
 
@@ -309,6 +324,9 @@ class MainViewCoordinator {
 
     let constraints = Constraints()
 
+    // The default after creating the hiearchy is top
+    var addressBarPosition: AddressBarPosition = .top
+
     fileprivate init(superview: UIView) {
         self.superview = superview
     }
@@ -326,31 +344,48 @@ class MainViewCoordinator {
     class Constraints {
 
         var navigationBarContainerTop: NSLayoutConstraint!
+        var navigationBarContainerBottom: NSLayoutConstraint!
         var toolbarBottom: NSLayoutConstraint!
         var contentContainerTop: NSLayoutConstraint!
         var tabBarContainerTop: NSLayoutConstraint!
-        var notificationContainerTop: NSLayoutConstraint!
+        var notificationContainerTopToNavigationBar: NSLayoutConstraint!
+        var notificationContainerTopToStatusBackground: NSLayoutConstraint!
         var notificationContainerHeight: NSLayoutConstraint!
+        var progressBarTop: NSLayoutConstraint!
+        var progressBarBottom: NSLayoutConstraint!
+        var statusBackgroundToNavigationBarContainerBottom: NSLayoutConstraint!
+        var statusBackgroundBottomToSafeAreaTop: NSLayoutConstraint!
 
     }
 
     func moveAddressBarToPosition(_ position: AddressBarPosition) {
+        guard position != addressBarPosition else { return }
+
         print(#function, position.rawValue)
         switch position {
         case .top:
-            moveAddressBarToTop()
-
+            toggleAddressBar(true)
         case .bottom:
-            moveAddressBarToBottom()
+            toggleAddressBar(false)
         }
+
+        addressBarPosition = position
     }
 
-    func moveAddressBarToTop() {
-        print(#function)
-    }
+    func toggleAddressBar(_ top: Bool) {
+        constraints.navigationBarContainerTop.isActive = top
+        constraints.navigationBarContainerBottom.isActive = !top
 
-    func moveAddressBarToBottom() {
-        print(#function)
+        constraints.progressBarTop.isActive = top
+        constraints.progressBarBottom.isActive = !top
+
+        constraints.notificationContainerTopToNavigationBar.isActive = top
+        constraints.notificationContainerTopToStatusBackground.isActive = !top
+
+        constraints.statusBackgroundToNavigationBarContainerBottom.isActive = top
+        constraints.statusBackgroundBottomToSafeAreaTop.isActive = !top
     }
 
 }
+
+// swiftlint:enable line_length

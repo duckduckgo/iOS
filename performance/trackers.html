@@ -4,21 +4,21 @@
 	const trackers = 100;
 	const interval = 1000 / 10;
 
-	var token = null;
-	var loaded = 0;
+	let token = null;
+	let loaded = 0;
 
 	function addTracker() {
 
-		var trackers = document.getElementById("trackers");
-		var counter = document.getElementById("counter");
-		var holder = document.createElement("div");
+		const trackers = document.getElementById("trackers");
+		const counter = document.getElementById("counter");
+		const holder = document.createElement("div");
 
 		if (loaded++ >= 100) {
 			counter.innerHTML = "Done";
 			clearTimeout(token);			
 		} else {
 			counter.innerHTML = `${loaded}`;
-			var script = document.createElement("script");
+			let script = document.createElement("script");
 			script.src = "//www.googletagmanager.com/gtmx.js";
 			holder.append(script);
 		}

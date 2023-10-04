@@ -43,7 +43,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
                 self.rootView.model.syncEnabled(recoveryCode: recoveryCode)
                 self.refreshDevices()
-                self.showRecoveryPDF()
+                self.showDeviceConnected([], isUnifiedFavoritesEnabled: model.$isUnifiedFavoritesEnabled)
             } catch {
                 handleError(error)
             }
@@ -53,7 +53,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     @MainActor
     func handleError(_ error: Error) {
         // Work out how to handle this properly later
-        assertionFailure(error.localizedDescription)
+//        assertionFailure(error.localizedDescription)
     }
 
     func showSyncSetup() {
@@ -79,7 +79,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
 
     func showRecoverData() {
-        collectCode(showConnectMode: true)
+        collectCode(showConnectMode: false)
     }
 
     func showDeviceConnected(_ devices: [SyncSettingsViewModel.Device]) {
@@ -117,6 +117,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         : UINavigationController(rootViewController: controller)
 
         navController.overrideUserInterfaceStyle = .dark
+        navController.setNeedsStatusBarAppearanceUpdate()
         navController.modalPresentationStyle = .fullScreen
         navigationController?.present(navController, animated: true) {
             self.checkCameraPermission(model: model)

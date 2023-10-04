@@ -35,7 +35,7 @@ struct UserText {
 
     static let connectDeviceInstructions = "Go to Settings > Sync & Back Up in the DuckDuckGo App on a different device and scan the QR code to sync."
 
-    static let recoveryModeInstructions = "Scan the QR code on your Recovery PDF, or another synced device, to recover your synced data."
+    static let recoveryModeInstructions = "Scan the QR code from your Recovery PDF or in the DuckDuckGo app under Settings > Sync & Back Up on a signed-in device."
 
     static let validatingCode = "Validating code"
     static let validatingCodeFailed = "Invalid code."
@@ -46,7 +46,10 @@ struct UserText {
     static let viewQRCodeTitle = "Your Sync Code"
 
     static let deviceSyncedTitle = "Device Synced!"
+    static let firstDeviceSyncedMessage = "You can sync this device’s bookmarks and Logins with additional devices at any time from the Sync & Back Up menu in Settings."
     static let deviceSyncedMessage = "Your bookmarks and Logins are now syncing with "
+    static let multipleDevicesSyncedMessage = "Your bookmarks and Logins are now syncing on "
+    static let wordDevices = "devices"
 
     static let saveRecoveryTitle = "Save Recovery Key"
     static let saveRecoveryButton = "Save As PDF"
@@ -70,6 +73,7 @@ struct UserText {
     static let manuallyEnterCodeTitle = "Enter Text Code"
 
     static let showQRCodeLabel = "Show QR Code"
+    static let showQRCodeSubLabel = "Display code to scan with another device"
 
     static let recoverDataButton = "Recover Your Synced Data"
 

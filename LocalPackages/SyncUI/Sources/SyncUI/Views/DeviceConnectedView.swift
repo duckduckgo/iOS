@@ -27,7 +27,6 @@ public struct DeviceConnectedView: View {
     var isCompact: Bool {
         verticalSizeClass == .compact
     }
-
     @State var showRecoveryPDF = false
 
     let saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel
@@ -38,6 +37,33 @@ public struct DeviceConnectedView: View {
         self.devices = devices
     }
 
+    var title: String {
+        if devices.isEmpty {
+            return "All Set!"
+        }
+        return UserText.deviceSyncedTitle
+    }
+
+    var message: String {
+        if devices.isEmpty {
+            return "You can sync this device’s bookmarks and Logins with additional devices at any time from the Sync & Back Up menu in Settings."
+        }
+        if devices.count == 1 {
+            return UserText.deviceSyncedMessage + devices[0].name
+        }
+        return UserText.multipleDevicesSyncedMessage
+    }
+
+    var devicesOnMessageText: String {
+        if devices.isEmpty {
+            return ""
+        }
+        if devices.count == 1 {
+            return devices[0].name
+        }
+        return "\(devices.count + 1) " + UserText.wordDevices
+    }
+
     @ViewBuilder
     func deviceSyncedView() -> some View {
         UnderflowContainer {
@@ -45,40 +71,14 @@ public struct DeviceConnectedView: View {
                 Image("Sync-Start-128")
                     .padding(.bottom, 20)
 
-                Text(UserText.deviceSyncedTitle)
+                Text(title)
                     .font(.system(size: 28, weight: .bold))
                     .padding(.bottom, 24)
 
-//                ZStack {
-//                    RoundedRectangle(cornerRadius: 8)
-//                        .stroke(.black.opacity(0.14))
-//
-//                    ScrollView {
-//                        VStack(spacing: 0) {
-//                            ForEach(devices.indices, id: \.self) { deviceIndex in
-//
-//                                HStack(spacing: 0) {
-//                                    Image(systemName: "checkmark.circle")
-//                                        .padding(.horizontal, 18)
-//                                    Text(devices[deviceIndex].name)
-//                                    Spacer()
-//                                }
-//                                .frame(height: 44)
-//
-//                                if deviceIndex + 1 < devices.count {
-//                                    Divider()
-//                                        .padding(.leading, 52)
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//                .padding(.bottom, 20)
-
-                Text(UserText.deviceSyncedMessage)
-                    .lineLimit(nil)
+                Text("\(message) \(Text(devicesOnMessageText).bold())")
                     .multilineTextAlignment(.center)
 
+//                OptionsView(isUnifiedFavoritesEnabled: isUnifiedFavoritesEnabled)
             }
             .padding(.horizontal, 20)
         } foregroundContent: {

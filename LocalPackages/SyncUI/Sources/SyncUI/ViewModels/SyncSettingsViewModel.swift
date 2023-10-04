@@ -170,4 +170,9 @@ public class SyncSettingsViewModel: ObservableObject {
         }
     }
 
+    public func startSyncPressed() {
+        isBusy = true
+        delegate?.createAccountAndStartSyncing()
+    }
+
 }

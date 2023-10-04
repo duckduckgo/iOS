@@ -49,8 +49,7 @@ public struct ScanOrPasteCodeView: View {
                 }
             } else {
                 Rectangle()
-                    // White so that the blur / transparent doesn't become too dark
-                    .fill(.white)
+                    .fill(.black)
             }
         }
         .ignoresSafeArea()
@@ -125,6 +124,7 @@ public struct ScanOrPasteCodeView: View {
             .lineLimit(nil)
             .multilineTextAlignment(.center)
             .font(.system(size: 12, weight: .regular))
+            .foregroundColor(.white.opacity(0.6))
             .padding(.vertical)
 
     }
@@ -137,7 +137,12 @@ public struct ScanOrPasteCodeView: View {
                 NavigationLink {
                     PasteCodeView(model: model)
                 } label: {
-                    Label(UserText.manuallyEnterCodeLabel, image: "SyncKeyboardIcon")
+                    HStack(spacing: 16) {
+                        Image("SyncKeyboardIcon") // Replace with your image name
+                        Text(UserText.manuallyEnterCodeLabel)
+                            .font(.system(size: 15, weight: .bold))
+                            .foregroundColor(.white.opacity(0.84))
+                    }
                 }
             }
             Section {
@@ -145,7 +150,19 @@ public struct ScanOrPasteCodeView: View {
                     NavigationLink {
                         ConnectModeView(model: model)
                     } label: {
-                        Label(UserText.showQRCodeLabel, image: "SyncQRCodeIcon")
+                        HStack(spacing: 16) {
+                            Image("SyncQRCodeIcon") // Replace with your image name
+
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(UserText.showQRCodeLabel)
+                                    .font(.system(size: 15, weight: .bold))
+                                    .foregroundColor(.white.opacity(0.84))
+                                Text(UserText.showQRCodeSubLabel)
+                                    .font(.system(size: 12))
+                                    .foregroundColor(.white.opacity(0.6))
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        }
                     }
                 }
             }
@@ -189,7 +206,6 @@ public struct ScanOrPasteCodeView: View {
                     Rectangle() // Also acts as the blur for the camera
                         .fill(.clear)
                         .frame(height: g.safeAreaInsets.top)
-                        .regularMaterialBackground()
 
                     ZStack {
                         // Background in case fullscreen camera view doesn't work
@@ -210,10 +226,10 @@ public struct ScanOrPasteCodeView: View {
 
                     ZStack {
                         Rectangle() // Also acts as the blur for the camera
-                            .fill(.clear)
+                            .fill(.black)
                             .regularMaterialBackground()
 
-                        VStack {
+                        VStack(spacing: 20) {
                             instructions()
                                 .padding(.horizontal, 20)
 
@@ -221,7 +237,6 @@ public struct ScanOrPasteCodeView: View {
                                 buttons()
                             }
                             .ignoresSafeArea()
-                            .hideScrollContentBackground()
                             .disableScrolling()
                         }
                         .frame(maxWidth: Constants.maxFullScreenWidth)

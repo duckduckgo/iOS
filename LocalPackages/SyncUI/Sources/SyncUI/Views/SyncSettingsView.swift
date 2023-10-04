@@ -146,35 +146,6 @@ public struct SyncSettingsView: View {
     }
 
     @ViewBuilder
-    func options() -> some View {
-        Section {
-
-            Toggle(isOn: $model.isFaviconsSyncEnabled) {
-                HStack(spacing: 16) {
-                    Image("SyncFavicons")
-                    Text("Sync Bookmark Icons").foregroundColor(.primary)
-                }
-            }
-
-            Toggle(isOn: $model.isUnifiedFavoritesEnabled) {
-                HStack(spacing: 16) {
-                    Image("SyncAllDevices")
-                    VStack(alignment: .leading) {
-                        Text("Unified favorites")
-                            .foregroundColor(.primary)
-                        Text("Use the same favorites on all devices. Switch off to maintain separate favorites for mobile and desktop.")
-                            .font(.system(size: 13))
-                            .foregroundColor(.secondary)
-                    }
-                }
-            }
-
-        } header: {
-            Text("Options")
-        }
-    }
-
-    @ViewBuilder
     func saveRecoveryPDF() -> some View {
         Section {
             Button(UserText.settingsSaveRecoveryPDFButton) {
@@ -219,31 +190,32 @@ public struct SyncSettingsView: View {
 
     public var body: some View {
         List {
-            workInProgress()
-
-            syncWithAnotherDeviceView()
-
-            singleDeviceSetUpView()
-
-            recoverYourDataView()
-
-            footerView()
-
-
-            syncToggle()
-
             if model.isSyncEnabled {
+
+                turnOffSync()
+
                 devices()
 
                 syncNewDevice()
 
-                options()
+                OptionsView(isUnifiedFavoritesEnabled: $model.isUnifiedFavoritesEnabled)
 
                 saveRecoveryPDF()
 
                 deleteAllData()
+
+            } else {
+
+                workInProgress()
+
+                syncWithAnotherDeviceView()
+
+                singleDeviceSetUpView()
+
+                recoverYourDataView()
+
+                footerView()
             }
-            
         }
         .navigationTitle(UserText.syncTitle)
         .applyListStyle()
@@ -253,7 +225,6 @@ public struct SyncSettingsView: View {
 
     @ViewBuilder
     func syncWithAnotherDeviceView() -> some View {
-        let linkBlue: Color = Color(red: 0.22, green: 0.41, blue: 0.94)
         Section {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
@@ -266,24 +237,30 @@ public struct SyncSettingsView: View {
                 Image("Sync-Pair-96")
                 
             }
-            Text("Scan QR Code")
-                .font(.system(size: 15, weight: .regular))
-                .foregroundColor(linkBlue)
-                .onTapGesture {
-                    model.delegate?.showSyncWithAnotherDevice()
+            Button("Scan QR Code") {
+                model.delegate?.showSyncWithAnotherDevice()
+            }
+            Button("Enter Text Code") {
+                model.delegate?.showSyncWithAnotherDeviceEnterText()
+            }
+        }
+    }
+
+    @ViewBuilder
+    func turnOffSync() -> some View {
+        Section {
+            if model.isBusy {
+                SwiftUI.ProgressView()
+            } else {
+                Button("Turn Off Sync & Back Up") {
+                    model.disableSync()
                 }
-            Text("Enter Text Code")
-                .font(.system(size: 15, weight: .regular))
-                .foregroundColor(linkBlue)
-                .onTapGesture {
-                    model.delegate?.showSyncWithAnotherDeviceEnterText()
-                }
+            }
         }
     }
 
     @ViewBuilder
     func singleDeviceSetUpView() -> some View {
-        let linkBlue: Color = Color(red: 0.22, green: 0.41, blue: 0.94)
         Section {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
@@ -296,19 +273,22 @@ public struct SyncSettingsView: View {
                 Image("Device-Mobile-Upload-96")
 
             }
-            Text("Start Sync & Back Up")
-                .font(.system(size: 15, weight: .regular))
-                .foregroundColor(linkBlue)
+            if model.isBusy {
+                SwiftUI.ProgressView()
+            } else {
+                Button("Start Sync & Back Up") {
+                    model.startSyncPressed()
+                }
+            }
         }
     }
 
     @ViewBuilder
     func recoverYourDataView() -> some View {
-        let linkBlue: Color = Color(red: 0.22, green: 0.41, blue: 0.94)
         Section {
-            Text("Recover Your Data")
-                .font(.system(size: 15, weight: .regular))
-                .foregroundColor(linkBlue)
+            Button("Recover Your Data") {
+                model.delegate?.showRecoverData()
+            }
         }
     }
 
@@ -328,4 +308,29 @@ extension View {
     @ViewBuilder func modifier(@ViewBuilder _ closure: (Self) -> some View) -> some View {
         closure(self)
     }
+}
+
+
+public struct OptionsView: View {
+    @Binding var isUnifiedFavoritesEnabled: Bool
+    public var body: some View {
+        Section {
+            Toggle(isOn: $isUnifiedFavoritesEnabled) {
+                HStack(spacing: 16) {
+                    Image("SyncAllDevices")
+                    VStack(alignment: .leading) {
+                        Text("Unified favorites")
+                            .foregroundColor(.primary)
+                        Text("Use the same favorites on all devices. Switch off to maintain separate favorites for mobile and desktop.")
+                            .font(.system(size: 13))
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
+
+        } header: {
+            Text("Options")
+        }
+    }
+
 }

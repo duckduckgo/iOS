@@ -29,30 +29,39 @@ public struct SyncSettingsView: View {
         self.model = model
     }
 
-    @ViewBuilder
-    func syncToggle() -> some View {
-        Section {
-            HStack {
-                Text(UserText.syncTitle)
-                Spacer()
+    public var body: some View {
+        List {
+            if model.isSyncEnabled {
 
-                if model.isBusy {
-                    SwiftUI.ProgressView()
-                } else {
-                    Toggle("", isOn: Binding(get: {
-                        return model.isSyncEnabled
-                    }, set: { enabled in
-                        if enabled {
-                            model.enableSync()
-                        } else {
-                            model.disableSync()
-                        }
-                    }))
-                }
+                turnOffSync()
+
+                devices()
+
+                syncNewDevice()
+
+                OptionsView(isUnifiedFavoritesEnabled: $model.isUnifiedFavoritesEnabled)
+
+                saveRecoveryPDF()
+
+                deleteAllData()
+
+            } else {
+
+                workInProgress()
+
+                syncWithAnotherDeviceView()
+
+                singleDeviceSetUpView()
+
+                recoverYourDataView()
+
+                footerView()
             }
-        } footer: {
-            Text(UserText.syncSettingsInfo)
         }
+        .navigationTitle(UserText.syncTitle)
+        .applyListStyle()
+        .environmentObject(model)
+
     }
 
     @ViewBuilder
@@ -188,60 +197,25 @@ public struct SyncSettingsView: View {
 
     }
 
-    public var body: some View {
-        List {
-            if model.isSyncEnabled {
-
-                turnOffSync()
-
-                devices()
-
-                syncNewDevice()
-
-                OptionsView(isUnifiedFavoritesEnabled: $model.isUnifiedFavoritesEnabled)
-
-                saveRecoveryPDF()
-
-                deleteAllData()
-
-            } else {
-
-                workInProgress()
-
-                syncWithAnotherDeviceView()
-
-                singleDeviceSetUpView()
-
-                recoverYourDataView()
-
-                footerView()
-            }
-        }
-        .navigationTitle(UserText.syncTitle)
-        .applyListStyle()
-        .environmentObject(model)
-
-    }
-
     @ViewBuilder
     func syncWithAnotherDeviceView() -> some View {
         Section {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Sync with Another Device")
+                    Text(UserText.syncWithAnotherDeviceTitle)
                         .font(.system(size: 15, weight: .bold))
-                    Text("Securely sync bookmarks and Logins between your devices.")
+                    Text(UserText.syncWithAnotherDeviceMessage)
                         .font(.system(size: 15, weight: .regular))
                 }
                 Spacer()
                 Image("Sync-Pair-96")
                 
             }
-            Button("Scan QR Code") {
-                model.delegate?.showSyncWithAnotherDevice()
+            Button(UserText.scanQRCode) {
+                model.scanQRCode()
             }
-            Button("Enter Text Code") {
-                model.delegate?.showSyncWithAnotherDeviceEnterText()
+            Button(UserText.enterTextCode) {
+                model.showEnterTextView()
             }
         }
     }
@@ -252,7 +226,7 @@ public struct SyncSettingsView: View {
             if model.isBusy {
                 SwiftUI.ProgressView()
             } else {
-                Button("Turn Off Sync & Back Up") {
+                Button(UserText.turnSyncOff) {
                     model.disableSync()
                 }
             }
@@ -264,9 +238,9 @@ public struct SyncSettingsView: View {
         Section {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Single-Device Setup")
+                    Text(UserText.singleDeviceSetUpTitle)
                         .font(.system(size: 15, weight: .bold))
-                    Text("Set up this device now, sync with other devices later.")
+                    Text(UserText.singleDeviceSetUpInstruction)
                         .font(.system(size: 15, weight: .regular))
                 }
                 Spacer()
@@ -276,7 +250,7 @@ public struct SyncSettingsView: View {
             if model.isBusy {
                 SwiftUI.ProgressView()
             } else {
-                Button("Start Sync & Back Up") {
+                Button(UserText.turnSyncOn) {
                     model.startSyncPressed()
                 }
             }
@@ -286,8 +260,8 @@ public struct SyncSettingsView: View {
     @ViewBuilder
     func recoverYourDataView() -> some View {
         Section {
-            Button("Recover Your Data") {
-                model.delegate?.showRecoverData()
+            Button(UserText.recoverYourData) {
+                model.showRecoverDataView()
             }
         }
     }
@@ -295,7 +269,7 @@ public struct SyncSettingsView: View {
     @ViewBuilder
     func footerView() -> some View {
         Section {} footer: {
-            Text("Your data is end-to-end encrypted, and DuckDuckGo does not have access to the decryption key.")
+            Text(UserText.syncSettingsFooter)
                 .font(.system(size: 12, weight: .regular))
                 .foregroundColor(.secondary)
         }
@@ -319,9 +293,9 @@ public struct OptionsView: View {
                 HStack(spacing: 16) {
                     Image("SyncAllDevices")
                     VStack(alignment: .leading) {
-                        Text("Unified favorites")
+                        Text(UserText.unifiedFavoritesTitle)
                             .foregroundColor(.primary)
-                        Text("Use the same favorites on all devices. Switch off to maintain separate favorites for mobile and desktop.")
+                        Text(UserText.unifiedFavoritesInstruction)
                             .font(.system(size: 13))
                             .foregroundColor(.secondary)
                     }
@@ -329,7 +303,7 @@ public struct OptionsView: View {
             }
 
         } header: {
-            Text("Options")
+            Text(UserText.options)
         }
     }
 

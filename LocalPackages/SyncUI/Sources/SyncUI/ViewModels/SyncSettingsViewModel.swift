@@ -22,7 +22,6 @@ import UIKit
 
 public protocol SyncManagementViewModelDelegate: AnyObject {
 
-    func showSyncSetup()
     func showRecoverData()
     func showSyncWithAnotherDevice()
     func showSyncWithAnotherDeviceEnterText()
@@ -81,17 +80,9 @@ public class SyncSettingsViewModel: ObservableObject {
     @Published var isBusy = false
     @Published var recoveryCode = ""
 
-
-    var setupFinishedState: TurnOnSyncViewModel.Result?
-
     public weak var delegate: SyncManagementViewModelDelegate?
 
     public init() { }
-
-    func enableSync() {
-        isBusy = true
-        delegate!.showSyncSetup()
-    }
 
     func disableSync() {
         isBusy = true
@@ -125,6 +116,14 @@ public class SyncSettingsViewModel: ObservableObject {
         delegate?.showSyncWithAnotherDevice()
     }
 
+    func showEnterTextView() {
+        delegate?.showSyncWithAnotherDeviceEnterText()
+    }
+
+    func showRecoverDataView() {
+        delegate?.showRecoverData()
+    }
+
     func createEditDeviceModel(_ device: Device) -> EditDeviceViewModel {
         return EditDeviceViewModel(device: device) { [weak self] newValue in
             self?.delegate?.updateDeviceName(newValue.name)
@@ -137,37 +136,10 @@ public class SyncSettingsViewModel: ObservableObject {
         }
     }
 
-    // MARK: Called by the view controller
-
     public func syncEnabled(recoveryCode: String) {
         isBusy = false
         isSyncEnabled = true
         self.recoveryCode = recoveryCode
-    }
-
-    public func setupFinished(_ model: TurnOnSyncViewModel) {
-        setupFinishedState = model.state
-        switch model.state {
-        case .turnOn:
-            delegate?.createAccountAndStartSyncing(optionsViewModel: self)
-
-        case .syncWithAnotherDevice:
-            delegate?.showSyncWithAnotherDevice()
-
-        case .recoverData:
-            delegate?.showRecoverData()
-
-        default:
-            isBusy = false
-        }
-    }
-
-    public func codeCollectionCancelled() {
-        if setupFinishedState == .syncWithAnotherDevice {
-            delegate?.createAccountAndStartSyncing(optionsViewModel: self)
-        } else {
-            isBusy = false
-        }
     }
 
     public func startSyncPressed() {

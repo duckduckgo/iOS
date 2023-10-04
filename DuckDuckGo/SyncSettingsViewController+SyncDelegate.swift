@@ -60,19 +60,19 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         assertionFailure(error.localizedDescription)
     }
 
-    func showSyncSetup() {
-        let model = TurnOnSyncViewModel { [weak self] in
-            self?.dismissPresentedViewController()
-            // Handle the finished logic in the closing of the view controller so that we also handle the
-            //  user dismissing it (cancel, swipe down, etc)
-        }
-
-        let controller = DismissibleHostingController(rootView: TurnOnSyncView(model: model)) { [weak self] in
-            self?.rootView.model.setupFinished(model)
-        }
-
-        navigationController?.present(controller, animated: true)
-    }
+//    func showSyncSetup() {
+//        let model = TurnOnSyncViewModel { [weak self] in
+//            self?.dismissPresentedViewController()
+//            // Handle the finished logic in the closing of the view controller so that we also handle the
+//            //  user dismissing it (cancel, swipe down, etc)
+//        }
+//
+//        let controller = DismissibleHostingController(rootView: TurnOnSyncView(model: model)) { [weak self] in
+//            self?.rootView.model.setupFinished(model)
+//        }
+//
+//        navigationController?.present(controller, animated: true)
+//    }
 
     func showSyncWithAnotherDevice() {
         collectCode(showConnectMode: syncService.account == nil)

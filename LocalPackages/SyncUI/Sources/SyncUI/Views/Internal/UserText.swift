@@ -27,11 +27,26 @@ struct UserText {
     static let turnOnButton = "Turn on Sync"
     static let turnOnMessage = "This will save an encrypted backup of your bookmarks and Autofill logins on DuckDuckGo’s servers, which can be synced with your other devices.\n\nThe decryption key is stored on your device and cannot be read by DuckDuckGo."
 
-    static let syncWithAnotherDeviceTitle = "Sync Another Device?"
-    static let syncWithAnotherDeviceMessage = "Your bookmarks and Autofill logins will be backed up! Would you like to sync another device now?\n\nIf you’ve already set up Sync on another device, this will allow you to combine bookmarks and Autofill logins from both devices into a single backup."
+    static let syncWithAnotherDeviceTitle = "Sync with Another Device"
+    static let syncWithAnotherDeviceMessage = "Securely sync bookmarks and Logins between your devices."
     static let syncWithAnotherDeviceButton = "Sync Another Device"
 
     static let recoveryMessage = "If you lose access to your devices, you will need this code to recover your synced data."
+
+    static let scanQRCode = "Scan QR Code"
+    static let enterTextCode = "Enter Text Code"
+    static let turnSyncOff = "Turn Off Sync & Back Up"
+
+    static let singleDeviceSetUpTitle = "Single-Device Setup"
+    static let singleDeviceSetUpInstruction = "Set up this device now, sync with other devices later."
+    static let turnSyncOn = "Start Sync & Back Up"
+    static let recoverYourData = "Recover Your Data"
+
+    static let options = "Options"
+    static let unifiedFavoritesTitle = "Unified favorites"
+    static let unifiedFavoritesInstruction = "Use the same favorites on all devices. Switch off to maintain separate favorites for mobile and desktop."
+
+    static let syncSettingsFooter = "Your data is end-to-end encrypted, and DuckDuckGo does not have access to the decryption key."
 
     static let connectDeviceInstructions = "Go to Settings > Sync & Back Up in the DuckDuckGo App on a different device and scan the QR code to sync."
 

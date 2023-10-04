@@ -175,6 +175,9 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "Når DuckDuckGo oppdager popup-vinduer om samtykke til informasjonskapsler på nettsteder du besøker, kan vi automatisk angi innstillingene for å minimere informasjonskapslene og maksimere personvernet, og deretter lukke popup-vinduene. Noen nettsteder tilbyr ikke noe alternativ for å administrere preferanser for informasjonskapsler, så slike popup-vinduer kan vi bare skjule.";
 
+/* Text link to email protection website */
+"autofill.enable.email.protection" = "Aktiver e-postbeskyttelse";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Skjul passord";
 
@@ -341,25 +344,55 @@
 "autofill.logins.search.no-results.title" = "Ingen resultater";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Passord blir lagret i pålogginger.";
+"autofill.password-generation-prompt.subtitle" = "Passord lagres trygt på enheten din i påloggingsmenyen.";
 
 /* Title for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.title" = "Vil du bruke et generert passord fra DuckDuckGo?";
+"autofill.password-generation-prompt.title" = "Vil du bruke et sterkt passord fra DuckDuckGo?";
 
 /* Button title choosing to use the suggested generated password for creating a login */
-"autofill.password-generation-prompt.use-generated-password.cta" = "Bruk generert passord";
+"autofill.password-generation-prompt.use-generated-password.cta" = "Bruk sterkt passord";
 
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Opprett eget passord";
 
+/* Text for the confirmation message displayed when a user tries activate a Private Email Address */
+"autofill.private.email.mesage.activate.confirm.content" = "E-post som sendes til %@, blir videresendt til innboksen din igjen.";
+
+/* Title for the confirmation message  displayed when a user tries activate a Private Email Address */
+"autofill.private.email.mesage.activate.confirm.title" = "Vil du aktivere privat Duck Address på nytt?";
+
+/* Mesasage displayed when a private email address is active */
+"autofill.private.email.mesage.active" = "Aktiv";
+
+/* Text for the confirmation message displayed when a user tries deactivate a Private Email Address */
+"autofill.private.email.mesage.deactivate.confirm.content" = "E-post som sendes til %@, blir ikke lenger videresendt til innboksen din.";
+
+/* Title for the confirmation message displayed when a user tries deactivate a Private Email Address */
+"autofill.private.email.mesage.deactivate.confirm.title" = "Vil du deaktivere privat Duck Address?";
+
+/* Mesasage displayed when a user tries to manage a private email address but the service is not available, returns an error or network is down */
+"autofill.private.email.mesage.error" = "Administrasjon av denne adressen er midlertidig utilgjengelig.";
+
+/* Mesasage displayed when a private email address is inactive */
+"autofill.private.email.mesage.inactive" = "Deaktivert";
+
+/* Button text for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.button" = "Den er grei";
+
+/* Content for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.content" = "Du kan fortsatt administrere denne Duck-adressen fra e-poster du mottar fra den i din personlige innboks.";
+
+/* Title for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.title" = "Brukernavn for privat Duck-adresse ble fjernet";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Pålogginger lagres trygt på enheten din og kan administreres i påloggingsmenyen i innstillinger.";
+"autofill.save-login.new-user.message" = "Pålogginger lagres trygt på enheten din i påloggingsmenyen.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vil du at DuckDuckGo skal lagre påloggingen din?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.not-now.CTA" = "Ikke nå";
+"autofill.save-login.not-now.CTA" = "Ikke lagre";
 
 /* Confirm CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.save.CTA" = "Lagre påloggingen";
@@ -375,6 +408,9 @@
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Vis passord";
+
+/* Message displayed to the user when they are logged out of Email protection. */
+"autofill.signin.to.manage" = "%@ for å administrere Duck-adressene dine på denne enheten.";
 
 /* Message displayed on modal asking for the user to update the password */
 "autofill.update-password.message" = "DuckDuckGo oppdaterer denne lagrede påloggingen på enheten din.";
@@ -660,6 +696,9 @@
 
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Nedlasting av %@ har startet";
+
+/* No comment provided by engineer. */
+"Duck Address" = "Duck-adresse";
 
 /* Email protection service offered by DuckDuckGo */
 "email-protection" = "E-postbeskyttelse";

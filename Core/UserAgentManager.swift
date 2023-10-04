@@ -85,8 +85,16 @@ public class DefaultUserAgentManager: UserAgentManager {
 }
 
 struct UserAgent {
+
+    private enum DefaultPolicy: String {
+
+        case ddg
+        case ddgFixed
+        case closest
+
+    }
     
-    private struct Constants {
+    private enum Constants {
         // swiftlint:disable line_length
         static let fallbackWekKitVersion = "605.1.15"
         static let fallbackSafariComponent = "Safari/\(fallbackWekKitVersion)"
@@ -96,6 +104,16 @@ struct UserAgent {
         
         static let uaOmitSitesConfigKey = "omitApplicationSites"
         static let uaOmitDomainConfigKey = "domain"
+
+        static let defaultPolicyConfigKey = "defaultPolicy"
+        static let ddgDefaultSitesConfigKey = "ddgDefaultSites"
+        static let ddgFixedSitesConfigKey = "ddgFixedSites"
+
+        static let closestUserAgentConfigKey = "closestUserAgent"
+        static let ddgFixedUserAgentConfigKey = "ddgFixedUserAgent"
+
+        static let uaVersionsKey = "versions"
+        static let uaStateKey = "state"
         // swiftlint:enable line_length
     }
     
@@ -110,12 +128,15 @@ struct UserAgent {
     private let versionComponent: String
     private let safariComponent: String
     private let applicationComponent = "DuckDuckGo/\(AppVersion.shared.majorVersionNumber)"
+    private let statistics: StatisticsStore
+    private let isTesting: Bool = ProcessInfo().arguments.contains("testing")
     
-    init(defaultAgent: String = Constants.fallbackDefaultAgent) {
+    init(defaultAgent: String = Constants.fallbackDefaultAgent, statistics: StatisticsStore = StatisticsUserDefaults()) {
         versionComponent = UserAgent.createVersionComponent(fromAgent: defaultAgent)
         baseAgent = UserAgent.createBaseAgent(fromAgent: defaultAgent, versionComponent: versionComponent)
         baseDesktopAgent = UserAgent.createBaseDesktopAgent(fromAgent: defaultAgent, versionComponent: versionComponent)
         safariComponent = UserAgent.createSafariComponent(fromAgent: baseAgent)
+        self.statistics = statistics
     }
     
     private func omitApplicationSites(forConfig config: PrivacyConfiguration) -> [String] {
@@ -124,24 +145,160 @@ struct UserAgent {
         
         return omitApplicationObjs.map { $0[Constants.uaOmitDomainConfigKey] ?? "" }
     }
-    
-    public func agent(forUrl url: URL?, isDesktop: Bool,
+
+    private func defaultPolicy(forConfig config: PrivacyConfiguration) -> DefaultPolicy {
+        let uaSettings = config.settings(for: .customUserAgent)
+        guard let policy = uaSettings[Constants.defaultPolicyConfigKey] as? String else { return .ddg }
+
+        return DefaultPolicy(rawValue: policy) ?? .ddg
+    }
+
+    private func ddgDefaultSites(forConfig config: PrivacyConfiguration) -> [String] {
+        let uaSettings = config.settings(for: .customUserAgent)
+        let defaultSitesObjs = uaSettings[Constants.ddgDefaultSitesConfigKey] as? [[String: String]] ?? []
+
+        return defaultSitesObjs.map { $0[Constants.uaOmitDomainConfigKey] ?? "" }
+    }
+
+    private func ddgFixedSites(forConfig config: PrivacyConfiguration) -> [String] {
+        let uaSettings = config.settings(for: .customUserAgent)
+        let fixedSitesObjs = uaSettings[Constants.ddgFixedSitesConfigKey] as? [[String: String]] ?? []
+
+        return fixedSitesObjs.map { $0[Constants.uaOmitDomainConfigKey] ?? "" }
+    }
+
+    private func closestUserAgentVersions(forConfig config: PrivacyConfiguration) -> [String] {
+        let uaSettings = config.settings(for: .customUserAgent)
+        let closestUserAgent = uaSettings[Constants.closestUserAgentConfigKey] as? [String: Any] ?? [:]
+        let versions = closestUserAgent[Constants.uaVersionsKey] as? [String] ?? []
+        return versions
+    }
+
+    private func ddgFixedUserAgentVersions(forConfig config: PrivacyConfiguration) -> [String] {
+        let uaSettings = config.settings(for: .customUserAgent)
+        let fixedUserAgent = uaSettings[Constants.ddgFixedUserAgentConfigKey] as? [String: Any] ?? [:]
+        let versions = fixedUserAgent[Constants.uaVersionsKey] as? [String] ?? []
+        return versions
+    }
+
+    public func agent(forUrl url: URL?,
+                      isDesktop: Bool,
                       privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig) -> String {
+
+        guard privacyConfig.isEnabled(featureKey: .customUserAgent) else { return oldLogic(forUrl: url,
+                                                                                           isDesktop: isDesktop,
+                                                                                           privacyConfig: privacyConfig) }
+
+        if ddgDefaultSites(forConfig: privacyConfig).contains(where: { domain in
+            url?.isPart(ofDomain: domain) ?? false
+        }) { return oldLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig) }
+
+        if ddgFixedSites(forConfig: privacyConfig).contains(where: { domain in
+            url?.isPart(ofDomain: domain) ?? false
+        }) { return ddgFixedLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig) }
+
+        if closestUserAgentVersions(forConfig: privacyConfig).contains(statistics.atbWeek ?? "") {
+            if canUseClosestLogic {
+                return closestLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+            } else {
+                return oldLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+            }
+        }
+
+        if ddgFixedUserAgentVersions(forConfig: privacyConfig).contains(statistics.atbWeek ?? "") {
+            return ddgFixedLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+        }
+
+        switch defaultPolicy(forConfig: privacyConfig) {
+        case .ddg: return oldLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+        case .ddgFixed: return ddgFixedLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+        case .closest:
+            if canUseClosestLogic {
+                return closestLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+            } else {
+                return oldLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+            }
+        }
+    }
+
+    private func oldLogic(forUrl url: URL?,
+                          isDesktop: Bool,
+                          privacyConfig: PrivacyConfiguration) -> String {
         let omittedSites = omitApplicationSites(forConfig: privacyConfig)
         let customUAEnabled = privacyConfig.isEnabled(featureKey: .customUserAgent)
 
         let omitApplicationComponent = !customUAEnabled || omittedSites.contains { domain in
             url?.isPart(ofDomain: domain) ?? false
         }
-        
+
         let resolvedApplicationComponent = !omitApplicationComponent ? applicationComponent : nil
+
         if isDesktop {
             return concatWithSpaces(baseDesktopAgent, resolvedApplicationComponent, safariComponent)
         } else {
             return concatWithSpaces(baseAgent, resolvedApplicationComponent, safariComponent)
         }
     }
-    
+
+    private func ddgFixedLogic(forUrl url: URL?,
+                               isDesktop: Bool,
+                               privacyConfig: PrivacyConfiguration) -> String {
+        let omittedSites = omitApplicationSites(forConfig: privacyConfig)
+        let omitApplicationComponent = omittedSites.contains { domain in
+            url?.isPart(ofDomain: domain) ?? false
+        }
+        let resolvedApplicationComponent = !omitApplicationComponent ? applicationComponent : nil
+
+        if canUseClosestLogic {
+            var defaultSafari = closestLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+            // If the UA should have DuckDuckGo append it prior to Safari
+            if let resolvedApplicationComponent {
+                if let index = defaultSafari.range(of: "Safari")?.lowerBound {
+                    defaultSafari.insert(contentsOf: resolvedApplicationComponent + " ", at: index)
+                }
+            }
+            return defaultSafari
+        } else {
+            return oldLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+        }
+    }
+
+    private func closestLogic(forUrl url: URL?,
+                              isDesktop: Bool,
+                              privacyConfig: PrivacyConfiguration) -> String {
+        if isDesktop {
+            return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15"
+        }
+        return "Mozilla/5.0 (" + deviceProfile + ") AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1"
+    }
+
+    private var canUseClosestLogic: Bool {
+        guard let webKitVersion else { return false }
+        return webKitVersion.versionCompare("605.1.15") != .orderedAscending
+    }
+
+    private var webKitVersion: String? {
+        let components = baseAgent.components(separatedBy: "AppleWebKit/")
+
+        if components.count > 1 {
+            let versionComponents = components[1].components(separatedBy: " ")
+            return versionComponents.first
+        }
+
+        return nil
+    }
+
+    var deviceProfile: String {
+        let regex = try? NSRegularExpression(pattern: "\\((.*?)\\)")
+        if let match = regex?.firstMatch(in: baseAgent, range: NSRange(baseAgent.startIndex..., in: baseAgent)) {
+            let range = Range(match.range(at: 1), in: baseAgent)
+            if let range = range {
+                return String(baseAgent[range])
+            }
+        }
+        return "iPhone; CPU iPhone OS 16_6 like Mac OS X"
+    }
+
     private func concatWithSpaces(_ elements: String?...) -> String {
         return elements
             .compactMap { $0 }
@@ -204,4 +361,27 @@ struct UserAgent {
         return "\(Constants.desktopPrefixComponent) \(suffix) \(versionComponent)"
     }
     
+}
+
+private extension StatisticsStore {
+
+    var atbWeek: String? {
+        guard let atb else { return nil }
+        let trimmed = String(atb.dropFirst())
+
+        if let hyphenIndex = trimmed.firstIndex(of: "-") {
+            return String(trimmed.prefix(upTo: hyphenIndex))
+        } else {
+            return trimmed
+        }
+    }
+
+}
+
+private extension String {
+
+    func versionCompare(_ otherVersion: String) -> ComparisonResult {
+        compare(otherVersion, options: .numeric)
+    }
+
 }

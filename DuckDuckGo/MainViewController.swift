@@ -210,6 +210,8 @@ class MainViewController: UIViewController {
         
         registerForApplicationEvents()
         registerForCookiesManagedNotification()
+        registerForSettingsChangeNotifications()
+
         tabManager.cleanupTabsFaviconCache()
     }
 
@@ -293,6 +295,17 @@ class MainViewController: UIViewController {
                                                selector: #selector(keyboardWillChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
+    }
+
+    func registerForSettingsChangeNotifications() {
+        NotificationCenter.default.addObserver(self, selector:
+                                                #selector(showFullSiteAddressChanged),
+                                               name: AppUserDefaults.Notifications.showFullSiteAddressChanged,
+                                               object: nil)
+    }
+
+    @objc func showFullSiteAddressChanged() {
+        refreshOmniBar()
     }
 
     /// Based on https://stackoverflow.com/a/46117073/73479

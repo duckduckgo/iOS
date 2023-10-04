@@ -339,7 +339,7 @@ class TabViewController: UIViewController {
 
         return activities
     }
-
+    
     func initAttributionLogic() {
         adClickAttributionLogic.delegate = self
         adClickAttributionDetection.delegate = adClickAttributionLogic

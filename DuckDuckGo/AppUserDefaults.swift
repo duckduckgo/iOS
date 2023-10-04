@@ -30,6 +30,8 @@ public class AppUserDefaults: AppSettings {
         public static let autofillEnabledChange = Notification.Name("com.duckduckgo.app.AutofillEnabledChange")
         public static let didVerifyInternalUser = Notification.Name("com.duckduckgo.app.DidVerifyInternalUser")
         public static let inspectableWebViewsToggled = Notification.Name("com.duckduckgo.app.DidToggleInspectableWebViews")
+        public static let showFullSiteAddressChanged = Notification.Name("com.duckduckgo.app.ShowFullSiteAddressChanged")
+        public static let addressBarPositionChanged = Notification.Name("com.duckduckgo.app.AddressBarPositionChanged")
     }
 
     private let groupName: String
@@ -85,7 +87,14 @@ public class AppUserDefaults: AppSettings {
         }
 
     }
-    
+
+    @UserDefaultsWrapper(key: .showFullSiteAddress, defaultValue: false)
+    var showFullSiteAddress: Bool {
+        didSet {
+            NotificationCenter.default.post(name: Notifications.showFullSiteAddressChanged, object: showFullSiteAddress)
+        }
+    }
+
     var currentThemeName: ThemeName {
         
         get {
@@ -184,6 +193,7 @@ public class AppUserDefaults: AppSettings {
 
         set {
             addressBarPositionStorage = newValue.rawValue
+            NotificationCenter.default.post(name: Notifications.addressBarPositionChanged, object: currentAddressBarPosition)
         }
     }
 

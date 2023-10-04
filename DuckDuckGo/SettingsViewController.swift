@@ -45,6 +45,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var appIconImageView: UIImageView!
     @IBOutlet weak var autocompleteToggle: UISwitch!
     @IBOutlet weak var authenticationToggle: UISwitch!
+    @IBOutlet weak var showFullSiteAddressToggle: UISwitch!
     @IBOutlet weak var autoClearAccessoryText: UILabel!
     @IBOutlet weak var versionText: UILabel!
     @IBOutlet weak var openUniversalLinksToggle: UISwitch!
@@ -141,6 +142,7 @@ class SettingsViewController: UITableViewController {
         configureAddressBarPositionCellAccessory()
         configureTextSizeCell()
         configureDisableAutocompleteToggle()
+        configureShowFullSiteAddressToggle()
         configureSecurityToggles()
         configureVersionText()
         configureUniversalLinksToggle()
@@ -286,6 +288,10 @@ class SettingsViewController: UITableViewController {
         } else {
             appIconCell.isHidden = true
         }
+    }
+
+    private func configureShowFullSiteAddressToggle() {
+        showFullSiteAddressToggle.isOn = appSettings.showFullSiteAddress
     }
 
     private func configureDisableAutocompleteToggle() {
@@ -527,7 +533,7 @@ class SettingsViewController: UITableViewController {
         }
     }
     
-    /// Only use this to hide the footer if the entire section can be conditionally hidden.
+    /// Only use this to hide the footer if t   he entire section can be conditionally hidden.
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if syncSectionIndex == section && !shouldShowSyncCell {
             return CGFloat.leastNonzeroMagnitude
@@ -577,6 +583,10 @@ class SettingsViewController: UITableViewController {
         privacyStore.authenticationEnabled = sender.isOn
     }
 
+    @IBAction func onShowFullSiteAddressToggled(_ sender: UISwitch) {
+        appSettings.showFullSiteAddress = sender.isOn
+    }
+
     @IBAction func onDonePressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -614,6 +624,7 @@ extension SettingsViewController: Themable {
         
         autocompleteToggle.onTintColor = theme.buttonTintColor
         authenticationToggle.onTintColor = theme.buttonTintColor
+        showFullSiteAddressToggle.onTintColor = theme.buttonTintColor
         openUniversalLinksToggle.onTintColor = theme.buttonTintColor
         longPressPreviewsToggle.onTintColor = theme.buttonTintColor
         voiceSearchToggle.onTintColor = theme.buttonTintColor

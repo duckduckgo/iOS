@@ -75,6 +75,13 @@ class OmniBar: UIView {
         return OmniBar.load(nibName: "OmniBar")
     }
 
+    private let appSettings: AppSettings
+
+    required init?(coder: NSCoder) {
+        appSettings = AppDependencyProvider.shared.appSettings
+        super.init(coder: coder)
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
         configureMenuButton()
@@ -338,7 +345,9 @@ class OmniBar: UIView {
             return
         }
 
-        if let query = url.searchQuery {
+        if appSettings.showFullSiteAddress {
+            textField.text = url.absoluteString
+        } else if let query = url.searchQuery {
             textField.text = query
         } else {
             textField.attributedText = OmniBar.demphasisePath(forUrl: url)

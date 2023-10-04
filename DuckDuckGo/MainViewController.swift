@@ -173,8 +173,9 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        viewCoordinator = MainViewFactory.createViewHierarchy(self.view)
-        
+        viewCoordinator = MainViewFactory.createViewHierarchy(self.view,
+                                                              addressBarPosition: appSettings.currentAddressBarPosition)
+
         viewCoordinator.toolbarBackButton.action = #selector(onBackPressed)
         viewCoordinator.toolbarForwardButton.action = #selector(onForwardPressed)
         viewCoordinator.toolbarFireButton.action = #selector(onFirePressed)
@@ -299,12 +300,20 @@ class MainViewController: UIViewController {
 
     func registerForSettingsChangeNotifications() {
         NotificationCenter.default.addObserver(self, selector:
-                                                #selector(showFullSiteAddressChanged),
+                                                #selector(onShowFullSiteAddressChanged),
                                                name: AppUserDefaults.Notifications.showFullSiteAddressChanged,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector:
+                                                #selector(onAddressBarPositionChanged),
+                                               name: AppUserDefaults.Notifications.addressBarPositionChanged,
                                                object: nil)
     }
 
-    @objc func showFullSiteAddressChanged() {
+    @objc func onAddressBarPositionChanged() {
+        viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
+    }
+
+    @objc func onShowFullSiteAddressChanged() {
         refreshOmniBar()
     }
 

@@ -31,14 +31,16 @@ class MainViewFactory {
         coordinator = MainViewCoordinator(superview: superview)
     }
 
-    static func createViewHierarchy(_ superview: UIView) -> MainViewCoordinator {
+    static func createViewHierarchy(_ superview: UIView, addressBarPosition: AddressBarPosition) -> MainViewCoordinator {
         let factory = MainViewFactory(superview)
 
         factory.createViews()
         factory.disableAutoresizingOnViewAndImmediateSubviews(superview)
         factory.constrainViews()
 
-        return factory.coordinator
+        let coordinator = factory.coordinator
+        coordinator.moveAddressBarToPosition(addressBarPosition)
+        return coordinator
     }
 
     private func disableAutoresizingOnViewAndImmediateSubviews(_ view: UIView) {
@@ -330,6 +332,25 @@ class MainViewCoordinator {
         var notificationContainerTop: NSLayoutConstraint!
         var notificationContainerHeight: NSLayoutConstraint!
 
+    }
+
+    func moveAddressBarToPosition(_ position: AddressBarPosition) {
+        print(#function, position.rawValue)
+        switch position {
+        case .top:
+            moveAddressBarToTop()
+
+        case .bottom:
+            moveAddressBarToBottom()
+        }
+    }
+
+    func moveAddressBarToTop() {
+        print(#function)
+    }
+
+    func moveAddressBarToBottom() {
+        print(#function)
     }
 
 }

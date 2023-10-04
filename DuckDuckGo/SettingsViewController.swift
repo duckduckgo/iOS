@@ -40,6 +40,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var defaultBrowserCell: UITableViewCell!
     @IBOutlet weak var themeAccessoryText: UILabel!
     @IBOutlet weak var fireButtonAnimationAccessoryText: UILabel!
+    @IBOutlet weak var addressBarPositionAccessoryText: UILabel!
     @IBOutlet weak var appIconCell: UITableViewCell!
     @IBOutlet weak var appIconImageView: UIImageView!
     @IBOutlet weak var autocompleteToggle: UISwitch!
@@ -133,6 +134,7 @@ class SettingsViewController: UITableViewController {
         configureSyncCell()
         configureThemeCellAccessory()
         configureFireButtonAnimationCellAccessory()
+        configureAddressBarPositionCellAccessory()
         configureTextSizeCell()
         configureDisableAutocompleteToggle()
         configureSecurityToggles()
@@ -161,6 +163,7 @@ class SettingsViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         configureFireButtonAnimationCellAccessory()
+        configureAddressBarPositionCellAccessory()
         configureTextSizeCell()
         configureAutoClearCellAccessory()
         configureRememberLogins()
@@ -263,7 +266,11 @@ class SettingsViewController: UITableViewController {
     private func configureFireButtonAnimationCellAccessory() {
         fireButtonAnimationAccessoryText.text = appSettings.currentFireButtonAnimation.descriptionText
     }
-    
+
+    private func configureAddressBarPositionCellAccessory() {
+        addressBarPositionAccessoryText.text = appSettings.currentAddressBarPosition.descriptionText
+    }
+
     private func configureTextSizeCell() {
         textSizeCell.isHidden = UIDevice.current.userInterfaceIdiom == .pad
         textSizeAccessoryText.text = "\(appSettings.textSize)%"

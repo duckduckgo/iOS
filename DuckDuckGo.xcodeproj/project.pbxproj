@@ -405,6 +405,7 @@
 		85514FFD2372DA0100DBC528 /* ios13-home-row.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 85514FFC2372DA0000DBC528 /* ios13-home-row.mp4 */; };
 		8551912724746EDC0010FDD0 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8551912624746EDC0010FDD0 /* SnapshotHelper.swift */; };
 		85582E0029D7409700E9AE35 /* SyncSettingsViewController+PDFRendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85582DFF29D7409700E9AE35 /* SyncSettingsViewController+PDFRendering.swift */; };
+		855D45D32ACD7DD1008F7AC6 /* AddressBarPositionSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855D45D22ACD7DD1008F7AC6 /* AddressBarPositionSettingsViewController.swift */; };
 		855D914D2063EF6A00C4B448 /* TabSwitcherTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855D914C2063EF6A00C4B448 /* TabSwitcherTransition.swift */; };
 		8563A03C1F9288D600F04442 /* BrowserChromeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */; };
 		8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A34A1FC8D96B00239327 /* LaunchTabNotification.swift */; };
@@ -1410,6 +1411,7 @@
 		85519124247468580010FDD0 /* TrackerRadarIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerRadarIntegrationTests.swift; sourceTree = "<group>"; };
 		8551912624746EDC0010FDD0 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		85582DFF29D7409700E9AE35 /* SyncSettingsViewController+PDFRendering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SyncSettingsViewController+PDFRendering.swift"; sourceTree = "<group>"; };
+		855D45D22ACD7DD1008F7AC6 /* AddressBarPositionSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressBarPositionSettingsViewController.swift; sourceTree = "<group>"; };
 		855D914C2063EF6A00C4B448 /* TabSwitcherTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcherTransition.swift; sourceTree = "<group>"; };
 		8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserChromeManager.swift; sourceTree = "<group>"; };
 		8565A34A1FC8D96B00239327 /* LaunchTabNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTabNotification.swift; sourceTree = "<group>"; };
@@ -3659,19 +3661,20 @@
 			isa = PBXGroup;
 			children = (
 				F1CDD3F11F16911700BE0581 /* AboutViewController.swift */,
-				1E865AEF272042DB001C74F3 /* TextSizeSettingsViewController.swift */,
+				855D45D22ACD7DD1008F7AC6 /* AddressBarPositionSettingsViewController.swift */,
 				AA3D854623D9E88E00788410 /* AppIconSettingsCell.swift */,
 				AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */,
 				98F0FC1F21FF18E700CE77AB /* AutoClearSettingsViewController.swift */,
+				1EE7C298294227EC0026C8CB /* AutoconsentSettingsViewController.swift */,
+				02C57C4A2514FEFB009E5129 /* DoNotSellSettingsViewController.swift */,
 				F456B3B425810BB900B79B90 /* FireButtonAnimationSettingsViewController.swift */,
 				85449EF423FDA02800512AAF /* KeyboardSettingsViewController.swift */,
 				8540BD5523D9E9C20057FDD2 /* PreserveLoginsSettingsViewController.swift */,
 				F176699D1E40BC86003D3222 /* Settings.storyboard */,
 				F1AB2B411E3F7D5C00868554 /* SettingsViewController.swift */,
+				1E865AEF272042DB001C74F3 /* TextSizeSettingsViewController.swift */,
 				9881439B23326DC200573F7C /* ThemeSettingsViewController.swift */,
 				8531A08D1F9950E6000484F0 /* UnprotectedSitesViewController.swift */,
-				02C57C4A2514FEFB009E5129 /* DoNotSellSettingsViewController.swift */,
-				1EE7C298294227EC0026C8CB /* AutoconsentSettingsViewController.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -6366,6 +6369,7 @@
 				027F48782A4B663C001A1C6C /* AppTPFAQView.swift in Sources */,
 				02A4EACA29B0F464009BE006 /* AppTPToggleViewModel.swift in Sources */,
 				4B6484EE27FD1E350050A7A1 /* WindowsBrowserWaitlistDebugViewController.swift in Sources */,
+				855D45D32ACD7DD1008F7AC6 /* AddressBarPositionSettingsViewController.swift in Sources */,
 				F1D796EE1E7AF2EB0019D451 /* UIViewControllerExtension.swift in Sources */,
 				1EE411F12857C3640003FE64 /* TrackerAnimationImageProvider.swift in Sources */,
 				1E7A711C2934EEBC00B7EA19 /* OmniBarNotification.swift in Sources */,

@@ -99,6 +99,8 @@ public struct UserDefaultsWrapper<T> {
         case syncEnvironment = "com.duckduckgo.ios.sync-environment"
 
         case networkProtectionDebugOptionAlwaysOnDisabled = "com.duckduckgo.network-protection.always-on.disabled"
+
+        case addressBarPosition = "com.duckduckgo.ios.addressbarposition"
     }
 
     private let key: Key

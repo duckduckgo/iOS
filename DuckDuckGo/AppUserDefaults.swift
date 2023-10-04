@@ -173,7 +173,20 @@ public class AppUserDefaults: AppSettings {
             userDefaults?.setValue(newValue.rawValue, forKey: Keys.currentFireButtonAnimationKey)
         }
     }
-    
+
+    @UserDefaultsWrapper(key: .addressBarPosition, defaultValue: nil)
+    private var addressBarPositionStorage: String?
+
+    var currentAddressBarPosition: AddressBarPosition {
+        get {
+            return AddressBarPosition(rawValue: addressBarPositionStorage  ?? "") ?? .top
+        }
+
+        set {
+            addressBarPositionStorage = newValue.rawValue
+        }
+    }
+
     @UserDefaultsWrapper(key: .textSize, defaultValue: 100)
     var textSize: Int
 

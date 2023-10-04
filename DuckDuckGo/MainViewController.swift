@@ -923,7 +923,7 @@ class MainViewController: UIViewController {
         self.notificationView = notificationView
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.viewCoordinator.constraints.notificationContainerHeight.constant = notificationView.frame.size.height
+            self.viewCoordinator.constraints.notificationContainerHeight.constant = notificationView.frame.height
             UIView.animate(withDuration: 0.3) {
                 self.view.layoutIfNeeded()
             }
@@ -935,7 +935,9 @@ class MainViewController: UIViewController {
 
         viewCoordinator.constraints.notificationContainerHeight.constant = 0
         UIView.animate(withDuration: 0.5, animations: {
-            self.notificationView?.frame = self.notificationView?.frame.offsetBy(dx: 0, dy: -100) ?? .zero
+            if let frame = self.notificationView?.frame {
+                self.notificationView?.frame = frame.offsetBy(dx: 0, dy: -frame.height)
+            }
             self.view.layoutSubviews()
         }, completion: { _ in
             self.notificationView?.removeFromSuperview()

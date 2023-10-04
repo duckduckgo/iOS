@@ -1109,7 +1109,7 @@ extension TabViewController: WKNavigationDelegate {
     
     private func onWebpageDidFinishLoading() {
         os_log("webpageLoading finished", log: .generalLog, type: .debug)
-                
+            
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
 
@@ -1916,8 +1916,8 @@ extension TabViewController: WKUIDelegate {
         let alert = WebJSAlert(domain: frame.request.url?.host
                                // in case the web view is navigating to another host
                                ?? webView.backForwardList.currentItem?.url.host
-                               ?? self.url?.absoluteString
-                               ?? "",
+                               // secure fall-back
+                               ?? frame.securityOrigin.host,
                                message: message,
                                alertType: .alert(handler: completionHandler))
         self.present(alert)

@@ -287,7 +287,6 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     
     // MARK: Subviews Setup
 
-    // swiftlint:disable:next function_body_length
     private func updateViewState() {
         
         switch viewModel.viewState {

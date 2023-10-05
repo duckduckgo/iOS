@@ -24,7 +24,6 @@ import TrackerRadarKit
 import BrowserServicesKit
 @testable import DuckDuckGo
 
-// swiftlint:disable:next type_body_length
 final class ContentBlockingUpdatingTests: XCTestCase {
     let appSettings = AppSettingsMock()
     let configManager = PrivacyConfigurationManagerMock()

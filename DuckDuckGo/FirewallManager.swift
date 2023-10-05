@@ -161,7 +161,6 @@ public class FirewallManager: FirewallManaging {
         }
     }
     
-    // swiftlint:disable:next function_body_length
     public func setState(to enabled: Bool) async throws {
         let managers = try await NETunnelProviderManager.loadAllFromPreferences()
         manager = nil

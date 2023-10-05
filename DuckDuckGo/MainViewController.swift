@@ -350,7 +350,7 @@ class MainViewController: UIViewController {
 
         findInPageBottomLayoutConstraint.constant = height
         currentTab?.webView.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
-        
+
         if let suggestionsTray = suggestionTrayController {
             let suggestionsFrameInView = suggestionsTray.view.convert(suggestionsTray.contentFrame, to: view)
             
@@ -1926,16 +1926,6 @@ extension MainViewController: Themable {
         findInPageView.decorate(with: theme)
         
         viewCoordinator.logoText.tintColor = theme.ddgTextTintColor
-
-        // Do this last or else things get reset
-        if appSettings.currentAddressBarPosition == .bottom {
-//            omniBar.backgroundColor = UIColor(designSystemColor: .panel)
-//            omniBar.hideSeparator()
-//            viewCoordinator.toolbar.backgroundColor = UIColor(designSystemColor: .panel)
-//            viewCoordinator.toolbar.setShadowImage(UIImage(), forToolbarPosition: .bottom)
-//            viewCoordinator.toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .bottom, barMetrics: .default)
-
-        }
     }
 
 }

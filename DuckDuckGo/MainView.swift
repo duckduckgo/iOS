@@ -248,13 +248,16 @@ extension MainViewFactory {
         let contentContainer = coordinator.contentContainer!
         let toolbar = coordinator.toolbar!
         let notificationBarContainer = coordinator.notificationBarContainer!
+        let navigationBarContainer = coordinator.navigationBarContainer!
 
         coordinator.constraints.contentContainerTop = contentContainer.constrainView(notificationBarContainer, by: .top, to: .bottom)
+        coordinator.constraints.contentContainerBottomToToolbarTop = contentContainer.constrainView(toolbar, by: .bottom, to: .top)
+        coordinator.constraints.contentContainerBottomToNavigationBarContainerTop = contentContainer.constrainView(navigationBarContainer, by: .bottom, to: .top)
 
         NSLayoutConstraint.activate([
             contentContainer.constrainView(superview, by: .leading),
             contentContainer.constrainView(superview, by: .trailing),
-            contentContainer.constrainView(toolbar, by: .bottom, to: .top),
+            coordinator.constraints.contentContainerBottomToToolbarTop,
             coordinator.constraints.contentContainerTop,
         ])
     }
@@ -361,6 +364,8 @@ class MainViewCoordinator {
         var progressBarBottom: NSLayoutConstraint!
         var statusBackgroundToNavigationBarContainerBottom: NSLayoutConstraint!
         var statusBackgroundBottomToSafeAreaTop: NSLayoutConstraint!
+        var contentContainerBottomToToolbarTop: NSLayoutConstraint!
+        var contentContainerBottomToNavigationBarContainerTop: NSLayoutConstraint!
 
     }
 
@@ -381,7 +386,9 @@ class MainViewCoordinator {
         constraints.navigationBarContainerBottom.isActive = false
         constraints.notificationContainerTopToStatusBackground.isActive = false
         constraints.statusBackgroundBottomToSafeAreaTop.isActive = false
+        constraints.contentContainerBottomToNavigationBarContainerTop.isActive = false
 
+        constraints.contentContainerBottomToToolbarTop.isActive = true
         constraints.navigationBarContainerTop.isActive = true
         constraints.progressBarTop.isActive = true
         constraints.notificationContainerTopToNavigationBar.isActive = true
@@ -393,7 +400,9 @@ class MainViewCoordinator {
         constraints.progressBarTop.isActive = false
         constraints.notificationContainerTopToNavigationBar.isActive = false
         constraints.statusBackgroundToNavigationBarContainerBottom.isActive = false
+        constraints.contentContainerBottomToToolbarTop.isActive = false
 
+        constraints.contentContainerBottomToNavigationBarContainerTop.isActive = true
         constraints.progressBarBottom.isActive = true
         constraints.navigationBarContainerBottom.isActive = true
         constraints.notificationContainerTopToStatusBackground.isActive = true

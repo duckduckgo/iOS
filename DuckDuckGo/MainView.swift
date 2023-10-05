@@ -373,43 +373,31 @@ class MainViewCoordinator {
         guard position != addressBarPosition else { return }
         switch position {
         case .top:
-            moveAddressBarToTop()
+            setAddressBarBottomActive(false)
+            setAddressBarTopActive(true)
+
         case .bottom:
-            moveAddressBarToBottom()
+            setAddressBarTopActive(false)
+            setAddressBarBottomActive(true)
         }
 
         addressBarPosition = position
     }
 
-    func moveAddressBarToTop() {
-        constraints.progressBarBottom.isActive = false
-        constraints.navigationBarContainerBottom.isActive = false
-        constraints.notificationContainerTopToStatusBackground.isActive = false
-        constraints.statusBackgroundBottomToSafeAreaTop.isActive = false
-        constraints.contentContainerBottomToNavigationBarContainerTop.isActive = false
-
-        constraints.contentContainerBottomToToolbarTop.isActive = true
-        constraints.navigationBarContainerTop.isActive = true
-        constraints.progressBarTop.isActive = true
-        constraints.notificationContainerTopToNavigationBar.isActive = true
-        constraints.statusBackgroundToNavigationBarContainerBottom.isActive = true
+    func setAddressBarTopActive(_ active: Bool) {
+        constraints.contentContainerBottomToToolbarTop.isActive = active
+        constraints.navigationBarContainerTop.isActive = active
+        constraints.progressBarTop.isActive = active
+        constraints.notificationContainerTopToNavigationBar.isActive = active
+        constraints.statusBackgroundToNavigationBarContainerBottom.isActive = active
     }
 
-    func moveAddressBarToBottom() {
-        constraints.navigationBarContainerTop.isActive = false
-        constraints.progressBarTop.isActive = false
-        constraints.notificationContainerTopToNavigationBar.isActive = false
-        constraints.statusBackgroundToNavigationBarContainerBottom.isActive = false
-        constraints.contentContainerBottomToToolbarTop.isActive = false
-
-        constraints.contentContainerBottomToNavigationBarContainerTop.isActive = true
-        constraints.progressBarBottom.isActive = true
-        constraints.navigationBarContainerBottom.isActive = true
-        constraints.notificationContainerTopToStatusBackground.isActive = true
-        constraints.statusBackgroundBottomToSafeAreaTop.isActive = true
-    }
-
-    func toggleAddressBar(_ top: Bool) {
+    func setAddressBarBottomActive(_ active: Bool) {
+        constraints.contentContainerBottomToNavigationBarContainerTop.isActive = active
+        constraints.progressBarBottom.isActive = active
+        constraints.navigationBarContainerBottom.isActive = active
+        constraints.notificationContainerTopToStatusBackground.isActive = active
+        constraints.statusBackgroundBottomToSafeAreaTop.isActive = active
     }
 
 }

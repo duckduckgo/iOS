@@ -80,25 +80,7 @@ public struct DeviceConnectedView: View {
                 Text("\(message) \(Text(devicesOnMessageText).bold())")
                     .multilineTextAlignment(.center)
 
-                VStack {
-                    Spacer(minLength: 71)
-                    Text("Options".capitalized)
-                        .font(.system(size: 12))
-                    Toggle(isOn: $optionsViewModel.isUnifiedFavoritesEnabled) {
-                        HStack(spacing: 16) {
-                            Image("SyncAllDevices")
-                            VStack(alignment: .leading) {
-                                Text("Unified favorites")
-                                    .foregroundColor(.primary)
-                                Text("Use the same favorites on all devices. Switch off to maintain separate favorites for mobile and desktop.")
-                                    .font(.system(size: 13))
-                                    .foregroundColor(.secondary)
-                            }
-                        }
-                    }
-                    .padding(16)
-                    .background(RoundedRectangle(cornerRadius: 10).foregroundColor(.black.opacity(0.10)))
-                }
+                options()
             }
             .padding(.horizontal, 20)
         } foregroundContent: {
@@ -115,6 +97,36 @@ public struct DeviceConnectedView: View {
         }
         .padding(.top, isCompact ? 0 : 56)
         .padding(.bottom)
+    }
+
+    @ViewBuilder
+    func options() -> some View {
+        VStack {
+            Spacer(minLength: 71)
+            Text(UserText.options.uppercased())
+                .font(.system(size: 12))
+            Toggle(isOn: $optionsViewModel.isUnifiedFavoritesEnabled) {
+                HStack(spacing: 16) {
+                    Image("SyncAllDevices")
+                    VStack(alignment: .leading) {
+                        Text("Unified favorites")
+                            .foregroundColor(.primary)
+                        Text("Use the same favorites on all devices. Switch off to maintain separate favorites for mobile and desktop.")
+                            .font(.system(size: 13))
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
+            .padding(16)
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(.black.opacity(0.01))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(.black.opacity(0.2), lineWidth: 0.2)
+            )
+        }
     }
 
     public var body: some View {

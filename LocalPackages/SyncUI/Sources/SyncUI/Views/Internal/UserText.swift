@@ -61,7 +61,8 @@ struct UserText {
     static let multipleDevicesSyncedMessage = "Your bookmarks and Logins are now syncing on "
     static let wordDevices = "devices"
 
-    static let saveRecoveryTitle = "Save Recovery Key"
+    static let saveRecoveryTitle = "Save Recovery Code?"
+    static let copyCode = "Copy Code"
 
     static let cameraPermissionRequired = "Camera Permission is Required"
     static let cameraPermissionInstructions = "Please go to your device's settings and grant permission for this app to access your camera."

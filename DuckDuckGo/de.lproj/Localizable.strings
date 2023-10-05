@@ -175,6 +175,9 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "Wenn DuckDuckGo Pop-ups zur Cookie-Zustimmung auf den von dir besuchten Websites erkennt, können wir deine Cookie-Einstellungen automatisch so festlegen, dass Cookies minimiert werden und der Datenschutz maximiert wird, und dann die Pop-ups schließen. Einige Websites bieten keine Option zur Verwaltung von Cookie-Einstellungen, sodass wir Pop-ups wie diese nur ausblenden können.";
 
+/* Text link to email protection website */
+"autofill.enable.email.protection" = "Email Protection aktivieren";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Passwort ausblenden";
 
@@ -341,25 +344,55 @@
 "autofill.logins.search.no-results.title" = "Keine Ergebnisse";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Das Passwort wird in den Anmeldedaten gespeichert.";
+"autofill.password-generation-prompt.subtitle" = "Passwörter werden sicher auf deinem Gerät im Anmeldedaten-Menü gespeichert.";
 
 /* Title for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.title" = "Generiertes Passwort von DuckDuckGo verwenden?";
+"autofill.password-generation-prompt.title" = "Ein sicheres Passwort von DuckDuckGo verwenden?";
 
 /* Button title choosing to use the suggested generated password for creating a login */
-"autofill.password-generation-prompt.use-generated-password.cta" = "Generiertes Passwort verwenden";
+"autofill.password-generation-prompt.use-generated-password.cta" = "Sicheres Passwort verwenden";
 
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Eigenes erstellen";
 
+/* Text for the confirmation message displayed when a user tries activate a Private Email Address */
+"autofill.private.email.mesage.activate.confirm.content" = "E-Mails, die an %@ gesendet werden, werden wieder an deinen Posteingang weitergeleitet.";
+
+/* Title for the confirmation message  displayed when a user tries activate a Private Email Address */
+"autofill.private.email.mesage.activate.confirm.title" = "Private Duck Address reaktivieren?";
+
+/* Mesasage displayed when a private email address is active */
+"autofill.private.email.mesage.active" = "Aktiv";
+
+/* Text for the confirmation message displayed when a user tries deactivate a Private Email Address */
+"autofill.private.email.mesage.deactivate.confirm.content" = "E-Mails, die an %@ gesendet werden, werden nicht mehr an deinen Posteingang weitergeleitet.";
+
+/* Title for the confirmation message displayed when a user tries deactivate a Private Email Address */
+"autofill.private.email.mesage.deactivate.confirm.title" = "Private Duck Address deaktivieren?";
+
+/* Mesasage displayed when a user tries to manage a private email address but the service is not available, returns an error or network is down */
+"autofill.private.email.mesage.error" = "Die Verwaltung dieser Adresse ist vorübergehend nicht möglich";
+
+/* Mesasage displayed when a private email address is inactive */
+"autofill.private.email.mesage.inactive" = "Deaktiviert";
+
+/* Button text for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.button" = "Verstanden";
+
+/* Content for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.content" = "Du kannst diese Duck Address weiterhin über die E-Mails in deinem persönlichen Posteingang verwalten.";
+
+/* Title for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.title" = "Benutzername von Private Duck Address wurde entfernt";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Die Anmeldedaten werden auf diesem Gerät sicher gespeichert und können über das Anmeldedaten-Menü in den Einstellungen verwaltet werden.";
+"autofill.save-login.new-user.message" = "Anmeldedaten werden sicher auf deinem Gerät im Anmeldedaten-Menü gespeichert.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Möchtest du, dass DuckDuckGo deine Anmeldedaten speichert?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.not-now.CTA" = "Jetzt nicht";
+"autofill.save-login.not-now.CTA" = "Nicht speichern";
 
 /* Confirm CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.save.CTA" = "Anmeldedaten speichern";
@@ -375,6 +408,9 @@
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Passwort anzeigen";
+
+/* Message displayed to the user when they are logged out of Email protection. */
+"autofill.signin.to.manage" = "%@, um deine Duck Addresses auf diesem Gerät zu verwalten.";
 
 /* Message displayed on modal asking for the user to update the password */
 "autofill.update-password.message" = "DuckDuckGo aktualisiert diese gespeicherten Anmeldedaten auf deinem Gerät.";
@@ -669,6 +705,9 @@
 
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Download von %@ gestartet";
+
+/* No comment provided by engineer. */
+"Duck Address" = "Duck Address";
 
 /* Email protection service offered by DuckDuckGo */
 "email-protection" = "E-Mail-Schutz";

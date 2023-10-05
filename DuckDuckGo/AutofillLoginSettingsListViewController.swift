@@ -287,6 +287,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     
     // MARK: Subviews Setup
 
+    // swiftlint:disable:next function_body_length
     private func updateViewState() {
         
         switch viewModel.viewState {
@@ -425,7 +426,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private func updateConstraintConstants() {
         let isIPhoneLandscape = traitCollection.containsTraits(in: UITraitCollection(verticalSizeClass: .compact))
         if isIPhoneLandscape {
-            lockedViewBottomConstraint.constant = (view.frame.height / 2 - max(lockedView.frame.height, 120.0) / 2)
+            lockedViewBottomConstraint.constant = (view.frame.height / 2.0 - max(lockedView.frame.height, 120.0) / 2.0)
         } else {
             lockedViewBottomConstraint.constant = view.frame.height * 0.15
         }

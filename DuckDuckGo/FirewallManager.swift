@@ -61,8 +61,8 @@ public class FirewallManager: FirewallManaging {
     public static let apptpLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier, category: "AppTP")
     
     var manager: NETunnelProviderManager?
-    public var delegate: FirewallDelegate?
-    
+    public weak var delegate: FirewallDelegate?
+
     public init() {
         NotificationCenter.default.addObserver(self, selector: #selector(statusDidChange),
                                                name: .NEVPNStatusDidChange, object: nil)
@@ -161,6 +161,7 @@ public class FirewallManager: FirewallManaging {
         }
     }
     
+    // swiftlint:disable:next function_body_length
     public func setState(to enabled: Bool) async throws {
         let managers = try await NETunnelProviderManager.loadAllFromPreferences()
         manager = nil

@@ -27,7 +27,7 @@ extension TabsModel {
 
     public static func get() -> TabsModel? {
         guard let data = UserDefaults.app.object(forKey: Constants.key) as? Data else { return nil }
-        return try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? TabsModel
+        return try? NSKeyedUnarchiver.unarchivedObject(ofClass: TabsModel.self, from: data)
     }
 
     public static func clear() {

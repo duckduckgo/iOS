@@ -33,6 +33,8 @@ class AutocompleteViewController: UIViewController {
     weak var delegate: AutocompleteViewControllerDelegate?
     weak var presentationDelegate: AutocompleteViewControllerPresentationDelegate?
 
+    let appSettings: AppSettings
+
     private var lastRequest: AutocompleteRequest?
     private var receivedResponse = false
     private var pendingRequest = false
@@ -43,9 +45,15 @@ class AutocompleteViewController: UIViewController {
     
     private var bookmarksSearch: BookmarksStringSearch!
 
+    var backgroundColor: UIColor {
+        appSettings.currentAddressBarPosition == .top ?
+            UIColor.black.withAlphaComponent(0.2) :
+            UIColor(designSystemColor: .background)
+    }
+
     var showBackground = true {
         didSet {
-            view.backgroundColor = showBackground ? UIColor.black.withAlphaComponent(0.2) : UIColor.clear
+            view.backgroundColor = showBackground ? backgroundColor : UIColor.clear
         }
     }
 
@@ -63,11 +71,23 @@ class AutocompleteViewController: UIViewController {
     
     static func loadFromStoryboard(bookmarksSearch: BookmarksStringSearch) -> AutocompleteViewController {
         let storyboard = UIStoryboard(name: "Autocomplete", bundle: nil)
-        guard let controller = storyboard.instantiateInitialViewController() as? AutocompleteViewController else {
+
+        guard let controller = storyboard.instantiateInitialViewController(creator: { coder in
+            AutocompleteViewController(coder: coder, appSettings: AppDependencyProvider.shared.appSettings)
+        }) else {
             fatalError("Failed to instatiate correct Autocomplete view controller")
         }
         controller.bookmarksSearch = bookmarksSearch
         return controller
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("not implemented")
+    }
+
+    required init?(coder: NSCoder, appSettings: AppSettings) {
+        self.appSettings = appSettings
+        super.init(coder: coder)
     }
 
     override func viewDidLoad() {
@@ -210,7 +230,7 @@ extension AutocompleteViewController: UITableViewDataSource {
         
         let currentTheme = ThemeManager.shared.currentTheme
         
-        cell.updateFor(query: query, suggestion: suggestions[indexPath.row], with: currentTheme)
+        cell.updateFor(query: query, suggestion: suggestions[indexPath.row], with: currentTheme, appSettings: appSettings)
         cell.plusButton.tag = indexPath.row
         
         let color = indexPath.row == selectedItem ? currentTheme.tableCellSelectedColor : UIColor(designSystemColor: .panel)

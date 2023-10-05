@@ -214,6 +214,7 @@ class MainViewController: UIViewController {
         registerForSettingsChangeNotifications()
 
         tabManager.cleanupTabsFaviconCache()
+        refreshViewsBasedOnAddressBarPosition()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -311,7 +312,18 @@ class MainViewController: UIViewController {
 
     @objc func onAddressBarPositionChanged() {
         viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
+        decorate(with: ThemeManager.shared.currentTheme)
+        refreshViewsBasedOnAddressBarPosition()
+    }
+
+    func refreshViewsBasedOnAddressBarPosition() {
         // TODO update any other view elements
+        switch appSettings.currentAddressBarPosition {
+        case .top:
+            omniBar.showSeparator()
+        case .bottom:
+            omniBar.hideSeparator()
+        }
     }
 
     @objc func onShowFullSiteAddressChanged() {
@@ -1895,11 +1907,12 @@ extension MainViewController: Themable {
         viewCoordinator.navigationBarContainer.tintColor = theme.barTintColor
         
         omniBar.decorate(with: theme)
+
         viewCoordinator.progress.decorate(with: theme)
         
         viewCoordinator.toolbar.barTintColor = theme.barBackgroundColor
         viewCoordinator.toolbar.tintColor = theme.barTintColor
-        
+
         tabSwitcherButton.decorate(with: theme)
         gestureBookmarksButton.decorate(with: theme)
         viewCoordinator.toolbarTabSwitcherButton.tintColor = theme.barTintColor
@@ -1911,8 +1924,18 @@ extension MainViewController: Themable {
         findInPageView.decorate(with: theme)
         
         viewCoordinator.logoText.tintColor = theme.ddgTextTintColor
+
+        // Do this last or else things get reset
+        if appSettings.currentAddressBarPosition == .bottom {
+//            omniBar.backgroundColor = UIColor(designSystemColor: .panel)
+//            omniBar.hideSeparator()
+//            viewCoordinator.toolbar.backgroundColor = UIColor(designSystemColor: .panel)
+//            viewCoordinator.toolbar.setShadowImage(UIImage(), forToolbarPosition: .bottom)
+//            viewCoordinator.toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .bottom, barMetrics: .default)
+
+        }
     }
-    
+
 }
 
 extension MainViewController: OnboardingDelegate {

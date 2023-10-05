@@ -175,7 +175,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
         mapDevices(registeredDevices)
         dismissPresentedViewController()
         let devices = self.rootView.model.devices.filter { !knownDevices.contains($0.id) && !$0.isThisDevice }
-        showDeviceConnected(devices, optionsModel: self.rootView.model)
+        showDeviceConnected(devices, optionsModel: self.rootView.model, isSingleSetUp: false)
     }
 
     func startPolling() {
@@ -214,7 +214,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                     .sink { [weak self] devices in
                         guard let self else { return }
                         self.dismissPresentedViewController()
-                        self.showDeviceConnected(devices.filter { !$0.isThisDevice }, optionsModel: self.rootView.model)
+                        self.showDeviceConnected(devices.filter { !$0.isThisDevice }, optionsModel: self.rootView.model, isSingleSetUp: false)
                     }.store(in: &cancellables)
                 try await syncService.transmitRecoveryKey(connectKey)
                 return true

@@ -27,16 +27,18 @@ public struct DeviceConnectedView: View {
     var isCompact: Bool {
         verticalSizeClass == .compact
     }
+    let isSingleSetUp: Bool
     @State var showRecoveryPDF = false
 
     let saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel
     @ObservedObject var optionsViewModel: SyncSettingsViewModel
     let devices: [SyncSettingsViewModel.Device]
 
-    public init(_ saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel, optionsViewModel: SyncSettingsViewModel, devices: [SyncSettingsViewModel.Device]) {
+    public init(_ saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel, optionsViewModel: SyncSettingsViewModel, devices: [SyncSettingsViewModel.Device], isSingleSetUp: Bool) {
         self.saveRecoveryKeyViewModel = saveRecoveryKeyViewModel
         self.devices = devices
         self.optionsViewModel = optionsViewModel
+        self.isSingleSetUp = isSingleSetUp
     }
 
     var title: String {
@@ -47,7 +49,7 @@ public struct DeviceConnectedView: View {
     }
 
     var message: String {
-        if devices.isEmpty {
+        if isSingleSetUp {
             return "You can sync this device’s bookmarks and Logins with additional devices at any time from the Sync & Back Up menu in Settings."
         }
         if devices.count == 1 {
@@ -79,8 +81,10 @@ public struct DeviceConnectedView: View {
 
                 Text("\(message) \(Text(devicesOnMessageText).bold())")
                     .multilineTextAlignment(.center)
-
-                options()
+                
+                if !isSingleSetUp {
+                    options()
+                }
             }
             .padding(.horizontal, 20)
         } foregroundContent: {

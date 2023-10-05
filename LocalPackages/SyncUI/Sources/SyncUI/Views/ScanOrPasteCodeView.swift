@@ -125,7 +125,7 @@ public struct ScanOrPasteCodeView: View {
             .multilineTextAlignment(.center)
             .font(.system(size: 12, weight: .regular))
             .foregroundColor(.white.opacity(0.6))
-            .padding(.vertical)
+            .padding(.vertical, 20)
 
     }
 
@@ -229,9 +229,11 @@ public struct ScanOrPasteCodeView: View {
                             .fill(.black)
                             .regularMaterialBackground()
 
-                        VStack(spacing: 20) {
-                            instructions()
-                                .padding(.horizontal, 20)
+                        VStack(spacing: -20) {
+                            Section {
+                                instructions()
+                                    .padding(.horizontal, 20)
+                            }
 
                             List {
                                 buttons()

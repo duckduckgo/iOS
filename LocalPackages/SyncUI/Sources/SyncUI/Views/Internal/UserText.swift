@@ -56,6 +56,7 @@ struct UserText {
     static let viewQRCodeInstructions = "Open the DuckDuckGo app on another device. Navigate to Settings > Sync & Back Up and scan this QR code."
     static let viewQRCodeTitle = "Your Sync Code"
 
+    static let syngleDeviceConnectedTitle = "All Set!"
     static let deviceSyncedTitle = "Device Synced!"
     static let firstDeviceSyncedMessage = "You can sync this device’s bookmarks and Logins with additional devices at any time from the Sync & Back Up menu in Settings."
     static let deviceSyncedMessage = "Your bookmarks and Logins are now syncing with "

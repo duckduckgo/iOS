@@ -44,8 +44,8 @@ public struct DeviceConnectedView: View {
     }
 
     var title: String {
-        if devices.isEmpty {
-            return "All Set!"
+        if isSingleSetUp {
+            return UserText.syngleDeviceConnectedTitle
         }
         return UserText.deviceSyncedTitle
     }

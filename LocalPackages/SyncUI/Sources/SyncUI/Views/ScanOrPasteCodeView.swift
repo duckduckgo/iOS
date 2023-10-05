@@ -138,8 +138,8 @@ public struct ScanOrPasteCodeView: View {
                     PasteCodeView(model: model)
                 } label: {
                     HStack(spacing: 16) {
-                        Image("SyncKeyboardIcon") // Replace with your image name
-                        Text(UserText.manuallyEnterCodeLabel)
+                        Image("SyncKeyboardIcon")
+                        Text(UserText.manuallyEnterCodeTitle)
                             .font(.system(size: 15, weight: .bold))
                             .foregroundColor(.white.opacity(0.84))
                     }

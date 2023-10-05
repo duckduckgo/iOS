@@ -23,13 +23,8 @@ import Foundation
 // Localise these later, when feature is closer to exernal release
 struct UserText {
 
-    static let turnOnTitle = "Turn on Sync?"
-    static let turnOnButton = "Turn on Sync"
-    static let turnOnMessage = "This will save an encrypted backup of your bookmarks and Autofill logins on DuckDuckGo’s servers, which can be synced with your other devices.\n\nThe decryption key is stored on your device and cannot be read by DuckDuckGo."
-
     static let syncWithAnotherDeviceTitle = "Sync with Another Device"
     static let syncWithAnotherDeviceMessage = "Securely sync bookmarks and Logins between your devices."
-    static let syncWithAnotherDeviceButton = "Sync Another Device"
 
     static let recoveryMessage = "If you lose access to your devices, you will need this code to recover your synced data."
 
@@ -67,7 +62,6 @@ struct UserText {
     static let wordDevices = "devices"
 
     static let saveRecoveryTitle = "Save Recovery Key"
-    static let saveRecoveryButton = "Save As PDF"
 
     static let cameraPermissionRequired = "Camera Permission is Required"
     static let cameraPermissionInstructions = "Please go to your device's settings and grant permission for this app to access your camera."
@@ -76,7 +70,6 @@ struct UserText {
     static let goToSettingsButton = "Go to Settings"
 
     static let syncTitle = "Sync & Back Up"
-    static let syncSettingsInfo = "Sync your bookmarks and Autofill logins across your devices and save an encrypted backup on DuckDuckGo’s servers."
 
     static let thisDevice = "This Device"
     static let connectedDevicesTitle = "Synced Devices"
@@ -84,13 +77,10 @@ struct UserText {
     static let pasteLabel = "Paste"
     static let copyCodeLabel = "Copy Code"
 
-    static let manuallyEnterCodeLabel = "Enter Text Code"
     static let manuallyEnterCodeTitle = "Enter Text Code"
 
     static let showQRCodeLabel = "Show QR Code"
     static let showQRCodeSubLabel = "Display code to scan with another device"
-
-    static let recoverDataButton = "Recover Your Synced Data"
 
     static let settingsNewDeviceInstructions = "Go to Settings > Sync in the DuckDuckGo App on a different device and scan to connect instantly"
     static let settingsScanQRCodeButton = "Scan QR Code"

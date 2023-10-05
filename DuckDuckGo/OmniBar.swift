@@ -62,7 +62,6 @@ class OmniBar: UIView {
     @IBOutlet var searchContainerMaxWidthConstraint: NSLayoutConstraint!
     @IBOutlet var omniBarLeadingConstraint: NSLayoutConstraint!
     @IBOutlet var omniBarTrailingConstraint: NSLayoutConstraint!
-    @IBOutlet var separatorToTop: NSLayoutConstraint!
     @IBOutlet var separatorToBottom: NSLayoutConstraint!
 
     weak var omniDelegate: OmniBarDelegate?
@@ -71,8 +70,7 @@ class OmniBar: UIView {
     
     private var privacyIconAndTrackersAnimator = PrivacyIconAndTrackersAnimator()
     private var notificationAnimator = OmniBarNotificationAnimator()
-    
-    
+
     static func loadFromXib() -> OmniBar {
         return OmniBar.load(nibName: "OmniBar")
     }
@@ -196,13 +194,11 @@ class OmniBar: UIView {
     }
 
     func moveSeparatorToTop() {
-        separatorToBottom.isActive = false
-        separatorToTop.isActive = true
+        separatorToBottom.constant = frame.height
     }
 
     func moveSeparatorToBottom() {
-        separatorToTop.isActive = false
-        separatorToBottom.isActive = true
+        separatorToBottom.constant = 0
     }
 
     func startBrowsing() {

@@ -381,7 +381,6 @@
             <gestureRecognizers/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="5D5-iT-bUk" secondAttribute="bottom" constant="6" id="0Dd-A4-H8W"/>
-                <constraint firstItem="hD7-j4-fpl" firstAttribute="top" secondItem="ojX-nM-dyN" secondAttribute="top" id="0vz-Nb-en0"/>
                 <constraint firstItem="Xrl-6Y-ll0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5D5-iT-bUk" secondAttribute="trailing" constant="24" id="4w4-aZ-P7u"/>
                 <constraint firstItem="pg8-E6-C14" firstAttribute="leading" secondItem="ojX-nM-dyN" secondAttribute="leading" constant="16" id="D0r-SA-Vnj"/>
                 <constraint firstItem="5D5-iT-bUk" firstAttribute="centerX" secondItem="ojX-nM-dyN" secondAttribute="centerX" id="G7B-Lp-iiF"/>
@@ -398,11 +397,6 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="0vz-Nb-en0"/>
-                </mask>
-            </variation>
             <connections>
                 <outlet property="backButton" destination="i9n-fD-ncJ" id="5sk-Ld-2Pq"/>
                 <outlet property="bookmarksButton" destination="ii4-Sq-bD1" id="XN8-Yb-eXK"/>
@@ -425,8 +419,7 @@
                 <outlet property="searchLoupe" destination="u6L-hZ-ptn" id="31i-ke-yHa"/>
                 <outlet property="searchStackContainer" destination="N6K-Lj-Fn6" id="X4J-ee-eJ0"/>
                 <outlet property="separatorHeightConstraint" destination="n0V-et-sPt" id="NST-ka-qSe"/>
-                <outlet property="separatorToBottom" destination="nfs-pA-DD4" id="Dep-Bj-6xB"/>
-                <outlet property="separatorToTop" destination="0vz-Nb-en0" id="GBV-RW-E10"/>
+                <outlet property="separatorToBottom" destination="nfs-pA-DD4" id="hfJ-iR-yz8"/>
                 <outlet property="separatorView" destination="hD7-j4-fpl" id="xlg-WZ-peq"/>
                 <outlet property="settingsButton" destination="1rB-5w-de3" id="KCF-tv-9xx"/>
                 <outlet property="shareButton" destination="hor-Jd-3kw" id="tc5-Us-Mba"/>

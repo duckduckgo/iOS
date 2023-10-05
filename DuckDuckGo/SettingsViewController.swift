@@ -113,7 +113,7 @@ class SettingsViewController: UITableViewController {
     }
 
     private var shouldShowSyncCell: Bool {
-        return true
+        return featureFlagger.isFeatureOn(.sync)
     }
 
     private lazy var shouldShowNetPCell: Bool = {

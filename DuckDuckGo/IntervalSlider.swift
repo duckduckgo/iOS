@@ -64,7 +64,7 @@ class IntervalSlider: UISlider {
         }
     }
 
-    // swiftlint:disable:next unused_setter_value
+    // swiftlint:disable unused_setter_value
     override var accessibilityValue: String? {
         get {
             let index = Int(self.value)
@@ -73,5 +73,6 @@ class IntervalSlider: UISlider {
         }
         set {}
     }
+    // swiftlint:enable unused_setter_value
 
 }

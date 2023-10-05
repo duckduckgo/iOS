@@ -204,7 +204,7 @@ public struct ScanOrPasteCodeView: View {
 
                 VStack(spacing: 0) {
                     Rectangle() // Also acts as the blur for the camera
-                        .fill(.clear)
+                        .fill(.black)
                         .frame(height: g.safeAreaInsets.top)
 
                     ZStack {

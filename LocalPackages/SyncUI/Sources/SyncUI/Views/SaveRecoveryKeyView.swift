@@ -107,7 +107,7 @@ public struct SaveRecoveryKeyView: View {
 
             recoveryInfo()
                 .padding(.bottom, 20)
-            Text("Anyone with access to this code can access your synced data, so please keep it in a safe place.")
+            Text(UserText.recoveryWarning)
                 .font(.system(size: 12))
                 .multilineTextAlignment(.center)
                 .foregroundColor(.black.opacity(0.6))

@@ -27,6 +27,7 @@ struct UserText {
     static let syncWithAnotherDeviceMessage = "Securely sync bookmarks and Logins between your devices."
 
     static let recoveryMessage = "If you lose access to your devices, you will need this code to recover your synced data."
+    static let recoveryWarning = "Anyone with access to this code can access your synced data, so please keep it in a safe place."
 
     static let scanQRCode = "Scan QR Code"
     static let enterTextCode = "Enter Text Code"
@@ -38,8 +39,8 @@ struct UserText {
     static let recoverYourData = "Recover Your Data"
 
     static let options = "Options"
-    static let unifiedFavoritesTitle = "Unified favorites"
-    static let unifiedFavoritesInstruction = "Use the same favorites on all devices. Switch off to maintain separate favorites for mobile and desktop."
+    static let unifiedFavoritesTitle = "Share Favorites"
+    static let unifiedFavoritesInstruction = "Use the same favorites on all devices. Leave off to keep mobile and desktop favorites separate."
 
     static let syncSettingsFooter = "Your data is end-to-end encrypted, and DuckDuckGo does not have access to the decryption key."
 

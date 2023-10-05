@@ -48,7 +48,6 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     }
 
     var cancellables = Set<AnyCancellable>()
-    
 
     // For some reason, on iOS 14, the viewDidLoad wasn't getting called so do some setup here
     convenience init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
@@ -169,20 +168,20 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
         }
     }
 
-    func loginAndShowDeviceConnected(recoveryKey: SyncCode.RecoveryKey) async throws {
+    func loginAndShowDeviceConnected(recoveryKey: SyncCode.RecoveryKey, isActiveSyncDevice: Bool) async throws {
         let knownDevices = Set(self.rootView.model.devices.map { $0.id })
         let registeredDevices = try await syncService.login(recoveryKey, deviceName: deviceName, deviceType: deviceType)
         mapDevices(registeredDevices)
         dismissPresentedViewController()
         let devices = self.rootView.model.devices.filter { !knownDevices.contains($0.id) && !$0.isThisDevice }
-        showDeviceConnected(devices, optionsModel: self.rootView.model, isSingleSetUp: false)
+        showDeviceConnected(devices, optionsModel: self.rootView.model, isSingleSetUp: false, isActiveSyncDevice: isActiveSyncDevice)
     }
 
     func startPolling() {
         Task { @MainActor in
             do {
                 if let recoveryKey = try await connector?.pollForRecoveryKey() {
-                    try await loginAndShowDeviceConnected(recoveryKey: recoveryKey)
+                    try await loginAndShowDeviceConnected(recoveryKey: recoveryKey, isActiveSyncDevice: false)
                 } else {
                     // Likely cancelled elsewhere
                     return
@@ -200,7 +199,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
             }
 
             if let recoveryKey = syncCode.recovery {
-                try await loginAndShowDeviceConnected(recoveryKey: recoveryKey)
+                try await loginAndShowDeviceConnected(recoveryKey: recoveryKey, isActiveSyncDevice: true)
                 return true
             } else if let connectKey = syncCode.connect {
                 if syncService.account == nil {
@@ -214,7 +213,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                     .sink { [weak self] devices in
                         guard let self else { return }
                         self.dismissPresentedViewController()
-                        self.showDeviceConnected(devices.filter { !$0.isThisDevice }, optionsModel: self.rootView.model, isSingleSetUp: false)
+                        self.showDeviceConnected(devices.filter { !$0.isThisDevice }, optionsModel: self.rootView.model, isSingleSetUp: false, isActiveSyncDevice: true)
                     }.store(in: &cancellables)
                 try await syncService.transmitRecoveryKey(connectKey)
                 return true
@@ -229,7 +228,6 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
     func codeCollectionCancelled() {
         assert(navigationController?.visibleViewController is UIHostingController<AnyView>)
         dismissPresentedViewController()
-//        rootView.model.codeCollectionCancelled()
     }
 
     func gotoSettings() {

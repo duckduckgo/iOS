@@ -28,17 +28,19 @@ public struct DeviceConnectedView: View {
         verticalSizeClass == .compact
     }
     let isSingleSetUp: Bool
+    let isActiveSyncDevice: Bool
     @State var showRecoveryPDF = false
 
     let saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel
     @ObservedObject var optionsViewModel: SyncSettingsViewModel
     let devices: [SyncSettingsViewModel.Device]
 
-    public init(_ saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel, optionsViewModel: SyncSettingsViewModel, devices: [SyncSettingsViewModel.Device], isSingleSetUp: Bool) {
+    public init(_ saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel, optionsViewModel: SyncSettingsViewModel, devices: [SyncSettingsViewModel.Device], isSingleSetUp: Bool, isActiveSyncDevice: Bool) {
         self.saveRecoveryKeyViewModel = saveRecoveryKeyViewModel
         self.devices = devices
         self.optionsViewModel = optionsViewModel
         self.isSingleSetUp = isSingleSetUp
+        self.isActiveSyncDevice = isActiveSyncDevice
     }
 
     var title: String {
@@ -50,10 +52,10 @@ public struct DeviceConnectedView: View {
 
     var message: String {
         if isSingleSetUp {
-            return "You can sync this device’s bookmarks and Logins with additional devices at any time from the Sync & Back Up menu in Settings."
+            return UserText.firstDeviceSyncedMessage
         }
         if devices.count == 1 {
-            return UserText.deviceSyncedMessage + devices[0].name
+            return UserText.deviceSyncedMessage
         }
         return UserText.multipleDevicesSyncedMessage
     }
@@ -82,7 +84,7 @@ public struct DeviceConnectedView: View {
                 Text("\(message) \(Text(devicesOnMessageText).bold())")
                     .multilineTextAlignment(.center)
                 
-                if !isSingleSetUp {
+                if isActiveSyncDevice {
                     options()
                 }
             }
@@ -113,9 +115,9 @@ public struct DeviceConnectedView: View {
                 HStack(spacing: 16) {
                     Image("SyncAllDevices")
                     VStack(alignment: .leading) {
-                        Text("Unified favorites")
+                        Text(UserText.unifiedFavoritesTitle)
                             .foregroundColor(.primary)
-                        Text("Use the same favorites on all devices. Switch off to maintain separate favorites for mobile and desktop.")
+                        Text(UserText.unifiedFavoritesInstruction)
                             .font(.system(size: 13))
                             .foregroundColor(.secondary)
                     }

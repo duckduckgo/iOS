@@ -24,10 +24,6 @@ import DDGSync
 import AVFoundation
 
 extension SyncSettingsViewController: SyncManagementViewModelDelegate {
-    func updateUnifiedFavorite(to displayUnified: Bool) {
-
-    }
-
 
     func updateDeviceName(_ name: String) {
         Task { @MainActor in
@@ -47,7 +43,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
                 self.rootView.model.syncEnabled(recoveryCode: recoveryCode)
                 self.refreshDevices()
-                self.showDeviceConnected([], optionsModel: optionsViewModel, isSingleSetUp: true)
+                self.showDeviceConnected([], optionsModel: optionsViewModel, isSingleSetUp: true, isActiveSyncDevice: true)
             } catch {
                 handleError(error)
             }
@@ -72,11 +68,16 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         collectCode(showConnectMode: false)
     }
 
-    func showDeviceConnected(_ devices: [SyncSettingsViewModel.Device], optionsModel: SyncSettingsViewModel, isSingleSetUp: Bool) {
+    func showDeviceConnected(_ devices: [SyncSettingsViewModel.Device], optionsModel: SyncSettingsViewModel, isSingleSetUp: Bool, isActiveSyncDevice: Bool) {
         let model = SaveRecoveryKeyViewModel(key: recoveryCode) { [weak self] in
             self?.shareRecoveryPDF()
         }
-        let controller = UIHostingController(rootView: DeviceConnectedView(model, optionsViewModel: optionsModel, devices: devices, isSingleSetUp: isSingleSetUp))
+        let controller = UIHostingController(
+            rootView: DeviceConnectedView(model,
+                                        optionsViewModel: optionsModel,
+                                          devices: devices,
+                                          isSingleSetUp: isSingleSetUp,
+                                          isActiveSyncDevice: isActiveSyncDevice))
         navigationController?.present(controller, animated: true) { [weak self] in
             self?.rootView.model.syncEnabled(recoveryCode: self!.recoveryCode)
             self?.refreshDevices()

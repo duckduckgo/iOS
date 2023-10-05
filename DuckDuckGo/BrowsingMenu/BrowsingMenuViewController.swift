@@ -58,16 +58,18 @@ final class BrowsingMenuViewController: UIViewController {
     private var headerButtons: [BrowsingMenuButton] = []
     private let headerEntries: [BrowsingMenuEntry]
     private let menuEntries: [BrowsingMenuEntry]
+    private let appSettings: AppSettings
 
-    class func instantiate(headerEntries: [BrowsingMenuEntry], menuEntries: [BrowsingMenuEntry]) -> BrowsingMenuViewController {
+    class func instantiate(headerEntries: [BrowsingMenuEntry], menuEntries: [BrowsingMenuEntry], appSettings: AppSettings) -> BrowsingMenuViewController {
         UIStoryboard(name: "BrowsingMenuViewController", bundle: nil).instantiateInitialViewController { coder in
-            BrowsingMenuViewController(headerEntries: headerEntries, menuEntries: menuEntries, coder: coder)
+            BrowsingMenuViewController(headerEntries: headerEntries, menuEntries: menuEntries, appSettings: appSettings, coder: coder)
         }!
     }
 
-    init?(headerEntries: [BrowsingMenuEntry], menuEntries: [BrowsingMenuEntry], coder: NSCoder) {
+    init?(headerEntries: [BrowsingMenuEntry], menuEntries: [BrowsingMenuEntry], appSettings: AppSettings, coder: NSCoder) {
         self.headerEntries = headerEntries
         self.menuEntries = menuEntries
+        self.appSettings = appSettings
         super.init(coder: coder)
         self.transitioningDelegate = self
     }
@@ -219,7 +221,9 @@ final class BrowsingMenuViewController: UIViewController {
         // Make it go above WebView in Landscape
         topConstraint.constant = frame.minY + (isIPhoneLandscape ? -10 : 5)
         // Move menu up in Landscape, as bottom toolbar shrinks
-        bottomConstraint.constant = windowBounds.maxY - frame.maxY - (isIPhoneLandscape ? 2 : 10)
+
+        let barPositionOffset: CGFloat = appSettings.currentAddressBarPosition == .top ? 0 : 52
+        bottomConstraint.constant = windowBounds.maxY - frame.maxY - (isIPhoneLandscape ? 2 : 10) - barPositionOffset
         rightConstraint.constant = isIPad ? 67 : 10
 
         recalculatePreferredWidthConstraint()

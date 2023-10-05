@@ -336,9 +336,15 @@ class MainViewCoordinator {
         logoText.tintColor = theme.ddgTextTintColor
     }
 
-    func hideSuggestionTray() {
-        suggestionTrayContainer.isHidden = true
-        suggestionTrayContainer.backgroundColor = .clear
+    func showToolbarSeparator() {
+        // Setting the background 'resets' the toolbar
+        toolbar.setBackgroundImage(nil, forToolbarPosition: .bottom, barMetrics: .default)
+        toolbar.setShadowImage(nil, forToolbarPosition: .bottom)
+    }
+
+    func hideToolbarSeparator() {
+        // The shadow image is what defines the separator, but we don't need to change the background here (in fact we want to keep it).
+        toolbar.setShadowImage(UIImage(), forToolbarPosition: .bottom)
     }
 
     class Constraints {
@@ -362,26 +368,39 @@ class MainViewCoordinator {
         guard position != addressBarPosition else { return }
         switch position {
         case .top:
-            toggleAddressBar(true)
+            moveAddressBarToTop()
         case .bottom:
-            toggleAddressBar(false)
+            moveAddressBarToBottom()
         }
 
         addressBarPosition = position
     }
 
+    func moveAddressBarToTop() {
+        constraints.progressBarBottom.isActive = false
+        constraints.navigationBarContainerBottom.isActive = false
+        constraints.notificationContainerTopToStatusBackground.isActive = false
+        constraints.statusBackgroundBottomToSafeAreaTop.isActive = false
+
+        constraints.navigationBarContainerTop.isActive = true
+        constraints.progressBarTop.isActive = true
+        constraints.notificationContainerTopToNavigationBar.isActive = true
+        constraints.statusBackgroundToNavigationBarContainerBottom.isActive = true
+    }
+
+    func moveAddressBarToBottom() {
+        constraints.navigationBarContainerTop.isActive = false
+        constraints.progressBarTop.isActive = false
+        constraints.notificationContainerTopToNavigationBar.isActive = false
+        constraints.statusBackgroundToNavigationBarContainerBottom.isActive = false
+
+        constraints.progressBarBottom.isActive = true
+        constraints.navigationBarContainerBottom.isActive = true
+        constraints.notificationContainerTopToStatusBackground.isActive = true
+        constraints.statusBackgroundBottomToSafeAreaTop.isActive = true
+    }
+
     func toggleAddressBar(_ top: Bool) {
-        constraints.navigationBarContainerTop.isActive = top
-        constraints.navigationBarContainerBottom.isActive = !top
-
-        constraints.progressBarTop.isActive = top
-        constraints.progressBarBottom.isActive = !top
-
-        constraints.notificationContainerTopToNavigationBar.isActive = top
-        constraints.notificationContainerTopToStatusBackground.isActive = !top
-
-        constraints.statusBackgroundToNavigationBarContainerBottom.isActive = top
-        constraints.statusBackgroundBottomToSafeAreaTop.isActive = !top
     }
 
 }

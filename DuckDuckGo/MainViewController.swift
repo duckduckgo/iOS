@@ -320,9 +320,11 @@ class MainViewController: UIViewController {
         // TODO update any other view elements
         switch appSettings.currentAddressBarPosition {
         case .top:
-            omniBar.showSeparator()
+            omniBar.moveSeparatorToBottom()
+            viewCoordinator.showToolbarSeparator()
         case .bottom:
-            omniBar.hideSeparator()
+            omniBar.moveSeparatorToTop()
+            viewCoordinator.hideToolbarSeparator()
         }
     }
 

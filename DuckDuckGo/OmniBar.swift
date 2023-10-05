@@ -62,6 +62,8 @@ class OmniBar: UIView {
     @IBOutlet var searchContainerMaxWidthConstraint: NSLayoutConstraint!
     @IBOutlet var omniBarLeadingConstraint: NSLayoutConstraint!
     @IBOutlet var omniBarTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet var separatorToTop: NSLayoutConstraint!
+    @IBOutlet var separatorToBottom: NSLayoutConstraint!
 
     weak var omniDelegate: OmniBarDelegate?
     fileprivate var state: OmniBarState = SmallOmniBarState.HomeNonEditingState()
@@ -191,6 +193,16 @@ class OmniBar: UIView {
     
     func hideSeparator() {
         separatorView.isHidden = true
+    }
+
+    func moveSeparatorToTop() {
+        separatorToBottom.isActive = false
+        separatorToTop.isActive = true
+    }
+
+    func moveSeparatorToBottom() {
+        separatorToTop.isActive = false
+        separatorToBottom.isActive = true
     }
 
     func startBrowsing() {

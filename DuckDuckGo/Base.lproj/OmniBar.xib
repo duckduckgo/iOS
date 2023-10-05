@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad12_9rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -381,6 +381,7 @@
             <gestureRecognizers/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="5D5-iT-bUk" secondAttribute="bottom" constant="6" id="0Dd-A4-H8W"/>
+                <constraint firstItem="hD7-j4-fpl" firstAttribute="top" secondItem="ojX-nM-dyN" secondAttribute="top" id="0vz-Nb-en0"/>
                 <constraint firstItem="Xrl-6Y-ll0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5D5-iT-bUk" secondAttribute="trailing" constant="24" id="4w4-aZ-P7u"/>
                 <constraint firstItem="pg8-E6-C14" firstAttribute="leading" secondItem="ojX-nM-dyN" secondAttribute="leading" constant="16" id="D0r-SA-Vnj"/>
                 <constraint firstItem="5D5-iT-bUk" firstAttribute="centerX" secondItem="ojX-nM-dyN" secondAttribute="centerX" id="G7B-Lp-iiF"/>
@@ -397,6 +398,11 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="0vz-Nb-en0"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="backButton" destination="i9n-fD-ncJ" id="5sk-Ld-2Pq"/>
                 <outlet property="bookmarksButton" destination="ii4-Sq-bD1" id="XN8-Yb-eXK"/>
@@ -419,6 +425,8 @@
                 <outlet property="searchLoupe" destination="u6L-hZ-ptn" id="31i-ke-yHa"/>
                 <outlet property="searchStackContainer" destination="N6K-Lj-Fn6" id="X4J-ee-eJ0"/>
                 <outlet property="separatorHeightConstraint" destination="n0V-et-sPt" id="NST-ka-qSe"/>
+                <outlet property="separatorToBottom" destination="nfs-pA-DD4" id="Dep-Bj-6xB"/>
+                <outlet property="separatorToTop" destination="0vz-Nb-en0" id="GBV-RW-E10"/>
                 <outlet property="separatorView" destination="hD7-j4-fpl" id="xlg-WZ-peq"/>
                 <outlet property="settingsButton" destination="1rB-5w-de3" id="KCF-tv-9xx"/>
                 <outlet property="shareButton" destination="hor-Jd-3kw" id="tc5-Us-Mba"/>
@@ -440,7 +448,7 @@
     </objects>
     <designables>
         <designable name="fqM-N4-jNd">
-            <size key="intrinsicContentSize" width="9" height="22"/>
+            <size key="intrinsicContentSize" width="5" height="21"/>
         </designable>
     </designables>
     <resources>
@@ -458,7 +466,7 @@
             <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

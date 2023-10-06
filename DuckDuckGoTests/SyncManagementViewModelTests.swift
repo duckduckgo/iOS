@@ -144,6 +144,10 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
         monitor.incrementCalls(function: #function.cleaningFunctionName())
     }
 
+    func updateOptions() {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+    }
+
 }
 
 // MARK: An idea... can be made more public if works out

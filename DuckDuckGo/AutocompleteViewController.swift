@@ -249,6 +249,13 @@ extension AutocompleteViewController: UITableViewDataSource {
         return cell
     }
 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if isAddressBarAtBottom && suggestions.isEmpty {
+            return view.frame.height
+        }
+        return 46
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return receivedResponse ? max(Constants.minItems, suggestions.count) : 0
     }

@@ -106,6 +106,10 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         syncService.scheduler.requestSyncImmediately()
     }
 
+    func updateOptions() {
+        syncService.scheduler.requestSyncImmediately()
+    }
+
     func refreshForState(_ authState: SyncAuthState) {
         rootView.model.isSyncEnabled = authState != .inactive
         if authState != .inactive {

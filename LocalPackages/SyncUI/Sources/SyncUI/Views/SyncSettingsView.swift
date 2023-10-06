@@ -40,6 +40,9 @@ public struct SyncSettingsView: View {
                 syncNewDevice()
 
                 OptionsView(isUnifiedFavoritesEnabled: $model.isUnifiedFavoritesEnabled)
+                    .onAppear(perform: {
+                        model.delegate?.updateOptions()
+                    })
 
                 saveRecoveryPDF()
 

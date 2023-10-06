@@ -113,6 +113,11 @@ class MainViewController: UIViewController {
         return tabManager?.current
     }
 
+    var searchBarRect: CGRect {
+        let view = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first?.rootViewController?.view
+        return omniBar.searchContainer.convert(omniBar.searchContainer.bounds, to: view)
+    }
+
     var keyModifierFlags: UIKeyModifierFlags?
     var showKeyboardAfterFireButton: DispatchWorkItem?
     
@@ -1435,6 +1440,10 @@ extension MainViewController: AutocompleteViewControllerDelegate {
     func autocompleteWasDismissed() {
         dismissOmniBar()
     }
+
+    func autocompleteDidRequestSearchBarRect() -> CGRect {
+        searchBarRect
+    }
 }
 
 extension MainViewController: HomeControllerDelegate {
@@ -1635,8 +1644,7 @@ extension MainViewController: TabDelegate {
     }
     
     func tabDidRequestSearchBarRect(tab: TabViewController) -> CGRect {
-        let view = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first?.rootViewController?.view
-        return omniBar.searchContainer.convert(omniBar.searchContainer.bounds, to: view)
+        searchBarRect
     }
 
     func tab(_ tab: TabViewController,

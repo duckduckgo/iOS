@@ -32,7 +32,7 @@ class SuggestionTableViewCell: UITableViewCell {
     @IBOutlet weak var typeImage: UIImageView!
     @IBOutlet weak var plusButton: UIButton!
 
-    func updateFor(query: String, suggestion: Suggestion, with theme: Theme, appSettings: AppSettings) {
+    func updateFor(query: String, suggestion: Suggestion, with theme: Theme, isAddressBarAtBottom: Bool) {
 
         switch suggestion.source {
         case .local:
@@ -49,10 +49,9 @@ class SuggestionTableViewCell: UITableViewCell {
         }
 
         self.plusButton.accessibilityLabel = UserText.voiceoverActionAutocomplete
-        switch appSettings.currentAddressBarPosition {
-        case .bottom:
+        if isAddressBarAtBottom {
             self.plusButton.setImage(UIImage(named: "Arrow-Down-Left-24"), for: .normal)
-        case .top:
+        } else {
             self.plusButton.setImage(UIImage(named: "Arrow-Top-Left-24"), for: .normal)
         }
 

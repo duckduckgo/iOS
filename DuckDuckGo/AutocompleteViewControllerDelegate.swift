@@ -28,6 +28,8 @@ protocol AutocompleteViewControllerDelegate: AnyObject {
     func autocomplete(pressedPlusButtonForSuggestion suggestion: Suggestion)
 
     func autocompleteWasDismissed()
+
+    func autocompleteDidRequestSearchBarRect() -> CGRect
 }
 
 protocol AutocompleteViewControllerPresentationDelegate: AnyObject {

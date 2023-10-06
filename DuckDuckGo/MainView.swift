@@ -34,16 +34,11 @@ class MainViewFactory {
         coordinator = MainViewCoordinator(superview: superview)
     }
 
-    static func createViewHierarchy(_ superview: UIView, addressBarPosition: AddressBarPosition) -> MainViewCoordinator {
+    static func createViewHierarchy(_ superview: UIView) -> MainViewCoordinator {
         let factory = MainViewFactory(superview)
-
         factory.createViews()
-        factory.disableAutoresizingOnViewAndImmediateSubviews(superview)
         factory.constrainViews()
-
-        let coordinator = factory.coordinator
-        coordinator.moveAddressBarToPosition(addressBarPosition)
-        return coordinator
+        return factory.coordinator
     }
 
     private func disableAutoresizingOnViewAndImmediateSubviews(_ view: UIView) {

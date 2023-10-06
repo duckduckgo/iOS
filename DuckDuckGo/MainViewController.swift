@@ -178,8 +178,8 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        viewCoordinator = MainViewFactory.createViewHierarchy(self.view,
-                                                              addressBarPosition: appSettings.currentAddressBarPosition)
+        viewCoordinator = MainViewFactory.createViewHierarchy(self.view)
+        viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
 
         viewCoordinator.toolbarBackButton.action = #selector(onBackPressed)
         viewCoordinator.toolbarForwardButton.action = #selector(onForwardPressed)

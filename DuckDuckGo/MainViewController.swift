@@ -217,6 +217,7 @@ class MainViewController: UIViewController {
         registerForApplicationEvents()
         registerForCookiesManagedNotification()
         registerForSettingsChangeNotifications()
+        registerForOrientationChangeNotification()
 
         tabManager.cleanupTabsFaviconCache()
         refreshViewsBasedOnAddressBarPosition()
@@ -239,6 +240,22 @@ class MainViewController: UIViewController {
     override func performSegue(withIdentifier identifier: String, sender: Any?) {
         assertionFailure()
         super.performSegue(withIdentifier: identifier, sender: sender)
+    }
+
+    func registerForOrientationChangeNotification() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(orientationDidChange),
+                                               name: UIDevice.orientationDidChangeNotification,
+                                               object: nil)
+    }
+
+    @objc func orientationDidChange() {
+        if UIDevice.current.orientation.isLandscape {
+            viewCoordinator.moveAddressBarToPosition(.top)
+        } else {
+            viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
+        }
+        refreshViewsBasedOnAddressBarPosition()
     }
 
     func loadSuggestionTray() {

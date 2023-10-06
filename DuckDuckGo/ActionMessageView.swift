@@ -39,7 +39,8 @@ class ActionMessageView: UIView {
         static var duration: TimeInterval = 3.0
         
         static var windowBottomPaddingWithBottomBar: CGFloat {
-            let bottomAddressBarModifier: CGFloat = AppDependencyProvider.shared.appSettings.currentAddressBarPosition == .bottom ? 52 : 0
+            let addressBarPosition = AppDependencyProvider.shared.appSettings.currentAddressBarPosition
+            let bottomAddressBarModifier: CGFloat = addressBarPosition == .bottom ? 52 : 0
 
             if UIDevice.current.userInterfaceIdiom == .phone && !isPortrait {
                 return 40 + bottomAddressBarModifier

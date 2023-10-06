@@ -32,18 +32,23 @@ class FullscreenDaxDialogViewController: UIViewController {
 
     @IBOutlet weak var highlightCutOutView: HighlightCutOutView!
     @IBOutlet weak var containerHeight: NSLayoutConstraint!
-    
+    @IBOutlet weak var spacerPadding: NSLayoutConstraint!
+
     weak var daxDialogViewController: DaxDialogViewController?
     weak var delegate: FullscreenDaxDialogDelegate?
 
     var spec: DaxDialogs.BrowsingSpec?
     var woShown: Bool = false
-    
+
+    let appSettings = AppDependencyProvider.shared.appSettings // TODO inject this
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let isAddressBarAtBottom = appSettings.currentAddressBarPosition == .bottom
+
         daxDialogViewController?.cta = spec?.cta
-        daxDialogViewController?.message = spec?.message
+        daxDialogViewController?.message = spec?.message.replacingOccurrences(of: "☝️", with: isAddressBarAtBottom ? "👇" : "☝️")
         daxDialogViewController?.onTapCta = dismissCta
         
         highlightCutOutView.fillColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
@@ -69,6 +74,7 @@ class FullscreenDaxDialogViewController: UIViewController {
         containerHeight.constant = daxDialogViewController?.calculateHeight() ?? 0
         
         updateCutOut()
+        updateForAddressBarPosition()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -92,8 +98,18 @@ class FullscreenDaxDialogViewController: UIViewController {
     @objc
     func orientationDidChange() {
         updateCutOut()
+        updateForAddressBarPosition()
     }
-    
+
+    private func updateForAddressBarPosition() {
+        if spec?.highlightAddressBar == true,
+           appSettings.currentAddressBarPosition == .bottom {
+            spacerPadding.constant = 52
+        } else {
+            spacerPadding.constant = 0
+        }
+    }
+
     @objc private func updateCutOut() {
         if spec?.highlightAddressBar ?? false, let rect = delegate?.daxDialogDidRquestAddressBarRect(controller: self) {
             let padding: CGFloat = 6

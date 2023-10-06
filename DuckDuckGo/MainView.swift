@@ -19,6 +19,7 @@
 
 import UIKit
 
+// swiftlint:disable file_length
 // swiftlint:disable line_length
 
 class MainViewFactory {
@@ -403,3 +404,4 @@ class MainViewCoordinator {
 }
 
 // swiftlint:enable line_length
+// swiftlint:enable file_length

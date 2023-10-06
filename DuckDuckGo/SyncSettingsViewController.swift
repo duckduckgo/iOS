@@ -217,7 +217,11 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                     .sink { [weak self] devices in
                         guard let self else { return }
                         self.dismissPresentedViewController()
-                        self.showDeviceConnected(devices.filter { !$0.isThisDevice }, optionsModel: self.rootView.model, isSingleSetUp: false, isActiveSyncDevice: true)
+                        self.showDeviceConnected(
+                            devices.filter { !$0.isThisDevice },
+                            optionsModel: self.rootView.model,
+                            isSingleSetUp: false,
+                            isActiveSyncDevice: true)
                     }.store(in: &cancellables)
                 try await syncService.transmitRecoveryKey(connectKey)
                 return true

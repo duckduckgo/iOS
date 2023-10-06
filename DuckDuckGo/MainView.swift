@@ -37,6 +37,7 @@ class MainViewFactory {
     static func createViewHierarchy(_ superview: UIView) -> MainViewCoordinator {
         let factory = MainViewFactory(superview)
         factory.createViews()
+        factory.disableAutoresizingOnViewAndImmediateSubviews(superview)
         factory.constrainViews()
         return factory.coordinator
     }

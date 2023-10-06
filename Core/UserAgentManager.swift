@@ -181,6 +181,7 @@ struct UserAgent {
         return versions
     }
 
+    // swiftlint:disable:next cyclomatic_complexity
     public func agent(forUrl url: URL?,
                       isDesktop: Bool,
                       privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig) -> String {

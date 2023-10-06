@@ -76,19 +76,30 @@ final class NetworkProtectionUNNotificationPresenter: NSObject, NetworkProtectio
         showNotification(.test, content)
     }
 
-    func showReconnectedNotification() {
+    func showConnectedNotification(serverLocation: String?) {
+        let body: String
+        if let serverLocation {
+            body = UserText.networkProtectionConnectionSuccessNotificationBody(serverLocation: serverLocation)
+        } else {
+            body = UserText.networkProtectionConnectionSuccessNotificationBody
+        }
+        let content = notificationContent(body: body)
+        showNotification(.connection, content)
+    }
+
+    func showConnectionNotification(serverLocation: String?) {
         let content = notificationContent(body: UserText.networkProtectionConnectionSuccessNotificationBody)
-        showNotification(.reconnected, content)
+        showNotification(.connection, content)
     }
 
     func showReconnectingNotification() {
         let content = notificationContent(body: UserText.networkProtectionConnectionInterruptedNotificationBody)
-        showNotification(.reconnecting, content)
+        showNotification(.connection, content)
     }
 
     func showConnectionFailureNotification() {
         let content = notificationContent(body: UserText.networkProtectionConnectionFailureNotificationBody)
-        showNotification(.connectionFailure, content)
+        showNotification(.connection, content)
     }
 
     func showSupersededNotification() {

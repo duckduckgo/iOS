@@ -20,9 +20,7 @@
 import Foundation
 
 public enum NetworkProtectionNotificationIdentifier: String {
-    case reconnecting = "network-protection.notification.reconnecting"
-    case reconnected = "network-protection.notification.reconnected"
-    case connectionFailure = "network-protection.notification.connection-failure"
+    case connection = "network-protection.notification.connection"
     case superseded = "network-protection.notification.superseded"
     case test = "network-protection.notification.test"
 }

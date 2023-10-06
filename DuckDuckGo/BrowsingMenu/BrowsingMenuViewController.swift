@@ -58,18 +58,23 @@ final class BrowsingMenuViewController: UIViewController {
     private var headerButtons: [BrowsingMenuButton] = []
     private let headerEntries: [BrowsingMenuEntry]
     private let menuEntries: [BrowsingMenuEntry]
-    private let appSettings: AppSettings
 
-    class func instantiate(headerEntries: [BrowsingMenuEntry], menuEntries: [BrowsingMenuEntry], appSettings: AppSettings) -> BrowsingMenuViewController {
+    var searchBarRect: () -> CGRect
+
+    var isAddressBarBottom: Bool {
+        searchBarRect().minY > view.frame.midY
+    }
+
+    class func instantiate(headerEntries: [BrowsingMenuEntry], menuEntries: [BrowsingMenuEntry], searchBarRect: @escaping () -> CGRect) -> BrowsingMenuViewController {
         UIStoryboard(name: "BrowsingMenuViewController", bundle: nil).instantiateInitialViewController { coder in
-            BrowsingMenuViewController(headerEntries: headerEntries, menuEntries: menuEntries, appSettings: appSettings, coder: coder)
+            BrowsingMenuViewController(headerEntries: headerEntries, menuEntries: menuEntries, searchBarRect: searchBarRect, coder: coder)
         }!
     }
 
-    init?(headerEntries: [BrowsingMenuEntry], menuEntries: [BrowsingMenuEntry], appSettings: AppSettings, coder: NSCoder) {
+    init?(headerEntries: [BrowsingMenuEntry], menuEntries: [BrowsingMenuEntry], searchBarRect: @escaping () -> CGRect, coder: NSCoder) {
         self.headerEntries = headerEntries
         self.menuEntries = menuEntries
-        self.appSettings = appSettings
+        self.searchBarRect = searchBarRect
         super.init(coder: coder)
         self.transitioningDelegate = self
     }
@@ -222,7 +227,7 @@ final class BrowsingMenuViewController: UIViewController {
         topConstraint.constant = frame.minY + (isIPhoneLandscape ? -10 : 5)
         // Move menu up in Landscape, as bottom toolbar shrinks
 
-        let barPositionOffset: CGFloat = appSettings.currentAddressBarPosition == .top ? 0 : 52
+        let barPositionOffset: CGFloat = isAddressBarBottom ? 52 : 0
         bottomConstraint.constant = windowBounds.maxY - frame.maxY - (isIPhoneLandscape ? 2 : 10) - barPositionOffset
         rightConstraint.constant = isIPad ? 67 : 10
 

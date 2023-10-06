@@ -1270,8 +1270,9 @@ extension MainViewController: OmniBarDelegate {
 
         let entries = tab.buildBrowsingMenu(with: menuBookmarksViewModel)
         let controller = BrowsingMenuViewController.instantiate(headerEntries: tab.buildBrowsingMenuHeaderContent(),
-                                                                menuEntries: entries,
-                                                                appSettings: appSettings)
+                                                                menuEntries: entries) {
+            [weak self] in self?.searchBarRect ?? .zero
+        }
 
         controller.modalPresentationStyle = .custom
         self.present(controller, animated: true) {

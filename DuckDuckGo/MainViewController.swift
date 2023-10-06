@@ -1287,8 +1287,8 @@ extension MainViewController: OmniBarDelegate {
 
         let entries = tab.buildBrowsingMenu(with: menuBookmarksViewModel)
         let controller = BrowsingMenuViewController.instantiate(headerEntries: tab.buildBrowsingMenuHeaderContent(),
-                                                                menuEntries: entries) {
-            [weak self] in self?.searchBarRect ?? .zero
+                                                                menuEntries: entries) { [weak self] in
+            self?.searchBarRect ?? .zero
         }
 
         controller.modalPresentationStyle = .custom
@@ -1953,6 +1953,10 @@ extension MainViewController: Themable {
         findInPageView.decorate(with: theme)
         
         viewCoordinator.logoText.tintColor = theme.ddgTextTintColor
+
+        if appSettings.currentAddressBarPosition == .bottom {
+            viewCoordinator.statusBackground.backgroundColor = theme.backgroundColor
+        }
     }
 
 }

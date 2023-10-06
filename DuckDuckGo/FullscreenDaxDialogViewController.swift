@@ -40,12 +40,13 @@ class FullscreenDaxDialogViewController: UIViewController {
     var spec: DaxDialogs.BrowsingSpec?
     var woShown: Bool = false
 
-    let appSettings = AppDependencyProvider.shared.appSettings // TODO inject this
+    var isAddressBarAtBottom: Bool {
+        guard let rect = delegate?.daxDialogDidRquestAddressBarRect(controller: self) else { return false }
+        return rect.minY > view.frame.midY
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let isAddressBarAtBottom = appSettings.currentAddressBarPosition == .bottom
 
         daxDialogViewController?.cta = spec?.cta
         daxDialogViewController?.message = spec?.message.replacingOccurrences(of: "☝️", with: isAddressBarAtBottom ? "👇" : "☝️")
@@ -102,8 +103,7 @@ class FullscreenDaxDialogViewController: UIViewController {
     }
 
     private func updateForAddressBarPosition() {
-        if spec?.highlightAddressBar == true,
-           appSettings.currentAddressBarPosition == .bottom {
+        if spec?.highlightAddressBar == true, isAddressBarAtBottom {
             spacerPadding.constant = 52
         } else {
             spacerPadding.constant = 0

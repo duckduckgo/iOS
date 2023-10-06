@@ -130,7 +130,7 @@ struct UserAgent {
     private let applicationComponent = "DuckDuckGo/\(AppVersion.shared.majorVersionNumber)"
     private let statistics: StatisticsStore
     private let isTesting: Bool = ProcessInfo().arguments.contains("testing")
-    
+
     init(defaultAgent: String = Constants.fallbackDefaultAgent, statistics: StatisticsStore = StatisticsUserDefaults()) {
         versionComponent = UserAgent.createVersionComponent(fromAgent: defaultAgent)
         baseAgent = UserAgent.createBaseAgent(fromAgent: defaultAgent, versionComponent: versionComponent)
@@ -206,6 +206,10 @@ struct UserAgent {
         }
 
         if ddgFixedUserAgentVersions(forConfig: privacyConfig).contains(statistics.atbWeek ?? "") {
+            return ddgFixedLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
+        }
+
+        if DefaultVariantManager().isSupported(feature: .fixedUserAgent) {
             return ddgFixedLogic(forUrl: url, isDesktop: isDesktop, privacyConfig: privacyConfig)
         }
 

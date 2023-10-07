@@ -82,6 +82,12 @@ class OmniBar: UIView {
         super.init(coder: coder)
     }
 
+    // Tests require this
+    override init(frame: CGRect) {
+        appSettings = AppDependencyProvider.shared.appSettings
+        super.init(frame: frame)
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
         configureMenuButton()

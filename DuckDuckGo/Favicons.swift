@@ -20,7 +20,6 @@
 import Common
 import Kingfisher
 import UIKit
-import LinkPresentation
 import WidgetKit
 
 // swiftlint:disable type_body_length file_length
@@ -349,21 +348,7 @@ public class Favicons {
 
         let additionalSources = sourcesProvider.additionalSources(forDomain: domain)
 
-        // Try LinkPresentation first, before falling back to standard favicon fetching logic.
-        retrieveLinkPresentationImage(from: domain) {
-            guard let image = $0, image.size.width >= Constants.targetImageSizePoints else {
-                self.retrieveBestImage(bestSources: bestSources, additionalSources: additionalSources, completion: completion)
-                return
-            }
-
-            completion(image)
-        }
-    }
-
-    private func retrieveBestImage(bestSources: [URL], additionalSources: [URL], completion: @escaping (UIImage?) -> Void) {
         retrieveBestImage(from: bestSources) {
-
-            // Fallback to favicons
             guard let image = $0 else {
                 self.retrieveBestImage(from: additionalSources) {
                     completion($0)
@@ -372,32 +357,6 @@ public class Favicons {
             }
 
             completion(image)
-        }
-    }
-
-    private func retrieveLinkPresentationImage(from domain: String, completion: @escaping (UIImage?) -> Void) {
-        guard let url = URL(string: "https://\(domain)") else {
-            completion(nil)
-            return
-        }
-
-        let metadataFetcher = LPMetadataProvider()
-        let completion: (LPLinkMetadata?, Error?) -> Void = { metadata, metadataError in
-            guard let iconProvider = metadata?.iconProvider, metadataError == nil else {
-                completion(nil)
-                return
-            }
-
-            iconProvider.loadObject(ofClass: UIImage.self) { potentialImage, _ in
-                completion(potentialImage as? UIImage)
-            }
-        }
-
-        if #available(iOS 15.0, *) {
-            let request = URLRequest.userInitiated(url)
-            metadataFetcher.startFetchingMetadata(for: request, completionHandler: completion)
-        } else {
-            metadataFetcher.startFetchingMetadata(for: url, completionHandler: completion)
         }
     }
 

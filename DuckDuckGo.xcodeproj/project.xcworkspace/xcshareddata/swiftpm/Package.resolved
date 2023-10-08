@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "43fd829917f61f605fc110b68bb1bf1841276b3c",
-          "version": "81.1.0"
+          "branch": "sam/add-netp-subscription-auth-support",
+          "revision": "b24418c49790bc46677469237afb46d00884624c",
+          "version": null
         }
       },
       {

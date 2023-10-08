@@ -82,14 +82,14 @@ extension EventMapping where Event == NetworkProtectionError {
                 .wireGuardInvalidState,
                 .wireGuardDnsResolution,
                 .wireGuardSetNetworkSettings,
-                .startWireGuardBackend:
+                .startWireGuardBackend,
+                .failedToRetrieveAuthToken:
             pixelEvent = .networkProtectionUnhandledError
             params[PixelParameters.function] = #function
             params[PixelParameters.line] = String(#line)
             // Should never be sent from from the app
         case .unhandledError(function: let function, line: let line, error: let error):
             pixelEvent = .networkProtectionUnhandledError
-
         }
 
         DailyPixel.fireDailyAndCount(pixel: pixelEvent, error: pixelError, withAdditionalParameters: params)

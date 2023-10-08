@@ -82,6 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Can be removed after a couple of versions
         cleanUpMacPromoExperiment2()
+        cleanUpIncrementalRolloutPixelTest()
 
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
         Configuration.setURLProvider(AppConfigurationURLProvider())
@@ -209,19 +210,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         syncService.initializeIfNeeded()
         self.syncService = syncService
 
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        
-        guard let main = storyboard.instantiateInitialViewController(creator: { coder in
-            MainViewController(coder: coder,
-                               bookmarksDatabase: self.bookmarksDatabase,
-                               bookmarksDatabaseCleaner: self.syncDataProviders.bookmarksAdapter.databaseCleaner,
-                               appTrackingProtectionDatabase: self.appTrackingProtectionDatabase,
-                               syncService: self.syncService,
-                               syncDataProviders: self.syncDataProviders)
-        }) else {
-            fatalError("Could not load MainViewController")
-        }
-        
+        let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
+                                      bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
+                                      appTrackingProtectionDatabase: appTrackingProtectionDatabase,
+                                      syncService: syncService,
+                                      syncDataProviders: syncDataProviders)
+        main.loadViewIfNeeded()
+
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = main
         window?.makeKeyAndVisible()
@@ -258,6 +253,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.removeObject(forKey: "com.duckduckgo.ios.macPromoMay23.exp2.cohort")
     }
 
+    private func cleanUpIncrementalRolloutPixelTest() {
+        UserDefaults.standard.removeObject(forKey: "network-protection.incremental-feature-flag-test.has-sent-pixel")
+    }
+
     private func clearTmp() {
         let tmp = FileManager.default.temporaryDirectory
         do {
@@ -275,12 +274,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             PreserveLogins.shared.clearLegacyAllowedDomains()
         })
     }
-
-    // Temporary feature flag tester, to validate that phased rollouts are working as intended.
-     // This is to be removed before the end of August 2023.
-     lazy var featureFlagTester: PhasedRolloutFeatureFlagTester = {
-         return PhasedRolloutFeatureFlagTester()
-     }()
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
@@ -335,7 +328,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         syncService.scheduler.notifyAppLifecycleEvent()
         fireFailedCompilationsPixelIfNeeded()
-        featureFlagTester.sendFeatureFlagEnabledPixelIfNecessary()
     }
 
     private func fireAppLaunchPixel() {
@@ -717,7 +709,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
         // Give the `clearNavigationStack` call time to complete.
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-            rootViewController.performSegue(withIdentifier: "Settings", sender: nil)
+            rootViewController.segueToSettings()
             let navigationController = rootViewController.presentedViewController as? UINavigationController
             navigationController?.popToRootViewController(animated: false)
             navigationController?.pushViewController(viewController, animated: true)

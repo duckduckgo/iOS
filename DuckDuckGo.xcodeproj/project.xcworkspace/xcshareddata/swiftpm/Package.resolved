@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "anya/autofill-on-default-flag",
-          "revision": "885f327b2fc1793eda26308fa3cb81995ba1b403",
-          "version": null
+          "branch": null,
+          "revision": "43fd829917f61f605fc110b68bb1bf1841276b3c",
+          "version": "81.1.0"
         }
       },
       {

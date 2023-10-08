@@ -175,6 +175,9 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "Kada DuckDuckGo otkrije skočne prozore pristanka na kolačiće na web lokacijama koje posjećuješ, mi možemo pokušati automatski odrediti tvoje postavke kolačića kako bismo minimizirali kolačiće i maksimizirali privatnost, a zatim zatvorili skočne prozore. Neke web lokacije ne nude opciju upravljanja postavkama kolačića, tako da možemo sakriti samo ovakve skočne prozore.";
 
+/* Text link to email protection website */
+"autofill.enable.email.protection" = "Omogući Email Protection";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Sakrij lozinku";
 
@@ -341,25 +344,55 @@
 "autofill.logins.search.no-results.title" = "Nema rezultata";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Lozinka će biti spremljena u Prijavama.";
+"autofill.password-generation-prompt.subtitle" = "Lozinke su sigurno pohranjene na tvom uređaju u izborniku Prijava.";
 
 /* Title for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.title" = "Koristiti generiranu lozinku iz DuckDuckGoa?";
+"autofill.password-generation-prompt.title" = "Koristiti jaku lozinku od DuckDuckGoa?";
 
 /* Button title choosing to use the suggested generated password for creating a login */
-"autofill.password-generation-prompt.use-generated-password.cta" = "Koristi generiranu lozinku";
+"autofill.password-generation-prompt.use-generated-password.cta" = "Koristi jaku lozinku";
 
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Izradi vlastitu";
 
+/* Text for the confirmation message displayed when a user tries activate a Private Email Address */
+"autofill.private.email.mesage.activate.confirm.content" = "E-pošta poslana na %@ ponovno će se prosljeđivati u tvoju pristiglu poštu.";
+
+/* Title for the confirmation message  displayed when a user tries activate a Private Email Address */
+"autofill.private.email.mesage.activate.confirm.title" = "Ponovno aktivirati privatnu adresu Duck address?";
+
+/* Mesasage displayed when a private email address is active */
+"autofill.private.email.mesage.active" = "Aktivna";
+
+/* Text for the confirmation message displayed when a user tries deactivate a Private Email Address */
+"autofill.private.email.mesage.deactivate.confirm.content" = "E-pošta poslana na %@ više se neće prosljeđivati u tvoju pristiglu poštu.";
+
+/* Title for the confirmation message displayed when a user tries deactivate a Private Email Address */
+"autofill.private.email.mesage.deactivate.confirm.title" = "Deaktivirati privatnu adresu Duck address?";
+
+/* Mesasage displayed when a user tries to manage a private email address but the service is not available, returns an error or network is down */
+"autofill.private.email.mesage.error" = "Upravljanje ovom adresom privremeno je nedostupno";
+
+/* Mesasage displayed when a private email address is inactive */
+"autofill.private.email.mesage.inactive" = "Deaktivirana";
+
+/* Button text for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.button" = "Shvaćam";
+
+/* Content for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.content" = "I dalje možeš upravljati ovom Duck Address adresom putem e-pošte koju si od nje primio u svom osobnom sandučiću.";
+
+/* Title for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.title" = "Korisničko ime privatne Duck Address adrese uklonjeno je";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Prijave se sigurno spremaju na tvom uređaju i njima se može upravljati putem izbornika Prijave u Postavkama.";
+"autofill.save-login.new-user.message" = "Prijave su sigurno pohranjene na tvom uređaju u izborniku Prijave.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Želiš li da DuckDuckGo spremi tvoju prijavu?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.not-now.CTA" = "Ne sada";
+"autofill.save-login.not-now.CTA" = "Nemoj spremiti";
 
 /* Confirm CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.save.CTA" = "Spremi prijavu";
@@ -375,6 +408,9 @@
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Pokaži lozinku";
+
+/* Message displayed to the user when they are logged out of Email protection. */
+"autofill.signin.to.manage" = "%@ za upravljanje tvojim Duck Address adresama na ovom uređaju.";
 
 /* Message displayed on modal asking for the user to update the password */
 "autofill.update-password.message" = "DuckDuckGo će ažurirati ovu spremljenu prijavu na tvom uređaju.";
@@ -660,6 +696,9 @@
 
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Preuzimanje je počelo za %@";
+
+/* No comment provided by engineer. */
+"Duck Address" = "Duck Address";
 
 /* Email protection service offered by DuckDuckGo */
 "email-protection" = "Zaštita e-pošte";

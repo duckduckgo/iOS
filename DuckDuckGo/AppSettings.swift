@@ -37,6 +37,8 @@ protocol AppSettings: AnyObject {
     var autofillCredentialsEnabled: Bool { get set }
     var autofillCredentialsSavePromptShowAtLeastOnce: Bool { get set }
     var autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary: Bool { get set }
+    var autofillIsNewInstallForOnByDefault: Bool? { get set }
+    func setAutofillIsNewInstallForOnByDefault()
 
     var voiceSearchEnabled: Bool { get set }
 

@@ -245,6 +245,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
         appIsLaunching = true
+
+        // Temporary logic for rollout of Autofill as on by default for new installs only
+        if AppDependencyProvider.shared.appSettings.autofillIsNewInstallForOnByDefault == nil {
+            AppDependencyProvider.shared.appSettings.setAutofillIsNewInstallForOnByDefault()
+        }
+
         return true
     }
 

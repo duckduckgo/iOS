@@ -112,6 +112,11 @@ extension MainViewFactory {
     private func createToolbar() {
 
         coordinator.toolbar = HitTestingToolbar()
+        coordinator.toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
+        coordinator.toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
+
+        coordinator.toolbar.isTranslucent = false
+
         coordinator.toolbarBackButton = UIBarButtonItem(title: UserText.keyCommandBrowserBack, image: UIImage(named: "BrowsePrevious"))
         coordinator.toolbarForwardButton = UIBarButtonItem(title: UserText.keyCommandBrowserForward, image: UIImage(named: "BrowseNext"))
         coordinator.toolbarFireButton = UIBarButtonItem(title: UserText.actionForgetAll, image: UIImage(named: "Fire"))

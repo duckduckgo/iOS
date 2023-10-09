@@ -326,7 +326,6 @@ class MainViewCoordinator {
 
     // The default after creating the hiearchy is top
     var addressBarPosition: AddressBarPosition = .top
-    var toolbarImage: UIImage?
 
     fileprivate init(superview: UIView) {
         self.superview = superview
@@ -338,13 +337,11 @@ class MainViewCoordinator {
     }
 
     func showToolbarSeparator() {
-        toolbar.setShadowImage(toolbarImage, forToolbarPosition: .bottom)
+        // TODO setBackgroundImage, setShadowImage technique doesn't restore the separate.
     }
 
     func hideToolbarSeparator() {
-        // The shadow image is what defines the separator, but we don't need to change the background here (in fact we want to keep it).
-        toolbarImage = toolbar.shadowImage(forToolbarPosition: .bottom)
-        toolbar.setShadowImage(UIImage(), forToolbarPosition: .bottom)
+        // TODO
     }
 
     class Constraints {

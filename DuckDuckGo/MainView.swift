@@ -112,9 +112,6 @@ extension MainViewFactory {
     private func createToolbar() {
 
         coordinator.toolbar = HitTestingToolbar()
-        coordinator.toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
-        coordinator.toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
-
         coordinator.toolbar.isTranslucent = false
 
         coordinator.toolbarBackButton = UIBarButtonItem(title: UserText.keyCommandBrowserBack, image: UIImage(named: "BrowsePrevious"))
@@ -342,11 +339,14 @@ class MainViewCoordinator {
     }
 
     func showToolbarSeparator() {
-        // TODO setBackgroundImage, setShadowImage technique doesn't restore the separate.
+        toolbar.setShadowImage(nil, forToolbarPosition: .any)
     }
 
     func hideToolbarSeparator() {
-        // TODO
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            // If this is called before the toolbar has shown it will not re-add the separator when moving to the top position
+            self.toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
+        }
     }
 
     class Constraints {

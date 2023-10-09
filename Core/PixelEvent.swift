@@ -501,7 +501,7 @@ extension Pixel {
         case emailIncontextModalExitEarly
         case emailIncontextModalExitEarlyContinue
 
-        case incrementalRolloutTest
+        case compilationFailed
     }
     
 }
@@ -978,13 +978,12 @@ extension Pixel.Event {
         case .emailIncontextModalExitEarly: return "m_email_incontext_modal_exit_early"
         case .emailIncontextModalExitEarlyContinue: return "m_email_incontext_modal_exit_early_continue"
 
+        case .compilationFailed: return "m_d_compilation_failed"
         // MARK: - Return user measurement
         case .returnUser: return "m_return_user"
         case .debugReturnUserAddATB: return "m_debug_return_user_add_atb"
         case .debugReturnUserReadATB: return "m_debug_return_user_read_atb"
         case .debugReturnUserUpdateATB: return "m_debug_return_user_update_atb"
-
-        case .incrementalRolloutTest: return "m_autofill_incremental_rollout_test"
         }
         
     }

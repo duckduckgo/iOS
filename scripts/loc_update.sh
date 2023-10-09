@@ -5,7 +5,7 @@ script_dir=$(dirname "$(readlink -f "$0")")
 base_dir="${script_dir}/.."
 
 # Add target sub-directories here when needed
-set -- "${base_dir}/DuckDuckGo" "${base_dir}/Widgets"
+set -- "${base_dir}/DuckDuckGo" "${base_dir}/Widgets" "${base_dir}/PacketTunnelProvider"
 
 for dir in "$@"; do
 	echo "Processing ${dir}"

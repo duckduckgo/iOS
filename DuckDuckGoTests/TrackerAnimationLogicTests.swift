@@ -30,14 +30,6 @@ class TrackerAnimationLogicTests: XCTestCase {
 
     static let pageURL = URL(string: "https://example.com")!
     
-    override func setUp() {
-        super.setUp()
-    }
-
-    override func tearDown() {
-        super.tearDown()
-    }
-    
     func testAnimationLogicToAnimateTrackersIfAnyBlocked() {
         let trackerInfo = makeBlockedTrackerInfo(pageURL: Self.pageURL)
         XCTAssertTrue(TrackerAnimationLogic.shouldAnimateTrackers(for: trackerInfo))

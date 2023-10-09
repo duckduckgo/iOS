@@ -62,7 +62,7 @@ protocol TabDelegate: AnyObject {
     func tabDidRequestSettings(tab: TabViewController)
 
     func tab(_ tab: TabViewController,
-             didRequestSettingsToLogins account: SecureVaultModels.WebsiteAccount?)
+             didRequestSettingsToLogins account: SecureVaultModels.WebsiteAccount)
     
     func tabDidRequestFindInPage(tab: TabViewController)
     func closeFindInPage(tab: TabViewController)

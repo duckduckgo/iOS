@@ -23,7 +23,7 @@ import SwiftUI
 
 final class NetworkProtectionRootViewController: UIHostingController<NetworkProtectionRootView> {
 
-    init(inviteCompletion: @escaping () -> Void) {
+    init(inviteCompletion: @escaping () -> Void = { }) {
         let rootView = NetworkProtectionRootView(inviteCompletion: inviteCompletion)
         super.init(rootView: rootView)
     }

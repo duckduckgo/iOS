@@ -82,12 +82,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Can be removed after a couple of versions
         cleanUpMacPromoExperiment2()
+        cleanUpIncrementalRolloutPixelTest()
 
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
         Configuration.setURLProvider(AppConfigurationURLProvider())
 
         CrashCollection.start {
-            Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: $0, includedParameters: [.appVersion])
+            Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: $0, includedParameters: [])
         }
 
         clearTmp()
@@ -209,19 +210,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         syncService.initializeIfNeeded()
         self.syncService = syncService
 
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        
-        guard let main = storyboard.instantiateInitialViewController(creator: { coder in
-            MainViewController(coder: coder,
-                               bookmarksDatabase: self.bookmarksDatabase,
-                               bookmarksDatabaseCleaner: self.syncDataProviders.bookmarksAdapter.databaseCleaner,
-                               appTrackingProtectionDatabase: self.appTrackingProtectionDatabase,
-                               syncService: self.syncService,
-                               syncDataProviders: self.syncDataProviders)
-        }) else {
-            fatalError("Could not load MainViewController")
-        }
-        
+        let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
+                                      bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
+                                      appTrackingProtectionDatabase: appTrackingProtectionDatabase,
+                                      syncService: syncService,
+                                      syncDataProviders: syncDataProviders)
+        main.loadViewIfNeeded()
+
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = main
         window?.makeKeyAndVisible()
@@ -245,11 +240,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
         appIsLaunching = true
+
+        // Temporary logic for rollout of Autofill as on by default for new installs only
+        if AppDependencyProvider.shared.appSettings.autofillIsNewInstallForOnByDefault == nil {
+            AppDependencyProvider.shared.appSettings.setAutofillIsNewInstallForOnByDefault()
+        }
+
         return true
     }
 
     private func cleanUpMacPromoExperiment2() {
         UserDefaults.standard.removeObject(forKey: "com.duckduckgo.ios.macPromoMay23.exp2.cohort")
+    }
+
+    private func cleanUpIncrementalRolloutPixelTest() {
+        UserDefaults.standard.removeObject(forKey: "network-protection.incremental-feature-flag-test.has-sent-pixel")
     }
 
     private func clearTmp() {
@@ -269,12 +274,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             PreserveLogins.shared.clearLegacyAllowedDomains()
         })
     }
-
-    // Temporary feature flag tester, to validate that phased rollouts are working as intended.
-     // This is to be removed before the end of August 2023.
-     lazy var featureFlagTester: PhasedRolloutFeatureFlagTester = {
-         return PhasedRolloutFeatureFlagTester()
-     }()
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
@@ -328,8 +327,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         syncService.scheduler.notifyAppLifecycleEvent()
-
-        featureFlagTester.sendFeatureFlagEnabledPixelIfNecessary()
+        fireFailedCompilationsPixelIfNeeded()
     }
 
     private func fireAppLaunchPixel() {
@@ -385,6 +383,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 #endif
+    }
+
+    private func fireFailedCompilationsPixelIfNeeded() {
+        let store = FailedCompilationsStore()
+        if store.hasAnyFailures {
+            DailyPixel.fire(pixel: .compilationFailed, withAdditionalParameters: store.summary) { error in
+                guard error != nil else { return }
+                store.cleanup()
+            }
+        }
     }
     
     private func shouldShowKeyboardOnLaunch() -> Bool {
@@ -667,9 +675,16 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
-            if response.notification.request.identifier == WindowsBrowserWaitlist.notificationIdentitier {
+            let identifier = response.notification.request.identifier
+            if identifier == WindowsBrowserWaitlist.notificationIdentitier {
                 presentWindowsBrowserWaitlistSettingsModal()
             }
+
+#if NETWORK_PROTECTION
+            if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
+                presentNetworkProtectionStatusSettingsModal()
+            }
+#endif
         }
 
         completionHandler()
@@ -679,7 +694,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let waitlistViewController = WindowsWaitlistViewController(nibName: nil, bundle: nil)
         presentSettings(with: waitlistViewController)
     }
-    
+
+#if NETWORK_PROTECTION
+    private func presentNetworkProtectionStatusSettingsModal() {
+        let networkProtectionRoot = NetworkProtectionRootViewController()
+        presentSettings(with: networkProtectionRoot)
+    }
+#endif
+
     private func presentSettings(with viewController: UIViewController) {
         guard let window = window, let rootViewController = window.rootViewController as? MainViewController else { return }
 
@@ -687,11 +709,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
         // Give the `clearNavigationStack` call time to complete.
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-            rootViewController.performSegue(withIdentifier: "Settings", sender: nil)
+            rootViewController.segueToSettings()
             let navigationController = rootViewController.presentedViewController as? UINavigationController
             navigationController?.popToRootViewController(animated: false)
             navigationController?.pushViewController(viewController, animated: true)
         }
     }
-
 }

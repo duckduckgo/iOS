@@ -175,6 +175,9 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "Când DuckDuckGo detectează ferestre pop-up în care ți se solicită consimțământul cu privire la modulele cookie pe site-urile pe care le vizitezi, putem încerca să îți setăm automat preferințele privind modulele cookie pentru a minimiza modulele cookie și a maximiza confidențialitatea și, apoi, pentru a închide ferestrele pop-up. Unele site-uri nu oferă o opțiune de gestionare a preferințelor privind modulele cookie, prin urmare putem doar să ascundem ferestrele pop-up precum acestea.";
 
+/* Text link to email protection website */
+"autofill.enable.email.protection" = "Activează Email Protection";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Ascunde parola";
 
@@ -341,25 +344,55 @@
 "autofill.logins.search.no-results.title" = "Niciun rezultat";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Parola va fi salvată în Datele de conectare.";
+"autofill.password-generation-prompt.subtitle" = "Parolele sunt stocate în siguranță pe dispozitivul dvs. în meniul Autentificări.";
 
 /* Title for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.title" = "Vrei să folosești parola generată de DuckDuckGo?";
+"autofill.password-generation-prompt.title" = "Folosiți o parolă puternică de la DuckDuckGo?";
 
 /* Button title choosing to use the suggested generated password for creating a login */
-"autofill.password-generation-prompt.use-generated-password.cta" = "Folosește parola generată";
+"autofill.password-generation-prompt.use-generated-password.cta" = "Utilizați o parolă puternică";
 
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Îmi creez propria parolă";
 
+/* Text for the confirmation message displayed when a user tries activate a Private Email Address */
+"autofill.private.email.mesage.activate.confirm.content" = "Mesajele de e-mail trimise la %@ vor fi din nou redirecționate către căsuța ta de inbox.";
+
+/* Title for the confirmation message  displayed when a user tries activate a Private Email Address */
+"autofill.private.email.mesage.activate.confirm.title" = "Reactivezi Duck Address privată?";
+
+/* Mesasage displayed when a private email address is active */
+"autofill.private.email.mesage.active" = "Activ";
+
+/* Text for the confirmation message displayed when a user tries deactivate a Private Email Address */
+"autofill.private.email.mesage.deactivate.confirm.content" = "E-mailurile trimise la %@ nu vor mai fi redirecționate către căsuța ta de inbox.";
+
+/* Title for the confirmation message displayed when a user tries deactivate a Private Email Address */
+"autofill.private.email.mesage.deactivate.confirm.title" = "Dezactivează Duck Address privată?";
+
+/* Mesasage displayed when a user tries to manage a private email address but the service is not available, returns an error or network is down */
+"autofill.private.email.mesage.error" = "Gestionarea acestei adrese este temporar indisponibilă";
+
+/* Mesasage displayed when a private email address is inactive */
+"autofill.private.email.mesage.inactive" = "Dezactivat";
+
+/* Button text for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.button" = "Am înțeles";
+
+/* Content for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.content" = "Poți gestiona în continuare această Duck Address din e-mailurile primite de la aceasta în căsuța ta de e-mail personală.";
+
+/* Title for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.title" = "Numele de utilizator pentru Duck Address privată a fost eliminat";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Datele de conectare sunt stocate în siguranță pe dispozitivul tău și pot fi gestionate din Setări, meniul Date de conectare.";
+"autofill.save-login.new-user.message" = "Conexiunile sunt stocate în siguranță pe dispozitivul dvs. în meniul Conectări.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Dorești ca DuckDuckGo să îți salveze datele de autentificare?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.not-now.CTA" = "Nu acum";
+"autofill.save-login.not-now.CTA" = "Nu salva";
 
 /* Confirm CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.save.CTA" = "Salvează autentificarea";
@@ -375,6 +408,9 @@
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Arată parola";
+
+/* Message displayed to the user when they are logged out of Email protection. */
+"autofill.signin.to.manage" = "%@ pentru a-ți gestiona adresele Duck Address pe acest dispozitiv.";
 
 /* Message displayed on modal asking for the user to update the password */
 "autofill.update-password.message" = "DuckDuckGo va actualiza aceste date de conectare stocate pe dispozitivul tău.";
@@ -660,6 +696,9 @@
 
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Descărcarea a început pentru %@";
+
+/* No comment provided by engineer. */
+"Duck Address" = "Duck Address";
 
 /* Email protection service offered by DuckDuckGo */
 "email-protection" = "Protecția comunicațiilor prin e-mail";

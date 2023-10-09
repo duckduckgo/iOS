@@ -26,8 +26,7 @@ import NetworkExtension
 import NetworkProtection
 
 final class NetworkProtectionTunnelController: TunnelController {
-    static var simulationOptions = NetworkProtectionSimulationOptions()
-    static var enabledSimulationOption: NetworkProtectionSimulationOption?
+    static var shouldSimulateFailure: Bool = false
 
     private let debugFeatures = NetworkProtectionDebugFeatures()
     private let tokenStore = NetworkProtectionKeychainTokenStore()
@@ -98,18 +97,13 @@ final class NetworkProtectionTunnelController: TunnelController {
     private func start(_ tunnelManager: NETunnelProviderManager) throws {
         var options = [String: NSObject]()
 
-        if Self.simulationOptions.isEnabled(.controllerFailure) {
-            Self.simulationOptions.setEnabled(false, option: .controllerFailure)
+        if Self.shouldSimulateFailure {
+            Self.shouldSimulateFailure = false
             throw StartError.simulateControllerFailureError
         }
 
         options["activationAttemptId"] = UUID().uuidString as NSString
         options["authToken"] = try tokenStore.fetchToken() as NSString?
-
-        if let optionKey = Self.enabledSimulationOption?.optionKey {
-            options[optionKey] = NSNumber(value: true)
-            Self.enabledSimulationOption = nil
-        }
 
         do {
             try tunnelManager.connection.startVPNTunnel(options: options)
@@ -118,7 +112,7 @@ final class NetworkProtectionTunnelController: TunnelController {
             throw error
         }
 
-        if debugFeatures.alwaysOnEnabled {
+        if !debugFeatures.alwaysOnDisabled {
             Task {
                 try await enableOnDemand(tunnelManager: tunnelManager)
             }
@@ -224,21 +218,6 @@ final class NetworkProtectionTunnelController: TunnelController {
         tunnelManager.isOnDemandEnabled = false
 
         try await tunnelManager.saveToPreferences()
-    }
-}
-
-private extension NetworkProtectionSimulationOption {
-    var optionKey: String? {
-        switch self {
-        case .crashFatalError:
-            return NetworkProtectionOptionKey.tunnelFatalErrorCrashSimulation
-        case .crashMemory:
-            return NetworkProtectionOptionKey.tunnelMemoryCrashSimulation
-        case .tunnelFailure:
-            return NetworkProtectionOptionKey.tunnelFailureSimulation
-        default:
-            return nil
-        }
     }
 }
 

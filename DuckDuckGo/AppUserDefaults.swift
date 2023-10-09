@@ -60,6 +60,7 @@ public class AppUserDefaults: AppSettings {
         static let currentFireButtonAnimationKey = "com.duckduckgo.app.currentFireButtonAnimationKey"
         
         static let autofillCredentialsEnabled = "com.duckduckgo.ios.autofillCredentialsEnabled"
+        static let autofillIsNewInstallForOnByDefault = "com.duckduckgo.ios.autofillIsNewInstallForOnByDefault"
     }
 
     private struct DebugKeys {
@@ -69,6 +70,8 @@ public class AppUserDefaults: AppSettings {
     private var userDefaults: UserDefaults? {
         return UserDefaults(suiteName: groupName)
     }
+
+    lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
 
     init(groupName: String = "group.com.duckduckgo.app") {
         self.groupName = groupName
@@ -182,16 +185,22 @@ public class AppUserDefaults: AppSettings {
             return
         }
         if !autofillCredentialsSavePromptShowAtLeastOnce {
-            autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary = true
-            autofillCredentialsEnabled = true
+            if let isNewInstall = autofillIsNewInstallForOnByDefault,
+               isNewInstall,
+               featureFlagger.isFeatureOn(.autofillOnByDefault) {
+                autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary = true
+                autofillCredentialsEnabled = true
+            }
         }
     }
     
     var autofillCredentialsEnabled: Bool {
         get {
-            // In future, we'll use setAutofillCredentialsEnabledAutomaticallyIfNecessary() here to automatically turn on autofill for people
-            // That haven't seen the save prompt before.
-            // For now, whilst internal testing is still happening, it's still set to default to be enabled
+            // setAutofillCredentialsEnabledAutomaticallyIfNecessary() used here to automatically turn on autofill for people if:
+            // 1. They haven't seen the save prompt before
+            // 2. They are a new install
+            // 3. The feature flag is enabled
+            setAutofillCredentialsEnabledAutomaticallyIfNecessary()
             return userDefaults?.object(forKey: Keys.autofillCredentialsEnabled) as? Bool ?? false
         }
         
@@ -205,7 +214,20 @@ public class AppUserDefaults: AppSettings {
     
     @UserDefaultsWrapper(key: .autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary, defaultValue: false)
     var autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary: Bool
-    
+
+    var autofillIsNewInstallForOnByDefault: Bool? {
+        get {
+            return userDefaults?.object(forKey: Keys.autofillIsNewInstallForOnByDefault) as? Bool
+        }
+        set {
+            userDefaults?.set(newValue, forKey: Keys.autofillIsNewInstallForOnByDefault)
+        }
+    }
+
+    func setAutofillIsNewInstallForOnByDefault() {
+        autofillIsNewInstallForOnByDefault = StatisticsUserDefaults().installDate == nil
+    }
+
     @UserDefaultsWrapper(key: .voiceSearchEnabled, defaultValue: false)
     var voiceSearchEnabled: Bool
 

@@ -31,7 +31,6 @@ extension AppDelegate {
             mainViewController.newTab(reuseExisting: true)
             mainViewController.enterSearch()
 
-
         case .favorites:
             mainViewController.newTab(reuseExisting: true, allowingKeyboard: false)
 
@@ -66,5 +65,4 @@ extension AppDelegate {
 
         return true
     }
-
 }

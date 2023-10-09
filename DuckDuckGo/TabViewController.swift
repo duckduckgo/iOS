@@ -1297,7 +1297,7 @@ extension TabViewController: WKNavigationDelegate {
 
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
         // which would skip link rewrites.
-        if navigationAction.navigationType != .backForward {
+        if navigationAction.navigationType != .backForward && navigationAction.isTargetingMainFrame() {
             let didRewriteLink = linkProtection.requestTrackingLinkRewrite(initiatingURL: webView.url,
                                                                            navigationAction: navigationAction,
                                                                            onStartExtracting: { showProgressIndicator() },
@@ -2496,7 +2496,8 @@ extension TabViewController: SaveLoginViewControllerDelegate {
     
     func saveLoginViewController(_ viewController: SaveLoginViewController,
                                  didRequestPresentConfirmKeepUsingAlertController alertController: UIAlertController) {
-        Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptShown)
+        Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptShown,
+                   withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
         present(alertController, animated: true)
     }
 }

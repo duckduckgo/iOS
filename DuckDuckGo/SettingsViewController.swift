@@ -46,7 +46,6 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var appIconImageView: UIImageView!
     @IBOutlet weak var autocompleteToggle: UISwitch!
     @IBOutlet weak var authenticationToggle: UISwitch!
-    @IBOutlet weak var showFullSiteAddressToggle: UISwitch!
     @IBOutlet weak var autoClearAccessoryText: UILabel!
     @IBOutlet weak var versionText: UILabel!
     @IBOutlet weak var openUniversalLinksToggle: UISwitch!
@@ -147,7 +146,6 @@ class SettingsViewController: UITableViewController {
         configureAddressBarPositionCell()
         configureTextSizeCell()
         configureDisableAutocompleteToggle()
-        configureShowFullSiteAddressToggle()
         configureSecurityToggles()
         configureVersionText()
         configureUniversalLinksToggle()
@@ -294,10 +292,6 @@ class SettingsViewController: UITableViewController {
         } else {
             appIconCell.isHidden = true
         }
-    }
-
-    private func configureShowFullSiteAddressToggle() {
-        showFullSiteAddressToggle.isOn = appSettings.showFullSiteAddress
     }
 
     private func configureDisableAutocompleteToggle() {
@@ -559,6 +553,9 @@ class SettingsViewController: UITableViewController {
         let rows = super.tableView(tableView, numberOfRowsInSection: section)
         if section == moreFromDDGSectionIndex && !shouldShowNetPCell {
             return rows - 1
+        } else if section == appearanceSectionIndex && UIDevice.current.userInterfaceIdiom == .pad {
+            // Both the text size and bottom bar settings are at the end of the section so need to reduce the section size appropriately
+            return rows - 2
         } else {
             return rows
         }
@@ -588,10 +585,6 @@ class SettingsViewController: UITableViewController {
     
     @IBAction func onAuthenticationToggled(_ sender: UISwitch) {
         privacyStore.authenticationEnabled = sender.isOn
-    }
-
-    @IBAction func onShowFullSiteAddressToggled(_ sender: UISwitch) {
-        appSettings.showFullSiteAddress = sender.isOn
     }
 
     @IBAction func onDonePressed(_ sender: Any) {
@@ -631,7 +624,6 @@ extension SettingsViewController: Themable {
         
         autocompleteToggle.onTintColor = theme.buttonTintColor
         authenticationToggle.onTintColor = theme.buttonTintColor
-        showFullSiteAddressToggle.onTintColor = theme.buttonTintColor
         openUniversalLinksToggle.onTintColor = theme.buttonTintColor
         longPressPreviewsToggle.onTintColor = theme.buttonTintColor
         voiceSearchToggle.onTintColor = theme.buttonTintColor

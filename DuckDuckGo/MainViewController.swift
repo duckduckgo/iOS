@@ -323,10 +323,6 @@ class MainViewController: UIViewController {
 
     func registerForSettingsChangeNotifications() {
         NotificationCenter.default.addObserver(self, selector:
-                                                #selector(onShowFullSiteAddressChanged),
-                                               name: AppUserDefaults.Notifications.showFullSiteAddressChanged,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self, selector:
                                                 #selector(onAddressBarPositionChanged),
                                                name: AppUserDefaults.Notifications.addressBarPositionChanged,
                                                object: nil)

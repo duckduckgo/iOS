@@ -32,7 +32,6 @@ protocol AppSettings: AnyObject {
     
     var currentFireButtonAnimation: FireButtonAnimationType { get set }
     var currentAddressBarPosition: AddressBarPosition { get set }
-    var showFullSiteAddress: Bool { get set }
 
     var textSize: Int { get set }
     

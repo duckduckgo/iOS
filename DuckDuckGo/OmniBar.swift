@@ -359,12 +359,12 @@ class OmniBar: UIView {
             return
         }
 
-        if appSettings.showFullSiteAddress {
-            textField.text = url.absoluteString
-        } else if let query = url.searchQuery {
+        if let query = url.searchQuery, !appSettings.showFullSiteAddress {
             textField.text = query
-        } else {
+        } else if appSettings.showFullSiteAddress {
             textField.attributedText = OmniBar.demphasisePath(forUrl: url)
+        } else {
+            textField.text = url.host?.dropping(prefix: "www.")
         }
     }
 

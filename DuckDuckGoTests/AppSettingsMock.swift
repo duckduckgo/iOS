@@ -32,6 +32,10 @@ class AppSettingsMock: AppSettings {
     
     var autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary: Bool = false
 
+    var autofillIsNewInstallForOnByDefault: Bool?
+
+    func setAutofillIsNewInstallForOnByDefault() { }
+
     var autocomplete: Bool = true
 
     var currentThemeName: DuckDuckGo.ThemeName = .systemDefault

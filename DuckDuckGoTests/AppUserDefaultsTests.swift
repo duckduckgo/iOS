@@ -19,14 +19,22 @@
 
 import XCTest
 @testable import DuckDuckGo
+import BrowserServicesKit
 
 class AppUserDefaultsTests: XCTestCase {
 
     let testGroupName = "test"
+    var internalUserDeciderStore: MockInternalUserStoring!
 
     override func setUp() {
         super.setUp()
         UserDefaults(suiteName: testGroupName)?.removePersistentDomain(forName: testGroupName)
+        internalUserDeciderStore = MockInternalUserStoring()
+    }
+
+    override func tearDown() {
+        internalUserDeciderStore = nil
+        super.tearDown()
     }
 
     func testWhenLinkPreviewsIsSetThenItIsPersisted() {
@@ -93,17 +101,46 @@ class AppUserDefaultsTests: XCTestCase {
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
         XCTAssertFalse(appUserDefaults.autofillCredentialsEnabled)
     }
-    
-    /*
-     These tests aren't required until we make autofill default to off, and then enable turning it on automatically
-    func testWhenAutofillCredentialsIsDisabledAndHasNotBeenTurnedOnAutomaticallyBeforeThenAutofillCredentialsEnabled() {
+
+    func testWhenAutofillCredentialsIsDisabledAndHasNotBeenTurnedOnAutomaticallyBeforeWhenSavePromptShownThenDefaultAutofillStateIsFalse() {
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
-        appUserDefaults.autofillCredentialsEnabled = false
-        appUserDefaults.autofillCredentialsSavePromptShowAtLeastOnce = false
         appUserDefaults.autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary = false
-        XCTAssertEqual(appUserDefaults.autofillCredentialsEnabled, true)
+        appUserDefaults.autofillCredentialsSavePromptShowAtLeastOnce = true
+
+        XCTAssertFalse(appUserDefaults.autofillCredentialsEnabled)
     }
-    
+
+    func testWhenAutofillCredentialsIsDisabledAndHasNotBeenTurnedOnAutomaticallyBeforeAndPromptHasNotBeenSeenAndIsNotNewInstallThenDefaultAutofillStateIsFalse() {
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        appUserDefaults.autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary = false
+        appUserDefaults.autofillCredentialsSavePromptShowAtLeastOnce = false
+        appUserDefaults.autofillIsNewInstallForOnByDefault = false
+
+        XCTAssertFalse(appUserDefaults.autofillCredentialsEnabled)
+    }
+
+    func testWhenAutofillCredentialsIsDisabledAndHasNotBeenTurnedOnAutomaticallyBeforeAndPromptHasNotBeenSeenAndIsNewInstallAndFeatureFlagDisabledThenDefaultAutofillStateIsFalse() {
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        appUserDefaults.autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary = false
+        appUserDefaults.autofillCredentialsSavePromptShowAtLeastOnce = false
+        appUserDefaults.autofillIsNewInstallForOnByDefault = true
+        let featureFlagger = createFeatureFlagger(withSubfeatureEnabled: false)
+        appUserDefaults.featureFlagger = featureFlagger
+
+        XCTAssertFalse(appUserDefaults.autofillCredentialsEnabled)
+    }
+
+    func testWhenAutofillCredentialsIsDisabledAndHasNotBeenTurnedOnAutomaticallyBeforeAndPromptHasNotBeenSeenAndIsNewInstallAndFeatureFlagEnabledThenDefaultAutofillStateIsTrue() {
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        appUserDefaults.autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary = false
+        appUserDefaults.autofillCredentialsSavePromptShowAtLeastOnce = false
+        appUserDefaults.autofillIsNewInstallForOnByDefault = true
+        let featureFlagger = createFeatureFlagger(withSubfeatureEnabled: true)
+        appUserDefaults.featureFlagger = featureFlagger
+
+        XCTAssertTrue(appUserDefaults.autofillCredentialsEnabled)
+    }
+
     func testWhenAutofillCredentialsIsDisabledAndHasNotBeenTurnedOnAutomaticallyBeforeAndPromptHasBeenSeenThenAutofillCredentialsStaysDisabled() {
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
         appUserDefaults.autofillCredentialsEnabled = false
@@ -119,6 +156,25 @@ class AppUserDefaultsTests: XCTestCase {
         appUserDefaults.autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary = true
         XCTAssertEqual(appUserDefaults.autofillCredentialsEnabled, false)
     }
-     */
+
+
+    // MARK: - Mock Creation
+
+    private func createFeatureFlagger(withSubfeatureEnabled enabled: Bool) -> DefaultFeatureFlagger {
+        let mockManager = MockPrivacyConfigurationManager()
+        mockManager.privacyConfig = mockConfiguration(subfeatureEnabled: enabled)
+
+        let internalUserDecider = DefaultInternalUserDecider(store: internalUserDeciderStore)
+        return DefaultFeatureFlagger(internalUserDecider: internalUserDecider, privacyConfig: mockManager.privacyConfig)
+    }
+
+    private func mockConfiguration(subfeatureEnabled: Bool) -> PrivacyConfiguration {
+        let mockPrivacyConfiguration = MockPrivacyConfiguration()
+        mockPrivacyConfiguration.isSubfeatureKeyEnabled = { _, _ in
+            return subfeatureEnabled
+        }
+
+        return mockPrivacyConfiguration
+    }
     
 }

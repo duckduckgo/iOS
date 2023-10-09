@@ -339,11 +339,11 @@ class MainViewController: UIViewController {
     }
 
     func refreshViewsBasedOnAddressBarPosition() {
-        // TODO update any other view elements
         switch appSettings.currentAddressBarPosition {
         case .top:
             omniBar.moveSeparatorToBottom()
             viewCoordinator.showToolbarSeparator()
+
         case .bottom:
             omniBar.moveSeparatorToTop()
             viewCoordinator.hideToolbarSeparator()
@@ -901,7 +901,7 @@ class MainViewController: UIViewController {
             if !DaxDialogs.shared.shouldShowFireButtonPulse {
                 ViewHighlighter.hideAll()
             }
-            if type.hideOmnibarSeparator() {
+            if type.hideOmnibarSeparator() && appSettings.currentAddressBarPosition == .top {
                 omniBar.hideSeparator()
             }
         }

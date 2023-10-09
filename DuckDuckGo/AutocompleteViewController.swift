@@ -242,11 +242,11 @@ extension AutocompleteViewController: UITableViewDataSource {
         }
         
         let currentTheme = ThemeManager.shared.currentTheme
-        cell.backgroundColor = UIColor(designSystemColor: .panel)
+        cell.backgroundColor = isAddressBarAtBottom ? UIColor(designSystemColor: .background) : UIColor(designSystemColor: .panel)
         cell.tintColor = currentTheme.autocompleteCellAccessoryColor
         cell.label?.textColor = currentTheme.tableCellTextColor
         cell.setHighlightedStateBackgroundColor(currentTheme.tableCellHighlightedBackgroundColor)
-        
+
         return cell
     }
 

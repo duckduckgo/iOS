@@ -125,7 +125,7 @@ public struct ScanOrPasteCodeView: View {
             .multilineTextAlignment(.center)
             .font(.system(size: 12, weight: .regular))
             .foregroundColor(.white.opacity(0.6))
-            .padding(.vertical, 20)
+            .padding(.top, 20)
 
     }
 
@@ -151,7 +151,7 @@ public struct ScanOrPasteCodeView: View {
                         ConnectModeView(model: model)
                     } label: {
                         HStack(spacing: 16) {
-                            Image("SyncQRCodeIcon") // Replace with your image name
+                            Image("SyncQRCodeIcon")
 
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(UserText.showQRCodeLabel)
@@ -229,7 +229,7 @@ public struct ScanOrPasteCodeView: View {
                             .fill(.black)
                             .regularMaterialBackground()
 
-                        VStack(spacing: -20) {
+                        VStack(spacing: 0) {
                             Section {
                                 instructions()
                                     .padding(.horizontal, 20)

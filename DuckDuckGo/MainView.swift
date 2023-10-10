@@ -35,14 +35,13 @@ class MainViewFactory {
         let factory = MainViewFactory(superview)
 
         factory.createViews()
-        factory.disableAutoresizingOnViewAndImmediateSubviews(superview)
+        factory.disableAutoresizingOnImmediateSubviews(superview)
         factory.constrainViews()
 
         return factory.coordinator
     }
 
-    private func disableAutoresizingOnViewAndImmediateSubviews(_ view: UIView) {
-        view.translatesAutoresizingMaskIntoConstraints = false
+    private func disableAutoresizingOnImmediateSubviews(_ view: UIView) {
         view.subviews.forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -142,7 +141,7 @@ extension MainViewFactory {
         coordinator.logoContainer.addSubview(coordinator.logoText)
         superview.addSubview(coordinator.logoContainer)
 
-        disableAutoresizingOnViewAndImmediateSubviews(coordinator.logoContainer)
+        disableAutoresizingOnImmediateSubviews(coordinator.logoContainer)
     }
 
 }

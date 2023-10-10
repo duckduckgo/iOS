@@ -382,10 +382,9 @@ class MainViewController: UIViewController {
 
         let navBarOffset = max(0, intersection.height - toolbarHeight)
         self.viewCoordinator.constraints.navigationBarContainerBottom.constant = -navBarOffset
-
-        animateForKeyboard(userInfo: userInfo, y: view.frame.height - height)
+        self.animateForKeyboard(userInfo: userInfo, y: self.view.frame.height - height)
     }
-    
+        
     private func animateForKeyboard(userInfo: [AnyHashable: Any], y: CGFloat) {
         let duration: TimeInterval = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
         let animationCurveRawNSN = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber
@@ -395,6 +394,7 @@ class MainViewController: UIViewController {
         let frame = self.findInPageView.frame
         UIView.animate(withDuration: duration, delay: 0, options: animationCurve, animations: {
             self.findInPageView.frame = CGRect(x: 0, y: y - frame.height, width: frame.width, height: frame.height)
+            self.view.layoutSubviews()
         }, completion: nil)
 
     }

@@ -229,7 +229,6 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                         self.rootView.model.isSyncingDevices = false
                     }.store(in: &cancellables)
 
-                try await syncService.transmitRecoveryKey(connectKey)
                 return true
             }
 

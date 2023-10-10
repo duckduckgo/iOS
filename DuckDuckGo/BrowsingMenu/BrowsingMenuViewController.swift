@@ -61,7 +61,7 @@ final class BrowsingMenuViewController: UIViewController {
 
     var searchBarRect: () -> CGRect
 
-    var isAddressBarBottom: Bool {
+    var isAddressBarAtBottom: Bool {
         searchBarRect().minY > view.frame.midY
     }
 
@@ -227,7 +227,7 @@ final class BrowsingMenuViewController: UIViewController {
         topConstraint.constant = frame.minY + (isIPhoneLandscape ? -10 : 5)
         // Move menu up in Landscape, as bottom toolbar shrinks
 
-        let barPositionOffset: CGFloat = isAddressBarBottom ? 52 : 0
+        let barPositionOffset: CGFloat = isAddressBarAtBottom ? 52 : 0
         bottomConstraint.constant = windowBounds.maxY - frame.maxY - (isIPhoneLandscape ? 2 : 10) - barPositionOffset
         rightConstraint.constant = isIPad ? 67 : 10
 

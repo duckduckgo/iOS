@@ -281,6 +281,11 @@ class OmniBar: UIView {
         }
     }
 
+    func selectTextToEnd(_ offset: Int) {
+        guard let fromPosition = textField.position(from: textField.beginningOfDocument, offset: offset) else { return }
+        textField.selectedTextRange = textField.textRange(from: fromPosition, to: textField.endOfDocument)
+    }
+
     fileprivate func refreshState(_ newState: OmniBarState) {
         if state.name != newState.name {
             os_log("OmniBar entering %s from %s", log: .generalLog, type: .debug, newState.name, state.name)

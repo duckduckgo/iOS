@@ -23,7 +23,6 @@ import Combine
 import Common
 import Core
 import DDGSync
-import Lottie
 import Kingfisher
 import BrowserServicesKit
 import Bookmarks
@@ -52,7 +51,6 @@ class MainViewController: UIViewController {
 
     weak var notificationView: NotificationView?
 
-    var omniBar: OmniBar!
     var chromeManager: BrowserChromeManager!
 
     var allowContentUnderflow = false {
@@ -99,7 +97,7 @@ class MainViewController: UIViewController {
     /// Do not reference directly, use `presentedMenuButton`
     let menuButton = MenuButton()
     var presentedMenuButton: MenuButton {
-        AppWidthObserver.shared.isLargeWidth ? omniBar.menuButtonContent : menuButton
+        AppWidthObserver.shared.isLargeWidth ? viewCoordinator.omniBar.menuButtonContent : menuButton
     }
     
     let gestureBookmarksButton = GestureToolbarButton()
@@ -115,7 +113,11 @@ class MainViewController: UIViewController {
 
     var searchBarRect: CGRect {
         let view = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first?.rootViewController?.view
-        return omniBar.searchContainer.convert(omniBar.searchContainer.bounds, to: view)
+        return viewCoordinator.omniBar.searchContainer.convert(viewCoordinator.omniBar.searchContainer.bounds, to: view)
+    }
+
+    var isAddressBarAtBottom: Bool {
+        searchBarRect.minY > view.frame.midY
     }
 
     var keyModifierFlags: UIKeyModifierFlags?
@@ -337,11 +339,11 @@ class MainViewController: UIViewController {
     func refreshViewsBasedOnAddressBarPosition() {
         switch appSettings.currentAddressBarPosition {
         case .top:
-            omniBar.moveSeparatorToBottom()
+            viewCoordinator.omniBar.moveSeparatorToBottom()
             viewCoordinator.showToolbarSeparator()
 
         case .bottom:
-            omniBar.moveSeparatorToTop()
+            viewCoordinator.omniBar.moveSeparatorToTop()
             viewCoordinator.hideToolbarSeparator()
         }
     }
@@ -380,11 +382,11 @@ class MainViewController: UIViewController {
             }
         }
 
-        let navBarOffset = max(0, intersection.height - toolbarHeight)
-        self.viewCoordinator.constraints.navigationBarContainerBottom.constant = -navBarOffset
+        let navBarOffset = min(0, toolbarHeight - intersection.height)
+        self.viewCoordinator.constraints.omniBarBottom.constant = isAddressBarAtBottom ? navBarOffset : 0
         self.animateForKeyboard(userInfo: userInfo, y: self.view.frame.height - height)
     }
-        
+
     private func animateForKeyboard(userInfo: [AnyHashable: Any], y: CGFloat) {
         let duration: TimeInterval = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
         let animationCurveRawNSN = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber
@@ -396,7 +398,6 @@ class MainViewController: UIViewController {
             self.findInPageView.frame = CGRect(x: 0, y: y - frame.height, width: frame.width, height: frame.height)
             self.view.layoutSubviews()
         }, completion: nil)
-
     }
 
     private func initTabButton() {
@@ -415,7 +416,7 @@ class MainViewController: UIViewController {
     }
     
     private func initBookmarksButton() {
-        omniBar.bookmarksButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
+        viewCoordinator.omniBar.bookmarksButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
                                                                                   action: #selector(quickSaveBookmarkLongPress(gesture:))))
         gestureBookmarksButton.delegate = self
         gestureBookmarksButton.image = UIImage(named: "Bookmarks")
@@ -537,11 +538,8 @@ class MainViewController: UIViewController {
     }
 
     private func attachOmniBar() {
-        omniBar = OmniBar.loadFromXib()
-        omniBar.omniDelegate = self
-        omniBar.menuButtonContent.delegate = self
-        omniBar.frame = viewCoordinator.navigationBarContainer.bounds
-        viewCoordinator.navigationBarContainer.addSubview(omniBar)
+        viewCoordinator.omniBar.omniDelegate = self
+        viewCoordinator.omniBar.menuButtonContent.delegate = self
     }
     
     fileprivate func attachHomeScreen() {
@@ -655,7 +653,7 @@ class MainViewController: UIViewController {
     func enterSearch() {
         if presentedViewController == nil {
             showBars()
-            omniBar.becomeFirstResponder()
+            viewCoordinator.omniBar.becomeFirstResponder()
         }
     }
 
@@ -747,7 +745,7 @@ class MainViewController: UIViewController {
     fileprivate func updateCurrentTab() {
         if let currentTab = currentTab {
             select(tab: currentTab)
-            omniBar.resignFirstResponder()
+            viewCoordinator.omniBar.resignFirstResponder()
         } else {
             attachHomeScreen()
         }
@@ -769,25 +767,25 @@ class MainViewController: UIViewController {
 
     private func refreshOmniBar() {
         guard let tab = currentTab, tab.link != nil else {
-            omniBar.stopBrowsing()
+            viewCoordinator.omniBar.stopBrowsing()
             return
         }
 
-        omniBar.refreshText(forUrl: tab.url)
+        viewCoordinator.omniBar.refreshText(forUrl: tab.url)
 
         if tab.isError {
-            omniBar.hidePrivacyIcon()
+            viewCoordinator.omniBar.hidePrivacyIcon()
         } else if let privacyInfo = tab.privacyInfo, privacyInfo.url.host == tab.url?.host {
-            omniBar.updatePrivacyIcon(for: privacyInfo)
+            viewCoordinator.omniBar.updatePrivacyIcon(for: privacyInfo)
         } else {
-            omniBar.resetPrivacyIcon(for: tab.url)
+            viewCoordinator.omniBar.resetPrivacyIcon(for: tab.url)
         }
             
-        omniBar.startBrowsing()
+        viewCoordinator.omniBar.startBrowsing()
     }
 
     func dismissOmniBar() {
-        omniBar.resignFirstResponder()
+        viewCoordinator.omniBar.resignFirstResponder()
         hideSuggestionTray()
         refreshOmniBar()
     }
@@ -796,8 +794,8 @@ class MainViewController: UIViewController {
         viewCoordinator.toolbarBackButton.isEnabled = currentTab?.canGoBack ?? false
         viewCoordinator.toolbarForwardButton.isEnabled = currentTab?.canGoForward ?? false
         
-        omniBar.backButton.isEnabled = viewCoordinator.toolbarBackButton.isEnabled
-        omniBar.forwardButton.isEnabled = viewCoordinator.toolbarForwardButton.isEnabled
+        viewCoordinator.omniBar.backButton.isEnabled = viewCoordinator.toolbarBackButton.isEnabled
+        viewCoordinator.omniBar.forwardButton.isEnabled = viewCoordinator.toolbarForwardButton.isEnabled
     }
   
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -844,7 +842,7 @@ class MainViewController: UIViewController {
         if homeController != nil {
             expectedState = .bookmarksImage
             viewCoordinator.lastToolbarButton.accessibilityLabel = UserText.bookmarksButtonHint
-            omniBar.menuButton.accessibilityLabel = UserText.bookmarksButtonHint
+            viewCoordinator.omniBar.menuButton.accessibilityLabel = UserText.bookmarksButtonHint
 
         } else {
             if presentedViewController is BrowsingMenuViewController {
@@ -853,7 +851,7 @@ class MainViewController: UIViewController {
                 expectedState = .menuImage
             }
             viewCoordinator.lastToolbarButton.accessibilityLabel = UserText.menuButtonHint
-            omniBar.menuButton.accessibilityLabel = UserText.menuButtonHint
+            viewCoordinator.omniBar.menuButton.accessibilityLabel = UserText.menuButtonHint
         }
 
         presentedMenuButton.decorate(with: ThemeManager.shared.currentTheme)
@@ -862,7 +860,7 @@ class MainViewController: UIViewController {
 
     private func applyWidthToTrayController() {
         if AppWidthObserver.shared.isLargeWidth {
-            self.suggestionTrayController?.float(withWidth: self.omniBar.searchStackContainer.frame.width + 24)
+            self.suggestionTrayController?.float(withWidth: self.viewCoordinator.omniBar.searchStackContainer.frame.width + 24)
         } else {
             self.suggestionTrayController?.fill()
         }
@@ -871,13 +869,13 @@ class MainViewController: UIViewController {
     private func applyLargeWidth() {
         viewCoordinator.tabBarContainer.isHidden = false
         viewCoordinator.toolbar.isHidden = true
-        omniBar.enterPadState()
+        viewCoordinator.omniBar.enterPadState()
     }
 
     private func applySmallWidth() {
         viewCoordinator.tabBarContainer.isHidden = true
         viewCoordinator.toolbar.isHidden = false
-        omniBar.enterPhoneState()
+        viewCoordinator.omniBar.enterPhoneState()
     }
 
     @discardableResult
@@ -897,7 +895,7 @@ class MainViewController: UIViewController {
                 ViewHighlighter.hideAll()
             }
             if type.hideOmnibarSeparator() && appSettings.currentAddressBarPosition == .top {
-                omniBar.hideSeparator()
+                viewCoordinator.omniBar.hideSeparator()
             }
         }
         viewCoordinator.suggestionTrayContainer.isHidden = false
@@ -905,7 +903,7 @@ class MainViewController: UIViewController {
     }
     
     func hideSuggestionTray() {
-        omniBar.showSeparator()
+        viewCoordinator.omniBar.showSeparator()
         viewCoordinator.suggestionTrayContainer.isHidden = true
         currentTab?.webView.accessibilityElementsHidden = false
         suggestionTrayController?.didHide()
@@ -1044,7 +1042,7 @@ class MainViewController: UIViewController {
     private func showVoiceSearch() {
         // https://app.asana.com/0/0/1201408131067987
         UIMenuController.shared.hideMenu()
-        omniBar.removeTextSelection()
+        viewCoordinator.omniBar.removeTextSelection()
         
         Pixel.fire(pixel: .openVoiceSearch)
         let voiceSearchController = VoiceSearchViewController()
@@ -1136,6 +1134,10 @@ extension MainViewController: BrowserChromeDelegate {
         viewCoordinator.tabBarContainer
     }
 
+    var omniBar: OmniBar {
+        viewCoordinator.omniBar
+    }
+
     private func hideKeyboard() {
         dismissOmniBar()
         _ = findInPageView.resignFirstResponder()
@@ -1161,7 +1163,7 @@ extension MainViewController: BrowserChromeDelegate {
             
             self.view.layoutIfNeeded()
             
-            self.omniBar.alpha = percent
+            self.viewCoordinator.omniBar.alpha = percent
             self.viewCoordinator.tabBarContainer.alpha = percent
             self.viewCoordinator.toolbar.alpha = percent
         }
@@ -1177,7 +1179,7 @@ extension MainViewController: BrowserChromeDelegate {
         if hidden { hideKeyboard() }
         
         updateNavBarConstant(hidden ? 0 : 1.0)
-        omniBar.alpha = hidden ? 0 : 1
+        viewCoordinator.omniBar.alpha = hidden ? 0 : 1
         viewCoordinator.tabBarContainer.alpha = hidden ? 0 : 1
         viewCoordinator.statusBackground.alpha = hidden ? 0 : 1
     }
@@ -1195,7 +1197,7 @@ extension MainViewController: BrowserChromeDelegate {
     }
     
     var barsMaxHeight: CGFloat {
-        return max(toolbarHeight, omniBar.frame.size.height)
+        return max(toolbarHeight, viewCoordinator.omniBar.frame.size.height)
     }
 
     // 1.0 - full size, 0.0 - hidden
@@ -1314,7 +1316,7 @@ extension MainViewController: OmniBarDelegate {
     func onEnterPressed() {
         guard !viewCoordinator.suggestionTrayContainer.isHidden else { return }
         
-        suggestionTrayController?.willDismiss(with: omniBar.textField.text ?? "")
+        suggestionTrayController?.willDismiss(with: viewCoordinator.omniBar.textField.text ?? "")
     }
 
     func onDismissed() {
@@ -1372,7 +1374,7 @@ extension MainViewController: OmniBarDelegate {
     func onSharePressed() {
         hideSuggestionTray()
         guard let link = currentTab?.link else { return }
-        currentTab?.onShareAction(forLink: link, fromView: omniBar.shareButton, orginatedFromMenu: false)
+        currentTab?.onShareAction(forLink: link, fromView: viewCoordinator.omniBar.shareButton, orginatedFromMenu: false)
     }
     
     func onVoiceSearchPressed() {
@@ -1426,26 +1428,23 @@ extension MainViewController: AutocompleteViewControllerDelegate {
     func autocomplete(pressedPlusButtonForSuggestion suggestion: Suggestion) {
         if let url = suggestion.url {
             if url.isDuckDuckGoSearch {
-                omniBar.textField.text = suggestion.suggestion
+                viewCoordinator.omniBar.textField.text = suggestion.suggestion
             } else if !url.isBookmarklet() {
-                omniBar.textField.text = url.absoluteString
+                viewCoordinator.omniBar.textField.text = url.absoluteString
             }
         } else {
-            omniBar.textField.text = suggestion.suggestion
+            viewCoordinator.omniBar.textField.text = suggestion.suggestion
         }
-        omniBar.textDidChange()
+        viewCoordinator.omniBar.textDidChange()
     }
     
     func autocomplete(highlighted suggestion: Suggestion, for query: String) {
         if let url = suggestion.url {
-            omniBar.textField.text = url.absoluteString
+            viewCoordinator.omniBar.textField.text = url.absoluteString
         } else {
-            omniBar.textField.text = suggestion.suggestion
-            
-            if suggestion.suggestion.hasPrefix(query),
-               let fromPosition = omniBar.textField.position(from: omniBar.textField.beginningOfDocument, offset: query.count) {
-                omniBar.textField.selectedTextRange = omniBar.textField.textRange(from: fromPosition,
-                                                                                  to: omniBar.textField.endOfDocument)
+            viewCoordinator.omniBar.textField.text = suggestion.suggestion
+            if suggestion.suggestion.hasPrefix(query) {
+                viewCoordinator.omniBar.selectTextToEnd(query.count)
             }
         }
     }
@@ -1590,7 +1589,7 @@ extension MainViewController: TabDelegate {
 
     func tab(_ tab: TabViewController, didChangePrivacyInfo privacyInfo: PrivacyInfo?) {
         if currentTab == tab {
-            omniBar.updatePrivacyIcon(for: privacyInfo)
+            viewCoordinator.omniBar.updatePrivacyIcon(for: privacyInfo)
         }
     }
 
@@ -1664,7 +1663,7 @@ extension MainViewController: TabDelegate {
              didRequestPresentingTrackerAnimation privacyInfo: PrivacyInfo,
              isCollapsing: Bool) {
         guard tabManager.current === tab else { return }
-        omniBar?.startTrackersAnimation(privacyInfo, forDaxDialog: !isCollapsing)
+        viewCoordinator.omniBar?.startTrackersAnimation(privacyInfo, forDaxDialog: !isCollapsing)
     }
     
     func tabDidRequestShowingMenuHighlighter(tab: TabViewController) {
@@ -1933,7 +1932,7 @@ extension MainViewController: Themable {
         viewCoordinator.navigationBarContainer.backgroundColor = theme.barBackgroundColor
         viewCoordinator.navigationBarContainer.tintColor = theme.barTintColor
         
-        omniBar.decorate(with: theme)
+        viewCoordinator.omniBar.decorate(with: theme)
 
         viewCoordinator.progress.decorate(with: theme)
         
@@ -2026,11 +2025,11 @@ extension MainViewController {
         }
         
         let backMenu = historyMenu(with: currentTab.webView.backForwardList.backList.reversed())
-        omniBar.backButton.menu = backMenu
+        viewCoordinator.omniBar.backButton.menu = backMenu
         viewCoordinator.toolbarBackButton.menu = backMenu
         
         let forwardMenu = historyMenu(with: currentTab.webView.backForwardList.forwardList)
-        omniBar.forwardButton.menu = forwardMenu
+        viewCoordinator.omniBar.forwardButton.menu = forwardMenu
         viewCoordinator.toolbarForwardButton.menu = forwardMenu
     }
 

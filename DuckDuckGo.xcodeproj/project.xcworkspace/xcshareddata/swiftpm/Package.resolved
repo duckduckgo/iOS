@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "43fd829917f61f605fc110b68bb1bf1841276b3c",
-          "version": "81.1.0"
+          "branch": "dominik/sync-ignore-ffs-favorites",
+          "revision": "7b323bdde3f5c9a863f84d8faaec93d3a2b89272",
+          "version": null
         }
       },
       {
@@ -156,7 +156,7 @@
       },
       {
         "package": "TrackerRadarKit",
-        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
+        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit",
         "state": {
           "branch": null,
           "revision": "4684440d03304e7638a2c8086895367e90987463",

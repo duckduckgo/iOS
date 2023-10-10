@@ -693,8 +693,8 @@
 		C17B59592A03AAD30055F2D1 /* PasswordGenerationPromptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17B59562A03AAD30055F2D1 /* PasswordGenerationPromptViewModel.swift */; };
 		C17B595A2A03AAD30055F2D1 /* PasswordGenerationPromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17B59572A03AAD30055F2D1 /* PasswordGenerationPromptViewController.swift */; };
 		C17B595B2A03AAD30055F2D1 /* PasswordGenerationPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17B59582A03AAD30055F2D1 /* PasswordGenerationPromptView.swift */; };
-		C18ED43C2AB8364400BF3805 /* FileTextPreviewDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18ED43B2AB8364400BF3805 /* FileTextPreviewDebugViewController.swift */; };
 		C18ED43A2AB6F77600BF3805 /* AutofillSettingsEnableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18ED4392AB6F77600BF3805 /* AutofillSettingsEnableFooterView.swift */; };
+		C18ED43C2AB8364400BF3805 /* FileTextPreviewDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18ED43B2AB8364400BF3805 /* FileTextPreviewDebugViewController.swift */; };
 		C1963863283794A000298D4D /* BookmarksCachingSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1963862283794A000298D4D /* BookmarksCachingSearch.swift */; };
 		C1B0F6422AB08BE9001EAF05 /* MockPrivacyConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B0F6412AB08BE9001EAF05 /* MockPrivacyConfiguration.swift */; };
 		C1B7B51C28941E980098FD6A /* HomeMessageViewModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B7B51B28941E980098FD6A /* HomeMessageViewModelBuilder.swift */; };
@@ -2265,8 +2265,8 @@
 		C17B59562A03AAD30055F2D1 /* PasswordGenerationPromptViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordGenerationPromptViewModel.swift; sourceTree = "<group>"; };
 		C17B59572A03AAD30055F2D1 /* PasswordGenerationPromptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordGenerationPromptViewController.swift; sourceTree = "<group>"; };
 		C17B59582A03AAD30055F2D1 /* PasswordGenerationPromptView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordGenerationPromptView.swift; sourceTree = "<group>"; };
-		C18ED43B2AB8364400BF3805 /* FileTextPreviewDebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileTextPreviewDebugViewController.swift; sourceTree = "<group>"; };
 		C18ED4392AB6F77600BF3805 /* AutofillSettingsEnableFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillSettingsEnableFooterView.swift; sourceTree = "<group>"; };
+		C18ED43B2AB8364400BF3805 /* FileTextPreviewDebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileTextPreviewDebugViewController.swift; sourceTree = "<group>"; };
 		C1963862283794A000298D4D /* BookmarksCachingSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksCachingSearch.swift; sourceTree = "<group>"; };
 		C1B0F6412AB08BE9001EAF05 /* MockPrivacyConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPrivacyConfiguration.swift; sourceTree = "<group>"; };
 		C1B7B51B28941E980098FD6A /* HomeMessageViewModelBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeMessageViewModelBuilder.swift; sourceTree = "<group>"; };
@@ -8961,8 +8961,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				kind = exactVersion;
-				version = 81.1.0;
+				branch = "dominik/sync-ignore-ffs-favorites";
+				kind = branch;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

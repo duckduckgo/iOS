@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
 public struct SyncSettingsView: View {
 
@@ -30,40 +31,49 @@ public struct SyncSettingsView: View {
     }
 
     public var body: some View {
-        List {
-            if model.isSyncEnabled {
-
-                turnOffSync()
-
-                devices()
-
-                syncNewDevice()
-
-                OptionsView(isUnifiedFavoritesEnabled: $model.isUnifiedFavoritesEnabled)
-                    .onAppear(perform: {
-                        model.delegate?.updateOptions()
-                    })
-
-                saveRecoveryPDF()
-
-                deleteAllData()
-
-            } else {
-
-                workInProgress()
-
-                syncWithAnotherDeviceView()
-
-                singleDeviceSetUpView()
-
-                recoverYourDataView()
-
-                footerView()
+        if model.isSyncingDevices {
+            SwiftUI.ProgressView()
+                .onReceive(timer) { _ in
+                    if selectedDevice == nil {
+                        model.delegate?.refreshDevices(clearDevices: false)
+                    }
+                }
+        } else {
+            List {
+                if model.isSyncEnabled {
+                    
+                    turnOffSync()
+                    
+                    devices()
+                    
+                    syncNewDevice()
+                    
+                    OptionsView(isUnifiedFavoritesEnabled: $model.isUnifiedFavoritesEnabled)
+                        .onAppear(perform: {
+                            model.delegate?.updateOptions()
+                        })
+                    
+                    saveRecoveryPDF()
+                    
+                    deleteAllData()
+                    
+                } else {
+                    
+                    workInProgress()
+                    
+                    syncWithAnotherDeviceView()
+                    
+                    singleDeviceSetUpView()
+                    
+                    recoverYourDataView()
+                    
+                    footerView()
+                }
             }
+            .navigationTitle(UserText.syncTitle)
+            .applyListStyle()
+            .environmentObject(model)
         }
-        .navigationTitle(UserText.syncTitle)
-        .applyListStyle()
-        .environmentObject(model)
 
     }
 
@@ -137,12 +147,16 @@ public struct SyncSettingsView: View {
                     .padding(.bottom, 32)
                     .padding(.top, 16)
 
-                Text(UserText.settingsNewDeviceInstructions)
-                    .font(.system(size: 15))
-                    .lineLimit(nil)
-                    .lineSpacing(1.2)
-                    .multilineTextAlignment(.center)
-                    .padding(.bottom, 16)
+                let instrution1 = Text(UserText.settingsNewDeviceInstructions1)
+                let instrution2 = Text(UserText.settingsNewDeviceInstructions2).bold()
+                let instrution3 = Text(UserText.settingsNewDeviceInstructions3)
+
+                Text("\(instrution1)\n \(instrution2) \(instrution3)")
+                .daxSubheadRegular()
+                .lineLimit(nil)
+                .lineSpacing(1.2)
+                .multilineTextAlignment(.center)
+                .padding(.bottom, 16)
             }
 
             NavigationLink(UserText.settingsShowCodeButton) {
@@ -206,9 +220,9 @@ public struct SyncSettingsView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(UserText.syncWithAnotherDeviceTitle)
-                        .font(.system(size: 15, weight: .bold))
+                        .daxBodyBold()
                     Text(UserText.syncWithAnotherDeviceMessage)
-                        .font(.system(size: 15, weight: .regular))
+                        .daxBodyRegular()
                 }
                 Spacer()
                 Image("Sync-Pair-96")
@@ -242,9 +256,9 @@ public struct SyncSettingsView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(UserText.singleDeviceSetUpTitle)
-                        .font(.system(size: 15, weight: .bold))
+                        .daxBodyBold()
                     Text(UserText.singleDeviceSetUpInstruction)
-                        .font(.system(size: 15, weight: .regular))
+                        .daxBodyRegular()
                 }
                 Spacer()
                 Image("Device-Mobile-Upload-96")
@@ -273,7 +287,7 @@ public struct SyncSettingsView: View {
     func footerView() -> some View {
         Section {} footer: {
             Text(UserText.syncSettingsFooter)
-                .font(.system(size: 12, weight: .regular))
+                .daxFootnoteRegular()
                 .foregroundColor(.secondary)
         }
     }
@@ -299,7 +313,7 @@ public struct OptionsView: View {
                         Text(UserText.unifiedFavoritesTitle)
                             .foregroundColor(.primary)
                         Text(UserText.unifiedFavoritesInstruction)
-                            .font(.system(size: 13))
+                            .daxBodyRegular()
                             .foregroundColor(.secondary)
                     }
                 }

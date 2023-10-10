@@ -85,7 +85,9 @@ struct UserText {
     static let showQRCodeLabel = "Show QR Code"
     static let showQRCodeSubLabel = "Display code to scan with another device"
 
-    static let settingsNewDeviceInstructions = "Go to Settings > Sync in the DuckDuckGo App on a different device and scan to connect instantly"
+    static let settingsNewDeviceInstructions1 = "Go to Settings > Sync in the"
+    static let settingsNewDeviceInstructions2 = "DuckDuckGo App"
+    static let settingsNewDeviceInstructions3 = "on a different device and scan to connect instantly"
     static let settingsScanQRCodeButton = "Scan QR Code"
     static let settingsShowCodeButton = "Show Text Code"
     static let settingsSaveRecoveryPDFButton = "Save Recovery PDF"

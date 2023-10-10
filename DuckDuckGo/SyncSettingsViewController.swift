@@ -178,7 +178,8 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
         mapDevices(registeredDevices)
         dismissPresentedViewController()
         let devices = self.rootView.model.devices.filter { !knownDevices.contains($0.id) && !$0.isThisDevice }
-        showDeviceConnected(devices, optionsModel: self.rootView.model, isSingleSetUp: false, isActiveSyncDevice: isActiveSyncDevice)
+        let isSecondDevice = devices.count == 1
+        showDeviceConnected(devices, optionsModel: self.rootView.model, isSingleSetUp: false, shouldShowOptions: isActiveSyncDevice && isSecondDevice)
     }
 
     func startPolling() {
@@ -210,19 +211,24 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                     try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
                     rootView.model.syncEnabled(recoveryCode: recoveryCode)
                 }
+                try await syncService.transmitRecoveryKey(connectKey)
+                self.dismissPresentedViewController()
+                self.rootView.model.isSyncingDevices = true
+
                 self.rootView.model.$devices
                     .removeDuplicates()
                     .dropFirst()
                     .prefix(1)
                     .sink { [weak self] devices in
                         guard let self else { return }
-                        self.dismissPresentedViewController()
                         self.showDeviceConnected(
                             devices.filter { !$0.isThisDevice },
                             optionsModel: self.rootView.model,
                             isSingleSetUp: false,
-                            isActiveSyncDevice: true)
+                            shouldShowOptions: devices.count == 2)
+                        self.rootView.model.isSyncingDevices = false
                     }.store(in: &cancellables)
+
                 try await syncService.transmitRecoveryKey(connectKey)
                 return true
             }

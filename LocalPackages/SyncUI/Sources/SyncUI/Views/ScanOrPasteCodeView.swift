@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
 /// Handles scanning or pasting a code.
 public struct ScanOrPasteCodeView: View {
@@ -72,14 +73,14 @@ public struct ScanOrPasteCodeView: View {
                     .padding(.bottom, 20)
 
                 Text(UserText.cameraPermissionRequired)
-                    .font(.system(size: 20, weight: .bold))
+                    .daxTitle3()
                     .lineSpacing(1.05)
                     .padding(.bottom, 8)
 
                 Text(UserText.cameraPermissionInstructions)
                     .lineLimit(nil)
                     .multilineTextAlignment(.center)
-                    .font(.system(size: 16, weight: .regular))
+                    .daxBodyRegular()
                     .lineSpacing(1.1)
 
                 Spacer()
@@ -109,7 +110,7 @@ public struct ScanOrPasteCodeView: View {
                     .padding(.bottom, 20)
 
                 Text(UserText.cameraIsUnavailableTitle)
-                    .font(.system(size: 20, weight: .bold))
+                    .daxTitle3()
                     .lineSpacing(1.05)
 
             }
@@ -123,7 +124,7 @@ public struct ScanOrPasteCodeView: View {
         Text(model.showConnectMode ? UserText.connectDeviceInstructions : UserText.recoveryModeInstructions)
             .lineLimit(nil)
             .multilineTextAlignment(.center)
-            .font(.system(size: 12, weight: .regular))
+            .daxCaption()
             .foregroundColor(.white.opacity(0.6))
             .padding(.top, 20)
 
@@ -140,7 +141,7 @@ public struct ScanOrPasteCodeView: View {
                     HStack(spacing: 16) {
                         Image("SyncKeyboardIcon")
                         Text(UserText.manuallyEnterCodeTitle)
-                            .font(.system(size: 15, weight: .bold))
+                            .daxButton()
                             .foregroundColor(.white.opacity(0.84))
                     }
                 }
@@ -155,10 +156,10 @@ public struct ScanOrPasteCodeView: View {
 
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(UserText.showQRCodeLabel)
-                                    .font(.system(size: 15, weight: .bold))
+                                    .daxButton()
                                     .foregroundColor(.white.opacity(0.84))
                                 Text(UserText.showQRCodeSubLabel)
-                                    .font(.system(size: 12))
+                                    .daxCaption()
                                     .foregroundColor(.white.opacity(0.6))
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)

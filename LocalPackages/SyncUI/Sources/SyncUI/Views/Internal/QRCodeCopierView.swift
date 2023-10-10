@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
 struct QRCodeCopierView: View {
 
@@ -59,7 +60,7 @@ struct QRCodeCopierView: View {
 
         if model.code != nil {
             Text(UserText.viewQRCodeInstructions)
-                .font(.system(size: 12, weight: .regular))
+                .daxCaption()
                 .foregroundColor(.secondary)
                 .lineLimit(nil)
                 .multilineTextAlignment(.center)

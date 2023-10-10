@@ -19,6 +19,8 @@
 
 import SwiftUI
 import DuckUI
+import DesignResourcesKit
+
 
 public struct DeviceConnectedView: View {
 
@@ -28,19 +30,19 @@ public struct DeviceConnectedView: View {
         verticalSizeClass == .compact
     }
     let isSingleSetUp: Bool
-    let isActiveSyncDevice: Bool
+    let shouldShowOptions: Bool
     @State var showRecoveryPDF = false
 
     let saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel
     @ObservedObject var optionsViewModel: SyncSettingsViewModel
     let devices: [SyncSettingsViewModel.Device]
 
-    public init(_ saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel, optionsViewModel: SyncSettingsViewModel, devices: [SyncSettingsViewModel.Device], isSingleSetUp: Bool, isActiveSyncDevice: Bool) {
+    public init(_ saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel, optionsViewModel: SyncSettingsViewModel, devices: [SyncSettingsViewModel.Device], isSingleSetUp: Bool, shouldShowOptions: Bool) {
         self.saveRecoveryKeyViewModel = saveRecoveryKeyViewModel
         self.devices = devices
         self.optionsViewModel = optionsViewModel
         self.isSingleSetUp = isSingleSetUp
-        self.isActiveSyncDevice = isActiveSyncDevice
+        self.shouldShowOptions = shouldShowOptions
     }
 
     var title: String {
@@ -78,13 +80,13 @@ public struct DeviceConnectedView: View {
                     .padding(.bottom, 20)
 
                 Text(title)
-                    .font(.system(size: 28, weight: .bold))
+                    .daxTitle1()
                     .padding(.bottom, 24)
 
                 Text("\(message) \(Text(devicesOnMessageText).bold())")
                     .multilineTextAlignment(.center)
                 
-                if isActiveSyncDevice {
+                if shouldShowOptions {
                     options()
                 }
             }
@@ -110,15 +112,16 @@ public struct DeviceConnectedView: View {
         VStack {
             Spacer(minLength: 71)
             Text(UserText.options.uppercased())
-                .font(.system(size: 12))
+                .daxFootnoteRegular()
             Toggle(isOn: $optionsViewModel.isUnifiedFavoritesEnabled) {
                 HStack(spacing: 16) {
                     Image("SyncAllDevices")
                     VStack(alignment: .leading) {
                         Text(UserText.unifiedFavoritesTitle)
                             .foregroundColor(.primary)
+                            .daxBodyRegular()
                         Text(UserText.unifiedFavoritesInstruction)
-                            .font(.system(size: 13))
+                            .daxCaption()
                             .foregroundColor(.secondary)
                     }
                 }

@@ -76,6 +76,7 @@ public class SyncSettingsViewModel: ObservableObject {
     @Published public var devices = [Device]()
     @Published public var isFaviconsSyncEnabled = false
     @Published public var isUnifiedFavoritesEnabled = true
+    @Published public var isSyncingDevices = false
 
     @Published var isBusy = false
     @Published var recoveryCode = ""

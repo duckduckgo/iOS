@@ -19,6 +19,7 @@
 
 import SwiftUI
 import DuckUI
+import DesignResourcesKit
 
 public struct PasteCodeView: View {
 
@@ -163,7 +164,7 @@ struct PasteButtonStyle: ButtonStyle {
             .frame(height: 44)
             .background(configuration.isPressed ? backgroundColor.opacity(0.7) : backgroundColor.opacity(1))
             .cornerRadius(8)
-            .font(.system(size: 15, weight: .semibold))
+            .daxButton()
 
     }
 

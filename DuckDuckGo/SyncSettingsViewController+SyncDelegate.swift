@@ -43,7 +43,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
                 self.rootView.model.syncEnabled(recoveryCode: recoveryCode)
                 self.refreshDevices()
-                self.showDeviceConnected([], optionsModel: optionsViewModel, isSingleSetUp: true, isActiveSyncDevice: true)
+                self.showDeviceConnected([], optionsModel: optionsViewModel, isSingleSetUp: true, shouldShowOptions: false)
             } catch {
                 handleError(error)
             }
@@ -68,7 +68,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         collectCode(showConnectMode: false)
     }
 
-    func showDeviceConnected(_ devices: [SyncSettingsViewModel.Device], optionsModel: SyncSettingsViewModel, isSingleSetUp: Bool, isActiveSyncDevice: Bool) {
+    func showDeviceConnected(_ devices: [SyncSettingsViewModel.Device], optionsModel: SyncSettingsViewModel, isSingleSetUp: Bool, shouldShowOptions: Bool) {
         let model = SaveRecoveryKeyViewModel(key: recoveryCode) { [weak self] in
             self?.shareRecoveryPDF()
         }
@@ -77,7 +77,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                                         optionsViewModel: optionsModel,
                                           devices: devices,
                                           isSingleSetUp: isSingleSetUp,
-                                          isActiveSyncDevice: isActiveSyncDevice))
+                                          shouldShowOptions: shouldShowOptions))
         navigationController?.present(controller, animated: true) { [weak self] in
             self?.rootView.model.syncEnabled(recoveryCode: self!.recoveryCode)
             self?.refreshDevices()

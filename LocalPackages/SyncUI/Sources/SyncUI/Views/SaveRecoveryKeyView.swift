@@ -19,6 +19,7 @@
 
 import SwiftUI
 import DuckUI
+import DesignResourcesKit
 
 public struct SaveRecoveryKeyView: View {
 
@@ -95,12 +96,12 @@ public struct SaveRecoveryKeyView: View {
                 .padding(.bottom, 24)
 
             Text(UserText.saveRecoveryTitle)
-                .font(.system(size: 28, weight: .bold))
+                .daxTitle1()
                 .padding(.bottom, 28)
 
             Text(UserText.recoveryMessage)
                 .lineLimit(nil)
-                .font(.system(size: 16))
+                .daxBodyRegular()
                 .lineSpacing(1.32)
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 20)
@@ -108,9 +109,9 @@ public struct SaveRecoveryKeyView: View {
             recoveryInfo()
                 .padding(.bottom, 20)
             Text(UserText.recoveryWarning)
-                .font(.system(size: 12))
+                .daxCaption()
                 .multilineTextAlignment(.center)
-                .foregroundColor(.black.opacity(0.6))
+                .foregroundColor(.primary.opacity(0.6))
         }
         .padding(.top, isCompact ? 0 : 56)
         .padding(.horizontal, 30)

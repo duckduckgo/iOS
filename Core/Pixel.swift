@@ -126,6 +126,8 @@ public struct PixelParameters {
     public static let returnUserErrorCode = "error_code"
     public static let returnUserOldATB = "old_atb"
     public static let returnUserNewATB = "new_atb"
+
+    public static let autofillDefaultState = "default_state"
 }
 
 public struct PixelValues {

@@ -28,6 +28,7 @@ public enum FeatureFlag: String {
     case autofillInlineIconCredentials
     case autofillAccessCredentialManagement
     case autofillPasswordGeneration
+    case autofillOnByDefault
     case incontextSignup
     case appTrackingProtection
     case networkProtection
@@ -48,6 +49,8 @@ extension FeatureFlag: FeatureFlagSourceProviding {
             return .remoteReleasable(.subfeature(AutofillSubfeature.accessCredentialManagement))
         case .autofillPasswordGeneration:
             return .remoteReleasable(.subfeature(AutofillSubfeature.autofillPasswordGeneration))
+        case .autofillOnByDefault:
+            return .remoteReleasable(.subfeature(AutofillSubfeature.onByDefault))
         case .incontextSignup:
             return .remoteReleasable(.feature(.incontextSignup))
         }

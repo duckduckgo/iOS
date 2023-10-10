@@ -14,9 +14,8 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "43fd829917f61f605fc110b68bb1bf1841276b3c",
-          "version": "81.1.0"
+          "branch": "dharb/bump-css-4-39-0",
+          "revision": "31b3df5d0cdcfdd8f8984e178b0aa2c415263461"
         }
       },
       {
@@ -33,8 +32,8 @@
         "repositoryURL": "https://github.com/duckduckgo/content-scope-scripts",
         "state": {
           "branch": null,
-          "revision": "74b6142c016be354144f28551de41b50c4864b1f",
-          "version": "4.37.0"
+          "revision": "aa279a3b006a0b1e009707311283c7fcaed24fb7",
+          "version": "4.39.0"
         }
       },
       {

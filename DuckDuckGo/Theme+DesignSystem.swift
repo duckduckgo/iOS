@@ -25,7 +25,7 @@ extension Theme {
 
     var omniBarBackgroundColor: UIColor { UIColor(designSystemColor: .panel) }
     var backgroundColor: UIColor { UIColor(designSystemColor: .background) }
-    var mainViewBackgroundColor: UIColor { UIColor(designSystemColor: .base) }
+    var mainViewBackgroundColor: UIColor { UIColor(designSystemColor: .background) }
     var barBackgroundColor: UIColor { UIColor(designSystemColor: .panel) }
     var barTintColor: UIColor { UIColor(designSystemColor: .icons) }
     var browsingMenuBackgroundColor: UIColor { UIColor(designSystemColor: .surface) }

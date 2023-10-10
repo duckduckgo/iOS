@@ -1919,6 +1919,9 @@ extension MainViewController: Themable {
     func decorate(with theme: Theme) {
         setNeedsStatusBarAppearanceUpdate()
 
+        // Does not appear to get updated when setting changes.
+        tabsBarController?.decorate(with: theme)
+
         if AppWidthObserver.shared.isLargeWidth {
             viewCoordinator.statusBackground.backgroundColor = theme.tabsBarBackgroundColor
         } else {

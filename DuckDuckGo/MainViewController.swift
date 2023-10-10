@@ -396,8 +396,10 @@ class MainViewController: UIViewController {
         let frame = self.findInPageView.frame
         UIView.animate(withDuration: duration, delay: 0, options: animationCurve, animations: {
             self.findInPageView.frame = CGRect(x: 0, y: y - frame.height, width: frame.width, height: frame.height)
-            self.view.layoutSubviews()
+            self.viewCoordinator.superview.layoutIfNeeded()
         }, completion: nil)
+
+        self.viewCoordinator.navigationBarContainer.layoutSubviews()
     }
 
     private func initTabButton() {

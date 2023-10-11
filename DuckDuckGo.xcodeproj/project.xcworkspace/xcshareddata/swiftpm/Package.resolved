@@ -14,8 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "dharb/bump-css-4-39-0",
-          "revision": "31b3df5d0cdcfdd8f8984e178b0aa2c415263461"
+          "branch": null,
+          "revision": "20ef8a4b3791a57d475cd848afdecb85fa010a5e",
+          "version": "81.2.0"
         }
       },
       {

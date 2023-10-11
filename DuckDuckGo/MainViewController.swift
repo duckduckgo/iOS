@@ -399,7 +399,8 @@ class MainViewController: UIViewController {
             self.viewCoordinator.superview.layoutIfNeeded()
         }, completion: nil)
 
-        self.viewCoordinator.navigationBarContainer.layoutSubviews()
+        // Don't wait for the animation cycle to layout the omnibar's children
+        self.viewCoordinator.omniBar.layoutSubviews()
     }
 
     private func initTabButton() {

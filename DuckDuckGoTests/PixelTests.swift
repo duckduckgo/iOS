@@ -159,4 +159,19 @@ class PixelTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
 
+    func testWhenAppVersionPassedAsParamOverridesAdditionalParams() {
+        let expectation = XCTestExpectation()
+        let params = [PixelParameters.appVersion: "1.2.3"]
+
+        stub(condition: isHost(host) && isPath("/t/ml_ios_phone")) { request -> HTTPStubsResponse in
+            XCTAssertEqual("1.2.3", request.url?.getParameter(named: PixelParameters.appVersion))
+            expectation.fulfill()
+            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+        }
+
+        Pixel.fire(pixel: .appLaunch, forDeviceType: .phone, withAdditionalParameters: params)
+
+        wait(for: [expectation], timeout: 1.0)
+    }
+
 }

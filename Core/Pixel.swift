@@ -179,7 +179,7 @@ public class Pixel {
                             includedParameters: [QueryParameters] = [.atb, .appVersion],
                             onComplete: @escaping (Error?) -> Void = { _ in }) {
         var newParams = params
-        if includedParameters.contains(.appVersion) {
+        if includedParameters.contains(.appVersion) && params[PixelParameters.appVersion] == nil {
             newParams[PixelParameters.appVersion] = AppVersion.shared.versionAndBuildNumber
         }
         if isDebugBuild {

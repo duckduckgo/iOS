@@ -344,7 +344,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 Pixel.fire(pixel: .appLaunch, withAdditionalParameters: [
                     PixelParameters.widgetError: "1",
                     PixelParameters.widgetErrorCode: "\((error as NSError).code)",
-                    PixelParameters.widgetErrorDomain: (error as NSError).domain
+                    PixelParameters.widgetErrorDomain: (error as NSError).domain,
+                    // appVersion without build number due to mismatch with crash version format
+                    PixelParameters.appVersion: AppVersion.shared.versionNumber
                 ])
                 
             case .success(let widgetInfo):

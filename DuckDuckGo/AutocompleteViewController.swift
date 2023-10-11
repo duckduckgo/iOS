@@ -113,11 +113,16 @@ class AutocompleteViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        resetNaviagtionBar()
+        resetNavigationBar()
     }
 
-    private func resetNaviagtionBar() {
+    private func resetNavigationBar() {
         navigationController?.hidesBarsOnSwipe = hidesBarsOnSwipeDefault
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        tableView.reloadData()
     }
 
     func updateQuery(query: String) {

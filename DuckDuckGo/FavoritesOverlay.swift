@@ -25,6 +25,8 @@ import Persistence
 protocol FavoritesOverlayDelegate: AnyObject {
     
     func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: BookmarkEntity)
+    func favoritesOverlayDidRequestSearchBarRect() -> CGRect
+
 }
 
 class FavoritesOverlay: UIViewController {
@@ -32,6 +34,7 @@ class FavoritesOverlay: UIViewController {
     struct Constants {
         static let margin: CGFloat = 28
         static let footerPadding: CGFloat = 50
+        static let toolbarHeight: CGFloat = 52
     }
     
     private let layout = UICollectionViewFlowLayout()
@@ -41,7 +44,12 @@ class FavoritesOverlay: UIViewController {
     private var theme: Theme!
     
     weak var delegate: FavoritesOverlayDelegate?
-    
+
+    var isAddressBarAtBottom: Bool {
+        let searchBarRect = delegate?.favoritesOverlayDidRequestSearchBarRect() ?? .zero
+        return searchBarRect.minY > view.frame.midY
+    }
+
     init(viewModel: FavoritesListInteracting) {
         renderer = FavoritesHomeViewSectionRenderer(allowsEditing: false,
                                                     viewModel: viewModel)
@@ -66,6 +74,8 @@ class FavoritesOverlay: UIViewController {
         
         renderer.install(into: self)
         
+        registerForKeyboardNotifications()
+        
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
@@ -81,7 +91,33 @@ class FavoritesOverlay: UIViewController {
         collectionView.frame = view.bounds
         collectionView.reloadData()
     }
- }
+    
+    private func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardDidShow),
+                                               name: UIResponder.keyboardDidShowNotification,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+    }
+    
+    @objc private func keyboardDidShow(notification: NSNotification) {
+        guard !AppWidthObserver.shared.isLargeWidth else { return }
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        let keyboardSize = keyboardFrame.size
+        let bottomInset = isAddressBarAtBottom ? 0 : keyboardSize.height - Constants.toolbarHeight
+        collectionView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: bottomInset, right: 0.0)
+    }
+    
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        collectionView.contentInset = .zero
+        collectionView.scrollIndicatorInsets = .zero
+    }
+
+}
 
 extension FavoritesOverlay: FavoritesHomeViewSectionRendererDelegate {
     

@@ -1002,16 +1002,6 @@ class MainViewController: UIViewController {
         tabsBarController?.backgroundTabAdded()
     }
 
-    func replaceToolbar(item target: UIBarButtonItem, with replacement: UIBarButtonItem) {
-        guard let items = viewCoordinator.toolbar.items else { return }
-
-        let newItems = items.compactMap({
-            $0 == target ? replacement : $0
-        })
-
-        viewCoordinator.toolbar.setItems(newItems, animated: false)
-    }
-
     func newTab(reuseExisting: Bool = false, allowingKeyboard: Bool = true) {
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
@@ -1412,6 +1402,11 @@ extension MainViewController: FavoritesOverlayDelegate {
         }
         showHomeRowReminder()
     }
+
+    func favoritesOverlayDidRequestSearchBarRect() -> CGRect {
+        searchBarRect
+    }
+
 }
 
 extension MainViewController: AutocompleteViewControllerDelegate {

@@ -175,6 +175,9 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "Amikor a DuckDuckGo a meglátogatott webhelyeken sütik elfogadására szolgáló felugró ablakokat észlel, a sütik minimalizálása és az adatvédelem maximalizálása érdekében automatikusan megpróbálhatjuk megadni a sütikre vonatkozó beállításaidat, és bezárhatjuk a felugró ablakokat. Egyes webhelyek nem adnak lehetőséget a sütikre vonatkozó beállítások kezelésére, így csak az ilyen felugró ablakokat tudjuk elrejteni.";
 
+/* Text link to email protection website */
+"autofill.enable.email.protection" = "E-mail-védelem engedélyezése";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Jelszó elrejtése";
 
@@ -341,25 +344,55 @@
 "autofill.logins.search.no-results.title" = "Nincs találat";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "A jelszó mentve lesz a Bejelentkezésekben.";
+"autofill.password-generation-prompt.subtitle" = "A rendszer biztonságosan tárolja az eszköz Bejelentkezés menüjében elérhető jelszavakat.";
 
 /* Title for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.title" = "DuckDuckGo által generált jelszó használata?";
+"autofill.password-generation-prompt.title" = "A DuckDuckGo által kínált erős jelszót kívánsz használni?";
 
 /* Button title choosing to use the suggested generated password for creating a login */
-"autofill.password-generation-prompt.use-generated-password.cta" = "Generált jelszó használata";
+"autofill.password-generation-prompt.use-generated-password.cta" = "Erős jelszó használata";
 
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Saját létrehozása";
 
+/* Text for the confirmation message displayed when a user tries activate a Private Email Address */
+"autofill.private.email.mesage.activate.confirm.content" = "A megadott %@ címre küldött e-maileket ismét továbbítjuk a postafiókodba.";
+
+/* Title for the confirmation message  displayed when a user tries activate a Private Email Address */
+"autofill.private.email.mesage.activate.confirm.title" = "Újraaktiválod a privát Duck-címet?";
+
+/* Mesasage displayed when a private email address is active */
+"autofill.private.email.mesage.active" = "Aktív";
+
+/* Text for the confirmation message displayed when a user tries deactivate a Private Email Address */
+"autofill.private.email.mesage.deactivate.confirm.content" = "A megadott %@ címre küldött e-maileket többé nem továbbítjuk a postafiókodba.";
+
+/* Title for the confirmation message displayed when a user tries deactivate a Private Email Address */
+"autofill.private.email.mesage.deactivate.confirm.title" = "Deaktiválod a privát Duck-címet?";
+
+/* Mesasage displayed when a user tries to manage a private email address but the service is not available, returns an error or network is down */
+"autofill.private.email.mesage.error" = "A cím kezelése átmenetileg nem elérhető";
+
+/* Mesasage displayed when a private email address is inactive */
+"autofill.private.email.mesage.inactive" = "Deaktiválva";
+
+/* Button text for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.button" = "Értem";
+
+/* Content for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.content" = "Ezt a Duck-címet a személyes postafiókodban továbbra is kezelheted az erről a címről érkező e-mailek segítségével.";
+
+/* Title for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.title" = "Privát Duck-cím felhasználóneve eltávolítva";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "A bejelentkezési adatokat az eszközöd biztonságosan tárolja, ezen adatok pedig a Beállítások > Bejelentkezések menüpontban kezelhetők.";
+"autofill.save-login.new-user.message" = "A rendszer biztonságosan tárolja az eszköz Bejelentkezés menüjében elérhető bejelentkezési adatokat.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "A DuckDuckGo mentse a bejelentkezést?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.not-now.CTA" = "Most nem";
+"autofill.save-login.not-now.CTA" = "Mentés mellőzése";
 
 /* Confirm CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.save.CTA" = "Bejelentkezés mentése";
@@ -375,6 +408,9 @@
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Jelszó megjelenítése";
+
+/* Message displayed to the user when they are logged out of Email protection. */
+"autofill.signin.to.manage" = "%@ a Duck-címek kezeléséhez ezen az eszközön.";
 
 /* Message displayed on modal asking for the user to update the password */
 "autofill.update-password.message" = "A DuckDuckGo frissíti az eszközödön ezt a tárolt bejelentkezést.";
@@ -660,6 +696,9 @@
 
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "A letöltés elindult: %@";
+
+/* No comment provided by engineer. */
+"Duck Address" = "Duck-cím";
 
 /* Email protection service offered by DuckDuckGo */
 "email-protection" = "E-mail védelem";

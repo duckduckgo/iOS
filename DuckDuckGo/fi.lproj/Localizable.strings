@@ -175,6 +175,9 @@
 /* No comment provided by engineer. */
 "autoconsent.info.header" = "Kun DuckDuckGo havaitsee evästeiden hallinnan ponnahdusikkunoita vierailemillasi sivustoilla, voimme yrittää määrittää evästeasetuksesi automaattisesti evästeiden minimoimiseksi ja yksityisyyden maksimoimiseksi ja sulkea sitten ponnahdusikkunat. Joillakin sivustoilla evästeiden hallinta ei ole mahdollista, joten voimme vain piilottaa tällaiset ponnahdusikkunat.";
 
+/* Text link to email protection website */
+"autofill.enable.email.protection" = "Ota Email Protection käyttöön";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Piilota salasana";
 
@@ -341,25 +344,55 @@
 "autofill.logins.search.no-results.title" = "Ei tuloksia";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Salasana tallennetaan Kirjautumiset-osioon.";
+"autofill.password-generation-prompt.subtitle" = "Salasanat tallennetaan turvallisesti laitteellesi kirjautumistiedot-valikkoon.";
 
 /* Title for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.title" = "Haluatko käyttää DuckDuckGon luomaa salasanaa?";
+"autofill.password-generation-prompt.title" = "Käytetäänkö DuckDuckGon vahvaa salasanaa?";
 
 /* Button title choosing to use the suggested generated password for creating a login */
-"autofill.password-generation-prompt.use-generated-password.cta" = "Käytä luotua salasanaa";
+"autofill.password-generation-prompt.use-generated-password.cta" = "Käytä vahvaa salasanaa";
 
 /* Button title choosing to use own password for creating a login */
 "autofill.password-generation-prompt.use-own-password.cta" = "Luo oma";
 
+/* Text for the confirmation message displayed when a user tries activate a Private Email Address */
+"autofill.private.email.mesage.activate.confirm.content" = "Osoitteeseen %@ lähetetyt sähköpostit välitetään taas saapuneet-kansioosi.";
+
+/* Title for the confirmation message  displayed when a user tries activate a Private Email Address */
+"autofill.private.email.mesage.activate.confirm.title" = "Aktivoi yksityinen Duck Address uudelleen?";
+
+/* Mesasage displayed when a private email address is active */
+"autofill.private.email.mesage.active" = "Aktiivinen";
+
+/* Text for the confirmation message displayed when a user tries deactivate a Private Email Address */
+"autofill.private.email.mesage.deactivate.confirm.content" = "Osoitteeseen %@ lähetettyjä sähköposteja ei enää välitetä saapuneet-kansioosi.";
+
+/* Title for the confirmation message displayed when a user tries deactivate a Private Email Address */
+"autofill.private.email.mesage.deactivate.confirm.title" = "Deaktivoi yksityinen Duck Address?";
+
+/* Mesasage displayed when a user tries to manage a private email address but the service is not available, returns an error or network is down */
+"autofill.private.email.mesage.error" = "Tämän osoitteen hallinta ei ole tilapäisesti käytettävissä";
+
+/* Mesasage displayed when a private email address is inactive */
+"autofill.private.email.mesage.inactive" = "Deaktivoitu";
+
+/* Button text for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.button" = "Selvä";
+
+/* Content for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.content" = "Voit edelleen hallita tätä Duck Address -osoitetta siltä vastaanotetuista sähköposteista henkilökohtaisessa postilaatikossasi.";
+
+/* Title for the alert dialog telling the user an updated username is no longer a private email address */
+"autofill.removed.duck.address.title" = "Yksityinen Duck Address -käyttäjätunnus on poistettu";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Kirjautumistiedot tallennetaan turvallisesti laitteellesi. Niitä voi hallita asetusten kirjautumistiedot-valikosta.";
+"autofill.save-login.new-user.message" = "Kirjautumistiedot tallennetaan turvallisesti laitteellesi kirjautumistiedot-valikkoon.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Haluatko, että DuckDuckGo tallentaa kirjautumistietosi?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.not-now.CTA" = "Ei nyt";
+"autofill.save-login.not-now.CTA" = "Älä tallenna";
 
 /* Confirm CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.save.CTA" = "Tallenna kirjautumistiedot";
@@ -375,6 +408,9 @@
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Näytä salasana";
+
+/* Message displayed to the user when they are logged out of Email protection. */
+"autofill.signin.to.manage" = "%@ hallitaksesi Duck Address -osoitteita tällä laitteella.";
 
 /* Message displayed on modal asking for the user to update the password */
 "autofill.update-password.message" = "DuckDuckGo päivittää tämän laitteellesi tallennetun kirjautumistiedon.";
@@ -669,6 +705,9 @@
 
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Tiedoston %@ lataus aloitettu";
+
+/* No comment provided by engineer. */
+"Duck Address" = "Duck Address";
 
 /* Email protection service offered by DuckDuckGo */
 "email-protection" = "Sähköpostisuojaus";

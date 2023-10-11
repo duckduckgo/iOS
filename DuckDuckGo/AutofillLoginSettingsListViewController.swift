@@ -40,8 +40,9 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     weak var delegate: AutofillLoginSettingsListViewControllerDelegate?
     weak var detailsViewController: AutofillLoginDetailsViewController?
     private let viewModel: AutofillLoginListViewModel
-    private let emptyView = AutofillItemsEmptyView()
+    private lazy var emptyView = AutofillItemsEmptyView()
     private let lockedView = AutofillItemsLockedView()
+    private let enableAutofillFooterView = AutofillSettingsEnableFooterView()
     private let emptySearchView = AutofillEmptySearchView()
     private let noAuthAvailableView = AutofillNoAuthAvailableView()
     private let tld: TLD = AppDependencyProvider.shared.storageCache.tld
@@ -73,6 +74,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.estimatedRowHeight = 60
+        tableView.estimatedSectionFooterHeight = 40
         tableView.registerCell(ofType: AutofillListItemTableViewCell.self)
         tableView.registerCell(ofType: EnableAutofillSettingsTableViewCell.self)
         // Have to set tableHeaderView height otherwise tableView content will jump when adding / removing searchController due to tableView insetGrouped style
@@ -154,12 +156,21 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         }
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        guard viewModel.viewState == .empty else { return }
+        adjustEmptyViewFooterSize()
+    }
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
         coordinator.animate(alongsideTransition: { _ in
             self.updateConstraintConstants()
-            self.emptyView.refreshConstraints()
+            if self.viewModel.viewState == .empty {
+                self.emptyView.refreshConstraints()
+            }
             if self.view.subviews.contains(self.noAuthAvailableView) {
                 self.noAuthAvailableView.refreshConstraints()
             }
@@ -291,38 +302,38 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         
         switch viewModel.viewState {
         case .showItems:
-            emptyView.isHidden = true
+            tableView.tableFooterView = nil
             tableView.isHidden = false
             lockedView.isHidden = true
             noAuthAvailableView.isHidden = true
             emptySearchView.isHidden = true
         case .noAuthAvailable:
-            emptyView.isHidden = true
+            tableView.tableFooterView = nil
             tableView.isHidden = true
             lockedView.isHidden = true
             noAuthAvailableView.isHidden = false
             emptySearchView.isHidden = true
         case .authLocked:
-            emptyView.isHidden = true
+            tableView.tableFooterView = nil
             tableView.isHidden = true
             lockedView.isHidden = false
             noAuthAvailableView.isHidden = true
             emptySearchView.isHidden = true
         case .empty:
-            emptyView.isHidden = false
+            tableView.tableFooterView = emptyView
             tableView.isHidden = false
             setEditing(false, animated: false)
             lockedView.isHidden = true
             noAuthAvailableView.isHidden = true
             emptySearchView.isHidden = true
         case .searching:
-            emptyView.isHidden = true
+            tableView.tableFooterView = nil
             tableView.isHidden = false
             lockedView.isHidden = true
             noAuthAvailableView.isHidden = true
             emptySearchView.isHidden = true
         case .searchingNoResults:
-            emptyView.isHidden = true
+            tableView.tableFooterView = nil
             tableView.isHidden = false
             lockedView.isHidden = true
             noAuthAvailableView.isHidden = true
@@ -425,10 +436,21 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private func updateConstraintConstants() {
         let isIPhoneLandscape = traitCollection.containsTraits(in: UITraitCollection(verticalSizeClass: .compact))
         if isIPhoneLandscape {
-            lockedViewBottomConstraint.constant = (view.frame.height / 2 - max(lockedView.frame.height, 120.0) / 2)
+            let viewVerticalCenter = view.frame.height / 2
+            let lockedViewHeight = max(lockedView.frame.height, 120.0)
+            lockedViewBottomConstraint.constant = viewVerticalCenter - (lockedViewHeight / 2.0)
         } else {
             lockedViewBottomConstraint.constant = view.frame.height * 0.15
         }
+    }
+
+    // Adjust the footer size based on remaining space
+    private func adjustEmptyViewFooterSize() {
+        // Temporarily remove the footer
+        tableView.tableFooterView = nil
+        let remainingHeight = tableView.frame.height - tableView.contentSize.height - view.safeAreaInsets.bottom - view.safeAreaInsets.top
+        emptyView.adjustHeight(to: max(remainingHeight, 0))
+        tableView.tableFooterView = emptyView
     }
 
     // MARK: Cell Methods
@@ -478,7 +500,9 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         switch viewModel.viewState {
         case .empty:
-            return emptyView
+            return viewModel.sections[section] == .enableAutofill ? enableAutofillFooterView : nil
+        case .showItems:
+            return viewModel.sections[section] == .enableAutofill ? enableAutofillFooterView : nil
         default:
             return nil
         }
@@ -487,9 +511,15 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         switch viewModel.viewState {
         case .empty:
-            return max(tableView.bounds.height - tableView.contentSize.height, 250)
+            if viewModel.sections[section] == .enableAutofill {
+                return enableAutofillFooterView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+            }
+            return 0
         case .showItems:
-            return 10
+            if viewModel.sections[section] == .enableAutofill {
+                return enableAutofillFooterView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+            }
+            return 10.0
         default:
             return 0
         }
@@ -628,9 +658,11 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
 extension AutofillLoginSettingsListViewController: EnableAutofillSettingsTableViewCellDelegate {
     func enableAutofillSettingsTableViewCell(_ cell: EnableAutofillSettingsTableViewCell, didChangeSettings value: Bool) {
         if value {
-            Pixel.fire(pixel: .autofillLoginsSettingsEnabled)
+            Pixel.fire(pixel: .autofillLoginsSettingsEnabled,
+                       withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
         } else {
-            Pixel.fire(pixel: .autofillLoginsSettingsDisabled)
+            Pixel.fire(pixel: .autofillLoginsSettingsDisabled,
+                       withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
         }
         
         viewModel.isAutofillEnabledInSettings = value

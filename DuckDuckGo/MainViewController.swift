@@ -32,8 +32,8 @@ import Persistence
 import PrivacyDashboard
 import Networking
 
-// swiftlint:disable type_body_length
 // swiftlint:disable file_length
+// swiftlint:disable type_body_length
 class MainViewController: UIViewController {
 // swiftlint:enable type_body_length
 
@@ -46,34 +46,6 @@ class MainViewController: UIViewController {
         
         return isIPad ? [.left, .right] : []
     }
-    
-    @IBOutlet weak var progressView: ProgressView!
-
-    @IBOutlet weak var suggestionTrayContainer: UIView!
-    @IBOutlet weak var customNavigationBar: UIView!
-    @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var fireButton: UIBarButtonItem!
-    @IBOutlet weak var lastToolbarButton: UIBarButtonItem!
-    @IBOutlet weak var backButton: UIBarButtonItem!
-    @IBOutlet weak var forwardButton: UIBarButtonItem!
-    @IBOutlet weak var tabsButton: UIBarButtonItem!
-    @IBOutlet weak var toolbar: UIToolbar!
-    @IBOutlet weak var navBarTop: NSLayoutConstraint!
-    @IBOutlet weak var toolbarBottom: NSLayoutConstraint!
-    @IBOutlet weak var containerViewTop: NSLayoutConstraint!
-    
-    @IBOutlet weak var tabsBar: UIView!
-    @IBOutlet weak var tabsBarTop: NSLayoutConstraint!
-
-    @IBOutlet weak var notificationContainer: UIView!
-    @IBOutlet weak var notificationContainerTop: NSLayoutConstraint!
-    @IBOutlet weak var notificationContainerHeight: NSLayoutConstraint!
-    
-    @IBOutlet weak var statusBarBackground: UIView!
-
-    @IBOutlet weak var logoContainer: UIView!
-    @IBOutlet weak var logo: UIImageView!
-    @IBOutlet weak var logoText: UIImageView!
 
     weak var findInPageView: FindInPageView!
     weak var findInPageHeightLayoutConstraint: NSLayoutConstraint!
@@ -86,12 +58,12 @@ class MainViewController: UIViewController {
 
     var allowContentUnderflow = false {
         didSet {
-            containerViewTop.constant = allowContentUnderflow ? contentUnderflow : 0
+            viewCoordinator.constraints.contentContainerTop.constant = allowContentUnderflow ? contentUnderflow : 0
         }
     }
     
     var contentUnderflow: CGFloat {
-        return 3 + (allowContentUnderflow ? -customNavigationBar.frame.size.height : 0)
+        return 3 + (allowContentUnderflow ? -viewCoordinator.navigationBarContainer.frame.size.height : 0)
     }
 
     lazy var emailManager: EmailManager = {
@@ -106,16 +78,16 @@ class MainViewController: UIViewController {
     var suggestionTrayController: SuggestionTrayViewController?
 
     var tabManager: TabManager!
-    private let previewsSource = TabPreviewsSource()
-    fileprivate var appSettings: AppSettings
+    let previewsSource = TabPreviewsSource()
+    let appSettings: AppSettings
     private var launchTabObserver: LaunchTabNotification.Observer?
     
     private let appTrackingProtectionDatabase: CoreDataDatabase
-    private let bookmarksDatabase: CoreDataDatabase
+    let bookmarksDatabase: CoreDataDatabase
     private weak var bookmarksDatabaseCleaner: BookmarkDatabaseCleaner?
     private var favoritesViewModel: FavoritesListInteracting
-    private let syncService: DDGSyncing
-    private let syncDataProviders: SyncDataProviders
+    let syncService: DDGSyncing
+    let syncDataProviders: SyncDataProviders
     private var localUpdatesCancellable: AnyCancellable?
     private var syncUpdatesCancellable: AnyCancellable?
     private var favoritesDisplayModeCancellable: AnyCancellable?
@@ -140,9 +112,9 @@ class MainViewController: UIViewController {
     
     private lazy var fireButtonAnimator: FireButtonAnimator = FireButtonAnimator(appSettings: appSettings)
     
-    private var bookmarksCachingSearch: BookmarksCachingSearch
+    let bookmarksCachingSearch: BookmarksCachingSearch
 
-    fileprivate lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
+    lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
         return tabManager?.current
     }
@@ -153,13 +125,19 @@ class MainViewController: UIViewController {
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
 
-    required init?(coder: NSCoder,
-                   bookmarksDatabase: CoreDataDatabase,
-                   bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
-                   appTrackingProtectionDatabase: CoreDataDatabase,
-                   syncService: DDGSyncing,
-                   syncDataProviders: SyncDataProviders,
-                   appSettings: AppSettings = AppUserDefaults()
+    required init?(coder: NSCoder) {
+        fatalError("Use init?(code:")
+    }
+
+    var viewCoordinator: MainViewCoordinator!
+
+    init(
+        bookmarksDatabase: CoreDataDatabase,
+        bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
+        appTrackingProtectionDatabase: CoreDataDatabase,
+        syncService: DDGSyncing,
+        syncDataProviders: SyncDataProviders,
+        appSettings: AppSettings = AppUserDefaults()
     ) {
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
         self.bookmarksDatabase = bookmarksDatabase
@@ -169,14 +147,11 @@ class MainViewController: UIViewController {
         self.appSettings = appSettings
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
-        super.init(coder: coder)
+
+        super.init(nibName: nil, bundle: nil)
 
         bindFavoritesDisplayMode()
         bindSyncService()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("Use init?(code:")
     }
 
     fileprivate var tabCountInfo: TabCountInfo?
@@ -207,6 +182,14 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        viewCoordinator = MainViewFactory.createViewHierarchy(self.view)
+        
+        viewCoordinator.toolbarBackButton.action = #selector(onBackPressed)
+        viewCoordinator.toolbarForwardButton.action = #selector(onForwardPressed)
+        viewCoordinator.toolbarFireButton.action = #selector(onFirePressed)
+
+        loadSuggestionTray()
+        loadTabsBarIfNeeded()
         loadFindInPage()
         attachOmniBar()
 
@@ -245,9 +228,49 @@ class MainViewController: UIViewController {
         startOnboardingFlowIfNotSeenBefore()
         tabsBarController?.refresh(tabsModel: tabManager.model)
         
+        _ = AppWidthObserver.shared.willResize(toWidth: view.frame.width)
+        applyWidth()
+
         if DaxDialogs.shared.shouldShowFireButtonPulse {
             showFireButtonPulse()
         }
+    }
+
+    override func performSegue(withIdentifier identifier: String, sender: Any?) {
+        assertionFailure()
+        super.performSegue(withIdentifier: identifier, sender: sender)
+    }
+
+    func loadSuggestionTray() {
+        let storyboard = UIStoryboard(name: "SuggestionTray", bundle: nil)
+
+        guard let controller = storyboard.instantiateInitialViewController(creator: { coder in
+            SuggestionTrayViewController(coder: coder,
+                                         favoritesViewModel: self.favoritesViewModel,
+                                         bookmarksSearch: self.bookmarksCachingSearch)
+        }) else {
+            assertionFailure()
+            return
+        }
+
+        controller.view.frame = viewCoordinator.suggestionTrayContainer.bounds
+        viewCoordinator.suggestionTrayContainer.addSubview(controller.view)
+
+        controller.dismissHandler = dismissSuggestionTray
+        controller.autocompleteDelegate = self
+        controller.favoritesOverlayDelegate = self
+        suggestionTrayController = controller
+    }
+
+    func loadTabsBarIfNeeded() {
+        guard isPad else { return }
+
+        let storyboard = UIStoryboard(name: "TabSwitcher", bundle: nil)
+        let controller: TabsBarViewController = storyboard.instantiateViewController(identifier: "TabsBar")
+        controller.view.frame = viewCoordinator.tabBarContainer.bounds
+        controller.delegate = self
+        viewCoordinator.tabBarContainer.addSubview(controller.view)
+        tabsBarController = controller
     }
 
     func startAddFavoriteFlow() {
@@ -270,9 +293,8 @@ class MainViewController: UIViewController {
             ProcessInfo.processInfo.environment["ONBOARDING"] == "true"
         guard showOnboarding else { return }
 
-        let onboardingFlow = "DaxOnboarding"
+        segueToDaxOnboarding()
 
-        performSegue(withIdentifier: onboardingFlow, sender: self)
     }
     
     private func registerForKeyboardNotifications() {
@@ -330,15 +352,15 @@ class MainViewController: UIViewController {
 
     private func initTabButton() {
         tabSwitcherButton.delegate = self
-        tabsButton.customView = tabSwitcherButton
-        tabsButton.isAccessibilityElement = true
-        tabsButton.accessibilityTraits = .button
+        viewCoordinator.toolbarTabSwitcherButton.customView = tabSwitcherButton
+        viewCoordinator.toolbarTabSwitcherButton.isAccessibilityElement = true
+        viewCoordinator.toolbarTabSwitcherButton.accessibilityTraits = .button
     }
     
     private func initMenuButton() {
-        lastToolbarButton.customView = menuButton
-        lastToolbarButton.isAccessibilityElement = true
-        lastToolbarButton.accessibilityTraits = .button
+        viewCoordinator.lastToolbarButton.customView = menuButton
+        viewCoordinator.lastToolbarButton.isAccessibilityElement = true
+        viewCoordinator.lastToolbarButton.accessibilityTraits = .button
         
         menuButton.delegate = self
     }
@@ -394,119 +416,6 @@ class MainViewController: UIViewController {
         
         Pixel.fire(pixel: .tabBarBookmarksLongPressed)
         currentTab?.saveAsBookmark(favorite: true, viewModel: menuBookmarksViewModel)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-        if !DaxDialogs.shared.shouldShowFireButtonPulse {
-            ViewHighlighter.hideAll()
-        }
-        
-        if let controller = segue.destination as? TabsBarViewController {
-            controller.delegate = self
-            tabsBarController = controller
-            return
-        }
-        
-        if let navController = segue.destination as? UINavigationController {
-            if let brokenSiteScreen = navController.topViewController as? ReportBrokenSiteViewController {
-                if UIDevice.current.userInterfaceIdiom == .pad {
-                    segue.destination.modalPresentationStyle = .formSheet
-                }
-                
-                brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
-            }
-        }
-
-        if var onboarding = segue.destination as? Onboarding {
-            onboarding.delegate = self
-        }
-        
-        if let controller = segue.destination as? ActionSheetDaxDialogViewController {
-            let spec = sender as? DaxDialogs.ActionSheetSpec
-            if spec == DaxDialogs.ActionSheetSpec.fireButtonEducation {
-                ViewHighlighter.hideAll()
-            }
-            controller.spec = spec
-            controller.delegate = self
-        }
-
-    }
-    
-    @IBSegueAction func onCreateSuggestionTray(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> SuggestionTrayViewController {
-        guard let controller = SuggestionTrayViewController(coder: coder,
-                                                            favoritesViewModel: favoritesViewModel,
-                                                            bookmarksSearch: bookmarksCachingSearch) else {
-            fatalError("Failed to create controller")
-        }
-        
-        controller.dismissHandler = dismissSuggestionTray
-        controller.autocompleteDelegate = self
-        controller.favoritesOverlayDelegate = self
-        suggestionTrayController = controller
-        
-        return controller
-    }
-    
-    @IBSegueAction func onCreateBookmarksList(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> BookmarksViewController {
-        guard let controller = BookmarksViewController(coder: coder,
-                                                       bookmarksDatabase: self.bookmarksDatabase,
-                                                       bookmarksSearch: bookmarksCachingSearch,
-                                                       syncService: syncService,
-                                                       syncDataProviders: syncDataProviders,
-                                                       appSettings: appSettings) else {
-            fatalError("Failed to create controller")
-        }
-        controller.delegate = self
-        
-        if segueIdentifier == "BookmarksEditCurrent",
-            let link = currentTab?.link,
-            let bookmark = menuBookmarksViewModel.favorite(for: link.url) ?? menuBookmarksViewModel.bookmark(for: link.url) {
-            controller.openEditFormWhenPresented(bookmark: bookmark)
-        } else if segueIdentifier == "BookmarksEdit",
-                  let bookmark = sender as? BookmarkEntity {
-            controller.openEditFormWhenPresented(bookmark: bookmark)
-        }
-        
-        return controller
-    }
-    
-    @IBSegueAction func onCreateTabSwitcher(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> TabSwitcherViewController {
-        guard let controller = TabSwitcherViewController(coder: coder,
-                                                         bookmarksDatabase: bookmarksDatabase,
-                                                         syncService: syncService) else {
-            fatalError("Failed to create controller")
-        }
-        
-        controller.transitioningDelegate = tabSwitcherTransition
-        controller.delegate = self
-        controller.tabsModel = tabManager.model
-        controller.previewsSource = previewsSource
-        tabSwitcherController = controller
-        
-        return controller
-    }
-    
-    @IBSegueAction func onCreateSettings(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> SettingsViewController {
-        guard let controller = SettingsViewController(coder: coder,
-                                                      bookmarksDatabase: bookmarksDatabase,
-                                                      syncService: syncService,
-                                                      syncDataProviders: syncDataProviders,
-                                                      internalUserDecider: AppDependencyProvider.shared.internalUserDecider) else {
-            fatalError("Failed to create controller")
-        }
-
-        if segueIdentifier == "SettingsToLogins" {
-            if let account = sender as? SecureVaultModels.WebsiteAccount {
-                controller.openLoginsWhenPresented(accountDetails: account)
-            } else {
-                controller.openLoginsWhenPresented()
-            }
-        } else if segueIdentifier == "SettingsToCookiePopupManagement" {
-            controller.openCookiePopupManagementWhenPresented()
-        }
-
-        return controller
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -596,12 +505,12 @@ class MainViewController: UIViewController {
         omniBar = OmniBar.loadFromXib()
         omniBar.omniDelegate = self
         omniBar.menuButtonContent.delegate = self
-        omniBar.frame = customNavigationBar.bounds
-        customNavigationBar.addSubview(omniBar)
+        omniBar.frame = viewCoordinator.navigationBarContainer.bounds
+        viewCoordinator.navigationBarContainer.addSubview(omniBar)
     }
 
     fileprivate func attachHomeScreen() {
-        logoContainer.isHidden = false
+        viewCoordinator.logoContainer.isHidden = false
         findInPageView.isHidden = true
         chromeManager.detach()
         
@@ -637,12 +546,12 @@ class MainViewController: UIViewController {
         wakeLazyFireButtonAnimator()
         
         if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
-            performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
+            segueToActionSheetDaxDialogWithSpec(spec)
         } else {
             let alert = ForgetDataAlert.buildAlert(forgetTabsAndDataHandler: { [weak self] in
                 self?.forgetAllWithAnimation {}
             })
-            self.present(controller: alert, fromView: self.toolbar)
+            self.present(controller: alert, fromView: self.viewCoordinator.toolbar)
         }
     }
     
@@ -691,7 +600,7 @@ class MainViewController: UIViewController {
 
     func loadUrlInNewTab(_ url: URL, reuseExisting: Bool = false, inheritedAttribution: AdClickAttributionLogic.State?) {
         allowContentUnderflow = false
-        customNavigationBar.alpha = 1
+        viewCoordinator.navigationBarContainer.alpha = 1
         loadViewIfNeeded()
         if reuseExisting, let existing = tabManager.first(withUrl: url) {
             selectTab(existing)
@@ -746,7 +655,7 @@ class MainViewController: UIViewController {
     }
     
     private func prepareTabForRequest(request: () -> Void) {
-        customNavigationBar.alpha = 1
+        viewCoordinator.navigationBarContainer.alpha = 1
         allowContentUnderflow = false
         request()
         guard let tab = currentTab else { fatalError("no tab") }
@@ -761,7 +670,7 @@ class MainViewController: UIViewController {
     }
 
     func select(tabAt index: Int) {
-        customNavigationBar.alpha = 1
+        viewCoordinator.navigationBarContainer.alpha = 1
         allowContentUnderflow = false
         let tab = tabManager.select(tabAt: index)
         select(tab: tab)
@@ -786,16 +695,16 @@ class MainViewController: UIViewController {
         currentTab?.progressWorker.progressBar = nil
         currentTab?.chromeDelegate = nil
         addToView(controller: tab)
-        tab.progressWorker.progressBar = progressView
+        tab.progressWorker.progressBar = viewCoordinator.progress
         chromeManager.attach(to: tab.webView.scrollView)
         tab.chromeDelegate = self
     }
 
     private func addToView(controller: UIViewController) {
         addChild(controller)
-        containerView.subviews.forEach { $0.removeFromSuperview() }
-        containerView.addSubview(controller.view)
-        controller.view.frame = containerView.bounds
+        viewCoordinator.contentContainer.subviews.forEach { $0.removeFromSuperview() }
+        viewCoordinator.contentContainer.addSubview(controller.view)
+        controller.view.frame = viewCoordinator.contentContainer.bounds
         controller.didMove(toParent: self)
 
     }
@@ -818,7 +727,7 @@ class MainViewController: UIViewController {
     }
 
     private func refreshTabIcon() {
-        tabsButton.accessibilityHint = UserText.numberOfTabs(tabManager.count)
+        viewCoordinator.toolbarTabSwitcherButton.accessibilityHint = UserText.numberOfTabs(tabManager.count)
         tabSwitcherButton.tabCount = tabManager.count
         tabSwitcherButton.hasUnread = tabManager.hasUnread
     }
@@ -849,11 +758,11 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func refreshBackForwardButtons() {
-        backButton.isEnabled = currentTab?.canGoBack ?? false
-        forwardButton.isEnabled = currentTab?.canGoForward ?? false
+        viewCoordinator.toolbarBackButton.isEnabled = currentTab?.canGoBack ?? false
+        viewCoordinator.toolbarForwardButton.isEnabled = currentTab?.canGoForward ?? false
         
-        omniBar.backButton.isEnabled = backButton.isEnabled
-        omniBar.forwardButton.isEnabled = forwardButton.isEnabled
+        omniBar.backButton.isEnabled = viewCoordinator.toolbarBackButton.isEnabled
+        omniBar.forwardButton.isEnabled = viewCoordinator.toolbarForwardButton.isEnabled
     }
   
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -882,7 +791,7 @@ class MainViewController: UIViewController {
 
         DispatchQueue.main.async {
             // Do this async otherwise the toolbar buttons skew to the right
-            if self.navBarTop.constant >= 0 {
+            if self.viewCoordinator.constraints.navigationBarContainerTop.constant >= 0 {
                 self.showBars()
             }
             // If tabs have been udpated, do this async to make sure size calcs are current
@@ -899,7 +808,7 @@ class MainViewController: UIViewController {
         let expectedState: MenuButton.State
         if homeController != nil {
             expectedState = .bookmarksImage
-            lastToolbarButton.accessibilityLabel = UserText.bookmarksButtonHint
+            viewCoordinator.lastToolbarButton.accessibilityLabel = UserText.bookmarksButtonHint
             omniBar.menuButton.accessibilityLabel = UserText.bookmarksButtonHint
 
         } else {
@@ -908,7 +817,7 @@ class MainViewController: UIViewController {
             } else {
                 expectedState = .menuImage
             }
-            lastToolbarButton.accessibilityLabel = UserText.menuButtonHint
+            viewCoordinator.lastToolbarButton.accessibilityLabel = UserText.menuButtonHint
             omniBar.menuButton.accessibilityLabel = UserText.menuButtonHint
         }
 
@@ -925,14 +834,14 @@ class MainViewController: UIViewController {
     }
     
     private func applyLargeWidth() {
-        tabsBar.isHidden = false
-        toolbar.isHidden = true
+        viewCoordinator.tabBarContainer.isHidden = false
+        viewCoordinator.toolbar.isHidden = true
         omniBar.enterPadState()
     }
 
     private func applySmallWidth() {
-        tabsBar.isHidden = true
-        toolbar.isHidden = false
+        viewCoordinator.tabBarContainer.isHidden = true
+        viewCoordinator.toolbar.isHidden = false
         omniBar.enterPhoneState()
     }
 
@@ -956,23 +865,15 @@ class MainViewController: UIViewController {
                 omniBar.hideSeparator()
             }
         }
-        suggestionTrayContainer.isHidden = false
+        viewCoordinator.suggestionTrayContainer.isHidden = false
         currentTab?.webView.accessibilityElementsHidden = true
     }
     
     func hideSuggestionTray() {
         omniBar.showSeparator()
-        suggestionTrayContainer.isHidden = true
+        viewCoordinator.suggestionTrayContainer.isHidden = true
         currentTab?.webView.accessibilityElementsHidden = false
         suggestionTrayController?.didHide()
-    }
-    
-    fileprivate func launchReportBrokenSite() {
-        performSegue(withIdentifier: "ReportBrokenSite", sender: self)
-    }
-    
-    fileprivate func launchDownloads() {
-        performSegue(withIdentifier: "Downloads", sender: self)
     }
     
     fileprivate func launchAutofillLogins(with currentTabUrl: URL? = nil) {
@@ -999,24 +900,12 @@ class MainViewController: UIViewController {
     @objc private func closeAutofillModal() {
         dismiss(animated: true)
     }
-    
-    func launchSettings() {
-        performSegue(withIdentifier: "Settings", sender: self)
-    }
-    
-    func launchCookiePopupManagementSettings() {
-        performSegue(withIdentifier: "SettingsToCookiePopupManagement", sender: self)
-    }
-
-    fileprivate func launchInstructions() {
-        performSegue(withIdentifier: "instructions", sender: self)
-    }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         notificationView?.layoutSubviews()
         let height = notificationView?.frame.size.height ?? 0
-        notificationContainerHeight.constant = height
+        viewCoordinator.constraints.notificationContainerHeight.constant = height
         ViewHighlighter.updatePositions()
     }
 
@@ -1026,13 +915,13 @@ class MainViewController: UIViewController {
 
         notificationView.setTitle(text: title)
         notificationView.setMessage(text: message)
-        notificationContainer.addSubview(notificationView)
-        notificationContainerTop.constant = -notificationView.frame.size.height
+        viewCoordinator.notificationBarContainer.addSubview(notificationView)
+        viewCoordinator.constraints.notificationContainerTop.constant = -notificationView.frame.size.height
         self.notificationView = notificationView
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.notificationContainerTop.constant = 0
-            self.notificationContainerHeight.constant = notificationView.frame.size.height
+            self.viewCoordinator.constraints.notificationContainerTop.constant = 0
+            self.viewCoordinator.constraints.notificationContainerHeight.constant = notificationView.frame.size.height
             UIView.animate(withDuration: 0.3) {
                 self.view.layoutIfNeeded()
             }
@@ -1042,12 +931,12 @@ class MainViewController: UIViewController {
 
     func hideNotification() {
 
-        notificationContainerTop.constant = -(notificationView?.frame.size.height ?? 0)
-        notificationContainerHeight.constant = 0
+        viewCoordinator.constraints.notificationContainerTop.constant = -(notificationView?.frame.size.height ?? 0)
+        viewCoordinator.constraints.notificationContainerHeight.constant = 0
         UIView.animate(withDuration: 0.5, animations: {
             self.view.layoutIfNeeded()
         }, completion: { _ in
-            self.notificationContainerTop.constant = 0
+            self.viewCoordinator.constraints.notificationContainerTop.constant = 0
             self.notificationView?.removeFromSuperview()
         })
 
@@ -1058,7 +947,7 @@ class MainViewController: UIViewController {
         if feature.showNow() {
             showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
                 if tapped {
-                    self.launchInstructions()
+                    self.segueToHomeRow()
                 }
                 self.hideNotification()
             }
@@ -1073,13 +962,13 @@ class MainViewController: UIViewController {
     }
 
     func replaceToolbar(item target: UIBarButtonItem, with replacement: UIBarButtonItem) {
-        guard let items = toolbar.items else { return }
+        guard let items = viewCoordinator.toolbar.items else { return }
 
         let newItems = items.compactMap({
             $0 == target ? replacement : $0
         })
 
-        toolbar.setItems(newItems, animated: false)
+        viewCoordinator.toolbar.setItems(newItems, animated: false)
     }
 
     func newTab(reuseExisting: Bool = false, allowingKeyboard: Bool = true) {
@@ -1101,12 +990,12 @@ class MainViewController: UIViewController {
     }
     
     func animateLogoAppearance() {
-        logoContainer.alpha = 0
-        logoContainer.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+        viewCoordinator.logoContainer.alpha = 0
+        viewCoordinator.logoContainer.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             UIView.animate(withDuration: 0.2) {
-                self.logoContainer.alpha = 1
-                self.logoContainer.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                self.viewCoordinator.logoContainer.alpha = 1
+                self.viewCoordinator.logoContainer.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             }
         }
     }
@@ -1115,7 +1004,7 @@ class MainViewController: UIViewController {
         currentTab?.findInPage?.delegate = self
         findInPageView.update(with: currentTab?.findInPage, updateTextField: true)
         // hide toolbar on iPhone
-        toolbar.accessibilityElementsHidden = !AppWidthObserver.shared.isLargeWidth
+        viewCoordinator.toolbar.accessibilityElementsHidden = !AppWidthObserver.shared.isLargeWidth
     }
     
     private func showVoiceSearch() {
@@ -1198,7 +1087,7 @@ extension MainViewController: FindInPageViewDelegate {
     
     func done(findInPageView: FindInPageView) {
         currentTab?.findInPage = nil
-        toolbar.accessibilityElementsHidden = false
+        viewCoordinator.toolbar.accessibilityElementsHidden = false
     }
     
 }
@@ -1207,6 +1096,10 @@ extension MainViewController: BrowserChromeDelegate {
 
     struct ChromeAnimationConstants {
         static let duration = 0.1
+    }
+
+    var tabBarContainer: UIView {
+        viewCoordinator.tabBarContainer
     }
 
     private func hideKeyboard() {
@@ -1235,8 +1128,8 @@ extension MainViewController: BrowserChromeDelegate {
             self.view.layoutIfNeeded()
             
             self.omniBar.alpha = percent
-            self.tabsBar.alpha = percent
-            self.toolbar.alpha = percent
+            self.viewCoordinator.tabBarContainer.alpha = percent
+            self.viewCoordinator.toolbar.alpha = percent
         }
         
         if animated {
@@ -1251,8 +1144,8 @@ extension MainViewController: BrowserChromeDelegate {
         
         updateNavBarConstant(hidden ? 0 : 1.0)
         omniBar.alpha = hidden ? 0 : 1
-        tabsBar.alpha = hidden ? 0 : 1
-        statusBarBackground.alpha = hidden ? 0 : 1
+        viewCoordinator.tabBarContainer.alpha = hidden ? 0 : 1
+        viewCoordinator.statusBackground.alpha = hidden ? 0 : 1
     }
     
     var canHideBars: Bool {
@@ -1260,11 +1153,11 @@ extension MainViewController: BrowserChromeDelegate {
     }
 
     var isToolbarHidden: Bool {
-        return toolbar.alpha < 1
+        return viewCoordinator.toolbar.alpha < 1
     }
 
     var toolbarHeight: CGFloat {
-        return toolbar.frame.size.height
+        return viewCoordinator.toolbar.frame.size.height
     }
     
     var barsMaxHeight: CGFloat {
@@ -1275,20 +1168,20 @@ extension MainViewController: BrowserChromeDelegate {
     private func updateToolbarConstant(_ ratio: CGFloat) {
         var bottomHeight = toolbarHeight
         bottomHeight += view.safeAreaInsets.bottom
-        let multiplier = toolbar.isHidden ? 1.0 : 1.0 - ratio
-        toolbarBottom.constant = bottomHeight * multiplier
+        let multiplier = viewCoordinator.toolbar.isHidden ? 1.0 : 1.0 - ratio
+        viewCoordinator.constraints.toolbarBottom.constant = bottomHeight * multiplier
         findInPageHeightLayoutConstraint.constant = findInPageView.container.frame.height + view.safeAreaInsets.bottom
     }
 
     // 1.0 - full size, 0.0 - hidden
     private func updateNavBarConstant(_ ratio: CGFloat) {
-        let browserTabsOffset = (tabsBar.isHidden ? 0 : tabsBar.frame.size.height)
-        let navBarTopOffset = customNavigationBar.frame.size.height + browserTabsOffset
-        if !tabsBar.isHidden {
+        let browserTabsOffset = (viewCoordinator.tabBarContainer.isHidden ? 0 : viewCoordinator.tabBarContainer.frame.size.height)
+        let navBarTopOffset = viewCoordinator.navigationBarContainer.frame.size.height + browserTabsOffset
+        if !viewCoordinator.tabBarContainer.isHidden {
             let topBarsConstant = -browserTabsOffset * (1.0 - ratio)
-            tabsBarTop.constant = topBarsConstant
+            viewCoordinator.constraints.tabBarContainerTop.constant = topBarsConstant
         }
-        navBarTop.constant = browserTabsOffset + -navBarTopOffset * (1.0 - ratio)
+        viewCoordinator.constraints.navigationBarContainerTop.constant = browserTabsOffset + -navBarTopOffset * (1.0 - ratio)
     }
 
 }
@@ -1373,17 +1266,17 @@ extension MainViewController: OmniBarDelegate {
             ViewHighlighter.hideAll()
         }
         hideSuggestionTray()
-        performSegue(withIdentifier: "Bookmarks", sender: self)
+        segueToBookmarks()
     }
     
     func onBookmarkEdit() {
         ViewHighlighter.hideAll()
         hideSuggestionTray()
-        performSegue(withIdentifier: "BookmarksEditCurrent", sender: self)
+        segueToEditCurrentBookmark()
     }
     
     func onEnterPressed() {
-        guard !suggestionTrayContainer.isHidden else { return }
+        guard !viewCoordinator.suggestionTrayContainer.isHidden else { return }
         
         suggestionTrayController?.willDismiss(with: omniBar.textField.text ?? "")
     }
@@ -1396,7 +1289,7 @@ extension MainViewController: OmniBarDelegate {
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
-        launchSettings()
+        segueToSettings()
     }
     
     func onCancelPressed() {
@@ -1543,7 +1436,7 @@ extension MainViewController: HomeControllerDelegate {
     }
     
     func home(_ home: HomeViewController, didRequestEdit favorite: BookmarkEntity) {
-        performSegue(withIdentifier: "BookmarksEdit", sender: favorite)
+        segueToEditBookmark(favorite)
     }
     
     func home(_ home: HomeViewController, didRequestContentOverflow shouldOverflow: Bool) -> CGFloat {
@@ -1557,20 +1450,20 @@ extension MainViewController: HomeControllerDelegate {
     }
     
     func showSettings(_ home: HomeViewController) {
-        launchSettings()
+        segueToSettings()
     }
     
     func home(_ home: HomeViewController, didRequestHideLogo hidden: Bool) {
-        logoContainer.isHidden = hidden
+        viewCoordinator.logoContainer.isHidden = hidden
     }
     
     func homeDidRequestLogoContainer(_ home: HomeViewController) -> UIView {
-        return logoContainer
+        return viewCoordinator.logoContainer
     }
     
     func home(_ home: HomeViewController, searchTransitionUpdated percent: CGFloat) {
-        statusBarBackground?.alpha = percent
-        customNavigationBar?.alpha = percent
+        viewCoordinator.statusBackground.alpha = percent
+        viewCoordinator.navigationBarContainer.alpha = percent
     }
     
 }
@@ -1662,7 +1555,7 @@ extension MainViewController: TabDelegate {
     }
 
     func tabDidRequestReportBrokenSite(tab: TabViewController) {
-        launchReportBrokenSite()
+        segueToReportBrokenSite()
     }
     
     func tabDidRequestBookmarks(tab: TabViewController) {
@@ -1676,7 +1569,7 @@ extension MainViewController: TabDelegate {
     }
     
     func tabDidRequestDownloads(tab: TabViewController) {
-        launchDownloads()
+        segueToDownloads()
     }
     
     func tabDidRequestAutofillLogins(tab: TabViewController) {
@@ -1684,12 +1577,12 @@ extension MainViewController: TabDelegate {
     }
     
     func tabDidRequestSettings(tab: TabViewController) {
-        launchSettings()
+        segueToSettings()
     }
 
     func tab(_ tab: TabViewController,
-             didRequestSettingsToLogins account: SecureVaultModels.WebsiteAccount?) {
-        performSegue(withIdentifier: "SettingsToLogins", sender: account)
+             didRequestSettingsToLogins account: SecureVaultModels.WebsiteAccount) {
+        segueToSettingsLoginsWithAccount(account)
     }
 
     func tabContentProcessDidTerminate(tab: TabViewController) {
@@ -1853,7 +1746,7 @@ extension MainViewController: TabSwitcherButtonDelegate {
                     
                 }
                 ViewHighlighter.hideAll()
-                self.performSegue(withIdentifier: "ShowTabs", sender: self)
+                self.segueToTabSwitcher()
             })
         }
     }
@@ -1967,10 +1860,10 @@ extension MainViewController: AutoClearWorker {
         guard let window = view.window else { return }
         
         let fireButtonView: UIView?
-        if toolbar.isHidden {
+        if viewCoordinator.toolbar.isHidden {
             fireButtonView = tabsBarController?.fireButton
         } else {
-            fireButtonView = fireButton.value(forKey: "view") as? UIView
+            fireButtonView = viewCoordinator.toolbarFireButton.value(forKey: "view") as? UIView
         }
         guard let view = fireButtonView else { return }
         
@@ -1988,25 +1881,25 @@ extension MainViewController: Themable {
         setNeedsStatusBarAppearanceUpdate()
 
         if AppWidthObserver.shared.isLargeWidth {
-            statusBarBackground.backgroundColor = theme.tabsBarBackgroundColor
+            viewCoordinator.statusBackground.backgroundColor = theme.tabsBarBackgroundColor
         } else {
-            statusBarBackground.backgroundColor = theme.omniBarBackgroundColor
+            viewCoordinator.statusBackground.backgroundColor = theme.omniBarBackgroundColor
         }
 
         view.backgroundColor = theme.mainViewBackgroundColor
 
-        customNavigationBar?.backgroundColor = theme.barBackgroundColor
-        customNavigationBar?.tintColor = theme.barTintColor
+        viewCoordinator.navigationBarContainer.backgroundColor = theme.barBackgroundColor
+        viewCoordinator.navigationBarContainer.tintColor = theme.barTintColor
         
-        omniBar?.decorate(with: theme)
-        progressView?.decorate(with: theme)
+        omniBar.decorate(with: theme)
+        viewCoordinator.progress.decorate(with: theme)
         
-        toolbar?.barTintColor = theme.barBackgroundColor
-        toolbar?.tintColor = theme.barTintColor
+        viewCoordinator.toolbar.barTintColor = theme.barBackgroundColor
+        viewCoordinator.toolbar.tintColor = theme.barTintColor
         
         tabSwitcherButton.decorate(with: theme)
         gestureBookmarksButton.decorate(with: theme)
-        tabsButton.tintColor = theme.barTintColor
+        viewCoordinator.toolbarTabSwitcherButton.tintColor = theme.barTintColor
         
         presentedMenuButton.decorate(with: theme)
         
@@ -2014,7 +1907,7 @@ extension MainViewController: Themable {
 
         findInPageView.decorate(with: theme)
         
-        logoText.tintColor = theme.ddgTextTintColor
+        viewCoordinator.logoText.tintColor = theme.ddgTextTintColor
     }
     
 }
@@ -2087,11 +1980,11 @@ extension MainViewController {
         
         let backMenu = historyMenu(with: currentTab.webView.backForwardList.backList.reversed())
         omniBar.backButton.menu = backMenu
-        backButton.menu = backMenu
+        viewCoordinator.toolbarBackButton.menu = backMenu
         
         let forwardMenu = historyMenu(with: currentTab.webView.backForwardList.forwardList)
         omniBar.forwardButton.menu = forwardMenu
-        forwardButton.menu = forwardMenu
+        viewCoordinator.toolbarForwardButton.menu = forwardMenu
     }
 
     private func historyMenu(with backForwardList: [WKBackForwardListItem]) -> UIMenu {

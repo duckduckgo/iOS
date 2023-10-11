@@ -77,7 +77,7 @@ struct AutofillViews {
             Text(title)
                 .daxTitle3()
                 .foregroundColor(Color(designSystemColor: .textPrimary))
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: Const.Size.maxWidth)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -92,6 +92,7 @@ struct AutofillViews {
                 .foregroundColor(Color(designSystemColor: .textSecondary))
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: Const.Size.maxWidth)
         }
     }
 
@@ -106,7 +107,7 @@ struct AutofillViews {
                 Text(title)
                     .daxButton()
                     .padding()
-                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .frame(minWidth: 0, maxWidth: Const.Size.maxWidth)
                     .foregroundColor(.white)
                     .background(Color(designSystemColor: .accent))
                     .cornerRadius(Const.Size.buttonCornerRadius)
@@ -126,7 +127,7 @@ struct AutofillViews {
                 Text(title)
                     .daxButton()
                     .padding()
-                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .frame(minWidth: 0, maxWidth: Const.Size.maxWidth)
                     .foregroundColor(Color(designSystemColor: .accent))
                     .cornerRadius(Const.Size.buttonCornerRadius)
                     .fixedSize(horizontal: false, vertical: true)
@@ -234,6 +235,7 @@ private enum Const {
         static let buttonCornerRadius: CGFloat = 8.0
         static let buttonBorderWidth: CGFloat = 1.0
         static let smallDevice: CGFloat = 320.0
+        static let maxWidth: CGFloat = 480.0
     }
 }
 

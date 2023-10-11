@@ -33,7 +33,10 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     private let titles = [
         Sections.keychain: "Keychain",
         Sections.debugFeature: "Debug Features",
-        Sections.simulateFailure: "Simulate Failure"
+        Sections.simulateFailure: "Simulate Failure",
+        Sections.registrationKey: "Registration Key",
+        Sections.notifications: "Notifications"
+
     ]
 
     enum Sections: Int, CaseIterable {
@@ -41,6 +44,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case keychain
         case debugFeature
         case simulateFailure
+        case registrationKey
+        case notifications
 
     }
 
@@ -51,7 +56,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     }
 
     enum DebugFeatureRows: Int, CaseIterable {
-        case enableAlwaysOn
+        case toggleAlwaysOn
     }
 
     enum SimulateFailureRows: Int, CaseIterable {
@@ -60,6 +65,18 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case controllerFailure
         case crashFatalError
         case crashMemory
+        case connectionInterruption
+    }
+
+    enum RegistrationKeyRows: Int, CaseIterable {
+
+        case expireNow
+
+    }
+
+    enum NotificationsRows: Int, CaseIterable {
+
+        case triggerTestNotification
 
     }
 
@@ -109,6 +126,13 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
         case .simulateFailure:
             configure(cell, forSimulateFailureAtRow: indexPath.row)
+
+        case .registrationKey:
+            configure(cell, forRegistrationKeyRow: indexPath.row)
+
+        case .notifications:
+            configure(cell, forNotificationRow: indexPath.row)
+
         case.none:
             break
         }
@@ -121,6 +145,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .keychain: return KeychainRows.allCases.count
         case .debugFeature: return DebugFeatureRows.allCases.count
         case .simulateFailure: return SimulateFailureRows.allCases.count
+        case .registrationKey: return RegistrationKeyRows.allCases.count
+        case .notifications: return NotificationsRows.allCases.count
         case .none: return 0
 
         }
@@ -137,6 +163,10 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             didSelectDebugFeature(at: indexPath)
         case .simulateFailure:
             didSelectSimulateFailure(at: indexPath)
+        case .registrationKey:
+            didSelectRegistationKeyAction(at: indexPath)
+        case .notifications:
+            didSelectTestNotificationAction(at: indexPath)
         case .none:
             break
         }
@@ -156,6 +186,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             cell.textLabel?.text = "Tunnel: Crash (Fatal Error)"
         case .crashMemory:
             cell.textLabel?.text = "Tunnel: Crash (CPU/Memory)"
+        case .connectionInterruption:
+            cell.textLabel?.text = "Connection Interruption"
         case .none:
             break
         }
@@ -163,11 +195,24 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
     private func didSelectSimulateFailure(at indexPath: IndexPath) {
         switch SimulateFailureRows(rawValue: indexPath.row) {
-        case .controllerFailure: simulateFailure(option: .controllerFailure)
-        case .tunnelFailure: simulateFailure(option: .tunnelFailure)
-        case .crashFatalError: simulateFailure(option: .crashFatalError)
-        case .crashMemory: simulateFailure(option: .crashMemory)
-        case .none: return
+        case .controllerFailure:
+            NetworkProtectionTunnelController.shouldSimulateFailure = true
+        case .tunnelFailure:
+            triggerSimulation(.tunnelFailure)
+        case .crashFatalError:
+            triggerSimulation(.crashFatalError)
+        case .crashMemory:
+            triggerSimulation(.crashMemory)
+        case .connectionInterruption:
+            triggerSimulation(.connectionInterruption)
+        case .none:
+            break
+        }
+    }
+
+    private func triggerSimulation(_ option: NetworkProtectionSimulationOption) {
+        Task {
+            await NetworkProtectionDebugUtilities().triggerSimulation(option)
         }
     }
 
@@ -175,13 +220,13 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
     private func configure(_ cell: UITableViewCell, forDebugFeatureAtRow row: Int) {
         switch DebugFeatureRows(rawValue: row) {
-        case .enableAlwaysOn:
-            cell.textLabel?.text = "Enable Always On"
+        case .toggleAlwaysOn:
+            cell.textLabel?.text = "Always On"
 
-            if debugFeatures.alwaysOnEnabled {
-                cell.accessoryType = .checkmark
-            } else {
+            if debugFeatures.alwaysOnDisabled {
                 cell.accessoryType = .none
+            } else {
+                cell.accessoryType = .checkmark
             }
         default:
             break
@@ -190,10 +235,54 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
     private func didSelectDebugFeature(at indexPath: IndexPath) {
         switch DebugFeatureRows(rawValue: indexPath.row) {
-        case .enableAlwaysOn:
-            debugFeatures.alwaysOnEnabled.toggle()
+        case .toggleAlwaysOn:
+            debugFeatures.alwaysOnDisabled.toggle()
             tableView.reloadRows(at: [indexPath], with: .none)
         default:
+            break
+        }
+    }
+
+    // MARK: Registration Key
+
+    private func configure(_ cell: UITableViewCell, forRegistrationKeyRow row: Int) {
+        switch RegistrationKeyRows(rawValue: row) {
+        case .expireNow:
+            cell.textLabel?.text = "Expire Now"
+        case .none:
+            break
+        }
+    }
+
+    private func didSelectRegistationKeyAction(at indexPath: IndexPath) {
+        switch RegistrationKeyRows(rawValue: indexPath.row) {
+        case .expireNow:
+            Task {
+                await NetworkProtectionDebugUtilities().expireRegistrationKeyNow()
+            }
+        case .none:
+            break
+        }
+    }
+
+    // MARK: Notifications
+
+    private func configure(_ cell: UITableViewCell, forNotificationRow row: Int) {
+        switch NotificationsRows(rawValue: row) {
+        case .triggerTestNotification:
+            cell.textLabel?.text = "Test Notification"
+        case .none:
+            break
+        }
+    }
+
+    private func didSelectTestNotificationAction(at indexPath: IndexPath) {
+        switch NotificationsRows(rawValue: indexPath.row) {
+        case .triggerTestNotification:
+            Task {
+                try await NetworkProtectionDebugUtilities().sendTestNotificationRequest()
+            }
+        case .none:
             break
         }
     }
@@ -202,18 +291,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
     private func clearAuthToken() {
         try? tokenStore.deleteToken()
-    }
-
-    private func simulateControllerFailure() {
-        NetworkProtectionTunnelController.enabledSimulationOption = .controllerFailure
-    }
-
-    private func simulaterTunnelFailure() {
-        NetworkProtectionTunnelController.enabledSimulationOption = .crashFatalError
-    }
-
-    private func simulateFailure(option: NetworkProtectionSimulationOption) {
-        NetworkProtectionTunnelController.enabledSimulationOption = .crashMemory
     }
 }
 

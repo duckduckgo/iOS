@@ -251,9 +251,8 @@ extension Pixel {
         case secureVaultInitFailedError
         case secureVaultFailedToOpenDatabaseError
         
-        // The pixels are for debugging a specific problem and should be removed when resolved
-        // https://app.asana.com/0/0/1202498365125439/f
-        case secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded
+        // Replacing secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded with data protection check
+        case secureVaultIsEnabledCheckedWhenEnabledAndDataProtected
         
         // MARK: Ad Click Attribution pixels
         
@@ -293,6 +292,11 @@ extension Pixel {
         case appTPCouldNotLoadDatabase
 
         // MARK: Network Protection
+
+        case networkProtectionActiveUser
+
+        case networkProtectionRekeyCompleted
+        case networkProtectionLatency
 
         case networkProtectionTunnelConfigurationNoServerRegistrationInfo
         case networkProtectionTunnelConfigurationCouldNotSelectClosestServer
@@ -499,7 +503,7 @@ extension Pixel {
         case emailIncontextModalExitEarly
         case emailIncontextModalExitEarlyContinue
 
-        case incrementalRolloutTest
+        case compilationFailed
     }
     
 }
@@ -742,7 +746,7 @@ extension Pixel.Event {
         case .secureVaultInitFailedError: return "m_secure-vault_error_init-failed"
         case .secureVaultFailedToOpenDatabaseError: return "m_secure-vault_error_failed-to-open-database"
             
-        case .secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded: return "m_secure-vault_is-enabled-checked_when-enabled-and-backgrounded_2"
+        case .secureVaultIsEnabledCheckedWhenEnabledAndDataProtected: return "m_secure-vault_is-enabled-checked_when-enabled-and-data-protected"
             
         // MARK: Ad Click Attribution pixels
             
@@ -781,6 +785,9 @@ extension Pixel.Event {
 
         // MARK: Network Protection pixels
 
+        case .networkProtectionActiveUser: return "m_netp_daily_active_d"
+        case .networkProtectionRekeyCompleted: return "m_netp_rekey_completed"
+        case .networkProtectionLatency: return "m_netp_latency"
         case .networkProtectionTunnelConfigurationNoServerRegistrationInfo: return "m_netp_tunnel_config_error_no_server_registration_info"
         case .networkProtectionTunnelConfigurationCouldNotSelectClosestServer: return "m_netp_tunnel_config_error_could_not_select_closest_server"
         case .networkProtectionTunnelConfigurationCouldNotGetPeerPublicKey: return "m_netp_tunnel_config_error_could_not_get_peer_public_key"
@@ -975,13 +982,12 @@ extension Pixel.Event {
         case .emailIncontextModalExitEarly: return "m_email_incontext_modal_exit_early"
         case .emailIncontextModalExitEarlyContinue: return "m_email_incontext_modal_exit_early_continue"
 
+        case .compilationFailed: return "m_d_compilation_failed"
         // MARK: - Return user measurement
         case .returnUser: return "m_return_user"
         case .debugReturnUserAddATB: return "m_debug_return_user_add_atb"
         case .debugReturnUserReadATB: return "m_debug_return_user_read_atb"
         case .debugReturnUserUpdateATB: return "m_debug_return_user_update_atb"
-
-        case .incrementalRolloutTest: return "m_autofill_incremental_rollout_test"
         }
         
     }

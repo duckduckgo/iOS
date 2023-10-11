@@ -95,6 +95,7 @@ public struct PixelParameters {
     public static let bookmarkCount = "bco"
     
     public static let isBackgrounded = "is_backgrounded"
+    public static let isDataProtected = "is_data_protected"
     
     public static let isInternalUser = "is_internal_user"
     
@@ -114,6 +115,9 @@ public struct PixelParameters {
     public static let keychainFieldName = "fieldName"
     public static let keychainErrorCode = errorCode
     public static let wireguardErrorCode = errorCode
+    public static let latency = "latency"
+    public static let server = "server"
+    public static let networkType = "network_type"
     public static let function = "function"
     public static let line = "line"
     public static let reason = "reason"
@@ -122,6 +126,8 @@ public struct PixelParameters {
     public static let returnUserErrorCode = "error_code"
     public static let returnUserOldATB = "old_atb"
     public static let returnUserNewATB = "new_atb"
+
+    public static let autofillDefaultState = "default_state"
 }
 
 public struct PixelValues {

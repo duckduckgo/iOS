@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": null,
-          "revision": "92948321f544c00bcdef7c23ebec739b84f71a8a",
-          "version": "81.1.1"
+          "revision": "20ef8a4b3791a57d475cd848afdecb85fa010a5e",
+          "version": "81.2.0"
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/duckduckgo/content-scope-scripts",
         "state": {
           "branch": null,
-          "revision": "74b6142c016be354144f28551de41b50c4864b1f",
-          "version": "4.37.0"
+          "revision": "aa279a3b006a0b1e009707311283c7fcaed24fb7",
+          "version": "4.39.0"
         }
       },
       {
@@ -156,7 +156,7 @@
       },
       {
         "package": "TrackerRadarKit",
-        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit",
+        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
         "state": {
           "branch": null,
           "revision": "4684440d03304e7638a2c8086895367e90987463",

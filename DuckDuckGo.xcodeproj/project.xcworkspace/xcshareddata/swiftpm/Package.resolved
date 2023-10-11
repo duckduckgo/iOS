@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "tom/hotfix-merge",
-          "revision": "26ec453b038a71fe60d0765cc32ae5712df006db",
-          "version": null
+          "branch": null,
+          "revision": "92948321f544c00bcdef7c23ebec739b84f71a8a",
+          "version": "81.1.1"
         }
       },
       {

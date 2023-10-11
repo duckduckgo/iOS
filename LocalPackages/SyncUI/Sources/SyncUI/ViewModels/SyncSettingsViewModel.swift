@@ -22,12 +22,12 @@ import UIKit
 
 public protocol SyncManagementViewModelDelegate: AnyObject {
 
-    func showSyncSetup()
     func showRecoverData()
     func showSyncWithAnotherDevice()
+    func showSyncWithAnotherDeviceEnterText()
     func showRecoveryPDF()
     func shareRecoveryPDF()
-    func createAccountAndStartSyncing()
+    func createAccountAndStartSyncing(optionsViewModel: SyncSettingsViewModel)
     func confirmAndDisableSync() async -> Bool
     func confirmAndDeleteAllData() async -> Bool
     func copyCode()
@@ -35,7 +35,7 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
     func removeDevice(_ device: SyncSettingsViewModel.Device)
     func updateDeviceName(_ name: String)
     func refreshDevices(clearDevices: Bool)
-
+    func updateOptions()
 }
 
 public class SyncSettingsViewModel: ObservableObject {
@@ -76,21 +76,14 @@ public class SyncSettingsViewModel: ObservableObject {
     @Published public var devices = [Device]()
     @Published public var isFaviconsSyncEnabled = false
     @Published public var isUnifiedFavoritesEnabled = true
+    @Published public var isSyncingDevices = false
 
     @Published var isBusy = false
     @Published var recoveryCode = ""
 
-
-    var setupFinishedState: TurnOnSyncViewModel.Result?
-
     public weak var delegate: SyncManagementViewModelDelegate?
 
     public init() { }
-
-    func enableSync() {
-        isBusy = true
-        delegate!.showSyncSetup()
-    }
 
     func disableSync() {
         isBusy = true
@@ -124,6 +117,14 @@ public class SyncSettingsViewModel: ObservableObject {
         delegate?.showSyncWithAnotherDevice()
     }
 
+    func showEnterTextView() {
+        delegate?.showSyncWithAnotherDeviceEnterText()
+    }
+
+    func showRecoverDataView() {
+        delegate?.showRecoverData()
+    }
+
     func createEditDeviceModel(_ device: Device) -> EditDeviceViewModel {
         return EditDeviceViewModel(device: device) { [weak self] newValue in
             self?.delegate?.updateDeviceName(newValue.name)
@@ -136,37 +137,15 @@ public class SyncSettingsViewModel: ObservableObject {
         }
     }
 
-    // MARK: Called by the view controller
-
     public func syncEnabled(recoveryCode: String) {
         isBusy = false
         isSyncEnabled = true
         self.recoveryCode = recoveryCode
     }
 
-    public func setupFinished(_ model: TurnOnSyncViewModel) {
-        setupFinishedState = model.state
-        switch model.state {
-        case .turnOn:
-            delegate?.createAccountAndStartSyncing()
-
-        case .syncWithAnotherDevice:
-            delegate?.showSyncWithAnotherDevice()
-
-        case .recoverData:
-            delegate?.showRecoverData()
-
-        default:
-            isBusy = false
-        }
-    }
-
-    public func codeCollectionCancelled() {
-        if setupFinishedState == .syncWithAnotherDevice {
-            delegate?.createAccountAndStartSyncing()
-        } else {
-            isBusy = false
-        }
+    public func startSyncPressed() {
+        isBusy = true
+        delegate?.createAccountAndStartSyncing(optionsViewModel: self)
     }
 
 }

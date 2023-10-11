@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
 /// Handles scanning or pasting a code.
 public struct ScanOrPasteCodeView: View {
@@ -49,8 +50,7 @@ public struct ScanOrPasteCodeView: View {
                 }
             } else {
                 Rectangle()
-                    // White so that the blur / transparent doesn't become too dark
-                    .fill(.white)
+                    .fill(.black)
             }
         }
         .ignoresSafeArea()
@@ -73,14 +73,14 @@ public struct ScanOrPasteCodeView: View {
                     .padding(.bottom, 20)
 
                 Text(UserText.cameraPermissionRequired)
-                    .font(.system(size: 20, weight: .bold))
+                    .daxTitle3()
                     .lineSpacing(1.05)
                     .padding(.bottom, 8)
 
                 Text(UserText.cameraPermissionInstructions)
                     .lineLimit(nil)
                     .multilineTextAlignment(.center)
-                    .font(.system(size: 16, weight: .regular))
+                    .daxBodyRegular()
                     .lineSpacing(1.1)
 
                 Spacer()
@@ -110,7 +110,7 @@ public struct ScanOrPasteCodeView: View {
                     .padding(.bottom, 20)
 
                 Text(UserText.cameraIsUnavailableTitle)
-                    .font(.system(size: 20, weight: .bold))
+                    .daxTitle3()
                     .lineSpacing(1.05)
 
             }
@@ -124,37 +124,55 @@ public struct ScanOrPasteCodeView: View {
         Text(model.showConnectMode ? UserText.connectDeviceInstructions : UserText.recoveryModeInstructions)
             .lineLimit(nil)
             .multilineTextAlignment(.center)
-            .font(.system(size: 16, weight: .regular))
-            .padding(.vertical)
+            .daxCaption()
+            .foregroundColor(.white.opacity(0.6))
+            .padding(.top, 20)
 
     }
 
     @ViewBuilder
     func buttons() -> some View {
 
-        Section {
-            Group {
+        Group {
+            Section {
                 NavigationLink {
                     PasteCodeView(model: model)
                 } label: {
-                    Label(UserText.manuallyEnterCodeLabel, image: "SyncKeyboardIcon")
+                    HStack(spacing: 16) {
+                        Image("SyncKeyboardIcon")
+                        Text(UserText.manuallyEnterCodeTitle)
+                            .daxButton()
+                            .foregroundColor(.white.opacity(0.84))
+                    }
                 }
-
+            }
+            Section {
                 if model.showConnectMode {
                     NavigationLink {
                         ConnectModeView(model: model)
                     } label: {
-                        Label(UserText.showQRCodeLabel, image: "SyncQRCodeIcon")
+                        HStack(spacing: 16) {
+                            Image("SyncQRCodeIcon")
+
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(UserText.showQRCodeLabel)
+                                    .daxButton()
+                                    .foregroundColor(.white.opacity(0.84))
+                                Text(UserText.showQRCodeSubLabel)
+                                    .daxCaption()
+                                    .foregroundColor(.white.opacity(0.6))
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        }
                     }
                 }
             }
-            .frame(height: 40)
-            .foregroundColor(.primary)
-            .onAppear {
-                model.endConnectMode()
-            }
         }
-
+        .frame(height: 40)
+        .foregroundColor(.primary)
+        .onAppear {
+            model.endConnectMode()
+        }
     }
 
     @ViewBuilder
@@ -187,9 +205,8 @@ public struct ScanOrPasteCodeView: View {
 
                 VStack(spacing: 0) {
                     Rectangle() // Also acts as the blur for the camera
-                        .fill(.clear)
+                        .fill(.black)
                         .frame(height: g.safeAreaInsets.top)
-                        .regularMaterialBackground()
 
                     ZStack {
                         // Background in case fullscreen camera view doesn't work
@@ -210,18 +227,19 @@ public struct ScanOrPasteCodeView: View {
 
                     ZStack {
                         Rectangle() // Also acts as the blur for the camera
-                            .fill(.clear)
+                            .fill(.black)
                             .regularMaterialBackground()
 
-                        VStack {
-                            instructions()
-                                .padding(.horizontal, 20)
+                        VStack(spacing: 0) {
+                            Section {
+                                instructions()
+                                    .padding(.horizontal, 20)
+                            }
 
                             List {
                                 buttons()
                             }
                             .ignoresSafeArea()
-                            .hideScrollContentBackground()
                             .disableScrolling()
                         }
                         .frame(maxWidth: Constants.maxFullScreenWidth)

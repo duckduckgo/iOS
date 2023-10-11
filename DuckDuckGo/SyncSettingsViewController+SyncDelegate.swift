@@ -37,13 +37,13 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         }
     }
 
-    func createAccountAndStartSyncing() {
+    func createAccountAndStartSyncing(optionsViewModel: SyncSettingsViewModel) {
         Task { @MainActor in
             do {
                 try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
                 self.rootView.model.syncEnabled(recoveryCode: recoveryCode)
                 self.refreshDevices()
-                self.showRecoveryPDF()
+                self.showDeviceConnected([], optionsModel: optionsViewModel, isSingleSetUp: true, shouldShowOptions: false)
             } catch {
                 handleError(error)
             }
@@ -56,33 +56,28 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         assertionFailure(error.localizedDescription)
     }
 
-    func showSyncSetup() {
-        let model = TurnOnSyncViewModel { [weak self] in
-            self?.dismissPresentedViewController()
-            // Handle the finished logic in the closing of the view controller so that we also handle the
-            //  user dismissing it (cancel, swipe down, etc)
-        }
-
-        let controller = DismissibleHostingController(rootView: TurnOnSyncView(model: model)) { [weak self] in
-            self?.rootView.model.setupFinished(model)
-        }
-
-        navigationController?.present(controller, animated: true)
-    }
-
     func showSyncWithAnotherDevice() {
         collectCode(showConnectMode: syncService.account == nil)
     }
 
-    func showRecoverData() {
-        collectCode(showConnectMode: true)
+    func showSyncWithAnotherDeviceEnterText() {
+        collectCode(showConnectMode: syncService.account == nil, showEnterTextCode: true)
     }
 
-    func showDeviceConnected(_ devices: [SyncSettingsViewModel.Device]) {
+    func showRecoverData() {
+        collectCode(showConnectMode: false)
+    }
+
+    func showDeviceConnected(_ devices: [SyncSettingsViewModel.Device], optionsModel: SyncSettingsViewModel, isSingleSetUp: Bool, shouldShowOptions: Bool) {
         let model = SaveRecoveryKeyViewModel(key: recoveryCode) { [weak self] in
             self?.shareRecoveryPDF()
         }
-        let controller = UIHostingController(rootView: DeviceConnectedView(model, devices: devices))
+        let controller = UIHostingController(
+            rootView: DeviceConnectedView(model,
+                                        optionsViewModel: optionsModel,
+                                          devices: devices,
+                                          isSingleSetUp: isSingleSetUp,
+                                          shouldShowOptions: shouldShowOptions))
         navigationController?.present(controller, animated: true) { [weak self] in
             self?.rootView.model.syncEnabled(recoveryCode: self!.recoveryCode)
             self?.refreshDevices()
@@ -97,17 +92,23 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         navigationController?.present(controller, animated: true)
     }
 
-    private func collectCode(showConnectMode: Bool) {
+    private func collectCode(showConnectMode: Bool, showEnterTextCode: Bool = false) {
         let model = ScanOrPasteCodeViewModel(showConnectMode: showConnectMode)
         model.delegate = self
 
-        let controller = UIHostingController(rootView: ScanOrPasteCodeView(model: model))
+        var controller: UIHostingController<AnyView>
+        if showEnterTextCode {
+            controller = UIHostingController(rootView: AnyView(PasteCodeView(model: model, isfirstScreen: true)))
+        } else {
+            controller = UIHostingController(rootView: AnyView(ScanOrPasteCodeView(model: model)))
+        }
 
         let navController = UIDevice.current.userInterfaceIdiom == .phone
         ? PortraitNavigationController(rootViewController: controller)
         : UINavigationController(rootViewController: controller)
 
         navController.overrideUserInterfaceStyle = .dark
+        navController.setNeedsStatusBarAppearanceUpdate()
         navController.modalPresentationStyle = .fullScreen
         navigationController?.present(navController, animated: true) {
             self.checkCameraPermission(model: model)

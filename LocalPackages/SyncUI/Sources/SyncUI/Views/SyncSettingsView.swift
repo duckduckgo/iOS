@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
 public struct SyncSettingsView: View {
 
@@ -29,30 +30,51 @@ public struct SyncSettingsView: View {
         self.model = model
     }
 
-    @ViewBuilder
-    func syncToggle() -> some View {
-        Section {
-            HStack {
-                Text(UserText.syncTitle)
-                Spacer()
-
-                if model.isBusy {
-                    SwiftUI.ProgressView()
+    public var body: some View {
+        if model.isSyncingDevices {
+            SwiftUI.ProgressView()
+                .onReceive(timer) { _ in
+                    if selectedDevice == nil {
+                        model.delegate?.refreshDevices(clearDevices: false)
+                    }
+                }
+        } else {
+            List {
+                if model.isSyncEnabled {
+                    
+                    turnOffSync()
+                    
+                    devices()
+                    
+                    syncNewDevice()
+                    
+                    OptionsView(isUnifiedFavoritesEnabled: $model.isUnifiedFavoritesEnabled)
+                        .onAppear(perform: {
+                            model.delegate?.updateOptions()
+                        })
+                    
+                    saveRecoveryPDF()
+                    
+                    deleteAllData()
+                    
                 } else {
-                    Toggle("", isOn: Binding(get: {
-                        return model.isSyncEnabled
-                    }, set: { enabled in
-                        if enabled {
-                            model.enableSync()
-                        } else {
-                            model.disableSync()
-                        }
-                    }))
+                    
+                    workInProgress()
+                    
+                    syncWithAnotherDeviceView()
+                    
+                    singleDeviceSetUpView()
+                    
+                    recoverYourDataView()
+                    
+                    footerView()
                 }
             }
-        } footer: {
-            Text(UserText.syncSettingsInfo)
+            .navigationTitle(UserText.syncTitle)
+            .applyListStyle()
+            .environmentObject(model)
         }
+
     }
 
     @ViewBuilder
@@ -125,12 +147,16 @@ public struct SyncSettingsView: View {
                     .padding(.bottom, 32)
                     .padding(.top, 16)
 
-                Text(UserText.settingsNewDeviceInstructions)
-                    .font(.system(size: 15))
-                    .lineLimit(nil)
-                    .lineSpacing(1.2)
-                    .multilineTextAlignment(.center)
-                    .padding(.bottom, 16)
+                let instrution1 = Text(UserText.settingsNewDeviceInstructions1)
+                let instrution2 = Text(UserText.settingsNewDeviceInstructions2).bold()
+                let instrution3 = Text(UserText.settingsNewDeviceInstructions3)
+
+                Text("\(instrution1)\n \(instrution2) \(instrution3)")
+                .daxSubheadRegular()
+                .lineLimit(nil)
+                .lineSpacing(1.2)
+                .multilineTextAlignment(.center)
+                .padding(.bottom, 16)
             }
 
             NavigationLink(UserText.settingsShowCodeButton) {
@@ -142,35 +168,6 @@ public struct SyncSettingsView: View {
             }
         } header: {
             Text("Sync New Device")
-        }
-    }
-
-    @ViewBuilder
-    func options() -> some View {
-        Section {
-
-            Toggle(isOn: $model.isFaviconsSyncEnabled) {
-                HStack(spacing: 16) {
-                    Image("SyncFavicons")
-                    Text("Sync Bookmark Icons").foregroundColor(.primary)
-                }
-            }
-
-            Toggle(isOn: $model.isUnifiedFavoritesEnabled) {
-                HStack(spacing: 16) {
-                    Image("SyncAllDevices")
-                    VStack(alignment: .leading) {
-                        Text("Unified favorites")
-                            .foregroundColor(.primary)
-                        Text("Use the same favorites on all devices. Switch off to maintain separate favorites for mobile and desktop.")
-                            .font(.system(size: 13))
-                            .foregroundColor(.secondary)
-                    }
-                }
-            }
-
-        } header: {
-            Text("Options")
         }
     }
 
@@ -217,29 +214,82 @@ public struct SyncSettingsView: View {
 
     }
 
-    public var body: some View {
-        List {
-            workInProgress()
-
-            syncToggle()
-
-            if model.isSyncEnabled {
-                devices()
-
-                syncNewDevice()
-
-                options()
-
-                saveRecoveryPDF()
-
-                deleteAllData()
+    @ViewBuilder
+    func syncWithAnotherDeviceView() -> some View {
+        Section {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(UserText.syncWithAnotherDeviceTitle)
+                        .daxBodyBold()
+                    Text(UserText.syncWithAnotherDeviceMessage)
+                        .daxBodyRegular()
+                }
+                Spacer()
+                Image("Sync-Pair-96")
+                
             }
-            
+            Button(UserText.scanQRCode) {
+                model.scanQRCode()
+            }
+            Button(UserText.enterTextCode) {
+                model.showEnterTextView()
+            }
         }
-        .navigationTitle(UserText.syncTitle)
-        .applyListStyle()
-        .environmentObject(model)
+    }
 
+    @ViewBuilder
+    func turnOffSync() -> some View {
+        Section {
+            if model.isBusy {
+                SwiftUI.ProgressView()
+            } else {
+                Button(UserText.turnSyncOff) {
+                    model.disableSync()
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    func singleDeviceSetUpView() -> some View {
+        Section {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(UserText.singleDeviceSetUpTitle)
+                        .daxBodyBold()
+                    Text(UserText.singleDeviceSetUpInstruction)
+                        .daxBodyRegular()
+                }
+                Spacer()
+                Image("Device-Mobile-Upload-96")
+
+            }
+            if model.isBusy {
+                SwiftUI.ProgressView()
+            } else {
+                Button(UserText.turnSyncOn) {
+                    model.startSyncPressed()
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    func recoverYourDataView() -> some View {
+        Section {
+            Button(UserText.recoverYourData) {
+                model.showRecoverDataView()
+            }
+        }
+    }
+
+    @ViewBuilder
+    func footerView() -> some View {
+        Section {} footer: {
+            Text(UserText.syncSettingsFooter)
+                .daxFootnoteRegular()
+                .foregroundColor(.secondary)
+        }
     }
 
 }
@@ -249,4 +299,29 @@ extension View {
     @ViewBuilder func modifier(@ViewBuilder _ closure: (Self) -> some View) -> some View {
         closure(self)
     }
+}
+
+
+public struct OptionsView: View {
+    @Binding var isUnifiedFavoritesEnabled: Bool
+    public var body: some View {
+        Section {
+            Toggle(isOn: $isUnifiedFavoritesEnabled) {
+                HStack(spacing: 16) {
+                    Image("SyncAllDevices")
+                    VStack(alignment: .leading) {
+                        Text(UserText.unifiedFavoritesTitle)
+                            .foregroundColor(.primary)
+                        Text(UserText.unifiedFavoritesInstruction)
+                            .daxBodyRegular()
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
+
+        } header: {
+            Text(UserText.options)
+        }
+    }
+
 }

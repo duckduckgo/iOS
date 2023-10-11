@@ -23,33 +23,48 @@ import Foundation
 // Localise these later, when feature is closer to exernal release
 struct UserText {
 
-    static let turnOnTitle = "Turn on Sync?"
-    static let turnOnButton = "Turn on Sync"
-    static let turnOnMessage = "This will save an encrypted backup of your bookmarks and Autofill logins on DuckDuckGo’s servers, which can be synced with your other devices.\n\nThe decryption key is stored on your device and cannot be read by DuckDuckGo."
-
-    static let syncWithAnotherDeviceTitle = "Sync Another Device?"
-    static let syncWithAnotherDeviceMessage = "Your bookmarks and Autofill logins will be backed up! Would you like to sync another device now?\n\nIf you’ve already set up Sync on another device, this will allow you to combine bookmarks and Autofill logins from both devices into a single backup."
-    static let syncWithAnotherDeviceButton = "Sync Another Device"
+    static let syncWithAnotherDeviceTitle = "Sync with Another Device"
+    static let syncWithAnotherDeviceMessage = "Securely sync bookmarks and Logins between your devices."
 
     static let recoveryMessage = "If you lose access to your devices, you will need this code to recover your synced data."
+    static let recoveryWarning = "Anyone with access to this code can access your synced data, so please keep it in a safe place."
 
-    static let connectDeviceInstructions = "Go to Settings > Sync in the DuckDuckGo App on a different device and scan the QR code to sync."
+    static let scanQRCode = "Scan QR Code"
+    static let enterTextCode = "Enter Text Code"
+    static let turnSyncOff = "Turn Off Sync & Back Up"
 
-    static let recoveryModeInstructions = "Scan the QR code on your Recovery PDF, or another synced device, to recover your synced data."
+    static let singleDeviceSetUpTitle = "Single-Device Setup"
+    static let singleDeviceSetUpInstruction = "Set up this device now, sync with other devices later."
+    static let turnSyncOn = "Start Sync & Back Up"
+    static let recoverYourData = "Recover Your Data"
+
+    static let options = "Options"
+    static let unifiedFavoritesTitle = "Share Favorites"
+    static let unifiedFavoritesInstruction = "Use the same favorites on all devices. Leave off to keep mobile and desktop favorites separate."
+
+    static let syncSettingsFooter = "Your data is end-to-end encrypted, and DuckDuckGo does not have access to the decryption key."
+
+    static let connectDeviceInstructions = "Go to Settings > Sync & Back Up in the DuckDuckGo App on a different device and scan the QR code to sync."
+
+    static let recoveryModeInstructions = "Scan the QR code from your Recovery PDF or in the DuckDuckGo app under Settings > Sync & Back Up on a signed-in device."
 
     static let validatingCode = "Validating code"
-    static let validatingCodeFailed = "That code does not appear to be valid.  Please try copying it again."
+    static let validatingCodeFailed = "Invalid code."
 
-    static let pasteCodeInstructions = "Copy the code from the Settings > Sync page in the DuckDuckGo App on another synced device and paste it here to sync this device."
+    static let pasteCodeInstructions = "Copy the code from the\n Settings > Sync & Back Up page in the DuckDuckGo App on another synced device and paste it here to sync this device."
 
-    static let viewQRCodeInstructions = "Go to Settings > Sync in the DuckDuckGo App on a different device and scan this QR code to sync."
-    static let viewQRCodeTitle = "QR Code"
+    static let viewQRCodeInstructions = "Open the DuckDuckGo app on another device. Navigate to Settings > Sync & Back Up and scan this QR code."
+    static let viewQRCodeTitle = "Your Sync Code"
 
+    static let syngleDeviceConnectedTitle = "All Set!"
     static let deviceSyncedTitle = "Device Synced!"
-    static let deviceSyncedMessage = "Your bookmarks and Autofill logins are now syncing with this device."
+    static let firstDeviceSyncedMessage = "You can sync this device’s bookmarks and Logins with additional devices at any time from the Sync & Back Up menu in Settings."
+    static let deviceSyncedMessage = "Your bookmarks and Logins are now syncing with "
+    static let multipleDevicesSyncedMessage = "Your bookmarks and Logins are now syncing on "
+    static let wordDevices = "devices"
 
-    static let saveRecoveryTitle = "Save Recovery Key"
-    static let saveRecoveryButton = "Save As PDF"
+    static let saveRecoveryTitle = "Save Recovery Code?"
+    static let copyCode = "Copy Code"
 
     static let cameraPermissionRequired = "Camera Permission is Required"
     static let cameraPermissionInstructions = "Please go to your device's settings and grant permission for this app to access your camera."
@@ -57,8 +72,7 @@ struct UserText {
 
     static let goToSettingsButton = "Go to Settings"
 
-    static let syncTitle = "Sync"
-    static let syncSettingsInfo = "Sync your bookmarks and Autofill logins across your devices and save an encrypted backup on DuckDuckGo’s servers."
+    static let syncTitle = "Sync & Back Up"
 
     static let thisDevice = "This Device"
     static let connectedDevicesTitle = "Synced Devices"
@@ -66,14 +80,14 @@ struct UserText {
     static let pasteLabel = "Paste"
     static let copyCodeLabel = "Copy Code"
 
-    static let manuallyEnterCodeLabel = "Manually Enter Code"
-    static let manuallyEnterCodeTitle = "Manually Enter Code"
+    static let manuallyEnterCodeTitle = "Enter Text Code"
 
     static let showQRCodeLabel = "Show QR Code"
+    static let showQRCodeSubLabel = "Display code to scan with another device"
 
-    static let recoverDataButton = "Recover Your Synced Data"
-
-    static let settingsNewDeviceInstructions = "Go to Settings > Sync in the DuckDuckGo App on a different device and scan to connect instantly"
+    static let settingsNewDeviceInstructions1 = "Go to Settings > Sync in the"
+    static let settingsNewDeviceInstructions2 = "DuckDuckGo App"
+    static let settingsNewDeviceInstructions3 = "on a different device and scan to connect instantly"
     static let settingsScanQRCodeButton = "Scan QR Code"
     static let settingsShowCodeButton = "Show Text Code"
     static let settingsSaveRecoveryPDFButton = "Save Recovery PDF"

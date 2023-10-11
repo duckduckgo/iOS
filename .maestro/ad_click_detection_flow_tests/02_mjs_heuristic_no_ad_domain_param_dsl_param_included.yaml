@@ -1,6 +1,7 @@
-# mjs_heuristic_no_ad_domain_param_dsl_param_included.yaml
-
 appId: com.duckduckgo.mobile.ios
+tags:
+    - adClick
+
 ---
 
 # Set up 
@@ -11,14 +12,14 @@ appId: com.duckduckgo.mobile.ios
       visible: 
         text: "Let’s Do It!"
         index: 0
-    file: ./shared/onboarding.yaml
+    file: ../shared/onboarding.yaml
 
 # Load Site
 - assertVisible:
     id: "searchEntry"
 - tapOn: 
     id: "searchEntry"
-- inputText: "https://www.search-company.site/"
+- inputText: "https://www.search-company.site/#ad-id-2"
 - pressKey: Enter
 
 # Manage onboarding
@@ -27,9 +28,7 @@ appId: com.duckduckgo.mobile.ios
       visible:
         text: "Got It"
         index: 0
-    file: ./shared/onboarding_browsing.yaml
-
-- assertVisible: "Search engine"
+    file: ../shared/onboarding_browsing.yaml
 
 # Test Ad2
 - assertVisible:

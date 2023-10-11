@@ -1,6 +1,7 @@
-# yjs_heuristic_ad_domain_provided_but_empty_u3_not_needed.yaml
-
 appId: com.duckduckgo.mobile.ios
+tags:
+    - adClick
+
 ---
 
 # Set up 
@@ -11,14 +12,14 @@ appId: com.duckduckgo.mobile.ios
       visible: 
         text: "Let’s Do It!"
         index: 0
-    file: ./shared/onboarding.yaml
+    file: ../shared/onboarding.yaml
 
 # Load Site
 - assertVisible:
     id: "searchEntry"
 - tapOn: 
     id: "searchEntry"
-- inputText: "https://www.search-company.site/"
+- inputText: "https://www.search-company.site/#ad-id-5"
 - pressKey: Enter
 
 # Manage onboarding
@@ -27,15 +28,8 @@ appId: com.duckduckgo.mobile.ios
       visible:
         text: "Got It"
         index: 0
-    file: ./shared/onboarding_browsing.yaml
+    file: ../shared/onboarding_browsing.yaml
 
-- assertVisible: "Search engine"
-
-# Test Ad5
-- swipe:
-    start: 400, 200
-    end: 400, 0
-    duration: 200
 - assertVisible:
     text: "[Ad 5] SERP Ad (heuristic)"
 - tapOn:

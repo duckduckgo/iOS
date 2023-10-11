@@ -396,10 +396,14 @@ class MainViewController: UIViewController {
         let frame = self.findInPageView.frame
         UIView.animate(withDuration: duration, delay: 0, options: animationCurve, animations: {
             self.findInPageView.frame = CGRect(x: 0, y: y - frame.height, width: frame.width, height: frame.height)
-            self.viewCoordinator.superview.layoutIfNeeded()
+
+            // Before iOS 17 this causes the omnibar to animate its contents.
+            if #available(iOS 17, *) {
+                self.viewCoordinator.superview.layoutIfNeeded()
+            }
         }, completion: nil)
 
-        // Don't wait for the animation cycle to layout the omnibar's children
+        // Don't wait for the animation cycle to layout the omnibar's children - only seems to work on iOS 17
         self.viewCoordinator.omniBar.layoutSubviews()
     }
 

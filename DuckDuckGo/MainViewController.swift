@@ -1925,7 +1925,6 @@ extension MainViewController: AutoClearWorker {
 extension MainViewController: Themable {
     
     func decorate(with theme: Theme) {
-        print("***", #function)
 
         setNeedsStatusBarAppearanceUpdate()
 

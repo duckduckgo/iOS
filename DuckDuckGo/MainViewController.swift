@@ -117,7 +117,11 @@ class MainViewController: UIViewController {
     }
 
     var isAddressBarAtBottom: Bool {
-        searchBarRect.minY > view.frame.midY
+        if searchBarRect == .zero {
+            return appSettings.currentAddressBarPosition == .bottom
+        }
+
+        return searchBarRect.minY > view.frame.midY
     }
 
     var keyModifierFlags: UIKeyModifierFlags?
@@ -222,7 +226,8 @@ class MainViewController: UIViewController {
         registerForOrientationChangeNotification()
 
         tabManager.cleanupTabsFaviconCache()
-        refreshViewsBasedOnAddressBarPosition()
+
+        refreshViewsBasedOnAddressBarPosition(appSettings.currentAddressBarPosition)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -252,12 +257,7 @@ class MainViewController: UIViewController {
     }
 
     @objc func orientationDidChange() {
-        if UIDevice.current.orientation.isLandscape {
-            viewCoordinator.moveAddressBarToPosition(.top)
-        } else {
-            viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
-        }
-        refreshViewsBasedOnAddressBarPosition()
+        onAddressBarPositionChanged()
     }
 
     func loadSuggestionTray() {
@@ -331,13 +331,17 @@ class MainViewController: UIViewController {
     }
 
     @objc func onAddressBarPositionChanged() {
-        viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
-        decorate(with: ThemeManager.shared.currentTheme)
-        refreshViewsBasedOnAddressBarPosition()
+        if UIDevice.current.orientation.isLandscape {
+            viewCoordinator.moveAddressBarToPosition(.top)
+            refreshViewsBasedOnAddressBarPosition(.top)
+        } else {
+            viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
+            refreshViewsBasedOnAddressBarPosition(appSettings.currentAddressBarPosition)
+        }
     }
 
-    func refreshViewsBasedOnAddressBarPosition() {
-        switch appSettings.currentAddressBarPosition {
+    func refreshViewsBasedOnAddressBarPosition(_ position: AddressBarPosition) {
+        switch position {
         case .top:
             viewCoordinator.omniBar.moveSeparatorToBottom()
             viewCoordinator.showToolbarSeparator()
@@ -345,6 +349,12 @@ class MainViewController: UIViewController {
         case .bottom:
             viewCoordinator.omniBar.moveSeparatorToTop()
             viewCoordinator.hideToolbarSeparator()
+        }
+
+        DispatchQueue.main.async {
+            // Do this in the next cycle so that the position of the bar is correctly reported
+            let theme = ThemeManager.shared.currentTheme
+            self.decorate(with: theme)
         }
     }
 
@@ -396,15 +406,7 @@ class MainViewController: UIViewController {
         let frame = self.findInPageView.frame
         UIView.animate(withDuration: duration, delay: 0, options: animationCurve, animations: {
             self.findInPageView.frame = CGRect(x: 0, y: y - frame.height, width: frame.width, height: frame.height)
-
-            // Before iOS 17 this causes the omnibar to animate its contents.
-            if #available(iOS 17, *) {
-                self.viewCoordinator.superview.layoutIfNeeded()
-            }
         }, completion: nil)
-
-        // Don't wait for the animation cycle to layout the omnibar's children - only seems to work on iOS 17
-        self.viewCoordinator.omniBar.layoutSubviews()
     }
 
     private func initTabButton() {
@@ -901,7 +903,7 @@ class MainViewController: UIViewController {
             if !DaxDialogs.shared.shouldShowFireButtonPulse {
                 ViewHighlighter.hideAll()
             }
-            if type.hideOmnibarSeparator() && appSettings.currentAddressBarPosition == .top {
+            if type.hideOmnibarSeparator() && !isAddressBarAtBottom {
                 viewCoordinator.omniBar.hideSeparator()
             }
         }
@@ -1923,6 +1925,8 @@ extension MainViewController: AutoClearWorker {
 extension MainViewController: Themable {
     
     func decorate(with theme: Theme) {
+        print("***", #function)
+
         setNeedsStatusBarAppearanceUpdate()
 
         // Does not appear to get updated when setting changes.
@@ -1958,7 +1962,7 @@ extension MainViewController: Themable {
         
         viewCoordinator.logoText.tintColor = theme.ddgTextTintColor
 
-        if appSettings.currentAddressBarPosition == .bottom {
+        if isAddressBarAtBottom {
             viewCoordinator.statusBackground.backgroundColor = theme.backgroundColor
         }
     }

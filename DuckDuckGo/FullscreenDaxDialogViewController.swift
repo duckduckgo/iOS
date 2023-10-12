@@ -109,12 +109,7 @@ class FullscreenDaxDialogViewController: UIViewController {
 
     @objc private func updateCutOut() {
         if spec?.highlightAddressBar ?? false, let rect = delegate?.daxDialogDidRquestAddressBarRect(controller: self) {
-            let padding: CGFloat = 6
-            let paddedRect = CGRect(x: rect.origin.x - padding,
-                                    y: rect.origin.y - padding,
-                                    width: rect.size.width + padding * 2,
-                                    height: rect.size.height + padding * 2)
-            highlightCutOutView.cutOutPath = UIBezierPath(roundedRect: paddedRect, cornerRadius: paddedRect.height / 2.0)
+            highlightCutOutView.cutOutPath = UIBezierPath(roundedRect: rect, cornerRadius: 8)
         } else {
             highlightCutOutView.cutOutPath = nil
         }

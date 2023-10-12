@@ -84,6 +84,10 @@ enum AddressBarPosition: String, CaseIterable {
     case top = "Top"
     case bottom = "Bottom"
 
+    var isBottom: Bool {
+        self == .bottom
+    }
+
     var descriptionText: String {
         switch self {
         case .top:

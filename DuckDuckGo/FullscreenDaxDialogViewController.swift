@@ -34,22 +34,19 @@ class FullscreenDaxDialogViewController: UIViewController {
     @IBOutlet weak var containerHeight: NSLayoutConstraint!
     @IBOutlet weak var spacerPadding: NSLayoutConstraint!
 
+    let appSettings = AppDependencyProvider.shared.appSettings
+
     weak var daxDialogViewController: DaxDialogViewController?
     weak var delegate: FullscreenDaxDialogDelegate?
 
     var spec: DaxDialogs.BrowsingSpec?
     var woShown: Bool = false
 
-    var isAddressBarAtBottom: Bool {
-        guard let rect = delegate?.daxDialogDidRquestAddressBarRect(controller: self) else { return false }
-        return rect.minY > view.frame.midY
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
         daxDialogViewController?.cta = spec?.cta
-        daxDialogViewController?.message = spec?.message.replacingOccurrences(of: "☝️", with: isAddressBarAtBottom ? "👇" : "☝️")
+        daxDialogViewController?.message = spec?.message.replacingOccurrences(of: "☝️", with: appSettings.currentAddressBarPosition == .bottom ? "👇" : "☝️")
         daxDialogViewController?.onTapCta = dismissCta
         
         highlightCutOutView.fillColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
@@ -103,7 +100,7 @@ class FullscreenDaxDialogViewController: UIViewController {
     }
 
     private func updateForAddressBarPosition() {
-        if spec?.highlightAddressBar == true, isAddressBarAtBottom {
+        if spec?.highlightAddressBar == true, appSettings.currentAddressBarPosition == .bottom {
             spacerPadding.constant = 52
         } else {
             spacerPadding.constant = 0

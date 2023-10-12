@@ -116,14 +116,6 @@ class MainViewController: UIViewController {
         return viewCoordinator.omniBar.searchContainer.convert(viewCoordinator.omniBar.searchContainer.bounds, to: view)
     }
 
-    var isAddressBarAtBottom: Bool {
-        if searchBarRect == .zero {
-            return appSettings.currentAddressBarPosition == .bottom
-        }
-
-        return searchBarRect.minY > view.frame.midY
-    }
-
     var keyModifierFlags: UIKeyModifierFlags?
     var showKeyboardAfterFireButton: DispatchWorkItem?
     
@@ -331,13 +323,8 @@ class MainViewController: UIViewController {
     }
 
     @objc func onAddressBarPositionChanged() {
-        if UIDevice.current.orientation.isLandscape {
-            viewCoordinator.moveAddressBarToPosition(.top)
-            refreshViewsBasedOnAddressBarPosition(.top)
-        } else {
-            viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
-            refreshViewsBasedOnAddressBarPosition(appSettings.currentAddressBarPosition)
-        }
+        viewCoordinator.moveAddressBarToPosition(appSettings.currentAddressBarPosition)
+        refreshViewsBasedOnAddressBarPosition(appSettings.currentAddressBarPosition)
     }
 
     func refreshViewsBasedOnAddressBarPosition(_ position: AddressBarPosition) {
@@ -351,11 +338,8 @@ class MainViewController: UIViewController {
             viewCoordinator.hideToolbarSeparator()
         }
 
-        DispatchQueue.main.async {
-            // Do this in the next cycle so that the position of the bar is correctly reported
-            let theme = ThemeManager.shared.currentTheme
-            self.decorate(with: theme)
-        }
+        let theme = ThemeManager.shared.currentTheme
+        self.decorate(with: theme)
     }
 
     @objc func onShowFullSiteAddressChanged() {
@@ -393,7 +377,7 @@ class MainViewController: UIViewController {
         }
 
         let navBarOffset = min(0, toolbarHeight - intersection.height)
-        self.viewCoordinator.constraints.omniBarBottom.constant = isAddressBarAtBottom ? navBarOffset : 0
+        self.viewCoordinator.constraints.omniBarBottom.constant = appSettings.currentAddressBarPosition == .bottom ? navBarOffset : 0
         self.animateForKeyboard(userInfo: userInfo, y: self.view.frame.height - height)
     }
 
@@ -903,7 +887,7 @@ class MainViewController: UIViewController {
             if !DaxDialogs.shared.shouldShowFireButtonPulse {
                 ViewHighlighter.hideAll()
             }
-            if type.hideOmnibarSeparator() && !isAddressBarAtBottom {
+            if type.hideOmnibarSeparator() && appSettings.currentAddressBarPosition != .bottom {
                 viewCoordinator.omniBar.hideSeparator()
             }
         }
@@ -1283,9 +1267,7 @@ extension MainViewController: OmniBarDelegate {
 
         let entries = tab.buildBrowsingMenu(with: menuBookmarksViewModel)
         let controller = BrowsingMenuViewController.instantiate(headerEntries: tab.buildBrowsingMenuHeaderContent(),
-                                                                menuEntries: entries) { [weak self] in
-            self?.searchBarRect ?? .zero
-        }
+                                                                menuEntries: entries)
 
         controller.modalPresentationStyle = .custom
         self.present(controller, animated: true) {
@@ -1403,10 +1385,6 @@ extension MainViewController: FavoritesOverlayDelegate {
         showHomeRowReminder()
     }
 
-    func favoritesOverlayDidRequestSearchBarRect() -> CGRect {
-        searchBarRect
-    }
-
 }
 
 extension MainViewController: AutocompleteViewControllerDelegate {
@@ -1457,9 +1435,6 @@ extension MainViewController: AutocompleteViewControllerDelegate {
         dismissOmniBar()
     }
 
-    func autocompleteDidRequestSearchBarRect() -> CGRect {
-        searchBarRect
-    }
 }
 
 extension MainViewController: HomeControllerDelegate {
@@ -1956,7 +1931,7 @@ extension MainViewController: Themable {
         
         viewCoordinator.logoText.tintColor = theme.ddgTextTintColor
 
-        if isAddressBarAtBottom {
+        if appSettings.currentAddressBarPosition == .bottom {
             viewCoordinator.statusBackground.backgroundColor = theme.backgroundColor
         }
     }

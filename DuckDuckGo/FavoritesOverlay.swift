@@ -25,7 +25,6 @@ import Persistence
 protocol FavoritesOverlayDelegate: AnyObject {
     
     func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: BookmarkEntity)
-    func favoritesOverlayDidRequestSearchBarRect() -> CGRect
 
 }
 
@@ -40,19 +39,17 @@ class FavoritesOverlay: UIViewController {
     private let layout = UICollectionViewFlowLayout()
     var collectionView: UICollectionView!
     private var renderer: FavoritesHomeViewSectionRenderer!
-    
+    private let appSettings: AppSettings
+
     private var theme: Theme!
     
     weak var delegate: FavoritesOverlayDelegate?
 
-    var isAddressBarAtBottom: Bool {
-        let searchBarRect = delegate?.favoritesOverlayDidRequestSearchBarRect() ?? .zero
-        return searchBarRect.minY > view.frame.midY
-    }
 
-    init(viewModel: FavoritesListInteracting) {
+    init(viewModel: FavoritesListInteracting, appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
         renderer = FavoritesHomeViewSectionRenderer(allowsEditing: false,
                                                     viewModel: viewModel)
+        self.appSettings = appSettings
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -108,7 +105,7 @@ class FavoritesOverlay: UIViewController {
         guard !AppWidthObserver.shared.isLargeWidth else { return }
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
         let keyboardSize = keyboardFrame.size
-        let bottomInset = isAddressBarAtBottom ? 0 : keyboardSize.height - Constants.toolbarHeight
+        let bottomInset = appSettings.currentAddressBarPosition == .bottom ? 0 : keyboardSize.height - Constants.toolbarHeight
         collectionView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: bottomInset, right: 0.0)
     }
     

@@ -58,23 +58,18 @@ final class BrowsingMenuViewController: UIViewController {
     private var headerButtons: [BrowsingMenuButton] = []
     private let headerEntries: [BrowsingMenuEntry]
     private let menuEntries: [BrowsingMenuEntry]
+    private let appSettings: AppSettings
 
-    var searchBarRect: () -> CGRect
-
-    var isAddressBarAtBottom: Bool {
-        searchBarRect().minY > view.frame.midY
-    }
-
-    class func instantiate(headerEntries: [BrowsingMenuEntry], menuEntries: [BrowsingMenuEntry], searchBarRect: @escaping () -> CGRect) -> BrowsingMenuViewController {
+    class func instantiate(headerEntries: [BrowsingMenuEntry], menuEntries: [BrowsingMenuEntry], appSettings: AppSettings = AppDependencyProvider.shared.appSettings) -> BrowsingMenuViewController {
         UIStoryboard(name: "BrowsingMenuViewController", bundle: nil).instantiateInitialViewController { coder in
-            BrowsingMenuViewController(headerEntries: headerEntries, menuEntries: menuEntries, searchBarRect: searchBarRect, coder: coder)
+            BrowsingMenuViewController(headerEntries: headerEntries, menuEntries: menuEntries, appSettings: appSettings, coder: coder)
         }!
     }
 
-    init?(headerEntries: [BrowsingMenuEntry], menuEntries: [BrowsingMenuEntry], searchBarRect: @escaping () -> CGRect, coder: NSCoder) {
+    init?(headerEntries: [BrowsingMenuEntry], menuEntries: [BrowsingMenuEntry], appSettings: AppSettings, coder: NSCoder) {
         self.headerEntries = headerEntries
         self.menuEntries = menuEntries
-        self.searchBarRect = searchBarRect
+        self.appSettings = appSettings
         super.init(coder: coder)
         self.transitioningDelegate = self
     }
@@ -227,7 +222,7 @@ final class BrowsingMenuViewController: UIViewController {
         topConstraint.constant = frame.minY + (isIPhoneLandscape ? -10 : 5)
         // Move menu up in Landscape, as bottom toolbar shrinks
 
-        let barPositionOffset: CGFloat = isAddressBarAtBottom ? 52 : 0
+        let barPositionOffset: CGFloat = appSettings.currentAddressBarPosition.isBottom ? 52 : 0
         bottomConstraint.constant = windowBounds.maxY - frame.maxY - (isIPhoneLandscape ? 2 : 10) - barPositionOffset
         rightConstraint.constant = isIPad ? 67 : 10
 

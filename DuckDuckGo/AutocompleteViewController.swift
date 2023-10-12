@@ -43,13 +43,10 @@ class AutocompleteViewController: UIViewController {
     
     private var bookmarksSearch: BookmarksStringSearch!
 
-    var isAddressBarAtBottom: Bool {
-        guard let rect = delegate?.autocompleteDidRequestSearchBarRect() else { return false }
-        return rect.minY > view.frame.midY
-    }
+    private var appSettings: AppSettings!
 
     var backgroundColor: UIColor {
-        isAddressBarAtBottom ?
+        appSettings.currentAddressBarPosition.isBottom ?
             UIColor(designSystemColor: .background) :
             UIColor.black.withAlphaComponent(0.2)
     }
@@ -72,13 +69,15 @@ class AutocompleteViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var shouldOffsetY = false
     
-    static func loadFromStoryboard(bookmarksSearch: BookmarksStringSearch) -> AutocompleteViewController {
+    static func loadFromStoryboard(bookmarksSearch: BookmarksStringSearch, 
+                                   appSettings: AppSettings = AppDependencyProvider.shared.appSettings) -> AutocompleteViewController {        
         let storyboard = UIStoryboard(name: "Autocomplete", bundle: nil)
 
         guard let controller = storyboard.instantiateInitialViewController() as? AutocompleteViewController else {
             fatalError("Failed to instatiate correct Autocomplete view controller")
         }
         controller.bookmarksSearch = bookmarksSearch
+        controller.appSettings = appSettings
         return controller
     }
 
@@ -227,7 +226,10 @@ extension AutocompleteViewController: UITableViewDataSource {
         
         let currentTheme = ThemeManager.shared.currentTheme
         
-        cell.updateFor(query: query, suggestion: suggestions[indexPath.row], with: currentTheme, isAddressBarAtBottom: isAddressBarAtBottom)
+        cell.updateFor(query: query,
+                       suggestion: suggestions[indexPath.row],
+                       with: currentTheme,
+                       isAddressBarAtBottom: appSettings.currentAddressBarPosition.isBottom)
         cell.plusButton.tag = indexPath.row
         
         let baseBackgroundColor = isPad ? UIColor(designSystemColor: .panel) : UIColor(designSystemColor: .background)
@@ -247,7 +249,10 @@ extension AutocompleteViewController: UITableViewDataSource {
         }
         
         let currentTheme = ThemeManager.shared.currentTheme
-        cell.backgroundColor = isAddressBarAtBottom ? UIColor(designSystemColor: .background) : UIColor(designSystemColor: .panel)
+        cell.backgroundColor = appSettings.currentAddressBarPosition.isBottom ?
+            UIColor(designSystemColor: .background) :
+            UIColor(designSystemColor: .panel)
+
         cell.tintColor = currentTheme.autocompleteCellAccessoryColor
         cell.label?.textColor = currentTheme.tableCellTextColor
         cell.setHighlightedStateBackgroundColor(currentTheme.tableCellHighlightedBackgroundColor)
@@ -256,7 +261,7 @@ extension AutocompleteViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if isAddressBarAtBottom && suggestions.isEmpty {
+        if appSettings.currentAddressBarPosition.isBottom && suggestions.isEmpty {
             return view.frame.height
         }
         return 46

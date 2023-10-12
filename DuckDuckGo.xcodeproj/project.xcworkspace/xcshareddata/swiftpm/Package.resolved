@@ -38,6 +38,15 @@
         }
       },
       {
+        "package": "DesignResourcesKit",
+        "repositoryURL": "https://github.com/duckduckgo/DesignResourcesKit",
+        "state": {
+          "branch": "brindy/update-panel-for-dark-mode",
+          "revision": "c34abc379b783e0f5c6eac8ffb0e7327e30762a5",
+          "version": null
+        }
+      },
+      {
         "package": "Autofill",
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {

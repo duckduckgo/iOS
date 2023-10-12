@@ -46,7 +46,7 @@ class FullscreenDaxDialogViewController: UIViewController {
         super.viewDidLoad()
 
         daxDialogViewController?.cta = spec?.cta
-        daxDialogViewController?.message = spec?.message.replacingOccurrences(of: "☝️", 
+        daxDialogViewController?.message = spec?.message.replacingOccurrences(of: "☝️",
                                                                               with: appSettings.currentAddressBarPosition == .bottom ? "👇" : "☝️")
         daxDialogViewController?.onTapCta = dismissCta
         

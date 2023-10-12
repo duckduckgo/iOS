@@ -230,7 +230,8 @@ extension AutocompleteViewController: UITableViewDataSource {
         cell.updateFor(query: query, suggestion: suggestions[indexPath.row], with: currentTheme, isAddressBarAtBottom: isAddressBarAtBottom)
         cell.plusButton.tag = indexPath.row
         
-        let backgroundColor = indexPath.row == selectedItem ? currentTheme.tableCellSelectedColor : UIColor(designSystemColor: .background)
+        let baseBackgroundColor = isPad ? UIColor(designSystemColor: .panel) : UIColor(designSystemColor: .background)
+        let backgroundColor = indexPath.row == selectedItem ? currentTheme.tableCellSelectedColor : baseBackgroundColor
 
         cell.backgroundColor = backgroundColor
         cell.tintColor = currentTheme.autocompleteCellAccessoryColor

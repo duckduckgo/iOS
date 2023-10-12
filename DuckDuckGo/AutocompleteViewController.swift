@@ -69,8 +69,8 @@ class AutocompleteViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var shouldOffsetY = false
     
-    static func loadFromStoryboard(bookmarksSearch: BookmarksStringSearch, 
-                                   appSettings: AppSettings = AppDependencyProvider.shared.appSettings) -> AutocompleteViewController {        
+    static func loadFromStoryboard(bookmarksSearch: BookmarksStringSearch,
+                                   appSettings: AppSettings = AppDependencyProvider.shared.appSettings) -> AutocompleteViewController {
         let storyboard = UIStoryboard(name: "Autocomplete", bundle: nil)
 
         guard let controller = storyboard.instantiateInitialViewController() as? AutocompleteViewController else {

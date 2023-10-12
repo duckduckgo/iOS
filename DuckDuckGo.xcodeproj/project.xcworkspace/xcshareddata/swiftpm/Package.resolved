@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": "dominik/sync-ignore-ffs-favorites",
-          "revision": "7b323bdde3f5c9a863f84d8faaec93d3a2b89272",
+          "revision": "4ee427b8e69f738cf4574f5674cda2021979623c",
           "version": null
         }
       },
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/duckduckgo/content-scope-scripts",
         "state": {
           "branch": null,
-          "revision": "74b6142c016be354144f28551de41b50c4864b1f",
-          "version": "4.37.0"
+          "revision": "aa279a3b006a0b1e009707311283c7fcaed24fb7",
+          "version": "4.39.0"
         }
       },
       {
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
           "branch": null,
-          "revision": "55466f10a339843cb79a27af62d5d61c030740b2",
-          "version": "8.4.1"
+          "revision": "6dd7d696d4e666cedb2f1890a46fe53615226646",
+          "version": "8.4.2"
         }
       },
       {

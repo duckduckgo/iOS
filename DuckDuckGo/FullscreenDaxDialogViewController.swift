@@ -46,7 +46,8 @@ class FullscreenDaxDialogViewController: UIViewController {
         super.viewDidLoad()
 
         daxDialogViewController?.cta = spec?.cta
-        daxDialogViewController?.message = spec?.message.replacingOccurrences(of: "☝️", with: appSettings.currentAddressBarPosition == .bottom ? "👇" : "☝️")
+        daxDialogViewController?.message = spec?.message.replacingOccurrences(of: "☝️", 
+                                                                              with: appSettings.currentAddressBarPosition == .bottom ? "👇" : "☝️")
         daxDialogViewController?.onTapCta = dismissCta
         
         highlightCutOutView.fillColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)

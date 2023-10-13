@@ -34,6 +34,10 @@ import Networking
 import DDGSync
 import SyncDataProviders
 
+#if NETWORK_PROTECTION
+import NetworkProtection
+#endif
+
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
 
@@ -45,6 +49,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private struct ShortcutKey {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
+
+#if NETWORK_PROTECTION
+        static let openVPNSettings = "com.duckduckgo.mobile.ios.vpn.open-settings"
+#endif
     }
 
     private var testing = false
@@ -328,6 +336,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         syncService.scheduler.notifyAppLifecycleEvent()
         fireFailedCompilationsPixelIfNeeded()
+        refreshShortcuts()
     }
 
     private func fireAppLaunchPixel() {
@@ -590,11 +599,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
         os_log("Handling shortcut item: %s", log: .generalLog, type: .debug, shortcutItem.type)
+
         mainViewController?.clearNavigationStack()
         autoClear?.applicationWillMoveToForeground()
-        if shortcutItem.type ==  ShortcutKey.clipboard, let query = UIPasteboard.general.string {
+
+        if shortcutItem.type == ShortcutKey.clipboard, let query = UIPasteboard.general.string {
             mainViewController?.loadQueryInNewTab(query)
+            return
         }
+
+#if NETWORK_PROTECTION
+        if shortcutItem.type == ShortcutKey.openVPNSettings {
+            presentNetworkProtectionStatusSettingsModal()
+        }
+#endif
     }
 
     private func removeEmailWaitlistState() {
@@ -622,6 +640,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var mainViewController: MainViewController? {
         return window?.rootViewController as? MainViewController
     }
+
+    func refreshShortcuts() {
+#if NETWORK_PROTECTION
+        guard NetworkProtectionKeychainTokenStore().isFeatureActivated else {
+            return
+        }
+
+        let items = [
+            UIApplicationShortcutItem(type: ShortcutKey.openVPNSettings,
+                                      localizedTitle: "Open VPN Settings",
+                                      localizedSubtitle: nil,
+                                      icon: UIApplicationShortcutIcon(templateImageName: "VPN-16"),
+                                      userInfo: nil)
+        ]
+
+        UIApplication.shared.shortcutItems = items
+#endif
+    }
+
 }
 
 extension AppDelegate: BlankSnapshotViewRecoveringDelegate {

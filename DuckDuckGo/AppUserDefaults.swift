@@ -183,7 +183,7 @@ public class AppUserDefaults: AppSettings {
 
     var currentAddressBarPosition: AddressBarPosition {
         get {
-            return AddressBarPosition(rawValue: addressBarPositionStorage  ?? "") ?? .top
+            return AddressBarPosition(rawValue: addressBarPositionStorage?.lowercased()  ?? "") ?? .top
         }
 
         set {

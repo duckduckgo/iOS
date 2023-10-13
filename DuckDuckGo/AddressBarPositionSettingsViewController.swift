@@ -49,7 +49,7 @@ class AddressBarPositionSettingsViewController: UITableViewController {
         cell.textLabel?.textColor = theme.tableCellTextColor
 
         cell.textLabel?.text = options[indexPath.row].descriptionText
-        cell.accessoryType = appSettings.currentAddressBarPosition.rawValue == cell.textLabel?.text ? .checkmark : .none
+        cell.accessoryType = appSettings.currentAddressBarPosition.descriptionText == cell.textLabel?.text ? .checkmark : .none
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -81,8 +81,8 @@ extension AddressBarPositionSettingsViewController: Themable {
 }
 
 enum AddressBarPosition: String, CaseIterable {
-    case top = "Top"
-    case bottom = "Bottom"
+    case top
+    case bottom
 
     var isBottom: Bool {
         self == .bottom
@@ -91,9 +91,9 @@ enum AddressBarPosition: String, CaseIterable {
     var descriptionText: String {
         switch self {
         case .top:
-            return self.rawValue
+            return UserText.addressBarPositionTop
         case .bottom:
-            return self.rawValue
+            return UserText.addressBarPositionBottom
         }
     }
 }

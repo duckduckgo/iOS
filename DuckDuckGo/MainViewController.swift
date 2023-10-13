@@ -337,7 +337,10 @@ class MainViewController: UIViewController {
 
         case .bottom:
             viewCoordinator.omniBar.moveSeparatorToTop()
-            viewCoordinator.hideToolbarSeparator()
+            // If this is called before the toolbar has shown it will not re-add the separator when moving to the top position
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.viewCoordinator.hideToolbarSeparator()
+            }
         }
 
         let theme = ThemeManager.shared.currentTheme

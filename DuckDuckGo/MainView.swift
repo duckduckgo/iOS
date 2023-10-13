@@ -346,6 +346,7 @@ class MainViewCoordinator {
     func decorateWithTheme(_ theme: Theme) {
         superview.backgroundColor = theme.mainViewBackgroundColor
         logoText.tintColor = theme.ddgTextTintColor
+        omniBar.decorate(with: theme)
     }
 
     func showToolbarSeparator() {
@@ -353,10 +354,7 @@ class MainViewCoordinator {
     }
 
     func hideToolbarSeparator() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            // If this is called before the toolbar has shown it will not re-add the separator when moving to the top position
-            self.toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
-        }
+        self.toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
     }
 
     class Constraints {

@@ -503,7 +503,6 @@
 		981CA7EA2617797500E119D5 /* MainViewController+AddFavoriteFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981CA7E92617797500E119D5 /* MainViewController+AddFavoriteFlow.swift */; };
 		981FED692201FE69008488D7 /* AutoClearSettingsScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED682201FE69008488D7 /* AutoClearSettingsScreenTests.swift */; };
 		981FED6E22025151008488D7 /* BlankSnapshotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED6C22025151008488D7 /* BlankSnapshotViewController.swift */; };
-		981FED712202519C008488D7 /* BlankSnapshot.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 981FED702202519C008488D7 /* BlankSnapshot.storyboard */; };
 		981FED7422046017008488D7 /* AutoClearTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED7322046017008488D7 /* AutoClearTests.swift */; };
 		981FED76220464EF008488D7 /* AutoClearSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED75220464EF008488D7 /* AutoClearSettingsModel.swift */; };
 		9820EAF522613CD30089094D /* WebProgressWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820EAF422613CD30089094D /* WebProgressWorker.swift */; };
@@ -1548,7 +1547,6 @@
 		981DCA992521EFAB00CD4C18 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
 		981FED682201FE69008488D7 /* AutoClearSettingsScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearSettingsScreenTests.swift; sourceTree = "<group>"; };
 		981FED6C22025151008488D7 /* BlankSnapshotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankSnapshotViewController.swift; sourceTree = "<group>"; };
-		981FED702202519C008488D7 /* BlankSnapshot.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BlankSnapshot.storyboard; sourceTree = "<group>"; };
 		981FED7322046017008488D7 /* AutoClearTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearTests.swift; sourceTree = "<group>"; };
 		981FED75220464EF008488D7 /* AutoClearSettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearSettingsModel.swift; sourceTree = "<group>"; };
 		9820A5D522B1C0B20024E37C /* DDG Trace.tracetemplate */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "DDG Trace.tracetemplate"; sourceTree = "<group>"; };
@@ -4939,7 +4937,6 @@
 			children = (
 				984147B624F0264B00362052 /* Authentication.storyboard */,
 				F1AE54E71F0425FC00D9A700 /* AuthenticationViewController.swift */,
-				981FED702202519C008488D7 /* BlankSnapshot.storyboard */,
 				981FED6C22025151008488D7 /* BlankSnapshotViewController.swift */,
 				F1CA3C3A1F045B65005FADB3 /* Authenticator.swift */,
 				F1CA3C361F045878005FADB3 /* PrivacyStore.swift */,
@@ -5715,7 +5712,6 @@
 				1E16260B296845120004127F /* cookie-banner-illustration-animated.json in Resources */,
 				AA4D6AD323DE4D27007E8790 /* AppIconPurple29x29@2x.png in Resources */,
 				AA4D6AA123DE4CC4007E8790 /* AppIconBlue60x60@3x.png in Resources */,
-				981FED712202519C008488D7 /* BlankSnapshot.storyboard in Resources */,
 				984147A824F0259000362052 /* Onboarding.storyboard in Resources */,
 				AA4D6AF723DF0312007E8790 /* AppIconRed60x60@2x.png in Resources */,
 				AA4D6AE923DE4D33007E8790 /* AppIconGreen29x29@3x.png in Resources */,

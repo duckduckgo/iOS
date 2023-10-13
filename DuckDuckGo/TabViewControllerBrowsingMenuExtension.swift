@@ -54,7 +54,8 @@ extension TabViewController {
             }
             
             Pixel.fire(pixel: .browsingMenuCopy)
-            ActionMessageView.present(message: UserText.actionCopyMessage)
+            ActionMessageView.present(message: UserText.actionCopyMessage,
+                                      presentationLocation: .withBottomBar(andAddressBarBottom: strongSelf.appSettings.currentAddressBarPosition.isBottom))
         }))
         
         entries.append(BrowsingMenuEntry.regular(name: UserText.actionPrint, image: UIImage(named: "Print-24")!, action: { [weak self] in
@@ -220,7 +221,9 @@ extension TabViewController {
         syncService.scheduler.notifyDataChanged()
 
         ActionMessageView.present(message: UserText.webSaveBookmarkDone,
-                                  actionTitle: UserText.actionGenericEdit, onAction: {
+                                  actionTitle: UserText.actionGenericEdit, 
+                                  presentationLocation: .withBottomBar(andAddressBarBottom: appSettings.currentAddressBarPosition.isBottom),
+                                  onAction: {
             self.performEditBookmarkAction(for: link)
         })
     }
@@ -266,7 +269,10 @@ extension TabViewController {
         WidgetCenter.shared.reloadAllTimelines()
         syncService.scheduler.notifyDataChanged()
 
-        ActionMessageView.present(message: UserText.webSaveFavoriteDone, actionTitle: UserText.actionGenericUndo, onAction: {
+        ActionMessageView.present(message: UserText.webSaveFavoriteDone,
+                                  actionTitle: UserText.actionGenericUndo,
+                                  presentationLocation: .withBottomBar(andAddressBarBottom: appSettings.currentAddressBarPosition.isBottom),
+                                  onAction: {
             self.performRemoveFavoriteAction(for: link, with: bookmarksInterface)
         })
     }
@@ -277,7 +283,10 @@ extension TabViewController {
         WidgetCenter.shared.reloadAllTimelines()
         syncService.scheduler.notifyDataChanged()
 
-        ActionMessageView.present(message: UserText.webFavoriteRemoved, actionTitle: UserText.actionGenericUndo, onAction: {
+        ActionMessageView.present(message: UserText.webFavoriteRemoved, 
+                                  actionTitle: UserText.actionGenericUndo,
+                                  presentationLocation: .withBottomBar(andAddressBarBottom: appSettings.currentAddressBarPosition.isBottom),
+                                  onAction: {
             self.performAddFavoriteAction(for: link, with: bookmarksInterface)
         })
     }
@@ -399,7 +408,9 @@ extension TabViewController {
         
         ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
         
-        ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo, onAction: { [weak self] in
+        ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo, 
+                                  presentationLocation: .withBottomBar(andAddressBarBottom: appSettings.currentAddressBarPosition.isBottom),
+                                  onAction: { [weak self] in
             self?.togglePrivacyProtection(domain: domain)
         })
     }

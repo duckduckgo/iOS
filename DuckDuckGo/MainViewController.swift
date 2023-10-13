@@ -76,7 +76,7 @@ class MainViewController: UIViewController {
 
     var tabManager: TabManager!
     let previewsSource = TabPreviewsSource()
-    fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
+    let appSettings: AppSettings
     private var launchTabObserver: LaunchTabNotification.Observer?
     
     private let appTrackingProtectionDatabase: CoreDataDatabase
@@ -133,7 +133,8 @@ class MainViewController: UIViewController {
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
         appTrackingProtectionDatabase: CoreDataDatabase,
         syncService: DDGSyncing,
-        syncDataProviders: SyncDataProviders
+        syncDataProviders: SyncDataProviders,
+        appSettings: AppSettings
     ) {
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
         self.bookmarksDatabase = bookmarksDatabase
@@ -142,6 +143,7 @@ class MainViewController: UIViewController {
         self.syncDataProviders = syncDataProviders
         self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
+        self.appSettings = appSettings
 
         super.init(nibName: nil, bundle: nil)
 
@@ -439,7 +441,7 @@ class MainViewController: UIViewController {
     @objc func quickSaveBookmark() {
         UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
         guard currentTab != nil else {
-            ActionMessageView.present(message: UserText.webSaveBookmarkNone)
+            ActionMessageView.present(message: UserText.webSaveBookmarkNone, presentationLocation: .withBottomBar(andAddressBarBottom: appSettings.currentAddressBarPosition.isBottom))
             return
         }
         
@@ -1856,7 +1858,7 @@ extension MainViewController: AutoClearWorker {
             DaxDialogs.shared.resumeRegularFlow()
             self.forgetTabs()
         } onTransitionCompleted: {
-            ActionMessageView.present(message: UserText.actionForgetAllDone)
+            ActionMessageView.present(message: UserText.actionForgetAllDone, presentationLocation: .withBottomBar(andAddressBarBottom: self.appSettings.currentAddressBarPosition.isBottom))
             transitionCompletion?()
         } completion: {
             Instruments.shared.endTimedEvent(for: spid)

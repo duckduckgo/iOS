@@ -214,7 +214,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       appTrackingProtectionDatabase: appTrackingProtectionDatabase,
                                       syncService: syncService,
-                                      syncDataProviders: syncDataProviders)
+                                      syncDataProviders: syncDataProviders,
+                                      appSettings: AppDependencyProvider.shared.appSettings)
         main.loadViewIfNeeded()
 
         window = UIWindow(frame: UIScreen.main.bounds)

@@ -85,7 +85,7 @@ class TabViewController: UIViewController {
     private weak var privacyDashboard: PrivacyDashboardViewController?
     
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache
-    private lazy var appSettings = AppDependencyProvider.shared.appSettings
+    let appSettings: AppSettings
 
     lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var internalUserDecider = AppDependencyProvider.shared.internalUserDecider
@@ -254,11 +254,15 @@ class TabViewController: UIViewController {
 
     private let rulesCompilationMonitor = RulesCompilationMonitor.shared
 
-    static func loadFromStoryboard(model: Tab, bookmarksDatabase: CoreDataDatabase, syncService: DDGSyncing) -> TabViewController {
+    static func loadFromStoryboard(model: Tab, 
+                                   appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
+                                   bookmarksDatabase: CoreDataDatabase,
+                                   syncService: DDGSyncing) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
             TabViewController(coder: coder,
                               tabModel: model,
+                              appSettings: appSettings,
                               bookmarksDatabase: bookmarksDatabase,
                               syncService: syncService)
         })
@@ -271,9 +275,11 @@ class TabViewController: UIViewController {
     
     required init?(coder aDecoder: NSCoder,
                    tabModel: Tab,
+                   appSettings: AppSettings,
                    bookmarksDatabase: CoreDataDatabase,
                    syncService: DDGSyncing) {
         self.tabModel = tabModel
+        self.appSettings = appSettings
         self.bookmarksDatabase = bookmarksDatabase
         self.syncService = syncService
         super.init(coder: aDecoder)
@@ -807,7 +813,8 @@ class TabViewController: UIViewController {
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.open(url, options: [:]) { opened in
             if !opened {
-                ActionMessageView.present(message: UserText.failedToOpenExternally)
+                ActionMessageView.present(message: UserText.failedToOpenExternally,
+                                          presentationLocation: .withBottomBar(andAddressBarBottom: self.appSettings.currentAddressBarPosition.isBottom))
             }
 
             // just showing a blank tab at this point, so close it
@@ -1826,7 +1833,9 @@ extension TabViewController {
         let attributedMessage = DownloadActionMessageViewHelper.makeDownloadStartedMessage(for: download)
 
         DispatchQueue.main.async {
-            ActionMessageView.present(message: attributedMessage, numberOfLines: 2, actionTitle: UserText.actionGenericShow, onAction: {
+            ActionMessageView.present(message: attributedMessage, numberOfLines: 2, actionTitle: UserText.actionGenericShow, 
+                                      presentationLocation: .withBottomBar(andAddressBarBottom: self.appSettings.currentAddressBarPosition.isBottom),
+                                      onAction: {
                 Pixel.fire(pixel: .downloadsListOpened,
                            withAdditionalParameters: [PixelParameters.originatedFromMenu: "0"])
                 self.delegate?.tabDidRequestDownloads(tab: self)
@@ -1840,7 +1849,7 @@ extension TabViewController {
             let downloadWasCancelled = nserror.domain == "NSURLErrorDomain" && nserror.code == -999
 
             if !downloadWasCancelled {
-                ActionMessageView.present(message: UserText.messageDownloadFailed)
+                ActionMessageView.present(message: UserText.messageDownloadFailed, presentationLocation: .withBottomBar(andAddressBarBottom: appSettings.currentAddressBarPosition.isBottom))
             }
 
             return
@@ -1851,7 +1860,9 @@ extension TabViewController {
         DispatchQueue.main.async {
             if !download.temporary {
                 let attributedMessage = DownloadActionMessageViewHelper.makeDownloadFinishedMessage(for: download)
-                ActionMessageView.present(message: attributedMessage, numberOfLines: 2, actionTitle: UserText.actionGenericShow, onAction: {
+                ActionMessageView.present(message: attributedMessage, numberOfLines: 2, actionTitle: UserText.actionGenericShow,
+                                          presentationLocation: .withBottomBar(andAddressBarBottom: self.appSettings.currentAddressBarPosition.isBottom),
+                                          onAction: {
                     Pixel.fire(pixel: .downloadsListOpened,
                                withAdditionalParameters: [PixelParameters.originatedFromMenu: "0"])
                     self.delegate?.tabDidRequestDownloads(tab: self)
@@ -2466,8 +2477,10 @@ extension TabViewController: SaveLoginViewControllerDelegate {
             if let newCredential = try vault.websiteCredentialsFor(accountId: credentialID) {
                 DispatchQueue.main.async {
                     ActionMessageView.present(message: message,
-                                              actionTitle: UserText.autofillLoginSaveToastActionButton, onAction: {
-                        
+                                              actionTitle: UserText.autofillLoginSaveToastActionButton,
+                                              presentationLocation: .withBottomBar(andAddressBarBottom: self.appSettings.currentAddressBarPosition.isBottom),
+                                              onAction: {
+
                         self.showLoginDetails(with: newCredential.account)
                     })
                     Favicons.shared.loadFavicon(forDomain: newCredential.account.domain, intoCache: .fireproof, fromCache: .tabs)

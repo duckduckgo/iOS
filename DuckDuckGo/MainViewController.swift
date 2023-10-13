@@ -441,7 +441,8 @@ class MainViewController: UIViewController {
     @objc func quickSaveBookmark() {
         UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
         guard currentTab != nil else {
-            ActionMessageView.present(message: UserText.webSaveBookmarkNone, presentationLocation: .withBottomBar(andAddressBarBottom: appSettings.currentAddressBarPosition.isBottom))
+            ActionMessageView.present(message: UserText.webSaveBookmarkNone,
+                                      presentationLocation: .withBottomBar(andAddressBarBottom: appSettings.currentAddressBarPosition.isBottom))
             return
         }
         
@@ -1858,7 +1859,8 @@ extension MainViewController: AutoClearWorker {
             DaxDialogs.shared.resumeRegularFlow()
             self.forgetTabs()
         } onTransitionCompleted: {
-            ActionMessageView.present(message: UserText.actionForgetAllDone, presentationLocation: .withBottomBar(andAddressBarBottom: self.appSettings.currentAddressBarPosition.isBottom))
+            ActionMessageView.present(message: UserText.actionForgetAllDone,
+                                      presentationLocation: .withBottomBar(andAddressBarBottom: self.appSettings.currentAddressBarPosition.isBottom))
             transitionCompletion?()
         } completion: {
             Instruments.shared.endTimedEvent(for: spid)

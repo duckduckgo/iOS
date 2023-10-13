@@ -221,7 +221,7 @@ extension TabViewController {
         syncService.scheduler.notifyDataChanged()
 
         ActionMessageView.present(message: UserText.webSaveBookmarkDone,
-                                  actionTitle: UserText.actionGenericEdit, 
+                                  actionTitle: UserText.actionGenericEdit,
                                   presentationLocation: .withBottomBar(andAddressBarBottom: appSettings.currentAddressBarPosition.isBottom),
                                   onAction: {
             self.performEditBookmarkAction(for: link)
@@ -283,7 +283,7 @@ extension TabViewController {
         WidgetCenter.shared.reloadAllTimelines()
         syncService.scheduler.notifyDataChanged()
 
-        ActionMessageView.present(message: UserText.webFavoriteRemoved, 
+        ActionMessageView.present(message: UserText.webFavoriteRemoved,
                                   actionTitle: UserText.actionGenericUndo,
                                   presentationLocation: .withBottomBar(andAddressBarBottom: appSettings.currentAddressBarPosition.isBottom),
                                   onAction: {
@@ -408,7 +408,7 @@ extension TabViewController {
         
         ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
         
-        ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo, 
+        ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo,
                                   presentationLocation: .withBottomBar(andAddressBarBottom: appSettings.currentAddressBarPosition.isBottom),
                                   onAction: { [weak self] in
             self?.togglePrivacyProtection(domain: domain)

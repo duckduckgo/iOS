@@ -254,7 +254,7 @@ class TabViewController: UIViewController {
 
     private let rulesCompilationMonitor = RulesCompilationMonitor.shared
 
-    static func loadFromStoryboard(model: Tab, 
+    static func loadFromStoryboard(model: Tab,
                                    appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
                                    bookmarksDatabase: CoreDataDatabase,
                                    syncService: DDGSyncing) -> TabViewController {
@@ -1833,7 +1833,7 @@ extension TabViewController {
         let attributedMessage = DownloadActionMessageViewHelper.makeDownloadStartedMessage(for: download)
 
         DispatchQueue.main.async {
-            ActionMessageView.present(message: attributedMessage, numberOfLines: 2, actionTitle: UserText.actionGenericShow, 
+            ActionMessageView.present(message: attributedMessage, numberOfLines: 2, actionTitle: UserText.actionGenericShow,
                                       presentationLocation: .withBottomBar(andAddressBarBottom: self.appSettings.currentAddressBarPosition.isBottom),
                                       onAction: {
                 Pixel.fire(pixel: .downloadsListOpened,

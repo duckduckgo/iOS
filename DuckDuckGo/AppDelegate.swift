@@ -141,7 +141,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DatabaseMigration.migrate(to: context)
         }
 
-        bookmarksDatabase.loadStore { context, error in
+        bookmarksDatabase.loadStore { [weak self] context, error in
             guard let context = context else {
                 if let error = error {
                     Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
@@ -164,6 +164,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 BookmarkUtils.migrateToFormFactorSpecificFavorites(byCopyingExistingTo: .mobile, in: context)
                 if context.hasChanges {
                     try context.save(onErrorFire: .bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders)
+                    self?.syncDataProviders.bookmarksAdapter.shouldResetBookmarksSyncTimestamp = true
                 }
             } catch {
                 Thread.sleep(forTimeInterval: 1)

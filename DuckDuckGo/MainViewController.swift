@@ -359,6 +359,10 @@ class MainViewController: UIViewController {
             let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
             return
         }
+        let duration: TimeInterval = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
+        let animationCurveRawNSN = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber
+        let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIView.AnimationOptions.curveEaseInOut.rawValue
+        let animationCurve = UIView.AnimationOptions(rawValue: animationCurveRaw)
 
         var height = keyboardFrame.size.height
 
@@ -381,21 +385,20 @@ class MainViewController: UIViewController {
             }
         }
 
-        let navBarOffset = min(0, toolbarHeight - intersection.height)
-        self.viewCoordinator.constraints.omniBarBottom.constant = appSettings.currentAddressBarPosition == .bottom ? navBarOffset : 0
-        self.animateForKeyboard(userInfo: userInfo, y: self.view.frame.height - height)
-    }
-
-    private func animateForKeyboard(userInfo: [AnyHashable: Any], y: CGFloat) {
-        let duration: TimeInterval = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
-        let animationCurveRawNSN = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber
-        let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIView.AnimationOptions.curveEaseInOut.rawValue
-        let animationCurve = UIView.AnimationOptions(rawValue: animationCurveRaw)
-
+        let y = self.view.frame.height - height
         let frame = self.findInPageView.frame
         UIView.animate(withDuration: duration, delay: 0, options: animationCurve, animations: {
             self.findInPageView.frame = CGRect(x: 0, y: y - frame.height, width: frame.width, height: frame.height)
         }, completion: nil)
+
+        if self.appSettings.currentAddressBarPosition.isBottom {
+            let navBarOffset = min(0, self.toolbarHeight - intersection.height)
+            self.viewCoordinator.constraints.omniBarBottom.constant = navBarOffset
+            UIView.animate(withDuration: duration, delay: 0, options: animationCurve) {
+                self.viewCoordinator.navigationBarContainer.superview?.layoutIfNeeded()
+            }
+        }
+
     }
 
     private func initTabButton() {

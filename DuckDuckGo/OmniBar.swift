@@ -322,6 +322,11 @@ class OmniBar: UIView {
         }
         
         updateOmniBarPadding()
+
+        UIView.animate(withDuration: 0.0) {
+            self.layoutIfNeeded()
+        }
+        
     }
 
     private func updateOmniBarPadding() {

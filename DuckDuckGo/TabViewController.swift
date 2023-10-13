@@ -813,8 +813,9 @@ class TabViewController: UIViewController {
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.open(url, options: [:]) { opened in
             if !opened {
+                let addressBarBottom = self.appSettings.currentAddressBarPosition.isBottom
                 ActionMessageView.present(message: UserText.failedToOpenExternally,
-                                          presentationLocation: .withBottomBar(andAddressBarBottom: self.appSettings.currentAddressBarPosition.isBottom))
+                                          presentationLocation: .withBottomBar(andAddressBarBottom: addressBarBottom))
             }
 
             // just showing a blank tab at this point, so close it
@@ -1849,7 +1850,9 @@ extension TabViewController {
             let downloadWasCancelled = nserror.domain == "NSURLErrorDomain" && nserror.code == -999
 
             if !downloadWasCancelled {
-                ActionMessageView.present(message: UserText.messageDownloadFailed, presentationLocation: .withBottomBar(andAddressBarBottom: appSettings.currentAddressBarPosition.isBottom))
+                let addressBarBottom = self.appSettings.currentAddressBarPosition.isBottom
+                ActionMessageView.present(message: UserText.messageDownloadFailed,
+                                          presentationLocation: .withBottomBar(andAddressBarBottom: addressBarBottom))
             }
 
             return
@@ -1860,8 +1863,9 @@ extension TabViewController {
         DispatchQueue.main.async {
             if !download.temporary {
                 let attributedMessage = DownloadActionMessageViewHelper.makeDownloadFinishedMessage(for: download)
+                let addressBarBottom = self.appSettings.currentAddressBarPosition.isBottom
                 ActionMessageView.present(message: attributedMessage, numberOfLines: 2, actionTitle: UserText.actionGenericShow,
-                                          presentationLocation: .withBottomBar(andAddressBarBottom: self.appSettings.currentAddressBarPosition.isBottom),
+                                          presentationLocation: .withBottomBar(andAddressBarBottom: addressBarBottom),
                                           onAction: {
                     Pixel.fire(pixel: .downloadsListOpened,
                                withAdditionalParameters: [PixelParameters.originatedFromMenu: "0"])
@@ -2476,9 +2480,10 @@ extension TabViewController: SaveLoginViewControllerDelegate {
             
             if let newCredential = try vault.websiteCredentialsFor(accountId: credentialID) {
                 DispatchQueue.main.async {
+                    let addressBarBottom = self.appSettings.currentAddressBarPosition.isBottom
                     ActionMessageView.present(message: message,
                                               actionTitle: UserText.autofillLoginSaveToastActionButton,
-                                              presentationLocation: .withBottomBar(andAddressBarBottom: self.appSettings.currentAddressBarPosition.isBottom),
+                                              presentationLocation: .withBottomBar(andAddressBarBottom: addressBarBottom),
                                               onAction: {
 
                         self.showLoginDetails(with: newCredential.account)

@@ -54,8 +54,9 @@ extension TabViewController {
             }
             
             Pixel.fire(pixel: .browsingMenuCopy)
+            let addressBarBottom = strongSelf.appSettings.currentAddressBarPosition.isBottom
             ActionMessageView.present(message: UserText.actionCopyMessage,
-                                      presentationLocation: .withBottomBar(andAddressBarBottom: strongSelf.appSettings.currentAddressBarPosition.isBottom))
+                                      presentationLocation: .withBottomBar(andAddressBarBottom: addressBarBottom))
         }))
         
         entries.append(BrowsingMenuEntry.regular(name: UserText.actionPrint, image: UIImage(named: "Print-24")!, action: { [weak self] in

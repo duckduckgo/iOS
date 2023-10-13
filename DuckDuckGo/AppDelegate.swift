@@ -339,6 +339,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         refreshShortcuts()
     }
 
+    func applicationWillResignActive(_ application: UIApplication) {
+        refreshShortcuts()
+    }
+
     private func fireAppLaunchPixel() {
         
         WidgetCenter.shared.getCurrentConfigurations { result in

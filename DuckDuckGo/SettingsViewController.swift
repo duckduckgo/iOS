@@ -534,7 +534,7 @@ class SettingsViewController: UITableViewController {
         }
     }
     
-    /// Only use this to hide the footer if t   he entire section can be conditionally hidden.
+    /// Only use this to hide the footer if the entire section can be conditionally hidden.
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if syncSectionIndex == section && !shouldShowSyncCell {
             return CGFloat.leastNonzeroMagnitude

@@ -16,9 +16,12 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
-import UIKit
-import DesignResourcesKit
 
+import UIKit
+
+// If you add a new colour here:
+//  * and it uses the design system, please put it in Theme+DesignSystem instead
+//  * and it doesn't use the design, please only do so with designer approval
 struct DarkTheme: Theme {
     var name = ThemeName.dark
     
@@ -28,15 +31,7 @@ struct DarkTheme: Theme {
 
     var tabsBarBackgroundColor = UIColor.black
     var tabsBarSeparatorColor = UIColor.darkGreyish
-    
-    var backgroundColor = UIColor(designSystemColor: .background)
-    
-    var mainViewBackgroundColor = UIColor(designSystemColor: .base)
-    
-    var omniBarBackgroundColor = UIColor(designSystemColor: .panel)
-    var barBackgroundColor = UIColor(designSystemColor: .panel)
-    var barTintColor = UIColor(designSystemColor: .icons)
-    
+
     var navigationBarTitleColor = UIColor.white
     var navigationBarTintColor = UIColor.lightMercury
     
@@ -45,7 +40,6 @@ struct DarkTheme: Theme {
     var searchBarBackgroundColor = UIColor.charcoalGrey
     var centeredSearchBarBackgroundColor = UIColor.nearlyBlackLight
     var searchBarTextColor = UIColor.white
-    var searchBarTextPlaceholderColor = UIColor(designSystemColor: .textSecondary)
     var searchBarTextDeemphasisColor = UIColor.lightMercury
     var searchBarBorderColor = UIColor.darkGreyish
     var searchBarClearTextIconColor = UIColor.greyish2
@@ -53,7 +47,6 @@ struct DarkTheme: Theme {
     
     var browsingMenuTextColor = UIColor.white
     var browsingMenuIconsColor = UIColor.gray20
-    var browsingMenuBackgroundColor = UIColor(designSystemColor: .surface)
     var browsingMenuSeparatorColor = UIColor.charcoalGrey
     var browsingMenuHighlightColor = UIColor.darkGreyish
     
@@ -63,7 +56,6 @@ struct DarkTheme: Theme {
     var autocompleteSuggestionTextColor = UIColor.white
     var autocompleteCellAccessoryColor = UIColor.lightMercury
 
-    var tableCellBackgroundColor = UIColor(designSystemColor: .surface)
     var tableCellSelectedColor = UIColor.charcoalGrey
     var tableCellSeparatorColor = UIColor.charcoalGrey
     var tableCellTextColor = UIColor.lightGreyish
@@ -72,7 +64,6 @@ struct DarkTheme: Theme {
     var tableCellHighlightedBackgroundColor = UIColor.greyishBrown
     var tableHeaderTextColor = UIColor.greyish3
     
-    var tabSwitcherCellBackgroundColor = UIColor(designSystemColor: .surface)
     var tabSwitcherCellBorderColor = UIColor.white
     var tabSwitcherCellTextColor = UIColor.white
     var tabSwitcherCellSecondaryTextColor = UIColor.lightMercury

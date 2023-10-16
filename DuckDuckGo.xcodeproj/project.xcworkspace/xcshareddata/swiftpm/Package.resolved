@@ -41,9 +41,9 @@
         "package": "DesignResourcesKit",
         "repositoryURL": "https://github.com/duckduckgo/DesignResourcesKit",
         "state": {
-          "branch": "brindy/update-panel-for-dark-mode",
-          "revision": "c34abc379b783e0f5c6eac8ffb0e7327e30762a5",
-          "version": null
+          "branch": null,
+          "revision": "d7ea2561ec7624c224f52e1c9b349075ddf1c782",
+          "version": "2.0.0"
         }
       },
       {

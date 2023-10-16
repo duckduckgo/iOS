@@ -70,10 +70,8 @@ tags:
 - tapOn: "Done"
 - assertVisible:
     text: "Publisher site"
-- assertVisible:
-    id: "Tabs"
-- tapOn: 
-    id: "Tabs"   
+- assertVisible: Tab Switcher
+- tapOn: Tab Switcher 
 - assertVisible:
     id: "Add"
 - tapOn:

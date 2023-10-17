@@ -33,6 +33,9 @@ public extension URL {
     static let aboutLink = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/about"))!
 
     static let surrogates = URL(string: "\(staticBase)/surrogates.txt")!
+
+    // The following URLs shall match the ones in update_embedded.sh. 
+    // Danger checks that the URLs match on every PR. If the code changes, the regex that Danger uses may need an update.
     static let privacyConfig = URL(string: "\(staticBase)/trackerblocking/config/v3/ios-config.json")!
     static let trackerDataSet = URL(string: "\(staticBase)/trackerblocking/v5/current/ios-tds.json")!
     static let bloomFilter = URL(string: "\(staticBase)/https/https-mobile-v2-bloom.bin")!

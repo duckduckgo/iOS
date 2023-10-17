@@ -22,9 +22,9 @@ import UIKit
 extension ActionMessageView: NibLoading {}
 
 class ActionMessageView: UIView {
-    
+
     enum PresentationLocation {
-        case withBottomBar
+        case withBottomBar(andAddressBarBottom: Bool)
         case withoutBottomBar
     }
     
@@ -45,6 +45,11 @@ class ActionMessageView: UIView {
             
             return 70
         }
+
+        static var windowBottomPaddingWithAddressBar: CGFloat {
+            return windowBottomPaddingWithBottomBar + 52
+        }
+
         static var windowBottomPaddingWithoutBottomBar: CGFloat {
             return 0
         }
@@ -53,8 +58,8 @@ class ActionMessageView: UIView {
     
     private static func bottomPadding(for location: PresentationLocation) -> CGFloat {
         switch location {
-        case .withBottomBar:
-            return Constants.windowBottomPaddingWithBottomBar
+        case .withBottomBar(let isAddressBarBottom):
+            return isAddressBarBottom ? Constants.windowBottomPaddingWithAddressBar : Constants.windowBottomPaddingWithBottomBar
         case .withoutBottomBar:
             return Constants.windowBottomPaddingWithoutBottomBar
         }
@@ -84,7 +89,7 @@ class ActionMessageView: UIView {
     static func present(message: NSAttributedString,
                         numberOfLines: Int = 0,
                         actionTitle: String? = nil,
-                        presentationLocation: PresentationLocation = .withBottomBar,
+                        presentationLocation: PresentationLocation = .withBottomBar(andAddressBarBottom: false),
                         onAction: @escaping () -> Void = {},
                         onDidDismiss: @escaping () -> Void = {}) {
         let messageView = loadFromXib()
@@ -100,7 +105,7 @@ class ActionMessageView: UIView {
     
     static func present(message: String,
                         actionTitle: String? = nil,
-                        presentationLocation: PresentationLocation = .withBottomBar,
+                        presentationLocation: PresentationLocation = .withBottomBar(andAddressBarBottom: false),
                         onAction: @escaping () -> Void = {},
                         onDidDismiss: @escaping () -> Void = {}) {
         let messageView = loadFromXib()
@@ -116,7 +121,7 @@ class ActionMessageView: UIView {
     private static func present(messageView: ActionMessageView,
                                 message: String,
                                 actionTitle: String? = nil,
-                                presentationLocation: PresentationLocation = .withBottomBar,
+                                presentationLocation: PresentationLocation = .withBottomBar(andAddressBarBottom: false),
                                 onAction: @escaping () -> Void = {},
                                 onDidDismiss: @escaping () -> Void = {}) {
         guard let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first else { return }

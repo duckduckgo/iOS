@@ -654,7 +654,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let items = [
             UIApplicationShortcutItem(type: ShortcutKey.openVPNSettings,
-                                      localizedTitle: "Open VPN Settings",
+                                      localizedTitle: "Open DuckDuckGo VPN",
                                       localizedSubtitle: nil,
                                       icon: UIApplicationShortcutIcon(templateImageName: "VPN-16"),
                                       userInfo: nil)

@@ -99,13 +99,7 @@ final class SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
         guard let domain = credentials.account.domain else {
             return false
         }
-        do {
-            return try AutofillSecureVaultFactory
-                .makeVault(errorReporter: SecureVaultErrorReporter.shared)
-                .hasNeverPromptWebsitesFor(domain: domain)
-        } catch {
-            return false
-        }
+        return Self.hasNeverPromptWebsitesFor(domain: domain)
     }
 
     private var savedMatchingPasswordWithoutUsername: SecureVaultModels.WebsiteCredentials? {
@@ -169,4 +163,14 @@ final class SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
         }
     }
 
+    static func hasNeverPromptWebsitesFor(domain: String) -> Bool {
+        do {
+            return try AutofillSecureVaultFactory
+                .makeVault(errorReporter: SecureVaultErrorReporter.shared)
+                .hasNeverPromptWebsitesFor(domain: domain)
+        } catch {
+            return false
+        }
+
+    }
 }

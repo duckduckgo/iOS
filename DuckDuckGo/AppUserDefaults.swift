@@ -28,6 +28,7 @@ public class AppUserDefaults: AppSettings {
         public static let currentFireButtonAnimationChange = Notification.Name("com.duckduckgo.app.CurrentFireButtonAnimationChange")
         public static let textSizeChange = Notification.Name("com.duckduckgo.app.TextSizeChange")
         public static let autofillEnabledChange = Notification.Name("com.duckduckgo.app.AutofillEnabledChange")
+        public static let autofillPasswordGenerationEnabledChange = Notification.Name("com.duckduckgo.app.AutofillPasswordGenerationEnabledChange")
         public static let didVerifyInternalUser = Notification.Name("com.duckduckgo.app.DidVerifyInternalUser")
         public static let inspectableWebViewsToggled = Notification.Name("com.duckduckgo.app.DidToggleInspectableWebViews")
         public static let addressBarPositionChanged = Notification.Name("com.duckduckgo.app.AddressBarPositionChanged")
@@ -223,7 +224,10 @@ public class AppUserDefaults: AppSettings {
             userDefaults?.set(newValue, forKey: Keys.autofillCredentialsEnabled)
         }
     }
-    
+
+    @UserDefaultsWrapper(key: .autofillPasswordNeverPromptEnabled, defaultValue: false)
+    var autofillPasswordNeverPromptEnabled: Bool
+
     @UserDefaultsWrapper(key: .autofillCredentialsSavePromptShowAtLeastOnce, defaultValue: false)
     var autofillCredentialsSavePromptShowAtLeastOnce: Bool
     

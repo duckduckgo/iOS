@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "89cd93fe9e394f518131bc26d4a3d02c96ee07e6",
-          "version": "81.3.1"
+          "branch": "anya/autofill-never-prompt-save",
+          "revision": "2eedd132fa725e005f36714bdcd25eec98f5285c",
+          "version": null
         }
       },
       {

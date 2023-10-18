@@ -73,11 +73,8 @@ struct NetworkProtectionStatusView: View {
             .listRowBackground(Color.cellBackground)
         } header: {
             header()
-        } footer: {
-            if !statusModel.shouldShowConnectionDetails {
-                inviteOnlyFooter()
-            }
-        }.increaseHeaderProminence()
+        }
+        .increaseHeaderProminence()
     }
 
     @ViewBuilder
@@ -127,8 +124,6 @@ struct NetworkProtectionStatusView: View {
             }
         } header: {
             Text(UserText.netPStatusViewConnectionDetails).foregroundColor(.textSecondary)
-        } footer: {
-            inviteOnlyFooter()
         }
     }
 
@@ -143,6 +138,8 @@ struct NetworkProtectionStatusView: View {
                 .foregroundColor(.textPrimary)
         } header: {
             Text(UserText.netPStatusViewSettingsSectionTitle).foregroundColor(.textSecondary)
+        } footer: {
+            inviteOnlyFooter()
         }
     }
 

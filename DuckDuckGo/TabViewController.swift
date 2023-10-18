@@ -2511,6 +2511,19 @@ extension TabViewController: SaveLoginViewControllerDelegate {
         saveLoginPromptLastDismissed = Date()
         saveLoginPromptIsPresenting = false
     }
+
+    func saveLoginViewController(_ viewController: SaveLoginViewController, didRequestNeverPromptForWebsite domain: String) {
+        viewController.dismiss(animated: true)
+        saveLoginPromptLastDismissed = Date()
+        saveLoginPromptIsPresenting = false
+
+        do {
+            _ = try SaveAutofillLoginManager.saveNeverPromptWebsite(domain,
+                                                                    with: AutofillSecureVaultFactory)
+        } catch {
+            os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
+        }
+    }
     
     func saveLoginViewController(_ viewController: SaveLoginViewController,
                                  didRequestPresentConfirmKeepUsingAlertController alertController: UIAlertController) {

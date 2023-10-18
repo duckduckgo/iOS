@@ -32,6 +32,7 @@ protocol SaveAutofillLoginManagerProtocol {
     var hasSavedMatchingUsername: Bool { get }
     
     static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: AutofillVaultFactory) throws -> Int64
+    static func saveNeverPromptWebsite(_ domain: String, with factory: AutofillVaultFactory) throws -> Int64
 }
 
 final class SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
@@ -144,4 +145,15 @@ final class SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
             throw error
         }
     }
+
+    static func saveNeverPromptWebsite(_ domain: String, with factory: AutofillVaultFactory) throws -> Int64 {
+        do {
+            return try AutofillSecureVaultFactory
+                .makeVault(errorReporter: SecureVaultErrorReporter.shared)
+                .storeNeverPromptWebsites(SecureVaultModels.NeverPromptWebsites(domain: domain))
+        } catch {
+            throw error
+        }
+    }
+
 }

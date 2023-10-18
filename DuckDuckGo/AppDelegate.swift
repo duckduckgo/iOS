@@ -80,6 +80,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 #endif
 
+        ContentBlocking.shared.onCriticalError = presentPreemptiveCrashAlert
+
         // Can be removed after a couple of versions
         cleanUpMacPromoExperiment2()
         cleanUpIncrementalRolloutPixelTest()
@@ -115,7 +117,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         removeEmailWaitlistState()
 
-        var shouldPresentInsufficientDiskSpaceAlertAndCrash = true
+        var shouldPresentInsufficientDiskSpaceAlertAndCrash = false
         Database.shared.loadStore { context, error in
             guard let context = context else {
                 
@@ -266,6 +268,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         return true
+    }
+
+    private func presentPreemptiveCrashAlert() {
+        Task { @MainActor in
+            let alertController = CriticalAlerts.makePreemptiveCrashAlert()
+            window?.rootViewController?.present(alertController, animated: true, completion: nil)
+        }
     }
 
     private func presentInsufficientDiskSpaceAlert() {

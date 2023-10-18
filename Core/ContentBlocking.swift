@@ -22,6 +22,7 @@ import BrowserServicesKit
 import Combine
 import Common
 
+
 public final class ContentBlocking {
     public static let shared = ContentBlocking()
 
@@ -34,6 +35,11 @@ public final class ContentBlocking {
     private let exceptionsSource: DefaultContentBlockerRulesExceptionsSource
     private let lastCompiledRulesStore: AppLastCompiledRulesStore
 
+    public var onCriticalError: (() -> Void)? {
+        didSet {
+            contentBlockingManager.onCriticalError = onCriticalError
+        }
+    }
 
     private init(privacyConfigurationManager: PrivacyConfigurationManaging? = nil) {
         let internalUserDecider = DefaultInternalUserDecider(store: InternalUserStore())
@@ -128,7 +134,7 @@ public final class ContentBlocking {
         }
         
     }
-    
+
     public func makeAdClickAttributionDetection(tld: TLD) -> AdClickAttributionDetection {
         AdClickAttributionDetection(feature: adClickAttribution,
                                     tld: tld,

@@ -37,6 +37,7 @@ struct NetworkProtectionStatusView: View {
             if statusModel.shouldShowConnectionDetails {
                 connectionDetails()
             }
+            settings()
         }
         .animation(.default, value: statusModel.shouldShowError)
         .padding(.top, statusModel.error == nil ? 0 : -20)
@@ -125,9 +126,23 @@ struct NetworkProtectionStatusView: View {
                 )
             }
         } header: {
-            Text(UserText.netPStatusViewConnectionDetails).foregroundColor(.textPrimary)
+            Text(UserText.netPStatusViewConnectionDetails).foregroundColor(.textSecondary)
         } footer: {
             inviteOnlyFooter()
+        }
+    }
+
+    @ViewBuilder
+    private func settings() -> some View {
+        Section {
+            NavigationLink(UserText.netPVPNSettingsTitle, destination: EmptyView())
+                .font(.system(size: 16))
+                .foregroundColor(.textPrimary)
+            NavigationLink(UserText.netPVPNNotificationsTitle, destination: EmptyView())
+                .font(.system(size: 16))
+                .foregroundColor(.textPrimary)
+        } header: {
+            Text(UserText.netPStatusViewSettingsSectionTitle).foregroundColor(.textSecondary)
         }
     }
 

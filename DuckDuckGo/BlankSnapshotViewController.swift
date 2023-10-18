@@ -25,50 +25,54 @@ protocol BlankSnapshotViewRecoveringDelegate: AnyObject {
     func recoverFromPresenting(controller: BlankSnapshotViewController)
 }
 
+// Still some logic here that should be de-duplicated from MainViewController
 class BlankSnapshotViewController: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ThemeManager.shared.currentTheme.statusBarStyle
     }
     
-    @IBOutlet weak var customNavigationBar: UIView!
-    @IBOutlet weak var tabsButton: UIBarButtonItem!
-    @IBOutlet weak var fireButton: UIBarButtonItem!
     let menuButton = MenuButton()
-    @IBOutlet weak var lastButton: UIBarButtonItem!
-    @IBOutlet weak var toolbar: UIToolbar!
-    
-    @IBOutlet weak var statusBarBackground: UIView!
-    @IBOutlet weak var navigationBarTop: NSLayoutConstraint!
-    
-    var omniBar: OmniBar!
-    let tabSwitcherButton = TabSwitcherButton()
-    
-    weak var delegate: BlankSnapshotViewRecoveringDelegate?
-    
-    static func loadFromStoryboard() -> BlankSnapshotViewController {
-        let storyboard = UIStoryboard(name: "BlankSnapshot", bundle: nil)
-        guard let controller = storyboard.instantiateInitialViewController() as? BlankSnapshotViewController else {
-            fatalError("Failed to instantiate correct Blank Snapshot view controller")
-        }
-        return controller
-    }
 
+    let tabSwitcherButton = TabSwitcherButton()
+    let appSettings: AppSettings
+
+    var viewCoordinator: MainViewCoordinator!
+
+    weak var delegate: BlankSnapshotViewRecoveringDelegate?
+
+    init(appSettings: AppSettings) {
+        self.appSettings = appSettings
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        viewCoordinator = MainViewFactory.createViewHierarchy(view)
+        if appSettings.currentAddressBarPosition.isBottom {
+            viewCoordinator.moveAddressBarToPosition(.bottom)
+            viewCoordinator.hideToolbarSeparator()
+        }
+
         configureOmniBar()
+        configureToolbarButtons()
 
         if AppWidthObserver.shared.isLargeWidth {
-            toolbar.isHidden = true
-            navigationBarTop.constant = 40
+            viewCoordinator.toolbar.isHidden = true
+            viewCoordinator.constraints.navigationBarContainerTop.constant = 40
             configureTabBar()
         } else {
-            tabsButton.customView = tabSwitcherButton
+            viewCoordinator.toolbarTabSwitcherButton.customView = tabSwitcherButton
             tabSwitcherButton.delegate = self
             
+            viewCoordinator.lastToolbarButton.customView = menuButton
             menuButton.setState(.menuImage, animated: false)
-            lastButton.customView = menuButton
+            viewCoordinator.lastToolbarButton.customView = menuButton
         }
 
         applyTheme(ThemeManager.shared.currentTheme)
@@ -77,7 +81,13 @@ class BlankSnapshotViewController: UIViewController {
     // Need to do this at this phase to support split screen on iPad
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        toolbar.isHidden = AppWidthObserver.shared.isLargeWidth
+        viewCoordinator.toolbar.isHidden = AppWidthObserver.shared.isLargeWidth
+    }
+
+    private func configureToolbarButtons() {
+        viewCoordinator.toolbarFireButton.action = #selector(buttonPressed(sender:))
+        viewCoordinator.toolbarFireButton.action = #selector(buttonPressed(sender:))
+        viewCoordinator.lastToolbarButton.action = #selector(buttonPressed(sender:))
     }
 
     private func configureTabBar() {
@@ -100,15 +110,10 @@ class BlankSnapshotViewController: UIViewController {
     }
     
     private func configureOmniBar() {
-        omniBar = OmniBar.loadFromXib()
-        omniBar.frame = customNavigationBar.bounds
-        customNavigationBar.addSubview(omniBar)
-
         if AppWidthObserver.shared.isLargeWidth {
-            omniBar.enterPadState()
+            viewCoordinator.omniBar.enterPadState()
         }
-        
-        omniBar.omniDelegate = self
+        viewCoordinator.omniBar.omniDelegate = self
     }
     
     @objc func buttonPressed(sender: Any) {
@@ -140,7 +145,7 @@ extension BlankSnapshotViewController: OmniBarDelegate {
     
     func onTextFieldDidBeginEditing(_ omniBar: OmniBar) -> Bool {
         DispatchQueue.main.async {
-            self.omniBar.resignFirstResponder()
+            self.viewCoordinator.omniBar.resignFirstResponder()
             self.userInteractionDetected()
         }
         return false
@@ -167,26 +172,36 @@ extension BlankSnapshotViewController: Themable {
     
     func decorate(with theme: Theme) {
         setNeedsStatusBarAppearanceUpdate()
-        
-        view.backgroundColor = theme.backgroundColor
-        
+
         if AppWidthObserver.shared.isLargeWidth {
-            statusBarBackground.backgroundColor = theme.tabsBarBackgroundColor
+            viewCoordinator.statusBackground.backgroundColor = theme.tabsBarBackgroundColor
         } else {
-            statusBarBackground.backgroundColor = theme.barBackgroundColor
+            viewCoordinator.statusBackground.backgroundColor = theme.omniBarBackgroundColor
         }
-        customNavigationBar?.backgroundColor = theme.barBackgroundColor
-        customNavigationBar?.tintColor = theme.barTintColor
-        
-        omniBar?.decorate(with: theme)
-        
-        toolbar?.barTintColor = theme.barBackgroundColor
-        toolbar?.tintColor = theme.barTintColor
-        
+
+        view.backgroundColor = theme.mainViewBackgroundColor
+
+        viewCoordinator.navigationBarContainer.backgroundColor = theme.barBackgroundColor
+        viewCoordinator.navigationBarContainer.tintColor = theme.barTintColor
+
+        viewCoordinator.omniBar.decorate(with: theme)
+
+        viewCoordinator.progress.decorate(with: theme)
+
+        viewCoordinator.toolbar.barTintColor = theme.barBackgroundColor
+        viewCoordinator.toolbar.tintColor = theme.barTintColor
+
         tabSwitcherButton.decorate(with: theme)
-        tabsButton.tintColor = theme.barTintColor
-        
+        viewCoordinator.toolbarTabSwitcherButton.tintColor = theme.barTintColor
+
+        viewCoordinator.logoText.tintColor = theme.ddgTextTintColor
+
+        if appSettings.currentAddressBarPosition == .bottom {
+            viewCoordinator.statusBackground.backgroundColor = theme.backgroundColor
+        }
+
         menuButton.decorate(with: theme)
-    }
+
+     }
     
 }

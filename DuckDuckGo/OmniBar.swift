@@ -62,6 +62,7 @@ class OmniBar: UIView {
     @IBOutlet var searchContainerMaxWidthConstraint: NSLayoutConstraint!
     @IBOutlet var omniBarLeadingConstraint: NSLayoutConstraint!
     @IBOutlet var omniBarTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet var separatorToBottom: NSLayoutConstraint!
 
     weak var omniDelegate: OmniBarDelegate?
     fileprivate var state: OmniBarState = SmallOmniBarState.HomeNonEditingState()
@@ -69,10 +70,22 @@ class OmniBar: UIView {
     
     private var privacyIconAndTrackersAnimator = PrivacyIconAndTrackersAnimator()
     private var notificationAnimator = OmniBarNotificationAnimator()
-    
-    
+
     static func loadFromXib() -> OmniBar {
         return OmniBar.load(nibName: "OmniBar")
+    }
+
+    private let appSettings: AppSettings
+
+    required init?(coder: NSCoder) {
+        appSettings = AppDependencyProvider.shared.appSettings
+        super.init(coder: coder)
+    }
+
+    // Tests require this
+    override init(frame: CGRect) {
+        appSettings = AppDependencyProvider.shared.appSettings
+        super.init(frame: frame)
     }
 
     override func awakeFromNib() {
@@ -186,6 +199,14 @@ class OmniBar: UIView {
         separatorView.isHidden = true
     }
 
+    func moveSeparatorToTop() {
+        separatorToBottom.constant = frame.height
+    }
+
+    func moveSeparatorToBottom() {
+        separatorToBottom.constant = 0
+    }
+
     func startBrowsing() {
         refreshState(state.onBrowsingStartedState)
     }
@@ -260,6 +281,11 @@ class OmniBar: UIView {
         }
     }
 
+    func selectTextToEnd(_ offset: Int) {
+        guard let fromPosition = textField.position(from: textField.beginningOfDocument, offset: offset) else { return }
+        textField.selectedTextRange = textField.textRange(from: fromPosition, to: textField.endOfDocument)
+    }
+
     fileprivate func refreshState(_ newState: OmniBarState) {
         if state.name != newState.name {
             os_log("OmniBar entering %s from %s", log: .generalLog, type: .debug, newState.name, state.name)
@@ -296,6 +322,11 @@ class OmniBar: UIView {
         }
         
         updateOmniBarPadding()
+
+        UIView.animate(withDuration: 0.0) {
+            self.layoutIfNeeded()
+        }
+        
     }
 
     private func updateOmniBarPadding() {

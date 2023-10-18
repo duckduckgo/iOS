@@ -31,7 +31,8 @@ protocol AppSettings: AnyObject {
     var sendDoNotSell: Bool { get set }
     
     var currentFireButtonAnimation: FireButtonAnimationType { get set }
-    
+    var currentAddressBarPosition: AddressBarPosition { get set }
+
     var textSize: Int { get set }
     
     var autofillCredentialsEnabled: Bool { get set }

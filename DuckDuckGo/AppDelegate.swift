@@ -214,7 +214,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       appTrackingProtectionDatabase: appTrackingProtectionDatabase,
                                       syncService: syncService,
-                                      syncDataProviders: syncDataProviders)
+                                      syncDataProviders: syncDataProviders,
+                                      appSettings: AppDependencyProvider.shared.appSettings)
         main.loadViewIfNeeded()
 
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -543,9 +544,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         overlayWindow = UIWindow(frame: frame)
         overlayWindow?.windowLevel = UIWindow.Level.alert
         
-        let overlay = BlankSnapshotViewController.loadFromStoryboard()
+        let overlay = BlankSnapshotViewController(appSettings: AppDependencyProvider.shared.appSettings)
         overlay.delegate = self
-        
+
         overlayWindow?.rootViewController = overlay
         overlayWindow?.makeKeyAndVisible()
         window?.isHidden = true

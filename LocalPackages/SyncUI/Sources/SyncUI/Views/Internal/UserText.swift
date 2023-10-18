@@ -112,5 +112,12 @@ struct UserText {
         return "\"\(name)\" will no longer be able to access your synced data."
     }
 
+    static let syncLimitExceededTitle = "⚠️ Sync Paused"
+    static let bookmarksLimitExceededDescription = "Bookmark limit exceeded. Delete some to resume syncing."
+    static let credentialsLimitExceededDescription = "Logins limit exceeded. Delete some to resume syncing."
+    static let bookmarksLimitExceededAction = "Manage Bookmarks"
+    static let credentialsLimitExceededAction = "Manage Logins"
+    
+
 }
 // swiftlint:enable line_length

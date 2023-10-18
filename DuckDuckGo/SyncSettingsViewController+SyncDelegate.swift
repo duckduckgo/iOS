@@ -37,7 +37,6 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         mainVC.segueToBookmarks()
     }
 
-
     func updateDeviceName(_ name: String) {
         Task { @MainActor in
             rootView.model.devices = []

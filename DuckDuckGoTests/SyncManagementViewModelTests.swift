@@ -82,6 +82,26 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
         ])
     }
 
+    func testWhenManageBookmarksCalled_BookmarksVCIsLaunched() {
+        model.manageBookmarks()
+
+        // You can either test one individual call was made x number of times or check for a whole number of calls
+        monitor.assert(#selector(launchBookmarksViewController).description, calls: 1)
+        monitor.assertCalls([
+            #selector(launchBookmarksViewController).description: 1
+        ])
+    }
+
+    func testWhenManageLogindCalled_AutofillVCIsLaunched() {
+        model.manageLogins()
+
+        // You can either test one individual call was made x number of times or check for a whole number of calls
+        monitor.assert(#selector(launchAutofillViewController).description, calls: 1)
+        monitor.assertCalls([
+            #selector(launchAutofillViewController).description: 1
+        ])
+    }
+
     // MARK: Delegate functions
 
     func showSyncWithAnotherDeviceEnterText() {
@@ -145,6 +165,14 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
     }
 
     func updateOptions() {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+    }
+
+    func launchBookmarksViewController() {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+    }
+
+    func launchAutofillViewController() {
         monitor.incrementCalls(function: #function.cleaningFunctionName())
     }
 

@@ -199,14 +199,6 @@ extension MainViewController {
         }
     }
 
-    func segueToSettingsLogins() {
-        os_log(#function, log: .generalLog, type: .debug)
-        hideAllHighlightsIfNeeded()
-        launchSettings {
-            $0.openLogins()
-        }
-    }
-
     private func launchSettings(completion: ((SettingsViewController) -> Void)? = nil) {
         os_log(#function, log: .generalLog, type: .debug)
         let storyboard = UIStoryboard(name: "Settings", bundle: nil)

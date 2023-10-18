@@ -49,7 +49,6 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
     var cancellables = Set<AnyCancellable>()
 
-
     // For some reason, on iOS 14, the viewDidLoad wasn't getting called so do some setup here
     convenience init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
         let viewModel = SyncSettingsViewModel()
@@ -160,7 +159,6 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
             lhs.isThisDevice
         })
     }
-    
 
 }
 

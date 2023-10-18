@@ -37,6 +37,9 @@ public final class SyncBookmarksAdapter {
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
     public let widgetRefreshCancellable: AnyCancellable
 
+    @UserDefaultsWrapper(key: .syncBookmarksPaused, defaultValue: false)
+    static private var isSyncBookmarksPaused: Bool
+
     public init(database: CoreDataDatabase, favoritesDisplayModeStorage: FavoritesDisplayModeStoring) {
         self.database = database
         self.favoritesDisplayModeStorage = favoritesDisplayModeStorage
@@ -79,6 +82,9 @@ public final class SyncBookmarksAdapter {
                 switch error {
                 case let syncError as SyncError:
                     Pixel.fire(pixel: .syncBookmarksFailed, error: syncError)
+                    if syncError == .unexpectedStatusCode(409) {
+                        Self.isSyncBookmarksPaused = true
+                    }
                 default:
                     let nsError = error as NSError
                     if nsError.domain != NSURLErrorDomain {

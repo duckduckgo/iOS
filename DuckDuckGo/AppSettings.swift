@@ -50,4 +50,6 @@ protocol AppSettings: AnyObject {
     
     var autoconsentPromptSeen: Bool { get set }
     var autoconsentEnabled: Bool { get set }
+
+    var isSyncBookmarksPaused: Bool { get }
 }

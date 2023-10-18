@@ -44,6 +44,10 @@ public struct SyncSettingsView: View {
                     
                     turnOffSync()
                     
+                    if $model.isSyncBookmarksPaused.wrappedValue {
+                        syncPaused(for: .bookmarks)
+                    }
+
                     devices()
                     
                     syncNewDevice()
@@ -292,6 +296,28 @@ public struct SyncSettingsView: View {
         }
     }
 
+    @ViewBuilder
+    func syncPaused(for itemType: LimitedItemType) -> some View {
+        Section {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("⚠️ Bookmarks Sync Paused")
+                    .daxBodyBold()
+                Text("Bookmark limit exceeded. Delete some to resume syncing.")
+                    .daxBodyRegular()
+            }
+            Button("Manage Bookmarks") {
+                print("some shit")
+                model.manageBookmarks()
+            }
+
+        }
+    }
+
+    enum LimitedItemType {
+        case bookmarks
+        case credentials
+    }
+
 }
 
 // Extension to apply custom view modifier
@@ -318,10 +344,9 @@ public struct OptionsView: View {
                     }
                 }
             }
-
+            
         } header: {
             Text(UserText.options)
         }
     }
-
 }

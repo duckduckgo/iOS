@@ -49,6 +49,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
     var cancellables = Set<AnyCancellable>()
 
+
     // For some reason, on iOS 14, the viewDidLoad wasn't getting called so do some setup here
     convenience init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
         let viewModel = SyncSettingsViewModel()
@@ -56,6 +57,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         self.init(rootView: SyncSettingsView(model: viewModel))
 
         setUpFavoritesDisplayModeSwitch(viewModel, appSettings)
+        setUpSyncPaused(viewModel, appSettings)
         refreshForState(syncService.authState)
 
         syncService.authStatePublisher
@@ -91,6 +93,16 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 viewModel.isUnifiedFavoritesEnabled = appSettings.favoritesDisplayMode.isDisplayUnified
+            }
+            .store(in: &cancellables)
+    }
+
+    private func setUpSyncPaused(_ viewModel: SyncSettingsViewModel, _ appSettings: AppSettings) {
+        viewModel.isSyncBookmarksPaused = appSettings.isSyncBookmarksPaused
+        NotificationCenter.default.publisher(for: AppUserDefaults.Notifications.favoritesDisplayModeChange)
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                viewModel.isSyncBookmarksPaused = appSettings.isSyncBookmarksPaused
             }
             .store(in: &cancellables)
     }
@@ -146,6 +158,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
             lhs.isThisDevice
         })
     }
+    
 
 }
 
@@ -248,5 +261,28 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
             UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
         }
     }
+//
+//    func launchBookmarksViewController() {
+//
+//        let mainVC = view.window?.rootViewController as? MainViewController
+//        mainVC?.segueToBookmarks()
+//
+////        let storyboard = UIStoryboard(name: "Bookmarks", bundle: nil)
+////        let bookmarks = storyboard.instantiateViewController(identifier: "BookmarksViewController") { coder in
+////            BookmarksViewController(coder: coder,
+////                                    bookmarksDatabase: self.bookmarksDatabase,
+////                                    bookmarksSearch: self.bookmarksCachingSearch,
+////                                    syncService: self.syncService,
+////                                    syncDataProviders: self.syncDataProviders,
+////                                    appSettings: self.appSettings)
+////        }
+////        bookmarks.delegate = self
+////
+////        let controller = ThemableNavigationController(rootViewController: bookmarks)
+////        controller.modalPresentationStyle = .automatic
+////        present(controller, animated: true) {
+////            completion?(bookmarks)
+////        }
+//    }
 
 }

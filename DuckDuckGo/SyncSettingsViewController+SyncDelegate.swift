@@ -24,6 +24,13 @@ import DDGSync
 import AVFoundation
 
 extension SyncSettingsViewController: SyncManagementViewModelDelegate {
+    
+    func lunchBookmarksViewController() {
+        self.dismiss(animated: true)
+        let mainVC = view.window?.rootViewController as? MainViewController
+        mainVC?.segueToBookmarks()
+    }
+
 
     func updateDeviceName(_ name: String) {
         Task { @MainActor in

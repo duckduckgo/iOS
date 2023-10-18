@@ -36,6 +36,7 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
     func updateDeviceName(_ name: String)
     func refreshDevices(clearDevices: Bool)
     func updateOptions()
+    func lunchBookmarksViewController()
 }
 
 public class SyncSettingsViewModel: ObservableObject {
@@ -77,6 +78,8 @@ public class SyncSettingsViewModel: ObservableObject {
     @Published public var isFaviconsSyncEnabled = false
     @Published public var isUnifiedFavoritesEnabled = true
     @Published public var isSyncingDevices = false
+    @Published public var isSyncBookmarksPaused = false
+    @Published public var isSyncCredentialsPaused = false
 
     @Published var isBusy = false
     @Published var recoveryCode = ""
@@ -146,6 +149,10 @@ public class SyncSettingsViewModel: ObservableObject {
     public func startSyncPressed() {
         isBusy = true
         delegate?.createAccountAndStartSyncing(optionsViewModel: self)
+    }
+
+    public func manageBookmarks() {
+        delegate?.lunchBookmarksViewController()
     }
 
 }

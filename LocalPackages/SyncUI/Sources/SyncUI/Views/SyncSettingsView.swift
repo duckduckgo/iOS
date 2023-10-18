@@ -48,6 +48,10 @@ public struct SyncSettingsView: View {
                         syncPaused(for: .bookmarks)
                     }
 
+                    if $model.isSyncCredentialsPaused.wrappedValue {
+                        syncPaused(for: .credentials)
+                    }
+
                     devices()
                     
                     syncNewDevice()
@@ -298,18 +302,38 @@ public struct SyncSettingsView: View {
 
     @ViewBuilder
     func syncPaused(for itemType: LimitedItemType) -> some View {
+        var explanation: String {
+            switch itemType {
+            case .bookmarks:
+                return "Bookmark limit exceeded. Delete some to resume syncing."
+            case .credentials:
+                return "Logins limit exceeded. Delete some to resume syncing."
+            }
+        }
+        var buttonTitle: String {
+            switch itemType {
+            case .bookmarks:
+                return "Manage Bookmarks"
+            case .credentials:
+                return "Manage Logins"
+            }
+        }
+
         Section {
             VStack(alignment: .leading, spacing: 4) {
-                Text("⚠️ Bookmarks Sync Paused")
+                Text("⚠️ Sync Paused")
                     .daxBodyBold()
-                Text("Bookmark limit exceeded. Delete some to resume syncing.")
+                Text(explanation)
                     .daxBodyRegular()
             }
-            Button("Manage Bookmarks") {
-                print("some shit")
-                model.manageBookmarks()
+            Button(buttonTitle) {
+                switch itemType {
+                case .bookmarks:
+                    model.manageBookmarks()
+                case .credentials:
+                    model.manageLogins()
+                }
             }
-
         }
     }
 

@@ -99,10 +99,12 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
     private func setUpSyncPaused(_ viewModel: SyncSettingsViewModel, _ appSettings: AppSettings) {
         viewModel.isSyncBookmarksPaused = appSettings.isSyncBookmarksPaused
-        NotificationCenter.default.publisher(for: AppUserDefaults.Notifications.favoritesDisplayModeChange)
+        viewModel.isSyncCredentialsPaused = appSettings.isSyncCredentialsPaused
+        NotificationCenter.default.publisher(for: AppUserDefaults.Notifications.syncPausedStateChanged)
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 viewModel.isSyncBookmarksPaused = appSettings.isSyncBookmarksPaused
+                viewModel.isSyncCredentialsPaused = appSettings.isSyncCredentialsPaused
             }
             .store(in: &cancellables)
     }
@@ -261,28 +263,5 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
             UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
         }
     }
-//
-//    func launchBookmarksViewController() {
-//
-//        let mainVC = view.window?.rootViewController as? MainViewController
-//        mainVC?.segueToBookmarks()
-//
-////        let storyboard = UIStoryboard(name: "Bookmarks", bundle: nil)
-////        let bookmarks = storyboard.instantiateViewController(identifier: "BookmarksViewController") { coder in
-////            BookmarksViewController(coder: coder,
-////                                    bookmarksDatabase: self.bookmarksDatabase,
-////                                    bookmarksSearch: self.bookmarksCachingSearch,
-////                                    syncService: self.syncService,
-////                                    syncDataProviders: self.syncDataProviders,
-////                                    appSettings: self.appSettings)
-////        }
-////        bookmarks.delegate = self
-////
-////        let controller = ThemableNavigationController(rootViewController: bookmarks)
-////        controller.modalPresentationStyle = .automatic
-////        present(controller, animated: true) {
-////            completion?(bookmarks)
-////        }
-//    }
 
 }

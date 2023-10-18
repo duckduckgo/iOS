@@ -36,7 +36,8 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
     func updateDeviceName(_ name: String)
     func refreshDevices(clearDevices: Bool)
     func updateOptions()
-    func lunchBookmarksViewController()
+    func launchBookmarksViewController()
+    func launchAutofillViewController()
 }
 
 public class SyncSettingsViewModel: ObservableObject {
@@ -152,7 +153,11 @@ public class SyncSettingsViewModel: ObservableObject {
     }
 
     public func manageBookmarks() {
-        delegate?.lunchBookmarksViewController()
+        delegate?.launchBookmarksViewController()
+    }
+
+    public func manageLogins() {
+        delegate?.launchAutofillViewController()
     }
 
 }

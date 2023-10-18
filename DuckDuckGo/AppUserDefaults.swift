@@ -29,7 +29,8 @@ public class AppUserDefaults: AppSettings {
         public static let currentFireButtonAnimationChange = Notification.Name("com.duckduckgo.app.CurrentFireButtonAnimationChange")
         public static let textSizeChange = Notification.Name("com.duckduckgo.app.TextSizeChange")
         public static let favoritesDisplayModeChange = Notification.Name("com.duckduckgo.app.FavoritesDisplayModeChange")
-        public static let syncBookmarksPausedStateChanged = Notification.Name("com.duckduckgo.app.SyncBookmarksPausedStateChanged")
+        public static let syncPausedStateChanged = SyncBookmarksAdapter.syncBookmarksPausedStateChanged
+        public static let syncCredentialsPausedStateChanged = SyncCredentialsAdapter.syncCredentialsPausedStateChanged
         public static let autofillEnabledChange = Notification.Name("com.duckduckgo.app.AutofillEnabledChange")
         public static let didVerifyInternalUser = Notification.Name("com.duckduckgo.app.DidVerifyInternalUser")
         public static let inspectableWebViewsToggled = Notification.Name("com.duckduckgo.app.DidToggleInspectableWebViews")
@@ -190,11 +191,10 @@ public class AppUserDefaults: AppSettings {
     var textSize: Int
 
     @UserDefaultsWrapper(key: .syncBookmarksPaused, defaultValue: false)
-    var isSyncBookmarksPaused: Bool {
-        didSet {
-            NotificationCenter.default.post(name: AppUserDefaults.Notifications.syncBookmarksPausedStateChanged, object: nil)
-        }
-    }
+    var isSyncBookmarksPaused: Bool
+
+    @UserDefaultsWrapper(key: .syncCredentialsPaused, defaultValue: false)
+    var isSyncCredentialsPaused: Bool
 
     public var favoritesDisplayMode: FavoritesDisplayMode {
         get {

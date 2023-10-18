@@ -24,11 +24,17 @@ import DDGSync
 import AVFoundation
 
 extension SyncSettingsViewController: SyncManagementViewModelDelegate {
-    
-    func lunchBookmarksViewController() {
+
+    func launchAutofillViewController() {
+        guard let mainVC = view.window?.rootViewController as? MainViewController else { return }
         self.dismiss(animated: true)
-        let mainVC = view.window?.rootViewController as? MainViewController
-        mainVC?.segueToBookmarks()
+        mainVC.launchAutofillLogins()
+    }
+
+    func launchBookmarksViewController() {
+        guard let mainVC = view.window?.rootViewController as? MainViewController else { return }
+        self.dismiss(animated: true)
+        mainVC.segueToBookmarks()
     }
 
 

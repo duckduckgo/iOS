@@ -50,7 +50,7 @@ public final class SyncSettingsAdapter {
             metadataDatabase: metadataDatabase,
             metadataStore: metadataStore,
             settingsHandlers: settingHandlers + [emailProtectionSyncHandler],
-            syncDidUpdateData: { [weak self] in
+            syncDidUpdateData: { [weak self] _ in
                 self?.syncDidCompleteSubject.send()
             }
         )

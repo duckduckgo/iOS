@@ -14,8 +14,8 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "dominik/sync-ffs-favorites",
-          "revision": "e2480a22fb70cbf8348bbec5202a04c8afc6a755",
+          "branch": "dominik/sync-favicons-fetching",
+          "revision": "b679cc248edb8b353c602a7267a1ba36b0d2f849",
           "version": null
         }
       },

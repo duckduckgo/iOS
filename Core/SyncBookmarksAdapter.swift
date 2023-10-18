@@ -74,10 +74,25 @@ public final class SyncBookmarksAdapter {
             return
         }
 
+        let faviconsFetcher = BookmarksFaviconsFetcher(
+            database: database,
+            metadataStore: BookmarkFaviconsMetadataStorage(
+                applicationSupportURL: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+            ),
+            fetcher: FaviconFetcher(),
+            store: Favicons.shared,
+            log: .syncLog
+        )
+
         let provider = BookmarksProvider(
             database: database,
             metadataStore: metadataStore,
-            syncDidUpdateData: { [syncDidCompleteSubject] in
+            syncDidUpdateData: { [syncDidCompleteSubject] changes in
+                faviconsFetcher.startFetching(
+                    with: changes[BookmarksProvider.ChangesKey.modified] ?? [],
+                    deletedBookmarkIDs: changes[BookmarksProvider.ChangesKey.deleted] ?? []
+                )
+
                 syncDidCompleteSubject.send()
                 Self.isSyncBookmarksPaused = false
             }

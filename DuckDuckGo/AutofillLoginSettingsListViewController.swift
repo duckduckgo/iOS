@@ -77,6 +77,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         tableView.estimatedSectionFooterHeight = 40
         tableView.registerCell(ofType: AutofillListItemTableViewCell.self)
         tableView.registerCell(ofType: EnableAutofillSettingsTableViewCell.self)
+        tableView.registerCell(ofType: AutofillNeverSavedTableViewCell.self)
         // Have to set tableHeaderView height otherwise tableView content will jump when adding / removing searchController due to tableView insetGrouped style
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 24))
         return tableView
@@ -470,6 +471,13 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         cell.theme = ThemeManager.shared.currentTheme
         return cell
     }
+
+    private func neverSavedCell(for tableView: UITableView, indexPath: IndexPath) -> AutofillNeverSavedTableViewCell {
+        // TODO - update these cells for DRK styling
+        let cell = tableView.dequeueCell(ofType: AutofillNeverSavedTableViewCell.self, for: indexPath)
+        cell.theme = ThemeManager.shared.currentTheme
+        return cell
+    }
 }
 
 // MARK: UITableViewDelegate
@@ -489,11 +497,24 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         switch viewModel.sections[indexPath.section] {
+        case .enableAutofill:
+            switch EnableAutofillRows(rawValue: indexPath.row) {
+            case .resetNeverPromptWebsites:
+                let controller = UIAlertController(title: "",
+                                                   message: UserText.autofillResetNeverSavedActionTitle,
+                                                   preferredStyle: .actionSheet)
+                controller.addAction(UIAlertAction(title: UserText.autofillResetNeverSavedActionConfirmButton, style: .destructive) { [weak self] _ in
+                    self?.viewModel.resetNeverPromptWebsites()
+                    self?.tableView.reloadData()
+                })
+                controller.addAction(UIAlertAction(title: UserText.autofillResetNeverSavedActionCancelButton, style: .cancel))
+                present(controller: controller, fromView: tableView.cellForRow(at: indexPath) ?? tableView)
+            default:
+                break
+            }
         case .credentials(_, let items):
             let item = items[indexPath.row]
             showAccountDetails(item.account)
-        default:
-            break
         }
     }
 
@@ -541,7 +562,14 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch viewModel.sections[indexPath.section] {
         case .enableAutofill:
-            return enableAutofillCell(for: tableView, indexPath: indexPath)
+            switch EnableAutofillRows(rawValue: indexPath.row) {
+            case .toggleAutofill:
+                return enableAutofillCell(for: tableView, indexPath: indexPath)
+            case .resetNeverPromptWebsites:
+                return neverSavedCell(for: tableView, indexPath: indexPath)
+            default:
+                fatalError("No cell for row at index \(indexPath.row)")
+            }
         case .credentials(_, let items):
             return credentialCell(for: tableView, item: items[indexPath.row], indexPath: indexPath)
         }

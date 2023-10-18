@@ -95,6 +95,19 @@ final class SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
         }
     }
 
+    func isNeverPromptWebsiteForDomain() -> Bool {
+        guard let domain = credentials.account.domain else {
+            return false
+        }
+        do {
+            return try AutofillSecureVaultFactory
+                .makeVault(errorReporter: SecureVaultErrorReporter.shared)
+                .hasNeverPromptWebsitesFor(domain: domain)
+        } catch {
+            return false
+        }
+    }
+
     private var savedMatchingPasswordWithoutUsername: SecureVaultModels.WebsiteCredentials? {
         let credentialsWithSamePassword = domainStoredCredentials.filter { storedCredentials in
             storedCredentials.password == credentials.password && (storedCredentials.account.username?.count ?? 0) == 0

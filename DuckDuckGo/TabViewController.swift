@@ -2267,6 +2267,11 @@ extension TabViewController: SecureVaultManagerDelegate {
               let autofillUserScript = autofillUserScript else { return }
 
         let manager = SaveAutofillLoginManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)
+
+        if manager.isNeverPromptWebsiteForDomain() {
+            return
+        }
+
         manager.prepareData { [weak self] in
             guard let self = self else { return }
             

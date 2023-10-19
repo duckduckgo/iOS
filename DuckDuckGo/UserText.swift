@@ -656,7 +656,6 @@ In addition to the details entered into this form, your app issue report will co
     static let netPAlwaysOnSettingFooter = NSLocalizedString("network.protection.vpn.always.on.setting.footer", value: "Automatically restore a VPN connection after interruption.", comment: "Footer text for the Always on VPN setting item.")
     static let netPSecureDNSSettingTitle = NSLocalizedString("network.protection.vpn.secure.dns.setting.title", value: "Secure DNS", comment: "Title for the Always on VPN setting item.")
     static let netPSecureDNSSettingFooter = NSLocalizedString("network.protection.vpn.secure.dns.setting.footer", value: "Network Protection prevents DNS leaks to your Internet Service Provider by routing DNS queries though the VPN tunnel to our own resolver.", comment: "Footer text for the Always on VPN setting item.")
-    static let netPLearnMore = NSLocalizedString("network.protection.learn.more", value: "Learn more", comment: "Text link to learn more which navigates user to FAQ.")
 
     static let inviteDialogContinueButton = NSLocalizedString("invite.dialog.continue.button", value: "Continue", comment: "Continue button on an invite dialog")
     static let inviteDialogGetStartedButton = NSLocalizedString("invite.dialog.get.started.button", value: "Get Started", comment: "Get Started button on an invite dialog")

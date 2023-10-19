@@ -1393,9 +1393,6 @@ https://duckduckgo.com/mac";
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
 
-/* Text link to learn more which navigates user to FAQ. */
-"network.protection.learn.more" = "Learn more";
-
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Connected - %@";
 

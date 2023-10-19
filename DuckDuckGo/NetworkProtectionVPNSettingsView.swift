@@ -28,19 +28,19 @@ struct NetworkProtectionVPNSettingsView: View {
         List {
             toggleSection(
                 text: UserText.netPAlwaysOnSettingTitle,
-                footerText: Text(UserText.netPAlwaysOnSettingFooter)
+                footerText: UserText.netPAlwaysOnSettingFooter
             )
             toggleSection(
                 text: UserText.netPSecureDNSSettingTitle,
-                footerText: Text("\(UserText.netPSecureDNSSettingFooter) [\(UserText.netPLearnMore)](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)")
-            ) // Still awaiting actual link: https://app.asana.com/0/0/1204630981406975/1205750157310733/f
+                footerText: UserText.netPSecureDNSSettingFooter
+            )
         }
         .applyInsetGroupedListStyleForiOS15AndOver()
         .navigationTitle(UserText.netPVPNSettingsTitle)
     }
 
     @ViewBuilder
-    func toggleSection(text: String, footerText: Text) -> some View {
+    func toggleSection(text: String, footerText: String) -> some View {
         Section {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
@@ -58,7 +58,7 @@ struct NetworkProtectionVPNSettingsView: View {
             }
             .listRowBackground(Color.cellBackground)
         } footer: {
-            footerText
+            Text(footerText)
                 .foregroundColor(.textSecondary)
                 .accentColor(Color.controlColor)
                 .font(.system(size: 13))

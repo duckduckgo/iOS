@@ -22,6 +22,7 @@
 import SwiftUI
 import NetworkProtection
 
+@available(iOS 15, *)
 struct NetworkProtectionStatusView: View {
     @ObservedObject public var statusModel: NetworkProtectionStatusViewModel
 
@@ -236,12 +237,6 @@ private extension Color {
     static let cellBackground = Color(designSystemColor: .surface)
     static let viewBackground = Color(designSystemColor: .background)
     static let controlColor = Color(designSystemColor: .accent)
-}
-
-struct NetworkProtectionStatusView_Previews: PreviewProvider {
-    static var previews: some View {
-        NetworkProtectionStatusView(statusModel: NetworkProtectionStatusViewModel())
-    }
 }
 
 #endif

@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "BrowserServicesKit",
+        "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
+        "state": {
+          "branch": "jacek/alerting",
+          "revision": "ce64fd6c61e0a323cd565d6a253ce4bf94ef609c",
+          "version": null
+        }
+      },
+      {
         "package": "CocoaAsyncSocket",
         "repositoryURL": "https://github.com/robbiehanson/CocoaAsyncSocket",
         "state": {

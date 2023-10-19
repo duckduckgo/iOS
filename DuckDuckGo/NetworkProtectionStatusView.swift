@@ -43,7 +43,7 @@ struct NetworkProtectionStatusView: View {
         .animation(.default, value: statusModel.shouldShowError)
         .padding(.top, statusModel.error == nil ? 0 : -20)
         .animation(.default, value: statusModel.shouldShowConnectionDetails)
-        .applyListStyle()
+        .applyInsetGroupedListStyleForiOS15AndOver()
         .navigationTitle(UserText.netPNavTitle)
     }
 
@@ -75,7 +75,7 @@ struct NetworkProtectionStatusView: View {
         } header: {
             header()
         }
-        .increaseHeaderProminence()
+        .increaseHeaderProminenceForiOS15AndOver()
     }
 
     @ViewBuilder
@@ -131,7 +131,7 @@ struct NetworkProtectionStatusView: View {
     @ViewBuilder
     private func settings() -> some View {
         Section {
-            NavigationLink(UserText.netPVPNSettingsTitle, destination: EmptyView())
+            NavigationLink(UserText.netPVPNSettingsTitle, destination: NetworkProtectionVPNSettingsView())
                 .font(.system(size: 16))
                 .foregroundColor(.textPrimary)
             NavigationLink(UserText.netPVPNNotificationsTitle, destination: EmptyView())
@@ -193,41 +193,6 @@ private struct NetworkProtectionServerItemView: View {
                 .foregroundColor(.textSecondary)
         }
         .listRowBackground(Color.cellBackground)
-    }
-}
-
-private extension View {
-    @ViewBuilder
-    func hideScrollContentBackground() -> some View {
-        if #available(iOS 16, *) {
-            self.scrollContentBackground(.hidden)
-        } else {
-            let originalBackgroundColor = UITableView.appearance().backgroundColor
-            self.onAppear {
-                UITableView.appearance().backgroundColor = .clear
-            }.onDisappear {
-                UITableView.appearance().backgroundColor = originalBackgroundColor
-            }
-        }
-    }
-
-    @ViewBuilder
-    func applyListStyle() -> some View {
-        self
-            .listStyle(.insetGrouped)
-            .hideScrollContentBackground()
-            .background(
-                Rectangle().ignoresSafeArea().foregroundColor(Color.viewBackground)
-            )
-    }
-
-    @ViewBuilder
-    func increaseHeaderProminence() -> some View {
-        if #available(iOS 15, *) {
-            self.headerProminence(.increased)
-        } else {
-            self
-        }
     }
 }
 

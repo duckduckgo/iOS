@@ -1448,7 +1448,7 @@ https://duckduckgo.com/mac";
 "network.protection.vpn.always.on.setting.title" = "Always On";
 
 /* Title for the VPN Notifications management screen. */
-"network.protection.vpn.notifications.title" = "IP Address";
+"network.protection.vpn.notifications.title" = "VPN Notifications";
 
 /* Footer text for the Always on VPN setting item. */
 "network.protection.vpn.secure.dns.setting.footer" = "Network Protection prevents DNS leaks to your Internet Service Provider by routing DNS queries though the VPN tunnel to our own resolver.";

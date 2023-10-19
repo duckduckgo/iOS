@@ -1438,6 +1438,9 @@ https://duckduckgo.com/mac";
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "Network Protection";
 
+/* Title for the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.button.title" = "Turn on Notifications";
+
 /* Footer text for the Always on VPN setting item. */
 "network.protection.vpn.always.on.setting.footer" = "Automatically restore a VPN connection after interruption.";
 

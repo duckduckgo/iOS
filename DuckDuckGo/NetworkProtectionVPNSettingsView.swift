@@ -71,7 +71,6 @@ private extension Color {
     static let textPrimary = Color(designSystemColor: .textPrimary)
     static let textSecondary = Color(designSystemColor: .textSecondary)
     static let cellBackground = Color(designSystemColor: .surface)
-    static let viewBackground = Color(designSystemColor: .background)
     static let controlColor = Color(designSystemColor: .accent)
 }
 

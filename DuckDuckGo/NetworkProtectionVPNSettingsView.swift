@@ -33,7 +33,7 @@ struct NetworkProtectionVPNSettingsView: View {
             toggleSection(
                 text: UserText.netPSecureDNSSettingTitle,
                 footerText: Text("\(UserText.netPSecureDNSSettingFooter) [\(UserText.netPLearnMore)](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)")
-            ) // TODO: Need actual link
+            ) // Still awaiting actual link: https://app.asana.com/0/0/1204630981406975/1205750157310733/f
         }
         .applyInsetGroupedListStyleForiOS15AndOver()
         .navigationTitle(UserText.netPVPNSettingsTitle)

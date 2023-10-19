@@ -35,7 +35,7 @@ struct NetworkProtectionVPNSettingsView: View {
                 footerText: UserText.netPSecureDNSSettingFooter
             )
         }
-        .applyInsetGroupedListStyleForiOS15AndOver()
+        .applyInsetGroupedListStyle()
         .navigationTitle(UserText.netPVPNSettingsTitle)
     }
 

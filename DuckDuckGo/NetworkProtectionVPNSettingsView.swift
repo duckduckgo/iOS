@@ -46,9 +46,9 @@ struct NetworkProtectionVPNSettingsView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(text)
                         .font(.system(size: 16))
-                        .foregroundColor(.textPrimary)
+                        .foregroundColor(.textPrimary.opacity(0.4))
                         .font(.system(size: 13))
-                        .foregroundColor(.textSecondary)
+                        .foregroundColor(.textSecondary.opacity(0.4)).disabled(true)
                 }
 
                 // These toggles are permanantly disabled as the features are permanantly enabled. Product decision.

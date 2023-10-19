@@ -134,7 +134,7 @@ struct NetworkProtectionStatusView: View {
             NavigationLink(UserText.netPVPNSettingsTitle, destination: NetworkProtectionVPNSettingsView())
                 .font(.system(size: 16))
                 .foregroundColor(.textPrimary)
-            NavigationLink(UserText.netPVPNNotificationsTitle, destination: EmptyView())
+            NavigationLink(UserText.netPVPNNotificationsTitle, destination: Text("Coming soon!"))
                 .font(.system(size: 16))
                 .foregroundColor(.textPrimary)
         } header: {

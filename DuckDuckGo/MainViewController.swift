@@ -1094,7 +1094,9 @@ class MainViewController: UIViewController {
             return
         }
         let alertController = CriticalAlerts.makeEmailProtectionSignInAlert()
-        present(alertController, animated: true, completion: nil)
+        dismiss(animated: true) {
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
 
     private func fireEmailPixel(_ pixel: Pixel.Event, notification: Notification) {

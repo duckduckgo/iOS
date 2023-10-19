@@ -53,7 +53,7 @@ extension EmailManagerRequestDelegate {
     }
     // swiftlint:enable function_parameter_count
 
-    func emailManagerKeychainAccessFailed(_ emailManager: EmailManager, 
+    func emailManagerKeychainAccessFailed(_ emailManager: EmailManager,
                                           accessType: EmailKeychainAccessType,
                                           error: EmailKeychainAccessError) {
         var parameters = [
@@ -87,7 +87,5 @@ extension EmailManagerRequestDelegate {
 
         Pixel.fire(pixel: .emailAutofillKeychainError, withAdditionalParameters: parameters)
     }
-
-
 
 }

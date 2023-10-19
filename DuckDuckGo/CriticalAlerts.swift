@@ -19,6 +19,7 @@
 
 import Foundation
 import UIKit
+import Core
 
 struct CriticalAlerts {
 
@@ -50,6 +51,20 @@ struct CriticalAlerts {
         }
 
         alertController.addAction(openSettingsButton)
+        return alertController
+    }
+
+    static func makeEmailProtectionSignInAlert() -> UIAlertController {
+        let alertController = UIAlertController(title: UserText.emailProtectionSignInTitle,
+                                                message: UserText.emailProtectionSignInBody,
+                                                preferredStyle: .alert)
+        alertController.overrideUserInterfaceStyle()
+
+        let signInButton = UIAlertAction(title: UserText.emailProtectionSignInAction, style: .default) { _ in
+            UIApplication.shared.open(URL.emailProtectionQuickLink, options: [:], completionHandler: nil)
+        }
+
+        alertController.addAction(signInButton)
         return alertController
     }
 

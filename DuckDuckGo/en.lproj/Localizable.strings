@@ -1012,6 +1012,15 @@
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "No matches found";
 
+/* Button title to Sign In */
+"error.email-protection-sign-in.action" = "Sign In";
+
+/* Alert message */
+"error.email-protection-sign-in.body" = "Please sign back in to continue using the Email Protection feature.";
+
+/* Alert title */
+"error.email-protection-sign-in.title" = "Email Protection error occurred";
+
 /* Button title to open device settings */
 "error.insufficient-disk-space.action" = "Open Settings";
 

@@ -53,27 +53,41 @@ extension EmailManagerRequestDelegate {
     }
     // swiftlint:enable function_parameter_count
 
-    func emailManagerKeychainAccessFailed(accessType: EmailKeychainAccessType, error: EmailKeychainAccessError) {
+    func emailManagerKeychainAccessFailed(_ emailManager: EmailManager, 
+                                          accessType: EmailKeychainAccessType,
+                                          error: EmailKeychainAccessError) {
         var parameters = [
             PixelParameters.emailKeychainAccessType: accessType.rawValue,
             PixelParameters.emailKeychainError: error.errorDescription
         ]
-
+        
+        var errorCode: Int32?
         if case let .keychainLookupFailure(status) = error {
+            errorCode = status
             parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
             parameters[PixelParameters.emailKeychainKeychainOperation] = "lookup"
         }
 
         if case let .keychainDeleteFailure(status) = error {
+            errorCode = status
             parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
             parameters[PixelParameters.emailKeychainKeychainOperation] = "delete"
         }
 
         if case let .keychainSaveFailure(status) = error {
+            errorCode = status
             parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
             parameters[PixelParameters.emailKeychainKeychainOperation] = "save"
         }
 
+        // https://app.asana.com/0/414709148257752/1205196846001239/f
+        if errorCode == -25291 {
+            emailManager.forceSignOut()
+        }
+
         Pixel.fire(pixel: .emailAutofillKeychainError, withAdditionalParameters: parameters)
     }
+
+
+
 }

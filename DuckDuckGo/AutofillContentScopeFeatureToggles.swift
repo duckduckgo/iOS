@@ -24,7 +24,6 @@ import BrowserServicesKit
 extension ContentScopeFeatureToggles {
     
     static let featureFlagger = AppDependencyProvider.shared.featureFlagger
-    static let appSettings = AppDependencyProvider.shared.appSettings
 
     static var supportedFeaturesOniOS: ContentScopeFeatureToggles {
         let isAutofillEnabledInSettings = AutofillSettingStatus.isAutofillEnabledInSettings
@@ -34,7 +33,7 @@ extension ContentScopeFeatureToggles {
                                    identitiesAutofill: false,
                                    creditCardsAutofill: false,
                                    credentialsSaving: featureFlagger.isFeatureOn(.autofillCredentialsSaving) && isAutofillEnabledInSettings,
-                                   passwordGeneration: featureFlagger.isFeatureOn(.autofillPasswordGeneration) && isAutofillEnabledInSettings && !appSettings.autofillPasswordNeverPromptEnabled,
+                                   passwordGeneration: featureFlagger.isFeatureOn(.autofillPasswordGeneration) && isAutofillEnabledInSettings,
                                    inlineIconCredentials: featureFlagger.isFeatureOn(.autofillInlineIconCredentials) && isAutofillEnabledInSettings,
                                    thirdPartyCredentialsProvider: false)
     }

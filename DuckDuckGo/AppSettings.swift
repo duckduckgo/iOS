@@ -36,7 +36,6 @@ protocol AppSettings: AnyObject {
     var textSize: Int { get set }
     
     var autofillCredentialsEnabled: Bool { get set }
-    var autofillPasswordNeverPromptEnabled: Bool { get set }
     var autofillCredentialsSavePromptShowAtLeastOnce: Bool { get set }
     var autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary: Bool { get set }
     var autofillIsNewInstallForOnByDefault: Bool? { get set }

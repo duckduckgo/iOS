@@ -153,7 +153,6 @@ class TabViewController: UIViewController {
             updateTabModel()
             delegate?.tabLoadingStateDidChange(tab: self)
             checkLoginDetectionAfterNavigation()
-            updateNeverPromptForSiteStatus()
         }
     }
     
@@ -2268,11 +2267,6 @@ extension TabViewController: SecureVaultManagerDelegate {
               let autofillUserScript = autofillUserScript else { return }
 
         let manager = SaveAutofillLoginManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)
-
-        if manager.isNeverPromptWebsiteForDomain() {
-            return
-        }
-
         manager.prepareData { [weak self] in
             guard let self = self else { return }
             
@@ -2299,27 +2293,6 @@ extension TabViewController: SecureVaultManagerDelegate {
     
     func secureVaultInitFailed(_ error: SecureStorageError) {
         SecureVaultErrorReporter.shared.secureVaultInitFailed(error)
-    }
-
-   func updateNeverPromptForSiteStatus() {
-       guard AutofillSettingStatus.isAutofillEnabledInSettings,
-             featureFlagger.isFeatureOn(.autofillCredentialsSaving),
-             let domain = url?.host else {
-           if appSettings.autofillPasswordNeverPromptEnabled {
-               os_log("Resetting autofillPasswordNeverPromptEnabled to false")
-               appSettings.autofillPasswordNeverPromptEnabled = false
-               NotificationCenter.default.post(name: AppUserDefaults.Notifications.autofillPasswordGenerationEnabledChange, object: self)
-           }
-           return
-       }
-
-       let neverPromptStatus = SaveAutofillLoginManager.hasNeverPromptWebsitesFor(domain: domain)
-       os_log("neverPromptStatus for domain \(domain) = \(neverPromptStatus)")
-       if appSettings.autofillPasswordNeverPromptEnabled != neverPromptStatus {
-           os_log("Updating autofillPasswordNeverPromptEnabled to \(neverPromptStatus)")
-           appSettings.autofillPasswordNeverPromptEnabled = neverPromptStatus
-           NotificationCenter.default.post(name: AppUserDefaults.Notifications.autofillPasswordGenerationEnabledChange, object: self)
-       }
     }
 
     func secureVaultManagerIsEnabledStatus(_ manager: SecureVaultManager, forType type: AutofillType?) -> Bool {

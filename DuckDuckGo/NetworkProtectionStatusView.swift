@@ -40,9 +40,12 @@ struct NetworkProtectionStatusView: View {
             }
             settings()
         }
-        .animation(.default, value: statusModel.shouldShowError)
         .padding(.top, statusModel.error == nil ? 0 : -20)
-        .animation(.default, value: statusModel.shouldShowConnectionDetails)
+        .if(statusModel.animationsOn, transform: {
+            $0
+                .animation(.default, value: statusModel.shouldShowConnectionDetails)
+                .animation(.default, value: statusModel.shouldShowError)
+        })
         .applyInsetGroupedListStyle()
         .navigationTitle(UserText.netPNavTitle)
     }

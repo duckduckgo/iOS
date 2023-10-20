@@ -24,7 +24,7 @@ import UIKit
 
 @available(iOS 15, *)
 struct NetworkProtectionVPNNotificationsView: View {
-    let model = NetworkProtectionVPNNotificationsViewModel(notificationsPermissions: AppNotificationsPermissions())
+    let model = NetworkProtectionVPNNotificationsViewModel(notificationsPermissions: NotificationsAuthorizationController())
 
     var body: some View {
         List {

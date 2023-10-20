@@ -32,8 +32,8 @@ final class NetworkProtectionVPNNotificationsViewModel: ObservableObject {
     private let notificationsAuthorization: NotificationsAuthorizationControlling
     @Published var viewKind: NetworkProtectionNotificationsViewKind = .loading
 
-    init(notificationsPermissions: NotificationsAuthorizationControlling) {
-        self.notificationsAuthorization = notificationsPermissions
+    init(notificationsAuthorization: NotificationsAuthorizationControlling) {
+        self.notificationsAuthorization = notificationsAuthorization
     }
 
     @MainActor

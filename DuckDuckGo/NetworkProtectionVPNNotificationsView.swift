@@ -42,6 +42,7 @@ struct NetworkProtectionVPNNotificationsView: View {
                 authorizedView
             }
         }
+        .animation(.default, value: model.viewKind)
         .applyInsetGroupedListStyle()
         .navigationTitle(UserText.netPVPNNotificationsTitle).onAppear {
             Task {

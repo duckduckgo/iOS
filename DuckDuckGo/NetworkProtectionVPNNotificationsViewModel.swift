@@ -23,7 +23,7 @@ import Combine
 import UserNotifications
 import NetworkProtection
 
-enum NetworkProtectionNotificationsViewKind {
+enum NetworkProtectionNotificationsViewKind: Equatable {
     case loading
     case unauthorized
     case authorized

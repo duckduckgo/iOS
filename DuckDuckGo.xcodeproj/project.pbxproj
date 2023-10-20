@@ -769,6 +769,7 @@
 		EE9D68D82AE15AD600B55EF4 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9D68D72AE15AD600B55EF4 /* UIApplicationExtension.swift */; };
 		EE9D68DA2AE1659F00B55EF4 /* NetworkProtectionVPNNotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9D68D92AE1659F00B55EF4 /* NetworkProtectionVPNNotificationsViewModel.swift */; };
 		EE9D68DC2AE16AE100B55EF4 /* NotificationsAuthorizationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9D68DB2AE16AE100B55EF4 /* NotificationsAuthorizationController.swift */; };
+		EE9D68DE2AE2A65600B55EF4 /* UserDefaults+NetworkProtection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9D68DD2AE2A65600B55EF4 /* UserDefaults+NetworkProtection.swift */; };
 		EEDFE2DA2AC6ED4F00F0E19C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EEDFE2DC2AC6ED4F00F0E19C /* Localizable.strings */; };
 		EEEB80A32A421CE600386378 /* NetworkProtectionPacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB80A22A421CE600386378 /* NetworkProtectionPacketTunnelProvider.swift */; };
 		EEF0F8CC2ABC832300630031 /* NetworkProtectionDebugFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF0F8CB2ABC832200630031 /* NetworkProtectionDebugFeatures.swift */; };
@@ -2342,6 +2343,7 @@
 		EE9D68D72AE15AD600B55EF4 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		EE9D68D92AE1659F00B55EF4 /* NetworkProtectionVPNNotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionVPNNotificationsViewModel.swift; sourceTree = "<group>"; };
 		EE9D68DB2AE16AE100B55EF4 /* NotificationsAuthorizationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsAuthorizationController.swift; sourceTree = "<group>"; };
+		EE9D68DD2AE2A65600B55EF4 /* UserDefaults+NetworkProtection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+NetworkProtection.swift"; sourceTree = "<group>"; };
 		EEB8FDB92A990AEE00EBEDCF /* Configuration-Alpha.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Configuration-Alpha.xcconfig"; path = "Configuration/Configuration-Alpha.xcconfig"; sourceTree = "<group>"; };
 		EEDFE2DB2AC6ED4F00F0E19C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EEDFE2DD2AC6ED5B00F0E19C /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -4420,6 +4422,7 @@
 			isa = PBXGroup;
 			children = (
 				EE7A92862AC6DE4700832A36 /* NetworkProtectionNotificationIdentifier.swift */,
+				EE9D68DD2AE2A65600B55EF4 /* UserDefaults+NetworkProtection.swift */,
 			);
 			name = NetworkProtection;
 			sourceTree = "<group>";
@@ -6723,6 +6726,7 @@
 				CB2A7EF4285383B300885F67 /* AppLastCompiledRulesStore.swift in Sources */,
 				4B75EA9226A266CB00018634 /* PrintingUserScript.swift in Sources */,
 				37445F972A155F7C0029F789 /* SyncDataProviders.swift in Sources */,
+				EE9D68DE2AE2A65600B55EF4 /* UserDefaults+NetworkProtection.swift in Sources */,
 				CB258D1F29A52B2500DEBA24 /* Configuration.swift in Sources */,
 				9847C00027A2DDBB00DB07AA /* AppPrivacyConfigurationDataProvider.swift in Sources */,
 				F143C3281E4A9A0E00CFDE3A /* StringExtension.swift in Sources */,

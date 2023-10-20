@@ -167,8 +167,13 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                                                              errorEvents: nil)
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
+        let notificationsSettingsStore = NetworkProtectionNotificationsSettingsUserDefaultsStore(userDefaults: .networkProtectionGroupDefaults)
+        let nofificationsPresenterDecorator = NetworkProtectionNotificationsPresenterTogglableDecorator(
+            notificationSettingsStore: notificationsSettingsStore,
+            wrappee: notificationsPresenter
+        )
         notificationsPresenter.requestAuthorization()
-        super.init(notificationsPresenter: notificationsPresenter,
+        super.init(notificationsPresenter: nofificationsPresenterDecorator,
                    tunnelHealthStore: NetworkProtectionTunnelHealthStore(),
                    controllerErrorStore: errorStore,
                    keychainType: .dataProtection(.unspecified),

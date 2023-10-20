@@ -58,7 +58,6 @@ final class NetworkProtectionVPNNotificationsViewModel: ObservableObject {
         notificationsSettingsStore.alertsEnabled = enabled
     }
 
-    @MainActor
     private func updateViewKind(for authorizationStatus: UNAuthorizationStatus) {
         switch authorizationStatus {
         case .notDetermined, .denied:
@@ -72,7 +71,6 @@ final class NetworkProtectionVPNNotificationsViewModel: ObservableObject {
 }
 
 extension NetworkProtectionVPNNotificationsViewModel: NotificationsPermissionsControllerDelegate {
-    @MainActor
     func authorizationStateDidChange(toStatus status: UNAuthorizationStatus) {
         updateViewKind(for: status)
     }

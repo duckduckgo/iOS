@@ -79,6 +79,8 @@ final class NotificationsAuthorizationController: NotificationsAuthorizationCont
 
     private func updateDelegateWithNewState() async {
         let newState = await authorizationStatus
-        delegate?.authorizationStateDidChange(toStatus: newState)
+        DispatchQueue.main.async { [weak self] in
+            self?.delegate?.authorizationStateDidChange(toStatus: newState)
+        }
     }
 }

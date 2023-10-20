@@ -45,6 +45,7 @@ final class NotificationsAuthorizationController: NotificationsAuthorizationCont
     }
 
     init() {
+        // To handle navigating back from iOS Settings after changing the authorization
         notificationCancellable = NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)
             .sink { _ in
                 Task { [weak self] in

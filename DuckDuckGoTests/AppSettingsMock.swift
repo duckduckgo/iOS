@@ -22,6 +22,10 @@ import Foundation
 @testable import DuckDuckGo
 
 class AppSettingsMock: AppSettings {
+    
+    var isSyncBookmarksPaused: Bool = false
+
+    var isSyncCredentialsPaused: Bool = false
 
     var autofillCredentialsEnabled: Bool = false
     

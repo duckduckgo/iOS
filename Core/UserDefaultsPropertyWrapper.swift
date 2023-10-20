@@ -97,6 +97,8 @@ public struct UserDefaultsWrapper<T> {
         case defaultBrowserUsageLastSeen = "com.duckduckgo.ios.default-browser-usage-last-seen"
 
         case syncEnvironment = "com.duckduckgo.ios.sync-environment"
+        case syncBookmarksPaused = "com.duckduckgo.ios.sync-bookmarksPaused"
+        case syncCredentialsPaused = "com.duckduckgo.ios.sync-credentialsPaused"
 
         case networkProtectionDebugOptionAlwaysOnDisabled = "com.duckduckgo.network-protection.always-on.disabled"
     }

@@ -36,6 +36,14 @@ public final class SyncBookmarksAdapter {
     public let databaseCleaner: BookmarkDatabaseCleaner
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
     public let widgetRefreshCancellable: AnyCancellable
+    public static let syncBookmarksPausedStateChanged = Notification.Name("com.duckduckgo.app.SyncPausedStateChanged")
+
+    @UserDefaultsWrapper(key: .syncBookmarksPaused, defaultValue: false)
+    static private var isSyncBookmarksPaused: Bool {
+        didSet {
+            NotificationCenter.default.post(name: syncBookmarksPausedStateChanged, object: nil)
+        }
+    }
 
     public init(database: CoreDataDatabase, favoritesDisplayModeStorage: FavoritesDisplayModeStoring) {
         self.database = database
@@ -71,6 +79,7 @@ public final class SyncBookmarksAdapter {
             metadataStore: metadataStore,
             syncDidUpdateData: { [syncDidCompleteSubject] in
                 syncDidCompleteSubject.send()
+                Self.isSyncBookmarksPaused = false
             }
         )
 
@@ -79,6 +88,16 @@ public final class SyncBookmarksAdapter {
                 switch error {
                 case let syncError as SyncError:
                     Pixel.fire(pixel: .syncBookmarksFailed, error: syncError)
+                    // If bookmarks count limit has been exceeded
+                    if syncError == .unexpectedStatusCode(409) {
+                        Self.isSyncBookmarksPaused = true
+                        DailyPixel.fire(pixel: .syncBookmarksCountLimitExceededDaily)
+                    }
+                    // If bookmarks request size limit has been exceeded
+                    if syncError == .unexpectedStatusCode(413) {
+                        Self.isSyncBookmarksPaused = true
+                        DailyPixel.fire(pixel: .syncBookmarksRequestSizeLimitExceededDaily)
+                    }
                 default:
                     let nsError = error as NSError
                     if nsError.domain != NSURLErrorDomain {

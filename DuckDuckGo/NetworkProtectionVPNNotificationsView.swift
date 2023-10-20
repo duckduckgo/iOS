@@ -21,10 +21,15 @@
 
 import SwiftUI
 import UIKit
+import NetworkProtection
+import Core
 
 @available(iOS 15, *)
 struct NetworkProtectionVPNNotificationsView: View {
-    let model = NetworkProtectionVPNNotificationsViewModel(notificationsPermissions: NotificationsAuthorizationController())
+    @ObservedObject var model = NetworkProtectionVPNNotificationsViewModel(
+        notificationsAuthorization: NotificationsAuthorizationController(),
+        notificationsSettingsStore: NetworkProtectionNotificationsSettingsUserDefaultsStore(userDefaults: .networkProtectionGroupDefaults)
+    )
 
     var body: some View {
         List {
@@ -34,7 +39,7 @@ struct NetworkProtectionVPNNotificationsView: View {
             case .unauthorized:
                 unauthorizedView
             case .authorized:
-                Text("Authorized")
+                authorizedView
             }
         }
         .applyInsetGroupedListStyle()
@@ -50,8 +55,32 @@ struct NetworkProtectionVPNNotificationsView: View {
         Button(UserText.netPTurnOnNotificationsButtonTitle) {
             model.turnOnNotifications()
         }
-        .foregroundColor(Color(designSystemColor: .accent))
+        .foregroundColor(.controlColor)
     }
+
+    @ViewBuilder
+    private var authorizedView: some View {
+        Section {
+            Toggle(UserText.netPVPNAlertsToggleTitle, isOn: Binding(
+                get: { model.alertsEnabled },
+                set: model.didToggleAlerts(to:)
+            ))
+            .toggleStyle(SwitchToggleStyle(tint: Color(designSystemColor: .accent)))
+        } footer: {
+            Text(UserText.netPVPNAlertsToggleSectionFooter)
+                .foregroundColor(.textSecondary)
+                .accentColor(.controlColor)
+                .font(.system(size: 13))
+                .padding(.top, 6)
+        }
+    }
+}
+
+private extension Color {
+    static let textPrimary = Color(designSystemColor: .textPrimary)
+    static let textSecondary = Color(designSystemColor: .textSecondary)
+    static let cellBackground = Color(designSystemColor: .surface)
+    static let controlColor = Color(designSystemColor: .accent)
 }
 
 #endif

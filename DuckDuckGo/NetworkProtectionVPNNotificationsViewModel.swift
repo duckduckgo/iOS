@@ -21,6 +21,7 @@
 
 import Combine
 import UserNotifications
+import NetworkProtection
 
 enum NetworkProtectionNotificationsViewKind {
     case loading
@@ -29,30 +30,35 @@ enum NetworkProtectionNotificationsViewKind {
 }
 
 final class NetworkProtectionVPNNotificationsViewModel: ObservableObject {
-    private let notificationsAuthorization: NotificationsAuthorizationControlling
+    private var notificationsAuthorization: NotificationsAuthorizationControlling
+    private var notificationsSettingsStore: NetworkProtectionNotificationsSettingsStore
     @Published var viewKind: NetworkProtectionNotificationsViewKind = .loading
+    var alertsEnabled: Bool {
+        self.notificationsSettingsStore.alertsEnabled
+    }
 
-    init(notificationsAuthorization: NotificationsAuthorizationControlling) {
+    init(notificationsAuthorization: NotificationsAuthorizationControlling,
+         notificationsSettingsStore: NetworkProtectionNotificationsSettingsStore) {
         self.notificationsAuthorization = notificationsAuthorization
+        self.notificationsSettingsStore = notificationsSettingsStore
+        self.notificationsAuthorization.delegate = self
     }
 
     @MainActor
     func onViewAppeared() async {
         let status = await notificationsAuthorization.authorizationStatus
-        switch status {
-        case .notDetermined, .denied:
-            viewKind = .unauthorized
-        case .authorized, .ephemeral, .provisional:
-            viewKind = .authorized
-        @unknown default:
-            assertionFailure("Unhandled enum case")
-        }
+        updateViewKind(for: status)
     }
 
     func turnOnNotifications() {
         notificationsAuthorization.requestAlertAuthorization()
     }
 
+    func didToggleAlerts(to enabled: Bool) {
+        notificationsSettingsStore.alertsEnabled = enabled
+    }
+
+    @MainActor
     private func updateViewKind(for authorizationStatus: UNAuthorizationStatus) {
         switch authorizationStatus {
         case .notDetermined, .denied:
@@ -66,6 +72,7 @@ final class NetworkProtectionVPNNotificationsViewModel: ObservableObject {
 }
 
 extension NetworkProtectionVPNNotificationsViewModel: NotificationsPermissionsControllerDelegate {
+    @MainActor
     func authorizationStateDidChange(toStatus status: UNAuthorizationStatus) {
         updateViewKind(for: status)
     }

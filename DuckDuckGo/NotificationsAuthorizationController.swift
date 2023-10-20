@@ -35,7 +35,7 @@ protocol NotificationsPermissionsControllerDelegate: AnyObject {
 final class NotificationsAuthorizationController: NotificationsAuthorizationControlling {
 
     weak var delegate: NotificationsPermissionsControllerDelegate?
-    weak var notificationCancellable: AnyCancellable?
+    var notificationCancellable: AnyCancellable?
 
     var authorizationStatus: UNAuthorizationStatus {
         get async {

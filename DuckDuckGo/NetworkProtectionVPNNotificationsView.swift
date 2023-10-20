@@ -26,7 +26,7 @@ import Core
 
 @available(iOS 15, *)
 struct NetworkProtectionVPNNotificationsView: View {
-    @ObservedObject var model = NetworkProtectionVPNNotificationsViewModel(
+    @StateObject var model = NetworkProtectionVPNNotificationsViewModel(
         notificationsAuthorization: NotificationsAuthorizationController(),
         notificationsSettingsStore: NetworkProtectionNotificationsSettingsUserDefaultsStore(userDefaults: .networkProtectionGroupDefaults)
     )

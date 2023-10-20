@@ -53,10 +53,17 @@ struct NetworkProtectionVPNNotificationsView: View {
 
     @ViewBuilder
     private var unauthorizedView: some View {
-        Button(UserText.netPTurnOnNotificationsButtonTitle) {
-            model.turnOnNotifications()
+        Section {
+            Button(UserText.netPTurnOnNotificationsButtonTitle) {
+                model.turnOnNotifications()
+            }
+            .foregroundColor(.controlColor)
+        } footer: {
+            Text(UserText.netPTurnOnNotificationsSectionFooter)
+                .foregroundColor(.textSecondary)
+                .font(.system(size: 13))
+                .padding(.top, 6)
         }
-        .foregroundColor(.controlColor)
     }
 
     @ViewBuilder
@@ -70,7 +77,6 @@ struct NetworkProtectionVPNNotificationsView: View {
         } footer: {
             Text(UserText.netPVPNAlertsToggleSectionFooter)
                 .foregroundColor(.textSecondary)
-                .accentColor(.controlColor)
                 .font(.system(size: 13))
                 .padding(.top, 6)
         }

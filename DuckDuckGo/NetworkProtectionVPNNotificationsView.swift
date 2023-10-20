@@ -24,17 +24,33 @@ import UIKit
 
 @available(iOS 15, *)
 struct NetworkProtectionVPNNotificationsView: View {
+    let model = NetworkProtectionVPNNotificationsViewModel(notificationsPermissions: AppNotificationsPermissions())
+
     var body: some View {
         List {
-            Button(UserText.netPTurnOnNotificationsButtonTitle) {
-                Task {
-                    await UIApplication.shared.openAppNotificationSettings()
-                }
+            switch model.viewKind {
+            case .loading:
+                EmptyView()
+            case .unauthorized:
+                unauthorizedView
+            case .authorized:
+                Text("Authorized")
             }
-            .foregroundColor(Color(designSystemColor: .accent))
         }
         .applyInsetGroupedListStyle()
-        .navigationTitle(UserText.netPVPNNotificationsTitle)
+        .navigationTitle(UserText.netPVPNNotificationsTitle).onAppear {
+            Task {
+                await model.onViewAppeared()
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var unauthorizedView: some View {
+        Button(UserText.netPTurnOnNotificationsButtonTitle) {
+            model.turnOnNotifications()
+        }
+        .foregroundColor(Color(designSystemColor: .accent))
     }
 }
 

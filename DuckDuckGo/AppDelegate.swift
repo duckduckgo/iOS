@@ -698,8 +698,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
 #if NETWORK_PROTECTION
     private func presentNetworkProtectionStatusSettingsModal() {
-        let networkProtectionRoot = NetworkProtectionRootViewController()
-        presentSettings(with: networkProtectionRoot)
+        if #available(iOS 15, *) {
+            let networkProtectionRoot = NetworkProtectionRootViewController()
+            presentSettings(with: networkProtectionRoot)
+        }
     }
 #endif
 

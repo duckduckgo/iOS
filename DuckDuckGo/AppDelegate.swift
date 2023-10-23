@@ -605,10 +605,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
         os_log("Handling shortcut item: %s", log: .generalLog, type: .debug, shortcutItem.type)
 
-        mainViewController?.clearNavigationStack()
         autoClear?.applicationWillMoveToForeground()
 
         if shortcutItem.type == ShortcutKey.clipboard, let query = UIPasteboard.general.string {
+            mainViewController?.clearNavigationStack()
             mainViewController?.loadQueryInNewTab(query)
             return
         }
@@ -749,6 +749,19 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     private func presentSettings(with viewController: UIViewController) {
         guard let window = window, let rootViewController = window.rootViewController as? MainViewController else { return }
 
+        if let navigationController = rootViewController.presentedViewController as? UINavigationController {
+            if let lastViewController = navigationController.viewControllers.last, lastViewController.isKind(of: type(of: viewController)) {
+                // Avoid presenting dismissing and re-presenting the view controller if it's already visible:
+                return
+            } else {
+                // Otherwise, replace existing view controllers with the presented one:
+                navigationController.popToRootViewController(animated: false)
+                navigationController.pushViewController(viewController, animated: false)
+                return
+            }
+        }
+
+        // If the previous checks failed, make sure the nav stack is reset and present the view controller from scratch:
         rootViewController.clearNavigationStack()
 
         // Give the `clearNavigationStack` call time to complete.

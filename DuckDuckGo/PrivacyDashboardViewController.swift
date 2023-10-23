@@ -121,9 +121,10 @@ extension PrivacyDashboardViewController: Themable {
 }
 
 extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
-    
-    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController, didChangeProtectionSwitch isEnabled: Bool) {
-        privacyDashboardProtectionSwitchChangeHandler(enabled: isEnabled)
+
+    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController,
+                                    didChangeProtectionSwitch protectionState: ProtectionState) {
+        privacyDashboardProtectionSwitchChangeHandler(enabled: protectionState.isProtected)
     }
     
     func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController, didRequestOpenUrlInNewTab url: URL) {

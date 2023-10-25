@@ -17,8 +17,11 @@
 //  limitations under the License.
 //
 
+// swiftlint:disable file_length
+
 import UIKit
 import DesignResourcesKit
+import SwiftUI
 
 class ThemeEditorViewController: UITableViewController {
 
@@ -28,6 +31,7 @@ class ThemeEditorViewController: UITableViewController {
         super.viewDidLoad()
         tableView.registerCell(ofType: ThemeEditorItemCell.self)
         tableView.registerCell(ofType: ThemeOverrideCell.self)
+        tableView.registerCell(ofType: ThemeEditorButtonCell.self)
     }
 
 }
@@ -39,12 +43,12 @@ extension ThemeEditorViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 1 : mutableTheme.colorProperties.count
+        return section == 0 ? 2 : mutableTheme.colorProperties.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            return tableView.dequeueCell(ofType: ThemeOverrideCell.self, for: indexPath)
+            return createManagerCell(tableView, for: indexPath)
         } else {
             return createThemeItemCell(tableView, for: indexPath)
         }
@@ -54,19 +58,42 @@ extension ThemeEditorViewController {
         return section == 0 ? nil : "Theme Colors"
     }
 
+    func createManagerCell(_ tableView: UITableView, for indexPath: IndexPath) -> UITableViewCell {
+        switch indexPath.row {
+        case 0:
+            return tableView.dequeueCell(ofType: ThemeOverrideCell.self, for: indexPath)
+        default:
+            let cell = tableView.dequeueCell(ofType: ThemeEditorButtonCell.self, for: indexPath)
+            var config = cell.defaultContentConfiguration()
+            config.text = "Reset"
+            config.textProperties.color = .destructive
+            cell.contentConfiguration = config
+            return cell
+        }
+    }
+
     func createThemeItemCell(_ tableView: UITableView, for indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(ofType: ThemeEditorItemCell.self, for: indexPath)
-        var config = cell.defaultContentConfiguration()
-        config.text = mutableTheme.colorProperties[indexPath.row]
-        cell.contentConfiguration = config
+        cell.present(themeItem: mutableTheme.colorProperties[indexPath.row], fromTheme: mutableTheme)
         return cell
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            toggleOverride()
+            onManagementCellSelected(atIndexPath: indexPath)
+        } else {
+            // TODO show editor
+            print("*** editor cell tapped")
         }
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+    func onManagementCellSelected(atIndexPath indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0: toggleOverride()
+        case 1: resetOverride()
+        default: fatalError("Unexpected index \(indexPath)")
+        }
     }
 
 }
@@ -78,6 +105,14 @@ extension ThemeEditorViewController {
         let mgr = ThemeManager.shared
         print(self, #function, mgr.overrideTheme == nil ? "enabling" : "disabling")
         mgr.overrideTheme = mgr.overrideTheme == nil ? mutableTheme : nil
+        tableView.reloadRows(at: [.init(row: 0, section: 0)], with: .automatic)
+    }
+
+    func resetOverride() {
+        print(self, #function)
+        let mgr = ThemeManager.shared
+        mutableTheme = MutableTheme(mgr.currentTheme)
+        mgr.overrideTheme = nil
         tableView.reloadRows(at: [.init(row: 0, section: 0)], with: .automatic)
     }
 
@@ -107,11 +142,73 @@ private class ThemeOverrideCell: UITableViewCell {
 
 }
 
-private class ThemeEditorItemCell: UITableViewCell {
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
+private class ThemeEditorButtonCell: UITableViewCell {
+
+}
+
+private class ThemeEditorItemCell: UITableViewCell, ObservableObject {
+
+    @Published private var themeItem: String = ""
+    @Published private var color: UIColor?
+
+    private var colorDescription: String {
+        var desc = color?.hexString ?? "<error>"
+
+        if let color = color {
+            let colorType = String(describing: type(of: color))
+            print(colorType)
+            if colorType == "UIDynamicCatalogColor",
+               let name = color.value(forKey: "name") as? String {
+                let bundle = (color.value(forKey: "_assetManager") as AnyObject).value(forKey: "_bundle") as? Bundle
+                if bundle == DesignResourcesKit.bundle {
+                    desc += " (Design System: \(name))"
+                } else {
+                    desc += " (Asset: \(name))"
+                }
+            }
+        }
+
+        return desc
+    }
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         print(self, #function)
+        if #available(iOS 16, *) {
+            contentConfiguration = UIHostingConfiguration {
+                CellView(cell: self)
+            }
+        }
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func present(themeItem: String, fromTheme theme: MutableTheme) {
+        self.themeItem = themeItem
+        self.color = theme.colorForProperty(themeItem)
+    }
+
+    struct CellView: View {
+
+        @ObservedObject var cell: ThemeEditorItemCell
+
+        var body: some View {
+            HStack {
+                
+                RoundedRectangle(cornerRadius: 12)
+                    .foregroundColor(Color(cell.color ?? .clear))
+                    .frame(width: 50, height: 50)
+
+                VStack(alignment: .leading) {
+                    Text(cell.themeItem)
+                    Text(cell.colorDescription)
+                        .daxCaption()
+                }
+
+            }
+        }
     }
 
 }
@@ -120,146 +217,90 @@ private class ThemeEditorItemCell: UITableViewCell {
 
 class MutableTheme: Theme {
 
+    // Not colours
     var name: ThemeName
-
     var currentImageSet: ThemeManager.ImageSet
-
     var statusBarStyle: UIStatusBarStyle
-
     var keyboardAppearance: UIKeyboardAppearance
 
+    // Already in design system
+    var omniBarBackgroundColor: UIColor
+    var backgroundColor: UIColor
+    var mainViewBackgroundColor: UIColor
+    var barBackgroundColor: UIColor
+    var barTintColor: UIColor
+    var browsingMenuBackgroundColor: UIColor
+    var tableCellBackgroundColor: UIColor
+    var tabSwitcherCellBackgroundColor: UIColor
+    var searchBarTextPlaceholderColor: UIColor
+
+    // To be changed to design system
     var tabsBarBackgroundColor: UIColor
-
     var tabsBarSeparatorColor: UIColor
-
     var navigationBarTitleColor: UIColor
-
     var navigationBarTintColor: UIColor
-
     var tintOnBlurColor: UIColor
-
     var searchBarBackgroundColor: UIColor
-
     var centeredSearchBarBackgroundColor: UIColor
-
     var searchBarTextColor: UIColor
-
     var searchBarTextDeemphasisColor: UIColor
-
     var searchBarBorderColor: UIColor
-
     var searchBarClearTextIconColor: UIColor
-
     var searchBarVoiceSearchIconColor: UIColor
-
     var browsingMenuTextColor: UIColor
-
     var browsingMenuIconsColor: UIColor
-
     var browsingMenuSeparatorColor: UIColor
-
     var browsingMenuHighlightColor: UIColor
-
     var progressBarGradientDarkColor: UIColor
-
     var progressBarGradientLightColor: UIColor
-
     var autocompleteSuggestionTextColor: UIColor
-
     var autocompleteCellAccessoryColor: UIColor
-
     var tableCellSelectedColor: UIColor
-
     var tableCellSeparatorColor: UIColor
-
     var tableCellTextColor: UIColor
-
     var tableCellAccessoryTextColor: UIColor
-
     var tableCellAccessoryColor: UIColor
-
     var tableCellHighlightedBackgroundColor: UIColor
-
     var tableHeaderTextColor: UIColor
-
     var tabSwitcherCellBorderColor: UIColor
-
     var tabSwitcherCellTextColor: UIColor
-
     var tabSwitcherCellSecondaryTextColor: UIColor
-
     var iconCellBorderColor: UIColor
-
     var buttonTintColor: UIColor
-
     var placeholderColor: UIColor
-
     var textFieldBackgroundColor: UIColor
-
     var textFieldFontColor: UIColor
-
     var homeRowPrimaryTextColor: UIColor
-
     var homeRowSecondaryTextColor: UIColor
-
     var homeRowBackgroundColor: UIColor
-
     var homePrivacyCellTextColor: UIColor
-
     var homePrivacyCellSecondaryTextColor: UIColor
-
     var aboutScreenTextColor: UIColor
-
     var aboutScreenButtonColor: UIColor
-
     var favoritesPlusTintColor: UIColor
-
     var favoritesPlusBackgroundColor: UIColor
-
     var faviconBackgroundColor: UIColor
-
     var favoriteTextColor: UIColor
-
     var feedbackPrimaryTextColor: UIColor
-
     var feedbackSecondaryTextColor: UIColor
-
     var feedbackSentimentButtonBackgroundColor: UIColor
-
     var privacyReportCellBackgroundColor: UIColor
-
     var activityStyle: UIActivityIndicatorView.Style
-
     var destructiveColor: UIColor
-
     var ddgTextTintColor: UIColor
-
     var daxDialogBackgroundColor: UIColor
-
     var daxDialogTextColor: UIColor
-
     var homeMessageBackgroundColor: UIColor
-
     var homeMessageHeaderTextColor: UIColor
-
     var homeMessageSubheaderTextColor: UIColor
-
     var homeMessageTopTextColor: UIColor
-
     var homeMessageButtonColor: UIColor
-
     var homeMessageButtonTextColor: UIColor
-
     var homeMessageDismissButtonColor: UIColor
-
     var autofillDefaultTitleTextColor: UIColor
-
     var autofillDefaultSubtitleTextColor: UIColor
-
     var autofillEmptySearchViewTextColor: UIColor
-
     var autofillLockedViewTextColor: UIColor
-
     var privacyDashboardWebviewBackgroundColor: UIColor
 
     // swiftlint:disable function_body_length
@@ -268,6 +309,15 @@ class MutableTheme: Theme {
         self.currentImageSet = theme.currentImageSet
         self.statusBarStyle = theme.statusBarStyle
         self.keyboardAppearance = theme.keyboardAppearance
+        self.omniBarBackgroundColor = theme.omniBarBackgroundColor
+        self.backgroundColor = theme.backgroundColor
+        self.mainViewBackgroundColor = theme.mainViewBackgroundColor
+        self.barBackgroundColor = theme.barBackgroundColor
+        self.barTintColor = theme.barTintColor
+        self.browsingMenuBackgroundColor = theme.browsingMenuBackgroundColor
+        self.tableCellBackgroundColor = theme.tableCellBackgroundColor
+        self.tabSwitcherCellBackgroundColor = theme.tabSwitcherCellBackgroundColor
+        self.searchBarTextPlaceholderColor = theme.searchBarTextPlaceholderColor
         self.tabsBarBackgroundColor = theme.tabsBarBackgroundColor
         self.tabsBarSeparatorColor = theme.tabsBarSeparatorColor
         self.navigationBarTitleColor = theme.navigationBarTitleColor
@@ -336,6 +386,7 @@ class MutableTheme: Theme {
         self.autofillLockedViewTextColor = theme.autofillLockedViewTextColor
         self.privacyDashboardWebviewBackgroundColor = theme.privacyDashboardWebviewBackgroundColor
     }
+
     // swiftlint:enable function_body_length
 
     lazy var colorProperties: [String] = {
@@ -346,13 +397,42 @@ class MutableTheme: Theme {
         let mirror = Mirror(reflecting: object)
         var propertyNames: [String] = []
 
-        for child in mirror.children {
-            if let childType = child.value as? T {
-                propertyNames.append(child.label!)
-            }
+        for child in mirror.children where child.value as? T != nil {
+            propertyNames.append(child.label!)
         }
 
         return propertyNames
     }
 
+    func colorForProperty(_ property: String) -> UIColor? {
+        let mirror = Mirror(reflecting: self)
+        return mirror.children.first(where: { $0.label == property })?.value as? UIColor
+    }
 }
+
+extension UIColor {
+
+    var hexString: String? {
+        guard let cgColor = self.cgColor.converted(to: CGColorSpace(name: CGColorSpace.sRGB)!, intent: .defaultIntent, options: nil) else {
+            return nil
+        }
+
+        guard let components = cgColor.components, components.count >= 3 else {
+            return nil
+        }
+
+        let r = Float(components[0])
+        let g = Float(components[1])
+        let b = Float(components[2])
+        let a: Float = components.count >= 4 ? Float(components[3]) : 1.0
+
+        return String(format: "%02lX%02lX%02lX%02lX",
+                      lroundf(r * 255),
+                      lroundf(g * 255),
+                      lroundf(b * 255),
+                      lroundf(a * 255))
+    }
+    
+}
+
+// swiftlint:enable file_length

@@ -151,20 +151,28 @@ private class ThemeEditorItemCell: UITableViewCell, ObservableObject {
     @Published private var themeItem: String = ""
     @Published private var color: UIColor?
 
+    var isCatalogColor: Bool {
+        guard let color else { return false }
+        let colorType = String(describing: type(of: color))
+        return colorType == "UIDynamicCatalogColor"
+    }
+
+    var isDesignSystemColor: Bool {
+        if isCatalogColor, let color = color {
+            let bundle = (color.value(forKey: "_assetManager") as AnyObject).value(forKey: "_bundle") as? Bundle
+            return bundle == DesignResourcesKit.bundle
+        }
+        return false
+    }
+
     private var colorDescription: String {
         var desc = color?.hexString ?? "<error>"
 
-        if let color = color {
-            let colorType = String(describing: type(of: color))
-            print(colorType)
-            if colorType == "UIDynamicCatalogColor",
-               let name = color.value(forKey: "name") as? String {
-                let bundle = (color.value(forKey: "_assetManager") as AnyObject).value(forKey: "_bundle") as? Bundle
-                if bundle == DesignResourcesKit.bundle {
-                    desc += " (Design System: \(name))"
-                } else {
-                    desc += " (Asset: \(name))"
-                }
+        if isCatalogColor, let name = color?.value(forKey: "name") as? String {
+            if isDesignSystemColor {
+                desc += " (Design System: \(name))"
+            } else {
+                desc += " (Asset: \(name))"
             }
         }
 
@@ -190,6 +198,7 @@ private class ThemeEditorItemCell: UITableViewCell, ObservableObject {
         self.color = theme.colorForProperty(themeItem)
     }
 
+    @available(iOS 16, *)
     struct CellView: View {
 
         @ObservedObject var cell: ThemeEditorItemCell
@@ -197,9 +206,17 @@ private class ThemeEditorItemCell: UITableViewCell, ObservableObject {
         var body: some View {
             HStack {
                 
-                RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(Color(cell.color ?? .clear))
-                    .frame(width: 50, height: 50)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 12)
+                        .foregroundColor(Color(cell.color ?? .clear))
+                        .frame(width: 50, height: 50)
+
+                    if cell.isDesignSystemColor {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(.green)
+                            .tint(.green)
+                    }
+                }
 
                 VStack(alignment: .leading) {
                     Text(cell.themeItem)

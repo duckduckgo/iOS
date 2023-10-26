@@ -23,6 +23,7 @@ import UIKit
 import DesignResourcesKit
 import SwiftUI
 
+@available(iOS 16, *)
 class ThemeEditorViewController: UITableViewController {
 
     var mutableTheme = MutableTheme(ThemeManager.shared.overrideTheme ?? ThemeManager.shared.currentTheme)
@@ -37,6 +38,7 @@ class ThemeEditorViewController: UITableViewController {
 }
 
 // MARK: UITableView configuration
+@available(iOS 16, *)
 extension ThemeEditorViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         2
@@ -82,8 +84,7 @@ extension ThemeEditorViewController {
         if indexPath.section == 0 {
             onManagementCellSelected(atIndexPath: indexPath)
         } else {
-            // TODO show editor
-            print("*** editor cell tapped")
+            editColorAtIndex(indexPath.row)
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -99,6 +100,7 @@ extension ThemeEditorViewController {
 }
 
 // MARK: Other logic
+@available(iOS 16, *)
 extension ThemeEditorViewController {
 
     func toggleOverride() {
@@ -116,8 +118,114 @@ extension ThemeEditorViewController {
         tableView.reloadRows(at: [.init(row: 0, section: 0)], with: .automatic)
     }
 
+    func editColorAtIndex(_ index: Int) {
+        let property = mutableTheme.colorProperties[index]
+        let controller = UIHostingController(rootView: ColorEditorView(controller: self, colorProperty: property))
+        navigationController?.pushViewController(controller, animated: true)
+    }
+
+    struct ColorEditorView: View {
+
+        @ObservedObject var controller: ThemeEditorViewController
+        let colorProperty: String
+
+        var uiColor: UIColor? {
+            controller.mutableTheme.colorForProperty(colorProperty)
+        }
+
+        var themeColor: Color {
+            Color(uiColor: uiColor ?? .clear)
+        }
+
+        var body: some View {
+            VStack {
+
+                RoundedRectangle(cornerRadius: 8)
+                    .foregroundColor(themeColor)
+                    .frame(width: 64, height: 64)
+                    .padding(.top, 16)
+
+                Text(uiColor?.colorDescription ?? "")
+                    .daxCaption()
+
+                List {
+                    Section {
+                        HStack {
+                            Spacer()
+
+                            Button {
+                                print("red")
+                            } label: {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .foregroundColor(.red)
+                                    .frame(width: 50, height: 50)
+                            }
+                            .buttonStyle(.borderless)
+                            
+                            Spacer()
+
+                            Button {
+                                print("green")
+                            } label: {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .foregroundColor(.green)
+                                    .frame(width: 50, height: 50)
+                            }
+                            .buttonStyle(.borderless)
+
+                            Spacer()
+
+                            Button {
+                                print("blue")
+                            } label: {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .foregroundColor(.blue)
+                                    .frame(width: 50, height: 50)
+                            }
+                            .buttonStyle(.borderless)
+
+                            Spacer()
+
+                            Button {
+                                print("yellow")
+                            } label: {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .foregroundColor(.yellow)
+                                    .frame(width: 50, height: 50)
+                            }
+                            .buttonStyle(.borderless)
+
+                            Spacer()
+                        }
+                    } header: {
+                        Text("Apply color (useful for seeing in the UI)")
+                            .textCase(nil)
+                    }
+
+                    Section {
+                        Button {
+
+                        } label: {
+                            Text("Button")
+                        }
+                    } header: {
+                        Text("Apply Design System color")
+                            .textCase(nil)
+                    }
+                }
+
+            }
+            .navigationTitle(colorProperty)
+        }
+
+    }
+
 }
 
+@available(iOS 16, *)
+extension ThemeEditorViewController: ObservableObject {
+
+}
 
 // MARK: Cells
 
@@ -151,34 +259,6 @@ private class ThemeEditorItemCell: UITableViewCell, ObservableObject {
     @Published private var themeItem: String = ""
     @Published private var color: UIColor?
 
-    var isCatalogColor: Bool {
-        guard let color else { return false }
-        let colorType = String(describing: type(of: color))
-        return colorType == "UIDynamicCatalogColor"
-    }
-
-    var isDesignSystemColor: Bool {
-        if isCatalogColor, let color = color {
-            let bundle = (color.value(forKey: "_assetManager") as AnyObject).value(forKey: "_bundle") as? Bundle
-            return bundle == DesignResourcesKit.bundle
-        }
-        return false
-    }
-
-    private var colorDescription: String {
-        var desc = color?.hexString ?? "<error>"
-
-        if isCatalogColor, let name = color?.value(forKey: "name") as? String {
-            if isDesignSystemColor {
-                desc += " (Design System: \(name))"
-            } else {
-                desc += " (Asset: \(name))"
-            }
-        }
-
-        return desc
-    }
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         print(self, #function)
@@ -211,7 +291,7 @@ private class ThemeEditorItemCell: UITableViewCell, ObservableObject {
                         .foregroundColor(Color(cell.color ?? .clear))
                         .frame(width: 50, height: 50)
 
-                    if cell.isDesignSystemColor {
+                    if cell.color?.isDesignSystemColor == true {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundColor(.green)
                             .tint(.green)
@@ -220,7 +300,7 @@ private class ThemeEditorItemCell: UITableViewCell, ObservableObject {
 
                 VStack(alignment: .leading) {
                     Text(cell.themeItem)
-                    Text(cell.colorDescription)
+                    Text(cell.color?.colorDescription ?? "")
                         .daxCaption()
                 }
 
@@ -449,7 +529,39 @@ extension UIColor {
                       lroundf(b * 255),
                       lroundf(a * 255))
     }
-    
+
+    var isCatalogColor: Bool {
+        let colorType = String(describing: type(of: self))
+        return colorType == "UIDynamicCatalogColor"
+    }
+
+    var isDesignSystemColor: Bool {
+        if isCatalogColor {
+            let bundle = (value(forKey: "_assetManager") as AnyObject).value(forKey: "_bundle") as? Bundle
+            return bundle == DesignResourcesKit.bundle
+        }
+        return false
+    }
+
+    var catalogName: String? {
+        guard isCatalogColor else { return nil }
+        return value(forKey: "name") as? String
+    }
+
+    var colorDescription: String {
+        var desc = hexString ?? "<error>"
+
+        if let name = catalogName {
+            if isDesignSystemColor {
+                desc += " (Design System: \(name))"
+            } else {
+                desc += " (Asset: \(name))"
+            }
+        }
+
+        return desc
+    }
+
 }
 
 // swiftlint:enable file_length

@@ -179,7 +179,7 @@ private class BrowserChromeDelegateMock: BrowserChromeDelegate {
 
     var barsMaxHeight: CGFloat = 30
 
-    var omniBar: OmniBar! = OmniBar(frame: CGRect(x: 0, y: 0, width: 300, height: 30))
+    var omniBar: OmniBar = OmniBar(frame: CGRect(x: 0, y: 0, width: 300, height: 30))
 
     var tabBarContainer: UIView = UIView()
 }

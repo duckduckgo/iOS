@@ -82,19 +82,6 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         setUpStatusMessagePublishers()
         setUpDisableTogglePublisher()
         setUpServerInfoPublishers()
-
-        errorObserver.publisher
-            .map {
-                $0.map { _ in
-                    ErrorItem(
-                        title: UserText.netPStatusViewErrorConnectionFailedTitle,
-                        message: UserText.netPStatusViewErrorConnectionFailedMessage
-                    )
-                }
-            }
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.error, onWeaklyHeld: self)
-            .store(in: &cancellables)
     }
 
     private func setUpIsConnectedStatePublishers() {

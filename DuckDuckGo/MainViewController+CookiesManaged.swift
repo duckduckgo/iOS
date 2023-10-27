@@ -37,7 +37,7 @@ extension MainViewController {
               topURL == tabManager.current?.url
         else { return }
         
-        omniBar.showOrScheduleCookiesManagedNotification(isCosmetic: isCosmetic)
+        viewCoordinator.omniBar.showOrScheduleCookiesManagedNotification(isCosmetic: isCosmetic)
     }
     
 }

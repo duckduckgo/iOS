@@ -31,12 +31,15 @@ protocol AppSettings: AnyObject {
     var sendDoNotSell: Bool { get set }
     
     var currentFireButtonAnimation: FireButtonAnimationType { get set }
-    
+    var currentAddressBarPosition: AddressBarPosition { get set }
+
     var textSize: Int { get set }
     
     var autofillCredentialsEnabled: Bool { get set }
     var autofillCredentialsSavePromptShowAtLeastOnce: Bool { get set }
     var autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary: Bool { get set }
+    var autofillIsNewInstallForOnByDefault: Bool? { get set }
+    func setAutofillIsNewInstallForOnByDefault()
 
     var voiceSearchEnabled: Bool { get set }
 

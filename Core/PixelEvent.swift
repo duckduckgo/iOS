@@ -245,6 +245,9 @@ extension Pixel {
 
         case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
         
+        case navigationbarPositionBottom
+        case navigationBarPositionTop
+
         case secureVaultInitError
         case secureVaultError
         
@@ -502,7 +505,6 @@ extension Pixel {
         case emailIncontextModalExitEarlyContinue
 
         case compilationFailed
-        case incrementalRolloutTest
     }
     
 }
@@ -577,7 +579,10 @@ extension Pixel.Event {
             
         case .autocompleteSelectedLocal: return "m_au_l"
         case .autocompleteSelectedRemote: return "m_au_r"
-            
+
+        case .navigationbarPositionBottom: return "m_seturlbar_bottom"
+        case .navigationBarPositionTop: return "m_seturlbar_top"
+
         case .feedbackPositive: return "mfbs_positive_submit"
         case .feedbackNegativePrefix(category: let category): return "mfbs_negative_\(category)"
             
@@ -985,8 +990,6 @@ extension Pixel.Event {
         case .debugReturnUserAddATB: return "m_debug_return_user_add_atb"
         case .debugReturnUserReadATB: return "m_debug_return_user_read_atb"
         case .debugReturnUserUpdateATB: return "m_debug_return_user_update_atb"
-
-        case .incrementalRolloutTest: return "m_autofill_incremental_rollout_test"
         }
         
     }

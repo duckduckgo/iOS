@@ -33,3 +33,41 @@ extension View {
         }
     }
 }
+
+/*
+ These exensions are needed to provide the UI styling specs for Network Protection
+ However, at time of writing, they are not supported in iOS <=14. As Network Protection
+ is not supporting iOS <=14, these are being kept separate.
+ */
+
+@available(iOS 15, *)
+extension View {
+    @ViewBuilder
+    func applyInsetGroupedListStyle() -> some View {
+        self
+            .listStyle(.insetGrouped)
+            .hideScrollContentBackground()
+            .background(
+                Rectangle().ignoresSafeArea().foregroundColor(Color(designSystemColor: .background))
+            )
+    }
+
+    @ViewBuilder
+    func increaseHeaderProminence() -> some View {
+        self.headerProminence(.increased)
+    }
+
+    @ViewBuilder
+    private func hideScrollContentBackground() -> some View {
+        if #available(iOS 16, *) {
+            self.scrollContentBackground(.hidden)
+        } else {
+            let originalBackgroundColor = UITableView.appearance().backgroundColor
+            self.onAppear {
+                UITableView.appearance().backgroundColor = .clear
+            }.onDisappear {
+                UITableView.appearance().backgroundColor = originalBackgroundColor
+            }
+        }
+    }
+}

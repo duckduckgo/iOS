@@ -22,6 +22,7 @@
 import Foundation
 import Combine
 import NetworkProtection
+import WidgetKit
 
 final class NetworkProtectionStatusViewModel: ObservableObject {
     private static var dateFormatter: DateComponentsFormatter = {
@@ -57,7 +58,11 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     // MARK: Toggle Item
     @Published public var isNetPEnabled = false
-    @Published public var statusMessage: String
+    @Published public var statusMessage: String {
+        didSet {
+            WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
+        }
+    }
     @Published public var shouldDisableToggle: Bool = false
 
     // MARK: Connection Details
@@ -172,6 +177,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         } else {
             await disableNetP()
         }
+
+        WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
     }
 
     @MainActor

@@ -25,6 +25,7 @@ import CoreData
 import Kingfisher
 import Bookmarks
 import Persistence
+import NetworkExtension
 
 struct Favorite {
 
@@ -191,6 +192,7 @@ struct Widgets: WidgetBundle {
     var body: some Widget {
         SearchWidget()
         FavoritesWidget()
+        VPNStatusWidget()
 
         if #available(iOSApplicationExtension 16.0, *) {
             SearchLockScreenWidget()
@@ -212,4 +214,116 @@ extension UIImage {
         }
     }
 
+}
+
+// MARK: - VPN Status Widget
+
+struct VPNStatusTimelineEntry: TimelineEntry {
+    let date: Date
+
+    let uuid: String = UUID().uuidString
+    let enabled: Bool?
+    let status: String
+
+    internal init(date: Date, enabled: Bool? = nil, status: String = "Unknown") {
+        self.date = date
+        self.enabled = enabled
+        self.status = status
+    }
+}
+
+class VPNStatusTimelineProvider: TimelineProvider {
+
+    typealias Entry = VPNStatusTimelineEntry
+
+    func placeholder(in context: Context) -> VPNStatusTimelineEntry {
+        return VPNStatusTimelineEntry(date: Date(), enabled: nil)
+    }
+
+    func getSnapshot(in context: Context, completion: @escaping (VPNStatusTimelineEntry) -> Void) {
+        let entry = VPNStatusTimelineEntry(date: Date(), enabled: false)
+        completion(entry)
+    }
+
+    func getTimeline(in context: Context, completion: @escaping (Timeline<VPNStatusTimelineEntry>) -> Void) {
+        NETunnelProviderManager.loadAllFromPreferences { managers, error in
+            let expiration =  Date().addingTimeInterval(TimeInterval.seconds(30))
+
+            if let error {
+                let entry = VPNStatusTimelineEntry(date: expiration, enabled: false, status: "Error")
+                let timeline = Timeline(entries: [entry], policy: .atEnd)
+                completion(timeline)
+                return
+            }
+
+            guard let manager = managers?.first else {
+                let entry = VPNStatusTimelineEntry(date: expiration, enabled: false, status: "No Manager")
+                let timeline = Timeline(entries: [entry], policy: .atEnd)
+                completion(timeline)
+                return
+            }
+
+            let status = manager.connection.status
+            let entry = VPNStatusTimelineEntry(date: Date().addingTimeInterval(TimeInterval.seconds(30)), enabled: true, status: status.description)
+            let timeline = Timeline(entries: [entry], policy: .atEnd)
+
+            completion(timeline)
+        }
+    }
+}
+
+extension NEVPNStatus {
+    var description: String {
+        switch self {
+        case .connected:
+            return "Connected"
+        case .connecting:
+            return "Connecting"
+        case .disconnected:
+            return "Disconnected"
+        case .disconnecting:
+            return "Disconnecting"
+        case .invalid:
+            return "Invalid"
+        case .reasserting:
+            return "Reasserting"
+        default:
+            return "Unknown Status"
+        }
+    }
+}
+
+struct VPNStatusView: View {
+    @Environment(\.widgetFamily) var family: WidgetFamily
+    var entry: VPNStatusTimelineProvider.Entry
+
+    @ViewBuilder
+    var body: some View {
+        if #available(iOSApplicationExtension 17.0, *) {
+            VStack {
+                Text(entry.status)
+                Text("Expiration: \(entry.date.description)").font(.footnote)
+                Text(entry.uuid).font(Font.system(size: 10, weight: .bold)).padding(.top, 8)
+            }
+                .containerBackground(for: .widget) {
+                    Color.orange
+                }
+        } else {
+            Text("Testing")
+        }
+
+    }
+}
+
+struct VPNStatusWidget: Widget {
+    let kind: String = "VPNStatusWidget"
+
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: VPNStatusTimelineProvider()) { entry in
+            VPNStatusView(entry: entry)
+        }
+        .configurationDisplayName("VPN Status")
+        .description("View and manage the DuckDuckGo VPN status")
+        .supportedFamilies([.systemMedium])
+    }
 }

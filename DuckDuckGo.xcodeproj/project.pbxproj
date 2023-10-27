@@ -764,6 +764,7 @@
 		EE7A92872AC6DE4700832A36 /* NetworkProtectionNotificationIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7A92862AC6DE4700832A36 /* NetworkProtectionNotificationIdentifier.swift */; };
 		EE8594992A44791C008A6D06 /* NetworkProtectionTunnelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8594982A44791C008A6D06 /* NetworkProtectionTunnelController.swift */; };
 		EE8E568A2A56BCE400F11DCA /* NetworkProtection in Frameworks */ = {isa = PBXBuildFile; productRef = EE8E56892A56BCE400F11DCA /* NetworkProtection */; };
+		EE9D68D12AE00CF300B55EF4 /* NetworkProtectionVPNSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9D68D02AE00CF300B55EF4 /* NetworkProtectionVPNSettingsView.swift */; };
 		EEDFE2DA2AC6ED4F00F0E19C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EEDFE2DC2AC6ED4F00F0E19C /* Localizable.strings */; };
 		EEEB80A32A421CE600386378 /* NetworkProtectionPacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB80A22A421CE600386378 /* NetworkProtectionPacketTunnelProvider.swift */; };
 		EEF0F8CC2ABC832300630031 /* NetworkProtectionDebugFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF0F8CB2ABC832200630031 /* NetworkProtectionDebugFeatures.swift */; };
@@ -1296,7 +1297,6 @@
 		6AC6DAB228804F97002723C0 /* BarsAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsAnimator.swift; sourceTree = "<group>"; };
 		6AC98418288055C1005FA9CA /* BarsAnimatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsAnimatorTests.swift; sourceTree = "<group>"; };
 		6FB030C7234331B400A10DB9 /* Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Configuration.xcconfig; path = Configuration/Configuration.xcconfig; sourceTree = "<group>"; };
-		7B5E1F9D2AB9E1E900DA1172 /* NetworkProtectionDebugFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionDebugFeatures.swift; sourceTree = "<group>"; };
 		83004E7F2193BB8200DA013C /* WKNavigationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKNavigationExtension.swift; sourceTree = "<group>"; };
 		83004E832193E14C00DA013C /* UIAlertControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIAlertControllerExtension.swift; path = ../Core/UIAlertControllerExtension.swift; sourceTree = "<group>"; };
 		83004E852193E5ED00DA013C /* TabViewControllerBrowsingMenuExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewControllerBrowsingMenuExtension.swift; sourceTree = "<group>"; };
@@ -2332,6 +2332,7 @@
 		EE7917902A83DE93008DFF28 /* CombineTestUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineTestUtilities.swift; sourceTree = "<group>"; };
 		EE7A92862AC6DE4700832A36 /* NetworkProtectionNotificationIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionNotificationIdentifier.swift; sourceTree = "<group>"; };
 		EE8594982A44791C008A6D06 /* NetworkProtectionTunnelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionTunnelController.swift; sourceTree = "<group>"; };
+		EE9D68D02AE00CF300B55EF4 /* NetworkProtectionVPNSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionVPNSettingsView.swift; sourceTree = "<group>"; };
 		EEB8FDB92A990AEE00EBEDCF /* Configuration-Alpha.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Configuration-Alpha.xcconfig"; path = "Configuration/Configuration-Alpha.xcconfig"; sourceTree = "<group>"; };
 		EEDFE2DB2AC6ED4F00F0E19C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EEDFE2DD2AC6ED5B00F0E19C /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -3533,7 +3534,6 @@
 				83ED3B8D1FA8E63700B47556 /* README.md */,
 				83ED3B8C1FA8E61D00B47556 /* ManualTestsScript.md */,
 				85A313962028E78A00327D00 /* release_notes.txt */,
-				EEF0F8CA2ABC82E100630031 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -4413,9 +4413,18 @@
 			name = NetworkProtection;
 			sourceTree = "<group>";
 		};
+		EE9D68CF2AE00CE000B55EF4 /* VPNSettings */ = {
+			isa = PBXGroup;
+			children = (
+				EE9D68D02AE00CF300B55EF4 /* NetworkProtectionVPNSettingsView.swift */,
+			);
+			name = VPNSettings;
+			sourceTree = "<group>";
+		};
 		EECD94B22A28B8580085C66E /* NetworkProtection */ = {
 			isa = PBXGroup;
 			children = (
+				EE9D68CF2AE00CE000B55EF4 /* VPNSettings */,
 				EE458D122ABB651500FC651A /* Debug */,
 				EE0153E22A6FE031002A8B26 /* Root */,
 				EE0153DF2A6EABAF002A8B26 /* Helpers */,
@@ -4433,14 +4442,6 @@
 				EE4FB1872A28D11900E5CBA7 /* NetworkProtectionStatusViewModel.swift */,
 			);
 			name = Status;
-			sourceTree = "<group>";
-		};
-		EEF0F8CA2ABC82E100630031 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				7B5E1F9D2AB9E1E900DA1172 /* NetworkProtectionDebugFeatures.swift */,
-			);
-			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		EEFD562D2A65B68B00DAEC48 /* Invite */ = {
@@ -6072,6 +6073,7 @@
 				9820FF502244FECC008D4782 /* UIScrollViewExtension.swift in Sources */,
 				8540BD5423D8D5080057FDD2 /* PreserveLoginsAlert.swift in Sources */,
 				1E87615928A1517200C7C5CE /* PrivacyDashboardViewController.swift in Sources */,
+				EE9D68D12AE00CF300B55EF4 /* NetworkProtectionVPNSettingsView.swift in Sources */,
 				319A371028299A850079FBCE /* PasswordHider.swift in Sources */,
 				982C87C42255559A00919035 /* UITableViewCellExtension.swift in Sources */,
 				B623C1C42862CD670043013E /* WKDownloadSession.swift in Sources */,

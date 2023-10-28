@@ -124,6 +124,12 @@ extension ThemeEditorViewController {
         navigationController?.pushViewController(controller, animated: true)
     }
 
+    func applyColor(_ color: UIColor, toProperty name: String) {
+        print(#function, color, name)
+        mutableTheme.setColor(color, forProperty: name)
+        ThemeManager.shared.overrideTheme = mutableTheme
+    }
+
     struct ColorEditorView: View {
 
         @ObservedObject var controller: ThemeEditorViewController
@@ -154,18 +160,18 @@ extension ThemeEditorViewController {
                             Spacer()
 
                             Button {
-                                print("red")
+                                controller.applyColor(.red, toProperty: colorProperty)
                             } label: {
                                 RoundedRectangle(cornerRadius: 8)
                                     .foregroundColor(.red)
                                     .frame(width: 50, height: 50)
                             }
                             .buttonStyle(.borderless)
-                            
+
                             Spacer()
 
                             Button {
-                                print("green")
+                                controller.applyColor(.green, toProperty: colorProperty)
                             } label: {
                                 RoundedRectangle(cornerRadius: 8)
                                     .foregroundColor(.green)
@@ -176,7 +182,7 @@ extension ThemeEditorViewController {
                             Spacer()
 
                             Button {
-                                print("blue")
+                                controller.applyColor(.blue, toProperty: colorProperty)
                             } label: {
                                 RoundedRectangle(cornerRadius: 8)
                                     .foregroundColor(.blue)
@@ -187,7 +193,7 @@ extension ThemeEditorViewController {
                             Spacer()
 
                             Button {
-                                print("yellow")
+                                controller.applyColor(.yellow, toProperty: colorProperty)
                             } label: {
                                 RoundedRectangle(cornerRadius: 8)
                                     .foregroundColor(.yellow)
@@ -243,7 +249,7 @@ private class ThemeOverrideCell: UITableViewCell {
             accessoryType = .checkmark
         }
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -285,7 +291,7 @@ private class ThemeEditorItemCell: UITableViewCell, ObservableObject {
 
         var body: some View {
             HStack {
-                
+
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
                         .foregroundColor(Color(cell.color ?? .clear))
@@ -312,93 +318,93 @@ private class ThemeEditorItemCell: UITableViewCell, ObservableObject {
 
 // MARK: Mutable Theme
 
-class MutableTheme: Theme {
+class MutableTheme: NSObject, Theme {
 
     // Not colours
     var name: ThemeName
     var currentImageSet: ThemeManager.ImageSet
     var statusBarStyle: UIStatusBarStyle
     var keyboardAppearance: UIKeyboardAppearance
+    var activityStyle: UIActivityIndicatorView.Style
 
     // Already in design system
-    var omniBarBackgroundColor: UIColor
-    var backgroundColor: UIColor
-    var mainViewBackgroundColor: UIColor
-    var barBackgroundColor: UIColor
-    var barTintColor: UIColor
-    var browsingMenuBackgroundColor: UIColor
-    var tableCellBackgroundColor: UIColor
-    var tabSwitcherCellBackgroundColor: UIColor
-    var searchBarTextPlaceholderColor: UIColor
+    @objc var omniBarBackgroundColor: UIColor
+    @objc var backgroundColor: UIColor
+    @objc var mainViewBackgroundColor: UIColor
+    @objc var barBackgroundColor: UIColor
+    @objc var barTintColor: UIColor
+    @objc var browsingMenuBackgroundColor: UIColor
+    @objc var tableCellBackgroundColor: UIColor
+    @objc var tabSwitcherCellBackgroundColor: UIColor
+    @objc var searchBarTextPlaceholderColor: UIColor
 
     // To be changed to design system
-    var tabsBarBackgroundColor: UIColor
-    var tabsBarSeparatorColor: UIColor
-    var navigationBarTitleColor: UIColor
-    var navigationBarTintColor: UIColor
-    var tintOnBlurColor: UIColor
-    var searchBarBackgroundColor: UIColor
-    var centeredSearchBarBackgroundColor: UIColor
-    var searchBarTextColor: UIColor
-    var searchBarTextDeemphasisColor: UIColor
-    var searchBarBorderColor: UIColor
-    var searchBarClearTextIconColor: UIColor
-    var searchBarVoiceSearchIconColor: UIColor
-    var browsingMenuTextColor: UIColor
-    var browsingMenuIconsColor: UIColor
-    var browsingMenuSeparatorColor: UIColor
-    var browsingMenuHighlightColor: UIColor
-    var progressBarGradientDarkColor: UIColor
-    var progressBarGradientLightColor: UIColor
-    var autocompleteSuggestionTextColor: UIColor
-    var autocompleteCellAccessoryColor: UIColor
-    var tableCellSelectedColor: UIColor
-    var tableCellSeparatorColor: UIColor
-    var tableCellTextColor: UIColor
-    var tableCellAccessoryTextColor: UIColor
-    var tableCellAccessoryColor: UIColor
-    var tableCellHighlightedBackgroundColor: UIColor
-    var tableHeaderTextColor: UIColor
-    var tabSwitcherCellBorderColor: UIColor
-    var tabSwitcherCellTextColor: UIColor
-    var tabSwitcherCellSecondaryTextColor: UIColor
-    var iconCellBorderColor: UIColor
-    var buttonTintColor: UIColor
-    var placeholderColor: UIColor
-    var textFieldBackgroundColor: UIColor
-    var textFieldFontColor: UIColor
-    var homeRowPrimaryTextColor: UIColor
-    var homeRowSecondaryTextColor: UIColor
-    var homeRowBackgroundColor: UIColor
-    var homePrivacyCellTextColor: UIColor
-    var homePrivacyCellSecondaryTextColor: UIColor
-    var aboutScreenTextColor: UIColor
-    var aboutScreenButtonColor: UIColor
-    var favoritesPlusTintColor: UIColor
-    var favoritesPlusBackgroundColor: UIColor
-    var faviconBackgroundColor: UIColor
-    var favoriteTextColor: UIColor
-    var feedbackPrimaryTextColor: UIColor
-    var feedbackSecondaryTextColor: UIColor
-    var feedbackSentimentButtonBackgroundColor: UIColor
-    var privacyReportCellBackgroundColor: UIColor
-    var activityStyle: UIActivityIndicatorView.Style
-    var destructiveColor: UIColor
-    var ddgTextTintColor: UIColor
-    var daxDialogBackgroundColor: UIColor
-    var daxDialogTextColor: UIColor
-    var homeMessageBackgroundColor: UIColor
-    var homeMessageHeaderTextColor: UIColor
-    var homeMessageSubheaderTextColor: UIColor
-    var homeMessageTopTextColor: UIColor
-    var homeMessageButtonColor: UIColor
-    var homeMessageButtonTextColor: UIColor
-    var homeMessageDismissButtonColor: UIColor
-    var autofillDefaultTitleTextColor: UIColor
-    var autofillDefaultSubtitleTextColor: UIColor
-    var autofillEmptySearchViewTextColor: UIColor
-    var autofillLockedViewTextColor: UIColor
-    var privacyDashboardWebviewBackgroundColor: UIColor
+    @objc var tabsBarBackgroundColor: UIColor
+    @objc var tabsBarSeparatorColor: UIColor
+    @objc var navigationBarTitleColor: UIColor
+    @objc var navigationBarTintColor: UIColor
+    @objc var tintOnBlurColor: UIColor
+    @objc var searchBarBackgroundColor: UIColor
+    @objc var centeredSearchBarBackgroundColor: UIColor
+    @objc var searchBarTextColor: UIColor
+    @objc var searchBarTextDeemphasisColor: UIColor
+    @objc var searchBarBorderColor: UIColor
+    @objc var searchBarClearTextIconColor: UIColor
+    @objc var searchBarVoiceSearchIconColor: UIColor
+    @objc var browsingMenuTextColor: UIColor
+    @objc var browsingMenuIconsColor: UIColor
+    @objc var browsingMenuSeparatorColor: UIColor
+    @objc var browsingMenuHighlightColor: UIColor
+    @objc var progressBarGradientDarkColor: UIColor
+    @objc var progressBarGradientLightColor: UIColor
+    @objc var autocompleteSuggestionTextColor: UIColor
+    @objc var autocompleteCellAccessoryColor: UIColor
+    @objc var tableCellSelectedColor: UIColor
+    @objc var tableCellSeparatorColor: UIColor
+    @objc var tableCellTextColor: UIColor
+    @objc var tableCellAccessoryTextColor: UIColor
+    @objc var tableCellAccessoryColor: UIColor
+    @objc var tableCellHighlightedBackgroundColor: UIColor
+    @objc var tableHeaderTextColor: UIColor
+    @objc var tabSwitcherCellBorderColor: UIColor
+    @objc var tabSwitcherCellTextColor: UIColor
+    @objc var tabSwitcherCellSecondaryTextColor: UIColor
+    @objc var iconCellBorderColor: UIColor
+    @objc var buttonTintColor: UIColor
+    @objc var placeholderColor: UIColor
+    @objc var textFieldBackgroundColor: UIColor
+    @objc var textFieldFontColor: UIColor
+    @objc var homeRowPrimaryTextColor: UIColor
+    @objc var homeRowSecondaryTextColor: UIColor
+    @objc var homeRowBackgroundColor: UIColor
+    @objc var homePrivacyCellTextColor: UIColor
+    @objc var homePrivacyCellSecondaryTextColor: UIColor
+    @objc var aboutScreenTextColor: UIColor
+    @objc var aboutScreenButtonColor: UIColor
+    @objc var favoritesPlusTintColor: UIColor
+    @objc var favoritesPlusBackgroundColor: UIColor
+    @objc var faviconBackgroundColor: UIColor
+    @objc var favoriteTextColor: UIColor
+    @objc var feedbackPrimaryTextColor: UIColor
+    @objc var feedbackSecondaryTextColor: UIColor
+    @objc var feedbackSentimentButtonBackgroundColor: UIColor
+    @objc var privacyReportCellBackgroundColor: UIColor
+    @objc var destructiveColor: UIColor
+    @objc var ddgTextTintColor: UIColor
+    @objc var daxDialogBackgroundColor: UIColor
+    @objc var daxDialogTextColor: UIColor
+    @objc var homeMessageBackgroundColor: UIColor
+    @objc var homeMessageHeaderTextColor: UIColor
+    @objc var homeMessageSubheaderTextColor: UIColor
+    @objc var homeMessageTopTextColor: UIColor
+    @objc var homeMessageButtonColor: UIColor
+    @objc var homeMessageButtonTextColor: UIColor
+    @objc var homeMessageDismissButtonColor: UIColor
+    @objc var autofillDefaultTitleTextColor: UIColor
+    @objc var autofillDefaultSubtitleTextColor: UIColor
+    @objc var autofillEmptySearchViewTextColor: UIColor
+    @objc var autofillLockedViewTextColor: UIColor
+    @objc var privacyDashboardWebviewBackgroundColor: UIColor
 
     // swiftlint:disable function_body_length
     init(_ theme: Theme) {
@@ -505,6 +511,11 @@ class MutableTheme: Theme {
         let mirror = Mirror(reflecting: self)
         return mirror.children.first(where: { $0.label == property })?.value as? UIColor
     }
+
+    func setColor(_ color: UIColor, forProperty name: String) {
+        setValue(color, forKeyPath: name)
+    }
+
 }
 
 extension UIColor {
@@ -565,3 +576,4 @@ extension UIColor {
 }
 
 // swiftlint:enable file_length
+

@@ -19,6 +19,9 @@
 
 import UIKit
 
+// swiftlint:disable file_length
+// swiftlint:disable line_length
+
 class MainViewFactory {
 
     private let coordinator: MainViewCoordinator
@@ -33,11 +36,9 @@ class MainViewFactory {
 
     static func createViewHierarchy(_ superview: UIView) -> MainViewCoordinator {
         let factory = MainViewFactory(superview)
-
         factory.createViews()
         factory.disableAutoresizingOnImmediateSubviews(superview)
         factory.constrainViews()
-
         return factory.coordinator
     }
 
@@ -71,7 +72,10 @@ extension MainViewFactory {
 
     class NavigationBarContainer: UIView { }
     private func createNavigationBarContainer() {
+        coordinator.omniBar = OmniBar.loadFromXib()
+        coordinator.omniBar.translatesAutoresizingMaskIntoConstraints = false
         coordinator.navigationBarContainer = NavigationBarContainer()
+        coordinator.navigationBarContainer.addSubview(coordinator.omniBar)
         superview.addSubview(coordinator.navigationBarContainer)
     }
 
@@ -110,6 +114,8 @@ extension MainViewFactory {
     private func createToolbar() {
 
         coordinator.toolbar = HitTestingToolbar()
+        coordinator.toolbar.isTranslucent = false
+
         coordinator.toolbarBackButton = UIBarButtonItem(title: UserText.keyCommandBrowserBack, image: UIImage(named: "BrowsePrevious"))
         coordinator.toolbarForwardButton = UIBarButtonItem(title: UserText.keyCommandBrowserForward, image: UIImage(named: "BrowseNext"))
         coordinator.toolbarFireButton = UIBarButtonItem(title: UserText.actionForgetAll, image: UIImage(named: "Fire"))
@@ -164,24 +170,37 @@ extension MainViewFactory {
     private func constrainProgress() {
         let progress = coordinator.progress!
         let navigationBarContainer = coordinator.navigationBarContainer!
+
+        coordinator.constraints.progressBarTop = progress.constrainView(navigationBarContainer, by: .top, to: .bottom)
+        coordinator.constraints.progressBarBottom = progress.constrainView(navigationBarContainer, by: .bottom, to: .top)
+
         NSLayoutConstraint.activate([
             progress.constrainView(navigationBarContainer, by: .trailing),
             progress.constrainView(navigationBarContainer, by: .leading),
             progress.constrainAttribute(.height, to: 3),
-            progress.constrainView(navigationBarContainer, by: .top, to: .bottom),
+            coordinator.constraints.progressBarTop,
         ])
     }
 
     private func constrainNavigationBarContainer() {
         let navigationBarContainer = coordinator.navigationBarContainer!
+        let toolbar = coordinator.toolbar!
+        let omniBar = coordinator.omniBar!
 
         coordinator.constraints.navigationBarContainerTop = navigationBarContainer.constrainView(superview.safeAreaLayoutGuide, by: .top)
+        coordinator.constraints.navigationBarContainerBottom = navigationBarContainer.constrainView(toolbar, by: .bottom, to: .top)
+        coordinator.constraints.omniBarBottom = omniBar.constrainView(navigationBarContainer, by: .bottom, relatedBy: .greaterThanOrEqual)
 
         NSLayoutConstraint.activate([
+            coordinator.constraints.navigationBarContainerTop,
             navigationBarContainer.constrainView(superview, by: .centerX),
             navigationBarContainer.constrainView(superview, by: .width),
-            coordinator.constraints.navigationBarContainerTop,
-            navigationBarContainer.constrainAttribute(.height, to: 52),
+            navigationBarContainer.constrainAttribute(.height, to: 52, relatedBy: .greaterThanOrEqual),
+            omniBar.constrainAttribute(.height, to: 52),
+            omniBar.constrainView(navigationBarContainer, by: .top),
+            omniBar.constrainView(navigationBarContainer, by: .leading),
+            omniBar.constrainView(navigationBarContainer, by: .trailing),
+            coordinator.constraints.omniBarBottom,
         ])
     }
 
@@ -201,11 +220,16 @@ extension MainViewFactory {
     private func constrainStatusBackground() {
         let statusBackground = coordinator.statusBackground!
         let navigationBarContainer = coordinator.navigationBarContainer!
+
+        coordinator.constraints.statusBackgroundToNavigationBarContainerBottom = statusBackground.constrainView(navigationBarContainer, by: .bottom)
+
+        coordinator.constraints.statusBackgroundBottomToSafeAreaTop = statusBackground.constrainView(coordinator.superview.safeAreaLayoutGuide, by: .bottom, to: .top)
+
         NSLayoutConstraint.activate([
             statusBackground.constrainView(superview, by: .width),
             statusBackground.constrainView(superview, by: .centerX),
             statusBackground.constrainView(superview, by: .top),
-            statusBackground.constrainView(navigationBarContainer, by: .bottom),
+            coordinator.constraints.statusBackgroundToNavigationBarContainerBottom,
         ])
     }
 
@@ -213,8 +237,10 @@ extension MainViewFactory {
         let notificationBarContainer = coordinator.notificationBarContainer!
         let contentContainer = coordinator.contentContainer!
         let navigationBarContainer = coordinator.navigationBarContainer!
+        let statusBackground = coordinator.statusBackground!
 
-        coordinator.constraints.notificationContainerTop = notificationBarContainer.constrainView(navigationBarContainer, by: .top, to: .bottom)
+        coordinator.constraints.notificationContainerTopToNavigationBar = notificationBarContainer.constrainView(navigationBarContainer, by: .top, to: .bottom)
+        coordinator.constraints.notificationContainerTopToStatusBackground = notificationBarContainer.constrainView(statusBackground, by: .top, to: .bottom)
         coordinator.constraints.notificationContainerHeight = notificationBarContainer.constrainAttribute(.height, to: 0)
 
         NSLayoutConstraint.activate([
@@ -222,7 +248,7 @@ extension MainViewFactory {
             notificationBarContainer.constrainView(superview, by: .centerX),
             coordinator.constraints.notificationContainerHeight,
             notificationBarContainer.constrainView(contentContainer, by: .bottom, to: .top),
-            coordinator.constraints.notificationContainerTop,
+            coordinator.constraints.notificationContainerTopToNavigationBar,
         ])
     }
 
@@ -230,13 +256,16 @@ extension MainViewFactory {
         let contentContainer = coordinator.contentContainer!
         let toolbar = coordinator.toolbar!
         let notificationBarContainer = coordinator.notificationBarContainer!
+        let navigationBarContainer = coordinator.navigationBarContainer!
 
         coordinator.constraints.contentContainerTop = contentContainer.constrainView(notificationBarContainer, by: .top, to: .bottom)
+        coordinator.constraints.contentContainerBottomToToolbarTop = contentContainer.constrainView(toolbar, by: .bottom, to: .top)
+        coordinator.constraints.contentContainerBottomToNavigationBarContainerTop = contentContainer.constrainView(navigationBarContainer, by: .bottom, to: .top)
 
         NSLayoutConstraint.activate([
             contentContainer.constrainView(superview, by: .leading),
             contentContainer.constrainView(superview, by: .trailing),
-            contentContainer.constrainView(toolbar, by: .bottom, to: .top),
+            coordinator.constraints.contentContainerBottomToToolbarTop,
             coordinator.constraints.contentContainerTop,
         ])
     }
@@ -287,24 +316,28 @@ class MainViewCoordinator {
 
     let superview: UIView
 
-    var logoContainer: UIView!
-    var logo: UIImageView!
-    var logoText: UIImageView!
-    var toolbar: UIToolbar!
-    var suggestionTrayContainer: UIView!
     var contentContainer: UIView!
-    var notificationBarContainer: UIView!
-    var statusBackground: UIView!
-    var tabBarContainer: UIView!
-    var navigationBarContainer: UIView!
-    var progress: ProgressView!
-    var toolbarBackButton: UIBarButtonItem!
-    var toolbarForwardButton: UIBarButtonItem!
-    var toolbarFireButton: UIBarButtonItem!
-    var toolbarTabSwitcherButton: UIBarButtonItem!
     var lastToolbarButton: UIBarButtonItem!
+    var logo: UIImageView!
+    var logoContainer: UIView!
+    var logoText: UIImageView!
+    var navigationBarContainer: UIView!
+    var notificationBarContainer: UIView!
+    var omniBar: OmniBar!
+    var progress: ProgressView!
+    var statusBackground: UIView!
+    var suggestionTrayContainer: UIView!
+    var tabBarContainer: UIView!
+    var toolbar: UIToolbar!
+    var toolbarBackButton: UIBarButtonItem!
+    var toolbarFireButton: UIBarButtonItem!
+    var toolbarForwardButton: UIBarButtonItem!
+    var toolbarTabSwitcherButton: UIBarButtonItem!
 
     let constraints = Constraints()
+
+    // The default after creating the hiearchy is top
+    var addressBarPosition: AddressBarPosition = .top
 
     fileprivate init(superview: UIView) {
         self.superview = superview
@@ -313,22 +346,69 @@ class MainViewCoordinator {
     func decorateWithTheme(_ theme: Theme) {
         superview.backgroundColor = theme.mainViewBackgroundColor
         logoText.tintColor = theme.ddgTextTintColor
+        omniBar.decorate(with: theme)
     }
 
-    func hideSuggestionTray() {
-        suggestionTrayContainer.isHidden = true
-        suggestionTrayContainer.backgroundColor = .clear
+    func showToolbarSeparator() {
+        toolbar.setShadowImage(nil, forToolbarPosition: .any)
+    }
+
+    func hideToolbarSeparator() {
+        self.toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
     }
 
     class Constraints {
 
         var navigationBarContainerTop: NSLayoutConstraint!
+        var navigationBarContainerBottom: NSLayoutConstraint!
         var toolbarBottom: NSLayoutConstraint!
         var contentContainerTop: NSLayoutConstraint!
         var tabBarContainerTop: NSLayoutConstraint!
-        var notificationContainerTop: NSLayoutConstraint!
+        var notificationContainerTopToNavigationBar: NSLayoutConstraint!
+        var notificationContainerTopToStatusBackground: NSLayoutConstraint!
         var notificationContainerHeight: NSLayoutConstraint!
+        var omniBarBottom: NSLayoutConstraint!
+        var progressBarTop: NSLayoutConstraint!
+        var progressBarBottom: NSLayoutConstraint!
+        var statusBackgroundToNavigationBarContainerBottom: NSLayoutConstraint!
+        var statusBackgroundBottomToSafeAreaTop: NSLayoutConstraint!
+        var contentContainerBottomToToolbarTop: NSLayoutConstraint!
+        var contentContainerBottomToNavigationBarContainerTop: NSLayoutConstraint!
 
     }
 
+    func moveAddressBarToPosition(_ position: AddressBarPosition) {
+        guard position != addressBarPosition else { return }
+        switch position {
+        case .top:
+            setAddressBarBottomActive(false)
+            setAddressBarTopActive(true)
+
+        case .bottom:
+            setAddressBarTopActive(false)
+            setAddressBarBottomActive(true)
+        }
+
+        addressBarPosition = position
+    }
+
+    func setAddressBarTopActive(_ active: Bool) {
+        constraints.contentContainerBottomToToolbarTop.isActive = active
+        constraints.navigationBarContainerTop.isActive = active
+        constraints.progressBarTop.isActive = active
+        constraints.notificationContainerTopToNavigationBar.isActive = active
+        constraints.statusBackgroundToNavigationBarContainerBottom.isActive = active
+    }
+
+    func setAddressBarBottomActive(_ active: Bool) {
+        constraints.contentContainerBottomToNavigationBarContainerTop.isActive = active
+        constraints.progressBarBottom.isActive = active
+        constraints.navigationBarContainerBottom.isActive = active
+        constraints.notificationContainerTopToStatusBackground.isActive = active
+        constraints.statusBackgroundBottomToSafeAreaTop.isActive = active
+    }
+
 }
+
+// swiftlint:enable line_length
+// swiftlint:enable file_length

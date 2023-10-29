@@ -25,6 +25,7 @@ import Persistence
 protocol FavoritesOverlayDelegate: AnyObject {
     
     func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: BookmarkEntity)
+
 }
 
 class FavoritesOverlay: UIViewController {
@@ -32,19 +33,23 @@ class FavoritesOverlay: UIViewController {
     struct Constants {
         static let margin: CGFloat = 28
         static let footerPadding: CGFloat = 50
+        static let toolbarHeight: CGFloat = 52
     }
     
     private let layout = UICollectionViewFlowLayout()
     var collectionView: UICollectionView!
     private var renderer: FavoritesHomeViewSectionRenderer!
-    
+    private let appSettings: AppSettings
+
     private var theme: Theme!
     
     weak var delegate: FavoritesOverlayDelegate?
-    
-    init(viewModel: FavoritesListInteracting) {
+
+
+    init(viewModel: FavoritesListInteracting, appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
         renderer = FavoritesHomeViewSectionRenderer(allowsEditing: false,
                                                     viewModel: viewModel)
+        self.appSettings = appSettings
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -100,16 +105,15 @@ class FavoritesOverlay: UIViewController {
         guard !AppWidthObserver.shared.isLargeWidth else { return }
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
         let keyboardSize = keyboardFrame.size
-        let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height + Constants.margin * 2, right: 0.0)
-        collectionView.contentInset = contentInsets
-        collectionView.scrollIndicatorInsets = contentInsets
+        let bottomInset = appSettings.currentAddressBarPosition == .bottom ? 0 : keyboardSize.height - Constants.toolbarHeight
+        collectionView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: bottomInset, right: 0.0)
     }
     
     @objc private func keyboardWillHide(notification: NSNotification) {
-        let contentInsets = UIEdgeInsets.zero
-        collectionView.contentInset = contentInsets
-        collectionView.scrollIndicatorInsets = contentInsets
+        collectionView.contentInset = .zero
+        collectionView.scrollIndicatorInsets = .zero
     }
+
 }
 
 extension FavoritesOverlay: FavoritesHomeViewSectionRendererDelegate {

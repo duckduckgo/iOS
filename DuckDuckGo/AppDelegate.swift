@@ -34,6 +34,10 @@ import Networking
 import DDGSync
 import SyncDataProviders
 
+#if NETWORK_PROTECTION
+import NetworkProtection
+#endif
+
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
 
@@ -45,6 +49,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private struct ShortcutKey {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
+
+#if NETWORK_PROTECTION
+        static let openVPNSettings = "com.duckduckgo.mobile.ios.vpn.open-settings"
+#endif
     }
 
     private var testing = false
@@ -229,7 +237,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       appTrackingProtectionDatabase: appTrackingProtectionDatabase,
                                       syncService: syncService,
-                                      syncDataProviders: syncDataProviders)
+                                      syncDataProviders: syncDataProviders,
+                                      appSettings: AppDependencyProvider.shared.appSettings)
         main.loadViewIfNeeded()
 
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -346,6 +355,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         syncService.scheduler.notifyAppLifecycleEvent()
         fireFailedCompilationsPixelIfNeeded()
+        refreshShortcuts()
+    }
+
+    func applicationWillResignActive(_ application: UIApplication) {
+        refreshShortcuts()
     }
 
     private func fireAppLaunchPixel() {
@@ -564,9 +578,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         overlayWindow = UIWindow(frame: frame)
         overlayWindow?.windowLevel = UIWindow.Level.alert
         
-        let overlay = BlankSnapshotViewController.loadFromStoryboard()
+        let overlay = BlankSnapshotViewController(appSettings: AppDependencyProvider.shared.appSettings)
         overlay.delegate = self
-        
+
         overlayWindow?.rootViewController = overlay
         overlayWindow?.makeKeyAndVisible()
         window?.isHidden = true
@@ -611,11 +625,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
         os_log("Handling shortcut item: %s", log: .generalLog, type: .debug, shortcutItem.type)
-        mainViewController?.clearNavigationStack()
+
         autoClear?.applicationWillMoveToForeground()
-        if shortcutItem.type ==  ShortcutKey.clipboard, let query = UIPasteboard.general.string {
+
+        if shortcutItem.type == ShortcutKey.clipboard, let query = UIPasteboard.general.string {
+            mainViewController?.clearNavigationStack()
             mainViewController?.loadQueryInNewTab(query)
+            return
         }
+
+#if NETWORK_PROTECTION
+        if shortcutItem.type == ShortcutKey.openVPNSettings {
+            presentNetworkProtectionStatusSettingsModal()
+        }
+#endif
     }
 
     private func removeEmailWaitlistState() {
@@ -643,6 +666,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var mainViewController: MainViewController? {
         return window?.rootViewController as? MainViewController
     }
+
+    func refreshShortcuts() {
+#if NETWORK_PROTECTION
+        guard NetworkProtectionKeychainTokenStore().isFeatureActivated else {
+            return
+        }
+
+        let items = [
+            UIApplicationShortcutItem(type: ShortcutKey.openVPNSettings,
+                                      localizedTitle: UserText.netPOpenVPNQuickAction,
+                                      localizedSubtitle: nil,
+                                      icon: UIApplicationShortcutIcon(templateImageName: "VPN-16"),
+                                      userInfo: nil)
+        ]
+
+        UIApplication.shared.shortcutItems = items
+#endif
+    }
+
 }
 
 extension AppDelegate: BlankSnapshotViewRecoveringDelegate {
@@ -718,14 +760,29 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
 #if NETWORK_PROTECTION
     private func presentNetworkProtectionStatusSettingsModal() {
-        let networkProtectionRoot = NetworkProtectionRootViewController()
-        presentSettings(with: networkProtectionRoot)
+        if #available(iOS 15, *) {
+            let networkProtectionRoot = NetworkProtectionRootViewController()
+            presentSettings(with: networkProtectionRoot)
+        }
     }
 #endif
 
     private func presentSettings(with viewController: UIViewController) {
         guard let window = window, let rootViewController = window.rootViewController as? MainViewController else { return }
 
+        if let navigationController = rootViewController.presentedViewController as? UINavigationController {
+            if let lastViewController = navigationController.viewControllers.last, lastViewController.isKind(of: type(of: viewController)) {
+                // Avoid presenting dismissing and re-presenting the view controller if it's already visible:
+                return
+            } else {
+                // Otherwise, replace existing view controllers with the presented one:
+                navigationController.popToRootViewController(animated: false)
+                navigationController.pushViewController(viewController, animated: false)
+                return
+            }
+        }
+
+        // If the previous checks failed, make sure the nav stack is reset and present the view controller from scratch:
         rootViewController.clearNavigationStack()
 
         // Give the `clearNavigationStack` call time to complete.

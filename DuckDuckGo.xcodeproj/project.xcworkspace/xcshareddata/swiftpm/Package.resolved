@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": null,
-          "revision": "89cd93fe9e394f518131bc26d4a3d02c96ee07e6",
-          "version": "81.3.1"
+          "revision": "8f7a94a70812862203955b3d2bbb909420fa55dd",
+          "version": "82.0.1"
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/duckduckgo/content-scope-scripts",
         "state": {
           "branch": null,
-          "revision": "aa279a3b006a0b1e009707311283c7fcaed24fb7",
-          "version": "4.39.0"
+          "revision": "254b23cf292140498650421bb31fd05740f4579b",
+          "version": "4.40.0"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/duckduckgo/DesignResourcesKit",
         "state": {
           "branch": null,
-          "revision": "5de78d59358ff60651b2cf9322c74a2297927b4e",
-          "version": "1.1.1"
+          "revision": "d7ea2561ec7624c224f52e1c9b349075ddf1c782",
+          "version": "2.0.0"
         }
       },
       {
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
           "branch": null,
-          "revision": "6dd7d696d4e666cedb2f1890a46fe53615226646",
-          "version": "8.4.2"
+          "revision": "c8e895c8fd50dc76e8d8dc827a636ad77b7f46ff",
+          "version": "9.0.0"
         }
       },
       {
@@ -105,8 +105,8 @@
         "repositoryURL": "https://github.com/duckduckgo/privacy-dashboard",
         "state": {
           "branch": null,
-          "revision": "51e2b46f413bf3ef18afefad631ca70f2c25ef70",
-          "version": "1.4.0"
+          "revision": "b4ac92a444e79d5651930482623b9f6dc9265667",
+          "version": "2.0.0"
         }
       },
       {

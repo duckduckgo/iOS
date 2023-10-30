@@ -69,9 +69,11 @@ public final class SyncCredentialsAdapter {
                 secureVaultFactory: secureVaultFactory,
                 secureVaultErrorReporter: secureVaultErrorReporter,
                 metadataStore: metadataStore,
-                syncDidUpdateData: { [weak self] _ in
-                    self?.syncDidCompleteSubject.send()
-                    Self.isSyncCredentialsPaused = false
+                syncDidFinish: { [weak self] result in
+                    if result.hasNewData {
+                        self?.syncDidCompleteSubject.send()
+                        Self.isSyncCredentialsPaused = false
+                    }
                 }
             )
 

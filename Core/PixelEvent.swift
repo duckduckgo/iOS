@@ -245,6 +245,9 @@ extension Pixel {
 
         case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
         
+        case navigationbarPositionBottom
+        case navigationBarPositionTop
+
         case secureVaultInitError
         case secureVaultError
         
@@ -475,6 +478,10 @@ extension Pixel {
         case syncFailedToMigrate
         case syncFailedToLoadAccount
         case syncFailedToSetupEngine
+        case syncBookmarksCountLimitExceededDaily
+        case syncCredentialsCountLimitExceededDaily
+        case syncBookmarksRequestSizeLimitExceededDaily
+        case syncCredentialsRequestSizeLimitExceededDaily
 
         case syncSentUnauthenticatedRequest
         case syncMetadataCouldNotLoadDatabase
@@ -578,7 +585,10 @@ extension Pixel.Event {
             
         case .autocompleteSelectedLocal: return "m_au_l"
         case .autocompleteSelectedRemote: return "m_au_r"
-            
+
+        case .navigationbarPositionBottom: return "m_seturlbar_bottom"
+        case .navigationBarPositionTop: return "m_seturlbar_top"
+
         case .feedbackPositive: return "mfbs_positive_submit"
         case .feedbackNegativePrefix(category: let category): return "mfbs_negative_\(category)"
             
@@ -952,6 +962,10 @@ extension Pixel.Event {
         case .syncFailedToMigrate: return "m_d_sync_failed_to_migrate"
         case .syncFailedToLoadAccount: return "m_d_sync_failed_to_load_account"
         case .syncFailedToSetupEngine: return "m_d_sync_failed_to_setup_engine"
+        case .syncBookmarksCountLimitExceededDaily: return "m_d_sync_bookmarks_count_limit_exceeded_daily"
+        case .syncCredentialsCountLimitExceededDaily: return "m_d_sync_credentials_count_limit_exceeded_daily"
+        case .syncBookmarksRequestSizeLimitExceededDaily: return "m_d_sync_bookmarks_request_size_limit_exceeded_daily"
+        case .syncCredentialsRequestSizeLimitExceededDaily: return "m_d_sync_credentials_request_size_limit_exceeded_daily"
 
         case .syncSentUnauthenticatedRequest: return "m_d_sync_sent_unauthenticated_request"
         case .syncMetadataCouldNotLoadDatabase: return "m_d_sync_metadata_could_not_load_database"

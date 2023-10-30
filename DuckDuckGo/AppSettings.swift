@@ -33,7 +33,8 @@ protocol AppSettings: AnyObject {
     var sendDoNotSell: Bool { get set }
     
     var currentFireButtonAnimation: FireButtonAnimationType { get set }
-    
+    var currentAddressBarPosition: AddressBarPosition { get set }
+
     var textSize: Int { get set }
 
     var favoritesDisplayMode: FavoritesDisplayMode { get set }
@@ -50,4 +51,7 @@ protocol AppSettings: AnyObject {
     
     var autoconsentPromptSeen: Bool { get set }
     var autoconsentEnabled: Bool { get set }
+
+    var isSyncBookmarksPaused: Bool { get }
+    var isSyncCredentialsPaused: Bool { get }
 }

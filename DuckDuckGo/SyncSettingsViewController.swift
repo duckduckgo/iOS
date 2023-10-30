@@ -56,6 +56,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         self.init(rootView: SyncSettingsView(model: viewModel))
 
         setUpFavoritesDisplayModeSwitch(viewModel, appSettings)
+        setUpSyncPaused(viewModel, appSettings)
         refreshForState(syncService.authState)
 
         syncService.authStatePublisher
@@ -91,6 +92,18 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 viewModel.isUnifiedFavoritesEnabled = appSettings.favoritesDisplayMode.isDisplayUnified
+            }
+            .store(in: &cancellables)
+    }
+
+    private func setUpSyncPaused(_ viewModel: SyncSettingsViewModel, _ appSettings: AppSettings) {
+        viewModel.isSyncBookmarksPaused = appSettings.isSyncBookmarksPaused
+        viewModel.isSyncCredentialsPaused = appSettings.isSyncCredentialsPaused
+        NotificationCenter.default.publisher(for: AppUserDefaults.Notifications.syncPausedStateChanged)
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                viewModel.isSyncBookmarksPaused = appSettings.isSyncBookmarksPaused
+                viewModel.isSyncCredentialsPaused = appSettings.isSyncCredentialsPaused
             }
             .store(in: &cancellables)
     }

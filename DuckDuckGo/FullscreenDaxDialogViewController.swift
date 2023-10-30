@@ -32,18 +32,22 @@ class FullscreenDaxDialogViewController: UIViewController {
 
     @IBOutlet weak var highlightCutOutView: HighlightCutOutView!
     @IBOutlet weak var containerHeight: NSLayoutConstraint!
-    
+    @IBOutlet weak var spacerPadding: NSLayoutConstraint!
+
+    let appSettings = AppDependencyProvider.shared.appSettings
+
     weak var daxDialogViewController: DaxDialogViewController?
     weak var delegate: FullscreenDaxDialogDelegate?
 
     var spec: DaxDialogs.BrowsingSpec?
     var woShown: Bool = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         daxDialogViewController?.cta = spec?.cta
-        daxDialogViewController?.message = spec?.message
+        daxDialogViewController?.message = spec?.message.replacingOccurrences(of: "☝️",
+                                                                              with: appSettings.currentAddressBarPosition == .bottom ? "👇" : "☝️")
         daxDialogViewController?.onTapCta = dismissCta
         
         highlightCutOutView.fillColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
@@ -69,6 +73,7 @@ class FullscreenDaxDialogViewController: UIViewController {
         containerHeight.constant = daxDialogViewController?.calculateHeight() ?? 0
         
         updateCutOut()
+        updateForAddressBarPosition()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -92,16 +97,20 @@ class FullscreenDaxDialogViewController: UIViewController {
     @objc
     func orientationDidChange() {
         updateCutOut()
+        updateForAddressBarPosition()
     }
-    
+
+    private func updateForAddressBarPosition() {
+        if spec?.highlightAddressBar == true, appSettings.currentAddressBarPosition == .bottom {
+            spacerPadding.constant = 52
+        } else {
+            spacerPadding.constant = 0
+        }
+    }
+
     @objc private func updateCutOut() {
         if spec?.highlightAddressBar ?? false, let rect = delegate?.daxDialogDidRquestAddressBarRect(controller: self) {
-            let padding: CGFloat = 6
-            let paddedRect = CGRect(x: rect.origin.x - padding,
-                                    y: rect.origin.y - padding,
-                                    width: rect.size.width + padding * 2,
-                                    height: rect.size.height + padding * 2)
-            highlightCutOutView.cutOutPath = UIBezierPath(roundedRect: paddedRect, cornerRadius: paddedRect.height / 2.0)
+            highlightCutOutView.cutOutPath = UIBezierPath(roundedRect: rect, cornerRadius: 8)
         } else {
             highlightCutOutView.cutOutPath = nil
         }

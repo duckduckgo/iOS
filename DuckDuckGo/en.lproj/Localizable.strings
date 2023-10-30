@@ -1393,6 +1393,9 @@ https://duckduckgo.com/mac";
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
 
+/* Title text for an iOS quick action that opens VPN settings */
+"network.protection.quick-action.open-vpn" = "Open VPN";
+
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Connected - %@";
 

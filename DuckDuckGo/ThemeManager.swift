@@ -47,14 +47,6 @@ class ThemeManager {
     
     public static let shared = ThemeManager()
 
-    var overrideTheme: Theme? {
-        didSet {
-            for controller in rootControllersProvider.rootControllers {
-                controller.applyTheme(overrideTheme ?? currentTheme)
-            }
-        }
-    }
-
     private var appSettings: AppSettings
     
     var rootControllersProvider: RootControllersProvider
@@ -65,8 +57,16 @@ class ThemeManager {
             }
         }
     }
-    
-    private static func makeTheme(name: ThemeName) -> Theme {
+
+    func restoreSetting() {
+        currentTheme = Self.makeTheme(name: AppDependencyProvider.shared.appSettings.currentThemeName)
+    }
+
+    func overrideSetting(_ theme: Theme) {
+        currentTheme = theme
+    }
+
+    public static func makeTheme(name: ThemeName) -> Theme {
 
         switch name {
         case .systemDefault:
@@ -93,13 +93,13 @@ class ThemeManager {
          rootProvider: RootControllersProvider = UIApplicationRootControllersProvider()) {
         
         appSettings = settings
-        currentTheme = overrideTheme ?? ThemeManager.makeTheme(name: settings.currentThemeName)
+        currentTheme = ThemeManager.makeTheme(name: settings.currentThemeName)
         rootControllersProvider = rootProvider
     }
     
     public func enableTheme(with name: ThemeName) {
         appSettings.currentThemeName = name
-        currentTheme = overrideTheme ?? ThemeManager.makeTheme(name: name)
+        currentTheme = ThemeManager.makeTheme(name: name)
     }
     
     public func refreshSystemTheme() {

@@ -26,10 +26,18 @@ import SwiftUI
 @available(iOS 16, *)
 class ThemeEditorViewController: UITableViewController {
 
-    var mutableTheme = MutableTheme(ThemeManager.shared.overrideTheme ?? ThemeManager.shared.currentTheme)
+    @Published var mutableTheme: MutableTheme!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        mutableTheme = ThemeManager.shared.currentTheme as? MutableTheme ??
+                                MutableTheme(ThemeManager.shared.currentTheme)
+
+        loadState()
+
+        print(#function, mutableTheme as Any)
+
         tableView.registerCell(ofType: ThemeEditorItemCell.self)
         tableView.registerCell(ofType: ThemeOverrideCell.self)
         tableView.registerCell(ofType: ThemeEditorButtonCell.self)
@@ -103,19 +111,69 @@ extension ThemeEditorViewController {
 @available(iOS 16, *)
 extension ThemeEditorViewController {
 
+    var stateFile: URL {
+        let fileManager = FileManager.default
+        let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+        let fileURL = documentsDirectory!.appendingPathComponent("state.json")
+        return fileURL
+    }
+
     func toggleOverride() {
         let mgr = ThemeManager.shared
-        print(self, #function, mgr.overrideTheme == nil ? "enabling" : "disabling")
-        mgr.overrideTheme = mgr.overrideTheme == nil ? mutableTheme : nil
+        if mgr.currentTheme is MutableTheme {
+            mgr.restoreSetting()
+        } else {
+            mgr.overrideSetting(mutableTheme)
+        }
+        saveState()
         tableView.reloadRows(at: [.init(row: 0, section: 0)], with: .automatic)
+    }
+
+    struct ThemeEditorState: Codable {
+
+        var enabled: Bool
+        var colors: [String: String]
+
+    }
+
+    func saveState() {
+        var colors = [String: String]()
+        mutableTheme.colorProperties.forEach {
+            colors[$0] = mutableTheme.colorForProperty($0)?.forSaving ?? ""
+        }
+        let enabled = ThemeManager.shared.currentTheme is MutableTheme
+        let state = ThemeEditorState(enabled: enabled, colors: colors)
+        if let data = try? JSONEncoder().encode(state) {
+            let json = String(data: data, encoding: .utf8)
+            print(#function, json ?? "nil", stateFile)
+            try? data.write(to: stateFile)
+        }
+    }
+
+    func loadState() {
+        if let data = try? Data(contentsOf: stateFile),
+           let state = try? JSONDecoder().decode(ThemeEditorState.self, from: data) {
+            print(#function, state)
+
+            state.colors.forEach {
+                let property = $0.key
+                let color = $0.value.color
+                applyColor(color, toProperty: property)
+            }
+
+            let mgr = ThemeManager.shared
+            if state.enabled {
+                mgr.overrideSetting(mutableTheme)
+            }
+        }
     }
 
     func resetOverride() {
         print(self, #function)
         let mgr = ThemeManager.shared
+        mgr.restoreSetting()
         mutableTheme = MutableTheme(mgr.currentTheme)
-        mgr.overrideTheme = nil
-        tableView.reloadRows(at: [.init(row: 0, section: 0)], with: .automatic)
+        tableView.reloadData()
     }
 
     func editColorAtIndex(_ index: Int) {
@@ -126,8 +184,14 @@ extension ThemeEditorViewController {
 
     func applyColor(_ color: UIColor, toProperty name: String) {
         print(#function, color, name)
+        let mgr = ThemeManager.shared
         mutableTheme.setColor(color, forProperty: name)
-        ThemeManager.shared.overrideTheme = mutableTheme
+        if mgr.currentTheme is MutableTheme {
+            mgr.overrideSetting(mutableTheme)
+        }
+        tableView.reloadData()
+        objectWillChange.send()
+        saveState()
     }
 
     struct ColorEditorView: View {
@@ -245,7 +309,7 @@ private class ThemeOverrideCell: UITableViewCell {
         config.textProperties.color = UIColor(designSystemColor: .textPrimary)
         self.contentConfiguration = config
 
-        if ThemeManager.shared.overrideTheme != nil {
+        if ThemeManager.shared.currentTheme is MutableTheme {
             accessoryType = .checkmark
         }
     }
@@ -520,6 +584,42 @@ class MutableTheme: NSObject, Theme {
 
 extension UIColor {
 
+    convenience init?(alphaHex: String) {
+        var hexSanitized = alphaHex.trimmingCharacters(in: .whitespacesAndNewlines)
+        hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
+        hexSanitized = hexSanitized.replacingOccurrences(of: "0x", with: "")
+
+        var rgb: UInt64 = 0
+
+        Scanner(string: hexSanitized).scanHexInt64(&rgb)
+
+        if hexSanitized.count == 6 {
+            let red = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
+            let green = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
+            let blue = CGFloat(rgb & 0x0000FF) / 255.0
+            self.init(red: red, green: green, blue: blue, alpha: 1.0)
+            return
+        } else if hexSanitized.count == 8 {
+            let red = CGFloat((rgb & 0xFF000000) >> 24) / 255.0
+            let green = CGFloat((rgb & 0x00FF0000) >> 16) / 255.0
+            let blue = CGFloat((rgb & 0x0000FF00) >> 8) / 255.0
+            let alpha = CGFloat(rgb & 0x000000FF) / 255.0
+            self.init(red: red, green: green, blue: blue, alpha: alpha)
+            return
+        } else {
+            return nil
+        }
+    }
+
+    var forSaving: String {
+        if isCatalogColor,
+            let bundle = (value(forKey: "_assetManager") as AnyObject).value(forKey: "_bundle") as? Bundle {
+            "\(bundle.name ?? "").\(catalogName ?? "")"
+        } else {
+            hexString ?? ""
+        }
+    }
+
     var hexString: String? {
         guard let cgColor = self.cgColor.converted(to: CGColorSpace(name: CGColorSpace.sRGB)!, intent: .defaultIntent, options: nil) else {
             return nil
@@ -575,5 +675,21 @@ extension UIColor {
 
 }
 
-// swiftlint:enable file_length
+private extension String {
 
+    var color: UIColor {
+        let components = self.components(separatedBy: ".")
+        if components.count > 1 {
+            if components[0] == DesignResourcesKit.bundle.name {
+                return UIColor(named: components[1], in: DesignResourcesKit.bundle, compatibleWith: nil)!
+            } else {
+                return UIColor(named: components[1])!
+            }
+        } else {
+            return UIColor(alphaHex: self)!
+        }
+    }
+
+}
+
+// swiftlint:enable file_length

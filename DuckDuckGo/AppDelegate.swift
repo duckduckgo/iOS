@@ -149,6 +149,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DatabaseMigration.migrate(to: context)
         }
 
+        var shouldResetBookmarksSyncTimestamp = false
+
         bookmarksDatabase.loadStore { [weak self] context, error in
             guard let context = context else {
                 if let error = error {
@@ -172,7 +174,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 BookmarkUtils.migrateToFormFactorSpecificFavorites(byCopyingExistingTo: .mobile, in: context)
                 if context.hasChanges {
                     try context.save(onErrorFire: .bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders)
-                    self?.syncDataProviders.bookmarksAdapter.shouldResetBookmarksSyncTimestamp = true
+                    if let syncDataProviders = self?.syncDataProviders {
+                        syncDataProviders.bookmarksAdapter.shouldResetBookmarksSyncTimestamp = true
+                    } else {
+                        shouldResetBookmarksSyncTimestamp = true
+                    }
                 }
             } catch {
                 Thread.sleep(forTimeInterval: 1)
@@ -230,6 +236,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage()
         )
+        syncDataProviders.bookmarksAdapter.shouldResetBookmarksSyncTimestamp = shouldResetBookmarksSyncTimestamp
+
         let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog, environment: environment)
         syncService.initializeIfNeeded()
         self.syncService = syncService

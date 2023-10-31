@@ -70,7 +70,7 @@ struct NetworkProtectionVPNNotificationsView: View {
                 get: { model.alertsEnabled },
                 set: model.didToggleAlerts(to:)
             ))
-            .toggleStyle(SwitchToggleStyle(tint: Color(designSystemColor: .accent)))
+            .toggleStyle(SwitchToggleStyle(tint: .controlColor))
         } footer: {
             Text(UserText.netPVPNAlertsToggleSectionFooter)
                 .foregroundColor(.textSecondary)

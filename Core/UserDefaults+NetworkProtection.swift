@@ -1,8 +1,8 @@
 //
-//  Core.h
-//  Core
+//  UserDefaults+NetworkProtection.swift
+//  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2023 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,16 +17,18 @@
 //  limitations under the License.
 //
 
+#if NETWORK_PROTECTION
 
-#import <UIKit/UIKit.h>
+import Foundation
 
+public extension UserDefaults {
+    static var networkProtectionGroupDefaults: UserDefaults {
+        let suiteName = "\(Global.groupIdPrefix).netp"
+        guard let defaults = UserDefaults(suiteName: suiteName) else {
+            fatalError("Failed to create netP UserDefaults")
+        }
+        return defaults
+    }
+}
 
-//! Project version number for Core.
-FOUNDATION_EXPORT double CoreVersionNumber;
-
-//! Project version string for Core.
-FOUNDATION_EXPORT const unsigned char CoreVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <Core/PublicHeader.h>
-
-
+#endif

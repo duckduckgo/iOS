@@ -483,6 +483,16 @@ public class Favicons {
 
 extension Favicons: Bookmarks.FaviconStoring {
 
+    public func hasFavicon(for domain: String) -> Bool {
+        guard let targetCache = Favicons.Constants.caches[.fireproof],
+              let resource = defaultResource(forDomain: domain)
+        else {
+            return false
+        }
+
+        return targetCache.isCached(forKey: resource.cacheKey)
+    }
+
     public func storeFavicon(_ imageData: Data, for url: URL) async throws {
 
         guard let domain = url.host,

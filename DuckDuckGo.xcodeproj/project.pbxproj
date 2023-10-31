@@ -271,6 +271,7 @@
 		4B470EE4299C6DFB0086EBDC /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F143C2E41E4A4CD400CFDE3A /* Core.framework */; };
 		4B52648B25F9613B00CB4C24 /* trackerData.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B52648A25F9613B00CB4C24 /* trackerData.json */; };
 		4B53648A26718D0E001AA041 /* EmailWaitlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B53648926718D0E001AA041 /* EmailWaitlist.swift */; };
+		4B5C46232AF1B4D4002A4432 /* VPNWaitlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5C46222AF1B4D4002A4432 /* VPNWaitlist.swift */; };
 		4B60AC97252EC07B00E8D219 /* fullscreenvideo.js in Resources */ = {isa = PBXBuildFile; fileRef = 4B60AC96252EC07B00E8D219 /* fullscreenvideo.js */; };
 		4B60ACA1252EC0B100E8D219 /* FullScreenVideoUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B60ACA0252EC0B100E8D219 /* FullScreenVideoUserScript.swift */; };
 		4B62C4BA25B930DD008912C6 /* AppConfigurationFetchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B62C4B925B930DD008912C6 /* AppConfigurationFetchTests.swift */; };
@@ -1280,6 +1281,7 @@
 		4B470EE2299C6DD10086EBDC /* AppTrackingProtectionStoringModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionStoringModel.swift; sourceTree = "<group>"; };
 		4B52648A25F9613B00CB4C24 /* trackerData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trackerData.json; sourceTree = "<group>"; };
 		4B53648926718D0E001AA041 /* EmailWaitlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailWaitlist.swift; sourceTree = "<group>"; };
+		4B5C46222AF1B4D4002A4432 /* VPNWaitlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNWaitlist.swift; sourceTree = "<group>"; };
 		4B60AC96252EC07B00E8D219 /* fullscreenvideo.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = fullscreenvideo.js; sourceTree = "<group>"; };
 		4B60ACA0252EC0B100E8D219 /* FullScreenVideoUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenVideoUserScript.swift; sourceTree = "<group>"; };
 		4B62C4B925B930DD008912C6 /* AppConfigurationFetchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurationFetchTests.swift; sourceTree = "<group>"; };
@@ -3351,6 +3353,14 @@
 			name = AppTrackingProtection;
 			sourceTree = "<group>";
 		};
+		4B5C46212AF1B436002A4432 /* VPN */ = {
+			isa = PBXGroup;
+			children = (
+				4B5C46222AF1B4D4002A4432 /* VPNWaitlist.swift */,
+			);
+			name = VPN;
+			sourceTree = "<group>";
+		};
 		4B6484F427FD1E390050A7A1 /* Waitlist */ = {
 			isa = PBXGroup;
 			children = (
@@ -3358,6 +3368,7 @@
 				56244C1C2A137B1900EDF259 /* WaitlistViews.swift */,
 				37FCAAA0299117F9000E420A /* MacBrowser */,
 				37FCAAA129911801000E420A /* WindowsBrowser */,
+				4B5C46212AF1B436002A4432 /* VPN */,
 				8524AAAB2A3888FE00EEC6D2 /* Waitlist.xcassets */,
 			);
 			name = Waitlist;
@@ -6327,6 +6338,7 @@
 				3132FA2C27A07A1B00DD7A12 /* FilePreview.swift in Sources */,
 				85C861E628FF1B5F00189466 /* HomeViewSectionRenderersExtension.swift in Sources */,
 				F1D477C61F2126CC0031ED49 /* OmniBarState.swift in Sources */,
+				4B5C46232AF1B4D4002A4432 /* VPNWaitlist.swift in Sources */,
 				85F2FFCD2211F615006BB258 /* MainViewController+KeyCommands.swift in Sources */,
 				0268FC132A449F04000EE6A2 /* OnboardingContainerView.swift in Sources */,
 				858650D9246B0D3C00C36F8A /* DaxOnboardingViewController.swift in Sources */,

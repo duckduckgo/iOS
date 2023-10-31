@@ -718,7 +718,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
             let identifier = response.notification.request.identifier
-            if identifier == WindowsBrowserWaitlist.notificationIdentitier {
+            if identifier == WindowsBrowserWaitlist.notificationIdentifier {
                 presentWindowsBrowserWaitlistSettingsModal()
             }
 

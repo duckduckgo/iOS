@@ -715,9 +715,9 @@ extension UIColor {
     var forSaving: String {
         if isCatalogColor,
             let bundle = (value(forKey: "_assetManager") as AnyObject).value(forKey: "_bundle") as? Bundle {
-            "\(bundle.name ?? "").\(catalogName ?? "")"
+            return "\(bundle.name ?? "").\(catalogName ?? "")"
         } else {
-            hexString ?? ""
+            return hexString ?? ""
         }
     }
 

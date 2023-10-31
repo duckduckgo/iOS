@@ -26,13 +26,15 @@ import SwiftUI
 @available(iOS 16, *)
 class ThemeEditorViewController: UITableViewController {
 
-    @Published var mutableTheme: MutableTheme!
+    @Published var editableTheme: MutableTheme!
+    var referenceTheme: MutableTheme!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        mutableTheme = ThemeManager.shared.currentTheme as? MutableTheme ??
+        editableTheme = ThemeManager.shared.currentTheme as? MutableTheme ??
                                 MutableTheme(ThemeManager.shared.currentTheme)
+        referenceTheme = MutableTheme(ThemeManager.makeTheme(name: AppDependencyProvider.shared.appSettings.currentThemeName))
 
         loadState()
 
@@ -51,7 +53,7 @@ extension ThemeEditorViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 2 : mutableTheme.colorProperties.count
+        return section == 0 ? 3 : editableTheme.colorProperties.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -70,19 +72,45 @@ extension ThemeEditorViewController {
         switch indexPath.row {
         case 0:
             return tableView.dequeueCell(ofType: ThemeOverrideCell.self, for: indexPath)
-        default:
+
+        case 1:
             let cell = tableView.dequeueCell(ofType: ThemeEditorButtonCell.self, for: indexPath)
             var config = cell.defaultContentConfiguration()
             config.text = "Reset"
             config.textProperties.color = .destructive
             cell.contentConfiguration = config
             return cell
+
+        case 2:
+            let cell = tableView.dequeueCell(ofType: ThemeEditorButtonCell.self, for: indexPath)
+            var config = cell.defaultContentConfiguration()
+            config.text = "Share Configuration"
+            cell.contentConfiguration = config
+            return cell
+
+        default: fatalError("Unknown \(indexPath)")
         }
+    }
+
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+
+        if indexPath.section == 1 {
+            return UISwipeActionsConfiguration(actions: [
+                .init(style: .destructive, title: "Reset") {
+                    let property = self.editableTheme.colorProperties[indexPath.row]
+                    self.resetColor(property)
+                    tableView.reloadRows(at: [indexPath], with: .automatic)
+                    $2(true)
+                }
+            ])
+        }
+
+        return nil
     }
 
     func createThemeItemCell(_ tableView: UITableView, for indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(ofType: ThemeEditorItemCell.self, for: indexPath)
-        cell.present(themeItem: mutableTheme.colorProperties[indexPath.row], fromTheme: mutableTheme)
+        cell.present(themeItem: editableTheme.colorProperties[indexPath.row], fromTheme: editableTheme)
         return cell
     }
 
@@ -99,10 +127,15 @@ extension ThemeEditorViewController {
         switch indexPath.row {
         case 0: toggleOverride()
         case 1: resetOverride()
+        case 2: shareSavedState()
         default: fatalError("Unexpected index \(indexPath)")
         }
     }
 
+    func shareSavedState() {
+        saveState()
+        presentShareSheet(withItems: [stateFile], fromView: self.view)
+    }
 }
 
 // MARK: Other logic
@@ -116,12 +149,20 @@ extension ThemeEditorViewController {
         return fileURL
     }
 
+    func resetColor(_ property: String) {
+        let userTheme = ThemeManager.makeTheme(name: AppDependencyProvider.shared.appSettings.currentThemeName)
+        let mutableTheme = MutableTheme(userTheme)
+        if let color = mutableTheme.colorForProperty(property) {
+            self.editableTheme.setColor(color, forProperty: property)
+        }
+    }
+
     func toggleOverride() {
         let mgr = ThemeManager.shared
         if mgr.currentTheme is MutableTheme {
             mgr.restoreSetting()
         } else {
-            mgr.overrideSetting(mutableTheme)
+            mgr.overrideSetting(editableTheme)
         }
         saveState()
         tableView.reloadRows(at: [.init(row: 0, section: 0)], with: .automatic)
@@ -136,8 +177,8 @@ extension ThemeEditorViewController {
 
     func saveState() {
         var colors = [String: String]()
-        mutableTheme.colorProperties.forEach {
-            colors[$0] = mutableTheme.colorForProperty($0)?.forSaving ?? ""
+        editableTheme.colorProperties.forEach {
+            colors[$0] = editableTheme.colorForProperty($0)?.forSaving ?? ""
         }
         let enabled = ThemeManager.shared.currentTheme is MutableTheme
         let state = ThemeEditorState(enabled: enabled, colors: colors)
@@ -160,7 +201,7 @@ extension ThemeEditorViewController {
 
             let mgr = ThemeManager.shared
             if state.enabled {
-                mgr.overrideSetting(mutableTheme)
+                mgr.overrideSetting(editableTheme)
             }
         }
     }
@@ -169,23 +210,23 @@ extension ThemeEditorViewController {
         print(self, #function)
         let mgr = ThemeManager.shared
         mgr.restoreSetting()
-        mutableTheme = MutableTheme(mgr.currentTheme)
+        editableTheme = MutableTheme(mgr.currentTheme)
         tableView.reloadData()
         objectWillChange.send()
         saveState()
     }
 
     func editColorAtIndex(_ index: Int) {
-        let property = mutableTheme.colorProperties[index]
+        let property = editableTheme.colorProperties[index]
         let controller = UIHostingController(rootView: ColorEditorView(controller: self, colorProperty: property))
         navigationController?.pushViewController(controller, animated: true)
     }
 
     func applyColor(_ color: UIColor, toProperty name: String, save: Bool = true) {
         let mgr = ThemeManager.shared
-        mutableTheme.setColor(color, forProperty: name)
+        editableTheme.setColor(color, forProperty: name)
         if mgr.currentTheme is MutableTheme {
-            mgr.overrideSetting(mutableTheme)
+            mgr.overrideSetting(editableTheme)
         }
         tableView.reloadData()
         objectWillChange.send()
@@ -208,7 +249,7 @@ extension ThemeEditorViewController {
         let colorProperty: String
 
         var uiColor: UIColor? {
-            controller.mutableTheme.colorForProperty(colorProperty)
+            controller.editableTheme.colorForProperty(colorProperty)
         }
 
         var themeColor: Color {
@@ -376,6 +417,13 @@ private class ThemeEditorItemCell: UITableViewCell, ObservableObject {
     @Published private var themeItem: String = ""
     @Published private var color: UIColor?
 
+    weak var theme: MutableTheme!
+    let reference = MutableTheme(ThemeManager.makeTheme(name: AppDependencyProvider.shared.appSettings.currentThemeName))
+
+    var isAssigned: Bool {
+        return reference.colorForProperty(themeItem) != theme.colorForProperty(themeItem)
+    }
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         if #available(iOS 16, *) {
@@ -390,6 +438,7 @@ private class ThemeEditorItemCell: UITableViewCell, ObservableObject {
     }
 
     func present(themeItem: String, fromTheme theme: MutableTheme) {
+        self.theme = theme
         self.themeItem = themeItem
         self.color = theme.colorForProperty(themeItem)
     }
@@ -402,15 +451,21 @@ private class ThemeEditorItemCell: UITableViewCell, ObservableObject {
         var body: some View {
             HStack {
 
-                ZStack {
+                ZStack(alignment: .bottomTrailing) {
                     RoundedRectangle(cornerRadius: 12)
                         .foregroundColor(Color(cell.color ?? .clear))
                         .frame(width: 50, height: 50)
 
-                    if cell.color?.isDesignSystemColor == true {
+                    if cell.isAssigned {
+                        Circle()
+                            .fill(.orange)
+                            .frame(width: 12, height: 12)
+                            .padding(4)
+                    } else if cell.color?.isDesignSystemColor == true {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundColor(.green)
                             .tint(.green)
+                            .padding(2)
                     }
                 }
 

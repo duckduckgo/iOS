@@ -36,8 +36,6 @@ class ThemeEditorViewController: UITableViewController {
 
         loadState()
 
-        print(#function, mutableTheme as Any)
-
         tableView.registerCell(ofType: ThemeEditorItemCell.self)
         tableView.registerCell(ofType: ThemeOverrideCell.self)
         tableView.registerCell(ofType: ThemeEditorButtonCell.self)
@@ -153,12 +151,11 @@ extension ThemeEditorViewController {
     func loadState() {
         if let data = try? Data(contentsOf: stateFile),
            let state = try? JSONDecoder().decode(ThemeEditorState.self, from: data) {
-            print(#function, state)
 
             state.colors.forEach {
                 let property = $0.key
                 let color = $0.value.color
-                applyColor(color, toProperty: property)
+                applyColor(color, toProperty: property, save: false)
             }
 
             let mgr = ThemeManager.shared
@@ -174,6 +171,8 @@ extension ThemeEditorViewController {
         mgr.restoreSetting()
         mutableTheme = MutableTheme(mgr.currentTheme)
         tableView.reloadData()
+        objectWillChange.send()
+        saveState()
     }
 
     func editColorAtIndex(_ index: Int) {
@@ -182,8 +181,7 @@ extension ThemeEditorViewController {
         navigationController?.pushViewController(controller, animated: true)
     }
 
-    func applyColor(_ color: UIColor, toProperty name: String) {
-        print(#function, color, name)
+    func applyColor(_ color: UIColor, toProperty name: String, save: Bool = true) {
         let mgr = ThemeManager.shared
         mutableTheme.setColor(color, forProperty: name)
         if mgr.currentTheme is MutableTheme {
@@ -191,7 +189,17 @@ extension ThemeEditorViewController {
         }
         tableView.reloadData()
         objectWillChange.send()
-        saveState()
+
+        if save {
+            saveState()
+        }
+    }
+
+    struct DesignSystemColorItem {
+
+        let color: UIColor
+        let name: String
+
     }
 
     struct ColorEditorView: View {
@@ -207,9 +215,20 @@ extension ThemeEditorViewController {
             Color(uiColor: uiColor ?? .clear)
         }
 
-        var body: some View {
-            VStack {
+        var designSystemColors: [DesignSystemColorItem] = [
+            .init(color: UIColor(designSystemColor: .accent), name: "accent"),
+            .init(color: UIColor(designSystemColor: .background), name: "background"),
+            .init(color: UIColor(designSystemColor: .container), name: "container"),
+            .init(color: UIColor(designSystemColor: .icons), name: "icons"),
+            .init(color: UIColor(designSystemColor: .lines), name: "lines"),
+            .init(color: UIColor(designSystemColor: .panel), name: "panel"),
+            .init(color: UIColor(designSystemColor: .surface), name: "surface"),
+            .init(color: UIColor(designSystemColor: .textPrimary), name: "textPrimary"),
+            .init(color: UIColor(designSystemColor: .textSecondary), name: "textSecondary"),
+        ]
 
+        @ViewBuilder func currentColorSection() -> some View {
+            VStack {
                 RoundedRectangle(cornerRadius: 8)
                     .foregroundColor(themeColor)
                     .frame(width: 64, height: 64)
@@ -217,71 +236,100 @@ extension ThemeEditorViewController {
 
                 Text(uiColor?.colorDescription ?? "")
                     .daxCaption()
+            }
+        }
+
+        @ViewBuilder func primaryColorSection() -> some View {
+            Section {
+
+                HStack {
+                    Spacer()
+
+                    Button {
+                        controller.applyColor(.red, toProperty: colorProperty)
+                    } label: {
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundColor(.red)
+                            .frame(width: 50, height: 50)
+                    }
+                    .buttonStyle(.borderless)
+
+                    Spacer()
+
+                    Button {
+                        controller.applyColor(.green, toProperty: colorProperty)
+                    } label: {
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundColor(.green)
+                            .frame(width: 50, height: 50)
+                    }
+                    .buttonStyle(.borderless)
+
+                    Spacer()
+
+                    Button {
+                        controller.applyColor(.blue, toProperty: colorProperty)
+                    } label: {
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundColor(.blue)
+                            .frame(width: 50, height: 50)
+                    }
+                    .buttonStyle(.borderless)
+
+                    Spacer()
+
+                    Button {
+                        controller.applyColor(.yellow, toProperty: colorProperty)
+                    } label: {
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundColor(.yellow)
+                            .frame(width: 50, height: 50)
+                    }
+                    .buttonStyle(.borderless)
+
+                    Spacer()
+                }
+            } header: {
+                Text("Apply color (useful for seeing in the UI)")
+                    .textCase(nil)
+            }
+        }
+
+        @ViewBuilder func designSystemColorSection() -> some View {
+            Section {
+
+                ForEach(designSystemColors, id: \.name) { item in
+                    Button {
+                        controller.applyColor(item.color, toProperty: colorProperty)
+                    } label: {
+                        HStack {
+
+                            RoundedRectangle(cornerRadius: 8)
+                                .foregroundColor(Color(item.color))
+                                .frame(width: 50, height: 50)
+
+                            Text(item.name)
+
+                        }
+                    }
+                }
+
+
+            } header: {
+                Text("Apply Design System color")
+                    .textCase(nil)
+            }
+        }
+
+        var body: some View {
+            VStack {
+
+                currentColorSection()
 
                 List {
-                    Section {
-                        HStack {
-                            Spacer()
+                    primaryColorSection()
 
-                            Button {
-                                controller.applyColor(.red, toProperty: colorProperty)
-                            } label: {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .foregroundColor(.red)
-                                    .frame(width: 50, height: 50)
-                            }
-                            .buttonStyle(.borderless)
-
-                            Spacer()
-
-                            Button {
-                                controller.applyColor(.green, toProperty: colorProperty)
-                            } label: {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .foregroundColor(.green)
-                                    .frame(width: 50, height: 50)
-                            }
-                            .buttonStyle(.borderless)
-
-                            Spacer()
-
-                            Button {
-                                controller.applyColor(.blue, toProperty: colorProperty)
-                            } label: {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .foregroundColor(.blue)
-                                    .frame(width: 50, height: 50)
-                            }
-                            .buttonStyle(.borderless)
-
-                            Spacer()
-
-                            Button {
-                                controller.applyColor(.yellow, toProperty: colorProperty)
-                            } label: {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .foregroundColor(.yellow)
-                                    .frame(width: 50, height: 50)
-                            }
-                            .buttonStyle(.borderless)
-
-                            Spacer()
-                        }
-                    } header: {
-                        Text("Apply color (useful for seeing in the UI)")
-                            .textCase(nil)
-                    }
-
-                    Section {
-                        Button {
-
-                        } label: {
-                            Text("Button")
-                        }
-                    } header: {
-                        Text("Apply Design System color")
-                            .textCase(nil)
-                    }
+                    designSystemColorSection()
                 }
 
             }
@@ -303,7 +351,6 @@ private class ThemeOverrideCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
-        print(self, #function)
         var config = defaultContentConfiguration()
         config.text = "Override Theme"
         config.textProperties.color = UIColor(designSystemColor: .textPrimary)
@@ -331,7 +378,6 @@ private class ThemeEditorItemCell: UITableViewCell, ObservableObject {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
-        print(self, #function)
         if #available(iOS 16, *) {
             contentConfiguration = UIHostingConfiguration {
                 CellView(cell: self)

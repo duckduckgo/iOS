@@ -209,6 +209,7 @@ class MainViewController: UIViewController {
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
         registerForKeyboardNotifications()
+        registerForSyncPausedNotifications()
 
         applyTheme(ThemeManager.shared.currentTheme)
 
@@ -302,6 +303,44 @@ class MainViewController: UIViewController {
                                                selector: #selector(keyboardWillChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
+    }
+
+    private func registerForSyncPausedNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showsyncPausedError),
+            name: SyncBookmarksAdapter.shouldShowBookmarkPauseError,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showsyncPausedError),
+            name: SyncCredentialsAdapter.shouldShowCredentialsPauseError,
+            object: nil)
+    }
+
+    @objc private func showsyncPausedError(_ notification: Notification) {
+        Task {
+            await MainActor.run {
+                var title = "Sync bookmark limit exceeded"
+                if notification.name == SyncCredentialsAdapter.shouldShowCredentialsPauseError {
+                    title = "Sync login limit exceeded"
+                }
+                if self.presentedViewController is SyncSettingsViewController {
+                    return
+                }
+                self.presentedViewController?.dismiss(animated: true)
+                let alert = UIAlertController(title: title,
+                                              message: "Delete some to resume syncing",
+                                              preferredStyle: .alert)
+                let learnMoreAction = UIAlertAction(title: "Learn More", style: .default) { _ in
+                    self.segueToSettingsSync()
+                }
+                let okAction = UIAlertAction(title: "OK", style: .cancel)
+                alert.addAction(learnMoreAction)
+                alert.addAction(okAction)
+                self.present(alert, animated: true)
+            }
+        }
     }
 
     /// Based on https://stackoverflow.com/a/46117073/73479

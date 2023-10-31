@@ -199,6 +199,14 @@ extension MainViewController {
         }
     }
 
+    func segueToSettingsSync() {
+        os_log(#function, log: .generalLog, type: .debug)
+        hideAllHighlightsIfNeeded()
+        launchSettings {
+            $0.showSync()
+        }
+    }
+
     private func launchSettings(completion: ((SettingsViewController) -> Void)? = nil) {
         os_log(#function, log: .generalLog, type: .debug)
         let storyboard = UIStoryboard(name: "Settings", bundle: nil)

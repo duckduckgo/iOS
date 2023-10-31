@@ -31,13 +31,16 @@ public final class SyncCredentialsAdapter {
     public let databaseCleaner: CredentialsDatabaseCleaner
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
     public static let syncCredentialsPausedStateChanged = SyncBookmarksAdapter.syncBookmarksPausedStateChanged
+    public static let shouldShowCredentialsPauseError = Notification.Name("com.duckduckgo.app.ShowSyncCredentialsPausedError")
 
     @UserDefaultsWrapper(key: .syncCredentialsPaused, defaultValue: false)
-    static private var isSyncCredentialsPaused: Bool {
+    static public var isSyncCredentialsPaused: Bool {
         didSet {
             NotificationCenter.default.post(name: syncCredentialsPausedStateChanged, object: nil)
         }
     }
+    @UserDefaultsWrapper(key: .syncCredentialsPausedErrorDisplayed, defaultValue: false)
+    static private var wasSyncCredentialsErrorDisplayed: Bool
 
     public init(secureVaultFactory: AutofillVaultFactory = AutofillSecureVaultFactory, secureVaultErrorReporter: SecureVaultErrorReporting) {
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
@@ -72,6 +75,7 @@ public final class SyncCredentialsAdapter {
                 syncDidUpdateData: { [weak self] in
                     self?.syncDidCompleteSubject.send()
                     Self.isSyncCredentialsPaused = false
+                    Self.wasSyncCredentialsErrorDisplayed = false
                 }
             )
 
@@ -84,11 +88,13 @@ public final class SyncCredentialsAdapter {
                         if syncError == .unexpectedStatusCode(409) {
                             Self.isSyncCredentialsPaused = true
                             DailyPixel.fire(pixel: .syncCredentialsCountLimitExceededDaily)
+                            Self.showErrorAlert()
                         }
                         // If credentials request size limit has been exceeded
                         if syncError == .unexpectedStatusCode(413) {
                             Self.isSyncCredentialsPaused = true
                             DailyPixel.fire(pixel: .syncCredentialsRequestSizeLimitExceededDaily)
+                            Self.showErrorAlert()
                         }
                     default:
                         let nsError = error as NSError
@@ -108,6 +114,13 @@ public final class SyncCredentialsAdapter {
             let params = processedErrors.errorPixelParameters
             Pixel.fire(pixel: .syncCredentialsProviderInitializationFailed, error: error, withAdditionalParameters: params)
        }
+    }
+
+    static private func showErrorAlert() {
+        if !Self.wasSyncCredentialsErrorDisplayed {
+            NotificationCenter.default.post(name: Self.shouldShowCredentialsPauseError, object: nil)
+            Self.wasSyncCredentialsErrorDisplayed = true
+        }
     }
 
     private var syncDidCompleteSubject = PassthroughSubject<Void, Never>()

@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1697654992169,
+    "version": 1698745071843,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -85,10 +85,6 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "settings": {
@@ -114,7 +110,12 @@
                 ]
             },
             "state": "enabled",
-            "hash": "cf1e1726876b6f6510eae65e2bc37047"
+            "hash": "c4367cb8ce342c06a089afa2bf8a7b84"
+        },
+        "androidBrowserConfig": {
+            "exceptions": [],
+            "state": "disabled",
+            "hash": "728493ef7a1488e4781656d3f9db84aa"
         },
         "autoconsent": {
             "exceptions": [
@@ -289,10 +290,6 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "settings": {
@@ -301,7 +298,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "6b201ccc9308a1e9b574b8a7da5a9b52"
+            "hash": "faab10f2de9c911fe8632c12dcfd52f5"
         },
         "autofill": {
             "exceptions": [
@@ -343,12 +340,15 @@
                         "steps": [
                             {
                                 "percent": 1
+                            },
+                            {
+                                "percent": 10
                             }
                         ]
                     }
                 }
             },
-            "hash": "555acbcb681d4f9b342dd2539c8e2c40"
+            "hash": "3a139910043488682718a3908993f8d3"
         },
         "clickToLoad": {
             "exceptions": [
@@ -1163,10 +1163,6 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "settings": {
@@ -1184,7 +1180,7 @@
                 }
             },
             "state": "disabled",
-            "hash": "282361b69a7a17fbd3a6c53cdfba6b97"
+            "hash": "0348b68a4f222f86bb690dba5a230bed"
         },
         "clickToPlay": {
             "exceptions": [
@@ -1199,10 +1195,6 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "settings": {
@@ -1215,7 +1207,7 @@
                 }
             },
             "state": "disabled",
-            "hash": "849beddfafbff071cd4a08697c265a38"
+            "hash": "41113a821c203f193f59b74df66c29a3"
         },
         "contentBlocking": {
             "state": "enabled",
@@ -1241,6 +1233,10 @@
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1401"
                 },
                 {
+                    "domain": "sundancecatalog.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1420"
+                },
+                {
                     "domain": "earth.google.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1099"
                 },
@@ -1251,13 +1247,9 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
-            "hash": "f94b331bc97d678adbd90ed74feb40b2"
+            "hash": "f7cc238fd4b1655cfcfb8d4a72a88d03"
         },
         "cookie": {
             "settings": {
@@ -1310,18 +1302,14 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "state": "disabled",
-            "hash": "ee691572b20893705632f670a2f72801"
+            "hash": "a25d857f1b17af5e17c11eae8bb4c3b2"
         },
         "customUserAgent": {
             "settings": {
-                "defaultPolicy": "ddg",
+                "defaultPolicy": "ddgFixed",
                 "ddgFixedSites": [],
                 "ddgDefaultSites": [
                     {
@@ -1329,131 +1317,131 @@
                         "reason": "Internal exclusion to roll out experiment"
                     }
                 ],
-                "ddgFixedUserAgent": {
+                "closestUserAgent": {
                     "versions": [
-                        "391",
-                        "389",
-                        "388",
-                        "386",
-                        "383",
-                        "382",
-                        "379",
-                        "377",
-                        "376",
-                        "374",
-                        "371",
-                        "370",
-                        "367",
-                        "365",
-                        "364",
-                        "361",
-                        "360",
-                        "358",
-                        "356",
-                        "353",
-                        "351",
-                        "349",
-                        "348",
-                        "345",
-                        "343",
-                        "341",
-                        "340",
-                        "338",
-                        "336",
-                        "334",
-                        "332",
-                        "330",
-                        "327",
-                        "325",
-                        "324",
-                        "322",
-                        "319",
-                        "317",
-                        "316",
-                        "314",
-                        "311",
-                        "310",
-                        "307",
-                        "305",
-                        "303",
-                        "301",
-                        "299",
-                        "297",
-                        "296",
-                        "294",
-                        "292",
-                        "290",
-                        "288",
-                        "286",
-                        "283",
-                        "282",
-                        "280",
-                        "277",
-                        "275",
-                        "273",
-                        "272",
-                        "270",
-                        "267",
-                        "265",
-                        "264",
-                        "261",
-                        "259",
-                        "258",
-                        "255",
-                        "253",
-                        "252",
-                        "250",
-                        "247",
-                        "246",
-                        "243",
-                        "242",
-                        "240",
-                        "237",
-                        "235",
-                        "233",
-                        "231",
-                        "229",
-                        "227",
-                        "225",
-                        "224",
-                        "221",
-                        "219",
-                        "217",
-                        "216",
-                        "214",
-                        "212",
-                        "210",
-                        "207",
-                        "206",
-                        "204",
-                        "201",
-                        "200",
-                        "198",
-                        "195",
-                        "193",
-                        "192",
-                        "189",
-                        "188",
-                        "186",
-                        "183",
-                        "181",
-                        "179",
-                        "177",
-                        "175",
-                        "174",
-                        "172",
-                        "170",
-                        "168",
-                        "166",
-                        "164",
-                        "162",
-                        "159",
-                        "158",
-                        "156",
-                        "153",
-                        "151",
-                        "149",
-                        "147"
+                        "392",
+                        "390",
+                        "387",
+                        "385",
+                        "384",
+                        "381",
+                        "380",
+                        "378",
+                        "375",
+                        "373",
+                        "372",
+                        "369",
+                        "368",
+                        "366",
+                        "363",
+                        "362",
+                        "359",
+                        "357",
+                        "355",
+                        "354",
+                        "352",
+                        "350",
+                        "347",
+                        "346",
+                        "344",
+                        "342",
+                        "339",
+                        "337",
+                        "335",
+                        "333",
+                        "331",
+                        "329",
+                        "328",
+                        "326",
+                        "323",
+                        "321",
+                        "320",
+                        "318",
+                        "315",
+                        "313",
+                        "312",
+                        "309",
+                        "308",
+                        "306",
+                        "304",
+                        "302",
+                        "300",
+                        "298",
+                        "295",
+                        "293",
+                        "291",
+                        "289",
+                        "287",
+                        "285",
+                        "284",
+                        "281",
+                        "279",
+                        "278",
+                        "276",
+                        "274",
+                        "271",
+                        "269",
+                        "268",
+                        "266",
+                        "263",
+                        "262",
+                        "260",
+                        "257",
+                        "256",
+                        "254",
+                        "251",
+                        "249",
+                        "248",
+                        "245",
+                        "244",
+                        "241",
+                        "239",
+                        "238",
+                        "236",
+                        "234",
+                        "232",
+                        "230",
+                        "228",
+                        "226",
+                        "223",
+                        "222",
+                        "220",
+                        "218",
+                        "215",
+                        "213",
+                        "211",
+                        "209",
+                        "208",
+                        "205",
+                        "203",
+                        "202",
+                        "199",
+                        "197",
+                        "196",
+                        "194",
+                        "191",
+                        "190",
+                        "187",
+                        "185",
+                        "184",
+                        "182",
+                        "180",
+                        "178",
+                        "176",
+                        "173",
+                        "171",
+                        "169",
+                        "167",
+                        "165",
+                        "163",
+                        "161",
+                        "160",
+                        "157",
+                        "155",
+                        "154",
+                        "152",
+                        "150",
+                        "148"
                     ]
                 },
                 "omitApplicationSites": [
@@ -1510,16 +1498,16 @@
                         "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
                     },
                     {
-                        "domain": "paramountplus.com",
-                        "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
-                    },
-                    {
                         "domain": "cvs.com",
                         "reason": "Navigation section at the top of the main page renders as text."
                     },
                     {
                         "domain": "facebook.com",
                         "reason": "When going to the main login page, there is a banner at the top which warns of an 'Unsupported browser'."
+                    },
+                    {
+                        "domain": "formula1.com",
+                        "reason": "Stream page shows 'unsupported browser'"
                     },
                     {
                         "domain": "hulu.com",
@@ -1566,16 +1554,12 @@
                     {
                         "domain": "marvel.com",
                         "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                    },
-                    {
-                        "domain": "paramountplus.com",
-                        "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                     }
                 ]
             },
             "exceptions": [],
             "state": "enabled",
-            "hash": "10c9207834e45150fb4fa54cc22a9b92"
+            "hash": "2cb1f5495863943f82cb660836d9d844"
         },
         "duckPlayer": {
             "exceptions": [],
@@ -1732,10 +1716,6 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "settings": {
@@ -2195,6 +2175,15 @@
                         ]
                     },
                     {
+                        "domain": "avito.ru",
+                        "rules": [
+                            {
+                                "selector": "[class*='advert-mimicry-block']",
+                                "type": "hide"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "bbc.com",
                         "rules": [
                             {
@@ -2339,15 +2328,6 @@
                         "domain": "dallasnews.com",
                         "rules": [
                             {
-                                "selector": "[data-targeting]",
-                                "type": "hide-empty"
-                            }
-                        ]
-                    },
-                    {
-                        "domain": "dallasnews.com",
-                        "rules": [
-                            {
                                 "selector": ".adhesiveAdWrapper",
                                 "type": "hide-empty"
                             },
@@ -2362,6 +2342,15 @@
                             {
                                 "selector": ".bg-neutral-grey-4.items-center",
                                 "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "deseret.com",
+                        "rules": [
+                            {
+                                "selector": "[data-targeting]",
+                                "type": "override"
                             }
                         ]
                     },
@@ -3415,6 +3404,15 @@
                         ]
                     },
                     {
+                        "domain": "whitakerfuneralhome.com",
+                        "rules": [
+                            {
+                                "selector": ".top-banner",
+                                "type": "override"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "winnipegfreepress.com",
                         "rules": [
                             {
@@ -3581,7 +3579,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "b14a407a0c2cb050996646dfaadaf2db"
+            "hash": "acd3ac81772327d9018204dd0e268b28"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -3596,19 +3594,19 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "state": "disabled",
-            "hash": "f3fcace884f1423ec9c111587966d0bb"
+            "hash": "4cf9d85cdd66d5b30776fb9a38f8e143"
         },
         "fingerprintingAudio": {
             "state": "disabled",
             "exceptions": [
                 {
+                    "domain": "litebluesso.usps.gov",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1424"
+                },
+                {
                     "domain": "earth.google.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1099"
                 },
@@ -3619,17 +3617,17 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
-            "hash": "47ea2125485511e0d94a8e767b246068"
+            "hash": "39522240455c067b38ce044b9c24d946"
         },
         "fingerprintingBattery": {
             "exceptions": [
                 {
+                    "domain": "litebluesso.usps.gov",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1424"
+                },
+                {
                     "domain": "earth.google.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1099"
                 },
@@ -3640,14 +3638,10 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "state": "enabled",
-            "hash": "0f48731cc79a1d8d063df9f955f6acd4"
+            "hash": "0cb72d321c9503d7601ab0d94c0f0ac5"
         },
         "fingerprintingCanvas": {
             "settings": {
@@ -3709,6 +3703,10 @@
                 {
                     "domain": "ikea.com",
                     "reason": "When creating an account, after filling out details and going to e-mail confirmation, there is an error 'Something went wrong', and the e-mail may not be received. Clicking 'Send new code' appears successful, but after entering the code there is often another account creation error."
+                },
+                {
+                    "domain": "litebluesso.usps.gov",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1424"
                 },
                 {
                     "domain": "manulife.ca",
@@ -3773,14 +3771,10 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "state": "disabled",
-            "hash": "3b3d0307a60663097a8efad33af4fd08"
+            "hash": "464e5cecb38baef8eea5f747f44024c9"
         },
         "fingerprintingHardware": {
             "settings": {
@@ -3813,6 +3807,10 @@
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/927"
                 },
                 {
+                    "domain": "litebluesso.usps.gov",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1424"
+                },
+                {
                     "domain": "realestate.com.au",
                     "reason": "Site loads blank and does not proceed."
                 },
@@ -3835,14 +3833,10 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "state": "enabled",
-            "hash": "c2469977eaaaf117362492d2c993fd1c"
+            "hash": "34d0e8f5460664b2cc2664ae47336165"
         },
         "fingerprintingScreenSize": {
             "settings": {
@@ -3881,6 +3875,10 @@
                     "reason": "Site loads blank and does not proceed."
                 },
                 {
+                    "domain": "litebluesso.usps.gov",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1424"
+                },
+                {
                     "domain": "secureserver.net",
                     "reason": "After entering login details and clicking to log in, the site shows an adwall and prevents login."
                 },
@@ -3895,20 +3893,20 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "state": "enabled",
-            "hash": "27afff6e74517f41184f4d3df479c53b"
+            "hash": "cbb7ca3551b6cfc219d228ef18a21130"
         },
         "fingerprintingTemporaryStorage": {
             "exceptions": [
                 {
                     "domain": "fedex.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/927"
+                },
+                {
+                    "domain": "litebluesso.usps.gov",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1424"
                 },
                 {
                     "domain": "earth.google.com",
@@ -3921,14 +3919,10 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "state": "enabled",
-            "hash": "4d9f5564b76c44f76b90692d98230d78"
+            "hash": "5726f4a4e6b435744db0a0ebc857994b"
         },
         "googleRejected": {
             "exceptions": [
@@ -3943,14 +3937,10 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "state": "disabled",
-            "hash": "f3fcace884f1423ec9c111587966d0bb"
+            "hash": "4cf9d85cdd66d5b30776fb9a38f8e143"
         },
         "gpc": {
             "state": "enabled",
@@ -3966,6 +3956,10 @@
                 {
                     "domain": "costco.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/644"
+                },
+                {
+                    "domain": "crunchyroll.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1422"
                 },
                 {
                     "domain": "eventbrite.com",
@@ -3994,10 +3988,6 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "settings": {
@@ -4009,7 +3999,7 @@
                     "privacy-test-pages.site"
                 ]
             },
-            "hash": "402a82434b6f2b8a5321d9f004a7c33f"
+            "hash": "f3b1e7807c9b00ee721177ff8b9f1cd5"
         },
         "harmfulApis": {
             "settings": {
@@ -4122,14 +4112,10 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "state": "disabled",
-            "hash": "0381a7afb0f7453acb315ab3e0884eaa"
+            "hash": "bbc5332342823cf86f7f29b5760e80ce"
         },
         "https": {
             "state": "enabled",
@@ -4157,13 +4143,9 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
-            "hash": "2b7a26bbc23127a7ce24cc992066ad14"
+            "hash": "a4ed93a164b497b850ee1b4b337edcf3"
         },
         "incontextSignup": {
             "exceptions": [],
@@ -4204,10 +4186,6 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "settings": {
@@ -4218,7 +4196,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "002c32fcc15897c2ffae8045ac0bdcb3"
+            "hash": "6562f7d3e2dfb60604a0d56e5fe19ff2"
         },
         "networkProtection": {
             "state": "disabled",
@@ -4254,14 +4232,10 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "state": "disabled",
-            "hash": "81f357de4bfc7abeddf1a3a3fb1fc7a9"
+            "hash": "6e117549e8a40b811250fdb77f754e0c"
         },
         "privacyDashboard": {
             "exceptions": [],
@@ -4313,14 +4287,10 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "state": "disabled",
-            "hash": "6fb4590e0f11214e27a5386f24f1962f"
+            "hash": "f152d124dcf50f00bc8b5afd6d8cbe2e"
         },
         "requestFilterer": {
             "state": "disabled",
@@ -4336,16 +4306,12 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "settings": {
                 "windowInMs": 0
             },
-            "hash": "c208c59a304e1d48cdd9ba85c0c8db25"
+            "hash": "ba2e7ce6c57f20ab022180ff29e013c4"
         },
         "runtimeChecks": {
             "state": "disabled",
@@ -4361,14 +4327,10 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "settings": {},
-            "hash": "ca5b15f5db8334f68f29726b21d09c4a"
+            "hash": "fa49d2d969e1924b894c4b411a7c7430"
         },
         "serviceworkerInitiatedRequests": {
             "exceptions": [
@@ -4383,14 +4345,10 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "state": "disabled",
-            "hash": "f3fcace884f1423ec9c111587966d0bb"
+            "hash": "4cf9d85cdd66d5b30776fb9a38f8e143"
         },
         "trackerAllowlist": {
             "state": "enabled",
@@ -4516,6 +4474,17 @@
                                     "nhl.com"
                                 ],
                                 "reason": "Videos show a spinner and never load."
+                            }
+                        ]
+                    },
+                    "adswizz.com": {
+                        "rules": [
+                            {
+                                "rule": "synchrobox.adswizz.com",
+                                "domains": [
+                                    "tunein.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1438"
                             }
                         ]
                     },
@@ -5234,14 +5203,6 @@
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1107"
                             },
                             {
-                                "rule": "alicdn.com.edgekey.net/",
-                                "domains": [
-                                    "aliexpress.com",
-                                    "aliexpress.us"
-                                ],
-                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/570"
-                            },
-                            {
                                 "rule": "nintendo.com.edgekey.net/account/js/common.js",
                                 "domains": [
                                     "nintendo.com"
@@ -5496,7 +5457,7 @@
                             {
                                 "rule": "geoip-js.com/js/apis/geoip2/v2.1/geoip2.js",
                                 "domains": [
-                                    "yourrewardcard.com"
+                                    "<all>"
                                 ],
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1288"
                             }
@@ -5847,6 +5808,17 @@
                                     "focus.de"
                                 ],
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1043"
+                            }
+                        ]
+                    },
+                    "groovehq.com": {
+                        "rules": [
+                            {
+                                "rule": "widget.cluster.groovehq.com/_next/static/chunks/",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1416"
                             }
                         ]
                     },
@@ -6399,6 +6371,17 @@
                             }
                         ]
                     },
+                    "permutive.app": {
+                        "rules": [
+                            {
+                                "rule": "edge.permutive.app",
+                                "domains": [
+                                    "globaltv.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1418"
+                            }
+                        ]
+                    },
                     "plotrabbit.com": {
                         "rules": [
                             {
@@ -6895,6 +6878,17 @@
                             }
                         ]
                     },
+                    "tiktok.com": {
+                        "rules": [
+                            {
+                                "rule": "www.tiktok.com/embed",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1412"
+                            }
+                        ]
+                    },
                     "tiqcdn.com": {
                         "rules": [
                             {
@@ -7263,13 +7257,9 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
-            "hash": "8cae71738e23bfd2e355653290f048b4"
+            "hash": "36405289e6da5cb590b78d1761d21ad7"
         },
         "trackingCookies1p": {
             "settings": {
@@ -7290,14 +7280,10 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "state": "disabled",
-            "hash": "0bea41340334fc80820a598f8b892e30"
+            "hash": "9eb0c864f68329c5c98269b9d77fce94"
         },
         "trackingCookies3p": {
             "settings": {
@@ -7315,14 +7301,10 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "state": "disabled",
-            "hash": "81f357de4bfc7abeddf1a3a3fb1fc7a9"
+            "hash": "6e117549e8a40b811250fdb77f754e0c"
         },
         "trackingParameters": {
             "exceptions": [
@@ -7337,10 +7319,6 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 },
                 {
                     "domain": "theverge.com",
@@ -7377,7 +7355,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "aab19f2fd45ded0765912ee266c309df"
+            "hash": "cce5a16256c1522d32184562787a0ad7"
         },
         "userAgentRotation": {
             "settings": {
@@ -7395,14 +7373,10 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "state": "disabled",
-            "hash": "9775f6a60d1271671e6ef7a7cd2811be"
+            "hash": "158b0b3e010b8606819c6bc60c435805"
         },
         "voiceSearch": {
             "exceptions": [],
@@ -7422,10 +7396,6 @@
                 {
                     "domain": "marvel.com",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1194"
-                },
-                {
-                    "domain": "paramountplus.com",
-                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/1085"
                 }
             ],
             "state": "enabled",
@@ -7458,7 +7428,7 @@
                     }
                 ]
             },
-            "hash": "40742df45658ad78c016f5a99178482d"
+            "hash": "c570e5c5011cf4cffbc62e7587a9731b"
         },
         "windowsPermissionUsage": {
             "exceptions": [],

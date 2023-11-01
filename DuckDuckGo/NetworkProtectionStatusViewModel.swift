@@ -70,6 +70,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     @Published public var location: String?
     @Published public var ipAddress: String?
 
+    @Published public var animationsOn: Bool = false
+
     public init(tunnelController: TunnelController = NetworkProtectionTunnelController(),
                 statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
                 serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
@@ -171,7 +173,11 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
+    @MainActor
     func didToggleNetP(to enabled: Bool) async {
+        // This is to prevent weird looking animations on navigating to the screen.
+        // It makes sense as animations should mostly only happen when a user has interacted.
+        animationsOn = true
         if enabled {
             await enableNetP()
         } else {

@@ -54,6 +54,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         case password
         case address
         case notes
+        case generic(String)
     }
 
     enum Constants {
@@ -244,6 +245,9 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         case .notes:
             message = UserText.autofillCopyToastNotesCopied
             UIPasteboard.general.string = notes
+        case .generic(let text):
+            message = "Copied"
+            UIPasteboard.general.string = text
         }
         
         presentCopyConfirmation(message: message)

@@ -163,6 +163,26 @@ struct AutofillLoginDetailsView: View {
                 })
             }
 
+            let previousPasswords = viewModel.notes.trimmingWhitespace().components(separatedBy: "\n")
+            if !previousPasswords.isEmpty {
+                Section {
+
+                    ForEach(previousPasswords, id: \.self) { password in
+                        CopyableCell(title: "Previously",
+                                     subtitle: password,
+                                     selectedCell: $viewModel.selectedCell,
+                                     isMonospaced: true,
+                                     actionTitle: "Copy",
+                                     action: { viewModel.copyToPasteboard(.generic(password)) },
+                                     secondaryActionTitle: "",
+                                     secondaryAction: {},
+                                     buttonImageName: "Copy-24",
+                                     buttonAccessibilityLabel: "Copy",
+                                     buttonAction: { viewModel.copyToPasteboard(.generic(password)) })
+                    }
+                }
+            }
+
             Section {
                 deleteCell()
             }

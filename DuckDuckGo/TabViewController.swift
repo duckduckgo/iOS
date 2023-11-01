@@ -1092,6 +1092,7 @@ extension TabViewController: WKNavigationDelegate {
         linkProtection.setMainFrameUrl(nil)
         referrerTrimming.onFinishNavigation()
         urlProvidedBasicAuthCredential = nil
+        syncService.scheduler.notifyDataChanged()
     }
     
     func preparePreview(completion: @escaping (UIImage?) -> Void) {

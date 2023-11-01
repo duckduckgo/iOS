@@ -71,6 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private(set) var syncDataProviders: SyncDataProviders!
     private var syncDidFinishCancellable: AnyCancellable?
     private var syncStateCancellable: AnyCancellable?
+    private var syncDeviceNameCancellable: AnyCancellable?
 
     // MARK: lifecycle
 
@@ -223,11 +224,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ).wrappedValue
         ) ?? defaultEnvironment
 
+        let currentDeviceTabs = CurrentDeviceTabs()
+
         syncDataProviders = SyncDataProviders(
             bookmarksDatabase: bookmarksDatabase,
             secureVaultErrorReporter: SecureVaultErrorReporter.shared,
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
-            favoritesDisplayModeStorage: FavoritesDisplayModeStorage()
+            favoritesDisplayModeStorage: FavoritesDisplayModeStorage(),
+            currentDeviceTabsSource: currentDeviceTabs
         )
         let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog, environment: environment)
         syncService.initializeIfNeeded()
@@ -240,6 +244,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                       syncDataProviders: syncDataProviders,
                                       appSettings: AppDependencyProvider.shared.appSettings)
         main.loadViewIfNeeded()
+        currentDeviceTabs.tabManager = main.tabManager
+
+
+        syncDeviceNameCancellable = syncService.authStatePublisher
+            .compactMap { [weak syncService] _ in syncService?.account?.deviceId }
+            .removeDuplicates()
+            .sink { deviceId in
+                currentDeviceTabs.deviceId = deviceId
+            }
+
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = main

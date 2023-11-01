@@ -48,7 +48,8 @@ final class VPNWaitlist: Waitlist {
     let waitlistStorage: WaitlistStorage
     let waitlistRequest: WaitlistRequest
 
-    init(store: WaitlistStorage, request: WaitlistRequest,
+    init(store: WaitlistStorage,
+         request: WaitlistRequest,
          privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) {
         self.waitlistStorage = store
         self.waitlistRequest = request

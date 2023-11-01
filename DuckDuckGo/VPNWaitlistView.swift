@@ -60,9 +60,9 @@ struct VPNWaitlistSignUpView: View {
         GeometryReader { proxy in
             ScrollView {
                 VStack(alignment: .center, spacing: 8) {
-                    HeaderView(imageName: "WindowsWaitlistJoinWaitlist", title: UserText.windowsWaitlistTryDuckDuckGoForWindows)
+                    HeaderView(imageName: "WindowsWaitlistJoinWaitlist", title: "Title")
 
-                    Text(UserText.windowsWaitlistSummary)
+                    Text("Summary")
                         .daxBodyRegular()
                         .foregroundColor(.waitlistTextSecondary)
                         .multilineTextAlignment(.center)
@@ -83,29 +83,7 @@ struct VPNWaitlistSignUpView: View {
                         .padding(.top, 14)
                     }
 
-                    Spacer(minLength: 24)
-
-                    Button(
-                        action: {
-                            action(.custom(.openMacBrowserWaitlist))
-                        }, label: {
-                            Text(UserText.windowsWaitlistMac)
-                                .daxHeadline()
-                                .foregroundColor(.waitlistBlue)
-                                .multilineTextAlignment(.center)
-                                .lineSpacing(5)
-                        }
-                    )
-                    .padding(.bottom, 12)
-                    .fixedSize(horizontal: false, vertical: true)
-
-                    Text(UserText.waitlistPrivacyDisclaimer)
-                        .daxFootnoteRegular()
-                        .foregroundColor(.waitlistTextSecondary)
-                        .multilineTextAlignment(.center)
-                        .lineSpacing(5)
-                        .padding(.bottom, 12)
-                        .fixedSize(horizontal: false, vertical: true)
+                    Spacer()
                 }
                 .padding([.leading, .trailing], 24)
                 .frame(minHeight: proxy.size.height)

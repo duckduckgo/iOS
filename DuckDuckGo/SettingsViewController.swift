@@ -127,7 +127,7 @@ class SettingsViewController: UITableViewController {
     private lazy var shouldShowNetPCell: Bool = {
 #if NETWORK_PROTECTION
         if #available(iOS 15, *) {
-            return featureFlagger.isFeatureOn(.networkProtection)
+            return true // featureFlagger.isFeatureOn(.networkProtection)
         } else {
             return false
         }
@@ -421,14 +421,20 @@ class SettingsViewController: UITableViewController {
 #if NETWORK_PROTECTION
     @available(iOS 15, *)
     private func showNetP() {
-        // This will be tidied up as part of https://app.asana.com/0/0/1205084446087078/f
-        let rootViewController = NetworkProtectionRootViewController { [weak self] in
-            self?.navigationController?.popViewController(animated: true)
-            let newRootViewController = NetworkProtectionRootViewController()
-            self?.pushNetP(newRootViewController)
+        if NetworkProtectionKeychainTokenStore().isFeatureActivated {
+            // This will be tidied up as part of https://app.asana.com/0/0/1205084446087078/f
+            let rootViewController = NetworkProtectionRootViewController { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
+                let newRootViewController = NetworkProtectionRootViewController()
+                self?.pushNetP(newRootViewController)
+            }
+
+            pushNetP(rootViewController)
+        } else {
+            navigationController?.pushViewController(VPNWaitlistViewController(nibName: nil, bundle: nil), animated: true)
         }
-        pushNetP(rootViewController)
     }
+
     @available(iOS 15, *)
     private func pushNetP(_ rootViewController: NetworkProtectionRootViewController) {
         navigationController?.pushViewController(

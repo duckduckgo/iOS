@@ -40,7 +40,7 @@ final class VPNWaitlistViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "VPN Waitlist"
+        title = "Network Protection Preview"
 
         addHostingControllerToViewHierarchy()
 

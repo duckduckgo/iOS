@@ -20,7 +20,7 @@
 import Foundation
 import BrowserServicesKit
 
-public enum FeatureFlag: String {
+public enum FeatureFlag: String, CaseIterable {
     case debugMenu
     case sync
     case autofillCredentialInjecting

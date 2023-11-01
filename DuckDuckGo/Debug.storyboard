@@ -275,6 +275,26 @@
                                             <segue destination="xFp-fx-HYn" kind="show" id="HbW-NY-KFi"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="JpV-4h-eBq" style="IBUITableViewCellStyleDefault" id="k9I-lx-HIC">
+                                        <rect key="frame" x="0.0" y="398" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="k9I-lx-HIC" id="vzV-99-oZH">
+                                            <rect key="frame" x="0.0" y="0.0" width="383.5" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Feature Flags" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JpV-4h-eBq">
+                                                    <rect key="frame" x="20" y="0.0" width="355.5" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="WIE-PE-fiX" kind="show" destinationCreationSelector="onCreateFeatureFlagDebugScreen:sender:segueIdentifier:" id="Fnd-ML-apb"/>
+                                        </connections>
+                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" tag="665" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="iau-ES-Bnx">
                                         <rect key="frame" x="0.0" y="707.5" width="414" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -946,6 +966,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vw1-aJ-BgA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4029" y="968"/>
+        </scene>
+        <!--FeatureFlagHostingViewController-->
+        <scene sceneID="RuN-xs-DzX">
+            <objects>
+                <hostingController storyboardIdentifier="FeatureFlagHostingViewController" id="WIE-PE-fiX" userLabel="FeatureFlagHostingViewController" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="KFQ-3b-YHa"/>
+                </hostingController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fSu-Ow-bEz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4792" y="1013"/>
         </scene>
         <!--Sync Info-->
         <scene sceneID="A1E-XU-w8R">

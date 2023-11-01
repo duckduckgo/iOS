@@ -35,7 +35,7 @@ protocol DependencyProvider {
     var appSettings: AppSettings { get }
     var variantManager: VariantManager { get }
     var internalUserDecider: InternalUserDecider { get }
-    var featureFlagger: FeatureFlagger { get }
+    var featureFlagger: DefaultFeatureFlagger { get }
     var storageCache: StorageCache { get }
     var downloadManager: DownloadManager { get }
     var autofillLoginSession: AutofillLoginSession { get }
@@ -62,8 +62,10 @@ final class AppDependencyProvider: DependencyProvider {
     static var shared: DependencyProvider = AppDependencyProvider()
     let appSettings: AppSettings = AppUserDefaults()
     let variantManager: VariantManager = DefaultVariantManager()
+    
     let internalUserDecider: InternalUserDecider = ContentBlocking.shared.privacyConfigurationManager.internalUserDecider
-    let featureFlagger: FeatureFlagger
+    private lazy var privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
+    lazy var featureFlagger: DefaultFeatureFlagger = DefaultFeatureFlagger(internalUserDecider: internalUserDecider, privacyConfig: privacyConfig, overrideStore: FeatureFlagOverrideStore())
 
     let storageCache = StorageCache()
     let downloadManager = DownloadManager()

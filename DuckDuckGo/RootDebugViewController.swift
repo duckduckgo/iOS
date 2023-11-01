@@ -126,6 +126,12 @@ class RootDebugViewController: UITableViewController {
         return controller
     }
 
+    @IBSegueAction func onCreateFeatureFlagDebugScreen(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> UIViewController {
+        guard let controller = UIHostingController(coder: coder, rootView: FeatureFlagDebugView()) else {
+            fatalError("Failed to create controller")
+        }
+        return controller
+    }
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if cell.tag == Row.toggleInspectableWebViews.rawValue {

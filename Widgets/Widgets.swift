@@ -192,7 +192,10 @@ struct Widgets: WidgetBundle {
     var body: some Widget {
         SearchWidget()
         FavoritesWidget()
-        VPNStatusWidget()
+
+        if #available(iOSApplicationExtension 17.0, *) {
+            VPNStatusWidget()
+        }
 
         if #available(iOSApplicationExtension 16.0, *) {
             SearchLockScreenWidget()
@@ -218,17 +221,20 @@ extension UIImage {
 
 // MARK: - VPN Status Widget
 
+enum VPNStatus {
+    case status(NEVPNStatus)
+    case error
+    case notConfigured
+}
 struct VPNStatusTimelineEntry: TimelineEntry {
     let date: Date
+    let status: VPNStatus
+    let location: String
 
-    let uuid: String = UUID().uuidString
-    let enabled: Bool?
-    let status: String
-
-    internal init(date: Date, enabled: Bool? = nil, status: String = "Unknown") {
+    internal init(date: Date, status: VPNStatus = .notConfigured, location: String = "No Location") {
         self.date = date
-        self.enabled = enabled
         self.status = status
+        self.location = location
     }
 }
 
@@ -237,34 +243,36 @@ class VPNStatusTimelineProvider: TimelineProvider {
     typealias Entry = VPNStatusTimelineEntry
 
     func placeholder(in context: Context) -> VPNStatusTimelineEntry {
-        return VPNStatusTimelineEntry(date: Date(), enabled: nil)
+        return VPNStatusTimelineEntry(date: Date())
     }
 
     func getSnapshot(in context: Context, completion: @escaping (VPNStatusTimelineEntry) -> Void) {
-        let entry = VPNStatusTimelineEntry(date: Date(), enabled: false)
+        let entry = VPNStatusTimelineEntry(date: Date())
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<VPNStatusTimelineEntry>) -> Void) {
         NETunnelProviderManager.loadAllFromPreferences { managers, error in
-            let expiration =  Date().addingTimeInterval(TimeInterval.seconds(30))
+            let expiration = Date().addingTimeInterval(TimeInterval.minutes(1))
 
             if let error {
-                let entry = VPNStatusTimelineEntry(date: expiration, enabled: false, status: "Error")
+                let entry = VPNStatusTimelineEntry(date: expiration, status: .error)
                 let timeline = Timeline(entries: [entry], policy: .atEnd)
                 completion(timeline)
                 return
             }
 
             guard let manager = managers?.first else {
-                let entry = VPNStatusTimelineEntry(date: expiration, enabled: false, status: "No Manager")
+                let entry = VPNStatusTimelineEntry(date: expiration, status: .notConfigured)
                 let timeline = Timeline(entries: [entry], policy: .atEnd)
                 completion(timeline)
                 return
             }
 
             let status = manager.connection.status
-            let entry = VPNStatusTimelineEntry(date: Date().addingTimeInterval(TimeInterval.seconds(30)), enabled: true, status: status.description)
+            let enabled = (status == .connected || status == .connecting)
+
+            let entry = VPNStatusTimelineEntry(date: expiration, status: .status(status))
             let timeline = Timeline(entries: [entry], policy: .atEnd)
 
             completion(timeline)
@@ -301,17 +309,47 @@ struct VPNStatusView: View {
     var body: some View {
         if #available(iOSApplicationExtension 17.0, *) {
             VStack {
-                Text(entry.status)
-                Text("Expiration: \(entry.date.description)").font(.footnote)
-                Text(entry.uuid).font(Font.system(size: 10, weight: .bold)).padding(.top, 8)
-            }
-                .containerBackground(for: .widget) {
-                    Color.orange
-                }
-        } else {
-            Text("Testing")
-        }
+                switch entry.status {
+                case .status(let status):
+                    Text(status.description)
+                    // Text("Location: \(entry.location)").font(.footnote)
 
+                    Spacer()
+
+                    switch status {
+                    case .connected:
+                        Button(intent: DisableVPNIntent()) {
+                            Text("Disconnect")
+                                .font(.body)
+                                .padding()
+                                .background(Color.black)
+                                .foregroundStyle(.white)
+                                .clipShape(Capsule())
+                        }
+                    case .disconnected:
+                        Button(intent: EnableVPNIntent()) {
+                            Text("Connect")
+                                .font(.body)
+                                .padding()
+                                .background(Color.black)
+                                .foregroundStyle(.white)
+                                .clipShape(Capsule())
+                        }
+                    default:
+                        Text("Changing status...")
+                    }
+                case .error:
+                    Text("Error")
+                case .notConfigured:
+                    Text("VPN Not Configured")
+                }
+            }
+            .containerBackground(for: .widget) {
+                Color.orange
+            }
+        } else {
+            Text("iOS 17 required")
+        }
     }
 }
 
@@ -324,6 +362,6 @@ struct VPNStatusWidget: Widget {
         }
         .configurationDisplayName("VPN Status")
         .description("View and manage the DuckDuckGo VPN status")
-        .supportedFamilies([.systemMedium])
+        .supportedFamilies([.systemSmall])
     }
 }

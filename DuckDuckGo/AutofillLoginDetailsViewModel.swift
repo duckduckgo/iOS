@@ -295,7 +295,13 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     credential.account.username = username
                     credential.account.title = title
                     credential.account.domain = autofillDomainNameUrlMatcher.normalizeUrlForWeb(address)
-                    credential.account.notes = notes
+
+                    if credential.password != passwordData && !password.isEmpty {
+                        let currentPassword = credential.password.flatMap { String(data: $0, encoding: .utf8) } ?? ""
+                        credential.account.notes = currentPassword.appending("\n").appending(notes)
+                    } else {
+                        credential.account.notes = notes
+                    }
                     credential.password = passwordData
 
                     _ = try vault.storeWebsiteCredentials(credential)

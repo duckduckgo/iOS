@@ -166,7 +166,6 @@ struct AutofillLoginDetailsView: View {
             let previousPasswords = viewModel.notes.trimmingWhitespace().components(separatedBy: "\n")
             if !previousPasswords.isEmpty {
                 Section {
-
                     ForEach(previousPasswords, id: \.self) { password in
                         CopyableCell(title: "Previously",
                                      subtitle: password,

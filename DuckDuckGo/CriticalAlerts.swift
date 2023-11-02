@@ -60,10 +60,12 @@ struct CriticalAlerts {
                                                 preferredStyle: .alert)
         alertController.overrideUserInterfaceStyle()
 
+        let closeButton = UIAlertAction(title: UserText.keyCommandClose, style: .cancel)
         let signInButton = UIAlertAction(title: UserText.emailProtectionSignInAction, style: .default) { _ in
             UIApplication.shared.open(URL.emailProtectionQuickLink, options: [:], completionHandler: nil)
         }
 
+        alertController.addAction(closeButton)
         alertController.addAction(signInButton)
         return alertController
     }

@@ -58,4 +58,14 @@ extension NetworkProtectionCodeRedemptionCoordinator {
     }
 }
 
+extension NetworkProtectionVPNNotificationsViewModel {
+    convenience init() {
+        let notificationsSettingsStore = NetworkProtectionNotificationsSettingsUserDefaultsStore(userDefaults: .networkProtectionGroupDefaults)
+        self.init(
+            notificationsAuthorization: NotificationsAuthorizationController(),
+            notificationsSettingsStore: notificationsSettingsStore
+        )
+    }
+}
+
 #endif

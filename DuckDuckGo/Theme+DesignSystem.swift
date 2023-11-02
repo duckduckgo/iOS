@@ -34,6 +34,8 @@ extension Theme {
     var searchBarTextPlaceholderColor: UIColor { UIColor(designSystemColor: .textSecondary) }
 
     // New:
+    var autocompleteCellAccessoryColor: UIColor { UIColor(designSystemColor: .icons) }
+
     var autofillDefaultTitleTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
     var autofillDefaultSubtitleTextColor: UIColor { UIColor(designSystemColor: .textSecondary) }
     var autofillEmptySearchViewTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
@@ -41,9 +43,54 @@ extension Theme {
 
     var ddgTextTintColor: UIColor { UIColor(designSystemColor: .textPrimary) }
 
-    #warning("might change")
+#warning("might change")
     var privacyDashboardWebviewBackgroundColor: UIColor { UIColor(designSystemColor: .surface) }
 
     var iconCellBorderColor: UIColor { UIColor(designSystemColor: .icons) }
+
+#warning("might change")
+    var tableCellAccessoryTextColor: UIColor { UIColor(designSystemColor: .textSecondary) }
+
+    var browsingMenuTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
+    var browsingMenuIconsColor: UIColor { UIColor(designSystemColor: .textPrimary) }
+    var browsingMenuSeparatorColor: UIColor { UIColor(designSystemColor: .lines) }
+
+    var feedbackSentimentButtonBackgroundColor: UIColor { UIColor(designSystemColor: .surface) }
+
+    var aboutScreenButtonColor: UIColor { UIColor(designSystemColor: .accent) }
+
+    var tabSwitcherCellBorderColor: UIColor { UIColor(designSystemColor: .surface) }
+    var tabSwitcherCellTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
+    var tabSwitcherCellSecondaryTextColor: UIColor { UIColor(designSystemColor: .textSecondary) }
+
+    var textFieldFontColor: UIColor { UIColor(designSystemColor: .textPrimary) }
+    var textFieldBackgroundColor: UIColor { UIColor(designSystemColor: .textPrimary) }
+
+    var buttonTintColor: UIColor { UIColor(designSystemColor: .accent) }
+
+    var feedbackPrimaryTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
+    var feedbackSecondaryTextColor: UIColor { UIColor(designSystemColor: .textSecondary) }
+
+    var progressBarGradientDarkColor: UIColor { UIColor(designSystemColor: .accent) }
+    var progressBarGradientLightColor: UIColor { UIColor(designSystemColor: .accent) }
+
+    var daxDialogBackgroundColor: UIColor { UIColor(designSystemColor: .surface) }
+    var daxDialogTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
+
+    var placeholderColor: UIColor { UIColor(designSystemColor: .textSecondary) }
+
+    var searchBarBackgroundColor: UIColor { UIColor(designSystemColor: .container) }
+    var searchBarTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
+
+    var navigationBarTitleColor: UIColor { UIColor(designSystemColor: .textPrimary) }
+    var tableHeaderTextColor: UIColor {UIColor(designSystemColor: .textSecondary) }
+
+    var faviconBackgroundColor: UIColor { UIColor(designSystemColor: .surface) }
+    var tableCellTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
+
+    var favoriteTextColor: UIColor { UIColor(designSystemColor: .textSecondary) }
+    var aboutScreenTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
+    var autocompleteSuggestionTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
+    var tableCellSeparatorColor: UIColor { UIColor(designSystemColor: .lines) }
 
 }

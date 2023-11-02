@@ -47,7 +47,7 @@ protocol Theme {
     var navigationBarTintColor: UIColor { get }
     
     // Color of the content that is directly placed over blurred background
-    var tintOnBlurColor: UIColor { get }
+//    var tintOnBlurColor: UIColor { get }
     
     var searchBarBackgroundColor: UIColor { get }
     // var centeredSearchBarBackgroundColor: UIColor { get }
@@ -70,7 +70,7 @@ protocol Theme {
     
     var autocompleteSuggestionTextColor: UIColor { get }
     var autocompleteCellAccessoryColor: UIColor { get }
-    
+
     var tableCellBackgroundColor: UIColor { get }
     var tableCellSelectedColor: UIColor { get }
     var tableCellSeparatorColor: UIColor { get }
@@ -131,8 +131,6 @@ protocol Theme {
 //    var homeMessageButtonTextColor: UIColor { get }
 //    var homeMessageDismissButtonColor: UIColor { get }
 
-    var autofillDefaultTitleTextColor: UIColor { get }
-    var autofillDefaultSubtitleTextColor: UIColor { get }
     var autofillEmptySearchViewTextColor: UIColor { get }
     var autofillLockedViewTextColor: UIColor { get }
 

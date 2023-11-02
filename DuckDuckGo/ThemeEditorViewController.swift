@@ -224,6 +224,9 @@ extension ThemeEditorViewController {
 
     func applyColor(_ color: UIColor, toProperty name: String, save: Bool = true) {
         let mgr = ThemeManager.shared
+
+        guard editableTheme.colorProperties.contains(name) else { return }
+
         editableTheme.setColor(color, forProperty: name)
         if mgr.currentTheme is MutableTheme {
             mgr.overrideSetting(editableTheme)
@@ -508,14 +511,9 @@ class MutableTheme: NSObject, Theme {
     @objc var tabsBarSeparatorColor: UIColor
     @objc var navigationBarTitleColor: UIColor
     @objc var navigationBarTintColor: UIColor
-    @objc var tintOnBlurColor: UIColor
     @objc var searchBarBackgroundColor: UIColor
-    // @objc var centeredSearchBarBackgroundColor: UIColor
     @objc var searchBarTextColor: UIColor
     @objc var searchBarTextDeemphasisColor: UIColor
-//    @objc var searchBarBorderColor: UIColor
-//    @objc var searchBarClearTextIconColor: UIColor
-//    @objc var searchBarVoiceSearchIconColor: UIColor
     @objc var browsingMenuTextColor: UIColor
     @objc var browsingMenuIconsColor: UIColor
     @objc var browsingMenuSeparatorColor: UIColor
@@ -546,25 +544,15 @@ class MutableTheme: NSObject, Theme {
     @objc var homePrivacyCellSecondaryTextColor: UIColor
     @objc var aboutScreenTextColor: UIColor
     @objc var aboutScreenButtonColor: UIColor
-//    @objc var favoritesPlusTintColor: UIColor
-//    @objc var favoritesPlusBackgroundColor: UIColor
     @objc var faviconBackgroundColor: UIColor
     @objc var favoriteTextColor: UIColor
     @objc var feedbackPrimaryTextColor: UIColor
     @objc var feedbackSecondaryTextColor: UIColor
     @objc var feedbackSentimentButtonBackgroundColor: UIColor
-//    @objc var privacyReportCellBackgroundColor: UIColor
     @objc var destructiveColor: UIColor
     @objc var ddgTextTintColor: UIColor
     @objc var daxDialogBackgroundColor: UIColor
     @objc var daxDialogTextColor: UIColor
-//    @objc var homeMessageBackgroundColor: UIColor
-//    @objc var homeMessageHeaderTextColor: UIColor
-//    @objc var homeMessageSubheaderTextColor: UIColor
-//    @objc var homeMessageTopTextColor: UIColor
-//    @objc var homeMessageButtonColor: UIColor
-//    @objc var homeMessageButtonTextColor: UIColor
-//    @objc var homeMessageDismissButtonColor: UIColor
     @objc var autofillDefaultTitleTextColor: UIColor
     @objc var autofillDefaultSubtitleTextColor: UIColor
     @objc var autofillEmptySearchViewTextColor: UIColor
@@ -590,14 +578,9 @@ class MutableTheme: NSObject, Theme {
         self.tabsBarSeparatorColor = theme.tabsBarSeparatorColor
         self.navigationBarTitleColor = theme.navigationBarTitleColor
         self.navigationBarTintColor = theme.navigationBarTintColor
-        self.tintOnBlurColor = theme.tintOnBlurColor
         self.searchBarBackgroundColor = theme.searchBarBackgroundColor
-        // self.centeredSearchBarBackgroundColor = theme.centeredSearchBarBackgroundColor
         self.searchBarTextColor = theme.searchBarTextColor
         self.searchBarTextDeemphasisColor = theme.searchBarTextDeemphasisColor
-//        self.searchBarBorderColor = theme.searchBarBorderColor
-//        self.searchBarClearTextIconColor = theme.searchBarClearTextIconColor
-//        self.searchBarVoiceSearchIconColor = theme.searchBarVoiceSearchIconColor
         self.browsingMenuTextColor = theme.browsingMenuTextColor
         self.browsingMenuIconsColor = theme.browsingMenuIconsColor
         self.browsingMenuSeparatorColor = theme.browsingMenuSeparatorColor
@@ -635,19 +618,11 @@ class MutableTheme: NSObject, Theme {
         self.feedbackPrimaryTextColor = theme.feedbackPrimaryTextColor
         self.feedbackSecondaryTextColor = theme.feedbackSecondaryTextColor
         self.feedbackSentimentButtonBackgroundColor = theme.feedbackSentimentButtonBackgroundColor
-//        self.privacyReportCellBackgroundColor = theme.privacyReportCellBackgroundColor
         self.activityStyle = theme.activityStyle
         self.destructiveColor = theme.destructiveColor
         self.ddgTextTintColor = theme.ddgTextTintColor
         self.daxDialogBackgroundColor = theme.daxDialogBackgroundColor
         self.daxDialogTextColor = theme.daxDialogTextColor
-//        self.homeMessageBackgroundColor = theme.homeMessageBackgroundColor
-//        self.homeMessageHeaderTextColor = theme.homeMessageHeaderTextColor
-//        self.homeMessageSubheaderTextColor = theme.homeMessageSubheaderTextColor
-//        self.homeMessageTopTextColor = theme.homeMessageTopTextColor
-//        self.homeMessageButtonColor = theme.homeMessageButtonColor
-//        self.homeMessageButtonTextColor = theme.homeMessageButtonTextColor
-//        self.homeMessageDismissButtonColor = theme.homeMessageDismissButtonColor
         self.autofillDefaultTitleTextColor = theme.autofillDefaultTitleTextColor
         self.autofillDefaultSubtitleTextColor = theme.autofillDefaultSubtitleTextColor
         self.autofillEmptySearchViewTextColor = theme.autofillEmptySearchViewTextColor

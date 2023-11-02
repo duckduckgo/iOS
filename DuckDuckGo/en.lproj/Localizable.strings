@@ -1016,10 +1016,10 @@
 "error.email-protection-sign-in.action" = "Sign In";
 
 /* Alert message */
-"error.email-protection-sign-in.body" = "Please sign back in to continue using the Email Protection feature.";
+"error.email-protection-sign-in.body" = "Sorry, please sign in again to re-enable Email Protection features on this browser.";
 
 /* Alert title */
-"error.email-protection-sign-in.title" = "Email Protection error occurred";
+"error.email-protection-sign-in.title" = "Email Protection Error";
 
 /* Button title to open device settings */
 "error.insufficient-disk-space.action" = "Open Settings";

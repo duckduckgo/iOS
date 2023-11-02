@@ -20,6 +20,7 @@
 import SwiftUI
 import DuckUI
 import DesignResourcesKit
+import BrowserServicesKit
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -117,10 +118,10 @@ struct AutofillLoginDetailsView: View {
                              keyboardType: .URL)
             }
             
-            Section {
-                editableMultilineCell(UserText.autofillLoginDetailsNotes,
-                                      subtitle: $viewModel.notes)
-            }
+//            Section {
+//                editableMultilineCell(UserText.autofillLoginDetailsNotes,
+//                                      subtitle: $viewModel.notes)
+//            }
 
             if viewModel.viewMode == .edit {
                 deleteCell()
@@ -151,33 +152,67 @@ struct AutofillLoginDetailsView: View {
                              secondaryAction: viewModel.websiteIsValidUrl ? { viewModel.openUrl() } : nil)
             }
 
-            Section {
-                CopyableCell(title: UserText.autofillLoginDetailsNotes,
-                             subtitle: viewModel.notes,
-                             selectedCell: $viewModel.selectedCell,
-                             truncationMode: .middle,
-                             multiLine: true,
-                             actionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsNotes),
-                             action: {
-                    viewModel.copyToPasteboard(.notes)
-                })
-            }
+//            Section {
+//                CopyableCell(title: UserText.autofillLoginDetailsNotes,
+//                             subtitle: viewModel.notes,
+//                             selectedCell: $viewModel.selectedCell,
+//                             truncationMode: .middle,
+//                             multiLine: true,
+//                             actionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsNotes),
+//                             action: {
+//                    viewModel.copyToPasteboard(.notes)
+//                })
+//            }
 
-            let previousPasswords = viewModel.notes.trimmingWhitespace().components(separatedBy: "\n")
-            if !previousPasswords.isEmpty {
-                Section {
-                    ForEach(previousPasswords, id: \.self) { password in
-                        CopyableCell(title: "Previously",
-                                     subtitle: password,
-                                     selectedCell: $viewModel.selectedCell,
-                                     isMonospaced: true,
-                                     actionTitle: "Copy",
-                                     action: { viewModel.copyToPasteboard(.generic(password)) },
-                                     secondaryActionTitle: "",
-                                     secondaryAction: {},
-                                     buttonImageName: "Copy-24",
-                                     buttonAccessibilityLabel: "Copy",
-                                     buttonAction: { viewModel.copyToPasteboard(.generic(password)) })
+            if let data = viewModel.notes.data(using: .utf8) {
+                if let previousPasswords = try? JSONDecoder().decode([SecureVaultModels.WebsiteAccount.PasswordHistoryItem].self, from: data) {
+                    if !previousPasswords.isEmpty {
+                        let passwords = previousPasswords.sorted(by: { $0.created > $1.created })
+                        Section {
+                            Button {
+                                isShowingHistory = true
+                            } label: {
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text("Password History")
+                                            .foregroundColor(.primary)
+                                        Text("Last updated \(dateFormatter.localizedString(for: passwords.first!.created, relativeTo: .init()))")
+                                            .label4Style(design: .default,
+                                                         foregroundColorLight: ForegroundColor(isSelected: false).color,
+                                                         foregroundColorDark: .gray30)
+                                    }
+                                    Spacer()
+                                    Text("\(previousPasswords.count)")
+                                        .foregroundColor(.secondary)
+                                    Image(systemName: "chevron.right")
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                            .sheet(isPresented: $isShowingHistory) {
+                                VStack {
+                                    Text("Password History")
+                                        .bold()
+                                    List {
+                                        ForEach(passwords) { item in
+                                            CopyableCell(title: dateFormatter.localizedString(for: item.created, relativeTo: .init()),
+                                                         subtitle: item.password,
+                                                         selectedCell: $viewModel.selectedCell,
+                                                         isMonospaced: true,
+                                                         actionTitle: "Copy",
+                                                         action: { viewModel.copyToPasteboard(.generic(item.password)) },
+                                                         secondaryActionTitle: "",
+                                                         secondaryAction: {},
+                                                         buttonImageName: "Copy-24",
+                                                         buttonAccessibilityLabel: "Copy",
+                                                         buttonAction: { viewModel.copyToPasteboard(.generic(item.password)) })
+                                        }
+                                    }
+                                }
+                                .padding(.vertical)
+                            }
+                        } footer: {
+                            Text("DuckDuckGo saves previous versions of items every time you make changes.")
+                        }
                     }
                 }
             }
@@ -187,6 +222,14 @@ struct AutofillLoginDetailsView: View {
             }
         }
     }
+
+    @State private var isShowingHistory = false
+
+    var dateFormatter: RelativeDateTimeFormatter = {
+        let dateFormatter = RelativeDateTimeFormatter()
+        dateFormatter.unitsStyle = .short
+        return dateFormatter
+    }()
 
     private func credentialsSection() -> some View {
         Section {

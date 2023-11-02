@@ -419,6 +419,7 @@ class SettingsViewController: UITableViewController {
     }
 
 #if NETWORK_PROTECTION
+    @available(iOS 15, *)
     private func showNetP() {
         // This will be tidied up as part of https://app.asana.com/0/0/1205084446087078/f
         let rootViewController = NetworkProtectionRootViewController { [weak self] in
@@ -428,7 +429,7 @@ class SettingsViewController: UITableViewController {
         }
         pushNetP(rootViewController)
     }
-
+    @available(iOS 15, *)
     private func pushNetP(_ rootViewController: NetworkProtectionRootViewController) {
         navigationController?.pushViewController(
             rootViewController,
@@ -451,15 +452,15 @@ class SettingsViewController: UITableViewController {
         let cell = tableView.cellForRow(at: indexPath)
 
         switch cell {
-            
+
         case defaultBrowserCell:
             Pixel.fire(pixel: .defaultBrowserButtonPressedSettings)
             guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
             UIApplication.shared.open(url)
-            
+
         case emailProtectionCell:
             showEmailWebDashboard()
-            
+
         case macBrowserWaitlistCell:
             showMacBrowserWaitlistViewController()
 
@@ -471,14 +472,15 @@ class SettingsViewController: UITableViewController {
 
         case syncCell:
             showSync()
-            
+
         case netPCell:
+            if #available(iOS 15, *) {
 #if NETWORK_PROTECTION
-            showNetP()
+                showNetP()
 #else
-            break
+                break
 #endif
-            
+            }
         default: break
         }
         

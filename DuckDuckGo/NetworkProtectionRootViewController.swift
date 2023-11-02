@@ -21,6 +21,7 @@
 
 import SwiftUI
 
+@available(iOS 15, *)
 final class NetworkProtectionRootViewController: UIHostingController<NetworkProtectionRootView> {
 
     init(inviteCompletion: @escaping () -> Void = { }) {
@@ -39,6 +40,7 @@ final class NetworkProtectionRootViewController: UIHostingController<NetworkProt
     }
 }
 
+@available(iOS 15, *)
 extension NetworkProtectionRootViewController: Themable {
 
     func decorate(with theme: Theme) {

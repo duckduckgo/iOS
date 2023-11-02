@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+#if NETWORK_PROTECTION
+
 import Foundation
 import NetworkProtection
 import Common
@@ -167,8 +169,13 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                                                              errorEvents: nil)
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
+        let notificationsSettingsStore = NetworkProtectionNotificationsSettingsUserDefaultsStore(userDefaults: .networkProtectionGroupDefaults)
+        let nofificationsPresenterDecorator = NetworkProtectionNotificationsPresenterTogglableDecorator(
+            notificationSettingsStore: notificationsSettingsStore,
+            wrappee: notificationsPresenter
+        )
         notificationsPresenter.requestAuthorization()
-        super.init(notificationsPresenter: notificationsPresenter,
+        super.init(notificationsPresenter: nofificationsPresenterDecorator,
                    tunnelHealthStore: NetworkProtectionTunnelHealthStore(),
                    controllerErrorStore: errorStore,
                    keychainType: .dataProtection(.unspecified),
@@ -203,3 +210,5 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         }
     }
 }
+
+#endif

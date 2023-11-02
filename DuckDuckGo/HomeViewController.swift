@@ -63,6 +63,7 @@ class HomeViewController: UIViewController {
     
     private let tabModel: Tab
     private let favoritesViewModel: FavoritesListInteracting
+    private let syncTabsHomeViewModel: SyncTabsHomeViewModel
     private var viewModelCancellable: AnyCancellable?
 
 #if APP_TRACKING_PROTECTION
@@ -84,8 +85,21 @@ class HomeViewController: UIViewController {
 #if APP_TRACKING_PROTECTION
         self.appTPHomeViewModel = AppTPHomeViewModel(appTrackingProtectionDatabase: appTPDatabase)
 #endif
-
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+              let syncTabsAdapter = appDelegate.syncDataProviders?.tabsAdapter,
+              let syncService = appDelegate.syncService
+        else {
+            fatalError("Failed to initialize SyncTabsHomeViewModel")
+        }
+        self.syncTabsHomeViewModel = SyncTabsHomeViewModel(syncTabsAdapter: syncTabsAdapter, syncService: syncService)
         super.init(coder: coder)
+
+        syncTabsHomeViewModel.open = { [weak self] url in
+           guard let mainVC = self?.parent as? MainViewController else {
+               return
+           }
+           mainVC.loadUrl(url)
+       }
     }
     
     required init?(coder: NSCoder) {
@@ -133,11 +147,13 @@ class HomeViewController: UIViewController {
 #if APP_TRACKING_PROTECTION
         collectionView.configure(withController: self,
                                  favoritesViewModel: favoritesViewModel,
+                                 syncTabsHomeViewModel: syncTabsHomeViewModel,
                                  appTPHomeViewModel: appTPHomeViewModel,
                                  andTheme: ThemeManager.shared.currentTheme)
 #else
         collectionView.configure(withController: self,
                                  favoritesViewModel: favoritesViewModel,
+                                 syncTabsHomeViewModel: syncTabsHomeViewModel,
                                  appTPHomeViewModel: nil,
                                  andTheme: ThemeManager.shared.currentTheme)
 #endif

@@ -28,6 +28,7 @@ final class HomePageConfiguration {
     
     enum Component: Equatable {
         case navigationBarSearch(fixed: Bool)
+        case syncTabs
         case favorites
         case homeMessage
         case appTrackingProtection
@@ -39,6 +40,7 @@ final class HomePageConfiguration {
             .navigationBarSearch(fixed: fixed),
             .homeMessage,
             .appTrackingProtection,
+            .syncTabs,
             .favorites
         ]
     }

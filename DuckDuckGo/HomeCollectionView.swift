@@ -52,6 +52,7 @@ class HomeCollectionView: UICollectionView {
                  forCellWithReuseIdentifier: "homeMessageCell")
         
         register(HomeMessageCollectionViewCell.self, forCellWithReuseIdentifier: "HomeMessageCell")
+        register(SyncTabsCollectionViewCell.self, forCellWithReuseIdentifier: "SyncTabsHomeCell")
 
 #if APP_TRACKING_PROTECTION
         register(AppTPCollectionViewCell.self, forCellWithReuseIdentifier: "AppTPHomeCell")
@@ -73,6 +74,7 @@ class HomeCollectionView: UICollectionView {
     
     func configure(withController controller: HomeViewController,
                    favoritesViewModel: FavoritesListInteracting,
+                   syncTabsHomeViewModel: SyncTabsHomeViewModel,
                    appTPHomeViewModel: AnyObject?, // Set to AnyObject so that AppTP can be disabled easily
                    andTheme theme: Theme) {
         self.controller = controller
@@ -83,6 +85,9 @@ class HomeCollectionView: UICollectionView {
             case .navigationBarSearch(let fixed):
                 renderers.install(renderer: NavigationSearchHomeViewSectionRenderer(fixed: fixed))
                 
+            case .syncTabs:
+                renderers.install(renderer: SyncTabsHomeViewSectionRenderer(syncTabsHomeViewModel: syncTabsHomeViewModel))
+
             case .favorites:
                 renderers.install(renderer: FavoritesHomeViewSectionRenderer(viewModel: favoritesViewModel))
                 

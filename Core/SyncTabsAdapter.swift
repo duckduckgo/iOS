@@ -27,8 +27,8 @@ public final class SyncTabsAdapter {
 
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
 
-    private(set) var provider: TabsProvider?
-    private(set) var tabsStore: DeviceTabsStore?
+    public private(set) var provider: TabsProvider?
+    public private(set) var tabsStore: DeviceTabsStore?
 
     public init() {
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()

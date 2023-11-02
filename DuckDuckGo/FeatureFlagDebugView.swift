@@ -27,89 +27,101 @@ struct FeatureFlagDebugView: View {
     var body: some View {
         List {
             ForEach(viewModel.items) { item in
-                self.featureConfigView(item)
+                FeatureFlagItemView(viewModel: item)
             }
         }
         .navigationTitle("Feature Flags")
     }
+}
 
-    @ViewBuilder
-    func featureConfigView(_ item: FeatureFlagDebugViewModel.Item) -> some View {
-        VStack {
+struct FeatureFlagItemView: View {
+    @StateObject var viewModel: FeatureFlagItem
+
+    var body: some View {
+        VStack(alignment: .leading) {
             HStack {
-                Text(item.id)
-                Picker("Feature override",
-                    selection: Binding(
-                        get: {
-                            item.overrideState
-                        },
-                        set: { value in
-                            viewModel.updateOverride(id: item.id, overrideState: value)
-                        }
-                    )
-                ) {
-                    ForEach(FeatureFlagDebugViewModel.Item.OverrideState.allCases) { state in
-                        Text(state.rawValue)
-                    }
+                Text(viewModel.id).font(.headline)
+            }
+
+            Picker("Override", selection: $viewModel.overrideState) {
+                ForEach(FeatureFlagItem.OverrideState.allCases) { state in
+                    Text(state.rawValue).tag(state)
                 }
-                .pickerStyle(.segmented)
+            }.font(.subheadline)
+            HStack {
+                Text("Flag Source:").font(.subheadline)
+                Spacer()
+                Text(viewModel.sourceTitle).multilineTextAlignment(.trailing).font(.body)
+            }
+            if let configFeatureTitle = viewModel.configFeatureTitle {
+                HStack {
+                    Text("Config Feature:").font(.subheadline)
+                    Spacer()
+                    Text(configFeatureTitle)
+                        .multilineTextAlignment(.trailing)
+                        .lineLimit(1)
+                        .scaledToFit()
+                        .minimumScaleFactor(0.2)
+                        .if(true) {
+                            if #available(iOS 15.0, *) {
+                                $0.font(.body.monospaced())
+                            } else {
+                                $0.font(.body)
+                            }
+                        }
+                }
             }
         }
     }
 }
 
-public final class FeatureFlagDebugViewModel: ObservableObject {
-    @Published var items: [Item]
+import Combine
+
+public class FeatureFlagItem: ObservableObject, Identifiable {
+    private let featureFlag: FeatureFlag
     private let featureFlagger: FeatureFlagger
     private let featureFlagOverrider: OverrideableFeatureFlagger
+    private var cancellable: AnyCancellable?
 
-    convenience init(defaultFeatureFlagger: DefaultFeatureFlagger = AppDependencyProvider.shared.featureFlagger) {
-        self.init(featureFlagger: defaultFeatureFlagger, featureFlagOverrider: defaultFeatureFlagger)
+    public var id: String {
+        featureFlag.rawValue
     }
 
-    init(featureFlagger: FeatureFlagger,
-         featureFlagOverrider: OverrideableFeatureFlagger) {
+    @Published public var overrideState: OverrideState
+    @Published public var sourceTitle: String
+    @Published public var configFeatureTitle: String?
+    public var flagState: Bool
+
+    init(featureFlag: FeatureFlag, featureFlagger: FeatureFlagger, featureFlagOverrider: OverrideableFeatureFlagger) {
+        self.featureFlag = featureFlag
         self.featureFlagger = featureFlagger
         self.featureFlagOverrider = featureFlagOverrider
-        for flag in FeatureFlag.allCases {
-            items.append(
-                Item(
-                    id: flag.rawValue,
-                    overrideState: Item.OverrideState(bool: featureFlagOverrider.overrideValue(for: flag)),
-                    flagState: featureFlagger.isFeatureOn(flag)
-                )
-            )
-        }
+        overrideState = OverrideState(bool: featureFlagOverrider.overrideValue(for: featureFlag))
+        flagState = featureFlagger.isFeatureOn(featureFlag)
+        sourceTitle = featureFlag.source.presentableText.title
+        configFeatureTitle = featureFlag.source.presentableText.configFeatureTitle
+        cancellable = $overrideState.sink(receiveValue: updateOverride(overrideState:))
     }
 
-    public struct Item: Identifiable {
-        public var id: String
-
-        public var overrideState: OverrideState
-        public var flagState: Bool
-
-        public enum OverrideState: String, Identifiable, CaseIterable {
-            public var id: String {
-                rawValue
-            }
-
-            init(bool: Bool?) {
-                guard let bool else {
-                    self = .noOverride
-                }
-                self = bool ? .overrideOn : .overrideOff
-            }
-
-            case overrideOn = "Override to On"
-            case overrideOff = "Override to Off"
-            case noOverride = "No Override"
+    public enum OverrideState: String, Identifiable, CaseIterable {
+        public var id: String {
+            rawValue
         }
+
+        init(bool: Bool?) {
+            guard let bool else {
+                self = .noOverride
+                return
+            }
+            self = bool ? .overrideOn : .overrideOff
+        }
+
+        case overrideOn = "On"
+        case overrideOff = "Off"
+        case noOverride = "None"
     }
 
-    func updateOverride(id: String, overrideState: Item.OverrideState) {
-        guard let flag = FeatureFlag(rawValue: id) else {
-            return
-        }
+    private func updateOverride(overrideState: FeatureFlagItem.OverrideState) {
         let value: Bool?
         switch overrideState {
         case .overrideOn:
@@ -119,10 +131,53 @@ public final class FeatureFlagDebugViewModel: ObservableObject {
         case .noOverride:
             value = nil
         }
-        featureFlagOverrider.setOverride(value: value, for: flag)
+        featureFlagOverrider.setOverride(value: value, for: featureFlag)
     }
 }
 
-#Preview {
-    FeatureFlagDebugView()
+private extension FeatureFlagSource {
+    var presentableText: (title: String, configFeatureTitle: String?) {
+        switch self {
+        case .disabled:
+            return (title: "Disabled", configFeatureTitle: nil)
+        case .internalOnly:
+            return (title: "Internal Only", configFeatureTitle: nil)
+        case .remoteDevelopment(let level):
+            return (title: "Remote Dev", configFeatureTitle: level.presentableText)
+        case .remoteReleasable(let level):
+            return (title: "Remote Release", configFeatureTitle: level.presentableText)
+        }
+    }
+}
+
+
+private extension PrivacyConfigFeatureLevel {
+    var presentableText: String {
+        switch self {
+        case .feature(let feature):
+            return feature.rawValue
+        case .subfeature(let subfeature):
+            return "\(subfeature.parent).\(subfeature)"
+        }
+    }
+}
+
+public final class FeatureFlagDebugViewModel: ObservableObject {
+    @Published var items: [FeatureFlagItem] = []
+
+    init(featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
+         featureFlagOverrider: OverrideableFeatureFlagger = AppDependencyProvider.shared.featureFlagOverrider) {
+        for flag in FeatureFlag.allCases {
+            guard flag != .debugMenu else {
+                continue
+            }
+            items.append(
+                FeatureFlagItem(
+                    featureFlag: flag,
+                    featureFlagger: featureFlagger,
+                    featureFlagOverrider: featureFlagOverrider
+                )
+            )
+        }
+    }
 }

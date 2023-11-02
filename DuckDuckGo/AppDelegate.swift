@@ -806,7 +806,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 }
 
-fileprivate extension Error {
+private extension Error {
 
     var isDiskFull: Bool {
         let nsError = self as NSError

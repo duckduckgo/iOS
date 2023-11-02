@@ -66,6 +66,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: lifecycle
 
+    @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
+    private var privacyConfigCustomURL: String?
+
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
@@ -85,7 +88,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         cleanUpIncrementalRolloutPixelTest()
 
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
-        Configuration.setURLProvider(AppConfigurationURLProvider())
+
+        if isDebugBuild {
+            if let privacyConfigCustomURL, let url = URL(string: privacyConfigCustomURL) {
+                Configuration.setURLProvider(CustomConfigurationURLProvider(customPrivacyConfigurationURL: url))
+            }
+        } else {
+            Configuration.setURLProvider(AppConfigurationURLProvider())
+        }
 
         CrashCollection.start {
             Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: $0, includedParameters: [])

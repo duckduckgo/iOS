@@ -33,4 +33,17 @@ extension Theme {
     var tabSwitcherCellBackgroundColor: UIColor { UIColor(designSystemColor: .surface) }
     var searchBarTextPlaceholderColor: UIColor { UIColor(designSystemColor: .textSecondary) }
 
+    // New:
+    var autofillDefaultTitleTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
+    var autofillDefaultSubtitleTextColor: UIColor { UIColor(designSystemColor: .textSecondary) }
+    var autofillEmptySearchViewTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
+    var autofillLockedViewTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
+
+    var ddgTextTintColor: UIColor { UIColor(designSystemColor: .textPrimary) }
+
+    #warning("might change")
+    var privacyDashboardWebviewBackgroundColor: UIColor { UIColor(designSystemColor: .surface) }
+
+    var iconCellBorderColor: UIColor { UIColor(designSystemColor: .icons) }
+
 }

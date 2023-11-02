@@ -41,9 +41,9 @@ struct DarkTheme: Theme {
     var centeredSearchBarBackgroundColor = UIColor.nearlyBlackLight
     var searchBarTextColor = UIColor.white
     var searchBarTextDeemphasisColor = UIColor.lightMercury
-    var searchBarBorderColor = UIColor.darkGreyish
-    var searchBarClearTextIconColor = UIColor.greyish2
-    var searchBarVoiceSearchIconColor = UIColor.greyish2
+//    var searchBarBorderColor = UIColor.darkGreyish
+//    var searchBarClearTextIconColor = UIColor.greyish2
+//    var searchBarVoiceSearchIconColor = UIColor.greyish2
     
     var browsingMenuTextColor = UIColor.white
     var browsingMenuIconsColor = UIColor.gray20
@@ -67,9 +67,7 @@ struct DarkTheme: Theme {
     var tabSwitcherCellBorderColor = UIColor.white
     var tabSwitcherCellTextColor = UIColor.white
     var tabSwitcherCellSecondaryTextColor = UIColor.lightMercury
-    
-    var iconCellBorderColor = UIColor.lightGreyish
-
+ 
     var buttonTintColor = UIColor.cornflowerBlue
     var placeholderColor = UIColor.greyish
     
@@ -96,29 +94,21 @@ struct DarkTheme: Theme {
     var feedbackSecondaryTextColor = UIColor.lightGreyish
     var feedbackSentimentButtonBackgroundColor = UIColor.charcoalGrey
     
-    var privacyReportCellBackgroundColor = UIColor.nearlyBlackLight
+//    var privacyReportCellBackgroundColor = UIColor.nearlyBlackLight
     
     var activityStyle: UIActivityIndicatorView.Style = .medium
     
     var destructiveColor: UIColor = UIColor.destructive
     
-    var ddgTextTintColor: UIColor = .white
-
     var daxDialogBackgroundColor: UIColor = .nearlyBlackLight
     var daxDialogTextColor: UIColor = UIColor.nearlyWhite
     
-    var homeMessageBackgroundColor = UIColor.nearlyBlackLight
-    var homeMessageHeaderTextColor = UIColor.white
-    var homeMessageSubheaderTextColor = UIColor.greyish2
-    var homeMessageTopTextColor = UIColor.cornflowerBlue
-    var homeMessageButtonColor = UIColor.cornflowerBlue
-    var homeMessageButtonTextColor = UIColor.white
-    var homeMessageDismissButtonColor = UIColor.white
+//    var homeMessageBackgroundColor = UIColor.nearlyBlackLight
+//    var homeMessageHeaderTextColor = UIColor.white
+//    var homeMessageSubheaderTextColor = UIColor.greyish2
+//    var homeMessageTopTextColor = UIColor.cornflowerBlue
+//    var homeMessageButtonColor = UIColor.cornflowerBlue
+//    var homeMessageButtonTextColor = UIColor.white
+//    var homeMessageDismissButtonColor = UIColor.white
 
-    var autofillDefaultTitleTextColor = UIColor.white
-    var autofillDefaultSubtitleTextColor = UIColor.lightMercury
-    var autofillEmptySearchViewTextColor = UIColor.gray20
-    var autofillLockedViewTextColor = UIColor.lightMercury
-
-    var privacyDashboardWebviewBackgroundColor = UIColor.nearlyBlackLight
 }

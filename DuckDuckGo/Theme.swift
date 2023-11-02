@@ -50,14 +50,15 @@ protocol Theme {
     var tintOnBlurColor: UIColor { get }
     
     var searchBarBackgroundColor: UIColor { get }
-    var centeredSearchBarBackgroundColor: UIColor { get }
+    // var centeredSearchBarBackgroundColor: UIColor { get }
     var searchBarTextColor: UIColor { get }
     var searchBarTextPlaceholderColor: UIColor { get }
     var searchBarTextDeemphasisColor: UIColor { get }
-    var searchBarBorderColor: UIColor { get }
-    var searchBarClearTextIconColor: UIColor { get }
-    var searchBarVoiceSearchIconColor: UIColor { get }
-    
+
+//    var searchBarBorderColor: UIColor { get }
+//    var searchBarVoiceSearchIconColor: UIColor { get }
+//    var searchBarClearTextIconColor: UIColor { get }
+
     var browsingMenuTextColor: UIColor { get }
     var browsingMenuIconsColor: UIColor { get }
     var browsingMenuBackgroundColor: UIColor { get }
@@ -102,8 +103,8 @@ protocol Theme {
     var aboutScreenTextColor: UIColor { get }
     var aboutScreenButtonColor: UIColor { get }
 
-    var favoritesPlusTintColor: UIColor { get }
-    var favoritesPlusBackgroundColor: UIColor { get }
+//    var favoritesPlusTintColor: UIColor { get }
+//    var favoritesPlusBackgroundColor: UIColor { get }
     var faviconBackgroundColor: UIColor { get }
     var favoriteTextColor: UIColor { get }
     
@@ -111,7 +112,7 @@ protocol Theme {
     var feedbackSecondaryTextColor: UIColor { get }
     var feedbackSentimentButtonBackgroundColor: UIColor { get }
     
-    var privacyReportCellBackgroundColor: UIColor { get }
+//    var privacyReportCellBackgroundColor: UIColor { get }
     
     var activityStyle: UIActivityIndicatorView.Style { get }
     
@@ -122,13 +123,13 @@ protocol Theme {
     var daxDialogBackgroundColor: UIColor { get }
     var daxDialogTextColor: UIColor { get }
     
-    var homeMessageBackgroundColor: UIColor { get }
-    var homeMessageHeaderTextColor: UIColor { get }
-    var homeMessageSubheaderTextColor: UIColor { get }
-    var homeMessageTopTextColor: UIColor { get }
-    var homeMessageButtonColor: UIColor { get }
-    var homeMessageButtonTextColor: UIColor { get }
-    var homeMessageDismissButtonColor: UIColor { get }
+//    var homeMessageBackgroundColor: UIColor { get }
+//    var homeMessageHeaderTextColor: UIColor { get }
+//    var homeMessageSubheaderTextColor: UIColor { get }
+//    var homeMessageTopTextColor: UIColor { get }
+//    var homeMessageButtonColor: UIColor { get }
+//    var homeMessageButtonTextColor: UIColor { get }
+//    var homeMessageDismissButtonColor: UIColor { get }
 
     var autofillDefaultTitleTextColor: UIColor { get }
     var autofillDefaultSubtitleTextColor: UIColor { get }

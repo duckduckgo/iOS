@@ -510,12 +510,12 @@ class MutableTheme: NSObject, Theme {
     @objc var navigationBarTintColor: UIColor
     @objc var tintOnBlurColor: UIColor
     @objc var searchBarBackgroundColor: UIColor
-    @objc var centeredSearchBarBackgroundColor: UIColor
+    // @objc var centeredSearchBarBackgroundColor: UIColor
     @objc var searchBarTextColor: UIColor
     @objc var searchBarTextDeemphasisColor: UIColor
-    @objc var searchBarBorderColor: UIColor
-    @objc var searchBarClearTextIconColor: UIColor
-    @objc var searchBarVoiceSearchIconColor: UIColor
+//    @objc var searchBarBorderColor: UIColor
+//    @objc var searchBarClearTextIconColor: UIColor
+//    @objc var searchBarVoiceSearchIconColor: UIColor
     @objc var browsingMenuTextColor: UIColor
     @objc var browsingMenuIconsColor: UIColor
     @objc var browsingMenuSeparatorColor: UIColor
@@ -546,25 +546,25 @@ class MutableTheme: NSObject, Theme {
     @objc var homePrivacyCellSecondaryTextColor: UIColor
     @objc var aboutScreenTextColor: UIColor
     @objc var aboutScreenButtonColor: UIColor
-    @objc var favoritesPlusTintColor: UIColor
-    @objc var favoritesPlusBackgroundColor: UIColor
+//    @objc var favoritesPlusTintColor: UIColor
+//    @objc var favoritesPlusBackgroundColor: UIColor
     @objc var faviconBackgroundColor: UIColor
     @objc var favoriteTextColor: UIColor
     @objc var feedbackPrimaryTextColor: UIColor
     @objc var feedbackSecondaryTextColor: UIColor
     @objc var feedbackSentimentButtonBackgroundColor: UIColor
-    @objc var privacyReportCellBackgroundColor: UIColor
+//    @objc var privacyReportCellBackgroundColor: UIColor
     @objc var destructiveColor: UIColor
     @objc var ddgTextTintColor: UIColor
     @objc var daxDialogBackgroundColor: UIColor
     @objc var daxDialogTextColor: UIColor
-    @objc var homeMessageBackgroundColor: UIColor
-    @objc var homeMessageHeaderTextColor: UIColor
-    @objc var homeMessageSubheaderTextColor: UIColor
-    @objc var homeMessageTopTextColor: UIColor
-    @objc var homeMessageButtonColor: UIColor
-    @objc var homeMessageButtonTextColor: UIColor
-    @objc var homeMessageDismissButtonColor: UIColor
+//    @objc var homeMessageBackgroundColor: UIColor
+//    @objc var homeMessageHeaderTextColor: UIColor
+//    @objc var homeMessageSubheaderTextColor: UIColor
+//    @objc var homeMessageTopTextColor: UIColor
+//    @objc var homeMessageButtonColor: UIColor
+//    @objc var homeMessageButtonTextColor: UIColor
+//    @objc var homeMessageDismissButtonColor: UIColor
     @objc var autofillDefaultTitleTextColor: UIColor
     @objc var autofillDefaultSubtitleTextColor: UIColor
     @objc var autofillEmptySearchViewTextColor: UIColor
@@ -592,12 +592,12 @@ class MutableTheme: NSObject, Theme {
         self.navigationBarTintColor = theme.navigationBarTintColor
         self.tintOnBlurColor = theme.tintOnBlurColor
         self.searchBarBackgroundColor = theme.searchBarBackgroundColor
-        self.centeredSearchBarBackgroundColor = theme.centeredSearchBarBackgroundColor
+        // self.centeredSearchBarBackgroundColor = theme.centeredSearchBarBackgroundColor
         self.searchBarTextColor = theme.searchBarTextColor
         self.searchBarTextDeemphasisColor = theme.searchBarTextDeemphasisColor
-        self.searchBarBorderColor = theme.searchBarBorderColor
-        self.searchBarClearTextIconColor = theme.searchBarClearTextIconColor
-        self.searchBarVoiceSearchIconColor = theme.searchBarVoiceSearchIconColor
+//        self.searchBarBorderColor = theme.searchBarBorderColor
+//        self.searchBarClearTextIconColor = theme.searchBarClearTextIconColor
+//        self.searchBarVoiceSearchIconColor = theme.searchBarVoiceSearchIconColor
         self.browsingMenuTextColor = theme.browsingMenuTextColor
         self.browsingMenuIconsColor = theme.browsingMenuIconsColor
         self.browsingMenuSeparatorColor = theme.browsingMenuSeparatorColor
@@ -628,26 +628,26 @@ class MutableTheme: NSObject, Theme {
         self.homePrivacyCellSecondaryTextColor = theme.homePrivacyCellSecondaryTextColor
         self.aboutScreenTextColor = theme.aboutScreenTextColor
         self.aboutScreenButtonColor = theme.aboutScreenButtonColor
-        self.favoritesPlusTintColor = theme.favoritesPlusTintColor
-        self.favoritesPlusBackgroundColor = theme.favoritesPlusBackgroundColor
+//        self.favoritesPlusTintColor = theme.favoritesPlusTintColor
+//        self.favoritesPlusBackgroundColor = theme.favoritesPlusBackgroundColor
         self.faviconBackgroundColor = theme.faviconBackgroundColor
         self.favoriteTextColor = theme.favoriteTextColor
         self.feedbackPrimaryTextColor = theme.feedbackPrimaryTextColor
         self.feedbackSecondaryTextColor = theme.feedbackSecondaryTextColor
         self.feedbackSentimentButtonBackgroundColor = theme.feedbackSentimentButtonBackgroundColor
-        self.privacyReportCellBackgroundColor = theme.privacyReportCellBackgroundColor
+//        self.privacyReportCellBackgroundColor = theme.privacyReportCellBackgroundColor
         self.activityStyle = theme.activityStyle
         self.destructiveColor = theme.destructiveColor
         self.ddgTextTintColor = theme.ddgTextTintColor
         self.daxDialogBackgroundColor = theme.daxDialogBackgroundColor
         self.daxDialogTextColor = theme.daxDialogTextColor
-        self.homeMessageBackgroundColor = theme.homeMessageBackgroundColor
-        self.homeMessageHeaderTextColor = theme.homeMessageHeaderTextColor
-        self.homeMessageSubheaderTextColor = theme.homeMessageSubheaderTextColor
-        self.homeMessageTopTextColor = theme.homeMessageTopTextColor
-        self.homeMessageButtonColor = theme.homeMessageButtonColor
-        self.homeMessageButtonTextColor = theme.homeMessageButtonTextColor
-        self.homeMessageDismissButtonColor = theme.homeMessageDismissButtonColor
+//        self.homeMessageBackgroundColor = theme.homeMessageBackgroundColor
+//        self.homeMessageHeaderTextColor = theme.homeMessageHeaderTextColor
+//        self.homeMessageSubheaderTextColor = theme.homeMessageSubheaderTextColor
+//        self.homeMessageTopTextColor = theme.homeMessageTopTextColor
+//        self.homeMessageButtonColor = theme.homeMessageButtonColor
+//        self.homeMessageButtonTextColor = theme.homeMessageButtonTextColor
+//        self.homeMessageDismissButtonColor = theme.homeMessageDismissButtonColor
         self.autofillDefaultTitleTextColor = theme.autofillDefaultTitleTextColor
         self.autofillDefaultSubtitleTextColor = theme.autofillDefaultSubtitleTextColor
         self.autofillEmptySearchViewTextColor = theme.autofillEmptySearchViewTextColor

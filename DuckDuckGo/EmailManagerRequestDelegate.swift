@@ -81,7 +81,7 @@ extension EmailManagerRequestDelegate {
         }
 
         // https://app.asana.com/0/414709148257752/1205196846001239/f
-        if errorCode == -25291 {
+        if errorCode == errSecNotAvailable {
             emailManager.forceSignOut()
         }
 

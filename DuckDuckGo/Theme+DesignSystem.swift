@@ -43,7 +43,6 @@ extension Theme {
 
     var ddgTextTintColor: UIColor { UIColor(designSystemColor: .textPrimary) }
 
-#warning("might change")
     var privacyDashboardWebviewBackgroundColor: UIColor { UIColor(designSystemColor: .surface) }
 
     var iconCellBorderColor: UIColor { UIColor(designSystemColor: .icons) }

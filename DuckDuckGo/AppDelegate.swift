@@ -367,7 +367,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        syncService.scheduler.notifyAppLifecycleEvent()
+        syncService.scheduler.notifyDataChanged()
         fireFailedCompilationsPixelIfNeeded()
         refreshShortcuts()
     }

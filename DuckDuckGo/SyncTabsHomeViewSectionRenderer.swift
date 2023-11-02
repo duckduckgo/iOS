@@ -63,7 +63,7 @@ class SyncTabsHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        1
+        syncTabsHomeViewModel.deviceTabs.isEmpty ? 0 : 1
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

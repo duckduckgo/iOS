@@ -74,19 +74,18 @@ extension Theme {
     var daxDialogTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
 
     var placeholderColor: UIColor { UIColor(designSystemColor: .textSecondary) }
-
-    var searchBarBackgroundColor: UIColor { UIColor(designSystemColor: .container) }
     var searchBarTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
 
     var navigationBarTitleColor: UIColor { UIColor(designSystemColor: .textPrimary) }
     var tableHeaderTextColor: UIColor {UIColor(designSystemColor: .textSecondary) }
 
     var faviconBackgroundColor: UIColor { UIColor(designSystemColor: .surface) }
-    var tableCellTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
 
     var favoriteTextColor: UIColor { UIColor(designSystemColor: .textSecondary) }
     var aboutScreenTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
     var autocompleteSuggestionTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
+
+    var tableCellTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
     var tableCellSeparatorColor: UIColor { UIColor(designSystemColor: .lines) }
 
     // No design system colour yet, so fall back to SDK colours

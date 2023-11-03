@@ -222,7 +222,6 @@ class UnprotectedSitesViewController: UITableViewController {
         
         let theme = enforceLightTheme ? LightTheme() : ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
         
         return cell
     }

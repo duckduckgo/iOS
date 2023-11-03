@@ -61,4 +61,5 @@ struct LightTheme: Theme {
     
     var destructiveColor: UIColor = UIColor.destructive
 
+    var searchBarBackgroundColor: UIColor = UIColor.lightGreyish
 }

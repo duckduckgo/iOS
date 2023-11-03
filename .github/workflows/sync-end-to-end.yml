@@ -6,7 +6,7 @@ on:
   #  - cron: '0 4 * * *' # run at 4 AM UTC
 
 jobs:
-  end-to-end-tests:
+  sync-end-to-end-tests:
     name: Sync End to end Tests
     runs-on: macos-13
 

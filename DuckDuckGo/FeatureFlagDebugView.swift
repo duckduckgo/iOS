@@ -21,6 +21,7 @@ import SwiftUI
 import BrowserServicesKit
 import Core
 import DesignResourcesKit
+import Combine
 
 struct FeatureFlagDebugView: View {
     @StateObject var viewModel: FeatureFlagDebugViewModel = FeatureFlagDebugViewModel()
@@ -82,9 +83,27 @@ struct FeatureFlagItemView: View {
     }
 }
 
-import Combine
+final class FeatureFlagDebugViewModel: ObservableObject {
+    @Published var items: [FeatureFlagItem] = []
 
-public class FeatureFlagItem: ObservableObject, Identifiable {
+    init(featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
+         featureFlagOverrider: FeatureFlagOverrider = AppDependencyProvider.shared.featureFlagOverrider) {
+        for flag in FeatureFlag.allCases {
+            guard flag != .debugMenu else {
+                continue
+            }
+            items.append(
+                FeatureFlagItem(
+                    featureFlag: flag,
+                    featureFlagger: featureFlagger,
+                    featureFlagOverrider: featureFlagOverrider
+                )
+            )
+        }
+    }
+}
+
+final class FeatureFlagItem: ObservableObject, Identifiable {
     private let featureFlag: FeatureFlag
     private var overrideStateCancellable: AnyCancellable?
 
@@ -173,25 +192,5 @@ private extension PrivacyConfigFeatureLevel {
 private extension Bool {
     var emoji: String {
         self ? "✅" : "❌"
-    }
-}
-
-public final class FeatureFlagDebugViewModel: ObservableObject {
-    @Published var items: [FeatureFlagItem] = []
-
-    init(featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
-         featureFlagOverrider: FeatureFlagOverrider = AppDependencyProvider.shared.featureFlagOverrider) {
-        for flag in FeatureFlag.allCases {
-            guard flag != .debugMenu else {
-                continue
-            }
-            items.append(
-                FeatureFlagItem(
-                    featureFlag: flag,
-                    featureFlagger: featureFlagger,
-                    featureFlagOverrider: featureFlagOverrider
-                )
-            )
-        }
     }
 }

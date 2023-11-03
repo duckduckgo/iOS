@@ -20,6 +20,7 @@
 import SwiftUI
 import BrowserServicesKit
 import Core
+import DesignResourcesKit
 
 struct FeatureFlagDebugView: View {
     @StateObject var viewModel: FeatureFlagDebugViewModel = FeatureFlagDebugViewModel()
@@ -38,24 +39,30 @@ struct FeatureFlagItemView: View {
     @StateObject var viewModel: FeatureFlagItem
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 4) {
             HStack {
-                Text(viewModel.id).font(.headline)
+                Text(viewModel.id).daxTitle3()
+                Spacer()
+                Text(viewModel.flagStateIndicator)
             }
 
-            Picker("Override", selection: $viewModel.overrideState) {
+            Picker("Local Override:", selection: $viewModel.overrideState) {
                 ForEach(FeatureFlagItem.OverrideState.allCases) { state in
                     Text(state.rawValue).tag(state)
                 }
-            }.font(.subheadline)
+            }.daxBodyBold()
             HStack {
-                Text("Flag Source:").font(.subheadline)
+                Text("Flag Source:")
+                    .daxBodyBold()
                 Spacer()
-                Text(viewModel.sourceTitle).multilineTextAlignment(.trailing).font(.body)
+                Text(viewModel.sourceTitle)
+                    .multilineTextAlignment(.trailing)
+                    .daxBodyRegular()
             }
             if let configFeatureTitle = viewModel.configFeatureTitle {
                 HStack {
-                    Text("Config Feature:").font(.subheadline)
+                    Text("Config Feature:")
+                        .daxBodyBold()
                     Spacer()
                     Text(configFeatureTitle)
                         .multilineTextAlignment(.trailing)
@@ -87,17 +94,20 @@ public class FeatureFlagItem: ObservableObject, Identifiable {
         featureFlag.rawValue
     }
 
+    public var flagTitle: String {
+        featureFlag.rawValue
+    }
+    @Published public var flagStateIndicator: String
     @Published public var overrideState: OverrideState
-    @Published public var sourceTitle: String
-    @Published public var configFeatureTitle: String?
-    public var flagState: Bool
+    public var sourceTitle: String
+    public var configFeatureTitle: String?
 
     init(featureFlag: FeatureFlag, featureFlagger: FeatureFlagger, featureFlagOverrider: OverrideableFeatureFlagger) {
         self.featureFlag = featureFlag
         self.featureFlagger = featureFlagger
         self.featureFlagOverrider = featureFlagOverrider
         overrideState = OverrideState(bool: featureFlagOverrider.overrideValue(for: featureFlag))
-        flagState = featureFlagger.isFeatureOn(featureFlag)
+        flagStateIndicator = featureFlagger.isFeatureOn(featureFlag).emoji
         sourceTitle = featureFlag.source.presentableText.title
         configFeatureTitle = featureFlag.source.presentableText.configFeatureTitle
         cancellable = $overrideState.sink(receiveValue: updateOverride(overrideState:))
@@ -132,6 +142,7 @@ public class FeatureFlagItem: ObservableObject, Identifiable {
             value = nil
         }
         featureFlagOverrider.setOverride(value: value, for: featureFlag)
+        flagStateIndicator = featureFlagger.isFeatureOn(featureFlag).emoji
     }
 }
 
@@ -159,6 +170,12 @@ private extension PrivacyConfigFeatureLevel {
         case .subfeature(let subfeature):
             return "\(subfeature.parent).\(subfeature)"
         }
+    }
+}
+
+private extension Bool {
+    var emoji: String {
+        self ? "✅" : "❌"
     }
 }
 

@@ -46,10 +46,10 @@ jobs:
         | tee xcodebuild.log
     
     - name: Create test account for Sync and return the recovery code
-        uses: duckduckgo/sync_crypto/action@main
-        id: sync-recovery-code
-        with:
-            debug: true
+      uses: duckduckgo/sync_crypto/action@main
+      id: sync-recovery-code
+      with:
+        debug: true
     
     - name: Sync e2e tests
       uses: mobile-dev-inc/action-maestro-cloud@v1.6.0

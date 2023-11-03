@@ -1752,6 +1752,7 @@ extension MainViewController: TabSwitcherDelegate {
         hideSuggestionTray()
         tabManager.remove(at: index)
         updateCurrentTab()
+        syncService.scheduler.notifyDataChanged()
     }
 
     func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController) {

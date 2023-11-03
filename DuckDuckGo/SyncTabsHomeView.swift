@@ -24,22 +24,50 @@ struct SyncTabsHomeView: View {
     @ObservedObject var viewModel: SyncTabsHomeViewModel
 
     var body: some View {
-        List {
+        VStack(alignment: .leading, spacing: 0) {
             ForEach(viewModel.deviceTabs) { deviceTabs in
-                Section(header: Text(deviceTabs.deviceId)) {
-                    ForEach(deviceTabs.deviceTabs) { tabInfo in
-                        Button {
-                            viewModel.open(tabInfo.url)
-                        } label: {
-                            Text(tabInfo.title.isEmpty ? tabInfo.url.absoluteString : tabInfo.title)
-                                .lineLimit(1)
-                        }
-                        .buttonStyle(.plain)
+                Text(deviceTabs.deviceId)
+                    .font(.system(size: 15).bold())
+                    .foregroundColor(Color(designSystemColor: .textSecondary))
+                Spacer(minLength: 8)
+                Rectangle()
+                    .foregroundColor(Color(designSystemColor: .lines))
+                    .frame(maxWidth: .infinity, idealHeight: 1)
+                Spacer(minLength: 12)
+                ForEach(deviceTabs.deviceTabs) { tabInfo in
+                    Button {
+                        viewModel.open(tabInfo.url)
+                    } label: {
+                        Text(tabInfo.title.isEmpty ? tabInfo.url.absoluteString : tabInfo.title)
+                            .lineLimit(1)
+                            .padding(.leading, 12)
+                            .font(.system(size: 15))
                     }
+                    .buttonStyle(.plain)
+                    .frame(height: 44)
+                    Rectangle()
+                        .foregroundColor(Color(designSystemColor: .container))
+                        .frame(maxWidth: .infinity, idealHeight: 1)
                 }
             }
         }
-        .padding(.horizontal, 0)
-        .frame(minHeight: 200, maxHeight: .infinity)
+//        List {
+//            ForEach(viewModel.deviceTabs) { deviceTabs in
+//                Section(header: Text(deviceTabs.deviceId)) {
+//                    ForEach(deviceTabs.deviceTabs) { tabInfo in
+//                        Button {
+//                            viewModel.open(tabInfo.url)
+//                        } label: {
+//                            Text(tabInfo.title.isEmpty ? tabInfo.url.absoluteString : tabInfo.title)
+//                                .lineLimit(1)
+//                        }
+//                        .buttonStyle(.plain)
+//                    }
+//                }
+//            }
+//        }
+//        .listStyle(.plain)
+//        .padding(.horizontal, 0)
+//        .frame(minHeight: 200, maxHeight: .infinity)
     }
 }

@@ -48,6 +48,7 @@ struct SyncTabsHomeView: View {
                     Rectangle()
                         .foregroundColor(Color(designSystemColor: .container))
                         .frame(maxWidth: .infinity, idealHeight: 1)
+                        .padding(.leading, 12)
                 }
             }
         }

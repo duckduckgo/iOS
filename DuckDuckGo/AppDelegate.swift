@@ -214,7 +214,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #if DEBUG
         let defaultEnvironment = ServerEnvironment.development
 #else
-        let defaultEnvironment = ServerEnvironment.production
+        let defaultEnvironment = ServerEnvironment.development
 #endif
 
         let environment = ServerEnvironment(

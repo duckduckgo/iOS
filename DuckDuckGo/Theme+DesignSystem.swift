@@ -47,9 +47,6 @@ extension Theme {
 
     var iconCellBorderColor: UIColor { UIColor(designSystemColor: .icons) }
 
-#warning("might change")
-    var tableCellAccessoryTextColor: UIColor { UIColor(designSystemColor: .textSecondary) }
-
     var browsingMenuTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
     var browsingMenuIconsColor: UIColor { UIColor(designSystemColor: .textPrimary) }
     var browsingMenuSeparatorColor: UIColor { UIColor(designSystemColor: .lines) }
@@ -91,5 +88,8 @@ extension Theme {
     var aboutScreenTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
     var autocompleteSuggestionTextColor: UIColor { UIColor(designSystemColor: .textPrimary) }
     var tableCellSeparatorColor: UIColor { UIColor(designSystemColor: .lines) }
+
+    // No design system colour yet, so fall back to SDK colours
+    var tableCellAccessoryTextColor: UIColor { .secondaryLabel }
 
 }

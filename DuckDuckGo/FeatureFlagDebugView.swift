@@ -86,9 +86,7 @@ import Combine
 
 public class FeatureFlagItem: ObservableObject, Identifiable {
     private let featureFlag: FeatureFlag
-    private let featureFlagger: FeatureFlagger
-    private let featureFlagOverrider: OverrideableFeatureFlagger
-    private var cancellable: AnyCancellable?
+    private var overrideStateCancellable: AnyCancellable?
 
     public var id: String {
         featureFlag.rawValue
@@ -102,20 +100,33 @@ public class FeatureFlagItem: ObservableObject, Identifiable {
     public var sourceTitle: String
     public var configFeatureTitle: String?
 
-    init(featureFlag: FeatureFlag, featureFlagger: FeatureFlagger, featureFlagOverrider: OverrideableFeatureFlagger) {
+    init(featureFlag: FeatureFlag, featureFlagger: FeatureFlagger, featureFlagOverrider: FeatureFlagOverrider) {
         self.featureFlag = featureFlag
-        self.featureFlagger = featureFlagger
-        self.featureFlagOverrider = featureFlagOverrider
         overrideState = OverrideState(bool: featureFlagOverrider.overrideValue(for: featureFlag))
         flagStateIndicator = featureFlagger.isFeatureOn(featureFlag).emoji
         sourceTitle = featureFlag.source.presentableText.title
         configFeatureTitle = featureFlag.source.presentableText.configFeatureTitle
-        cancellable = $overrideState.sink(receiveValue: updateOverride(overrideState:))
+        overrideState = OverrideState(bool: featureFlagOverrider.overrideValue(for: featureFlag))
+        overrideStateCancellable = $overrideState.sink { [weak self] in
+            featureFlagOverrider.setOverride(value: $0.bool, for: featureFlag)
+            self?.flagStateIndicator = featureFlagger.isFeatureOn(featureFlag).emoji
+        }
     }
 
     public enum OverrideState: String, Identifiable, CaseIterable {
         public var id: String {
             rawValue
+        }
+
+        public var bool: Bool? {
+            switch self {
+            case .overrideOn:
+                return true
+            case .overrideOff:
+                return false
+            case .noOverride:
+                return nil
+            }
         }
 
         init(bool: Bool?) {
@@ -129,20 +140,6 @@ public class FeatureFlagItem: ObservableObject, Identifiable {
         case overrideOn = "On"
         case overrideOff = "Off"
         case noOverride = "None"
-    }
-
-    private func updateOverride(overrideState: FeatureFlagItem.OverrideState) {
-        let value: Bool?
-        switch overrideState {
-        case .overrideOn:
-            value = true
-        case .overrideOff:
-            value = false
-        case .noOverride:
-            value = nil
-        }
-        featureFlagOverrider.setOverride(value: value, for: featureFlag)
-        flagStateIndicator = featureFlagger.isFeatureOn(featureFlag).emoji
     }
 }
 
@@ -183,7 +180,7 @@ public final class FeatureFlagDebugViewModel: ObservableObject {
     @Published var items: [FeatureFlagItem] = []
 
     init(featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
-         featureFlagOverrider: OverrideableFeatureFlagger = AppDependencyProvider.shared.featureFlagOverrider) {
+         featureFlagOverrider: FeatureFlagOverrider = AppDependencyProvider.shared.featureFlagOverrider) {
         for flag in FeatureFlag.allCases {
             guard flag != .debugMenu else {
                 continue

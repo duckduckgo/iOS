@@ -36,6 +36,7 @@ protocol DependencyProvider {
     var variantManager: VariantManager { get }
     var internalUserDecider: InternalUserDecider { get }
     var featureFlagger: FeatureFlagger { get }
+    var featureFlagOverrider: FeatureFlagOverrider { get }
     var storageCache: StorageCache { get }
     var downloadManager: DownloadManager { get }
     var autofillLoginSession: AutofillLoginSession { get }
@@ -71,7 +72,7 @@ final class AppDependencyProvider: DependencyProvider {
         overrideStore: FeatureFlagOverrideStore()
     )
     lazy var featureFlagger: FeatureFlagger = defaultFeatureFlagger
-    lazy var featureFlagOverrider: OverrideableFeatureFlagger = defaultFeatureFlagger
+    lazy var featureFlagOverrider: FeatureFlagOverrider = defaultFeatureFlagger
 
     let storageCache = StorageCache()
     let downloadManager = DownloadManager()

@@ -60,7 +60,7 @@ extension Theme {
     var tabSwitcherCellSecondaryTextColor: UIColor { UIColor(designSystemColor: .textSecondary) }
 
     var textFieldFontColor: UIColor { UIColor(designSystemColor: .textPrimary) }
-    var textFieldBackgroundColor: UIColor { UIColor(designSystemColor: .textPrimary) }
+    var textFieldBackgroundColor: UIColor { UIColor(designSystemColor: .surface) }
 
     var buttonTintColor: UIColor { UIColor(designSystemColor: .accent) }
 

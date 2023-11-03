@@ -32,7 +32,7 @@ struct SyncTabsHomeView: View {
                 Spacer(minLength: 8)
                 Rectangle()
                     .foregroundColor(Color(designSystemColor: .lines))
-                    .frame(maxWidth: .infinity, idealHeight: 1)
+                    .frame(maxWidth: .infinity, minHeight: 1, maxHeight: 1)
                 Spacer(minLength: 12)
                 ForEach(deviceTabs.deviceTabs) { tabInfo in
                     Button {
@@ -47,7 +47,7 @@ struct SyncTabsHomeView: View {
                     .frame(height: 44)
                     Rectangle()
                         .foregroundColor(Color(designSystemColor: .container))
-                        .frame(maxWidth: .infinity, idealHeight: 1)
+                        .frame(maxWidth: .infinity, minHeight: 1, maxHeight: 1)
                         .padding(.leading, 12)
                 }
             }

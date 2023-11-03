@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+import Combine
 import UIKit
 
 class SyncTabsHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
@@ -36,7 +37,15 @@ class SyncTabsHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     init(syncTabsHomeViewModel: SyncTabsHomeViewModel) {
         self.syncTabsHomeViewModel = syncTabsHomeViewModel
         super.init()
+
+        cancellable = syncTabsHomeViewModel.$deviceTabs
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.controller?.collectionView.reloadData()
+            }
     }
+
+    private var cancellable: AnyCancellable?
 
     func install(into controller: HomeViewController) {
         self.controller = controller

@@ -51,7 +51,6 @@ final class SyncTabsHomeViewModel: ObservableObject {
                 self?.reloadDeviceTabs()
             }
 
-        print(#function)
         reloadDeviceTabs()
     }
 

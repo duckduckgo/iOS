@@ -1,0 +1,43 @@
+appId: com.duckduckgo.mobile.ios
+tags:
+    - sync
+
+---
+
+- clearState
+- launchApp
+- runFlow: 
+    when: 
+      visible: 
+        text: "Let’s Do It!"
+        index: 0
+    file: ../shared/onboarding.yaml
+
+# <HACK>This is a workaround to prevent iOS from showing the Paste permission alert
+- tapOn:
+    id: searchEntry
+- inputText: ${CODE}
+- longPressOn:
+    id: searchEntry
+- tapOn: Select All
+- tapOn: Cut
+- tapOn:
+    id: searchEntry
+- longPressOn:
+    id: searchEntry
+- tapOn: Paste
+- tapOn: Cancel
+#</HACK>
+
+- tapOn: Settings
+- runFlow:
+    file: ../shared/set_internal_user.yaml
+- assertVisible: Sync
+- tapOn: Sync
+- assertVisible: Sync
+- tapOn: "0"
+- assertVisible: Turn on Sync?
+- tapOn: Recover Your Synced Data
+- assertVisible: Scan QR Code
+- tapOn: Manually Enter Code
+- tapOn: Paste

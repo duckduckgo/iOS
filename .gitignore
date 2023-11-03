@@ -70,9 +70,6 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/test_output
 
-# Mestro
-.maestro/**/shared
-
 # DuckDuckGo
 
 Configuration/ExternalDeveloper.xcconfig

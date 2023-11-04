@@ -67,11 +67,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
 
     // MARK: Connection Details
     @Published public var shouldShowConnectionDetails: Bool = false
-    @Published public var location: String? {
-        didSet {
-            print("DEBUG: Got new location")
-        }
-    }
+    @Published public var location: String?
     @Published public var ipAddress: String?
 
     @Published public var animationsOn: Bool = false

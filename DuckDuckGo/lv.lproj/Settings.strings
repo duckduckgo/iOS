@@ -37,6 +37,9 @@
 /* Class = "UILabel"; text = "Text Size"; ObjectID = "9Ko-0g-T3h"; */
 "9Ko-0g-T3h.text" = "Burtu izmērs";
 
+/* Class = "UILabel"; text = "Title"; ObjectID = "9kt-6R-XiZ"; */
+"9kt-6R-XiZ.text" = "Nosaukums";
+
 /* Class = "UILabel"; text = "App Launch"; ObjectID = "13n-KI-KLq"; */
 "13n-KI-KLq.text" = "Lietotnes palaišana";
 
@@ -72,6 +75,12 @@
 
 /* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "cW7-OM-2oW"; */
 "cW7-OM-2oW.text" = "Globālā privātuma kontrole (GPC)";
+
+/* Class = "UIBarButtonItem"; title = "Add"; ObjectID = "CxT-QK-iVn"; */
+"CxT-QK-iVn.title" = "Pievienot";
+
+/* Class = "UILabel"; text = "Hide your location and conceal your online activity"; ObjectID = "Cyw-ir-cSK"; */
+"Cyw-ir-cSK.text" = "Hide your location and conceal your online activity";
 
 /* Class = "UILabel"; text = "App Exit, Inactive for 15 Minutes"; ObjectID = "D0R-jp-UY8"; */
 "D0R-jp-UY8.text" = "Iziešana no lietotnes, neaktīva 15 minūtes";
@@ -151,6 +160,9 @@
 /* Class = "UILabel"; text = "Long-Press Previews"; ObjectID = "HLr-R8-xxF"; */
 "HLr-R8-xxF.text" = "Ilgas nospiešanas rezultātu priekšskatījumi";
 
+/* Class = "UILabel"; text = "Browse privately with our app for Windows"; ObjectID = "hoT-Nu-KXP"; */
+"hoT-Nu-KXP.text" = "Pārlūko privāti ar mūsu Windows lietotni";
+
 /* Class = "UILabel"; text = "Privacy Protection enabled for all sites"; ObjectID = "Hu1-5i-vjL"; */
 "Hu1-5i-vjL.text" = "Privātuma aizsardzība ir iespējota visām vietnēm";
 
@@ -162,6 +174,12 @@
 
 /* Class = "UILabel"; text = "Share Feedback"; ObjectID = "m23-t6-9cb"; */
 "m23-t6-9cb.text" = "Kopīgot atsauksmes";
+
+/* Class = "UINavigationItem"; title = "Address Bar Position"; ObjectID = "mLn-1x-Fl5"; Note = "Fire button animation setting page title"; */
+"mLn-1x-Fl5.title" = "Adreses joslas pozīcija";
+
+/* Class = "UILabel"; text = "Address Bar Position"; ObjectID = "mqV-pf-NZ1"; Note = "Fire button animation settings item"; */
+"mqV-pf-NZ1.text" = "Adreses joslas pozīcija";
 
 /* Class = "UILabel"; text = "Let DuckDuckGo manage cookie consent pop-ups"; ObjectID = "nX1-F1-Frd"; */
 "nX1-F1-Frd.text" = "Ļaut DuckDuckGo pārvaldīt sīkfailu piekrišanas uznirstošos logus";
@@ -175,14 +193,26 @@
 /* Class = "UILabel"; text = "About DuckDuckGo"; ObjectID = "oM7-1o-9oY"; */
 "oM7-1o-9oY.text" = "Par DuckDuckGo";
 
+/* Class = "UILabel"; text = "Top"; ObjectID = "opn-JO-idF"; */
+"opn-JO-idF.text" = "Populārākie";
+
 /* Class = "UITableViewSection"; headerTitle = "More From DuckDuckGo"; ObjectID = "OxE-MQ-uJk"; */
 "OxE-MQ-uJk.headerTitle" = "Vairāk no DuckDuckGo";
+
+/* Class = "UILabel"; text = "Sync"; ObjectID = "oXN-ez-gct"; */
+"oXN-ez-gct.text" = "Sinhronizēt";
 
 /* Class = "UILabel"; text = "Browse privately with our app for Mac "; ObjectID = "P0F-ts-ekd"; */
 "P0F-ts-ekd.text" = "Pārlūko privāti, izmantojot mūsu Mac lietotni ";
 
+/* Class = "UILabel"; text = "Network Protection"; ObjectID = "qah-gb-udB"; */
+"qah-gb-udB.text" = "Network Protection";
+
 /* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
 "qeN-SV-zy7.text" = "Etiķete";
+
+/* Class = "UILabel"; text = "DuckDuckGo Windows App"; ObjectID = "RQ8-H1-Ez1"; */
+"RQ8-H1-Ez1.text" = "DuckDuckGo Windows lietotne";
 
 /* Class = "UINavigationItem"; title = "Text Size"; ObjectID = "ssa-zd-L3T"; */
 "ssa-zd-L3T.title" = "Burtu izmērs";
@@ -232,8 +262,8 @@
 /* Class = "UILabel"; text = "Add App to Your Dock"; ObjectID = "yvj-LL-MiR"; */
 "yvj-LL-MiR.text" = "Pievienot lietotni dokam";
 
-/* Class = "UILabel"; text = "DuckDuckGo Desktop App"; ObjectID = "Yz9-17-qnn"; */
-"Yz9-17-qnn.text" = "DuckDuckGo darbvirsmas lietotne";
+/* Class = "UILabel"; text = "DuckDuckGo Mac App"; ObjectID = "Yz9-17-qnn"; */
+"Yz9-17-qnn.text" = "DuckDuckGo Mac lietotne";
 
 /* Class = "UILabel"; text = "New Tab"; ObjectID = "Zpg-h0-rYv"; */
 "Zpg-h0-rYv.text" = "Jauna cilne";

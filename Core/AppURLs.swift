@@ -29,6 +29,7 @@ public extension URL {
 
     static let autocomplete = URL(string: "\(base)/ac/")!
     static let emailProtection = URL(string: "\(base)/email")!
+    static let emailProtectionSignUp = URL(string: "\(base)/email/start-incontext")!
     static let emailProtectionQuickLink = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/email"))!
     static let aboutLink = URL(string: AppDeepLinkSchemes.quickLink.appending("\(ddg.host!)/about"))!
 

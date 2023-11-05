@@ -33,7 +33,7 @@ struct VPNStatusTimelineEntry: TimelineEntry {
     let status: VPNStatus
     let location: String
 
-    internal init(date: Date, status: VPNStatus = .notConfigured, location: String = "No Location") {
+    internal init(date: Date, status: VPNStatus = .notConfigured, location: String) {
         self.date = date
         self.status = status
         self.location = location
@@ -45,11 +45,11 @@ class VPNStatusTimelineProvider: TimelineProvider {
     typealias Entry = VPNStatusTimelineEntry
 
     func placeholder(in context: Context) -> VPNStatusTimelineEntry {
-        return VPNStatusTimelineEntry(date: Date())
+        return VPNStatusTimelineEntry(date: Date(), location: "Paoli, PA")
     }
 
     func getSnapshot(in context: Context, completion: @escaping (VPNStatusTimelineEntry) -> Void) {
-        let entry = VPNStatusTimelineEntry(date: Date())
+        let entry = VPNStatusTimelineEntry(date: Date(), location: "Paoli, PA")
         completion(entry)
     }
 
@@ -57,15 +57,18 @@ class VPNStatusTimelineProvider: TimelineProvider {
         NETunnelProviderManager.loadAllFromPreferences { managers, error in
             let expiration = Date().addingTimeInterval(TimeInterval.minutes(1))
 
+            let defaults = UserDefaults(suiteName: "group.com.duckduckgo.netp")!
+            let location = defaults.string(forKey: "netp-server-location") ?? "Unknown Location"
+
             if let error {
-                let entry = VPNStatusTimelineEntry(date: expiration, status: .error)
+                let entry = VPNStatusTimelineEntry(date: expiration, status: .error, location: location)
                 let timeline = Timeline(entries: [entry], policy: .atEnd)
                 completion(timeline)
                 return
             }
 
             guard let manager = managers?.first else {
-                let entry = VPNStatusTimelineEntry(date: expiration, status: .notConfigured)
+                let entry = VPNStatusTimelineEntry(date: expiration, status: .notConfigured, location: location)
                 let timeline = Timeline(entries: [entry], policy: .atEnd)
                 completion(timeline)
                 return
@@ -74,7 +77,7 @@ class VPNStatusTimelineProvider: TimelineProvider {
             let status = manager.connection.status
             let enabled = (status == .connected || status == .connecting)
 
-            let entry = VPNStatusTimelineEntry(date: expiration, status: .status(status))
+            let entry = VPNStatusTimelineEntry(date: expiration, status: .status(status), location: location)
             let timeline = Timeline(entries: [entry], policy: .atEnd)
 
             completion(timeline)
@@ -254,7 +257,7 @@ struct VPNStatusWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: VPNStatusTimelineProvider()) { entry in
-            VPNStatusView(entry: entry)
+            VPNStatusView(entry: entry).widgetURL(DeepLinks.openVPN)
         }
         .configurationDisplayName("VPN Status")
         .description("View and manage the DuckDuckGo VPN status")

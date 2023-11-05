@@ -43,7 +43,7 @@ struct DisableVPNIntent: AppIntent {
 
             manager.connection.stopVPNTunnel()
 
-            try? await Task.sleep(interval: .seconds(3))
+            try? await Task.sleep(interval: .seconds(2))
 
             return .result()
         } catch {
@@ -73,7 +73,7 @@ struct EnableVPNIntent: AppIntent {
             try await manager.saveToPreferences()
             try manager.connection.startVPNTunnel()
 
-            try? await Task.sleep(interval: .seconds(5))
+            try? await Task.sleep(interval: .seconds(4))
 
             return .result()
         } catch {

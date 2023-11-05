@@ -490,7 +490,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         NotificationCenter.default.post(name: AutofillLoginListAuthenticator.Notifications.invalidateContext, object: nil)
-        mainViewController?.clearNavigationStack()
+        // mainViewController?.clearNavigationStack()
         autoClear?.applicationWillMoveToForeground()
         showKeyboardIfSettingOn = false
 
@@ -738,7 +738,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
 #if NETWORK_PROTECTION
-    private func presentNetworkProtectionStatusSettingsModal() {
+    func presentNetworkProtectionStatusSettingsModal() {
         if #available(iOS 15, *) {
             let networkProtectionRoot = NetworkProtectionRootViewController()
             presentSettings(with: networkProtectionRoot)

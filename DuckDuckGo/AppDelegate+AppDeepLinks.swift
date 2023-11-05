@@ -50,6 +50,9 @@ extension AppDelegate {
         case .newEmail:
             mainViewController.newEmailAddress()
 
+        case .openVPN:
+            presentNetworkProtectionStatusSettingsModal()
+
         default:
             guard app.applicationState == .active,
                   let currentTab = mainViewController.currentTab else {

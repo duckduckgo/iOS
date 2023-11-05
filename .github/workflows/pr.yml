@@ -81,6 +81,7 @@ jobs:
           -scheme "DuckDuckGo" \
           -destination "platform=iOS Simulator,name=iPhone 15,OS=17.0" \
           -derivedDataPath "DerivedData" \
+          CODE_SIGNING_ALLOWED=NO \
           DDG_SLOW_COMPILE_CHECK_THRESHOLD=250 \
           | tee xcodebuild.log \
           | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml

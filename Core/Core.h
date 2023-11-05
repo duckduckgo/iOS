@@ -19,7 +19,6 @@
 
 
 #import <UIKit/UIKit.h>
-#import "BloomFilterWrapper.h"
 
 
 //! Project version number for Core.

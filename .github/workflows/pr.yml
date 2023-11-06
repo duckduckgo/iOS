@@ -86,6 +86,12 @@ jobs:
           # | tee xcodebuild.log \
           # | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml
 
+    - name: Setup tmate session
+      if: ${{ failure() }}
+      uses: mxschmitt/action-tmate@v3
+      with:
+        limit-access-to-actor: true
+
     - name: Upload logs if workflow failed
       uses: actions/upload-artifact@v3
       if: failure()

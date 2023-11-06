@@ -88,6 +88,10 @@ jobs:
           -destination "platform=iOS Simulator,name=iPhone 15,OS=17.0" \
           -derivedDataPath "DerivedData" \
           DDG_SLOW_COMPILE_CHECK_THRESHOLD=250 \
+          PROVISIONING_PROFILE_SPECIFIER="" \
+          CODE_SIGN_IDENTITY="" \
+          CODE_SIGN_ENTITLEMENTS="" \
+          ENABLE_TESTABILITY=true \
           | tee xcodebuild.log \
           | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml
 

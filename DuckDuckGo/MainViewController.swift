@@ -694,8 +694,8 @@ class MainViewController: UIViewController {
         allowContentUnderflow = false
         request()
         guard let tab = currentTab else { fatalError("no tab") }
-        select(tab: tab)
         dismissOmniBar()
+        select(tab: tab)
     }
 
     private func addTab(url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) {

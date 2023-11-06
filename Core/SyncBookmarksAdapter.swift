@@ -45,6 +45,17 @@ public final class SyncBookmarksAdapter {
         }
     }
 
+    @Published
+    public var isFaviconsFetchingEnabled: Bool = UserDefaultsWrapper(key: .syncAutomaticallyFetchFavicons, defaultValue: false).wrappedValue {
+        didSet {
+            var udWrapper = UserDefaultsWrapper(key: .syncAutomaticallyFetchFavicons, defaultValue: false)
+            udWrapper.wrappedValue = isFaviconsFetchingEnabled
+            if !isFaviconsFetchingEnabled {
+                faviconsFetcher?.cancelOngoingFetchingIfNeeded()
+            }
+        }
+    }
+
     public init(database: CoreDataDatabase, favoritesDisplayModeStorage: FavoritesDisplayModeStoring) {
         self.database = database
         self.favoritesDisplayModeStorage = favoritesDisplayModeStorage
@@ -64,6 +75,7 @@ public final class SyncBookmarksAdapter {
         if shouldEnable {
             databaseCleaner.scheduleRegularCleaning()
             handleFavoritesAfterDisablingSync()
+            isFaviconsFetchingEnabled = false
         } else {
             databaseCleaner.cancelCleaningSchedule()
         }
@@ -87,11 +99,13 @@ public final class SyncBookmarksAdapter {
         let provider = BookmarksProvider(
             database: database,
             metadataStore: metadataStore,
-            syncDidFinish: { [syncDidCompleteSubject] result in
-                faviconsFetcher.startFetching(with: result.modifiedIds, deletedBookmarkIDs: result.deletedIds)
-
+            syncDidFinish: { [weak self] result in
+                faviconsFetcher.updateBookmarkIDs(modified: result.modifiedIds, deleted: result.deletedIds)
+                if self?.isFaviconsFetchingEnabled == true {
+                    faviconsFetcher.startFetching()
+                }
                 if result.hasNewData {
-                    syncDidCompleteSubject.send()
+                    self?.syncDidCompleteSubject.send()
                     Self.isSyncBookmarksPaused = false
                 }
             }
@@ -124,6 +138,7 @@ public final class SyncBookmarksAdapter {
             }
 
         self.provider = provider
+        self.faviconsFetcher = faviconsFetcher
     }
 
     private func handleFavoritesAfterDisablingSync() {
@@ -151,4 +166,5 @@ public final class SyncBookmarksAdapter {
     private var syncErrorCancellable: AnyCancellable?
     private let database: CoreDataDatabase
     private let favoritesDisplayModeStorage: FavoritesDisplayModeStoring
+    private var faviconsFetcher: BookmarksFaviconsFetcher?
 }

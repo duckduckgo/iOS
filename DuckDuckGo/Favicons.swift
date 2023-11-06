@@ -493,10 +493,10 @@ extension Favicons: Bookmarks.FaviconStoring {
         return targetCache.isCached(forKey: resource.cacheKey)
     }
 
-    public func storeFavicon(_ imageData: Data, for url: URL) async throws {
+    public func storeFavicon(_ imageData: Data, with url: URL?, for documentURL: URL) async throws {
 
-        guard let domain = url.host,
-              let options = kfOptions(forDomain: domain, withURL: url, usingCache: .fireproof),
+        guard let domain = documentURL.host,
+              let options = kfOptions(forDomain: domain, withURL: documentURL, usingCache: .fireproof),
               let resource = defaultResource(forDomain: domain),
               let targetCache = Favicons.Constants.caches[.fireproof],
               let image = UIImage(data: imageData)

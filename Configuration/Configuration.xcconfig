@@ -19,3 +19,9 @@
 
 DDG_SLOW_COMPILE_CHECK_THRESHOLD = 100
 OTHER_SWIFT_FLAGS[config=Debug][arch=*][sdk=*] = $(inherited) -Xfrontend -warn-long-expression-type-checking=$(DDG_SLOW_COMPILE_CHECK_THRESHOLD) -Xfrontend -warn-long-function-bodies=$(DDG_SLOW_COMPILE_CHECK_THRESHOLD)
+
+CODE_SIGN_ENTITLEMENTS[config=CI][arch=*][sdk=*] = DuckDuckGo/DuckDuckGoCI.entitlements
+CODE_SIGN_IDENTITY[config=CI][sdk=*] =
+CODE_SIGN_STYLE[config=CI][sdk=*] = Automatic
+
+PROVISIONING_PROFILE_SPECIFIER[config=CI][sdk=*] =

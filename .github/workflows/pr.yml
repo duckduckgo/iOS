@@ -79,11 +79,12 @@ jobs:
       run: |
         set -o pipefail && xcodebuild test \
           -scheme "DuckDuckGo" \
+          -configuration "CI" \
           -destination "platform=iOS Simulator,name=iPhone 15,OS=17.0" \
-          -derivedDataPath "DerivedData" \
-          DDG_SLOW_COMPILE_CHECK_THRESHOLD=250 \
-          | tee xcodebuild.log \
-          | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml
+          -derivedDataPath "DerivedData"
+          # DDG_SLOW_COMPILE_CHECK_THRESHOLD=250
+          # | tee xcodebuild.log \
+          # | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml
 
     - name: Upload logs if workflow failed
       uses: actions/upload-artifact@v3

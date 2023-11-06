@@ -34,6 +34,7 @@ public class AppUserDefaults: AppSettings {
         public static let autofillEnabledChange = Notification.Name("com.duckduckgo.app.AutofillEnabledChange")
         public static let didVerifyInternalUser = Notification.Name("com.duckduckgo.app.DidVerifyInternalUser")
         public static let inspectableWebViewsToggled = Notification.Name("com.duckduckgo.app.DidToggleInspectableWebViews")
+        public static let addressBarPositionChanged = Notification.Name("com.duckduckgo.app.AddressBarPositionChanged")
     }
 
     private let groupName: String
@@ -186,7 +187,21 @@ public class AppUserDefaults: AppSettings {
             userDefaults?.setValue(newValue.rawValue, forKey: Keys.currentFireButtonAnimationKey)
         }
     }
-    
+
+    @UserDefaultsWrapper(key: .addressBarPosition, defaultValue: nil)
+    private var addressBarPositionStorage: String?
+
+    var currentAddressBarPosition: AddressBarPosition {
+        get {
+            return AddressBarPosition(rawValue: addressBarPositionStorage?.lowercased()  ?? "") ?? .top
+        }
+
+        set {
+            addressBarPositionStorage = newValue.rawValue
+            NotificationCenter.default.post(name: Notifications.addressBarPositionChanged, object: currentAddressBarPosition)
+        }
+    }
+
     @UserDefaultsWrapper(key: .textSize, defaultValue: 100)
     var textSize: Int
 

@@ -103,6 +103,9 @@ public struct UserDefaultsWrapper<T> {
         case syncCredentialsPausedErrorDisplayed = "com.duckduckgo.ios.sync-credentialsPausedErrorDisplayed"
 
         case networkProtectionDebugOptionAlwaysOnDisabled = "com.duckduckgo.network-protection.always-on.disabled"
+
+        case addressBarPosition = "com.duckduckgo.ios.addressbarposition"
+        case showFullSiteAddress = "com.duckduckgo.ios.showfullsiteaddress"
     }
 
     private let key: Key

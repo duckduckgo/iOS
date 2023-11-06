@@ -39,6 +39,12 @@ public final class SyncBookmarksAdapter {
     public static let syncBookmarksPausedStateChanged = Notification.Name("com.duckduckgo.app.SyncPausedStateChanged")
     public static let shouldShowBookmarkPauseError = Notification.Name("com.duckduckgo.app.ShowSyncBookmarksPausedError")
 
+    public var shouldResetBookmarksSyncTimestamp: Bool = false {
+        willSet {
+            assert(provider == nil, "Setting this value has no effect after provider has been instantiated")
+        }
+    }
+
     @UserDefaultsWrapper(key: .syncBookmarksPaused, defaultValue: false)
     static public var isSyncBookmarksPaused: Bool {
         didSet {
@@ -87,23 +93,28 @@ public final class SyncBookmarksAdapter {
                 Self.wasSyncBookmarksErrorDisplayed = false
             }
         )
+        if shouldResetBookmarksSyncTimestamp {
+            provider.lastSyncTimestamp = nil
+        }
 
         syncErrorCancellable = provider.syncErrorPublisher
             .sink { error in
                 switch error {
                 case let syncError as SyncError:
                     Pixel.fire(pixel: .syncBookmarksFailed, error: syncError)
-                    // If bookmarks count limit has been exceeded
-                    if syncError == .unexpectedStatusCode(409) {
+                    switch syncError {
+                    case .unexpectedStatusCode(409):
+                        // If bookmarks count limit has been exceeded
                         Self.isSyncBookmarksPaused = true
                         DailyPixel.fire(pixel: .syncBookmarksCountLimitExceededDaily)
                         Self.showErrorAlert()
-                    }
-                    // If bookmarks request size limit has been exceeded
-                    if syncError == .unexpectedStatusCode(413) {
+                    case .unexpectedStatusCode(413):
+                        // If bookmarks request size limit has been exceeded
                         Self.isSyncBookmarksPaused = true
                         DailyPixel.fire(pixel: .syncBookmarksRequestSizeLimitExceededDaily)
                         Self.showErrorAlert()
+                    default:
+                        break
                     }
                 default:
                     let nsError = error as NSError

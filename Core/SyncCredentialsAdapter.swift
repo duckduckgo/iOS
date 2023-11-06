@@ -84,17 +84,20 @@ public final class SyncCredentialsAdapter {
                     switch error {
                     case let syncError as SyncError:
                         Pixel.fire(pixel: .syncCredentialsFailed, error: syncError)
-                        // If credentials count limit has been exceeded
-                        if syncError == .unexpectedStatusCode(409) {
+
+                        switch syncError {
+                        case .unexpectedStatusCode(409):
+                            // If credentials count limit has been exceeded
                             Self.isSyncCredentialsPaused = true
                             DailyPixel.fire(pixel: .syncCredentialsCountLimitExceededDaily)
                             Self.showErrorAlert()
-                        }
-                        // If credentials request size limit has been exceeded
-                        if syncError == .unexpectedStatusCode(413) {
+                        case .unexpectedStatusCode(413):
+                            // If credentials request size limit has been exceeded
                             Self.isSyncCredentialsPaused = true
                             DailyPixel.fire(pixel: .syncCredentialsRequestSizeLimitExceededDaily)
                             Self.showErrorAlert()
+                        default:
+                            break
                         }
                     default:
                         let nsError = error as NSError

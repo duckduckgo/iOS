@@ -22,11 +22,15 @@ import Foundation
 @testable import DuckDuckGo
 
 class AppSettingsMock: AppSettings {
-    
+
     var isSyncBookmarksPaused: Bool = false
 
     var isSyncCredentialsPaused: Bool = false
 
+    var currentAddressBarPosition: DuckDuckGo.AddressBarPosition = .top
+
+    var showFullSiteAddress: Bool = false
+    
     var autofillCredentialsEnabled: Bool = false
     
     var autofillCredentialsSavePromptShowAtLeastOnce: Bool = false

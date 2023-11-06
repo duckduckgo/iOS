@@ -22,6 +22,7 @@
 import SwiftUI
 import NetworkProtection
 
+@available(iOS 15, *)
 struct NetworkProtectionRootView: View {
     let model = NetworkProtectionRootViewModel()
     let inviteCompletion: () -> Void
@@ -39,12 +40,6 @@ struct NetworkProtectionRootView: View {
                 statusModel: NetworkProtectionStatusViewModel()
             )
         }
-    }
-}
-
-struct NetworkProtectionRootView_Previews: PreviewProvider {
-    static var previews: some View {
-        NetworkProtectionRootView { }
     }
 }
 

@@ -245,6 +245,9 @@ extension Pixel {
 
         case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
         
+        case navigationbarPositionBottom
+        case navigationBarPositionTop
+
         case secureVaultInitError
         case secureVaultError
         
@@ -582,7 +585,10 @@ extension Pixel.Event {
             
         case .autocompleteSelectedLocal: return "m_au_l"
         case .autocompleteSelectedRemote: return "m_au_r"
-            
+
+        case .navigationbarPositionBottom: return "m_seturlbar_bottom"
+        case .navigationBarPositionTop: return "m_seturlbar_top"
+
         case .feedbackPositive: return "mfbs_positive_submit"
         case .feedbackNegativePrefix(category: let category): return "mfbs_negative_\(category)"
             

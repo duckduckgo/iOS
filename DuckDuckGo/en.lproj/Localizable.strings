@@ -121,6 +121,24 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existing bookmarks will not be duplicated.";
 
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "You have exceeded the bookmarks sync limit. Try deleting some bookmarks. Until this is resolved your bookmarks will not be backed up.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Bookmarks Sync is Paused";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "You have exceeded the passwords sync limit. Try deleting some passwords. Until this is resolved your passwords will not be backed up.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Passwords Sync is Paused";
+
+/* Learn more button in alert */
+"alert.sync-paused-alert-learn-more-button" = "Learn More";
+
+/* Confirmation button in alert */
+"alert.sync-paused-alert-ok-button" = "OK";
+
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Bookmark All Tabs?";
 

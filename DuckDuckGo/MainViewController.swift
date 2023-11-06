@@ -321,21 +321,23 @@ class MainViewController: UIViewController {
     @objc private func showsyncPausedError(_ notification: Notification) {
         Task {
             await MainActor.run {
-                var title = "Sync bookmark limit exceeded"
+                var title = UserText.syncBookmarkPausedAlertTitle
+                var description = UserText.syncBookmarkPausedAlertDescription
                 if notification.name == SyncCredentialsAdapter.shouldShowCredentialsPauseError {
-                    title = "Sync login limit exceeded"
+                    title = UserText.syncCredentialsPausedAlertTitle
+                    description = UserText.syncCredentialsPausedAlertDescription
                 }
                 if self.presentedViewController is SyncSettingsViewController {
                     return
                 }
                 self.presentedViewController?.dismiss(animated: true)
                 let alert = UIAlertController(title: title,
-                                              message: "Delete some to resume syncing",
+                                              message: description,
                                               preferredStyle: .alert)
-                let learnMoreAction = UIAlertAction(title: "Learn More", style: .default) { _ in
+                let learnMoreAction = UIAlertAction(title: UserText.syncPausedAlertLearnMoreButton, style: .default) { _ in
                     self.segueToSettingsSync()
                 }
-                let okAction = UIAlertAction(title: "OK", style: .cancel)
+                let okAction = UIAlertAction(title: UserText.syncPausedAlertOkButton, style: .cancel)
                 alert.addAction(learnMoreAction)
                 alert.addAction(okAction)
                 self.present(alert, animated: true)

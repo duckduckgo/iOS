@@ -170,6 +170,7 @@ class SettingsViewController: UITableViewController {
         configureEmailProtectionAccessoryText()
         configureMacBrowserWaitlistCell()
         configureWindowsBrowserWaitlistCell()
+        configureSyncCell()
 
         // Make sure multiline labels are correctly presented
         tableView.setNeedsLayout()

@@ -75,6 +75,12 @@ jobs:
     - name: Select Xcode
       run: sudo xcode-select -s /Applications/Xcode_$(<.xcode-version).app/Contents/Developer
 
+    - name: Install yeetd
+      run: |
+        wget https://github.com/biscuitehh/yeetd/releases/download/1.0/yeetd-normal.pkg
+        sudo installer -pkg yeetd-normal.pkg -target /
+        yeetd &
+        
     - name: Build and test
       run: |
         set -o pipefail && xcodebuild test \

@@ -2,7 +2,7 @@ name: PR Checks
 
 on:
   push:
-    branches: [ develop, "release/**" ]
+    branches: [ develop, "release/**", "dominik/xcode15-2" ]
   pull_request:
 
 jobs:

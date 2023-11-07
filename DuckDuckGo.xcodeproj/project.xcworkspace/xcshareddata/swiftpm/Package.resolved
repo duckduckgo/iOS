@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "dominik/sync-fix-removing-all-favorites",
-          "revision": "dc3e728e6327e58abe0543e8afaa44187c544cce",
-          "version": null
+          "branch": null,
+          "revision": "0ac6d8e2153bec4ddd4e983915da6db09fcbed05",
+          "version": "82.2.1"
         }
       },
       {

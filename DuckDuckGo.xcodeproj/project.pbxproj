@@ -9057,8 +9057,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "dominik/sync-fix-removing-all-favorites";
-				kind = branch;
+				kind = exactVersion;
+				version = 82.2.1;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

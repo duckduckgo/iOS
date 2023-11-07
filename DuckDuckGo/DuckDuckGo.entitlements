@@ -15,6 +15,7 @@
 		<string>$(GROUP_ID_PREFIX).statistics</string>
 		<string>$(GROUP_ID_PREFIX).database</string>
 		<string>$(GROUP_ID_PREFIX).apptp</string>
+		<string>$(GROUP_ID_PREFIX).netp</string>
 	</array>
 </dict>
 </plist>

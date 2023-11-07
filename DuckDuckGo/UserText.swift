@@ -656,6 +656,10 @@ In addition to the details entered into this form, your app issue report will co
     static let netPAlwaysOnSettingFooter = NSLocalizedString("network.protection.vpn.always.on.setting.footer", value: "Automatically restore a VPN connection after interruption.", comment: "Footer text for the Always on VPN setting item.")
     static let netPSecureDNSSettingTitle = NSLocalizedString("network.protection.vpn.secure.dns.setting.title", value: "Secure DNS", comment: "Title for the Always on VPN setting item.")
     static let netPSecureDNSSettingFooter = NSLocalizedString("network.protection.vpn.secure.dns.setting.footer", value: "Network Protection prevents DNS leaks to your Internet Service Provider by routing DNS queries though the VPN tunnel to our own resolver.", comment: "Footer text for the Always on VPN setting item.")
+    static let netPTurnOnNotificationsButtonTitle = NSLocalizedString("network.protection.turn.on.notifications.button.title", value: "Turn on Notifications", comment: "Title for the button to link to the iOS app settings and enable notifications app-wide.")
+    static let netPTurnOnNotificationsSectionFooter = NSLocalizedString("network.protection.turn.on.notifications.section.footer", value: "Allow DuckDuckGo to notify you if your connection drops or VPN status changes.", comment: "Footer text under the button to link to the iOS app settings and enable notifications app-wide.")
+    static let netPVPNAlertsToggleTitle = NSLocalizedString("network.protection.vpn.alerts.toggle.title", value: "VPN Alerts", comment: "Title for the toggle for VPN alerts.")
+    static let netPVPNAlertsToggleSectionFooter = NSLocalizedString("network.protection.vpn.alerts.toggle.section.footer", value: "Get notified if your connection drops or VPN status changes.", comment: "List section footer for the toggle for VPN alerts.")
 
     static let netPOpenVPNQuickAction = NSLocalizedString("network.protection.quick-action.open-vpn", value: "Open VPN", comment: "Title text for an iOS quick action that opens VPN settings")
 
@@ -843,5 +847,17 @@ In addition to the details entered into this form, your app issue report will co
     // MARK: Errors
 
     static let unknownErrorTryAgainMessage = NSLocalizedString("error.unknown.try.again", value: "An unknown error has occurred", comment: "Generic error message on a dialog for when the cause is not known.")
+
+    static let preemptiveCrashTitle = NSLocalizedString("error.preemptive-crash.title", value: "App issue detected", comment: "Alert title")
+    static let preemptiveCrashBody = NSLocalizedString("error.preemptive-crash.body", value: "Looks like there's an issue with the app and it needs to close. Please reopen to continue.", comment: "Alert message")
+    static let preemptiveCrashAction = NSLocalizedString("error.preemptive-crash.action", value: "Close App", comment: "Button title that is shutting down the app")
+
+    static let insufficientDiskSpaceTitle = NSLocalizedString("error.insufficient-disk-space.title", value: "Not enough storage", comment: "Alert title")
+    static let insufficientDiskSpaceBody = NSLocalizedString("error.insufficient-disk-space.body", value: "Looks like your device has run out of storage space. Please free up space to continue.", comment: "Alert message")
+    static let insufficientDiskSpaceAction = NSLocalizedString("error.insufficient-disk-space.action", value: "Open Settings", comment: "Button title to open device settings")
+
+    static let emailProtectionSignInTitle = NSLocalizedString("error.email-protection-sign-in.title", value: "Email Protection Error", comment: "Alert title")
+    static let emailProtectionSignInBody = NSLocalizedString("error.email-protection-sign-in.body", value: "Sorry, please sign in again to re-enable Email Protection features on this browser.", comment: "Alert message")
+    static let emailProtectionSignInAction = NSLocalizedString("error.email-protection-sign-in.action", value: "Sign In", comment: "Button title to Sign In")
 
 }

@@ -35,7 +35,12 @@ public final class SyncBookmarksAdapter {
     public private(set) var provider: BookmarksProvider?
     public let databaseCleaner: BookmarkDatabaseCleaner
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
-    public let widgetRefreshCancellable: AnyCancellable
+    public var shouldResetBookmarksSyncTimestamp: Bool = false {
+        willSet {
+            assert(provider == nil, "Setting this value has no effect after provider has been instantiated")
+        }
+    }
+
     public static let syncBookmarksPausedStateChanged = Notification.Name("com.duckduckgo.app.SyncPausedStateChanged")
 
     @UserDefaultsWrapper(key: .syncBookmarksPaused, defaultValue: false)
@@ -110,6 +115,9 @@ public final class SyncBookmarksAdapter {
                 }
             }
         )
+        if shouldResetBookmarksSyncTimestamp {
+            provider.lastSyncTimestamp = nil
+        }
 
         syncErrorCancellable = provider.syncErrorPublisher
             .sink { error in
@@ -164,6 +172,7 @@ public final class SyncBookmarksAdapter {
 
     private var syncDidCompleteSubject = PassthroughSubject<Void, Never>()
     private var syncErrorCancellable: AnyCancellable?
+    private var widgetRefreshCancellable: AnyCancellable
     private let database: CoreDataDatabase
     private let favoritesDisplayModeStorage: FavoritesDisplayModeStoring
     private var faviconsFetcher: BookmarksFaviconsFetcher?

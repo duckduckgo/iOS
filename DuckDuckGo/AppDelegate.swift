@@ -88,6 +88,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 #endif
 
+        ContentBlocking.shared.onCriticalError = presentPreemptiveCrashAlert
+
         // Can be removed after a couple of versions
         cleanUpMacPromoExperiment2()
         cleanUpIncrementalRolloutPixelTest()
@@ -123,6 +125,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         removeEmailWaitlistState()
 
+        var shouldPresentInsufficientDiskSpaceAlertAndCrash = false
         Database.shared.loadStore { context, error in
             guard let context = context else {
                 
@@ -142,14 +145,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     Pixel.fire(pixel: .dbInitializationError,
                                error: error,
                                withAdditionalParameters: parameters)
-                    Thread.sleep(forTimeInterval: 1)
-                    fatalError("Could not create database stack: \(error.localizedDescription)")
+                    if error.isDiskFull {
+                        shouldPresentInsufficientDiskSpaceAlertAndCrash = true
+                        return
+                    } else {
+                        Thread.sleep(forTimeInterval: 1)
+                        fatalError("Could not create database stack: \(error.localizedDescription)")
+                    }
                 }
             }
             DatabaseMigration.migrate(to: context)
         }
 
-        bookmarksDatabase.loadStore { context, error in
+        var shouldResetBookmarksSyncTimestamp = false
+
+        bookmarksDatabase.loadStore { [weak self] context, error in
             guard let context = context else {
                 if let error = error {
                     Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
@@ -158,8 +168,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase)
                 }
 
-                Thread.sleep(forTimeInterval: 1)
-                fatalError("Could not create Bookmarks database stack: \(error?.localizedDescription ?? "err")")
+                if shouldPresentInsufficientDiskSpaceAlertAndCrash {
+                    return
+                } else {
+                    Thread.sleep(forTimeInterval: 1)
+                    fatalError("Could not create Bookmarks database stack: \(error?.localizedDescription ?? "err")")
+                }
             }
             
             let legacyStorage = LegacyBookmarksCoreDataStorage()
@@ -172,6 +186,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 BookmarkUtils.migrateToFormFactorSpecificFavorites(byCopyingExistingTo: .mobile, in: context)
                 if context.hasChanges {
                     try context.save(onErrorFire: .bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders)
+                    if let syncDataProviders = self?.syncDataProviders {
+                        syncDataProviders.bookmarksAdapter.shouldResetBookmarksSyncTimestamp = true
+                    } else {
+                        shouldResetBookmarksSyncTimestamp = true
+                    }
                 }
             } catch {
                 Thread.sleep(forTimeInterval: 1)
@@ -189,8 +208,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     Pixel.fire(pixel: .appTPCouldNotLoadDatabase)
                 }
 
-                Thread.sleep(forTimeInterval: 1)
-                fatalError("Could not create AppTP database stack: \(error?.localizedDescription ?? "err")")
+                if shouldPresentInsufficientDiskSpaceAlertAndCrash {
+                    return
+                } else {
+                    Thread.sleep(forTimeInterval: 1)
+                    fatalError("Could not create AppTP database stack: \(error?.localizedDescription ?? "err")")
+                }
             }
         }
 
@@ -229,6 +252,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage()
         )
+        syncDataProviders.bookmarksAdapter.shouldResetBookmarksSyncTimestamp = shouldResetBookmarksSyncTimestamp
+
         let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog, environment: environment)
         syncService.initializeIfNeeded()
         self.syncService = syncService
@@ -244,7 +269,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = main
         window?.makeKeyAndVisible()
-        
+
+        if shouldPresentInsufficientDiskSpaceAlertAndCrash {
+            presentInsufficientDiskSpaceAlert()
+        }
+
         autoClear = AutoClear(worker: main)
         autoClear?.applicationDidLaunch()
         
@@ -274,6 +303,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         return true
+    }
+
+    private func presentPreemptiveCrashAlert() {
+        Task { @MainActor in
+            let alertController = CriticalAlerts.makePreemptiveCrashAlert()
+            window?.rootViewController?.present(alertController, animated: true, completion: nil)
+        }
+    }
+
+    private func presentInsufficientDiskSpaceAlert() {
+        let alertController = CriticalAlerts.makeInsufficientDiskSpaceAlert()
+        window?.rootViewController?.present(alertController, animated: true, completion: nil)
     }
 
     private func cleanUpMacPromoExperiment2() {
@@ -793,4 +834,16 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             navigationController?.pushViewController(viewController, animated: true)
         }
     }
+}
+
+private extension Error {
+
+    var isDiskFull: Bool {
+        let nsError = self as NSError
+        if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError, underlyingError.code == 13 {
+            return true
+        }
+        return false
+    }
+
 }

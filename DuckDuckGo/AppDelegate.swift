@@ -89,10 +89,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
 
-        if isDebugBuild {
-            if let privacyConfigCustomURL, let url = URL(string: privacyConfigCustomURL) {
-                Configuration.setURLProvider(CustomConfigurationURLProvider(customPrivacyConfigurationURL: url))
-            }
+        if isDebugBuild, let privacyConfigCustomURL, let url = URL(string: privacyConfigCustomURL) {
+            Configuration.setURLProvider(CustomConfigurationURLProvider(customPrivacyConfigurationURL: url))
         } else {
             Configuration.setURLProvider(AppConfigurationURLProvider())
         }

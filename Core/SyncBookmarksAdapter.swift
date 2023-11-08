@@ -55,7 +55,9 @@ public final class SyncBookmarksAdapter {
         didSet {
             var udWrapper = UserDefaultsWrapper(key: .syncAutomaticallyFetchFavicons, defaultValue: false)
             udWrapper.wrappedValue = isFaviconsFetchingEnabled
-            if !isFaviconsFetchingEnabled {
+            if isFaviconsFetchingEnabled {
+                faviconsFetcher?.initializeFetcherState()
+            } else {
                 faviconsFetcher?.cancelOngoingFetchingIfNeeded()
             }
         }
@@ -93,7 +95,7 @@ public final class SyncBookmarksAdapter {
 
         let faviconsFetcher = BookmarksFaviconsFetcher(
             database: database,
-            metadataStore: BookmarkFaviconsMetadataStorage(
+            stateStore: BookmarkFaviconsFetcherStateStore(
                 applicationSupportURL: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
             ),
             fetcher: FaviconFetcher(),
@@ -104,18 +106,20 @@ public final class SyncBookmarksAdapter {
         let provider = BookmarksProvider(
             database: database,
             metadataStore: metadataStore,
-            syncDidUpdateData: { [weak self] faviconsFetcherInput in
-                if let faviconsFetcherInput {
-                    faviconsFetcher.updateBookmarkIDs(
-                        modified: faviconsFetcherInput.modifiedBookmarksUUIDs,
-                        deleted: faviconsFetcherInput.deletedBookmarksUUIDs
-                    )
-                }
-                if self?.isFaviconsFetchingEnabled == true {
-                    faviconsFetcher.startFetching()
-                }
+            syncDidUpdateData: { [weak self] in
                 self?.syncDidCompleteSubject.send()
                 Self.isSyncBookmarksPaused = false
+            },
+            syncDidFinish: { [weak self] faviconsFetcherInput in
+                if self?.isFaviconsFetchingEnabled == true {
+                    if let faviconsFetcherInput {
+                        faviconsFetcher.updateBookmarkIDs(
+                            modified: faviconsFetcherInput.modifiedBookmarksUUIDs,
+                            deleted: faviconsFetcherInput.deletedBookmarksUUIDs
+                        )
+                    }
+                    faviconsFetcher.startFetching()
+                }
             }
         )
         if shouldResetBookmarksSyncTimestamp {

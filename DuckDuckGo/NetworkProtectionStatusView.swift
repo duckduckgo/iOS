@@ -40,9 +40,12 @@ struct NetworkProtectionStatusView: View {
             }
             settings()
         }
-        .animation(.default, value: statusModel.shouldShowError)
         .padding(.top, statusModel.error == nil ? 0 : -20)
-        .animation(.default, value: statusModel.shouldShowConnectionDetails)
+        .if(statusModel.animationsOn, transform: {
+            $0
+                .animation(.default, value: statusModel.shouldShowConnectionDetails)
+                .animation(.default, value: statusModel.shouldShowError)
+        })
         .applyInsetGroupedListStyle()
         .navigationTitle(UserText.netPNavTitle)
     }
@@ -134,7 +137,7 @@ struct NetworkProtectionStatusView: View {
             NavigationLink(UserText.netPVPNSettingsTitle, destination: NetworkProtectionVPNSettingsView())
                 .font(.system(size: 16))
                 .foregroundColor(.textPrimary)
-            NavigationLink(UserText.netPVPNNotificationsTitle, destination: Text("Coming soon!"))
+            NavigationLink(UserText.netPVPNNotificationsTitle, destination: NetworkProtectionVPNNotificationsView())
                 .font(.system(size: 16))
                 .foregroundColor(.textPrimary)
         } header: {

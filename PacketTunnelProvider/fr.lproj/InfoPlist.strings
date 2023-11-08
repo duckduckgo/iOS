@@ -1,0 +1,9 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "FournisseurTunnelPaquets";
+
+/* Bundle name */
+"CFBundleName" = "FournisseurTunnelPaquets";
+
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "Copyright © 2023 DuckDuckGo. Tous droits réservés.";
+

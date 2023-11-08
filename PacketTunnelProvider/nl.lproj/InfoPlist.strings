@@ -1,0 +1,9 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "PacketTunnelProvider";
+
+/* Bundle name */
+"CFBundleName" = "PacketTunnelProvider";
+
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "Copyright © 2023 DuckDuckGo. Alle rechten voorbehouden.";
+

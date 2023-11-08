@@ -106,6 +106,12 @@
 /* Share action */
 "action.title.share" = "Del";
 
+/* Settings label for bottom position for the address bar */
+"address.bar.bottom" = "Nederst";
+
+/* Settings label for top position for the address bar */
+"address.bar.top" = "Top";
+
 /* No comment provided by engineer. */
 "addWidget.button" = "Tilføj widget";
 
@@ -1017,6 +1023,33 @@
 
 /* No comment provided by engineer. */
 "Error" = "Fejl";
+
+/* Button title to Sign In */
+"error.email-protection-sign-in.action" = "Log ind";
+
+/* Alert message */
+"error.email-protection-sign-in.body" = "Beklager, log på igen for at genaktivere Email Protection i denne browser.";
+
+/* Alert title */
+"error.email-protection-sign-in.title" = "Fejl i Email Protection";
+
+/* Button title to open device settings */
+"error.insufficient-disk-space.action" = "Åbn Indstillinger";
+
+/* Alert message */
+"error.insufficient-disk-space.body" = "Det ser ud til, at din enhed er løbet tør for lagerplads. Frigør plads for at fortsætte.";
+
+/* Alert title */
+"error.insufficient-disk-space.title" = "Ikke nok lagerplads";
+
+/* Button title that is shutting down the app */
+"error.preemptive-crash.action" = "Luk app";
+
+/* Alert message */
+"error.preemptive-crash.body" = "Det ser ud til, at der er et problem med appen, og at den skal lukkes. Åbn den igen for at fortsætte.";
+
+/* Alert title */
+"error.preemptive-crash.title" = "App-problem opdaget";
 
 /* Generic error message on a dialog for when the cause is not known. */
 "error.unknown.try.again" = "An unknown error has occurred";

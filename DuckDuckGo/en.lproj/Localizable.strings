@@ -1012,6 +1012,33 @@
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "No matches found";
 
+/* Button title to Sign In */
+"error.email-protection-sign-in.action" = "Sign In";
+
+/* Alert message */
+"error.email-protection-sign-in.body" = "Sorry, please sign in again to re-enable Email Protection features on this browser.";
+
+/* Alert title */
+"error.email-protection-sign-in.title" = "Email Protection Error";
+
+/* Button title to open device settings */
+"error.insufficient-disk-space.action" = "Open Settings";
+
+/* Alert message */
+"error.insufficient-disk-space.body" = "Looks like your device has run out of storage space. Please free up space to continue.";
+
+/* Alert title */
+"error.insufficient-disk-space.title" = "Not enough storage";
+
+/* Button title that is shutting down the app */
+"error.preemptive-crash.action" = "Close App";
+
+/* Alert message */
+"error.preemptive-crash.body" = "Looks like there's an issue with the app and it needs to close. Please reopen to continue.";
+
+/* Alert title */
+"error.preemptive-crash.title" = "App issue detected";
+
 /* Generic error message on a dialog for when the cause is not known. */
 "error.unknown.try.again" = "An unknown error has occurred";
 
@@ -1440,6 +1467,18 @@ https://duckduckgo.com/mac";
 
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "Network Protection";
+
+/* Title for the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.button.title" = "Turn on Notifications";
+
+/* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.section.footer" = "Allow DuckDuckGo to notify you if your connection drops or VPN status changes.";
+
+/* List section footer for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.section.footer" = "Get notified if your connection drops or VPN status changes.";
+
+/* Title for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.title" = "VPN Alerts";
 
 /* Footer text for the Always on VPN setting item. */
 "network.protection.vpn.always.on.setting.footer" = "Automatically restore a VPN connection after interruption.";

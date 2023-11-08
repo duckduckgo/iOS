@@ -724,8 +724,8 @@ class MainViewController: UIViewController {
         allowContentUnderflow = false
         request()
         guard let tab = currentTab else { fatalError("no tab") }
-        select(tab: tab)
         dismissOmniBar()
+        select(tab: tab)
     }
 
     private func addTab(url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) {
@@ -1109,6 +1109,7 @@ class MainViewController: UIViewController {
     @objc
     private func onDuckDuckGoEmailSignOut(_ notification: Notification) {
         fireEmailPixel(.emailDisabled, notification: notification)
+        presentEmailProtectionSignInAlertIfNeeded(notification)
         if let object = notification.object as? EmailManager,
            let emailManager = syncDataProviders.settingsAdapter.emailManager,
            object !== emailManager {
@@ -1116,7 +1117,18 @@ class MainViewController: UIViewController {
             syncService.scheduler.notifyDataChanged()
         }
     }
-    
+
+    private func presentEmailProtectionSignInAlertIfNeeded(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: String],
+            userInfo[EmailManager.NotificationParameter.isForcedSignOut] != nil else {
+            return
+        }
+        let alertController = CriticalAlerts.makeEmailProtectionSignInAlert()
+        dismiss(animated: true) {
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+
     private func fireEmailPixel(_ pixel: Pixel.Event, notification: Notification) {
         var pixelParameters: [String: String] = [:]
         

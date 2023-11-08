@@ -35,7 +35,6 @@ struct SaveLoginView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @State private var orientation = UIDevice.current.orientation
-    @State private var maxButtonHeight: CGFloat = 0
 
     private var layoutType: LayoutType {
         viewModel.layoutType
@@ -142,53 +141,8 @@ struct SaveLoginView: View {
             AutofillViews.PrimaryButton(title: confirmButton,
                                         action: viewModel.save)
 
-            switch layoutType {
-            case .newUser, .saveLogin, .savePassword:
-                HStack {
-                    AutofillViews.SecondaryButton(title: UserText.autofillSaveLoginNotNowCTA,
-                                                 action: viewModel.cancelButtonPressed)
-                    .background(
-                        GeometryReader { proxy in
-                            Color.clear.onAppear {
-                                let height = proxy.size.height
-                                maxButtonHeight = max(maxButtonHeight, height)
-                            }
-                        }
-                    )
-                    .frame(height: maxButtonHeight)
-
-                    if AutofillViews.isIPhonePortrait(verticalSizeClass, horizontalSizeClass) {
-                        Menu {
-                            Button(UserText.autofillSaveLoginNeverPromptCTA) {
-                                viewModel.neverPrompt()
-                            }
-                        } label: {
-                            Image.tripleDot
-                                .daxButton()
-                                .padding()
-                                .frame(width: Const.Size.buttonTripleDotWidth, height: maxButtonHeight)
-                                .foregroundColor(Color(designSystemColor: .accent))
-                                .cornerRadius(Const.Size.buttonCornerRadius)
-                                .fixedSize(horizontal: false, vertical: true)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: Const.Size.buttonCornerRadius)
-                                        .stroke(Color(designSystemColor: .accent),
-                                                lineWidth: Const.Size.buttonBorderWidth)
-                                        .padding(1)
-                                )
-                        }
-                    } else {
-                        AutofillViews.SecondaryButton(title: UserText.autofillSaveLoginNeverPromptCTA,
-                                                     action: viewModel.neverPrompt)
-                    }
-
-                }
-                .frame(maxWidth: Const.Size.maxWidth)
-
-            default:
-                AutofillViews.TertiaryButton(title: UserText.autofillSaveLoginNotNowCTA,
-                                             action: viewModel.cancelButtonPressed)
-            }
+            AutofillViews.TertiaryButton(title: UserText.autofillSaveLoginNeverPromptCTA,
+                                         action: viewModel.neverPrompt)
         }
     }
 
@@ -259,15 +213,7 @@ private enum Const {
         static let bottomSpacerLegacyHeight: CGFloat = 16.0
         static let bottomSpacerLegacyHeightIPad: CGFloat = 64.0
         static let bottomSpacerLegacyHeightLandscape: CGFloat = 44.0
-        static let buttonCornerRadius: CGFloat = 8.0
-        static let buttonBorderWidth: CGFloat = 1.0
-        static let buttonTripleDotWidth: CGFloat = 50.0
-        static let maxWidth: CGFloat = 480.0
     }
-}
-
-private extension Image {
-    static let tripleDot = Image("Triple-Dot-24")
 }
 
 struct SaveLoginView_Previews: PreviewProvider {
@@ -283,8 +229,6 @@ struct SaveLoginView_Previews: PreviewProvider {
         var hasSavedMatchingUsername: Bool { false }
         
         static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: AutofillVaultFactory) throws -> Int64 { return 0 }
-        static func saveNeverPromptWebsite(_ domain: String, with factory: BrowserServicesKit.AutofillVaultFactory) throws -> Int64 { return 0 }
-
     }
     
     static var previews: some View {

@@ -218,7 +218,23 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         navigationController?.pushViewController(detailsController, animated: animated)
         detailsViewController = detailsController
     }
-    
+
+    private func presentNeverPromptResetPromptAtIndexPath(_ indexPath: IndexPath) {
+        let controller = UIAlertController(title: "",
+                                           message: UserText.autofillResetNeverSavedActionTitle,
+                                           preferredStyle: .actionSheet)
+        controller.addAction(UIAlertAction(title: UserText.autofillResetNeverSavedActionConfirmButton, style: .destructive) { [weak self] _ in
+            self?.viewModel.resetNeverPromptWebsites()
+            self?.tableView.reloadData()
+            Pixel.fire(pixel: .autofillLoginsSettingsResetExcludedConfirmed)
+        })
+        controller.addAction(UIAlertAction(title: UserText.autofillResetNeverSavedActionCancelButton, style: .cancel) { _ in
+            Pixel.fire(pixel: .autofillLoginsSettingsResetExcludedDismissed)
+        })
+        present(controller: controller, fromView: tableView.cellForRow(at: indexPath) ?? tableView)
+        Pixel.fire(pixel: .autofillLoginsSettingsResetExcludedDisplayed)
+    }
+
     private func setupCancellables() {
         viewModel.$viewState
             .receive(on: DispatchQueue.main)
@@ -500,15 +516,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
         case .enableAutofill:
             switch EnableAutofillRows(rawValue: indexPath.row) {
             case .resetNeverPromptWebsites:
-                let controller = UIAlertController(title: "",
-                                                   message: UserText.autofillResetNeverSavedActionTitle,
-                                                   preferredStyle: .actionSheet)
-                controller.addAction(UIAlertAction(title: UserText.autofillResetNeverSavedActionConfirmButton, style: .destructive) { [weak self] _ in
-                    self?.viewModel.resetNeverPromptWebsites()
-                    self?.tableView.reloadData()
-                })
-                controller.addAction(UIAlertAction(title: UserText.autofillResetNeverSavedActionCancelButton, style: .cancel))
-                present(controller: controller, fromView: tableView.cellForRow(at: indexPath) ?? tableView)
+                presentNeverPromptResetPromptAtIndexPath(indexPath)
             default:
                 break
             }

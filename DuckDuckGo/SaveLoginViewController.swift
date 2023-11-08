@@ -138,6 +138,7 @@ extension SaveLoginViewController: SaveLoginViewModelDelegate {
     }
 
     func saveLoginViewModelNeverPrompt(_ viewModel: SaveLoginViewModel) {
+        Pixel.fire(pixel: .autofillLoginsSaveLoginModalExcludeSiteConfirmed)
         delegate?.saveLoginViewController(self, didRequestNeverPromptForWebsite: viewModel.accountDomain)
     }
 

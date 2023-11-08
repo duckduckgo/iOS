@@ -71,8 +71,10 @@ class PrivacyDashboardViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let navController = segue.destination as? UINavigationController,
-           let brokenSiteScreen = navController.topViewController as? ReportBrokenSiteViewController {
-            brokenSiteScreen.brokenSiteInfo = tabViewController?.getCurrentWebsiteInfo()
+           let brokenSiteVC = navController.topViewController as? ReportBrokenSiteViewController {
+            brokenSiteVC.brokenSiteInfo = tabViewController?.getCurrentWebsiteInfo()
+            brokenSiteVC.privacyConfigurationManager = privacyConfigurationManager
+            brokenSiteVC.contentBlockingManager = contentBlockingManager
         }
     }
 }

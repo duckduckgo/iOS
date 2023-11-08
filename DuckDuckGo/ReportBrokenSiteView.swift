@@ -25,11 +25,13 @@ struct ReportBrokenSiteView: View {
     
     let categories: [BrokenSite.Category]
     let submitReport: (BrokenSite.Category?, String) -> Void
-    
+    let toggleProtection: (Bool) -> Void
     @State private var selectedCategory: BrokenSite.Category?
     
     @State private var description: String = ""
     @State private var placeholderText: String = UserText.brokenSiteCommentPlaceholder
+    
+    @State var isProtected: Bool
     
     func submitForm() {
         submitReport(selectedCategory, description)
@@ -37,9 +39,40 @@ struct ReportBrokenSiteView: View {
     
     var form: some View {
         Form {
+            
             Section {
+                HStack {
+                    let protectionStatusString = isProtected ? "ON" : "OFF"
+                    let label = UserText.brokenSiteProtectionSwitchLabel.replacingOccurrences(of: "%@", with: protectionStatusString)
+                    
+                    Text(label)
+                        .lineLimit(1)
+                        .daxBodyRegular()
+                        .foregroundColor(Color(designSystemColor: .textPrimary))
+                    
+                    Spacer()
+                    
+                    Toggle("", isOn: $isProtected)
+                    .labelsHidden()
+                    .onChange(of: isProtected) { value in
+                        toggleProtection(value)
+                    }
+                }
+                .listRowBackground(Color(designSystemColor: .container))
+//                .frame(maxWidth: .infinity)
                 
-            } header: {
+                if isProtected {
+                    let baseColor = UIColor(Color(designSystemColor: .accent)).withAlphaComponent(0.18)
+                    let sectionBgColor = Color(baseColor)
+                    Text(UserText.brokenSiteProtectionBanner)
+                        .lineLimit(1)
+                        .daxBodyRegular()
+                        .foregroundColor(Color(designSystemColor: .textPrimary))
+                        .listRowBackground(sectionBgColor)
+                }
+            }
+            
+//            Section {
                 VStack {
                     Image("Breakage-128")
                         .resizable()
@@ -50,58 +83,67 @@ struct ReportBrokenSiteView: View {
                         .textCase(nil)
                         .multilineTextAlignment(.center)
                         .daxBodyRegular()
-                        .foregroundColor(Color(designSystemColor: .textSecondary))
+                        .foregroundColor(Color(designSystemColor: .textPrimary))
                 }
                 .frame(maxWidth: .infinity)
-            }
-            .listRowBackground(Color.clear)
+//            }
+//            .listRowBackground(Color.clear)
             
+            // TODO: delete (header: Text(UserText.brokenSiteCategoryTitle))
             Section {
-                HStack {
-                    Picker("", selection: $selectedCategory) {
-                        HStack {
-                            Text(UserText.brokenSiteCategoryPlaceholder)
-                            Spacer()
-                        }
+                Picker("", selection: $selectedCategory) {
+                    Text("Select the type of issue")
                         .tag(nil as BrokenSite.Category?)
-                        
-                        ForEach(categories) { cat in
-                            HStack {
-                                Text(cat.categoryText)
-                                Spacer()
-                            }
-                            .tag(Optional(cat))
-                        }
-                    }
-                    .labelsHidden()
                     
-                    Spacer()
+                    ForEach(categories) { cat in
+                        Text(cat.categoryText)
+                        .tag(Optional(cat))
+                    }
                 }
-                .padding(.leading, Const.Size.pickerPadding)
-            } header: {
-                Text(UserText.brokenSiteCategoryTitle)
-            }
-            
-            Section {
+                .frame(maxWidth: .infinity)
+                .labelsHidden()
+//                                .padding(.leading, Const.Size.pickerPadding)
+                
                 // As of July 2023 SwiftUI STILL does not support placeholders for `TextEditor`
                 // Until that time we have to use this hack to show a placeholder
                 // https://stackoverflow.com/a/65406506
                 ZStack {
                     if self.description.isEmpty {
                         TextEditor(text: $placeholderText)
-                            .font(.body)
+                            .daxSubheadRegular()
                             .foregroundColor(Color(UIColor.placeholderText))
                             .disabled(true)
                     }
                     
                     TextEditor(text: $description)
-                        .font(.body)
+                        .daxSubheadRegular()
                 }
                 .padding(.leading, Const.Size.commentFieldPadding)
                 .frame(minHeight: Const.Size.minCommentHeight)
-            } header: {
-                Text(UserText.brokenSiteSectionTitle)
             }
+            .frame(maxWidth: .infinity)
+            .listRowBackground(Color(designSystemColor: .container))
+            
+            // TODO: delete (header: Text(UserText.brokenSiteSectionTitle))
+//            Section {
+//                // As of July 2023 SwiftUI STILL does not support placeholders for `TextEditor`
+//                // Until that time we have to use this hack to show a placeholder
+//                // https://stackoverflow.com/a/65406506
+//                ZStack {
+//                    if self.description.isEmpty {
+//                        TextEditor(text: $placeholderText)
+//                            .daxSubheadRegular()
+//                            .foregroundColor(Color(UIColor.placeholderText))
+//                            .disabled(true)
+//                    }
+//                    
+//                    TextEditor(text: $description)
+//                        .daxSubheadRegular()
+//                }
+//                .padding(.leading, Const.Size.commentFieldPadding)
+//                .frame(minHeight: Const.Size.minCommentHeight)
+//            }
+//            .listRowBackground(Color(designSystemColor: .container))
             
             Section {
                 Button(action: {
@@ -113,6 +155,15 @@ struct ReportBrokenSiteView: View {
                 .listRowBackground(Color.clear)
             }
             .listRowInsets(EdgeInsets())
+            
+            Section {
+                Text("Reports sent to DuckDuckGo only include info required to help us address your feedback.")
+                    .multilineTextAlignment(.center)
+                    .daxSubheadRegular()
+                    .foregroundColor(Color(designSystemColor: .textPrimary))
+            }
+            .frame(maxWidth: .infinity)
+            .listRowInsets(EdgeInsets())
         }
     }
     
@@ -121,7 +172,7 @@ struct ReportBrokenSiteView: View {
         if #available(iOS 16, *) {
             form
                 .scrollContentBackground(.hidden)
-                .background(Color(designSystemColor: .background))
+                .background(Color(designSystemColor: .surface))
         } else {
             form
                 .background(Color(designSystemColor: .background))
@@ -136,7 +187,7 @@ struct ReportBrokenSiteView: View {
 private enum Const {
     enum Size {
         static let imageSize: CGFloat = 128
-        static let minCommentHeight: CGFloat = 60
+        static let minCommentHeight: CGFloat = 80
         static let commentFieldPadding: CGFloat = -4
         static let pickerPadding: CGFloat = -12
         static let buttonHeight: CGFloat = 30
@@ -145,6 +196,6 @@ private enum Const {
 
 struct ReportBrokenSiteView_Previews: PreviewProvider {
     static var previews: some View {
-        ReportBrokenSiteView(categories: BrokenSite.Category.allCases, submitReport: { _, _ in })
+        ReportBrokenSiteView(categories: BrokenSite.Category.allCases, submitReport: { _, _ in }, toggleProtection: { _ in }, isProtected: true)
     }
 }

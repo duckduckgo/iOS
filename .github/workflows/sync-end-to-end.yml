@@ -46,7 +46,7 @@ jobs:
         | tee xcodebuild.log
     
     - name: Create test account for Sync and return the recovery code
-      uses: duckduckgo/sync_crypto/action@loremattei/fix-apple-build
+      uses: duckduckgo/sync_crypto/action@main
       id: sync-recovery-code
       with:
         debug: true

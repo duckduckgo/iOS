@@ -134,6 +134,7 @@ public class StatisticsLoader {
     public func storeUpdateVersionIfPresent(_ atb: Atb) {
         if let updateVersion = atb.updateVersion {
             statisticsStore.atb = updateVersion
+            statisticsStore.variant = nil
             returnUserMeasurement.updateStoredATB(atb)
         }
     }

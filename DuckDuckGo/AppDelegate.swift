@@ -62,7 +62,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private lazy var privacyStore = PrivacyUserDefaults()
     private var bookmarksDatabase: CoreDataDatabase = BookmarksDatabase.make()
+
+#if APP_TRACKING_PROTECTION
     private var appTrackingProtectionDatabase: CoreDataDatabase = AppTrackingProtectionDatabase.make()
+#endif
+
     private var autoClear: AutoClear?
     private var showKeyboardIfSettingOn = true
     private var lastBackgroundDate: Date?
@@ -87,6 +91,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 .forEach { $0.perform(setHardwareLayout, with: nil) }
         }
 #endif
+
+        ContentBlocking.shared.onCriticalError = presentPreemptiveCrashAlert
 
         // Can be removed after a couple of versions
         cleanUpMacPromoExperiment2()
@@ -123,6 +129,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         removeEmailWaitlistState()
 
+        var shouldPresentInsufficientDiskSpaceAlertAndCrash = false
         Database.shared.loadStore { context, error in
             guard let context = context else {
                 
@@ -142,8 +149,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     Pixel.fire(pixel: .dbInitializationError,
                                error: error,
                                withAdditionalParameters: parameters)
-                    Thread.sleep(forTimeInterval: 1)
-                    fatalError("Could not create database stack: \(error.localizedDescription)")
+                    if error.isDiskFull {
+                        shouldPresentInsufficientDiskSpaceAlertAndCrash = true
+                        return
+                    } else {
+                        Thread.sleep(forTimeInterval: 1)
+                        fatalError("Could not create database stack: \(error.localizedDescription)")
+                    }
                 }
             }
             DatabaseMigration.migrate(to: context)
@@ -158,8 +170,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase)
                 }
 
-                Thread.sleep(forTimeInterval: 1)
-                fatalError("Could not create Bookmarks database stack: \(error?.localizedDescription ?? "err")")
+                if shouldPresentInsufficientDiskSpaceAlertAndCrash {
+                    return
+                } else {
+                    Thread.sleep(forTimeInterval: 1)
+                    fatalError("Could not create Bookmarks database stack: \(error?.localizedDescription ?? "err")")
+                }
             }
             
             let legacyStorage = LegacyBookmarksCoreDataStorage()
@@ -171,6 +187,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             WidgetCenter.shared.reloadAllTimelines()
         }
 
+#if APP_TRACKING_PROTECTION
         appTrackingProtectionDatabase.loadStore { context, error in
             guard context != nil else {
                 if let error = error {
@@ -179,10 +196,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     Pixel.fire(pixel: .appTPCouldNotLoadDatabase)
                 }
 
-                Thread.sleep(forTimeInterval: 1)
-                fatalError("Could not create AppTP database stack: \(error?.localizedDescription ?? "err")")
+                if shouldPresentInsufficientDiskSpaceAlertAndCrash {
+                    return
+                } else {
+                    Thread.sleep(forTimeInterval: 1)
+                    fatalError("Could not create AppTP database stack: \(error?.localizedDescription ?? "err")")
+                }
             }
         }
+#endif
 
         Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
             WidgetCenter.shared.reloadAllTimelines()
@@ -218,18 +240,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         syncService.initializeIfNeeded()
         self.syncService = syncService
 
+#if APP_TRACKING_PROTECTION
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       appTrackingProtectionDatabase: appTrackingProtectionDatabase,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
                                       appSettings: AppDependencyProvider.shared.appSettings)
+#else
+        let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
+                                      bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
+                                      syncService: syncService,
+                                      syncDataProviders: syncDataProviders,
+                                      appSettings: AppDependencyProvider.shared.appSettings)
+#endif
         main.loadViewIfNeeded()
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = main
         window?.makeKeyAndVisible()
-        
+
+        if shouldPresentInsufficientDiskSpaceAlertAndCrash {
+            presentInsufficientDiskSpaceAlert()
+        }
+
         autoClear = AutoClear(worker: main)
         autoClear?.applicationDidLaunch()
         
@@ -256,6 +290,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         return true
+    }
+
+    private func presentPreemptiveCrashAlert() {
+        Task { @MainActor in
+            let alertController = CriticalAlerts.makePreemptiveCrashAlert()
+            window?.rootViewController?.present(alertController, animated: true, completion: nil)
+        }
+    }
+
+    private func presentInsufficientDiskSpaceAlert() {
+        let alertController = CriticalAlerts.makeInsufficientDiskSpaceAlert()
+        window?.rootViewController?.present(alertController, animated: true, completion: nil)
     }
 
     private func cleanUpMacPromoExperiment2() {
@@ -772,4 +818,16 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             navigationController?.pushViewController(viewController, animated: true)
         }
     }
+}
+
+private extension Error {
+
+    var isDiskFull: Bool {
+        let nsError = self as NSError
+        if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError, underlyingError.code == 13 {
+            return true
+        }
+        return false
+    }
+
 }

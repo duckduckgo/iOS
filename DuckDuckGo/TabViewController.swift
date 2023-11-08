@@ -90,6 +90,7 @@ class TabViewController: UIViewController {
     lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var internalUserDecider = AppDependencyProvider.shared.internalUserDecider
 
+    private lazy var autofillNeverPromptWebsitesManager = AppDependencyProvider.shared.autofillNeverPromptWebsitesManager
     private lazy var autofillWebsiteAccountMatcher = AutofillWebsiteAccountMatcher(autofillUrlMatcher: AutofillDomainNameUrlMatcher(),
                                                                                    tld: TabViewController.tld)
     private(set) var tabModel: Tab
@@ -2523,10 +2524,9 @@ extension TabViewController: SaveLoginViewControllerDelegate {
         saveLoginPromptIsPresenting = false
 
         do {
-            _ = try SaveAutofillLoginManager.saveNeverPromptWebsite(domain,
-                                                                    with: AutofillSecureVaultFactory)
+            _ = try autofillNeverPromptWebsitesManager.saveNeverPromptWebsite(domain)
         } catch {
-            os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
+            os_log("%: failed to save never prompt for website %s", type: .error, #function, error.localizedDescription)
         }
     }
     

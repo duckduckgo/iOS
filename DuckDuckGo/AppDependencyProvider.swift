@@ -34,6 +34,7 @@ protocol DependencyProvider {
     var voiceSearchHelper: VoiceSearchHelperProtocol { get }
     var downloadManager: DownloadManager { get }
     var autofillLoginSession: AutofillLoginSession { get }
+    var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager { get }
     var configurationManager: ConfigurationManager { get }
 }
 
@@ -56,6 +57,7 @@ class AppDependencyProvider: DependencyProvider {
     let voiceSearchHelper: VoiceSearchHelperProtocol = VoiceSearchHelper()
     let downloadManager = DownloadManager()
     let autofillLoginSession = AutofillLoginSession()
+    let autofillNeverPromptWebsitesManager = AutofillNeverPromptWebsitesManager()
 
     let configurationManager = ConfigurationManager()
 }

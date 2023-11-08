@@ -32,7 +32,6 @@ protocol SaveAutofillLoginManagerProtocol {
     var hasSavedMatchingUsername: Bool { get }
     
     static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: AutofillVaultFactory) throws -> Int64
-    static func saveNeverPromptWebsite(_ domain: String, with factory: AutofillVaultFactory) throws -> Int64
 }
 
 final class SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
@@ -99,7 +98,7 @@ final class SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
         guard let domain = credentials.account.domain else {
             return false
         }
-        return Self.hasNeverPromptWebsitesFor(domain: domain)
+        return AppDependencyProvider.shared.autofillNeverPromptWebsitesManager.hasNeverPromptWebsitesFor(domain: domain)
     }
 
     private var savedMatchingPasswordWithoutUsername: SecureVaultModels.WebsiteCredentials? {
@@ -151,26 +150,5 @@ final class SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
         } catch {
             throw error
         }
-    }
-
-    static func saveNeverPromptWebsite(_ domain: String, with factory: AutofillVaultFactory) throws -> Int64 {
-        do {
-            return try AutofillSecureVaultFactory
-                .makeVault(errorReporter: SecureVaultErrorReporter.shared)
-                .storeNeverPromptWebsites(SecureVaultModels.NeverPromptWebsites(domain: domain))
-        } catch {
-            throw error
-        }
-    }
-
-    static func hasNeverPromptWebsitesFor(domain: String) -> Bool {
-        do {
-            return try AutofillSecureVaultFactory
-                .makeVault(errorReporter: SecureVaultErrorReporter.shared)
-                .hasNeverPromptWebsitesFor(domain: domain)
-        } catch {
-            return false
-        }
-
     }
 }

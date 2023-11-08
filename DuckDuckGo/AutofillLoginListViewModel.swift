@@ -50,8 +50,6 @@ internal enum EnableAutofillRows: Int, CaseIterable {
     case resetNeverPromptWebsites
 }
 
-// swiftlint:disable file_length type_body_length
-
 final class AutofillLoginListViewModel: ObservableObject {
     
     enum ViewState {
@@ -68,7 +66,6 @@ final class AutofillLoginListViewModel: ObservableObject {
     var authenticationNotRequired = false
     private var accounts = [SecureVaultModels.WebsiteAccount]()
     private var accountsToSuggest = [SecureVaultModels.WebsiteAccount]()
-    private var neverPromptWebsites = [SecureVaultModels.NeverPromptWebsites]()
     private var cancellables: Set<AnyCancellable> = []
     private var appSettings: AppSettings
     private let tld: TLD
@@ -77,6 +74,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     private var cachedDeletedCredentials: SecureVaultModels.WebsiteCredentials?
     private let autofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
     private let autofillDomainNameUrlSort = AutofillDomainNameUrlSort()
+    private let autofillNeverPromptWebsitesManager = AppDependencyProvider.shared.autofillNeverPromptWebsitesManager
 
     @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
     @Published private(set) var sections = [AutofillLoginListSectionType]() {
@@ -161,7 +159,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     func rowsInSection(_ section: Int) -> Int {
         switch self.sections[section] {
         case .enableAutofill:
-            return neverPromptWebsites.isEmpty ? 1 : 2
+            return autofillNeverPromptWebsitesManager.neverPromptWebsites.isEmpty ? 1 : 2
         case .credentials(_, let items):
             return items.count
         }
@@ -170,7 +168,6 @@ final class AutofillLoginListViewModel: ObservableObject {
     func updateData() {
         self.accounts = fetchAccounts()
         self.accountsToSuggest = fetchSuggestedAccounts()
-        self.neverPromptWebsites = fetchNeverPromptWebsites()
         self.sections = makeSections(with: accounts)
     }
     
@@ -189,8 +186,11 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
         self.sections = makeSections(with: filteredAccounts)
     }
-    
-    
+
+    func resetNeverPromptWebsites() {
+        _ = autofillNeverPromptWebsitesManager.deleteAllNeverPromptWebsites()
+    }
+
     // MARK: Private Methods
     
     private func fetchAccounts() -> [SecureVaultModels.WebsiteAccount] {
@@ -224,25 +224,6 @@ final class AutofillLoginListViewModel: ObservableObject {
         })
 
         return sortedSuggestions
-    }
-
-    private func fetchNeverPromptWebsites() -> [SecureVaultModels.NeverPromptWebsites] {
-        guard let secureVault = secureVault else {
-            return []
-        }
-
-        do {
-            return try secureVault.neverPromptWebsites()
-        } catch {
-            os_log("Failed to fetch accounts")
-            return []
-        }
-    }
-
-    func resetNeverPromptWebsites() {
-        if deleteAllNeverPromptWebsites() {
-            neverPromptWebsites = fetchNeverPromptWebsites()
-        }
     }
 
     private func makeSections(with accounts: [SecureVaultModels.WebsiteAccount]) -> [AutofillLoginListSectionType] {
@@ -354,20 +335,6 @@ final class AutofillLoginListViewModel: ObservableObject {
             Pixel.fire(pixel: .secureVaultError, error: error)
         }
     }
-
-    @discardableResult
-    func deleteAllNeverPromptWebsites() -> Bool {
-        guard let secureVault = secureVault else { return false }
-
-        do {
-            try secureVault.deleteAllNeverPromptWebsites()
-            return true
-        } catch {
-            Pixel.fire(pixel: .secureVaultError, error: error)
-            return false
-        }
-    }
-
 }
 
 extension AutofillLoginListItemViewModel: Comparable {
@@ -417,5 +384,3 @@ internal extension Dictionary where Key == String, Value == [AutofillLoginListIt
         }.sorted()
     }
 }
-
-// swiftlint:enable file_length type_body_length

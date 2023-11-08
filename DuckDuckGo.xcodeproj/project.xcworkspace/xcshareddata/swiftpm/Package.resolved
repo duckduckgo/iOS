@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "sam/send-dau-pixel-more-reliably",
-          "revision": "8aeccb0f983f04bbd0c564d414b0a2f31e61477d",
-          "version": null
+          "branch": null,
+          "revision": "989e306052bc284a1202fad1087f8b88e515a966",
+          "version": "82.2.2"
         }
       },
       {

@@ -13,7 +13,9 @@ tags:
         index: 0
     file: ../shared/onboarding.yaml
 
-# <HACK>This is a workaround to prevent iOS from showing the Paste permission alert
+# <HACK>This is a workaround to:
+# - Put the code in the clipboard on Maestro Cloud
+# - Prevent iOS from showing the Paste permission alert
 - tapOn:
     id: searchEntry
 - inputText: ${CODE}
@@ -29,6 +31,7 @@ tags:
 - tapOn: Cancel
 #</HACK>
 
+# Recover Account test
 - tapOn: Settings
 - runFlow:
     file: ../shared/set_internal_user.yaml

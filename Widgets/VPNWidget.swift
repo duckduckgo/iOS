@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import AppIntents
 import Core
 import SwiftUI
 import WidgetKit
@@ -46,22 +47,21 @@ class VPNStatusTimelineProvider: TimelineProvider {
     typealias Entry = VPNStatusTimelineEntry
 
     func placeholder(in context: Context) -> VPNStatusTimelineEntry {
-        return VPNStatusTimelineEntry(date: Date(), status: .status(.connected), location: "Paoli, PA")
+        return VPNStatusTimelineEntry(date: Date(), status: .status(.connected), location: "Los Angeles, CA")
     }
 
     func getSnapshot(in context: Context, completion: @escaping (VPNStatusTimelineEntry) -> Void) {
-        let entry = VPNStatusTimelineEntry(date: Date(), status: .status(.connected), location: "Paoli, PA")
+        let entry = VPNStatusTimelineEntry(date: Date(), status: .status(.connected), location: "Los Angeles, CA")
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<VPNStatusTimelineEntry>) -> Void) {
         NETunnelProviderManager.loadAllFromPreferences { managers, error in
-            let expiration = Date().addingTimeInterval(TimeInterval.minutes(5))
-
             let defaults = UserDefaults.networkProtectionGroupDefaults
             let location = defaults.string(forKey: NetworkProtectionUserDefaultKeys.lastSelectedServer) ?? "Unknown Location"
+            let expiration = Date().addingTimeInterval(TimeInterval.minutes(5))
 
-            if let error {
+            if error != nil {
                 let entry = VPNStatusTimelineEntry(date: expiration, status: .error, location: location)
                 let timeline = Timeline(entries: [entry], policy: .atEnd)
                 completion(timeline)
@@ -76,8 +76,6 @@ class VPNStatusTimelineProvider: TimelineProvider {
             }
 
             let status = manager.connection.status
-            let enabled = (status == .connected || status == .connecting)
-
             let entry = VPNStatusTimelineEntry(date: expiration, status: .status(status), location: location)
             let timeline = Timeline(entries: [entry], policy: .atEnd)
 
@@ -89,31 +87,21 @@ class VPNStatusTimelineProvider: TimelineProvider {
 extension NEVPNStatus {
     var description: String {
         switch self {
-        case .connected:
-            return "Connected"
-        case .connecting:
-            return "Connecting"
-        case .disconnected:
-            return "Disconnected"
-        case .disconnecting:
-            return "Disconnecting"
-        case .invalid:
-            return "Invalid"
-        case .reasserting:
-            return "Reasserting"
-        default:
-            return "Unknown Status"
+        case .connected: return "Connected"
+        case .connecting: return "Connecting"
+        case .disconnected: return "Disconnected"
+        case .disconnecting: return "Disconnecting"
+        case .invalid: return "Invalid"
+        case .reasserting: return "Reasserting"
+        default: return "Unknown Status"
         }
     }
 
     var isConnected: Bool {
         switch self {
-        case .connected, .connecting, .reasserting:
-            return true
-        case .disconnecting, .disconnected:
-            return false
-        default:
-            return false
+        case .connected, .connecting, .reasserting: return true
+        case .disconnecting, .disconnected: return false
+        default: return false
         }
     }
 }
@@ -125,58 +113,12 @@ struct VPNStatusView: View {
 
     @ViewBuilder
     var body: some View {
-        VStack {
+        Group {
             switch entry.status {
             case .status(let status):
                 HStack {
-                    VStack(alignment: .leading, spacing: 0) {
-                        Image(headerImageName(with: status))
-                            .frame(width: 50, height: 54)
-                            .padding(.top, 15)
-
-                        Spacer()
-
-                        Text(title(with: status))
-                            .font(.system(size: 16, weight: .semibold))
-                            .fontWeight(.semibold)
-                            .foregroundStyle(status.isConnected ? Color.white : Color.black)
-
-                        Text(status.isConnected ? entry.location : "VPN is Off")
-                            .font(.system(size: 12, weight: .medium))
-                            .foregroundStyle(status.isConnected ? Color.white : Color.black)
-                            .opacity(status.isConnected ? 0.8 : 0.6)
-
-                        switch status {
-                        case .connected, .connecting, .reasserting:
-                            Button(intent: DisableVPNIntent()) {
-                                Text("Disconnect")
-                                    .font(.system(size: 15, weight: .medium))
-                                    .fontWeight(.semibold)
-                            }
-                            .foregroundStyle(Color("VPNWidgetConnectedColor"))
-                            .buttonStyle(.borderedProminent)
-                            .tint(.white)
-                            .disabled(status != .connected)
-                            .padding(.top, 6)
-                            .padding(.bottom, 16)
-                        case .disconnected, .disconnecting:
-                            Button(intent: EnableVPNIntent()) {
-                                Text("Connect")
-                                    .font(.system(size: 15, weight: .medium))
-                                    .fontWeight(.semibold)
-                            }
-                            .foregroundStyle(.white)
-                            .buttonStyle(.borderedProminent)
-                            .tint(Color("VPNWidgetConnectedColor"))
-                            .disabled(status != .disconnected)
-                            .padding(.top, 6)
-                            .padding(.bottom, 16)
-                        default:
-                            Spacer()
-                        }
-
-                    }
-                    .padding([.leading, .trailing], 16)
+                    connectionView(with: status)
+                        .padding([.leading, .trailing], 16)
 
                     Spacer()
                 }
@@ -200,54 +142,82 @@ struct VPNStatusView: View {
                 @unknown default:
                     Color.white
                 }
-            case .error:
+            case .error, .notConfigured:
                 Color.white
-            case .notConfigured:
-                Color.white
+            }
+        }
+    }
+
+    private func connectionView(with status: NEVPNStatus) -> some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 0) {
+                Image(headerImageName(with: status))
+                    .frame(width: 50, height: 54)
+                    .padding(.top, 15)
+
+                Spacer()
+
+                Text(title(with: status))
+                    .font(.system(size: 16, weight: .semibold))
+                    .fontWeight(.semibold)
+                    .foregroundStyle(status.isConnected ? Color.white : Color.black)
+
+                Text(status.isConnected ? entry.location : "VPN is Off")
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundStyle(status.isConnected ? Color.white : Color.black)
+                    .opacity(status.isConnected ? 0.8 : 0.6)
+
+                switch status {
+                case .connected, .connecting, .reasserting:
+                    Button(intent: DisableVPNIntent()) {
+                        Text("Disconnect")
+                            .font(.system(size: 15, weight: .medium))
+                            .fontWeight(.semibold)
+                    }
+                    .foregroundStyle(Color("VPNWidgetConnectedColor"))
+                    .buttonStyle(.borderedProminent)
+                    .tint(.white)
+                    .disabled(status != .connected)
+                    .padding(.top, 6)
+                    .padding(.bottom, 16)
+                case .disconnected, .disconnecting:
+                    Button(intent: EnableVPNIntent()) {
+                        Text("Connect")
+                            .font(.system(size: 15, weight: .medium))
+                            .fontWeight(.semibold)
+                    }
+                    .foregroundStyle(.white)
+                    .buttonStyle(.borderedProminent)
+                    .tint(Color("VPNWidgetConnectedColor"))
+                    .disabled(status != .disconnected)
+                    .padding(.top, 6)
+                    .padding(.bottom, 16)
+                default:
+                    Spacer()
+                }
             }
         }
     }
 
     private func headerImageName(with status: NEVPNStatus) -> String {
         switch status {
-        case .connecting, .connected, .reasserting:
-            return "vpn-on"
-        case .disconnecting, .disconnected:
-            return "vpn-off"
-        case .invalid:
-            return "vpn-off"
-        @unknown default:
-            return "vpn-off"
+        case .connecting, .connected, .reasserting: return "vpn-on"
+        case .disconnecting, .disconnected: return "vpn-off"
+        case .invalid: return "vpn-off"
+        @unknown default: return "vpn-off"
         }
     }
 
     private func title(with status: NEVPNStatus) -> String {
         switch status {
-        case .connecting, .connected, .reasserting:
-            return "Protected"
-        case .disconnecting, .disconnected:
-            return "Unprotected"
-        case .invalid:
-            return "Invalid"
-        @unknown default:
-            return "Unknown"
+        case .connecting, .connected, .reasserting: return "Protected"
+        case .disconnecting, .disconnected: return "Unprotected"
+        case .invalid: return "Invalid"
+        @unknown default: return "Unknown"
         }
     }
 
 }
-
-extension Image {
-    func centerSquareCropped() -> some View {
-        GeometryReader { geo in
-            let length = geo.size.width > geo.size.height ? geo.size.height : geo.size.width
-            self
-                .resizable()
-                .scaledToFill()
-                .frame(width: length, height: length, alignment: .center)
-                .clipped()
-        }
-    }
- }
 
 @available(iOSApplicationExtension 17.0, *)
 struct VPNStatusWidget: Widget {
@@ -257,8 +227,8 @@ struct VPNStatusWidget: Widget {
         StaticConfiguration(kind: kind, provider: VPNStatusTimelineProvider()) { entry in
             VPNStatusView(entry: entry).widgetURL(DeepLinks.openVPN)
         }
-        .configurationDisplayName("VPN Status")
-        .description("View and manage the DuckDuckGo VPN status")
+        .configurationDisplayName("DuckDuckGo VPN Status")
+        .description("View and manage DuckDuckGo VPN’s status")
         .supportedFamilies([.systemSmall])
         .contentMarginsDisabled()
     }
@@ -269,19 +239,19 @@ struct VPNStatusView_Previews: PreviewProvider {
     static let connectedState = VPNStatusTimelineProvider.Entry(
         date: Date(),
         status: .status(.connected),
-        location: "Vancouver, CA"
+        location: "Paoli, PA"
     )
 
     static let disconnectedState = VPNStatusTimelineProvider.Entry(
         date: Date(),
         status: .status(.disconnected),
-        location: "Vancouver, CA"
+        location: "Paoli, PA"
     )
 
     static let notConfiguredState = VPNStatusTimelineProvider.Entry(
         date: Date(),
         status: .notConfigured,
-        location: "Vancouver, CA"
+        location: "Paoli, PA"
     )
 
     static var previews: some View {

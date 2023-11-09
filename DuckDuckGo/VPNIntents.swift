@@ -20,7 +20,7 @@
 import AppIntents
 import NetworkExtension
 
-@available(iOS 16.0, *)
+@available(iOS 17.0, *)
 struct DisableVPNIntent: AppIntent {
 
     static let title: LocalizedStringResource = "Disable VPN"
@@ -53,7 +53,7 @@ struct DisableVPNIntent: AppIntent {
 
 }
 
-@available(iOS 16.0, *)
+@available(iOS 17.0, *)
 struct EnableVPNIntent: AppIntent {
 
     static let title: LocalizedStringResource = "Enable VPN"

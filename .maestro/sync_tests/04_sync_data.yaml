@@ -56,8 +56,9 @@ tags:
 - tapOn:
     id: searchEntry
 - inputText: ${CODE}
-- tapOn:
+- longPressOn:
     id: searchEntry
+- tapOn: searchEntry
 - tapOn: Select All
 - tapOn: Cut
 - tapOn:

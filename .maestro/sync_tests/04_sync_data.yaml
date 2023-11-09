@@ -58,7 +58,12 @@ tags:
 - inputText: ${CODE}
 - longPressOn:
     id: searchEntry
-- tapOn: searchEntry
+- runFlow:
+    when:
+      visible:
+        text: searchEntry
+    commands:
+      - tapOn: searchEntry
 - tapOn: Select All
 - tapOn: Cut
 - tapOn:

@@ -65,6 +65,7 @@ final class NetworkProtectionVPNLocationViewModel: ObservableObject {
         self.tunnelSettings = tunnelSettings
     }
 
+    @MainActor
     func onViewAppeared() async {
         guard let list = try? await locationListRepository.fetchLocationList() else { return }
         self.countryItems = list.map(NetworkProtectionVPNCountryItemModel.init(netPLocation:))

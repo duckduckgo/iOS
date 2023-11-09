@@ -104,7 +104,6 @@ public struct BrokenSiteInfo {
             Keys.tds: tdsETag?.trimmingCharacters(in: CharacterSet(charactersIn: "\"")) ?? "",
             Keys.blockedTrackers: blockedTrackerDomains.joined(separator: ","),
             Keys.surrogates: installedSurrogates.joined(separator: ","),
-            Keys.atb: StatisticsUserDefaults().atb ?? "",
             Keys.os: systemVersion,
             Keys.manufacturer: manufacturer,
             Keys.model: model,

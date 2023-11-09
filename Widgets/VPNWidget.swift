@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 import SwiftUI
 import WidgetKit
 import NetworkExtension
@@ -45,20 +46,20 @@ class VPNStatusTimelineProvider: TimelineProvider {
     typealias Entry = VPNStatusTimelineEntry
 
     func placeholder(in context: Context) -> VPNStatusTimelineEntry {
-        return VPNStatusTimelineEntry(date: Date(), location: "Paoli, PA")
+        return VPNStatusTimelineEntry(date: Date(), status: .status(.connected), location: "Paoli, PA")
     }
 
     func getSnapshot(in context: Context, completion: @escaping (VPNStatusTimelineEntry) -> Void) {
-        let entry = VPNStatusTimelineEntry(date: Date(), location: "Paoli, PA")
+        let entry = VPNStatusTimelineEntry(date: Date(), status: .status(.connected), location: "Paoli, PA")
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<VPNStatusTimelineEntry>) -> Void) {
         NETunnelProviderManager.loadAllFromPreferences { managers, error in
-            let expiration = Date().addingTimeInterval(TimeInterval.minutes(1))
+            let expiration = Date().addingTimeInterval(TimeInterval.minutes(5))
 
-            let defaults = UserDefaults(suiteName: "group.com.duckduckgo.netp")!
-            let location = defaults.string(forKey: "netp-server-location") ?? "Unknown Location"
+            let defaults = UserDefaults.networkProtectionGroupDefaults
+            let location = defaults.string(forKey: NetworkProtectionUserDefaultKeys.lastSelectedServer) ?? "Unknown Location"
 
             if let error {
                 let entry = VPNStatusTimelineEntry(date: expiration, status: .error, location: location)
@@ -117,96 +118,93 @@ extension NEVPNStatus {
     }
 }
 
+@available(iOSApplicationExtension 17.0, *)
 struct VPNStatusView: View {
     @Environment(\.widgetFamily) var family: WidgetFamily
     var entry: VPNStatusTimelineProvider.Entry
 
     @ViewBuilder
     var body: some View {
-        if #available(iOSApplicationExtension 17.0, *) {
-            VStack {
-                switch entry.status {
-                case .status(let status):
-                    HStack {
-                        VStack(alignment: .leading, spacing: 0) {
-                            Image(headerImageName(with: status))
-                                .frame(width: 50, height: 54)
-                                .padding(.top, 15)
-
-                            Spacer()
-
-                            Text(title(with: status))
-                                .font(.system(size: 16, weight: .semibold))
-                                .fontWeight(.semibold)
-                                .foregroundStyle(status.isConnected ? Color.white : Color.black)
-
-                            Text(status.isConnected ? entry.location : "VPN is Off")
-                                .font(.system(size: 12, weight: .medium))
-                                .foregroundStyle(status.isConnected ? Color.white : Color.black)
-                                .opacity(status.isConnected ? 0.8 : 0.6)
-
-                            switch status {
-                            case .connected, .connecting, .reasserting:
-                                Button(intent: DisableVPNIntent()) {
-                                    Text("Disconnect")
-                                        .font(.system(size: 15, weight: .medium))
-                                        .fontWeight(.semibold)
-                                }
-                                .foregroundStyle(Color("VPNWidgetConnectedColor"))
-                                .buttonStyle(.borderedProminent)
-                                .tint(.white)
-                                .disabled(status != .connected)
-                                .padding(.top, 6)
-                                .padding(.bottom, 16)
-                            case .disconnected, .disconnecting:
-                                Button(intent: EnableVPNIntent()) {
-                                    Text("Connect")
-                                        .font(.system(size: 15, weight: .medium))
-                                        .fontWeight(.semibold)
-                                }
-                                .foregroundStyle(.white)
-                                .buttonStyle(.borderedProminent)
-                                .tint(Color("VPNWidgetConnectedColor"))
-                                .disabled(status != .disconnected)
-                                .padding(.top, 6)
-                                .padding(.bottom, 16)
-                            default:
-                                Spacer()
-                            }
-
-                        }
-                        .padding([.leading, .trailing], 16)
+        VStack {
+            switch entry.status {
+            case .status(let status):
+                HStack {
+                    VStack(alignment: .leading, spacing: 0) {
+                        Image(headerImageName(with: status))
+                            .frame(width: 50, height: 54)
+                            .padding(.top, 15)
 
                         Spacer()
+
+                        Text(title(with: status))
+                            .font(.system(size: 16, weight: .semibold))
+                            .fontWeight(.semibold)
+                            .foregroundStyle(status.isConnected ? Color.white : Color.black)
+
+                        Text(status.isConnected ? entry.location : "VPN is Off")
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundStyle(status.isConnected ? Color.white : Color.black)
+                            .opacity(status.isConnected ? 0.8 : 0.6)
+
+                        switch status {
+                        case .connected, .connecting, .reasserting:
+                            Button(intent: DisableVPNIntent()) {
+                                Text("Disconnect")
+                                    .font(.system(size: 15, weight: .medium))
+                                    .fontWeight(.semibold)
+                            }
+                            .foregroundStyle(Color("VPNWidgetConnectedColor"))
+                            .buttonStyle(.borderedProminent)
+                            .tint(.white)
+                            .disabled(status != .connected)
+                            .padding(.top, 6)
+                            .padding(.bottom, 16)
+                        case .disconnected, .disconnecting:
+                            Button(intent: EnableVPNIntent()) {
+                                Text("Connect")
+                                    .font(.system(size: 15, weight: .medium))
+                                    .fontWeight(.semibold)
+                            }
+                            .foregroundStyle(.white)
+                            .buttonStyle(.borderedProminent)
+                            .tint(Color("VPNWidgetConnectedColor"))
+                            .disabled(status != .disconnected)
+                            .padding(.top, 6)
+                            .padding(.bottom, 16)
+                        default:
+                            Spacer()
+                        }
+
                     }
-                case .error:
-                    Text("Error")
-                case .notConfigured:
-                    Text("VPN Not Configured")
+                    .padding([.leading, .trailing], 16)
+
+                    Spacer()
                 }
+            case .error:
+                Text("Error")
+                    .foregroundStyle(Color.black)
+            case .notConfigured:
+                Text("VPN Not Configured")
+                    .foregroundStyle(Color.black)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .containerBackground(for: .widget) {
-                switch entry.status {
-                case .status(let status):
-                    switch status {
-                    case .connecting, .connected, .reasserting:
-                        Color("VPNWidgetConnectedColor")
-                    case .disconnecting, .disconnected:
-                        Color.white
-                    case .invalid:
-                        Color.white
-                    @unknown default:
-                        Color.white
-                    }
-                case .error:
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .containerBackground(for: .widget) {
+            switch entry.status {
+            case .status(let status):
+                switch status {
+                case .connecting, .connected, .reasserting:
+                    Color("VPNWidgetConnectedColor")
+                case .disconnecting, .disconnected, .invalid:
                     Color.white
-                case .notConfigured:
+                @unknown default:
                     Color.white
                 }
+            case .error:
+                Color.white
+            case .notConfigured:
+                Color.white
             }
-        } else {
-            Text("iOS 17 required")
         }
     }
 
@@ -280,14 +278,40 @@ struct VPNStatusView_Previews: PreviewProvider {
         location: "Vancouver, CA"
     )
 
-    static var previews: some View {
-        VPNStatusView(entry: connectedState)
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
-            .environment(\.colorScheme, .light)
+    static let notConfiguredState = VPNStatusTimelineProvider.Entry(
+        date: Date(),
+        status: .notConfigured,
+        location: "Vancouver, CA"
+    )
 
-        VPNStatusView(entry: disconnectedState)
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
-            .environment(\.colorScheme, .dark)
+    static var previews: some View {
+        if #available(iOSApplicationExtension 17.0, *) {
+            VPNStatusView(entry: connectedState)
+                .previewContext(WidgetPreviewContext(family: .systemSmall))
+                .environment(\.colorScheme, .light)
+
+            VPNStatusView(entry: connectedState)
+                .previewContext(WidgetPreviewContext(family: .systemSmall))
+                .environment(\.colorScheme, .dark)
+
+            VPNStatusView(entry: disconnectedState)
+                .previewContext(WidgetPreviewContext(family: .systemSmall))
+                .environment(\.colorScheme, .light)
+
+            VPNStatusView(entry: disconnectedState)
+                .previewContext(WidgetPreviewContext(family: .systemSmall))
+                .environment(\.colorScheme, .dark)
+
+            VPNStatusView(entry: notConfiguredState)
+                .previewContext(WidgetPreviewContext(family: .systemSmall))
+                .environment(\.colorScheme, .light)
+
+            VPNStatusView(entry: notConfiguredState)
+                .previewContext(WidgetPreviewContext(family: .systemSmall))
+                .environment(\.colorScheme, .dark)
+        } else {
+            Text("iOS 17 required")
+        }
     }
 
 }

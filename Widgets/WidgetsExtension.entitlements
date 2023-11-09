@@ -6,7 +6,7 @@
 	<array>
 		<string>$(GROUP_ID_PREFIX).bookmarks</string>
 		<string>$(GROUP_ID_PREFIX).database</string>
-		<string>group.com.duckduckgo.netp</string>
+		<string>$(GROUP_ID_PREFIX).netp</string>
 	</array>
 </dict>
 </plist>

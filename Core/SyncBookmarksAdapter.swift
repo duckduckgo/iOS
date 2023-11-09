@@ -63,6 +63,9 @@ public final class SyncBookmarksAdapter {
         }
     }
 
+    @UserDefaultsWrapper(key: .syncIsEligibleForFaviconsFetcherOnboarding, defaultValue: false)
+    public var isEligibleForFaviconsFetcherOnboarding: Bool
+
     public init(database: CoreDataDatabase, favoritesDisplayModeStorage: FavoritesDisplayModeStoring) {
         self.database = database
         self.favoritesDisplayModeStorage = favoritesDisplayModeStorage

@@ -577,8 +577,10 @@ class MainViewController: UIViewController {
         let tabModel = currentTab?.tabModel
         let controller = HomeViewController.loadFromStoryboard(model: tabModel!,
                                                                favoritesViewModel: favoritesViewModel,
-                                                               appTPDatabase: appTrackingProtectionDatabase)
-        
+                                                               appTPDatabase: appTrackingProtectionDatabase,
+                                                               syncService: syncService,
+                                                               syncDataProviders: syncDataProviders)
+
         homeController = controller
 
         controller.chromeDelegate = self

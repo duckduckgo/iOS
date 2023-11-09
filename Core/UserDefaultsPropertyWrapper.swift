@@ -100,6 +100,9 @@ public struct UserDefaultsWrapper<T> {
         case syncBookmarksPaused = "com.duckduckgo.ios.sync-bookmarksPaused"
         case syncCredentialsPaused = "com.duckduckgo.ios.sync-credentialsPaused"
         case syncAutomaticallyFetchFavicons = "com.duckduckgo.ios.sync-automatically-fetch-favicons"
+        case syncIsFaviconsFetcherEnabled = "com.duckduckgo.ios.sync-is-favicons-fetcher-enabled"
+        case syncIsEligibleForFaviconsFetcherOnboarding = "com.duckduckgo.ios.sync-is-eligible-for-favicons-fetcher-onboarding"
+        case syncDidPresentFaviconsFetcherOnboarding = "com.duckduckgo.ios.sync-did-present-favicons-fetcher-onboarding"
 
         case networkProtectionDebugOptionAlwaysOnDisabled = "com.duckduckgo.network-protection.always-on.disabled"
 

@@ -94,6 +94,14 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
             }
             .store(in: &cancellables)
 
+        viewModel.$devices
+            .map { $0.count > 1 }
+            .removeDuplicates()
+            .sink { [weak self] hasMoreThanOneDevice in
+                self?.syncBookmarksAdapter.isEligibleForFaviconsFetcherOnboarding = hasMoreThanOneDevice
+            }
+            .store(in: &cancellables)
+
         viewModel.$isFaviconsFetchingEnabled
             .sink { [weak self] isFaviconsFetchingEnabled in
                 self?.syncBookmarksAdapter.isFaviconsFetchingEnabled = isFaviconsFetchingEnabled

@@ -185,7 +185,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    keychainType: .dataProtection(.unspecified),
                    tokenStore: tokenStore,
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
-                   providerEvents: Self.packetTunnelProviderEvents)
+                   providerEvents: Self.packetTunnelProviderEvents,
+                   tunnelSettings: TunnelSettings(defaults: .networkProtectionGroupDefaults))
         startMonitoringMemoryPressureEvents()
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
     }

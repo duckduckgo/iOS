@@ -90,6 +90,11 @@ extension EventMapping where Event == NetworkProtectionError {
         case .unhandledError(function: let function, line: let line, error: let error):
             pixelEvent = .networkProtectionUnhandledError
 
+        case .failedToFetchLocationList:
+            return
+
+        case .failedToParseLocationListResponse:
+            return
         }
 
         DailyPixel.fireDailyAndCount(pixel: pixelEvent, error: pixelError, withAdditionalParameters: params)

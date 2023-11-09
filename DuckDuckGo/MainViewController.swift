@@ -78,8 +78,11 @@ class MainViewController: UIViewController {
     let previewsSource = TabPreviewsSource()
     let appSettings: AppSettings
     private var launchTabObserver: LaunchTabNotification.Observer?
-    
+
+#if APP_TRACKING_PROTECTION
     private let appTrackingProtectionDatabase: CoreDataDatabase
+#endif
+
     let bookmarksDatabase: CoreDataDatabase
     private weak var bookmarksDatabaseCleaner: BookmarkDatabaseCleaner?
     private let favoritesViewModel: FavoritesListInteracting
@@ -128,6 +131,7 @@ class MainViewController: UIViewController {
 
     var viewCoordinator: MainViewCoordinator!
 
+#if APP_TRACKING_PROTECTION
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
@@ -149,6 +153,27 @@ class MainViewController: UIViewController {
 
         bindSyncService()
     }
+#else
+    init(
+        bookmarksDatabase: CoreDataDatabase,
+        bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
+        syncService: DDGSyncing,
+        syncDataProviders: SyncDataProviders,
+        appSettings: AppSettings
+    ) {
+        self.bookmarksDatabase = bookmarksDatabase
+        self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
+        self.syncService = syncService
+        self.syncDataProviders = syncDataProviders
+        self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
+        self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
+        self.appSettings = appSettings
+        
+        super.init(nibName: nil, bundle: nil)
+
+        bindSyncService()
+    }
+#endif
 
     fileprivate var tabCountInfo: TabCountInfo?
 
@@ -554,10 +579,15 @@ class MainViewController: UIViewController {
         AppDependencyProvider.shared.homePageConfiguration.refresh()
 
         let tabModel = currentTab?.tabModel
+
+#if APP_TRACKING_PROTECTION
         let controller = HomeViewController.loadFromStoryboard(model: tabModel!,
                                                                favoritesViewModel: favoritesViewModel,
                                                                appTPDatabase: appTrackingProtectionDatabase)
-        
+#else
+        let controller = HomeViewController.loadFromStoryboard(model: tabModel!, favoritesViewModel: favoritesViewModel)
+#endif
+
         homeController = controller
 
         controller.chromeDelegate = self
@@ -694,8 +724,8 @@ class MainViewController: UIViewController {
         allowContentUnderflow = false
         request()
         guard let tab = currentTab else { fatalError("no tab") }
-        select(tab: tab)
         dismissOmniBar()
+        select(tab: tab)
     }
 
     private func addTab(url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) {
@@ -1079,6 +1109,7 @@ class MainViewController: UIViewController {
     @objc
     private func onDuckDuckGoEmailSignOut(_ notification: Notification) {
         fireEmailPixel(.emailDisabled, notification: notification)
+        presentEmailProtectionSignInAlertIfNeeded(notification)
         if let object = notification.object as? EmailManager,
            let emailManager = syncDataProviders.settingsAdapter.emailManager,
            object !== emailManager {
@@ -1086,7 +1117,18 @@ class MainViewController: UIViewController {
             syncService.scheduler.notifyDataChanged()
         }
     }
-    
+
+    private func presentEmailProtectionSignInAlertIfNeeded(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: String],
+            userInfo[EmailManager.NotificationParameter.isForcedSignOut] != nil else {
+            return
+        }
+        let alertController = CriticalAlerts.makeEmailProtectionSignInAlert()
+        dismiss(animated: true) {
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+
     private func fireEmailPixel(_ pixel: Pixel.Event, notification: Notification) {
         var pixelParameters: [String: String] = [:]
         

@@ -22,12 +22,6 @@
 import Foundation
 import SwiftUI
 
-extension String: Identifiable {
-    public var id: String {
-        self
-    }
-}
-
 @available(iOS 15, *)
 struct NetworkProtectionVPNLocationView: View {
     @StateObject var model = NetworkProtectionVPNLocationViewModel()

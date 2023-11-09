@@ -2464,9 +2464,9 @@ extension TabViewController: SecureVaultManagerDelegate {
             return
         }
 
-        let runtimeConfiguration = DefaultAutofillSourceProvider.Builder(
-                                                                        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-                                                                        properties: buildContentScopePropertiesForDomain(domain))
+        let runtimeConfiguration =
+                DefaultAutofillSourceProvider.Builder(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+                                                                         properties: buildContentScopePropertiesForDomain(domain))
                                                                 .build()
                                                                 .buildRuntimeConfigResponse()
 

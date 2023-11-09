@@ -19,6 +19,7 @@
 
 import AppIntents
 import NetworkExtension
+import WidgetKit
 
 @available(iOS 17.0, *)
 struct DisableVPNIntent: AppIntent {
@@ -37,10 +38,20 @@ struct DisableVPNIntent: AppIntent {
 
             manager.isOnDemandEnabled = false
             try await manager.saveToPreferences()
-
             manager.connection.stopVPNTunnel()
 
-            try? await Task.sleep(interval: .seconds(2))
+            WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
+            var iterations = 0
+
+            while iterations <= 10 {
+                try? await Task.sleep(interval: .seconds(0.5))
+
+                if manager.connection.status == .disconnected {
+                    return .result()
+                }
+
+                iterations += 1
+            }
 
             return .result()
         } catch {
@@ -69,7 +80,18 @@ struct EnableVPNIntent: AppIntent {
             try await manager.saveToPreferences()
             try manager.connection.startVPNTunnel()
 
-            try? await Task.sleep(interval: .seconds(4))
+            WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
+            var iterations = 0
+
+            while iterations <= 10 {
+                try? await Task.sleep(interval: .seconds(0.5))
+
+                if manager.connection.status == .connected {
+                    return .result()
+                }
+
+                iterations += 1
+            }
 
             return .result()
         } catch {

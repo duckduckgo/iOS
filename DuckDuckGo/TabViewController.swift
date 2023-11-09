@@ -123,6 +123,8 @@ class TabViewController: UIViewController {
     private var saveLoginPromptLastDismissed: Date?
     private var saveLoginPromptIsPresenting: Bool = false
 
+    private var cachedRuntimeConfigurationForDomain: [String: String?] = [:]
+
     // If no trackers dax dialog was shown recently in this tab, ie without the user navigating somewhere else, e.g. backgrounding or tab switcher
     private var woShownRecently = false
 
@@ -2314,8 +2316,8 @@ extension TabViewController: SecureVaultManagerDelegate {
         return isEnabled
     }
 
-    func secureVaultManagerShouldSaveData(_: SecureVaultManager) -> Bool {
-        true
+    func secureVaultManagerShouldSaveData(_ manager: SecureVaultManager) -> Bool {
+        return secureVaultManagerIsEnabledStatus(manager, forType: nil)
     }
 
     func secureVaultManager(_ vault: SecureVaultManager,

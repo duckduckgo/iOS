@@ -23,15 +23,12 @@ import Core
 
 class AutofillNeverPromptWebsitesManager {
 
-    public var neverPromptWebsites: [SecureVaultModels.NeverPromptWebsites] = []
+    public private(set) var neverPromptWebsites: [SecureVaultModels.NeverPromptWebsites] = []
 
-    private let secureVaultFactory: AutofillVaultFactory
-    private let secureVaultErrorReporter: SecureVaultErrorReporter
+    private let secureVault: (any AutofillSecureVault)?
 
-    public init(secureVaultFactory: AutofillVaultFactory = AutofillSecureVaultFactory,
-                secureVaultErrorReporter: SecureVaultErrorReporter = SecureVaultErrorReporter.shared) {
-        self.secureVaultFactory = secureVaultFactory
-        self.secureVaultErrorReporter = secureVaultErrorReporter
+    public init(secureVault: (any AutofillSecureVault)? = try? AutofillSecureVaultFactory.makeVault(errorReporter: SecureVaultErrorReporter.shared)) {
+        self.secureVault = secureVault
 
         fetchNeverPromptWebsites()
     }
@@ -40,11 +37,13 @@ class AutofillNeverPromptWebsitesManager {
         return neverPromptWebsites.contains { $0.domain == domain }
     }
 
-    public func saveNeverPromptWebsite(_ domain: String) throws -> Int64 {
+    public func saveNeverPromptWebsite(_ domain: String) throws -> Int64? {
+        guard let secureVault = secureVault else {
+            return nil
+        }
+
         do {
-            let id = try secureVaultFactory
-                .makeVault(errorReporter: secureVaultErrorReporter)
-                .storeNeverPromptWebsites(SecureVaultModels.NeverPromptWebsites(domain: domain))
+            let id = try secureVault.storeNeverPromptWebsites(SecureVaultModels.NeverPromptWebsites(domain: domain))
 
             fetchNeverPromptWebsites()
             return id
@@ -55,10 +54,12 @@ class AutofillNeverPromptWebsitesManager {
     }
 
     public func deleteAllNeverPromptWebsites() -> Bool {
+        guard let secureVault = secureVault else {
+            return false
+        }
+
         do {
-            try secureVaultFactory
-                .makeVault(errorReporter: secureVaultErrorReporter)
-                .deleteAllNeverPromptWebsites()
+            try secureVault.deleteAllNeverPromptWebsites()
 
             fetchNeverPromptWebsites()
             return true
@@ -68,15 +69,16 @@ class AutofillNeverPromptWebsitesManager {
         }
     }
 
-    private func fetchNeverPromptWebsites() {
+    internal func fetchNeverPromptWebsites() {
+        guard let secureVault = secureVault else {
+            return
+        }
+
         do {
-            neverPromptWebsites = try secureVaultFactory
-                    .makeVault(errorReporter: secureVaultErrorReporter)
-                    .neverPromptWebsites()
+            neverPromptWebsites = try secureVault.neverPromptWebsites()
         } catch {
             Pixel.fire(pixel: .secureVaultError, error: error)
             neverPromptWebsites = []
         }
     }
-
 }

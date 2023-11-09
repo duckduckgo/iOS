@@ -57,7 +57,7 @@ class AppDependencyProvider: DependencyProvider {
     let voiceSearchHelper: VoiceSearchHelperProtocol = VoiceSearchHelper()
     let downloadManager = DownloadManager()
     let autofillLoginSession = AutofillLoginSession()
-    let autofillNeverPromptWebsitesManager = AutofillNeverPromptWebsitesManager()
+    lazy var autofillNeverPromptWebsitesManager = AutofillNeverPromptWebsitesManager()
 
     let configurationManager = ConfigurationManager()
 }

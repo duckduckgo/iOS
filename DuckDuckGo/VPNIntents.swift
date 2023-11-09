@@ -25,11 +25,8 @@ struct DisableVPNIntent: AppIntent {
 
     static let title: LocalizedStringResource = "Disable VPN"
     static let description: LocalizedStringResource = "Disables the DuckDuckGo VPN"
-
-    /// Launch your app when the system triggers this intent.
     static let openAppWhenRun: Bool = false
 
-    /// Define the method that the system calls when it triggers this event.
     @MainActor
     func perform() async throws -> some IntentResult {
         do {
@@ -58,7 +55,6 @@ struct EnableVPNIntent: AppIntent {
 
     static let title: LocalizedStringResource = "Enable VPN"
     static let description: LocalizedStringResource = "Enables the DuckDuckGo VPN"
-
     static let openAppWhenRun: Bool = false
 
     @MainActor

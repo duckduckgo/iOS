@@ -68,4 +68,14 @@ extension NetworkProtectionVPNNotificationsViewModel {
     }
 }
 
+extension NetworkProtectionVPNLocationViewModel {
+    convenience init() {
+        let locationListRepository = NetworkProtectionLocationListCompositeRepository(tokenStore: NetworkProtectionKeychainTokenStore())
+        self.init(
+            locationListRepository: locationListRepository,
+            tunnelSettings: TunnelSettings(defaults: .networkProtectionGroupDefaults)
+        )
+    }
+}
+
 #endif

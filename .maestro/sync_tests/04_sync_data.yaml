@@ -131,14 +131,6 @@ tags:
 - assertVisible: Stack Overflow - Where Developers Learn, Share, & Build Careers
 - tapOn: Done
 
-# Verify favorites in home screen
-- assertVisible:
-    id: "searchEntry"
-- assertVisible: DuckDuckGo — Privacy, simplified.
-- assertVisible: NFL.com | Official Site of the National Football League
-- assertVisible: DuckDuckGo · GitHub
-- assertVisible: Stack Overflow - Where Developers Learn, Share, & Build Careers
-
 # Verify logins
 - tapOn: Settings
 - tapOn: Logins

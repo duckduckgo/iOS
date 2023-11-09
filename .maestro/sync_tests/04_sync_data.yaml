@@ -69,7 +69,12 @@ tags:
 
 - tapOn: Close Tabs and Clear Data
 - tapOn: Close Tabs and Clear Data
-- tapOn: Cancel
+- runFlow:
+    when:
+      visible:
+        text: "Cancel"
+    commands:
+      - tapOn: Cancel
 #</HACK>
 
 - tapOn: Settings

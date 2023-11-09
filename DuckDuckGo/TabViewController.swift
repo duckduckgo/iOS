@@ -615,6 +615,7 @@ class TabViewController: UIViewController {
 
     public func reload() {
         updateContentMode()
+        cachedRuntimeConfigurationForDomain = [:]
         webView.reload()
         privacyDashboard?.dismiss(animated: true)
     }
@@ -2451,6 +2452,38 @@ extension TabViewController: SecureVaultManagerDelegate {
     }
 
     func secureVaultManager(_: BrowserServicesKit.SecureVaultManager, didRequestPasswordManagerForDomain domain: String) {
+    }
+
+    func secureVaultManager(_: SecureVaultManager, didRequestRuntimeConfigurationForDomain domain: String, completionHandler: @escaping (String?) -> Void) {
+        // didRequestRuntimeConfigurationForDomain fires for every iframe loaded on a website
+        // so caching the runtime configuration for the domain to prevent unnecessary re-building of the configuration
+        if let runtimeConfigurationForDomain = cachedRuntimeConfigurationForDomain[domain] as? String {
+            completionHandler(runtimeConfigurationForDomain)
+            return
+        }
+
+        let runtimeConfiguration = DefaultAutofillSourceProvider.Builder(
+                                                                        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+                                                                        properties: buildContentScopePropertiesForDomain(domain))
+                                                                .build()
+                                                                .buildRuntimeConfigResponse()
+
+        cachedRuntimeConfigurationForDomain = [domain: runtimeConfiguration]
+        completionHandler(runtimeConfiguration)
+    }
+
+    private func buildContentScopePropertiesForDomain(_ domain: String) -> ContentScopeProperties {
+        var supportedFeatures = ContentScopeFeatureToggles.supportedFeaturesOniOS
+
+        if AutofillSettingStatus.isAutofillEnabledInSettings,
+           featureFlagger.isFeatureOn(.autofillCredentialsSaving),
+           autofillNeverPromptWebsitesManager.hasNeverPromptWebsitesFor(domain: domain) {
+            supportedFeatures.passwordGeneration = false
+        }
+
+        return ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell,
+                                      sessionKey: autofillUserScript?.sessionKey ?? "",
+                                      featureToggles: supportedFeatures)
     }
 
     func secureVaultManager(_: SecureVaultManager, didReceivePixel pixel: AutofillUserScript.JSPixel) {

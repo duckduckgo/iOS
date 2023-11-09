@@ -159,6 +159,31 @@ public final class SyncBookmarksAdapter {
         self.faviconsFetcher = faviconsFetcher
     }
 
+    public func cancelFaviconsFetching(_ application: UIApplication) {
+        guard let faviconsFetcher else {
+            return
+        }
+        if faviconsFetcher.isFetchingInProgress == true {
+            os_log(.debug, log: .syncLog, "Favicons Fetching is in progress. Starting background task to allow it to gracefully complete.")
+
+            var taskID: UIBackgroundTaskIdentifier!
+            taskID = application.beginBackgroundTask(withName: "Cancelled Favicons Fetching Completion Task") {
+                os_log(.debug, log: .syncLog, "Forcing background task completion")
+                application.endBackgroundTask(taskID)
+            }
+            faviconsFetchingDidFinishCancellable?.cancel()
+            faviconsFetchingDidFinishCancellable = faviconsFetcher.$isFetchingInProgress.dropFirst().filter { !$0 }
+                .prefix(1)
+                .receive(on: DispatchQueue.main)
+                .sink { _ in
+                    os_log(.debug, log: .syncLog, "Ending background task")
+                    application.endBackgroundTask(taskID)
+                }
+        }
+
+        faviconsFetcher.cancelOngoingFetchingIfNeeded()
+    }
+
     private func handleFavoritesAfterDisablingSync() {
         let context = database.makeContext(concurrencyType: .privateQueueConcurrencyType)
 
@@ -186,4 +211,5 @@ public final class SyncBookmarksAdapter {
     private let database: CoreDataDatabase
     private let favoritesDisplayModeStorage: FavoritesDisplayModeStoring
     private var faviconsFetcher: BookmarksFaviconsFetcher?
+    private var faviconsFetchingDidFinishCancellable: AnyCancellable?
 }

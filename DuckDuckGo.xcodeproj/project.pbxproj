@@ -747,6 +747,7 @@
 		EE0153EB2A6FF970002A8B26 /* NetworkProtectionRootViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0153EA2A6FF970002A8B26 /* NetworkProtectionRootViewModelTests.swift */; };
 		EE0153ED2A6FF9E6002A8B26 /* NetworkProtectionRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0153EC2A6FF9E6002A8B26 /* NetworkProtectionRootView.swift */; };
 		EE0153EF2A70021E002A8B26 /* NetworkProtectionInviteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0153EE2A70021E002A8B26 /* NetworkProtectionInviteView.swift */; };
+		EE01EB402AFBD0000096AAC9 /* NetworkProtectionVPNSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01EB3F2AFBD0000096AAC9 /* NetworkProtectionVPNSettingsViewModel.swift */; };
 		EE01EB432AFC1E0A0096AAC9 /* NetworkProtectionVPNLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01EB422AFC1E0A0096AAC9 /* NetworkProtectionVPNLocationView.swift */; };
 		EE276BEA2A77F823009167B6 /* NetworkProtectionRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE276BE92A77F823009167B6 /* NetworkProtectionRootViewController.swift */; };
 		EE3766DE2AC5945500AAB575 /* NetworkProtectionUNNotificationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3766DD2AC5945500AAB575 /* NetworkProtectionUNNotificationPresenter.swift */; };
@@ -2320,6 +2321,7 @@
 		EE0153EA2A6FF970002A8B26 /* NetworkProtectionRootViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionRootViewModelTests.swift; sourceTree = "<group>"; };
 		EE0153EC2A6FF9E6002A8B26 /* NetworkProtectionRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionRootView.swift; sourceTree = "<group>"; };
 		EE0153EE2A70021E002A8B26 /* NetworkProtectionInviteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionInviteView.swift; sourceTree = "<group>"; };
+		EE01EB3F2AFBD0000096AAC9 /* NetworkProtectionVPNSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionVPNSettingsViewModel.swift; sourceTree = "<group>"; };
 		EE01EB422AFC1E0A0096AAC9 /* NetworkProtectionVPNLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionVPNLocationView.swift; sourceTree = "<group>"; };
 		EE276BE92A77F823009167B6 /* NetworkProtectionRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionRootViewController.swift; sourceTree = "<group>"; };
 		EE3766DD2AC5945500AAB575 /* NetworkProtectionUNNotificationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionUNNotificationPresenter.swift; sourceTree = "<group>"; };
@@ -4439,6 +4441,7 @@
 			isa = PBXGroup;
 			children = (
 				EE9D68D02AE00CF300B55EF4 /* NetworkProtectionVPNSettingsView.swift */,
+				EE01EB3F2AFBD0000096AAC9 /* NetworkProtectionVPNSettingsViewModel.swift */,
 			);
 			name = VPNSettings;
 			sourceTree = "<group>";
@@ -6441,6 +6444,7 @@
 				31EF52E1281B3BDC0034796E /* AutofillLoginListItemViewModel.swift in Sources */,
 				1E4FAA6627D8DFC800ADC5B3 /* CompleteDownloadRowViewModel.swift in Sources */,
 				83004E862193E5ED00DA013C /* TabViewControllerBrowsingMenuExtension.swift in Sources */,
+				EE01EB402AFBD0000096AAC9 /* NetworkProtectionVPNSettingsViewModel.swift in Sources */,
 				EE72CA852A862D000043B5B3 /* NetworkProtectionDebugViewController.swift in Sources */,
 				C18ED43A2AB6F77600BF3805 /* AutofillSettingsEnableFooterView.swift in Sources */,
 				CB84C7BD29A3EF530088A5B8 /* AppConfigurationURLProvider.swift in Sources */,

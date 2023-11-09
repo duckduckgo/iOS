@@ -227,8 +227,8 @@ struct VPNStatusWidget: Widget {
         StaticConfiguration(kind: kind, provider: VPNStatusTimelineProvider()) { entry in
             VPNStatusView(entry: entry).widgetURL(DeepLinks.openVPN)
         }
-        .configurationDisplayName("DuckDuckGo VPN Status")
-        .description("View and manage DuckDuckGo VPN’s status")
+        .configurationDisplayName("VPN Status")
+        .description("View and manage the DuckDuckGo VPN status")
         .supportedFamilies([.systemSmall])
         .contentMarginsDisabled()
     }

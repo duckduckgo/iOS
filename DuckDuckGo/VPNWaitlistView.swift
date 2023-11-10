@@ -22,6 +22,7 @@ import Core
 import Waitlist
 import DesignResourcesKit
 
+@available(iOS 15.0, *)
 struct VPNWaitlistView: View {
 
     @EnvironmentObject var viewModel: WaitlistViewModel
@@ -40,8 +41,8 @@ struct VPNWaitlistView: View {
             VPNWaitlistJoinedWaitlistView(notificationState: state) { action in
                 Task { await viewModel.perform(action: action) }
             }
-        case .invited(let inviteCode):
-            VPNWaitlistInvitedView(inviteCode: inviteCode) { action in
+        case .invited:
+            VPNWaitlistInvitedView(viewData: NetworkProtectionInvitedToWaitlistViewData()) { action in
                 Task { await viewModel.perform(action: action) }
             }
         case .waitlistRemoved:
@@ -50,6 +51,7 @@ struct VPNWaitlistView: View {
     }
 }
 
+@available(iOS 15.0, *)
 struct VPNWaitlistSignUpView: View {
 
     let requestInFlight: Bool
@@ -60,16 +62,27 @@ struct VPNWaitlistSignUpView: View {
         GeometryReader { proxy in
             ScrollView {
                 VStack(alignment: .center, spacing: 8) {
-                    HeaderView(imageName: "WindowsWaitlistJoinWaitlist", title: "Title")
+                    HeaderView(imageName: "WindowsWaitlistJoinWaitlist", title: UserText.networkProtectionWaitlistJoinTitle)
 
-                    Text("Summary")
+                    Text(UserText.networkProtectionWaitlistJoinSubtitle1)
                         .daxBodyRegular()
                         .foregroundColor(.waitlistTextSecondary)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
 
-                    Button(UserText.waitlistJoin, action: { action(.joinQueue) })
+                    Text(UserText.networkProtectionWaitlistJoinSubtitle2)
+                        .daxBodyRegular()
+                        .foregroundColor(.waitlistTextSecondary)
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(6)
+                        .padding(.top, 24)
+
+                    Button("Join the Waitlist", action: { action(.joinQueue) })
                         .buttonStyle(RoundedButtonStyle(enabled: !requestInFlight))
+                        .padding(.top, 24)
+
+                    Button("I Have an Invite Code", action: { action(.custom(.openNetworkProtectionInviteCodeScreen)) })
+                        .buttonStyle(RoundedButtonStyle(enabled: true, style: .bordered))
                         .padding(.top, 24)
 
                     if requestInFlight {
@@ -83,6 +96,11 @@ struct VPNWaitlistSignUpView: View {
                         .padding(.top, 14)
                     }
 
+                    Text(UserText.networkProtectionWaitlistAvailabilityDisclaimer)
+                        .font(.footnote)
+                        .foregroundStyle(Color.secondary)
+                        .padding(.top, 24)
+
                     Spacer()
                 }
                 .padding([.leading, .trailing], 24)
@@ -95,6 +113,7 @@ struct VPNWaitlistSignUpView: View {
 
 // MARK: - Joined Waitlist Views
 
+@available(iOS 15.0, *)
 struct VPNWaitlistJoinedWaitlistView: View {
 
     let notificationState: WaitlistViewModel.NotificationPermissionState
@@ -103,17 +122,22 @@ struct VPNWaitlistJoinedWaitlistView: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            HeaderView(imageName: "WaitlistJoined", title: UserText.waitlistOnTheList)
+            HeaderView(imageName: "WaitlistJoined", title: UserText.networkProtectionWaitlistJoinedTitle)
 
             switch notificationState {
             case .notificationAllowed:
-                Text(UserText.windowsWaitlistJoinedWithNotifications)
+                Text(UserText.networkProtectionWaitlistJoinedWithNotificationsSubtitle1)
+                    .daxBodyRegular()
+                    .foregroundColor(.waitlistTextSecondary)
+                    .lineSpacing(6)
+
+                Text(UserText.networkProtectionWaitlistJoinedWithNotificationsSubtitle2)
                     .daxBodyRegular()
                     .foregroundColor(.waitlistTextSecondary)
                     .lineSpacing(6)
 
             default:
-                Text(UserText.windowsWaitlistJoinedWithoutNotifications)
+                Text("TODO")
                     .daxBodyRegular()
                     .foregroundColor(.waitlistTextSecondary)
                     .lineSpacing(6)
@@ -138,6 +162,7 @@ struct VPNWaitlistJoinedWaitlistView: View {
 
 }
 
+@available(iOS 15.0, *)
 private struct AllowNotificationsView: View {
 
     let action: (WaitlistViewModel.ViewAction) -> Void
@@ -174,9 +199,11 @@ private struct ShareButtonFramePreferenceKey: PreferenceKey {
     static func reduce(value: inout CGRect, nextValue: () -> CGRect) {}
 }
 
+@available(iOS 15.0, *)
 struct VPNWaitlistInvitedView: View {
 
-    let inviteCode: String
+    let viewData: InvitedToWaitlistViewData
+
     let action: (WaitlistViewModel.ViewAction) -> Void
 
     @State private var shareButtonFrame: CGRect = .zero
@@ -185,56 +212,32 @@ struct VPNWaitlistInvitedView: View {
         GeometryReader { proxy in
             ScrollView {
                 VStack(alignment: .center, spacing: 0) {
-                    HeaderView(imageName: "WaitlistInvited", title: UserText.waitlistYoureInvited)
+                    HeaderView(imageName: "WaitlistInvited", title: UserText.networkProtectionWaitlistInvitedTitle)
 
-                    Text(UserText.windowsWaitlistInviteScreenSubtitle)
+                    Text(UserText.networkProtectionWaitlistInvitedSubtitle)
                         .daxBodyRegular()
                         .foregroundColor(.waitlistTextSecondary)
                         .padding(.top, 16)
                         .lineSpacing(6)
                         .fixedSize(horizontal: false, vertical: true)
 
-                    Text(UserText.waitlistInviteScreenStepTitle(step: 1))
-                        .daxHeadline()
-                        .foregroundColor(.waitlistTextSecondary)
-                        .padding(.top, 28)
-                        .padding(.bottom, 8)
-
-                    Text(UserText.windowsWaitlistInviteScreenStep1Description)
-                        .daxBodyRegular()
-                        .foregroundColor(.waitlistTextSecondary)
-                        .lineSpacing(6)
-
-                    Text(URL.windows.absoluteString.dropping(prefix: "https://"))
-                        .daxHeadline()
-                        .foregroundColor(.waitlistBlue)
-                        .menuController(UserText.waitlistCopy) {
-                            action(.copyDownloadURLToPasteboard)
+                    VStack(spacing: 16.0) {
+                        ForEach(viewData.entryViewViewDataList) { itemData in
+                            WaitlistListEntryView(viewData: itemData)
                         }
-                        .scaledToFit()
+                    }
+                    .padding(.top, 24)
 
-                    Text(UserText.waitlistInviteScreenStepTitle(step: 2))
-                        .daxHeadline()
-                        .foregroundColor(.waitlistTextSecondary)
-                        .padding(.top, 22)
-                        .padding(.bottom, 8)
+                    Button("Get Started", action: { action(.custom(.openNetworkProtectionPrivacyPolicyScreen)) })
+                        .buttonStyle(RoundedButtonStyle(enabled: true))
+                        .padding(.top, 32)
 
-                    Text(UserText.windowsWaitlistInviteScreenStep2Description)
-                        .daxBodyRegular()
-                        .foregroundColor(.waitlistTextSecondary)
-                        .lineSpacing(6)
+                    Text(UserText.networkProtectionWaitlistAvailabilityDisclaimer)
+                        .font(.footnote)
+                        .foregroundStyle(Color.secondary)
+                        .padding(.top, 24)
 
-                    InviteCodeView(title: UserText.waitlistInviteCode, inviteCode: inviteCode)
-                        .menuController(UserText.waitlistCopy) {
-                            action(.copyInviteCodeToPasteboard)
-                        }
-                        .fixedSize()
-                        .padding(.top, 28)
-
-                    Spacer(minLength: 24)
-
-                    shareButton
-                        .padding(.bottom, 26)
+                    Spacer()
 
                 }
                 .frame(maxWidth: .infinity, minHeight: proxy.size.height)
@@ -243,30 +246,74 @@ struct VPNWaitlistInvitedView: View {
             }
         }
     }
+}
 
-    var shareButton: some View {
+protocol InvitedToWaitlistViewData {
+    var headerImageName: String { get }
+    var title: String { get }
+    var subtitle: String { get }
+    var entryViewViewDataList: [WaitlistEntryViewItemViewData] { get }
+    var availabilityDisclaimer: String { get }
+    var buttonDismissLabel: String { get }
+    var buttonGetStartedLabel: String { get }
+}
 
-        Button(action: {
-            action(.openShareSheet(shareButtonFrame))
-        }, label: {
-            Image("Share")
-                .foregroundColor(.waitlistTextSecondary)
-        })
-        .frame(width: 44, height: 44)
-        .background(
-            GeometryReader { proxy in
-                Color.clear
-                    .preference(key: ShareButtonFramePreferenceKey.self, value: proxy.frame(in: .global))
+struct WaitlistEntryViewItemViewData: Identifiable {
+    let id = UUID()
+    let imageName: String
+    let title: String
+    let subtitle: String
+}
+
+struct NetworkProtectionInvitedToWaitlistViewData: InvitedToWaitlistViewData {
+    let headerImageName = "Gift-96"
+    let title = UserText.networkProtectionWaitlistInvitedTitle
+    let subtitle = UserText.networkProtectionWaitlistInvitedSubtitle
+    let buttonDismissLabel = UserText.networkProtectionWaitlistButtonDismiss
+    let buttonGetStartedLabel = UserText.networkProtectionWaitlistButtonGetStarted
+    let availabilityDisclaimer = UserText.networkProtectionWaitlistAvailabilityDisclaimer
+    let entryViewViewDataList: [WaitlistEntryViewItemViewData] =
+    [
+        .init(imageName: "Shield-16",
+              title: UserText.networkProtectionWaitlistInvitedSection1Title,
+              subtitle: UserText.networkProtectionWaitlistInvitedSection1Subtitle),
+
+        .init(imageName: "Rocket-16",
+                  title: UserText.networkProtectionWaitlistInvitedSection2Title,
+                  subtitle: UserText.networkProtectionWaitlistInvitedSection2Subtitle),
+
+        .init(imageName: "Card-16",
+                  title: UserText.networkProtectionWaitlistInvitedSection3Title,
+                  subtitle: UserText.networkProtectionWaitlistInvitedSection3Subtitle),
+    ]
+}
+
+private struct WaitlistListEntryView: View {
+    let viewData: WaitlistEntryViewItemViewData
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 8) {
+            Image(viewData.imageName)
+                .frame(maxWidth: 16, maxHeight: 16)
+
+            VStack(alignment: .leading, spacing: 6) {
+                Text(viewData.title)
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundColor(Color("BlackWhite80"))
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                Text(viewData.subtitle)
+                    .font(.system(size: 13))
+                    .foregroundColor(Color("BlackWhite60"))
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
-        )
-        .onPreferenceChange(ShareButtonFramePreferenceKey.self) { newFrame in
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                self.shareButtonFrame = newFrame
-            }
+            .frame(maxWidth: .infinity)
+
+            Spacer()
         }
-
     }
-
 }
 
 // MARK: - Previews

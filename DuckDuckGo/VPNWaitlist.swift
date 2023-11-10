@@ -95,3 +95,8 @@ final class VPNWaitlist: Waitlist {
     private var isWaitlistRemovedCancellable: AnyCancellable?
 
 }
+
+extension WaitlistViewModel.ViewCustomAction {
+    static var openNetworkProtectionInviteCodeScreen = WaitlistViewModel.ViewCustomAction(identifier: "openNetworkProtectionInviteCodeScreen")
+    static var openNetworkProtectionPrivacyPolicyScreen = WaitlistViewModel.ViewCustomAction(identifier: "openNetworkProtectionPrivacyPolicyScreen")
+}

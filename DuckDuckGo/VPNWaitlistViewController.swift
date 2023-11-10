@@ -23,6 +23,7 @@ import LinkPresentation
 import Core
 import Waitlist
 
+@available(iOS 15.0, *)
 final class VPNWaitlistViewController: UIViewController {
 
     private let viewModel: WaitlistViewModel
@@ -89,6 +90,7 @@ final class VPNWaitlistViewController: UIViewController {
 
 }
 
+@available(iOS 15.0, *)
 extension VPNWaitlistViewController: WaitlistViewModelDelegate {
 
     func waitlistViewModelDidAskToReceiveJoinedNotification(_ viewModel: WaitlistViewModel) async -> Bool {
@@ -117,19 +119,21 @@ extension VPNWaitlistViewController: WaitlistViewModelDelegate {
     }
 
     func waitlistViewModel(_ viewModel: WaitlistViewModel, didTriggerCustomAction action: WaitlistViewModel.ViewCustomAction) {
-        if action == .openMacBrowserWaitlist {
-            let macWaitlistViewController = MacWaitlistViewController(nibName: nil, bundle: nil)
-            navigationController?.popToRootViewController(animated: true)
-            navigationController?.pushViewController(macWaitlistViewController, animated: true)
+        if action == .openNetworkProtectionInviteCodeScreen {
+            let networkProtectionViewController = NetworkProtectionRootViewController { [weak self] in
+                print("DEBUG: Invite complete")
+            }
+
+            self.navigationController?.pushViewController(networkProtectionViewController, animated: true)
         }
     }
 
     func waitlistViewModelDidOpenInviteCodeShareSheet(_ viewModel: WaitlistViewModel, inviteCode: String, senderFrame: CGRect) {
-        fatalError()
+        // The VPN waitlist doesn't support the share sheet
     }
 
     func waitlistViewModelDidOpenDownloadURLShareSheet(_ viewModel: WaitlistViewModel, senderFrame: CGRect) {
-        fatalError()
+        // The VPN waitlist doesn't support the share sheet
     }
 
 }

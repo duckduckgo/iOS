@@ -275,6 +275,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
         WindowsBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
+        VPNWaitlist.shared.registerBackgroundRefreshTaskHandler()
         RemoteMessaging.registerBackgroundRefreshTaskHandler(bookmarksDatabase: bookmarksDatabase)
 
         UNUserNotificationCenter.current().delegate = self
@@ -374,10 +375,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             WindowsBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
         }
 
+        VPNWaitlist.shared.fetchInviteCodeIfAvailable { error in
+            guard error == nil else { return }
+            VPNWaitlist.shared.sendInviteCodeAvailableNotification()
+        }
+
         BGTaskScheduler.shared.getPendingTaskRequests { tasks in
             let hasWindowsBrowserWaitlistTask = tasks.contains { $0.identifier == WindowsBrowserWaitlist.backgroundRefreshTaskIdentifier }
             if !hasWindowsBrowserWaitlistTask {
                 WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
+            }
+
+            let hasVPNWaitlistTask = tasks.contains { $0.identifier == VPNWaitlist.backgroundRefreshTaskIdentifier }
+            if !hasVPNWaitlistTask {
+                VPNWaitlist.shared.scheduleBackgroundRefreshTask()
             }
         }
 

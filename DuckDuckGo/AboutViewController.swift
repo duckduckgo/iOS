@@ -46,7 +46,7 @@ struct AboutView: View {
                     .daxHeadline()
 
                 Divider()
-                    .frame(width: 160)
+                    .frame(width: 80)
                     .padding()
 
                 Text(LocalizedStringKey(UserText.aboutText))
@@ -54,7 +54,7 @@ struct AboutView: View {
                     .multilineTextAlignment(.leading)
                     .foregroundColor(.primary)
                     .tintIfAvailable(Color(designSystemColor: .accent))
-                    .padding(.horizontal)
+                    .padding(.horizontal, 32)
                     .padding(.bottom)
 
                 Spacer()

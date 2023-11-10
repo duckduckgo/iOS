@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+import Bookmarks
+
 protocol AppSettings: AnyObject {
     var autocomplete: Bool { get set }
     var currentThemeName: ThemeName { get set }
@@ -34,6 +36,8 @@ protocol AppSettings: AnyObject {
     var currentAddressBarPosition: AddressBarPosition { get set }
 
     var textSize: Int { get set }
+
+    var favoritesDisplayMode: FavoritesDisplayMode { get set }
     
     var autofillCredentialsEnabled: Bool { get set }
     var autofillCredentialsSavePromptShowAtLeastOnce: Bool { get set }
@@ -47,4 +51,7 @@ protocol AppSettings: AnyObject {
     
     var autoconsentPromptSeen: Bool { get set }
     var autoconsentEnabled: Bool { get set }
+
+    var isSyncBookmarksPaused: Bool { get }
+    var isSyncCredentialsPaused: Bool { get }
 }

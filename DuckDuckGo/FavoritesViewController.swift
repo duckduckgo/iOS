@@ -52,10 +52,12 @@ class FavoritesViewController: UIViewController {
     private let bookmarksDatabase: CoreDataDatabase
     private let syncService: DDGSyncing
     private let syncDataProviders: SyncDataProviders
+    private let appSettings: AppSettings
     
     fileprivate var viewModelCancellable: AnyCancellable?
     private var localUpdatesCancellable: AnyCancellable?
     private var syncUpdatesCancellable: AnyCancellable?
+    private var favoritesDisplayModeCancellable: AnyCancellable?
 
     var hasFavorites: Bool {
         renderer.viewModel.favorites.count > 0
@@ -68,10 +70,17 @@ class FavoritesViewController: UIViewController {
         }
     }
     
-    init?(coder: NSCoder, bookmarksDatabase: CoreDataDatabase, syncService: DDGSyncing, syncDataProviders: SyncDataProviders) {
+    init?(
+        coder: NSCoder,
+        bookmarksDatabase: CoreDataDatabase,
+        syncService: DDGSyncing,
+        syncDataProviders: SyncDataProviders,
+        appSettings: AppSettings
+    ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
+        self.appSettings = appSettings
         super.init(coder: coder)
     }
 
@@ -93,9 +102,13 @@ class FavoritesViewController: UIViewController {
         collectionView.backgroundColor = .clear
 
         view.addSubview(collectionView)
-        
-        renderer = FavoritesHomeViewSectionRenderer(allowsEditing: true,
-                                                    viewModel: FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase))
+
+        let favoritesListViewModel = FavoritesListViewModel(
+            bookmarksDatabase: bookmarksDatabase,
+            favoritesDisplayMode: appSettings.favoritesDisplayMode
+        )
+
+        renderer = FavoritesHomeViewSectionRenderer(allowsEditing: true, viewModel: favoritesListViewModel)
         renderer.install(into: self)
 
         // Has to happen after the renderer is installed
@@ -105,6 +118,16 @@ class FavoritesViewController: UIViewController {
             self?.collectionView.reloadData()
             self?.updateHeroImage()
         }
+
+        favoritesDisplayModeCancellable = NotificationCenter.default.publisher(for: AppUserDefaults.Notifications.favoritesDisplayModeChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self else {
+                    return
+                }
+                self.renderer.viewModel.favoritesDisplayMode = self.appSettings.favoritesDisplayMode
+                self.collectionView.reloadData()
+            }
 
         registerForKeyboardNotifications()
 

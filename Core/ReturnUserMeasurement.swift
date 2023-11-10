@@ -45,9 +45,6 @@ class KeychainReturnUserMeasurement: ReturnUserMeasurement {
     }
 
     func installCompletedWithATB(_ atb: Atb) {
-        if let oldATB = readSecureATB() {
-            sendReturnUserMeasurement(oldATB, atb.version)
-        }
         writeSecureATB(atb.version)
     }
 
@@ -107,13 +104,6 @@ class KeychainReturnUserMeasurement: ReturnUserMeasurement {
         }
 
         return nil
-    }
-
-    private func sendReturnUserMeasurement(_ oldATB: String, _ newATB: String) {
-        Pixel.fire(pixel: .returnUser, withAdditionalParameters: [
-            PixelParameters.returnUserOldATB: oldATB,
-            PixelParameters.returnUserNewATB: newATB
-        ])
     }
 
     private func fireDebugPixel(_ event: Pixel.Event, errorCode: OSStatus) {

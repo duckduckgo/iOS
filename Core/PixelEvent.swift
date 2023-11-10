@@ -358,9 +358,6 @@ extension Pixel {
         case remoteMessageSecondaryActionClicked
         case remoteMessageSheet
 
-        // MARK: Return user measurement
-        case returnUser
-
         // MARK: debug pixels
         case dbCrashDetected
 
@@ -998,7 +995,6 @@ extension Pixel.Event {
 
         case .compilationFailed: return "m_d_compilation_failed"
         // MARK: - Return user measurement
-        case .returnUser: return "m_return_user"
         case .debugReturnUserAddATB: return "m_debug_return_user_add_atb"
         case .debugReturnUserReadATB: return "m_debug_return_user_read_atb"
         case .debugReturnUserUpdateATB: return "m_debug_return_user_update_atb"

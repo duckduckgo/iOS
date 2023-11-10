@@ -38,7 +38,6 @@ class NetworkProtectionWidgetRefreshModel {
     }
 
     public func refreshVPNWidget() {
-        print("DEBUG: Refreshing widget!")
         WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
     }
 

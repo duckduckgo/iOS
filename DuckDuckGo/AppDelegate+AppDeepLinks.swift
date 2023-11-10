@@ -52,7 +52,9 @@ extension AppDelegate {
             mainViewController.newEmailAddress()
 
         case .openVPN:
+#if NETWORK_PROTECTION
             presentNetworkProtectionStatusSettingsModal()
+#endif
 
         default:
             guard app.applicationState == .active,

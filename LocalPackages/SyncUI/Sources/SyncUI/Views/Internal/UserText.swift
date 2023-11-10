@@ -120,10 +120,9 @@ struct UserText {
     static let bookmarksLimitExceededAction = "Manage Bookmarks"
     static let credentialsLimitExceededAction = "Manage Logins"
     
-    static let fetchFaviconsOnboardingTitle = "Find Missing Icons?"
-    static let fetchFaviconsOnboardingMessage = "Would you like DuckDuckGo to find and download icons for your bookmarks?"
-    static let fetchFaviconsOnboardingOptionTitle = "Keep Icons Updated"
-    static let fetchFaviconsOnboardingOptionCaption = "Have this device automatically download icons for synced bookmarks."
+    static let fetchFaviconsOnboardingTitle = "Fetch Missing Icons?"
+    static let fetchFaviconsOnboardingMessage = "Do you want this device to find icons for any incoming bookmark synced from one of your other devices?"
+    static let fetchFaviconsOnboardingButtonTitle = "Keep Bookmarks Icons Updated"
 
 }
 // swiftlint:enable line_length

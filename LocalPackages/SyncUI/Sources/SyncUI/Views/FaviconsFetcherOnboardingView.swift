@@ -1,5 +1,6 @@
 //
 //  FaviconsFetcherOnboardingView.swift
+//  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
 //
@@ -22,12 +23,6 @@ import DesignResourcesKit
 
 public struct FaviconsFetcherOnboardingView: View {
 
-    @Environment(\.verticalSizeClass) var verticalSizeClass
-
-    var isCompact: Bool {
-        verticalSizeClass == .compact
-    }
-
     public init(model: FaviconsFetcherOnboardingViewModel) {
         self.model = model
     }
@@ -35,57 +30,44 @@ public struct FaviconsFetcherOnboardingView: View {
     @ObservedObject public var model: FaviconsFetcherOnboardingViewModel
 
     public var body: some View {
-        UnderflowContainer {
-            VStack(spacing: 12) {
-                Image("Sync-Start-128")
-                    .padding(.bottom, 12)
+        VStack(spacing: 0) {
+
+            VStack(spacing: 24) {
+                Image("SyncFetchFaviconsLogo")
 
                 Text(UserText.fetchFaviconsOnboardingTitle)
-                    .daxTitle3()
+                    .daxTitle1()
 
                 Text(UserText.fetchFaviconsOnboardingMessage)
                     .multilineTextAlignment(.center)
                     .daxBodyRegular()
-                    .padding(.bottom, 24)
+            }
+            .padding(.horizontal, 24)
+            .padding(.vertical, 20)
 
-                Text(UserText.options.uppercased())
-                    .daxFootnoteRegular()
-                Toggle(isOn: $model.isFaviconsFetchingEnabled) {
-                    VStack(alignment: .leading) {
-                        Text(UserText.fetchFaviconsOnboardingOptionTitle)
-                            .foregroundColor(.primary)
-                            .daxBodyRegular()
-                        Text(UserText.fetchFaviconsOnboardingOptionCaption)
-                            .daxCaption()
-                            .foregroundColor(.secondary)
+            VStack(spacing: 8) {
+                Button {
+                    withAnimation {
+                        model.isFaviconsFetchingEnabled = true
+                        model.onDismiss()
                     }
+                } label: {
+                    Text(UserText.fetchFaviconsOnboardingButtonTitle)
                 }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 10)
-                .background(
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(.black.opacity(0.01))
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(.black.opacity(0.2), lineWidth: 0.2)
-                )
-            }
-            .padding(.horizontal, 20)
+                .buttonStyle(PrimaryButtonStyle())
+                .frame(maxWidth: 360)
 
-        } foregroundContent: {
-            Button {
-                withAnimation {
-                    model.onDismiss()
+                Button {
+                    withAnimation {
+                        model.onDismiss()
+                    }
+                } label: {
+                    Text(UserText.notNowButton)
                 }
-            } label: {
-                Text("Dismiss")
+                .buttonStyle(SecondaryButtonStyle())
+                .frame(maxWidth: 360)
             }
-            .buttonStyle(PrimaryButtonStyle())
-            .frame(maxWidth: 360)
-            .padding(.horizontal, 30)
+            .padding(.init(top: 24, leading: 24, bottom: 0, trailing: 24))
         }
-        .padding(.top, isCompact ? 0 : 24)
-        .padding(.bottom)
     }
 }

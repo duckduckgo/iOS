@@ -1,0 +1,10 @@
+appId: com.duckduckgo.mobile.ios
+---
+
+- scroll
+- scroll
+- scroll
+- assertVisible: Debug Menu
+- tapOn: Debug Menu
+- tapOn: Internal User State
+- tapOn: Settings

@@ -50,9 +50,9 @@ tags:
 - tapOn: Done
 
 # Sync data
-# <HACK>This is a workaround to:
+# <WORDAROUND>This is a workaround to:
 # - Put the code in the clipboard on Maestro Cloud
-# - Prevent iOS from showing the Paste permission alert
+# - Prevent iOS from showing the Paste permission alert as Maestro can't handle it
 - tapOn:
     id: searchEntry
 - inputText: ${CODE}
@@ -81,7 +81,7 @@ tags:
         text: "Cancel"
     commands:
       - tapOn: Cancel
-#</HACK>
+#</WORDAROUND>
 
 - tapOn: Settings
 - runFlow:

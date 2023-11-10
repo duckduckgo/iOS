@@ -328,22 +328,22 @@ class MainViewController: UIViewController {
     private func registerForSyncPausedNotifications() {
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(showsyncPausedError),
-            name: SyncBookmarksAdapter.shouldShowBookmarkPauseError,
+            selector: #selector(showSyncPausedError),
+            name: SyncBookmarksAdapter.notifyBookmarksSyncLimitReached,
             object: nil)
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(showsyncPausedError),
-            name: SyncCredentialsAdapter.shouldShowCredentialsPauseError,
+            selector: #selector(showSyncPausedError),
+            name: SyncCredentialsAdapter.credentialsSyncLimitReached,
             object: nil)
     }
 
-    @objc private func showsyncPausedError(_ notification: Notification) {
+    @objc private func showSyncPausedError(_ notification: Notification) {
         Task {
             await MainActor.run {
                 var title = UserText.syncBookmarkPausedAlertTitle
                 var description = UserText.syncBookmarkPausedAlertDescription
-                if notification.name == SyncCredentialsAdapter.shouldShowCredentialsPauseError {
+                if notification.name == SyncCredentialsAdapter.credentialsSyncLimitReached {
                     title = UserText.syncCredentialsPausedAlertTitle
                     description = UserText.syncCredentialsPausedAlertDescription
                 }

@@ -37,7 +37,7 @@ public final class SyncBookmarksAdapter {
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
     public let widgetRefreshCancellable: AnyCancellable
     public static let syncBookmarksPausedStateChanged = Notification.Name("com.duckduckgo.app.SyncPausedStateChanged")
-    public static let shouldShowBookmarkPauseError = Notification.Name("com.duckduckgo.app.ShowSyncBookmarksPausedError")
+    public static let notifyBookmarksSyncLimitReached = Notification.Name("com.duckduckgo.app.SyncBookmarksLimitReached")
 
     public var shouldResetBookmarksSyncTimestamp: Bool = false {
         willSet {
@@ -53,7 +53,7 @@ public final class SyncBookmarksAdapter {
     }
 
     @UserDefaultsWrapper(key: .syncBookmarksPausedErrorDisplayed, defaultValue: false)
-    static private var wasSyncBookmarksErrorDisplayed: Bool
+    static private var didShowBookmarksSyncPausedError: Bool
 
     public init(database: CoreDataDatabase, favoritesDisplayModeStorage: FavoritesDisplayModeStoring) {
         self.database = database
@@ -107,12 +107,12 @@ public final class SyncBookmarksAdapter {
                         // If bookmarks count limit has been exceeded
                         Self.isSyncBookmarksPaused = true
                         DailyPixel.fire(pixel: .syncBookmarksCountLimitExceededDaily)
-                        Self.showErrorAlert()
+                        Self.notifyBookmarksSyncLimitReached()
                     case .unexpectedStatusCode(413):
                         // If bookmarks request size limit has been exceeded
                         Self.isSyncBookmarksPaused = true
                         DailyPixel.fire(pixel: .syncBookmarksRequestSizeLimitExceededDaily)
-                        Self.showErrorAlert()
+                        Self.notifyBookmarksSyncLimitReached()
                     default:
                         break
                     }
@@ -130,10 +130,10 @@ public final class SyncBookmarksAdapter {
         self.provider = provider
     }
 
-    static private func showErrorAlert() {
-        if !Self.wasSyncBookmarksErrorDisplayed {
-            NotificationCenter.default.post(name: Self.shouldShowBookmarkPauseError, object: nil)
-            Self.wasSyncBookmarksErrorDisplayed = true
+    static private func notifyBookmarksSyncLimitReached() {
+        if !Self.didShowBookmarksSyncPausedError {
+            NotificationCenter.default.post(name: Self.notifyBookmarksSyncLimitReached, object: nil)
+            Self.didShowBookmarksSyncPausedError = true
         }
     }
 

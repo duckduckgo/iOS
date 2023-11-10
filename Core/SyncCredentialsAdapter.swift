@@ -31,7 +31,7 @@ public final class SyncCredentialsAdapter {
     public let databaseCleaner: CredentialsDatabaseCleaner
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
     public static let syncCredentialsPausedStateChanged = SyncBookmarksAdapter.syncBookmarksPausedStateChanged
-    public static let shouldShowCredentialsPauseError = Notification.Name("com.duckduckgo.app.ShowSyncCredentialsPausedError")
+    public static let credentialsSyncLimitReached = Notification.Name("com.duckduckgo.app.SyncCredentialsLimitReached")
 
     @UserDefaultsWrapper(key: .syncCredentialsPaused, defaultValue: false)
     static public var isSyncCredentialsPaused: Bool {
@@ -40,7 +40,7 @@ public final class SyncCredentialsAdapter {
         }
     }
     @UserDefaultsWrapper(key: .syncCredentialsPausedErrorDisplayed, defaultValue: false)
-    static private var wasSyncCredentialsErrorDisplayed: Bool
+    static private var didShowCredentialsSyncPausedError: Bool
 
     public init(secureVaultFactory: AutofillVaultFactory = AutofillSecureVaultFactory, secureVaultErrorReporter: SecureVaultErrorReporting) {
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
@@ -75,7 +75,7 @@ public final class SyncCredentialsAdapter {
                 syncDidUpdateData: { [weak self] in
                     self?.syncDidCompleteSubject.send()
                     Self.isSyncCredentialsPaused = false
-                    Self.wasSyncCredentialsErrorDisplayed = false
+                    Self.didShowCredentialsSyncPausedError = false
                 }
             )
 
@@ -90,12 +90,12 @@ public final class SyncCredentialsAdapter {
                             // If credentials count limit has been exceeded
                             Self.isSyncCredentialsPaused = true
                             DailyPixel.fire(pixel: .syncCredentialsCountLimitExceededDaily)
-                            Self.showErrorAlert()
+                            Self.notifyCredentialsSyncLimitReached()
                         case .unexpectedStatusCode(413):
                             // If credentials request size limit has been exceeded
                             Self.isSyncCredentialsPaused = true
                             DailyPixel.fire(pixel: .syncCredentialsRequestSizeLimitExceededDaily)
-                            Self.showErrorAlert()
+                            Self.notifyCredentialsSyncLimitReached()
                         default:
                             break
                         }
@@ -119,10 +119,10 @@ public final class SyncCredentialsAdapter {
        }
     }
 
-    static private func showErrorAlert() {
-        if !Self.wasSyncCredentialsErrorDisplayed {
-            NotificationCenter.default.post(name: Self.shouldShowCredentialsPauseError, object: nil)
-            Self.wasSyncCredentialsErrorDisplayed = true
+    static private func notifyCredentialsSyncLimitReached() {
+        if !Self.didShowCredentialsSyncPausedError {
+            NotificationCenter.default.post(name: Self.credentialsSyncLimitReached, object: nil)
+            Self.didShowCredentialsSyncPausedError = true
         }
     }
 

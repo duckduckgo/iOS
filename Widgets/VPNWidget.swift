@@ -25,6 +25,8 @@ import WidgetKit
 import NetworkExtension
 import NetworkProtection
 
+#if ALPHA
+
 enum VPNStatus {
     case status(NEVPNStatus)
     case error
@@ -285,3 +287,5 @@ struct VPNStatusView_Previews: PreviewProvider {
     }
 
 }
+
+#endif

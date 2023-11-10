@@ -193,7 +193,7 @@ struct Widgets: WidgetBundle {
         SearchWidget()
         FavoritesWidget()
 
-#if DEBUG || ALPHA
+#if ALPHA
         if #available(iOSApplicationExtension 17.0, *) {
             VPNStatusWidget()
         }

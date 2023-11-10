@@ -25,6 +25,7 @@ import Common
 import DDGSync
 import Persistence
 
+// swiftlint:disable:next type_body_length
 class HomeViewController: UIViewController {
     
     @IBOutlet weak var ctaContainerBottom: NSLayoutConstraint!

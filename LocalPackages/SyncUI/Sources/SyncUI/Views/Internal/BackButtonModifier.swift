@@ -42,3 +42,21 @@ struct BackButtonModifier: ViewModifier {
     }
 
 }
+
+struct CancelButtonModifier: ViewModifier {
+    
+    @Environment(\.presentationMode) var presentation
+    let action: () -> Void
+    
+    func body(content: Content) -> some View {
+        content
+            .navigationBarBackButtonHidden()
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel", action: action)
+                        .foregroundColor(Color.white)
+                }
+            }
+    }
+    
+}

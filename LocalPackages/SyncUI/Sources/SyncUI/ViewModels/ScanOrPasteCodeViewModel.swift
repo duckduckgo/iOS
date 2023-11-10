@@ -91,7 +91,6 @@ public class ScanOrPasteCodeViewModel: ObservableObject {
 
         Task { @MainActor in
             let codeUsed = await delegate?.syncCodeEntered(code: string) == true
-            isValidating = false
             if !codeUsed {
                 invalidCode = true
             }

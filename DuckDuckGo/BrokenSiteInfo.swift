@@ -24,6 +24,11 @@ public struct BrokenSiteInfo {
 
     static let allowedQueryReservedCharacters =  CharacterSet(charactersIn: ",")
 
+    enum ProtectionsState: String {
+        case enabled = "1"
+        case disabled = "0"
+    }
+
     private struct Keys {
         static let url = "siteUrl"
         static let category = "category"
@@ -40,6 +45,7 @@ public struct BrokenSiteInfo {
         static let gpc = "gpc"
         static let ampUrl = "ampUrl"
         static let urlParametersRemoved = "urlParametersRemoved"
+        static let protectionsState = "protectionsState"
     }
     
     private let url: URL?
@@ -54,12 +60,14 @@ public struct BrokenSiteInfo {
     private let manufacturer: String
     private let systemVersion: String
     private let gpc: Bool
-    
+    private let protectionsState: ProtectionsState
+
     public init(url: URL?, httpsUpgrade: Bool,
                 blockedTrackerDomains: [String], installedSurrogates: [String],
                 isDesktop: Bool, tdsETag: String?,
                 ampUrl: String?,
                 urlParametersRemoved: Bool,
+                protected: Bool,
                 model: String = UIDevice.current.model,
                 manufacturer: String = "Apple",
                 systemVersion: String = UIDevice.current.systemVersion,
@@ -76,7 +84,8 @@ public struct BrokenSiteInfo {
         self.model = model
         self.manufacturer = manufacturer
         self.systemVersion = systemVersion
-        
+        self.protectionsState = protected ? .enabled : .disabled
+
         if let gpcParam = gpc {
             self.gpc = gpcParam
         } else {
@@ -101,7 +110,8 @@ public struct BrokenSiteInfo {
             Keys.model: model,
             Keys.gpc: gpc ? "true" : "false",
             Keys.ampUrl: ampUrl ?? "",
-            Keys.urlParametersRemoved: urlParametersRemoved ? "true" : "false"
+            Keys.urlParametersRemoved: urlParametersRemoved ? "true" : "false",
+            Keys.protectionsState: protectionsState.rawValue
         ]
         
         Pixel.fire(pixel: .brokenSiteReport,

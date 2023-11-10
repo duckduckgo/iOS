@@ -28,9 +28,6 @@
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "JF8-Ow-zXL"; */
 "JF8-Ow-zXL.title" = "Retour";
 
-/* Class = "UIBarButtonItem"; title = "Submit"; ObjectID = "jr6-Al-4fr"; */
-"jr6-Al-4fr.title" = "Envoyer";
-
 /* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "lsB-Kq-U8p"; */
 "lsB-Kq-U8p.normalTitle" = "Envoyer";
 
@@ -57,9 +54,6 @@
 
 /* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
 "WjT-HM-yim.title" = "Signaler un problème de site";
-
-/* Class = "UILabel"; text = "Broken Site Reason"; ObjectID = "Wx3-Vb-ItS"; */
-"Wx3-Vb-ItS.text" = "Raison du mauvais fonctionnement du site";
 
 /* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "Xb0-Zu-opM"; */
 "Xb0-Zu-opM.title" = "Partagez vos commentaires";

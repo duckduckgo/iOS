@@ -37,7 +37,7 @@ public final class SyncBookmarksAdapter {
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
     public let widgetRefreshCancellable: AnyCancellable
     public static let syncBookmarksPausedStateChanged = Notification.Name("com.duckduckgo.app.SyncPausedStateChanged")
-    public static let notifyBookmarksSyncLimitReached = Notification.Name("com.duckduckgo.app.SyncBookmarksLimitReached")
+    public static let bookmarksSyncLimitReached = Notification.Name("com.duckduckgo.app.SyncBookmarksLimitReached")
 
     public var shouldResetBookmarksSyncTimestamp: Bool = false {
         willSet {
@@ -90,7 +90,7 @@ public final class SyncBookmarksAdapter {
             syncDidUpdateData: { [syncDidCompleteSubject] in
                 syncDidCompleteSubject.send()
                 Self.isSyncBookmarksPaused = false
-                Self.wasSyncBookmarksErrorDisplayed = false
+                Self.didShowBookmarksSyncPausedError = false
             }
         )
         if shouldResetBookmarksSyncTimestamp {
@@ -132,7 +132,7 @@ public final class SyncBookmarksAdapter {
 
     static private func notifyBookmarksSyncLimitReached() {
         if !Self.didShowBookmarksSyncPausedError {
-            NotificationCenter.default.post(name: Self.notifyBookmarksSyncLimitReached, object: nil)
+            NotificationCenter.default.post(name: Self.bookmarksSyncLimitReached, object: nil)
             Self.didShowBookmarksSyncPausedError = true
         }
     }

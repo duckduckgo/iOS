@@ -329,7 +329,7 @@ class MainViewController: UIViewController {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(showSyncPausedError),
-            name: SyncBookmarksAdapter.notifyBookmarksSyncLimitReached,
+            name: SyncBookmarksAdapter.bookmarksSyncLimitReached,
             object: nil)
         NotificationCenter.default.addObserver(
             self,

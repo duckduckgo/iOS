@@ -172,7 +172,7 @@ class MainViewController: UIViewController {
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
-        self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
+        self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         self.appSettings = appSettings
         

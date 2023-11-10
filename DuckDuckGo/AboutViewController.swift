@@ -45,8 +45,9 @@ struct AboutView: View {
                 Text("Welcome to the Duck Side!")
                     .daxHeadline()
 
-                Divider()
-                    .frame(width: 80)
+                Rectangle()
+                    .frame(width: 80, height: 0.5)
+                    .foregroundColor(Color(designSystemColor: .lines))
                     .padding()
 
                 Text(LocalizedStringKey(UserText.aboutText))

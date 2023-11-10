@@ -19,64 +19,72 @@
 
 import UIKit
 import Core
+import SwiftUI
+import DesignResourcesKit
 
-class AboutViewController: UIViewController {
+class AboutViewController: UIHostingController<AboutView> {
 
-    @IBOutlet weak var headerText: UILabel!
-    @IBOutlet weak var descriptionText: UILabel!
-    @IBOutlet weak var logoImage: UIImageView!
-    @IBOutlet weak var moreButton: UIButton!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        applyTheme(ThemeManager.shared.currentTheme)
+    convenience init() {
+        self.init(rootView: AboutView())
     }
 
-    @IBAction func onPrivacyLinkTapped(_ sender: UIButton) {
-        dismiss(animated: true) {
-            UIApplication.shared.open(URL.aboutLink, options: [:])
-        }
-    }
 }
 
-extension AboutViewController: Themable {
-    
-    func decorate(with theme: Theme) {
-        view.backgroundColor = theme.backgroundColor
-        
-        switch theme.currentImageSet {
-        case .light:
-            logoImage?.image = UIImage(named: "LogoDarkText")
-        case .dark:
-            logoImage?.image = UIImage(named: "LogoLightText")
-        }
-        
-        decorateDescription(with: theme)
-        
-        headerText.textColor = theme.aboutScreenTextColor
-        moreButton.setTitleColor(theme.aboutScreenButtonColor, for: .normal)
-    }
-    
-    private func decorateDescription(with theme: Theme) {
-        if let attributedText = descriptionText.attributedText,
-            var font = attributedText.attribute(NSAttributedString.Key.font, at: 0, effectiveRange: nil) as? UIFont {
-            
-            let attributes: [NSAttributedString.Key: Any]
-            if traitCollection.horizontalSizeClass == .regular,
-                traitCollection.verticalSizeClass == .regular {
-                font = font.withSize(24.0)
-                attributes = [.foregroundColor: theme.aboutScreenTextColor,
-                              .font: font]
-            } else {
-                attributes = [.foregroundColor: theme.aboutScreenTextColor,
-                              .font: font]
-            }
+struct AboutView: View {
 
-            let decoratedText = NSMutableAttributedString(string: UserText.settingsAboutText)
-            decoratedText.addAttributes(attributes, range: NSRange(location: 0, length: decoratedText.length))
-            
-            descriptionText.attributedText = decoratedText
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 12) {
+                Image("Logo")
+                    .resizable()
+                    .frame(width: 96, height: 96)
+                    .padding(.top)
+
+                Image("TextDuckDuckGo")
+
+                Text("Welcome to the Duck Side!")
+                    .daxHeadline()
+
+                Divider()
+                    .frame(width: 160)
+                    .padding()
+
+                // swiftlint:disable line_length
+                Text("""
+DuckDuckGo is the independent Internet privacy company founded in 2008 for anyone who’s tired of being tracked online and wants an easy solution. We’re proof you can get real privacy protection online without tradeoffs.
+
+The DuckDuckGo browser comes with the features you expect from a go-to browser, like bookmarks, tabs, passwords, and more, plus over [a dozen powerful privacy protections](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) not offered in most popular browsers by default. This uniquely comprehensive set of privacy protections helps protect your online activities, from searching to browsing, emailing, and more.
+
+Our privacy protections work without having to know anything about the technical details or deal with complicated settings. All you have to do is switch your browser to DuckDuckGo across all your devices and you get privacy by default.
+
+But if you *do* want a peek under the hood, you can find more information about how DuckDuckGo privacy protections work on our [help pages](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).
+""")
+                // swiftlint:enable line_length
+                .lineLimit(nil)
+                .multilineTextAlignment(.leading)
+                .tintIfAvailable(Color(designSystemColor: .accent))
+                .padding(.horizontal)
+                .padding(.bottom)
+
+            }
+        }
+        .background(Rectangle()
+            .ignoresSafeArea()
+            .foregroundColor(Color(designSystemColor: .background)))
+    }
+
+}
+
+private extension View {
+    
+    @ViewBuilder func tintIfAvailable(_ color: Color) -> some View {
+        if #available(iOS 16.0, *) {
+            tint(color)
         }
     }
+
+}
+
+#Preview {
+    AboutView()
 }

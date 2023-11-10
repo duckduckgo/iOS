@@ -39,6 +39,13 @@ jobs:
 
     steps:
 
+    - name: Assert develop branch
+      run: |
+        case "${{ github.ref }}" in
+          *develop) ;;
+          *) echo "👎 Not develop branch"; exit 1 ;;
+        esac
+
     - name: Register SSH keys for access to certificates
       uses: webfactory/ssh-agent@v0.7.0
       with:

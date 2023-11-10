@@ -1,0 +1,51 @@
+appId: com.duckduckgo.mobile.ios
+tags:
+    - sync
+
+---
+
+- clearState
+- launchApp
+- runFlow: 
+    when: 
+      visible: 
+        text: "Let’s Do It!"
+        index: 0
+    file: ../shared/onboarding.yaml
+
+# <WORKAROUND>This is a workaround to:
+# - Put the code in the clipboard on Maestro Cloud
+# - Prevent iOS from showing the Paste permission alert as Maestro can't handle it
+- tapOn:
+    id: searchEntry
+- inputText: ${CODE}
+- longPressOn:
+    id: searchEntry
+- tapOn: Select All
+- tapOn: Cut
+- tapOn:
+    id: searchEntry
+- longPressOn:
+    id: searchEntry
+- tapOn: Paste
+- tapOn: Cancel
+#</WORKAROUND>
+
+# Recover Account test
+- tapOn: Settings
+- runFlow:
+    file: ../shared/set_internal_user.yaml
+- assertVisible: Sync
+- tapOn: Sync
+- assertVisible: Sync
+- tapOn: "0"
+- assertVisible: Turn on Sync?
+- tapOn: Recover Your Synced Data
+- assertVisible: Scan QR Code
+- tapOn: Manually Enter Code
+- tapOn: Paste
+- assertVisible: Device Synced!
+- tapOn: Next
+- tapOn: Not Now
+- tapOn: Settings
+- tapOn: Done

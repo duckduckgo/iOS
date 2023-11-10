@@ -26,6 +26,10 @@ class AppSettingsMock: AppSettings {
 
     var isSyncCredentialsPaused: Bool = false
 
+    var isSyncBookmarksPaused: Bool = false
+
+    var isSyncCredentialsPaused: Bool = false
+
     var currentAddressBarPosition: DuckDuckGo.AddressBarPosition = .top
 
     var showFullSiteAddress: Bool = false

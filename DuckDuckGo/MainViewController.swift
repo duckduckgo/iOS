@@ -79,8 +79,11 @@ class MainViewController: UIViewController {
     let previewsSource = TabPreviewsSource()
     let appSettings: AppSettings
     private var launchTabObserver: LaunchTabNotification.Observer?
-    
+
+#if APP_TRACKING_PROTECTION
     private let appTrackingProtectionDatabase: CoreDataDatabase
+#endif
+
     let bookmarksDatabase: CoreDataDatabase
     private weak var bookmarksDatabaseCleaner: BookmarkDatabaseCleaner?
     private var favoritesViewModel: FavoritesListInteracting
@@ -134,6 +137,7 @@ class MainViewController: UIViewController {
 
     var viewCoordinator: MainViewCoordinator!
 
+#if APP_TRACKING_PROTECTION
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
@@ -156,6 +160,27 @@ class MainViewController: UIViewController {
         bindFavoritesDisplayMode()
         bindSyncService()
     }
+#else
+    init(
+        bookmarksDatabase: CoreDataDatabase,
+        bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
+        syncService: DDGSyncing,
+        syncDataProviders: SyncDataProviders,
+        appSettings: AppSettings
+    ) {
+        self.bookmarksDatabase = bookmarksDatabase
+        self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
+        self.syncService = syncService
+        self.syncDataProviders = syncDataProviders
+        self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
+        self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
+        self.appSettings = appSettings
+        
+        super.init(nibName: nil, bundle: nil)
+
+        bindSyncService()
+    }
+#endif
 
     fileprivate var tabCountInfo: TabCountInfo?
 
@@ -213,6 +238,7 @@ class MainViewController: UIViewController {
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
         registerForKeyboardNotifications()
+        registerForSyncPausedNotifications()
 
         applyTheme(ThemeManager.shared.currentTheme)
 
@@ -322,6 +348,46 @@ class MainViewController: UIViewController {
                                                selector: #selector(keyboardWillChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
+    }
+
+    private func registerForSyncPausedNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showSyncPausedError),
+            name: SyncBookmarksAdapter.bookmarksSyncLimitReached,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showSyncPausedError),
+            name: SyncCredentialsAdapter.credentialsSyncLimitReached,
+            object: nil)
+    }
+
+    @objc private func showSyncPausedError(_ notification: Notification) {
+        Task {
+            await MainActor.run {
+                var title = UserText.syncBookmarkPausedAlertTitle
+                var description = UserText.syncBookmarkPausedAlertDescription
+                if notification.name == SyncCredentialsAdapter.credentialsSyncLimitReached {
+                    title = UserText.syncCredentialsPausedAlertTitle
+                    description = UserText.syncCredentialsPausedAlertDescription
+                }
+                if self.presentedViewController is SyncSettingsViewController {
+                    return
+                }
+                self.presentedViewController?.dismiss(animated: true)
+                let alert = UIAlertController(title: title,
+                                              message: description,
+                                              preferredStyle: .alert)
+                let learnMoreAction = UIAlertAction(title: UserText.syncPausedAlertLearnMoreButton, style: .default) { _ in
+                    self.segueToSettingsSync()
+                }
+                let okAction = UIAlertAction(title: UserText.syncPausedAlertOkButton, style: .cancel)
+                alert.addAction(learnMoreAction)
+                alert.addAction(okAction)
+                self.present(alert, animated: true)
+            }
+        }
     }
 
     func registerForSettingsChangeNotifications() {
@@ -575,11 +641,19 @@ class MainViewController: UIViewController {
         AppDependencyProvider.shared.homePageConfiguration.refresh()
 
         let tabModel = currentTab?.tabModel
+
+#if APP_TRACKING_PROTECTION
         let controller = HomeViewController.loadFromStoryboard(model: tabModel!,
                                                                favoritesViewModel: favoritesViewModel,
                                                                appTPDatabase: appTrackingProtectionDatabase,
                                                                syncService: syncService,
                                                                syncDataProviders: syncDataProviders)
+#else
+        let controller = HomeViewController.loadFromStoryboard(model: tabModel!,
+                                                               favoritesViewModel: favoritesViewModel,
+                                                               syncService: syncService,
+                                                               syncDataProviders: syncDataProviders)
+#endif
 
         homeController = controller
 
@@ -717,8 +791,8 @@ class MainViewController: UIViewController {
         allowContentUnderflow = false
         request()
         guard let tab = currentTab else { fatalError("no tab") }
-        select(tab: tab)
         dismissOmniBar()
+        select(tab: tab)
     }
 
     private func addTab(url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) {

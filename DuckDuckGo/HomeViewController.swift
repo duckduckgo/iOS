@@ -71,7 +71,8 @@ class HomeViewController: UIViewController {
 #if APP_TRACKING_PROTECTION
     private let appTPHomeViewModel: AppTPHomeViewModel
 #endif
-    
+
+#if APP_TRACKING_PROTECTION
     static func loadFromStoryboard(
         model: Tab,
         favoritesViewModel: FavoritesListInteracting,
@@ -79,7 +80,6 @@ class HomeViewController: UIViewController {
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders
     ) -> HomeViewController {
-
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "HomeViewController", creator: { coder in
             HomeViewController(
@@ -93,7 +93,28 @@ class HomeViewController: UIViewController {
         })
         return controller
     }
-    
+#else
+    static func loadFromStoryboard(
+        model: Tab,
+        favoritesViewModel: FavoritesListInteracting,
+        syncService: DDGSyncing,
+        syncDataProviders: SyncDataProviders
+    ) -> HomeViewController {
+        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+        let controller = storyboard.instantiateViewController(identifier: "HomeViewController", creator: { coder in
+            HomeViewController(
+                coder: coder,
+                tabModel: model,
+                favoritesViewModel: favoritesViewModel,
+                syncService: syncService,
+                syncDataProviders: syncDataProviders
+            )
+        })
+        return controller
+    }
+#endif
+
+#if APP_TRACKING_PROTECTION
     required init?(
         coder: NSCoder,
         tabModel: Tab,
@@ -107,13 +128,27 @@ class HomeViewController: UIViewController {
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
 
-#if APP_TRACKING_PROTECTION
         self.appTPHomeViewModel = AppTPHomeViewModel(appTrackingProtectionDatabase: appTPDatabase)
-#endif
 
         super.init(coder: coder)
     }
-    
+#else
+    required init?(
+        coder: NSCoder,
+        tabModel: Tab,
+        favoritesViewModel: FavoritesListInteracting,
+        syncService: DDGSyncing,
+        syncDataProviders: SyncDataProviders
+    ) {
+        self.tabModel = tabModel
+        self.favoritesViewModel = favoritesViewModel
+        self.syncService = syncService
+        self.syncDataProviders = syncDataProviders
+
+        super.init(coder: coder)
+    }
+#endif
+
     required init?(coder: NSCoder) {
         fatalError("Not implemented")
     }

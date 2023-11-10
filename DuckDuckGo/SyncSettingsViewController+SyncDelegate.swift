@@ -157,6 +157,8 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                     do {
                         self.rootView.model.isSyncEnabled = false
                         try await self.syncService.disconnect()
+                        AppUserDefaults().isSyncBookmarksPaused = false
+                        AppUserDefaults().isSyncCredentialsPaused = false
                     } catch {
                         self.handleError(error)
                     }
@@ -180,6 +182,8 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                     do {
                         self.rootView.model.isSyncEnabled = false
                         try await self.syncService.deleteAccount()
+                        AppUserDefaults().isSyncBookmarksPaused = false
+                        AppUserDefaults().isSyncCredentialsPaused = false
                     } catch {
                         self.handleError(error)
                     }

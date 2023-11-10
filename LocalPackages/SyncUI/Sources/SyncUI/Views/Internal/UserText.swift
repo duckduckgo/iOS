@@ -41,6 +41,7 @@ struct UserText {
     static let options = "Options"
     static let fetchFaviconsOptionTitle = "Fetch Bookmark Icons"
     static let fetchFaviconsOptionCaption = "Automatically download icons for synced bookmarks."
+
     static let unifiedFavoritesTitle = "Share Favorites"
     static let unifiedFavoritesInstruction = "Use the same favorites on all devices. Leave off to keep mobile and desktop favorites separate."
 

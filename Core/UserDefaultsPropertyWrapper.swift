@@ -99,6 +99,8 @@ public struct UserDefaultsWrapper<T> {
         case syncEnvironment = "com.duckduckgo.ios.sync-environment"
         case syncBookmarksPaused = "com.duckduckgo.ios.sync-bookmarksPaused"
         case syncCredentialsPaused = "com.duckduckgo.ios.sync-credentialsPaused"
+        case syncBookmarksPausedErrorDisplayed = "com.duckduckgo.ios.sync-bookmarksPausedErrorDisplayed"
+        case syncCredentialsPausedErrorDisplayed = "com.duckduckgo.ios.sync-credentialsPausedErrorDisplayed"
         case syncAutomaticallyFetchFavicons = "com.duckduckgo.ios.sync-automatically-fetch-favicons"
         case syncIsFaviconsFetcherEnabled = "com.duckduckgo.ios.sync-is-favicons-fetcher-enabled"
         case syncIsEligibleForFaviconsFetcherOnboarding = "com.duckduckgo.ios.sync-is-eligible-for-favicons-fetcher-onboarding"

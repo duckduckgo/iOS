@@ -79,7 +79,3 @@ private extension View {
     }
 
 }
-
-#Preview {
-    AboutView()
-}

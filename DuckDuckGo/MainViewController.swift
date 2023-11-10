@@ -213,6 +213,7 @@ class MainViewController: UIViewController {
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
         registerForKeyboardNotifications()
+        registerForSyncPausedNotifications()
 
         applyTheme(ThemeManager.shared.currentTheme)
 
@@ -322,6 +323,46 @@ class MainViewController: UIViewController {
                                                selector: #selector(keyboardWillChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
+    }
+
+    private func registerForSyncPausedNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showSyncPausedError),
+            name: SyncBookmarksAdapter.bookmarksSyncLimitReached,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showSyncPausedError),
+            name: SyncCredentialsAdapter.credentialsSyncLimitReached,
+            object: nil)
+    }
+
+    @objc private func showSyncPausedError(_ notification: Notification) {
+        Task {
+            await MainActor.run {
+                var title = UserText.syncBookmarkPausedAlertTitle
+                var description = UserText.syncBookmarkPausedAlertDescription
+                if notification.name == SyncCredentialsAdapter.credentialsSyncLimitReached {
+                    title = UserText.syncCredentialsPausedAlertTitle
+                    description = UserText.syncCredentialsPausedAlertDescription
+                }
+                if self.presentedViewController is SyncSettingsViewController {
+                    return
+                }
+                self.presentedViewController?.dismiss(animated: true)
+                let alert = UIAlertController(title: title,
+                                              message: description,
+                                              preferredStyle: .alert)
+                let learnMoreAction = UIAlertAction(title: UserText.syncPausedAlertLearnMoreButton, style: .default) { _ in
+                    self.segueToSettingsSync()
+                }
+                let okAction = UIAlertAction(title: UserText.syncPausedAlertOkButton, style: .cancel)
+                alert.addAction(learnMoreAction)
+                alert.addAction(okAction)
+                self.present(alert, animated: true)
+            }
+        }
     }
 
     func registerForSettingsChangeNotifications() {

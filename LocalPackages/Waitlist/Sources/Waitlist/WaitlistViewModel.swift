@@ -40,6 +40,15 @@ public final class WaitlistViewModel: ObservableObject {
         case joinedQueue(NotificationPermissionState)
         case invited(inviteCode: String)
         case waitlistRemoved
+        case custom(ViewCustomState)
+    }
+
+    public struct ViewCustomState: Equatable {
+        public let identifier: String
+
+        public init(identifier: String) {
+            self.identifier = identifier
+        }
     }
 
     public enum ViewAction: Equatable {
@@ -117,6 +126,10 @@ public final class WaitlistViewModel: ObservableObject {
         case .copyInviteCodeToPasteboard: copyInviteCodeToClipboard()
         case .custom(let action): delegate?.waitlistViewModel(self, didTriggerCustomAction: action)
         }
+    }
+
+    public func set(customState: ViewCustomState) {
+        self.viewState = .custom(customState)
     }
 
     // MARK: - Private

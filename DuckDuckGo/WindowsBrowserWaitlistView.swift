@@ -48,6 +48,8 @@ struct WindowsBrowserWaitlistView: View {
             WaitlistDownloadBrowserContentView(platform: .windows) { action in
                 Task { await viewModel.perform(action: action) }
             }
+        case .custom:
+            fatalError("Tried to use custom state without supporting one")
         }
     }
 }

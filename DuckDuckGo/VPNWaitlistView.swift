@@ -47,6 +47,10 @@ struct VPNWaitlistView: View {
             }
         case .waitlistRemoved:
             Text("Not supported")
+        case .custom(let customState):
+            if customState == .networkProtectionPrivacyPolicyScreen {
+                VPNWaitlistPrivacyPolicyView()
+            }
         }
     }
 }
@@ -248,6 +252,64 @@ struct VPNWaitlistInvitedView: View {
     }
 }
 
+@available(iOS 15.0, *)
+struct VPNWaitlistPrivacyPolicyView: View {
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 0) {
+                Text(UserText.networkProtectionPrivacyPolicyTitle)
+                    .font(.system(size: 15, weight: .bold))
+                    .multilineTextAlignment(.leading)
+                
+                Group {
+                    Text(UserText.networkProtectionPrivacyPolicySection1Title).titleStyle()
+
+                    Text(LocalizedStringKey(UserText.networkProtectionPrivacyPolicySection1ListMarkdown)).bodyStyle()
+                    Text(UserText.networkProtectionPrivacyPolicySection2Title).titleStyle()
+                    Text(UserText.networkProtectionPrivacyPolicySection2List).bodyStyle()
+                    Text(UserText.networkProtectionPrivacyPolicySection3Title).titleStyle()
+                    Text(UserText.networkProtectionPrivacyPolicySection3List).bodyStyle()
+                    Text(UserText.networkProtectionPrivacyPolicySection4Title).titleStyle()
+                    Text(UserText.networkProtectionPrivacyPolicySection4List).bodyStyle()
+                    Text(UserText.networkProtectionPrivacyPolicySection5Title).titleStyle()
+                    Text(UserText.networkProtectionPrivacyPolicySection5List).bodyStyle()
+                }
+                
+                Text(UserText.networkProtectionTermsOfServiceTitle)
+                    .font(.system(size: 15, weight: .bold))
+                    .multilineTextAlignment(.leading)
+                    .padding(.top, 28)
+                    .padding(.bottom, 14)
+                
+                Group {
+                    Text(UserText.networkProtectionTermsOfServiceSection1Title).titleStyle(topPadding: 0)
+                    Text(UserText.networkProtectionTermsOfServiceSection1List).bodyStyle()
+                    Text(UserText.networkProtectionTermsOfServiceSection2Title).titleStyle()
+                    Text(LocalizedStringKey(UserText.networkProtectionTermsOfServiceSection2ListMarkdown)).bodyStyle()
+                    Text(UserText.networkProtectionTermsOfServiceSection3Title).titleStyle()
+                    Text(UserText.networkProtectionTermsOfServiceSection3List).bodyStyle()
+                    Text(UserText.networkProtectionTermsOfServiceSection4Title).titleStyle()
+                    Text(UserText.networkProtectionTermsOfServiceSection4List).bodyStyle()
+                    Text(UserText.networkProtectionTermsOfServiceSection5Title).titleStyle()
+                    Text(UserText.networkProtectionTermsOfServiceSection5List).bodyStyle()
+                }
+                
+                Group {
+                    Text(UserText.networkProtectionTermsOfServiceSection6Title).titleStyle()
+                    Text(UserText.networkProtectionTermsOfServiceSection6List).bodyStyle()
+                    Text(UserText.networkProtectionTermsOfServiceSection7Title).titleStyle()
+                    Text(UserText.networkProtectionTermsOfServiceSection7List).bodyStyle()
+                    Text(UserText.networkProtectionTermsOfServiceSection8Title).titleStyle()
+                    Text(UserText.networkProtectionTermsOfServiceSection8List).bodyStyle()
+                }
+            }
+            .padding(.all, 20)
+        }
+    }
+
+}
+
 protocol InvitedToWaitlistViewData {
     var headerImageName: String { get }
     var title: String { get }
@@ -314,6 +376,23 @@ private struct WaitlistListEntryView: View {
             Spacer()
         }
     }
+}
+
+private extension Text {
+
+    func titleStyle(topPadding: CGFloat = 24, bottomPadding: CGFloat = 14) -> some View {
+        self
+            .font(.system(size: 11, weight: .bold))
+            .multilineTextAlignment(.leading)
+            .padding(.top, topPadding)
+            .padding(.bottom, bottomPadding)
+    }
+
+    func bodyStyle() -> some View {
+        self
+            .font(.system(size: 11))
+    }
+
 }
 
 // MARK: - Previews

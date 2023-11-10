@@ -24,11 +24,6 @@ public struct BrokenSiteInfo {
 
     static let allowedQueryReservedCharacters =  CharacterSet(charactersIn: ",")
 
-    enum ProtectionsState: String {
-        case enabled = "1"
-        case disabled = "0"
-    }
-
     private struct Keys {
         static let url = "siteUrl"
         static let category = "category"
@@ -60,14 +55,14 @@ public struct BrokenSiteInfo {
     private let manufacturer: String
     private let systemVersion: String
     private let gpc: Bool
-    private let protectionsState: ProtectionsState
+    private let protectionsState: Bool
 
     public init(url: URL?, httpsUpgrade: Bool,
                 blockedTrackerDomains: [String], installedSurrogates: [String],
                 isDesktop: Bool, tdsETag: String?,
                 ampUrl: String?,
                 urlParametersRemoved: Bool,
-                protected: Bool,
+                protectionsState: Bool,
                 model: String = UIDevice.current.model,
                 manufacturer: String = "Apple",
                 systemVersion: String = UIDevice.current.systemVersion,
@@ -84,7 +79,7 @@ public struct BrokenSiteInfo {
         self.model = model
         self.manufacturer = manufacturer
         self.systemVersion = systemVersion
-        self.protectionsState = protected ? .enabled : .disabled
+        self.protectionsState = protectionsState
 
         if let gpcParam = gpc {
             self.gpc = gpcParam
@@ -111,7 +106,7 @@ public struct BrokenSiteInfo {
             Keys.gpc: gpc ? "true" : "false",
             Keys.ampUrl: ampUrl ?? "",
             Keys.urlParametersRemoved: urlParametersRemoved ? "true" : "false",
-            Keys.protectionsState: protectionsState.rawValue
+            Keys.protectionsState: protectionsState ? "true" : "false"
         ]
         
         Pixel.fire(pixel: .brokenSiteReport,

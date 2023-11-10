@@ -33,10 +33,10 @@ class ContentBlockingRulesTests: XCTestCase {
         andTemporaryUnprotectedDomains: [])
          
         // Test tracker is set up to be blocked
-        if let rule = rules.findExactFilter(filter: "^(https?)?(wss?)?://([a-z0-9-]+\\.)*googleadservices\\.com(:?[0-9]+)?/.*") {
+        if let rule = rules.findExactFilter(filter: "^(https?)?(wss?)?://([a-z0-9-]+\\.)*bad\\.third-party\\.site(:?[0-9]+)?/.*") {
             XCTAssert(rule.action == .block())
         } else {
-            XCTFail("Missing google ad services rule")
+            XCTFail("Missing tracking rule")
         }
         
         // Test exceptiions are set to ignore previous rules

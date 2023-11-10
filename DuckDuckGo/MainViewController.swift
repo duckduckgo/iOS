@@ -79,8 +79,11 @@ class MainViewController: UIViewController {
     let previewsSource = TabPreviewsSource()
     let appSettings: AppSettings
     private var launchTabObserver: LaunchTabNotification.Observer?
-    
+
+#if APP_TRACKING_PROTECTION
     private let appTrackingProtectionDatabase: CoreDataDatabase
+#endif
+
     let bookmarksDatabase: CoreDataDatabase
     private weak var bookmarksDatabaseCleaner: BookmarkDatabaseCleaner?
     private var favoritesViewModel: FavoritesListInteracting
@@ -134,6 +137,7 @@ class MainViewController: UIViewController {
 
     var viewCoordinator: MainViewCoordinator!
 
+#if APP_TRACKING_PROTECTION
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
@@ -156,6 +160,27 @@ class MainViewController: UIViewController {
         bindFavoritesDisplayMode()
         bindSyncService()
     }
+#else
+    init(
+        bookmarksDatabase: CoreDataDatabase,
+        bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
+        syncService: DDGSyncing,
+        syncDataProviders: SyncDataProviders,
+        appSettings: AppSettings
+    ) {
+        self.bookmarksDatabase = bookmarksDatabase
+        self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
+        self.syncService = syncService
+        self.syncDataProviders = syncDataProviders
+        self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
+        self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
+        self.appSettings = appSettings
+        
+        super.init(nibName: nil, bundle: nil)
+
+        bindSyncService()
+    }
+#endif
 
     fileprivate var tabCountInfo: TabCountInfo?
 
@@ -616,10 +641,15 @@ class MainViewController: UIViewController {
         AppDependencyProvider.shared.homePageConfiguration.refresh()
 
         let tabModel = currentTab?.tabModel
+
+#if APP_TRACKING_PROTECTION
         let controller = HomeViewController.loadFromStoryboard(model: tabModel!,
                                                                favoritesViewModel: favoritesViewModel,
                                                                appTPDatabase: appTrackingProtectionDatabase)
-        
+#else
+        let controller = HomeViewController.loadFromStoryboard(model: tabModel!, favoritesViewModel: favoritesViewModel)
+#endif
+
         homeController = controller
 
         controller.chromeDelegate = self
@@ -756,8 +786,8 @@ class MainViewController: UIViewController {
         allowContentUnderflow = false
         request()
         guard let tab = currentTab else { fatalError("no tab") }
-        select(tab: tab)
         dismissOmniBar()
+        select(tab: tab)
     }
 
     private func addTab(url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) {

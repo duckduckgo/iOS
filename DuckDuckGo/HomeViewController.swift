@@ -69,6 +69,7 @@ class HomeViewController: UIViewController {
     private let appTPHomeViewModel: AppTPHomeViewModel
 #endif
     
+#if APP_TRACKING_PROTECTION
     static func loadFromStoryboard(model: Tab, favoritesViewModel: FavoritesListInteracting, appTPDatabase: CoreDataDatabase) -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "HomeViewController", creator: { coder in
@@ -76,18 +77,33 @@ class HomeViewController: UIViewController {
         })
         return controller
     }
-    
+#else
+    static func loadFromStoryboard(model: Tab, favoritesViewModel: FavoritesListInteracting) -> HomeViewController {
+        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+        let controller = storyboard.instantiateViewController(identifier: "HomeViewController", creator: { coder in
+            HomeViewController(coder: coder, tabModel: model, favoritesViewModel: favoritesViewModel)
+        })
+        return controller
+    }
+#endif
+
+#if APP_TRACKING_PROTECTION
     required init?(coder: NSCoder, tabModel: Tab, favoritesViewModel: FavoritesListInteracting, appTPDatabase: CoreDataDatabase) {
         self.tabModel = tabModel
         self.favoritesViewModel = favoritesViewModel
-
-#if APP_TRACKING_PROTECTION
         self.appTPHomeViewModel = AppTPHomeViewModel(appTrackingProtectionDatabase: appTPDatabase)
-#endif
 
         super.init(coder: coder)
     }
-    
+#else
+    required init?(coder: NSCoder, tabModel: Tab, favoritesViewModel: FavoritesListInteracting) {
+        self.tabModel = tabModel
+        self.favoritesViewModel = favoritesViewModel
+
+        super.init(coder: coder)
+    }
+#endif
+
     required init?(coder: NSCoder) {
         fatalError("Not implemented")
     }

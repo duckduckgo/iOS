@@ -71,10 +71,11 @@ final class AutofillLoginListViewModel: ObservableObject {
     private let tld: TLD
     private var currentTabUrl: URL?
     private let secureVault: (any AutofillSecureVault)?
+    private let autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager
     private var cachedDeletedCredentials: SecureVaultModels.WebsiteCredentials?
     private let autofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
     private let autofillDomainNameUrlSort = AutofillDomainNameUrlSort()
-    private let autofillNeverPromptWebsitesManager = AppDependencyProvider.shared.autofillNeverPromptWebsitesManager
+
 
     @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
     @Published private(set) var sections = [AutofillLoginListSectionType]() {
@@ -95,11 +96,13 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
     }
     
-    init(appSettings: AppSettings, tld: TLD, secureVault: (any AutofillSecureVault)?, currentTabUrl: URL? = nil) {
+    init(appSettings: AppSettings, tld: TLD, secureVault: (any AutofillSecureVault)?, currentTabUrl: URL? = nil, autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager = AppDependencyProvider.shared.autofillNeverPromptWebsitesManager) {
         self.appSettings = appSettings
         self.tld = tld
         self.secureVault = secureVault
         self.currentTabUrl = currentTabUrl
+        self.autofillNeverPromptWebsitesManager = autofillNeverPromptWebsitesManager
+
         updateData()
         authenticationNotRequired = !hasAccountsSaved || AppDependencyProvider.shared.autofillLoginSession.isValidSession
         setupCancellables()

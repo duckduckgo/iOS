@@ -69,7 +69,7 @@ class AutofillNeverPromptWebsitesManager {
         }
     }
 
-    internal func fetchNeverPromptWebsites() {
+    private func fetchNeverPromptWebsites() {
         guard let secureVault = secureVault else {
             return
         }

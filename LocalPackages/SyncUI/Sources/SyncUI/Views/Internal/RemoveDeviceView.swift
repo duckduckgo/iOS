@@ -19,6 +19,7 @@
 
 import SwiftUI
 import DuckUI
+import DesignResourcesKit
 
 struct RemoveDeviceView: View {
 
@@ -32,13 +33,13 @@ struct RemoveDeviceView: View {
                 Image(model.imageName)
 
                 Text(UserText.removeDeviceTitle)
-                    .font(.title)
+                    .daxTitle1()
 
                 Text(UserText.removeDeviceMessage(model.device.name))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 20)
                     .padding(.top, 20)
-                    .font(.system(size: 14))
+                    .daxBodyRegular()
             }
             .padding(.horizontal, 20)
             .navigationBarTitleDisplayMode(.inline)

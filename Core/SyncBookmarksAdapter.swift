@@ -26,14 +26,38 @@ import Persistence
 import SyncDataProviders
 import WidgetKit
 
+public protocol FavoritesDisplayModeStoring: AnyObject {
+    var favoritesDisplayMode: FavoritesDisplayMode { get set }
+}
+
 public final class SyncBookmarksAdapter {
 
     public private(set) var provider: BookmarksProvider?
     public let databaseCleaner: BookmarkDatabaseCleaner
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
     public let widgetRefreshCancellable: AnyCancellable
+    public static let syncBookmarksPausedStateChanged = Notification.Name("com.duckduckgo.app.SyncPausedStateChanged")
+    public static let bookmarksSyncLimitReached = Notification.Name("com.duckduckgo.app.SyncBookmarksLimitReached")
 
-    public init(database: CoreDataDatabase) {
+    public var shouldResetBookmarksSyncTimestamp: Bool = false {
+        willSet {
+            assert(provider == nil, "Setting this value has no effect after provider has been instantiated")
+        }
+    }
+
+    @UserDefaultsWrapper(key: .syncBookmarksPaused, defaultValue: false)
+    static public var isSyncBookmarksPaused: Bool {
+        didSet {
+            NotificationCenter.default.post(name: syncBookmarksPausedStateChanged, object: nil)
+        }
+    }
+
+    @UserDefaultsWrapper(key: .syncBookmarksPausedErrorDisplayed, defaultValue: false)
+    static private var didShowBookmarksSyncPausedError: Bool
+
+    public init(database: CoreDataDatabase, favoritesDisplayModeStorage: FavoritesDisplayModeStoring) {
+        self.database = database
+        self.favoritesDisplayModeStorage = favoritesDisplayModeStorage
         syncDidCompletePublisher = syncDidCompleteSubject.eraseToAnyPublisher()
         databaseCleaner = BookmarkDatabaseCleaner(
             bookmarkDatabase: database,
@@ -49,6 +73,7 @@ public final class SyncBookmarksAdapter {
         databaseCleaner.cleanUpDatabaseNow()
         if shouldEnable {
             databaseCleaner.scheduleRegularCleaning()
+            handleFavoritesAfterDisablingSync()
         } else {
             databaseCleaner.cancelCleaningSchedule()
         }
@@ -64,14 +89,33 @@ public final class SyncBookmarksAdapter {
             metadataStore: metadataStore,
             syncDidUpdateData: { [syncDidCompleteSubject] in
                 syncDidCompleteSubject.send()
+                Self.isSyncBookmarksPaused = false
+                Self.didShowBookmarksSyncPausedError = false
             }
         )
+        if shouldResetBookmarksSyncTimestamp {
+            provider.lastSyncTimestamp = nil
+        }
 
         syncErrorCancellable = provider.syncErrorPublisher
             .sink { error in
                 switch error {
                 case let syncError as SyncError:
                     Pixel.fire(pixel: .syncBookmarksFailed, error: syncError)
+                    switch syncError {
+                    case .unexpectedStatusCode(409):
+                        // If bookmarks count limit has been exceeded
+                        Self.isSyncBookmarksPaused = true
+                        DailyPixel.fire(pixel: .syncBookmarksCountLimitExceededDaily)
+                        Self.notifyBookmarksSyncLimitReached()
+                    case .unexpectedStatusCode(413):
+                        // If bookmarks request size limit has been exceeded
+                        Self.isSyncBookmarksPaused = true
+                        DailyPixel.fire(pixel: .syncBookmarksRequestSizeLimitExceededDaily)
+                        Self.notifyBookmarksSyncLimitReached()
+                    default:
+                        break
+                    }
                 default:
                     let nsError = error as NSError
                     if nsError.domain != NSURLErrorDomain {
@@ -86,6 +130,36 @@ public final class SyncBookmarksAdapter {
         self.provider = provider
     }
 
+    static private func notifyBookmarksSyncLimitReached() {
+        if !Self.didShowBookmarksSyncPausedError {
+            NotificationCenter.default.post(name: Self.bookmarksSyncLimitReached, object: nil)
+            Self.didShowBookmarksSyncPausedError = true
+        }
+    }
+
+    private func handleFavoritesAfterDisablingSync() {
+        let context = database.makeContext(concurrencyType: .privateQueueConcurrencyType)
+
+        context.performAndWait {
+            do {
+                if favoritesDisplayModeStorage.favoritesDisplayMode.isDisplayUnified {
+                    BookmarkUtils.copyFavorites(from: .unified, to: .mobile, clearingNonNativeFavoritesFolder: .desktop, in: context)
+                    favoritesDisplayModeStorage.favoritesDisplayMode = .displayNative(.mobile)
+                } else {
+                    BookmarkUtils.copyFavorites(from: .mobile, to: .unified, clearingNonNativeFavoritesFolder: .desktop, in: context)
+                }
+                try context.save()
+            } catch {
+                let nsError = error as NSError
+                let processedErrors = CoreDataErrorsParser.parse(error: nsError)
+                let params = processedErrors.errorPixelParameters
+                Pixel.fire(pixel: .favoritesCleanupFailed, error: error, withAdditionalParameters: params)
+            }
+        }
+    }
+
     private var syncDidCompleteSubject = PassthroughSubject<Void, Never>()
     private var syncErrorCancellable: AnyCancellable?
+    private let database: CoreDataDatabase
+    private let favoritesDisplayModeStorage: FavoritesDisplayModeStoring
 }

@@ -54,12 +54,12 @@ class BookmarkUtilsTests: XCTestCase {
         BookmarkUtils.prepareFoldersStructure(in: context)
         
         count = try context.count(for: countRequest)
-        XCTAssertEqual(count, 2)
+        XCTAssertEqual(count, 4)
         
         BookmarkUtils.prepareFoldersStructure(in: context)
         
         count = try context.count(for: countRequest)
-        XCTAssertEqual(count, 2)
+        XCTAssertEqual(count, 4)
     }
  
 }

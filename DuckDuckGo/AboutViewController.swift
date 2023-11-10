@@ -49,24 +49,17 @@ struct AboutView: View {
                     .frame(width: 160)
                     .padding()
 
-                // swiftlint:disable line_length
-                Text("""
-DuckDuckGo is the independent Internet privacy company founded in 2008 for anyone who’s tired of being tracked online and wants an easy solution. We’re proof you can get real privacy protection online without tradeoffs.
+                Text(LocalizedStringKey(UserText.aboutText))
+                    .lineLimit(nil)
+                    .multilineTextAlignment(.leading)
+                    .foregroundColor(.primary)
+                    .tintIfAvailable(Color(designSystemColor: .accent))
+                    .padding(.horizontal)
+                    .padding(.bottom)
 
-The DuckDuckGo browser comes with the features you expect from a go-to browser, like bookmarks, tabs, passwords, and more, plus over [a dozen powerful privacy protections](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) not offered in most popular browsers by default. This uniquely comprehensive set of privacy protections helps protect your online activities, from searching to browsing, emailing, and more.
-
-Our privacy protections work without having to know anything about the technical details or deal with complicated settings. All you have to do is switch your browser to DuckDuckGo across all your devices and you get privacy by default.
-
-But if you *do* want a peek under the hood, you can find more information about how DuckDuckGo privacy protections work on our [help pages](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).
-""")
-                // swiftlint:enable line_length
-                .lineLimit(nil)
-                .multilineTextAlignment(.leading)
-                .tintIfAvailable(Color(designSystemColor: .accent))
-                .padding(.horizontal)
-                .padding(.bottom)
-
+                Spacer()
             }
+            .frame(maxWidth: .infinity)
         }
         .background(Rectangle()
             .ignoresSafeArea()
@@ -80,6 +73,8 @@ private extension View {
     @ViewBuilder func tintIfAvailable(_ color: Color) -> some View {
         if #available(iOS 16.0, *) {
             tint(color)
+        } else {
+            self
         }
     }
 

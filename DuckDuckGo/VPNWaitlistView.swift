@@ -66,7 +66,7 @@ struct VPNWaitlistSignUpView: View {
         GeometryReader { proxy in
             ScrollView {
                 VStack(alignment: .center, spacing: 8) {
-                    HeaderView(imageName: "WindowsWaitlistJoinWaitlist", title: UserText.networkProtectionWaitlistJoinTitle)
+                    HeaderView(imageName: "JoinVPNWaitlist", title: UserText.networkProtectionWaitlistJoinTitle)
 
                     Text(UserText.networkProtectionWaitlistJoinSubtitle1)
                         .daxBodyRegular()
@@ -126,7 +126,7 @@ struct VPNWaitlistJoinedWaitlistView: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            HeaderView(imageName: "WaitlistJoined", title: UserText.networkProtectionWaitlistJoinedTitle)
+            HeaderView(imageName: "JoinedVPNWaitlist", title: UserText.networkProtectionWaitlistJoinedTitle)
 
             switch notificationState {
             case .notificationAllowed:

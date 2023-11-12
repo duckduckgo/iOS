@@ -1,7 +1,7 @@
 appId: com.duckduckgo.mobile.ios
 ---
 
-- assertVisible: Sync
+- assertVisible: Sync & Back Up
 - scroll
 - tapOn:
     point: 50%,91% # TODO: Revisit after new setup flow has been implemented. 

@@ -1,12 +1,10 @@
 appId: com.duckduckgo.mobile.ios
 ---
 
-- assertVisible: Sync
-- tapOn: Sync
-- assertVisible: Sync
-- tapOn: "0"
-- assertVisible: Turn on Sync?
-- tapOn: Turn on Sync
-- tapOn: Sync Another Device
-- tapOn: Show QR Code
-- assertVisible: "Go to Settings > Sync in the DuckDuckGo App on a different device and scan this QR code to sync."
+- assertVisible: Sync & Back Up
+- tapOn: Sync & Back Up
+- assertVisible: Sync & Back Up 
+- tapOn: Start Sync & Back Up
+- assertVisible: All Set!
+- tapOn: Next
+- assertVisible: Save Recovery Code?

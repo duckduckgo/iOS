@@ -59,8 +59,8 @@ public struct RoundedButtonStyle: ButtonStyle {
             .padding([.top, .bottom], 16)
             .background(backgroundColor)
             .foregroundColor(foregroundColor)
-            .border(borderColor, width: borderWidth)
             .clipShape(RoundedRectangle(cornerRadius: 8))
+            .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(borderColor, lineWidth: borderWidth))
     }
 
 }

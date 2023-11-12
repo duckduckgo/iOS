@@ -55,6 +55,7 @@ class BookmarkEditorViewModelTests: XCTestCase {
     func testWhenCreatingFolderWithoutParentThenModelCanSave() {
         let model = BookmarkEditorViewModel(creatingFolderWithParentID: nil,
                                             bookmarksDatabase: db,
+                                            favoritesDisplayMode: .displayNative(.mobile),
                                             errorEvents: errorValidatingHandler())
         
         XCTAssertFalse(model.canAddNewFolder)
@@ -72,6 +73,7 @@ class BookmarkEditorViewModelTests: XCTestCase {
         XCTAssertNotNil(root)
         let model = BookmarkEditorViewModel(creatingFolderWithParentID: root?.objectID,
                                             bookmarksDatabase: db,
+                                            favoritesDisplayMode: .displayNative(.mobile),
                                             errorEvents: errorValidatingHandler())
         
         XCTAssertFalse(model.canAddNewFolder)
@@ -95,6 +97,7 @@ class BookmarkEditorViewModelTests: XCTestCase {
         
         let model = BookmarkEditorViewModel(editingEntityID: firstBookmark.objectID,
                                             bookmarksDatabase: db,
+                                            favoritesDisplayMode: .displayNative(.mobile),
                                             errorEvents: errorValidatingHandler())
         
         XCTAssertFalse(model.isNew)
@@ -115,6 +118,7 @@ class BookmarkEditorViewModelTests: XCTestCase {
         
         let model = BookmarkEditorViewModel(editingEntityID: firstBookmark.objectID,
                                             bookmarksDatabase: db,
+                                            favoritesDisplayMode: .displayNative(.mobile),
                                             errorEvents: errorValidatingHandler())
         
         XCTAssertFalse(model.isNew)
@@ -136,15 +140,16 @@ class BookmarkEditorViewModelTests: XCTestCase {
         
         let model = BookmarkEditorViewModel(editingEntityID: firstBookmark.objectID,
                                             bookmarksDatabase: db,
+                                            favoritesDisplayMode: .displayNative(.mobile),
                                             errorEvents: errorValidatingHandler())
         
         let folders = model.locations
         
         let fetchFolders = BookmarkEntity.fetchRequest()
-        fetchFolders.predicate = NSPredicate(format: "%K == true AND %K != %@ AND %K == false",
+        fetchFolders.predicate = NSPredicate(format: "%K == true AND NOT %K IN %@ AND %K == false",
                                              #keyPath(BookmarkEntity.isFolder),
                                              #keyPath(BookmarkEntity.uuid),
-                                             BookmarkEntity.Constants.favoritesFolderID,
+                                             FavoritesFolderID.allCases.map(\.rawValue),
                                              #keyPath(BookmarkEntity.isPendingDeletion))
         let allFolders = (try? context.fetch(fetchFolders)) ?? []
         
@@ -179,11 +184,12 @@ class BookmarkEditorViewModelTests: XCTestCase {
         
         let model = BookmarkEditorViewModel(editingEntityID: firstBookmark.objectID,
                                             bookmarksDatabase: db,
+                                            favoritesDisplayMode: .displayNative(.mobile),
                                             errorEvents: errorValidatingHandler())
         
-        XCTAssert(model.bookmark.isFavorite)
+        XCTAssert(model.bookmark.isFavorite(on: .mobile))
         model.removeFromFavorites()
-        XCTAssertFalse(model.bookmark.isFavorite)
+        XCTAssertFalse(model.bookmark.isFavorite(on: .mobile))
         XCTAssert(model.canSave)
         model.save()
     }
@@ -194,6 +200,7 @@ class BookmarkEditorViewModelTests: XCTestCase {
         let errorReported = expectation(description: "Error reported")
         let model = BookmarkEditorViewModel(creatingFolderWithParentID: nil,
                                             bookmarksDatabase: db,
+                                            favoritesDisplayMode: .displayNative(.mobile),
                                             errorEvents: .init(mapping: { event, _, _, _ in
             XCTAssertEqual(event, .saveFailed(.edit))
             errorReported.fulfill()

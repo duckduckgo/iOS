@@ -33,8 +33,8 @@ class BookmarksExporterTests: XCTestCase {
 
         htmlLoader = HtmlTestDataLoader()
 
-        importer = BookmarksImporter(coreDataStore: storage)
-        exporter = BookmarksExporter(coreDataStore: storage)
+        importer = BookmarksImporter(coreDataStore: storage, favoritesDisplayMode: .displayNative(.mobile))
+        exporter = BookmarksExporter(coreDataStore: storage, favoritesDisplayMode: .displayNative(.mobile))
     }
 
     override func tearDownWithError() throws {

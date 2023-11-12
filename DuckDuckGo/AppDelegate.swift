@@ -161,7 +161,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DatabaseMigration.migrate(to: context)
         }
 
-        bookmarksDatabase.loadStore { context, error in
+        var shouldResetBookmarksSyncTimestamp = false
+
+        bookmarksDatabase.loadStore { [weak self] context, error in
             guard let context = context else {
                 if let error = error {
                     Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
@@ -183,6 +185,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
                                                   to: context)
             legacyStorage?.removeStore()
+
+            do {
+                BookmarkUtils.migrateToFormFactorSpecificFavorites(byCopyingExistingTo: .mobile, in: context)
+                if context.hasChanges {
+                    try context.save(onErrorFire: .bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders)
+                    if let syncDataProviders = self?.syncDataProviders {
+                        syncDataProviders.bookmarksAdapter.shouldResetBookmarksSyncTimestamp = true
+                    } else {
+                        shouldResetBookmarksSyncTimestamp = true
+                    }
+                }
+            } catch {
+                Thread.sleep(forTimeInterval: 1)
+                fatalError("Could not prepare Bookmarks DB structure")
+            }
 
             WidgetCenter.shared.reloadAllTimelines()
         }
@@ -235,7 +252,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ).wrappedValue
         ) ?? defaultEnvironment
 
-        syncDataProviders = SyncDataProviders(bookmarksDatabase: bookmarksDatabase, secureVaultErrorReporter: SecureVaultErrorReporter.shared)
+        syncDataProviders = SyncDataProviders(
+            bookmarksDatabase: bookmarksDatabase,
+            secureVaultErrorReporter: SecureVaultErrorReporter.shared,
+            settingHandlers: [FavoritesDisplayModeSyncHandler()],
+            favoritesDisplayModeStorage: FavoritesDisplayModeStorage()
+        )
+        syncDataProviders.bookmarksAdapter.shouldResetBookmarksSyncTimestamp = shouldResetBookmarksSyncTimestamp
+
         let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog, environment: environment)
         syncService.initializeIfNeeded()
         self.syncService = syncService
@@ -276,7 +300,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
         WindowsBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
         VPNWaitlist.shared.registerBackgroundRefreshTaskHandler()
-        RemoteMessaging.registerBackgroundRefreshTaskHandler(bookmarksDatabase: bookmarksDatabase)
+
+        RemoteMessaging.registerBackgroundRefreshTaskHandler(
+            bookmarksDatabase: bookmarksDatabase,
+            favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
+        )
 
         UNUserNotificationCenter.current().delegate = self
         
@@ -490,7 +518,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func refreshRemoteMessages() {
         Task {
-            try? await RemoteMessaging.fetchAndProcess(bookmarksDatabase: self.bookmarksDatabase)
+            try? await RemoteMessaging.fetchAndProcess(
+                bookmarksDatabase: self.bookmarksDatabase,
+                favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
+            )
         }
     }
 

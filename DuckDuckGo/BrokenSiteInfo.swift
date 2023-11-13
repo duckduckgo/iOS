@@ -104,7 +104,7 @@ public struct BrokenSiteInfo {
             Keys.manufacturer: manufacturer,
             Keys.model: model,
             Keys.gpc: gpc ? "true" : "false",
-            Keys.ampUrl: ampUrl ?? "",
+            Keys.ampUrl: normalize(URL(string: ampUrl ?? "")),
             Keys.urlParametersRemoved: urlParametersRemoved ? "true" : "false",
             Keys.protectionsState: protectionsState ? "true" : "false"
         ]

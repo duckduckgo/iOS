@@ -579,7 +579,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         NotificationCenter.default.post(name: AutofillLoginListAuthenticator.Notifications.invalidateContext, object: nil)
-        // mainViewController?.clearNavigationStack()
+
+        // The openVPN action handles the navigation stack on its own and does not need it to be cleared
+        if url != AppDeepLinkSchemes.openVPN.url {
+            mainViewController?.clearNavigationStack()
+        }
+
         autoClear?.applicationWillMoveToForeground()
         showKeyboardIfSettingOn = false
 

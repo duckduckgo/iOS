@@ -230,7 +230,6 @@ struct VPNWaitlistInvitedView: View {
                             WaitlistListEntryView(viewData: itemData)
                         }
                     }
-                    .background(Color.red)
                     .padding(.top, 24)
 
                     Button("Get Started", action: { action(.custom(.openNetworkProtectionPrivacyPolicyScreen)) })
@@ -355,11 +354,11 @@ private struct WaitlistListEntryView: View {
     let viewData: WaitlistEntryViewItemViewData
 
     var body: some View {
-        HStack(alignment: .top, spacing: 8) {
+        HStack(alignment: .center, spacing: 16) {
             Image(viewData.imageName)
                 .frame(maxWidth: 16, maxHeight: 16)
 
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: 2) {
                 Text(viewData.title)
                     .font(.system(size: 13, weight: .bold))
                     .foregroundColor(Color("BlackWhite80"))

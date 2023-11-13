@@ -110,7 +110,13 @@ extension MainViewController {
             UIKeyCommand(title: "", action: #selector(keyboardEscape), input: UIKeyCommand.inputEscape, modifierFlags: [])
         ]
 
-        return [alwaysAvailable, browsingCommands, findInPageCommands, arrowKeys, other].flatMap { $0 }
+        let commands = [alwaysAvailable, browsingCommands, findInPageCommands, arrowKeys, other].flatMap { $0 }
+        if #available(iOS 15, *) {
+            commands.forEach {
+                $0.wantsPriorityOverSystemBehavior = true
+            }
+        }
+        return commands
     }
 
     @objc func keyboardMoveSelectionUp() {

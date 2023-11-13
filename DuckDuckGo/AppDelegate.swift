@@ -62,7 +62,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private lazy var privacyStore = PrivacyUserDefaults()
     private var bookmarksDatabase: CoreDataDatabase = BookmarksDatabase.make()
+
+#if APP_TRACKING_PROTECTION
     private var appTrackingProtectionDatabase: CoreDataDatabase = AppTrackingProtectionDatabase.make()
+#endif
+
     private var autoClear: AutoClear?
     private var showKeyboardIfSettingOn = true
     private var lastBackgroundDate: Date?
@@ -157,7 +161,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DatabaseMigration.migrate(to: context)
         }
 
-        bookmarksDatabase.loadStore { context, error in
+        var shouldResetBookmarksSyncTimestamp = false
+
+        bookmarksDatabase.loadStore { [weak self] context, error in
             guard let context = context else {
                 if let error = error {
                     Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
@@ -180,9 +186,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                   to: context)
             legacyStorage?.removeStore()
 
+            do {
+                BookmarkUtils.migrateToFormFactorSpecificFavorites(byCopyingExistingTo: .mobile, in: context)
+                if context.hasChanges {
+                    try context.save(onErrorFire: .bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders)
+                    if let syncDataProviders = self?.syncDataProviders {
+                        syncDataProviders.bookmarksAdapter.shouldResetBookmarksSyncTimestamp = true
+                    } else {
+                        shouldResetBookmarksSyncTimestamp = true
+                    }
+                }
+            } catch {
+                Thread.sleep(forTimeInterval: 1)
+                fatalError("Could not prepare Bookmarks DB structure")
+            }
+
             WidgetCenter.shared.reloadAllTimelines()
         }
 
+#if APP_TRACKING_PROTECTION
         appTrackingProtectionDatabase.loadStore { context, error in
             guard context != nil else {
                 if let error = error {
@@ -199,6 +221,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         }
+#endif
 
         Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
             WidgetCenter.shared.reloadAllTimelines()
@@ -229,17 +252,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ).wrappedValue
         ) ?? defaultEnvironment
 
-        syncDataProviders = SyncDataProviders(bookmarksDatabase: bookmarksDatabase, secureVaultErrorReporter: SecureVaultErrorReporter.shared)
+        syncDataProviders = SyncDataProviders(
+            bookmarksDatabase: bookmarksDatabase,
+            secureVaultErrorReporter: SecureVaultErrorReporter.shared,
+            settingHandlers: [FavoritesDisplayModeSyncHandler()],
+            favoritesDisplayModeStorage: FavoritesDisplayModeStorage()
+        )
+        syncDataProviders.bookmarksAdapter.shouldResetBookmarksSyncTimestamp = shouldResetBookmarksSyncTimestamp
+
         let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog, environment: environment)
         syncService.initializeIfNeeded()
         self.syncService = syncService
 
+#if APP_TRACKING_PROTECTION
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       appTrackingProtectionDatabase: appTrackingProtectionDatabase,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
                                       appSettings: AppDependencyProvider.shared.appSettings)
+#else
+        let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
+                                      bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
+                                      syncService: syncService,
+                                      syncDataProviders: syncDataProviders,
+                                      appSettings: AppDependencyProvider.shared.appSettings)
+#endif
         main.loadViewIfNeeded()
 
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -261,7 +299,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
         WindowsBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
-        RemoteMessaging.registerBackgroundRefreshTaskHandler(bookmarksDatabase: bookmarksDatabase)
+        RemoteMessaging.registerBackgroundRefreshTaskHandler(
+            bookmarksDatabase: bookmarksDatabase,
+            favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
+        )
 
         UNUserNotificationCenter.current().delegate = self
         
@@ -465,7 +506,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func refreshRemoteMessages() {
         Task {
-            try? await RemoteMessaging.fetchAndProcess(bookmarksDatabase: self.bookmarksDatabase)
+            try? await RemoteMessaging.fetchAndProcess(
+                bookmarksDatabase: self.bookmarksDatabase,
+                favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
+            )
         }
     }
 

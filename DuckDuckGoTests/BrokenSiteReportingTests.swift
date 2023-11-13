@@ -75,6 +75,7 @@ final class BrokenSiteReportingTests: XCTestCase {
                                             tdsETag: test.blocklistVersion,
                                             ampUrl: nil,
                                             urlParametersRemoved: false,
+                                            protectionsState: true,
                                             model: test.model ?? "",
                                             manufacturer: test.manufacturer ?? "",
                                             systemVersion: test.os ?? "",

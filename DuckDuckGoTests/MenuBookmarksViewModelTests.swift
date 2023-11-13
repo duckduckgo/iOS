@@ -59,17 +59,19 @@ class MenuBookmarksViewModelTests: XCTestCase {
     private func validateNewBookmark(_ bookmark: BookmarkEntity?) {
         guard let bookmark = bookmark else { XCTFail("Missing bookmark"); return }
         XCTAssertNotNil(bookmark)
-        XCTAssertFalse(bookmark.isFavorite)
-        XCTAssertNil(bookmark.favoriteFolder)
+        XCTAssertFalse(bookmark.isFavorite(on: .mobile))
+        XCTAssertTrue(bookmark.favoriteFoldersSet.isEmpty)
         XCTAssertEqual(bookmark, bookmark.parent?.childrenArray.last)
     }
     
     private func validateNewFavorite(_ favorite: BookmarkEntity?) {
         guard let favorite = favorite else { XCTFail("Missing favorite"); return }
-        XCTAssert(favorite.isFavorite)
-        XCTAssertNotNil(favorite.favoriteFolder)
+        XCTAssert(favorite.isFavorite(on: .mobile))
+        XCTAssertFalse(favorite.favoriteFoldersSet.isEmpty)
         XCTAssertEqual(favorite, favorite.parent?.childrenArray.last)
-        XCTAssertEqual(favorite, favorite.favoriteFolder?.favorites?.lastObject as? BookmarkEntity)
+        XCTAssertEqual(favorite, favorite.favoriteFoldersSet
+            .first(where: { $0.uuid == FavoritesFolderID.mobile.rawValue })?
+            .favorites?.lastObject as? BookmarkEntity)
     }
 
     func testWhenCheckingBookmarkStatusThenReturnOneIfFound() {

@@ -70,8 +70,8 @@ public class CoreDataBookmarksSearchStore: BookmarksSearchStore {
         fetchRequest.resultType = .dictionaryResultType
         fetchRequest.propertiesToFetch = [#keyPath(BookmarkEntity.title),
                                           #keyPath(BookmarkEntity.url),
-                                          #keyPath(BookmarkEntity.favoriteFolder),
                                           #keyPath(BookmarkEntity.objectID)]
+        fetchRequest.relationshipKeyPathsForPrefetching = [#keyPath(BookmarkEntity.favoriteFolders)]
         
         context.perform {
             let result = try? context.fetch(fetchRequest) as? [Dictionary<String, Any>]
@@ -131,7 +131,7 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
             self.init(objectID: objectID,
                       title: title,
                       url: url,
-                      isFavorite: bookmark[#keyPath(BookmarkEntity.favoriteFolder)] != nil)
+                      isFavorite: (bookmark[#keyPath(BookmarkEntity.favoriteFolders)] as? Set<NSManagedObject>)?.isEmpty != true)
         }
 
         public func togglingFavorite() -> BookmarksStringSearchResult {

@@ -19,6 +19,8 @@
 
 import SwiftUI
 import DuckUI
+import DesignResourcesKit
+
 
 public struct DeviceConnectedView: View {
 
@@ -27,58 +29,66 @@ public struct DeviceConnectedView: View {
     var isCompact: Bool {
         verticalSizeClass == .compact
     }
-
+    let isSingleSetUp: Bool
+    let shouldShowOptions: Bool
     @State var showRecoveryPDF = false
 
     let saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel
+    @ObservedObject var optionsViewModel: SyncSettingsViewModel
     let devices: [SyncSettingsViewModel.Device]
 
-    public init(_ saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel, devices: [SyncSettingsViewModel.Device]) {
+    public init(_ saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel, optionsViewModel: SyncSettingsViewModel, devices: [SyncSettingsViewModel.Device], isSingleSetUp: Bool, shouldShowOptions: Bool) {
         self.saveRecoveryKeyViewModel = saveRecoveryKeyViewModel
         self.devices = devices
+        self.optionsViewModel = optionsViewModel
+        self.isSingleSetUp = isSingleSetUp
+        self.shouldShowOptions = shouldShowOptions
+    }
+
+    var title: String {
+        if isSingleSetUp {
+            return UserText.syngleDeviceConnectedTitle
+        }
+        return UserText.deviceSyncedTitle
+    }
+
+    var message: String {
+        if isSingleSetUp {
+            return UserText.firstDeviceSyncedMessage
+        }
+        if devices.count == 1 {
+            return UserText.deviceSyncedMessage
+        }
+        return UserText.multipleDevicesSyncedMessage
+    }
+
+    var devicesOnMessageText: String {
+        if devices.isEmpty {
+            return ""
+        }
+        if devices.count == 1 {
+            return devices[0].name
+        }
+        return "\(devices.count + 1) " + UserText.wordDevices
     }
 
     @ViewBuilder
     func deviceSyncedView() -> some View {
         UnderflowContainer {
             VStack(spacing: 0) {
-                Image("SyncSuccess")
+                Image("Sync-Start-128")
                     .padding(.bottom, 20)
 
-                Text(UserText.deviceSyncedTitle)
-                    .font(.system(size: 28, weight: .bold))
+                Text(title)
+                    .daxTitle1()
                     .padding(.bottom, 24)
 
-                ZStack {
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(.black.opacity(0.14))
-
-                    ScrollView {
-                        VStack(spacing: 0) {
-                            ForEach(devices.indices, id: \.self) { deviceIndex in
-
-                                HStack(spacing: 0) {
-                                    Image(systemName: "checkmark.circle")
-                                        .padding(.horizontal, 18)
-                                    Text(devices[deviceIndex].name)
-                                    Spacer()
-                                }
-                                .frame(height: 44)
-
-                                if deviceIndex + 1 < devices.count {
-                                    Divider()
-                                        .padding(.leading, 52)
-                                }
-                            }
-                        }
-                    }
-                }
-                .padding(.bottom, 20)
-
-                Text(UserText.deviceSyncedMessage)
-                    .lineLimit(nil)
+                Text("\(message) \(Text(devicesOnMessageText).bold())")
                     .multilineTextAlignment(.center)
-
+                
+                if shouldShowOptions {
+                    options()
+                }
             }
             .padding(.horizontal, 20)
         } foregroundContent: {
@@ -95,6 +105,37 @@ public struct DeviceConnectedView: View {
         }
         .padding(.top, isCompact ? 0 : 56)
         .padding(.bottom)
+    }
+
+    @ViewBuilder
+    func options() -> some View {
+        VStack {
+            Spacer(minLength: 71)
+            Text(UserText.options.uppercased())
+                .daxFootnoteRegular()
+            Toggle(isOn: $optionsViewModel.isUnifiedFavoritesEnabled) {
+                HStack(spacing: 16) {
+                    Image("SyncAllDevices")
+                    VStack(alignment: .leading) {
+                        Text(UserText.unifiedFavoritesTitle)
+                            .foregroundColor(.primary)
+                            .daxBodyRegular()
+                        Text(UserText.unifiedFavoritesInstruction)
+                            .daxCaption()
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
+            .padding(16)
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(.black.opacity(0.01))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(.black.opacity(0.2), lineWidth: 0.2)
+            )
+        }
     }
 
     public var body: some View {

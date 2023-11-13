@@ -19,6 +19,7 @@
 
 import UIKit
 import WebKit
+import WidgetKit
 import Combine
 import Common
 import Core
@@ -85,14 +86,19 @@ class MainViewController: UIViewController {
 
     let bookmarksDatabase: CoreDataDatabase
     private weak var bookmarksDatabaseCleaner: BookmarkDatabaseCleaner?
-    private let favoritesViewModel: FavoritesListInteracting
+    private var favoritesViewModel: FavoritesListInteracting
     let syncService: DDGSyncing
     let syncDataProviders: SyncDataProviders
     private var localUpdatesCancellable: AnyCancellable?
     private var syncUpdatesCancellable: AnyCancellable?
+    private var favoritesDisplayModeCancellable: AnyCancellable?
     private var emailCancellables = Set<AnyCancellable>()
 
-    lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
+    lazy var menuBookmarksViewModel: MenuBookmarksInteracting = {
+        let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
+        viewModel.favoritesDisplayMode = appSettings.favoritesDisplayMode
+        return viewModel
+    }()
 
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
@@ -138,19 +144,20 @@ class MainViewController: UIViewController {
         appTrackingProtectionDatabase: CoreDataDatabase,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
-        appSettings: AppSettings
+        appSettings: AppSettings = AppUserDefaults()
     ) {
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
-        self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
+        self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         self.appSettings = appSettings
 
         super.init(nibName: nil, bundle: nil)
 
+        bindFavoritesDisplayMode()
         bindSyncService()
     }
 #else
@@ -165,7 +172,7 @@ class MainViewController: UIViewController {
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
-        self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
+        self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         self.appSettings = appSettings
         
@@ -231,6 +238,7 @@ class MainViewController: UIViewController {
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
         registerForKeyboardNotifications()
+        registerForSyncPausedNotifications()
 
         applyTheme(ThemeManager.shared.currentTheme)
 
@@ -342,6 +350,46 @@ class MainViewController: UIViewController {
                                                object: nil)
     }
 
+    private func registerForSyncPausedNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showSyncPausedError),
+            name: SyncBookmarksAdapter.bookmarksSyncLimitReached,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showSyncPausedError),
+            name: SyncCredentialsAdapter.credentialsSyncLimitReached,
+            object: nil)
+    }
+
+    @objc private func showSyncPausedError(_ notification: Notification) {
+        Task {
+            await MainActor.run {
+                var title = UserText.syncBookmarkPausedAlertTitle
+                var description = UserText.syncBookmarkPausedAlertDescription
+                if notification.name == SyncCredentialsAdapter.credentialsSyncLimitReached {
+                    title = UserText.syncCredentialsPausedAlertTitle
+                    description = UserText.syncCredentialsPausedAlertDescription
+                }
+                if self.presentedViewController is SyncSettingsViewController {
+                    return
+                }
+                self.presentedViewController?.dismiss(animated: true)
+                let alert = UIAlertController(title: title,
+                                              message: description,
+                                              preferredStyle: .alert)
+                let learnMoreAction = UIAlertAction(title: UserText.syncPausedAlertLearnMoreButton, style: .default) { _ in
+                    self.segueToSettingsSync()
+                }
+                let okAction = UIAlertAction(title: UserText.syncPausedAlertOkButton, style: .cancel)
+                alert.addAction(learnMoreAction)
+                alert.addAction(okAction)
+                self.present(alert, animated: true)
+            }
+        }
+    }
+
     func registerForSettingsChangeNotifications() {
         NotificationCenter.default.addObserver(self, selector:
                                                 #selector(onAddressBarPositionChanged),
@@ -446,6 +494,20 @@ class MainViewController: UIViewController {
                                                                                   action: #selector(quickSaveBookmarkLongPress(gesture:))))
         gestureBookmarksButton.delegate = self
         gestureBookmarksButton.image = UIImage(named: "Bookmarks")
+    }
+
+    private func bindFavoritesDisplayMode() {
+        favoritesDisplayModeCancellable = NotificationCenter.default.publisher(for: AppUserDefaults.Notifications.favoritesDisplayModeChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self else {
+                    return
+                }
+                self.menuBookmarksViewModel.favoritesDisplayMode = self.appSettings.favoritesDisplayMode
+                self.favoritesViewModel.favoritesDisplayMode = self.appSettings.favoritesDisplayMode
+                self.homeController?.collectionView.reloadData()
+                WidgetCenter.shared.reloadAllTimelines()
+            }
     }
 
     private func bindSyncService() {
@@ -583,9 +645,10 @@ class MainViewController: UIViewController {
 #if APP_TRACKING_PROTECTION
         let controller = HomeViewController.loadFromStoryboard(model: tabModel!,
                                                                favoritesViewModel: favoritesViewModel,
+                                                               appSettings: appSettings,
                                                                appTPDatabase: appTrackingProtectionDatabase)
 #else
-        let controller = HomeViewController.loadFromStoryboard(model: tabModel!, favoritesViewModel: favoritesViewModel)
+        let controller = HomeViewController.loadFromStoryboard(model: tabModel!, favoritesViewModel: favoritesViewModel, appSettings: appSettings)
 #endif
 
         homeController = controller
@@ -941,7 +1004,7 @@ class MainViewController: UIViewController {
         suggestionTrayController?.didHide()
     }
     
-    fileprivate func launchAutofillLogins(with currentTabUrl: URL? = nil) {
+    func launchAutofillLogins(with currentTabUrl: URL? = nil) {
         let appSettings = AppDependencyProvider.shared.appSettings
         let autofillSettingsViewController = AutofillLoginSettingsListViewController(
             appSettings: appSettings,

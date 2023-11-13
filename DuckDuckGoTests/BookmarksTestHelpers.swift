@@ -63,12 +63,14 @@ struct BasicBookmarksStructure {
         
         BookmarkUtils.prepareFoldersStructure(in: context)
         
-        guard let rootFolder = BookmarkUtils.fetchRootFolder(context),
-              let favoritesFolder = BookmarkUtils.fetchFavoritesFolder(context) else {
+        guard let rootFolder = BookmarkUtils.fetchRootFolder(context)
+        else {
             XCTFail("Couldn't find required folders")
             return
         }
-        
+
+        let favoritesFolders = BookmarkUtils.fetchFavoritesFolders(for: .displayNative(.mobile), in: context)
+
         let topLevel = createBookmarksList(usingNames: topLevelTitles, parent: rootFolder, in: context)
         
         let parent = topLevel[1]
@@ -80,10 +82,10 @@ struct BasicBookmarksStructure {
         nestedLevel[0].url = nil
         nestedLevel[0].isFolder = true
         
-        topLevel[0].addToFavorites(favoritesRoot: favoritesFolder)
-        topLevel[2].addToFavorites(favoritesRoot: favoritesFolder)
-        nestedLevel[1].addToFavorites(favoritesRoot: favoritesFolder)
-        topLevel[3].addToFavorites(favoritesRoot: favoritesFolder)
+        topLevel[0].addToFavorites(folders: favoritesFolders)
+        topLevel[2].addToFavorites(folders: favoritesFolders)
+        nestedLevel[1].addToFavorites(folders: favoritesFolders)
+        topLevel[3].addToFavorites(folders: favoritesFolders)
         
         do {
             try context.save()

@@ -28,6 +28,8 @@ struct ConnectModeView: View {
 
     var body: some View {
         QRCodeCopierView(model: qrCodeModel)
+            .padding(.vertical, 20)
+            .frame(maxWidth: Constants.maxFullScreenWidth)
             .onAppear {
                 self.qrCodeModel = model.startConnectMode()
             }

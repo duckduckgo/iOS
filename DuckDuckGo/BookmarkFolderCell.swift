@@ -36,7 +36,7 @@ class BookmarkFolderCell: UITableViewCell {
 
             if folder.uuid == BookmarkEntity.Constants.rootFolderID {
                 title.text = UserText.sectionTitleBookmarks
-            } else if folder.uuid == BookmarkEntity.Constants.favoritesFolderID {
+            } else if folder.uuid.flatMap({ FavoritesFolderID.allCases.map(\.rawValue).contains($0) }) == true {
                 title.text = "Favorites"
                 assertionFailure("Favorites folder in UI")
             } else {

@@ -1591,6 +1591,12 @@ https://duckduckgo.com/mac";
 /* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
 "network-protection.waitlist.joined.with-notifications.subtitle.2" = "We’ll notify you when your invite is ready.";
 
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.text" = "Open your invite";
+
+/* Title for Network Protection waitlist notification */
+"network-protection.waitlist.notification.title" = "Network Protection beta is ready!";
+
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";
 

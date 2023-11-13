@@ -54,8 +54,8 @@ final class VPNWaitlist: Waitlist {
     static let backgroundTaskName = "VPN Waitlist Status Task"
     static let backgroundRefreshTaskIdentifier = "com.duckduckgo.app.vpnWaitlistStatus"
     static let notificationIdentifier = "com.duckduckgo.ios.vpn.invite-code-available"
-    static let inviteAvailableNotificationTitle = UserText.windowsWaitlistAvailableNotificationTitle
-    static let inviteAvailableNotificationBody = UserText.waitlistAvailableNotificationBody
+    static let inviteAvailableNotificationTitle = UserText.networkProtectionWaitlistNotificationTitle
+    static let inviteAvailableNotificationBody = UserText.networkProtectionWaitlistNotificationText
 
     var isAvailable: Bool {
         // isFeatureEnabled

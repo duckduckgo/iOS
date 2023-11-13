@@ -30,6 +30,19 @@ public protocol FavoritesDisplayModeStoring: AnyObject {
     var favoritesDisplayMode: FavoritesDisplayMode { get set }
 }
 
+public class BookmarksFaviconsFetcherErrorHandler: EventMapping<BookmarksFaviconsFetcherError> {
+
+    public init() {
+        super.init { event, _, _, _ in
+            Pixel.fire(pixel: .bookmarksFaviconsFetcherFailed, error: event)
+        }
+    }
+
+    override init(mapping: @escaping EventMapping<BookmarksFaviconsFetcherError>.Mapping) {
+        fatalError("Use init()")
+    }
+}
+
 public final class SyncBookmarksAdapter {
 
     public static let syncBookmarksPausedStateChanged = Notification.Name("com.duckduckgo.app.SyncPausedStateChanged")
@@ -101,13 +114,26 @@ public final class SyncBookmarksAdapter {
             return
         }
 
+
+        let stateStore: BookmarkFaviconsFetcherStateStore
+        do {
+            stateStore = try BookmarkFaviconsFetcherStateStore(
+                applicationSupportURL: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+            )
+        } catch {
+            Pixel.fire(pixel: .bookmarksFaviconsFetcherStateStoreInitializationFailed, error: error)
+
+            Thread.sleep(forTimeInterval: 1)
+            fatalError("Could not create BookmarkFaviconsFetcherStateStore: \(error.localizedDescription)")
+        }
+
+
         let faviconsFetcher = BookmarksFaviconsFetcher(
             database: database,
-            stateStore: BookmarkFaviconsFetcherStateStore(
-                applicationSupportURL: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-            ),
+            stateStore: stateStore,
             fetcher: FaviconFetcher(),
             store: Favicons.shared,
+            errorEvents: BookmarksFaviconsFetcherErrorHandler(),
             log: .syncLog
         )
 

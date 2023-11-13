@@ -31,13 +31,15 @@ let package = Package(
             targets: ["SyncUI"])
     ],
     dependencies: [
-        .package(path: "../DuckUI")
+        .package(path: "../DuckUI"),
+        .package(url: "https://github.com/duckduckgo/DesignResourcesKit", exact: "2.0.0")
     ],
     targets: [
         .target(
             name: "SyncUI",
             dependencies: [
-                .product(name: "DuckUI", package: "DuckUI")
+                .product(name: "DuckUI", package: "DuckUI"),
+                "DesignResourcesKit"
             ])
     ]
 )

@@ -130,6 +130,12 @@ extension VPNWaitlistViewController: WaitlistViewModelDelegate {
         if action == .openNetworkProtectionPrivacyPolicyScreen {
             self.viewModel.set(customState: .networkProtectionPrivacyPolicyScreen)
         }
+
+        if action == .acceptNetworkProtectionTerms {
+            self.navigationController?.popViewController(animated: true)
+            let networkProtectionViewController = NetworkProtectionRootViewController()
+            self.navigationController?.pushViewController(networkProtectionViewController, animated: true)
+        }
     }
 
     func waitlistViewModelDidOpenInviteCodeShareSheet(_ viewModel: WaitlistViewModel, inviteCode: String, senderFrame: CGRect) {

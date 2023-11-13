@@ -404,8 +404,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         VPNWaitlist.shared.fetchInviteCodeIfAvailable { error in
-            guard error == nil else { return }
-            VPNWaitlist.shared.sendInviteCodeAvailableNotification()
+            guard error == nil else {
+
+                // If the user already has an invite code but no auth token for some reason, attempt to redeem and store it again.
+                if error == .alreadyHasInviteCode,
+                   let inviteCode = VPNWaitlist.shared.waitlistStorage.getWaitlistInviteCode(),
+                   !NetworkProtectionKeychainTokenStore().isFeatureActivated {
+                    Task {
+                        do {
+                            try await NetworkProtectionCodeRedemptionCoordinator().redeem(inviteCode)
+                            VPNWaitlist.shared.sendInviteCodeAvailableNotification()
+                        } catch {
+                            // TODO
+                        }
+                    }
+                }
+
+                return
+
+            }
+
+            guard let inviteCode = VPNWaitlist.shared.waitlistStorage.getWaitlistInviteCode() else {
+                return
+            }
+
+            Task {
+                do {
+                    try await NetworkProtectionCodeRedemptionCoordinator().redeem(inviteCode)
+                    VPNWaitlist.shared.sendInviteCodeAvailableNotification()
+                } catch {
+                    // TODO
+                }
+            }
         }
 
         BGTaskScheduler.shared.getPendingTaskRequests { tasks in

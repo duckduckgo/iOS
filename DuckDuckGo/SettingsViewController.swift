@@ -426,6 +426,7 @@ class SettingsViewController: UITableViewController {
 #if NETWORK_PROTECTION
     @available(iOS 15, *)
     private func showNetP() {
+        // TODO: Check for T&C acceptance
         if NetworkProtectionKeychainTokenStore().isFeatureActivated {
             // This will be tidied up as part of https://app.asana.com/0/0/1205084446087078/f
             let rootViewController = NetworkProtectionRootViewController { [weak self] in

@@ -49,7 +49,9 @@ struct VPNWaitlistView: View {
             Text("Not supported")
         case .custom(let customState):
             if customState == .networkProtectionPrivacyPolicyScreen {
-                VPNWaitlistPrivacyPolicyView()
+                VPNWaitlistPrivacyPolicyView { action in
+                    Task { await viewModel.perform(action: action) }
+                }
             }
         }
     }
@@ -255,11 +257,13 @@ struct VPNWaitlistInvitedView: View {
 @available(iOS 15.0, *)
 struct VPNWaitlistPrivacyPolicyView: View {
 
+    let action: (WaitlistViewModel.ViewAction) -> Void
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 Text(UserText.networkProtectionPrivacyPolicyTitle)
-                    .font(.system(size: 15, weight: .bold))
+                    .font(.system(size: 17, weight: .bold))
                     .multilineTextAlignment(.leading)
                 
                 Group {
@@ -277,7 +281,7 @@ struct VPNWaitlistPrivacyPolicyView: View {
                 }
                 
                 Text(UserText.networkProtectionTermsOfServiceTitle)
-                    .font(.system(size: 15, weight: .bold))
+                    .font(.system(size: 17, weight: .bold))
                     .multilineTextAlignment(.leading)
                     .padding(.top, 28)
                     .padding(.bottom, 14)
@@ -303,6 +307,10 @@ struct VPNWaitlistPrivacyPolicyView: View {
                     Text(UserText.networkProtectionTermsOfServiceSection8Title).titleStyle()
                     Text(UserText.networkProtectionTermsOfServiceSection8List).bodyStyle()
                 }
+
+                Button("Agree and Continue", action: { action(.custom(.acceptNetworkProtectionTerms)) })
+                    .buttonStyle(RoundedButtonStyle(enabled: true))
+                    .padding(.top, 24)
             }
             .padding(.all, 20)
         }
@@ -382,7 +390,7 @@ private extension Text {
 
     func titleStyle(topPadding: CGFloat = 24, bottomPadding: CGFloat = 14) -> some View {
         self
-            .font(.system(size: 11, weight: .bold))
+            .font(.system(size: 13, weight: .bold))
             .multilineTextAlignment(.leading)
             .padding(.top, topPadding)
             .padding(.bottom, bottomPadding)
@@ -390,7 +398,7 @@ private extension Text {
 
     func bodyStyle() -> some View {
         self
-            .font(.system(size: 11))
+            .font(.system(size: 13))
     }
 
 }

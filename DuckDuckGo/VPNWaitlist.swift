@@ -58,7 +58,8 @@ final class VPNWaitlist: Waitlist {
     static let inviteAvailableNotificationBody = UserText.waitlistAvailableNotificationBody
 
     var isAvailable: Bool {
-        isFeatureEnabled
+        // isFeatureEnabled
+        return true
     }
 
     var isWaitlistRemoved: Bool {
@@ -126,4 +127,5 @@ extension WaitlistViewModel.ViewCustomState {
 extension WaitlistViewModel.ViewCustomAction {
     static var openNetworkProtectionInviteCodeScreen = WaitlistViewModel.ViewCustomAction(identifier: "openNetworkProtectionInviteCodeScreen")
     static var openNetworkProtectionPrivacyPolicyScreen = WaitlistViewModel.ViewCustomAction(identifier: "openNetworkProtectionPrivacyPolicyScreen")
+    static var acceptNetworkProtectionTerms = WaitlistViewModel.ViewCustomAction(identifier: "acceptNetworkProtectionTerms")
 }

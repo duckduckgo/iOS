@@ -19,6 +19,7 @@
 
 import SwiftUI
 import DuckUI
+import DesignResourcesKit
 
 public struct SaveRecoveryKeyView: View {
 
@@ -56,7 +57,7 @@ public struct SaveRecoveryKeyView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 12)
         }
-        .background(RoundedRectangle(cornerRadius: 10).foregroundColor(.black.opacity(0.12)))
+        .background(RoundedRectangle(cornerRadius: 10).foregroundColor(.black.opacity(0.03)))
     }
 
     @ViewBuilder
@@ -67,10 +68,15 @@ public struct SaveRecoveryKeyView: View {
             }
             .buttonStyle(PrimaryButtonStyle(compact: isCompact))
 
-            Button("Copy Key") {
+            Button(UserText.copyCode) {
                 model.copyKey()
             }
             .buttonStyle(SecondaryButtonStyle(compact: isCompact))
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                .inset(by: 0.5)
+                .stroke(.blue, lineWidth: 1)
+                )
 
             Button {
                 presentation.wrappedValue.dismiss()
@@ -90,17 +96,22 @@ public struct SaveRecoveryKeyView: View {
                 .padding(.bottom, 24)
 
             Text(UserText.saveRecoveryTitle)
-                .font(.system(size: 28, weight: .bold))
+                .daxTitle1()
                 .padding(.bottom, 28)
 
             Text(UserText.recoveryMessage)
                 .lineLimit(nil)
-                .font(.system(size: 16))
+                .daxBodyRegular()
                 .lineSpacing(1.32)
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 20)
 
             recoveryInfo()
+                .padding(.bottom, 20)
+            Text(UserText.recoveryWarning)
+                .daxCaption()
+                .multilineTextAlignment(.center)
+                .foregroundColor(.primary.opacity(0.6))
         }
         .padding(.top, isCompact ? 0 : 56)
         .padding(.horizontal, 30)

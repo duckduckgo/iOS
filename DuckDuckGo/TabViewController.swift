@@ -335,6 +335,8 @@ class TabViewController: UIViewController {
 
     override func buildActivities() -> [UIActivity] {
         let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
+        viewModel.favoritesDisplayMode = appSettings.favoritesDisplayMode
+
         var activities: [UIActivity] = [SaveBookmarkActivity(controller: self,
                                                              viewModel: viewModel)]
 
@@ -868,7 +870,7 @@ class TabViewController: UIViewController {
         let blockedTrackerDomains = privacyInfo?.trackerInfo.trackersBlocked.compactMap { $0.domain } ?? []
 
         let configuration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
-        let protected = configuration.isFeature(.contentBlocking, enabledForDomain: url?.host)
+        let protectionsState = configuration.isFeature(.contentBlocking, enabledForDomain: url?.host)
 
         return BrokenSiteInfo(url: url,
                               httpsUpgrade: httpsForced,
@@ -878,7 +880,7 @@ class TabViewController: UIViewController {
                               tdsETag: ContentBlocking.shared.contentBlockingManager.currentMainRules?.etag ?? "",
                               ampUrl: linkProtection.lastAMPURLString,
                               urlParametersRemoved: linkProtection.urlParametersRemoved,
-                              protected: protected)
+                              protectionsState: protectionsState)
     }
     
     public func print() {

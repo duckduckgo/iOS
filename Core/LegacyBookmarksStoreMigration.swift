@@ -39,7 +39,7 @@ public class LegacyBookmarksStoreMigration {
             }
         } else {
             // Initialize structure if needed
-            BookmarkUtils.prepareFoldersStructure(in: context)
+            BookmarkUtils.prepareLegacyFoldersStructure(in: context)
             if context.hasChanges {
                 do {
                     try context.save(onErrorFire: .bookmarksCouldNotPrepareDatabase)
@@ -82,7 +82,8 @@ public class LegacyBookmarksStoreMigration {
         BookmarkUtils.prepareFoldersStructure(in: destination)
         
         guard let newRoot = BookmarkUtils.fetchRootFolder(destination),
-              let newFavoritesRoot = BookmarkUtils.fetchFavoritesFolder(destination) else {
+              let newFavoritesRoot = BookmarkUtils.fetchFavoritesFolder(withUUID: FavoritesFolderID.unified.rawValue, in: destination),
+              let newMobileFavoritesRoot = BookmarkUtils.fetchFavoritesFolder(withUUID: FavoritesFolderID.mobile.rawValue, in: destination) else {
             Pixel.fire(pixel: .bookmarksMigrationCouldNotPrepareDatabase)
             Thread.sleep(forTimeInterval: 2)
             fatalError("Could not write to Bookmarks DB")
@@ -169,6 +170,8 @@ public class LegacyBookmarksStoreMigration {
             }()
             bookmark.addToFavorites(insertAt: 0,
                                     favoritesRoot: newFavoritesRoot)
+            bookmark.addToFavorites(insertAt: 0,
+                                    favoritesRoot: newMobileFavoritesRoot)
         }
         
         do {
@@ -176,7 +179,7 @@ public class LegacyBookmarksStoreMigration {
         } catch {
             destination.reset()
             
-            BookmarkUtils.prepareFoldersStructure(in: destination)
+            BookmarkUtils.prepareLegacyFoldersStructure(in: destination)
             do {
                 try destination.save(onErrorFire: .bookmarksMigrationCouldNotPrepareDatabaseOnFailedMigration)
             } catch {

@@ -87,7 +87,7 @@ struct VPNWaitlistSignUpView: View {
 
                     Button("I Have an Invite Code", action: { action(.custom(.openNetworkProtectionInviteCodeScreen)) })
                         .buttonStyle(RoundedButtonStyle(enabled: true, style: .bordered))
-                        .padding(.top, 24)
+                        .padding(.top, 18)
 
                     if requestInFlight {
                         HStack {
@@ -141,7 +141,7 @@ struct VPNWaitlistJoinedWaitlistView: View {
                     .lineSpacing(6)
 
             default:
-                Text("TODO")
+                Text(UserText.networkProtectionWaitlistJoinedWithNotificationsSubtitle1)
                     .daxBodyRegular()
                     .foregroundColor(.waitlistTextSecondary)
                     .lineSpacing(6)
@@ -216,7 +216,7 @@ struct VPNWaitlistInvitedView: View {
         GeometryReader { proxy in
             ScrollView {
                 VStack(alignment: .center, spacing: 0) {
-                    HeaderView(imageName: "WaitlistInvited", title: UserText.networkProtectionWaitlistInvitedTitle)
+                    HeaderView(imageName: "InvitedVPNWaitlist", title: UserText.networkProtectionWaitlistInvitedTitle)
 
                     Text(UserText.networkProtectionWaitlistInvitedSubtitle)
                         .daxBodyRegular()
@@ -230,6 +230,7 @@ struct VPNWaitlistInvitedView: View {
                             WaitlistListEntryView(viewData: itemData)
                         }
                     }
+                    .background(Color.red)
                     .padding(.top, 24)
 
                     Button("Get Started", action: { action(.custom(.openNetworkProtectionPrivacyPolicyScreen)) })

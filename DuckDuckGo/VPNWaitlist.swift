@@ -25,6 +25,26 @@ import Waitlist
 
 final class VPNWaitlist: Waitlist {
 
+    enum AccessType {
+        /// Used if the user does not have waitlist feature flag access
+        case none
+
+        /// Used if the user has waitlist feature flag access, but has not joined the waitlist
+        case waitlistAvailable
+
+        /// Used if the user has waitlist feature flag access, and has joined the waitlist
+        case waitlistJoined
+
+        /// Used if the user has been invited via the waitlist, but needs to accept the Privacy Policy and Terms of Service
+        case waitlistInvitedPendingTermsAcceptance
+
+        /// Used if the user has been invited via the waitlist and has accepted the Privacy Policy and Terms of Service
+        case waitlistInvited
+
+        /// Used if the user has been invited to test Network Protection directly
+        case inviteCodeInvited
+    }
+
     static let identifier: String = "vpn"
     static let apiProductName: String = "networkprotection_ios"
     static let downloadURL: URL = URL.windows
@@ -45,30 +65,32 @@ final class VPNWaitlist: Waitlist {
         return false
     }
 
+    var networkProtectionAccessType: AccessType {
+        let hasWaitlistAccess = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlist)
+        let isWaitlistActive = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlistBetaActive)
+
+        if !hasWaitlistAccess && !isWaitlistActive {
+            return .none
+        }
+
+        // TODO
+        return .inviteCodeInvited
+    }
+
     let waitlistStorage: WaitlistStorage
     let waitlistRequest: WaitlistRequest
+    private let privacyConfigurationManager: PrivacyConfigurationManaging
 
     init(store: WaitlistStorage,
          request: WaitlistRequest,
          privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) {
         self.waitlistStorage = store
         self.waitlistRequest = request
+        self.privacyConfigurationManager = privacyConfigurationManager
 
-        isFeatureEnabled = true // privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .windowsWaitlist)
-
-//        isFeatureEnabledCancellable = privacyConfigurationManager.updatesPublisher
-//            .map { [weak privacyConfigurationManager] in
-//                privacyConfigurationManager?.privacyConfig.isEnabled(featureKey: .windowsWaitlist) == true
-//            }
-//            .receive(on: DispatchQueue.main)
-//            .assign(to: \.isFeatureEnabled, onWeaklyHeld: self)
-//
-//        isWaitlistRemovedCancellable = privacyConfigurationManager.updatesPublisher
-//            .map { [weak privacyConfigurationManager] in
-//                privacyConfigurationManager?.privacyConfig.isEnabled(featureKey: .windowsDownloadLink) == true
-//            }
-//            .receive(on: DispatchQueue.main)
-//            .assign(to: \.isWaitlistRemoved, onWeaklyHeld: self)
+        let hasWaitlistAccess = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlist)
+        let isWaitlistActive = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlistBetaActive)
+        isFeatureEnabled = hasWaitlistAccess && isWaitlistActive
     }
 
     convenience init(store: WaitlistStorage, request: WaitlistRequest) {
@@ -84,6 +106,7 @@ final class VPNWaitlist: Waitlist {
             return "On waitlist"
         }
 
+        // TODO
         return "Default text"
     }
 

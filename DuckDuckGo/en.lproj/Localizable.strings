@@ -1444,16 +1444,22 @@ https://duckduckgo.com/mac";
 /* Privacy Policy title for Network Protection */
 "network-protection.privacy-policy.section.2.title" = "We don’t keep any logs of your online activity.";
 
-/* Privacy Policy list for Network Protection
-   Privacy Policy title for Network Protection */
+/* Privacy Policy list for Network Protection */
+"network-protection.privacy-policy.section.3.list" = "Our servers store generic usage (for example, CPU load) and diagnostic data (for example, errors), but none of that data is connected to any individual’s activity.\n\nWe use this non-identifying information to monitor and ensure the performance and quality of the service, for example to make sure servers aren’t overloaded.";
+
+/* Privacy Policy title for Network Protection */
 "network-protection.privacy-policy.section.3.title" = "We only keep anonymous performance metrics that we cannot connect to your online activity.";
 
-/* Privacy Policy list for Network Protection
-   Privacy Policy title for Network Protection */
+/* Privacy Policy list for Network Protection */
+"network-protection.privacy-policy.section.4.list" = "Dedicated servers means they are not shared with anyone else.\n\nWe rent our servers from providers we carefully selected because they meet our privacy requirements.\n\nWe have strict access controls in place so that only limited DuckDuckGo team members have access to our servers.";
+
+/* Privacy Policy title for Network Protection */
 "network-protection.privacy-policy.section.4.title" = "We use dedicated servers for all VPN traffic.";
 
-/* Privacy Policy list for Network Protection
-   Privacy Policy title for Network Protection */
+/* Privacy Policy list for Network Protection */
+"network-protection.privacy-policy.section.5.list" = "If you reach out to us for support by submitting a bug report or through email and agree to be contacted to troubleshoot the issue, we’ll contact you using the information you provide.\n\nIf you participate in a voluntary product survey or questionnaire and agree to provide further feedback, we may contact you using the information you provide.\n\nWe will permanently delete all personal information you provided to us (email, contact information), within 30 days after closing a support case or, in the case of follow up feedback, within 60 days after ending this beta service.";
+
+/* Privacy Policy title for Network Protection */
 "network-protection.privacy-policy.section.5.title" = "We protect and limit use of your data when you communicate directly with DuckDuckGo.";
 
 /* Privacy Policy title for Network Protection */

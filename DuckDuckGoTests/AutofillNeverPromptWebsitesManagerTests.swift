@@ -48,6 +48,8 @@ final class AutofillNeverPromptWebsitesManagerTests: XCTestCase {
     }
 
     func testWhenMultipleNeverPromptWebsitesThenHasNeverPromptWebsiteForDomain() {
+        XCTAssertTrue(manager.deleteAllNeverPromptWebsites())
+
         XCTAssertNoThrow(try manager.saveNeverPromptWebsite("example.com"))
         XCTAssertNoThrow(try manager.saveNeverPromptWebsite("sub.example.com"))
         XCTAssertNoThrow(try manager.saveNeverPromptWebsite("anotherdomain.com"))
@@ -57,6 +59,8 @@ final class AutofillNeverPromptWebsitesManagerTests: XCTestCase {
     }
 
     func testWhenDeletingAllNeverPromptWebsitesTheAllNeverPromptWebsitesDeleted() {
+        XCTAssertTrue(manager.deleteAllNeverPromptWebsites())
+
         let domain = "example.com"
         XCTAssertNoThrow(try manager.saveNeverPromptWebsite(domain))
         XCTAssertEqual(manager.neverPromptWebsites.count, 1)

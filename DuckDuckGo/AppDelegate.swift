@@ -844,6 +844,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
                 presentNetworkProtectionStatusSettingsModal()
             }
+
+            if identifier == VPNWaitlist.notificationIdentifier {
+                presentNetworkProtectionWaitlistModal()
+            }
 #endif
         }
 
@@ -856,6 +860,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
 #if NETWORK_PROTECTION
+    private func presentNetworkProtectionWaitlistModal() {
+        if #available(iOS 15, *) {
+            let networkProtectionRoot = VPNWaitlistViewController(nibName: nil, bundle: nil)
+            presentSettings(with: networkProtectionRoot)
+        }
+    }
+
     private func presentNetworkProtectionStatusSettingsModal() {
         if #available(iOS 15, *) {
             let networkProtectionRoot = NetworkProtectionRootViewController()

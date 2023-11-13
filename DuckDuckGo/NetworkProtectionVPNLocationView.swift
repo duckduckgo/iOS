@@ -28,7 +28,7 @@ struct NetworkProtectionVPNLocationView: View {
 
     var body: some View {
         List {
-            Text("⚠️ THIS FEATURE IS STILL WORK IN PROGRESS ⚠️")
+            Text("⚠️ FEATURE IS WORK IN PROGRESS ⚠️")
             Section {
                 Button(action: model.onNearestItemSelection) {
                     Text(UserText.netPPreferredLocationNearest)

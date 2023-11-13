@@ -14,8 +14,8 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "anya/autofill-never-prompt-save",
-          "revision": "ee8f5278e747d0638b83a354009b5eb397a27fec",
+          "branch": null,
+          "revision": "ee8f4037c50b065e614c09156a829db6b20ad9ae",
           "version": null
         }
       },
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
           "branch": null,
-          "revision": "b1cd01b6c67fb282b2463bfcb1a2c08ef27a960a",
-          "version": null
+          "revision": "93677cc02cfe650ce7f417246afd0e8e972cd83e",
+          "version": "10.0.0"
         }
       },
       {

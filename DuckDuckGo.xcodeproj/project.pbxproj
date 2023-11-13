@@ -9091,8 +9091,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "anya/autofill-never-prompt-save";
-				kind = branch;
+				kind = revision;
+				revision = ee8f4037c50b065e614c09156a829db6b20ad9ae;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

@@ -4,9 +4,9 @@
 <dict>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.duckduckgo.alpha.bookmarks</string>
-		<string>group.com.duckduckgo.alpha.database</string>
-		<string>group.com.duckduckgo.netp</string>
+		<string>$(GROUP_ID_PREFIX).bookmarks</string>
+		<string>$(GROUP_ID_PREFIX).database</string>
+		<string>$(GROUP_ID_PREFIX).netp</string>
 	</array>
 </dict>
 </plist>

@@ -27,9 +27,11 @@ import DuckDuckGo
 private extension BookmarkListViewModel {
     
     convenience init(bookmarksDatabase: CoreDataDatabase,
-                     parentID: NSManagedObjectID?) {
+                     parentID: NSManagedObjectID?,
+                     favoritesDisplayMode: FavoritesDisplayMode) {
         self.init(bookmarksDatabase: bookmarksDatabase,
                   parentID: parentID,
+                  favoritesDisplayMode: favoritesDisplayMode,
                   errorEvents: .init(mapping: { event, _, _, _ in
             XCTFail("Unexpected error: \(event)")
         }))
@@ -65,7 +67,8 @@ class BookmarkListViewModelTests: XCTestCase {
     func testWhenFolderIsSetThenBookmarksFetchedFromThatLocation() {
         
         let viewModel = BookmarkListViewModel(bookmarksDatabase: db,
-                                              parentID: nil)
+                                              parentID: nil,
+                                              favoritesDisplayMode: .displayNative(.mobile))
         let context = db.makeContext(concurrencyType: .mainQueueConcurrencyType)
         XCTAssertNotNil(viewModel.currentFolder?.objectID)
         XCTAssertEqual(viewModel.currentFolder?.objectID, BookmarkUtils.fetchRootFolder(context)?.objectID)
@@ -77,7 +80,8 @@ class BookmarkListViewModelTests: XCTestCase {
         XCTAssertEqual(names, BasicBookmarksStructure.topLevelTitles)
         
         let nestedViewModel = BookmarkListViewModel(bookmarksDatabase: db,
-                                                    parentID: result[1].objectID)
+                                                    parentID: result[1].objectID,
+                                                    favoritesDisplayMode: .displayNative(.mobile))
         XCTAssertEqual(nestedViewModel.currentFolder?.objectID, result[1].objectID)
         
         let result2 = nestedViewModel.bookmarks
@@ -89,7 +93,8 @@ class BookmarkListViewModelTests: XCTestCase {
     func testWhenDeletingABookmarkItIsRemoved() {
         
         let viewModel = BookmarkListViewModel(bookmarksDatabase: db,
-                                              parentID: nil)
+                                              parentID: nil,
+                                              favoritesDisplayMode: .displayNative(.mobile))
         let result = viewModel.bookmarks
         let idSet = Set(result.map { $0.objectID })
         
@@ -99,7 +104,8 @@ class BookmarkListViewModelTests: XCTestCase {
         viewModel.softDeleteBookmark(bookmark)
         
         let newViewModel = BookmarkListViewModel(bookmarksDatabase: db,
-                                               parentID: nil)
+                                                 parentID: nil,
+                                                 favoritesDisplayMode: .displayNative(.mobile))
         let newResult = newViewModel.bookmarks
         let newIdSet = Set(newResult.map { $0.objectID })
         
@@ -112,7 +118,8 @@ class BookmarkListViewModelTests: XCTestCase {
     func testWhenDeletingABookmarkFolderItIsRemovedWithContents() {
         
         let viewModel = BookmarkListViewModel(bookmarksDatabase: db,
-                                              parentID: nil)
+                                              parentID: nil,
+                                              favoritesDisplayMode: .displayNative(.mobile))
         let result = viewModel.bookmarks
         let idSet = Set(result.map { $0.objectID })
         
@@ -125,7 +132,8 @@ class BookmarkListViewModelTests: XCTestCase {
         viewModel.softDeleteBookmark(folder)
         
         let newViewModel = BookmarkListViewModel(bookmarksDatabase: db,
-                                               parentID: nil)
+                                                 parentID: nil,
+                                                 favoritesDisplayMode: .displayNative(.mobile))
         let newResult = newViewModel.bookmarks
         let newIdSet = Set(newResult.map { $0.objectID })
         
@@ -139,15 +147,17 @@ class BookmarkListViewModelTests: XCTestCase {
     func testWhenGettingTotalCountThenFoldersAreNotTakenIntoAccount() {
         
         let viewModel = BookmarkListViewModel(bookmarksDatabase: db,
-                                              parentID: nil)
-        
+                                              parentID: nil,
+                                              favoritesDisplayMode: .displayNative(.mobile))
+
         XCTAssertEqual(viewModel.totalBookmarksCount, 5)
     }
     
     func testWhenMovingBookmarkItGoesToNewPosition() {
         
         let viewModel = BookmarkListViewModel(bookmarksDatabase: db,
-                                              parentID: nil)
+                                              parentID: nil,
+                                              favoritesDisplayMode: .displayNative(.mobile))
         let result = viewModel.bookmarks
         
         let first = result[0]
@@ -158,7 +168,8 @@ class BookmarkListViewModelTests: XCTestCase {
                                toIndex: 1)
         
         let newViewModel = BookmarkListViewModel(bookmarksDatabase: db,
-                                               parentID: nil)
+                                                 parentID: nil,
+                                                 favoritesDisplayMode: .displayNative(.mobile))
         let newResult = newViewModel.bookmarks
         let newFirst = newResult[0]
         let newSecond = newResult[1]
@@ -171,9 +182,11 @@ class BookmarkListViewModelTests: XCTestCase {
     func testWhenContextSavesThenChangesArePropagated() {
         
         let viewModel = BookmarkListViewModel(bookmarksDatabase: db,
-                                                   parentID: nil)
+                                              parentID: nil,
+                                              favoritesDisplayMode: .displayNative(.mobile))
         let listeningViewModel = BookmarkListViewModel(bookmarksDatabase: db,
-                                                       parentID: nil)
+                                                       parentID: nil,
+                                                       favoritesDisplayMode: .displayNative(.mobile))
         
         let expectation = expectation(description: "Changes propagated")
         
@@ -203,6 +216,7 @@ class BookmarkListViewModelTests: XCTestCase {
         expectation.expectedFulfillmentCount = 3
         let viewModel = BookmarkListViewModel(bookmarksDatabase: db,
                                               parentID: nil,
+                                              favoritesDisplayMode: .displayNative(.mobile),
                                               errorEvents: .init(mapping: { event, _, _, _ in
             let expectedEvent = expectedEvents.popLast()
             XCTAssertEqual(event, expectedEvent)
@@ -230,7 +244,8 @@ class BookmarkListViewModelTests: XCTestCase {
                                toIndex: 10)
         
         let newViewModel = BookmarkListViewModel(bookmarksDatabase: db,
-                                                 parentID: nil)
+                                                 parentID: nil,
+                                                 favoritesDisplayMode: .displayNative(.mobile))
         let newResult = newViewModel.bookmarks
         let newFirst = newResult[0]
         let newSecond = newResult[1]
@@ -245,7 +260,8 @@ class BookmarkListViewModelTests: XCTestCase {
     func testWhenFolderIsNotAFolderThenErrorIsReported() {
         
         let viewModel = BookmarkListViewModel(bookmarksDatabase: db,
-                                              parentID: nil)
+                                              parentID: nil,
+                                              favoritesDisplayMode: .displayNative(.mobile))
 
         let result = viewModel.bookmarks
         let bookmark = result[0]
@@ -254,6 +270,7 @@ class BookmarkListViewModelTests: XCTestCase {
         let errorReported = expectation(description: "Error reported")
         let brokenViewModel = BookmarkListViewModel(bookmarksDatabase: db,
                                                     parentID: bookmark.objectID,
+                                                    favoritesDisplayMode: .displayNative(.mobile),
                                                     errorEvents: .init(mapping: { event, _, _, _ in
             errorReported.fulfill()
             XCTAssertEqual(event, .bookmarkFolderExpected)
@@ -267,7 +284,8 @@ class BookmarkListViewModelTests: XCTestCase {
     func testWhenFolderIsMissingThenErrorIsReported() {
         
         let viewModel = BookmarkListViewModel(bookmarksDatabase: db,
-                                              parentID: nil)
+                                              parentID: nil,
+                                              favoritesDisplayMode: .displayNative(.mobile))
 
         let result = viewModel.bookmarks
         let bookmark = result[0]
@@ -282,6 +300,7 @@ class BookmarkListViewModelTests: XCTestCase {
         let errorReported = expectation(description: "Error reported")
         let brokenViewModel = BookmarkListViewModel(bookmarksDatabase: db,
                                                     parentID: tmpFolder.objectID,
+                                                    favoritesDisplayMode: .displayNative(.mobile),
                                                     errorEvents: .init(mapping: { event, _, _, _ in
             errorReported.fulfill()
             XCTAssertEqual(event, .bookmarksListMissingFolder)
@@ -300,6 +319,7 @@ class BookmarkListViewModelTests: XCTestCase {
         let expectation = expectation(description: "Error reported")
         _ = BookmarkListViewModel(bookmarksDatabase: db,
                                   parentID: nil,
+                                  favoritesDisplayMode: .displayNative(.mobile),
                                   errorEvents: .init(mapping: { event, _, _, _ in
             XCTAssertEqual(event, .fetchingRootItemFailed(.bookmarks))
             expectation.fulfill()

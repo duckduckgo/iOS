@@ -20,6 +20,7 @@
 import Foundation
 import AppIntents
 import Core
+import DesignResourcesKit
 import SwiftUI
 import WidgetKit
 import NetworkExtension
@@ -138,7 +139,7 @@ struct VPNStatusView: View {
             case .status(let status):
                 switch status {
                 case .connecting, .connected, .reasserting:
-                    Color("VPNWidgetConnectedColor")
+                    Color.vpnWidgetBackgroundColor
                 case .disconnecting, .disconnected, .invalid:
                     Color.white
                 @unknown default:
@@ -176,7 +177,7 @@ struct VPNStatusView: View {
                             .font(.system(size: 15, weight: .medium))
                             .fontWeight(.semibold)
                     }
-                    .foregroundStyle(Color("VPNWidgetConnectedColor"))
+                    .foregroundStyle(Color.vpnWidgetBackgroundColor)
                     .buttonStyle(.borderedProminent)
                     .tint(.white)
                     .disabled(status != .connected)
@@ -190,7 +191,7 @@ struct VPNStatusView: View {
                     }
                     .foregroundStyle(.white)
                     .buttonStyle(.borderedProminent)
-                    .tint(Color("VPNWidgetConnectedColor"))
+                    .tint(Color.vpnWidgetBackgroundColor)
                     .disabled(status != .disconnected)
                     .padding(.top, 6)
                     .padding(.bottom, 16)
@@ -284,6 +285,15 @@ struct VPNStatusView_Previews: PreviewProvider {
         } else {
             Text("iOS 17 required")
         }
+    }
+
+}
+
+extension Color {
+
+    static var vpnWidgetBackgroundColor: Color {
+        let color = UIColor(designSystemColor: .accent).resolvedColor(with: UITraitCollection(userInterfaceStyle: .light))
+        return Color(color)
     }
 
 }

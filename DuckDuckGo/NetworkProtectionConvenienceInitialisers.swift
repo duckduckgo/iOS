@@ -55,7 +55,11 @@ extension NetworkProtectionKeychainTokenStore {
 extension NetworkProtectionCodeRedemptionCoordinator {
     convenience init() {
         let tunnelSettings = TunnelSettings(defaults: .networkProtectionGroupDefaults)
-        self.init(environment: tunnelSettings.selectedEnvironment, tokenStore: NetworkProtectionKeychainTokenStore(), errorEvents: .networkProtectionAppDebugEvents)
+        self.init(
+            environment: tunnelSettings.selectedEnvironment,
+            tokenStore: NetworkProtectionKeychainTokenStore(),
+            errorEvents: .networkProtectionAppDebugEvents
+        )
     }
 }
 

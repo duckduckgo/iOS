@@ -85,27 +85,6 @@ class KeychainReturnUserMeasurement: ReturnUserMeasurement {
 
     }
 
-    private func readSecureATB() -> String? {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: Self.SecureATBKeychainName,
-            kSecReturnData as String: kCFBooleanTrue!,
-            kSecMatchLimit as String: kSecMatchLimitOne
-        ]
-
-        var dataTypeRef: AnyObject?
-        let status: OSStatus = SecItemCopyMatching(query as CFDictionary, &dataTypeRef)
-        if ![errSecSuccess, errSecItemNotFound].contains(status) {
-            fireDebugPixel(.debugReturnUserReadATB, errorCode: status)
-        }
-
-        if let data = dataTypeRef as? Data {
-            return String(data: data, encoding: .utf8)
-        }
-
-        return nil
-    }
-
     private func fireDebugPixel(_ event: Pixel.Event, errorCode: OSStatus) {
         Pixel.fire(pixel: event, withAdditionalParameters: [
             PixelParameters.returnUserErrorCode: "\(errorCode)"

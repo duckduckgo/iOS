@@ -91,12 +91,26 @@ public struct UserText {
     public static let navigationTitleEdit = NSLocalizedString("navigation.title.edit", value: "Edit", comment: "Edit button")
     public static let navigationTitleDone = NSLocalizedString("navigation.title.done", value: "Done", comment: "Finish editing bookmarks button")
     
-    static let reportBrokenSiteHeader = NSLocalizedString("report.brokensite.header", value: "Submitting an anonymous broken site report helps us debug these issues and improve the app.", comment: "")
+    static let reportBrokenSiteHeader = NSLocalizedString("report.brokensite.header", value: "Submitting an anonymous broken site report helps us improve the app.", comment: "")
+    
+    
+    
+    
+    
+    static let brokenSiteProtectionSwitchLabel = NSLocalizedString("brokensite.switchLabel", value: "Protections are %@ for this website", comment: "Broken Site protection switch label")
+    static let brokenSiteProtectionBanner = NSLocalizedString("brokensite.protectionBanner", value: "Turning protection OFF maight help.", comment: "Broken Site protection banner")
+    
+    
+    
+    
+    
     
     static let brokenSiteSectionTitle = NSLocalizedString("brokensite.sectionTitle", value: "DESCRIBE WHAT HAPPENED", comment: "Broken Site Section Title")
     static let brokenSiteCategoryTitle = NSLocalizedString("brokensite.categoryTitle", value: "SELECT A CATEGORY", comment: "Broken Site Category Section Title")
-    static let brokenSiteCategoryPlaceholder = NSLocalizedString("brokensite.categoryPlaceholder", value: "Pick your issue from the list...", comment: "Broken Site Category Placeholder")
-    static let brokenSiteCommentPlaceholder = NSLocalizedString("brokensite.commentPlaceholder", value: "Sharing more details can help us address this issue", comment: "Broken Site Comment Placeholder")
+    static let brokenSiteCategoryPlaceholder = NSLocalizedString("brokensite.categoryPlaceholder", value: "Describe what happened", comment: "Broken Site Category Placeholder")
+    
+    static let brokenSiteCommentPlaceholder = NSLocalizedString("brokensite.commentPlaceholder", value: "Share more details (optional):\n• What happened?\n• What should have happened?\n• Did turning off protections help?", comment: "Broken Site Comment Placeholder")
+    
     
     static let brokenSiteCategoryImages = NSLocalizedString("brokensite.category.images", value: "Images didn’t load", comment: "Broken Site Category")
     static let brokenSiteCategoryPaywall = NSLocalizedString("brokensite.category.paywall", value: "The site asked me to disable", comment: "Broken Site Category")

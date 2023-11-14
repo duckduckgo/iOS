@@ -791,16 +791,22 @@
 "brokensite.category.videos" = "Video didn’t play";
 
 /* Broken Site Category Placeholder */
-"brokensite.categoryPlaceholder" = "Pick your issue from the list...";
+"brokensite.categoryPlaceholder" = "Describe what happened";
 
 /* Broken Site Category Section Title */
 "brokensite.categoryTitle" = "SELECT A CATEGORY";
 
 /* Broken Site Comment Placeholder */
-"brokensite.commentPlaceholder" = "Sharing more details can help us address this issue";
+"brokensite.commentPlaceholder" = "Share more details (optional):\n• What happened?\n• What should have happened?\n• Did turning off protections help?";
+
+/* Broken Site protection banner */
+"brokensite.protectionBanner" = "Turning protection OFF maight help.";
 
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "DESCRIBE WHAT HAPPENED";
+
+/* Broken Site protection switch label */
+"brokensite.switchLabel" = "Protections are %@ for this website";
 
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Past month";
@@ -1637,7 +1643,7 @@ https://duckduckgo.com/mac";
 "prompt.custom.url.scheme.title" = "Open in Another App?";
 
 /* No comment provided by engineer. */
-"report.brokensite.header" = "Submitting an anonymous broken site report helps us debug these issues and improve the app.";
+"report.brokensite.header" = "Submitting an anonymous broken site report helps us improve the app.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Search or enter address";

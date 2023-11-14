@@ -58,8 +58,10 @@ public struct BrokenSiteInfo {
     private let protectionsState: Bool
 
     public init(url: URL?, httpsUpgrade: Bool,
-                blockedTrackerDomains: [String], installedSurrogates: [String],
-                isDesktop: Bool, tdsETag: String?,
+                blockedTrackerDomains: [String],
+                installedSurrogates: [String],
+                isDesktop: Bool,
+                tdsETag: String?,
                 ampUrl: String?,
                 urlParametersRemoved: Bool,
                 protectionsState: Bool,

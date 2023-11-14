@@ -122,22 +122,23 @@ extension MainViewController {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
 
-        let storyboard = UIStoryboard(name: "Feedback", bundle: nil)
-        guard let controller: UINavigationController = storyboard.instantiateInitialViewController(),
-              let brokenSiteScreen = controller.topViewController as? ReportBrokenSiteViewController else {
-            assertionFailure()
-            return
-        }
-
-        brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
-
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            controller.modalPresentationStyle = .formSheet
-        } else {
-            controller.modalPresentationStyle = .pageSheet
-        }
-
-        present(controller, animated: true)
+        // TODO: Open privacy dashboard
+//        let storyboard = UIStoryboard(name: "Feedback", bundle: nil)
+//        guard let controller: UINavigationController = storyboard.instantiateInitialViewController(),
+//              let brokenSiteScreen = controller.topViewController as? ReportBrokenSiteViewController else {
+//            assertionFailure()
+//            return
+//        }
+//
+//        brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
+//
+//        if UIDevice.current.userInterfaceIdiom == .pad {
+//            controller.modalPresentationStyle = .formSheet
+//        } else {
+//            controller.modalPresentationStyle = .pageSheet
+//        }
+//
+//        present(controller, animated: true)
     }
 
     func segueToDownloads() {

@@ -37,7 +37,8 @@ final class FaviconsFetcherOnboarding {
 
     @MainActor
     func presentOnboardingIfNeeded(from viewController: UIViewController) {
-        guard shouldPresentOnboarding else {
+        let isCurrentlyPresenting = viewController.presentedViewController != nil
+        guard shouldPresentOnboarding, !isCurrentlyPresenting else {
             return
         }
         didPresentFaviconsFetchingOnboarding = true

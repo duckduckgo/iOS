@@ -53,4 +53,8 @@ public class MockWaitlistViewModelDelegate: WaitlistViewModelDelegate {
         didTriggerCustomActionCalled = true
     }
 
+    public func waitlistViewModelShouldRefreshState(_ viewModel: WaitlistViewModel) -> Bool {
+        return true
+    }
+
 }

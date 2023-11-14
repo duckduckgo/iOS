@@ -146,4 +146,8 @@ extension VPNWaitlistViewController: WaitlistViewModelDelegate {
         // The VPN waitlist doesn't support the share sheet
     }
 
+    func waitlistViewModelShouldRefreshState(_ viewModel: WaitlistViewModel) -> Bool {
+        return viewModel.viewState != .custom(.networkProtectionPrivacyPolicyScreen)
+    }
+
 }

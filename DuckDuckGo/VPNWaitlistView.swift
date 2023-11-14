@@ -46,7 +46,7 @@ struct VPNWaitlistView: View {
                 Task { await viewModel.perform(action: action) }
             }
         case .waitlistRemoved:
-            Text("Not supported")
+            fatalError("State not supported for VPN waitlists")
         case .custom(let customState):
             if customState == .networkProtectionPrivacyPolicyScreen {
                 VPNWaitlistPrivacyPolicyView { action in

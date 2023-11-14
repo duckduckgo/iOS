@@ -27,8 +27,8 @@ public protocol WaitlistViewModelDelegate: AnyObject {
     func waitlistViewModelDidJoinQueueWithNotificationsAllowed(_ viewModel: WaitlistViewModel)
     func waitlistViewModelDidOpenInviteCodeShareSheet(_ viewModel: WaitlistViewModel, inviteCode: String, senderFrame: CGRect)
     func waitlistViewModelDidOpenDownloadURLShareSheet(_ viewModel: WaitlistViewModel, senderFrame: CGRect)
-
     func waitlistViewModel(_ viewModel: WaitlistViewModel, didTriggerCustomAction action: WaitlistViewModel.ViewCustomAction)
+    func waitlistViewModelShouldRefreshState(_ viewModel: WaitlistViewModel) -> Bool
 }
 
 @MainActor
@@ -104,9 +104,14 @@ public final class WaitlistViewModel: ObservableObject {
     }
 
     public func updateViewState() async {
+        guard delegate?.waitlistViewModelShouldRefreshState(self) ?? true else {
+            return
+        }
+
         guard viewState != .waitlistRemoved else {
             return
         }
+
         if waitlistStorage.getWaitlistTimestamp() != nil, waitlistStorage.getWaitlistInviteCode() == nil {
             await checkNotificationPermissions()
         } else if let inviteCode = waitlistStorage.getWaitlistInviteCode() {

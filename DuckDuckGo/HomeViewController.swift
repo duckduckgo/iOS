@@ -65,9 +65,11 @@ class HomeViewController: UIViewController {
     
     private let tabModel: Tab
     private let favoritesViewModel: FavoritesListInteracting
-    private var viewModelCancellable: AnyCancellable?
+    private let appSettings: AppSettings
     private let syncService: DDGSyncing
     private let syncDataProviders: SyncDataProviders
+    private var viewModelCancellable: AnyCancellable?
+    private var favoritesDisplayModeCancellable: AnyCancellable?
 
 #if APP_TRACKING_PROTECTION
     private let appTPHomeViewModel: AppTPHomeViewModel
@@ -77,9 +79,10 @@ class HomeViewController: UIViewController {
     static func loadFromStoryboard(
         model: Tab,
         favoritesViewModel: FavoritesListInteracting,
-        appTPDatabase: CoreDataDatabase,
+        appSettings: AppSettings,
         syncService: DDGSyncing,
-        syncDataProviders: SyncDataProviders
+        syncDataProviders: SyncDataProviders,
+        appTPDatabase: CoreDataDatabase
     ) -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "HomeViewController", creator: { coder in
@@ -87,9 +90,10 @@ class HomeViewController: UIViewController {
                 coder: coder,
                 tabModel: model,
                 favoritesViewModel: favoritesViewModel,
-                appTPDatabase: appTPDatabase,
+                appSettings: appSettings,
                 syncService: syncService,
-                syncDataProviders: syncDataProviders
+                syncDataProviders: syncDataProviders,
+                appTPDatabase: appTPDatabase
             )
         })
         return controller
@@ -98,6 +102,7 @@ class HomeViewController: UIViewController {
     static func loadFromStoryboard(
         model: Tab,
         favoritesViewModel: FavoritesListInteracting,
+        appSettings: AppSettings,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders
     ) -> HomeViewController {
@@ -107,6 +112,7 @@ class HomeViewController: UIViewController {
                 coder: coder,
                 tabModel: model,
                 favoritesViewModel: favoritesViewModel,
+                appSettings: appSettings,
                 syncService: syncService,
                 syncDataProviders: syncDataProviders
             )
@@ -120,12 +126,14 @@ class HomeViewController: UIViewController {
         coder: NSCoder,
         tabModel: Tab,
         favoritesViewModel: FavoritesListInteracting,
-        appTPDatabase: CoreDataDatabase,
+        appSettings: AppSettings,
         syncService: DDGSyncing,
-        syncDataProviders: SyncDataProviders
+        syncDataProviders: SyncDataProviders,
+        appTPDatabase: CoreDataDatabase
     ) {
         self.tabModel = tabModel
         self.favoritesViewModel = favoritesViewModel
+        self.appSettings = appSettings
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
 
@@ -138,11 +146,13 @@ class HomeViewController: UIViewController {
         coder: NSCoder,
         tabModel: Tab,
         favoritesViewModel: FavoritesListInteracting,
+        appSettings: AppSettings,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders
     ) {
         self.tabModel = tabModel
         self.favoritesViewModel = favoritesViewModel
+        self.appSettings = appSettings
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
 
@@ -179,6 +189,16 @@ class HomeViewController: UIViewController {
                 self.delegate?.home(self, didRequestHideLogo: false)
             }
         }
+
+        favoritesDisplayModeCancellable = NotificationCenter.default.publisher(for: AppUserDefaults.Notifications.favoritesDisplayModeChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self else {
+                    return
+                }
+                self.favoritesViewModel.favoritesDisplayMode = self.appSettings.favoritesDisplayMode
+                self.collectionView.reloadData()
+            }
     }
     
     @objc func bookmarksDidChange() {

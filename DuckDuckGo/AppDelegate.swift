@@ -67,6 +67,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var appTrackingProtectionDatabase: CoreDataDatabase = AppTrackingProtectionDatabase.make()
 #endif
 
+#if NETWORK_PROTECTION
+    private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
+#endif
+
     private var autoClear: AutoClear?
     private var showKeyboardIfSettingOn = true
     private var lastBackgroundDate: Date?
@@ -278,6 +282,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                       syncDataProviders: syncDataProviders,
                                       appSettings: AppDependencyProvider.shared.appSettings)
 #endif
+
         main.loadViewIfNeeded()
 
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -315,6 +320,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if AppDependencyProvider.shared.appSettings.autofillIsNewInstallForOnByDefault == nil {
             AppDependencyProvider.shared.appSettings.setAutofillIsNewInstallForOnByDefault()
         }
+
+#if NETWORK_PROTECTION
+        widgetRefreshModel.beginObservingVPNStatus()
+#endif
 
         return true
     }
@@ -411,6 +420,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         syncService.scheduler.notifyAppLifecycleEvent()
         fireFailedCompilationsPixelIfNeeded()
         refreshShortcuts()
+
+#if NETWORK_PROTECTION
+        widgetRefreshModel.refreshVPNWidget()
+#endif
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -567,7 +580,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         NotificationCenter.default.post(name: AutofillLoginListAuthenticator.Notifications.invalidateContext, object: nil)
-        mainViewController?.clearNavigationStack()
+
+        // The openVPN action handles the navigation stack on its own and does not need it to be cleared
+        if url != AppDeepLinkSchemes.openVPN.url {
+            mainViewController?.clearNavigationStack()
+        }
+
         autoClear?.applicationWillMoveToForeground()
         showKeyboardIfSettingOn = false
 
@@ -815,7 +833,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
 #if NETWORK_PROTECTION
-    private func presentNetworkProtectionStatusSettingsModal() {
+    func presentNetworkProtectionStatusSettingsModal() {
         if #available(iOS 15, *) {
             let networkProtectionRoot = NetworkProtectionRootViewController()
             presentSettings(with: networkProtectionRoot)

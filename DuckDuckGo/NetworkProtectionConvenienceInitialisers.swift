@@ -54,7 +54,8 @@ extension NetworkProtectionKeychainTokenStore {
 
 extension NetworkProtectionCodeRedemptionCoordinator {
     convenience init() {
-        self.init(tokenStore: NetworkProtectionKeychainTokenStore(), errorEvents: .networkProtectionAppDebugEvents)
+        let tunnelSettings = TunnelSettings(defaults: .networkProtectionGroupDefaults)
+        self.init(environment: tunnelSettings.selectedEnvironment, tokenStore: NetworkProtectionKeychainTokenStore(), errorEvents: .networkProtectionAppDebugEvents)
     }
 }
 
@@ -78,7 +79,11 @@ extension NetworkProtectionVPNSettingsViewModel {
 
 extension NetworkProtectionVPNLocationViewModel {
     convenience init() {
-        let locationListRepository = NetworkProtectionLocationListCompositeRepository(tokenStore: NetworkProtectionKeychainTokenStore())
+        let tunnelSettings = TunnelSettings(defaults: .networkProtectionGroupDefaults)
+        let locationListRepository = NetworkProtectionLocationListCompositeRepository(
+            environment: tunnelSettings.selectedEnvironment,
+            tokenStore: NetworkProtectionKeychainTokenStore()
+        )
         self.init(
             locationListRepository: locationListRepository,
             tunnelSettings: TunnelSettings(defaults: .networkProtectionGroupDefaults)

@@ -489,7 +489,6 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }
 
     private func neverSavedCell(for tableView: UITableView, indexPath: IndexPath) -> AutofillNeverSavedTableViewCell {
-        // TODO - update these cells for DRK styling
         let cell = tableView.dequeueCell(ofType: AutofillNeverSavedTableViewCell.self, for: indexPath)
         cell.theme = ThemeManager.shared.currentTheme
         return cell

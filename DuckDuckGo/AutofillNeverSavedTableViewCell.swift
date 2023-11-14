@@ -31,8 +31,6 @@ class AutofillNeverSavedTableViewCell: UITableViewCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel(frame: CGRect.zero)
         label.font = .preferredFont(forTextStyle: .callout)
-        label.textColor = .gray90
-//        label.textColor = UIColor(designSystemColor: .label)
         label.text = UserText.autofillNeverSavedSettings
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping

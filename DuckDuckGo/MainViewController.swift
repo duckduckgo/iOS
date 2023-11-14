@@ -645,9 +645,10 @@ class MainViewController: UIViewController {
 #if APP_TRACKING_PROTECTION
         let controller = HomeViewController.loadFromStoryboard(model: tabModel!,
                                                                favoritesViewModel: favoritesViewModel,
+                                                               appSettings: appSettings,
                                                                appTPDatabase: appTrackingProtectionDatabase)
 #else
-        let controller = HomeViewController.loadFromStoryboard(model: tabModel!, favoritesViewModel: favoritesViewModel)
+        let controller = HomeViewController.loadFromStoryboard(model: tabModel!, favoritesViewModel: favoritesViewModel, appSettings: appSettings)
 #endif
 
         homeController = controller

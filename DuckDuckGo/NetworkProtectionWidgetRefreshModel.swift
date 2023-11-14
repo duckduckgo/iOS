@@ -1,5 +1,5 @@
 //
-//  UserDefaults+NetworkProtection.swift
+//  NetworkProtectionWidgetRefreshModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -20,20 +20,26 @@
 #if NETWORK_PROTECTION
 
 import Foundation
+import Combine
+import NetworkExtension
+import WidgetKit
 
-public extension UserDefaults {
-    static var networkProtectionGroupDefaults: UserDefaults {
-        let suiteName = "\(Global.groupIdPrefix).netp"
-        guard let defaults = UserDefaults(suiteName: suiteName) else {
-            fatalError("Failed to create netP UserDefaults")
-        }
-        return defaults
+class NetworkProtectionWidgetRefreshModel {
+
+    private var cancellable: AnyCancellable?
+
+    public func beginObservingVPNStatus() {
+        cancellable = NotificationCenter.default.publisher(for: .NEVPNStatusDidChange)
+            .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.refreshVPNWidget()
+            }
     }
-}
 
-public enum NetworkProtectionUserDefaultKeys {
-
-    public static let lastSelectedServer = "com.duckduckgo.network-protection.last-selected-server"
+    public func refreshVPNWidget() {
+        WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
+    }
 
 }
 

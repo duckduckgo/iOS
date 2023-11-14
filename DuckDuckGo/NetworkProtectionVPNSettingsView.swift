@@ -20,12 +20,21 @@
 #if NETWORK_PROTECTION
 
 import SwiftUI
+import DesignResourcesKit
 
 @available(iOS 15, *)
 struct NetworkProtectionVPNSettingsView: View {
+    @StateObject var viewModel = NetworkProtectionVPNSettingsViewModel()
 
     var body: some View {
         List {
+            NavigationLink(destination: NetworkProtectionVPNLocationView()) {
+                HStack {
+                    Text(UserText.netPPreferredLocationSettingTitle).daxBodyRegular().foregroundColor(.textPrimary)
+                    Spacer()
+                    Text(viewModel.preferredLocation).daxBodyRegular().foregroundColor(.textSecondary)
+                }
+            }
             toggleSection(
                 text: UserText.netPAlwaysOnSettingTitle,
                 footerText: UserText.netPAlwaysOnSettingFooter

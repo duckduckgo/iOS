@@ -140,6 +140,10 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 params[PixelParameters.function] = function
                 params[PixelParameters.line] = String(line)
                 pixelError = error
+            case .failedToFetchLocationList:
+                return
+            case .failedToParseLocationListResponse:
+                return
             }
             DailyPixel.fireDailyAndCount(pixel: pixelEvent, error: pixelError, withAdditionalParameters: params)
         }
@@ -184,7 +188,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    keychainType: .dataProtection(.unspecified),
                    tokenStore: tokenStore,
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
-                   providerEvents: Self.packetTunnelProviderEvents)
+                   providerEvents: Self.packetTunnelProviderEvents,
+                   tunnelSettings: TunnelSettings(defaults: .networkProtectionGroupDefaults))
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)

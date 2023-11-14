@@ -87,7 +87,8 @@ extension MainViewController {
                                     bookmarksDatabase: self.bookmarksDatabase,
                                     bookmarksSearch: self.bookmarksCachingSearch,
                                     syncService: self.syncService,
-                                    syncDataProviders: self.syncDataProviders)
+                                    syncDataProviders: self.syncDataProviders,
+                                    appSettings: self.appSettings)
         }
         bookmarks.delegate = self
 
@@ -195,6 +196,14 @@ extension MainViewController {
         hideAllHighlightsIfNeeded()
         launchSettings {
             $0.openLogins(accountDetails: account)
+        }
+    }
+
+    func segueToSettingsSync() {
+        os_log(#function, log: .generalLog, type: .debug)
+        hideAllHighlightsIfNeeded()
+        launchSettings {
+            $0.showSync()
         }
     }
 

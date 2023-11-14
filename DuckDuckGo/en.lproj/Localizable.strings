@@ -127,6 +127,24 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existing bookmarks will not be duplicated.";
 
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "You have exceeded the bookmarks sync limit. Try deleting some bookmarks. Until this is resolved your bookmarks will not be backed up.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Bookmarks Sync is Paused";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "You have exceeded the passwords sync limit. Try deleting some passwords. Until this is resolved your passwords will not be backed up.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Passwords Sync is Paused";
+
+/* Learn more button in alert */
+"alert.sync-paused-alert-learn-more-button" = "Learn More";
+
+/* Confirmation button in alert */
+"alert.sync-paused-alert-ok-button" = "OK";
+
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Bookmark All Tabs?";
 
@@ -1012,6 +1030,33 @@
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "No matches found";
 
+/* Button title to Sign In */
+"error.email-protection-sign-in.action" = "Sign In";
+
+/* Alert message */
+"error.email-protection-sign-in.body" = "Sorry, please sign in again to re-enable Email Protection features on this browser.";
+
+/* Alert title */
+"error.email-protection-sign-in.title" = "Email Protection Error";
+
+/* Button title to open device settings */
+"error.insufficient-disk-space.action" = "Open Settings";
+
+/* Alert message */
+"error.insufficient-disk-space.body" = "Looks like your device has run out of storage space. Please free up space to continue.";
+
+/* Alert title */
+"error.insufficient-disk-space.title" = "Not enough storage";
+
+/* Button title that is shutting down the app */
+"error.preemptive-crash.action" = "Close App";
+
+/* Alert message */
+"error.preemptive-crash.body" = "Looks like there's an issue with the app and it needs to close. Please reopen to continue.";
+
+/* Alert title */
+"error.preemptive-crash.title" = "App issue detected";
+
 /* Generic error message on a dialog for when the cause is not known. */
 "error.unknown.try.again" = "An unknown error has occurred";
 
@@ -1023,6 +1068,18 @@
 
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Remove";
+
+/* Display Mode for favorites */
+"favorites.settings.all-devices" = "All Device Favorites";
+
+/* Footer of the favorites settings table */
+"favorites.settings.footer" = "Choose which favorites to display on a new tab based on their origin.";
+
+/* Header of the favorites settings table */
+"favorites.settings.header" = "Display Preferences";
+
+/* Display Mode for favorites */
+"favorites.settings.mobile-only" = "Mobile Favorites Only";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Ad and pop-up blocking";

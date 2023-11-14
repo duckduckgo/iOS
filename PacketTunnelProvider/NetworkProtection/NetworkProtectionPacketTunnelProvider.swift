@@ -20,14 +20,17 @@
 #if NETWORK_PROTECTION
 
 import Foundation
-import NetworkProtection
 import Common
+import Combine
 import Core
 import Networking
 import NetworkExtension
+import NetworkProtection
 
 // Initial implementation for initial Network Protection tests. Will be fleshed out with https://app.asana.com/0/1203137811378537/1204630829332227/f
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
+
+    private var cancellables = Set<AnyCancellable>()
 
     // MARK: - PacketTunnelProvider.Event reporting
 
@@ -188,6 +191,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    providerEvents: Self.packetTunnelProviderEvents,
                    tunnelSettings: TunnelSettings(defaults: .networkProtectionGroupDefaults))
         startMonitoringMemoryPressureEvents()
+        observeServerChanges()
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
     }
 
@@ -213,6 +217,14 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             }
             source.resume()
         }
+    }
+
+    private func observeServerChanges() {
+        lastSelectedServerInfoPublisher.sink { server in
+            let location = server?.serverLocation ?? "Unknown Location"
+            UserDefaults.networkProtectionGroupDefaults.set(location, forKey: NetworkProtectionUserDefaultKeys.lastSelectedServer)
+        }
+        .store(in: &cancellables)
     }
 }
 

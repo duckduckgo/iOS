@@ -30,7 +30,7 @@ public struct RemoteMessageRequest {
         #if DEBUG
         return URL(string: "https://raw.githubusercontent.com/duckduckgo/remote-messaging-config/main/samples/ios/sample1.json")!
         #else
-        return URL(string: "https://staticcdn.duckduckgo.com/remotemessaging/config/staging/ios-config.json")!
+        return URL(string: "https://staticcdn.duckduckgo.com/remotemessaging/config/v1/ios-config.json")!
         #endif
     }
 

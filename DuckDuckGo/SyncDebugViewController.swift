@@ -44,6 +44,8 @@ class SyncDebugViewController: UITableViewController {
     enum InfoRows: Int, CaseIterable {
 
         case syncNow
+        case logOut
+        case toggleFavoritesDisplayMode
 
     }
 
@@ -105,6 +107,10 @@ class SyncDebugViewController: UITableViewController {
             switch InfoRows(rawValue: indexPath.row) {
             case .syncNow:
                 cell.textLabel?.text = "Sync now"
+            case .logOut:
+                cell.textLabel?.text = "Log out of sync in 10 seconds"
+            case .toggleFavoritesDisplayMode:
+                cell.textLabel?.text = "Toggle favorites display mode in 10 seconds"
             case .none:
                 break
             }
@@ -161,6 +167,23 @@ class SyncDebugViewController: UITableViewController {
             switch InfoRows(rawValue: indexPath.row) {
             case .syncNow:
                 sync.scheduler.requestSyncImmediately()
+            case .logOut:
+                Task {
+                    try await Task.sleep(nanoseconds: UInt64(10e9))
+                    try await sync.disconnect()
+                }
+            case .toggleFavoritesDisplayMode:
+                Task { @MainActor in
+                    try await Task.sleep(nanoseconds: UInt64(10e9))
+                    var displayMode = AppDependencyProvider.shared.appSettings.favoritesDisplayMode
+                    if displayMode.isDisplayUnified {
+                        displayMode = .displayNative(.mobile)
+                    } else {
+                        displayMode = .displayUnified(native: .mobile)
+                    }
+                    AppDependencyProvider.shared.appSettings.favoritesDisplayMode = displayMode
+                    NotificationCenter.default.post(name: AppUserDefaults.Notifications.favoritesDisplayModeChange, object: nil)
+                }
             default: break
             }
         case .environment:

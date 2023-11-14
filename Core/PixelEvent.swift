@@ -312,6 +312,8 @@ extension Pixel {
         case networkProtectionClientFailedToEncodeRegisterKeyRequest
         case networkProtectionClientFailedToFetchRegisteredServers
         case networkProtectionClientFailedToParseRegisteredServersResponse
+        case networkProtectionClientFailedToFetchLocations
+        case networkProtectionClientFailedToParseLocationsResponse
         case networkProtectionClientFailedToEncodeRedeemRequest
         case networkProtectionClientInvalidInviteCode
         case networkProtectionClientFailedToRedeemInviteCode
@@ -810,6 +812,9 @@ extension Pixel.Event {
         case .networkProtectionClientFailedToFetchRegisteredServers: return "m_netp_backend_api_error_failed_to_fetch_registered_servers"
         case .networkProtectionClientFailedToParseRegisteredServersResponse:
             return "m_netp_backend_api_error_parsing_device_registration_response_failed"
+        case .networkProtectionClientFailedToFetchLocations: return "m_netp_backend_api_error_failed_to_fetch_locations"
+        case .networkProtectionClientFailedToParseLocationsResponse:
+            return "m_netp_backend_api_error_parsing_locations_response_failed"
         case .networkProtectionClientFailedToEncodeRedeemRequest: return "m_netp_backend_api_error_encoding_redeem_request_body_failed"
         case .networkProtectionClientInvalidInviteCode: return "m_netp_backend_api_error_invalid_invite_code"
         case .networkProtectionClientFailedToRedeemInviteCode: return "m_netp_backend_api_error_failed_to_redeem_invite_code"

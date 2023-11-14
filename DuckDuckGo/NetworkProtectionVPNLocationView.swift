@@ -38,9 +38,9 @@ struct NetworkProtectionVPNLocationView: View {
                 ForEach(model.countryItems) { item in
                     Button(action: {
                         model.onCountryItemSelection(countryID: item.countryID)
-                    }) {
+                    }, label: {
                         Text(item.localizedName)
-                    }
+                    })
                 }
             }
         }

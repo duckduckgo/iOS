@@ -529,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Sisselogimisandmed kustutati";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Lähtesta välistatud saidid";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Tühista";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Lähtesta välistatud saidid";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Kui lähtestad välistatud saidid, küsitakse järgmisel mõnele neist saitidest sisselogimisel, kas soovid salvestada oma sisselogimisandmed.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Otsi sisselogimisandmeid";
 
@@ -612,6 +624,9 @@
 
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Privaatse Duck Addressi kasutajanimi eemaldati";
+
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Ära selle saidi kohta rohkem küsi";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.message" = "Logisid hoitakse turvaliselt sinu seadmes logide menüüs.";

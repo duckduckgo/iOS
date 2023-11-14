@@ -529,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Prijava je izbrisana";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Vrati izvorne isključene web lokacije";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Otkaži";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Resetiraj isključene web lokacije";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Ako resetiraš isključene web lokacije, od tebe će se zatražiti da spremiš svoju prijavu sljedeći put kad se prijaviš na bilo koju od ovih lokacija.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Pretraživanje prijava";
 
@@ -612,6 +624,9 @@
 
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Korisničko ime privatne Duck Address adrese uklonjeno je";
+
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Nikada ne traži za ovu web lokaciju";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.message" = "Prijave su sigurno pohranjene na tvom uređaju u izborniku Prijave.";

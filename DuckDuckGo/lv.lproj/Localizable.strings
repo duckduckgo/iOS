@@ -529,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Pieteikšanās dati izdzēsti";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Atiestatīt izslēgtās vietnes";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Atcelt";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Atiestatīt izslēgtās vietnes";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Ja atiestatīsi izslēgtās vietnes, nākamreiz pierakstoties kādā no šīm vietnēm, tev tiks piedāvāts saglabāt savus pieteikšanās datus.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Meklēt pieteikšanās datus";
 
@@ -612,6 +624,9 @@
 
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Privātās Duck adreses lietotājvārds tika noņemts";
+
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Nekad nejautāt par šo vietni";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.message" = "Pieteikšanās dati tiek droši saglabāti tavā ierīcē, izvēlnē Pieteikšanās dati.";

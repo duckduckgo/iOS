@@ -22,6 +22,7 @@ import BrowserServicesKit
 import Combine
 import Core
 import Waitlist
+import NetworkProtection
 
 final class VPNWaitlist: Waitlist {
 
@@ -59,23 +60,52 @@ final class VPNWaitlist: Waitlist {
 
     var isAvailable: Bool {
         // isFeatureEnabled
-        return true
+        return true // TODO: Use feature flag values
     }
 
     var isWaitlistRemoved: Bool {
         return false
     }
 
-    var networkProtectionAccessType: AccessType {
-        let hasWaitlistAccess = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlist)
-        let isWaitlistActive = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlistBetaActive)
+    @UserDefaultsWrapper(key: .networkProtectionWaitlistTermsAndConditionsAccepted, defaultValue: false)
+    static var termsAndConditionsAccepted: Bool
 
-        if !hasWaitlistAccess && !isWaitlistActive {
+    var networkProtectionAccessType: AccessType {
+        let authTokenStore = NetworkProtectionKeychainTokenStore()
+
+        // First, check for users who have activated the VPN via an invite code:
+        if authTokenStore.isFeatureActivated && !waitlistStorage.isInvited {
+            return .inviteCodeInvited
+        }
+
+        // Next, check if the waitlist is still active; if not, the user has no access.
+        // TODO: Use a real value
+        let isWaitlistActive = true // privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlistBetaActive)
+        if !isWaitlistActive {
             return .none
         }
 
-        // TODO
-        return .inviteCodeInvited
+        // Next, check if a waitlist user has NetP access and whether they need to accept T&C.
+        if authTokenStore.isFeatureActivated && waitlistStorage.isInvited {
+            if Self.termsAndConditionsAccepted {
+                return .waitlistInvited
+            } else {
+                return .waitlistInvitedPendingTermsAcceptance
+            }
+        }
+
+        // Next, check if the user has waitlist access at all and whether they've already joined.
+        // TODO: Use a real value
+        let hasWaitlistAccess = true // privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlist)
+        if hasWaitlistAccess {
+            if waitlistStorage.isOnWaitlist {
+                return .waitlistJoined
+            } else {
+                return .waitlistAvailable
+            }
+        }
+
+        return .none
     }
 
     let waitlistStorage: WaitlistStorage

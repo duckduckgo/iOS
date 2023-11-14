@@ -355,21 +355,43 @@ class SettingsViewController: UITableViewController {
     private func configureNetPCell() {
         netPCell.isHidden = !shouldShowNetPCell
 #if NETWORK_PROTECTION
+        updateNetPCellSubtitle(connected: false)
         connectionObserver.publisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] status in
-                let detailText: String
                 switch status {
-                case .connected:
-                    detailText = UserText.netPCellConnected
-                default:
-                    detailText = UserText.netPCellDisconnected
+                case .connected: self?.updateNetPCellSubtitle(connected: true)
+                default: self?.updateNetPCellSubtitle(connected: false)
                 }
-                self?.netPCell.detailTextLabel?.text = detailText
             }
             .store(in: &cancellables)
 #endif
     }
+
+#if NETWORK_PROTECTION
+    private func updateNetPCellSubtitle(connected: Bool) {
+        let detailText: String
+
+        switch VPNWaitlist.shared.networkProtectionAccessType {
+        case .none:
+            detailText = ""
+        case .waitlistAvailable:
+            detailText = "Sign up now!"
+        case .waitlistJoined:
+            detailText = "You signed up!"
+        case .waitlistInvitedPendingTermsAcceptance:
+            detailText = "Please accept terms"
+        case .waitlistInvited, .inviteCodeInvited:
+            if connected {
+                detailText = UserText.netPCellConnected
+            } else {
+                detailText = UserText.netPCellDisconnected
+            }
+        }
+
+        netPCell.detailTextLabel?.text = detailText
+    }
+#endif
 
     private func configureDebugCell() {
         debugCell.isHidden = !shouldShowDebugCell

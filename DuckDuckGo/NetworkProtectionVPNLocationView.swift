@@ -38,7 +38,7 @@ struct NetworkProtectionVPNLocationView: View {
             }
         }
         .applyInsetGroupedListStyle()
-        .navigationTitle("VPN Location").onAppear {
+        .navigationTitle(UserText.netPVPNLocationTitle)
         .onAppear {
             Task {
                 await model.onViewAppeared()

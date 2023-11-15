@@ -1528,6 +1528,9 @@ https://duckduckgo.com/mac";
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
 
+/* Title for the VPN Location screen. */
+"network.protection.vpn.location.title" = "VPN Location";
+
 /* Title for the VPN Notifications management screen. */
 "network.protection.vpn.notifications.title" = "VPN Notifications";
 

@@ -114,27 +114,7 @@ public final class SyncBookmarksAdapter {
             return
         }
 
-
-        let stateStore: BookmarksFaviconsFetcherStateStore
-        do {
-            let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-            stateStore = try BookmarksFaviconsFetcherStateStore(applicationSupportURL: url)
-        } catch {
-            Pixel.fire(pixel: .bookmarksFaviconsFetcherStateStoreInitializationFailed, error: error)
-
-            Thread.sleep(forTimeInterval: 1)
-            fatalError("Could not create BookmarkFaviconsFetcherStateStore: \(error.localizedDescription)")
-        }
-
-
-        let faviconsFetcher = BookmarksFaviconsFetcher(
-            database: database,
-            stateStore: stateStore,
-            fetcher: FaviconFetcher(),
-            faviconStore: Favicons.shared,
-            errorEvents: BookmarksFaviconsFetcherErrorHandler(),
-            log: .syncLog
-        )
+        let faviconsFetcher = setUpFaviconsFetcher()
 
         let provider = BookmarksProvider(
             database: database,
@@ -145,7 +125,7 @@ public final class SyncBookmarksAdapter {
                 Self.didShowBookmarksSyncPausedError = false
             },
             syncDidFinish: { [weak self] faviconsFetcherInput in
-                if self?.isFaviconsFetchingEnabled == true {
+                if let faviconsFetcher, self?.isFaviconsFetchingEnabled == true {
                     if let faviconsFetcherInput {
                         faviconsFetcher.updateBookmarkIDs(
                             modified: faviconsFetcherInput.modifiedBookmarksUUIDs,
@@ -164,6 +144,27 @@ public final class SyncBookmarksAdapter {
 
         self.provider = provider
         self.faviconsFetcher = faviconsFetcher
+    }
+
+    private func setUpFaviconsFetcher() -> BookmarksFaviconsFetcher? {
+        let stateStore: BookmarksFaviconsFetcherStateStore
+        do {
+            let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+            stateStore = try BookmarksFaviconsFetcherStateStore(applicationSupportURL: url)
+        } catch {
+            Pixel.fire(pixel: .bookmarksFaviconsFetcherStateStoreInitializationFailed, error: error)
+            os_log(.error, log: .syncLog, "Failed to initialize BookmarksFaviconsFetcherStateStore: %{public}s", String(reflecting: error))
+            return nil
+        }
+
+        return BookmarksFaviconsFetcher(
+            database: database,
+            stateStore: stateStore,
+            fetcher: FaviconFetcher(),
+            faviconStore: Favicons.shared,
+            errorEvents: BookmarksFaviconsFetcherErrorHandler(),
+            log: .syncLog
+        )
     }
 
     private func bindSyncErrorPublisher(_ provider: BookmarksProvider) {

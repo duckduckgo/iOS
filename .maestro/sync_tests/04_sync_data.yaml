@@ -56,27 +56,28 @@ tags:
 - tapOn:
     id: searchEntry
 - inputText: ${CODE}
-- tapOn: 
-    id: searchEntry
-- doubleTapOn: 
-    id: searchEntry
-- runFlow:
-    when:
-      visible:
-        text: "Select All"
-    commands:
-      - tapOn: "Select All"
 
+- evalScript: ${output.counter = 0}
+- repeat:
+    while:
+      true: ${output.counter < 3}
+      notVisible: Select All
+    commands:
+      - longPressOn: 
+          id: "searchEntry"
+      - evalScript: ${output.counter = output.counter + 1}
+
+- tapOn: 'Select All'
 - tapOn: Cut
-- tapOn:
-    id: searchEntry
-- runFlow:
-    when:
-      notVisible:
-        text: "Paste"
+- evalScript: ${output.counter = 0}
+- repeat:
+    while:
+      true: ${output.counter < 3}
+      notVisible: Paste
     commands:
       - tapOn: 
-            id: searchEntry
+          id: "searchEntry"
+      - evalScript: ${output.counter = output.counter + 1}
 - tapOn: Paste
 - tapOn: Cancel
 

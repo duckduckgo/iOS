@@ -83,11 +83,11 @@ struct VPNWaitlistSignUpView: View {
                         .lineSpacing(6)
                         .padding(.top, 24)
 
-                    Button("Join the Waitlist", action: { action(.joinQueue) })
+                    Button(UserText.networkProtectionWaitlistButtonJoinWaitlist, action: { action(.joinQueue) })
                         .buttonStyle(RoundedButtonStyle(enabled: !requestInFlight))
                         .padding(.top, 24)
 
-                    Button("I Have an Invite Code", action: { action(.custom(.openNetworkProtectionInviteCodeScreen)) })
+                    Button(UserText.networkProtectionWaitlistButtonExistingInviteCode, action: { action(.custom(.openNetworkProtectionInviteCodeScreen)) })
                         .buttonStyle(RoundedButtonStyle(enabled: true, style: .bordered))
                         .padding(.top, 18)
 

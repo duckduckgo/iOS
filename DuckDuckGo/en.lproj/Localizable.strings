@@ -1447,7 +1447,8 @@ https://duckduckgo.com/mac";
 /* Enable Notifications button for Network Protection joined waitlist screen */
 "network-protection.waitlist.button.enable-notifications" = "Enable Notifications";
 
-/* Join Waitlist button for Network Protection join waitlist screen */
+/* Button title for users who already have an invite code
+   Join Waitlist button for Network Protection join waitlist screen */
 "network-protection.waitlist.button.join-waitlist" = "Join the Waitlist";
 
 /* Button title text for the Network Protection waitlist confirmation prompt */

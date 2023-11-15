@@ -146,15 +146,6 @@ extension MainViewController {
         
         currentTab?.privacyDashboard = controller
         controller.popoverPresentationController?.delegate = controller
-        
-        // TODO: Set source for ipad? code from TabViewController
-//        if let iconView = chromeDelegate.omniBar.privacyInfoContainer.privacyIcon {
-//            controller.popoverPresentationController?.sourceView = iconView
-//            controller.popoverPresentationController?.sourceRect = iconView.bounds
-//        }
-//        privacyDashboard = controller
-//        privacyDashboard?.brokenSiteInfo = getCurrentWebsiteInfo()
-        
         controller.brokenSiteInfo = brokenSiteInfo
 
         if UIDevice.current.userInterfaceIdiom == .pad {

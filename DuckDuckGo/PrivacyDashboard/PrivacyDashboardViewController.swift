@@ -66,7 +66,6 @@ class PrivacyDashboardViewController: UIViewController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
         privacyDashboardController.setup(for: webView, reportBrokenSiteOnly: initMode == Mode.reportBrokenSite ? true : false)
         privacyDashboardController.preferredLocale = Bundle.main.preferredLocalizations.first
         applyTheme(ThemeManager.shared.currentTheme)
@@ -98,14 +97,16 @@ class PrivacyDashboardViewController: UIViewController {
         contentBlockingManager.scheduleCompilation()
         
         privacyDashboardController.didStartRulesCompilation()
-        
-        Pixel.fire(pixel: state.isProtected ? .privacyDashboardProtectionEnabled : .privacyDashboardProtectionDisabled)
+        switch source {
+        case .menu:
+            Pixel.fire(pixel: state.isProtected ? .reportBrokenSiteProtectionEnabled : .reportBrokenSiteProtectionDisabled)
+        case .dashboard:
+            Pixel.fire(pixel: state.isProtected ? .privacyDashboardProtectionEnabled : .privacyDashboardProtectionDisabled)
+        }
     }
     
-    private func privacyDashboardCloseTappedHandler() {
-        DispatchQueue.main.async {
-            self.dismiss(animated: true)
-        }
+    private func privacyDashboardCloseHandler() {
+        self.dismiss(animated: true)
     }
 }
 
@@ -161,8 +162,12 @@ extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
 
 extension PrivacyDashboardViewController: PrivacyDashboardNavigationDelegate {
     
+    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboard.PrivacyDashboardController, didSetHeight height: Int) {
+        preferredContentSize = CGSize(width: Int(view.intrinsicContentSize.width), height: height)
+    }
+    
     func privacyDashboardControllerDidTapClose(_ privacyDashboardController: PrivacyDashboardController) {
-        privacyDashboardCloseTappedHandler()
+        privacyDashboardCloseHandler()
     }
 }
 
@@ -181,13 +186,8 @@ extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelega
         
         brokenSiteInfo.send(with: category, description: description, source: source)
         ActionMessageView.present(message: UserText.feedbackSumbittedConfirmation)
-        privacyDashboardCloseTappedHandler()
+        privacyDashboardCloseHandler()
     }
 }
 
-extension PrivacyDashboardViewController: UIPopoverPresentationControllerDelegate {
-    
-    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
-        // TODO: handle closure by drag
-    }
-}
+extension PrivacyDashboardViewController: UIPopoverPresentationControllerDelegate {}

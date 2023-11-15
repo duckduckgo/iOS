@@ -418,7 +418,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 // If the user already has an invite code but their auth token has gone missing, attempt to redeem it again.
                 let tokenStore = NetworkProtectionKeychainTokenStore()
                 let waitlistStorage = VPNWaitlist.shared.waitlistStorage
-                if error == .alreadyHasInviteCode, let inviteCode = waitlistStorage.getWaitlistInviteCode(), !tokenStore.isFeatureActivated {
+                if error == .alreadyHasInviteCode,
+                   let inviteCode = waitlistStorage.getWaitlistInviteCode(),
+                   !tokenStore.isFeatureActivated {
                     self?.fetchVPNWaitlistAuthToken(inviteCode: inviteCode)
                 }
 #endif

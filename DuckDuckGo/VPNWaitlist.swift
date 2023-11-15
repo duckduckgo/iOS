@@ -126,16 +126,19 @@ final class VPNWaitlist: Waitlist {
     }
 
     var settingsSubtitle: String {
-        if waitlistStorage.isInvited {
-            return "Invited"
+        switch VPNWaitlist.shared.networkProtectionAccessType {
+        case .none:
+            return ""
+        case .waitlistAvailable:
+            return "Join the private waitlist"
+        case .waitlistJoined:
+            return "You're on the list!"
+        case .waitlistInvitedPendingTermsAcceptance:
+            return "You're invited!"
+        case .waitlistInvited, .inviteCodeInvited:
+            assertionFailure("These states should use the VPN connection status")
+            return ""
         }
-
-        if waitlistStorage.isOnWaitlist {
-            return "On waitlist"
-        }
-
-        // TODO
-        return "Default text"
     }
 
     // MARK: -

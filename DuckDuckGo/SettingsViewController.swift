@@ -127,7 +127,7 @@ class SettingsViewController: UITableViewController {
     private lazy var shouldShowNetPCell: Bool = {
 #if NETWORK_PROTECTION
         if #available(iOS 15, *) {
-            return true // featureFlagger.isFeatureOn(.networkProtection)
+            return featureFlagger.isFeatureOn(.networkProtection)
         } else {
             return false
         }
@@ -369,20 +369,12 @@ class SettingsViewController: UITableViewController {
 #if NETWORK_PROTECTION
     private func updateNetPCellSubtitle(connectionStatus: ConnectionStatus) {
         switch VPNWaitlist.shared.networkProtectionAccessType {
-        case .none:
-            netPCell.detailTextLabel?.text = ""
-        case .waitlistAvailable:
-            netPCell.detailTextLabel?.text = "Sign up now!"
-        case .waitlistJoined:
-            netPCell.detailTextLabel?.text = "You signed up!"
-        case .waitlistInvitedPendingTermsAcceptance:
-            netPCell.detailTextLabel?.text = "Please accept terms"
+        case .none, .waitlistAvailable, .waitlistJoined, .waitlistInvitedPendingTermsAcceptance:
+            netPCell.detailTextLabel?.text = VPNWaitlist.shared.settingsSubtitle
         case .waitlistInvited, .inviteCodeInvited:
             switch connectionStatus {
-            case .connected:
-                netPCell.detailTextLabel?.text = UserText.netPCellConnected
-            default:
-                netPCell.detailTextLabel?.text = UserText.netPCellDisconnected
+            case .connected: netPCell.detailTextLabel?.text = UserText.netPCellConnected
+            default: netPCell.detailTextLabel?.text = UserText.netPCellDisconnected
             }
         }
     }
@@ -445,6 +437,7 @@ class SettingsViewController: UITableViewController {
     private func showNetP() {
         switch VPNWaitlist.shared.networkProtectionAccessType {
         case .inviteCodeInvited, .waitlistInvited:
+            // This will be tidied up as part of https://app.asana.com/0/0/1205084446087078/f
             let rootViewController = NetworkProtectionRootViewController { [weak self] in
                 self?.navigationController?.popViewController(animated: true)
                 let newRootViewController = NetworkProtectionRootViewController()

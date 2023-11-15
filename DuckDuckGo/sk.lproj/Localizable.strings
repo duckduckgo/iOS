@@ -1597,8 +1597,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Obľúbené položky";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "V službe DuckDuckGo zavádzame nový štandard dôvery online.\n\nSúkromný prehliadač DuckDuckGo poskytuje všetky základné informácie o ochrane súkromia, ktoré potrebujete, aby ste sa ochránili pri vyhľadávaní a prehliadaní webu, vrátane blokovania sledovacích zariadení, inteligentnejšieho šifrovania a súkromného vyhľadávania v prehliadači DuckDuckGo.\n\nPri používaní internetu by sme predsa nemali mať zlý pocit a dopriať si zaslúžené online súkromie by nemalo byť o nič ťažšie ako obyčajné zatiahnutie rolety.";
+/* about page */
+"settings.about.text" = "DuckDuckGo je nezávislá spoločnosť na ochranu súkromia na internete, ktorá bola založená v roku 2008 pre všetkých, ktorých už nebaví sledovanie na internete a chcú jednoduché riešenie. Sme dôkazom, že skutočnú online ochranu súkromia môžete získať bez kompromisov.\n\nPrehliadač DuckDuckGo je vybavený funkciami, ktoré od prehliadača očakávate, ako sú napríklad záložky, karty, heslá a ďalšie funkcie. Navyše obsahuje viac ako [tucet účinných ochranných opatrení na ochranu súkromia](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) sa vo väčšine populárnych prehliadačov štandardne neponúka. Tento jedinečne komplexný súbor ochrany súkromia pomáha chrániť vaše online aktivity od vyhľadávania po prehliadanie, posielanie e-mailov a ďalšie.\n\nNaša ochrana súkromia funguje bez toho, aby ste museli poznať technické detaily alebo riešiť zložité nastavenia. Stačí prepnúť prehliadač na DuckDuckGo vo všetkých zariadeniach a získate predvolené súkromie.\n\nAk však chcete nahliadnuť pod pokrievku, viac informácií o tom, ako funguje ochrana súkromia DuckDuckGo, nájdete na našich [stránkach pomoci](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Odoslať správu";
@@ -1767,6 +1767,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Správa od %@:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Vitajte na Duck Side!";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "Vyskúšajte DuckDuckGo pre Windows!";

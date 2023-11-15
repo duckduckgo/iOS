@@ -163,7 +163,7 @@ extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
 extension PrivacyDashboardViewController: PrivacyDashboardNavigationDelegate {
     
     func privacyDashboardController(_ privacyDashboardController: PrivacyDashboard.PrivacyDashboardController, didSetHeight height: Int) {
-        preferredContentSize = CGSize(width: Int(view.intrinsicContentSize.width), height: height)
+        preferredContentSize.height = CGFloat(height)
     }
     
     func privacyDashboardControllerDidTapClose(_ privacyDashboardController: PrivacyDashboardController) {

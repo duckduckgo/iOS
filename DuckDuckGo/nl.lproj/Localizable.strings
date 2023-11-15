@@ -1597,8 +1597,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favorieten";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "Bij DuckDuckGo zetten we de nieuwe standaard voor vertrouwen online.\n\nDe DuckDuckGo Privacy Browser biedt alle essentiële facetten van privacy die je nodig hebt om jezelf te beschermen tijdens het zoeken en browsen op het internet, zoals het blokkeren van trackers, slimmere versleuteling en privézoekopdrachten.\n\nHet internet zou namelijk helemaal niet zo griezelig moeten zijn en de privacy die je online verdient, moet net zo eenvoudig zijn als het sluiten van de gordijnen.";
+/* about page */
+"settings.about.text" = "DuckDuckGo is het onafhankelijke internetprivacybedrijf, opgericht in 2008, voor iedereen die het beu is om online gevolgd te worden en daar een eenvoudige oplossing voor wil. Wij zijn het bewijs dat je privacy op internet écht beschermd kan worden zonder compromissen.\n\nDe DuckDuckGo-browser wordt geleverd met de functies die je van een webbrowser verwacht, zoals bladwijzers, tabbladen, wachtwoorden en meer, plus meer dan [een dozijn krachtige tools om je privacy te beschermen](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) die niet standaard worden aangeboden in de meeste populaire browsers. Deze unieke, uitgebreide privacybescherming helpt je online activiteiten te beschermen – of je nu zoekt, surft of mailt.\n\nJe hoeft niets te weten over de technische details of ingewikkelde instellingen om te profiteren van onze privacybescherming. Je hoeft alleen maar DuckDuckGo op al je apparaten te installeren en geniet dan standaard van privacy.\n\nMaar als je *een kijkje onder de motorkap* wilt, vind je meer informatie over de privacybescherming van DuckDuckGo op onze [hulppagina's](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Rapport versturen";
@@ -1767,6 +1767,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Een bericht van %@:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Welkom bij de Duck kant!";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "Probeer DuckDuckGo voor Windows!";

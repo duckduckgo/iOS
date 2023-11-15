@@ -248,7 +248,7 @@ struct VPNWaitlistInvitedView: View {
                     }
                     .padding(.top, 24)
 
-                    Button("Get Started", action: { action(.custom(.openNetworkProtectionPrivacyPolicyScreen)) })
+                    Button(UserText.networkProtectionWaitlistGetStarted, action: { action(.custom(.openNetworkProtectionPrivacyPolicyScreen)) })
                         .buttonStyle(RoundedButtonStyle(enabled: true))
                         .padding(.top, 32)
 
@@ -322,7 +322,7 @@ struct VPNWaitlistPrivacyPolicyView: View {
                     Text(VPNWaitlistUserText.networkProtectionTermsOfServiceSection8List).bodyStyle()
                 }
 
-                Button("Agree and Continue", action: { action(.custom(.acceptNetworkProtectionTerms)) })
+                Button(UserText.networkProtectionWaitlistAgreeAndContinue, action: { action(.custom(.acceptNetworkProtectionTerms)) })
                     .buttonStyle(RoundedButtonStyle(enabled: true))
                     .padding(.top, 24)
             }

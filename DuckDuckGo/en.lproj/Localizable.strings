@@ -1435,6 +1435,9 @@ https://duckduckgo.com/mac";
 /* Privacy Policy title for Network Protection */
 "network-protection.privacy-policy.title" = "Privacy Policy";
 
+/* Title text for the Network Protection terms and conditions accept button */
+"network-protection.waitlist.agree-and-continue" = "Agree and Continue";
+
 /* Availability disclaimer for Network Protection join waitlist screen */
 "network-protection.waitlist.availability-disclaimer" = "Network Protection is free to use during the beta.";
 
@@ -1446,6 +1449,9 @@ https://duckduckgo.com/mac";
 
 /* Join Waitlist button for Network Protection join waitlist screen */
 "network-protection.waitlist.button.join-waitlist" = "Join the Waitlist";
+
+/* Button title text for the Network Protection waitlist confirmation prompt */
+"network-protection.waitlist.get-started" = "Get Started";
 
 /* Subtitle for section 1 of the Network Protection invited screen */
 "network-protection.waitlist.invited.section-1.subtitle" = "Encrypt online traffic across your browsers and apps.";
@@ -1478,7 +1484,7 @@ https://duckduckgo.com/mac";
 "network-protection.waitlist.join.subtitle.2" = "Join the waitlist, and we’ll notify you when it’s your turn.";
 
 /* Title for Network Protection join waitlist screen */
-"network-protection.waitlist.join.title" = "Network Protection Beta";
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
 
 /* Title for Network Protection joined waitlist screen */
 "network-protection.waitlist.joined.title" = "You’re on the list!";
@@ -1488,6 +1494,9 @@ https://duckduckgo.com/mac";
 
 /* Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled */
 "network-protection.waitlist.joined.with-notifications.subtitle.2" = "We’ll notify you when your invite is ready.";
+
+/* Body text for the alert to enable notifications */
+"network-protection.waitlist.notification-alert.description" = "We’ll send you a notification when your invite to test Network Protection is ready.";
 
 /* Title for Network Protection waitlist notification */
 "network-protection.waitlist.notification.text" = "Open your invite";

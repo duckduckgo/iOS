@@ -41,7 +41,7 @@ final class VPNWaitlistViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Network Protection Preview"
+        title = UserText.networkProtectionWaitlistJoinTitle
 
         addHostingControllerToViewHierarchy()
 
@@ -96,7 +96,7 @@ extension VPNWaitlistViewController: WaitlistViewModelDelegate {
     func waitlistViewModelDidAskToReceiveJoinedNotification(_ viewModel: WaitlistViewModel) async -> Bool {
         return await withCheckedContinuation { continuation in
             let alertController = UIAlertController(title: UserText.waitlistNotifyMeConfirmationTitle,
-                                                    message: "We’ll send you a notification when your invite to test Network Protection is ready.",
+                                                    message: UserText.networkProtectionWaitlistNotificationAlertDescription,
                                                     preferredStyle: .alert)
             alertController.overrideUserInterfaceStyle()
 

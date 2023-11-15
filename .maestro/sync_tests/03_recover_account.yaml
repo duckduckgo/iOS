@@ -19,20 +19,38 @@ tags:
 - tapOn:
     id: searchEntry
 - inputText: ${CODE}
-- repeat:
-    while:
-      notVisible: "Select All"
+- tapOn: 
+    id: searchEntry
+- doubleTapOn: 
+    id: searchEntry
+- runFlow:
+    when:
+      visible:
+        text: "Select All"
     commands:
-      - tapOn:
-            id: searchEntry
-- tapOn: Select All
+      - tapOn: "Select All"
+
 - tapOn: Cut
 - tapOn:
     id: searchEntry
-- longPressOn:
-    id: searchEntry
+- runFlow:
+    when:
+      notVisible:
+        text: "Paste"
+    commands:
+      - tapOn: 
+            id: searchEntry
 - tapOn: Paste
 - tapOn: Cancel
+
+- tapOn: Close Tabs and Clear Data
+- tapOn: Close Tabs and Clear Data
+- runFlow:
+    when:
+      visible:
+        text: Cancel
+    commands:
+      - tapOn: Cancel
 #</WORKAROUND>
 
 # Recover Account test

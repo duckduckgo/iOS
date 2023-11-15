@@ -42,8 +42,12 @@ struct PasswordGenerationPromptView: View {
                 .zIndex(1)
 
                 VStack {
+                    Spacer()
+                        .frame(height: Const.Size.topPadding)
+                    AutofillViews.AppIconHeader()
+                    Spacer()
+                        .frame(height: Const.Size.headlineTopPadding)
                     AutofillViews.Headline(title: UserText.autofillPasswordGenerationPromptTitle)
-                        .padding(.top, Const.Size.topPadding)
                     if #available(iOS 16.0, *) {
                         passwordView
                             .padding([.top, .bottom], passwordVerticalPadding)
@@ -185,6 +189,7 @@ private enum Const {
         static let closeButtonOffsetPortrait: CGFloat = 44.0
         static let closeButtonOffsetPortraitSmallFrame: CGFloat = 16.0
         static let topPadding: CGFloat = 56.0
+        static let headlineTopPadding: CGFloat = 24.0
         static let ios15scrollOffset: CGFloat = 80.0
         static let passwordButtonSpacing: CGFloat = 10.0
         static let passwordPaddingHeight: CGFloat = 28.0

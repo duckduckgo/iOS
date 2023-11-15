@@ -70,6 +70,13 @@ struct AutofillViews {
         }
     }
 
+    struct AppIconHeader: View {
+        var body: some View {
+            Image.appIcon
+                .scaledToFit()
+        }
+    }
+
     struct Headline: View {
         let title: String
 
@@ -241,4 +248,5 @@ private enum Const {
 
 private extension Image {
     static let close = Image("Close-24")
+    static let appIcon = Image("WaitlistShareSheetLogo")
 }

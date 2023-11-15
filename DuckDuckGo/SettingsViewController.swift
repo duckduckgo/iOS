@@ -183,6 +183,7 @@ class SettingsViewController: UITableViewController {
         configureMacBrowserWaitlistCell()
         configureWindowsBrowserWaitlistCell()
         configureSyncCell()
+        updateNetPCellSubtitle(connectionStatus: connectionObserver.recentValue)
 
         // Make sure multiline labels are correctly presented
         tableView.setNeedsLayout()
@@ -355,41 +356,35 @@ class SettingsViewController: UITableViewController {
     private func configureNetPCell() {
         netPCell.isHidden = !shouldShowNetPCell
 #if NETWORK_PROTECTION
-        updateNetPCellSubtitle(connected: false)
+        updateNetPCellSubtitle(connectionStatus: connectionObserver.recentValue)
         connectionObserver.publisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] status in
-                switch status {
-                case .connected: self?.updateNetPCellSubtitle(connected: true)
-                default: self?.updateNetPCellSubtitle(connected: false)
-                }
+                self?.updateNetPCellSubtitle(connectionStatus: status)
             }
             .store(in: &cancellables)
 #endif
     }
 
 #if NETWORK_PROTECTION
-    private func updateNetPCellSubtitle(connected: Bool) {
-        let detailText: String
-
+    private func updateNetPCellSubtitle(connectionStatus: ConnectionStatus) {
         switch VPNWaitlist.shared.networkProtectionAccessType {
         case .none:
-            detailText = ""
+            netPCell.detailTextLabel?.text = ""
         case .waitlistAvailable:
-            detailText = "Sign up now!"
+            netPCell.detailTextLabel?.text = "Sign up now!"
         case .waitlistJoined:
-            detailText = "You signed up!"
+            netPCell.detailTextLabel?.text = "You signed up!"
         case .waitlistInvitedPendingTermsAcceptance:
-            detailText = "Please accept terms"
+            netPCell.detailTextLabel?.text = "Please accept terms"
         case .waitlistInvited, .inviteCodeInvited:
-            if connected {
-                detailText = UserText.netPCellConnected
-            } else {
-                detailText = UserText.netPCellDisconnected
+            switch connectionStatus {
+            case .connected:
+                netPCell.detailTextLabel?.text = UserText.netPCellConnected
+            default:
+                netPCell.detailTextLabel?.text = UserText.netPCellDisconnected
             }
         }
-
-        netPCell.detailTextLabel?.text = detailText
     }
 #endif
 

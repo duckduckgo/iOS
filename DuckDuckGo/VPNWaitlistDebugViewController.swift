@@ -48,6 +48,7 @@ final class VPNWaitlistDebugViewController: UITableViewController {
     }
 
     private let debuggingActionTitles = [
+        DebuggingActionRows.resetTermsAndConditionsAcceptance: "Reset T&C Acceptance",
         DebuggingActionRows.scheduleWaitlistNotification: "Fire Waitlist Notification in 3 seconds",
         DebuggingActionRows.setMockInviteCode: "Set Mock Invite Code",
         DebuggingActionRows.deleteInviteCode: "Delete Invite Code"
@@ -55,6 +56,7 @@ final class VPNWaitlistDebugViewController: UITableViewController {
 
     enum DebuggingActionRows: Int, CaseIterable {
 
+        case resetTermsAndConditionsAcceptance
         case scheduleWaitlistNotification
         case setMockInviteCode
         case deleteInviteCode
@@ -149,6 +151,8 @@ final class VPNWaitlistDebugViewController: UITableViewController {
             let row = DebuggingActionRows(rawValue: indexPath.row)!
 
             switch row {
+            case .resetTermsAndConditionsAcceptance:
+                VPNWaitlist.termsAndConditionsAccepted = false
             case .scheduleWaitlistNotification:
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
                     self.storage.store(inviteCode: "ABCD1234")

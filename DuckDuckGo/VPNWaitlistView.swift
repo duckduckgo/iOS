@@ -42,7 +42,7 @@ struct VPNWaitlistView: View {
                 Task { await viewModel.perform(action: action) }
             }
         case .invited:
-            VPNWaitlistInvitedView(viewData: NetworkProtectionInvitedToWaitlistViewData()) { action in
+            VPNWaitlistInvitedView { action in
                 Task { await viewModel.perform(action: action) }
             }
         case .waitlistRemoved:
@@ -208,7 +208,23 @@ private struct ShareButtonFramePreferenceKey: PreferenceKey {
 @available(iOS 15.0, *)
 struct VPNWaitlistInvitedView: View {
 
-    let viewData: InvitedToWaitlistViewData
+    let benefitsList: [VPNWaitlistBenefit] = [
+        .init(
+            imageName: "Shield-16",
+            title: UserText.networkProtectionWaitlistInvitedSection1Title,
+            subtitle: UserText.networkProtectionWaitlistInvitedSection1Subtitle
+        ),
+        .init(
+            imageName: "Rocket-16",
+            title: UserText.networkProtectionWaitlistInvitedSection2Title,
+            subtitle: UserText.networkProtectionWaitlistInvitedSection2Subtitle
+        ),
+        .init(
+            imageName: "Card-16",
+            title: UserText.networkProtectionWaitlistInvitedSection3Title,
+            subtitle: UserText.networkProtectionWaitlistInvitedSection3Subtitle
+        ),
+    ]
 
     let action: (WaitlistViewModel.ViewAction) -> Void
 
@@ -228,9 +244,7 @@ struct VPNWaitlistInvitedView: View {
                         .fixedSize(horizontal: false, vertical: true)
 
                     VStack(spacing: 16.0) {
-                        ForEach(viewData.entryViewViewDataList) { itemData in
-                            WaitlistListEntryView(viewData: itemData)
-                        }
+                        ForEach(benefitsList) { WaitlistListEntryView(viewData: $0) }
                     }
                     .padding(.top, 24)
 
@@ -318,48 +332,16 @@ struct VPNWaitlistPrivacyPolicyView: View {
 
 }
 
-protocol InvitedToWaitlistViewData {
-    var headerImageName: String { get }
-    var title: String { get }
-    var subtitle: String { get }
-    var entryViewViewDataList: [WaitlistEntryViewItemViewData] { get }
-    var availabilityDisclaimer: String { get }
-    var buttonDismissLabel: String { get }
-    var buttonGetStartedLabel: String { get }
-}
-
-struct WaitlistEntryViewItemViewData: Identifiable {
+struct VPNWaitlistBenefit: Identifiable {
     let id = UUID()
     let imageName: String
     let title: String
     let subtitle: String
 }
 
-struct NetworkProtectionInvitedToWaitlistViewData: InvitedToWaitlistViewData {
-    let headerImageName = "Gift-96"
-    let title = UserText.networkProtectionWaitlistInvitedTitle
-    let subtitle = UserText.networkProtectionWaitlistInvitedSubtitle
-    let buttonDismissLabel = UserText.networkProtectionWaitlistButtonDismiss
-    let buttonGetStartedLabel = UserText.networkProtectionWaitlistButtonGetStarted
-    let availabilityDisclaimer = UserText.networkProtectionWaitlistAvailabilityDisclaimer
-    let entryViewViewDataList: [WaitlistEntryViewItemViewData] =
-    [
-        .init(imageName: "Shield-16",
-              title: UserText.networkProtectionWaitlistInvitedSection1Title,
-              subtitle: UserText.networkProtectionWaitlistInvitedSection1Subtitle),
-
-        .init(imageName: "Rocket-16",
-                  title: UserText.networkProtectionWaitlistInvitedSection2Title,
-                  subtitle: UserText.networkProtectionWaitlistInvitedSection2Subtitle),
-
-        .init(imageName: "Card-16",
-                  title: UserText.networkProtectionWaitlistInvitedSection3Title,
-                  subtitle: UserText.networkProtectionWaitlistInvitedSection3Subtitle),
-    ]
-}
-
 private struct WaitlistListEntryView: View {
-    let viewData: WaitlistEntryViewItemViewData
+
+    let viewData: VPNWaitlistBenefit
 
     var body: some View {
         HStack(alignment: .center, spacing: 16) {
@@ -384,6 +366,7 @@ private struct WaitlistListEntryView: View {
             Spacer()
         }
     }
+
 }
 
 private extension Text {

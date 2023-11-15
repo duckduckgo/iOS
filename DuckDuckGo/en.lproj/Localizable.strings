@@ -1441,32 +1441,11 @@ https://duckduckgo.com/mac";
 /* Agree and Continue button for Network Protection join waitlist screen */
 "network-protection.waitlist.button.agree-and-continue" = "Agree and Continue";
 
-/* Cancel button for Network Protection join waitlist screen */
-"network-protection.waitlist.button.cancel" = "Cancel";
-
-/* Close button for Network Protection join waitlist screen */
-"network-protection.waitlist.button.close" = "Close";
-
-/* Dismiss button for Network Protection join waitlist screen */
-"network-protection.waitlist.button.dismiss" = "Dismiss";
-
-/* Close button for Network Protection joined waitlist screen */
-"network-protection.waitlist.button.done" = "Done";
-
 /* Enable Notifications button for Network Protection joined waitlist screen */
 "network-protection.waitlist.button.enable-notifications" = "Enable Notifications";
 
-/* Get Started button for Network Protection joined waitlist screen */
-"network-protection.waitlist.button.get-started" = "Get Started";
-
-/* Got It button for Network Protection joined waitlist screen */
-"network-protection.waitlist.button.got-it" = "Got It";
-
 /* Join Waitlist button for Network Protection join waitlist screen */
 "network-protection.waitlist.button.join-waitlist" = "Join the Waitlist";
-
-/* No Thanks button for Network Protection joined waitlist screen */
-"network-protection.waitlist.button.no-thanks" = "No Thanks";
 
 /* Subtitle for section 1 of the Network Protection invited screen */
 "network-protection.waitlist.invited.section-1.subtitle" = "Encrypt online traffic across your browsers and apps.";

@@ -31,21 +31,23 @@ class PrivacyDashboardViewController: UIViewController {
         case reportBrokenSite
     }
 
-    
     @IBOutlet private(set) weak var webView: WKWebView!
-    
-    public weak var tabViewController: TabViewController?
     
     private let initMode: Mode
     private let privacyDashboardController: PrivacyDashboardController
     private let privacyConfigurationManager: PrivacyConfigurationManaging
     private let contentBlockingManager: ContentBlockerRulesManager
+    public var brokenSiteInfo: BrokenSiteInfo?
+    
+    var source: BrokenSiteInfo.Source {
+        initMode == .reportBrokenSite ? .menu : .dashboard
+    }
 
     init?(coder: NSCoder,
           privacyInfo: PrivacyInfo?,
           privacyConfigurationManager: PrivacyConfigurationManaging,
           contentBlockingManager: ContentBlockerRulesManager,
-          initMode: Mode = .privacyDashboard) {
+          initMode: Mode) {
         self.privacyDashboardController = PrivacyDashboardController(privacyInfo: privacyInfo)
         self.privacyConfigurationManager = privacyConfigurationManager
         self.contentBlockingManager = contentBlockingManager
@@ -65,7 +67,7 @@ class PrivacyDashboardViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        privacyDashboardController.setup(for: webView, reportBrokenSiteOnly: true)
+        privacyDashboardController.setup(for: webView, reportBrokenSiteOnly: initMode == Mode.reportBrokenSite ? true : false)
         privacyDashboardController.preferredLocale = Bundle.main.preferredLocalizations.first
         applyTheme(ThemeManager.shared.currentTheme)
     }
@@ -80,22 +82,12 @@ class PrivacyDashboardViewController: UIViewController {
         privacyDashboardController.updatePrivacyInfo(privacyInfo)
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if let navController = segue.destination as? UINavigationController,
-//           let brokenSiteScreen = navController.topViewController as? ReportBrokenSiteViewController {
-//            brokenSiteScreen.brokenSiteInfo = tabViewController?.getCurrentWebsiteInfo()
-//        }
-//    }
-}
-
-private extension PrivacyDashboardViewController {
-    
-    func privacyDashboardProtectionSwitchChangeHandler(enabled: Bool) {
+    private func privacyDashboardProtectionSwitchChangeHandler(state: ProtectionState) {
         guard let domain = privacyDashboardController.privacyInfo?.url.host else { return }
         
         let privacyConfiguration = privacyConfigurationManager.privacyConfig
         
-        if enabled {
+        if state.isProtected {
             privacyConfiguration.userEnabledProtection(forDomain: domain)
             ActionMessageView.present(message: UserText.messageProtectionEnabled.format(arguments: domain))
         } else {
@@ -107,11 +99,13 @@ private extension PrivacyDashboardViewController {
         
         privacyDashboardController.didStartRulesCompilation()
         
-        Pixel.fire(pixel: enabled ? .privacyDashboardProtectionEnabled : .privacyDashboardProtectionDisabled)
+        Pixel.fire(pixel: state.isProtected ? .privacyDashboardProtectionEnabled : .privacyDashboardProtectionDisabled)
     }
     
-    func privacyDashboardCloseTappedHandler() {
-        dismiss(animated: true)
+    private func privacyDashboardCloseTappedHandler() {
+        DispatchQueue.main.async {
+            self.dismiss(animated: true)
+        }
     }
 }
 
@@ -134,7 +128,7 @@ extension PrivacyDashboardViewController: Themable {
 extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
 
     func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController, didChangeProtectionSwitch protectionState: ProtectionState) {
-        privacyDashboardProtectionSwitchChangeHandler(enabled: protectionState.isProtected)
+        privacyDashboardProtectionSwitchChangeHandler(state: protectionState)
     }
     
     func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController, didRequestOpenUrlInNewTab url: URL) {
@@ -173,16 +167,27 @@ extension PrivacyDashboardViewController: PrivacyDashboardNavigationDelegate {
 }
 
 extension PrivacyDashboardViewController: PrivacyDashboardReportBrokenSiteDelegate {
-    
-
-    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController, reportBrokenSiteDidChangeProtectionSwitch protectionState: ProtectionState) {
         
+    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController, reportBrokenSiteDidChangeProtectionSwitch protectionState: ProtectionState) {
+        privacyDashboardProtectionSwitchChangeHandler(state: protectionState)
     }
     
     func privacyDashboardController(_ privacyDashboardController: PrivacyDashboard.PrivacyDashboardController, didRequestSubmitBrokenSiteReportWithCategory category: String, description: String) {
         
+        guard let brokenSiteInfo = brokenSiteInfo else {
+            assertionFailure("brokenSiteInfo not initialised")
+            return
+        }
+        
+        brokenSiteInfo.send(with: category, description: description, source: source)
+        ActionMessageView.present(message: UserText.feedbackSumbittedConfirmation)
+        privacyDashboardCloseTappedHandler()
     }
 }
 
-
-extension PrivacyDashboardViewController: UIPopoverPresentationControllerDelegate { }
+extension PrivacyDashboardViewController: UIPopoverPresentationControllerDelegate {
+    
+    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
+        // TODO: handle closure by drag
+    }
+}

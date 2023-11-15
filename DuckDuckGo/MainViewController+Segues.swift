@@ -22,6 +22,7 @@ import Common
 import Core
 import Bookmarks
 import BrowserServicesKit
+import PrivacyDashboard
 
 extension MainViewController {
 
@@ -122,23 +123,47 @@ extension MainViewController {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
 
-        // TODO: Open privacy dashboard
-//        let storyboard = UIStoryboard(name: "Feedback", bundle: nil)
-//        guard let controller: UINavigationController = storyboard.instantiateInitialViewController(),
-//              let brokenSiteScreen = controller.topViewController as? ReportBrokenSiteViewController else {
-//            assertionFailure()
-//            return
+        let brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
+        guard let currentURL = brokenSiteInfo?.url,
+              let privacyInfo = currentTab?.makePrivacyInfo(url: currentURL) else {
+            assertionFailure("Missing fundamental data")
+            return
+        }
+        
+        let storyboard = UIStoryboard(name: "PrivacyDashboard", bundle: nil)
+        let controller = storyboard.instantiateInitialViewController { coder in
+             PrivacyDashboardViewController(coder: coder,
+                                           privacyInfo: privacyInfo,
+                                           privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+                                           contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
+                                           initMode: .reportBrokenSite)
+        }
+        
+        guard let controller = controller else {
+            assertionFailure("PrivacyDashboardViewController not initialised")
+            return
+        }
+        
+        currentTab?.privacyDashboard = controller
+        controller.popoverPresentationController?.delegate = controller
+        
+        // TODO: Set source for ipad? code from TabViewController
+//        if let iconView = chromeDelegate.omniBar.privacyInfoContainer.privacyIcon {
+//            controller.popoverPresentationController?.sourceView = iconView
+//            controller.popoverPresentationController?.sourceRect = iconView.bounds
 //        }
-//
-//        brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
-//
-//        if UIDevice.current.userInterfaceIdiom == .pad {
-//            controller.modalPresentationStyle = .formSheet
-//        } else {
-//            controller.modalPresentationStyle = .pageSheet
-//        }
-//
-//        present(controller, animated: true)
+//        privacyDashboard = controller
+//        privacyDashboard?.brokenSiteInfo = getCurrentWebsiteInfo()
+        
+        controller.brokenSiteInfo = brokenSiteInfo
+
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            controller.modalPresentationStyle = .formSheet
+        } else {
+            controller.modalPresentationStyle = .pageSheet
+        }
+        
+        present(controller, animated: true)
     }
 
     func segueToDownloads() {

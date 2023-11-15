@@ -783,6 +783,7 @@
 		EE9D68DA2AE1659F00B55EF4 /* NetworkProtectionVPNNotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9D68D92AE1659F00B55EF4 /* NetworkProtectionVPNNotificationsViewModel.swift */; };
 		EE9D68DC2AE16AE100B55EF4 /* NotificationsAuthorizationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9D68DB2AE16AE100B55EF4 /* NotificationsAuthorizationController.swift */; };
 		EE9D68DE2AE2A65600B55EF4 /* UserDefaults+NetworkProtection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9D68DD2AE2A65600B55EF4 /* UserDefaults+NetworkProtection.swift */; };
+		EEC02C142B0519DE0045CE11 /* NetworkProtectionVPNLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC02C132B0519DE0045CE11 /* NetworkProtectionVPNLocationViewModel.swift */; };
 		EEDFE2DA2AC6ED4F00F0E19C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EEDFE2DC2AC6ED4F00F0E19C /* Localizable.strings */; };
 		EEEB80A32A421CE600386378 /* NetworkProtectionPacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB80A22A421CE600386378 /* NetworkProtectionPacketTunnelProvider.swift */; };
 		EEF0F8CC2ABC832300630031 /* NetworkProtectionDebugFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF0F8CB2ABC832200630031 /* NetworkProtectionDebugFeatures.swift */; };
@@ -2390,6 +2391,7 @@
 		EE9D68DB2AE16AE100B55EF4 /* NotificationsAuthorizationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsAuthorizationController.swift; sourceTree = "<group>"; };
 		EE9D68DD2AE2A65600B55EF4 /* UserDefaults+NetworkProtection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+NetworkProtection.swift"; sourceTree = "<group>"; };
 		EEB8FDB92A990AEE00EBEDCF /* Configuration-Alpha.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Configuration-Alpha.xcconfig"; path = "Configuration/Configuration-Alpha.xcconfig"; sourceTree = "<group>"; };
+		EEC02C132B0519DE0045CE11 /* NetworkProtectionVPNLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionVPNLocationViewModel.swift; sourceTree = "<group>"; };
 		EEDFE2DB2AC6ED4F00F0E19C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EEDFE2DD2AC6ED5B00F0E19C /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EEDFE2DE2AC6ED5F00F0E19C /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -4449,6 +4451,7 @@
 			isa = PBXGroup;
 			children = (
 				EE01EB422AFC1E0A0096AAC9 /* NetworkProtectionVPNLocationView.swift */,
+				EEC02C132B0519DE0045CE11 /* NetworkProtectionVPNLocationViewModel.swift */,
 			);
 			name = PreferredLocation;
 			sourceTree = "<group>";
@@ -6384,6 +6387,7 @@
 				989B337522D7EF2100437824 /* EmptyCollectionReusableView.swift in Sources */,
 				8524CC94246C5C8900E59D45 /* DaxDialogViewController.swift in Sources */,
 				F42EF9312614BABE00101FB9 /* ActionSheetDaxDialogViewController.swift in Sources */,
+				EEC02C142B0519DE0045CE11 /* NetworkProtectionVPNLocationViewModel.swift in Sources */,
 				F13B4BC01F180D8A00814661 /* TabsModel.swift in Sources */,
 				02025B0C29884D2C00E694E7 /* AppTrackerData.swift in Sources */,
 				85AE6690209724120014CF04 /* NotificationView.swift in Sources */,

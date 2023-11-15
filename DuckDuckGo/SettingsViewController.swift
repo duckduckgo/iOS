@@ -448,9 +448,8 @@ class SettingsViewController: UITableViewController {
 #if NETWORK_PROTECTION
     @available(iOS 15, *)
     private func showNetP() {
-        // TODO: Check for T&C acceptance
-        if NetworkProtectionKeychainTokenStore().isFeatureActivated {
-            // This will be tidied up as part of https://app.asana.com/0/0/1205084446087078/f
+        switch VPNWaitlist.shared.networkProtectionAccessType {
+        case .inviteCodeInvited, .waitlistInvited:
             let rootViewController = NetworkProtectionRootViewController { [weak self] in
                 self?.navigationController?.popViewController(animated: true)
                 let newRootViewController = NetworkProtectionRootViewController()
@@ -458,7 +457,7 @@ class SettingsViewController: UITableViewController {
             }
 
             pushNetP(rootViewController)
-        } else {
+        default:
             navigationController?.pushViewController(VPNWaitlistViewController(nibName: nil, bundle: nil), animated: true)
         }
     }

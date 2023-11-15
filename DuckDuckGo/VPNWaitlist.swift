@@ -59,8 +59,7 @@ final class VPNWaitlist: Waitlist {
     static let inviteAvailableNotificationBody = UserText.networkProtectionWaitlistNotificationText
 
     var isAvailable: Bool {
-        // isFeatureEnabled
-        return true // TODO: Use feature flag values
+        isFeatureEnabled
     }
 
     var isWaitlistRemoved: Bool {
@@ -79,8 +78,7 @@ final class VPNWaitlist: Waitlist {
         }
 
         // Next, check if the waitlist is still active; if not, the user has no access.
-        // TODO: Use a real value
-        let isWaitlistActive = true // privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlistBetaActive)
+        let isWaitlistActive = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlistBetaActive)
         if !isWaitlistActive {
             return .none
         }
@@ -95,8 +93,7 @@ final class VPNWaitlist: Waitlist {
         }
 
         // Next, check if the user has waitlist access at all and whether they've already joined.
-        // TODO: Use a real value
-        let hasWaitlistAccess = true // privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlist)
+        let hasWaitlistAccess = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlist)
         if hasWaitlistAccess {
             if waitlistStorage.isOnWaitlist {
                 return .waitlistJoined

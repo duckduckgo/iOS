@@ -60,4 +60,23 @@ jobs:
         env: |
             CODE=${{ steps.sync-recovery-code.outputs.recovery-code }}
     
+    - name: Create Asana task when workflow failed
+      if: ${{ failure() }}
+      run: |
+        curl -s "https://app.asana.com/api/1.0/tasks" \
+          --header "Accept: application/json" \
+          --header "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
+          --header "Content-Type: application/json" \
+          --data ' { "data": { "name": "GH Workflow Failure - Sync End to end tests", "workspace": "${{ vars.GH_ASANA_WORKSPACE_ID }}", "projects": [ "${{ vars.GH_ASANA_IOS_APP_PROJECT_ID }}" ], "notes" : "The end to end workflow has failed. See https://github.com/duckduckgo/iOS/actions/runs/${{ github.run_id }}" } }'
+
+    - name: Upload logs when workflow failed
+      uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        name: BuildLogs
+        path: |
+          xcodebuild.log
+          DerivedData/Logs/Test/*.xcresult
+        retention-days: 7
+    
     

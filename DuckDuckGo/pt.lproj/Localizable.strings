@@ -1606,8 +1606,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favoritos";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "No DuckDuckGo, estamos a estabelecer o novo padrão de confiança online.\n\nO Navegador de Privacidade DuckDuckGo fornece todos os elementos essenciais de privacidade que precisa para se proteger enquanto pesquisa e navega na web, incluindo o bloqueio de rastreamento, a criptografia mais inteligente e a pesquisa privada DuckDuckGo.\n\nAfinal de contas, a internet não deve ser tão assustadora e obter a privacidade que merece online deve ser tão simples quanto fechar as cortinas.";
+/* about page */
+"settings.about.text" = "A DuckDuckGo é a empresa independente de privacidade na Internet fundada em 2008 para quem está cansado de ser rastreado online e quer uma solução simples. Somos a prova de que podes proteger a tua privacidade online sem compromissos.\n\nO navegador DuckDuckGo vem com as funcionalidades que esperas num navegador de referência, como marcadores, separadores, palavras-passe, entre outras, além de mais de [uma dúzia de proteções de privacidade poderosas](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) que os navegadores mais populares não oferecem por predefinição. Este conjunto especialmente abrangente de proteções de privacidade ajuda a proteger as tuas atividades online, desde a pesquisa à navegação, e-mails, entre outras.\n\nPara utilizares as nossas proteções de privacidade, não tens de saber nada sobre os detalhes técnicos nem lidar com definições complicadas. Tudo o que tens de fazer é mudar o teu navegador para o DuckDuckGo em todos os teus dispositivos e desfrutar de privacidade como predefinição.\n\nMas *se* quiseres espreitar os bastidores, podes consultar mais informações sobre como funcionam as proteções de privacidade do DuckDuckGo nas nossas [páginas de ajuda](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Submeter relatório";
@@ -1776,6 +1776,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Uma mensagem de %@:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Bem-vindo ao Duck Side!";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "Experimenta o DuckDuckGo para Windows!";

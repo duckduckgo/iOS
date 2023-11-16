@@ -1606,8 +1606,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favoriler";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "DuckDuckGo'da, internet için yeni güven standardını belirliyoruz.\n\nDuckDuckGo Gizlilik Tarayıcısı izleyici engelleme, akıllı şifreleme ve DuckDuckGo gizli arama da dâhil olmak üzere web'de arama ve göz atma sırasında kendinizi korumak için ihtiyacınız olan tüm gizlilik özelliklerini sağlar.\n\nNe de olsa, internet sizi korkutmamalı ve internette hakkınız olan gizliliği elde etmek panjurları kapatmak kadar basit olmalı.";
+/* about page */
+"settings.about.text" = "DuckDuckGo, çevrim içi takip edilmeyi hiç istemeyen ve pratik bir çözüm arayan herkese hizmet veren, 2008 yılında kurulmuş bağımsız bir İnternet gizlilik şirketidir. Biz, çevrim içi ortamda ödün vermeden gerçek gizlilik koruması elde edebileceğinizin kanıtıyız.\n\nDuckDuckGo tarayıcı; yer imleri, sekmeler, parolalar ve daha fazlası gibi en çok kullandığınız tarayıcıdan beklediğiniz ama çoğu popüler tarayıcıda varsayılan olarak bulunmayan özelliklerin yanı sıra [sayısı ondan fazla güçlü gizlilik koruması](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) ile birlikte gelir. Son derece kapsamlı olan bu gizlilik koruma seti; aramadan gezinmeye, e-posta göndermeye ve daha fazlasına kadar çevrim içi etkinliklerinizde koruma sağlamaya yardımcı olur.\n\nGizlilik korumalarımız, teknik ayrıntılar hakkında hiçbir şey bilmenize veya karmaşık ayarlarla uğraşmanıza gerek kalmadan çalışır. Tüm cihazlarınızda tarayıcı olarak DuckDuckGo'yu kullanarak aradığınız gizliliği sağlayabilirsiniz.\n\nAncak ayrıntılara bir göz atmak *istiyorsanız*, DuckDuckGo gizlilik korumalarının nasıl çalıştığı hakkında daha fazla bilgiyi [yardım sayfalarımızda](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/) bulabilirsiniz.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Rapor Gönder";
@@ -1776,6 +1776,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "%@ size bir mesaj gönderdi:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Duck Side'a hoş geldiniz!";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "Windows için DuckDuckGo'yu deneyin!";

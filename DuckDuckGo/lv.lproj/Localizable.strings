@@ -1606,8 +1606,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Izlase";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "DuckDuckGo mērķis ir veidot jaunu tiešsaistes uzticēšanās standartu.\n\nDuckDuckGo konfidencialitātes pārlūks nodrošina visu nepieciešamo privātumu, lai aizsargātu tevi, meklējot un pārlūkojot informāciju tīmeklī, ieskaitot izsekotāju bloķēšanu, viedāku šifrēšanu un DuckDuckGo privāto meklēšanu.\n\nGalu galā – internetam nevajadzētu iedvest bailes, un tava godam nopelnītā tiešsaistes privātuma iegūšanai vajadzētu būt tikpat vienkāršai kā žalūziju aizvēršanai.";
+/* about page */
+"settings.about.text" = "DuckDuckGo ir neatkarīgs 2008. gadā dibināts interneta privātuma uzņēmums ikvienam, kam ir apnikusi izsekošana tiešsaistē un kas vēlas vienkāršu risinājumu. Mēs esam pierādījums tam, ka tiešsaistē var iegūt reālu privātuma aizsardzību bez kompromisiem.\n\nDuckDuckGo pārlūks sniedz visas iespējas, ko gaidi no pārlūkprogrammas, piemēram, grāmatzīmes, cilnes, paroles un citas, kā arī vairāk nekā [duci spēcīgu privātuma aizsardzības funkciju](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) pēc noklusējuma netiek piedāvāts lielākajā daļā populārāko pārlūkprogrammu. Šis unikāli visaptverošais privātuma aizsardzības komplekts palīdz aizsargāt tavas darbības tiešsaistē, sākot no meklēšanas līdz pārlūkošanai, e-pasta sūtīšanai u.c.\n\nMūsu privātuma aizsardzība darbojas vienmēr – tev nav jāpārzina sarežģīti tehniskie aspekti vai iestatījumi. Tev vienkārši jālieto DuckDuckGo pārlūks visās savās ierīcēs, un privātums būs tavs standarta risinājums.\n\nBet, ja vēlies paskatīties, kas lācītim vēderā, vairāk informācijas par to, kā darbojas DuckDuckGo privātuma aizsardzība, vari atrast mūsu [palīdzības lapās](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Iesniegt ziņojumu";
@@ -1776,6 +1776,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Ziņojums no %@:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Sveicināti Duck pusē!";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "Iegūsti DuckDuckGo operētājsistēmai Windows!";

@@ -25,6 +25,7 @@ import CoreData
 import Kingfisher
 import Bookmarks
 import Persistence
+import NetworkExtension
 
 struct Favorite {
 
@@ -201,6 +202,12 @@ struct Widgets: WidgetBundle {
     var body: some Widget {
         SearchWidget()
         FavoritesWidget()
+
+#if ALPHA
+        if #available(iOSApplicationExtension 17.0, *) {
+            VPNStatusWidget()
+        }
+#endif
 
         if #available(iOSApplicationExtension 16.0, *) {
             SearchLockScreenWidget()

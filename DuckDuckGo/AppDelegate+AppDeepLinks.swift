@@ -22,6 +22,7 @@ import Core
 
 extension AppDelegate {
 
+    // swiftlint:disable:next cyclomatic_complexity
     func handleAppDeepLink(_ app: UIApplication, _ mainViewController: MainViewController?, _ url: URL) -> Bool {
         guard let mainViewController else { return false }
 
@@ -49,6 +50,11 @@ extension AppDelegate {
 
         case .newEmail:
             mainViewController.newEmailAddress()
+
+        case .openVPN:
+#if NETWORK_PROTECTION
+            presentNetworkProtectionStatusSettingsModal()
+#endif
 
         default:
             guard app.applicationState == .active,

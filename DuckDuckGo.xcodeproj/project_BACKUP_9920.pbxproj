@@ -9072,8 +9072,13 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
+<<<<<<< HEAD
 				branch = fcappelli/breakage_report_improvements;
 				kind = branch;
+=======
+				kind = exactVersion;
+				version = 84.0.1;
+>>>>>>> 78a106691e2eabdfd71262a4278cf01d241bebf5
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

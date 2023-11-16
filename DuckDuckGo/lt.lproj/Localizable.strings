@@ -1597,8 +1597,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Mėgstami";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "„DuckDuckGo“ nustatome naują patikimumo tinkle standartą.\n\n„DuckDuckGo“ privatumo naršyklė užtikrina visus svarbiausius įrankius, kurie padės apsaugoti savo privatumą ieškant ir naršant tinkle, įskaitant sekiklių blokavimą, išmanųjį šifravimą ir „DuckDuckGo“ privačias paieškas.\n\nMūsų komanda tiki, kad internetas neturėtų būti toks baisus, o privatumas, kurio nusipelnėte internete, turėtų būti ranka pasiekiamas.";
+/* about page */
+"settings.about.text" = "„DuckDuckGo“ yra nepriklausoma interneto privatumo bendrovė, įkurta 2008 metais ir skirta visiems, kurie pavargo nuo sekimo internete ir nori lengvo sprendimo. Esame įrodymas, kad galite gauti tikrą privatumo apsaugą internete be kompromisų.\n\n„DuckDuckGo“ naršyklėje yra funkcijos, kurių tikitės iš pagrindinės naršyklės, pvz., žymės, skirtukai, slaptažodžiai ir dar daugiau, taip pat [keliolika galingų privatumo apsaugos priemonių](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) pagal numatytuosius nustatymus nėra siūlomas daugelyje populiarių naršyklių. Šis unikalus išsamus privatumo apsaugos rinkinys padeda apsaugoti jūsų veiklą internete – nuo paieškos iki naršymo, el. pašto ir kt.\n\nMūsų privatumo apsaugos priemonės veikia nereikalaudamos nieko žinoti apie technines detales ar naudotis sudėtingais nustatymais. Tereikia visuose įrenginiuose perjungti naršyklę į „DuckDuckGo“ ir privatumas bus užtikrintas pagal numatytuosius nustatymus.\n\nTačiau jei norite žvilgtelėti po gaubtu, daugiau informacijos apie tai, kaip veikia „DuckDuckGo“ privatumo apsauga, galite rasti mūsų [pagalbos puslapiuose] (ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Pateikti ataskaitą";
@@ -1767,6 +1767,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Pranešimas iš %@:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Sveiki prisijungę prie „Duck“!";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "Išbandykite „DuckDuckGo“, skirtą „Windows“!";

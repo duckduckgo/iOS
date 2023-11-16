@@ -19,64 +19,64 @@
 
 import UIKit
 import Core
+import SwiftUI
+import DesignResourcesKit
 
-class AboutViewController: UIViewController {
+class AboutViewController: UIHostingController<AboutView> {
 
-    @IBOutlet weak var headerText: UILabel!
-    @IBOutlet weak var descriptionText: UILabel!
-    @IBOutlet weak var logoImage: UIImageView!
-    @IBOutlet weak var moreButton: UIButton!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        applyTheme(ThemeManager.shared.currentTheme)
+    convenience init() {
+        self.init(rootView: AboutView())
     }
 
-    @IBAction func onPrivacyLinkTapped(_ sender: UIButton) {
-        dismiss(animated: true) {
-            UIApplication.shared.open(URL.aboutLink, options: [:])
-        }
-    }
 }
 
-extension AboutViewController: Themable {
-    
-    func decorate(with theme: Theme) {
-        view.backgroundColor = theme.backgroundColor
-        
-        switch theme.currentImageSet {
-        case .light:
-            logoImage?.image = UIImage(named: "LogoDarkText")
-        case .dark:
-            logoImage?.image = UIImage(named: "LogoLightText")
-        }
-        
-        decorateDescription(with: theme)
-        
-        headerText.textColor = theme.aboutScreenTextColor
-        moreButton.setTitleColor(theme.aboutScreenButtonColor, for: .normal)
-    }
-    
-    private func decorateDescription(with theme: Theme) {
-        if let attributedText = descriptionText.attributedText,
-            var font = attributedText.attribute(NSAttributedString.Key.font, at: 0, effectiveRange: nil) as? UIFont {
-            
-            let attributes: [NSAttributedString.Key: Any]
-            if traitCollection.horizontalSizeClass == .regular,
-                traitCollection.verticalSizeClass == .regular {
-                font = font.withSize(24.0)
-                attributes = [.foregroundColor: theme.aboutScreenTextColor,
-                              .font: font]
-            } else {
-                attributes = [.foregroundColor: theme.aboutScreenTextColor,
-                              .font: font]
-            }
+struct AboutView: View {
 
-            let decoratedText = NSMutableAttributedString(string: UserText.settingsAboutText)
-            decoratedText.addAttributes(attributes, range: NSRange(location: 0, length: decoratedText.length))
-            
-            descriptionText.attributedText = decoratedText
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 12) {
+                Image("Logo")
+                    .resizable()
+                    .frame(width: 96, height: 96)
+                    .padding(.top)
+
+                Image("TextDuckDuckGo")
+
+                Text("Welcome to the Duck Side!")
+                    .daxHeadline()
+
+                Rectangle()
+                    .frame(width: 80, height: 0.5)
+                    .foregroundColor(Color(designSystemColor: .lines))
+                    .padding()
+
+                Text(LocalizedStringKey(UserText.aboutText))
+                    .lineLimit(nil)
+                    .multilineTextAlignment(.leading)
+                    .foregroundColor(.primary)
+                    .tintIfAvailable(Color(designSystemColor: .accent))
+                    .padding(.horizontal, 32)
+                    .padding(.bottom)
+
+                Spacer()
+            }
+            .frame(maxWidth: .infinity)
+        }
+        .background(Rectangle()
+            .ignoresSafeArea()
+            .foregroundColor(Color(designSystemColor: .background)))
+    }
+
+}
+
+private extension View {
+    
+    @ViewBuilder func tintIfAvailable(_ color: Color) -> some View {
+        if #available(iOS 16.0, *) {
+            tint(color)
+        } else {
+            self
         }
     }
+
 }

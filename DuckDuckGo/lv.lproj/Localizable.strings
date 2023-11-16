@@ -563,7 +563,7 @@
 "autofill.logins.prompt.password.button.title" = "%@ parole";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Vai izmantot saglabātos pieteikšanās datus?";
+"autofill.logins.prompt.title" = "Izmantot saglabāto paroli?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "meklējumam \"%@\"";
@@ -614,25 +614,19 @@
 "autofill.removed.duck.address.title" = "Privātās Duck adreses lietotājvārds tika noņemts";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Pieteikšanās dati tiek droši saglabāti tavā ierīcē, izvēlnē Pieteikšanās dati.";
+"autofill.save-login.new-user.message" = "Paroles tiek droši saglabātas tavā ierīcē, izvēlnē Pieteikšanās dati.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Vai vēlies, lai DuckDuckGo saglabātu tavus pieteikšanās datus?";
+"autofill.save-login.new-user.title" = "Vai vēlies, lai DuckDuckGo saglabātu tavu paroli?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Nesaglabāt";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Saglabāt pieteikšanās datus";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Saglabāt pieteikšanās datus?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Saglabāt paroli";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Saglabāt paroli?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Rādīt paroli";
@@ -641,7 +635,7 @@
 "autofill.signin.to.manage" = "%@, lai pārvaldītu savas Duck adreses šajā ierīcē.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo atjauninās šos saglabātos pieteikšanās datus tavā ierīcē.";
+"autofill.update-password.message" = "DuckDuckGo atjauninās tavā ierīcē saglabāto paroli.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Atjaunināt paroli";

@@ -563,7 +563,7 @@
 "autofill.logins.prompt.password.button.title" = "Wachtwoord voor %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Opgeslagen aanmeldgegevens gebruiken?";
+"autofill.logins.prompt.title" = "Een opgeslagen wachtwoord gebruiken?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "voor '%@'";
@@ -614,25 +614,19 @@
 "autofill.removed.duck.address.title" = "De persoonlijke gebruikersnaam voor het Duck Address is verwijderd";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Aanmeldgegevens worden veilig opgeslagen op je apparaat in het menu 'Aanmeldingen'.";
+"autofill.save-login.new-user.message" = "Wachtwoorden worden veilig opgeslagen op je apparaat in het menu 'Aanmeldingen'.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Wil je dat DuckDuckGo je login opslaat?";
+"autofill.save-login.new-user.title" = "Wil je dat DuckDuckGo je wachtwoord opslaat?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Niet opslaan";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Login opslaan";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Login opslaan?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Wachtwoord opslaan";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Wachtwoord opslaan?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Wachtwoord weergeven";
@@ -641,7 +635,7 @@
 "autofill.signin.to.manage" = "%@ om je Duck-adressen op dit apparaat te beheren.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo werkt deze opgeslagen aanmeldgegevens op je apparaat bij.";
+"autofill.update-password.message" = "DuckDuckGo werkt dit opgeslagen wachtwoord op je apparaat bij.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Wachtwoord bijwerken";

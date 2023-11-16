@@ -563,7 +563,7 @@
 "autofill.logins.prompt.password.button.title" = "Parola pentru %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Folosești datele de conectare salvate?";
+"autofill.logins.prompt.title" = "Folosești o parolă salvată?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "pentru „%@”";
@@ -614,25 +614,19 @@
 "autofill.removed.duck.address.title" = "Numele de utilizator pentru Duck Address privată a fost eliminat";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Conexiunile sunt stocate în siguranță pe dispozitivul dvs. în meniul Conectări.";
+"autofill.save-login.new-user.message" = "Parolele sunt stocate în siguranță pe dispozitivul dvs. în meniul Autentificări.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Dorești ca DuckDuckGo să îți salveze datele de autentificare?";
+"autofill.save-login.new-user.title" = "Dorești ca DuckDuckGo să-ți salveze parola?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Nu salva";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Salvează autentificarea";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Salvezi autentificarea?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Salvează parola";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Salvezi parola?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Arată parola";
@@ -641,7 +635,7 @@
 "autofill.signin.to.manage" = "%@ pentru a-ți gestiona adresele Duck Address pe acest dispozitiv.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo va actualiza aceste date de conectare stocate pe dispozitivul tău.";
+"autofill.update-password.message" = "DuckDuckGo va actualiza această parolă stocată pe dispozitivul tău.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Actualizează parola";

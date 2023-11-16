@@ -563,7 +563,7 @@
 "autofill.logins.prompt.password.button.title" = "Lozinka za %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Koristiti spremljene podatke za prijavu?";
+"autofill.logins.prompt.title" = "Koristiti spremljenu lozinku?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "za '%@'";
@@ -614,25 +614,19 @@
 "autofill.removed.duck.address.title" = "Korisničko ime privatne Duck Address adrese uklonjeno je";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Prijave su sigurno pohranjene na tvom uređaju u izborniku Prijave.";
+"autofill.save-login.new-user.message" = "Lozinke su sigurno pohranjene na tvom uređaju u izborniku Prijava.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Želiš li da DuckDuckGo spremi tvoju prijavu?";
+"autofill.save-login.new-user.title" = "Želiš li da DuckDuckGo spremi tvoju lozinku?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Nemoj spremiti";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Spremi prijavu";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Želiš li spremiti prijavu?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Spremi lozinku";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Želiš li spremiti lozinku?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Pokaži lozinku";
@@ -641,7 +635,7 @@
 "autofill.signin.to.manage" = "%@ za upravljanje tvojim Duck Address adresama na ovom uređaju.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo će ažurirati ovu spremljenu prijavu na tvom uređaju.";
+"autofill.update-password.message" = "DuckDuckGo će ažurirati ovu pohranjenu lozinku na tvom uređaju.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Ažuriraj lozinku";

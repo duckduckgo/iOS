@@ -563,7 +563,7 @@
 "autofill.logins.prompt.password.button.title" = "Heslo pre %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Použiť uložené prihlasovacie údaje?";
+"autofill.logins.prompt.title" = "Použiť uložené heslo?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "pre „%@”";
@@ -614,25 +614,19 @@
 "autofill.removed.duck.address.title" = "Používateľské meno Private Duck Address bolo odstránené";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Prihlasovacie údaje sú bezpečne uložené v zariadení v ponuke Prihlásenia.";
+"autofill.save-login.new-user.message" = "Heslá sú bezpečne uložené na vašom zariadení v ponuke Prihlásenia.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Chcete, aby DuckDuckGo uložil vaše prihlasovacie údaje?";
+"autofill.save-login.new-user.title" = "Chcete, aby DuckDuckGo uložil vaše heslo?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Neukladať";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Uložiť prihlasovacie údaje";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Uložiť prihlasovacie údaje?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Uložiť heslo";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Uložiť heslo?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Zobraziť heslo";
@@ -641,7 +635,7 @@
 "autofill.signin.to.manage" = "%@ na správu vašich Duck adries na tomto zariadení.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo bude aktualizovať tieto uložené prihlasovacie údaje vo vašom zariadení.";
+"autofill.update-password.message" = "DuckDuckGo aktualizuje toto uložené heslo vo vašom zariadení.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Aktualizovať heslo";

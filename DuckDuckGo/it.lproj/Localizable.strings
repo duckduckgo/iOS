@@ -563,7 +563,7 @@
 "autofill.logins.prompt.password.button.title" = "Password per %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Usare i dati di accesso salvati?";
+"autofill.logins.prompt.title" = "Utilizzare una password salvata?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "per \"%@\"";
@@ -614,25 +614,19 @@
 "autofill.removed.duck.address.title" = "Il nome utente Private Duck Address è stato rimosso";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Gli accessi sono archiviati in modo sicuro sul tuo dispositivo nel menu Accessi.";
+"autofill.save-login.new-user.message" = "Le password sono archiviate in modo sicuro sul tuo dispositivo nel menu Accessi.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Vuoi che DuckDuckGo salvi i dati di accesso?";
+"autofill.save-login.new-user.title" = "Vuoi che DuckDuckGo salvi la password?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Non salvare";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Salva dati di accesso";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Salvare dati di accesso?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Salva password";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Salvare password?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Mostra password";
@@ -641,7 +635,7 @@
 "autofill.signin.to.manage" = "%@ per gestire i tuoi Duck Address su questo dispositivo.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo aggiornerà questi dati di accesso memorizzati sul tuo dispositivo.";
+"autofill.update-password.message" = "DuckDuckGo aggiornerà questa password memorizzata sul tuo dispositivo.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Aggiorna password";

@@ -563,7 +563,7 @@
 "autofill.logins.prompt.password.button.title" = "%@ için parola";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Kayıtlı Giriş kullanılsın mı?";
+"autofill.logins.prompt.title" = "Kayıtlı bir şifre mi kullanıyorsunuz?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "\"%@\" için";
@@ -614,25 +614,19 @@
 "autofill.removed.duck.address.title" = "Özel Duck Address kullanıcı adı kaldırıldı";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Giriş bilgileri cihazınızdaki Giriş Bilgileri menüsünde güvenli bir şekilde saklanır.";
+"autofill.save-login.new-user.message" = "Şifreler cihazınızdaki Oturum Açma menüsünde güvenli bir şekilde saklanır.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "DuckDuckGo'nun Girişinizi kaydetmesini istiyor musunuz?";
+"autofill.save-login.new-user.title" = "DuckDuckGo'nun şifrenizi kaydetmesini istiyor musunuz?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Kaydetme";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Girişi Kaydet";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Giriş Kaydedilsin mi?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Şifre Kaydet";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Şifre Kaydedilsin mi?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Parolayı göster";
@@ -641,7 +635,7 @@
 "autofill.signin.to.manage" = "Bu cihazdaki Duck Address'leri yönetmek için %@.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo, cihazınızdaki bu kayıtlı Giriş bilgisini güncelleyecektir.";
+"autofill.update-password.message" = "DuckDuckGo bu kayıtlı şifreyi cihazınızda güncelleyecektir.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Şifreyi Güncelle";

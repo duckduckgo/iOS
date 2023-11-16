@@ -563,7 +563,7 @@
 "autofill.logins.prompt.password.button.title" = "Adgangskode til %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Vil du bruge et gemt login?";
+"autofill.logins.prompt.title" = "Brug en gemt adgangskode?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "for '%@'";
@@ -614,25 +614,19 @@
 "autofill.removed.duck.address.title" = "Privat Duck Address-brugernavn blev fjernet";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Logins gemmes sikkert på din enhed i menuen Logins.";
+"autofill.save-login.new-user.message" = "Adgangskoder gemmes sikkert på din enhed i menuen Logins.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Skal DuckDuckGo gemme dit login?";
+"autofill.save-login.new-user.title" = "Skal DuckDuckGo gemme din adgangskode?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Gem ikke";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Gem login";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Gem login?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Gem adgangskode";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Gem adgangskode?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Vis adgangskode";
@@ -641,7 +635,7 @@
 "autofill.signin.to.manage" = "%@ for at administrere dine Duck-adresser på denne enhed.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo opdaterer dette gemte login på din enhed.";
+"autofill.update-password.message" = "DuckDuckGo opdaterer denne gemte adgangskode på din enhed.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Opdater adgangskode";

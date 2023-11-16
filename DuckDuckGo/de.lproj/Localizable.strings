@@ -563,7 +563,7 @@
 "autofill.logins.prompt.password.button.title" = "Passwort für %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Gespeicherte Anmeldedaten verwenden?";
+"autofill.logins.prompt.title" = "Gespeichertes Passwort verwenden?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "für „%@“";
@@ -614,25 +614,19 @@
 "autofill.removed.duck.address.title" = "Benutzername von Private Duck Address wurde entfernt";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Anmeldedaten werden sicher auf deinem Gerät im Anmeldedaten-Menü gespeichert.";
+"autofill.save-login.new-user.message" = "Passwörter werden sicher auf deinem Gerät im Anmeldedaten-Menü gespeichert.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Möchtest du, dass DuckDuckGo deine Anmeldedaten speichert?";
+"autofill.save-login.new-user.title" = "Möchtest du, dass DuckDuckGo dein Passwort speichert?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Nicht speichern";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Anmeldedaten speichern";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Anmeldedaten speichern?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Passwort speichern";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Passwort speichern?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Passwort anzeigen";
@@ -641,7 +635,7 @@
 "autofill.signin.to.manage" = "%@, um deine Duck Addresses auf diesem Gerät zu verwalten.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo aktualisiert diese gespeicherten Anmeldedaten auf deinem Gerät.";
+"autofill.update-password.message" = "DuckDuckGo aktualisiert dieses gespeicherte Passwort auf deinem Gerät.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Passwort aktualisieren";

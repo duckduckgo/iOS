@@ -143,7 +143,6 @@ extension WindowsWaitlistViewController: WaitlistViewModelDelegate {
             navigationController?.pushViewController(macWaitlistViewController, animated: true)
         }
     }
-
 }
 
 private final class WindowsWaitlistLinkMetadata: NSObject, UIActivityItemSource {

@@ -27,6 +27,7 @@ public protocol WaitlistViewModelDelegate: AnyObject {
     func waitlistViewModelDidJoinQueueWithNotificationsAllowed(_ viewModel: WaitlistViewModel)
     func waitlistViewModelDidOpenInviteCodeShareSheet(_ viewModel: WaitlistViewModel, inviteCode: String, senderFrame: CGRect)
     func waitlistViewModelDidOpenDownloadURLShareSheet(_ viewModel: WaitlistViewModel, senderFrame: CGRect)
+
     func waitlistViewModel(_ viewModel: WaitlistViewModel, didTriggerCustomAction action: WaitlistViewModel.ViewCustomAction)
 }
 
@@ -97,7 +98,6 @@ public final class WaitlistViewModel: ObservableObject {
         guard viewState != .waitlistRemoved else {
             return
         }
-
         if waitlistStorage.getWaitlistTimestamp() != nil, waitlistStorage.getWaitlistInviteCode() == nil {
             await checkNotificationPermissions()
         } else if let inviteCode = waitlistStorage.getWaitlistInviteCode() {

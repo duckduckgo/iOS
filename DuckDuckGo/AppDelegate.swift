@@ -408,46 +408,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        WindowsBrowserWaitlist.shared.fetchInviteCodeIfAvailable { error in
-            guard error == nil else { return }
-            WindowsBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
-        }
-
-        VPNWaitlist.shared.fetchInviteCodeIfAvailable { [weak self] error in
-            guard error == nil else {
-#if !DEBUG
-                // If the user already has an invite code but their auth token has gone missing, attempt to redeem it again.
-                let tokenStore = NetworkProtectionKeychainTokenStore()
-                let waitlistStorage = VPNWaitlist.shared.waitlistStorage
-                if error == .alreadyHasInviteCode,
-                   let inviteCode = waitlistStorage.getWaitlistInviteCode(),
-                   !tokenStore.isFeatureActivated {
-                    self?.fetchVPNWaitlistAuthToken(inviteCode: inviteCode)
-                }
-#endif
-                return
-
-            }
-
-            guard let inviteCode = VPNWaitlist.shared.waitlistStorage.getWaitlistInviteCode() else {
-                return
-            }
-
-            self?.fetchVPNWaitlistAuthToken(inviteCode: inviteCode)
-        }
-
-        BGTaskScheduler.shared.getPendingTaskRequests { tasks in
-            let hasWindowsBrowserWaitlistTask = tasks.contains { $0.identifier == WindowsBrowserWaitlist.backgroundRefreshTaskIdentifier }
-            if !hasWindowsBrowserWaitlistTask {
-                WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
-            }
-
-            let hasVPNWaitlistTask = tasks.contains { $0.identifier == VPNWaitlist.backgroundRefreshTaskIdentifier }
-            if !hasVPNWaitlistTask {
-                VPNWaitlist.shared.scheduleBackgroundRefreshTask()
-            }
-        }
-
+        checkWaitlists()
         syncService.scheduler.notifyAppLifecycleEvent()
         fireFailedCompilationsPixelIfNeeded()
         refreshShortcuts()
@@ -788,17 +749,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.shared.shortcutItems = items
 #endif
     }
-
-#if NETWORK_PROTECTION
-    func fetchVPNWaitlistAuthToken(inviteCode: String) {
-        Task {
-            do {
-                try await NetworkProtectionCodeRedemptionCoordinator().redeem(inviteCode)
-                VPNWaitlist.shared.sendInviteCodeAvailableNotification()
-            } catch {}
-        }
-    }
-#endif
 
 }
 

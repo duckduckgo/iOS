@@ -25,6 +25,8 @@ import Common
 import DDGSync
 import Persistence
 
+// swiftlint:disable file_length
+
 // swiftlint:disable:next type_body_length
 class HomeViewController: UIViewController {
     
@@ -76,6 +78,7 @@ class HomeViewController: UIViewController {
 #endif
 
 #if APP_TRACKING_PROTECTION
+    // swiftlint:disable:next function_parameter_count
     static func loadFromStoryboard(
         model: Tab,
         favoritesViewModel: FavoritesListInteracting,

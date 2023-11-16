@@ -62,7 +62,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private lazy var privacyStore = PrivacyUserDefaults()
     private var bookmarksDatabase: CoreDataDatabase = BookmarksDatabase.make()
+
+#if APP_TRACKING_PROTECTION
     private var appTrackingProtectionDatabase: CoreDataDatabase = AppTrackingProtectionDatabase.make()
+#endif
+
+#if NETWORK_PROTECTION
+    private let widgetRefreshModel = NetworkProtectionWidgetRefreshModel()
+#endif
+
     private var autoClear: AutoClear?
     private var showKeyboardIfSettingOn = true
     private var lastBackgroundDate: Date?
@@ -87,6 +95,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 .forEach { $0.perform(setHardwareLayout, with: nil) }
         }
 #endif
+
+        ContentBlocking.shared.onCriticalError = presentPreemptiveCrashAlert
 
         // Can be removed after a couple of versions
         cleanUpMacPromoExperiment2()
@@ -123,6 +133,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         removeEmailWaitlistState()
 
+        var shouldPresentInsufficientDiskSpaceAlertAndCrash = false
         Database.shared.loadStore { context, error in
             guard let context = context else {
                 
@@ -142,14 +153,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     Pixel.fire(pixel: .dbInitializationError,
                                error: error,
                                withAdditionalParameters: parameters)
-                    Thread.sleep(forTimeInterval: 1)
-                    fatalError("Could not create database stack: \(error.localizedDescription)")
+                    if error.isDiskFull {
+                        shouldPresentInsufficientDiskSpaceAlertAndCrash = true
+                        return
+                    } else {
+                        Thread.sleep(forTimeInterval: 1)
+                        fatalError("Could not create database stack: \(error.localizedDescription)")
+                    }
                 }
             }
             DatabaseMigration.migrate(to: context)
         }
 
-        bookmarksDatabase.loadStore { context, error in
+        var shouldResetBookmarksSyncTimestamp = false
+
+        bookmarksDatabase.loadStore { [weak self] context, error in
             guard let context = context else {
                 if let error = error {
                     Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
@@ -158,8 +176,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase)
                 }
 
-                Thread.sleep(forTimeInterval: 1)
-                fatalError("Could not create Bookmarks database stack: \(error?.localizedDescription ?? "err")")
+                if shouldPresentInsufficientDiskSpaceAlertAndCrash {
+                    return
+                } else {
+                    Thread.sleep(forTimeInterval: 1)
+                    fatalError("Could not create Bookmarks database stack: \(error?.localizedDescription ?? "err")")
+                }
             }
             
             let legacyStorage = LegacyBookmarksCoreDataStorage()
@@ -168,9 +190,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                   to: context)
             legacyStorage?.removeStore()
 
+            do {
+                BookmarkUtils.migrateToFormFactorSpecificFavorites(byCopyingExistingTo: .mobile, in: context)
+                if context.hasChanges {
+                    try context.save(onErrorFire: .bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders)
+                    if let syncDataProviders = self?.syncDataProviders {
+                        syncDataProviders.bookmarksAdapter.shouldResetBookmarksSyncTimestamp = true
+                    } else {
+                        shouldResetBookmarksSyncTimestamp = true
+                    }
+                }
+            } catch {
+                Thread.sleep(forTimeInterval: 1)
+                fatalError("Could not prepare Bookmarks DB structure")
+            }
+
             WidgetCenter.shared.reloadAllTimelines()
         }
 
+#if APP_TRACKING_PROTECTION
         appTrackingProtectionDatabase.loadStore { context, error in
             guard context != nil else {
                 if let error = error {
@@ -179,10 +217,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     Pixel.fire(pixel: .appTPCouldNotLoadDatabase)
                 }
 
-                Thread.sleep(forTimeInterval: 1)
-                fatalError("Could not create AppTP database stack: \(error?.localizedDescription ?? "err")")
+                if shouldPresentInsufficientDiskSpaceAlertAndCrash {
+                    return
+                } else {
+                    Thread.sleep(forTimeInterval: 1)
+                    fatalError("Could not create AppTP database stack: \(error?.localizedDescription ?? "err")")
+                }
             }
         }
+#endif
 
         Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
             WidgetCenter.shared.reloadAllTimelines()
@@ -213,23 +256,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ).wrappedValue
         ) ?? defaultEnvironment
 
-        syncDataProviders = SyncDataProviders(bookmarksDatabase: bookmarksDatabase, secureVaultErrorReporter: SecureVaultErrorReporter.shared)
+        syncDataProviders = SyncDataProviders(
+            bookmarksDatabase: bookmarksDatabase,
+            secureVaultErrorReporter: SecureVaultErrorReporter.shared,
+            settingHandlers: [FavoritesDisplayModeSyncHandler()],
+            favoritesDisplayModeStorage: FavoritesDisplayModeStorage()
+        )
+        syncDataProviders.bookmarksAdapter.shouldResetBookmarksSyncTimestamp = shouldResetBookmarksSyncTimestamp
+
         let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog, environment: environment)
         syncService.initializeIfNeeded()
         self.syncService = syncService
 
+#if APP_TRACKING_PROTECTION
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
                                       bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
                                       appTrackingProtectionDatabase: appTrackingProtectionDatabase,
                                       syncService: syncService,
                                       syncDataProviders: syncDataProviders,
                                       appSettings: AppDependencyProvider.shared.appSettings)
+#else
+        let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
+                                      bookmarksDatabaseCleaner: syncDataProviders.bookmarksAdapter.databaseCleaner,
+                                      syncService: syncService,
+                                      syncDataProviders: syncDataProviders,
+                                      appSettings: AppDependencyProvider.shared.appSettings)
+#endif
+
         main.loadViewIfNeeded()
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = main
         window?.makeKeyAndVisible()
-        
+
+        if shouldPresentInsufficientDiskSpaceAlertAndCrash {
+            presentInsufficientDiskSpaceAlert()
+        }
+
         autoClear = AutoClear(worker: main)
         autoClear?.applicationDidLaunch()
         
@@ -241,7 +304,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
         WindowsBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
-        RemoteMessaging.registerBackgroundRefreshTaskHandler(bookmarksDatabase: bookmarksDatabase)
+        RemoteMessaging.registerBackgroundRefreshTaskHandler(
+            bookmarksDatabase: bookmarksDatabase,
+            favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
+        )
 
         UNUserNotificationCenter.current().delegate = self
         
@@ -255,7 +321,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             AppDependencyProvider.shared.appSettings.setAutofillIsNewInstallForOnByDefault()
         }
 
+#if NETWORK_PROTECTION
+        widgetRefreshModel.beginObservingVPNStatus()
+#endif
+
         return true
+    }
+
+    private func presentPreemptiveCrashAlert() {
+        Task { @MainActor in
+            let alertController = CriticalAlerts.makePreemptiveCrashAlert()
+            window?.rootViewController?.present(alertController, animated: true, completion: nil)
+        }
+    }
+
+    private func presentInsufficientDiskSpaceAlert() {
+        let alertController = CriticalAlerts.makeInsufficientDiskSpaceAlert()
+        window?.rootViewController?.present(alertController, animated: true, completion: nil)
     }
 
     private func cleanUpMacPromoExperiment2() {
@@ -338,6 +420,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         syncService.scheduler.notifyAppLifecycleEvent()
         fireFailedCompilationsPixelIfNeeded()
         refreshShortcuts()
+
+#if NETWORK_PROTECTION
+        widgetRefreshModel.refreshVPNWidget()
+#endif
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -433,7 +519,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func refreshRemoteMessages() {
         Task {
-            try? await RemoteMessaging.fetchAndProcess(bookmarksDatabase: self.bookmarksDatabase)
+            try? await RemoteMessaging.fetchAndProcess(
+                bookmarksDatabase: self.bookmarksDatabase,
+                favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
+            )
         }
     }
 
@@ -490,7 +579,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         NotificationCenter.default.post(name: AutofillLoginListAuthenticator.Notifications.invalidateContext, object: nil)
-        mainViewController?.clearNavigationStack()
+
+        // The openVPN action handles the navigation stack on its own and does not need it to be cleared
+        if url != AppDeepLinkSchemes.openVPN.url {
+            mainViewController?.clearNavigationStack()
+        }
+
         autoClear?.applicationWillMoveToForeground()
         showKeyboardIfSettingOn = false
 
@@ -738,7 +832,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
 #if NETWORK_PROTECTION
-    private func presentNetworkProtectionStatusSettingsModal() {
+    func presentNetworkProtectionStatusSettingsModal() {
         if #available(iOS 15, *) {
             let networkProtectionRoot = NetworkProtectionRootViewController()
             presentSettings(with: networkProtectionRoot)
@@ -772,4 +866,16 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             navigationController?.pushViewController(viewController, animated: true)
         }
     }
+}
+
+private extension Error {
+
+    var isDiskFull: Bool {
+        let nsError = self as NSError
+        if let underlyingError = nsError.userInfo["NSUnderlyingError"] as? NSError, underlyingError.code == 13 {
+            return true
+        }
+        return false
+    }
+
 }

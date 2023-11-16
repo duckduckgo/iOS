@@ -34,8 +34,6 @@ class EmailSignupViewController: UIViewController {
         static let duckDuckGoTitle: String = "DuckDuckGo"
         static let backImage = UIImage(systemName: "chevron.left")
 
-        static let signUpUrl: String = "https://duckduckgo.com/email/start-incontext"
-
         static let emailPath: String = "email/"
         static let emailStartInContextPath: String = "email/start-incontext"
         static let emailChooseAddressPath: String = "email/choose-address"
@@ -179,7 +177,7 @@ class EmailSignupViewController: UIViewController {
 
         // Slight delay needed for userScripts to load otherwise email protection webpage reports that this is an unsupported browser
         let workItem = DispatchWorkItem { [unowned self] in
-            self.loadUrl(URL(string: Constants.signUpUrl))
+            self.loadUrl(URL.emailProtectionSignUp)
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: workItem)
@@ -357,30 +355,6 @@ extension EmailSignupViewController: EmailManagerRequestDelegate {
     }
     // swiftlint:enable function_parameter_count
 
-    func emailManagerKeychainAccessFailed(accessType: EmailKeychainAccessType, error: EmailKeychainAccessError) {
-        var parameters = [
-            PixelParameters.emailKeychainAccessType: accessType.rawValue,
-            PixelParameters.emailKeychainError: error.errorDescription
-        ]
-
-        if case let .keychainLookupFailure(status) = error {
-            parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
-            parameters[PixelParameters.emailKeychainKeychainOperation] = "lookup"
-        }
-
-        if case let .keychainDeleteFailure(status) = error {
-            parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
-            parameters[PixelParameters.emailKeychainKeychainOperation] = "delete"
-        }
-
-        if case let .keychainSaveFailure(status) = error {
-            parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
-            parameters[PixelParameters.emailKeychainKeychainOperation] = "save"
-        }
-
-        Pixel.fire(pixel: .emailAutofillKeychainError, withAdditionalParameters: parameters)
-    }
-
 }
 
 // MARK: - SecureVaultManagerDelegate
@@ -445,6 +419,10 @@ extension EmailSignupViewController: SecureVaultManagerDelegate {
 
     func secureVaultManager(_: BrowserServicesKit.SecureVaultManager, didRequestPasswordManagerForDomain domain: String) {
         // no-op
+    }
+
+    func secureVaultManager(_: SecureVaultManager, didRequestRuntimeConfigurationForDomain domain: String, completionHandler: @escaping (String?) -> Void) {
+        completionHandler(nil)
     }
 
     func secureVaultManager(_: SecureVaultManager, didReceivePixel pixel: AutofillUserScript.JSPixel) {

@@ -182,6 +182,7 @@ class SettingsViewController: UITableViewController {
         configureEmailProtectionAccessoryText()
         configureMacBrowserWaitlistCell()
         configureWindowsBrowserWaitlistCell()
+        configureSyncCell()
 
         // Make sure multiline labels are correctly presented
         tableView.setNeedsLayout()
@@ -253,6 +254,10 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configureSyncCell() {
+        syncCell.textLabel?.text = "Sync & Back Up"
+        if SyncBookmarksAdapter.isSyncBookmarksPaused || SyncCredentialsAdapter.isSyncCredentialsPaused {
+            syncCell.textLabel?.text = "⚠️ " + "Sync & Back Up"
+        }
         syncCell.isHidden = !shouldShowSyncCell
     }
 
@@ -370,7 +375,7 @@ class SettingsViewController: UITableViewController {
         debugCell.isHidden = !shouldShowDebugCell
     }
 
-    private func showSync(animated: Bool = true) {
+    func showSync(animated: Bool = true) {
         let controller = SyncSettingsViewController()
         navigationController?.pushViewController(controller, animated: animated)
     }
@@ -579,7 +584,11 @@ class SettingsViewController: UITableViewController {
             AppDependencyProvider.shared.voiceSearchHelper.enableVoiceSearch(enableVoiceSearch)
         }
     }
-    
+
+    @IBAction func onAboutTapped() {
+        navigationController?.pushViewController(AboutViewController(), animated: true)
+    }
+
     private func showNoMicrophonePermissionAlert() {
         let alertController = NoMicPermissionAlert.buildAlert()
         present(alertController, animated: true, completion: nil)

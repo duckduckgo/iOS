@@ -26,6 +26,7 @@ import Bookmarks
 import Persistence
 
 // swiftlint:disable file_length
+// swiftlint:disable:next type_body_length
 class TabSwitcherViewController: UIViewController {
     
     struct Constants {
@@ -247,6 +248,7 @@ class TabSwitcherViewController: UIViewController {
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         alert.addAction(title: UserText.actionBookmark, style: .default) {
             let model = MenuBookmarksViewModel(bookmarksDatabase: self.bookmarksDatabase, syncService: self.syncService)
+            model.favoritesDisplayMode = AppDependencyProvider.shared.appSettings.favoritesDisplayMode
             let result = self.bookmarkAll(viewModel: model)
             self.displayBookmarkAllStatusMessage(with: result, openTabsCount: self.tabsModel.tabs.count)
         }

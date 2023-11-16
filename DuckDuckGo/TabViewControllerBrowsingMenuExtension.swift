@@ -238,7 +238,7 @@ extension TabViewController {
     private func buildFavoriteEntry(for link: Link,
                                     bookmark: BookmarkEntity?,
                                     with bookmarksInterface: MenuBookmarksInteracting) -> BrowsingMenuEntry {
-        if bookmark?.isFavorite ?? false {
+        if bookmark?.isFavorite(on: .mobile) ?? false {
             let action: () -> Void = { [weak self] in
                 Pixel.fire(pixel: .browsingMenuRemoveFromFavorites)
                 self?.performRemoveFavoriteAction(for: link, with: bookmarksInterface)

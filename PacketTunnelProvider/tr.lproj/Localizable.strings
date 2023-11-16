@@ -1,7 +1,15 @@
-/* 
-  Localizable.strings
-  DuckDuckGo
+/* The body of the notification shown when Network Protection fails to reconnect */
+"network.protection.failure.notification.body" = "Ağ Koruması bağlanamadı. Lütfen daha sonra tekrar deneyin.";
 
-  Created by Graeme Arthur on 29/09/2023.
-  Copyright © 2023 DuckDuckGo. All rights reserved.
-*/
+/* The body of the notification shown when Network Protection's connection is interrupted */
+"network.protection.interrupted.notification.body" = "Ağ Koruması kesintiye uğradı. Şimdi yeniden bağlanmaya çalışılıyor...";
+
+/* The title of the notifications shown from Network Protection */
+"network.protection.notification.title" = "DuckDuckGo";
+
+/* The body of the notification shown when Network Protection reconnects successfully */
+"network.protection.success.notification.body" = "Ağ Koruması Açık. Konumunuz ve çevrim içi etkinliğiniz korunuyor.";
+
+/* The body of the notification shown when Network Protection connects successfully with the city + state/country as formatted parameter */
+"network.protection.success.notification.subtitle.including.serverLocation" = "Cihaz trafiği %@ üzerinden yönlendiriliyor.";
+

@@ -28,7 +28,7 @@ class BookmarkEntityTests: XCTestCase {
     var db: CoreDataDatabase!
     var context: NSManagedObjectContext!
     var root: BookmarkEntity!
-    var favorites: BookmarkEntity!
+    var favoritesFolders: [BookmarkEntity] = []
 
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -45,15 +45,15 @@ class BookmarkEntityTests: XCTestCase {
         root = BookmarkUtils.fetchRootFolder(context)
         XCTAssertNotNil(root)
 
-        favorites = BookmarkUtils.fetchFavoritesFolder(context)
-        XCTAssertNotNil(favorites)
+        favoritesFolders = BookmarkUtils.fetchFavoritesFolders(for: .displayNative(.mobile), in: context)
+        XCTAssertNotNil(favoritesFolders)
     }
 
     override func tearDownWithError() throws {
         try super.tearDownWithError()
 
         root = nil
-        favorites = nil
+        favoritesFolders = []
         context = nil
 
         try db.tearDown(deleteStores: true)
@@ -73,7 +73,7 @@ class BookmarkEntityTests: XCTestCase {
                                                    url: "u",
                                                    parent: root,
                                                    context: context)
-        favorite.addToFavorites(favoritesRoot: favorites)
+        favorite.addToFavorites(folders: favoritesFolders)
 
         try context.save()
     }

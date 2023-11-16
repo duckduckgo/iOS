@@ -41,19 +41,23 @@ class AddOrEditBookmarkViewController: UIViewController {
     private let viewModel: BookmarkEditorViewModel
     private let bookmarksDatabase: CoreDataDatabase
     private let syncService: DDGSyncing
+    private let appSettings: AppSettings
 
     private var viewModelCancellable: AnyCancellable?
 
     init?(coder: NSCoder,
           editingEntityID: NSManagedObjectID,
           bookmarksDatabase: CoreDataDatabase,
-          syncService: DDGSyncing) {
+          syncService: DDGSyncing,
+          appSettings: AppSettings) {
         
         self.bookmarksDatabase = bookmarksDatabase
         self.viewModel = BookmarkEditorViewModel(editingEntityID: editingEntityID,
                                                  bookmarksDatabase: bookmarksDatabase,
+                                                 favoritesDisplayMode: appSettings.favoritesDisplayMode,
                                                  syncService: syncService)
         self.syncService = syncService
+        self.appSettings = appSettings
 
         super.init(coder: coder)
     }
@@ -61,13 +65,16 @@ class AddOrEditBookmarkViewController: UIViewController {
     init?(coder: NSCoder,
           parentFolderID: NSManagedObjectID?,
           bookmarksDatabase: CoreDataDatabase,
-          syncService: DDGSyncing) {
+          syncService: DDGSyncing,
+          appSettings: AppSettings) {
 
         self.bookmarksDatabase = bookmarksDatabase
         self.viewModel = BookmarkEditorViewModel(creatingFolderWithParentID: parentFolderID,
                                                  bookmarksDatabase: bookmarksDatabase,
+                                                 favoritesDisplayMode: appSettings.favoritesDisplayMode,
                                                  syncService: syncService)
         self.syncService = syncService
+        self.appSettings = appSettings
 
         super.init(coder: coder)
     }
@@ -138,7 +145,8 @@ class AddOrEditBookmarkViewController: UIViewController {
             coder: coder,
             parentFolderID: viewModel.bookmark.parent?.objectID,
             bookmarksDatabase: bookmarksDatabase,
-            syncService: syncService
+            syncService: syncService,
+            appSettings: appSettings
         ) else {
             fatalError("Failed to create controller")
         }

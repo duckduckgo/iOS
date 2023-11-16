@@ -1597,8 +1597,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Ulubione";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "DuckDuckGo ustanawia nowy standard zaufania w sieci.\n\nPrzeglądarka DuckDuckGo Privacy Browser zapewnia wszelkie niezbędne rozwiązania w zakresie prywatności, które gwarantują ochronę podczas wyszukiwania i przeglądania treści w sieci, między innymi blokowanie skryptów śledzących, bardziej inteligentne szyfrowanie oraz prywatne wyszukiwanie DuckDuckGo.\n\nW końcu w Internecie nie wszystko powinno być widoczne, a uzyskanie niezbędnej prywatności powinno być tak proste jak zasunięcie rolety.";
+/* about page */
+"settings.about.text" = "DuckDuckGo to założona w 2008 roku niezależna firma zajmująca się prywatnością w Internecie dla osób, które mają dosyć śledzenia online i poszukują łatwego w obsłudze rozwiązania. Jesteśmy dowodem na to, że możesz uzyskać prawdziwą ochronę prywatności online bez kompromisów.\n\nPrzeglądarka DuckDuckGo jest wyposażona w funkcje, których potrzebujesz, takie jak zakładki, karty, hasła i inne, a także [kilkanaście zaawansowanych mechanizmów ochrony prywatności](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/), które nie są domyślnie oferowane w większości popularnych przeglądarek. Ten wyjątkowo zaawansowany zestaw mechanizmów ochrony prywatności pomaga chronić działania w Internecie, od wyszukiwania po przeglądanie, obsługę wiadomości e-mail i nie tylko.\n\nDo korzystania z mechanizmów ochrony prywatności nie jest wymagana znajomość szczegółów technicznych ani skomplikowane ustawienia. Aby uzyskać ochronę prywatności, wystarczy ustawić na wszystkich urządzeniach domyślną przeglądarkę DuckDuckGo.\n\nJeśli interesują Cię szczegóły techniczne, więcej informacji o działaniu mechanizmów ochrony prywatności DuckDuckGo można znaleźć na [stronach pomocy](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Prześlij raport";
@@ -1767,6 +1767,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Wiadomość od %@:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Witaj po Kaczej Stronie Mocy!";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "Wypróbuj DuckDuckGo dla systemu Windows.";

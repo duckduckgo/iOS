@@ -1597,8 +1597,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Suosikit";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "DuckDuckGo asettaa uudet standardit luottamukselle verkossa.\n\nDuckDuckGo-tietosuojaselain tarjoaa kaikki keskeiset tietosuojaominaisuudet nettihakujesi ja -selailusi turvaksi, kuten seurantapalvelinten eston, älykkäämmän salauksen ja yksityisen DuckDuckGo-haun.\n\nInternetin ei pitäisi tuntua karmivalta paikalta ja nettiyksityisyyden pitäisi olla yhtä helppoa kuin verhojen vetäminen ikkunan eteen.";
+/* about page */
+"settings.about.text" = "DuckDuckGo on vuonna 2008 perustettu riippumaton internetissä tietosuojaa tarjoava yritys niille, jotka ovat kyllästyneet siihen, että heitä seurataan netissä, ja haluavat yksinkertaisen ratkaisun. Olemme todiste siitä, että voit saada todellista tietosuojaa verkossa ilman kompromisseja.\n\nDuckDuckGo-selaimessa on kaikki parhaiden selainten ominaisuudet, kuten kirjanmerkit, välilehdet, salasanat ja paljon muuta, sekä yli [kymmenkunta tehokasta tietosuojausta](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) ei tarjolla oletuksena suosituimmissa selaimissa. Tämä ainutlaatuisen kattava tietosuoja auttaa turvaamaan haut, selaamisen, sähköpostin lähettämiseen ja muun toimintasi verkossa.\n\nTietosuojamme toimivat, vaikka et tietäisi mitään teknisistä yksityiskohdista tai osaisi käsitellä monimutkaisia asetuksia. Sinun tarvitsee vain vaihtaa selaimesi DuckDuckGohon kaikilla laitteillasi, ja saat tietosuojan oletuksena.\n\nJos kuitenkin haluat kurkistaa konepellin alle, lisätietoja DuckDuckGon tietosuojan toiminnasta on [ohjesivuillamme](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Lähetä raportti";
@@ -1767,6 +1767,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Viesti käyttäjältä %@:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Tervetuloa Duckin puolelle!";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "Hanki DuckDuckGo Windows-laitteeseesi!";

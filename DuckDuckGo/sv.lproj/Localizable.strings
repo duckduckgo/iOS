@@ -1597,8 +1597,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favoriter";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "På DuckDuckGo sätter vi en ny standard för förtroende på nätet.\n\nDuckDuckGo Privacy Browser tillhandahåller alla de grundläggande sekretesstjänster du behöver för att skydda dig själv när du söker och surfar på nätet, inklusive blockering av spårare, smartare kryptering och DuckDuckGo privat sökning.\n\nInternet borde ju trots allt inte kännas så skrämmande och det bör vara lika enkelt att få det integritetsskydd du förtjänar som det är att dra ner rullgardinen.";
+/* about page */
+"settings.about.text" = "DuckDuckGo är det oberoende integritetsskyddsföretaget som grundades 2008 för alla som är trötta på att bli spårade online och vill ha en enkel lösning. Vi är beviset på att man kan få riktigt integritetsskydd på nätet utan att kompromissa.\n\nDuckDuckGo-webbläsaren har de funktioner du förväntar dig av en vanlig webbläsare, som bokmärken, flikar, lösenord och mer, plus över [ett dussin kraftfulla integritetsskydd](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) som inte ingår som standard i de flesta populära webbläsare. Den här omfattande uppsättningen av integritetsskydd hjälper dig att skydda dina onlineaktiviteter, från sökning och surfning till e-post och mycket mer.\n\nVårt integritetsskydd fungerar utan att du behöver känna till de tekniska detaljerna eller ta itu med komplicerade inställningar. Det enda du behöver göra är att byta webbläsare till DuckDuckGo på alla dina enheter för att få integritet som standard.\n\nMen om du * verkligen* vill ta en titt under huven hittar du mer information om hur DuckDuckGos integritetsskydd fungerar på våra [hjälpsidor](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Skicka in rapport";
@@ -1767,6 +1767,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Ett meddelande från %@:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Välkommen till Duck-sidan!";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "Testa DuckDuckGo för Windows!";

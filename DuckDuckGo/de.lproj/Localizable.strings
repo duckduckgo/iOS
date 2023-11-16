@@ -1597,8 +1597,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favoriten";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "Wir bei DuckDuckGo setzen den neuen Vertrauensstandard im Internet.\n\nDer DuckDuckGo Privacy Browser bietet dir alles Grundlegende zum Datenschutz, um dich beim Suchen und Browsen im Internet zu schützen, u. a. eine Tracker-Blockade, eine klügere Verschlüsselung und die private DuckDuckGo-Suche.\n\nSchließlich muss das Internet kein gruseliger Ort sein. Die Online-Privatsphäre zu bekommen, die du verdienst, sollte so einfach sein, wie die Jalousien herunterzulassen.";
+/* about page */
+"settings.about.text" = "DuckDuckGo ist die unabhängige Firma für Internet-Datenschutz, die 2008 für alle gegründet wurde, die es leid sind, online getrackt zu werden, und eine einfache Lösung suchen. Wir sind der Beweis, dass du echten Online-Datenschutz ohne Kompromisse erhalten kannst.\n\nDer DuckDuckGo-Browser bietet die Funktionen, die von einem alltagstauglichen Browser erwartet werden, wie Lesezeichen, Tabs, Passwörter und mehr, sowie über [ein Dutzend leistungsstarke Datenschutzmaßnahmen](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/), die in den meisten gängigen Browsern nicht standardmäßig angeboten werden. Dieser einzigartige, umfassende Datenschutz hilft dir, deine Online-Aktivitäten zu schützen – von der Suche über das Browsen bis hin zu E-Mails und vielem mehr.\n\nUnser Datenschutz funktioniert, ohne dass du etwas über die technischen Details wissen oder dich mit komplizierten Einstellungen auseinandersetzen musst. Du musst lediglich den Browser auf allen deinen Geräten auf DuckDuckGo umstellen und schon erhältst du echte Privatsphäre als Standard.\n\nWenn du jedoch einen Blick unter die Haube werfen möchtest, findest du auf unseren [Hilfeseiten](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/) weitere Informationen darüber, wie der Datenschutz bei DuckDuckGo funktioniert.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Bericht senden";
@@ -1767,6 +1767,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Eine Nachricht von %@:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Willkommen auf der Duck-len Seite!";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "Teste DuckDuckGo für Windows!";

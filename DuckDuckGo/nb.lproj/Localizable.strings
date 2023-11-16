@@ -1597,8 +1597,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favoritter";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "Hos DuckDuckGo setter vi den nye standarden for tillit på nett.\n\nDuckDuckGo privatnettleser gir deg verktøyene du trenger for å sikre personvernet mens du søker og surfer på nett, med funksjoner som blokkering av sporingsanordninger, smartere kryptering og DuckDuckGo privatsøk.\n\nInternett burde ikke føles ekkelt å bruke, og det å få privatlivet du fortjener på nett, bør være like enkelt som å lukke persiennene.";
+/* about page */
+"settings.about.text" = "DuckDuckGo er et uavhengig personvernselskap som ble grunnlagt i 2008, for alle som er lei av å bli sporet på nettet og vil ha en enkel løsning. Vi er beviset på at ekte personvern er mulig på nettet uten å fire på kravene.\n\nDuckDuckGo-nettleseren har funksjoner du kan forvente i en vanlig nettleser, som bokmerker, faner, passord med mer, pluss over [en rekke kraftige personvernfunksjoner](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) ikke tilbys i de fleste populære nettlesere som standard. Disse usedvanlig omfattende personvernfunksjonene bidrar til å beskytte nettaktivitetene dine, fra søk til surfing, e-poster med mer.\n\nPersonvernfunksjonene fungerer uten at du behøver å kunne noe om de tekniske detaljene eller forholde deg til kompliserte innstillinger. Det eneste du behøver å gjøre, er å bytte nettleser til DuckDuckGo på alle enhetene dine, så får du personvern som standard.\n\nMen hvis du *vil* ta en titt under panseret, kan du finne mer informasjon om hvordan DuckDuckGos personvern fungerer på våre [hjelpesider](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Send inn rapport";
@@ -1767,6 +1767,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "En melding fra %@:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Velkommen til «the Duck Side»!";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "Prøv DuckDuckGo for Windows!";

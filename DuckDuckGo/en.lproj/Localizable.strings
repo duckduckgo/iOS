@@ -1439,7 +1439,7 @@ https://duckduckgo.com/mac";
 "network-protection.waitlist.agree-and-continue" = "Agree and Continue";
 
 /* Availability disclaimer for Network Protection join waitlist screen */
-"network-protection.waitlist.availability-disclaimer" = "Network Protection is free to use during the beta.";
+"network-protection.waitlist.availability-disclaimer" = "Network Protection is free to use during early access.";
 
 /* Agree and Continue button for Network Protection join waitlist screen */
 "network-protection.waitlist.button.agree-and-continue" = "Agree and Continue";
@@ -1478,7 +1478,7 @@ https://duckduckgo.com/mac";
 "network-protection.waitlist.invited.subtitle" = "Get an extra layer of protection online with the VPN built for speed and simplicity. Encrypt your internet connection across your entire device and hide your location and IP address from sites you visit.";
 
 /* Title for Network Protection invited screen */
-"network-protection.waitlist.invited.title" = "You’re invited to try\nNetwork Protection beta!";
+"network-protection.waitlist.invited.title" = "You’re invited to try\nNetwork Protection early access!";
 
 /* First subtitle for Network Protection join waitlist screen */
 "network-protection.waitlist.join.subtitle.1" = "Secure your connection anytime, anywhere with Network Protection, the VPN from DuckDuckGo.";
@@ -1505,7 +1505,7 @@ https://duckduckgo.com/mac";
 "network-protection.waitlist.notification.text" = "Open your invite";
 
 /* Title for Network Protection waitlist notification */
-"network-protection.waitlist.notification.title" = "Network Protection beta is ready!";
+"network-protection.waitlist.notification.title" = "Network Protection early access is ready!";
 
 /* Message for the network protection invite dialog */
 "network.protection.invite.dialog.message" = "Enter your invite code to get started.";

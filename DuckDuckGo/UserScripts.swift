@@ -45,6 +45,7 @@ final class UserScripts: UserScriptsProvider {
         contentBlockerUserScript = ContentBlockerRulesUserScript(configuration: sourceProvider.contentBlockerRulesConfig)
         surrogatesScript = SurrogatesUserScript(configuration: sourceProvider.surrogatesConfig)
         autofillUserScript = AutofillUserScript(scriptSourceProvider: sourceProvider.autofillSourceProvider)
+        autofillUserScript.sessionKey = sourceProvider.contentScopeProperties.sessionKey
 
         loginFormDetectionScript = sourceProvider.loginDetectionEnabled ? LoginFormDetectionUserScript() : nil
         contentScopeUserScript = ContentScopeUserScript(sourceProvider.privacyConfigurationManager,

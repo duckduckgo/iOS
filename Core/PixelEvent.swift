@@ -203,7 +203,8 @@ extension Pixel {
         case autofillLoginsSaveLoginModalDisplayed
         case autofillLoginsSaveLoginModalConfirmed
         case autofillLoginsSaveLoginModalDismissed
-        
+        case autofillLoginsSaveLoginModalExcludeSiteConfirmed
+
         case autofillLoginsSavePasswordModalDisplayed
         case autofillLoginsSavePasswordModalConfirmed
         case autofillLoginsSavePasswordModalDismissed
@@ -238,6 +239,9 @@ extension Pixel {
         case autofillLoginsSettingsEnabled
         case autofillLoginsSettingsDisabled
         case autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate
+        case autofillLoginsSettingsResetExcludedDisplayed
+        case autofillLoginsSettingsResetExcludedConfirmed
+        case autofillLoginsSettingsResetExcludedDismissed
 
         case autofillLoginsPasswordGenerationPromptDisplayed
         case autofillLoginsPasswordGenerationPromptConfirmed
@@ -699,7 +703,8 @@ extension Pixel.Event {
         case .autofillLoginsSaveLoginModalDisplayed: return "m_autofill_logins_save_login_inline_displayed"
         case .autofillLoginsSaveLoginModalConfirmed: return "m_autofill_logins_save_login_inline_confirmed"
         case .autofillLoginsSaveLoginModalDismissed: return "m_autofill_logins_save_login_inline_dismissed"
-        
+        case .autofillLoginsSaveLoginModalExcludeSiteConfirmed: return "m_autofill_logins_save_login_exclude_site_confirmed"
+
         case .autofillLoginsSavePasswordModalDisplayed: return "m_autofill_logins_save_password_inline_displayed"
         case .autofillLoginsSavePasswordModalConfirmed: return "m_autofill_logins_save_password_inline_confirmed"
         case .autofillLoginsSavePasswordModalDismissed: return "m_autofill_logins_save_password_inline_dismissed"
@@ -741,6 +746,9 @@ extension Pixel.Event {
         case .autofillLoginsSettingsDisabled: return "m_autofill_logins_settings_disabled"
         case .autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate:
             return "m_autofill_logins_settings_add-new-login_error_attempted-to-create-duplicate"
+        case .autofillLoginsSettingsResetExcludedDisplayed: return "m_autofill_settings_reset_excluded_displayed"
+        case .autofillLoginsSettingsResetExcludedConfirmed: return "m_autofill_settings_reset_excluded_confirmed"
+        case .autofillLoginsSettingsResetExcludedDismissed: return "m_autofill_settings_reset_excluded_dismissed"
 
         case .autofillLoginsPasswordGenerationPromptDisplayed: return "m_autofill_logins_password_generation_prompt_displayed"
         case .autofillLoginsPasswordGenerationPromptConfirmed: return "m_autofill_logins_password_generation_prompt_confirmed"

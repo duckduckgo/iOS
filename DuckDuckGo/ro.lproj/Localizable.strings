@@ -529,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Date de conectare șterse";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Resetează site-urile excluse";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Renunță";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Resetează site-urile excluse";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Dacă resetezi site-urile excluse, ți se va cere să îți salvezi datele de conectare data viitoare când te conectezi la oricare dintre aceste site-uri.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Date de autentificare pentru căutare";
 
@@ -563,7 +575,7 @@
 "autofill.logins.prompt.password.button.title" = "Parola pentru %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Folosești datele de conectare salvate?";
+"autofill.logins.prompt.title" = "Folosești o parolă salvată?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "pentru „%@”";
@@ -613,26 +625,23 @@
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Numele de utilizator pentru Duck Address privată a fost eliminat";
 
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Nu solicita niciodată pentru acest site";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Conexiunile sunt stocate în siguranță pe dispozitivul dvs. în meniul Conectări.";
+"autofill.save-login.new-user.message" = "Parolele sunt stocate în siguranță pe dispozitivul dvs. în meniul Autentificări.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Dorești ca DuckDuckGo să îți salveze datele de autentificare?";
+"autofill.save-login.new-user.title" = "Dorești ca DuckDuckGo să-ți salveze parola?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Nu salva";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Salvează autentificarea";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Salvezi autentificarea?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Salvează parola";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Salvezi parola?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Arată parola";
@@ -641,7 +650,7 @@
 "autofill.signin.to.manage" = "%@ pentru a-ți gestiona adresele Duck Address pe acest dispozitiv.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo va actualiza aceste date de conectare stocate pe dispozitivul tău.";
+"autofill.update-password.message" = "DuckDuckGo va actualiza această parolă stocată pe dispozitivul tău.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Actualizează parola";

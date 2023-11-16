@@ -55,18 +55,10 @@ struct AutofillViews {
         }
     }
 
-    struct WebsiteWithFavicon: View {
-        let accountDomain: String
-
+    struct AppIconHeader: View {
         var body: some View {
-            HStack {
-                FaviconView(viewModel: FaviconViewModel(domain: accountDomain))
-                    .scaledToFit()
-                    .frame(width: Const.Size.logoImage, height: Const.Size.logoImage)
-                Text(accountDomain)
-                    .daxFootnoteRegular()
-                    .foregroundColor(Color(designSystemColor: .textSecondary))
-            }
+            Image.appIcon
+                .scaledToFit()
         }
     }
 
@@ -241,4 +233,5 @@ private enum Const {
 
 private extension Image {
     static let close = Image("Close-24")
+    static let appIcon = Image("WaitlistShareSheetLogo")
 }

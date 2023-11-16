@@ -75,6 +75,7 @@ final class BrokenSiteReportingTests: XCTestCase {
                                             tdsETag: test.blocklistVersion,
                                             ampUrl: nil,
                                             urlParametersRemoved: false,
+                                            protectionsState: test.protectionsEnabled,
                                             model: test.model ?? "",
                                             manufacturer: test.manufacturer ?? "",
                                             systemVersion: test.os ?? "",
@@ -147,6 +148,7 @@ private struct Test: Codable {
     let exceptPlatforms: [String]
     let manufacturer, model, os: String?
     let gpcEnabled: Bool?
+    let protectionsEnabled: Bool
 }
 
 // MARK: - ExpectReportURLParam

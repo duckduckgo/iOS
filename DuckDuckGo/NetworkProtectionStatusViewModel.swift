@@ -22,6 +22,7 @@
 import Foundation
 import Combine
 import NetworkProtection
+import WidgetKit
 
 final class NetworkProtectionStatusViewModel: ObservableObject {
     private static var dateFormatter: DateComponentsFormatter = {
@@ -178,6 +179,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         } else {
             await disableNetP()
         }
+
+        WidgetCenter.shared.reloadTimelines(ofKind: "VPNStatusWidget")
     }
 
     @MainActor

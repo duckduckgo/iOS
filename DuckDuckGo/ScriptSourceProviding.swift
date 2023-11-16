@@ -74,8 +74,10 @@ struct DefaultScriptSourceProvider: ScriptSourceProviding {
     
     private static func makeAutofillSource(privacyConfigurationManager: PrivacyConfigurationManaging,
                                            properties: ContentScopeProperties) -> AutofillUserScriptSourceProvider {
-        DefaultAutofillSourceProvider(privacyConfigurationManager: privacyConfigurationManager,
-                                      properties: properties)
+        return DefaultAutofillSourceProvider.Builder(privacyConfigurationManager: privacyConfigurationManager,
+                                                     properties: properties)
+        .withJSLoading()
+        .build()
     }
     
     private static func buildContentBlockerRulesConfig(contentBlockingManager: ContentBlockerRulesManagerProtocol,

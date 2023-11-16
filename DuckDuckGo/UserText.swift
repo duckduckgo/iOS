@@ -261,9 +261,7 @@ public struct UserText {
     
     public static let homeTabSearchAndFavorites = NSLocalizedString("homeTab.searchAndFavorites", value: "Search or enter address", comment: "This describes empty tab")
     public static let homeTabTitle = NSLocalizedString("homeTab.title", value: "Home", comment: "Home tab title")
-    
-    public static let settingsAboutText = NSLocalizedString("settings.about.text", value: "At DuckDuckGo, we’re setting the new standard of trust online.\n\nDuckDuckGo Privacy Browser provides all the privacy essentials you need to protect yourself as you search and browse the web, including tracker blocking, smarter encryption, and DuckDuckGo private search.\n\nAfter all, the Internet shouldn’t feel so creepy, and getting the privacy you deserve online should be as simple as closing the blinds.", comment: "")
-    
+
     public static let daxDialogHomeInitial = NSLocalizedString("dax.onboarding.home.initial", value: "Next, try visiting one of your favorite sites!\n\nI’ll block trackers so they can’t spy on you. I’ll also upgrade the security of your connection if possible. 🔒", comment: "")
     public static let daxDialogHomeSubsequent = NSLocalizedString("dax.onboarding.home.subsequent", value: "You’ve got this!\n\nRemember: Every time you browse with me, a creepy ad loses its wings. 👍", comment: "ad = advertisment")
     public static let daxDialogHomeAddFavorite = NSLocalizedString("dax.onboarding.home.add.favorite", value: "Visit your favorite sites in a flash!\n\nGo to a site you love. Then tap the \"⋯\" icon and select *Add to Favorites*.", comment: "Encourage user to add favorite site using the browsing menu.")
@@ -403,21 +401,20 @@ public struct UserText {
     
     public static let emptyDownloads = NSLocalizedString("downloads.downloads-list.empty", value: "No files downloaded yet", comment: "Empty downloads list placholder")
     
-    public static let autofillSaveLoginTitleNewUser = NSLocalizedString("autofill.save-login.new-user.title", value: "Do you want DuckDuckGo to save your Login?", comment: "Title displayed on modal asking for the user to save the login for the first time")
+    public static let autofillSaveLoginTitleNewUser = NSLocalizedString("autofill.save-login.new-user.title", value: "Do you want DuckDuckGo to save your password?", comment: "Title displayed on modal asking for the user to save the login for the first time")
     public static let autofillSaveLoginTitle = NSLocalizedString("autofill.save-login.title", value: "Save Login?", comment: "Title displayed on modal asking for the user to save the login")
     public static let autofillUpdateUsernameTitle = NSLocalizedString("autofill.update-usernamr.title", value: "Update username?", comment: "Title displayed on modal asking for the user to update the username")
 
-    public static let autofillSaveLoginMessageNewUser = NSLocalizedString("autofill.save-login.new-user.message", value: "Logins are stored securely on your device in the Logins menu.", comment: "Message displayed on modal asking for the user to save the login for the first time")
+    public static let autofillSaveLoginMessageNewUser = NSLocalizedString("autofill.save-login.new-user.message", value: "Passwords are stored securely on your device in the Logins menu.", comment: "Message displayed on modal asking for the user to save the login for the first time")
     public static let autofillSaveLoginNotNowCTA = NSLocalizedString("autofill.save-login.not-now.CTA", value: "Don’t Save", comment: "Cancel CTA displayed on modal asking for the user to save the login")
-   
-    public static let autofillSavePasswordTitle = NSLocalizedString("autofill.save-password.title", value: "Save Password?", comment: "Title displayed on modal asking for the user to save the password")
+    public static let autofillSaveLoginNeverPromptCTA = NSLocalizedString("autofill.save-login.never-prompt.CTA", value:"Never Ask for This Site", comment: "CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin")
+
     public static func autofillUpdatePassword(for title: String) -> String {
         let message = NSLocalizedString("autofill.update-password.title", value: "Update password for\n%@?", comment: "Title displayed on modal asking for the user to update the password")
         return message.format(arguments: title)
     }
-    public static let autoUpdatePasswordMessage = NSLocalizedString("autofill.update-password.message", value: "DuckDuckGo will update this stored Login on your device.", comment: "Message displayed on modal asking for the user to update the password")
+    public static let autoUpdatePasswordMessage = NSLocalizedString("autofill.update-password.message", value: "DuckDuckGo will update this stored password on your device.", comment: "Message displayed on modal asking for the user to update the password")
 
-    public static let autofillSaveLoginSaveCTA = NSLocalizedString("autofill.save-login.save.CTA", value: "Save Login", comment: "Confirm CTA displayed on modal asking for the user to save the login")
     public static let autofillSavePasswordSaveCTA = NSLocalizedString("autofill.save-password.save.CTA", value: "Save Password", comment: "Confirm CTA displayed on modal asking for the user to save the password")
     public static let autofillUpdatePasswordSaveCTA = NSLocalizedString("autofill.update-password.save.CTA", value: "Update Password", comment: "Confirm CTA displayed on modal asking for the user to update the password")
     public static let autofillShowPassword = NSLocalizedString("autofill.show-password", value: "Show Password", comment: "Accessibility title for a Show Password button displaying actial password instead of *****")
@@ -652,6 +649,12 @@ In addition to the details entered into this form, your app issue report will co
     static let netPStatusViewShareFeedback = NSLocalizedString("network.protection.status.menu.share.feedback", value: "Share Feedback", comment: "The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text")
     static let netPStatusViewErrorConnectionFailedTitle = NSLocalizedString("network.protection.status.view.error.connection.failed.title", value: "Failed to Connect.", comment: "Generic connection failed error title shown in NetworkProtection's status view.")
     static let netPStatusViewErrorConnectionFailedMessage = NSLocalizedString("network.protection.status.view.error.connection.failed.message", value: "Please try again later.", comment: "Generic connection failed error message shown in NetworkProtection's status view.")
+    static let netPPreferredLocationSettingTitle = NSLocalizedString("network.protection.vpn.preferred.location.title", value: "Preferred Location", comment: "Title for the Preferred Location VPN Settings item.")
+    static let netPPreferredLocationNearest = NSLocalizedString("network.protection.vpn.preferred.location.nearest", value: "Nearest Available", comment: "Label for the Preferred Location VPN Settings item when the nearest available location is selected.")
+    static let netPVPNLocationRecommendedSectionTitle = NSLocalizedString("network.protection.vpn.location.recommended.section.title", value: "Recommended", comment: "Title for the VPN Location screen's Recommended section.")
+    static let netPVPNLocationAllCountriesSectionTitle = NSLocalizedString("network.protection.vpn.location.all.countries.section.title", value: "All Countries", comment: "Title for the VPN Location screen's All Countries section.")
+    static let netPVPNLocationNearestAvailableItemTitle = NSLocalizedString("network.protection.vpn.location.nearest.available.item.title", value: "Nearest Available", comment: "Title for the VPN Location screen's Nearest Available selection item.")
+    static let netPVPNLocationRecommendedSectionFooter = NSLocalizedString("network.protection.vpn.location.recommended.section.footer", value: "Automatically connect to the nearest server we can find", comment: "Footer describing the VPN Location screen's Recommended section which just has Nearest Available.")
     static let netPAlwaysOnSettingTitle = NSLocalizedString("network.protection.vpn.always.on.setting.title", value: "Always On", comment: "Title for the Always on VPN setting item.")
     static let netPAlwaysOnSettingFooter = NSLocalizedString("network.protection.vpn.always.on.setting.footer", value: "Automatically restore a VPN connection after interruption.", comment: "Footer text for the Always on VPN setting item.")
     static let netPSecureDNSSettingTitle = NSLocalizedString("network.protection.vpn.secure.dns.setting.title", value: "Secure DNS", comment: "Title for the Always on VPN setting item.")
@@ -677,7 +680,11 @@ In addition to the details entered into this form, your app issue report will co
     
     public static let emailSettingsSubtitle = NSLocalizedString("email.settings.subtitle", value: "Block email trackers and hide your address", comment: "Subtitle for the email settings cell")
     public static let macWaitlistBrowsePrivately = NSLocalizedString("mac-waitlist.settings.browse-privately", value: "Browse privately with our app for Mac", comment: "Title for the settings subtitle")
-    
+    public static let favoritesDisplayPreferencesHeader = NSLocalizedString("favorites.settings.header", value: "Display Preferences", comment: "Header of the favorites settings table")
+    public static let favoritesDisplayPreferencesFooter = NSLocalizedString("favorites.settings.footer", value: "Choose which favorites to display on a new tab based on their origin.", comment: "Footer of the favorites settings table")
+    public static let favoritesDisplayPreferencesMobileOnly = NSLocalizedString("favorites.settings.mobile-only", value: "Mobile Favorites Only", comment: "Display Mode for favorites")
+    public static let favoritesDisplayPreferencesAllDevices = NSLocalizedString("favorites.settings.all-devices", value: "All Device Favorites", comment: "Display Mode for favorites")
+
     // MARK: Share Sheet
     
     public static let macWaitlistShareSheetTitle = NSLocalizedString("mac-waitlist.share-sheet.title", value: "DuckDuckGo for Mac", comment: "Title for the share sheet entry")
@@ -709,15 +716,30 @@ In addition to the details entered into this form, your app issue report will co
         let message = NSLocalizedString("autofill.logins.search.no-results.subtitle", value: "for '%@'", comment: "Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle)")
         return message.format(arguments: query)
     }
-    
+
+    public static let aboutText = NSLocalizedString("settings.about.text", value: """
+DuckDuckGo is the independent Internet privacy company founded in 2008 for anyone who’s tired of being tracked online and wants an easy solution. We’re proof you can get real privacy protection online without tradeoffs.
+
+The DuckDuckGo browser comes with the features you expect from a go-to browser, like bookmarks, tabs, passwords, and more, plus over [a dozen powerful privacy protections](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) not offered in most popular browsers by default. This uniquely comprehensive set of privacy protections helps protect your online activities, from searching to browsing, emailing, and more.
+
+Our privacy protections work without having to know anything about the technical details or deal with complicated settings. All you have to do is switch your browser to DuckDuckGo across all your devices and you get privacy by default.
+
+But if you *do* want a peek under the hood, you can find more information about how DuckDuckGo privacy protections work on our [help pages](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).
+""", comment: "about page")
+
     public static let autofillEnableSettings = NSLocalizedString("autofill.logins.list.enable", value:"Save and Autofill Logins", comment: "Title for a toggle that enables autofill")
+    public static let autofillNeverSavedSettings = NSLocalizedString("autofill.logins.list.never.saved", value:"Reset Excluded Sites", comment: "Title for a button that allows a user to reset their list of never saved sites")
     public static let autofillLoginListTitle = NSLocalizedString("autofill.logins.list.title", value:"Logins", comment: "Title for screen listing autofill logins")
     public static let autofillLoginListSearchPlaceholder = NSLocalizedString("autofill.logins.list.search-placeholder", value:"Search Logins", comment: "Placeholder for search field on autofill login listing")
     public static let autofillLoginListSuggested = NSLocalizedString("autofill.logins.list.suggested", value:"Suggested", comment: "Section title for group of suggested saved logins")
 
+    public static let autofillResetNeverSavedActionTitle = NSLocalizedString("autofill.logins.list.never.saved.reset.action.title", value:"If you reset excluded sites, you will be prompted to save your Login next time you sign in to any of these sites.", comment: "Alert title")
+    public static let autofillResetNeverSavedActionConfirmButton = NSLocalizedString("autofill.logins.list.never.saved.reset.action.confirm", value: "Reset Excluded Sites", comment: "Confirm button to reset list of never saved sites")
+    public static let autofillResetNeverSavedActionCancelButton = NSLocalizedString("autofill.logins.list.never.saved.reset.action.cancel", value: "Cancel", comment: "Cancel button for resetting list of never saved sites")
+
     public static let autofillLoginPromptAuthenticationCancelButton = NSLocalizedString("autofill.logins.prompt.auth.cancel", value:"Cancel", comment: "Cancel button for auth during login prompt")
     public static let autofillLoginPromptAuthenticationReason = NSLocalizedString("autofill.logins.prompt.auth.reason", value:"Unlock To Use Saved Login", comment: "Reason for auth during login prompt")
-    public static let autofillLoginPromptTitle = NSLocalizedString("autofill.logins.prompt.title", value:"Use a saved Login?", comment: "Title for autofill login prompt")
+    public static let autofillLoginPromptTitle = NSLocalizedString("autofill.logins.prompt.title", value:"Use a saved password?", comment: "Title for autofill login prompt")
     public static let autofillLoginPromptExactMatchTitle = NSLocalizedString("autofill.logins.prompt.exact.match.title", value:"From this website", comment: "Title for section of autofill logins that are an exact match to the current website")
     public static func autofillLoginPromptPartialMatchTitle(for type: String) -> String {
         let message = NSLocalizedString("autofill.logins.prompt.partial.match.title", value: "From %@", comment: "Title for section of autofill logins that are an approximate match to the current website")
@@ -838,11 +860,17 @@ In addition to the details entered into this form, your app issue report will co
     }
     public static let syncRemoveDeviceConfirmAction = "Remove"
     public static let syncCodeCopied = "Recovery Code copied"
-    public static let syncTitle = "Sync"
+    public static let syncTitle = "Sync & Back Up"
 
     // MARK: Errors
 
     static let unknownErrorTryAgainMessage = NSLocalizedString("error.unknown.try.again", value: "An unknown error has occurred", comment: "Generic error message on a dialog for when the cause is not known.")
+    static let syncBookmarkPausedAlertTitle = NSLocalizedString("alert.sync-bookmarks-paused-title", value: "Bookmarks Sync is Paused", comment: "Title for alert shown when sync bookmarks paused for too many items")
+    static let syncBookmarkPausedAlertDescription = NSLocalizedString("alert.sync-bookmarks-paused-description", value: "You have exceeded the bookmarks sync limit. Try deleting some bookmarks. Until this is resolved your bookmarks will not be backed up.", comment: "Description for alert shown when sync bookmarks paused for too many items")
+    static let syncCredentialsPausedAlertTitle = NSLocalizedString("alert.sync-credentials-paused-title", value: "Passwords Sync is Paused", comment: "Title for alert shown when sync credentials paused for too many items")
+    static let syncCredentialsPausedAlertDescription = NSLocalizedString("alert.sync-credentials-paused-description", value: "You have exceeded the passwords sync limit. Try deleting some passwords. Until this is resolved your passwords will not be backed up.", comment: "Description for alert shown when sync credentials paused for too many items")
+    public static let syncPausedAlertOkButton = NSLocalizedString("alert.sync-paused-alert-ok-button", value: "OK", comment: "Confirmation button in alert")
+    public static let syncPausedAlertLearnMoreButton = NSLocalizedString("alert.sync-paused-alert-learn-more-button", value: "Learn More", comment: "Learn more button in alert")
 
     static let preemptiveCrashTitle = NSLocalizedString("error.preemptive-crash.title", value: "App issue detected", comment: "Alert title")
     static let preemptiveCrashBody = NSLocalizedString("error.preemptive-crash.body", value: "Looks like there's an issue with the app and it needs to close. Please reopen to continue.", comment: "Alert message")

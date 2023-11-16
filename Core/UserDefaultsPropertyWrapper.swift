@@ -69,7 +69,7 @@ public struct UserDefaultsWrapper<T> {
         case downloadedTrackerDataSetCount = "com.duckduckgo.app.downloadedTrackerDataSetCount"
         case downloadedPrivacyConfigurationCount = "com.duckduckgo.app.downloadedPrivacyConfigurationCount"
         case textSize = "com.duckduckgo.ios.textSize"
-        
+
         case emailWaitlistShouldReceiveNotifications = "com.duckduckgo.ios.showWaitlistNotification"
         case unseenDownloadsAvailable = "com.duckduckgo.app.unseenDownloadsAvailable"
         
@@ -81,7 +81,7 @@ public struct UserDefaultsWrapper<T> {
         case autofillCredentialsSavePromptShowAtLeastOnce = "com.duckduckgo.ios.autofillCredentialsSavePromptShowAtLeastOnce"
         case autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary =
                 "com.duckduckgo.ios.autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary"
-        
+
         case featureFlaggingDidVerifyInternalUser = "com.duckduckgo.app.featureFlaggingDidVerifyInternalUser"
         
         case voiceSearchEnabled = "com.duckduckgo.app.voiceSearchEnabled"
@@ -97,6 +97,10 @@ public struct UserDefaultsWrapper<T> {
         case defaultBrowserUsageLastSeen = "com.duckduckgo.ios.default-browser-usage-last-seen"
 
         case syncEnvironment = "com.duckduckgo.ios.sync-environment"
+        case syncBookmarksPaused = "com.duckduckgo.ios.sync-bookmarksPaused"
+        case syncCredentialsPaused = "com.duckduckgo.ios.sync-credentialsPaused"
+        case syncBookmarksPausedErrorDisplayed = "com.duckduckgo.ios.sync-bookmarksPausedErrorDisplayed"
+        case syncCredentialsPausedErrorDisplayed = "com.duckduckgo.ios.sync-credentialsPausedErrorDisplayed"
 
         case networkProtectionDebugOptionAlwaysOnDisabled = "com.duckduckgo.network-protection.always-on.disabled"
 

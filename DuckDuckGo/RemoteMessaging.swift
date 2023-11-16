@@ -44,14 +44,17 @@ struct RemoteMessaging {
         return Date().timeIntervalSince(Self.lastRemoteMessagingRefreshDate) > Constants.minimumConfigurationRefreshInterval
     }
 
-    static func registerBackgroundRefreshTaskHandler(bookmarksDatabase: CoreDataDatabase) {
+    static func registerBackgroundRefreshTaskHandler(
+        bookmarksDatabase: CoreDataDatabase,
+        favoritesDisplayMode: @escaping @autoclosure () -> FavoritesDisplayMode
+    ) {
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.backgroundRefreshTaskIdentifier, using: nil) { task in
             guard shouldRefresh else {
                 task.setTaskCompleted(success: true)
                 scheduleBackgroundRefreshTask()
                 return
             }
-            backgroundRefreshTaskHandler(bgTask: task, bookmarksDatabase: bookmarksDatabase)
+            backgroundRefreshTaskHandler(bgTask: task, bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: favoritesDisplayMode())
         }
     }
 
@@ -77,10 +80,14 @@ struct RemoteMessaging {
         #endif
     }
 
-    static func backgroundRefreshTaskHandler(bgTask: BGTask, bookmarksDatabase: CoreDataDatabase) {
+    static func backgroundRefreshTaskHandler(
+        bgTask: BGTask,
+        bookmarksDatabase: CoreDataDatabase,
+        favoritesDisplayMode: @escaping @autoclosure () -> FavoritesDisplayMode
+    ) {
         let fetchAndProcessTask = Task {
             do {
-                try await Self.fetchAndProcess(bookmarksDatabase: bookmarksDatabase)
+                try await Self.fetchAndProcess(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: favoritesDisplayMode())
                 Self.lastRemoteMessagingRefreshDate = Date()
                 scheduleBackgroundRefreshTask()
                 bgTask.setTaskCompleted(success: true)
@@ -97,24 +104,28 @@ struct RemoteMessaging {
     }
 
     /// Convenience function
-    static func fetchAndProcess(bookmarksDatabase: CoreDataDatabase) async throws {
+    static func fetchAndProcess(bookmarksDatabase: CoreDataDatabase, favoritesDisplayMode: FavoritesDisplayMode) async throws {
         
         var bookmarksCount = 0
         var favoritesCount = 0
         let context = bookmarksDatabase.makeContext(concurrencyType: .privateQueueConcurrencyType)
         context.performAndWait {
+            let displayedFavoritesFolder = BookmarkUtils.fetchFavoritesFolder(withUUID: favoritesDisplayMode.displayedFolder.rawValue, in: context)!
+
             let bookmarksCountRequest = BookmarkEntity.fetchRequest()
-            bookmarksCountRequest.predicate = NSPredicate(format: "%K == nil AND %K == false AND %K == false",
-                                                 #keyPath(BookmarkEntity.favoriteFolder),
-                                                 #keyPath(BookmarkEntity.isFolder),
-                                                 #keyPath(BookmarkEntity.isPendingDeletion))
+            bookmarksCountRequest.predicate = NSPredicate(format: "SUBQUERY(%K, $x, $x CONTAINS %@).@count == 0 AND %K == false AND %K == false",
+                                                          #keyPath(BookmarkEntity.favoriteFolders),
+                                                          displayedFavoritesFolder,
+                                                          #keyPath(BookmarkEntity.isFolder),
+                                                          #keyPath(BookmarkEntity.isPendingDeletion))
             bookmarksCount = (try? context.count(for: bookmarksCountRequest)) ?? 0
             
             let favoritesCountRequest = BookmarkEntity.fetchRequest()
-            bookmarksCountRequest.predicate = NSPredicate(format: "%K != nil AND %K == false AND %K == false",
-                                                 #keyPath(BookmarkEntity.favoriteFolder),
-                                                 #keyPath(BookmarkEntity.isFolder),
-                                                 #keyPath(BookmarkEntity.isPendingDeletion))
+            favoritesCountRequest.predicate = NSPredicate(format: "%K CONTAINS %@ AND %K == false AND %K == false",
+                                                          #keyPath(BookmarkEntity.favoriteFolders),
+                                                          displayedFavoritesFolder,
+                                                          #keyPath(BookmarkEntity.isFolder),
+                                                          #keyPath(BookmarkEntity.isPendingDeletion))
             favoritesCount = (try? context.count(for: favoritesCountRequest)) ?? 0
         }
         

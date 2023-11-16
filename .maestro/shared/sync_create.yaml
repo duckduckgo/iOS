@@ -1,0 +1,10 @@
+appId: com.duckduckgo.mobile.ios
+---
+
+- assertVisible: Sync & Back Up
+- tapOn: Sync & Back Up
+- assertVisible: Sync & Back Up 
+- tapOn: Start Sync & Back Up
+- assertVisible: All Set!
+- tapOn: Next
+- assertVisible: Save Recovery Code?

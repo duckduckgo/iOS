@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Bookmarks
 import Core
 import WidgetKit
 
@@ -27,6 +28,9 @@ public class AppUserDefaults: AppSettings {
         public static let doNotSellStatusChange = Notification.Name("com.duckduckgo.app.DoNotSellStatusChange")
         public static let currentFireButtonAnimationChange = Notification.Name("com.duckduckgo.app.CurrentFireButtonAnimationChange")
         public static let textSizeChange = Notification.Name("com.duckduckgo.app.TextSizeChange")
+        public static let favoritesDisplayModeChange = Notification.Name("com.duckduckgo.app.FavoritesDisplayModeChange")
+        public static let syncPausedStateChanged = SyncBookmarksAdapter.syncBookmarksPausedStateChanged
+        public static let syncCredentialsPausedStateChanged = SyncCredentialsAdapter.syncCredentialsPausedStateChanged
         public static let autofillEnabledChange = Notification.Name("com.duckduckgo.app.AutofillEnabledChange")
         public static let didVerifyInternalUser = Notification.Name("com.duckduckgo.app.DidVerifyInternalUser")
         public static let inspectableWebViewsToggled = Notification.Name("com.duckduckgo.app.DidToggleInspectableWebViews")
@@ -35,7 +39,7 @@ public class AppUserDefaults: AppSettings {
 
     private let groupName: String
 
-    private struct Keys {
+    struct Keys {
         static let autocompleteKey = "com.duckduckgo.app.autocompleteDisabledKey"
         static let currentThemeNameKey = "com.duckduckgo.app.currentThemeNameKey"
         
@@ -62,6 +66,8 @@ public class AppUserDefaults: AppSettings {
         
         static let autofillCredentialsEnabled = "com.duckduckgo.ios.autofillCredentialsEnabled"
         static let autofillIsNewInstallForOnByDefault = "com.duckduckgo.ios.autofillIsNewInstallForOnByDefault"
+
+        static let favoritesDisplayMode = "com.duckduckgo.ios.favoritesDisplayMode"
     }
 
     private struct DebugKeys {
@@ -70,6 +76,10 @@ public class AppUserDefaults: AppSettings {
 
     private var userDefaults: UserDefaults? {
         return UserDefaults(suiteName: groupName)
+    }
+
+    private var bookmarksUserDefaults: UserDefaults? {
+        UserDefaults(suiteName: "group.com.duckduckgo.bookmarks")
     }
 
     lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
@@ -195,6 +205,25 @@ public class AppUserDefaults: AppSettings {
     @UserDefaultsWrapper(key: .textSize, defaultValue: 100)
     var textSize: Int
 
+    @UserDefaultsWrapper(key: .syncBookmarksPaused, defaultValue: false)
+    var isSyncBookmarksPaused: Bool
+
+    @UserDefaultsWrapper(key: .syncCredentialsPaused, defaultValue: false)
+    var isSyncCredentialsPaused: Bool
+
+    public var favoritesDisplayMode: FavoritesDisplayMode {
+        get {
+            guard let string = userDefaults?.string(forKey: Keys.favoritesDisplayMode), let favoritesDisplayMode = FavoritesDisplayMode(string) else {
+                return .default
+            }
+            return favoritesDisplayMode
+        }
+        set {
+            userDefaults?.setValue(newValue.description, forKey: Keys.favoritesDisplayMode)
+            bookmarksUserDefaults?.setValue(newValue.description, forKey: Keys.favoritesDisplayMode)
+        }
+    }
+
     private func setAutofillCredentialsEnabledAutomaticallyIfNecessary() {
         if autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary {
             return
@@ -223,7 +252,7 @@ public class AppUserDefaults: AppSettings {
             userDefaults?.set(newValue, forKey: Keys.autofillCredentialsEnabled)
         }
     }
-    
+
     @UserDefaultsWrapper(key: .autofillCredentialsSavePromptShowAtLeastOnce, defaultValue: false)
     var autofillCredentialsSavePromptShowAtLeastOnce: Bool
     

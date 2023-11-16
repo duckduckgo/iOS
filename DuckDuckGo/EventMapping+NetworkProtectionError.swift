@@ -32,6 +32,12 @@ extension EventMapping where Event == NetworkProtectionError {
         var params: [String: String] = [:]
 
         switch event {
+        case .failedToFetchLocationList(let error):
+            pixelEvent = .networkProtectionClientFailedToFetchLocations
+            pixelError = error
+        case .failedToParseLocationListResponse(let error):
+            pixelEvent = .networkProtectionClientFailedToParseLocationsResponse
+            pixelError = error
         case .failedToEncodeRedeemRequest:
             pixelEvent = .networkProtectionClientFailedToEncodeRedeemRequest
         case .invalidInviteCode:
@@ -89,7 +95,6 @@ extension EventMapping where Event == NetworkProtectionError {
             // Should never be sent from from the app
         case .unhandledError(function: let function, line: let line, error: let error):
             pixelEvent = .networkProtectionUnhandledError
-
         }
 
         DailyPixel.fireDailyAndCount(pixel: pixelEvent, error: pixelError, withAdditionalParameters: params)

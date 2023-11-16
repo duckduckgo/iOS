@@ -30,7 +30,8 @@ private extension FavoritesListViewModel {
         self.init(bookmarksDatabase: bookmarksDatabase,
                   errorEvents: .init(mapping: { event, _, _, _ in
             XCTFail("Unexpected error: \(event)")
-        }))
+        }),
+                  favoritesDisplayMode: .displayNative(.mobile))
     }
 }
 
@@ -135,7 +136,8 @@ class FavoriteListViewModelTests: XCTestCase {
             let expectedEvent = expectedEvents.popLast()
             XCTAssertEqual(event, expectedEvent)
             expectation.fulfill()
-        }))
+        }),
+                                               favoritesDisplayMode: .displayNative(.mobile))
                                               
         let result = viewModel.favorites
         
@@ -175,11 +177,13 @@ class FavoriteListViewModelTests: XCTestCase {
         try context.save()
         
         let expectation = expectation(description: "Error reported")
+        expectation.assertForOverFulfill = false
         _ = FavoritesListViewModel(bookmarksDatabase: db,
                                    errorEvents: .init(mapping: { event, _, _, _ in
             XCTAssertEqual(event, .fetchingRootItemFailed(.favorites))
             expectation.fulfill()
-        }))
+        }),
+                                   favoritesDisplayMode: .displayNative(.mobile))
         
         waitForExpectations(timeout: 1)
     }

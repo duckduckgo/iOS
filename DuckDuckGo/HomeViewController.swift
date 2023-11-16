@@ -63,31 +63,69 @@ class HomeViewController: UIViewController {
     
     private let tabModel: Tab
     private let favoritesViewModel: FavoritesListInteracting
+    private let appSettings: AppSettings
     private var viewModelCancellable: AnyCancellable?
+    private var favoritesDisplayModeCancellable: AnyCancellable?
 
 #if APP_TRACKING_PROTECTION
     private let appTPHomeViewModel: AppTPHomeViewModel
 #endif
     
-    static func loadFromStoryboard(model: Tab, favoritesViewModel: FavoritesListInteracting, appTPDatabase: CoreDataDatabase) -> HomeViewController {
+#if APP_TRACKING_PROTECTION
+    static func loadFromStoryboard(
+        model: Tab,
+        favoritesViewModel: FavoritesListInteracting,
+        appSettings: AppSettings,
+        appTPDatabase: CoreDataDatabase
+    ) -> HomeViewController {
+
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "HomeViewController", creator: { coder in
-            HomeViewController(coder: coder, tabModel: model, favoritesViewModel: favoritesViewModel, appTPDatabase: appTPDatabase)
+            HomeViewController(
+                coder: coder,
+                tabModel: model,
+                favoritesViewModel: favoritesViewModel,
+                appSettings: appSettings,
+                appTPDatabase: appTPDatabase
+            )
         })
         return controller
     }
-    
-    required init?(coder: NSCoder, tabModel: Tab, favoritesViewModel: FavoritesListInteracting, appTPDatabase: CoreDataDatabase) {
-        self.tabModel = tabModel
-        self.favoritesViewModel = favoritesViewModel
+#else
+    static func loadFromStoryboard(model: Tab, favoritesViewModel: FavoritesListInteracting, appSettings: AppSettings) -> HomeViewController {
+        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+        let controller = storyboard.instantiateViewController(identifier: "HomeViewController", creator: { coder in
+            HomeViewController(coder: coder, tabModel: model, favoritesViewModel: favoritesViewModel, appSettings: appSettings)
+        })
+        return controller
+    }
+#endif
 
 #if APP_TRACKING_PROTECTION
+    required init?(
+        coder: NSCoder,
+        tabModel: Tab,
+        favoritesViewModel: FavoritesListInteracting,
+        appSettings: AppSettings,
+        appTPDatabase: CoreDataDatabase
+    ) {
+        self.tabModel = tabModel
+        self.favoritesViewModel = favoritesViewModel
+        self.appSettings = appSettings
         self.appTPHomeViewModel = AppTPHomeViewModel(appTrackingProtectionDatabase: appTPDatabase)
-#endif
 
         super.init(coder: coder)
     }
-    
+#else
+    required init?(coder: NSCoder, tabModel: Tab, favoritesViewModel: FavoritesListInteracting, appSettings: AppSettings) {
+        self.tabModel = tabModel
+        self.favoritesViewModel = favoritesViewModel
+        self.appSettings = appSettings
+
+        super.init(coder: coder)
+    }
+#endif
+
     required init?(coder: NSCoder) {
         fatalError("Not implemented")
     }
@@ -117,6 +155,16 @@ class HomeViewController: UIViewController {
                 self.delegate?.home(self, didRequestHideLogo: false)
             }
         }
+
+        favoritesDisplayModeCancellable = NotificationCenter.default.publisher(for: AppUserDefaults.Notifications.favoritesDisplayModeChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self else {
+                    return
+                }
+                self.favoritesViewModel.favoritesDisplayMode = self.appSettings.favoritesDisplayMode
+                self.collectionView.reloadData()
+            }
     }
     
     @objc func bookmarksDidChange() {

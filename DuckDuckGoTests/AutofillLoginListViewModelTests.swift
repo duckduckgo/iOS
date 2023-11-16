@@ -31,6 +31,18 @@ class AutofillLoginListViewModelTests: XCTestCase {
     private let tld = TLD()
     private let appSettings = AppUserDefaults()
     private let vault = (try? MockSecureVaultFactory.makeVault(errorReporter: nil))!
+    private var manager: AutofillNeverPromptWebsitesManager!
+
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+        manager = AutofillNeverPromptWebsitesManager(secureVault: vault)
+    }
+
+    override func tearDownWithError() throws {
+        manager = nil
+
+        try super.tearDownWithError()
+    }
 
     func testWhenOneLoginDeletedWithNoSuggestionsThenAlphabeticalSectionIsDeleted() {
         let accountIdToDelete = "1"
@@ -38,7 +50,7 @@ class AutofillLoginListViewModelTests: XCTestCase {
             SecureVaultModels.WebsiteAccount(id: accountIdToDelete, title: nil, username: "", domain: "testsite.com", created: Date(), lastUpdated: Date())
         ]
 
-        let model = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault)
+        let model = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, autofillNeverPromptWebsitesManager: manager)
         let tableContentsToDelete = model.tableContentsToDelete(accountId: accountIdToDelete)
         XCTAssertEqual(tableContentsToDelete.sectionsToDelete.count, 1)
         XCTAssertEqual(tableContentsToDelete.rowsToDelete.count, 0)
@@ -52,7 +64,7 @@ class AutofillLoginListViewModelTests: XCTestCase {
             SecureVaultModels.WebsiteAccount(id: "3", title: nil, username: "", domain: "testsite3.com", created: Date(), lastUpdated: Date())
         ]
 
-        let model = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault)
+        let model = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, autofillNeverPromptWebsitesManager: manager)
         let tableContentsToDelete = model.tableContentsToDelete(accountId: accountIdToDelete)
         XCTAssertEqual(tableContentsToDelete.sectionsToDelete.count, 0)
         XCTAssertEqual(tableContentsToDelete.rowsToDelete.count, 1)
@@ -99,6 +111,31 @@ class AutofillLoginListViewModelTests: XCTestCase {
         let tableContentsToDelete = model.tableContentsToDelete(accountId: accountIdToDelete)
         XCTAssertEqual(tableContentsToDelete.sectionsToDelete.count, 0)
         XCTAssertEqual(tableContentsToDelete.rowsToDelete.count, 2)
+    }
+
+    func testWhenNoNeverPromptWebsitesSavedThenNeverPromptSectionIsNotShown() {
+        XCTAssertTrue(manager.deleteAllNeverPromptWebsites())
+        let model = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, autofillNeverPromptWebsitesManager: manager)
+        XCTAssertEqual(model.rowsInSection(0), 1)
+    }
+
+    func testWhenOneNeverPromptWebsiteSavedThenNeverPromptSectionIsShown() {
+        XCTAssertTrue(manager.deleteAllNeverPromptWebsites())
+        XCTAssertNoThrow(try manager.saveNeverPromptWebsite("example.com"))
+        let model = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, autofillNeverPromptWebsitesManager: manager)
+        XCTAssertEqual(model.rowsInSection(0), 2)
+    }
+
+    func testWhenManyNeverPromptWebsiteSavedThenNeverPromptSectionIsShown() {
+        XCTAssertTrue(manager.deleteAllNeverPromptWebsites())
+        XCTAssertNoThrow(try manager.saveNeverPromptWebsite("example.com"))
+        XCTAssertNoThrow(try manager.saveNeverPromptWebsite("example.co.uk"))
+        XCTAssertNoThrow(try manager.saveNeverPromptWebsite("duckduckgo.com"))
+        XCTAssertNoThrow(try manager.saveNeverPromptWebsite("daxisawesome.com"))
+        XCTAssertNoThrow(try manager.saveNeverPromptWebsite("123domain.com"))
+
+        let model = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: vault, autofillNeverPromptWebsitesManager: manager)
+        XCTAssertEqual(model.rowsInSection(0), 2)
     }
 }
 

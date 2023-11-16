@@ -45,6 +45,11 @@ internal enum AutofillLoginListSectionType: Comparable {
     static let miscSectionHeading = "#"
 }
 
+internal enum EnableAutofillRows: Int, CaseIterable {
+    case toggleAutofill
+    case resetNeverPromptWebsites
+}
+
 final class AutofillLoginListViewModel: ObservableObject {
     
     enum ViewState {
@@ -66,9 +71,11 @@ final class AutofillLoginListViewModel: ObservableObject {
     private let tld: TLD
     private var currentTabUrl: URL?
     private let secureVault: (any AutofillSecureVault)?
+    private let autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager
     private var cachedDeletedCredentials: SecureVaultModels.WebsiteCredentials?
     private let autofillDomainNameUrlMatcher = AutofillDomainNameUrlMatcher()
     private let autofillDomainNameUrlSort = AutofillDomainNameUrlSort()
+
 
     @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
     @Published private(set) var sections = [AutofillLoginListSectionType]() {
@@ -89,11 +96,13 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
     }
     
-    init(appSettings: AppSettings, tld: TLD, secureVault: (any AutofillSecureVault)?, currentTabUrl: URL? = nil) {
+    init(appSettings: AppSettings, tld: TLD, secureVault: (any AutofillSecureVault)?, currentTabUrl: URL? = nil, autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager = AppDependencyProvider.shared.autofillNeverPromptWebsitesManager) {
         self.appSettings = appSettings
         self.tld = tld
         self.secureVault = secureVault
         self.currentTabUrl = currentTabUrl
+        self.autofillNeverPromptWebsitesManager = autofillNeverPromptWebsitesManager
+
         updateData()
         authenticationNotRequired = !hasAccountsSaved || AppDependencyProvider.shared.autofillLoginSession.isValidSession
         setupCancellables()
@@ -153,7 +162,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     func rowsInSection(_ section: Int) -> Int {
         switch self.sections[section] {
         case .enableAutofill:
-            return 1
+            return autofillNeverPromptWebsitesManager.neverPromptWebsites.isEmpty ? 1 : 2
         case .credentials(_, let items):
             return items.count
         }
@@ -180,8 +189,11 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
         self.sections = makeSections(with: filteredAccounts)
     }
-    
-    
+
+    func resetNeverPromptWebsites() {
+        _ = autofillNeverPromptWebsitesManager.deleteAllNeverPromptWebsites()
+    }
+
     // MARK: Private Methods
     
     private func fetchAccounts() -> [SecureVaultModels.WebsiteAccount] {

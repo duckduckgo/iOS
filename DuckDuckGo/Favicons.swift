@@ -381,6 +381,8 @@ public class Favicons {
             return
         }
 
+        /// DuckDuckGo Privacy Browser uses built-in functionality from iOS to fetch the highest quality favicons for your bookmarks and favorites.
+        /// This functionality uses a user agent that is different from other network requests made by the app in order to find the best favicon available.
         let metadataFetcher = LPMetadataProvider()
         let completion: (LPLinkMetadata?, Error?) -> Void = { metadata, metadataError in
             guard let iconProvider = metadata?.iconProvider, metadataError == nil else {

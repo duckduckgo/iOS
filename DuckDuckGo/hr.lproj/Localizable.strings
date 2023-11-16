@@ -529,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Prijava je izbrisana";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Vrati izvorne isključene web lokacije";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Otkaži";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Resetiraj isključene web lokacije";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Ako resetiraš isključene web lokacije, od tebe će se zatražiti da spremiš svoju prijavu sljedeći put kad se prijaviš na bilo koju od ovih lokacija.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Pretraživanje prijava";
 
@@ -563,7 +575,7 @@
 "autofill.logins.prompt.password.button.title" = "Lozinka za %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Koristiti spremljene podatke za prijavu?";
+"autofill.logins.prompt.title" = "Koristiti spremljenu lozinku?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "za '%@'";
@@ -613,26 +625,23 @@
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Korisničko ime privatne Duck Address adrese uklonjeno je";
 
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Nikada ne traži za ovu web lokaciju";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Prijave su sigurno pohranjene na tvom uređaju u izborniku Prijave.";
+"autofill.save-login.new-user.message" = "Lozinke su sigurno pohranjene na tvom uređaju u izborniku Prijava.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Želiš li da DuckDuckGo spremi tvoju prijavu?";
+"autofill.save-login.new-user.title" = "Želiš li da DuckDuckGo spremi tvoju lozinku?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Nemoj spremiti";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Spremi prijavu";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Želiš li spremiti prijavu?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Spremi lozinku";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Želiš li spremiti lozinku?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Pokaži lozinku";
@@ -641,7 +650,7 @@
 "autofill.signin.to.manage" = "%@ za upravljanje tvojim Duck Address adresama na ovom uređaju.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo će ažurirati ovu spremljenu prijavu na tvom uređaju.";
+"autofill.update-password.message" = "DuckDuckGo će ažurirati ovu pohranjenu lozinku na tvom uređaju.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Ažuriraj lozinku";
@@ -1597,8 +1606,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Omiljeno";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "U DuckDuckGou postavljamo novi standard povjerenja na internetu.\n\nDuckDuckGo anonimni je preglednik koji pruža sve što ti je potrebno da se zaštitiš dok pretražuješ i pregledavaš internet, uključujući blokiranje alata za praćenje, pametnije šifriranje i privatno pretraživanje uz pomoć DuckDuckGoa.\n\nUostalom, internet ne bi trebao biti neugodno mjesto, a zaštita privatnosti na internetu koju zaslužuješ trebala bi biti jednostavna poput spuštanja roleta.";
+/* about page */
+"settings.about.text" = "DuckDuckGo neovisna je tvrtka za privatnost na internetu osnovana 2008. godine. Namijenjena je svakome tko je umoran od toga da ga prate na internetu i želi jednostavno rješenje za to. Mi smo dokaz da je prava zaštita privatnosti na internetu moguća bez kompromisa.\n\nPreglednik DuckDuckGo dolazi sa značajkama koje očekujete od preglednika, kao što su oznake, kartice, lozinke i još mnogo toga, plus više od [desetak moćnih zaštita privatnosti](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) nije ponuđeno u većini popularnih preglednika prema zadanim postavkama. Ovaj jedinstveno sveobuhvatan skup zaštita privatnosti pomaže u zaštiti tvojih mrežnih aktivnosti, od pretraživanja do pregledavanja, slanja e-pošte i još mnogo toga.\n\nNaša zaštita privatnosti funkcionira bez potrebe da znamo bilo što o tehničkim detaljima ili da se bavimo kompliciranim postavkama. Sve što trebaš učiniti jest prebaciti svoj preglednik na DuckDuckGo na svim svojim uređajima i prema zadanim postavkama dobivaš našu zaštitu privatnosti.\n\nAli ako *želite* zaviriti \"ispod haube\", više o tome kako DuckDuckGo zaštita privatnosti funkcionira možeš pronaći na našim [stranicama pomoći](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Pošalji izvješće";
@@ -1767,6 +1776,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Poruka od %@:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Dobrodošli na našu stranu!";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "Nabavi DuckDuckGo za Windows!";

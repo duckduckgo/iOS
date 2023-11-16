@@ -355,13 +355,13 @@ private struct WaitlistListEntryView: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(viewData.title)
                     .font(.system(size: 13, weight: .bold))
-                    .foregroundColor(Color("BlackWhite80"))
+                    .opacity(0.8)
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 Text(viewData.subtitle)
                     .font(.system(size: 13))
-                    .foregroundColor(Color("BlackWhite60"))
+                    .opacity(0.6)
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }

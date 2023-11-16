@@ -575,7 +575,7 @@
 "autofill.logins.prompt.password.button.title" = "Hasło %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Czy chcesz użyć zapisanego loginu?";
+"autofill.logins.prompt.title" = "Użyć zapisanego hasła?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "dla frazy: %@";
@@ -629,25 +629,19 @@
 "autofill.save-login.never-prompt.CTA" = "Nigdy nie pytaj o tę witrynę";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Loginy są bezpiecznie przechowywane na Twoim urządzeniu w menu Loginy.";
+"autofill.save-login.new-user.message" = "Hasła są bezpiecznie przechowywane na Twoim urządzeniu w menu Loginy.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Czy chcesz zapisać dane logowania w DuckDuckGo?";
+"autofill.save-login.new-user.title" = "Czy chcesz zapisać hasło w DuckDuckGo?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Nie zapisuj";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Zapisz logowanie";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Zapisać logowanie?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Zapisz hasło";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Zapisać hasło?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Pokaż hasło";
@@ -656,7 +650,7 @@
 "autofill.signin.to.manage" = "%@, aby zarządzać adresami Duck Address na tym urządzeniu.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo zaktualizuje ten zapisany login na Twoim urządzeniu.";
+"autofill.update-password.message" = "DuckDuckGo zaktualizuje to zapisane hasło na Twoim urządzeniu.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Aktualizuj hasło";

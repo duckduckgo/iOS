@@ -46,10 +46,8 @@ struct SaveLoginView: View {
 
     private var title: String {
         switch layoutType {
-        case .newUser, .saveLogin:
+        case .newUser, .saveLogin, .savePassword:
             return UserText.autofillSaveLoginTitleNewUser
-        case .savePassword:
-            return UserText.autofillSavePasswordTitle
         case .updateUsername:
             return UserText.autofillUpdateUsernameTitle
         case .updatePassword:
@@ -59,9 +57,7 @@ struct SaveLoginView: View {
     
     private var confirmButton: String {
         switch layoutType {
-        case .newUser, .saveLogin:
-            return UserText.autofillSaveLoginSaveCTA
-        case .savePassword:
+        case .newUser, .saveLogin, .savePassword:
             return UserText.autofillSavePasswordSaveCTA
         case .updateUsername:
             return UserText.autofillUpdateUsernameSaveCTA
@@ -90,7 +86,7 @@ struct SaveLoginView: View {
             VStack {
                 Spacer()
                     .frame(height: Const.Size.topPadding)
-                AutofillViews.WebsiteWithFavicon(accountDomain: viewModel.accountDomain)
+                AutofillViews.AppIconHeader()
                 Spacer()
                     .frame(height: Const.Size.headlineTopPadding)
                 AutofillViews.Headline(title: title)

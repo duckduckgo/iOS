@@ -575,7 +575,7 @@
 "autofill.logins.prompt.password.button.title" = "Mot de passe pour %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Utiliser un identifiant enregistré ?";
+"autofill.logins.prompt.title" = "Utiliser un mot de passe enregistré ?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "pour '%@'";
@@ -629,25 +629,19 @@
 "autofill.save-login.never-prompt.CTA" = "Ne jamais demander pour ce site";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Les identifiants de connexion sont stockés en toute sécurité sur votre appareil dans le menu Identifiants.";
+"autofill.save-login.new-user.message" = "Les mots de passe sont stockés en toute sécurité sur votre appareil dans le menu Identifiants.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Voulez-vous que DuckDuckGo enregistre votre identifiant ?";
+"autofill.save-login.new-user.title" = "Voulez-vous que DuckDuckGo enregistre votre mot de passe ?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Ne pas enregistrer";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Enregistrer l'identifiant";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Enregistrer l'identifiant ?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Enregistrer le mot de passe";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Enregistrer le mot de passe ?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Afficher le mot de passe";
@@ -656,7 +650,7 @@
 "autofill.signin.to.manage" = "%@ pour gérer vos Duck Addresses sur cet appareil.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo mettra à jour cet identifiant enregistré sur votre appareil.";
+"autofill.update-password.message" = "DuckDuckGo mettra à jour ce mot de passe enregistré sur votre appareil.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Modifier le mot de passe";

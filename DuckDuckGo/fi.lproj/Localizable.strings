@@ -575,7 +575,7 @@
 "autofill.logins.prompt.password.button.title" = "Sivuston %@ salasana";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Käytä tallennettuja kirjautumistietoja?";
+"autofill.logins.prompt.title" = "Käytetäänkö tallennettua salasanaa?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "kohteelle '%@'";
@@ -629,25 +629,19 @@
 "autofill.save-login.never-prompt.CTA" = "Älä kysy enää tällä sivustolla";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Kirjautumistiedot tallennetaan turvallisesti laitteellesi kirjautumistiedot-valikkoon.";
+"autofill.save-login.new-user.message" = "Salasanat tallennetaan turvallisesti laitteellesi kirjautumistiedot-valikkoon.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Haluatko, että DuckDuckGo tallentaa kirjautumistietosi?";
+"autofill.save-login.new-user.title" = "Haluatko, että DuckDuckGo tallentaa salasanasi?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Älä tallenna";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Tallenna kirjautumistiedot";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Tallennetaanko kirjautumistiedot?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Tallenna salasana";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Tallennetaanko salasana?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Näytä salasana";
@@ -656,7 +650,7 @@
 "autofill.signin.to.manage" = "%@ hallitaksesi Duck Address -osoitteita tällä laitteella.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo päivittää tämän laitteellesi tallennetun kirjautumistiedon.";
+"autofill.update-password.message" = "DuckDuckGo päivittää tämän tallennetun salasanan laitteellesi.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Päivitä salasana";

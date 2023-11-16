@@ -92,6 +92,15 @@
         }
       },
       {
+        "package": "PrivacyDashboardResources",
+        "repositoryURL": "https://github.com/duckduckgo/privacy-dashboard",
+        "state": {
+          "branch": "shane/ios-form",
+          "revision": "ad774518f25039ca46d3a7b94e4bf1288f5f581b",
+          "version": null
+        }
+      },
+      {
         "package": "Punycode",
         "repositoryURL": "https://github.com/gumob/PunycodeSwift.git",
         "state": {

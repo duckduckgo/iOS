@@ -58,12 +58,12 @@ import NetworkProtection
 
 final class NetworkProtectionVPNLocationViewModel: ObservableObject {
     private let locationListRepository: NetworkProtectionLocationListRepository
-    private let tunnelSettings: TunnelSettings
+    private let settings: VPNSettings
     @Published public var countryItems: [NetworkProtectionVPNCountryItemModel] = []
 
-    init(locationListRepository: NetworkProtectionLocationListRepository, tunnelSettings: TunnelSettings) {
+    init(locationListRepository: NetworkProtectionLocationListRepository, settings: VPNSettings) {
         self.locationListRepository = locationListRepository
-        self.tunnelSettings = tunnelSettings
+        self.settings = settings
     }
 
     @MainActor
@@ -73,12 +73,12 @@ final class NetworkProtectionVPNLocationViewModel: ObservableObject {
     }
 
     func onNearestItemSelection() {
-        tunnelSettings.selectedLocation = .nearest
+        settings.selectedLocation = .nearest
     }
 
     func onCountryItemSelection(countryID: String) {
         let location = NetworkProtectionSelectedLocation(country: countryID)
-        tunnelSettings.selectedLocation = .location(location)
+        settings.selectedLocation = .location(location)
     }
 }
 

@@ -54,9 +54,9 @@ extension NetworkProtectionKeychainTokenStore {
 
 extension NetworkProtectionCodeRedemptionCoordinator {
     convenience init() {
-        let tunnelSettings = TunnelSettings(defaults: .networkProtectionGroupDefaults)
+        let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
         self.init(
-            environment: tunnelSettings.selectedEnvironment,
+            environment: settings.selectedEnvironment,
             tokenStore: NetworkProtectionKeychainTokenStore(),
             errorEvents: .networkProtectionAppDebugEvents
         )
@@ -65,32 +65,30 @@ extension NetworkProtectionCodeRedemptionCoordinator {
 
 extension NetworkProtectionVPNNotificationsViewModel {
     convenience init() {
-        let notificationsSettingsStore = NetworkProtectionNotificationsSettingsUserDefaultsStore(userDefaults: .networkProtectionGroupDefaults)
         self.init(
             notificationsAuthorization: NotificationsAuthorizationController(),
-            notificationsSettingsStore: notificationsSettingsStore
-        )
+            settings: VPNSettings(defaults: .networkProtectionGroupDefaults))
     }
 }
 
 extension NetworkProtectionVPNSettingsViewModel {
     convenience init() {
         self.init(
-            tunnelSettings: TunnelSettings(defaults: .networkProtectionGroupDefaults)
+            settings: VPNSettings(defaults: .networkProtectionGroupDefaults)
         )
     }
 }
 
 extension NetworkProtectionVPNLocationViewModel {
     convenience init() {
-        let tunnelSettings = TunnelSettings(defaults: .networkProtectionGroupDefaults)
+        let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
         let locationListRepository = NetworkProtectionLocationListCompositeRepository(
-            environment: tunnelSettings.selectedEnvironment,
+            environment: settings.selectedEnvironment,
             tokenStore: NetworkProtectionKeychainTokenStore()
         )
         self.init(
             locationListRepository: locationListRepository,
-            tunnelSettings: TunnelSettings(defaults: .networkProtectionGroupDefaults)
+            settings: VPNSettings(defaults: .networkProtectionGroupDefaults)
         )
     }
 }

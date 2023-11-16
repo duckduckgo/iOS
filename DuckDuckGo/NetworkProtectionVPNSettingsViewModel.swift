@@ -24,14 +24,14 @@ import NetworkProtection
 import Combine
 
 final class NetworkProtectionVPNSettingsViewModel: ObservableObject {
-    private let tunnelSettings: TunnelSettings
+    private let settings: VPNSettings
     private var cancellable: AnyCancellable?
 
     @Published public var preferredLocation: String = UserText.netPPreferredLocationNearest
 
-    init(tunnelSettings: TunnelSettings) {
-        self.tunnelSettings = tunnelSettings
-        cancellable = tunnelSettings.selectedLocationPublisher.map { selectedLocation in
+    init(settings: VPNSettings) {
+        self.settings = settings
+        cancellable = settings.selectedLocationPublisher.map { selectedLocation in
             guard let selectedLocation = selectedLocation.location else {
                 return UserText.netPPreferredLocationNearest
             }

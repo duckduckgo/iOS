@@ -57,7 +57,7 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
 
     init(
         networkProtectionActivation: NetworkProtectionFeatureActivation = NetworkProtectionKeychainTokenStore(),
-        networkProtectionWaitlistStorage: WaitlistStorage = VPNWaitlist.shared.waitlistStorage,
+        networkProtectionWaitlistStorage: WaitlistStorage = WaitlistKeychainStore(waitlistIdentifier: VPNWaitlist.identifier),
         networkProtectionTermsAndConditionsStore: NetworkProtectionTermsAndConditionsStore = NetworkProtectionTermsAndConditionsUserDefaultsStore(),
         privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager
     ) {

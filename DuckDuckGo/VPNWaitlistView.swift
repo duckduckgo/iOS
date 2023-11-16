@@ -49,12 +49,6 @@ struct VPNWaitlistView: View {
             }
         case .waitlistRemoved:
             fatalError("State not supported for VPN waitlists")
-        case .custom(let customState):
-            if customState == .networkProtectionPrivacyPolicyScreen {
-                VPNWaitlistPrivacyPolicyView { action in
-                    Task { await viewModel.perform(action: action) }
-                }
-            }
         }
     }
 }
@@ -230,7 +224,7 @@ struct VPNWaitlistInvitedView: View {
         ),
     ]
 
-    let action: (WaitlistViewModel.ViewAction) -> Void
+    let action: WaitlistViewActionHandler
 
     @State private var shareButtonFrame: CGRect = .zero
 
@@ -275,7 +269,7 @@ struct VPNWaitlistInvitedView: View {
 @available(iOS 15.0, *)
 struct VPNWaitlistPrivacyPolicyView: View {
 
-    let action: (WaitlistViewModel.ViewAction) -> Void
+    let action: WaitlistViewActionHandler
 
     var body: some View {
         ScrollView {

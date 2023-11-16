@@ -144,10 +144,6 @@ extension WindowsWaitlistViewController: WaitlistViewModelDelegate {
         }
     }
 
-    func waitlistViewModelShouldRefreshState(_ viewModel: WaitlistViewModel) -> Bool {
-        return true
-    }
-
 }
 
 private final class WindowsWaitlistLinkMetadata: NSObject, UIActivityItemSource {

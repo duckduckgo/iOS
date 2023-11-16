@@ -116,10 +116,6 @@ final class VPNWaitlist: Waitlist {
 
 }
 
-extension WaitlistViewModel.ViewCustomState {
-    static var networkProtectionPrivacyPolicyScreen = WaitlistViewModel.ViewCustomState(identifier: "networkProtectionPrivacyPolicyScreen")
-}
-
 extension WaitlistViewModel.ViewCustomAction {
     static var openNetworkProtectionInviteCodeScreen = WaitlistViewModel.ViewCustomAction(identifier: "openNetworkProtectionInviteCodeScreen")
     static var openNetworkProtectionPrivacyPolicyScreen = WaitlistViewModel.ViewCustomAction(identifier: "openNetworkProtectionPrivacyPolicyScreen")

@@ -100,9 +100,6 @@ extension MacWaitlistViewController: WaitlistViewModelDelegate {
         }
     }
 
-    func waitlistViewModelShouldRefreshState(_ viewModel: WaitlistViewModel) -> Bool {
-        return true
-    }
 }
 
 private final class MacWaitlistLinkMetadata: NSObject, UIActivityItemSource {

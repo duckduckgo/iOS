@@ -28,7 +28,6 @@ public protocol WaitlistViewModelDelegate: AnyObject {
     func waitlistViewModelDidOpenInviteCodeShareSheet(_ viewModel: WaitlistViewModel, inviteCode: String, senderFrame: CGRect)
     func waitlistViewModelDidOpenDownloadURLShareSheet(_ viewModel: WaitlistViewModel, senderFrame: CGRect)
     func waitlistViewModel(_ viewModel: WaitlistViewModel, didTriggerCustomAction action: WaitlistViewModel.ViewCustomAction)
-    func waitlistViewModelShouldRefreshState(_ viewModel: WaitlistViewModel) -> Bool
 }
 
 @MainActor
@@ -40,15 +39,6 @@ public final class WaitlistViewModel: ObservableObject {
         case joinedQueue(NotificationPermissionState)
         case invited(inviteCode: String)
         case waitlistRemoved
-        case custom(ViewCustomState)
-    }
-
-    public struct ViewCustomState: Equatable {
-        public let identifier: String
-
-        public init(identifier: String) {
-            self.identifier = identifier
-        }
     }
 
     public enum ViewAction: Equatable {
@@ -104,10 +94,6 @@ public final class WaitlistViewModel: ObservableObject {
     }
 
     public func updateViewState() async {
-        guard delegate?.waitlistViewModelShouldRefreshState(self) ?? true else {
-            return
-        }
-
         guard viewState != .waitlistRemoved else {
             return
         }
@@ -131,10 +117,6 @@ public final class WaitlistViewModel: ObservableObject {
         case .copyInviteCodeToPasteboard: copyInviteCodeToClipboard()
         case .custom(let action): delegate?.waitlistViewModel(self, didTriggerCustomAction: action)
         }
-    }
-
-    public func set(customState: ViewCustomState) {
-        self.viewState = .custom(customState)
     }
 
     // MARK: - Private

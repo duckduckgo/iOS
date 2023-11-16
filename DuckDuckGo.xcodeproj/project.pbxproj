@@ -306,6 +306,7 @@
 		4BCD14632B05AF2B000B1E4C /* NetworkProtectionAccessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD14622B05AF2B000B1E4C /* NetworkProtectionAccessController.swift */; };
 		4BCD14672B05B682000B1E4C /* NetworkProtectionTermsAndConditionsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD14662B05B682000B1E4C /* NetworkProtectionTermsAndConditionsStore.swift */; };
 		4BCD14692B05BDD5000B1E4C /* AppDelegate+Waitlists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD14682B05BDD5000B1E4C /* AppDelegate+Waitlists.swift */; };
+		4BCD146B2B05C4B5000B1E4C /* VPNWaitlistTermsAndConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD146A2B05C4B5000B1E4C /* VPNWaitlistTermsAndConditionsViewController.swift */; };
 		4BE2756827304F57006B20B0 /* URLRequestExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE27566272F878F006B20B0 /* URLRequestExtension.swift */; };
 		4BEF65692989C2FC00B650CB /* AdapterSocketEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021D307A2989C0C400918636 /* AdapterSocketEvent.swift */; };
 		4BEF656A2989C2FC00B650CB /* ProxyServerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021D307C2989C0C600918636 /* ProxyServerEvent.swift */; };
@@ -1331,6 +1332,7 @@
 		4BCD14622B05AF2B000B1E4C /* NetworkProtectionAccessController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionAccessController.swift; sourceTree = "<group>"; };
 		4BCD14662B05B682000B1E4C /* NetworkProtectionTermsAndConditionsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionTermsAndConditionsStore.swift; sourceTree = "<group>"; };
 		4BCD14682B05BDD5000B1E4C /* AppDelegate+Waitlists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Waitlists.swift"; sourceTree = "<group>"; };
+		4BCD146A2B05C4B5000B1E4C /* VPNWaitlistTermsAndConditionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNWaitlistTermsAndConditionsViewController.swift; sourceTree = "<group>"; };
 		4BE27566272F878F006B20B0 /* URLRequestExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URLRequestExtension.swift; path = ../DuckDuckGo/URLRequestExtension.swift; sourceTree = "<group>"; };
 		4BFB911A29B7D9530014D4B7 /* AppTrackingProtectionStoringModelPerformanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionStoringModelPerformanceTests.swift; sourceTree = "<group>"; };
 		56244C1C2A137B1900EDF259 /* WaitlistViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitlistViews.swift; sourceTree = "<group>"; };
@@ -3479,6 +3481,7 @@
 				4BBBBA892B031B4200D965DA /* VPNWaitlistDebugViewController.swift */,
 				4BBBBA8B2B031B4200D965DA /* VPNWaitlistView.swift */,
 				4BBBBA8A2B031B4200D965DA /* VPNWaitlistViewController.swift */,
+				4BCD146A2B05C4B5000B1E4C /* VPNWaitlistTermsAndConditionsViewController.swift */,
 			);
 			name = VPN;
 			sourceTree = "<group>";
@@ -6425,6 +6428,7 @@
 				85AE6690209724120014CF04 /* NotificationView.swift in Sources */,
 				1EA51376286596A000493C6A /* PrivacyIconLogic.swift in Sources */,
 				980891A92238504B00313A70 /* UILabelExtension.swift in Sources */,
+				4BCD146B2B05C4B5000B1E4C /* VPNWaitlistTermsAndConditionsViewController.swift in Sources */,
 				984D035A24ACCC7D0066CFB8 /* TabViewCell.swift in Sources */,
 				31951E8E2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift in Sources */,
 				F194FAED1F14E2B3009B4DF8 /* UIFontExtension.swift in Sources */,

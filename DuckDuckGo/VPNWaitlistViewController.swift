@@ -21,7 +21,6 @@
 
 import UIKit
 import SwiftUI
-import LinkPresentation
 import Core
 import Waitlist
 
@@ -132,16 +131,8 @@ extension VPNWaitlistViewController: WaitlistViewModelDelegate {
         }
 
         if action == .openNetworkProtectionPrivacyPolicyScreen {
-            self.viewModel.set(customState: .networkProtectionPrivacyPolicyScreen)
-        }
-
-        if action == .acceptNetworkProtectionTerms {
-            var termsAndConditionsStore = NetworkProtectionTermsAndConditionsUserDefaultsStore()
-            termsAndConditionsStore.networkProtectionWaitlistTermsAndConditionsAccepted = true
-
-            self.navigationController?.popViewController(animated: true)
-            let networkProtectionViewController = NetworkProtectionRootViewController()
-            self.navigationController?.pushViewController(networkProtectionViewController, animated: true)
+            let termsAndConditionsViewController = VPNWaitlistTermsAndConditionsViewController()
+            self.navigationController?.pushViewController(termsAndConditionsViewController, animated: true)
         }
     }
 
@@ -151,10 +142,6 @@ extension VPNWaitlistViewController: WaitlistViewModelDelegate {
 
     func waitlistViewModelDidOpenDownloadURLShareSheet(_ viewModel: WaitlistViewModel, senderFrame: CGRect) {
         // The VPN waitlist doesn't support the share sheet
-    }
-
-    func waitlistViewModelShouldRefreshState(_ viewModel: WaitlistViewModel) -> Bool {
-        return viewModel.viewState != .custom(.networkProtectionPrivacyPolicyScreen)
     }
 
 }

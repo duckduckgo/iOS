@@ -84,7 +84,8 @@ final class VPNWaitlist: Waitlist {
 
         let hasWaitlistAccess = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlist)
         let isWaitlistActive = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlistBetaActive)
-        isFeatureEnabled = hasWaitlistAccess && isWaitlistActive
+        let internalUser = InternalUserStore()
+        isFeatureEnabled = (hasWaitlistAccess && isWaitlistActive) || internalUser.isInternalUser
     }
 
     convenience init(store: WaitlistStorage, request: WaitlistRequest) {

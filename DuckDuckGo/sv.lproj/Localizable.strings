@@ -529,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Inloggning raderad";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Återställ exkluderade webbplatser";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Avbryt";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Återställ exkluderade webbplatser";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Om du återställer exkluderade webbplatser kommer du att uppmanas att spara din inloggning nästa gång du loggar in på någon av dessa webbplatser.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Sök inloggningar";
 
@@ -612,6 +624,9 @@
 
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Användarnamn för privat Duck Address har tagits bort";
+
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Fråga aldrig för den här webbplatsen";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.message" = "Inloggningar lagras säkert på din enhet i menyn Inloggningar.";

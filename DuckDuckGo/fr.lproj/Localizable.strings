@@ -529,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Identifiant supprimé";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Réinitialiser les sites exclus";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Annuler";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Réinitialiser les sites exclus";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Si vous réinitialisez les sites exclus, on vous invitera à enregistrer votre identifiant la prochaine fois que vous vous connecterez à l'un de ces sites.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Recherche d'identifiants";
 
@@ -612,6 +624,9 @@
 
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Le nom d'utilisateur de la Duck Address privée a été supprimé";
+
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Ne jamais demander pour ce site";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.message" = "Les identifiants de connexion sont stockés en toute sécurité sur votre appareil dans le menu Identifiants.";

@@ -24,8 +24,10 @@ import Core
 import BrowserServicesKit
 import PrivacyDashboard
 
+/// View controller used for `Privacy Dasboard` or `Report broken site`, the web content is chosen at init time setting the correct `initMode`
 class PrivacyDashboardViewController: UIViewController {
-
+    
+    /// Type of web page displayed
     enum Mode {
         case privacyDashboard
         case reportBrokenSite
@@ -142,7 +144,6 @@ extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
     
     func privacyDashboardControllerDidRequestShowReportBrokenSite(_ privacyDashboardController: PrivacyDashboardController) {
         Pixel.fire(pixel: .privacyDashboardReportBrokenSite)
-//        performSegue(withIdentifier: "ReportBrokenSite", sender: self)
     }
     
     func privacyDashboardController(_ privacyDashboardController: PrivacyDashboard.PrivacyDashboardController,
@@ -163,7 +164,8 @@ extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
 extension PrivacyDashboardViewController: PrivacyDashboardNavigationDelegate {
     
     func privacyDashboardController(_ privacyDashboardController: PrivacyDashboard.PrivacyDashboardController, didSetHeight height: Int) {
-        preferredContentSize.height = CGFloat(height)
+        // The size received in iPad is wrong, shane will sort this out soon.
+        // preferredContentSize.height = CGFloat(height)
     }
     
     func privacyDashboardControllerDidTapClose(_ privacyDashboardController: PrivacyDashboardController) {

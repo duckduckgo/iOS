@@ -64,7 +64,6 @@ final class BrokenSiteReportingTests: XCTestCase {
             return
         }
         
-        
         os_log("Testing [%s]", type: .info, test.name)
         
         let brokenSiteInfo = BrokenSiteInfo(url: URL(string: test.siteURL),
@@ -81,7 +80,6 @@ final class BrokenSiteReportingTests: XCTestCase {
                                             systemVersion: test.os ?? "",
                                             gpc: test.gpcEnabled)
         
-
         stub(condition: isHost(host)) { request -> HTTPStubsResponse in
             
             guard let requestURL = request.url else {
@@ -117,7 +115,7 @@ final class BrokenSiteReportingTests: XCTestCase {
             return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
         }
         
-        brokenSiteInfo.send(with: test.category, description: "")
+        brokenSiteInfo.send(with: test.category, description: "", source: .dashboard)
     }
 }
 

@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+#if NETWORK_PROTECTION
+
 import UIKit
 import Core
 import BackgroundTasks
@@ -193,3 +195,5 @@ final class VPNWaitlistDebugViewController: UITableViewController {
         tableView.reloadData()
     }
 }
+
+#endif

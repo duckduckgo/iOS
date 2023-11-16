@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+#if NETWORK_PROTECTION
+
 import SwiftUI
 import Core
 import Waitlist
@@ -387,3 +389,5 @@ private extension Text {
     }
 
 }
+
+#endif

@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+#if NETWORK_PROTECTION
+
 import UIKit
 import SwiftUI
 import LinkPresentation
@@ -156,3 +158,5 @@ extension VPNWaitlistViewController: WaitlistViewModelDelegate {
     }
 
 }
+
+#endif

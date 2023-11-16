@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+#if NETWORK_PROTECTION
+
 import Foundation
 import BrowserServicesKit
 import ContentBlocking
@@ -119,3 +121,5 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
     }
 
 }
+
+#endif

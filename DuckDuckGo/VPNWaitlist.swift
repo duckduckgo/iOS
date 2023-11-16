@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+#if NETWORK_PROTECTION
+
 import Foundation
 import BrowserServicesKit
 import Combine
@@ -123,3 +125,5 @@ extension WaitlistViewModel.ViewCustomAction {
     static var openNetworkProtectionPrivacyPolicyScreen = WaitlistViewModel.ViewCustomAction(identifier: "openNetworkProtectionPrivacyPolicyScreen")
     static var acceptNetworkProtectionTerms = WaitlistViewModel.ViewCustomAction(identifier: "acceptNetworkProtectionTerms")
 }
+
+#endif

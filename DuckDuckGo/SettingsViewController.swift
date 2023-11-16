@@ -183,7 +183,10 @@ class SettingsViewController: UITableViewController {
         configureMacBrowserWaitlistCell()
         configureWindowsBrowserWaitlistCell()
         configureSyncCell()
+
+#if NETWORK_PROTECTION
         updateNetPCellSubtitle(connectionStatus: connectionObserver.recentValue)
+#endif
 
         // Make sure multiline labels are correctly presented
         tableView.setNeedsLayout()

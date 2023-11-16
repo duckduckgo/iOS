@@ -24,24 +24,24 @@ public struct BrokenSiteInfo {
 
     static let allowedQueryReservedCharacters =  CharacterSet(charactersIn: ",")
 
-    enum Key: String {
-        case siteUrl
-        case category
-        case description
-        case upgradedHttps
-        case tds
-        case blockedTrackers
-        case surrogates
-        case atb
-        case os
-        case manufacturer
-        case model
-        case siteType
-        case gpc
-        case ampUrl
-        case urlParametersRemoved
-        case protectionsState
-        case reportFlow
+    private struct Keys {
+        static let url = "siteUrl"
+        static let category = "category"
+        static let reportFlow = "reportFlow"
+        static let description = "description"
+        static let upgradedHttps = "upgradedHttps"
+        static let tds = "tds"
+        static let blockedTrackers = "blockedTrackers"
+        static let surrogates = "surrogates"
+        static let atb = "atb"
+        static let os = "os"
+        static let manufacturer = "manufacturer"
+        static let model = "model"
+        static let siteType = "siteType"
+        static let gpc = "gpc"
+        static let ampUrl = "ampUrl"
+        static let urlParametersRemoved = "urlParametersRemoved"
+        static let protectionsState = "protectionsState"
     }
     
     public enum Source: String {
@@ -49,19 +49,19 @@ public struct BrokenSiteInfo {
         case dashboard
     }
     
-    public let url: URL?
-    public let httpsUpgrade: Bool
-    public let blockedTrackerDomains: [String]
-    public let installedSurrogates: [String]
-    public let isDesktop: Bool
-    public let tdsETag: String?
-    public let ampUrl: String?
-    public let urlParametersRemoved: Bool
-    public let model: String
-    public let manufacturer: String
-    public let systemVersion: String
-    public let gpc: Bool
-    public let protectionsState: Bool
+    private let url: URL?
+    private let httpsUpgrade: Bool
+    private let blockedTrackerDomains: [String]
+    private let installedSurrogates: [String]
+    private let isDesktop: Bool
+    private let tdsETag: String?
+    private let ampUrl: String?
+    private let urlParametersRemoved: Bool
+    private let model: String
+    private let manufacturer: String
+    private let systemVersion: String
+    private let gpc: Bool
+    private let protectionsState: Bool
 
     public init(url: URL?, httpsUpgrade: Bool,
                 blockedTrackerDomains: [String],
@@ -99,23 +99,23 @@ public struct BrokenSiteInfo {
     func send(with category: String?, description: String, source: Source) {
         
         let parameters: [String: String] = [
-            Key.siteUrl.rawValue: normalize(url),
-            Key.category.rawValue: category ?? "",
-            Key.description.rawValue: description,
-            Key.reportFlow.rawValue: source.rawValue,
-            Key.upgradedHttps.rawValue: httpsUpgrade ? "true" : "false",
-            Key.siteType.rawValue: isDesktop ? "desktop" : "mobile",
-            Key.tds.rawValue: tdsETag?.trimmingCharacters(in: CharacterSet(charactersIn: "\"")) ?? "",
-            Key.blockedTrackers.rawValue: blockedTrackerDomains.joined(separator: ","),
-            Key.surrogates.rawValue: installedSurrogates.joined(separator: ","),
-            Key.atb.rawValue: StatisticsUserDefaults().atb ?? "",
-            Key.os.rawValue: systemVersion,
-            Key.manufacturer.rawValue: manufacturer,
-            Key.model.rawValue: model,
-            Key.gpc.rawValue: gpc ? "true" : "false",
-            Key.ampUrl.rawValue: ampUrl ?? "",
-            Key.urlParametersRemoved.rawValue: urlParametersRemoved ? "true" : "false",
-            Key.protectionsState.rawValue: protectionsState ? "true" : "false"
+            Keys.url: normalize(url),
+            Keys.category: category ?? "",
+            Keys.description: description,
+            Keys.reportFlow: source.rawValue,
+            Keys.upgradedHttps: httpsUpgrade ? "true" : "false",
+            Keys.siteType: isDesktop ? "desktop" : "mobile",
+            Keys.tds: tdsETag?.trimmingCharacters(in: CharacterSet(charactersIn: "\"")) ?? "",
+            Keys.blockedTrackers: blockedTrackerDomains.joined(separator: ","),
+            Keys.surrogates: installedSurrogates.joined(separator: ","),
+            Keys.atb: StatisticsUserDefaults().atb ?? "",
+            Keys.os: systemVersion,
+            Keys.manufacturer: manufacturer,
+            Keys.model: model,
+            Keys.gpc: gpc ? "true" : "false",
+            Keys.ampUrl: ampUrl ?? "",
+            Keys.urlParametersRemoved: urlParametersRemoved ? "true" : "false",
+            Keys.protectionsState: protectionsState ? "true" : "false"
         ]
         
         Pixel.fire(pixel: .brokenSiteReport,

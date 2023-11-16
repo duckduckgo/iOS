@@ -44,6 +44,7 @@ final class BrokenSiteReportingTests: XCTestCase {
 
     func testBrokenSiteReporting() throws {
         let testJSON = data.fromJsonFile(Resource.tests)
+        let testString = String(data: testJSON, encoding: .utf8)
         let testData = try JSONDecoder().decode(BrokenSiteReportingTestData.self, from: testJSON)
 
         referenceTests = testData.reportURL.tests.filter {
@@ -133,7 +134,6 @@ private struct ReportURL: Codable {
 }
 
 // MARK: - Test
-
 private struct Test: Codable {
     let name: String
     let siteURL: String

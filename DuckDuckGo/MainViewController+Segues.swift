@@ -124,7 +124,7 @@ extension MainViewController {
         hideAllHighlightsIfNeeded()
 
         let brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
-        guard let currentURL = brokenSiteInfo?.url,
+        guard let currentURL = currentTab?.url,
               let privacyInfo = currentTab?.makePrivacyInfo(url: currentURL) else {
             assertionFailure("Missing fundamental data")
             return

@@ -49,8 +49,8 @@ final class NetworkProtectionVPNLocationViewModel: ObservableObject {
         await reloadList()
     }
 
-    func onCountryItemSelection(id: String) async {
-        let location = NetworkProtectionSelectedLocation(country: id)
+    func onCountryItemSelection(id: String, cityId: String? = nil) async {
+        let location = NetworkProtectionSelectedLocation(country: id, city: cityId)
         tunnelSettings.selectedLocation = .location(location)
         await reloadList()
     }
@@ -60,31 +60,60 @@ final class NetworkProtectionVPNLocationViewModel: ObservableObject {
         let selectedLocation = self.tunnelSettings.selectedLocation
         let isNearestSelected = selectedLocation == .nearest
         let countryItems = list.map { currentLocation in
-            let isSelected: Bool
+            let isCountrySelected: Bool
+            let isNearestCitySelected: Bool
+            var cityPickerItems: [CityItem]
             if case .location(let location) = selectedLocation {
-                isSelected = location.country == currentLocation.country
+                isCountrySelected = location.country == currentLocation.country
+                isNearestCitySelected = location.city == nil
+                cityPickerItems = currentLocation.cities.map { currentCity in
+                    let isCitySelected = currentCity.name == location.city
+                    return CityItem(city: currentCity, isSelected: isCitySelected)
+                }
             } else {
-                isSelected = false
+                isCountrySelected = false
+                isNearestCitySelected = true
+                cityPickerItems = currentLocation.cities.map { currentCity in
+                    CityItem(city: currentCity, isSelected: false)
+                }
             }
-            return NetworkProtectionVPNCountryItemModel(netPLocation: currentLocation, isSelected: isSelected)
+            let nearestItem = CityItem(
+                city: nil,
+                isSelected: isNearestCitySelected
+            )
+            cityPickerItems.insert(nearestItem, at: 0)
+            return NetworkProtectionVPNCountryItemModel(
+                netPLocation: currentLocation,
+                isSelected: isCountrySelected,
+                cityPickerItems: cityPickerItems
+            )
         }
+
         state = .loaded(isNearestSelected: isNearestSelected, countryItems: countryItems)
     }
 }
+
+private typealias CountryItem = NetworkProtectionVPNCountryItemModel
+private typealias CityItem = NetworkProtectionVPNCityItemModel
 
 struct NetworkProtectionVPNCountryItemModel: Identifiable {
     let isSelected: Bool
     var id: String
     let emoji: String
-    let localizedName: String
-    let cities: String?
+    let title: String
+    let subtitle: String?
+    let cityPickerItems: [NetworkProtectionVPNCityItemModel]
+    let shouldShowPicker: Bool
 
-    init(netPLocation: NetworkProtectionLocation, isSelected: Bool) {
+    fileprivate init(netPLocation: NetworkProtectionLocation, isSelected: Bool, cityPickerItems: [NetworkProtectionVPNCityItemModel]) {
         self.isSelected = isSelected
         self.id = netPLocation.country
-        self.localizedName = Locale.current.localizedString(forRegionCode: id) ?? id
-        self.cities = netPLocation.cities.count > 1 ? "\(netPLocation.cities.count) cities" : nil
+        self.title = Locale.current.localizedString(forRegionCode: id) ?? id
+        let hasMultipleCities = netPLocation.cities.count > 1
+        self.subtitle = hasMultipleCities ? "\(netPLocation.cities.count) cities" : nil
+        self.cityPickerItems = cityPickerItems
         self.emoji = Self.flag(country: netPLocation.country)
+        self.shouldShowPicker = hasMultipleCities
     }
 
     static func flag(country: String) -> String {
@@ -96,6 +125,24 @@ struct NetworkProtectionVPNCountryItemModel: Identifiable {
             .compactMap({ UnicodeScalar(flagBase + $0.value)?.description })
             .joined()
         return flag
+    }
+}
+
+struct NetworkProtectionVPNCityItemModel: Identifiable {
+    fileprivate enum Selection {
+        case nearest
+        case city(NetworkProtectionLocation.City)
+    }
+
+    static let nearestItemId = "nearestItemId"
+    let id: String?
+    let name: String
+    let isSelected: Bool
+
+    fileprivate init(city: NetworkProtectionLocation.City?, isSelected: Bool) {
+        self.id = city?.name ?? Self.nearestItemId
+        self.name = city?.name ?? UserText.netPPreferredLocationNearest
+        self.isSelected = isSelected
     }
 }
 

@@ -75,32 +75,66 @@ struct NetworkProtectionVPNLocationView: View {
     private func countries(itemModels: [NetworkProtectionVPNCountryItemModel]) -> some View {
         Section {
             ForEach(itemModels) { item in
-                ChecklistItem(
-                    isSelected: item.isSelected,
-                    action: {
-                        Task {
-                            await model.onCountryItemSelection(id: item.id)
-                        }
-                    },
-                    label: {
-                        Text(item.emoji)
-                        VStack(alignment: .leading) {
-                            Text(item.localizedName)
-                                .font(.system(size: 16))
-                                .foregroundStyle(Color.textPrimary)
-                            if let cities = item.cities {
-                                Text(cities)
-                                    .font(.system(size: 13))
-                                    .foregroundStyle(Color.textSecondary)
-                            }
-                        }
-                        .padding(.vertical, 1)
+                CountryItem(itemModel: item) {
+                    Task {
+                        await model.onCountryItemSelection(id: item.id)
                     }
-                )
+                } cityPickerAction: { cityId in
+                    Task {
+                        await model.onCountryItemSelection(id: item.id, cityId: cityId)
+                    }
+                }
+
             }
         } header: {
             Text(UserText.netPVPNLocationAllCountriesSectionTitle)
         }
+    }
+}
+
+@available(iOS 15, *)
+private struct CountryItem: View {
+    let itemModel: NetworkProtectionVPNCountryItemModel
+    let action: () -> Void
+    let cityPickerAction: (String?) -> Void
+
+    init(itemModel: NetworkProtectionVPNCountryItemModel, action: @escaping () -> Void, cityPickerAction: @escaping (String?) -> Void) {
+        self.itemModel = itemModel
+        self.action = action
+        self.cityPickerAction = cityPickerAction
+    }
+
+    var body: some View {
+        ChecklistItem(
+            isSelected: itemModel.isSelected,
+            action: action,
+            label: {
+                Text(itemModel.emoji)
+                VStack(alignment: .leading) {
+                    Text(itemModel.title)
+                        .font(.system(size: 16))
+                        .foregroundStyle(Color.textPrimary)
+                    if let subtitle = itemModel.subtitle {
+                        Text(subtitle)
+                            .font(.system(size: 13))
+                            .foregroundStyle(Color.textSecondary)
+                    }
+                }
+                .padding(.vertical, 1)
+                if itemModel.shouldShowPicker {
+                    Spacer()
+                    Menu {
+                        ForEach(itemModel.cityPickerItems) { cityItem in
+                            MenuItem(isSelected: cityItem.isSelected, title: cityItem.name) {
+                                cityPickerAction(cityItem.id)
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis.circle")
+                    }
+                }
+            }
+        )
     }
 }
 
@@ -123,6 +157,33 @@ private struct ChecklistItem<Content>: View where Content: View {
                             $0.hidden()
                         }
                     label()
+                }
+            }
+        )
+        .tint(Color(designSystemColor: .textPrimary))
+        .listRowInsets(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
+    }
+}
+
+@available(iOS 15, *)
+private struct MenuItem: View {
+    let isSelected: Bool
+    let title: String
+    let action: () -> Void
+
+    var body: some View {
+        Button(
+            action: action,
+            label: {
+                HStack(spacing: 12) {
+                    Text(title)
+                    Spacer()
+                    Image("Check-24")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .if(!isSelected) {
+                            $0.hidden()
+                        }
                 }
             }
         )

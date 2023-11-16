@@ -134,7 +134,8 @@ extension VPNWaitlistViewController: WaitlistViewModelDelegate {
         }
 
         if action == .acceptNetworkProtectionTerms {
-            VPNWaitlist.termsAndConditionsAccepted = true
+            var termsAndConditionsStore = NetworkProtectionTermsAndConditionsUserDefaultsStore()
+            termsAndConditionsStore.networkProtectionWaitlistTermsAndConditionsAccepted = true
 
             self.navigationController?.popViewController(animated: true)
             let networkProtectionViewController = NetworkProtectionRootViewController()

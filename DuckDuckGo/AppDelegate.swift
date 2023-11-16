@@ -325,7 +325,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #if NETWORK_PROTECTION
         widgetRefreshModel.beginObservingVPNStatus()
-        updateVPNAccessFromFeatureFlagState()
+        NetworkProtectionAccessController().refreshNetworkProtectionAccess()
 #endif
 
         return true
@@ -796,26 +796,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 try await NetworkProtectionCodeRedemptionCoordinator().redeem(inviteCode)
                 VPNWaitlist.shared.sendInviteCodeAvailableNotification()
             } catch {}
-        }
-    }
-
-    func updateVPNAccessFromFeatureFlagState() {
-        guard NetworkProtectionKeychainTokenStore().isFeatureActivated else {
-            return
-        }
-
-        let waitlistStorage = VPNWaitlist.shared.waitlistStorage
-        let configManager = ContentBlocking.shared.privacyConfigurationManager
-
-        if !configManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlistBetaActive) {
-            waitlistStorage.deleteWaitlistState()
-            try? NetworkProtectionKeychainTokenStore().deleteToken()
-
-            Task {
-                let controller = NetworkProtectionTunnelController()
-                await controller.stop()
-                await controller.removeVPN()
-            }
         }
     }
 #endif

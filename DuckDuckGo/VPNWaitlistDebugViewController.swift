@@ -152,7 +152,8 @@ final class VPNWaitlistDebugViewController: UITableViewController {
 
             switch row {
             case .resetTermsAndConditionsAcceptance:
-                VPNWaitlist.termsAndConditionsAccepted = false
+                var termsAndConditionsStore = NetworkProtectionTermsAndConditionsUserDefaultsStore()
+                termsAndConditionsStore.networkProtectionWaitlistTermsAndConditionsAccepted = false
             case .scheduleWaitlistNotification:
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
                     self.storage.store(inviteCode: "ABCD1234")

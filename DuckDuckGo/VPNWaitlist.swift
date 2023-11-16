@@ -66,55 +66,19 @@ final class VPNWaitlist: Waitlist {
         return false
     }
 
-    @UserDefaultsWrapper(key: .networkProtectionWaitlistTermsAndConditionsAccepted, defaultValue: false)
-    static var termsAndConditionsAccepted: Bool
-
-    var networkProtectionAccessType: AccessType {
-        let authTokenStore = NetworkProtectionKeychainTokenStore()
-
-        // First, check for users who have activated the VPN via an invite code:
-        if authTokenStore.isFeatureActivated && !waitlistStorage.isInvited {
-            return .inviteCodeInvited
-        }
-
-        // Next, check if the waitlist is still active; if not, the user has no access.
-        let isWaitlistActive = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlistBetaActive)
-        if !isWaitlistActive {
-            return .none
-        }
-
-        // Next, check if a waitlist user has NetP access and whether they need to accept T&C.
-        if authTokenStore.isFeatureActivated && waitlistStorage.isInvited {
-            if Self.termsAndConditionsAccepted {
-                return .waitlistInvited
-            } else {
-                return .waitlistInvitedPendingTermsAcceptance
-            }
-        }
-
-        // Next, check if the user has waitlist access at all and whether they've already joined.
-        let hasWaitlistAccess = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlist)
-        if hasWaitlistAccess {
-            if waitlistStorage.isOnWaitlist {
-                return .waitlistJoined
-            } else {
-                return .waitlistAvailable
-            }
-        }
-
-        return .none
-    }
-
     let waitlistStorage: WaitlistStorage
     let waitlistRequest: WaitlistRequest
     private let privacyConfigurationManager: PrivacyConfigurationManaging
+    private let networkProtectionAccess: NetworkProtectionAccess
 
     init(store: WaitlistStorage,
          request: WaitlistRequest,
-         privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) {
+         privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
+         networkProtectionAccess: NetworkProtectionAccess = NetworkProtectionAccessController()) {
         self.waitlistStorage = store
         self.waitlistRequest = request
         self.privacyConfigurationManager = privacyConfigurationManager
+        self.networkProtectionAccess = networkProtectionAccess
 
         let hasWaitlistAccess = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlist)
         let isWaitlistActive = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlistBetaActive)
@@ -126,7 +90,7 @@ final class VPNWaitlist: Waitlist {
     }
 
     var settingsSubtitle: String {
-        switch VPNWaitlist.shared.networkProtectionAccessType {
+        switch networkProtectionAccess.networkProtectionAccessType() {
         case .none:
             return ""
         case .waitlistAvailable:

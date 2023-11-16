@@ -368,7 +368,7 @@ class SettingsViewController: UITableViewController {
 
 #if NETWORK_PROTECTION
     private func updateNetPCellSubtitle(connectionStatus: ConnectionStatus) {
-        switch VPNWaitlist.shared.networkProtectionAccessType {
+        switch NetworkProtectionAccessController().networkProtectionAccessType() {
         case .none, .waitlistAvailable, .waitlistJoined, .waitlistInvitedPendingTermsAcceptance:
             netPCell.detailTextLabel?.text = VPNWaitlist.shared.settingsSubtitle
         case .waitlistInvited, .inviteCodeInvited:
@@ -435,7 +435,7 @@ class SettingsViewController: UITableViewController {
 #if NETWORK_PROTECTION
     @available(iOS 15, *)
     private func showNetP() {
-        switch VPNWaitlist.shared.networkProtectionAccessType {
+        switch NetworkProtectionAccessController().networkProtectionAccessType() {
         case .inviteCodeInvited, .waitlistInvited:
             // This will be tidied up as part of https://app.asana.com/0/0/1205084446087078/f
             let rootViewController = NetworkProtectionRootViewController { [weak self] in

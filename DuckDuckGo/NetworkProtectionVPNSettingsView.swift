@@ -37,11 +37,22 @@ struct NetworkProtectionVPNSettingsView: View {
             }
             toggleSection(
                 text: UserText.netPAlwaysOnSettingTitle,
-                footerText: UserText.netPAlwaysOnSettingFooter
+                footerText: UserText.netPAlwaysOnSettingFooter,
+                toggle: disabledToggle
             )
             toggleSection(
+                text: UserText.netPExcludeLocalNetworksSettingTitle,
+                footerText: UserText.netPExcludeLocalNetworksSettingFooter
+            ) {
+                Toggle("", isOn: $viewModel.excludeLocalNetworks)
+                    .onTapGesture {
+                        viewModel.toggleExcludeLocalNetworks()
+                    }
+            }
+            toggleSection(
                 text: UserText.netPSecureDNSSettingTitle,
-                footerText: UserText.netPSecureDNSSettingFooter
+                footerText: UserText.netPSecureDNSSettingFooter,
+                toggle: disabledToggle
             )
         }
         .applyInsetGroupedListStyle()
@@ -49,7 +60,7 @@ struct NetworkProtectionVPNSettingsView: View {
     }
 
     @ViewBuilder
-    func toggleSection(text: String, footerText: String) -> some View {
+    func toggleSection(text: String, footerText: String, @ViewBuilder toggle: () -> some View) -> some View {
         Section {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
@@ -58,11 +69,10 @@ struct NetworkProtectionVPNSettingsView: View {
                         .foregroundColor(.textPrimary.opacity(0.4))
                         .font(.system(size: 13))
                         .foregroundColor(.textSecondary.opacity(0.4))
+                        .layoutPriority(1)
                 }
 
-                // These toggles are permanantly disabled as the features are permanantly enabled. Product decision.
-                Toggle("", isOn: .constant(true))
-                    .disabled(true)
+                toggle()
                     .toggleStyle(SwitchToggleStyle(tint: .controlColor))
             }
             .listRowBackground(Color.cellBackground)
@@ -73,6 +83,12 @@ struct NetworkProtectionVPNSettingsView: View {
                 .font(.system(size: 13))
                 .padding(.top, 6)
         }
+    }
+
+    @ViewBuilder
+    func disabledToggle() -> some View {
+        Toggle("", isOn: .constant(true))
+            .disabled(true)
     }
 }
 

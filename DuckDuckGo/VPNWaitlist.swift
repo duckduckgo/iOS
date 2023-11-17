@@ -61,7 +61,8 @@ final class VPNWaitlist: Waitlist {
     static let inviteAvailableNotificationBody = UserText.networkProtectionWaitlistNotificationText
 
     var isAvailable: Bool {
-        isFeatureEnabled
+        return true
+        // isFeatureEnabled
     }
 
     var isWaitlistRemoved: Bool {

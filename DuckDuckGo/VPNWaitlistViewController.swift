@@ -122,7 +122,7 @@ extension VPNWaitlistViewController: WaitlistViewModelDelegate {
     func waitlistViewModel(_ viewModel: WaitlistViewModel, didTriggerCustomAction action: WaitlistViewModel.ViewCustomAction) {
         if action == .openNetworkProtectionInviteCodeScreen {
             let networkProtectionViewController = NetworkProtectionRootViewController { [weak self] in
-                self?.navigationController?.popViewController(animated: true)
+                self?.navigationController?.popToRootViewController(animated: true)
                 let newRootViewController = NetworkProtectionRootViewController()
                 self?.navigationController?.pushViewController(newRootViewController, animated: true)
             }

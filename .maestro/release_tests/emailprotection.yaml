@@ -17,7 +17,7 @@ tags:
 - scroll
 - scroll
 - assertVisible: Email Protection
-- tapOn: Email Protection, Block email trackers and hide your address
+- tapOn: Email Protection
 - assertVisible:
     id: searchEntry
 - assertVisible: https://duckduckgo.com/email/

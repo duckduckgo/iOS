@@ -82,29 +82,23 @@ class PrivacyDashboardViewController: UIViewController {
         privacyDashboardController.didFinishRulesCompilation()
         privacyDashboardController.updatePrivacyInfo(privacyInfo)
     }
-    
+
     private func privacyDashboardProtectionSwitchChangeHandler(state: ProtectionState) {
         guard let domain = privacyDashboardController.privacyInfo?.url.host else { return }
         
         let privacyConfiguration = privacyConfigurationManager.privacyConfig
-        
+        let pixelParam = ["trigger_origin": state.eventOrigin.screen.rawValue]
         if state.isProtected {
             privacyConfiguration.userEnabledProtection(forDomain: domain)
             ActionMessageView.present(message: UserText.messageProtectionEnabled.format(arguments: domain))
+            Pixel.fire(pixel: .dashboardProtectionAllowlistRemove, withAdditionalParameters: pixelParam)
         } else {
             privacyConfiguration.userDisabledProtection(forDomain: domain)
             ActionMessageView.present(message: UserText.messageProtectionDisabled.format(arguments: domain))
+            Pixel.fire(pixel: .dashboardProtectionAllowlistAdd, withAdditionalParameters: pixelParam)
         }
         
         contentBlockingManager.scheduleCompilation()
-        
-        privacyDashboardController.didStartRulesCompilation()
-        switch source {
-        case .menu:
-            Pixel.fire(pixel: state.isProtected ? .reportBrokenSiteProtectionEnabled : .reportBrokenSiteProtectionDisabled)
-        case .dashboard:
-            Pixel.fire(pixel: state.isProtected ? .privacyDashboardProtectionEnabled : .privacyDashboardProtectionDisabled)
-        }
     }
     
     private func privacyDashboardCloseHandler() {

@@ -529,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Η σύνδεση διαγράφηκε";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Επαναφορά αποκλεισμένων ιστότοπων";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Ακύρωση";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Επαναφορά αποκλεισμένων ιστότοπων";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Εάν κάνετε επαναφορά των αποκλεισμένων ιστότοπων, θα σας ζητηθεί να αποθηκεύσετε τη σύνδεσή σας την επόμενη φορά που θα συνδεθείτε σε οποιονδήποτε από τους ιστότοπους αυτούς.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Αναζήτηση στοιχείων σύνδεσης";
 
@@ -563,7 +575,7 @@
 "autofill.logins.prompt.password.button.title" = "Κωδικός πρόσβασης για %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Χρήση αποθηκευμένων στοιχείων σύνδεσης;";
+"autofill.logins.prompt.title" = "Χρήση αποθηκευμένου κωδικού πρόσβασης;";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "για '%@'";
@@ -613,26 +625,23 @@
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Το ιδιωτικό όνομα χρήστη Duck Address καταργήθηκε";
 
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Μην ζητάτε ποτέ αυτόν τον ιστότοπο";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Οι συνδέσεις αποθηκεύονται με ασφάλεια στη συσκευή σας στο μενού Συνδέσεις.";
+"autofill.save-login.new-user.message" = "Οι κωδικοί πρόσβασης αποθηκεύονται με ασφάλεια στη συσκευή σας στο μενού Συνδέσεις.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Θέλετε να αποθηκεύσει το DuckDuckGo τη σύνδεσή σας;";
+"autofill.save-login.new-user.title" = "Θέλετε το DuckDuckGo να αποθηκεύσει τον κωδικό πρόσβασής σας;";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Να μην αποθηκευτεί";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Αποθήκευση σύνδεσης";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Αποθήκευση σύνδεσης;";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Αποθήκευση κωδικού πρόσβασης";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Αποθήκευση κωδικού πρόσβασης;";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Εμφάνιση κωδικού πρόσβασης";
@@ -641,7 +650,7 @@
 "autofill.signin.to.manage" = "%@ για διαχείριση των διευθύνσεών σας Duck Address σε αυτήν τη συσκευή.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "Το DuckDuckGo θα ενημερώσει αυτήν την αποθηκευμένη σύνδεση στη συσκευή σας.";
+"autofill.update-password.message" = "Το DuckDuckGo θα ενημερώσει αυτόν τον αποθηκευμένο κωδικό πρόσβασης στη συσκευή σας.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Ενημέρωση κωδικού πρόσβασης";

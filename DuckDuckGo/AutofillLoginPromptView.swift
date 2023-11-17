@@ -44,7 +44,7 @@ struct AutofillLoginPromptView: View {
             VStack {
                 Spacer()
                     .frame(height: Const.Size.topPadding)
-                AutofillViews.WebsiteWithFavicon(accountDomain: viewModel.domain)
+                AutofillViews.AppIconHeader()
                 Spacer()
                     .frame(height: Const.Size.headlineTopPadding)
                 AutofillViews.Headline(title: viewModel.message)

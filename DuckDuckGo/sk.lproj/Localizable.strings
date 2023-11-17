@@ -529,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Prihlasovacie údaje boli odstránené";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Obnovenie vylúčených lokalít";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Zrušiť";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Obnovenie vylúčených lokalít";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Ak obnovíte vylúčené lokality, pri ďalšom prihlásení na niektorú z týchto lokalít dostanete výzvu na uloženie prihlasovacích údajov.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Vyhľadávanie prihlásení";
 
@@ -563,7 +575,7 @@
 "autofill.logins.prompt.password.button.title" = "Heslo pre %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Použiť uložené prihlasovacie údaje?";
+"autofill.logins.prompt.title" = "Použiť uložené heslo?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "pre „%@”";
@@ -613,26 +625,23 @@
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Používateľské meno Private Duck Address bolo odstránené";
 
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Nikdy sa nepýtať na túto stránku";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Prihlasovacie údaje sú bezpečne uložené v zariadení v ponuke Prihlásenia.";
+"autofill.save-login.new-user.message" = "Heslá sú bezpečne uložené na vašom zariadení v ponuke Prihlásenia.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Chcete, aby DuckDuckGo uložil vaše prihlasovacie údaje?";
+"autofill.save-login.new-user.title" = "Chcete, aby DuckDuckGo uložil vaše heslo?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Neukladať";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Uložiť prihlasovacie údaje";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Uložiť prihlasovacie údaje?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Uložiť heslo";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Uložiť heslo?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Zobraziť heslo";
@@ -641,7 +650,7 @@
 "autofill.signin.to.manage" = "%@ na správu vašich Duck adries na tomto zariadení.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo bude aktualizovať tieto uložené prihlasovacie údaje vo vašom zariadení.";
+"autofill.update-password.message" = "DuckDuckGo aktualizuje toto uložené heslo vo vašom zariadení.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Aktualizovať heslo";

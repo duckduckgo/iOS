@@ -529,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Início de sessão eliminado";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Repor sites excluídos";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Cancelar";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Repor sites excluídos";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Se repuseres os sites excluídos, ser-te-á pedido que guardes os teus dados de início de sessão da próxima vez que iniciares sessão num destes sites.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Pesquisar inícios de sessão";
 
@@ -563,7 +575,7 @@
 "autofill.logins.prompt.password.button.title" = "Palavra-passe para % @";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Utilizar um início de sessão guardado?";
+"autofill.logins.prompt.title" = "Usar uma palavra-passe guardada?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "para \"%@\"";
@@ -613,26 +625,23 @@
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "O nome de utilizador privado do Duck Address foi removido";
 
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Nunca pedir para este site";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Os dados de início de sessão são armazenados de forma segura no teu dispositivo no menu Inícios de sessão.";
+"autofill.save-login.new-user.message" = "As palavras-passe são armazenadas de forma segura no teu dispositivo no menu Inícios de sessão.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Queres que o DuckDuckGo guarde o teu início de sessão?";
+"autofill.save-login.new-user.title" = "Queres que o DuckDuckGo guarde a tua palavra-passe?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Não guardes";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Guardar início de sessão";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Guardar início de sessão?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Guardar palavra-passe";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Guardar palavra-passe?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Mostrar palavra-passe";
@@ -641,7 +650,7 @@
 "autofill.signin.to.manage" = "%@ para gerires os teus Duck Addresses neste dispositivo.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "O DuckDuckGo vai atualizar este início de sessão armazenado no teu dispositivo.";
+"autofill.update-password.message" = "O DuckDuckGo vai atualizar esta palavra-passe armazenada no teu dispositivo.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Atualizar palavra-passe";

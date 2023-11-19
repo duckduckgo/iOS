@@ -96,8 +96,8 @@ extension VPNWaitlistViewController: WaitlistViewModelDelegate {
 
     func waitlistViewModelDidAskToReceiveJoinedNotification(_ viewModel: WaitlistViewModel) async -> Bool {
         return await withCheckedContinuation { continuation in
-            let alertController = UIAlertController(title: UserText.waitlistNotifyMeConfirmationTitle,
-                                                    message: UserText.networkProtectionWaitlistNotificationAlertDescription,
+            let alertController = UIAlertController(title: UserText.networkProtectionNotificationPromptTitle,
+                                                    message: UserText.networkProtectionNotificationPromptDescription,
                                                     preferredStyle: .alert)
             alertController.overrideUserInterfaceStyle()
 

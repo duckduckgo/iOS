@@ -97,11 +97,11 @@ final class VPNWaitlist: Waitlist {
         case .none:
             return ""
         case .waitlistAvailable:
-            return "Join the private waitlist"
+            return UserText.networkProtectionSettingsSubtitleNotJoined
         case .waitlistJoined:
-            return "You're on the list!"
+            return UserText.networkProtectionSettingsSubtitleJoinedButNotInvited
         case .waitlistInvitedPendingTermsAcceptance:
-            return "You're invited!"
+            return UserText.networkProtectionSettingsSubtitleJoinedAndInvited
         case .waitlistInvited, .inviteCodeInvited:
             assertionFailure("These states should use the VPN connection status")
             return ""

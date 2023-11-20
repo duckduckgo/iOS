@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "BrowserServicesKit",
+        "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
+        "state": {
+          "branch": "fcappelli/breakage_report_improvements",
+          "revision": "3beb9e40d9062b330a56b5af77f944a9aa6c39e3",
+          "version": null
+        }
+      },
+      {
         "package": "CocoaAsyncSocket",
         "repositoryURL": "https://github.com/robbiehanson/CocoaAsyncSocket",
         "state": {
@@ -95,9 +104,9 @@
         "package": "PrivacyDashboardResources",
         "repositoryURL": "https://github.com/duckduckgo/privacy-dashboard",
         "state": {
-          "branch": "shane/ios-form",
-          "revision": "ad774518f25039ca46d3a7b94e4bf1288f5f581b",
-          "version": null
+          "branch": null,
+          "revision": "59dedf0f4ff1e9147de0806a54c6043861eb0870",
+          "version": "3.1.0"
         }
       },
       {

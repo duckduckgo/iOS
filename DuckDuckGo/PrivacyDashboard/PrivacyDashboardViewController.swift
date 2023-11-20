@@ -102,7 +102,7 @@ class PrivacyDashboardViewController: UIViewController {
     }
     
     private func privacyDashboardCloseHandler() {
-        self.dismiss(animated: true)
+        dismiss(animated: true)
     }
 }
 

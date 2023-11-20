@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": "fcappelli/breakage_report_improvements",
-          "revision": "3beb9e40d9062b330a56b5af77f944a9aa6c39e3",
+          "revision": "60cc52d888adb482519495b73277b5f15d128ab4",
           "version": null
         }
       },
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
           "branch": null,
-          "revision": "c8e895c8fd50dc76e8d8dc827a636ad77b7f46ff",
-          "version": "9.0.0"
+          "revision": "93677cc02cfe650ce7f417246afd0e8e972cd83e",
+          "version": "10.0.0"
         }
       },
       {

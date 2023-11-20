@@ -90,6 +90,7 @@ class TabViewController: UIViewController {
     lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var internalUserDecider = AppDependencyProvider.shared.internalUserDecider
 
+    private lazy var autofillNeverPromptWebsitesManager = AppDependencyProvider.shared.autofillNeverPromptWebsitesManager
     private lazy var autofillWebsiteAccountMatcher = AutofillWebsiteAccountMatcher(autofillUrlMatcher: AutofillDomainNameUrlMatcher(),
                                                                                    tld: TabViewController.tld)
     private(set) var tabModel: Tab
@@ -121,6 +122,8 @@ class TabViewController: UIViewController {
     // Required to prevent fireproof prompt presenting before autofill save login prompt
     private var saveLoginPromptLastDismissed: Date?
     private var saveLoginPromptIsPresenting: Bool = false
+
+    private var cachedRuntimeConfigurationForDomain: [String: String?] = [:]
 
     // If no trackers dax dialog was shown recently in this tab, ie without the user navigating somewhere else, e.g. backgrounding or tab switcher
     private var woShownRecently = false
@@ -616,6 +619,7 @@ class TabViewController: UIViewController {
 
     public func reload() {
         updateContentMode()
+        cachedRuntimeConfigurationForDomain = [:]
         webView.reload()
         privacyDashboard?.dismiss(animated: true)
     }
@@ -2303,7 +2307,7 @@ extension TabViewController: SecureVaultManagerDelegate {
     func secureVaultInitFailed(_ error: SecureStorageError) {
         SecureVaultErrorReporter.shared.secureVaultInitFailed(error)
     }
-    
+
     func secureVaultManagerIsEnabledStatus(_ manager: SecureVaultManager, forType type: AutofillType?) -> Bool {
         let isEnabled = AutofillSettingStatus.isAutofillEnabledInSettings &&
                         featureFlagger.isFeatureOn(.autofillCredentialInjecting) &&
@@ -2316,8 +2320,8 @@ extension TabViewController: SecureVaultManagerDelegate {
         return isEnabled
     }
 
-    func secureVaultManagerShouldSaveData(_: SecureVaultManager) -> Bool {
-        true
+    func secureVaultManagerShouldSaveData(_ manager: SecureVaultManager) -> Bool {
+        return secureVaultManagerIsEnabledStatus(manager, forType: nil)
     }
 
     func secureVaultManager(_ vault: SecureVaultManager,
@@ -2456,6 +2460,38 @@ extension TabViewController: SecureVaultManagerDelegate {
     func secureVaultManager(_: BrowserServicesKit.SecureVaultManager, didRequestPasswordManagerForDomain domain: String) {
     }
 
+    func secureVaultManager(_: SecureVaultManager, didRequestRuntimeConfigurationForDomain domain: String, completionHandler: @escaping (String?) -> Void) {
+        // didRequestRuntimeConfigurationForDomain fires for every iframe loaded on a website
+        // so caching the runtime configuration for the domain to prevent unnecessary re-building of the configuration
+        if let runtimeConfigurationForDomain = cachedRuntimeConfigurationForDomain[domain] as? String {
+            completionHandler(runtimeConfigurationForDomain)
+            return
+        }
+
+        let runtimeConfiguration =
+                DefaultAutofillSourceProvider.Builder(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+                                                                         properties: buildContentScopePropertiesForDomain(domain))
+                                                                .build()
+                                                                .buildRuntimeConfigResponse()
+
+        cachedRuntimeConfigurationForDomain = [domain: runtimeConfiguration]
+        completionHandler(runtimeConfiguration)
+    }
+
+    private func buildContentScopePropertiesForDomain(_ domain: String) -> ContentScopeProperties {
+        var supportedFeatures = ContentScopeFeatureToggles.supportedFeaturesOniOS
+
+        if AutofillSettingStatus.isAutofillEnabledInSettings,
+           featureFlagger.isFeatureOn(.autofillCredentialsSaving),
+           autofillNeverPromptWebsitesManager.hasNeverPromptWebsitesFor(domain: domain) {
+            supportedFeatures.passwordGeneration = false
+        }
+
+        return ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell,
+                                      sessionKey: autofillUserScript?.sessionKey ?? "",
+                                      featureToggles: supportedFeatures)
+    }
+
     func secureVaultManager(_: SecureVaultManager, didReceivePixel pixel: AutofillUserScript.JSPixel) {
         guard !pixel.isEmailPixel else {
             // The iOS app uses a native email autofill UI, and sends its pixels separately. Ignore pixels sent from the JS layer.
@@ -2519,6 +2555,18 @@ extension TabViewController: SaveLoginViewControllerDelegate {
         viewController.dismiss(animated: true)
         saveLoginPromptLastDismissed = Date()
         saveLoginPromptIsPresenting = false
+    }
+
+    func saveLoginViewController(_ viewController: SaveLoginViewController, didRequestNeverPromptForWebsite domain: String) {
+        viewController.dismiss(animated: true)
+        saveLoginPromptLastDismissed = Date()
+        saveLoginPromptIsPresenting = false
+
+        do {
+            _ = try autofillNeverPromptWebsitesManager.saveNeverPromptWebsite(domain)
+        } catch {
+            os_log("%: failed to save never prompt for website %s", type: .error, #function, error.localizedDescription)
+        }
     }
     
     func saveLoginViewController(_ viewController: SaveLoginViewController,

@@ -529,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Bejelentkezés törölve";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Kizárt webhelyek visszaállítása";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Mégsem";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Kizárt webhelyek visszaállítása";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "A kizárt webhelyek visszaállítása esetén a rendszer a bejelentkezési adataid mentését kéri, amikor legközelebb bejelentkezel ezen webhelyek bármelyikére.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Bejelentkezési adatok keresése";
 
@@ -563,7 +575,7 @@
 "autofill.logins.prompt.password.button.title" = "%@ jelszava";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Mentett bejelentkezés használata?";
+"autofill.logins.prompt.title" = "Mentett jelszót használsz?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "erre: „%@“";
@@ -613,26 +625,23 @@
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Privát Duck-cím felhasználóneve eltávolítva";
 
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Soha ne kérdezzen rá ennél a webhelynél";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "A rendszer biztonságosan tárolja az eszköz Bejelentkezés menüjében elérhető bejelentkezési adatokat.";
+"autofill.save-login.new-user.message" = "A rendszer biztonságosan tárolja az eszköz Bejelentkezés menüjében elérhető jelszavakat.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "A DuckDuckGo mentse a bejelentkezést?";
+"autofill.save-login.new-user.title" = "A DuckDuckGo mentse a jelszót?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Mentés mellőzése";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Bejelentkezés mentése";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Mented a bejelentkezést?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Jelszó mentése";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Mented a jelszót?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Jelszó megjelenítése";
@@ -641,7 +650,7 @@
 "autofill.signin.to.manage" = "%@ a Duck-címek kezeléséhez ezen az eszközön.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "A DuckDuckGo frissíti az eszközödön ezt a tárolt bejelentkezést.";
+"autofill.update-password.message" = "A DuckDuckGo frissíti az eszközödön ezt a tárolt jelszót.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Jelszó frissítése";
@@ -1597,8 +1606,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Kedvencek";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "A DuckDuckGo célja egy új online bizalmi szint megteremtése.\n\nA DuckDuckGo Adatvédelmi Böngésző minden olyan alapvető adatvédelmi elemet tartalmaz, amelyre szükséged lehet ahhoz, hogy megvédd magad az internetes keresés és böngészés során, beleértve a nyomkövetők letiltását, az intelligensebb titkosítást és a DuckDuckGo privát keresést.\n\nAz internet végső soron nem feltétlenül kell, hogy ellenséges közeg legyen, és hisszük, hogy az általad megérdemelt adatvédelem olyan egyszerű is lehet, mint a redőny lehúzása.";
+/* about page */
+"settings.about.text" = "A 2008-ban alapított független internetes adatvédelmi cég, a DuckDuckGo egyszerű megoldást kínál azoknak, akiknek elegük van abból, hogy állandóan nyomon követik őket az interneten. Mi vagyunk annak a bizonyítéka, hogy kompromisszumok nélkül is lehet valódi online adatvédelmet biztosítani.\n\nA DuckDuckGo böngésző rendelkezik a böngészőktől elvárt funkciókkal, mint például könyvjelzők, lapok, jelszavak és egyéb funkciók, valamint több mint [egy tucat olyan hatékony adatvédelmi megoldással](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/), amelyet a legtöbb népszerű böngésző nem kínál alapértelmezés szerint. Ezek az egyedülállóan átfogó adatvédelmi megoldások segítenek megvédeni online tevékenységeid, legyen szó keresésről, böngészésről, e-mailezésről vagy sok minden másról.\n\nAdatvédelmi megoldásaink anélkül működnek, hogy bármit is tudnod kellene a technikai részletekről vagy bonyolult beállításokkal kellene foglalkoznod. Mindössze annyit kell tenned, hogy minden eszközödön a DuckDuckGo böngészőre váltasz, és máris igénybe veheted az alapértelmezés szerinti adatvédelmet.\n\nHa azonban *igazán* szeretnél bepillantani a motorháztető alá is, a [súgóoldalainkon](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/) további információkat találhatsz a DuckDuckGo adatvédelmi megoldásainak működéséről.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Jelentés beküldése";
@@ -1767,6 +1776,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "%@ üzenete:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Isten hozott a Kacsa oldalon!";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "Próbáld ki a DuckDuckGo Windowsos verzióját!";

@@ -575,7 +575,11 @@ class SettingsViewController: UITableViewController {
             AppDependencyProvider.shared.voiceSearchHelper.enableVoiceSearch(enableVoiceSearch)
         }
     }
-    
+
+    @IBAction func onAboutTapped() {
+        navigationController?.pushViewController(AboutViewController(), animated: true)
+    }
+
     private func showNoMicrophonePermissionAlert() {
         let alertController = NoMicPermissionAlert.buildAlert()
         present(alertController, animated: true, completion: nil)

@@ -34,6 +34,7 @@ class MockDependencyProvider: DependencyProvider {
     var voiceSearchHelper: VoiceSearchHelperProtocol
     var downloadManager: DownloadManager
     var autofillLoginSession: AutofillLoginSession
+    var autofillNeverPromptWebsitesManager: AutofillNeverPromptWebsitesManager
     var configurationManager: ConfigurationManager
 
     init() {
@@ -48,6 +49,7 @@ class MockDependencyProvider: DependencyProvider {
         voiceSearchHelper = defaultProvider.voiceSearchHelper
         downloadManager = defaultProvider.downloadManager
         autofillLoginSession = defaultProvider.autofillLoginSession
+        autofillNeverPromptWebsitesManager = defaultProvider.autofillNeverPromptWebsitesManager
         configurationManager = defaultProvider.configurationManager
     }
 }

@@ -21,25 +21,22 @@ tags:
     file: ../shared/sync_create.yaml
 
 # Copy Sync Code and Log Out
-- tapOn: Back
-- tapOn: Cancel
-- assertVisible: Save Recovery Key
-- tapOn: Copy Key
+- tapOn: Copy Code
 - tapOn: Not Now
-- tapOn: "1"
+- assertVisible: Sync & Back Up
+- tapOn: Turn Off Sync & Back Up
 - assertVisible: Turn Off Sync?
 - tapOn: Remove
 
 # Login
-- tapOn: "0"
-- tapOn: Recover Your Synced Data
-- tapOn: Manually Enter Code
+- assertVisible: Sync & Back Up
+- tapOn: Enter Text Code
 - tapOn: Paste
 - assertVisible: Device Synced!
 - tapOn: Next
 - tapOn: Not Now
 
 # Clean up
-- assertVisible: Sync
+- assertVisible: Sync & Back Up
 - runFlow:
     file: ../shared/sync_delete.yaml

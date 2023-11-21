@@ -4,6 +4,9 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
+/* No comment provided by engineer. */
+"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Редактиране";
 
@@ -132,6 +135,24 @@
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Съществуващите отметки няма да бъдат дублирани.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Превишихте ограничението за синхронизиране на отметки. Опитайте да изтриете някои от отметките. Докато този проблем не бъде разрешен, отметките няма да бъдат архивирани.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Синхронизирането на отметки е на пауза";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Превишихте ограничението за синхронизиране на пароли. Опитайте да изтриете някои от паролите. Докато този проблем не бъде разрешен, паролите няма да бъдат архивирани.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Синхронизирането на паролите е на пауза";
+
+/* Learn more button in alert */
+"alert.sync-paused-alert-learn-more-button" = "Научете повече";
+
+/* Confirmation button in alert */
+"alert.sync-paused-alert-ok-button" = "ОК";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Поставяне на всички раздели в отметки?";
@@ -754,48 +775,6 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Импортирайте HTML файл с отметки от друг браузър или експортирайте съществуващите отметки.";
 
-/* Broken Site Category */
-"brokensite.category.comments" = "Коментарите не се зареждат";
-
-/* Broken Site Category */
-"brokensite.category.content" = "Липсва съдържание";
-
-/* Broken Site Category */
-"brokensite.category.cookieprompt" = "Неуспешно управление на изскачащ прозорец за бисквитки";
-
-/* Broken Site Category */
-"brokensite.category.images" = "Изображенията не се зареждат";
-
-/* Broken Site Category */
-"brokensite.category.links" = "Връзките или бутоните не работят";
-
-/* Broken Site Category */
-"brokensite.category.login" = "Не мога да вляза";
-
-/* Broken Site Category */
-"brokensite.category.other" = "Нещо друго";
-
-/* Broken Site Category */
-"brokensite.category.paywall" = "Сайтът ме помоли да деактивирам";
-
-/* Broken Site Category */
-"brokensite.category.unsupported" = "Браузърът е несъвместим";
-
-/* Broken Site Category */
-"brokensite.category.videos" = "Видеото не се възпроизвежда";
-
-/* Broken Site Category Placeholder */
-"brokensite.categoryPlaceholder" = "Изберете проблем от списъка...";
-
-/* Broken Site Category Section Title */
-"brokensite.categoryTitle" = "ИЗБЕРЕТЕ КАТЕГОРИЯ";
-
-/* Broken Site Comment Placeholder */
-"brokensite.commentPlaceholder" = "Ако споделите повече подробности, може да ни помогне да се справим с този проблем";
-
-/* Broken Site Section Title */
-"brokensite.sectionTitle" = "ОПИШЕТЕ ПРОБЛЕМА";
-
 /* No comment provided by engineer. */
 "bucket: %@" = "контейнер: %@";
 
@@ -1071,6 +1050,18 @@
 
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Премахване";
+
+/* Display Mode for favorites */
+"favorites.settings.all-devices" = "Всички любими, запазени на устройството";
+
+/* Footer of the favorites settings table */
+"favorites.settings.footer" = "Изберете кои любими отметки да се показват в нов раздел въз основа на техния произход.";
+
+/* Header of the favorites settings table */
+"favorites.settings.header" = "Предпочитания за показване";
+
+/* Display Mode for favorites */
+"favorites.settings.mobile-only" = "Само любими на мобилни устройства";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Блокиране на реклами и изскачащи прозорци";
@@ -1438,6 +1429,9 @@
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
 
+/* Title text for an iOS quick action that opens VPN settings */
+"network.protection.quick-action.open-vpn" = "Отваряне на VPN";
+
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Connected - %@";
 
@@ -1477,8 +1471,59 @@
 /* Location label shown in NetworkProtection's status view. */
 "network.protection.status.view.location" = "Location";
 
+/* Label shown on the title of the settings section in NetworkProtection's status view. */
+"network.protection.status.view.settings.section.title" = "Управление";
+
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "Network Protection";
+
+/* Title for the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.button.title" = "Включване на известията";
+
+/* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.section.footer" = "Разрешете на DuckDuckGo да Ви уведомява, ако връзката бъде прекъсната или състоянието на VPN се промени.";
+
+/* List section footer for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.section.footer" = "Получавайте известия при прекъсване на връзката или промяна на състоянието на VPN.";
+
+/* Title for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.title" = "Известия за VPN";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.footer" = "Автоматично възстановяване на VPN връзка след прекъсване.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.title" = "Винаги включено";
+
+/* Title for the VPN Location screen's All Countries section. */
+"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Title for the VPN Location screen's Nearest Available selection item. */
+"network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
+
+/* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+
+/* Title for the VPN Location screen's Recommended section. */
+"network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Title for the VPN Notifications management screen. */
+"network.protection.vpn.notifications.title" = "Известия за VPN";
+
+/* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
+"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+
+/* Title for the Preferred Location VPN Settings item. */
+"network.protection.vpn.preferred.location.title" = "Preferred Location";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.footer" = "Мрежовата защита предотвратява изтичането на DNS към Вашия доставчик на интернет услуги, като насочва DNS заявките през VPN тунела към нашия собствен резолвер.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.title" = "Сигурен DNS";
+
+/* Title for the VPN Settings screen. */
+"network.protection.vpn.settings.title" = "Настройки на VPN";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
@@ -1593,9 +1638,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Отваряне в друго приложение?";
-
-/* No comment provided by engineer. */
-"report.brokensite.header" = "Изпращането на анонимен доклад за неработещ сайт ни помага да отстраним грешките и да подобрим приложението.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Търсене или въвеждане на адрес";

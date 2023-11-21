@@ -50,9 +50,8 @@ extension TabsModel {
     }
 
     func save() {
-        var data: Data
         do {
-            data = try NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
+            let data = try NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
             UserDefaults.app.set(data, forKey: Constants.key)
         } catch {
             os_log("Something went wrong archiving TabsModel %@", log: .generalLog, type: .error, error.localizedDescription)

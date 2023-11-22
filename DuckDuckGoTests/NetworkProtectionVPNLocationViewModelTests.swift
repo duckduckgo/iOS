@@ -24,6 +24,7 @@ import NetworkProtectionTestUtils
 @testable import DuckDuckGo
 
 // swiftlint:disable type_body_length
+// swiftlint:disable file_length
 
 final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
     private var listRepository: MockNetworkProtectionLocationListRepository!
@@ -34,7 +35,7 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         listRepository = MockNetworkProtectionLocationListRepository()
-        let testDefaults = UserDefaults(suiteName: "com.duckduckgo.\(String(describing: type(of: self)))")!
+        let testDefaults = UserDefaults(suiteName: #file + Thread.current.debugDescription)!
         tunnelSettings = TunnelSettings(defaults: testDefaults)
         viewModel = NetworkProtectionVPNLocationViewModel(locationListRepository: listRepository, tunnelSettings: tunnelSettings)
     }
@@ -49,186 +50,388 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
 
     // MARK: onViewAppeared
 
-    @MainActor
     func test_onViewAppeared_setsCorrectCountryTitle() async throws {
+        try await assertOnListLoadSetsCorrectCountryTitle { [weak self] in
+            await self?.viewModel.onViewAppeared()
+        }
+    }
+
+    func test_onViewAppeared_setsCountryID() async throws {
+        try await assertOnListLoadSetsCorrectCountryID { [weak self] in
+            await self?.viewModel.onViewAppeared()
+        }
+    }
+
+    func test_onViewAppeared_setsCorrectEmoji() async throws {
+        try await assertOnListLoadSetsCorrectEmoji { [weak self] in
+            await self?.viewModel.onViewAppeared()
+        }
+    }
+
+    func test_onViewAppeared_selectedCountryFromSettings_isSelectedSetToTrue() async throws {
+        try await assertOnListLoad_countryIsSelected { [weak self] testCaseCountryId in
+            self?.tunnelSettings.selectedLocation = .location(NetworkProtectionSelectedLocation(country: testCaseCountryId))
+            await self?.viewModel.onViewAppeared()
+        }
+    }
+
+    func test_onViewAppeared_NOTSelectedCountryFromSettings_isSelectedSetToFalse() async throws {
+        try await assertOnListLoad_isSelectedSetToFalse { [weak self] in
+            self?.tunnelSettings.selectedLocation = .location(NetworkProtectionSelectedLocation(country: "US"))
+            await self?.viewModel.onViewAppeared()
+        }
+    }
+
+    func test_onViewAppeared_nearestSelectedInSettings_isNearestSelectedSetToTrue() async throws {
+        try await assertNearestSelectedSetToTrue { [weak self] in
+            self?.tunnelSettings.selectedLocation = .nearest
+            await self?.viewModel.onViewAppeared()
+        }
+    }
+
+    func test_onViewAppeared_nearestNOTSelectedInSettings_isNearestSelectedSetToFalse() async throws {
+        try await assertNearestSelectedSetToFalse { [weak self] testCaseCountryId in
+            self?.tunnelSettings.selectedLocation = .location(NetworkProtectionSelectedLocation(country: testCaseCountryId))
+            await self?.viewModel.onViewAppeared()
+        }
+    }
+
+    func test_onViewAppeared_countryHas1City_subtitleIsNil() async throws {
+        try await assertOnListLoad_countryWith1City_hasNilSubtitle { [weak self] in
+            await self?.viewModel.onViewAppeared()
+        }
+    }
+
+    func test_onViewAppeared_countryHas1City_shouldShowPickerIsFalse() async throws {
+        try await assertOnListLoad_countryWith1City_shouldShowPickerIsFalse { [weak self] in
+            await self?.viewModel.onViewAppeared()
+        }
+    }
+
+    func test_onViewAppeared_countryHasMoreThan1City_shouldShowPickerIsTrue() async throws {
+        try await assertOnListLoad_countryHasMoreThan1City_shouldShowPickerIsTrue { [weak self] in
+            await self?.viewModel.onViewAppeared()
+        }
+    }
+
+    func test_onViewAppeared_countryHasMoreThan1City_subtitleShowsCityCount() async throws {
+        try await assertOnListLoad_countryHasMoreThan1City_subtitleShowsCityCount { [weak self] in
+            await self?.viewModel.onViewAppeared()
+        }
+    }
+
+    func test_onViewAppeared_showsCityTitles() async throws {
+        try await assertOnListLoad_showsCityTitles { [weak self] in
+            await self?.viewModel.onViewAppeared()
+        }
+    }
+
+    func test_onViewAppeared_cityIsSelected_itemIsSelected() async throws {
+        try await assertOnListLoad_itemIsSelected { [weak self] testCase in
+            self?.tunnelSettings.selectedLocation = .location(testCase)
+            await self?.viewModel.onViewAppeared()
+        }
+    }
+
+    func test_onViewAppeared_cityIsNOTSelected_itemIsNOTSelected() async throws {
+        let countries: [NetworkProtectionLocation] = [
+            try .testData(country: "NL", cityNames: ["Rotterdam", "Amsterdam"]),
+            try .testData(country: "DE", cityNames: ["Berlin", "Frankfurt", "Bremen"])
+        ]
+
+        listRepository.stubLocationList = countries
+        tunnelSettings.selectedLocation = .location(NetworkProtectionSelectedLocation(country: "US", city: "New York"))
+        await viewModel.onViewAppeared()
+        let selectedItems = try loadedItems().flatMap { $0.cityPickerItems }.filter(\.isSelected)
+        XCTAssertEqual(selectedItems.count, 0)
+    }
+
+    func test_onViewAppeared_countryWithoutCityIsSelected_nearestItemIsSelected() async throws {
+        try await assertOnListLoad_nearestItemIsSelected { [weak self] testCase in
+            self?.tunnelSettings.selectedLocation = .location(testCase)
+            await self?.viewModel.onViewAppeared()
+        }
+    }
+
+    // MARK: onNearestItemSelection
+
+    func test_onNearestItemSelection_setsCorrectCountryTitle() async throws {
+        try await assertOnListLoadSetsCorrectCountryTitle { [weak self] in
+            await self?.viewModel.onNearestItemSelection()
+        }
+    }
+
+    func test_onNearestItemSelection_setsCountryID() async throws {
+        try await assertOnListLoadSetsCorrectCountryID { [weak self] in
+            await self?.viewModel.onViewAppeared()
+        }
+    }
+
+    func test_onNearestItemSelection_setsCorrectEmoji() async throws {
+        try await assertOnListLoadSetsCorrectEmoji { [weak self] in
+            await self?.viewModel.onNearestItemSelection()
+        }
+    }
+
+    func test_onNearestItemSelection_isNearestSelectedSetToTrue() async throws {
+        try await assertNearestSelectedSetToTrue { [weak self] in
+            await self?.viewModel.onNearestItemSelection()
+        }
+    }
+
+    func test_onNearestItemSelection_countryHas1City_subtitleIsNil() async throws {
+        try await assertOnListLoad_countryWith1City_hasNilSubtitle { [weak self] in
+            await self?.viewModel.onNearestItemSelection()
+        }
+    }
+
+    func test_onNearestItemSelection_countryHas1City_shouldShowPickerIsFalse() async throws {
+        try await assertOnListLoad_countryWith1City_shouldShowPickerIsFalse { [weak self] in
+            await self?.viewModel.onNearestItemSelection()
+        }
+    }
+
+    func test_onNearestItemSelection_countryHasMoreThan1City_shouldShowPickerIsTrue() async throws {
+        try await assertOnListLoad_countryHasMoreThan1City_shouldShowPickerIsTrue { [weak self] in
+            await self?.viewModel.onNearestItemSelection()
+        }
+    }
+
+    func test_onNearestItemSelection_countryHasMoreThan1City_subtitleShowsCityCount() async throws {
+        try await assertOnListLoad_countryHasMoreThan1City_subtitleShowsCityCount { [weak self] in
+            await self?.viewModel.onNearestItemSelection()
+        }
+    }
+
+    func test_onNearestItemSelection_showsCityTitles() async throws {
+        try await assertOnListLoad_showsCityTitles { [weak self] in
+            await self?.viewModel.onNearestItemSelection()
+        }
+    }
+
+    // MARK: onCountryItemSelection
+
+    func test_onCountryItemSelection_setsCorrectCountryTitle() async throws {
+        try await assertOnListLoadSetsCorrectCountryTitle { [weak self] in
+            await self?.viewModel.onCountryItemSelection(id: "NL", cityId: "Rotterdam")
+        }
+    }
+
+    func test_onCountryItemSelection_setsCountryID() async throws {
+        try await assertOnListLoadSetsCorrectCountryID { [weak self] in
+            await self?.viewModel.onCountryItemSelection(id: "NL", cityId: "Rotterdam")
+        }
+    }
+
+    func test_onCountryItemSelection_setsCorrectEmoji() async throws {
+        try await assertOnListLoadSetsCorrectEmoji { [weak self] in
+            await self?.viewModel.onCountryItemSelection(id: "NL", cityId: "Rotterdam")
+        }
+    }
+
+    func test_onCountryItemSelection_selectedCountryFromSettings_isSelectedSetToTrue() async throws {
+        try await assertOnListLoad_countryIsSelected { [weak self] testCaseCountryId in
+            await self?.viewModel.onCountryItemSelection(id: testCaseCountryId)
+        }
+    }
+
+    func test_onCountryItemSelection_NOTSelectedCountry_isSelectedSetToFalse() async throws {
+        try await assertOnListLoad_isSelectedSetToFalse { [weak self] in
+            await self?.viewModel.onCountryItemSelection(id: "US")
+        }
+    }
+
+    func test_onCountryItemSelection_isNearestSelectedSetToFalse() async throws {
+        try await assertNearestSelectedSetToFalse { [weak self] testCaseCountryId in
+            await self?.viewModel.onCountryItemSelection(id: testCaseCountryId)
+        }
+    }
+
+    func test_onCountryItemSelection_countryHas1City_subtitleIsNil() async throws {
+        try await assertOnListLoad_countryWith1City_hasNilSubtitle { [weak self] in
+            await self?.viewModel.onCountryItemSelection(id: "NL", cityId: "Rotterdam")
+        }
+    }
+
+    func test_onCountryItemSelection_countryHas1City_shouldShowPickerIsFalse() async throws {
+        try await assertOnListLoad_countryWith1City_shouldShowPickerIsFalse { [weak self] in
+            await self?.viewModel.onCountryItemSelection(id: "NL", cityId: "Rotterdam")
+        }
+    }
+
+    func test_onCountryItemSelection_countryHasMoreThan1City_shouldShowPickerIsTrue() async throws {
+        try await assertOnListLoad_countryHasMoreThan1City_shouldShowPickerIsTrue { [weak self] in
+            await self?.viewModel.onCountryItemSelection(id: "NL", cityId: "Rotterdam")
+        }
+    }
+
+    func test_onCountryItemSelection_countryHasMoreThan1City_subtitleShowsCityCount() async throws {
+        try await assertOnListLoad_countryHasMoreThan1City_subtitleShowsCityCount { [weak self] in
+            await self?.viewModel.onCountryItemSelection(id: "NL", cityId: "Rotterdam")
+        }
+    }
+
+    func test_onCountryItemSelection_showsCityTitles() async throws {
+        try await assertOnListLoad_showsCityTitles { [weak self] in
+            await self?.viewModel.onCountryItemSelection(id: "NL", cityId: "Rotterdam")
+        }
+    }
+
+    func test_onCountryItemSelection_cityIsSelected_itemIsSelected() async throws {
+        try await assertOnListLoad_itemIsSelected { [weak self] testCase in
+            await self?.viewModel.onCountryItemSelection(id: testCase.country, cityId: testCase.city)
+        }
+    }
+
+    func test_onCountryItemSelection_countryWithoutCityIsSelected_nearestItemIsSelected() async throws {
+        try await assertOnListLoad_nearestItemIsSelected { [weak self] testCase in
+            await self?.viewModel.onCountryItemSelection(id: testCase.country, cityId: testCase.city)
+        }
+    }
+
+    // MARK: Assertions
+
+    func assertOnListLoadSetsCorrectCountryTitle(when functionUnderTest: () async -> Void,
+                                                 file: StaticString = #file,
+                                                 line: UInt = #line) async throws {
         let titlesForLocationsIDs = [
             "NL": "Netherlands",
             "DE": "Germany",
             "SE": "Sweden"
         ]
-        let locationIds = Array(titlesForLocationsIDs.keys)
-        let countries: [NetworkProtectionLocation] = try locationIds.map { id in
-            try .testData(country: id)
-        }
-        listRepository.stubLocationList = countries
-        await viewModel.onViewAppeared()
+        let countryIds = Array(titlesForLocationsIDs.keys)
+        try stubLocationList(with: countryIds)
+
+        await functionUnderTest()
 
         let items = try loadedItems()
 
-        for i in 0..<locationIds.count {
-            XCTContext.runActivity(named: "Country List index: \(i)") { _ in
-                XCTAssertEqual(items[i].title, titlesForLocationsIDs[locationIds[i]])
-            }
+        for i in 0..<countryIds.count {
+            XCTAssertEqual(items[i].title, titlesForLocationsIDs[countryIds[i]], file: file, line: line)
         }
     }
 
-    @MainActor
-    func test_onViewAppeared_setsCountryID() async throws {
+    func assertOnListLoadSetsCorrectCountryID(when functionUnderTest: () async -> Void,
+                                              file: StaticString = #file,
+                                              line: UInt = #line) async throws {
         let iDsForLocationsIDs = [
             "NL": "NL",
             "DE": "DE",
             "SE": "SE"
         ]
-        let locationIds = Array(iDsForLocationsIDs.keys)
-        let countries: [NetworkProtectionLocation] = try locationIds.map { id in
-            try .testData(country: id)
-        }
-        listRepository.stubLocationList = countries
-        await viewModel.onViewAppeared()
+        let countryIds = Array(iDsForLocationsIDs.keys)
+        try stubLocationList(with: countryIds)
+
+        await functionUnderTest()
 
         let items = try loadedItems()
 
-        for i in 0..<locationIds.count {
-            XCTContext.runActivity(named: "Country List index: \(i)") { _ in
-                XCTAssertEqual(items[i].id, iDsForLocationsIDs[locationIds[i]])
-            }
+        for i in 0..<countryIds.count {
+            XCTAssertEqual(items[i].id, iDsForLocationsIDs[countryIds[i]], file: file, line: line)
         }
     }
 
-    @MainActor
-    func test_onViewAppeared_setsCorrectEmoji() async throws {
+    func assertOnListLoadSetsCorrectEmoji(when functionUnderTest: () async -> Void,
+                                          file: StaticString = #file,
+                                          line: UInt = #line) async throws {
         let emojisForLocationsIDs = [
             "NL": "🇳🇱",
             "DE": "🇩🇪",
             "SE": "🇸🇪"
         ]
-        let locationIds = Array(emojisForLocationsIDs.keys)
-        let countries: [NetworkProtectionLocation] = try locationIds.map { id in
-            try .testData(country: id)
-        }
-        listRepository.stubLocationList = countries
-        await viewModel.onViewAppeared()
+        let countryIds = Array(emojisForLocationsIDs.keys)
+        try stubLocationList(with: countryIds)
+
+        await functionUnderTest()
 
         let items = try loadedItems()
 
-        for i in 0..<locationIds.count {
-            XCTContext.runActivity(named: "Country List index: \(i)") { _ in
-                XCTAssertEqual(items[i].emoji, emojisForLocationsIDs[locationIds[i]])
-            }
+        for i in 0..<countryIds.count {
+            XCTAssertEqual(items[i].emoji, emojisForLocationsIDs[countryIds[i]], file: file, line: line)
         }
     }
 
-    @MainActor
-    func test_onViewAppeared_selectedCountryFromSettings_isSelectedSetToTrue() async throws {
+    func assertOnListLoad_countryIsSelected(when functionUnderTestWithTestCaseID: (String) async -> Void,
+                                            file: StaticString = #file,
+                                            line: UInt = #line) async throws {
         let countryIds = ["NL", "DE", "SE"]
-        let countries: [NetworkProtectionLocation] = try countryIds.map { id in
-            try .testData(country: id)
-        }
-        listRepository.stubLocationList = countries
+        try stubLocationList(with: countryIds)
 
         for i in 0..<countryIds.count {
-            tunnelSettings.selectedLocation = .location(NetworkProtectionSelectedLocation(country: countryIds[i]))
-            await viewModel.onViewAppeared()
+            await functionUnderTestWithTestCaseID(countryIds[i])
 
             let items = try loadedItems()
 
-            XCTContext.runActivity(named: "Country List index: \(i)") { _ in
-                XCTAssertTrue(items[i].isSelected)
-            }
+            XCTAssertTrue(items[i].isSelected, file: file, line: line)
         }
     }
 
-    @MainActor
-    func test_onViewAppeared_NOTSelectedCountryFromSettings_isSelectedSetToFalse() async throws {
-        let countryIds = ["NL", "DE", "SE"]
-        let countries: [NetworkProtectionLocation] = try countryIds.map { id in
-            try .testData(country: id)
-        }
-        listRepository.stubLocationList = countries
-        tunnelSettings.selectedLocation = .location(NetworkProtectionSelectedLocation(country: "US"))
-        await viewModel.onViewAppeared()
+    func assertNearestSelectedSetToTrue(when functionUnderTest: () async -> Void,
+                                        file: StaticString = #file,
+                                        line: UInt = #line) async throws {
+        try stubLocationList(with: ["NL", "DE", "SE"])
 
-        for i in 0..<countryIds.count {
-            let items = try loadedItems()
-
-            XCTContext.runActivity(named: "Country List index: \(i)") { _ in
-                XCTAssertFalse(items[i].isSelected)
-            }
-        }
-    }
-
-    @MainActor
-    func test_onViewAppeared_nearestSelectedInSettings_isNearestSelectedSetToTrue() async throws {
-        let countries: [NetworkProtectionLocation] = try ["NL", "DE", "SE"].map { id in
-            try .testData(country: id)
-        }
-        listRepository.stubLocationList = countries
-        tunnelSettings.selectedLocation = .nearest
-        await viewModel.onViewAppeared()
+        await functionUnderTest()
         guard case .loaded(let isNearestSelected, _) = viewModel.state else {
             throw TestError.notLoadedState
         }
 
-        XCTAssertTrue(isNearestSelected)
+        XCTAssertTrue(isNearestSelected, file: file, line: line)
     }
 
-    @MainActor
-    func test_onViewAppeared_nearestNOTSelectedInSettings_isNearestSelectedSetToFalse() async throws {
+    func assertNearestSelectedSetToFalse(when functionUnderTestWithTestCaseID: (String) async -> Void,
+                                         file: StaticString = #file,
+                                         line: UInt = #line) async throws {
         let countryIds = ["NL", "DE", "SE"]
-        let countries: [NetworkProtectionLocation] = try countryIds.map { id in
-            try .testData(country: id)
-        }
-        listRepository.stubLocationList = countries
+        try stubLocationList(with: countryIds)
 
         for i in 0..<countryIds.count {
-            tunnelSettings.selectedLocation = .location(NetworkProtectionSelectedLocation(country: countryIds[i]))
-            await viewModel.onViewAppeared()
+            await functionUnderTestWithTestCaseID(countryIds[i])
 
-            try XCTContext.runActivity(named: "Country List index: \(i)") { _ in
-                guard case .loaded(let isNearestSelected, _) = viewModel.state else {
-                    throw TestError.notLoadedState
-                }
-                XCTAssertFalse(isNearestSelected)
+            guard case .loaded(let isNearestSelected, _) = viewModel.state else {
+                throw TestError.notLoadedState
             }
+            XCTAssertFalse(isNearestSelected, file: file, line: line)
         }
     }
 
-    @MainActor
-    func test_onViewAppeared_countryHas1City_subtitleIsNil() async throws {
+    func assertOnListLoad_countryWith1City_hasNilSubtitle(when functionUnderTest: () async -> Void,
+                                                          file: StaticString = #file,
+                                                          line: UInt = #line) async throws {
         let countryIds = ["NL", "DE", "SE"]
         let countries: [NetworkProtectionLocation] = try countryIds.map { id in
             try .testData(country: id, cityNames: ["A city"])
         }
         listRepository.stubLocationList = countries
-        await viewModel.onViewAppeared()
+
+        await functionUnderTest()
+
         let items = try loadedItems()
 
         for i in 0..<countryIds.count {
-            XCTContext.runActivity(named: "Country List index: \(i)") { _ in
-                XCTAssertNil(items[i].subtitle)
-            }
+            XCTAssertNil(items[i].subtitle, file: file, line: line)
         }
     }
 
-    @MainActor
-    func test_onViewAppeared_countryHas1City_shouldShowPickerIsFalse() async throws {
+    func assertOnListLoad_countryWith1City_shouldShowPickerIsFalse(when functionUnderTest: () async -> Void,
+                                                                   file: StaticString = #file,
+                                                                   line: UInt = #line) async throws {
         let countryIds = ["NL", "DE", "SE"]
         let countries: [NetworkProtectionLocation] = try countryIds.map { id in
             try .testData(country: id, cityNames: ["A city"])
         }
         listRepository.stubLocationList = countries
-        await viewModel.onViewAppeared()
+        await functionUnderTest()
         let items = try loadedItems()
 
         for i in 0..<countryIds.count {
-            XCTContext.runActivity(named: "Country List index: \(i)") { _ in
-                XCTAssertFalse(items[i].shouldShowPicker)
-            }
+            XCTAssertFalse(items[i].shouldShowPicker, file: file, line: line)
         }
     }
 
-    @MainActor
-    func test_onViewAppeared_countryHasMoreThan1City_shouldShowPickerIsTrue() async throws {
+    func assertOnListLoad_countryHasMoreThan1City_shouldShowPickerIsTrue(when functionUnderTest: () async -> Void,
+                                                                         file: StaticString = #file,
+                                                                         line: UInt = #line) async throws {
         let countryIds = ["NL", "DE", "SE"]
         var countries = [NetworkProtectionLocation]()
 
@@ -243,18 +446,17 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
         }
 
         listRepository.stubLocationList = countries
-        await viewModel.onViewAppeared()
+        await functionUnderTest()
         let items = try loadedItems()
 
         for i in 0..<countryIds.count {
-            XCTContext.runActivity(named: "Country List index: \(i)") { _ in
-                XCTAssertTrue(items[i].shouldShowPicker)
-            }
+            XCTAssertTrue(items[i].shouldShowPicker, file: file, line: line)
         }
     }
 
-    @MainActor
-    func test_onViewAppeared_countryHasMoreThan1City_subtitleShowsCityCount() async throws {
+    func assertOnListLoad_countryHasMoreThan1City_subtitleShowsCityCount(when functionUnderTest: () async -> Void,
+                                                                         file: StaticString = #file,
+                                                                         line: UInt = #line) async throws {
         struct TestCase {
             let countryId: String
             let citiesCount: Int
@@ -274,18 +476,37 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
         }
 
         listRepository.stubLocationList = countries
-        await viewModel.onViewAppeared()
+
+        await functionUnderTest()
+
         let items = try loadedItems()
 
         for i in 0..<testCases.count {
-            XCTContext.runActivity(named: "Country List index: \(i)") { _ in
-                XCTAssertEqual(items[i].subtitle, testCases[i].expectedSubtitle)
-            }
+            XCTAssertEqual(items[i].subtitle, testCases[i].expectedSubtitle, file: file, line: line)
         }
     }
 
-    @MainActor
-    func test_onViewAppeared_showsCityTitles() async throws {
+    func assertOnListLoad_isSelectedSetToFalse(when functionUnderTest: () async -> Void,
+                                               file: StaticString = #file,
+                                               line: UInt = #line) async throws {
+        let countryIds = ["NL", "DE", "SE"]
+        let countries: [NetworkProtectionLocation] = try countryIds.map { id in
+            try .testData(country: id)
+        }
+        listRepository.stubLocationList = countries
+
+        await functionUnderTest()
+
+        for i in 0..<countryIds.count {
+            let items = try loadedItems()
+
+            XCTAssertFalse(items[i].isSelected, file: file, line: line)
+        }
+    }
+
+    func assertOnListLoad_showsCityTitles(when functionUnderTest: () async -> Void,
+                                          file: StaticString = #file,
+                                          line: UInt = #line) async throws {
         struct TestCase {
             let countryId: String
             let cityTitles: [String]
@@ -297,25 +518,25 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
         let countries: [NetworkProtectionLocation] = try testCases.map { testCase in
             return try .testData(country: testCase.countryId, cityNames: testCase.cityTitles)
         }
-
         listRepository.stubLocationList = countries
-        await viewModel.onViewAppeared()
+
+        await functionUnderTest()
+
         let items = try loadedItems()
 
         for testCaseIndex in 0..<testCases.count {
             let testCase = testCases[testCaseIndex]
             let countryItem = items[testCaseIndex]
             for cityIndex in 0..<testCase.cityTitles.count {
-                XCTContext.runActivity(named: "Country List index: \(testCaseIndex), City Index: \(cityIndex)") { _ in
-                    // First cityPickerItem title is always nearest
-                    XCTAssertEqual(testCase.cityTitles[cityIndex], countryItem.cityPickerItems[cityIndex+1].name)
-                }
+                // First cityPickerItem title is always nearest
+                XCTAssertEqual(testCase.cityTitles[cityIndex], countryItem.cityPickerItems[cityIndex+1].name, file: file, line: line)
             }
         }
     }
 
-    @MainActor
-    func test_onViewAppeared_cityIsSelected_itemIsSelected() async throws {
+    func assertOnListLoad_itemIsSelected(when functionUnderTestWithTestCase: (NetworkProtectionSelectedLocation) async -> Void,
+                                         file: StaticString = #file,
+                                         line: UInt = #line) async throws {
         let countries: [NetworkProtectionLocation] = [
             try .testData(country: "NL", cityNames: ["Rotterdam", "Amsterdam"]),
             try .testData(country: "DE", cityNames: ["Berlin", "Frankfurt", "Bremen"])
@@ -329,30 +550,16 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
         listRepository.stubLocationList = countries
 
         for testCase in selectionTestCases {
-            tunnelSettings.selectedLocation = .location(testCase)
-            await viewModel.onViewAppeared()
+            await functionUnderTestWithTestCase(testCase)
             let selectedItems = try loadedItems().flatMap { $0.cityPickerItems }.filter(\.isSelected)
-            XCTAssertEqual(selectedItems.count, 1)
-            XCTAssertEqual(selectedItems.first?.id, testCase.city)
+            XCTAssertEqual(selectedItems.count, 1, file: file, line: line)
+            XCTAssertEqual(selectedItems.first?.id, testCase.city, file: file, line: line)
         }
     }
 
-    @MainActor
-    func test_onViewAppeared_cityIsNOTSelected_itemIsNOTSelected() async throws {
-        let countries: [NetworkProtectionLocation] = [
-            try .testData(country: "NL", cityNames: ["Rotterdam", "Amsterdam"]),
-            try .testData(country: "DE", cityNames: ["Berlin", "Frankfurt", "Bremen"])
-        ]
-
-        listRepository.stubLocationList = countries
-        tunnelSettings.selectedLocation = .location(NetworkProtectionSelectedLocation(country: "US", city: "New York"))
-        await viewModel.onViewAppeared()
-        let selectedItems = try loadedItems().flatMap { $0.cityPickerItems }.filter(\.isSelected)
-        XCTAssertEqual(selectedItems.count, 0)
-    }
-
-    @MainActor
-    func test_onViewAppeared_countryWithoutCityIsSelected_nearestItemIsSelected() async throws {
+    func assertOnListLoad_nearestItemIsSelected(when functionUnderTestWithTestCase: (NetworkProtectionSelectedLocation) async -> Void,
+                                                file: StaticString = #file,
+                                                line: UInt = #line) async throws {
         let countries: [NetworkProtectionLocation] = [
             try .testData(country: "NL", cityNames: ["Rotterdam", "Amsterdam"]),
             try .testData(country: "DE", cityNames: ["Berlin", "Frankfurt", "Bremen"]),
@@ -367,15 +574,23 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
         listRepository.stubLocationList = countries
 
         for testCase in selectionTestCases {
-            tunnelSettings.selectedLocation = .location(testCase)
-            await viewModel.onViewAppeared()
+            await functionUnderTestWithTestCase(testCase)
             let selectedItems = try loadedItems().flatMap { $0.cityPickerItems }.filter(\.isSelected)
-            XCTAssertEqual(selectedItems.count, 1)
-            XCTAssertEqual(selectedItems.first?.id, NetworkProtectionVPNCityItemModel.nearestItemId)
+            XCTAssertEqual(selectedItems.count, 1, file: file, line: line)
+            XCTAssertEqual(selectedItems.first?.id, NetworkProtectionVPNCityItemModel.nearestItemId, file: file, line: line)
         }
     }
 
-    private func loadedItems(file: StaticString = #file, line: UInt = #line) throws -> [NetworkProtectionVPNCountryItemModel] {
+    // MARK: Helpers
+
+    private func stubLocationList(with countryIDs: [String]) throws {
+        let countries: [NetworkProtectionLocation] = try countryIDs.map { id in
+            try .testData(country: id)
+        }
+        listRepository.stubLocationList = countries
+    }
+
+    private func loadedItems() throws -> [NetworkProtectionVPNCountryItemModel] {
         guard case .loaded(_, countryItems: let items) = viewModel.state else {
             throw TestError.notLoadedState
         }
@@ -417,3 +632,5 @@ struct EncodableWrapper: Encodable {
         try self.wrapped.encode(to: encoder)
     }
 }
+
+// swiftlint:enable file_length

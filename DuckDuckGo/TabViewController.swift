@@ -1062,6 +1062,8 @@ extension TabViewController: WKNavigationDelegate {
                     } cancelHandler: {
                         decisionHandler(.cancel)
                     }
+                    // Rewrite the current URL to prevent spoofing from download URLs
+                    self.chromeDelegate?.omniBar.textField.text = "about:blank"
                 }
             } else {
                 Pixel.fire(pixel: .unhandledDownload)

@@ -39,24 +39,22 @@ final class NetworkProtectionVPNLocationViewModel: ObservableObject {
         state = .loading
     }
 
-    @MainActor
     func onViewAppeared() async {
         await reloadList()
     }
 
-    @MainActor
     func onNearestItemSelection() async {
         tunnelSettings.selectedLocation = .nearest
         await reloadList()
     }
 
-    @MainActor
     func onCountryItemSelection(id: String, cityId: String? = nil) async {
         let location = NetworkProtectionSelectedLocation(country: id, city: cityId)
         tunnelSettings.selectedLocation = .location(location)
         await reloadList()
     }
-
+    
+    @MainActor
     private func reloadList() async {
         guard let list = try? await locationListRepository.fetchLocationList() else { return }
         let selectedLocation = self.tunnelSettings.selectedLocation

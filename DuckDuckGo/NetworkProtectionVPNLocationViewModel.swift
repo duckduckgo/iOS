@@ -131,11 +131,6 @@ struct NetworkProtectionVPNCountryItemModel: Identifiable {
 }
 
 struct NetworkProtectionVPNCityItemModel: Identifiable {
-    fileprivate enum Selection {
-        case nearest
-        case city(NetworkProtectionLocation.City)
-    }
-
     static let nearestItemId = "nearestItemId"
     let id: String?
     let name: String

@@ -23,7 +23,6 @@ import Foundation
 import Combine
 import NetworkProtection
 
-@MainActor
 final class NetworkProtectionVPNLocationViewModel: ObservableObject {
     private let locationListRepository: NetworkProtectionLocationListRepository
     private let tunnelSettings: TunnelSettings
@@ -40,15 +39,18 @@ final class NetworkProtectionVPNLocationViewModel: ObservableObject {
         state = .loading
     }
 
+    @MainActor
     func onViewAppeared() async {
         await reloadList()
     }
 
+    @MainActor
     func onNearestItemSelection() async {
         tunnelSettings.selectedLocation = .nearest
         await reloadList()
     }
 
+    @MainActor
     func onCountryItemSelection(id: String, cityId: String? = nil) async {
         let location = NetworkProtectionSelectedLocation(country: id, city: cityId)
         tunnelSettings.selectedLocation = .location(location)

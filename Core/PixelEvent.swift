@@ -450,6 +450,7 @@ extension Pixel {
         case debugCantSaveBookmarkFix
 
         case debugCannotClearObservationsDatabase
+        case debugBookmarksLost
 
         // Return user measurement
         case debugReturnUserReadATB
@@ -876,6 +877,8 @@ extension Pixel.Event {
         case .dbRemoteMessagingUpdateMessageStatusError: return "m_d_db_rm_update_message_status"
         case .dbRemoteMessagingDeleteScheduledMessageError: return "m_d_db_rm_delete_scheduled_message"
         case .dbLocalAuthenticationError: return "m_d_local_auth_error"
+
+        case .debugBookmarksLost: return "m_debug_bookmarks_lost"
 
         case .configurationFetchInfo: return "m_d_cfgfetch"
             

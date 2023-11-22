@@ -58,14 +58,6 @@ class ThemeManager {
         }
     }
 
-    func restoreSetting() {
-        currentTheme = Self.makeTheme(name: AppDependencyProvider.shared.appSettings.currentThemeName)
-    }
-
-    func overrideSetting(_ theme: Theme) {
-        currentTheme = theme
-    }
-
     public static func makeTheme(name: ThemeName) -> Theme {
 
         switch name {

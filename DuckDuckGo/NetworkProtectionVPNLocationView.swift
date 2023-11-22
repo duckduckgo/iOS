@@ -63,9 +63,10 @@ struct NetworkProtectionVPNLocationView: View {
             )
         } header: {
             Text(UserText.netPVPNLocationRecommendedSectionTitle)
+                .foregroundStyle(Color.textPrimary)
         } footer: {
             Text(UserText.netPVPNLocationRecommendedSectionFooter)
-                .foregroundColor(.textSecondary)
+                .foregroundStyle(Color.textSecondary)
                 .font(.system(size: 13))
                 .padding(.top, 6)
         }
@@ -88,6 +89,7 @@ struct NetworkProtectionVPNLocationView: View {
             }
         } header: {
             Text(UserText.netPVPNLocationAllCountriesSectionTitle)
+                .foregroundStyle(Color.textPrimary)
         }
     }
 }
@@ -110,7 +112,7 @@ private struct CountryItem: View {
             action: action,
             label: {
                 Text(itemModel.emoji)
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text(itemModel.title)
                         .font(.system(size: 16))
                         .foregroundStyle(Color.textPrimary)
@@ -120,7 +122,6 @@ private struct CountryItem: View {
                             .foregroundStyle(Color.textSecondary)
                     }
                 }
-                .padding(.vertical, 1)
                 if itemModel.shouldShowPicker {
                     Spacer()
                     Menu {
@@ -131,6 +132,8 @@ private struct CountryItem: View {
                         }
                     } label: {
                         Image(systemName: "ellipsis.circle")
+                            .resizable()
+                            .frame(width: 22, height: 22)
                     }
                 }
             }
@@ -149,9 +152,7 @@ private struct ChecklistItem<Content>: View where Content: View {
             action: action,
             label: {
                 HStack(spacing: 12) {
-                    Image("Check-24")
-                        .resizable()
-                        .frame(width: 20, height: 20)
+                    Image(systemName: "checkmark")
                         .tint(.controlColor)
                         .if(!isSelected) {
                             $0.hidden()
@@ -161,7 +162,7 @@ private struct ChecklistItem<Content>: View where Content: View {
             }
         )
         .tint(Color(designSystemColor: .textPrimary))
-        .listRowInsets(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
+        .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
     }
 }
 
@@ -178,9 +179,7 @@ private struct MenuItem: View {
                 HStack(spacing: 12) {
                     Text(title)
                     Spacer()
-                    Image("Check-24")
-                        .resizable()
-                        .frame(width: 20, height: 20)
+                    Image(systemName: "checkmark")
                         .if(!isSelected) {
                             $0.hidden()
                         }
@@ -188,7 +187,6 @@ private struct MenuItem: View {
             }
         )
         .tint(Color(designSystemColor: .textPrimary))
-        .listRowInsets(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
     }
 }
 

@@ -529,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Aanmeldgegevens verwijderd";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Uitgesloten sites opnieuw instellen";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Annuleren";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Uitgesloten sites opnieuw instellen";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Als je uitgesloten sites opnieuw instelt, zie je de volgende keer dat je bij een van deze sites inlogt een melding om je inloggegevens op te slaan.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Aanmeldgegevens zoeken";
 
@@ -563,7 +575,7 @@
 "autofill.logins.prompt.password.button.title" = "Wachtwoord voor %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Opgeslagen aanmeldgegevens gebruiken?";
+"autofill.logins.prompt.title" = "Een opgeslagen wachtwoord gebruiken?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "voor '%@'";
@@ -613,26 +625,23 @@
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "De persoonlijke gebruikersnaam voor het Duck Address is verwijderd";
 
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Nooit vragen voor deze site";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Aanmeldgegevens worden veilig opgeslagen op je apparaat in het menu 'Aanmeldingen'.";
+"autofill.save-login.new-user.message" = "Wachtwoorden worden veilig opgeslagen op je apparaat in het menu 'Aanmeldingen'.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Wil je dat DuckDuckGo je login opslaat?";
+"autofill.save-login.new-user.title" = "Wil je dat DuckDuckGo je wachtwoord opslaat?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Niet opslaan";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Login opslaan";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Login opslaan?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Wachtwoord opslaan";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Wachtwoord opslaan?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Wachtwoord weergeven";
@@ -641,7 +650,7 @@
 "autofill.signin.to.manage" = "%@ om je Duck-adressen op dit apparaat te beheren.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo werkt deze opgeslagen aanmeldgegevens op je apparaat bij.";
+"autofill.update-password.message" = "DuckDuckGo werkt dit opgeslagen wachtwoord op je apparaat bij.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Wachtwoord bijwerken";
@@ -1597,8 +1606,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favorieten";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "Bij DuckDuckGo zetten we de nieuwe standaard voor vertrouwen online.\n\nDe DuckDuckGo Privacy Browser biedt alle essentiële facetten van privacy die je nodig hebt om jezelf te beschermen tijdens het zoeken en browsen op het internet, zoals het blokkeren van trackers, slimmere versleuteling en privézoekopdrachten.\n\nHet internet zou namelijk helemaal niet zo griezelig moeten zijn en de privacy die je online verdient, moet net zo eenvoudig zijn als het sluiten van de gordijnen.";
+/* about page */
+"settings.about.text" = "DuckDuckGo is het onafhankelijke internetprivacybedrijf, opgericht in 2008, voor iedereen die het beu is om online gevolgd te worden en daar een eenvoudige oplossing voor wil. Wij zijn het bewijs dat je privacy op internet écht beschermd kan worden zonder compromissen.\n\nDe DuckDuckGo-browser wordt geleverd met de functies die je van een webbrowser verwacht, zoals bladwijzers, tabbladen, wachtwoorden en meer, plus meer dan [een dozijn krachtige tools om je privacy te beschermen](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) die niet standaard worden aangeboden in de meeste populaire browsers. Deze unieke, uitgebreide privacybescherming helpt je online activiteiten te beschermen – of je nu zoekt, surft of mailt.\n\nJe hoeft niets te weten over de technische details of ingewikkelde instellingen om te profiteren van onze privacybescherming. Je hoeft alleen maar DuckDuckGo op al je apparaten te installeren en geniet dan standaard van privacy.\n\nMaar als je *een kijkje onder de motorkap* wilt, vind je meer informatie over de privacybescherming van DuckDuckGo op onze [hulppagina's](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Rapport versturen";
@@ -1767,6 +1776,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Een bericht van %@:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Welkom bij de Duck kant!";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "Probeer DuckDuckGo voor Windows!";

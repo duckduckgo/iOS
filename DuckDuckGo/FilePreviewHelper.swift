@@ -33,7 +33,10 @@ struct FilePreviewHelper {
     
     static func canAutoPreviewMIMEType(_ mimeType: MIMEType) -> Bool {
         switch mimeType {
-        case .reality, .usdz, .passbook, .calendar:
+        case .passbook:
+            return UIDevice.current.userInterfaceIdiom == .phone
+
+        case .reality, .usdz, .calendar:
             return true
         default:
             return false

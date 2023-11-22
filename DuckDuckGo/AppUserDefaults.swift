@@ -252,7 +252,7 @@ public class AppUserDefaults: AppSettings {
             userDefaults?.set(newValue, forKey: Keys.autofillCredentialsEnabled)
         }
     }
-    
+
     @UserDefaultsWrapper(key: .autofillCredentialsSavePromptShowAtLeastOnce, defaultValue: false)
     var autofillCredentialsSavePromptShowAtLeastOnce: Bool
     

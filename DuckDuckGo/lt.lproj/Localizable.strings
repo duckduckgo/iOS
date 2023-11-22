@@ -529,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Prisijungimas ištrintas";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Iš naujo nustatyti neįtrauktas svetaines";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Atšaukti";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Iš naujo nustatyti neįtrauktas svetaines";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Jei iš naujo nustatysite neįtrauktas svetaines, kitą kartą, kai prisijungsite prie bet kurios iš šių svetainių, būsite paraginti išsaugoti savo prisijungimo vardą.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Ieškoti prisijungimų";
 
@@ -563,7 +575,7 @@
 "autofill.logins.prompt.password.button.title" = "Slaptažodis, skirtas %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Naudoti išsaugotą prisijungimą?";
+"autofill.logins.prompt.title" = "Naudoti išsaugotą slaptažodį?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "„%@“";
@@ -613,26 +625,23 @@
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Privatus „Duck Address“ naudotojo vardas buvo pašalintas";
 
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Niekada neklauskite šioje svetainėje";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Prisijungimai saugiai saugomi jūsų įrenginio meniu „Prisijungimai“.";
+"autofill.save-login.new-user.message" = "Slaptažodžiai saugiai saugomi jūsų įrenginio meniu „Prisijungimai“.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Ar norite, kad „DuckDuckGo“ išsaugotų jūsų prisijungimą?";
+"autofill.save-login.new-user.title" = "Ar norite, kad „DuckDuckGo“ išsaugotų jūsų slaptažodį?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Neišsaugokite";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Išsaugoti prisijungimą";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Išsaugoti prisijungimą?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Išsaugoti slaptažodį";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Išsaugoti slaptažodį?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Rodyti slaptažodį";
@@ -641,7 +650,7 @@
 "autofill.signin.to.manage" = "%@, kad galėtumėte valdyti savo „Duck Address“ šiame įrenginyje.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "„DuckDuckGo“ atnaujins šį jūsų įrenginyje įrašytą prisijungimą.";
+"autofill.update-password.message" = "„DuckDuckGo“ atnaujins šį jūsų įrenginyje išsaugotą slaptažodį.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Atnaujinti slaptažodį";
@@ -1597,8 +1606,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Mėgstami";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "„DuckDuckGo“ nustatome naują patikimumo tinkle standartą.\n\n„DuckDuckGo“ privatumo naršyklė užtikrina visus svarbiausius įrankius, kurie padės apsaugoti savo privatumą ieškant ir naršant tinkle, įskaitant sekiklių blokavimą, išmanųjį šifravimą ir „DuckDuckGo“ privačias paieškas.\n\nMūsų komanda tiki, kad internetas neturėtų būti toks baisus, o privatumas, kurio nusipelnėte internete, turėtų būti ranka pasiekiamas.";
+/* about page */
+"settings.about.text" = "„DuckDuckGo“ yra nepriklausoma interneto privatumo bendrovė, įkurta 2008 metais ir skirta visiems, kurie pavargo nuo sekimo internete ir nori lengvo sprendimo. Esame įrodymas, kad galite gauti tikrą privatumo apsaugą internete be kompromisų.\n\n„DuckDuckGo“ naršyklėje yra funkcijos, kurių tikitės iš pagrindinės naršyklės, pvz., žymės, skirtukai, slaptažodžiai ir dar daugiau, taip pat [keliolika galingų privatumo apsaugos priemonių](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) pagal numatytuosius nustatymus nėra siūlomas daugelyje populiarių naršyklių. Šis unikalus išsamus privatumo apsaugos rinkinys padeda apsaugoti jūsų veiklą internete – nuo paieškos iki naršymo, el. pašto ir kt.\n\nMūsų privatumo apsaugos priemonės veikia nereikalaudamos nieko žinoti apie technines detales ar naudotis sudėtingais nustatymais. Tereikia visuose įrenginiuose perjungti naršyklę į „DuckDuckGo“ ir privatumas bus užtikrintas pagal numatytuosius nustatymus.\n\nTačiau jei norite žvilgtelėti po gaubtu, daugiau informacijos apie tai, kaip veikia „DuckDuckGo“ privatumo apsauga, galite rasti mūsų [pagalbos puslapiuose] (ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Pateikti ataskaitą";
@@ -1767,6 +1776,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Pranešimas iš %@:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Sveiki prisijungę prie „Duck“!";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "Išbandykite „DuckDuckGo“, skirtą „Windows“!";

@@ -250,7 +250,6 @@ class MainViewController: UIViewController {
         registerForApplicationEvents()
         registerForCookiesManagedNotification()
         registerForSettingsChangeNotifications()
-        registerForOrientationChangeNotification()
 
         tabManager.cleanupTabsFaviconCache()
 
@@ -274,17 +273,6 @@ class MainViewController: UIViewController {
     override func performSegue(withIdentifier identifier: String, sender: Any?) {
         assertionFailure()
         super.performSegue(withIdentifier: identifier, sender: sender)
-    }
-
-    func registerForOrientationChangeNotification() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(orientationDidChange),
-                                               name: UIDevice.orientationDidChangeNotification,
-                                               object: nil)
-    }
-
-    @objc func orientationDidChange() {
-        onAddressBarPositionChanged()
     }
 
     func loadSuggestionTray() {

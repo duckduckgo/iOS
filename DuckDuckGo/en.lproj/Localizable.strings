@@ -1519,6 +1519,9 @@ https://duckduckgo.com/mac";
 /* Title for the VPN Location screen's All Countries section. */
 "network.protection.vpn.location.all.countries.section.title" = "All Countries";
 
+/* Subtitle of countries item when there are multiple cities, example :  */
+"network.protection.vpn.location.country.item.formatted.cities.count" = "%d cities";
+
 /* Title for the VPN Location screen's Nearest Available selection item. */
 "network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
 

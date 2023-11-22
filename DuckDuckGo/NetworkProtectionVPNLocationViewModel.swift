@@ -110,7 +110,7 @@ struct NetworkProtectionVPNCountryItemModel: Identifiable {
         self.id = netPLocation.country
         self.title = Locale.current.localizedString(forRegionCode: id) ?? id
         let hasMultipleCities = netPLocation.cities.count > 1
-        self.subtitle = hasMultipleCities ? "\(netPLocation.cities.count) cities" : nil
+        self.subtitle = hasMultipleCities ? UserText.netPVPNLocationCountryItemFormattedCitiesCount(netPLocation.cities.count) : nil
         self.cityPickerItems = cityPickerItems
         self.emoji = Self.flag(country: netPLocation.country)
         self.shouldShowPicker = hasMultipleCities

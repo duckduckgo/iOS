@@ -656,9 +656,13 @@ In addition to the details entered into this form, your app issue report will co
     static let netPPreferredLocationNearest = NSLocalizedString("network.protection.vpn.preferred.location.nearest", value: "Nearest Available", comment: "Label for the Preferred Location VPN Settings item when the nearest available location is selected.")
     static let netPVPNLocationTitle = NSLocalizedString("network.protection.vpn.location.title", value: "VPN Location", comment: "Title for the VPN Location screen.")
     static let netPVPNLocationRecommendedSectionTitle = NSLocalizedString("network.protection.vpn.location.recommended.section.title", value: "Recommended", comment: "Title for the VPN Location screen's Recommended section.")
+    static let netPVPNLocationRecommendedSectionFooter = NSLocalizedString("network.protection.vpn.location.recommended.section.footer", value: "Automatically connect to the nearest server we can find", comment: "Footer describing the VPN Location screen's Recommended section which just has Nearest Available.")
     static let netPVPNLocationAllCountriesSectionTitle = NSLocalizedString("network.protection.vpn.location.all.countries.section.title", value: "All Countries", comment: "Title for the VPN Location screen's All Countries section.")
     static let netPVPNLocationNearestAvailableItemTitle = NSLocalizedString("network.protection.vpn.location.nearest.available.item.title", value: "Nearest Available", comment: "Title for the VPN Location screen's Nearest Available selection item.")
-    static let netPVPNLocationRecommendedSectionFooter = NSLocalizedString("network.protection.vpn.location.recommended.section.footer", value: "Automatically connect to the nearest server we can find", comment: "Footer describing the VPN Location screen's Recommended section which just has Nearest Available.")
+    static func netPVPNLocationCountryItemFormattedCitiesCount(_ count: Int) -> String {
+        let message = NSLocalizedString("network.protection.vpn.location.country.item.formatted.cities.count", value: "%d cities", comment: "Subtitle of countries item when there are multiple cities, example : ")
+        return message.format(arguments: count)
+    }
     static let netPAlwaysOnSettingTitle = NSLocalizedString("network.protection.vpn.always.on.setting.title", value: "Always On", comment: "Title for the Always on VPN setting item.")
     static let netPAlwaysOnSettingFooter = NSLocalizedString("network.protection.vpn.always.on.setting.footer", value: "Automatically restore a VPN connection after interruption.", comment: "Footer text for the Always on VPN setting item.")
     static let netPSecureDNSSettingTitle = NSLocalizedString("network.protection.vpn.secure.dns.setting.title", value: "Secure DNS", comment: "Title for the Always on VPN setting item.")

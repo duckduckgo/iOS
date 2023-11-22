@@ -387,8 +387,7 @@ class SettingsViewController: UITableViewController {
             syncDataProviders: syncDataProviders
         )
         autofillController.delegate = self
-        Pixel.fire(pixel: .autofillSettingsOpened,
-                   withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
+        Pixel.fire(pixel: .autofillSettingsOpened)
         navigationController?.pushViewController(autofillController, animated: animated)
     }
     

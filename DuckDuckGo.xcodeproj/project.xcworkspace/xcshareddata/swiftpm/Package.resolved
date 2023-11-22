@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "shane/css-dbp",
-          "revision": "fe57c7c00a6515f1b520d9a0449ed8be73ab2e42",
-          "version": null
+          "branch": null,
+          "revision": "af63158c03de7a47fb9e2cbcd97fbd28a64ab1fd",
+          "version": "84.2.0"
         }
       },
       {

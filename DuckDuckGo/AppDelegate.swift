@@ -116,17 +116,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if testing {
             _ = DefaultUserAgentManager.shared
             Database.shared.loadStore { _, _ in }
-            bookmarksDatabase.loadStore { context, error in
-                guard let context = context else {
-                    fatalError("Error: \(error?.localizedDescription ?? "<unknown>")")
-                }
-                
-                let legacyStorage = LegacyBookmarksCoreDataStorage()
-                legacyStorage?.loadStoreAndCaches()
-                LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
-                                                      to: context)
-                legacyStorage?.removeStore()
-            }
+            _ = BookmarksDatabaseSetup.loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase, crashOnLoadStoreError: true)
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
         }
@@ -166,47 +156,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         var shouldResetBookmarksSyncTimestamp = false
-
-        bookmarksDatabase.loadStore { [weak self] context, error in
-            guard let context = context else {
-                if let error = error {
-                    Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
-                               error: error)
-                } else {
-                    Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase)
-                }
-
-                if shouldPresentInsufficientDiskSpaceAlertAndCrash {
-                    return
-                } else {
-                    Thread.sleep(forTimeInterval: 1)
-                    fatalError("Could not create Bookmarks database stack: \(error?.localizedDescription ?? "err")")
-                }
-            }
-            
-            let legacyStorage = LegacyBookmarksCoreDataStorage()
-            legacyStorage?.loadStoreAndCaches()
-            LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
-                                                  to: context)
-            legacyStorage?.removeStore()
-
-            do {
-                BookmarkUtils.migrateToFormFactorSpecificFavorites(byCopyingExistingTo: .mobile, in: context)
-                if context.hasChanges {
-                    try context.save(onErrorFire: .bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders)
-                    if let syncDataProviders = self?.syncDataProviders {
-                        syncDataProviders.bookmarksAdapter.shouldResetBookmarksSyncTimestamp = true
-                    } else {
-                        shouldResetBookmarksSyncTimestamp = true
-                    }
-                }
-            } catch {
-                Thread.sleep(forTimeInterval: 1)
-                fatalError("Could not prepare Bookmarks DB structure")
-            }
-
-            WidgetCenter.shared.reloadAllTimelines()
+        if BookmarksDatabaseSetup.loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase,
+                                                      crashOnLoadStoreError: !shouldPresentInsufficientDiskSpaceAlertAndCrash) {
+            // MARK: post-Bookmarks migration logic
+            assertBookmarksMigrationHappensOnlyOnce()
+            shouldResetBookmarksSyncTimestamp = true
         }
+
+        WidgetCenter.shared.reloadAllTimelines()
 
 #if APP_TRACKING_PROTECTION
         appTrackingProtectionDatabase.loadStore { context, error in
@@ -326,6 +283,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #endif
 
         return true
+    }
+
+    private func assertBookmarksMigrationHappensOnlyOnce() {
+        let key = UserDefaultsWrapper<Any>.Key.bookmarksLastGoodVersion.rawValue
+        if let lastGoodVersion = UserDefaults.standard.string(forKey: key) {
+            Pixel.fire(pixel: .debugBookmarksLost, withAdditionalParameters: [
+                PixelParameters.bookmarksLastGoodVersion: lastGoodVersion
+            ])
+            assertionFailure("Unexpected bookmarks migration")
+        } else {
+            UserDefaults.standard.setValue(AppVersion().versionNumber, forKey: key)
+        }
     }
 
     private func presentPreemptiveCrashAlert() {

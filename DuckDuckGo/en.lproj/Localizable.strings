@@ -1526,7 +1526,7 @@ https://duckduckgo.com/mac";
 "network.protection.vpn.always.on.setting.title" = "Always On";
 
 /* Footer text for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.footer" = "Let local traffic bypass the VPN and connect to devices on your local network, like a printer.";
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Bypass the VPN for local network connections, like to a printer.";
 
 /* Title for the Exclude Local Networks setting item. */
 "network.protection.vpn.exclude.local.networks.setting.title" = "Exclude Local Networks";

@@ -529,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Login slettet";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Nulstil ekskluderede websteder";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Annullér";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Nulstil ekskluderede websteder";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Hvis du nulstiller ekskluderede websteder, vil du blive bedt om at gemme dit login, næste gang du logger ind på en af disse sider.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Søg logins";
 
@@ -563,7 +575,7 @@
 "autofill.logins.prompt.password.button.title" = "Adgangskode til %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Vil du bruge et gemt login?";
+"autofill.logins.prompt.title" = "Brug en gemt adgangskode?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "for '%@'";
@@ -613,26 +625,23 @@
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Privat Duck Address-brugernavn blev fjernet";
 
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Spørg aldrig på dette websted";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Logins gemmes sikkert på din enhed i menuen Logins.";
+"autofill.save-login.new-user.message" = "Adgangskoder gemmes sikkert på din enhed i menuen Logins.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Skal DuckDuckGo gemme dit login?";
+"autofill.save-login.new-user.title" = "Skal DuckDuckGo gemme din adgangskode?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Gem ikke";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Gem login";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Gem login?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Gem adgangskode";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Gem adgangskode?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Vis adgangskode";
@@ -641,7 +650,7 @@
 "autofill.signin.to.manage" = "%@ for at administrere dine Duck-adresser på denne enhed.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo opdaterer dette gemte login på din enhed.";
+"autofill.update-password.message" = "DuckDuckGo opdaterer denne gemte adgangskode på din enhed.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Opdater adgangskode";

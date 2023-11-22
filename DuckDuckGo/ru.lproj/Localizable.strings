@@ -529,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Логин удален";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Сбросить список исключений";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Отменить";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Сбросить список исключений";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "В случае сброса списка исключений, при следующем входе на любой из этих сайтов вам предложат сохранить свои учетные данные.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Поиск логинов";
 
@@ -563,7 +575,7 @@
 "autofill.logins.prompt.password.button.title" = "Пароль %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Использовать сохраненный логин?";
+"autofill.logins.prompt.title" = "Использовать сохраненный пароль?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "по запросу «%@»";
@@ -613,26 +625,23 @@
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Приватное имя пользователя Duck Address удалено";
 
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Больше не спрашивать на этом сайте";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Учетные данные надежно хранятся на вашем устройстве в меню «Логины».";
+"autofill.save-login.new-user.message" = "Пароли надежно хранятся на вашем устройстве в меню «Логины».";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Хотите, чтобы DuckDuckGo сохранил логин?";
+"autofill.save-login.new-user.title" = "Хотите, чтобы DuckDuckGo сохранил ваш пароль?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Не сохранять";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Сохранить логин";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Сохранить логин?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Сохранить пароль";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Сохранить пароль?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Показать пароль";
@@ -641,7 +650,7 @@
 "autofill.signin.to.manage" = "%@ для управления адресами Duck Address с этого устройства.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo обновит логин, сохраненный на вашем устройстве.";
+"autofill.update-password.message" = "DuckDuckGo обновит пароль, сохраненный на вашем устройстве.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Обновить пароль";

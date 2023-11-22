@@ -529,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Pieteikšanās dati izdzēsti";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Atiestatīt izslēgtās vietnes";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Atcelt";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Atiestatīt izslēgtās vietnes";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Ja atiestatīsi izslēgtās vietnes, nākamreiz pierakstoties kādā no šīm vietnēm, tev tiks piedāvāts saglabāt savus pieteikšanās datus.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Meklēt pieteikšanās datus";
 
@@ -563,7 +575,7 @@
 "autofill.logins.prompt.password.button.title" = "%@ parole";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Vai izmantot saglabātos pieteikšanās datus?";
+"autofill.logins.prompt.title" = "Izmantot saglabāto paroli?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "meklējumam \"%@\"";
@@ -613,26 +625,23 @@
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Privātās Duck adreses lietotājvārds tika noņemts";
 
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Nekad nejautāt par šo vietni";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Pieteikšanās dati tiek droši saglabāti tavā ierīcē, izvēlnē Pieteikšanās dati.";
+"autofill.save-login.new-user.message" = "Paroles tiek droši saglabātas tavā ierīcē, izvēlnē Pieteikšanās dati.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Vai vēlies, lai DuckDuckGo saglabātu tavus pieteikšanās datus?";
+"autofill.save-login.new-user.title" = "Vai vēlies, lai DuckDuckGo saglabātu tavu paroli?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Nesaglabāt";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Saglabāt pieteikšanās datus";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Saglabāt pieteikšanās datus?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Saglabāt paroli";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Saglabāt paroli?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Rādīt paroli";
@@ -641,7 +650,7 @@
 "autofill.signin.to.manage" = "%@, lai pārvaldītu savas Duck adreses šajā ierīcē.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo atjauninās šos saglabātos pieteikšanās datus tavā ierīcē.";
+"autofill.update-password.message" = "DuckDuckGo atjauninās tavā ierīcē saglabāto paroli.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Atjaunināt paroli";

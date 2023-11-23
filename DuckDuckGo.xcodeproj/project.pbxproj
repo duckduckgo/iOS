@@ -9146,7 +9146,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "dominik/sync-favicons-fetching";
+				branch = "dominik/sync-lists-merging";
 				kind = branch;
 			};
 		};

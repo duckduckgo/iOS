@@ -529,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Inicio de sesión eliminado";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Restablecer sitios excluidos";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Cancelar";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Restablecer sitios excluidos";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Si restableces los sitios excluidos, se te pedirá que guardes tus datos de inicio de sesión la próxima vez que accedas a cualquiera de estos sitios.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Buscar inicios de sesión";
 
@@ -563,7 +575,7 @@
 "autofill.logins.prompt.password.button.title" = "Contraseña para %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "¿Usar un inicio de sesión guardado?";
+"autofill.logins.prompt.title" = "¿Usar una contraseña guardada?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "para '%@'";
@@ -613,26 +625,23 @@
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Se ha eliminado el nombre de usuario de la Duck Address privada";
 
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "No preguntar nunca para esta página";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Los inicios de sesión se almacenan de forma segura en tu dispositivo en el menú Inicios de sesión.";
+"autofill.save-login.new-user.message" = "Las contraseñas se almacenan de forma segura en tu dispositivo en el menú Inicios de sesión.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "¿Quieres que DuckDuckGo guarde tu inicio de sesión?";
+"autofill.save-login.new-user.title" = "¿Quieres que DuckDuckGo guarde tu contraseña?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "No guardar";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Guardar inicio de sesión";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "¿Guardar inicio de sesión?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Guardar contraseña";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "¿Guardar contraseña?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Mostrar contraseña";
@@ -641,7 +650,7 @@
 "autofill.signin.to.manage" = "%@ para gestionar tus Duck Addresses en este dispositivo.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo actualizará este inicio de sesión almacenado en tu dispositivo.";
+"autofill.update-password.message" = "DuckDuckGo actualizará esta contraseña almacenada en tu dispositivo.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Actualizar contraseña";
@@ -1597,8 +1606,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favoritos";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "En DuckDuckGo, estamos estableciendo el nuevo estándar de confianza en línea.\n\nEl navegador privado de DuckDuckGo ofrece todos los Privacy Essentials que necesitas para protegerte mientras realizas búsquedas y navegas en Internet, incluyendo bloqueo de rastreadores, cifrado más inteligente y búsquedas privadas de DuckDuckGo.\n\nDespués de todo, Internet no tiene por qué ser tan horrible y disfrutar de la privacidad en línea que mereces debería ser lo más fácil posible.";
+/* about page */
+"settings.about.text" = "DuckDuckGo es la empresa de privacidad en internet independiente fundada en 2008 para quienes estén cansados de ser rastreados en línea y quieran una solución sencilla. Somos la prueba de que es posible obtener protección de privacidad real en línea sin concesiones.\n\nEl navegador DuckDuckGo incluye las funciones que esperas de un navegador de referencia, como marcadores, pestañas, contraseñas y más, así como más de [una docena de potentes funciones de protección de privacidad](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) no se ofrece en la mayoría de los navegadores populares de forma predeterminada. Este conjunto completo de funciones de protección de privacidad ayuda a proteger tu actividad en línea, desde la búsqueda hasta la navegación, el correo electrónico y mucho más.\n\nNuestra protección de privacidad funciona sin necesidad de conocimientos técnicos y sin tener que lidiar con configuraciones complicadas. Lo único que tienes que hacer es cambiar el navegador a DuckDuckGo en todos tus dispositivos y obtener privacidad de forma predeterminada.\n\nSin embargo, si quieres conocer los entresijos, puedes encontrar más información sobre cómo funcionan las protecciones de privacidad de DuckDuckGo en nuestras [páginas de ayuda](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Enviar informe";
@@ -1767,6 +1776,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Un mensaje de %@:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Bienvenidas al \"Lado Pato\"!";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "¡Prueba DuckDuckGo para Windows!";

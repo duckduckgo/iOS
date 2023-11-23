@@ -529,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Sisselogimisandmed kustutati";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Lähtesta välistatud saidid";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Tühista";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Lähtesta välistatud saidid";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Kui lähtestad välistatud saidid, küsitakse järgmisel mõnele neist saitidest sisselogimisel, kas soovid salvestada oma sisselogimisandmed.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Otsi sisselogimisandmeid";
 
@@ -563,7 +575,7 @@
 "autofill.logins.prompt.password.button.title" = "Parool veebisaidi %@ jaoks";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Kas kasutada salvestatud sisselogimisandmeid?";
+"autofill.logins.prompt.title" = "Kas kasutada salvestatud parooli?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "otsinguga '%@'";
@@ -613,26 +625,23 @@
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Privaatse Duck Addressi kasutajanimi eemaldati";
 
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Ära selle saidi kohta rohkem küsi";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Logisid hoitakse turvaliselt sinu seadmes logide menüüs.";
+"autofill.save-login.new-user.message" = "Paroole hoitakse turvaliselt sinu seadmes sisselogimisandmete menüüs.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Kas soovid, et DuckDuckGo salvestaks sinu sisselogimisandmed?";
+"autofill.save-login.new-user.title" = "Kas soovid, et DuckDuckGo salvestaks sinu parooli?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Ära salvesta";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Salvesta sisselogimisandmed";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Kas salvestada sisselogimisandmed?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Salvesta parool";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Kas salvestada parool?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Kuva parool";
@@ -641,7 +650,7 @@
 "autofill.signin.to.manage" = "%@, et hallata selles seadmes oma Duck Addresse.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo värskendab need salvestatud sisselogimisandmed sinu seadmes.";
+"autofill.update-password.message" = "DuckDuckGo värskendab selle salvestatud parooli sinu seadmes.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Värskenda parooli";
@@ -1597,8 +1606,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Lemmikud";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "DuckDuckGo on veebi usaldusväärsuse uus standard.\n \nDuckDuckGo privaatsusbrauser pakub kõiki privaatsuse põhifunktsioone, mida peate enda kaitsmiseks veebist otsides ja sirvides kasutama, sealhulgas jälgijate blokeerimist, nutikamat krüptimist ja DuckDuckGo privaatset otsingut.\n\nLõppude lõpuks ei tohiks Internet nii jube olla ja Internetis väärilise privaatsuse saavutamine peaks olema sama lihtne kui ruloo alla tõmbamine.";
+/* about page */
+"settings.about.text" = "DuckDuckGo on 2008. aastal asutatud sõltumatu internetiprivaatsuse ettevõte igaühele, kellel on kõrini varjatud jälgimisest internetis ja kes soovib lihtsat lahendust selle vältimiseks. Me oleme tõestuseks, et internetis on võimalik saada tõelist privaatsuskaitset ilma kompromisse tegemata.\n\nDuckDuckGo brauseril on kõik funktsioonid, mida sa brauserilt ootad, nagu järjehoidjad, vahekaardid, paroolid ja palju muud, lisaks sellele aga ka üle [tosina võimsa privaatsuskaitse funktsiooni](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/), mida enamik populaarsemaid brausereid vaikimisi ei paku. See ainulaadselt terviklik privaatsuskaitse aitab kaitsta sinu tegevust internetis alates otsingutest kuni sirvimiseni, meilide saatmiseni ja palju muuni.\n\nMeie privaatsuskaitse toimib ilma, et peaksid teadma midagi tehnilistest nüanssidest või tegelema keeruliste seadistustega. Ainus, mis sa pead tegema, on vahetada oma brauser kõigis seadmetes DuckDuckGo vastu – ja vaikeprivaatsus ongi tagatud.\n\nKui aga *soovid* piiluda kapoti alla, leiate lisateavet DuckDuckGo privaatsuskaitse tööpõhimõtete kohta meie [abilehtedelt](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Saada aruanne";
@@ -1767,6 +1776,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Sõnum saatjalt %@:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Tere tulemast Pardipoolele!";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "Proovi rakendust DuckDuckGo for Windows!";

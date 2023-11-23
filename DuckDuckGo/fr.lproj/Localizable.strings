@@ -529,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Identifiant supprimé";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Réinitialiser les sites exclus";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Annuler";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Réinitialiser les sites exclus";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Si vous réinitialisez les sites exclus, on vous invitera à enregistrer votre identifiant la prochaine fois que vous vous connecterez à l'un de ces sites.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Recherche d'identifiants";
 
@@ -563,7 +575,7 @@
 "autofill.logins.prompt.password.button.title" = "Mot de passe pour %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Utiliser un identifiant enregistré ?";
+"autofill.logins.prompt.title" = "Utiliser un mot de passe enregistré ?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "pour '%@'";
@@ -613,26 +625,23 @@
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Le nom d'utilisateur de la Duck Address privée a été supprimé";
 
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Ne jamais demander pour ce site";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Les identifiants de connexion sont stockés en toute sécurité sur votre appareil dans le menu Identifiants.";
+"autofill.save-login.new-user.message" = "Les mots de passe sont stockés en toute sécurité sur votre appareil dans le menu Identifiants.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Voulez-vous que DuckDuckGo enregistre votre identifiant ?";
+"autofill.save-login.new-user.title" = "Voulez-vous que DuckDuckGo enregistre votre mot de passe ?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Ne pas enregistrer";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Enregistrer l'identifiant";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Enregistrer l'identifiant ?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Enregistrer le mot de passe";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Enregistrer le mot de passe ?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Afficher le mot de passe";
@@ -641,7 +650,7 @@
 "autofill.signin.to.manage" = "%@ pour gérer vos Duck Addresses sur cet appareil.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo mettra à jour cet identifiant enregistré sur votre appareil.";
+"autofill.update-password.message" = "DuckDuckGo mettra à jour ce mot de passe enregistré sur votre appareil.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Modifier le mot de passe";
@@ -1597,8 +1606,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favoris";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "Chez DuckDuckGo, nous mettons en place un nouveau concept de confiance en ligne.\n\nLe navigateur confidentiel DuckDuckGo fournit tous les éléments de confidentialité essentiels dont vous avez besoin pour vous protéger lorsque vous faites des recherches et naviguez sur le Web, notamment le blocage des traqueurs, un cryptage plus intelligent et la recherche privée DuckDuckGo.\n\nAprès tout, la sphère Internet gagnerait à s’affranchir d’un éventail de pratiques douteuses. Avec nous, protégez votre vie privée en ligne aussi aisément que vous fermez les rideaux.";
+/* about page */
+"settings.about.text" = "DuckDuckGo est une société indépendante de confidentialité sur internet fondée en 2008, destinée à tous ceux qui en ont assez d'être suivis en ligne et qui veulent une solution simple. Nous sommes la preuve que vous pouvez bénéficier d'une véritable protection de la confidentialité en ligne, sans avoir à faire de compromis.\n\nLe navigateur DuckDuckGo est doté des fonctionnalités que vous attendez d'un navigateur de référence, comme les signets, les onglets et les mots de passe, entre autres, auxquels s'ajoutent plus d'[une douzaine de protections puissantes de la confidentialité](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) que la plupart des navigateurs populaires ne proposent pas par défaut. Cet ensemble unique et complet de protections de la confidentialité permet de préserver vos activités en ligne, de la recherche à la navigation, en passant par l'envoi d'e-mails, etc.\n\nInutile de s'y connaître en détails techniques ou de gérer des paramètres complexes pour faire fonctionner nos protections de la confidentialité. Il vous suffit d'opter pour le navigateur DuckDuckGo sur tous vos appareils afin de pouvoir bénéficier de la confidentialité par défaut.\n\nMais si vous voulez vous faire une idée, vous trouverez plus d'informations sur le fonctionnement des protections de la confidentialité DuckDuckGo sur nos [pages d'aide](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Envoyer le rapport";
@@ -1767,6 +1776,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Message de %@ :";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Bienvenue du côté Duck !";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "Essayez DuckDuckGo pour Windows !";

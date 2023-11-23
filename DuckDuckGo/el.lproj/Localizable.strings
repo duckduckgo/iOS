@@ -529,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Η σύνδεση διαγράφηκε";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Επαναφορά αποκλεισμένων ιστότοπων";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Ακύρωση";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Επαναφορά αποκλεισμένων ιστότοπων";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Εάν κάνετε επαναφορά των αποκλεισμένων ιστότοπων, θα σας ζητηθεί να αποθηκεύσετε τη σύνδεσή σας την επόμενη φορά που θα συνδεθείτε σε οποιονδήποτε από τους ιστότοπους αυτούς.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Αναζήτηση στοιχείων σύνδεσης";
 
@@ -563,7 +575,7 @@
 "autofill.logins.prompt.password.button.title" = "Κωδικός πρόσβασης για %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Χρήση αποθηκευμένων στοιχείων σύνδεσης;";
+"autofill.logins.prompt.title" = "Χρήση αποθηκευμένου κωδικού πρόσβασης;";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "για '%@'";
@@ -613,26 +625,23 @@
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Το ιδιωτικό όνομα χρήστη Duck Address καταργήθηκε";
 
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Μην ζητάτε ποτέ αυτόν τον ιστότοπο";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Οι συνδέσεις αποθηκεύονται με ασφάλεια στη συσκευή σας στο μενού Συνδέσεις.";
+"autofill.save-login.new-user.message" = "Οι κωδικοί πρόσβασης αποθηκεύονται με ασφάλεια στη συσκευή σας στο μενού Συνδέσεις.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Θέλετε να αποθηκεύσει το DuckDuckGo τη σύνδεσή σας;";
+"autofill.save-login.new-user.title" = "Θέλετε το DuckDuckGo να αποθηκεύσει τον κωδικό πρόσβασής σας;";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Να μην αποθηκευτεί";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Αποθήκευση σύνδεσης";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Αποθήκευση σύνδεσης;";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Αποθήκευση κωδικού πρόσβασης";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Αποθήκευση κωδικού πρόσβασης;";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Εμφάνιση κωδικού πρόσβασης";
@@ -641,7 +650,7 @@
 "autofill.signin.to.manage" = "%@ για διαχείριση των διευθύνσεών σας Duck Address σε αυτήν τη συσκευή.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "Το DuckDuckGo θα ενημερώσει αυτήν την αποθηκευμένη σύνδεση στη συσκευή σας.";
+"autofill.update-password.message" = "Το DuckDuckGo θα ενημερώσει αυτόν τον αποθηκευμένο κωδικό πρόσβασης στη συσκευή σας.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Ενημέρωση κωδικού πρόσβασης";
@@ -1597,8 +1606,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Αγαπημένα";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "Στην DuckDuckGo, θέτουμε τα νέα πρότυπα σε ό,τι αφορά την αξιοπιστία του διαδικτύου.\n\nΤο πρόγραμμα περιήγησης Προστασίας προσωπικών δεδομένων DuckDuckGo παρέχει όλα όσα χρειάζεστε για να προστατεύετε τον εαυτό σας όταν πραγματοποιείτε αναζήτηση και περιήγηση στο διαδίκτυο, συμπεριλαμβανομένου του αποκλεισμού παρακολούθησης, πιο έξυπνης κρυπτογράφησης και ιδιωτικής αναζήτησης DuckDuckGo.\n\nΆλλωστε, στο διαδίκτυο δεν θα πρέπει να αισθάνεστε άβολα, ενώ το να απολαμβάνετε την ιδιωτικότητα που σας αξίζει στο διαδίκτυο θα πρέπει να είναι τόσο απλό όσο το κλείσιμο μιας πόρτας.";
+/* about page */
+"settings.about.text" = "Το DuckDuckGo αποτελεί την ανεξάρτητη εταιρεία προστασίας προσωπικών δεδομένων στο διαδίκτυο που ιδρύθηκε το 2008 για όσους έχουν βαρεθεί να παρακολουθούνται στο διαδίκτυο και επιθυμούν μια εύκολη λύση. Αποτελούμε τρανή απόδειξη ότι μπορείτε να αποκτήσετε πραγματική προστασία του απορρήτου σας στο διαδίκτυο χωρίς συμβιβασμούς.\n\nο πρόγραμμα περιήγησης DuckDuckGo διαθέτει τις λειτουργίες που περιμένετε από ένα πρόγραμμα περιήγησης, όπως σελιδοδείκτες, καρτέλες, κωδικούς πρόσβασης και πολλά άλλα, καθώς και πάνω από [δώδεκα ισχυρές λειτουργίες προστασίες απορρήτου](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) που δεν προσφέρονται από τα περισσότερα δημοφιλή προγράμματα περιήγησης βάσει προεπιλογής. Αυτό το μοναδικά ολοκληρωμένο σύνολο προστασίας του απορρήτου συμβάλλει στην προστασία των διαδικτυακών δραστηριοτήτων σας, από αναζήτηση έως περιήγηση, αποστολή email και πολλά άλλα.\n\nΗ προστασία απορρήτου μας λειτουργεί χωρίς να χρειάζεται να γνωρίζετε τις τεχνικές λεπτομέρειες ή να ασχολείστε με περίπλοκες ρυθμίσεις. Το μόνο που έχετε να κάνετε είναι να αλλάξετε το πρόγραμμα περιήγησής σας σε DuckDuckGo σε όλες τις συσκευές σας και θα έχετε ιδιωτικότητα βάσει προεπιλογής.\n\nΑλλά αν *θέλετε* να ρίξετε μια αναλυτική ματιά, μπορείτε να βρείτε περισσότερες πληροφορίες σχετικά με το πώς λειτουργούν οι προστασίες απορρήτου του DuckDuckGo στις [σελίδες της ενότητας Βοήθεια](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Υποβολή αναφοράς";
@@ -1767,6 +1776,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Μήνυμα από %@:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Καλωσορίσατε στην πλευρά της Πάπιας!";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "Δοκιμάστε το DuckDuckGo για Windows!";

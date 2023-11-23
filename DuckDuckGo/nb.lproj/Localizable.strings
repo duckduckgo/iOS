@@ -529,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Påloggingen er slettet";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Tilbakestill ekskluderte nettsteder";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Avbryt";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Tilbakestill ekskluderte nettsteder";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Hvis du tilbakestiller ekskluderte nettsteder, blir du bedt om å lagre påloggingsinformasjonen din neste gang du logger på disse nettstedene.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Søk i pålogginger";
 
@@ -563,7 +575,7 @@
 "autofill.logins.prompt.password.button.title" = "Passord for %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Vil du bruke en lagret pålogging?";
+"autofill.logins.prompt.title" = "Vil du bruke et lagret passord?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "for «%@»";
@@ -613,26 +625,23 @@
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Brukernavn for privat Duck-adresse ble fjernet";
 
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Aldri spør for dette nettstedet";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Pålogginger lagres trygt på enheten din i påloggingsmenyen.";
+"autofill.save-login.new-user.message" = "Passord lagres trygt på enheten din i påloggingsmenyen.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Vil du at DuckDuckGo skal lagre påloggingen din?";
+"autofill.save-login.new-user.title" = "Vil du at DuckDuckGo skal lagre passordet ditt?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Ikke lagre";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Lagre påloggingen";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Vil du lagre påloggingen?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Lagre passordet";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Vil du lagre passordet?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Vis passord";
@@ -641,7 +650,7 @@
 "autofill.signin.to.manage" = "%@ for å administrere Duck-adressene dine på denne enheten.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo oppdaterer denne lagrede påloggingen på enheten din.";
+"autofill.update-password.message" = "DuckDuckGo oppdaterer dette lagrede passordet på enheten din.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Oppdater passordet";
@@ -1597,8 +1606,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favoritter";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "Hos DuckDuckGo setter vi den nye standarden for tillit på nett.\n\nDuckDuckGo privatnettleser gir deg verktøyene du trenger for å sikre personvernet mens du søker og surfer på nett, med funksjoner som blokkering av sporingsanordninger, smartere kryptering og DuckDuckGo privatsøk.\n\nInternett burde ikke føles ekkelt å bruke, og det å få privatlivet du fortjener på nett, bør være like enkelt som å lukke persiennene.";
+/* about page */
+"settings.about.text" = "DuckDuckGo er et uavhengig personvernselskap som ble grunnlagt i 2008, for alle som er lei av å bli sporet på nettet og vil ha en enkel løsning. Vi er beviset på at ekte personvern er mulig på nettet uten å fire på kravene.\n\nDuckDuckGo-nettleseren har funksjoner du kan forvente i en vanlig nettleser, som bokmerker, faner, passord med mer, pluss over [en rekke kraftige personvernfunksjoner](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) ikke tilbys i de fleste populære nettlesere som standard. Disse usedvanlig omfattende personvernfunksjonene bidrar til å beskytte nettaktivitetene dine, fra søk til surfing, e-poster med mer.\n\nPersonvernfunksjonene fungerer uten at du behøver å kunne noe om de tekniske detaljene eller forholde deg til kompliserte innstillinger. Det eneste du behøver å gjøre, er å bytte nettleser til DuckDuckGo på alle enhetene dine, så får du personvern som standard.\n\nMen hvis du *vil* ta en titt under panseret, kan du finne mer informasjon om hvordan DuckDuckGos personvern fungerer på våre [hjelpesider](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Send inn rapport";
@@ -1767,6 +1776,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "En melding fra %@:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Velkommen til «the Duck Side»!";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "Prøv DuckDuckGo for Windows!";

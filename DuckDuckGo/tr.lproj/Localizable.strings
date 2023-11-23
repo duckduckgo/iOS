@@ -529,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Giriş bilgileri silindi";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Hariç Tutulan Siteleri Sıfırla";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "İptal";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Hariç Tutulan Siteleri Sıfırla";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Hariç tutulan siteleri sıfırlarsanız, bu sitelerden herhangi birinde bir sonraki oturum açışınızda Giriş bilgilerinizi kaydetmeniz istenecektir.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Giriş Ara";
 
@@ -563,7 +575,7 @@
 "autofill.logins.prompt.password.button.title" = "%@ için parola";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Kayıtlı Giriş kullanılsın mı?";
+"autofill.logins.prompt.title" = "Kayıtlı bir şifre mi kullanıyorsunuz?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "\"%@\" için";
@@ -613,26 +625,23 @@
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Özel Duck Address kullanıcı adı kaldırıldı";
 
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Bu Site için Hiçbir Zaman Sorma";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Giriş bilgileri cihazınızdaki Giriş Bilgileri menüsünde güvenli bir şekilde saklanır.";
+"autofill.save-login.new-user.message" = "Şifreler cihazınızdaki Oturum Açma menüsünde güvenli bir şekilde saklanır.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "DuckDuckGo'nun Girişinizi kaydetmesini istiyor musunuz?";
+"autofill.save-login.new-user.title" = "DuckDuckGo'nun şifrenizi kaydetmesini istiyor musunuz?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Kaydetme";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Girişi Kaydet";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Giriş Kaydedilsin mi?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Şifre Kaydet";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Şifre Kaydedilsin mi?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Parolayı göster";
@@ -641,7 +650,7 @@
 "autofill.signin.to.manage" = "Bu cihazdaki Duck Address'leri yönetmek için %@.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo, cihazınızdaki bu kayıtlı Giriş bilgisini güncelleyecektir.";
+"autofill.update-password.message" = "DuckDuckGo bu kayıtlı şifreyi cihazınızda güncelleyecektir.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Şifreyi Güncelle";
@@ -1597,8 +1606,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favoriler";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "DuckDuckGo'da, internet için yeni güven standardını belirliyoruz.\n\nDuckDuckGo Gizlilik Tarayıcısı izleyici engelleme, akıllı şifreleme ve DuckDuckGo gizli arama da dâhil olmak üzere web'de arama ve göz atma sırasında kendinizi korumak için ihtiyacınız olan tüm gizlilik özelliklerini sağlar.\n\nNe de olsa, internet sizi korkutmamalı ve internette hakkınız olan gizliliği elde etmek panjurları kapatmak kadar basit olmalı.";
+/* about page */
+"settings.about.text" = "DuckDuckGo, çevrim içi takip edilmeyi hiç istemeyen ve pratik bir çözüm arayan herkese hizmet veren, 2008 yılında kurulmuş bağımsız bir İnternet gizlilik şirketidir. Biz, çevrim içi ortamda ödün vermeden gerçek gizlilik koruması elde edebileceğinizin kanıtıyız.\n\nDuckDuckGo tarayıcı; yer imleri, sekmeler, parolalar ve daha fazlası gibi en çok kullandığınız tarayıcıdan beklediğiniz ama çoğu popüler tarayıcıda varsayılan olarak bulunmayan özelliklerin yanı sıra [sayısı ondan fazla güçlü gizlilik koruması](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) ile birlikte gelir. Son derece kapsamlı olan bu gizlilik koruma seti; aramadan gezinmeye, e-posta göndermeye ve daha fazlasına kadar çevrim içi etkinliklerinizde koruma sağlamaya yardımcı olur.\n\nGizlilik korumalarımız, teknik ayrıntılar hakkında hiçbir şey bilmenize veya karmaşık ayarlarla uğraşmanıza gerek kalmadan çalışır. Tüm cihazlarınızda tarayıcı olarak DuckDuckGo'yu kullanarak aradığınız gizliliği sağlayabilirsiniz.\n\nAncak ayrıntılara bir göz atmak *istiyorsanız*, DuckDuckGo gizlilik korumalarının nasıl çalıştığı hakkında daha fazla bilgiyi [yardım sayfalarımızda](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/) bulabilirsiniz.";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Rapor Gönder";
@@ -1767,6 +1776,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "%@ size bir mesaj gönderdi:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Duck Side'a hoş geldiniz!";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "Windows için DuckDuckGo'yu deneyin!";

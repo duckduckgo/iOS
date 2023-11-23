@@ -24,6 +24,7 @@ import Core
 protocol SaveLoginViewModelDelegate: AnyObject {
     func saveLoginViewModelDidSave(_ viewModel: SaveLoginViewModel)
     func saveLoginViewModelDidCancel(_ viewModel: SaveLoginViewModel)
+    func saveLoginViewModelNeverPrompt(_ viewModel: SaveLoginViewModel)
     func saveLoginViewModelConfirmKeepUsing(_ viewModel: SaveLoginViewModel, isAlreadyDismissed: Bool)
     func saveLoginViewModelDidResizeContent(_ viewModel: SaveLoginViewModel, contentHeight: CGFloat)
 }
@@ -179,5 +180,11 @@ final class SaveLoginViewModel: ObservableObject {
         didSave = true
         autofillFirstTimeUser = false
         delegate?.saveLoginViewModelDidSave(self)
+    }
+
+    func neverPrompt() {
+        didSave = true
+        autofillFirstTimeUser = false
+        delegate?.saveLoginViewModelNeverPrompt(self)
     }
 }

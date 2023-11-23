@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": "dominik/sync-favicons-fetching",
-          "revision": "c64925e391522578f8e4b9886f17410bde57484a",
+          "revision": "2d1d73cee34c5e2b897209b78522f27d6a991ea3",
           "version": null
         }
       },
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/duckduckgo/content-scope-scripts",
         "state": {
           "branch": null,
-          "revision": "254b23cf292140498650421bb31fd05740f4579b",
-          "version": "4.40.0"
+          "revision": "b7ad9843e70cede0c2ca9c4260d970f62cb28156",
+          "version": "4.52.0"
         }
       },
       {
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
           "branch": null,
-          "revision": "c8e895c8fd50dc76e8d8dc827a636ad77b7f46ff",
-          "version": "9.0.0"
+          "revision": "93677cc02cfe650ce7f417246afd0e8e972cd83e",
+          "version": "10.0.0"
         }
       },
       {
@@ -156,7 +156,7 @@
       },
       {
         "package": "TrackerRadarKit",
-        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit",
+        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
         "state": {
           "branch": null,
           "revision": "4684440d03304e7638a2c8086895367e90987463",

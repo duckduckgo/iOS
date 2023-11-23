@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "fcappelli/breakage_report_improvements",
-          "revision": "60cc52d888adb482519495b73277b5f15d128ab4",
-          "version": null
+          "branch": null,
+          "revision": "6dc31cc7e46131d79ce1f96463b36381656d7b2d",
+          "version": "85.0.0"
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/duckduckgo/content-scope-scripts",
         "state": {
           "branch": null,
-          "revision": "254b23cf292140498650421bb31fd05740f4579b",
-          "version": "4.40.0"
+          "revision": "b7ad9843e70cede0c2ca9c4260d970f62cb28156",
+          "version": "4.52.0"
         }
       },
       {

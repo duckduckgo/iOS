@@ -73,7 +73,7 @@ final class NetworkProtectionVPNLocationViewModel: ObservableObject {
                     let isCitySelected = currentCity.name == location.city
                     return CityItem(city: currentCity, isSelected: isCitySelected)
                 }
-            case.nearest:
+            case .nearest:
                 isCountrySelected = false
                 isNearestCitySelected = false
                 cityPickerItems = currentLocation.cities.map { currentCity in

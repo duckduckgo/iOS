@@ -21,6 +21,7 @@ import UIKit
 import Combine
 import Common
 import Core
+import CoreData
 import UserNotifications
 import Kingfisher
 import WidgetKit
@@ -39,6 +40,7 @@ import NetworkProtection
 #endif
 
 // swiftlint:disable file_length
+// swiftlint:disable line_length
 // swiftlint:disable type_body_length
 
 @UIApplicationMain
@@ -167,6 +169,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         var shouldResetBookmarksSyncTimestamp = false
 
+        let preMigrationErrorHandling = EventMapping<BookmarkFormFactorFavoritesMigration.MigrationErrors> { _, error, _, _ in
+            if let error = error {
+                Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
+                           error: error)
+            } else {
+                Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase)
+            }
+
+            if shouldPresentInsufficientDiskSpaceAlertAndCrash {
+                return
+            } else {
+                Thread.sleep(forTimeInterval: 1)
+                fatalError("Could not create Bookmarks database stack: \(error?.localizedDescription ?? "err")")
+            }
+        }
+
+        var oldFavoritesOrder = BookmarkFormFactorFavoritesMigration.getFavoritesOrderFromPreV4Model(dbContainerLocation: BookmarksDatabase.defaultDBLocation,
+                                                                                                     dbFileURL: BookmarksDatabase.defaultDBFileURL,
+                                                                                                     errorEvents: preMigrationErrorHandling)
+
         bookmarksDatabase.loadStore { [weak self] context, error in
             guard let context = context else {
                 if let error = error {
@@ -191,7 +213,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             legacyStorage?.removeStore()
 
             do {
-                BookmarkUtils.migrateToFormFactorSpecificFavorites(byCopyingExistingTo: .mobile, in: context)
+                BookmarkFormFactorFavoritesMigration.migrateToFormFactorSpecificFavorites(byCopyingExistingTo: .mobile,
+                                                                                          preservingOrderOf: oldFavoritesOrder,
+                                                                                          in: context)
                 if context.hasChanges {
                     try context.save(onErrorFire: .bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders)
                     if let syncDataProviders = self?.syncDataProviders {

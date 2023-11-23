@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "bartek/fix-favorites-migration-order",
-          "revision": "a4be0746a06f65f021a26a7bca3dd74bf088ba4e",
-          "version": null
+          "branch": null,
+          "revision": "99a64f24becbb11d8ea9da1d2df1ca270e5318a3",
+          "version": "83.0.0-3"
         }
       },
       {

@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": null,
-          "revision": "6dc31cc7e46131d79ce1f96463b36381656d7b2d",
-          "version": "85.0.0"
+          "revision": "af63158c03de7a47fb9e2cbcd97fbd28a64ab1fd",
+          "version": "84.2.0"
         }
       },
       {
@@ -105,8 +105,8 @@
         "repositoryURL": "https://github.com/duckduckgo/privacy-dashboard",
         "state": {
           "branch": null,
-          "revision": "59dedf0f4ff1e9147de0806a54c6043861eb0870",
-          "version": "3.1.0"
+          "revision": "b4ac92a444e79d5651930482623b9f6dc9265667",
+          "version": "2.0.0"
         }
       },
       {
@@ -156,7 +156,7 @@
       },
       {
         "package": "TrackerRadarKit",
-        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit",
+        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
         "state": {
           "branch": null,
           "revision": "4684440d03304e7638a2c8086895367e90987463",

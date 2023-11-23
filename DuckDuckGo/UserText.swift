@@ -91,6 +91,24 @@ public struct UserText {
     public static let navigationTitleEdit = NSLocalizedString("navigation.title.edit", value: "Edit", comment: "Edit button")
     public static let navigationTitleDone = NSLocalizedString("navigation.title.done", value: "Done", comment: "Finish editing bookmarks button")
     
+    static let reportBrokenSiteHeader = NSLocalizedString("report.brokensite.header", value: "Submitting an anonymous broken site report helps us debug these issues and improve the app.", comment: "")
+    
+    static let brokenSiteSectionTitle = NSLocalizedString("brokensite.sectionTitle", value: "DESCRIBE WHAT HAPPENED", comment: "Broken Site Section Title")
+    static let brokenSiteCategoryTitle = NSLocalizedString("brokensite.categoryTitle", value: "SELECT A CATEGORY", comment: "Broken Site Category Section Title")
+    static let brokenSiteCategoryPlaceholder = NSLocalizedString("brokensite.categoryPlaceholder", value: "Pick your issue from the list...", comment: "Broken Site Category Placeholder")
+    static let brokenSiteCommentPlaceholder = NSLocalizedString("brokensite.commentPlaceholder", value: "Sharing more details can help us address this issue", comment: "Broken Site Comment Placeholder")
+    
+    static let brokenSiteCategoryImages = NSLocalizedString("brokensite.category.images", value: "Images didn’t load", comment: "Broken Site Category")
+    static let brokenSiteCategoryPaywall = NSLocalizedString("brokensite.category.paywall", value: "The site asked me to disable", comment: "Broken Site Category")
+    static let brokenSiteCategoryComments = NSLocalizedString("brokensite.category.comments", value: "Comments didn’t load", comment: "Broken Site Category")
+    static let brokenSiteCategoryVideos = NSLocalizedString("brokensite.category.videos", value: "Video didn’t play", comment: "Broken Site Category")
+    static let brokenSiteCategoryLinks = NSLocalizedString("brokensite.category.links", value: "Links or buttons don’t work", comment: "Broken Site Category")
+    static let brokenSiteCategoryContent = NSLocalizedString("brokensite.category.content", value: "Content is missing", comment: "Broken Site Category")
+    static let brokenSiteCategoryLogin = NSLocalizedString("brokensite.category.login", value: "I can’t sign in", comment: "Broken Site Category")
+    static let brokenSiteCategoryUnsupported = NSLocalizedString("brokensite.category.unsupported", value: "The browser is incompatible", comment: "Broken Site Category")
+    static let brokenSiteCategoryCookiePrompt = NSLocalizedString("brokensite.category.cookieprompt", value: "Cookie pop-up wasn't managed", comment: "Broken Site Category")
+    static let brokenSiteCategoryOther = NSLocalizedString("brokensite.category.other", value: "Something else", comment: "Broken Site Category")
+        
     public static let homeRowReminderTitle = NSLocalizedString("home.row.reminder.title", value: "Take DuckDuckGo home", comment: "Home is this context is the bottom home row (dock)")
     public static let homeRowReminderMessage = NSLocalizedString("home.row.reminder.message", value: "Add DuckDuckGo to your dock for easy access!", comment: "")
     

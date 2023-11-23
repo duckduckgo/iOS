@@ -82,7 +82,7 @@ class TabViewController: UIViewController {
 
     private(set) var webView: WKWebView!
     private lazy var appRatingPrompt: AppRatingPrompt = AppRatingPrompt()
-    public weak var privacyDashboard: PrivacyDashboardViewController?
+    private weak var privacyDashboard: PrivacyDashboardViewController?
     
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache
     let appSettings: AppSettings
@@ -681,7 +681,7 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
             privacyDashboard = controller
-            privacyDashboard?.brokenSiteInfo = getCurrentWebsiteInfo()
+            privacyDashboard?.tabViewController = self
         }
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
@@ -707,10 +707,8 @@ class TabViewController: UIViewController {
         PrivacyDashboardViewController(coder: coder,
                                        privacyInfo: privacyInfo,
                                        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-                                       contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
-                                       initMode: .privacyDashboard)
+                                       contentBlockingManager: ContentBlocking.shared.contentBlockingManager)
     }
-    
     private func addTextSizeObserver() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onTextSizeChange),
@@ -772,7 +770,7 @@ class TabViewController: UIViewController {
         onPrivacyInfoChanged()
     }
     
-    public func makePrivacyInfo(url: URL) -> PrivacyInfo? {
+    private func makePrivacyInfo(url: URL) -> PrivacyInfo? {
         guard let host = url.host else { return nil }
         
         let entity = ContentBlocking.shared.trackerDataManager.trackerData.findEntity(forHost: host)

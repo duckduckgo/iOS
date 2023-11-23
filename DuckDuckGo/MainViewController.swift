@@ -674,10 +674,10 @@ class MainViewController: UIViewController {
     func onQuickFirePressed() {
         wakeLazyFireButtonAnimator()
         
-        forgetAllWithAnimation {}
-        dismiss(animated: true)
+        self.forgetAllWithAnimation {}
+        self.dismiss(animated: true)
         if KeyboardSettings().onAppLaunch {
-            enterSearch()
+            self.enterSearch()
         }
     }
     

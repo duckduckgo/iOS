@@ -59,29 +59,34 @@ final class NetworkProtectionVPNLocationViewModel: ObservableObject {
         guard let list = try? await locationListRepository.fetchLocationList() else { return }
         let selectedLocation = self.tunnelSettings.selectedLocation
         let isNearestSelected = selectedLocation == .nearest
+
         let countryItems = list.map { currentLocation in
             let isCountrySelected: Bool
             let isNearestCitySelected: Bool
             var cityPickerItems: [CityItem]
-            if case .location(let location) = selectedLocation {
+
+            switch selectedLocation {
+            case .location(let location):
                 isCountrySelected = location.country == currentLocation.country
                 isNearestCitySelected = location.city == nil && isCountrySelected
                 cityPickerItems = currentLocation.cities.map { currentCity in
                     let isCitySelected = currentCity.name == location.city
                     return CityItem(city: currentCity, isSelected: isCitySelected)
                 }
-            } else {
+            case.nearest:
                 isCountrySelected = false
                 isNearestCitySelected = false
                 cityPickerItems = currentLocation.cities.map { currentCity in
                     CityItem(city: currentCity, isSelected: false)
                 }
             }
+
             let nearestItem = CityItem(
                 city: nil,
                 isSelected: isNearestCitySelected
             )
             cityPickerItems.insert(nearestItem, at: 0)
+
             return NetworkProtectionVPNCountryItemModel(
                 netPLocation: currentLocation,
                 isSelected: isCountrySelected,
@@ -129,13 +134,12 @@ struct NetworkProtectionVPNCountryItemModel: Identifiable {
 }
 
 struct NetworkProtectionVPNCityItemModel: Identifiable {
-    static let nearestItemId = "nearestItemId"
     let id: String?
     let name: String
     let isSelected: Bool
 
     fileprivate init(city: NetworkProtectionLocation.City?, isSelected: Bool) {
-        self.id = city?.name ?? Self.nearestItemId
+        self.id = city?.name
         self.name = city?.name ?? UserText.netPPreferredLocationNearest
         self.isSelected = isSelected
     }

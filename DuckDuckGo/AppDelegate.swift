@@ -40,7 +40,6 @@ import NetworkProtection
 #endif
 
 // swiftlint:disable file_length
-// swiftlint:disable line_length
 // swiftlint:disable type_body_length
 
 @UIApplicationMain
@@ -181,9 +180,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        var oldFavoritesOrder = BookmarkFormFactorFavoritesMigration.getFavoritesOrderFromPreV4Model(dbContainerLocation: BookmarksDatabase.defaultDBLocation,
-                                                                                                     dbFileURL: BookmarksDatabase.defaultDBFileURL,
-                                                                                                     errorEvents: preMigrationErrorHandling)
+        let oldFavoritesOrder = BookmarkFormFactorFavoritesMigration
+            .getFavoritesOrderFromPreV4Model(
+                dbContainerLocation: BookmarksDatabase.defaultDBLocation,
+                dbFileURL: BookmarksDatabase.defaultDBFileURL,
+                errorEvents: preMigrationErrorHandling
+            )
 
         bookmarksDatabase.loadStore { [weak self] context, error in
             guard let context = context else {

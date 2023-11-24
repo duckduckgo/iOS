@@ -45,15 +45,15 @@ public struct SyncWithServer: View {
                 Image("Sync-Server-128")
                     .padding(.bottom, 20)
 
-                Text(UserText.ConnextWithServerSheetTitle)
+                Text(UserText.connectWithServerSheetTitle)
                     .daxTitle1()
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 24)
                 VStack(spacing: 16) {
-                    Text(UserText.ConnextWithServerSheetDescriptionPart1)
+                    Text(UserText.connectWithServerSheetDescriptionPart1)
                         .multilineTextAlignment(.center)
 
-                    Text(UserText.ConnextWithServerSheetDescriptionPart2)
+                    Text(UserText.connectWithServerSheetDescriptionPart2)
                         .multilineTextAlignment(.center)
                 }
             }
@@ -63,12 +63,12 @@ public struct SyncWithServer: View {
                 Button {
                     model.startSyncPressed()
                 } label: {
-                    Text(UserText.ConnextWithServerSheetButton)
+                    Text(UserText.connectWithServerSheetButton)
                 }
                 .buttonStyle(PrimaryButtonStyle())
                 .frame(maxWidth: 360)
                 .padding(.horizontal, 30)
-                Text(UserText.ConnextWithServerSheetFooter)
+                Text(UserText.connectWithServerSheetFooter)
                     .daxFootnoteRegular()
                     .foregroundColor(Color(designSystemColor: .textSecondary))
             }

@@ -66,6 +66,10 @@ struct UserText {
     static let connectWithServerSheetButton = NSLocalizedString("connect.with.server.sheet.button", value: "Turn on Sync & Backup", comment: "Connect With Server Sheet - Button")
     static let connectWithServerSheetFooter = NSLocalizedString("connect.with.server.sheet.footer", value: "You can sync with your other devices later.", comment: "Connect With Server Sheet - Footer")
 
+// Preparing To Sync Sheet
+    static let preparingToSyncSheetTitle = "Setting Up Sync and Backup"
+    static let preparingToSyncSheetDescription = "Your bookmarks and passwords are being prepared to sync. This should only take a moment."
+    static let preparingToSyncSheetFooter = "Connecting…"
 
 
     static let recoveryMessage = "If you lose access to your devices, you will need this code to recover your synced data."

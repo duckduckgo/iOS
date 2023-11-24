@@ -30,18 +30,20 @@ public struct PreparingToSync: View {
         UnderflowContainer {
             VStack(spacing: 0) {
                 Image("Sync-128")
-                    .padding(.bottom, 20)
+                    .padding(20)
 
-                Text("Preparing to Sync")
+                Text(UserText.preparingToSyncSheetTitle)
                     .daxTitle1()
+                    .multilineTextAlignment(.center)
                     .padding(.bottom, 24)
 
-                Text("We are getting things set up. \nIt won't take long")
+                Text(UserText.preparingToSyncSheetDescription)
                     .multilineTextAlignment(.center)
             }
             .padding(.horizontal, 20)
         } foregroundContent: {
-            Text("Connecting…")
+            Text(UserText.preparingToSyncSheetFooter)
+                .foregroundColor(Color(designSystemColor: .textSecondary))
         }
     }
 }

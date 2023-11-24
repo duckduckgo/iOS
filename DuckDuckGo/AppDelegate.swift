@@ -116,7 +116,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if testing {
             _ = DefaultUserAgentManager.shared
             Database.shared.loadStore { _, _ in }
-            _ = BookmarksDatabaseSetup.loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase, crashOnLoadStoreError: true)
+            _ = BookmarksDatabaseSetup(crashOnError: true).loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase)
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
         }
@@ -156,8 +156,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         var shouldResetBookmarksSyncTimestamp = false
-        if BookmarksDatabaseSetup.loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase,
-                                                      crashOnLoadStoreError: !shouldPresentInsufficientDiskSpaceAlertAndCrash) {
+        if BookmarksDatabaseSetup(crashOnError: !shouldPresentInsufficientDiskSpaceAlertAndCrash)
+                .loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase) {
+
             // MARK: post-Bookmarks migration logic
             assertBookmarksMigrationHappensOnlyOnce()
             shouldResetBookmarksSyncTimestamp = true

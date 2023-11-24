@@ -37,6 +37,16 @@ extension SyncSettingsViewController {
         }
     }
 
+    func shareCode(_ code: String) {
+
+        navigationController?.visibleViewController?.presentShareSheet(withItems: [code],
+                                                                       fromView: view,
+                                                                       overrideInterfaceStyle: .dark) { [weak self] _, success, _, _ in
+            guard success else { return }
+            self?.navigationController?.visibleViewController?.dismiss(animated: true)
+        }
+    }
+
 }
 
 private class RecoveryCodeItem: NSObject, UIActivityItemSource {

@@ -23,7 +23,7 @@ import Foundation
 // Localise these later, when feature is closer to exernal release
 struct UserText {
 
-    static let syncWithAnotherDeviceTitle = "Sync with Another Device"
+    static let syncWithAnotherDeviceTitle = "Begin Syncing"
     static let syncWithAnotherDeviceMessage = "Securely sync bookmarks and Logins between your devices."
 
     static let recoveryMessage = "If you lose access to your devices, you will need this code to recover your synced data."
@@ -39,14 +39,14 @@ struct UserText {
     static let recoverYourData = "Recover Your Data"
 
     static let options = "Options"
-    static let unifiedFavoritesTitle = "Share Favorites"
-    static let unifiedFavoritesInstruction = "Use the same favorites on all devices. Leave off to keep mobile and desktop favorites separate."
+    static let unifiedFavoritesTitle = "Unify Favorites "
+    static let unifiedFavoritesInstruction = "Use the same favorite bookmarks on all your devices. Leave off to keep mobile and desktop favorites separate."
 
     static let syncSettingsFooter = "Your data is end-to-end encrypted, and DuckDuckGo does not have access to the decryption key."
 
-    static let connectDeviceInstructions = "Go to Settings > Sync & Back Up in the DuckDuckGo App on a different device and scan the QR code to sync."
+    static let connectDeviceInstructions = "Go to Settings › Sync & Backup in the DuckDuckGo Browser on a another device and select \n”Sync with Another Device.”"
 
-    static let recoveryModeInstructions = "Scan the QR code from your Recovery PDF or in the DuckDuckGo app under Settings > Sync & Back Up on a signed-in device."
+    static let recoveryModeInstructions = "Scan the QR code on your Recovery PDF, or another synced device, to recover your data."
 
     static let validatingCode = "Validating code"
     static let validatingCodeFailed = "Invalid code."

@@ -25,6 +25,8 @@ public struct SyncSettingsView: View {
     @ObservedObject public var model: SyncSettingsViewModel
 
     let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
+    @State var isSyncWithSetUpSheetVisible = false
+    @State var isRecoverSyncedDataSheetVisible = false
 
     public init(model: SyncSettingsViewModel) {
         self.model = model
@@ -40,7 +42,7 @@ public struct SyncSettingsView: View {
                 }
         } else {
             List {
-                workInProgress()
+//                workInProgress()
 
                 if model.isSyncEnabled {
                     
@@ -56,7 +58,7 @@ public struct SyncSettingsView: View {
 
                     devices()
                     
-                    syncNewDevice()
+//                    syncNewDevice()
                     
                     OptionsView(isUnifiedFavoritesEnabled: $model.isUnifiedFavoritesEnabled)
                         .onAppear(perform: {
@@ -70,12 +72,14 @@ public struct SyncSettingsView: View {
                 } else {
 
                     syncWithAnotherDeviceView()
+
+                    otherOptions()
+
+//                    singleDeviceSetUpView()
                     
-                    singleDeviceSetUpView()
+//                    recoverYourDataView()
                     
-                    recoverYourDataView()
-                    
-                    footerView()
+//                    footerView()
                 }
             }
             .navigationTitle(UserText.syncTitle)
@@ -166,26 +170,85 @@ extension SyncSettingsView {
     @ViewBuilder
     func syncWithAnotherDeviceView() -> some View {
         Section {
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(UserText.syncWithAnotherDeviceTitle)
-                        .daxBodyBold()
-                    Text(UserText.syncWithAnotherDeviceMessage)
-                        .daxBodyRegular()
-                }
-                Spacer()
+            VStack(spacing: 8) {
                 Image("Sync-Pair-96")
+                Text(UserText.syncWithAnotherDeviceTitle)
+                    .daxTitle3()
+                Text(UserText.syncWithAnotherDeviceMessage)
+                    .daxBodyRegular()
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(Color(designSystemColor: .textPrimary))
+                Button(action: {
+                    model.scanQRCode()
+                }, label: {
+                    Text("Sync With Another Device")
+                        .daxButton()
+                        .foregroundColor(.white)
+                        .frame(maxWidth: 310)
+                        .frame(height: 50)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color(designSystemColor: .accent))
+                        )
+                })
+                .padding(.vertical, 16)
+            }
 
-            }
-            Button(UserText.scanQRCode) {
-                model.scanQRCode()
-            }
-            Button(UserText.enterTextCode) {
-                model.showEnterTextView()
-            }
+            //            HStack {
+            //                VStack(alignment: .leading, spacing: 4) {
+            //                    Text(UserText.syncWithAnotherDeviceTitle)
+            //                        .daxBodyBold()
+            //                    Text(UserText.syncWithAnotherDeviceMessage)
+            //                        .daxBodyRegular()
+            //                }
+            //                Spacer()
+            //                Image("Sync-Pair-96")
+            //
+            //            }
+            //            Button(UserText.scanQRCode) {
+//                            model.scanQRCode()
+            //            }
+            //            Button(UserText.enterTextCode) {
+            //                model.showEnterTextView()
+            //            }
+        } footer: {
+            Text("Your data is end-to-end encrypted, and DuckDuckGo does not have access to the encryption key.")
+                .daxFootnoteRegular()
+                .multilineTextAlignment(.center)
+        }
+    }
+
+    @ViewBuilder
+    func otherOptions() -> some View {
+        Section {
+            Text("Sync and Back Up This Device")
+                .daxBodyRegular()
+                .foregroundColor(Color(designSystemColor: .accent))
+                .onTapGesture {
+                    isSyncWithSetUpSheetVisible = true
+                }
+                .sheet(isPresented: $isSyncWithSetUpSheetVisible, content: {
+                    SyncWithServer(model: model, onCancel: {
+                        isSyncWithSetUpSheetVisible = false
+                    })
+                })
+            Text("Recover Synced Data")
+                .daxBodyRegular()
+                .foregroundColor(Color(designSystemColor: .accent))
+                .onTapGesture {
+                    isRecoverSyncedDataSheetVisible = true
+                }
+                .sheet(isPresented: $isRecoverSyncedDataSheetVisible, content: {
+                    RecoverSyncedData(model: model, onCancel: {
+                        isRecoverSyncedDataSheetVisible = false
+                    })
+                })
+        } header: {
+            Text("Other Options")
         }
     }
 }
+
 
 // Sync Enabled Views
 extension SyncSettingsView {
@@ -267,6 +330,9 @@ extension SyncSettingsView {
                     }
                 }
             }
+            Button("Sync With Another Device") {
+                model.scanQRCode()
+            }
         } header: {
             Text(UserText.connectedDevicesTitle)
         }
@@ -304,6 +370,16 @@ extension SyncSettingsView {
                     model.disableSync()
                 }
             }
+        } header: {
+            HStack(alignment: .center) {
+                Text("Sync Enabled")
+                Circle()
+                    .fill(.green)
+                    .frame(width: 8)
+            }
+        } footer: {
+            Text("Bookmarks and passwords are currently synced across your devices.")
+                .multilineTextAlignment(.leading)
         }
     }
 
@@ -363,15 +439,12 @@ public struct OptionsView: View {
     public var body: some View {
         Section {
             Toggle(isOn: $isUnifiedFavoritesEnabled) {
-                HStack(spacing: 16) {
-                    Image("SyncAllDevices")
-                    VStack(alignment: .leading) {
-                        Text(UserText.unifiedFavoritesTitle)
-                            .foregroundColor(.primary)
-                        Text(UserText.unifiedFavoritesInstruction)
-                            .daxBodyRegular()
-                            .foregroundColor(.secondary)
-                    }
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(UserText.unifiedFavoritesTitle)
+                        .foregroundColor(.primary)
+                    Text(UserText.unifiedFavoritesInstruction)
+                        .daxBodyRegular()
+                        .foregroundColor(.secondary)
                 }
             }
         } header: {

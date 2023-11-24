@@ -38,26 +38,25 @@ public struct SaveRecoveryKeyView: View {
 
     @ViewBuilder
     func recoveryInfo() -> some View {
-        ZStack {
             VStack(spacing: 26) {
                 HStack(spacing: 16) {
-                    QRCodeView(string: model.key, size: 94, style: .dark)
+                    QRCodeView(string: model.key, size: 64, style: .dark)
 
                     Text(model.key)
                         .fontWeight(.light)
                         .lineSpacing(1.6)
-                        .lineLimit(5)
+                        .lineLimit(3)
                         .applyKerning(2)
                         .truncationMode(.tail)
                         .monospaceSystemFont(ofSize: 16)
                         .frame(maxWidth: .infinity)
                 }
+                buttons()
             }
             .padding(.top, 20)
             .padding(.horizontal, 20)
             .padding(.bottom, 12)
-        }
-        .background(RoundedRectangle(cornerRadius: 10).foregroundColor(.black.opacity(0.03)))
+            .background(RoundedRectangle(cornerRadius: 10).foregroundColor(.black.opacity(0.03)))
     }
 
     @ViewBuilder
@@ -66,7 +65,12 @@ public struct SaveRecoveryKeyView: View {
             Button("Save as PDF") {
                 model.showRecoveryPDFAction()
             }
-            .buttonStyle(PrimaryButtonStyle(compact: isCompact))
+            .buttonStyle(SecondaryButtonStyle(compact: isCompact))
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                .inset(by: 0.5)
+                .stroke(.blue, lineWidth: 1)
+                )
 
             Button(UserText.copyCode) {
                 model.copyKey()
@@ -77,16 +81,7 @@ public struct SaveRecoveryKeyView: View {
                 .inset(by: 0.5)
                 .stroke(.blue, lineWidth: 1)
                 )
-
-            Button {
-                presentation.wrappedValue.dismiss()
-            } label: {
-                Text(UserText.notNowButton)
-            }
-            .buttonStyle(SecondaryButtonStyle(compact: isCompact))
         }
-        .frame(maxWidth: 360)
-        .padding(.horizontal, 30)
     }
 
     @ViewBuilder
@@ -121,7 +116,14 @@ public struct SaveRecoveryKeyView: View {
         UnderflowContainer {
             mainContent()
         } foregroundContent: {
-            buttons()
+            Button {
+                presentation.wrappedValue.dismiss()
+                model.onDismiss()
+            } label: {
+                Text(UserText.nextButton)
+            }
+            .buttonStyle(PrimaryButtonStyle(compact: isCompact))
+            .padding(.horizontal, 20)
         }
     }
 

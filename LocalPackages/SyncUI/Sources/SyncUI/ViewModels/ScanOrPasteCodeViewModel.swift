@@ -31,6 +31,7 @@ public protocol ScanOrPasteCodeViewModelDelegate: AnyObject {
 
     func codeCollectionCancelled()
     func gotoSettings()
+    func shareCode(_ code: String)
 
 }
 
@@ -62,12 +63,16 @@ public class ScanOrPasteCodeViewModel: ObservableObject {
 
     public weak var delegate: ScanOrPasteCodeViewModelDelegate?
 
-    var showQRCodeModel: ShowQRCodeViewModel?
+    var showQRCodeModel: ShowQRCodeViewModel
 
     let showConnectMode: Bool
+    let recoveryCode: String?
 
-    public init(showConnectMode: Bool) {
+    public init(showConnectMode: Bool, recoveryCode: String?) {
         self.showConnectMode = showConnectMode
+        self.recoveryCode = recoveryCode
+        showQRCodeModel = ShowQRCodeViewModel()
+        showQRCodeModel.code = recoveryCode
     }
 
     func codeScanned(_ code: String) async -> Bool {
@@ -106,9 +111,13 @@ public class ScanOrPasteCodeViewModel: ObservableObject {
         let model = ShowQRCodeViewModel()
         showQRCodeModel = model
         Task { @MainActor in
-            showQRCodeModel?.code = await delegate?.startConnectMode()
+            showQRCodeModel.code = await delegate?.startConnectMode()
         }
         return model
+    }
+
+    func showShareCodeSheet() {
+        delegate?.shareCode(showQRCodeModel.code ?? "")
     }
 
     func endConnectMode() {

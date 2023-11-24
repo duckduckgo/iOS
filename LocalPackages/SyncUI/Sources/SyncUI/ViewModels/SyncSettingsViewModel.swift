@@ -160,4 +160,7 @@ public class SyncSettingsViewModel: ObservableObject {
         delegate?.launchAutofillViewController()
     }
 
+    public func recoverSyncDataPressed() {
+        delegate?.showRecoverData()
+    }
 }

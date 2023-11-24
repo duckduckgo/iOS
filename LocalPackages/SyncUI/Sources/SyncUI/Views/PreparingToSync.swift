@@ -1,5 +1,5 @@
 //
-//  DeviceConnectedView.swift
+//  PreparingToSync.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -22,39 +22,26 @@ import DuckUI
 import DesignResourcesKit
 
 
-public struct DeviceConnectedView: View {
-
-    @Environment(\.presentationMode) var presentation
+public struct PreparingToSync: View {
 
     public init() {}
 
-    @ViewBuilder
-    func deviceSyncedView() -> some View {
+    public var body: some View {
         UnderflowContainer {
             VStack(spacing: 0) {
                 Image("Sync-Start-128")
                     .padding(.bottom, 20)
 
-                Text("Your Data is Synced!")
+                Text("Preparing to Sync")
                     .daxTitle1()
                     .padding(.bottom, 24)
+
+                Text("We are getting things set up. \nIt won't take long")
+                    .multilineTextAlignment(.center)
             }
             .padding(.horizontal, 20)
         } foregroundContent: {
-            Button {
-                presentation.wrappedValue.dismiss()
-            } label: {
-                Text(UserText.doneButton)
-            }
-            .buttonStyle(PrimaryButtonStyle())
-            .frame(maxWidth: 360)
-            .padding(.horizontal, 30)
+            Text("Connecting…")
         }
-        .padding(.bottom)
-    }
-
-    public var body: some View {
-        deviceSyncedView()
-            .transition(.move(edge: .leading))
     }
 }

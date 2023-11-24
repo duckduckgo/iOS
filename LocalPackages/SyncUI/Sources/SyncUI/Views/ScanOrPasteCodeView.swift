@@ -24,6 +24,9 @@ import DesignResourcesKit
 public struct ScanOrPasteCodeView: View {
 
     @ObservedObject var model: ScanOrPasteCodeViewModel
+    @State var qrCodeModel = ShowQRCodeViewModel()
+
+    @State private var isShareSheetPresented: Bool = false
 
     public init(model: ScanOrPasteCodeViewModel) {
         self.model = model
@@ -120,14 +123,11 @@ public struct ScanOrPasteCodeView: View {
 
     @ViewBuilder
     func instructions() -> some View {
-
+        
         Text(model.showConnectMode ? UserText.connectDeviceInstructions : UserText.recoveryModeInstructions)
-            .lineLimit(nil)
+            .daxFootnoteRegular()
             .multilineTextAlignment(.center)
-            .daxCaption()
-            .foregroundColor(.white.opacity(0.6))
-            .padding(.top, 20)
-
+            .padding(.horizontal, 16)
     }
 
     @ViewBuilder
@@ -192,70 +192,160 @@ public struct ScanOrPasteCodeView: View {
                         .stroke(lineWidth: 8)
                         .foregroundColor(isInvalidCode ? .red.opacity(0.6) : .white.opacity(0.8))
                         .rotationEffect(.degrees(degrees), anchor: .center)
-                        .frame(width: 300, height: 300)
+                        .frame(width: 250, height: 250)
                 }
             }
         }
     }
 
     public var body: some View {
-        GeometryReader { g in
-            ZStack(alignment: .top) {
-                fullscreenCameraBackground()
+        VStack(spacing: 10) {
+            VStack(spacing: 10) {
+                if model.showConnectMode {
+                    Text("Scan QR Code")
+                        .daxTitle2()
+                }
+                instructions()
+            }
+            .padding(.top, 10)
+            GeometryReader { g in
+                ZStack(alignment: .top) {
+                    fullscreenCameraBackground()
 
-                VStack(spacing: 0) {
-                    Rectangle() // Also acts as the blur for the camera
-                        .fill(.black)
-                        .frame(height: g.safeAreaInsets.top)
-
-                    ZStack {
-                        // Background in case fullscreen camera view doesn't work
-                        if !model.showCamera {
-                            Rectangle().fill(Color.black)
-                        }
-                        
-                        cameraViewPort()
-                            .frame(width: g.size.width, height: g.size.width)
-                            .frame(maxHeight: g.size.height - 300)
-
-                        Group {
-                            cameraPermissionDenied()
-                            cameraUnavailable()
-                        }
-                        .padding(.horizontal, 0)
-                    }
-
-                    ZStack {
+                    VStack(spacing: 0) {
                         Rectangle() // Also acts as the blur for the camera
                             .fill(.black)
-                            .regularMaterialBackground()
+                            .frame(height: g.safeAreaInsets.top)
 
-                        VStack(spacing: 0) {
-                            Section {
-                                instructions()
+                        ZStack {
+                            // Background in case fullscreen camera view doesn't work
+                            if !model.showCamera {
+                                Rectangle().fill(Color.black)
+                            }
+
+//                            cameraViewPort()
+//                                .frame(width: g.size.width, height: g.size.width)
+//                                .frame(maxHeight: g.size.height)
+
+                            Group {
+                                cameraPermissionDenied()
+                                cameraUnavailable()
+                            }
+                            .padding(.horizontal, 0)
+
+                            VStack {
+                                Spacer()
+                                Text("Point camera at QR code to sync")
+                                    .padding(.vertical, 8)
                                     .padding(.horizontal, 20)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 56)
+                                            .fill(.clear)
+                                            .background(BlurView(style: .light))
+                                            .cornerRadius(20)
+                                    )
+                                    .daxCaption()
                             }
-
-                            List {
-                                buttons()
-                            }
-                            .ignoresSafeArea()
-                            .disableScrolling()
+                            .padding(.bottom, 12)
                         }
-                        .frame(maxWidth: Constants.maxFullScreenWidth)
                     }
+                    .ignoresSafeArea()
                 }
-                .ignoresSafeArea()
-            }
-            .navigationTitle("Scan QR Code")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel", action: model.cancel)
-                    .foregroundColor(Color.white)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button("Cancel", action: model.cancel)
+                            .foregroundColor(Color.white)
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink("Manually Enter Code", destination: {
+                            PasteCodeView(model: model)
+                        })
+                        .foregroundColor(Color(designSystemColor: .accent))
+                    }
                 }
             }
         }
+        if model.showConnectMode {
+            VStack(spacing: 8) {
+                HStack(alignment: .top, spacing: 20) {
+                    QRCodeView(string: qrCodeModel.code ?? "", size: 120)
+                    VStack(alignment: .leading, spacing: 10) {
+                        HStack {
+                            Text("Mobile-to-Mobile?")
+                                .daxBodyBold()
+                                .fixedSize()
+                            Spacer()
+                            Image("SyncDeviceType_phone")
+                                .padding(2)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 2)
+                                        .fill(Color(designSystemColor: .lines))
+                                )
+                        }
+                        Text("Scan this code with another device to sync.")
+                            .foregroundColor(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .multilineTextAlignment(.leading)
+                    }
+                }
+                .padding(20)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color(designSystemColor: .panel))
+                )
+                .padding(20)
+                HStack {
+                    Text("can't scan?")
+                    Text("Share Text Code")
+                        .foregroundColor(Color(designSystemColor: .accent))
+                        .onTapGesture {
+                            model.showShareCodeSheet()
+                        }
+                    //                    .sheet(isPresented: $isShareSheetPresented, content: {
+                    //                        ShareSheet(activityItems: [qrCodeModel.code ?? ""])
+                    //                            .frame(height: UIScreen.main.bounds.height / 2)
+                    //                    })
+                }
+            }
+            .padding(.bottom, 40)
+            .onAppear {
+                if let recoveryCode = model.recoveryCode {
+                    self.qrCodeModel.code = recoveryCode
+                } else {
+                    self.qrCodeModel = model.startConnectMode()
+                }
+            }
+        } else {
+            Rectangle().fill(Color.black)
+                .frame(maxHeight: 274)
+        }
     }
+
+    struct ShareSheet: UIViewControllerRepresentable {
+        let activityItems: [Any]
+
+        func makeUIViewController(context: Context) -> UIViewController {
+            let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+            return controller
+        }
+
+        func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+        }
+    }
+
+
+    struct BlurView: UIViewRepresentable {
+        var style: UIBlurEffect.Style
+
+        func makeUIView(context: Context) -> UIVisualEffectView {
+            return UIVisualEffectView(effect: UIBlurEffect(style: style))
+        }
+
+        func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
+            uiView.effect = UIBlurEffect(style: style)
+        }
+    }
+
 }
 
 private struct RoundedCorner: Shape {

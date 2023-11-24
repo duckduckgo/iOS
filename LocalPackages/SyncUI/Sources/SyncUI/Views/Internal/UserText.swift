@@ -39,31 +39,32 @@ struct UserText {
     static let turnSyncOff = NSLocalizedString("turn.sync.off", value: "Turn Off Sync & Backup...", comment: "Turn Sync Off - Button")
     static let turnSyncOffSectionHeader = NSLocalizedString("turn.sync.off.section.header", value: "Sync Enabled", comment: "Turn Sync Off - Section Header")
     static let turnSyncOffSectionFooter = NSLocalizedString("turn.sync.off.section.footer", value: "Bookmarks and passwords are currently synced across your devices.", comment: "Turn Sync Off - Section Footer")
-
     // Sync Paused Errors
     static let syncLimitExceededTitle = NSLocalizedString("sync.limit.exceeded.title", value: "⚠️ Sync Paused", comment: "Sync Paused Errors - Title")
     static let bookmarksLimitExceededDescription = NSLocalizedString("bookmarks.limit.exceeded.description", value: "Bookmark limit exceeded. Delete some to resume syncing.", comment: "Sync Paused Errors - Bookmarks Limit Exceeded Description")
     static let credentialsLimitExceededDescription = NSLocalizedString("credentials.limit.exceeded.description", value: "Logins limit exceeded. Delete some to resume syncing.", comment: "Sync Paused Errors - Credentials Limit Exceeded Description")
     static let bookmarksLimitExceededAction = NSLocalizedString("bookmarks.limit.exceeded.action", value: "Manage Bookmarks", comment: "Sync Paused Errors - Bookmarks Limit Exceeded Action")
     static let credentialsLimitExceededAction = NSLocalizedString("credentials.limit.exceeded.action", value: "Manage Logins", comment: "Sync Paused Errors - Credentials Limit Exceeded Action")
-
     // Synced Devices
     static let syncedDevicesSectionHeader = NSLocalizedString("synced.devices.section.header", value: "Synced Devices", comment: "Synced Devices - Section Header")
     static let syncedDevicesThisDeviceLabel = NSLocalizedString("synced.devices.this.device.label", value: "This Device", comment: "Synced Devices - This Device Label")
     static let syncedDevicesSyncWithAnotherDeviceLabel = NSLocalizedString("synced.devices.sync.with.another.device.label", value: "Sync with Another Device", comment: "Synced Devices - Sync with Another Device Label")
-
     // Options
     static let optionsSectionHeader = NSLocalizedString("options.section.header", value: "Options", comment: "Options - Section Header")
     static let unifiedFavoritesTitle = NSLocalizedString("unified.favorites.title", value: "Unify Favorites", comment: "Options - Unify Favorites Title")
     static let unifiedFavoritesInstruction = NSLocalizedString("unified.favorites.instruction", value: "Use the same favorite bookmarks on all your devices. Leave off to keep mobile and desktop favorites separate.", comment: "Options - Unify Favorites Instruction")
-
     // Save RecoveryPDF
     static let saveRecoveryPDFButton = NSLocalizedString("save.recovery.pdf.button", value: "Save Recovery PDF", comment: "Save RecoveryPDF - Button")
     static let saveRecoveryPDFFooter = NSLocalizedString("save.recovery.pdf.footer", value: "If you lose your device, you will need this recovery code to restore your synced data.", comment: "Save RecoveryPDF - Footer")
-
     // Delete Server Data
     static let deleteServerData = NSLocalizedString("delete.server.data", value: "Turn Off and Delete Server Data...", comment: "Delete Server Data - Button")
 
+// Connect With Server Sheet
+    static let connectWithServerSheetTitle = NSLocalizedString("connect.with.server.sheet.title", value: "Sync and Back Up This Device", comment: "Connect With Server Sheet - Title")
+    static let connectWithServerSheetDescriptionPart1 = NSLocalizedString("connect.with.server.sheet.description.part1", value: "This creates an encrypted backup of your bookmarks and passwords on DuckDuckGo’s secure server, which can be synced with your other devices.", comment: "Connect With Server Sheet - Description Part 1")
+    static let connectWithServerSheetDescriptionPart2 = NSLocalizedString("connect.with.server.sheet.description.part2", value: "The encryption key is only stored on your device, DuckDuckGo cannot access it.", comment: "Connect With Server Sheet - Description Part 2")
+    static let connectWithServerSheetButton = NSLocalizedString("connect.with.server.sheet.button", value: "Turn on Sync & Backup", comment: "Connect With Server Sheet - Button")
+    static let connectWithServerSheetFooter = NSLocalizedString("connect.with.server.sheet.footer", value: "You can sync with your other devices later.", comment: "Connect With Server Sheet - Footer")
 
 
 
@@ -129,8 +130,10 @@ struct UserText {
     static let settingsSaveRecoveryPDFButton = "Save Recovery PDF"
     static let settingsRecoveryPDFWarning = "If you lose your device, you will need this recovery code to restore your synced data."
 
-    static let removeButton = "Remove"
+// Standard Buttons
     static let cancelButton = "Cancel"
+    
+    static let removeButton = "Remove"
     static let doneButton = "Done"
     static let nextButton = "Next"
     static let notNowButton = "Not Now"

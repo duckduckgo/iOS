@@ -36,7 +36,7 @@ public struct SyncWithServer: View {
             VStack(spacing: 0) {
                 HStack {
                     Button(action: onCancel, label: {
-                        Text("Cancel")
+                        Text(UserText.cancelButton)
                             .foregroundColor(.primary)
                     })
                     Spacer()
@@ -45,15 +45,15 @@ public struct SyncWithServer: View {
                 Image("Sync-Server-128")
                     .padding(.bottom, 20)
 
-                Text("Sync and Back Up This Device")
+                Text(UserText.ConnextWithServerSheetTitle)
                     .daxTitle1()
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 24)
-                VStack(spacing: 10) {
-                    Text("This creates an encrypted backup of your bookmarks and passwords on DuckDuckGo’s secure server, which can be synced with your other devices.")
+                VStack(spacing: 16) {
+                    Text(UserText.ConnextWithServerSheetDescriptionPart1)
                         .multilineTextAlignment(.center)
 
-                    Text("The encryption key is only stored on your device, DuckDuckGo cannot access it.")
+                    Text(UserText.ConnextWithServerSheetDescriptionPart2)
                         .multilineTextAlignment(.center)
                 }
             }
@@ -63,12 +63,12 @@ public struct SyncWithServer: View {
                 Button {
                     model.startSyncPressed()
                 } label: {
-                    Text("Turn on Sync & Backup")
+                    Text(UserText.ConnextWithServerSheetButton)
                 }
                 .buttonStyle(PrimaryButtonStyle())
                 .frame(maxWidth: 360)
                 .padding(.horizontal, 30)
-                Text("You can sync with your other devices later.")
+                Text(UserText.ConnextWithServerSheetFooter)
                     .daxFootnoteRegular()
                     .foregroundColor(Color(designSystemColor: .textSecondary))
             }

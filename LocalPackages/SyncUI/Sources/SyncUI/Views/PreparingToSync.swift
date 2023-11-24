@@ -29,7 +29,7 @@ public struct PreparingToSync: View {
     public var body: some View {
         UnderflowContainer {
             VStack(spacing: 0) {
-                Image("Sync-Start-128")
+                Image("Sync-128")
                     .padding(.bottom, 20)
 
                 Text("Preparing to Sync")

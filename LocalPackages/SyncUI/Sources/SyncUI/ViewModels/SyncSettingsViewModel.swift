@@ -125,10 +125,6 @@ public class SyncSettingsViewModel: ObservableObject {
         delegate?.showSyncWithAnotherDeviceEnterText()
     }
 
-    func showRecoverDataView() {
-        delegate?.showRecoverData()
-    }
-
     func createEditDeviceModel(_ device: Device) -> EditDeviceViewModel {
         return EditDeviceViewModel(device: device) { [weak self] newValue in
             self?.delegate?.updateDeviceName(newValue.name)

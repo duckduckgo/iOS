@@ -32,7 +32,6 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
     var recoveryCode: String {
         guard let code = syncService.account?.recoveryCode else {
-            assertionFailure("No recovery code")
             return ""
         }
 

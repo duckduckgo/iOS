@@ -23,24 +23,60 @@ import Foundation
 // Localise these later, when feature is closer to exernal release
 struct UserText {
 
-    static let syncWithAnotherDeviceTitle = "Begin Syncing"
-    static let syncWithAnotherDeviceMessage = "Securely sync bookmarks and Logins between your devices."
+// Sync Set Up
+    // Sync With Another Device Card
+    static let syncWithAnotherDeviceTitle = NSLocalizedString("sync.with.another.device.title", value: "Begin Syncing", comment: "Title for syncing with another device")
+    static let syncWithAnotherDeviceMessage = NSLocalizedString("sync.with.another.device.message", value: "Securely sync bookmarks and passwords between your devices.", comment: "Message for syncing with another device")
+    static let syncWithAnotherDeviceButton = NSLocalizedString("sync.with.another.device.button", value: "Sync with Another Device", comment: "Button label for syncing with another device")
+    static let syncWithAnotherDeviceFooter = NSLocalizedString("sync.with.another.device.footer", value: "Your data is end-to-end encrypted, and DuckDuckGo does not have access to the encryption key.", comment: "Footer message for syncing with another device")
+    // Other Options
+    static let syncAndBackUpThisDeviceLink = NSLocalizedString("sync.and.backup.this.device.link", value: "Sync and Back Up This Device", comment: "Link label for syncing and backing up the device")
+    static let recoverSyncedDataLink = NSLocalizedString("recover.synced.data.link", value: "Recover Synced Data", comment: "Link label for recovering synced data")
+    static let otherOptionsSectionHeader = NSLocalizedString("other.options.section.header", value: "Other Options", comment: "Section header for other syncing options")
+
+// Sync Enabled View
+    // Turn Sync Off
+    static let turnSyncOff = NSLocalizedString("turn.sync.off", value: "Turn Off Sync & Backup...", comment: "Turn Sync Off - Button")
+    static let turnSyncOffSectionHeader = NSLocalizedString("turn.sync.off.section.header", value: "Sync Enabled", comment: "Turn Sync Off - Section Header")
+    static let turnSyncOffSectionFooter = NSLocalizedString("turn.sync.off.section.footer", value: "Bookmarks and passwords are currently synced across your devices.", comment: "Turn Sync Off - Section Footer")
+
+    // Sync Paused Errors
+    static let syncLimitExceededTitle = NSLocalizedString("sync.limit.exceeded.title", value: "⚠️ Sync Paused", comment: "Sync Paused Errors - Title")
+    static let bookmarksLimitExceededDescription = NSLocalizedString("bookmarks.limit.exceeded.description", value: "Bookmark limit exceeded. Delete some to resume syncing.", comment: "Sync Paused Errors - Bookmarks Limit Exceeded Description")
+    static let credentialsLimitExceededDescription = NSLocalizedString("credentials.limit.exceeded.description", value: "Logins limit exceeded. Delete some to resume syncing.", comment: "Sync Paused Errors - Credentials Limit Exceeded Description")
+    static let bookmarksLimitExceededAction = NSLocalizedString("bookmarks.limit.exceeded.action", value: "Manage Bookmarks", comment: "Sync Paused Errors - Bookmarks Limit Exceeded Action")
+    static let credentialsLimitExceededAction = NSLocalizedString("credentials.limit.exceeded.action", value: "Manage Logins", comment: "Sync Paused Errors - Credentials Limit Exceeded Action")
+
+    // Synced Devices
+    static let syncedDevicesSectionHeader = NSLocalizedString("synced.devices.section.header", value: "Synced Devices", comment: "Synced Devices - Section Header")
+    static let syncedDevicesThisDeviceLabel = NSLocalizedString("synced.devices.this.device.label", value: "This Device", comment: "Synced Devices - This Device Label")
+    static let syncedDevicesSyncWithAnotherDeviceLabel = NSLocalizedString("synced.devices.sync.with.another.device.label", value: "Sync with Another Device", comment: "Synced Devices - Sync with Another Device Label")
+
+    // Options
+    static let optionsSectionHeader = NSLocalizedString("options.section.header", value: "Options", comment: "Options - Section Header")
+    static let unifiedFavoritesTitle = NSLocalizedString("unified.favorites.title", value: "Unify Favorites", comment: "Options - Unify Favorites Title")
+    static let unifiedFavoritesInstruction = NSLocalizedString("unified.favorites.instruction", value: "Use the same favorite bookmarks on all your devices. Leave off to keep mobile and desktop favorites separate.", comment: "Options - Unify Favorites Instruction")
+
+    // Save RecoveryPDF
+    static let saveRecoveryPDFButton = NSLocalizedString("save.recovery.pdf.button", value: "Save Recovery PDF", comment: "Save RecoveryPDF - Button")
+    static let saveRecoveryPDFFooter = NSLocalizedString("save.recovery.pdf.footer", value: "If you lose your device, you will need this recovery code to restore your synced data.", comment: "Save RecoveryPDF - Footer")
+
+    // Delete Server Data
+    static let deleteServerData = NSLocalizedString("delete.server.data", value: "Turn Off and Delete Server Data...", comment: "Delete Server Data - Button")
+
+
+
 
     static let recoveryMessage = "If you lose access to your devices, you will need this code to recover your synced data."
     static let recoveryWarning = "Anyone with access to this code can access your synced data, so please keep it in a safe place."
 
     static let scanQRCode = "Scan QR Code"
     static let enterTextCode = "Enter Text Code"
-    static let turnSyncOff = "Turn Off Sync & Back Up"
 
     static let singleDeviceSetUpTitle = "Single-Device Setup"
     static let singleDeviceSetUpInstruction = "Set up this device now, sync with other devices later."
-    static let turnSyncOn = "Start Sync & Back Up"
+    static let turnSyncOn = "Start Sync & Backup"
     static let recoverYourData = "Recover Your Data"
-
-    static let options = "Options"
-    static let unifiedFavoritesTitle = "Unify Favorites "
-    static let unifiedFavoritesInstruction = "Use the same favorite bookmarks on all your devices. Leave off to keep mobile and desktop favorites separate."
 
     static let syncSettingsFooter = "Your data is end-to-end encrypted, and DuckDuckGo does not have access to the decryption key."
 
@@ -72,10 +108,10 @@ struct UserText {
 
     static let goToSettingsButton = "Go to Settings"
 
-    static let syncTitle = "Sync & Back Up"
+    static let syncTitle = "Sync & Backup"
 
     static let thisDevice = "This Device"
-    static let connectedDevicesTitle = "Synced Devices"
+
 
     static let pasteLabel = "Paste"
     static let copyCodeLabel = "Copy Code"
@@ -92,7 +128,6 @@ struct UserText {
     static let settingsShowCodeButton = "Show Text Code"
     static let settingsSaveRecoveryPDFButton = "Save Recovery PDF"
     static let settingsRecoveryPDFWarning = "If you lose your device, you will need this recovery code to restore your synced data."
-    static let settingsDeleteAllButton = "Turn Off and Delete Server Data..."
 
     static let removeButton = "Remove"
     static let cancelButton = "Cancel"
@@ -111,13 +146,5 @@ struct UserText {
     static func removeDeviceMessage(_ name: String) -> String {
         return "\"\(name)\" will no longer be able to access your synced data."
     }
-
-    static let syncLimitExceededTitle = "⚠️ Sync Paused"
-    static let bookmarksLimitExceededDescription = "Bookmark limit exceeded. Delete some to resume syncing."
-    static let credentialsLimitExceededDescription = "Logins limit exceeded. Delete some to resume syncing."
-    static let bookmarksLimitExceededAction = "Manage Bookmarks"
-    static let credentialsLimitExceededAction = "Manage Logins"
-    
-
 }
 // swiftlint:enable line_length

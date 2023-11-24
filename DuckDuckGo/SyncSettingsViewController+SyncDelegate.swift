@@ -111,7 +111,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
 
     private func collectCode(showConnectMode: Bool, showEnterTextCode: Bool = false) {
-        let model = ScanOrPasteCodeViewModel(showConnectMode: showConnectMode, recoveryCode: recoveryCode)
+        let model = ScanOrPasteCodeViewModel(showConnectMode: showConnectMode, recoveryCode: recoveryCode.isEmpty ? nil : recoveryCode)
         model.delegate = self
 
         var controller: UIHostingController<AnyView>

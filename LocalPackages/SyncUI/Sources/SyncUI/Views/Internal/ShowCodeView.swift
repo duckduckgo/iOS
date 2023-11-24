@@ -19,26 +19,26 @@
 
 import SwiftUI
 
-struct ShowCodeView: View {
-
-    let code: String
-    let copyCode: () -> Void
-
-    var body: some View {
-
-        List {
-            Text(code)
-                .monospaceSystemFont(ofSize: 16)
-
-            Button {
-                copyCode()
-            } label: {
-                Label("Copy Code", image: "SyncCopy")
-            }
-        }
-        .lineSpacing(1.47)
-        .navigationTitle("Code")
-        .applyListStyle()
-    }
-
-}
+//struct ShowCodeView: View {
+//
+//    let code: String
+//    let copyCode: () -> Void
+//
+//    var body: some View {
+//
+//        List {
+//            Text(code)
+//                .monospaceSystemFont(ofSize: 16)
+//
+//            Button {
+//                copyCode()
+//            } label: {
+//                Label("Copy Code", image: "SyncCopy")
+//            }
+//        }
+//        .lineSpacing(1.47)
+//        .navigationTitle("Code")
+//        .applyListStyle()
+//    }
+//
+//}

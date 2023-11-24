@@ -27,16 +27,27 @@ final class NetworkProtectionVPNLocationViewModel: ObservableObject {
     private let locationListRepository: NetworkProtectionLocationListRepository
     private let tunnelSettings: TunnelSettings
     @Published public var state: LoadingState
+    @Published public var isNearestSelected: Bool
 
     enum LoadingState {
         case loading
-        case loaded(isNearestSelected: Bool, countryItems: [NetworkProtectionVPNCountryItemModel])
+        case loaded(countryItems: [NetworkProtectionVPNCountryItemModel])
+
+        var isLoading: Bool {
+            switch self {
+            case .loading:
+                true
+            case .loaded:
+                false
+            }
+        }
     }
 
     init(locationListRepository: NetworkProtectionLocationListRepository, tunnelSettings: TunnelSettings) {
         self.locationListRepository = locationListRepository
         self.tunnelSettings = tunnelSettings
         state = .loading
+        self.isNearestSelected = tunnelSettings.selectedLocation == .nearest
     }
 
     func onViewAppeared() async {
@@ -93,8 +104,8 @@ final class NetworkProtectionVPNLocationViewModel: ObservableObject {
                 cityPickerItems: cityPickerItems
             )
         }
-
-        state = .loaded(isNearestSelected: isNearestSelected, countryItems: countryItems)
+        self.isNearestSelected = isNearestSelected
+        state = .loaded(countryItems: countryItems)
     }
 }
 

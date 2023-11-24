@@ -28,16 +28,11 @@ struct NetworkProtectionVPNLocationView: View {
 
     var body: some View {
         List {
-            switch model.state {
-            case .loading:
-                EmptyView()
-            case .loaded(let isNearestSelected, let countryItems):
-                nearest(isSelected: isNearestSelected)
-                countries(itemModels: countryItems)
-                    .animation(.default, value: countryItems.isEmpty)
-            }
+            nearest(isSelected: model.isNearestSelected)
+            countries()
         }
         .applyInsetGroupedListStyle()
+        .animation(.default, value: model.state.isLoading)
         .navigationTitle(UserText.netPVPNLocationTitle)
         .onAppear {
             Task {
@@ -73,24 +68,34 @@ struct NetworkProtectionVPNLocationView: View {
     }
 
     @ViewBuilder
-    private func countries(itemModels: [NetworkProtectionVPNCountryItemModel]) -> some View {
+    private func countries() -> some View {
         Section {
-            ForEach(itemModels) { item in
-                CountryItem(itemModel: item) {
-                    Task {
-                        await model.onCountryItemSelection(id: item.id)
-                    }
-                } cityPickerAction: { cityId in
-                    Task {
-                        await model.onCountryItemSelection(id: item.id, cityId: cityId)
+            switch model.state {
+            case .loading:
+                HStack(alignment: .center) {
+                    Spacer()
+                    SwiftUI.ProgressView()
+                    Spacer()
+                }
+                .listRowBackground(Color.clear)
+            case .loaded(let countryItems):
+                ForEach(countryItems) { item in
+                    CountryItem(itemModel: item) {
+                        Task {
+                            await model.onCountryItemSelection(id: item.id)
+                        }
+                    } cityPickerAction: { cityId in
+                        Task {
+                            await model.onCountryItemSelection(id: item.id, cityId: cityId)
+                        }
                     }
                 }
-
             }
         } header: {
             Text(UserText.netPVPNLocationAllCountriesSectionTitle)
                 .foregroundStyle(Color.textPrimary)
         }
+        .animation(.default, value: model.state.isLoading)
     }
 }
 

@@ -372,11 +372,8 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
         try stubLocationList(with: ["NL", "DE", "SE"])
 
         await functionUnderTest()
-        guard case .loaded(let isNearestSelected, _) = viewModel.state else {
-            throw TestError.notLoadedState
-        }
 
-        XCTAssertTrue(isNearestSelected, file: file, line: line)
+        XCTAssertTrue(viewModel.isNearestSelected, file: file, line: line)
     }
 
     func assertNearestSelectedSetToFalse(when functionUnderTestWithTestCaseID: (String) async -> Void,
@@ -388,10 +385,7 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
         for i in 0..<countryIds.count {
             await functionUnderTestWithTestCaseID(countryIds[i])
 
-            guard case .loaded(let isNearestSelected, _) = viewModel.state else {
-                throw TestError.notLoadedState
-            }
-            XCTAssertFalse(isNearestSelected, file: file, line: line)
+            XCTAssertFalse(viewModel.isNearestSelected, file: file, line: line)
         }
     }
 
@@ -577,7 +571,13 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
             await functionUnderTestWithTestCase(testCase)
             let selectedItems = try loadedItems().flatMap { $0.cityPickerItems }.filter(\.isSelected)
             XCTAssertEqual(selectedItems.count, 1, file: file, line: line)
-            XCTAssertEqual(selectedItems.first?.id, NetworkProtectionVPNCityItemModel.nearestItemId, file: file, line: line)
+            XCTAssertNil(selectedItems.first?.id, file: file, line: line)
+            XCTAssertEqual(
+                selectedItems.first?.name,
+                UserText.netPVPNLocationNearestAvailableItemTitle,
+                file: file,
+                line: line
+            )
         }
     }
 
@@ -591,7 +591,7 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
     }
 
     private func loadedItems() throws -> [NetworkProtectionVPNCountryItemModel] {
-        guard case .loaded(_, countryItems: let items) = viewModel.state else {
+        guard case .loaded(let items) = viewModel.state else {
             throw TestError.notLoadedState
         }
         return items

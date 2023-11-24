@@ -36,9 +36,9 @@ final class NetworkProtectionVPNLocationViewModel: ObservableObject {
         var isLoading: Bool {
             switch self {
             case .loading:
-                true
+                return true
             case .loaded:
-                false
+                return false
             }
         }
     }

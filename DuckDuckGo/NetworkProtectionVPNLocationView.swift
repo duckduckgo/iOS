@@ -72,11 +72,7 @@ struct NetworkProtectionVPNLocationView: View {
         Section {
             switch model.state {
             case .loading:
-                HStack(alignment: .center) {
-                    Spacer()
-                    SwiftUI.ProgressView()
-                    Spacer()
-                }
+                EmptyView()
                 .listRowBackground(Color.clear)
             case .loaded(let countryItems):
                 ForEach(countryItems) { item in

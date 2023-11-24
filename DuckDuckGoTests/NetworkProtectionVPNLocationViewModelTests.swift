@@ -607,7 +607,10 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
 final class MockNetworkProtectionLocationListRepository: NetworkProtectionLocationListRepository {
     var stubLocationList: [NetworkProtectionLocation] = []
     var stubError: Error?
+    var didCallFetchLocationList: Bool = false
+
     func fetchLocationList() async throws -> [NetworkProtectionLocation] {
+        didCallFetchLocationList = true
         if let stubError {
             throw stubError
         }

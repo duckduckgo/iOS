@@ -94,7 +94,7 @@ class ActionSheetDaxDialogViewController: UIViewController {
             return
         }
         
-        dismiss(animated: true)
+        self.dismiss(animated: true)
         if let spec = spec {
             Pixel.fire(pixel: spec.cancelActionPixelName)
         }

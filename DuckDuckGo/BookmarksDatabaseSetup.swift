@@ -30,9 +30,11 @@ struct BookmarksDatabaseSetup {
 
     func loadStoreAndMigrate(bookmarksDatabase: CoreDataDatabase) -> Bool {
         var migrationHappened = false
+
+        let oldFavoritesOrder = getOldFavoritesOrder()
+
         bookmarksDatabase.loadStore { context, error in
             guard let context = assertContext(context, error: error) else { return }
-            let oldFavoritesOrder = self.getOldFavoritesOrder(context)
             self.migrateFromFirstVersionOfBookmarksCoreDataStorage(context)
             migrationHappened = self.migrateToFormFactorSpecificFavorites(context, oldFavoritesOrder: oldFavoritesOrder)
             // Add future bookmarks database migrations here and set boolean to result of whatever the last migration returns
@@ -58,7 +60,7 @@ struct BookmarksDatabaseSetup {
         return context
     }
 
-    private func getOldFavoritesOrder(_ context: NSManagedObjectContext) -> [String]? {
+    private func getOldFavoritesOrder() -> [String]? {
         let preMigrationErrorHandling = EventMapping<BookmarkFormFactorFavoritesMigration.MigrationErrors> { _, error, _, _ in
             if let error = error {
                 Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,

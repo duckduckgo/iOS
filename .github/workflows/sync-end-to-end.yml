@@ -1,10 +1,8 @@
 name: Sync-End-to-End tests
 
 on:
-  # TODO: Revert before merge
-  push
-  #schedule:
-  #  - cron: '0 5 * * *' # run at 5 AM UTC
+  schedule:
+    - cron: '0 5 * * *' # run at 5 AM UTC
 
 jobs:
   sync-end-to-end-tests:

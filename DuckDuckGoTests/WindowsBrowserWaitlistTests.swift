@@ -61,7 +61,6 @@ class WindowsBrowserWaitlistTests: XCTestCase {
         let request = MockWaitlistRequest.failure()
         let privacyConfigurationManager: PrivacyConfigurationManagerMock = PrivacyConfigurationManagerMock()
         let privacyConfig = privacyConfigurationManager.privacyConfig as! PrivacyConfigurationMock // swiftlint:disable:this force_cast
-        var enabledFeatures = privacyConfig.enabledFeaturesForVersions
         privacyConfig.enabledFeaturesForVersions[.windowsDownloadLink] = Set([AppVersionProvider().appVersion()!])
 
         let waitlist = WindowsBrowserWaitlist(store: store, request: request, privacyConfigurationManager: privacyConfigurationManager)

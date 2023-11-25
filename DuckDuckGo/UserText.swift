@@ -622,7 +622,7 @@ In addition to the details entered into this form, your app issue report will co
     public static let netPCellConnected = NSLocalizedString("netP.cell.connected", value: "Connected", comment: "String indicating NetP is connected when viewed from the settings screen")
     public static let netPCellDisconnected = NSLocalizedString("netP.cell.disconnected", value: "Not connected", comment: "String indicating NetP is disconnected when viewed from the settings screen")
 
-    static let netPInviteTitle = NSLocalizedString("network.protection.invite.dialog.title", value: "You're invited to try Network Protection", comment: "Title for the network protection invite screen")
+    static let netPInviteTitle = NSLocalizedString("network.protection.invite.dialog.title", value: "You’re invited to try Network Protection", comment: "Title for the network protection invite screen")
     static let netPInviteMessage = NSLocalizedString("network.protection.invite.dialog.message", value: "Enter your invite code to get started.", comment: "Message for the network protection invite dialog")
     static let netPInviteFieldPrompt = NSLocalizedString("network.protection.invite.field.prompt", value: "Invite Code", comment: "Prompt for the network protection invite code text field")
     static let netPInviteSuccessTitle = NSLocalizedString("network.protection.invite.success.title", value: "Success! You’re in.", comment: "Title for the network protection invite success view")
@@ -889,4 +889,49 @@ But if you *do* want a peek under the hood, you can find more information about 
     static let emailProtectionSignInBody = NSLocalizedString("error.email-protection-sign-in.body", value: "Sorry, please sign in again to re-enable Email Protection features on this browser.", comment: "Alert message")
     static let emailProtectionSignInAction = NSLocalizedString("error.email-protection-sign-in.action", value: "Sign In", comment: "Button title to Sign In")
 
+    // MARK: - VPN Waitlist
+
+    static let networkProtectionWaitlistJoinTitle = NSLocalizedString("network-protection.waitlist.join.title", value: "Network Protection Early Access", comment: "Title for Network Protection join waitlist screen")
+    static let networkProtectionWaitlistJoinSubtitle1 = NSLocalizedString("network-protection.waitlist.join.subtitle.1", value: "Secure your connection anytime, anywhere with Network Protection, the VPN from DuckDuckGo.", comment: "First subtitle for Network Protection join waitlist screen")
+    static let networkProtectionWaitlistJoinSubtitle2 = NSLocalizedString("network-protection.waitlist.join.subtitle.2", value: "Join the waitlist, and we’ll notify you when it’s your turn.", comment: "Second subtitle for Network Protection join waitlist screen")
+
+    static let networkProtectionWaitlistJoinedTitle = NSLocalizedString("network-protection.waitlist.joined.title", value: "You’re on the list!", comment: "Title for Network Protection joined waitlist screen")
+    static let networkProtectionWaitlistJoinedWithNotificationsSubtitle1 = NSLocalizedString("network-protection.waitlist.joined.with-notifications.subtitle.1", value: "New invites are sent every few days, on a first come, first served basis.", comment: "Subtitle 1 for Network Protection joined waitlist screen when notifications are enabled")
+    static let networkProtectionWaitlistJoinedWithNotificationsSubtitle2 = NSLocalizedString("network-protection.waitlist.joined.with-notifications.subtitle.2", value: "We’ll notify you when your invite is ready.", comment: "Subtitle 2 for Network Protection joined waitlist screen when notifications are enabled")
+
+    static let networkProtectionWaitlistNotificationTitle = NSLocalizedString("network-protection.waitlist.notification.title", value: "Network Protection is ready!", comment: "Title for Network Protection waitlist notification")
+    static let networkProtectionWaitlistNotificationText = NSLocalizedString("network-protection.waitlist.notification.text", value: "Open your invite", comment: "Title for Network Protection waitlist notification")
+
+    static let networkProtectionWaitlistInvitedTitle = NSLocalizedString("network-protection.waitlist.invited.title", value: "You’re invited to try\nNetwork Protection early access!", comment: "Title for Network Protection invited screen")
+    static let networkProtectionWaitlistInvitedSubtitle = NSLocalizedString("network-protection.waitlist.invited.subtitle", value: "Get an extra layer of protection online with the VPN built for speed and simplicity. Encrypt your internet connection across your entire device and hide your location and IP address from sites you visit.", comment: "Subtitle for Network Protection invited screen")
+
+    static let networkProtectionWaitlistInvitedSection1Title = NSLocalizedString("network-protection.waitlist.invited.section-1.title", value: "Full-device coverage", comment: "Title for section 1 of the Network Protection invited screen")
+    static let networkProtectionWaitlistInvitedSection1Subtitle = NSLocalizedString("network-protection.waitlist.invited.section-1.subtitle", value: "Encrypt online traffic across your browsers and apps.", comment: "Subtitle for section 1 of the Network Protection invited screen")
+
+    static let networkProtectionWaitlistInvitedSection2Title = NSLocalizedString("network-protection.waitlist.invited.section-2.title", value: "Fast, reliable, and easy to use", comment: "Title for section 2 of the Network Protection invited screen")
+    static let networkProtectionWaitlistInvitedSection2Subtitle = NSLocalizedString("network-protection.waitlist.invited.section-2.subtitle", value: "No need for a separate app. Connect in one click and see your connection status at a glance.", comment: "Subtitle for section 2 of the Network Protection invited screen")
+
+    static let networkProtectionWaitlistInvitedSection3Title = NSLocalizedString("network-protection.waitlist.invited.section-3.title", value: "Strict no-logging policy", comment: "Title for section 3 of the Network Protection invited screen")
+    static let networkProtectionWaitlistInvitedSection3Subtitle = NSLocalizedString("network-protection.waitlist.invited.section-3.subtitle", value: "We do not log or save any data that can connect you to your online activity.", comment: "Subtitle for section 3 of the Network Protection invited screen")
+
+    static let networkProtectionWaitlistButtonEnableNotifications = NSLocalizedString("network-protection.waitlist.button.enable-notifications", value: "Enable Notifications", comment: "Enable Notifications button for Network Protection joined waitlist screen")
+    static let networkProtectionWaitlistButtonJoinWaitlist = NSLocalizedString("network-protection.waitlist.button.join-waitlist", value: "Join the Waitlist", comment: "Join Waitlist button for Network Protection join waitlist screen")
+    static let networkProtectionWaitlistButtonAgreeAndContinue = NSLocalizedString("network-protection.waitlist.button.agree-and-continue", value: "Agree and Continue", comment: "Agree and Continue button for Network Protection join waitlist screen")
+    static let networkProtectionWaitlistButtonExistingInviteCode = NSLocalizedString("network-protection.waitlist.button.existing-invite-code", value: "I Have an Invite Code", comment: "Button title for users who already have an invite code")
+
+    static let networkProtectionWaitlistAvailabilityDisclaimer = NSLocalizedString("network-protection.waitlist.availability-disclaimer", value: "Network Protection is free to use during early access.", comment: "Availability disclaimer for Network Protection join waitlist screen")
+
+    static let networkProtectionPrivacyPolicyTitle = NSLocalizedString("network-protection.privacy-policy.title", value: "Privacy Policy", comment: "Privacy Policy title for Network Protection")
+
+    static let networkProtectionWaitlistNotificationAlertDescription = NSLocalizedString("network-protection.waitlist.notification-alert.description", value: "We’ll send you a notification when your invite to test Network Protection is ready.", comment: "Body text for the alert to enable notifications")
+
+    static let networkProtectionWaitlistGetStarted = NSLocalizedString("network-protection.waitlist.get-started", value: "Get Started", comment: "Button title text for the Network Protection waitlist confirmation prompt")
+    static let networkProtectionWaitlistAgreeAndContinue = NSLocalizedString("network-protection.waitlist.agree-and-continue", value: "Agree and Continue", comment: "Title text for the Network Protection terms and conditions accept button")
+
+    static let networkProtectionSettingsSubtitleNotJoined = NSLocalizedString("network-protection.waitlist.settings-subtitle.waitlist-not-joined", value: "Join the private waitlist", comment: "Subtitle text for the Network Protection settings row")
+    static let networkProtectionSettingsSubtitleJoinedButNotInvited = NSLocalizedString("network-protection.waitlist.settings-subtitle.joined-but-not-invited", value: "You’re on the list!", comment: "Subtitle text for the Network Protection settings row")
+    static let networkProtectionSettingsSubtitleJoinedAndInvited = NSLocalizedString("network-protection.waitlist.settings-subtitle.joined-and-invited", value: "Your invite is ready!", comment: "Subtitle text for the Network Protection settings row")
+
+    static let networkProtectionNotificationPromptTitle = NSLocalizedString("network-protection.waitlist.notification-prompt-title", value: "Know the instant you're invited", comment: "Title for the alert to confirm enabling notifications")
+    static let networkProtectionNotificationPromptDescription = NSLocalizedString("network-protection.waitlist.notification-prompt-description", value: "Get a notification when your copy of Network Protection early access is ready.", comment: "Subtitle for the alert to confirm enabling notifications")
 }

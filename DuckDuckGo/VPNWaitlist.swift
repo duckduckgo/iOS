@@ -61,7 +61,9 @@ final class VPNWaitlist: Waitlist {
     static let inviteAvailableNotificationBody = UserText.networkProtectionWaitlistNotificationText
 
     var isAvailable: Bool {
-        return isFeatureEnabled
+        let hasWaitlistAccess = featureFlagger.isFeatureOn(.networkProtectionWaitlistAccess)
+        let isWaitlistActive = featureFlagger.isFeatureOn(.networkProtectionWaitlistActive)
+        return hasWaitlistAccess && isWaitlistActive
     }
 
     var isWaitlistRemoved: Bool {
@@ -70,26 +72,23 @@ final class VPNWaitlist: Waitlist {
 
     let waitlistStorage: WaitlistStorage
     let waitlistRequest: WaitlistRequest
-    private let privacyConfigurationManager: PrivacyConfigurationManaging
+    private let featureFlagger: FeatureFlagger
     private let networkProtectionAccess: NetworkProtectionAccess
 
-    init(store: WaitlistStorage,
-         request: WaitlistRequest,
-         privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
-         networkProtectionAccess: NetworkProtectionAccess = NetworkProtectionAccessController()) {
+    init(store: WaitlistStorage, request: WaitlistRequest, featureFlagger: FeatureFlagger, networkProtectionAccess: NetworkProtectionAccess) {
         self.waitlistStorage = store
         self.waitlistRequest = request
-        self.privacyConfigurationManager = privacyConfigurationManager
+        self.featureFlagger = featureFlagger
         self.networkProtectionAccess = networkProtectionAccess
-
-        let hasWaitlistAccess = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlist)
-        let isWaitlistActive = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlistBetaActive)
-        let internalUser = InternalUserStore()
-        isFeatureEnabled = (hasWaitlistAccess && isWaitlistActive) || internalUser.isInternalUser
     }
 
     convenience init(store: WaitlistStorage, request: WaitlistRequest) {
-        self.init(store: store, request: request, privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager)
+        self.init(
+            store: store,
+            request: request,
+            featureFlagger: AppDependencyProvider.shared.featureFlagger,
+            networkProtectionAccess: NetworkProtectionAccessController()
+        )
     }
 
     var settingsSubtitle: String {
@@ -107,13 +106,6 @@ final class VPNWaitlist: Waitlist {
             return ""
         }
     }
-
-    // MARK: -
-
-    private var isFeatureEnabled: Bool = false
-    private var modeCancellable: AnyCancellable?
-    private var isFeatureEnabledCancellable: AnyCancellable?
-    private var isWaitlistRemovedCancellable: AnyCancellable?
 
 }
 

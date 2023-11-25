@@ -77,7 +77,7 @@ struct VPNWaitlistSignUpView: View {
                         .foregroundColor(.waitlistTextSecondary)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
-                        .padding(.top, 24)
+                        .padding(.top, 18)
 
                     Button(UserText.networkProtectionWaitlistButtonJoinWaitlist, action: { action(.joinQueue) })
                         .buttonStyle(RoundedButtonStyle(enabled: !requestInFlight))

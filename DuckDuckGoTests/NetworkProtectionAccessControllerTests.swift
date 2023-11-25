@@ -29,8 +29,24 @@ import WaitlistMocks
 
 final class NetworkProtectionAccessControllerTests: XCTestCase {
 
+    var internalUserDeciderStore: MockInternalUserStoring!
+    
+    override func setUp() {
+        super.setUp()
+        internalUserDeciderStore = MockInternalUserStoring()
+
+        // True by default until NetP ships, as it is not visible at all to external users.
+        internalUserDeciderStore.isInternalUser = true
+    }
+
+    override func tearDown() {
+        internalUserDeciderStore = nil
+        super.tearDown()
+    }
+
     func testWhenFeatureFlagsAreDisabled_AndTheUserHasNotBeenDirectlyInvited_ThenNetworkProtectionIsNotAccessible() {
         let controller = createMockAccessController(
+            isInternalUser: false,
             featureActivated: false,
             termsAccepted: false,
             featureFlagsEnabled: false,
@@ -101,13 +117,18 @@ final class NetworkProtectionAccessControllerTests: XCTestCase {
         XCTAssertEqual(controller.networkProtectionAccessType(), .waitlistInvited)
     }
 
+    // MARK: - Mock Creation
+
     private func createMockAccessController(
+        isInternalUser: Bool = true,
         featureActivated: Bool,
         termsAccepted: Bool,
         featureFlagsEnabled: Bool,
         hasJoinedWaitlist: Bool,
         hasBeenInvited: Bool
     ) -> NetworkProtectionAccessController {
+        internalUserDeciderStore.isInternalUser = isInternalUser
+
         let mockActivation = MockNetworkProtectionFeatureActivation()
         mockActivation.isFeatureActivated = featureActivated
 
@@ -124,28 +145,31 @@ final class NetworkProtectionAccessControllerTests: XCTestCase {
 
         let mockTermsAndConditionsStore = MockNetworkProtectionTermsAndConditionsStore()
         mockTermsAndConditionsStore.networkProtectionWaitlistTermsAndConditionsAccepted = termsAccepted
-
-        let mockManager = mockConfigurationManager(subfeatureEnabled: featureFlagsEnabled)
+        let mockFeatureFlagger = createFeatureFlagger(withSubfeatureEnabled: featureFlagsEnabled)
 
         return NetworkProtectionAccessController(
             networkProtectionActivation: mockActivation,
             networkProtectionWaitlistStorage: mockWaitlistStorage,
             networkProtectionTermsAndConditionsStore: mockTermsAndConditionsStore,
-            privacyConfigurationManager: mockManager
+            featureFlagger: mockFeatureFlagger
         )
     }
 
-    private func mockConfigurationManager(subfeatureEnabled: Bool) -> PrivacyConfigurationManaging {
-        let mockPrivacyConfiguration = MockPrivacyConfiguration()
+    private func createFeatureFlagger(withSubfeatureEnabled enabled: Bool) -> DefaultFeatureFlagger {
+        let mockManager = MockPrivacyConfigurationManager()
+        mockManager.privacyConfig = mockConfiguration(subfeatureEnabled: enabled)
 
+        let internalUserDecider = DefaultInternalUserDecider(store: internalUserDeciderStore)
+        return DefaultFeatureFlagger(internalUserDecider: internalUserDecider, privacyConfig: mockManager.privacyConfig)
+    }
+
+    private func mockConfiguration(subfeatureEnabled: Bool) -> PrivacyConfiguration {
+        let mockPrivacyConfiguration = MockPrivacyConfiguration()
         mockPrivacyConfiguration.isSubfeatureKeyEnabled = { _, _ in
             return subfeatureEnabled
         }
 
-        let mockManager = MockPrivacyConfigurationManager()
-        mockManager.privacyConfig = mockPrivacyConfiguration
-
-        return mockManager
+        return mockPrivacyConfiguration
     }
 
 }

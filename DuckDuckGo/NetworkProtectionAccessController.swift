@@ -55,18 +55,18 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
     private let networkProtectionActivation: NetworkProtectionFeatureActivation
     private let networkProtectionWaitlistStorage: WaitlistStorage
     private let networkProtectionTermsAndConditionsStore: NetworkProtectionTermsAndConditionsStore
-    private let privacyConfigurationManager: PrivacyConfigurationManaging
+    private let featureFlagger: FeatureFlagger
 
     init(
         networkProtectionActivation: NetworkProtectionFeatureActivation = NetworkProtectionKeychainTokenStore(),
         networkProtectionWaitlistStorage: WaitlistStorage = WaitlistKeychainStore(waitlistIdentifier: VPNWaitlist.identifier),
         networkProtectionTermsAndConditionsStore: NetworkProtectionTermsAndConditionsStore = NetworkProtectionTermsAndConditionsUserDefaultsStore(),
-        privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager
+        featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger
     ) {
         self.networkProtectionActivation = networkProtectionActivation
         self.networkProtectionWaitlistStorage = networkProtectionWaitlistStorage
         self.networkProtectionTermsAndConditionsStore = networkProtectionTermsAndConditionsStore
-        self.privacyConfigurationManager = privacyConfigurationManager
+        self.featureFlagger = featureFlagger
     }
 
     func networkProtectionAccessType() -> NetworkProtectionAccessType {
@@ -76,7 +76,7 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
         }
 
         // Next, check if the waitlist is still active; if not, the user has no access.
-        let isWaitlistActive = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlistBetaActive)
+        let isWaitlistActive = featureFlagger.isFeatureOn(.networkProtectionWaitlistActive)
         if !isWaitlistActive {
             return .none
         }
@@ -91,7 +91,7 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
         }
 
         // Next, check if the user has waitlist access at all and whether they've already joined.
-        let hasWaitlistAccess = privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlist)
+        let hasWaitlistAccess = featureFlagger.isFeatureOn(.networkProtectionWaitlistAccess)
         if hasWaitlistAccess {
             if networkProtectionWaitlistStorage.isOnWaitlist {
                 return .waitlistJoined
@@ -108,7 +108,7 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
             return
         }
 
-        if !privacyConfigurationManager.privacyConfig.isSubfeatureEnabled(NetworkProtectionSubfeature.waitlistBetaActive) {
+        if !featureFlagger.isFeatureOn(.networkProtectionWaitlistActive) {
             networkProtectionWaitlistStorage.deleteWaitlistState()
             try? NetworkProtectionKeychainTokenStore().deleteToken()
 

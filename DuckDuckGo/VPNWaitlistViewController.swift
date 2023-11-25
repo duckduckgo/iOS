@@ -122,9 +122,13 @@ extension VPNWaitlistViewController: WaitlistViewModelDelegate {
     func waitlistViewModel(_ viewModel: WaitlistViewModel, didTriggerCustomAction action: WaitlistViewModel.ViewCustomAction) {
         if action == .openNetworkProtectionInviteCodeScreen {
             let networkProtectionViewController = NetworkProtectionRootViewController { [weak self] in
-                self?.navigationController?.popToRootViewController(animated: true)
-                let newRootViewController = NetworkProtectionRootViewController()
-                self?.navigationController?.pushViewController(newRootViewController, animated: true)
+                guard let self = self, let rootViewController = self.navigationController?.viewControllers.first else {
+                    assertionFailure("Failed to show NetP status view")
+                    return
+                }
+
+                let networkProtectionRootViewController = NetworkProtectionRootViewController()
+                self.navigationController?.setViewControllers([rootViewController, networkProtectionRootViewController], animated: true)
             }
 
             self.navigationController?.pushViewController(networkProtectionViewController, animated: true)

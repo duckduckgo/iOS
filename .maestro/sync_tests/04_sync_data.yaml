@@ -56,18 +56,28 @@ tags:
 - tapOn:
     id: searchEntry
 - inputText: ${CODE}
+
+- evalScript: ${output.counter = 0}
 - repeat:
     while:
-      notVisible: "Select All"
+      true: ${output.counter < 3}
+      notVisible: Select All
     commands:
-      - tapOn:
-            id: searchEntry
-- tapOn: Select All
+      - longPressOn: 
+          id: "searchEntry"
+      - evalScript: ${output.counter = output.counter + 1}
+
+- tapOn: 'Select All'
 - tapOn: Cut
-- tapOn:
-    id: searchEntry
-- longPressOn:
-    id: searchEntry
+- evalScript: ${output.counter = 0}
+- repeat:
+    while:
+      true: ${output.counter < 3}
+      notVisible: Paste
+    commands:
+      - tapOn: 
+          id: "searchEntry"
+      - evalScript: ${output.counter = output.counter + 1}
 - tapOn: Paste
 - tapOn: Cancel
 
@@ -76,7 +86,7 @@ tags:
 - runFlow:
     when:
       visible:
-        text: "Cancel"
+        text: Cancel
     commands:
       - tapOn: Cancel
 #</WORKAROUND>
@@ -119,8 +129,22 @@ tags:
 - assertVisible: NFL.com | Official Site of the National Football League
 - assertVisible: AS.com - Diario online deportivo. Fútbol, motor y mucho más
 - tapOn: Bookmarks
+
+# Only expect local favorites when Share Favorites is off
 - tapOn: Favorites
 - assertVisible: DuckDuckGo — Privacy, simplified.
+
+# Enable Share Favorites and expect all favorites
+- tapOn: Done
+- tapOn: Settings
+- tapOn: Sync & Back Up
+- scroll
+- assertVisible: Share Favorites
+- tapOn: "0"
+- tapOn: Settings
+- tapOn: Done
+- tapOn: Bookmarks
+- tapOn: Favorites
 - assertVisible: NFL.com | Official Site of the National Football League
 - assertVisible: DuckDuckGo · GitHub
 - assertVisible: Stack Overflow - Where Developers Learn, Share, & Build Careers

@@ -54,9 +54,9 @@ extension NetworkProtectionKeychainTokenStore {
 
 extension NetworkProtectionCodeRedemptionCoordinator {
     convenience init() {
-        let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+        let tunnelSettings = TunnelSettings(defaults: .networkProtectionGroupDefaults)
         self.init(
-            environment: settings.selectedEnvironment,
+            environment: tunnelSettings.selectedEnvironment,
             tokenStore: NetworkProtectionKeychainTokenStore(),
             errorEvents: .networkProtectionAppDebugEvents
         )
@@ -65,30 +65,38 @@ extension NetworkProtectionCodeRedemptionCoordinator {
 
 extension NetworkProtectionVPNNotificationsViewModel {
     convenience init() {
+        let notificationsSettingsStore = NetworkProtectionNotificationsSettingsUserDefaultsStore(userDefaults: .networkProtectionGroupDefaults)
         self.init(
             notificationsAuthorization: NotificationsAuthorizationController(),
-            settings: VPNSettings(defaults: .networkProtectionGroupDefaults))
+            notificationsSettingsStore: notificationsSettingsStore
+        )
     }
 }
 
 extension NetworkProtectionVPNSettingsViewModel {
     convenience init() {
         self.init(
-            settings: VPNSettings(defaults: .networkProtectionGroupDefaults)
+            tunnelSettings: TunnelSettings(defaults: .networkProtectionGroupDefaults)
+        )
+    }
+}
+
+extension NetworkProtectionLocationListCompositeRepository {
+    convenience init() {
+        let tunnelSettings = TunnelSettings(defaults: .networkProtectionGroupDefaults)
+        self.init(
+            environment: tunnelSettings.selectedEnvironment,
+            tokenStore: NetworkProtectionKeychainTokenStore()
         )
     }
 }
 
 extension NetworkProtectionVPNLocationViewModel {
     convenience init() {
-        let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
-        let locationListRepository = NetworkProtectionLocationListCompositeRepository(
-            environment: settings.selectedEnvironment,
-            tokenStore: NetworkProtectionKeychainTokenStore()
-        )
+        let locationListRepository = NetworkProtectionLocationListCompositeRepository()
         self.init(
             locationListRepository: locationListRepository,
-            settings: VPNSettings(defaults: .networkProtectionGroupDefaults)
+            tunnelSettings: TunnelSettings(defaults: .networkProtectionGroupDefaults)
         )
     }
 }

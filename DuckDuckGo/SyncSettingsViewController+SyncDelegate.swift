@@ -115,10 +115,10 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         model.delegate = self
 
         var controller: UIHostingController<AnyView>
-        if showEnterTextCode {
-            controller = UIHostingController(rootView: AnyView(PasteCodeView(model: model, isfirstScreen: true)))
-        } else {
+        if showConnectMode {
             controller = UIHostingController(rootView: AnyView(ScanOrPasteCodeView(model: model)))
+        } else {
+            controller = UIHostingController(rootView: AnyView(ScanOrEnterCodeToRecoverSyncedData(model: model)))
         }
 
         let navController = UIDevice.current.userInterfaceIdiom == .phone

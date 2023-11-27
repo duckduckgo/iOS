@@ -83,9 +83,23 @@ struct UserText {
     static let deviceSyncedSheetTitle = NSLocalizedString("device.synced.sheet.title", value: "Your Data is Synced!", comment: "Device SyncedSheet - Title")
 
 // Recover Synced Data Sheet
-    static let recoverSyncedDataTitle = "Recover Synced Data"
-    static let recoverSyncedDataDescription = "To restore your synced data, you'll need the Recovery Code you saved when you first set up Sync. This code may have been saved as a PDF on the device you originally used to set up Sync."
-    static let recoverSyncedDataButton = "Get Started"
+    static let recoverSyncedDataTitle = NSLocalizedString("recover.synced.data.sheet.title", value: "Recover Synced Data", comment: "Recover Synced Data Sheet - Title")
+    static let recoverSyncedDataDescription = NSLocalizedString("recover.synced.data.sheet.description", value: "To restore your synced data, you'll need the Recovery Code you saved when you first set up Sync. This code may have been saved as a PDF on the device you originally used to set up Sync.", comment: "Recover Synced Data Sheet - Description")
+    static let recoverSyncedDataButton = NSLocalizedString("recover.synced.data.sheet.button", value: "Get Started", comment: "Recover Synced Data Sheet - Button")
+
+// Scan Or Enter Code To Recover Synced Data View
+    static let scanCodeToRecoverSyncedDataTitle = NSLocalizedString("scan.code.to.recover.synced.data.title", value: "Recover Synced Data", comment: "Scan Or Enter Code To Recover Synced Data View - Title")
+    static let scanCodeToRecoverSyncedDataExplanation = NSLocalizedString("scan.code.to.recover.synced.data.explanation", value: "Scan the QR code on your Recovery PDF, or another synced device, to recover your data.", comment: "Scan Or Enter Code To Recover Synced Data View - Explanation")
+    static let scanCodeToRecoverSyncedDataFooter = NSLocalizedString("scan.code.to.recover.synced.data.footer", value: "Can’t Scan?", comment: "Scan Or Enter Code To Recover Synced Data View - Footer")
+    static let scanCodeToRecoverSyncedDataEnterCodeLink = NSLocalizedString("scan.code.to.recover.synced.data.enter.code.link", value: "Enter Text Code Manually", comment: "Scan Or Enter Code To Recover Synced Data View - Enter Code Link")
+
+// Camera View
+    static let cameraPointCameraIndication = NSLocalizedString("camera.point.camera.indication", value: "Point camera at QR code to sync", comment: "Camera View - Point Camera Indication")
+    static let cameraPermissionRequired = NSLocalizedString("camera.permission.required", value: "Camera Permission is Required", comment: "Camera View - Permission Required")
+    static let cameraPermissionInstructions = NSLocalizedString("camera.permission.instructions", value: "Please go to your device's settings and grant permission for this app to access your camera.", comment: "Camera View - Permission Instructions")
+    static let cameraIsUnavailableTitle = NSLocalizedString("camera.is.unavailable.title", value: "Camera is Unavailable", comment: "Camera View - Unavailable Title")
+    static let cameraGoToSettingsButton = NSLocalizedString("camera.go.to.settings.button", value: "Go to Settings", comment: "Camera View - Go to Settings Button")
+
 
     static let scanQRCode = "Scan QR Code"
     static let enterTextCode = "Enter Text Code"
@@ -115,12 +129,6 @@ struct UserText {
     static let deviceSyncedMessage = "Your bookmarks and Logins are now syncing with "
     static let multipleDevicesSyncedMessage = "Your bookmarks and Logins are now syncing on "
     static let wordDevices = "devices"
-
-    static let cameraPermissionRequired = "Camera Permission is Required"
-    static let cameraPermissionInstructions = "Please go to your device's settings and grant permission for this app to access your camera."
-    static let cameraIsUnavailableTitle = "Camera is Unavailable"
-
-    static let goToSettingsButton = "Go to Settings"
 
     static let syncTitle = "Sync & Backup"
 

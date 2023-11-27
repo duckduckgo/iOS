@@ -36,7 +36,7 @@ public struct RecoverSyncedData: View {
             VStack(spacing: 0) {
                 HStack {
                     Button(action: onCancel, label: {
-                        Text("Cancel")
+                        Text(UserText.cancelButton)
                             .foregroundColor(.primary)
                     })
                     Spacer()

@@ -42,14 +42,6 @@ public struct ScanOrPasteCodeView: View {
                     return await model.codeScanned($0)
                 } onCameraUnavailable: {
                     model.cameraUnavailable()
-                } onInvalidCodeScanned: {
-                    withAnimation(.linear.delay(0.0)) {
-                        isInvalidCode = true
-                    }
-
-                    withAnimation(.linear.delay(0.2)) {
-                        isInvalidCode = false
-                    }
                 }
             } else {
                 Rectangle()
@@ -222,10 +214,6 @@ public struct ScanOrPasteCodeView: View {
                             if !model.showCamera {
                                 Rectangle().fill(Color.black)
                             }
-
-//                            cameraViewPort()
-//                                .frame(width: g.size.width, height: g.size.width)
-//                                .frame(maxHeight: g.size.height)
 
                             Group {
                                 cameraPermissionDenied()

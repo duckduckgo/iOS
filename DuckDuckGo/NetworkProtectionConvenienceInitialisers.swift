@@ -81,13 +81,19 @@ extension NetworkProtectionVPNSettingsViewModel {
     }
 }
 
-extension NetworkProtectionVPNLocationViewModel {
+extension NetworkProtectionLocationListCompositeRepository {
     convenience init() {
         let tunnelSettings = TunnelSettings(defaults: .networkProtectionGroupDefaults)
-        let locationListRepository = NetworkProtectionLocationListCompositeRepository(
+        self.init(
             environment: tunnelSettings.selectedEnvironment,
             tokenStore: NetworkProtectionKeychainTokenStore()
         )
+    }
+}
+
+extension NetworkProtectionVPNLocationViewModel {
+    convenience init() {
+        let locationListRepository = NetworkProtectionLocationListCompositeRepository()
         self.init(
             locationListRepository: locationListRepository,
             tunnelSettings: TunnelSettings(defaults: .networkProtectionGroupDefaults)

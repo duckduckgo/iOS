@@ -71,7 +71,8 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     public init(tunnelController: TunnelController = NetworkProtectionTunnelController(),
                 statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
                 serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
-                errorObserver: ConnectionErrorObserver = ConnectionErrorObserverThroughSession()) {
+                errorObserver: ConnectionErrorObserver = ConnectionErrorObserverThroughSession(),
+                locationListRepository: NetworkProtectionLocationListRepository = NetworkProtectionLocationListCompositeRepository()) {
         self.tunnelController = tunnelController
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver
@@ -85,6 +86,11 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         setUpStatusMessagePublishers()
         setUpDisableTogglePublisher()
         setUpServerInfoPublishers()
+
+        // Prefetching this now for snappy load times on the locations screens
+        Task {
+            _ = try? await locationListRepository.fetchLocationList()
+        }
     }
 
     private func setUpIsConnectedStatePublishers() {

@@ -136,11 +136,6 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
                 presentedViewController.dismiss(animated: true, completion: nil)
             }
         }
-//        guard let vc = navigationController?.topViewController else { return }
-//        guard let view = vc.view else { return }
-//        if !(view is SyncSettingsView) {
-//            vc.dismiss(animated: true)
-//        }
     }
 
     func refreshDevices(clearDevices: Bool = true) {
@@ -194,13 +189,9 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
     }
 
     func loginAndShowDeviceConnected(recoveryKey: SyncCode.RecoveryKey, isActiveSyncDevice: Bool) async throws {
-//        let knownDevices = Set(self.rootView.model.devices.map { $0.id })
         let registeredDevices = try await syncService.login(recoveryKey, deviceName: deviceName, deviceType: deviceType)
         mapDevices(registeredDevices)
         dismissVCAndShowRecoveryPDF()
-//        let devices = self.rootView.model.devices.filter { !knownDevices.contains($0.id) && !$0.isThisDevice }
-//        let isSecondDevice = devices.count == 1
-//        showDeviceConnected(devices, optionsModel: self.rootView.model, isSingleSetUp: false, shouldShowOptions: isActiveSyncDevice && isSecondDevice)
     }
 
     func startPolling() {

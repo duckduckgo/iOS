@@ -74,10 +74,6 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         collectCode(showConnectMode: true)
     }
 
-    func showSyncWithAnotherDeviceEnterText() {
-        collectCode(showConnectMode: syncService.account == nil, showEnterTextCode: true)
-    }
-
     func showRecoverData() {
         dismissPresentedViewController()
         collectCode(showConnectMode: false)
@@ -109,7 +105,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         }
     }
 
-    private func collectCode(showConnectMode: Bool, showEnterTextCode: Bool = false) {
+    private func collectCode(showConnectMode: Bool) {
         let model = ScanOrPasteCodeViewModel(showConnectMode: showConnectMode, recoveryCode: recoveryCode.isEmpty ? nil : recoveryCode)
         model.delegate = self
 

@@ -45,7 +45,7 @@ public struct BrokenSiteInfo {
     }
     
     public enum Source: String {
-        case menu
+        case appMenu = "menu"
         case dashboard
     }
     

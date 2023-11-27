@@ -42,7 +42,7 @@ class PrivacyDashboardViewController: UIViewController {
     public var brokenSiteInfo: BrokenSiteInfo?
     
     var source: BrokenSiteInfo.Source {
-        initMode == .reportBrokenSite ? .menu : .dashboard
+        initMode == .reportBrokenSite ? .appMenu : .dashboard
     }
 
     init?(coder: NSCoder,
@@ -87,7 +87,8 @@ class PrivacyDashboardViewController: UIViewController {
         guard let domain = privacyDashboardController.privacyInfo?.url.host else { return }
         
         let privacyConfiguration = privacyConfigurationManager.privacyConfig
-        let pixelParam = ["trigger_origin": state.eventOrigin.screen.rawValue]
+        let pixelParam = ["trigger_origin": state.eventOrigin.screen.rawValue,
+                          "source": source.rawValue]
         if state.isProtected {
             privacyConfiguration.userEnabledProtection(forDomain: domain)
             ActionMessageView.present(message: UserText.messageProtectionEnabled.format(arguments: domain))

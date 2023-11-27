@@ -82,6 +82,10 @@ struct UserText {
 // Device Synced Sheet
     static let deviceSyncedSheetTitle = NSLocalizedString("device.synced.sheet.title", value: "Your Data is Synced!", comment: "Device SyncedSheet - Title")
 
+// Recover Synced Data Sheet
+    static let recoverSyncedDataTitle = "Recover Synced Data"
+    static let recoverSyncedDataDescription = "To restore your synced data, you'll need the Recovery Code you saved when you first set up Sync. This code may have been saved as a PDF on the device you originally used to set up Sync."
+    static let recoverSyncedDataButton = "Get Started"
 
     static let scanQRCode = "Scan QR Code"
     static let enterTextCode = "Enter Text Code"

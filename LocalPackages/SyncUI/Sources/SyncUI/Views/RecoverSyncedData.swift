@@ -43,14 +43,14 @@ public struct RecoverSyncedData: View {
                 }
                 .frame(height: 56)
                 Image("Sync-Recover-128")
-                    .padding(.bottom, 20)
+                    .padding(20)
 
-                Text("Recover Synced Data")
+                Text(UserText.recoverSyncedDataTitle)
                     .daxTitle1()
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 24)
 
-                Text("To restore your synced data, you'll need the Recover")
+                Text(UserText.recoverSyncedDataDescription)
                         .multilineTextAlignment(.center)
             }
             .padding(.horizontal, 20)
@@ -58,7 +58,7 @@ public struct RecoverSyncedData: View {
             Button {
                 model.recoverSyncDataPressed()
             } label: {
-                Text("Get Started")
+                Text(UserText.recoverSyncedDataButton)
             }
             .buttonStyle(PrimaryButtonStyle())
             .frame(maxWidth: 360)

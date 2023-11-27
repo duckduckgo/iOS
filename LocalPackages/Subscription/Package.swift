@@ -11,17 +11,11 @@ let package = Package(
             name: "Subscription",
             targets: ["Subscription"]),
     ],
-    dependencies: [
-        .package(path: "../Account"),
-        .package(path: "../Purchase"),
-    ],
+    dependencies: [],
     targets: [
         .target(
             name: "Subscription",
-            dependencies: [
-                .product(name: "Account", package: "Account"),
-                .product(name: "Purchase", package: "Purchase"),
-            ]),
+            dependencies: []),
         .testTarget(
             name: "SubscriptionTests",
             dependencies: ["Subscription"]),

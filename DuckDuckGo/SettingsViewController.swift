@@ -81,8 +81,10 @@ class SettingsViewController: UITableViewController {
     private let syncSectionIndex = 1
     private let autofillSectionIndex = 2
     private let appearanceSectionIndex = 3
-    private let moreFromDDGSectionIndex = 6
-    private let debugSectionIndex = 8
+    private let privacyProSectionIndex = 5
+    private let moreFromDDGSectionIndex = 7
+    private let debugSectionIndex = 9
+    
     
     private let bookmarksDatabase: CoreDataDatabase
 
@@ -136,6 +138,19 @@ class SettingsViewController: UITableViewController {
         return false
 #endif
     }()
+    
+    private lazy var shouldShowPrivacyPro: Bool = {
+#if PRIVACYPRO
+        if #available(iOS 15, *) {
+            // return featureFlagger.isFeatureOn(.privacyPro)
+            return true
+        } else {
+            return false
+        }
+#else
+        return false
+#endif
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -155,6 +170,7 @@ class SettingsViewController: UITableViewController {
         configureDebugCell()
         configureVoiceSearchCell()
         configureNetPCell()
+        configurePrivacyPro()
         applyTheme(ThemeManager.shared.currentTheme)
 
         internalUserDecider.isInternalUserPublisher.dropFirst().sink(receiveValue: { [weak self] _ in
@@ -357,6 +373,9 @@ class SettingsViewController: UITableViewController {
         }
     }
 
+    private func configurePrivacyPro() {
+    }
+    
     private func configureNetPCell() {
         netPCell.isHidden = !shouldShowNetPCell
 #if NETWORK_PROTECTION
@@ -461,6 +480,13 @@ class SettingsViewController: UITableViewController {
         )
     }
 #endif
+    
+#if PRIVACYPRO
+    @available(iOS 15, *)
+    private func showPrivacyPro() {
+        
+    }
+#endif
 
     private func showWindowsBrowserWaitlistViewController() {
         navigationController?.pushViewController(WindowsWaitlistViewController(nibName: nil, bundle: nil), animated: true)
@@ -505,6 +531,16 @@ class SettingsViewController: UITableViewController {
                 break
 #endif
             }
+            
+        case privacyProSignupCell:
+            if #available(iOS 15, *) {
+#if PRIVACYPRO
+                showPrivacyPro()
+#else
+                break
+#endif
+            }
+            
         default: break
         }
         
@@ -550,6 +586,8 @@ class SettingsViewController: UITableViewController {
             return CGFloat.leastNonzeroMagnitude
         } else if debugSectionIndex == section && !shouldShowDebugCell {
             return CGFloat.leastNonzeroMagnitude
+        } else if privacyProSectionIndex == section && !shouldShowPrivacyPro {
+            return CGFloat.leastNonzeroMagnitude
         } else {
             return super.tableView(tableView, heightForHeaderInSection: section)
         }
@@ -577,9 +615,18 @@ class SettingsViewController: UITableViewController {
         } else if section == appearanceSectionIndex && UIDevice.current.userInterfaceIdiom == .pad {
             // Both the text size and bottom bar settings are at the end of the section so need to reduce the section size appropriately
             return rows - 2
+        } else if section == privacyProSectionIndex && !shouldShowPrivacyPro {
+            return 0
         } else {
             return rows
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == privacyProSectionIndex && !shouldShowPrivacyPro {
+            return nil
+        }
+        return super.tableView(tableView, titleForHeaderInSection: section)
     }
 
     @IBAction func onVoiceSearchToggled(_ sender: UISwitch) {

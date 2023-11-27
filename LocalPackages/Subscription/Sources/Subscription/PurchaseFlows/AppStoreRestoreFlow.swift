@@ -18,9 +18,8 @@
 
 import Foundation
 import StoreKit
-import Account
 
-@available(macOS 12.0, iOS 15.0, *)
+@available(macOS 12.0, *)
 public final class AppStoreRestoreFlow {
 
     public enum Error: Swift.Error {

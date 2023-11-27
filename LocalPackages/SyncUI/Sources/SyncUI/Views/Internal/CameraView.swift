@@ -44,21 +44,23 @@ public struct CameraView: View {
                             cameraUnavailable()
                         }
                         .padding(.horizontal, 0)
-                        
-                        VStack {
-                            Spacer()
-                            Text(UserText.cameraPointCameraIndication)
-                                .padding(.vertical, 8)
-                                .padding(.horizontal, 20)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 56)
-                                        .fill(.clear)
-                                        .background(BlurView(style: .light))
-                                        .cornerRadius(20)
-                                )
-                                .daxCaption()
+
+                        if model.showCamera {
+                            VStack {
+                                Spacer()
+                                Text(UserText.cameraPointCameraIndication)
+                                    .padding(.vertical, 8)
+                                    .padding(.horizontal, 20)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 56)
+                                            .fill(.clear)
+                                            .background(BlurView(style: .light))
+                                            .cornerRadius(20)
+                                    )
+                                    .daxCaption()
+                            }
+                            .padding(.bottom, 20)
                         }
-                        .padding(.bottom, 20)
                     }
                 }
                 .ignoresSafeArea()

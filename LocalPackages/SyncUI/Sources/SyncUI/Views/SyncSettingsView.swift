@@ -94,28 +94,32 @@ extension SyncSettingsView {
     @ViewBuilder
     func syncWithAnotherDeviceView() -> some View {
         Section {
-            VStack(alignment: .center, spacing: 8) {
-                Image("Sync-Pair-96")
-                Text(UserText.syncWithAnotherDeviceTitle)
-                    .daxTitle3()
-                Text(UserText.syncWithAnotherDeviceMessage)
-                    .daxBodyRegular()
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(Color(designSystemColor: .textPrimary))
-                Button(action: {
-                    model.scanQRCode()
-                }, label: {
-                    Text(UserText.syncWithAnotherDeviceButton)
-                        .daxButton()
-                        .foregroundColor(.white)
-                        .frame(maxWidth: 310)
-                        .frame(height: 50)
-                        .background(
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(Color(designSystemColor: .accent))
-                        )
-                })
-                .padding(.vertical, 16)
+            HStack {
+                Spacer()
+                VStack(alignment: .center, spacing: 8) {
+                    Image("Sync-Pair-96")
+                    Text(UserText.syncWithAnotherDeviceTitle)
+                        .daxTitle3()
+                    Text(UserText.syncWithAnotherDeviceMessage)
+                        .daxBodyRegular()
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(Color(designSystemColor: .textPrimary))
+                    Button(action: {
+                        model.scanQRCode()
+                    }, label: {
+                        Text(UserText.syncWithAnotherDeviceButton)
+                            .daxButton()
+                            .foregroundColor(.white)
+                            .frame(maxWidth: 310)
+                            .frame(height: 50)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color(designSystemColor: .accent))
+                            )
+                    })
+                    .padding(.vertical, 16)
+                }
+                Spacer()
             }
         } footer: {
             Text(UserText.syncWithAnotherDeviceFooter)

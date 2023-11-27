@@ -67,7 +67,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     @MainActor
     func handleError(_ error: Error) {
         // Work out how to handle this properly later
-//        assertionFailure(error.localizedDescription)
+        assertionFailure(error.localizedDescription)
     }
 
     func showSyncWithAnotherDevice() {
@@ -88,7 +88,6 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             rootView: DeviceConnectedView())
         navigationController?.present(controller, animated: true) { [weak self] in
             self?.rootView.model.syncEnabled(recoveryCode: self!.recoveryCode)
-//            self?.refreshDevices()
         }
     }
 

@@ -131,7 +131,16 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     }
 
     func dismissPresentedViewController() {
-        navigationController?.topViewController?.dismiss(animated: true)
+        if let presentedViewController = navigationController?.presentedViewController {
+            if !(presentedViewController is UIHostingController<SyncSettingsView>) {
+                presentedViewController.dismiss(animated: true, completion: nil)
+            }
+        }
+//        guard let vc = navigationController?.topViewController else { return }
+//        guard let view = vc.view else { return }
+//        if !(view is SyncSettingsView) {
+//            vc.dismiss(animated: true)
+//        }
     }
 
     func refreshDevices(clearDevices: Bool = true) {
@@ -188,7 +197,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
 //        let knownDevices = Set(self.rootView.model.devices.map { $0.id })
         let registeredDevices = try await syncService.login(recoveryKey, deviceName: deviceName, deviceType: deviceType)
         mapDevices(registeredDevices)
-        navigationController?.topViewController?.dismiss(animated: true, completion: showRecoveryPDF)
+        dismissVCAndShowRecoveryPDF()
 //        let devices = self.rootView.model.devices.filter { !knownDevices.contains($0.id) && !$0.isThisDevice }
 //        let isSecondDevice = devices.count == 1
 //        showDeviceConnected(devices, optionsModel: self.rootView.model, isSingleSetUp: false, shouldShowOptions: isActiveSyncDevice && isSecondDevice)
@@ -216,27 +225,28 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
             guard let syncCode = try? SyncCode.decodeBase64String(code) else {
                 return false
             }
-
             if let recoveryKey = syncCode.recovery {
+                dismissPresentedViewController()
+                showPreparingSync()
                 try await loginAndShowDeviceConnected(recoveryKey: recoveryKey, isActiveSyncDevice: true)
                 return true
             } else if let connectKey = syncCode.connect {
+                dismissPresentedViewController()
                 showPreparingSync()
                 if syncService.account == nil {
                     try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
                     rootView.model.syncEnabled(recoveryCode: recoveryCode)
                 }
                 try await syncService.transmitRecoveryKey(connectKey)
-                self.dismissPresentedViewController()
                 self.rootView.model.isSyncingDevices = true
 
                 self.rootView.model.$devices
                     .removeDuplicates()
                     .dropFirst()
                     .prefix(1)
-                    .sink { [weak self] devices in
+                    .sink { [weak self] _ in
                         guard let self else { return }
-                        self.showDeviceConnected()
+                        self.dismissVCAndShowRecoveryPDF()
                         self.rootView.model.isSyncingDevices = false
                     }.store(in: &cancellables)
 
@@ -247,6 +257,10 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
             handleError(error)
         }
         return false
+    }
+
+    func dismissVCAndShowRecoveryPDF() {
+        self.navigationController?.topViewController?.dismiss(animated: true, completion: self.showRecoveryPDF)
     }
 
     func codeCollectionCancelled() {

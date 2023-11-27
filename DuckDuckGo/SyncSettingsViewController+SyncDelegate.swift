@@ -116,7 +116,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
 
         var controller: UIHostingController<AnyView>
         if showConnectMode {
-            controller = UIHostingController(rootView: AnyView(ScanOrPasteCodeView(model: model)))
+            controller = UIHostingController(rootView: AnyView(ScanOrSeeCode(model: model)))
         } else {
             controller = UIHostingController(rootView: AnyView(ScanOrEnterCodeToRecoverSyncedData(model: model)))
         }

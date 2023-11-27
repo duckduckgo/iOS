@@ -42,6 +42,7 @@ public struct SyncWithServer: View {
                     Spacer()
                 }
                 .frame(height: 56)
+                .padding(.bottom, 20)
                 Image("Sync-Server-128")
                     .padding(.bottom, 20)
 

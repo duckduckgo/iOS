@@ -79,6 +79,8 @@ struct UserText {
     static let saveRecoveryCodeSaveAsPdfButton = NSLocalizedString("save.recovery.code.save.as.pdf.button", value: "Save as PDF", comment: "Save Recovery Code Sheet - Save as PDF Button")
     static let saveRecoveryCodeSaveCodeCopiedToast = NSLocalizedString("save.recovery.code.code.copied.button", value: "Recovery code copied to clipboard", comment: "Save Recovery Code Sheet - Copy Code Toast")
 
+// Device Synced Sheet
+    static let deviceSyncedSheetTitle = NSLocalizedString("device.synced.sheet.title", value: "Your Data is Synced!", comment: "Device SyncedSheet - Title")
 
 
     static let scanQRCode = "Scan QR Code"

@@ -33,13 +33,14 @@ public struct DeviceConnectedView: View {
         UnderflowContainer {
             VStack(spacing: 0) {
                 Image("Sync-Start-128")
-                    .padding(.bottom, 20)
+                    .padding(20)
 
-                Text("Your Data is Synced!")
+                Text(UserText.deviceSyncedSheetTitle)
                     .daxTitle1()
                     .padding(.bottom, 24)
             }
             .padding(.horizontal, 20)
+            .padding(.top, 56)
         } foregroundContent: {
             Button {
                 presentation.wrappedValue.dismiss()

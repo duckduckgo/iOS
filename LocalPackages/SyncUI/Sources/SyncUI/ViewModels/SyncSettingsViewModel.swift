@@ -24,7 +24,6 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
 
     func showRecoverData()
     func showSyncWithAnotherDevice()
-    func showSyncWithAnotherDeviceEnterText()
     func showRecoveryPDF()
     func shareRecoveryPDF()
     func createAccountAndStartSyncing(optionsViewModel: SyncSettingsViewModel)
@@ -119,10 +118,6 @@ public class SyncSettingsViewModel: ObservableObject {
 
     func scanQRCode() {
         delegate?.showSyncWithAnotherDevice()
-    }
-
-    func showEnterTextView() {
-        delegate?.showSyncWithAnotherDeviceEnterText()
     }
 
     func createEditDeviceModel(_ device: Device) -> EditDeviceViewModel {

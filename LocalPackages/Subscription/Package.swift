@@ -14,7 +14,6 @@ let package = Package(
     dependencies: [
         .package(path: "../Account"),
         .package(path: "../Purchase"),
-        //.package(path: "../SwiftUIExtensions")
     ],
     targets: [
         .target(
@@ -22,10 +21,6 @@ let package = Package(
             dependencies: [
                 .product(name: "Account", package: "Account"),
                 .product(name: "Purchase", package: "Purchase"),
-                //.product(name: "SwiftUIExtensions", package: "SwiftUIExtensions")
-            ],
-            resources: [
-                .process("Resources")
             ]),
         .testTarget(
             name: "SubscriptionTests",

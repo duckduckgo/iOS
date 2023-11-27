@@ -22,7 +22,7 @@ import PackageDescription
 let package = Package(
     name: "SubscriptionUI",
     platforms: [
-        .iOS(.v14)
+        .iOS(.v15)
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
@@ -31,6 +31,8 @@ let package = Package(
             targets: ["SubscriptionUI"])
     ],
     dependencies: [
+        .package(path: "../Account"),
+        .package(path: "../Purchase"),
         .package(path: "../DuckUI"),
         .package(url: "https://github.com/duckduckgo/DesignResourcesKit", exact: "2.0.0")
     ],
@@ -38,6 +40,8 @@ let package = Package(
         .target(
             name: "SubscriptionUI",
             dependencies: [
+                .product(name: "Account", package: "Account"),
+                .product(name: "Purchase", package: "Purchase"),
                 .product(name: "DuckUI", package: "DuckUI"),
                 "DesignResourcesKit"
             ])

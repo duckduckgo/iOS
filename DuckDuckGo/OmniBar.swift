@@ -162,7 +162,7 @@ class OmniBar: UIView {
 
     private func configureEditingMenu() {
         let title = UserText.actionPasteAndGo
-        UIMenuController.shared.menuItems = [UIMenuItem(title: title, action: #selector(pasteAndGo))]
+        UIMenuController.shared.menuItems = [UIMenuItem(title: title, action: #selector(self.pasteURLAndGo))]
     }
     
     var textFieldBottomSpacing: CGFloat {
@@ -179,7 +179,7 @@ class OmniBar: UIView {
         }
     }
 
-    @objc func pasteAndGo(sender: UIMenuItem) {
+    @objc func pasteURLAndGo(sender: UIMenuItem) {
         guard let pastedText = UIPasteboard.general.string else { return }
         textField.text = pastedText
         onQuerySubmitted()

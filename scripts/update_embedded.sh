@@ -60,5 +60,6 @@ performUpdate() {
 	rm -f "$TEMP_ETAG_FILENAME"
 }
 
+# The following URLs shall match the ones in AppURLs.swift. Danger checks that the URLs match on every PR. If the code changes, the regex that Danger uses may need an update.
 performUpdate 'https://staticcdn.duckduckgo.com/trackerblocking/v5/current/ios-tds.json' "${base_dir}/Core/AppTrackerDataSetProvider.swift" "${base_dir}/Core/trackerData.json"
-performUpdate 'https://staticcdn.duckduckgo.com/trackerblocking/config/v2/ios-config.json' "${base_dir}/Core/AppPrivacyConfigurationDataProvider.swift" "${base_dir}/Core/ios-config.json"
+performUpdate 'https://staticcdn.duckduckgo.com/trackerblocking/config/v4/ios-config.json' "${base_dir}/Core/AppPrivacyConfigurationDataProvider.swift" "${base_dir}/Core/ios-config.json"

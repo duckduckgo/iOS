@@ -106,6 +106,12 @@
 /* Share action */
 "action.title.share" = "Del";
 
+/* Settings label for bottom position for the address bar */
+"address.bar.bottom" = "Nederst";
+
+/* Settings label for top position for the address bar */
+"address.bar.top" = "Top";
+
 /* No comment provided by engineer. */
 "addWidget.button" = "Tilføj widget";
 
@@ -523,6 +529,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Login slettet";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Nulstil ekskluderede websteder";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Annullér";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Nulstil ekskluderede websteder";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Hvis du nulstiller ekskluderede websteder, vil du blive bedt om at gemme dit login, næste gang du logger ind på en af disse sider.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Søg logins";
 
@@ -557,7 +575,7 @@
 "autofill.logins.prompt.password.button.title" = "Adgangskode til %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Vil du bruge et gemt login?";
+"autofill.logins.prompt.title" = "Brug en gemt adgangskode?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "for '%@'";
@@ -607,26 +625,23 @@
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Privat Duck Address-brugernavn blev fjernet";
 
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Spørg aldrig på dette websted";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Logins gemmes sikkert på din enhed i menuen Logins.";
+"autofill.save-login.new-user.message" = "Adgangskoder gemmes sikkert på din enhed i menuen Logins.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Skal DuckDuckGo gemme dit login?";
+"autofill.save-login.new-user.title" = "Skal DuckDuckGo gemme din adgangskode?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Gem ikke";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Gem login";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Gem login?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Gem adgangskode";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Gem adgangskode?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Vis adgangskode";
@@ -635,7 +650,7 @@
 "autofill.signin.to.manage" = "%@ for at administrere dine Duck-adresser på denne enhed.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo opdaterer dette gemte login på din enhed.";
+"autofill.update-password.message" = "DuckDuckGo opdaterer denne gemte adgangskode på din enhed.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Opdater adgangskode";
@@ -1017,6 +1032,33 @@
 
 /* No comment provided by engineer. */
 "Error" = "Fejl";
+
+/* Button title to Sign In */
+"error.email-protection-sign-in.action" = "Log ind";
+
+/* Alert message */
+"error.email-protection-sign-in.body" = "Beklager, log på igen for at genaktivere Email Protection i denne browser.";
+
+/* Alert title */
+"error.email-protection-sign-in.title" = "Fejl i Email Protection";
+
+/* Button title to open device settings */
+"error.insufficient-disk-space.action" = "Åbn Indstillinger";
+
+/* Alert message */
+"error.insufficient-disk-space.body" = "Det ser ud til, at din enhed er løbet tør for lagerplads. Frigør plads for at fortsætte.";
+
+/* Alert title */
+"error.insufficient-disk-space.title" = "Ikke nok lagerplads";
+
+/* Button title that is shutting down the app */
+"error.preemptive-crash.action" = "Luk app";
+
+/* Alert message */
+"error.preemptive-crash.body" = "Det ser ud til, at der er et problem med appen, og at den skal lukkes. Åbn den igen for at fortsætte.";
+
+/* Alert title */
+"error.preemptive-crash.title" = "App-problem opdaget";
 
 /* Generic error message on a dialog for when the cause is not known. */
 "error.unknown.try.again" = "An unknown error has occurred";
@@ -1564,8 +1606,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favoritter";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "Hos DuckDuckGo sætter vi den nye standard for tillid online.\n\nDuckDuckGo Privacy Browser giver dig alle de nødvendige værktøjer til at værne over privatlivets fred, så du kan beskytte dig selv, når du søger og surfer på nettet, herunder tracker-blokering, smartere kryptering og DuckDuckGo-privat søgning.\n\nInternettet bør trods alt ikke føles så skummelt, og det bør være lige så enkelt at få det privatliv, du fortjener online, som at lukke dine persienner ned.";
+/* about page */
+"settings.about.text" = "DuckDuckGo er en uafhængig virksomhed, grundlagt i 2008, der beskytter privatlivet på internettet for alle, der er trætte af at blive sporet online og ønsker en nem løsning. Vi er bevis på, at du kan få ægte beskyttelse af privatlivet online uden at gå på kompromis.\n\nDuckDuckGo-browseren kommer med de funktioner, du forventer af en standardbrowser, som bogmærker, faner, adgangskoder og meget mere, plus over [et dusin kraftfulde beskyttelser af privatlivet](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/), som ikke tilbydes i de fleste populære browsere som standard. Dette unikke og omfattende sæt af beskyttelsesfunktioner hjælper med at beskytte dine onlineaktiviteter, fra søgning til browsing, e-mailing og meget mere.\n\nVores beskyttelse af privatlivet fungerer, uden at du behøver at vide noget om de tekniske detaljer eller håndtere komplicerede indstillinger. Det eneste, du skal gøre, er at skifte din browser til DuckDuckGo på alle dine enheder, så får du privatliv som standard.\n\nMen hvis du gerne vil have et kig under motorhjelmen, kan du finde flere oplysninger om, hvordan DuckDuckGos beskyttelse af privatlivet fungerer, på vores [hjælpesider](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Indsend rapport";
@@ -1734,6 +1776,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "En besked fra %@:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Velkommen til Duck siden";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "Prøv DuckDuckGo til Windows!";

@@ -1,0 +1,27 @@
+appId: com.duckduckgo.mobile.ios
+tags:
+    - sync
+
+---
+
+- clearState
+- launchApp
+- runFlow: 
+    when: 
+      visible: 
+        text: "Let’s Do It!"
+        index: 0
+    file: ../shared/onboarding.yaml
+
+- tapOn: Settings
+- runFlow:
+    file: ../shared/set_internal_user.yaml
+- runFlow:
+    file: ../shared/sync_create.yaml
+
+
+# Clean up
+- tapOn: Not Now
+- assertVisible: Sync & Back Up
+- runFlow:
+    file: ../shared/sync_delete.yaml

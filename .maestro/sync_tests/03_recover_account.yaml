@@ -1,0 +1,71 @@
+appId: com.duckduckgo.mobile.ios
+tags:
+    - sync
+
+---
+
+- clearState
+- launchApp
+- runFlow: 
+    when: 
+      visible: 
+        text: "Let’s Do It!"
+        index: 0
+    file: ../shared/onboarding.yaml
+
+# <WORKAROUND>This is a workaround to:
+# - Put the code in the clipboard on Maestro Cloud
+# - Prevent iOS from showing the Paste permission alert as Maestro can't handle it
+- tapOn:
+    id: searchEntry
+- inputText: ${CODE}
+
+- evalScript: ${output.counter = 0}
+- repeat:
+    while:
+      true: ${output.counter < 3}
+      notVisible: Select All
+    commands:
+      - longPressOn: 
+          id: "searchEntry"
+      - evalScript: ${output.counter = output.counter + 1}
+
+- tapOn: 'Select All'
+- tapOn: Cut
+- evalScript: ${output.counter = 0}
+- repeat:
+    while:
+      true: ${output.counter < 3}
+      notVisible: Paste
+    commands:
+      - tapOn: 
+          id: "searchEntry"
+      - evalScript: ${output.counter = output.counter + 1}
+- tapOn: Paste
+- tapOn: Cancel
+
+- tapOn: Close Tabs and Clear Data
+- tapOn: Close Tabs and Clear Data
+- runFlow:
+    when:
+      visible:
+        text: Cancel
+    commands:
+      - tapOn: Cancel
+#</WORKAROUND>
+
+# Recover Account test
+- tapOn: Settings
+- runFlow:
+    file: ../shared/set_internal_user.yaml
+- assertVisible: Sync & Back Up
+- tapOn: Sync & Back Up
+- assertVisible: Sync & Back up
+- tapOn: Recover Your Data
+- tapOn: Enter Text Code
+- tapOn: Paste
+- assertVisible: Device Synced!
+- tapOn: Next
+- tapOn: Not Now
+- tapOn: Settings
+- tapOn: Done

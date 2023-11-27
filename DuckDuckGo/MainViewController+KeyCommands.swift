@@ -71,7 +71,7 @@ extension MainViewController {
         }
         
         var arrowKeys = [UIKeyCommand]()
-        if omniBar.textField.isFirstResponder {
+        if viewCoordinator.omniBar.textField.isFirstResponder {
             arrowKeys = [
                 UIKeyCommand(title: "", action: #selector(keyboardMoveSelectionUp), input: UIKeyCommand.inputUpArrow, modifierFlags: []),
                 UIKeyCommand(title: "", action: #selector(keyboardMoveSelectionDown), input: UIKeyCommand.inputDownArrow, modifierFlags: [])
@@ -110,7 +110,13 @@ extension MainViewController {
             UIKeyCommand(title: "", action: #selector(keyboardEscape), input: UIKeyCommand.inputEscape, modifierFlags: [])
         ]
 
-        return [alwaysAvailable, browsingCommands, findInPageCommands, arrowKeys, other].flatMap { $0 }
+        let commands = [alwaysAvailable, browsingCommands, findInPageCommands, arrowKeys, other].flatMap { $0 }
+        if #available(iOS 15, *) {
+            commands.forEach {
+                $0.wantsPriorityOverSystemBehavior = true
+            }
+        }
+        return commands
     }
 
     @objc func keyboardMoveSelectionUp() {
@@ -140,7 +146,7 @@ extension MainViewController {
             controller.launchNewSearch()
         } else {
             showBars()
-            omniBar.becomeFirstResponder()
+            viewCoordinator.omniBar.becomeFirstResponder()
         }
     }
 

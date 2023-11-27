@@ -32,6 +32,12 @@ extension EventMapping where Event == NetworkProtectionError {
         var params: [String: String] = [:]
 
         switch event {
+        case .failedToFetchLocationList(let error):
+            pixelEvent = .networkProtectionClientFailedToFetchLocations
+            pixelError = error
+        case .failedToParseLocationListResponse(let error):
+            pixelEvent = .networkProtectionClientFailedToParseLocationsResponse
+            pixelError = error
         case .failedToEncodeRedeemRequest:
             pixelEvent = .networkProtectionClientFailedToEncodeRedeemRequest
         case .invalidInviteCode:

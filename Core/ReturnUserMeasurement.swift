@@ -45,9 +45,6 @@ class KeychainReturnUserMeasurement: ReturnUserMeasurement {
     }
 
     func installCompletedWithATB(_ atb: Atb) {
-        if let oldATB = readSecureATB() {
-            sendReturnUserMeasurement(oldATB, atb.version)
-        }
         writeSecureATB(atb.version)
     }
 
@@ -86,34 +83,6 @@ class KeychainReturnUserMeasurement: ReturnUserMeasurement {
             fireDebugPixel(.debugReturnUserAddATB, errorCode: status)
         }
 
-    }
-
-    private func readSecureATB() -> String? {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: Self.SecureATBKeychainName,
-            kSecReturnData as String: kCFBooleanTrue!,
-            kSecMatchLimit as String: kSecMatchLimitOne
-        ]
-
-        var dataTypeRef: AnyObject?
-        let status: OSStatus = SecItemCopyMatching(query as CFDictionary, &dataTypeRef)
-        if ![errSecSuccess, errSecItemNotFound].contains(status) {
-            fireDebugPixel(.debugReturnUserReadATB, errorCode: status)
-        }
-
-        if let data = dataTypeRef as? Data {
-            return String(data: data, encoding: .utf8)
-        }
-
-        return nil
-    }
-
-    private func sendReturnUserMeasurement(_ oldATB: String, _ newATB: String) {
-        Pixel.fire(pixel: .returnUser, withAdditionalParameters: [
-            PixelParameters.returnUserOldATB: oldATB,
-            PixelParameters.returnUserNewATB: newATB
-        ])
     }
 
     private func fireDebugPixel(_ event: Pixel.Event, errorCode: OSStatus) {

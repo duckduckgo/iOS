@@ -67,6 +67,31 @@ final class NetworkProtectionTunnelController: TunnelController {
         tunnelManager.connection.stopVPNTunnel()
     }
 
+    func removeVPN() async {
+        try? await tunnelManager?.removeFromPreferences()
+    }
+
+    // MARK: - Connection Status Querying
+
+    /// Queries Network Protection to know if its VPN is connected.
+    ///
+    /// - Returns: `true` if the VPN is connected, connecting or reasserting, and `false` otherwise.
+    ///
+    var isConnected: Bool {
+        get async {
+            guard let tunnelManager = await loadTunnelManager() else {
+                return false
+            }
+
+            switch tunnelManager.connection.status {
+            case .connected, .connecting, .reasserting:
+                return true
+            default:
+                return false
+            }
+        }
+    }
+
     private func startWithError() async throws {
         let tunnelManager: NETunnelProviderManager
 

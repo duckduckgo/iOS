@@ -26,6 +26,7 @@ protocol SaveLoginViewControllerDelegate: AnyObject {
     func saveLoginViewController(_ viewController: SaveLoginViewController, didSaveCredentials credentials: SecureVaultModels.WebsiteCredentials)
     func saveLoginViewController(_ viewController: SaveLoginViewController, didUpdateCredentials credentials: SecureVaultModels.WebsiteCredentials)
     func saveLoginViewControllerDidCancel(_ viewController: SaveLoginViewController)
+    func saveLoginViewController(_ viewController: SaveLoginViewController, didRequestNeverPromptForWebsite domain: String)
     func saveLoginViewController(_ viewController: SaveLoginViewController,
                                  didRequestPresentConfirmKeepUsingAlertController alertController: UIAlertController)
 }
@@ -134,6 +135,11 @@ extension SaveLoginViewController: SaveLoginViewModelDelegate {
     
     func saveLoginViewModelDidCancel(_ viewModel: SaveLoginViewModel) {
         delegate?.saveLoginViewControllerDidCancel(self)
+    }
+
+    func saveLoginViewModelNeverPrompt(_ viewModel: SaveLoginViewModel) {
+        Pixel.fire(pixel: .autofillLoginsSaveLoginModalExcludeSiteConfirmed)
+        delegate?.saveLoginViewController(self, didRequestNeverPromptForWebsite: viewModel.accountDomain)
     }
 
     func saveLoginViewModelConfirmKeepUsing(_ viewModel: SaveLoginViewModel, isAlreadyDismissed: Bool) {

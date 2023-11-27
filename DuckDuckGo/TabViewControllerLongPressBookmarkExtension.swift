@@ -35,18 +35,24 @@ extension TabViewController {
             syncService.scheduler.notifyDataChanged()
 
             DispatchQueue.main.async {
-                ActionMessageView.present(message: UserText.webSaveFavoriteDone)
+                let addressBarBottom = self.appSettings.currentAddressBarPosition.isBottom
+                ActionMessageView.present(message: UserText.webSaveFavoriteDone,
+                                          presentationLocation: .withBottomBar(andAddressBarBottom: addressBarBottom))
             }
         } else if nil == viewModel.bookmark(for: link.url) {
             viewModel.createBookmark(title: link.displayTitle, url: link.url)
             syncService.scheduler.notifyDataChanged()
 
             DispatchQueue.main.async {
-                ActionMessageView.present(message: UserText.webSaveBookmarkDone)
+                let addressBarBottom = self.appSettings.currentAddressBarPosition.isBottom
+                ActionMessageView.present(message: UserText.webSaveBookmarkDone,
+                                          presentationLocation: .withBottomBar(andAddressBarBottom: addressBarBottom))
             }
         } else {
             DispatchQueue.main.async {
-                ActionMessageView.present(message: UserText.webBookmarkAlreadySaved)
+                let addressBarBottom = self.appSettings.currentAddressBarPosition.isBottom
+                ActionMessageView.present(message: UserText.webBookmarkAlreadySaved,
+                                          presentationLocation: .withBottomBar(andAddressBarBottom: addressBarBottom))
             }
         }
     }

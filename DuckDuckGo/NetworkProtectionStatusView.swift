@@ -22,6 +22,7 @@
 import SwiftUI
 import NetworkProtection
 
+@available(iOS 15, *)
 struct NetworkProtectionStatusView: View {
     @ObservedObject public var statusModel: NetworkProtectionStatusViewModel
 
@@ -37,11 +38,15 @@ struct NetworkProtectionStatusView: View {
             if statusModel.shouldShowConnectionDetails {
                 connectionDetails()
             }
+            settings()
         }
-        .animation(.default, value: statusModel.shouldShowError)
         .padding(.top, statusModel.error == nil ? 0 : -20)
-        .animation(.default, value: statusModel.shouldShowConnectionDetails)
-        .applyListStyle()
+        .if(statusModel.animationsOn, transform: {
+            $0
+                .animation(.default, value: statusModel.shouldShowConnectionDetails)
+                .animation(.default, value: statusModel.shouldShowError)
+        })
+        .applyInsetGroupedListStyle()
         .navigationTitle(UserText.netPNavTitle)
     }
 
@@ -72,11 +77,8 @@ struct NetworkProtectionStatusView: View {
             .listRowBackground(Color.cellBackground)
         } header: {
             header()
-        } footer: {
-            if !statusModel.shouldShowConnectionDetails {
-                inviteOnlyFooter()
-            }
-        }.increaseHeaderProminence()
+        }
+        .increaseHeaderProminence()
     }
 
     @ViewBuilder
@@ -111,11 +113,13 @@ struct NetworkProtectionStatusView: View {
     private func connectionDetails() -> some View {
         Section {
             if let location = statusModel.location {
-                NetworkProtectionServerItemView(
-                    imageID: "Server-Location-24",
-                    title: UserText.netPStatusViewLocation,
-                    value: location
-                )
+                NavigationLink(destination: NetworkProtectionVPNLocationView()) {
+                    NetworkProtectionServerItemView(
+                        imageID: "Server-Location-24",
+                        title: UserText.netPStatusViewLocation,
+                        value: location
+                    )
+                }
             }
             if let ipAddress = statusModel.ipAddress {
                 NetworkProtectionServerItemView(
@@ -125,7 +129,21 @@ struct NetworkProtectionStatusView: View {
                 )
             }
         } header: {
-            Text(UserText.netPStatusViewConnectionDetails).foregroundColor(.textPrimary)
+            Text(UserText.netPStatusViewConnectionDetails).foregroundColor(.textSecondary)
+        }
+    }
+
+    @ViewBuilder
+    private func settings() -> some View {
+        Section {
+            NavigationLink(UserText.netPVPNSettingsTitle, destination: NetworkProtectionVPNSettingsView())
+                .font(.system(size: 16))
+                .foregroundColor(.textPrimary)
+            NavigationLink(UserText.netPVPNNotificationsTitle, destination: NetworkProtectionVPNNotificationsView())
+                .font(.system(size: 16))
+                .foregroundColor(.textPrimary)
+        } header: {
+            Text(UserText.netPStatusViewSettingsSectionTitle).foregroundColor(.textSecondary)
         } footer: {
             inviteOnlyFooter()
         }
@@ -183,53 +201,12 @@ private struct NetworkProtectionServerItemView: View {
     }
 }
 
-private extension View {
-    @ViewBuilder
-    func hideScrollContentBackground() -> some View {
-        if #available(iOS 16, *) {
-            self.scrollContentBackground(.hidden)
-        } else {
-            let originalBackgroundColor = UITableView.appearance().backgroundColor
-            self.onAppear {
-                UITableView.appearance().backgroundColor = .clear
-            }.onDisappear {
-                UITableView.appearance().backgroundColor = originalBackgroundColor
-            }
-        }
-    }
-
-    @ViewBuilder
-    func applyListStyle() -> some View {
-        self
-            .listStyle(.insetGrouped)
-            .hideScrollContentBackground()
-            .background(
-                Rectangle().ignoresSafeArea().foregroundColor(Color.viewBackground)
-            )
-    }
-
-    @ViewBuilder
-    func increaseHeaderProminence() -> some View {
-        if #available(iOS 15, *) {
-            self.headerProminence(.increased)
-        } else {
-            self
-        }
-    }
-}
-
 private extension Color {
     static let textPrimary = Color(designSystemColor: .textPrimary)
     static let textSecondary = Color(designSystemColor: .textSecondary)
     static let cellBackground = Color(designSystemColor: .surface)
     static let viewBackground = Color(designSystemColor: .background)
     static let controlColor = Color(designSystemColor: .accent)
-}
-
-struct NetworkProtectionStatusView_Previews: PreviewProvider {
-    static var previews: some View {
-        NetworkProtectionStatusView(statusModel: NetworkProtectionStatusViewModel())
-    }
 }
 
 #endif

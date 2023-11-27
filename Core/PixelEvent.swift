@@ -203,7 +203,8 @@ extension Pixel {
         case autofillLoginsSaveLoginModalDisplayed
         case autofillLoginsSaveLoginModalConfirmed
         case autofillLoginsSaveLoginModalDismissed
-        
+        case autofillLoginsSaveLoginModalExcludeSiteConfirmed
+
         case autofillLoginsSavePasswordModalDisplayed
         case autofillLoginsSavePasswordModalConfirmed
         case autofillLoginsSavePasswordModalDismissed
@@ -238,6 +239,9 @@ extension Pixel {
         case autofillLoginsSettingsEnabled
         case autofillLoginsSettingsDisabled
         case autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate
+        case autofillLoginsSettingsResetExcludedDisplayed
+        case autofillLoginsSettingsResetExcludedConfirmed
+        case autofillLoginsSettingsResetExcludedDismissed
 
         case autofillLoginsPasswordGenerationPromptDisplayed
         case autofillLoginsPasswordGenerationPromptConfirmed
@@ -245,6 +249,9 @@ extension Pixel {
 
         case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
         
+        case navigationbarPositionBottom
+        case navigationBarPositionTop
+
         case secureVaultInitError
         case secureVaultError
         
@@ -309,6 +316,8 @@ extension Pixel {
         case networkProtectionClientFailedToEncodeRegisterKeyRequest
         case networkProtectionClientFailedToFetchRegisteredServers
         case networkProtectionClientFailedToParseRegisteredServersResponse
+        case networkProtectionClientFailedToFetchLocations
+        case networkProtectionClientFailedToParseLocationsResponse
         case networkProtectionClientFailedToEncodeRedeemRequest
         case networkProtectionClientInvalidInviteCode
         case networkProtectionClientFailedToRedeemInviteCode
@@ -354,9 +363,6 @@ extension Pixel {
         case remoteMessagePrimaryActionClicked
         case remoteMessageSecondaryActionClicked
         case remoteMessageSheet
-
-        // MARK: Return user measurement
-        case returnUser
 
         // MARK: debug pixels
         case dbCrashDetected
@@ -470,10 +476,15 @@ extension Pixel {
         case bookmarksMigrationCouldNotPrepareDatabaseOnFailedMigration
         case bookmarksMigrationCouldNotValidateDatabase
         case bookmarksMigrationCouldNotRemoveOldStore
+        case bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders
 
         case syncFailedToMigrate
         case syncFailedToLoadAccount
         case syncFailedToSetupEngine
+        case syncBookmarksCountLimitExceededDaily
+        case syncCredentialsCountLimitExceededDaily
+        case syncBookmarksRequestSizeLimitExceededDaily
+        case syncCredentialsRequestSizeLimitExceededDaily
 
         case syncSentUnauthenticatedRequest
         case syncMetadataCouldNotLoadDatabase
@@ -486,6 +497,7 @@ extension Pixel {
 
         case bookmarksCleanupFailed
         case bookmarksCleanupAttemptedWhileSyncWasEnabled
+        case favoritesCleanupFailed
 
         case credentialsDatabaseCleanupFailed
         case credentialsCleanupAttemptedWhileSyncWasEnabled
@@ -576,7 +588,10 @@ extension Pixel.Event {
             
         case .autocompleteSelectedLocal: return "m_au_l"
         case .autocompleteSelectedRemote: return "m_au_r"
-            
+
+        case .navigationbarPositionBottom: return "m_seturlbar_bottom"
+        case .navigationBarPositionTop: return "m_seturlbar_top"
+
         case .feedbackPositive: return "mfbs_positive_submit"
         case .feedbackNegativePrefix(category: let category): return "mfbs_negative_\(category)"
             
@@ -688,7 +703,8 @@ extension Pixel.Event {
         case .autofillLoginsSaveLoginModalDisplayed: return "m_autofill_logins_save_login_inline_displayed"
         case .autofillLoginsSaveLoginModalConfirmed: return "m_autofill_logins_save_login_inline_confirmed"
         case .autofillLoginsSaveLoginModalDismissed: return "m_autofill_logins_save_login_inline_dismissed"
-        
+        case .autofillLoginsSaveLoginModalExcludeSiteConfirmed: return "m_autofill_logins_save_login_exclude_site_confirmed"
+
         case .autofillLoginsSavePasswordModalDisplayed: return "m_autofill_logins_save_password_inline_displayed"
         case .autofillLoginsSavePasswordModalConfirmed: return "m_autofill_logins_save_password_inline_confirmed"
         case .autofillLoginsSavePasswordModalDismissed: return "m_autofill_logins_save_password_inline_dismissed"
@@ -730,6 +746,9 @@ extension Pixel.Event {
         case .autofillLoginsSettingsDisabled: return "m_autofill_logins_settings_disabled"
         case .autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate:
             return "m_autofill_logins_settings_add-new-login_error_attempted-to-create-duplicate"
+        case .autofillLoginsSettingsResetExcludedDisplayed: return "m_autofill_settings_reset_excluded_displayed"
+        case .autofillLoginsSettingsResetExcludedConfirmed: return "m_autofill_settings_reset_excluded_confirmed"
+        case .autofillLoginsSettingsResetExcludedDismissed: return "m_autofill_settings_reset_excluded_dismissed"
 
         case .autofillLoginsPasswordGenerationPromptDisplayed: return "m_autofill_logins_password_generation_prompt_displayed"
         case .autofillLoginsPasswordGenerationPromptConfirmed: return "m_autofill_logins_password_generation_prompt_confirmed"
@@ -798,6 +817,9 @@ extension Pixel.Event {
         case .networkProtectionClientFailedToFetchRegisteredServers: return "m_netp_backend_api_error_failed_to_fetch_registered_servers"
         case .networkProtectionClientFailedToParseRegisteredServersResponse:
             return "m_netp_backend_api_error_parsing_device_registration_response_failed"
+        case .networkProtectionClientFailedToFetchLocations: return "m_netp_backend_api_error_failed_to_fetch_locations"
+        case .networkProtectionClientFailedToParseLocationsResponse:
+            return "m_netp_backend_api_error_parsing_locations_response_failed"
         case .networkProtectionClientFailedToEncodeRedeemRequest: return "m_netp_backend_api_error_encoding_redeem_request_body_failed"
         case .networkProtectionClientInvalidInviteCode: return "m_netp_backend_api_error_invalid_invite_code"
         case .networkProtectionClientFailedToRedeemInviteCode: return "m_netp_backend_api_error_failed_to_redeem_invite_code"
@@ -945,10 +967,15 @@ extension Pixel.Event {
             return "m_d_bookmarks_migration_could_not_prepare_database_on_failed_migration"
         case .bookmarksMigrationCouldNotValidateDatabase: return "m_d_bookmarks_migration_could_not_validate_database"
         case .bookmarksMigrationCouldNotRemoveOldStore: return "m_d_bookmarks_migration_could_not_remove_old_store"
+        case .bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders: return "m_d_bookmarks_migration_could_not_prepare_multiple_favorite_folders"
 
         case .syncFailedToMigrate: return "m_d_sync_failed_to_migrate"
         case .syncFailedToLoadAccount: return "m_d_sync_failed_to_load_account"
         case .syncFailedToSetupEngine: return "m_d_sync_failed_to_setup_engine"
+        case .syncBookmarksCountLimitExceededDaily: return "m_d_sync_bookmarks_count_limit_exceeded_daily"
+        case .syncCredentialsCountLimitExceededDaily: return "m_d_sync_credentials_count_limit_exceeded_daily"
+        case .syncBookmarksRequestSizeLimitExceededDaily: return "m_d_sync_bookmarks_request_size_limit_exceeded_daily"
+        case .syncCredentialsRequestSizeLimitExceededDaily: return "m_d_sync_credentials_request_size_limit_exceeded_daily"
 
         case .syncSentUnauthenticatedRequest: return "m_d_sync_sent_unauthenticated_request"
         case .syncMetadataCouldNotLoadDatabase: return "m_d_sync_metadata_could_not_load_database"
@@ -962,6 +989,7 @@ extension Pixel.Event {
 
         case .bookmarksCleanupFailed: return "m_d_bookmarks_cleanup_failed"
         case .bookmarksCleanupAttemptedWhileSyncWasEnabled: return "m_d_bookmarks_cleanup_attempted_while_sync_was_enabled"
+        case .favoritesCleanupFailed: return "m_d_favorites_cleanup_failed"
 
         case .credentialsDatabaseCleanupFailed: return "m_d_credentials_database_cleanup_failed_2"
         case .credentialsCleanupAttemptedWhileSyncWasEnabled: return "m_d_credentials_cleanup_attempted_while_sync_was_enabled"
@@ -980,7 +1008,6 @@ extension Pixel.Event {
 
         case .compilationFailed: return "m_d_compilation_failed"
         // MARK: - Return user measurement
-        case .returnUser: return "m_return_user"
         case .debugReturnUserAddATB: return "m_debug_return_user_add_atb"
         case .debugReturnUserReadATB: return "m_debug_return_user_read_atb"
         case .debugReturnUserUpdateATB: return "m_debug_return_user_update_atb"

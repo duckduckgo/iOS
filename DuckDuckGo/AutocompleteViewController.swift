@@ -43,9 +43,17 @@ class AutocompleteViewController: UIViewController {
     
     private var bookmarksSearch: BookmarksStringSearch!
 
+    private var appSettings: AppSettings!
+
+    var backgroundColor: UIColor {
+        appSettings.currentAddressBarPosition.isBottom ?
+            UIColor(designSystemColor: .background) :
+            UIColor.black.withAlphaComponent(0.2)
+    }
+
     var showBackground = true {
         didSet {
-            view.backgroundColor = showBackground ? UIColor.black.withAlphaComponent(0.2) : UIColor.clear
+            view.backgroundColor = showBackground ? backgroundColor : UIColor.clear
         }
     }
 
@@ -61,12 +69,15 @@ class AutocompleteViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var shouldOffsetY = false
     
-    static func loadFromStoryboard(bookmarksSearch: BookmarksStringSearch) -> AutocompleteViewController {
+    static func loadFromStoryboard(bookmarksSearch: BookmarksStringSearch,
+                                   appSettings: AppSettings = AppDependencyProvider.shared.appSettings) -> AutocompleteViewController {
         let storyboard = UIStoryboard(name: "Autocomplete", bundle: nil)
+
         guard let controller = storyboard.instantiateInitialViewController() as? AutocompleteViewController else {
             fatalError("Failed to instatiate correct Autocomplete view controller")
         }
         controller.bookmarksSearch = bookmarksSearch
+        controller.appSettings = appSettings
         return controller
     }
 
@@ -101,11 +112,16 @@ class AutocompleteViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        resetNaviagtionBar()
+        resetNavigationBar()
     }
 
-    private func resetNaviagtionBar() {
+    private func resetNavigationBar() {
         navigationController?.hidesBarsOnSwipe = hidesBarsOnSwipeDefault
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        tableView.reloadData()
     }
 
     func updateQuery(query: String) {
@@ -210,12 +226,16 @@ extension AutocompleteViewController: UITableViewDataSource {
         
         let currentTheme = ThemeManager.shared.currentTheme
         
-        cell.updateFor(query: query, suggestion: suggestions[indexPath.row], with: currentTheme)
+        cell.updateFor(query: query,
+                       suggestion: suggestions[indexPath.row],
+                       with: currentTheme,
+                       isAddressBarAtBottom: appSettings.currentAddressBarPosition.isBottom)
         cell.plusButton.tag = indexPath.row
         
-        let color = indexPath.row == selectedItem ? currentTheme.tableCellSelectedColor : UIColor(designSystemColor: .panel)
-        
-        cell.backgroundColor = color
+        let baseBackgroundColor = isPad ? UIColor(designSystemColor: .panel) : UIColor(designSystemColor: .background)
+        let backgroundColor = indexPath.row == selectedItem ? currentTheme.tableCellSelectedColor : baseBackgroundColor
+
+        cell.backgroundColor = backgroundColor
         cell.tintColor = currentTheme.autocompleteCellAccessoryColor
         cell.setHighlightedStateBackgroundColor(currentTheme.tableCellHighlightedBackgroundColor)
         
@@ -229,12 +249,22 @@ extension AutocompleteViewController: UITableViewDataSource {
         }
         
         let currentTheme = ThemeManager.shared.currentTheme
-        cell.backgroundColor = UIColor(designSystemColor: .panel)
+        cell.backgroundColor = appSettings.currentAddressBarPosition.isBottom ?
+            UIColor(designSystemColor: .background) :
+            UIColor(designSystemColor: .panel)
+
         cell.tintColor = currentTheme.autocompleteCellAccessoryColor
         cell.label?.textColor = currentTheme.tableCellTextColor
         cell.setHighlightedStateBackgroundColor(currentTheme.tableCellHighlightedBackgroundColor)
-        
+
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if appSettings.currentAddressBarPosition.isBottom && suggestions.isEmpty {
+            return view.frame.height
+        }
+        return 46
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

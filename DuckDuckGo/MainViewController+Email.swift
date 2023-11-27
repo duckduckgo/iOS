@@ -49,7 +49,9 @@ extension MainViewController {
                 }
                 let pasteBoard = UIPasteboard.general
                 pasteBoard.string = emailManager.emailAddressFor(alias)
-                ActionMessageView.present(message: UserText.emailBrowsingMenuAlert)
+                let addressBarBottom = self.appSettings.currentAddressBarPosition.isBottom
+                ActionMessageView.present(message: UserText.emailBrowsingMenuAlert,
+                                          presentationLocation: .withBottomBar(andAddressBarBottom: addressBarBottom))
             }
         }
     }
@@ -72,30 +74,6 @@ extension MainViewController: EmailManagerRequestDelegate {
         return try await request.fetch().data ?? { throw AliasRequestError.noDataError }()
     }
     // swiftlint:enable function_parameter_count
-
-    func emailManagerKeychainAccessFailed(accessType: EmailKeychainAccessType, error: EmailKeychainAccessError) {
-        var parameters = [
-            PixelParameters.emailKeychainAccessType: accessType.rawValue,
-            PixelParameters.emailKeychainError: error.errorDescription
-        ]
-
-        if case let .keychainLookupFailure(status) = error {
-            parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
-            parameters[PixelParameters.emailKeychainKeychainOperation] = "lookup"
-        }
-
-        if case let .keychainDeleteFailure(status) = error {
-            parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
-            parameters[PixelParameters.emailKeychainKeychainOperation] = "delete"
-        }
-
-        if case let .keychainSaveFailure(status) = error {
-            parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
-            parameters[PixelParameters.emailKeychainKeychainOperation] = "save"
-        }
-
-        Pixel.fire(pixel: .emailAutofillKeychainError, withAdditionalParameters: parameters)
-    }
 
 }
 

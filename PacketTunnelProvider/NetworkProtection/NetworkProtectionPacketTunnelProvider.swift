@@ -17,15 +17,20 @@
 //  limitations under the License.
 //
 
+#if NETWORK_PROTECTION
+
 import Foundation
-import NetworkProtection
 import Common
+import Combine
 import Core
 import Networking
 import NetworkExtension
+import NetworkProtection
 
 // Initial implementation for initial Network Protection tests. Will be fleshed out with https://app.asana.com/0/1203137811378537/1204630829332227/f
 final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
+
+    private var cancellables = Set<AnyCancellable>()
 
     // MARK: - PacketTunnelProvider.Event reporting
 
@@ -137,6 +142,10 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 pixelError = error
             case .failedToRetrieveAuthToken:
                 return
+            case .failedToFetchLocationList:
+                return
+            case .failedToParseLocationListResponse:
+                return
             }
             DailyPixel.fireDailyAndCount(pixel: pixelEvent, error: pixelError, withAdditionalParameters: params)
         }
@@ -169,15 +178,22 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                                                              errorEvents: nil)
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
+        let notificationsSettingsStore = NetworkProtectionNotificationsSettingsUserDefaultsStore(userDefaults: .networkProtectionGroupDefaults)
+        let nofificationsPresenterDecorator = NetworkProtectionNotificationsPresenterTogglableDecorator(
+            notificationSettingsStore: notificationsSettingsStore,
+            wrappee: notificationsPresenter
+        )
         notificationsPresenter.requestAuthorization()
-        super.init(notificationsPresenter: notificationsPresenter,
+        super.init(notificationsPresenter: nofificationsPresenterDecorator,
                    tunnelHealthStore: NetworkProtectionTunnelHealthStore(),
                    controllerErrorStore: errorStore,
                    keychainType: .dataProtection(.unspecified),
                    tokenStore: tokenStore,
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
-                   providerEvents: Self.packetTunnelProviderEvents)
+                   providerEvents: Self.packetTunnelProviderEvents,
+                   tunnelSettings: TunnelSettings(defaults: .networkProtectionGroupDefaults))
         startMonitoringMemoryPressureEvents()
+        observeServerChanges()
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
     }
 
@@ -204,4 +220,14 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             source.resume()
         }
     }
+
+    private func observeServerChanges() {
+        lastSelectedServerInfoPublisher.sink { server in
+            let location = server?.serverLocation ?? "Unknown Location"
+            UserDefaults.networkProtectionGroupDefaults.set(location, forKey: NetworkProtectionUserDefaultKeys.lastSelectedServer)
+        }
+        .store(in: &cancellables)
+    }
 }
+
+#endif

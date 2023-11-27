@@ -44,6 +44,7 @@ final class MockSecureVault<T: AutofillDatabaseProvider>: AutofillSecureVault {
 
     var storedAccounts: [SecureVaultModels.WebsiteAccount] = []
     var storedCredentials: [Int64: SecureVaultModels.WebsiteCredentials] = [:]
+    var storedNeverPromptWebsites = [SecureVaultModels.NeverPromptWebsites]()
     var storedNotes: [SecureVaultModels.Note] = []
     var storedIdentities: [SecureVaultModels.Identity] = []
     var storedCards: [SecureVaultModels.CreditCard] = []
@@ -97,6 +98,29 @@ final class MockSecureVault<T: AutofillDatabaseProvider>: AutofillSecureVault {
 
     func deleteWebsiteCredentialsFor(accountId: Int64) throws {
         storedCredentials[accountId] = nil
+    }
+
+    func neverPromptWebsites() throws -> [SecureVaultModels.NeverPromptWebsites] {
+        return storedNeverPromptWebsites
+    }
+
+    func hasNeverPromptWebsitesFor(domain: String) throws -> Bool {
+        return !storedNeverPromptWebsites.filter { $0.domain == domain }.isEmpty
+    }
+
+    func storeNeverPromptWebsites(_ neverPromptWebsite: SecureVaultModels.NeverPromptWebsites) throws -> Int64 {
+        if let neverPromptWebsiteId = neverPromptWebsite.id {
+            storedNeverPromptWebsites.append(neverPromptWebsite)
+            return neverPromptWebsiteId
+        } else {
+            storedNeverPromptWebsites.append(neverPromptWebsite)
+            return -1
+        }
+
+    }
+
+    func deleteAllNeverPromptWebsites() throws {
+        storedNeverPromptWebsites = []
     }
 
     func notes() throws -> [SecureVaultModels.Note] {
@@ -203,6 +227,8 @@ class MockDatabaseProvider: AutofillDatabaseProvider {
     var _forDomain = [String]()
     var _credentialsDict = [Int64: SecureVaultModels.WebsiteCredentials]()
     var _note: SecureVaultModels.Note?
+    var _neverPromptWebsites = [SecureVaultModels.NeverPromptWebsites]()
+
     var db: GRDB.DatabaseWriter
     // swiftlint:enable identifier_name
 
@@ -245,6 +271,33 @@ class MockDatabaseProvider: AutofillDatabaseProvider {
 
     func accounts() throws -> [SecureVaultModels.WebsiteAccount] {
         return _accounts
+    }
+
+    func neverPromptWebsites() throws -> [SecureVaultModels.NeverPromptWebsites] {
+        return _neverPromptWebsites
+    }
+
+    func hasNeverPromptWebsitesFor(domain: String) throws -> Bool {
+        return false
+    }
+
+    func storeNeverPromptWebsite(_ neverPromptWebsite: SecureVaultModels.NeverPromptWebsites) throws -> Int64 {
+        if let neverPromptWebsiteId = neverPromptWebsite.id {
+            _neverPromptWebsites.append(neverPromptWebsite)
+            return neverPromptWebsiteId
+        } else {
+            return -1
+        }
+    }
+
+    func deleteAllNeverPromptWebsites() throws {
+        _neverPromptWebsites.removeAll()
+    }
+
+    func updateNeverPromptWebsite(_ neverPromptWebsite: SecureVaultModels.NeverPromptWebsites) throws {
+    }
+
+    func insertNeverPromptWebsite(_ neverPromptWebsite: SecureVaultModels.NeverPromptWebsites) throws {
     }
 
     func notes() throws -> [SecureVaultModels.Note] {

@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": "sam/add-netp-subscription-auth-support",
-          "revision": "b24418c49790bc46677469237afb46d00884624c",
+          "revision": "22506de8f9fcadddf2a949ac922ad4377b0a3188",
           "version": null
         }
       },
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/duckduckgo/content-scope-scripts",
         "state": {
           "branch": null,
-          "revision": "74b6142c016be354144f28551de41b50c4864b1f",
-          "version": "4.37.0"
+          "revision": "b7ad9843e70cede0c2ca9c4260d970f62cb28156",
+          "version": "4.52.0"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/duckduckgo/DesignResourcesKit",
         "state": {
           "branch": null,
-          "revision": "5de78d59358ff60651b2cf9322c74a2297927b4e",
-          "version": "1.1.1"
+          "revision": "d7ea2561ec7624c224f52e1c9b349075ddf1c782",
+          "version": "2.0.0"
         }
       },
       {
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
           "branch": null,
-          "revision": "55466f10a339843cb79a27af62d5d61c030740b2",
-          "version": "8.4.1"
+          "revision": "93677cc02cfe650ce7f417246afd0e8e972cd83e",
+          "version": "10.0.0"
         }
       },
       {
@@ -105,8 +105,8 @@
         "repositoryURL": "https://github.com/duckduckgo/privacy-dashboard",
         "state": {
           "branch": null,
-          "revision": "51e2b46f413bf3ef18afefad631ca70f2c25ef70",
-          "version": "1.4.0"
+          "revision": "b4ac92a444e79d5651930482623b9f6dc9265667",
+          "version": "2.0.0"
         }
       },
       {
@@ -156,7 +156,7 @@
       },
       {
         "package": "TrackerRadarKit",
-        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
+        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit",
         "state": {
           "branch": null,
           "revision": "4684440d03304e7638a2c8086895367e90987463",

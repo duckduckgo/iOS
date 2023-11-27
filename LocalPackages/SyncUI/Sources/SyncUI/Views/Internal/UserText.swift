@@ -71,10 +71,15 @@ struct UserText {
     static let preparingToSyncSheetDescription = NSLocalizedString("preparing.to.sync.sheet.description", value: "Your bookmarks and passwords are being prepared to sync. This should only take a moment.", comment: "Preparing To Sync Sheet - Description")
     static let preparingToSyncSheetFooter = NSLocalizedString("preparing.to.sync.sheet.footer", value: "Connecting…", comment: "Preparing To Sync Sheet - Footer")
 
+// Save Recovery Code Sheet
+    static let saveRecoveryCodeSheetTitle = NSLocalizedString("save.recovery.code.sheet.title", value: "Save Recovery Code", comment: "Save Recovery Code Sheet - Title")
+    static let saveRecoveryCodeSheetDescription = NSLocalizedString("save.recovery.code.sheet.description", value: "If you lose access to your devices, you will need this code to recover your synced data.", comment: "Save Recovery Code Sheet - Description")
+    static let saveRecoveryCodeSheetFooter = NSLocalizedString("save.recovery.code.sheet.footer", value: "Anyone with access to this code can access your synced data, so please keep it in a safe place.", comment: "Save Recovery Code Sheet - Footer")
+    static let saveRecoveryCodeCopyCodeButton = NSLocalizedString("save.recovery.code.copy.code.button", value: "Copy Code", comment: "Save Recovery Code Sheet - Copy Code Button")
+    static let saveRecoveryCodeSaveAsPdfButton = NSLocalizedString("save.recovery.code.save.as.pdf.button", value: "Save as PDF", comment: "Save Recovery Code Sheet - Save as PDF Button")
+    static let saveRecoveryCodeSaveCodeCopiedToast = NSLocalizedString("save.recovery.code.code.copied.button", value: "Recovery code copied to clipboard", comment: "Save Recovery Code Sheet - Copy Code Toast")
 
 
-    static let recoveryMessage = "If you lose access to your devices, you will need this code to recover your synced data."
-    static let recoveryWarning = "Anyone with access to this code can access your synced data, so please keep it in a safe place."
 
     static let scanQRCode = "Scan QR Code"
     static let enterTextCode = "Enter Text Code"
@@ -104,9 +109,6 @@ struct UserText {
     static let deviceSyncedMessage = "Your bookmarks and Logins are now syncing with "
     static let multipleDevicesSyncedMessage = "Your bookmarks and Logins are now syncing on "
     static let wordDevices = "devices"
-
-    static let saveRecoveryTitle = "Save Recovery Code?"
-    static let copyCode = "Copy Code"
 
     static let cameraPermissionRequired = "Camera Permission is Required"
     static let cameraPermissionInstructions = "Please go to your device's settings and grant permission for this app to access your camera."

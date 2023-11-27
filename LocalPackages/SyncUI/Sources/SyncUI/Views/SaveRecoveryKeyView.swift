@@ -25,6 +25,7 @@ public struct SaveRecoveryKeyView: View {
 
     @Environment(\.presentationMode) var presentation
     @Environment(\.verticalSizeClass) var verticalSizeClass
+    @State private var isCopied = false
 
     var isCompact: Bool {
         verticalSizeClass == .compact
@@ -51,7 +52,7 @@ public struct SaveRecoveryKeyView: View {
                         .monospaceSystemFont(ofSize: 16)
                         .frame(maxWidth: .infinity)
                 }
-                buttons()
+                codeButtons()
             }
             .padding(.top, 20)
             .padding(.horizontal, 20)
@@ -60,9 +61,9 @@ public struct SaveRecoveryKeyView: View {
     }
 
     @ViewBuilder
-    func buttons() -> some View {
+    func codeButtons() -> some View {
         VStack(spacing: isCompact ? 4 : 8) {
-            Button("Save as PDF") {
+            Button(UserText.saveRecoveryCodeSaveAsPdfButton) {
                 model.showRecoveryPDFAction()
             }
             .buttonStyle(SecondaryButtonStyle(compact: isCompact))
@@ -72,16 +73,37 @@ public struct SaveRecoveryKeyView: View {
                 .stroke(.blue, lineWidth: 1)
                 )
 
-            Button(UserText.copyCode) {
+            Button(UserText.saveRecoveryCodeCopyCodeButton) {
                 model.copyKey()
+                isCopied = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    isCopied = false
+                }
             }
             .buttonStyle(SecondaryButtonStyle(compact: isCompact))
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
-                .inset(by: 0.5)
-                .stroke(.blue, lineWidth: 1)
-                )
+                    .inset(by: 0.5)
+                    .stroke(.blue, lineWidth: 1)
+            )
         }
+    }
+
+    @ViewBuilder
+    func nextButton() -> some View {
+        Button {
+            presentation.wrappedValue.dismiss()
+            model.onDismiss()
+        } label: {
+            Text(UserText.nextButton)
+        }
+        .buttonStyle(PrimaryButtonStyle(compact: isCompact))
+        .overlay(
+            isCopied ?
+            codeCopiedToast()
+            : nil
+        )
+        .padding(.horizontal, 20)
     }
 
     @ViewBuilder
@@ -90,11 +112,11 @@ public struct SaveRecoveryKeyView: View {
             Image("SyncDownloadRecoveryCode")
                 .padding(.bottom, 24)
 
-            Text(UserText.saveRecoveryTitle)
+            Text(UserText.saveRecoveryCodeSheetTitle)
                 .daxTitle1()
                 .padding(.bottom, 28)
 
-            Text(UserText.recoveryMessage)
+            Text(UserText.saveRecoveryCodeSheetDescription)
                 .lineLimit(nil)
                 .daxBodyRegular()
                 .lineSpacing(1.32)
@@ -103,7 +125,7 @@ public struct SaveRecoveryKeyView: View {
 
             recoveryInfo()
                 .padding(.bottom, 20)
-            Text(UserText.recoveryWarning)
+            Text(UserText.saveRecoveryCodeSheetFooter)
                 .daxCaption()
                 .multilineTextAlignment(.center)
                 .foregroundColor(.primary.opacity(0.6))
@@ -112,18 +134,26 @@ public struct SaveRecoveryKeyView: View {
         .padding(.horizontal, 30)
     }
 
+    @ViewBuilder
+    func codeCopiedToast() -> some View {
+        ZStack(alignment: .leading) {
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color.black)
+                .frame(height: 45)
+            Text(UserText.saveRecoveryCodeSaveCodeCopiedToast)
+                .foregroundColor(.white)
+                .padding()
+
+        }
+        .padding(.bottom, 50)
+    }
+
+
     public var body: some View {
         UnderflowContainer {
             mainContent()
         } foregroundContent: {
-            Button {
-                presentation.wrappedValue.dismiss()
-                model.onDismiss()
-            } label: {
-                Text(UserText.nextButton)
-            }
-            .buttonStyle(PrimaryButtonStyle(compact: isCompact))
-            .padding(.horizontal, 20)
+            nextButton()
         }
     }
 

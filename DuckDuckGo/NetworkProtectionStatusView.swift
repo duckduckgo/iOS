@@ -113,11 +113,13 @@ struct NetworkProtectionStatusView: View {
     private func connectionDetails() -> some View {
         Section {
             if let location = statusModel.location {
-                NetworkProtectionServerItemView(
-                    imageID: "Server-Location-24",
-                    title: UserText.netPStatusViewLocation,
-                    value: location
-                )
+                NavigationLink(destination: NetworkProtectionVPNLocationView()) {
+                    NetworkProtectionServerItemView(
+                        imageID: "Server-Location-24",
+                        title: UserText.netPStatusViewLocation,
+                        value: location
+                    )
+                }
             }
             if let ipAddress = statusModel.ipAddress {
                 NetworkProtectionServerItemView(

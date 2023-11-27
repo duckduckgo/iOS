@@ -100,6 +100,15 @@ struct UserText {
     static let cameraIsUnavailableTitle = NSLocalizedString("camera.is.unavailable.title", value: "Camera is Unavailable", comment: "Camera View - Unavailable Title")
     static let cameraGoToSettingsButton = NSLocalizedString("camera.go.to.settings.button", value: "Go to Settings", comment: "Camera View - Go to Settings Button")
 
+// Manually Enter Code View
+    static let manuallyEnterCodeTitle = "Enter Text Code"
+    static let manuallyEnterCodeValidatingCodeAction = "Validating code"
+    static let manuallyEnterCodeValidatingCodeFailedAction = "Invalid code."
+    static let manuallyEnterCodeInstructionPart1 = "Go to "
+    static let manuallyEnterCodeInstructionPart2 = "Settings > Sync & Backup > Sync With Another Device "
+    static let manuallyEnterCodeInstructionPart3 = "and select "
+    static let manuallyEnterCodeInstructionPart4 = "View Text Code "
+    static let manuallyEnterCodeInstructionPart5 = "in the DuckDuckGo App on another synced device and paste the code here to sync this device."
 
     static let scanQRCode = "Scan QR Code"
     static let enterTextCode = "Enter Text Code"
@@ -114,9 +123,6 @@ struct UserText {
     static let connectDeviceInstructions = "Go to Settings › Sync & Backup in the DuckDuckGo Browser on a another device and select \n”Sync with Another Device.”"
 
     static let recoveryModeInstructions = "Scan the QR code on your Recovery PDF, or another synced device, to recover your data."
-
-    static let validatingCode = "Validating code"
-    static let validatingCodeFailed = "Invalid code."
 
     static let pasteCodeInstructions = "Copy the code from the\n Settings > Sync & Back Up page in the DuckDuckGo App on another synced device and paste it here to sync this device."
 
@@ -134,11 +140,8 @@ struct UserText {
 
     static let thisDevice = "This Device"
 
-
-    static let pasteLabel = "Paste"
     static let copyCodeLabel = "Copy Code"
 
-    static let manuallyEnterCodeTitle = "Enter Text Code"
 
     static let showQRCodeLabel = "Show QR Code"
     static let showQRCodeSubLabel = "Display code to scan with another device"
@@ -153,12 +156,13 @@ struct UserText {
 
 // Standard Buttons
     static let cancelButton = "Cancel"
-    
-    static let removeButton = "Remove"
     static let doneButton = "Done"
     static let nextButton = "Next"
-    static let notNowButton = "Not Now"
     static let backButton = "Back"
+    static let pasteButton = "Paste"
+
+    static let removeButton = "Remove"
+    static let notNowButton = "Not Now"
 
     static let editDeviceLabel = "Device Name"
     static func editDevice(_ name: String) -> String {

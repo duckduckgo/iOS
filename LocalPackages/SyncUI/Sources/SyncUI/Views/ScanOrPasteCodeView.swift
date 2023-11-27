@@ -85,7 +85,7 @@ public struct ScanOrPasteCodeView: View {
                 } label: {
                     HStack {
                         Image("SyncGotoButton")
-                        Text(UserText.goToSettingsButton)
+                        Text(UserText.cameraGoToSettingsButton)
                     }
                 }
                 .buttonStyle(SyncLabelButtonStyle())

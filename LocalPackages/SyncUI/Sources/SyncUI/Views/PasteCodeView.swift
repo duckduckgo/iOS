@@ -30,17 +30,14 @@ public struct PasteCodeView: View {
 
     @State var isEditingCode = false
 
-    var isFirstScreen: Bool
-
-    public init(model: ScanOrPasteCodeViewModel, isfirstScreen: Bool = false) {
+    public init(model: ScanOrPasteCodeViewModel) {
         self.model = model
-        self.isFirstScreen = isfirstScreen
     }
 
     @ViewBuilder
     func pasteButton() -> some View {
         Button(action: model.pasteCode) {
-            Label(UserText.pasteLabel, image: "SyncPaste")
+            Label(UserText.pasteButton, image: "SyncPaste")
         }
     }
 
@@ -67,14 +64,14 @@ public struct PasteCodeView: View {
                 if model.isValidating {
                     HStack(spacing: 4) {
                         SwiftUI.ProgressView()
-                        Text(UserText.validatingCode)
+                        Text(UserText.manuallyEnterCodeValidatingCodeAction)
                             .foregroundColor(.white.opacity(0.36))
                     }
                     .padding(.horizontal)
                 } else if model.invalidCode {
                     HStack {
                         Image("SyncAlert")
-                        Text(UserText.validatingCodeFailed)
+                        Text(UserText.manuallyEnterCodeValidatingCodeFailedAction)
                             .foregroundColor(.white.opacity(0.36))
                     }
                     .padding(.horizontal)
@@ -97,11 +94,20 @@ public struct PasteCodeView: View {
 
     @ViewBuilder
     func instructions() -> some View {
-        Text(UserText.pasteCodeInstructions)
+        instructionsText()
             .lineLimit(nil)
             .multilineTextAlignment(.center)
             .foregroundColor(.white.opacity(0.6))
             .padding()
+    }
+
+    func instructionsText() -> some View {
+        (Text(UserText.manuallyEnterCodeInstructionPart1) +
+            Text(UserText.manuallyEnterCodeInstructionPart2).bold() +
+            Text(UserText.manuallyEnterCodeInstructionPart3) +
+            Text(UserText.manuallyEnterCodeInstructionPart4).bold() +
+            Text(UserText.manuallyEnterCodeInstructionPart5)
+        )
     }
 
     @ViewBuilder
@@ -119,13 +125,9 @@ public struct PasteCodeView: View {
     }
 
     public var body: some View {
-        if isFirstScreen {
-            pastCodeWiewWithNoModifier()
-                .modifier(CancelButtonModifier(action: model.cancel))
-        } else {
-            pastCodeWiewWithNoModifier()
-                .modifier(BackButtonModifier())
-        }
+        pastCodeWiewWithNoModifier()
+            .modifier(BackButtonModifier())
+
     }
 
 }

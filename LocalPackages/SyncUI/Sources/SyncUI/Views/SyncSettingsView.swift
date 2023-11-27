@@ -94,7 +94,7 @@ extension SyncSettingsView {
     @ViewBuilder
     func syncWithAnotherDeviceView() -> some View {
         Section {
-            VStack(spacing: 8) {
+            VStack(alignment: .center, spacing: 8) {
                 Image("Sync-Pair-96")
                 Text(UserText.syncWithAnotherDeviceTitle)
                     .daxTitle3()
@@ -178,6 +178,27 @@ extension SyncSettingsView {
         }
     }
 
+
+    @ViewBuilder
+    func devicesList() -> some View {
+        ForEach(model.devices) { device in
+            Button {
+                selectedDevice = device
+            } label: {
+                HStack {
+                    deviceTypeImage(device)
+                    Text(device.name)
+                        .foregroundColor(.primary)
+                    Spacer()
+                    if device.isThisDevice {
+                        Text(UserText.syncedDevicesThisDeviceLabel)
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
+        }
+    }
+
     @ViewBuilder
     func devices() -> some View {
         Section {
@@ -185,23 +206,7 @@ extension SyncSettingsView {
                 ProgressView()
                     .padding()
             }
-
-            ForEach(model.devices) { device in
-                Button {
-                    selectedDevice = device
-                } label: {
-                    HStack {
-                        deviceTypeImage(device)
-                        Text(device.name)
-                            .foregroundColor(.primary)
-                        Spacer()
-                        if device.isThisDevice {
-                            Text(UserText.syncedDevicesThisDeviceLabel)
-                                .foregroundColor(.secondary)
-                        }
-                    }
-                }
-            }
+            devicesList()
             Button(action: {
                 model.scanQRCode()
             }, label: {
@@ -232,7 +237,6 @@ extension SyncSettingsView {
                 model.delegate?.refreshDevices(clearDevices: false)
             }
         }
-
     }
 
     @ViewBuilder

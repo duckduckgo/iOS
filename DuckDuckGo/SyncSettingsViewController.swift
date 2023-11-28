@@ -134,6 +134,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         if let presentedViewController = navigationController?.presentedViewController {
             if !(presentedViewController is UIHostingController<SyncSettingsView>) {
                 presentedViewController.dismiss(animated: true, completion: nil)
+                endConnectMode()
             }
         }
     }
@@ -212,6 +213,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
     }
 
     func syncCodeEntered(code: String) async -> Bool {
+        var shouldShowSyncEnabled = true
         do {
             guard let syncCode = try? SyncCode.decodeBase64String(code) else {
                 return false
@@ -226,10 +228,11 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                 showPreparingSync()
                 if syncService.account == nil {
                     try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
+                    self.dismissVCAndShowRecoveryPDF()
+                    shouldShowSyncEnabled = false
                     rootView.model.syncEnabled(recoveryCode: recoveryCode)
                 }
                 try await syncService.transmitRecoveryKey(connectKey)
-                self.rootView.model.isSyncingDevices = true
 
                 self.rootView.model.$devices
                     .removeDuplicates()
@@ -237,8 +240,9 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                     .prefix(1)
                     .sink { [weak self] _ in
                         guard let self else { return }
-                        self.dismissVCAndShowRecoveryPDF()
-                        self.rootView.model.isSyncingDevices = false
+                        if shouldShowSyncEnabled {
+                            self.dismissVCAndShowRecoveryPDF()
+                        }
                     }.store(in: &cancellables)
 
                 return true

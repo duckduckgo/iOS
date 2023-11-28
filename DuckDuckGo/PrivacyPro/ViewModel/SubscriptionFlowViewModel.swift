@@ -1,5 +1,5 @@
 //
-//  SubscriptionFlowView.swift
+//  SubscriptionFlowViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -17,19 +17,16 @@
 //  limitations under the License.
 //
 
-import SwiftUI
+import Foundation
+import UserScript
 
-struct SubscriptionFlowView: View {
-    
-    let model: SubscriptionFlowViewModel
-    
-    init(model: SubscriptionFlowViewModel = SubscriptionFlowViewModel()) {
-        self.model = model
-    }
-    
-    var body: some View {
-        AsyncHeadlessWebView(url: URL.purchaseSubscription,
-                             userScript: model.userScript,
-                             subFeature: model.subFeature)
+struct SubscriptionFlowViewModel {
+    let userScript: SubscriptionPagesUserScript
+    let subFeature: Subfeature
+
+    init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
+         subFeature: Subfeature = SubscriptionPagesUseSubscriptionFeature()) {
+        self.userScript = userScript
+        self.subFeature = subFeature
     }
 }

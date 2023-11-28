@@ -1,5 +1,5 @@
 //
-//  SubscriptionFlowView.swift
+//  TestUserScript.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -17,19 +17,20 @@
 //  limitations under the License.
 //
 
-import SwiftUI
+import WebKit
 
-struct SubscriptionFlowView: View {
-    
-    let model: SubscriptionFlowViewModel
-    
-    init(model: SubscriptionFlowViewModel = SubscriptionFlowViewModel()) {
-        self.model = model
+public final class TestUserScript: NSObject, WKScriptMessageHandler {
+    public var source: String {
+        // Here, you can inject any JavaScript if needed
+        return ""
     }
-    
-    var body: some View {
-        AsyncHeadlessWebView(url: URL.purchaseSubscription,
-                             userScript: model.userScript,
-                             subFeature: model.subFeature)
+
+    public let context = "simpleContext"
+
+    // Implement WKScriptMessageHandler method
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        if message.name == context {
+            print("Message received from web content: \(message.body)")
+        }
     }
 }

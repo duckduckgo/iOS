@@ -486,8 +486,8 @@ class SettingsViewController: UITableViewController {
 #if SUBSCRIPTION
     @available(iOS 15, *)
     private func showPrivacyPro() {
-        let privacyView = SubscriptionFlowView()
-        let hostingController = UIHostingController(rootView: privacyView)
+        let privacyProview = SubscriptionFlowView()
+        let hostingController = UIHostingController(rootView: privacyProview)
         navigationController?.pushViewController(hostingController, animated: true)
     }
 #endif

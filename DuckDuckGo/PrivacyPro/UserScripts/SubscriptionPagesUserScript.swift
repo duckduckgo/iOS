@@ -35,7 +35,7 @@ public final class SubscriptionPagesUserScript: NSObject, UserScript, UserScript
     public static let context = "subscriptionPages"
 
     // special pages messaging cannot be isolated as we'll want regular page-scripts to be able to communicate
-    public let broker = UserScriptMessageBroker(context: SubscriptionPagesUserScript.context, requiresRunInPageContentWorld: true )
+    public let broker = UserScriptMessageBroker(context: SubscriptionPagesUserScript.context, requiresRunInPageContentWorld: false )
 
     public let messageNames: [String] = [
         SubscriptionPagesUserScript.context
@@ -61,7 +61,6 @@ extension SubscriptionPagesUserScript: WKScriptMessageHandlerWithReply {
     }
 }
 
-// MARK: - Fallback for macOS 10.15
 extension SubscriptionPagesUserScript: WKScriptMessageHandler {
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         // unsupported
@@ -112,7 +111,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature {
     }
 
     func getSubscription(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        var authToken = AccountManager().authToken ?? "Test Token"
+        var authToken = AccountManager().authToken ?? ""
         return Subscription(token: authToken)
     }
 

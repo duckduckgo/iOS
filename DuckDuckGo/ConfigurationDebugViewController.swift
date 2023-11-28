@@ -90,7 +90,7 @@ class ConfigurationDebugViewController: UITableViewController {
     }
 
     private func fetchAssets() {
-        AppConfigurationFetch().start { [weak tableView] result in
+        AppConfigurationFetch().start(isDebug: true) { [weak tableView] result in
             switch result {
             case .assetsUpdated(let protectionsUpdated):
                 if protectionsUpdated {

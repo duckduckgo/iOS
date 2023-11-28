@@ -27,52 +27,30 @@ struct NetworkProtectionVPNSettingsView: View {
     @StateObject var viewModel = NetworkProtectionVPNSettingsViewModel()
 
     var body: some View {
-        List {
-            NavigationLink(destination: NetworkProtectionVPNLocationView()) {
-                HStack {
-                    Text(UserText.netPPreferredLocationSettingTitle).daxBodyRegular().foregroundColor(.textPrimary)
-                    Spacer()
-                    Text(viewModel.preferredLocation).daxBodyRegular().foregroundColor(.textSecondary)
+        VStack {
+            List {
+                Section {
+                    NavigationLink(destination: NetworkProtectionVPNLocationView()) {
+                        HStack {
+                            Text(UserText.netPPreferredLocationSettingTitle).daxBodyRegular().foregroundColor(.textPrimary)
+                            Spacer()
+                            Text(viewModel.preferredLocation).daxBodyRegular().foregroundColor(.textSecondary)
+                        }
+                    }
+                }
+                Section {
+                    HStack(spacing: 16) {
+                        Image("Info-Solid-24")
+                            .foregroundColor(.icon)
+                        Text(UserText.netPSecureDNSSettingFooter)
+                            .daxFootnoteRegular()
+                            .foregroundColor(.textSecondary)
+                    }
                 }
             }
-            toggleSection(
-                text: UserText.netPAlwaysOnSettingTitle,
-                footerText: UserText.netPAlwaysOnSettingFooter
-            )
-            toggleSection(
-                text: UserText.netPSecureDNSSettingTitle,
-                footerText: UserText.netPSecureDNSSettingFooter
-            )
         }
         .applyInsetGroupedListStyle()
         .navigationTitle(UserText.netPVPNSettingsTitle)
-    }
-
-    @ViewBuilder
-    func toggleSection(text: String, footerText: String) -> some View {
-        Section {
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(text)
-                        .font(.system(size: 16))
-                        .foregroundColor(.textPrimary.opacity(0.4))
-                        .font(.system(size: 13))
-                        .foregroundColor(.textSecondary.opacity(0.4))
-                }
-
-                // These toggles are permanantly disabled as the features are permanantly enabled. Product decision.
-                Toggle("", isOn: .constant(true))
-                    .disabled(true)
-                    .toggleStyle(SwitchToggleStyle(tint: .controlColor))
-            }
-            .listRowBackground(Color.cellBackground)
-        } footer: {
-            Text(footerText)
-                .foregroundColor(.textSecondary)
-                .accentColor(Color.controlColor)
-                .font(.system(size: 13))
-                .padding(.top, 6)
-        }
     }
 }
 
@@ -81,6 +59,7 @@ private extension Color {
     static let textSecondary = Color(designSystemColor: .textSecondary)
     static let cellBackground = Color(designSystemColor: .surface)
     static let controlColor = Color(designSystemColor: .accent)
+    static let icon = Color(designSystemColor: .icons).opacity(0.3)
 }
 
 #endif

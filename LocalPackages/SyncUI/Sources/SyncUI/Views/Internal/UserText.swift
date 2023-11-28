@@ -121,8 +121,8 @@ struct UserText {
     static let bookmarksLimitExceededAction = "Manage Bookmarks"
     static let credentialsLimitExceededAction = "Manage Logins"
     
-    static let fetchFaviconsOnboardingTitle = "Fetch Missing Icons?"
-    static let fetchFaviconsOnboardingMessage = "Do you want this device to find icons for any incoming bookmark synced from one of your other devices?"
+    static let fetchFaviconsOnboardingTitle = "Download Missing Icons?"
+    static let fetchFaviconsOnboardingMessage = "Do you want this device to automatically download icons for any new bookmarks synced from your other devices? This will expose the download to your network any time a bookmark is synced."
     static let fetchFaviconsOnboardingButtonTitle = "Keep Bookmarks Icons Updated"
 
 }

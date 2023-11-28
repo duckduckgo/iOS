@@ -67,25 +67,30 @@ extension NetworkProtectionVPNNotificationsViewModel {
     convenience init() {
         self.init(
             notificationsAuthorization: NotificationsAuthorizationController(),
-            settings: VPNSettings(defaults: .networkProtectionGroupDefaults))
+            settings: VPNSettings(defaults: .networkProtectionGroupDefaults)
+        )
     }
 }
 
 extension NetworkProtectionVPNSettingsViewModel {
     convenience init() {
+        self.init(settings: VPNSettings(defaults: .networkProtectionGroupDefaults))
+    }
+}
+
+extension NetworkProtectionLocationListCompositeRepository {
+    convenience init() {
+        let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
         self.init(
-            settings: VPNSettings(defaults: .networkProtectionGroupDefaults)
+            environment: settings.selectedEnvironment,
+            tokenStore: NetworkProtectionKeychainTokenStore()
         )
     }
 }
 
 extension NetworkProtectionVPNLocationViewModel {
     convenience init() {
-        let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
-        let locationListRepository = NetworkProtectionLocationListCompositeRepository(
-            environment: settings.selectedEnvironment,
-            tokenStore: NetworkProtectionKeychainTokenStore()
-        )
+        let locationListRepository = NetworkProtectionLocationListCompositeRepository()
         self.init(
             locationListRepository: locationListRepository,
             settings: VPNSettings(defaults: .networkProtectionGroupDefaults)

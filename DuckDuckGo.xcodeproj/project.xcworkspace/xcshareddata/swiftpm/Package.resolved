@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": null,
-          "revision": "33c1ef85f715cc8995542ff427dd36cc6daaa834",
-          "version": null
+          "revision": "1331652ad0dc21c23b495b4a9a42e2a0eb44859d",
+          "version": "86.0.0"
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/duckduckgo/content-scope-scripts",
         "state": {
           "branch": null,
-          "revision": "254b23cf292140498650421bb31fd05740f4579b",
-          "version": "4.40.0"
+          "revision": "b7ad9843e70cede0c2ca9c4260d970f62cb28156",
+          "version": "4.52.0"
         }
       },
       {

@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "diego/vpn-settings",
-          "revision": "17b017754749363ce95ec4ea623cbdfdf8b75ad7",
-          "version": null
+          "branch": null,
+          "revision": "1331652ad0dc21c23b495b4a9a42e2a0eb44859d",
+          "version": "86.0.0"
         }
       },
       {

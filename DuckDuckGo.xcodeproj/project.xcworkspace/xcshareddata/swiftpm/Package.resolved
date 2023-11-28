@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "1331652ad0dc21c23b495b4a9a42e2a0eb44859d",
-          "version": "86.0.0"
+          "branch": "anh/privacy-defaults",
+          "revision": "9d439868103f6f2dea4071eac60b446152c468f9",
+          "version": null
         }
       },
       {

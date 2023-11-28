@@ -23,7 +23,7 @@ import Foundation
 // Localise these later, when feature is closer to exernal release
 struct UserText {
 
-    //Sync Title
+    // Sync Title
     static let syncTitle = NSLocalizedString("sync.title", value: "Sync & Backup", comment: "Sync & Backup Title")
 
     // Sync Set Up

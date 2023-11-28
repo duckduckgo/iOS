@@ -25,7 +25,7 @@ import NetworkProtection
 
 final class NetworkProtectionVPNLocationViewModel: ObservableObject {
     private let locationListRepository: NetworkProtectionLocationListRepository
-    private let tunnelSettings: TunnelSettings
+    private let settings: VPNSettings
     @Published public var state: LoadingState
     @Published public var isNearestSelected: Bool
 
@@ -43,11 +43,11 @@ final class NetworkProtectionVPNLocationViewModel: ObservableObject {
         }
     }
 
-    init(locationListRepository: NetworkProtectionLocationListRepository, tunnelSettings: TunnelSettings) {
+    init(locationListRepository: NetworkProtectionLocationListRepository, settings: VPNSettings) {
         self.locationListRepository = locationListRepository
-        self.tunnelSettings = tunnelSettings
+        self.settings = settings
         state = .loading
-        self.isNearestSelected = tunnelSettings.selectedLocation == .nearest
+        self.isNearestSelected = settings.selectedLocation == .nearest
     }
 
     func onViewAppeared() async {
@@ -55,20 +55,20 @@ final class NetworkProtectionVPNLocationViewModel: ObservableObject {
     }
 
     func onNearestItemSelection() async {
-        tunnelSettings.selectedLocation = .nearest
+        settings.selectedLocation = .nearest
         await reloadList()
     }
 
     func onCountryItemSelection(id: String, cityId: String? = nil) async {
         let location = NetworkProtectionSelectedLocation(country: id, city: cityId)
-        tunnelSettings.selectedLocation = .location(location)
+        settings.selectedLocation = .location(location)
         await reloadList()
     }
     
     @MainActor
     private func reloadList() async {
         guard let list = try? await locationListRepository.fetchLocationList() else { return }
-        let selectedLocation = self.tunnelSettings.selectedLocation
+        let selectedLocation = self.settings.selectedLocation
         let isNearestSelected = selectedLocation == .nearest
 
         let countryItems = list.map { currentLocation in

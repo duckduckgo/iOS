@@ -69,11 +69,9 @@ class AutofillLoginPromptViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if trigger == AutofillUserScript.GetTriggerType.autoprompt {
-            Pixel.fire(pixel: .autofillLoginsFillLoginInlineAutopromptDisplayed,
-                       withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
+            Pixel.fire(pixel: .autofillLoginsFillLoginInlineAutopromptDisplayed)
         } else {
-            Pixel.fire(pixel: .autofillLoginsFillLoginInlineManualDisplayed,
-                       withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
+            Pixel.fire(pixel: .autofillLoginsFillLoginInlineManualDisplayed)
         }
     }
     
@@ -97,11 +95,9 @@ class AutofillLoginPromptViewController: UIViewController {
 extension AutofillLoginPromptViewController: UISheetPresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         if self.trigger == AutofillUserScript.GetTriggerType.autoprompt {
-            Pixel.fire(pixel: .autofillLoginsAutopromptDismissed,
-                       withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
+            Pixel.fire(pixel: .autofillLoginsAutopromptDismissed)
         } else {
-            Pixel.fire(pixel: .autofillLoginsFillLoginInlineManualDismissed,
-                       withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
+            Pixel.fire(pixel: .autofillLoginsFillLoginInlineManualDismissed)
         }
         completion?(nil, false)
     }
@@ -111,11 +107,9 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
     func autofillLoginPromptViewModel(_ viewModel: AutofillLoginPromptViewModel, didSelectAccount account: SecureVaultModels.WebsiteAccount) {
         
         if trigger == AutofillUserScript.GetTriggerType.autoprompt {
-            Pixel.fire(pixel: .autofillLoginsFillLoginInlineAutopromptConfirmed,
-                       withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
+            Pixel.fire(pixel: .autofillLoginsFillLoginInlineAutopromptConfirmed)
         } else {
-            Pixel.fire(pixel: .autofillLoginsFillLoginInlineManualConfirmed,
-                       withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
+            Pixel.fire(pixel: .autofillLoginsFillLoginInlineManualConfirmed)
         }
 
         if AppDependencyProvider.shared.autofillLoginSession.isValidSession {
@@ -169,11 +163,9 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
     func autofillLoginPromptViewModelDidCancel(_ viewModel: AutofillLoginPromptViewModel) {
         dismiss(animated: true) {
             if self.trigger == AutofillUserScript.GetTriggerType.autoprompt {
-                Pixel.fire(pixel: .autofillLoginsAutopromptDismissed,
-                           withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
+                Pixel.fire(pixel: .autofillLoginsAutopromptDismissed)
             } else {
-                Pixel.fire(pixel: .autofillLoginsFillLoginInlineManualDismissed,
-                           withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
+                Pixel.fire(pixel: .autofillLoginsFillLoginInlineManualDismissed)
             }
             
             self.completion?(nil, false)

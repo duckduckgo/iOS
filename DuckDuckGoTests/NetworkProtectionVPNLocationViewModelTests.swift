@@ -28,7 +28,7 @@ import NetworkProtectionTestUtils
 
 final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
     private var listRepository: MockNetworkProtectionLocationListRepository!
-    private var tunnelSettings: TunnelSettings!
+    private var settings: VPNSettings!
     private var viewModel: NetworkProtectionVPNLocationViewModel!
 
     @MainActor
@@ -36,13 +36,13 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
         super.setUp()
         listRepository = MockNetworkProtectionLocationListRepository()
         let testDefaults = UserDefaults(suiteName: #file + Thread.current.debugDescription)!
-        tunnelSettings = TunnelSettings(defaults: testDefaults)
-        viewModel = NetworkProtectionVPNLocationViewModel(locationListRepository: listRepository, tunnelSettings: tunnelSettings)
+        settings = VPNSettings(defaults: testDefaults)
+        viewModel = NetworkProtectionVPNLocationViewModel(locationListRepository: listRepository, settings: settings)
     }
 
     override func tearDown() {
-        tunnelSettings.selectedLocation = .nearest
-        tunnelSettings = nil
+        settings.selectedLocation = .nearest
+        settings = nil
         listRepository = nil
         viewModel = nil
         super.tearDown()
@@ -70,28 +70,28 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
 
     func test_onViewAppeared_selectedCountryFromSettings_isSelectedSetToTrue() async throws {
         try await assertOnListLoad_countryIsSelected { [weak self] testCaseCountryId in
-            self?.tunnelSettings.selectedLocation = .location(NetworkProtectionSelectedLocation(country: testCaseCountryId))
+            self?.settings.selectedLocation = .location(NetworkProtectionSelectedLocation(country: testCaseCountryId))
             await self?.viewModel.onViewAppeared()
         }
     }
 
     func test_onViewAppeared_NOTSelectedCountryFromSettings_isSelectedSetToFalse() async throws {
         try await assertOnListLoad_isSelectedSetToFalse { [weak self] in
-            self?.tunnelSettings.selectedLocation = .location(NetworkProtectionSelectedLocation(country: "US"))
+            self?.settings.selectedLocation = .location(NetworkProtectionSelectedLocation(country: "US"))
             await self?.viewModel.onViewAppeared()
         }
     }
 
     func test_onViewAppeared_nearestSelectedInSettings_isNearestSelectedSetToTrue() async throws {
         try await assertNearestSelectedSetToTrue { [weak self] in
-            self?.tunnelSettings.selectedLocation = .nearest
+            self?.settings.selectedLocation = .nearest
             await self?.viewModel.onViewAppeared()
         }
     }
 
     func test_onViewAppeared_nearestNOTSelectedInSettings_isNearestSelectedSetToFalse() async throws {
         try await assertNearestSelectedSetToFalse { [weak self] testCaseCountryId in
-            self?.tunnelSettings.selectedLocation = .location(NetworkProtectionSelectedLocation(country: testCaseCountryId))
+            self?.settings.selectedLocation = .location(NetworkProtectionSelectedLocation(country: testCaseCountryId))
             await self?.viewModel.onViewAppeared()
         }
     }
@@ -128,7 +128,7 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
 
     func test_onViewAppeared_cityIsSelected_itemIsSelected() async throws {
         try await assertOnListLoad_itemIsSelected { [weak self] testCase in
-            self?.tunnelSettings.selectedLocation = .location(testCase)
+            self?.settings.selectedLocation = .location(testCase)
             await self?.viewModel.onViewAppeared()
         }
     }
@@ -140,7 +140,7 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
         ]
 
         listRepository.stubLocationList = countries
-        tunnelSettings.selectedLocation = .location(NetworkProtectionSelectedLocation(country: "US", city: "New York"))
+        settings.selectedLocation = .location(NetworkProtectionSelectedLocation(country: "US", city: "New York"))
         await viewModel.onViewAppeared()
         let selectedItems = try loadedItems().flatMap { $0.cityPickerItems }.filter(\.isSelected)
         XCTAssertEqual(selectedItems.count, 0)
@@ -148,7 +148,7 @@ final class NetworkProtectionVPNLocationViewModelTests: XCTestCase {
 
     func test_onViewAppeared_countryWithoutCityIsSelected_nearestItemIsSelected() async throws {
         try await assertOnListLoad_nearestItemIsSelected { [weak self] testCase in
-            self?.tunnelSettings.selectedLocation = .location(testCase)
+            self?.settings.selectedLocation = .location(testCase)
             await self?.viewModel.onViewAppeared()
         }
     }

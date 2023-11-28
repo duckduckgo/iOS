@@ -25,11 +25,6 @@ import Combine
 import Foundation
 import WebKit
 import UserScript
-import Subscription
-
-public extension Notification.Name {
-    static let subscriptionPageCloseAndOpenPreferences = Notification.Name("com.duckduckgo.subscriptionPage.CloseAndOpenPreferences")
-}
 
 ///
 /// The user script that will be the broker for all subscription features
@@ -117,7 +112,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature {
     }
 
     func getSubscription(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        var authToken = AccountManager().authToken ?? ""
+        var authToken = AccountManager().authToken ?? "Test Token"
         return Subscription(token: authToken)
     }
 
@@ -133,11 +128,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature {
 
     func backToSettings(params: Any, original: WKScriptMessage) async throws -> Encodable? {
         await AccountManager().refreshAccountData()
-        
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: .subscriptionPageCloseAndOpenPreferences, object: self)
-        }
-
         return nil
     }
 

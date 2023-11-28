@@ -140,7 +140,7 @@ class SettingsViewController: UITableViewController {
     }()
     
     private lazy var shouldShowPrivacyPro: Bool = {
-#if PRIVACYPRO
+#if SUBSCRIPTION
         if #available(iOS 15, *) {
             // return featureFlagger.isFeatureOn(.privacyPro)
             return true
@@ -374,7 +374,9 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configurePrivacyPro() {
+        // Fetch the status of the subscription and decide what needs to be shown
     }
+    
     
     private func configureNetPCell() {
         netPCell.isHidden = !shouldShowNetPCell
@@ -481,10 +483,12 @@ class SettingsViewController: UITableViewController {
     }
 #endif
     
-#if PRIVACYPRO
+#if SUBSCRIPTION
     @available(iOS 15, *)
     private func showPrivacyPro() {
-        
+        let privacyView = SubscriptionFlowView()
+        let hostingController = UIHostingController(rootView: privacyView)
+        navigationController?.pushViewController(hostingController, animated: true)
     }
 #endif
 
@@ -534,7 +538,7 @@ class SettingsViewController: UITableViewController {
             
         case privacyProSignupCell:
             if #available(iOS 15, *) {
-#if PRIVACYPRO
+#if SUBSCRIPTION
                 showPrivacyPro()
 #else
                 break

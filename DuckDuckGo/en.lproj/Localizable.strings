@@ -1646,7 +1646,7 @@ https://duckduckgo.com/mac";
 "network.protection.vpn.preferred.location.title" = "Preferred Location";
 
 /* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.footer" = "Network Protection prevents DNS leaks to your Internet Service Provider by routing DNS queries though the VPN tunnel to our own resolver.";
+"network.protection.vpn.secure.dns.setting.footer" = "Our VPN uses Secure DNS to keep your online activity private, so that your Internet provider can't see what websites you visit.";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN Settings";

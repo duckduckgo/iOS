@@ -446,7 +446,7 @@ class OmniBar: UIView {
     }
 
     @IBAction func onSettingsButtonPressed(_ sender: Any) {
-        Pixel.fire(.addressBarSettings)
+        Pixel.fire(pixel: .addressBarSettings)
         omniDelegate?.onSettingsPressed()
     }
     

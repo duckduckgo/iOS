@@ -18,19 +18,23 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct SubscriptionFlowView: View {
     
-    let viewModel: SubscriptionFlowViewModel
-    
-    init(model: SubscriptionFlowViewModel = SubscriptionFlowViewModel()) {
-        self.viewModel = model
-    }
+    @ObservedObject var viewModel: SubscriptionFlowViewModel
     
     var body: some View {
-        AsyncHeadlessWebView(url: viewModel.purchaseURL,
-                             userScript: viewModel.userScript,
-                             subFeature: viewModel.subFeature)
+        ZStack {
+            if !viewModel.isLoadingProducts {
+                AsyncHeadlessWebView(url: viewModel.purchaseURL,
+                                     userScript: viewModel.userScript,
+                                     subFeature: viewModel.subFeature).background()
+            } else {
+                SwiftUI.ProgressView()
+            }
+        }
+        
         .navigationTitle(viewModel.viewTitle)
     }
 }

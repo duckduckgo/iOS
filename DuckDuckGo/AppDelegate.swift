@@ -356,15 +356,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         widgetRefreshModel.beginObservingVPNStatus()
         NetworkProtectionAccessController().refreshNetworkProtectionAccess()
 #endif
-        
-        
-#if SUBSCRIPTION
-        if #available(iOS 15.0, *) {
-            Task {
-                await PurchaseManager.shared.updateAvailableProducts()
-            }
-        }
-#endif
 
         return true
     }

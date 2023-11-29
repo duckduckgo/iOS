@@ -23,27 +23,5 @@ public struct SubscriptionUserText {
     
     public static let navigationTitle = NSLocalizedString("nagivation.title", value: "Privacy Pro", comment: "Navigation Bar Title for Feature")
     
-    // Settings Strings
-    public static let settingsSectionTitle = NSLocalizedString("settings.sectionTitle",
-                                                               value: "Privacy Pro",
-                                                               comment: "Settings section title")
-    public static let subscribeTitle = NSLocalizedString("settings.subscribeTitle",
-                                                         value: "Subscribe to Privacy Pro",
-                                                         comment: "Settings title for unsubscribed users")
-    public static let subscribeSubtitle = NSLocalizedString("settings.subscribeSubTitle",
-                                                            value: "More seamlessless privacy with three new protections, incluiding:",
-                                                            comment: "Settings title for unsubscribed users")
-    public static let featureOneName = NSLocalizedString("settings.feature1",
-                                                            value: "VPN (Virtual Private Network)",
-                                                            comment: "Feature one title for unsubscribed users")
-    public static let featureTwoName = NSLocalizedString("settings.feature2",
-                                                            value: "Personal Information Removal",
-                                                            comment: "Feature two title for unsubscribed users")
-    public static let featureThreeName = NSLocalizedString("settings.feature3",
-                                                            value: "Identity Theft Restoration",
-                                                            comment: "Feature three title for unsubscribed users")
-    public static let learnMore = NSLocalizedString("settings.learnMore",
-                                                            value: "Learn More",
-                                                            comment: "Button title for Learn more")
-
+    
 }

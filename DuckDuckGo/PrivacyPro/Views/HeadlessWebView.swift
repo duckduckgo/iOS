@@ -21,17 +21,9 @@ import Foundation
 import WebKit
 import UserScript
 import SwiftUI
-
-class WebViewManager: ObservableObject {
-    @Published var shouldReload: Bool = false
-
-    func reload() {
-        shouldReload = true
-    }
-}
+import DesignResourcesKit
 
 struct HeadlessWebview: UIViewRepresentable {
-    @ObservedObject var manager: WebViewManager
     let userScript: UserScriptMessaging
     let subFeature: Subfeature
     let url: URL
@@ -54,24 +46,17 @@ struct HeadlessWebview: UIViewRepresentable {
         return webView
     }
 
-    func updateUIView(_ uiView: WKWebView, context: Context) {
-        if manager.shouldReload {
-            uiView.reload()
-            manager.shouldReload = false
-        }
-    }
+    func updateUIView(_ uiView: WKWebView, context: Context) {}
 }
 
 struct AsyncHeadlessWebView: View {
     let url: URL
     let userScript: UserScriptMessaging
     let subFeature: Subfeature
-    let webViewManager = WebViewManager()
 
     var body: some View {
         GeometryReader { geometry in
-            HeadlessWebview(manager: webViewManager,
-                            userScript: userScript,
+            HeadlessWebview(userScript: userScript,
                             subFeature: subFeature,
                             url: url)
                 .frame(width: geometry.size.width, height: geometry.size.height)

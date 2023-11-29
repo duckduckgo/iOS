@@ -20,15 +20,30 @@
 import Foundation
 import UserScript
 
-struct SubscriptionFlowViewModel {
+class SubscriptionFlowViewModel: ObservableObject {
+    
     let userScript: SubscriptionPagesUserScript
     let subFeature: Subfeature
     let purchaseURL = URL.purchaseSubscription
     let viewTitle = SubscriptionUserText.navigationTitle
+    
+    @Published var isLoadingProducts = true
 
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: Subfeature = SubscriptionPagesUseSubscriptionFeature()) {
         self.userScript = userScript
         self.subFeature = subFeature
+        Task { await updateStoreProducts() }
+    }
+    
+    // Fetch available products from Storekit
+    private func updateStoreProducts() async {
+        await PurchaseManager.shared.updateAvailableProducts()
+        await setProductsLoading(false)
+    }
+    
+    @MainActor
+    private func setProductsLoading(_ isLoading: Bool) {
+        self.isLoadingProducts = isLoading
     }
 }

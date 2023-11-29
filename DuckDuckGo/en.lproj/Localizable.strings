@@ -1630,6 +1630,9 @@ https://duckduckgo.com/mac";
 /* Title for the VPN Location screen's Recommended section. */
 "network.protection.vpn.location.recommended.section.title" = "Recommended";
 
+/* Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States */
+"network.protection.vpn.location.subtitle.formatted.city.and.country" = "%1$@, %2$@";
+
 /* Title for the VPN Location screen. */
 "network.protection.vpn.location.title" = "VPN Location";
 

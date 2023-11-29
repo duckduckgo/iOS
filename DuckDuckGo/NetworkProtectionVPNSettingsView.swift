@@ -31,10 +31,21 @@ struct NetworkProtectionVPNSettingsView: View {
             List {
                 Section {
                     NavigationLink(destination: NetworkProtectionVPNLocationView()) {
-                        HStack {
-                            Text(UserText.netPPreferredLocationSettingTitle).daxBodyRegular().foregroundColor(.textPrimary)
-                            Spacer()
-                            Text(viewModel.preferredLocation).daxBodyRegular().foregroundColor(.textSecondary)
+                        HStack(spacing: 16) {
+                            switch viewModel.preferredLocation.icon {
+                            case .defaultIcon:
+                                Image("Location-Solid-24")
+                            case .emoji(let string):
+                                Text(string)
+                            }
+                            VStack(alignment: .leading) {
+                                Text(UserText.netPPreferredLocationSettingTitle)
+                                    .daxBodyRegular()
+                                    .foregroundColor(.textPrimary)
+                                Text(viewModel.preferredLocation.title)
+                                    .daxFootnoteRegular()
+                                    .foregroundColor(.textSecondary)
+                            }
                         }
                     }
                 }

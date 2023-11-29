@@ -645,6 +645,10 @@ In addition to the details entered into this form, your app issue report will co
     static let netPStatusViewConnectionDetails = NSLocalizedString("network.protection.status.view.connection.details", value: "Connection Details", comment: "Connection details label shown in NetworkProtection's status view.")
     static let netPStatusViewSettingsSectionTitle = NSLocalizedString("network.protection.status.view.settings.section.title", value: "Manage", comment: "Label shown on the title of the settings section in NetworkProtection's status view.")
     static let netPVPNSettingsTitle = NSLocalizedString("network.protection.vpn.settings.title", value: "VPN Settings", comment: "Title for the VPN Settings screen.")
+    static func netPVPNSettingsLocationSubtitleFormattedCityAndCountry(city: String, country: String) -> String {
+        let localized = NSLocalizedString("network.protection.vpn.location.subtitle.formatted.city.and.country", value: "%@, %@", comment: "Subtitle for the preferred location item that formats a city and country. E.g Chicago, United States")
+        return localized.format(arguments: city, country)
+    }
     static let netPVPNNotificationsTitle = NSLocalizedString("network.protection.vpn.notifications.title", value: "VPN Notifications", comment: "Title for the VPN Notifications management screen.")
     static let netPStatusViewShareFeedback = NSLocalizedString("network.protection.status.menu.share.feedback", value: "Share Feedback", comment: "The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text")
     static let netPStatusViewErrorConnectionFailedTitle = NSLocalizedString("network.protection.status.view.error.connection.failed.title", value: "Failed to Connect.", comment: "Generic connection failed error title shown in NetworkProtection's status view.")

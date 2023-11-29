@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "BrowserServicesKit",
+        "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
+        "state": {
+          "branch": "sam/netp-waitlist-final-touches",
+          "revision": "45619b42ffe2f46a354d100fbed133efb70fba73",
+          "version": null
+        }
+      },
+      {
         "package": "CocoaAsyncSocket",
         "repositoryURL": "https://github.com/robbiehanson/CocoaAsyncSocket",
         "state": {

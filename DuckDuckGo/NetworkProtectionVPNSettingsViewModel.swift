@@ -34,11 +34,13 @@ final class NetworkProtectionVPNSettingsViewModel: ObservableObject {
         self.settings = settings
         self.preferredLocation = NetworkProtectionLocationSettingsItemModel(selectedLocation: settings.selectedLocation)
         settings.selectedLocationPublisher
+            .receive(on: DispatchQueue.main)
             .map(NetworkProtectionLocationSettingsItemModel.init(selectedLocation:))
             .assign(to: \.preferredLocation, onWeaklyHeld: self)
             .store(in: &cancellables)
         
         settings.excludeLocalNetworksPublisher
+            .receive(on: DispatchQueue.main)
             .assign(to: \.excludeLocalNetworks, onWeaklyHeld: self)
             .store(in: &cancellables)
     }

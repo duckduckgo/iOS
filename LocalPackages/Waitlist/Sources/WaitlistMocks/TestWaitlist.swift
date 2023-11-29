@@ -42,7 +42,7 @@ public struct TestWaitlist: Waitlist {
     public static var backgroundTaskName: String = "BG Task"
 
     public static var backgroundRefreshTaskIdentifier: String = "bgtask"
-    public static var notificationIdentitier: String = "notification"
+    public static var notificationIdentifier: String = "notification"
     public static var inviteAvailableNotificationTitle: String = "Title"
     public static var inviteAvailableNotificationBody: String = "Body"
 }

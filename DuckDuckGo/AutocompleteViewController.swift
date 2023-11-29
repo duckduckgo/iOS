@@ -237,8 +237,7 @@ extension AutocompleteViewController: UITableViewDataSource {
 
         cell.backgroundColor = backgroundColor
         cell.tintColor = currentTheme.autocompleteCellAccessoryColor
-        cell.setHighlightedStateBackgroundColor(currentTheme.tableCellHighlightedBackgroundColor)
-        
+
         return cell
     }
 
@@ -255,7 +254,6 @@ extension AutocompleteViewController: UITableViewDataSource {
 
         cell.tintColor = currentTheme.autocompleteCellAccessoryColor
         cell.label?.textColor = currentTheme.tableCellTextColor
-        cell.setHighlightedStateBackgroundColor(currentTheme.tableCellHighlightedBackgroundColor)
 
         return cell
     }

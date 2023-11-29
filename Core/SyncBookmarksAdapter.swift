@@ -43,6 +43,19 @@ public class BookmarksFaviconsFetcherErrorHandler: EventMapping<BookmarksFavicon
     }
 }
 
+public enum SyncBookmarksAdapterError: CustomNSError {
+    case unableToAccessFaviconsFetcherStateStoreDirectory
+
+    public static let errorDomain: String = "SyncBookmarksAdapterError"
+
+    public var errorCode: Int {
+        switch self {
+        case .unableToAccessFaviconsFetcherStateStoreDirectory:
+            return 1
+        }
+    }
+}
+
 public final class SyncBookmarksAdapter {
 
     public static let syncBookmarksPausedStateChanged = Notification.Name("com.duckduckgo.app.SyncPausedStateChanged")
@@ -147,7 +160,9 @@ public final class SyncBookmarksAdapter {
     private func setUpFaviconsFetcher() -> BookmarksFaviconsFetcher? {
         let stateStore: BookmarksFaviconsFetcherStateStore
         do {
-            let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+            guard let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
+                throw SyncBookmarksAdapterError.unableToAccessFaviconsFetcherStateStoreDirectory
+            }
             stateStore = try BookmarksFaviconsFetcherStateStore(applicationSupportURL: url)
         } catch {
             Pixel.fire(pixel: .bookmarksFaviconsFetcherStateStoreInitializationFailed, error: error)

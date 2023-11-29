@@ -27,33 +27,36 @@ struct NetworkProtectionVPNSettingsView: View {
     @StateObject var viewModel = NetworkProtectionVPNSettingsViewModel()
 
     var body: some View {
-        List {
-            NavigationLink(destination: NetworkProtectionVPNLocationView()) {
-                HStack {
-                    Text(UserText.netPPreferredLocationSettingTitle).daxBodyRegular().foregroundColor(.textPrimary)
-                    Spacer()
-                    Text(viewModel.preferredLocation).daxBodyRegular().foregroundColor(.textSecondary)
+        VStack {
+            List {
+                Section {
+                    NavigationLink(destination: NetworkProtectionVPNLocationView()) {
+                        HStack {
+                            Text(UserText.netPPreferredLocationSettingTitle).daxBodyRegular().foregroundColor(.textPrimary)
+                            Spacer()
+                            Text(viewModel.preferredLocation).daxBodyRegular().foregroundColor(.textSecondary)
+                        }
+                    }
+                }
+                toggleSection(
+                    text: UserText.netPExcludeLocalNetworksSettingTitle,
+                    footerText: UserText.netPExcludeLocalNetworksSettingFooter
+                ) {
+                    Toggle("", isOn: $viewModel.excludeLocalNetworks)
+                        .onTapGesture {
+                            viewModel.toggleExcludeLocalNetworks()
+                        }
+                }
+                Section {
+                    HStack(spacing: 16) {
+                        Image("Info-Solid-24")
+                            .foregroundColor(.icon)
+                        Text(UserText.netPSecureDNSSettingFooter)
+                            .daxFootnoteRegular()
+                            .foregroundColor(.textSecondary)
+                    }
                 }
             }
-            toggleSection(
-                text: UserText.netPAlwaysOnSettingTitle,
-                footerText: UserText.netPAlwaysOnSettingFooter,
-                toggle: disabledToggle
-            )
-            toggleSection(
-                text: UserText.netPExcludeLocalNetworksSettingTitle,
-                footerText: UserText.netPExcludeLocalNetworksSettingFooter
-            ) {
-                Toggle("", isOn: $viewModel.excludeLocalNetworks)
-                    .onTapGesture {
-                        viewModel.toggleExcludeLocalNetworks()
-                    }
-            }
-            toggleSection(
-                text: UserText.netPSecureDNSSettingTitle,
-                footerText: UserText.netPSecureDNSSettingFooter,
-                toggle: disabledToggle
-            )
         }
         .applyInsetGroupedListStyle()
         .navigationTitle(UserText.netPVPNSettingsTitle)
@@ -65,10 +68,8 @@ struct NetworkProtectionVPNSettingsView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(text)
-                        .font(.system(size: 16))
-                        .foregroundColor(.textPrimary.opacity(0.4))
-                        .font(.system(size: 13))
-                        .foregroundColor(.textSecondary.opacity(0.4))
+                        .daxBodyRegular()
+                        .foregroundColor(.textPrimary)
                         .layoutPriority(1)
                 }
 
@@ -80,15 +81,9 @@ struct NetworkProtectionVPNSettingsView: View {
             Text(footerText)
                 .foregroundColor(.textSecondary)
                 .accentColor(Color.controlColor)
-                .font(.system(size: 13))
+                .daxFootnoteRegular()
                 .padding(.top, 6)
         }
-    }
-
-    @ViewBuilder
-    func disabledToggle() -> some View {
-        Toggle("", isOn: .constant(true))
-            .disabled(true)
     }
 }
 
@@ -97,6 +92,7 @@ private extension Color {
     static let textSecondary = Color(designSystemColor: .textSecondary)
     static let cellBackground = Color(designSystemColor: .surface)
     static let controlColor = Color(designSystemColor: .accent)
+    static let icon = Color(designSystemColor: .icons).opacity(0.3)
 }
 
 #endif

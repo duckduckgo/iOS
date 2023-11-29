@@ -134,7 +134,7 @@ private struct CountryItem: View {
                     } label: {
                         Image(systemName: "ellipsis.circle")
                             .resizable()
-                            .frame(width: 22, height: 22)
+                            .frame(width: 22, height: 22).tint(.textSecondary)
                     }
                 }
             }
@@ -184,6 +184,7 @@ private struct MenuItem: View {
                         .if(!isSelected) {
                             $0.hidden()
                         }
+                        .tint(.textPrimary)
                 }
             }
         )

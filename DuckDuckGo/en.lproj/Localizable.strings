@@ -1609,12 +1609,6 @@ https://duckduckgo.com/mac";
 /* Title for the toggle for VPN alerts. */
 "network.protection.vpn.alerts.toggle.title" = "VPN Alerts";
 
-/* Footer text for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.footer" = "Automatically restore a VPN connection after interruption.";
-
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.always.on.setting.title" = "Always On";
-
 /* Footer text for the Exclude Local Networks setting item. */
 "network.protection.vpn.exclude.local.networks.setting.footer" = "Bypass the VPN for local network connections, like to a printer.";
 
@@ -1650,9 +1644,6 @@ https://duckduckgo.com/mac";
 
 /* Footer text for the Always on VPN setting item. */
 "network.protection.vpn.secure.dns.setting.footer" = "Network Protection prevents DNS leaks to your Internet Service Provider by routing DNS queries though the VPN tunnel to our own resolver.";
-
-/* Title for the Always on VPN setting item. */
-"network.protection.vpn.secure.dns.setting.title" = "Secure DNS";
 
 /* Title for the VPN Settings screen. */
 "network.protection.vpn.settings.title" = "VPN Settings";

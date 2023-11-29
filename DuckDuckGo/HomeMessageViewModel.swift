@@ -139,6 +139,12 @@ struct HomeMessageViewModel {
                 LaunchTabNotification.postLaunchTabNotification(urlString: value)
                 onDidClose(buttonAction)
             }
+        case .surveyURL(let value):
+            return {
+                print("DEBUG: OPENING SURVEY URL")
+                LaunchTabNotification.postLaunchTabNotification(urlString: value)
+                onDidClose(buttonAction)
+            }
         case .appStore:
             return {
                 let url = URL.appStore

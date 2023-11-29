@@ -38,6 +38,15 @@ struct NetworkProtectionVPNSettingsView: View {
                         }
                     }
                 }
+                toggleSection(
+                    text: UserText.netPExcludeLocalNetworksSettingTitle,
+                    footerText: UserText.netPExcludeLocalNetworksSettingFooter
+                ) {
+                    Toggle("", isOn: $viewModel.excludeLocalNetworks)
+                        .onTapGesture {
+                            viewModel.toggleExcludeLocalNetworks()
+                        }
+                }
                 Section {
                     HStack(spacing: 16) {
                         Image("Info-Solid-24")
@@ -51,6 +60,30 @@ struct NetworkProtectionVPNSettingsView: View {
         }
         .applyInsetGroupedListStyle()
         .navigationTitle(UserText.netPVPNSettingsTitle)
+    }
+
+    @ViewBuilder
+    func toggleSection(text: String, footerText: String, @ViewBuilder toggle: () -> some View) -> some View {
+        Section {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(text)
+                        .daxBodyRegular()
+                        .foregroundColor(.textPrimary)
+                        .layoutPriority(1)
+                }
+
+                toggle()
+                    .toggleStyle(SwitchToggleStyle(tint: .controlColor))
+            }
+            .listRowBackground(Color.cellBackground)
+        } footer: {
+            Text(footerText)
+                .foregroundColor(.textSecondary)
+                .accentColor(Color.controlColor)
+                .daxFootnoteRegular()
+                .padding(.top, 6)
+        }
     }
 }
 

@@ -42,7 +42,8 @@ extension TabViewController {
         entries.append(BrowsingMenuEntry.regular(name: UserText.actionShare, image: UIImage(named: "Share-24")!, action: { [weak self] in
             guard let self = self else { return }
             guard let menu = self.chromeDelegate?.omniBar.menuButton else { return }
-            self.onShareAction(forLink: self.link!, fromView: menu, orginatedFromMenu: true)
+            Pixel.fire(pixel: .browsingMenuShare)
+            self.onShareAction(forLink: self.link!, fromView: menu)
         }))
         
         entries.append(BrowsingMenuEntry.regular(name: UserText.actionCopy, image: UIImage(named: "Copy-24")!, action: { [weak self] in
@@ -302,10 +303,7 @@ extension TabViewController {
         }
     }
 
-    func onShareAction(forLink link: Link, fromView view: UIView, orginatedFromMenu: Bool) {
-        Pixel.fire(pixel: .browsingMenuShare,
-                   withAdditionalParameters: [PixelParameters.originatedFromMenu: orginatedFromMenu ? "1" : "0"])
-        
+    func onShareAction(forLink link: Link, fromView view: UIView) {
         shareLinkWithTemporaryDownload(temporaryDownloadForPreviewedFile, originalLink: link) { [weak self] link in
             guard let self = self else { return }
             var items: [Any] = [link, self.webView.viewPrintFormatter()]

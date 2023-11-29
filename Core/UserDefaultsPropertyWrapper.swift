@@ -107,6 +107,7 @@ public struct UserDefaultsWrapper<T> {
         case syncDidPresentFaviconsFetcherOnboarding = "com.duckduckgo.ios.sync-did-present-favicons-fetcher-onboarding"
 
         case networkProtectionDebugOptionAlwaysOnDisabled = "com.duckduckgo.network-protection.always-on.disabled"
+        case networkProtectionWaitlistTermsAndConditionsAccepted = "com.duckduckgo.ios.vpn.terms-and-conditions-accepted"
 
         case addressBarPosition = "com.duckduckgo.ios.addressbarposition"
         case showFullSiteAddress = "com.duckduckgo.ios.showfullsiteaddress"

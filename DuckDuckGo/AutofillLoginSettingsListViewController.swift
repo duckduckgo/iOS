@@ -552,6 +552,21 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
             return 0
         }
     }
+
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection: Int) {
+        if let view = view as? UITableViewHeaderFooterView {
+            let theme = ThemeManager.shared.currentTheme
+            view.textLabel?.textColor = theme.tableHeaderTextColor
+        }
+    }
+
+    func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection: Int) {
+        if let view = view as? UITableViewHeaderFooterView {
+            let theme = ThemeManager.shared.currentTheme
+            view.textLabel?.textColor = theme.tableHeaderTextColor
+        }
+    }
+
 }
 
 // MARK: UITableViewDataSource
@@ -693,11 +708,9 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
 extension AutofillLoginSettingsListViewController: EnableAutofillSettingsTableViewCellDelegate {
     func enableAutofillSettingsTableViewCell(_ cell: EnableAutofillSettingsTableViewCell, didChangeSettings value: Bool) {
         if value {
-            Pixel.fire(pixel: .autofillLoginsSettingsEnabled,
-                       withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
+            Pixel.fire(pixel: .autofillLoginsSettingsEnabled)
         } else {
-            Pixel.fire(pixel: .autofillLoginsSettingsDisabled,
-                       withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
+            Pixel.fire(pixel: .autofillLoginsSettingsDisabled)
         }
         
         viewModel.isAutofillEnabledInSettings = value

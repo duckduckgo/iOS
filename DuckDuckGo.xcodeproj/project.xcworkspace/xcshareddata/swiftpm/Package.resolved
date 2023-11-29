@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "BrowserServicesKit",
+        "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
+        "state": {
+          "branch": "jacek/custom-config-url",
+          "revision": "ee5f9b75bef3ee22538ac5b948a0333698953492",
+          "version": null
+        }
+      },
+      {
         "package": "CocoaAsyncSocket",
         "repositoryURL": "https://github.com/robbiehanson/CocoaAsyncSocket",
         "state": {

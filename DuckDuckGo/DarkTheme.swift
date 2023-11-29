@@ -32,93 +32,34 @@ struct DarkTheme: Theme {
     var tabsBarBackgroundColor = UIColor.black
     var tabsBarSeparatorColor = UIColor.darkGreyish
 
-    var navigationBarTitleColor = UIColor.white
     var navigationBarTintColor = UIColor.lightMercury
-    
-    var tintOnBlurColor = UIColor.white
-    
-    var searchBarBackgroundColor = UIColor.charcoalGrey
-    var centeredSearchBarBackgroundColor = UIColor.nearlyBlackLight
-    var searchBarTextColor = UIColor.white
-    var searchBarTextDeemphasisColor = UIColor.lightMercury
-    var searchBarBorderColor = UIColor.darkGreyish
-    var searchBarClearTextIconColor = UIColor.greyish2
-    var searchBarVoiceSearchIconColor = UIColor.greyish2
-    
-    var browsingMenuTextColor = UIColor.white
-    var browsingMenuIconsColor = UIColor.gray20
-    var browsingMenuSeparatorColor = UIColor.charcoalGrey
-    var browsingMenuHighlightColor = UIColor.darkGreyish
-    
-    var progressBarGradientDarkColor = UIColor.orange
-    var progressBarGradientLightColor = UIColor.orangeLight
-    
-    var autocompleteSuggestionTextColor = UIColor.white
-    var autocompleteCellAccessoryColor = UIColor.lightMercury
 
+    var centeredSearchBarBackgroundColor = UIColor.nearlyBlackLight
+    var searchBarTextDeemphasisColor = UIColor.lightMercury
+
+    var browsingMenuHighlightColor = UIColor.darkGreyish
+  
     var tableCellSelectedColor = UIColor.charcoalGrey
-    var tableCellSeparatorColor = UIColor.charcoalGrey
-    var tableCellTextColor = UIColor.lightGreyish
-    var tableCellAccessoryTextColor = UIColor.greyish
     var tableCellAccessoryColor = UIColor.greyish3
     var tableCellHighlightedBackgroundColor = UIColor.greyishBrown
-    var tableHeaderTextColor = UIColor.greyish3
     
     var tabSwitcherCellBorderColor = UIColor.white
     var tabSwitcherCellTextColor = UIColor.white
     var tabSwitcherCellSecondaryTextColor = UIColor.lightMercury
-    
-    var iconCellBorderColor = UIColor.lightGreyish
-
-    var buttonTintColor = UIColor.cornflowerBlue
-    var placeholderColor = UIColor.greyish
-    
-    var textFieldBackgroundColor = UIColor.nearlyBlackLight
-    var textFieldFontColor = UIColor.white
-    
+ 
     var homeRowPrimaryTextColor = UIColor.white
     var homeRowSecondaryTextColor = UIColor.lightMercury
     var homeRowBackgroundColor = UIColor.nearlyBlackLight
     
     var homePrivacyCellTextColor = UIColor.white
     var homePrivacyCellSecondaryTextColor = UIColor.greyish3
-    
-    var aboutScreenTextColor = UIColor.white
-    var aboutScreenButtonColor = UIColor.cornflowerBlue
-    
+     
     var favoritesPlusTintColor = UIColor.greyish3
     var favoritesPlusBackgroundColor = UIColor.greyishBrown2
 
-    var faviconBackgroundColor = UIColor.charcoalGrey
-    var favoriteTextColor = UIColor.greyish
-    
-    var feedbackPrimaryTextColor = UIColor.white
-    var feedbackSecondaryTextColor = UIColor.lightGreyish
-    var feedbackSentimentButtonBackgroundColor = UIColor.charcoalGrey
-    
-    var privacyReportCellBackgroundColor = UIColor.nearlyBlackLight
-    
     var activityStyle: UIActivityIndicatorView.Style = .medium
     
     var destructiveColor: UIColor = UIColor.destructive
-    
-    var ddgTextTintColor: UIColor = .white
 
-    var daxDialogBackgroundColor: UIColor = .nearlyBlackLight
-    var daxDialogTextColor: UIColor = UIColor.nearlyWhite
-    
-    var homeMessageBackgroundColor = UIColor.nearlyBlackLight
-    var homeMessageHeaderTextColor = UIColor.white
-    var homeMessageSubheaderTextColor = UIColor.greyish2
-    var homeMessageTopTextColor = UIColor.cornflowerBlue
-    var homeMessageButtonColor = UIColor.cornflowerBlue
-    var homeMessageButtonTextColor = UIColor.white
-    var homeMessageDismissButtonColor = UIColor.white
-
-    var autofillDefaultTitleTextColor = UIColor.white
-    var autofillDefaultSubtitleTextColor = UIColor.lightMercury
-    var autofillEmptySearchViewTextColor = UIColor.gray20
-    var autofillLockedViewTextColor = UIColor.lightMercury
-
-    var privacyDashboardWebviewBackgroundColor = UIColor.nearlyBlackLight
+    var searchBarBackgroundColor: UIColor = UIColor.charcoalGrey
 }

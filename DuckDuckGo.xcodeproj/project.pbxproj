@@ -773,6 +773,7 @@
 		EE0153EF2A70021E002A8B26 /* NetworkProtectionInviteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0153EE2A70021E002A8B26 /* NetworkProtectionInviteView.swift */; };
 		EE01EB402AFBD0000096AAC9 /* NetworkProtectionVPNSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01EB3F2AFBD0000096AAC9 /* NetworkProtectionVPNSettingsViewModel.swift */; };
 		EE01EB432AFC1E0A0096AAC9 /* NetworkProtectionVPNLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01EB422AFC1E0A0096AAC9 /* NetworkProtectionVPNLocationView.swift */; };
+		EE0798C52B179936000A4F64 /* NetworkProtectionVPNCountryLabelsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0798C42B179936000A4F64 /* NetworkProtectionVPNCountryLabelsModel.swift */; };
 		EE276BEA2A77F823009167B6 /* NetworkProtectionRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE276BE92A77F823009167B6 /* NetworkProtectionRootViewController.swift */; };
 		EE3766DE2AC5945500AAB575 /* NetworkProtectionUNNotificationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3766DD2AC5945500AAB575 /* NetworkProtectionUNNotificationPresenter.swift */; };
 		EE3B226B29DE0F110082298A /* MockInternalUserStoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3B226A29DE0F110082298A /* MockInternalUserStoring.swift */; };
@@ -2393,6 +2394,7 @@
 		EE0153EE2A70021E002A8B26 /* NetworkProtectionInviteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionInviteView.swift; sourceTree = "<group>"; };
 		EE01EB3F2AFBD0000096AAC9 /* NetworkProtectionVPNSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionVPNSettingsViewModel.swift; sourceTree = "<group>"; };
 		EE01EB422AFC1E0A0096AAC9 /* NetworkProtectionVPNLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionVPNLocationView.swift; sourceTree = "<group>"; };
+		EE0798C42B179936000A4F64 /* NetworkProtectionVPNCountryLabelsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionVPNCountryLabelsModel.swift; sourceTree = "<group>"; };
 		EE276BE92A77F823009167B6 /* NetworkProtectionRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionRootViewController.swift; sourceTree = "<group>"; };
 		EE3766DD2AC5945500AAB575 /* NetworkProtectionUNNotificationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionUNNotificationPresenter.swift; sourceTree = "<group>"; };
 		EE3B226A29DE0F110082298A /* MockInternalUserStoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockInternalUserStoring.swift; sourceTree = "<group>"; };
@@ -4496,6 +4498,7 @@
 			children = (
 				EE01EB422AFC1E0A0096AAC9 /* NetworkProtectionVPNLocationView.swift */,
 				EEC02C132B0519DE0045CE11 /* NetworkProtectionVPNLocationViewModel.swift */,
+				EE0798C42B179936000A4F64 /* NetworkProtectionVPNCountryLabelsModel.swift */,
 			);
 			name = PreferredLocation;
 			sourceTree = "<group>";
@@ -6357,6 +6360,7 @@
 				1EE7C299294227EC0026C8CB /* AutoconsentSettingsViewController.swift in Sources */,
 				4BCD14632B05AF2B000B1E4C /* NetworkProtectionAccessController.swift in Sources */,
 				1E8AD1D527C2E22900ABA377 /* DownloadsListSectionViewModel.swift in Sources */,
+				EE0798C52B179936000A4F64 /* NetworkProtectionVPNCountryLabelsModel.swift in Sources */,
 				4BC6DD1C2A60E6AD001EC129 /* ReportBrokenSiteView.swift in Sources */,
 				31584616281AFB46004ADB8B /* AutofillLoginDetailsViewController.swift in Sources */,
 				C1F341C72A6924100032057B /* EmailAddressPromptViewModel.swift in Sources */,

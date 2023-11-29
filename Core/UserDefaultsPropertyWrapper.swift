@@ -107,6 +107,8 @@ public struct UserDefaultsWrapper<T> {
 
         case addressBarPosition = "com.duckduckgo.ios.addressbarposition"
         case showFullSiteAddress = "com.duckduckgo.ios.showfullsiteaddress"
+
+        case webContainerId = "com.duckduckgo.ios.webcontainer.id"
     }
 
     private let key: Key

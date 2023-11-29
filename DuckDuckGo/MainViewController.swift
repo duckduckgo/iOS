@@ -1926,7 +1926,8 @@ extension MainViewController: AutoClearWorker {
         URLSession.shared.configuration.urlCache?.removeAllCachedResponses()
 
         let pixel = TimedPixel(.forgetAllDataCleared)
-        WebCacheManager.shared.clear(tabCountInfo: tabCountInfo) {
+        let dataStore = WKWebViewConfiguration.persistent().websiteDataStore
+        WebCacheManager.shared.clear(dataStore: dataStore, tabCountInfo: tabCountInfo) {
             pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
         }
         

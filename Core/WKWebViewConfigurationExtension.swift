@@ -21,8 +21,13 @@ import WebKit
 
 extension WKWebViewConfiguration {
 
-    public static func persistent() -> WKWebViewConfiguration {
-        return configuration(persistsData: true)
+
+    public static func persistent(idManager: DataStoreIdManager = .shared) -> WKWebViewConfiguration {
+        let config = configuration(persistsData: true)
+        if #available(iOS 17, *) {
+            config.websiteDataStore = WKWebsiteDataStore(forIdentifier: idManager.id)
+        }
+        return config
     }
 
     public static func nonPersistent() -> WKWebViewConfiguration {
@@ -45,6 +50,47 @@ extension WKWebViewConfiguration {
         configuration.preferences.isFraudulentWebsiteWarningEnabled = false
 
         return configuration
+    }
+
+}
+
+public class DataStoreIdManager {
+
+    public static let shared = DataStoreIdManager()
+
+    @UserDefaultsWrapper(key: .webContainerId, defaultValue: nil)
+    private var containerId: String?
+
+    var id: UUID {
+        if containerId == nil {
+            containerId = UUID().uuidString
+        }
+
+        if let containerId,
+           let uuid = UUID(uuidString: containerId) {
+            print("***", containerId)
+            return uuid
+        }
+
+        fatalError("Unable to create container ID")
+    }
+
+    var hasId: Bool {
+        return containerId != nil
+    }
+
+    public func reset() {
+        guard let containerId else { return }
+        if #available(iOS 17, *) {
+            if let uuid = UUID(uuidString: containerId) {
+                WKWebsiteDataStore.remove(forIdentifier: uuid) { error in
+                    if let error {
+                        print("***", error.localizedDescription)
+                    }
+                }
+            }
+        }
+        self.containerId = nil
     }
 
 }

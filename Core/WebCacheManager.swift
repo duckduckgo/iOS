@@ -37,6 +37,8 @@ public protocol WebCacheManagerDataStore {
     
     func removeAllDataExceptCookies(completion: @escaping () -> Void)
     
+    func preservedCookies(_ preservedLogins: PreserveLogins) async -> [HTTPCookie]
+
 }
 
 public class WebCacheManager {
@@ -139,10 +141,51 @@ public class WebCacheManager {
 
     }
 
-    public func clear(dataStore: WebCacheManagerDataStore = WKWebsiteDataStore.default(),
+    @available(iOS 17, *)
+    func checkDataStores() async {
+        print("***", #function, await WKWebsiteDataStore.allDataStoreIdentifiers)
+    }
+
+    @available(iOS 17, *)
+    func containerBasedClearing(_ dataStore: WebCacheManagerDataStore,
+                                logins: PreserveLogins,
+                                storeIdManager: DataStoreIdManager = .shared,
+                                completion: @escaping () -> Void) {
+        print("***", #function)
+
+        guard storeIdManager.hasId else {
+            completion()
+            return
+        }
+
+        Task { @MainActor in
+            let preservedCookies = await dataStore.preservedCookies(logins)
+
+            await (dataStore as? WKWebsiteDataStore)?.removeAllData()
+            storeIdManager.reset()
+
+            await checkDataStores()
+
+            await WKWebViewConfiguration
+                .persistent(idManager: storeIdManager)
+                .websiteDataStore.storeCookies(preservedCookies)
+
+            completion()
+        }
+    }
+
+    // swiftlint:disable function_body_length
+    public func clear(dataStore: WebCacheManagerDataStore,
                       logins: PreserveLogins = PreserveLogins.shared,
                       tabCountInfo: TabCountInfo? = nil,
                       completion: @escaping () -> Void) {
+
+        if #available(iOS 17, *) {
+            containerBasedClearing(dataStore, logins: logins) {
+                completion()
+            }
+            return
+        }
 
         dataStore.removeAllDataExceptCookies {
             guard let cookieStore = dataStore.cookieStore else {
@@ -206,7 +249,8 @@ public class WebCacheManager {
             }
         }
     }
-    
+    // swiftlint:enable function_body_length
+
     private func performSanityCheck(for cookieStore: WebCacheManagerCookieStore, summary: WebStoreCookieClearingSummary, tabCountInfo: TabCountInfo?) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             cookieStore.getAllCookies { cookiesAfterCleaning in
@@ -294,7 +338,41 @@ extension WKHTTPCookieStore: WebCacheManagerCookieStore {
         
 }
 
+extension WKWebsiteDataStore {
+
+    @available(iOS 17, *)
+    @MainActor
+    public func removeAllData() async {
+        let uuids = await WKWebsiteDataStore.allDataStoreIdentifiers
+        print("***", #function)
+        for uuid in uuids {
+            print("*** removing", uuid)
+            do {
+                try await WKWebsiteDataStore.remove(forIdentifier: uuid)
+            } catch {
+                print("***", #function, error.localizedDescription, uuid)
+            }
+        }
+    }
+
+}
+
 extension WKWebsiteDataStore: WebCacheManagerDataStore {
+
+    @MainActor
+    public func storeCookies(_ cookies: [HTTPCookie]) async {
+        for cookie in cookies {
+            await httpCookieStore.setCookie(cookie)
+        }
+    }
+
+    @MainActor
+    public func preservedCookies(_ preservedLogins: PreserveLogins) async -> [HTTPCookie] {
+        let allCookies = await self.httpCookieStore.allCookies()
+        return allCookies.filter {
+            preservedLogins.isAllowed(cookieDomain: $0.domain)
+        }
+    }
 
     public var cookieStore: WebCacheManagerCookieStore? {
         return self.httpCookieStore

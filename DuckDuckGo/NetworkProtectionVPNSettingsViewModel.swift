@@ -24,22 +24,34 @@ import NetworkProtection
 import Combine
 
 final class NetworkProtectionVPNSettingsViewModel: ObservableObject {
-    private let tunnelSettings: TunnelSettings
-    private var cancellable: AnyCancellable?
+    private let settings: VPNSettings
+    private var cancellables: Set<AnyCancellable> = []
 
     @Published public var preferredLocation: String = UserText.netPPreferredLocationNearest
+    @Published public var excludeLocalNetworks: Bool = true
 
-    init(tunnelSettings: TunnelSettings) {
-        self.tunnelSettings = tunnelSettings
-        cancellable = tunnelSettings.selectedLocationPublisher.map { selectedLocation in
-            guard let selectedLocation = selectedLocation.location else {
-                return UserText.netPPreferredLocationNearest
+    init(settings: VPNSettings) {
+        self.settings = settings
+        settings.selectedLocationPublisher
+            .map { selectedLocation in
+                guard let selectedLocation = selectedLocation.location else {
+                    return UserText.netPPreferredLocationNearest
+                }
+                guard let city = selectedLocation.city else {
+                    return Self.localizedString(forRegionCode: selectedLocation.country)
+                }
+                return "\(city), \(Self.localizedString(forRegionCode: selectedLocation.country))"
             }
-            guard let city = selectedLocation.city else {
-                return Self.localizedString(forRegionCode: selectedLocation.country)
-            }
-            return "\(city), \(Self.localizedString(forRegionCode: selectedLocation.country))"
-        }.assign(to: \.preferredLocation, onWeaklyHeld: self)
+            .assign(to: \.preferredLocation, onWeaklyHeld: self)
+            .store(in: &cancellables)
+        
+        settings.excludeLocalNetworksPublisher
+            .assign(to: \.excludeLocalNetworks, onWeaklyHeld: self)
+            .store(in: &cancellables)
+    }
+
+    func toggleExcludeLocalNetworks() {
+        settings.excludeLocalNetworks.toggle()
     }
 
     private static func localizedString(forRegionCode: String) -> String {

@@ -296,8 +296,18 @@
 		4B948E2629DCCDB9002531FA /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = 4B948E2529DCCDB9002531FA /* Persistence */; };
 		4BB7CBB02AF59C310014A35F /* VPNWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB7CBAF2AF59C310014A35F /* VPNWidget.swift */; };
 		4BBBBA872B02E85400D965DA /* DesignResourcesKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4BBBBA862B02E85400D965DA /* DesignResourcesKit */; };
+		4BBBBA8D2B031B4200D965DA /* VPNWaitlistDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBBBA892B031B4200D965DA /* VPNWaitlistDebugViewController.swift */; };
+		4BBBBA8E2B031B4200D965DA /* VPNWaitlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBBBA8A2B031B4200D965DA /* VPNWaitlistViewController.swift */; };
+		4BBBBA8F2B031B4200D965DA /* VPNWaitlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBBBA8B2B031B4200D965DA /* VPNWaitlistView.swift */; };
+		4BBBBA902B031B4200D965DA /* VPNWaitlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBBBA8C2B031B4200D965DA /* VPNWaitlist.swift */; };
+		4BBBBA922B03291700D965DA /* VPNWaitlistUserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBBBA912B03291700D965DA /* VPNWaitlistUserText.swift */; };
 		4BC21A2F27238B7500229F0E /* RunLoopExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC21A2C272388BD00229F0E /* RunLoopExtensionTests.swift */; };
 		4BC6DD1C2A60E6AD001EC129 /* ReportBrokenSiteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC6DD1B2A60E6AD001EC129 /* ReportBrokenSiteView.swift */; };
+		4BCD14632B05AF2B000B1E4C /* NetworkProtectionAccessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD14622B05AF2B000B1E4C /* NetworkProtectionAccessController.swift */; };
+		4BCD14672B05B682000B1E4C /* NetworkProtectionTermsAndConditionsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD14662B05B682000B1E4C /* NetworkProtectionTermsAndConditionsStore.swift */; };
+		4BCD14692B05BDD5000B1E4C /* AppDelegate+Waitlists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD14682B05BDD5000B1E4C /* AppDelegate+Waitlists.swift */; };
+		4BCD146B2B05C4B5000B1E4C /* VPNWaitlistTermsAndConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD146A2B05C4B5000B1E4C /* VPNWaitlistTermsAndConditionsViewController.swift */; };
+		4BCD146D2B05DB09000B1E4C /* NetworkProtectionAccessControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD146C2B05DB09000B1E4C /* NetworkProtectionAccessControllerTests.swift */; };
 		4BE2756827304F57006B20B0 /* URLRequestExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE27566272F878F006B20B0 /* URLRequestExtension.swift */; };
 		4BEF65692989C2FC00B650CB /* AdapterSocketEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021D307A2989C0C400918636 /* AdapterSocketEvent.swift */; };
 		4BEF656A2989C2FC00B650CB /* ProxyServerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021D307C2989C0C600918636 /* ProxyServerEvent.swift */; };
@@ -786,6 +796,8 @@
 		EE9D68DA2AE1659F00B55EF4 /* NetworkProtectionVPNNotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9D68D92AE1659F00B55EF4 /* NetworkProtectionVPNNotificationsViewModel.swift */; };
 		EE9D68DC2AE16AE100B55EF4 /* NotificationsAuthorizationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9D68DB2AE16AE100B55EF4 /* NotificationsAuthorizationController.swift */; };
 		EE9D68DE2AE2A65600B55EF4 /* UserDefaults+NetworkProtection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9D68DD2AE2A65600B55EF4 /* UserDefaults+NetworkProtection.swift */; };
+		EEC02C142B0519DE0045CE11 /* NetworkProtectionVPNLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC02C132B0519DE0045CE11 /* NetworkProtectionVPNLocationViewModel.swift */; };
+		EEC02C162B065BE00045CE11 /* NetworkProtectionVPNLocationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC02C152B065BE00045CE11 /* NetworkProtectionVPNLocationViewModelTests.swift */; };
 		EEDFE2DA2AC6ED4F00F0E19C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EEDFE2DC2AC6ED4F00F0E19C /* Localizable.strings */; };
 		EEEB80A32A421CE600386378 /* NetworkProtectionPacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB80A22A421CE600386378 /* NetworkProtectionPacketTunnelProvider.swift */; };
 		EEF0F8CC2ABC832300630031 /* NetworkProtectionDebugFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF0F8CB2ABC832200630031 /* NetworkProtectionDebugFeatures.swift */; };
@@ -1316,8 +1328,18 @@
 		4B83397229AFB8D2003F7EA9 /* AppTrackingProtectionFeedbackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionFeedbackModel.swift; sourceTree = "<group>"; };
 		4B83397429AFBCE6003F7EA9 /* AppTrackingProtectionFeedbackModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionFeedbackModelTests.swift; sourceTree = "<group>"; };
 		4BB7CBAF2AF59C310014A35F /* VPNWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNWidget.swift; sourceTree = "<group>"; };
+		4BBBBA892B031B4200D965DA /* VPNWaitlistDebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPNWaitlistDebugViewController.swift; sourceTree = "<group>"; };
+		4BBBBA8A2B031B4200D965DA /* VPNWaitlistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPNWaitlistViewController.swift; sourceTree = "<group>"; };
+		4BBBBA8B2B031B4200D965DA /* VPNWaitlistView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPNWaitlistView.swift; sourceTree = "<group>"; };
+		4BBBBA8C2B031B4200D965DA /* VPNWaitlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPNWaitlist.swift; sourceTree = "<group>"; };
+		4BBBBA912B03291700D965DA /* VPNWaitlistUserText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNWaitlistUserText.swift; sourceTree = "<group>"; };
 		4BC21A2C272388BD00229F0E /* RunLoopExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunLoopExtensionTests.swift; sourceTree = "<group>"; };
 		4BC6DD1B2A60E6AD001EC129 /* ReportBrokenSiteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportBrokenSiteView.swift; sourceTree = "<group>"; };
+		4BCD14622B05AF2B000B1E4C /* NetworkProtectionAccessController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionAccessController.swift; sourceTree = "<group>"; };
+		4BCD14662B05B682000B1E4C /* NetworkProtectionTermsAndConditionsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionTermsAndConditionsStore.swift; sourceTree = "<group>"; };
+		4BCD14682B05BDD5000B1E4C /* AppDelegate+Waitlists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Waitlists.swift"; sourceTree = "<group>"; };
+		4BCD146A2B05C4B5000B1E4C /* VPNWaitlistTermsAndConditionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNWaitlistTermsAndConditionsViewController.swift; sourceTree = "<group>"; };
+		4BCD146C2B05DB09000B1E4C /* NetworkProtectionAccessControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionAccessControllerTests.swift; sourceTree = "<group>"; };
 		4BE27566272F878F006B20B0 /* URLRequestExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URLRequestExtension.swift; path = ../DuckDuckGo/URLRequestExtension.swift; sourceTree = "<group>"; };
 		4BFB911A29B7D9530014D4B7 /* AppTrackingProtectionStoringModelPerformanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionStoringModelPerformanceTests.swift; sourceTree = "<group>"; };
 		56244C1C2A137B1900EDF259 /* WaitlistViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitlistViews.swift; sourceTree = "<group>"; };
@@ -2396,6 +2418,8 @@
 		EE9D68DB2AE16AE100B55EF4 /* NotificationsAuthorizationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsAuthorizationController.swift; sourceTree = "<group>"; };
 		EE9D68DD2AE2A65600B55EF4 /* UserDefaults+NetworkProtection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+NetworkProtection.swift"; sourceTree = "<group>"; };
 		EEB8FDB92A990AEE00EBEDCF /* Configuration-Alpha.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Configuration-Alpha.xcconfig"; path = "Configuration/Configuration-Alpha.xcconfig"; sourceTree = "<group>"; };
+		EEC02C132B0519DE0045CE11 /* NetworkProtectionVPNLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionVPNLocationViewModel.swift; sourceTree = "<group>"; };
+		EEC02C152B065BE00045CE11 /* NetworkProtectionVPNLocationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionVPNLocationViewModelTests.swift; sourceTree = "<group>"; };
 		EEDFE2DB2AC6ED4F00F0E19C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EEDFE2DD2AC6ED5B00F0E19C /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EEDFE2DE2AC6ED5F00F0E19C /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -3437,6 +3461,7 @@
 				56244C1C2A137B1900EDF259 /* WaitlistViews.swift */,
 				37FCAAA0299117F9000E420A /* MacBrowser */,
 				37FCAAA129911801000E420A /* WindowsBrowser */,
+				4BBBBA882B031B3300D965DA /* VPN */,
 				8524AAAB2A3888FE00EEC6D2 /* Waitlist.xcassets */,
 			);
 			name = Waitlist;
@@ -3460,6 +3485,18 @@
 				0253A43229E5E393003697C1 /* AppTrackingProtectionAllowlistModelTests.swift */,
 			);
 			name = AppTrackingProtection;
+			sourceTree = "<group>";
+		};
+		4BBBBA882B031B3300D965DA /* VPN */ = {
+			isa = PBXGroup;
+			children = (
+				4BBBBA8C2B031B4200D965DA /* VPNWaitlist.swift */,
+				4BBBBA892B031B4200D965DA /* VPNWaitlistDebugViewController.swift */,
+				4BBBBA8B2B031B4200D965DA /* VPNWaitlistView.swift */,
+				4BBBBA8A2B031B4200D965DA /* VPNWaitlistViewController.swift */,
+				4BCD146A2B05C4B5000B1E4C /* VPNWaitlistTermsAndConditionsViewController.swift */,
+			);
+			name = VPN;
 			sourceTree = "<group>";
 		};
 		830FA79B1F8E81FB00FCE105 /* ContentBlocker */ = {
@@ -4438,6 +4475,8 @@
 				EE0153E02A6EABE0002A8B26 /* NetworkProtectionConvenienceInitialisers.swift */,
 				EE458D0C2AB1DA4600FC651A /* EventMapping+NetworkProtectionError.swift */,
 				EE9D68DB2AE16AE100B55EF4 /* NotificationsAuthorizationController.swift */,
+				4BCD14622B05AF2B000B1E4C /* NetworkProtectionAccessController.swift */,
+				4BCD14662B05B682000B1E4C /* NetworkProtectionTermsAndConditionsStore.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -4456,6 +4495,7 @@
 			isa = PBXGroup;
 			children = (
 				EE01EB422AFC1E0A0096AAC9 /* NetworkProtectionVPNLocationView.swift */,
+				EEC02C132B0519DE0045CE11 /* NetworkProtectionVPNLocationViewModel.swift */,
 			);
 			name = PreferredLocation;
 			sourceTree = "<group>";
@@ -4501,6 +4541,8 @@
 				EEFE9C722A603CE9005B0A26 /* NetworkProtectionStatusViewModelTests.swift */,
 				EE0153EA2A6FF970002A8B26 /* NetworkProtectionRootViewModelTests.swift */,
 				EE41BD182A729E9C00546C57 /* NetworkProtectionInviteViewModelTests.swift */,
+				4BCD146C2B05DB09000B1E4C /* NetworkProtectionAccessControllerTests.swift */,
+				EEC02C152B065BE00045CE11 /* NetworkProtectionVPNLocationViewModelTests.swift */,
 			);
 			name = NetworkProtection;
 			sourceTree = "<group>";
@@ -5101,6 +5143,7 @@
 				CB24F70E29A3EB15006DCC58 /* AppConfigurationURLProvider.swift */,
 				84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */,
 				85DB12EC2A1FED0C000A4A72 /* AppDelegate+AppDeepLinks.swift */,
+				4BCD14682B05BDD5000B1E4C /* AppDelegate+Waitlists.swift */,
 				98B31291218CCB8C00E54DE1 /* AppDependencyProvider.swift */,
 				85BA58591F3506AE00C6E8CA /* AppSettings.swift */,
 				85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */,
@@ -5215,6 +5258,7 @@
 				F143C32C1E4A9A4800CFDE3A /* UIViewControllerExtension.swift */,
 				F1DE78591E5CD2A70058895A /* UIViewExtension.swift */,
 				F1F5337B1F26A9EF00D80D4F /* UserText.swift */,
+				4BBBBA912B03291700D965DA /* VPNWaitlistUserText.swift */,
 				986DA94924884B18004A7E39 /* WebViewTransition.swift */,
 				EE9D68D72AE15AD600B55EF4 /* UIApplicationExtension.swift */,
 			);
@@ -6218,6 +6262,7 @@
 				C1CDA3162AFB9C7F006D1476 /* AutofillNeverPromptWebsitesManager.swift in Sources */,
 				F1CA3C371F045878005FADB3 /* PrivacyStore.swift in Sources */,
 				37FCAAC029930E26000E420A /* FailedAssertionView.swift in Sources */,
+				4BBBBA922B03291700D965DA /* VPNWaitlistUserText.swift in Sources */,
 				F4E1936625AF722F001D2666 /* HighlightCutOutView.swift in Sources */,
 				1E162605296840D80004127F /* Triangle.swift in Sources */,
 				B609D5522862EAFF0088CAC2 /* InlineWKDownloadDelegate.swift in Sources */,
@@ -6241,6 +6286,7 @@
 				B652DF12287C336E00C12A9C /* ContentBlockingUpdating.swift in Sources */,
 				314C92BA27C3E7CB0042EC96 /* QuickLookContainerViewController.swift in Sources */,
 				855D914D2063EF6A00C4B448 /* TabSwitcherTransition.swift in Sources */,
+				4BBBBA8F2B031B4200D965DA /* VPNWaitlistView.swift in Sources */,
 				CB258D1229A4F24900DEBA24 /* ConfigurationManager.swift in Sources */,
 				8546A54A2A672959003929BF /* MainViewController+Email.swift in Sources */,
 				F4F6DFB226E6AEC100ED7E12 /* AddOrEditBookmarkViewController.swift in Sources */,
@@ -6309,6 +6355,7 @@
 				85DFEDED24C7CCA500973FE7 /* AppWidthObserver.swift in Sources */,
 				4B6484F327FD1E350050A7A1 /* MenuControllerView.swift in Sources */,
 				1EE7C299294227EC0026C8CB /* AutoconsentSettingsViewController.swift in Sources */,
+				4BCD14632B05AF2B000B1E4C /* NetworkProtectionAccessController.swift in Sources */,
 				1E8AD1D527C2E22900ABA377 /* DownloadsListSectionViewModel.swift in Sources */,
 				4BC6DD1C2A60E6AD001EC129 /* ReportBrokenSiteView.swift in Sources */,
 				31584616281AFB46004ADB8B /* AutofillLoginDetailsViewController.swift in Sources */,
@@ -6374,6 +6421,7 @@
 				02341FA62A4379CC008A1531 /* OnboardingStepViewModel.swift in Sources */,
 				850365F323DE087800D0F787 /* UIImageViewExtension.swift in Sources */,
 				373608922ABB430D00629E7F /* FavoritesDisplayMode+UserDefaults.swift in Sources */,
+				4BBBBA8D2B031B4200D965DA /* VPNWaitlistDebugViewController.swift in Sources */,
 				C160544129D6044D00B715A1 /* AutofillInterfaceUsernameTruncator.swift in Sources */,
 				02A54A9A2A094A17000C8FED /* AppTPHomeView.swift in Sources */,
 				31C70B5528045E3500FB6AD1 /* SecureVaultErrorReporter.swift in Sources */,
@@ -6395,11 +6443,13 @@
 				989B337522D7EF2100437824 /* EmptyCollectionReusableView.swift in Sources */,
 				8524CC94246C5C8900E59D45 /* DaxDialogViewController.swift in Sources */,
 				F42EF9312614BABE00101FB9 /* ActionSheetDaxDialogViewController.swift in Sources */,
+				EEC02C142B0519DE0045CE11 /* NetworkProtectionVPNLocationViewModel.swift in Sources */,
 				F13B4BC01F180D8A00814661 /* TabsModel.swift in Sources */,
 				02025B0C29884D2C00E694E7 /* AppTrackerData.swift in Sources */,
 				85AE6690209724120014CF04 /* NotificationView.swift in Sources */,
 				1EA51376286596A000493C6A /* PrivacyIconLogic.swift in Sources */,
 				980891A92238504B00313A70 /* UILabelExtension.swift in Sources */,
+				4BCD146B2B05C4B5000B1E4C /* VPNWaitlistTermsAndConditionsViewController.swift in Sources */,
 				984D035A24ACCC7D0066CFB8 /* TabViewCell.swift in Sources */,
 				31951E8E2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift in Sources */,
 				F194FAED1F14E2B3009B4DF8 /* UIFontExtension.swift in Sources */,
@@ -6431,6 +6481,7 @@
 				C17B595A2A03AAD30055F2D1 /* PasswordGenerationPromptViewController.swift in Sources */,
 				8531A08E1F9950E6000484F0 /* UnprotectedSitesViewController.swift in Sources */,
 				CBD4F13C279EBF4A00B20FD7 /* HomeMessage.swift in Sources */,
+				4BBBBA8E2B031B4200D965DA /* VPNWaitlistViewController.swift in Sources */,
 				3132FA2C27A07A1B00DD7A12 /* FilePreview.swift in Sources */,
 				85C861E628FF1B5F00189466 /* HomeViewSectionRenderersExtension.swift in Sources */,
 				F1D477C61F2126CC0031ED49 /* OmniBarState.swift in Sources */,
@@ -6448,6 +6499,7 @@
 				31C70B5B2804C61000FB6AD1 /* SaveAutofillLoginManager.swift in Sources */,
 				85449EFD23FDA71F00512AAF /* KeyboardSettings.swift in Sources */,
 				980891A222369ADB00313A70 /* FeedbackUserText.swift in Sources */,
+				4BCD14692B05BDD5000B1E4C /* AppDelegate+Waitlists.swift in Sources */,
 				988F3DD3237DE8D900AEE34C /* ForgetDataAlert.swift in Sources */,
 				850ABD012AC3961100A733DF /* MainViewController+Segues.swift in Sources */,
 				9817C9C321EF594700884F65 /* AutoClear.swift in Sources */,
@@ -6455,11 +6507,13 @@
 				85EE7F572246685B000FE757 /* WebContainerViewController.swift in Sources */,
 				1EC458462948932500CB2B13 /* UIHostingControllerExtension.swift in Sources */,
 				1E4DCF4E27B6A69600961E25 /* DownloadsListHostingController.swift in Sources */,
+				4BCD14672B05B682000B1E4C /* NetworkProtectionTermsAndConditionsStore.swift in Sources */,
 				020108A129A5610C00644F9D /* AppTPActivityHostingViewController.swift in Sources */,
 				C1F341C92A6926920032057B /* EmailAddressPromptViewController.swift in Sources */,
 				02025B0F29884DC500E694E7 /* AppTrackerDataParser.swift in Sources */,
 				027F48742A4B5904001A1C6C /* AppTPAboutView.swift in Sources */,
 				311BD1B12836C0CA00AEF6C1 /* AutofillLoginListAuthenticator.swift in Sources */,
+				4BBBBA902B031B4200D965DA /* VPNWaitlist.swift in Sources */,
 				B652DF13287C373A00C12A9C /* ScriptSourceProviding.swift in Sources */,
 				854A012B2A54412600FCC628 /* ActivityViewController.swift in Sources */,
 				F1CA3C391F045885005FADB3 /* PrivacyUserDefaults.swift in Sources */,
@@ -6647,6 +6701,7 @@
 				026F08B829B7DC480079B9DF /* EmbeddedAppTPDataTests.swift in Sources */,
 				851CD674244D7E6000331B98 /* UserDefaultsExtension.swift in Sources */,
 				850559D223CF710C0055C0D5 /* WebCacheManagerTests.swift in Sources */,
+				EEC02C162B065BE00045CE11 /* NetworkProtectionVPNLocationViewModelTests.swift in Sources */,
 				987130C5294AAB9F00AB05E0 /* BookmarkEditorViewModelTests.swift in Sources */,
 				8341D807212D5E8D000514C2 /* HashExtensionTest.swift in Sources */,
 				C1D21E2F293A599C006E5A05 /* AutofillLoginSessionTests.swift in Sources */,
@@ -6674,6 +6729,7 @@
 				F1D477C91F2139410031ED49 /* SmallOmniBarStateTests.swift in Sources */,
 				987130C9294AAB9F00AB05E0 /* BookmarkUtilsTests.swift in Sources */,
 				C1BF0BA929B63E2200482B73 /* AutofillLoginPromptViewModelTests.swift in Sources */,
+				4BCD146D2B05DB09000B1E4C /* NetworkProtectionAccessControllerTests.swift in Sources */,
 				EE3B226B29DE0F110082298A /* MockInternalUserStoring.swift in Sources */,
 				987130C8294AAB9F00AB05E0 /* BookmarksTestHelpers.swift in Sources */,
 				F198D7981E3A45D90088DA8A /* WKWebViewConfigurationExtensionTests.swift in Sources */,
@@ -7802,7 +7858,7 @@
 				CODE_SIGN_ENTITLEMENTS = PacketTunnelProvider/PacketTunnelProvider.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -7839,7 +7895,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -7931,7 +7987,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -7958,7 +8014,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -8104,7 +8160,7 @@
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
@@ -8128,7 +8184,7 @@
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				INFOPLIST_FILE = DuckDuckGo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -8192,7 +8248,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEAD_CODE_STRIPPING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Widgets/Info.plist;
@@ -8227,7 +8283,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
@@ -8261,7 +8317,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = OpenAction/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -8291,7 +8347,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -8577,7 +8633,7 @@
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGoAlpha.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
@@ -8603,7 +8659,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -8635,7 +8691,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -8672,7 +8728,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
@@ -8708,7 +8764,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HKE973VLUW;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -8743,11 +8799,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 2;
+				DYLIB_CURRENT_VERSION = 0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -8921,11 +8977,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 2;
+				DYLIB_CURRENT_VERSION = 0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -8954,10 +9010,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 0;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 2;
+				DYLIB_CURRENT_VERSION = 0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -9143,7 +9199,7 @@
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = exactVersion;
-				version = 85.0.0;
+				version = 86.1.0;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

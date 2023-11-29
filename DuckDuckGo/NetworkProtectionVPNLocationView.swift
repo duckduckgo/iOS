@@ -28,73 +28,174 @@ struct NetworkProtectionVPNLocationView: View {
 
     var body: some View {
         List {
-            Text("⚠️ FEATURE IS WORK IN PROGRESS ⚠️")
-            Section {
-                Button(action: model.onNearestItemSelection) {
-                    Text(UserText.netPPreferredLocationNearest)
-                }
-            }
-            Section {
-                ForEach(model.countryItems) { item in
-                    Button(action: {
-                        model.onCountryItemSelection(countryID: item.countryID)
-                    }, label: {
-                        Text(item.localizedName)
-                    })
-                }
-            }
+            nearest(isSelected: model.isNearestSelected)
+            countries()
         }
-        .animation(.default, value: model.countryItems.isEmpty)
         .applyInsetGroupedListStyle()
-        .navigationTitle("VPN Location").onAppear {
+        .animation(.default, value: model.state.isLoading)
+        .navigationTitle(UserText.netPVPNLocationTitle)
+        .onAppear {
             Task {
                 await model.onViewAppeared()
             }
         }
     }
+
+    @ViewBuilder
+    private func nearest(isSelected: Bool) -> some View {
+        Section {
+            ChecklistItem(
+                isSelected: isSelected,
+                action: {
+                    Task {
+                        await model.onNearestItemSelection()
+                    }
+                }, label: {
+                    Text(UserText.netPPreferredLocationNearest)
+                        .foregroundStyle(Color.textPrimary)
+                        .font(.system(size: 16))
+                }
+            )
+        } header: {
+            Text(UserText.netPVPNLocationRecommendedSectionTitle)
+                .foregroundStyle(Color.textPrimary)
+        } footer: {
+            Text(UserText.netPVPNLocationRecommendedSectionFooter)
+                .foregroundStyle(Color.textSecondary)
+                .font(.system(size: 13))
+                .padding(.top, 6)
+        }
+    }
+
+    @ViewBuilder
+    private func countries() -> some View {
+        Section {
+            switch model.state {
+            case .loading:
+                EmptyView()
+                .listRowBackground(Color.clear)
+            case .loaded(let countryItems):
+                ForEach(countryItems) { item in
+                    CountryItem(itemModel: item) {
+                        Task {
+                            await model.onCountryItemSelection(id: item.id)
+                        }
+                    } cityPickerAction: { cityId in
+                        Task {
+                            await model.onCountryItemSelection(id: item.id, cityId: cityId)
+                        }
+                    }
+                }
+            }
+        } header: {
+            Text(UserText.netPVPNLocationAllCountriesSectionTitle)
+                .foregroundStyle(Color.textPrimary)
+        }
+        .animation(.default, value: model.state.isLoading)
+    }
 }
 
-import NetworkProtection
+@available(iOS 15, *)
+private struct CountryItem: View {
+    let itemModel: NetworkProtectionVPNCountryItemModel
+    let action: () -> Void
+    let cityPickerAction: (String?) -> Void
 
-final class NetworkProtectionVPNLocationViewModel: ObservableObject {
-    private let locationListRepository: NetworkProtectionLocationListRepository
-    private let tunnelSettings: TunnelSettings
-    @Published public var countryItems: [NetworkProtectionVPNCountryItemModel] = []
-
-    init(locationListRepository: NetworkProtectionLocationListRepository, tunnelSettings: TunnelSettings) {
-        self.locationListRepository = locationListRepository
-        self.tunnelSettings = tunnelSettings
+    init(itemModel: NetworkProtectionVPNCountryItemModel, action: @escaping () -> Void, cityPickerAction: @escaping (String?) -> Void) {
+        self.itemModel = itemModel
+        self.action = action
+        self.cityPickerAction = cityPickerAction
     }
 
-    @MainActor
-    func onViewAppeared() async {
-        guard let list = try? await locationListRepository.fetchLocationList() else { return }
-        self.countryItems = list.map(NetworkProtectionVPNCountryItemModel.init(netPLocation:))
-    }
-
-    func onNearestItemSelection() {
-        tunnelSettings.selectedLocation = .nearest
-    }
-
-    func onCountryItemSelection(countryID: String) {
-        let location = NetworkProtectionSelectedLocation(country: countryID)
-        tunnelSettings.selectedLocation = .location(location)
+    var body: some View {
+        ChecklistItem(
+            isSelected: itemModel.isSelected,
+            action: action,
+            label: {
+                Text(itemModel.emoji)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(itemModel.title)
+                        .font(.system(size: 16))
+                        .foregroundStyle(Color.textPrimary)
+                    if let subtitle = itemModel.subtitle {
+                        Text(subtitle)
+                            .font(.system(size: 13))
+                            .foregroundStyle(Color.textSecondary)
+                    }
+                }
+                if itemModel.shouldShowPicker {
+                    Spacer()
+                    Menu {
+                        ForEach(itemModel.cityPickerItems) { cityItem in
+                            MenuItem(isSelected: cityItem.isSelected, title: cityItem.name) {
+                                cityPickerAction(cityItem.id)
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis.circle")
+                            .resizable()
+                            .frame(width: 22, height: 22).tint(.textSecondary)
+                    }
+                }
+            }
+        )
     }
 }
 
-struct NetworkProtectionVPNCountryItemModel: Identifiable {
-    let countryID: String
-    let localizedName: String
-    let cities: [String]
-    var id: String {
-        "\(countryID) - \(cities.count) cities"
-    }
+@available(iOS 15, *)
+private struct ChecklistItem<Content>: View where Content: View {
+    let isSelected: Bool
+    let action: () -> Void
+    @ViewBuilder let label: () -> Content
 
-    init(netPLocation: NetworkProtectionLocation) {
-        self.countryID = netPLocation.country
-        self.localizedName = Locale.current.localizedString(forRegionCode: countryID) ?? countryID
-        self.cities = netPLocation.cities.map(\.name)
+    var body: some View {
+        Button(
+            action: action,
+            label: {
+                HStack(spacing: 12) {
+                    Image(systemName: "checkmark")
+                        .tint(.controlColor)
+                        .if(!isSelected) {
+                            $0.hidden()
+                        }
+                    label()
+                }
+            }
+        )
+        .tint(Color(designSystemColor: .textPrimary))
+        .listRowInsets(EdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16))
     }
+}
+
+@available(iOS 15, *)
+private struct MenuItem: View {
+    let isSelected: Bool
+    let title: String
+    let action: () -> Void
+
+    var body: some View {
+        Button(
+            action: action,
+            label: {
+                HStack(spacing: 12) {
+                    Text(title)
+                    Spacer()
+                    Image(systemName: "checkmark")
+                        .if(!isSelected) {
+                            $0.hidden()
+                        }
+                        .tint(.textPrimary)
+                }
+            }
+        )
+        .tint(Color(designSystemColor: .textPrimary))
+    }
+}
+
+private extension Color {
+    static let textPrimary = Color(designSystemColor: .textPrimary)
+    static let textSecondary = Color(designSystemColor: .textSecondary)
+    static let controlColor = Color(designSystemColor: .accent)
 }
 
 #endif

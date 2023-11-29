@@ -176,9 +176,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                                                              errorEvents: nil)
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
-        let notificationsSettingsStore = NetworkProtectionNotificationsSettingsUserDefaultsStore(userDefaults: .networkProtectionGroupDefaults)
+        let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
         let nofificationsPresenterDecorator = NetworkProtectionNotificationsPresenterTogglableDecorator(
-            notificationSettingsStore: notificationsSettingsStore,
+            settings: settings,
             wrappee: notificationsPresenter
         )
         notificationsPresenter.requestAuthorization()
@@ -189,7 +189,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    tokenStore: tokenStore,
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
-                   tunnelSettings: TunnelSettings(defaults: .networkProtectionGroupDefaults))
+                   settings: settings)
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)

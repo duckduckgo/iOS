@@ -76,7 +76,6 @@ class BookmarksViewControllerCellFactory {
         let theme = ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor
         cell.titleLabel.textColor = theme.tableCellTextColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
         cell.favoriteImageView.tintColor = UIColor(designSystemColor: .icons)
         cell.editingAccessoryType = .disclosureIndicator
         return cell
@@ -91,7 +90,6 @@ class BookmarksViewControllerCellFactory {
         cell.backgroundColor = theme.tableCellBackgroundColor
         cell.titleLabel.textColor = theme.tableCellTextColor
         cell.childrenCountLabel.textColor = theme.tableCellTextColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
         cell.editingAccessoryType = .disclosureIndicator
         return cell
     }

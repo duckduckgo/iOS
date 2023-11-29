@@ -510,17 +510,8 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
         let theme = ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
-        
-        if cell.accessoryType == .disclosureIndicator {
-            let accesoryImage = UIImageView(image: UIImage(named: "DisclosureIndicator"))
-            accesoryImage.frame = CGRect(x: 0, y: 0, width: 8, height: 13)
-            accesoryImage.tintColor = theme.tableCellAccessoryColor
-            cell.accessoryView = accesoryImage
-        }
     }
 
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection: Int) {

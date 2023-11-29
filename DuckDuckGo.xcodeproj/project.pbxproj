@@ -781,6 +781,7 @@
 		D625299A2B15E4B9002A372F /* AppStoreRestoreFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62529972B15E4B9002A372F /* AppStoreRestoreFlow.swift */; };
 		D625299B2B15E4B9002A372F /* AppStoreAccountManagementFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62529982B15E4B9002A372F /* AppStoreAccountManagementFlow.swift */; };
 		D63657192A7BAE7C001AF19D /* EmailManagerRequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D63657182A7BAE7C001AF19D /* EmailManagerRequestDelegate.swift */; };
+		D6BA60EE2B17BAE20032C67F /* SubscriptionUserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BA60ED2B17BAE20032C67F /* SubscriptionUserText.swift */; };
 		D6BBC4622B1663190027507E /* HeadlessWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BBC4612B1663190027507E /* HeadlessWebView.swift */; };
 		D6BBC4652B1665EB0027507E /* SubscriptionFlowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BBC4642B1665EB0027507E /* SubscriptionFlowViewModel.swift */; };
 		D6BBC4672B16B4040027507E /* WKUserContentController+Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BBC4662B16B4040027507E /* WKUserContentController+Handler.swift */; };
@@ -2400,6 +2401,7 @@
 		D62529972B15E4B9002A372F /* AppStoreRestoreFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStoreRestoreFlow.swift; sourceTree = "<group>"; };
 		D62529982B15E4B9002A372F /* AppStoreAccountManagementFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStoreAccountManagementFlow.swift; sourceTree = "<group>"; };
 		D63657182A7BAE7C001AF19D /* EmailManagerRequestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailManagerRequestDelegate.swift; sourceTree = "<group>"; };
+		D6BA60ED2B17BAE20032C67F /* SubscriptionUserText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionUserText.swift; sourceTree = "<group>"; };
 		D6BBC4612B1663190027507E /* HeadlessWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlessWebView.swift; sourceTree = "<group>"; };
 		D6BBC4642B1665EB0027507E /* SubscriptionFlowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionFlowViewModel.swift; sourceTree = "<group>"; };
 		D6BBC4662B16B4040027507E /* WKUserContentController+Handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WKUserContentController+Handler.swift"; sourceTree = "<group>"; };
@@ -4480,13 +4482,14 @@
 			isa = PBXGroup;
 			children = (
 				D6FC2BB32B17AD5800744491 /* Models */,
-				D6BBC46A2B16B68C0027507E /* Extensions */,
-				D62529952B15E4B9002A372F /* PurchaseFlows */,
 				D6BBC4632B1665270027507E /* ViewModel */,
+				D625296B2B15467E002A372F /* Views */,
 				D625297C2B15E449002A372F /* Account */,
 				D62529862B15E449002A372F /* Purchase */,
+				D62529952B15E4B9002A372F /* PurchaseFlows */,
 				D62529882B15E449002A372F /* UserScripts */,
-				D625296B2B15467E002A372F /* Views */,
+				D6BBC46A2B16B68C0027507E /* Extensions */,
+				D6BA60ED2B17BAE20032C67F /* SubscriptionUserText.swift */,
 			);
 			path = PrivacyPro;
 			sourceTree = "<group>";
@@ -4494,8 +4497,8 @@
 		D625296B2B15467E002A372F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D62529742B155BCB002A372F /* SubscriptionFlowView.swift */,
 				D6BBC4612B1663190027507E /* HeadlessWebView.swift */,
+				D62529742B155BCB002A372F /* SubscriptionFlowView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -6691,6 +6694,7 @@
 				9872D205247DCAC100CEF398 /* TabPreviewsSource.swift in Sources */,
 				F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */,
 				85DFEDEF24C7EA3B00973FE7 /* SmallOmniBarState.swift in Sources */,
+				D6BA60EE2B17BAE20032C67F /* SubscriptionUserText.swift in Sources */,
 				1E908BF129827C480008C8F3 /* AutoconsentUserScript.swift in Sources */,
 				4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */,
 				1E7A71192934EC6100B7EA19 /* OmniBarNotificationContainerView.swift in Sources */,

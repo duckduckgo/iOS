@@ -21,15 +21,16 @@ import SwiftUI
 
 struct SubscriptionFlowView: View {
     
-    let model: SubscriptionFlowViewModel
+    let viewModel: SubscriptionFlowViewModel
     
     init(model: SubscriptionFlowViewModel = SubscriptionFlowViewModel()) {
-        self.model = model
+        self.viewModel = model
     }
     
     var body: some View {
-        AsyncHeadlessWebView(url: URL.purchaseSubscription,
-                             userScript: model.userScript,
-                             subFeature: model.subFeature)
+        AsyncHeadlessWebView(url: viewModel.purchaseURL,
+                             userScript: viewModel.userScript,
+                             subFeature: viewModel.subFeature)
+        .navigationTitle(viewModel.viewTitle)
     }
 }

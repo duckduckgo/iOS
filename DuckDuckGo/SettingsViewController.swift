@@ -74,6 +74,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var voiceSearchCell: UITableViewCell!
     @IBOutlet weak var voiceSearchToggle: UISwitch!
     @IBOutlet weak var privacyProSignupCell: UITableViewCell!
+    @IBOutlet weak var privacyProLearnMoreCell: UITableViewCell!
     
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
@@ -142,8 +143,7 @@ class SettingsViewController: UITableViewController {
     private lazy var shouldShowPrivacyPro: Bool = {
 #if SUBSCRIPTION
         if #available(iOS 15, *) {
-            // return featureFlagger.isFeatureOn(.privacyPro)
-            return true
+             return featureFlagger.isFeatureOn(.privacyPro)
         } else {
             return false
         }
@@ -374,7 +374,9 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configurePrivacyPro() {
-        // Fetch the status of the subscription and decide what needs to be shown
+        privacyProSignupCell.accessoryType = .none
+        privacyProSignupCell.isUserInteractionEnabled = false
+        
     }
     
     
@@ -534,15 +536,17 @@ class SettingsViewController: UITableViewController {
 #else
                 break
 #endif
+                
             }
             
-        case privacyProSignupCell:
+        case privacyProLearnMoreCell:
             if #available(iOS 15, *) {
 #if SUBSCRIPTION
                 showPrivacyPro()
 #else
                 break
 #endif
+                
             }
             
         default: break
@@ -632,6 +636,7 @@ class SettingsViewController: UITableViewController {
         }
         return super.tableView(tableView, titleForHeaderInSection: section)
     }
+    
 
     @IBAction func onVoiceSearchToggled(_ sender: UISwitch) {
         var enableVoiceSearch = sender.isOn

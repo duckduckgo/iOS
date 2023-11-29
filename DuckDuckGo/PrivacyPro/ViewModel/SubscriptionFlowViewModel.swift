@@ -23,6 +23,8 @@ import UserScript
 struct SubscriptionFlowViewModel {
     let userScript: SubscriptionPagesUserScript
     let subFeature: Subfeature
+    let purchaseURL = URL.purchaseSubscription
+    let viewTitle = SubscriptionUserText.navigationTitle
 
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: Subfeature = SubscriptionPagesUseSubscriptionFeature()) {

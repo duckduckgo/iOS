@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1700585688784,
+    "version": 1701253939396,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -1252,6 +1252,9 @@
                         "domain": "formula1.com"
                     },
                     {
+                        "domain": "gigisplayhouse.org"
+                    },
+                    {
                         "domain": "hulu.com"
                     },
                     {
@@ -1293,7 +1296,7 @@
             },
             "exceptions": [],
             "state": "enabled",
-            "hash": "b101ded240bc51fce0ece83191b2da62"
+            "hash": "4c62237a3eeaf9cfec814fc3fb7af282"
         },
         "duckPlayer": {
             "exceptions": [],
@@ -1671,10 +1674,6 @@
                         "type": "hide-empty"
                     },
                     {
-                        "selector": "[class*='l-ad']",
-                        "type": "hide-empty"
-                    },
-                    {
                         "selector": "[class*='page-ad']",
                         "type": "hide-empty"
                     },
@@ -1878,6 +1877,22 @@
                     "upgrade to flickr pro to hide these ads"
                 ],
                 "domains": [
+                    {
+                        "domain": "3bmeteo.com",
+                        "rules": [
+                            {
+                                "type": "disable-default"
+                            },
+                            {
+                                "selector": "#admasthead",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": "#ads_container",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
                     {
                         "domain": "abc.es",
                         "rules": [
@@ -2656,6 +2671,22 @@
                         ]
                     },
                     {
+                        "domain": "kentonline.co.uk",
+                        "rules": [
+                            {
+                                "type": "disable-default"
+                            },
+                            {
+                                "selector": "[id*='p_mpu']",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": "[id*='p_dmp']",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "komputerswiat.pl",
                         "rules": [
                             {
@@ -3255,6 +3286,18 @@
                         ]
                     },
                     {
+                        "domain": "startpagina.nl",
+                        "rules": [
+                            {
+                                "type": "disable-default"
+                            },
+                            {
+                                "selector": ".ad-widget",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "takealot.com",
                         "rules": [
                             {
@@ -3704,7 +3747,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "c747ff47f18924f7ddde7cea3874e3bc"
+            "hash": "f7c00905a329790def09ac2296a0e1da"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -4025,9 +4068,6 @@
             "state": "enabled",
             "exceptions": [
                 {
-                    "domain": "abcnews.go.com"
-                },
-                {
                     "domain": "allegiantair.com"
                 },
                 {
@@ -4079,7 +4119,7 @@
                     "privacy-test-pages.site"
                 ]
             },
-            "hash": "9f8ae6a01924a47b3ca6ce18f001cbd9"
+            "hash": "d11962aceb1417d05e8f2854d5fb72a9"
         },
         "harmfulApis": {
             "settings": {
@@ -4546,16 +4586,6 @@
                             }
                         ]
                     },
-                    "adserver.adtech.advertising.com": {
-                        "rules": [
-                            {
-                                "rule": "adserver.adtech.advertising.com/pubapi/3.0/1/54669.7/0/0/ADTECH;v=2;cmd=bid;cors=yes",
-                                "domains": [
-                                    "collider.com"
-                                ]
-                            }
-                        ]
-                    },
                     "adswizz.com": {
                         "rules": [
                             {
@@ -4580,6 +4610,16 @@
                                     "adamtheautomator.com",
                                     "gardeningknowhow.com",
                                     "packhacker.com"
+                                ]
+                            }
+                        ]
+                    },
+                    "advertising.com": {
+                        "rules": [
+                            {
+                                "rule": "adserver.adtech.advertising.com/pubapi/3.0/1/54669.7/0/0/ADTECH;v=2;cmd=bid;cors=yes",
+                                "domains": [
+                                    "collider.com"
                                 ]
                             }
                         ]
@@ -5106,6 +5146,16 @@
                             }
                         ]
                     },
+                    "datadoghq-browser-agent.com": {
+                        "rules": [
+                            {
+                                "rule": "www.datadoghq-browser-agent.com/datadog-logs-v4.js",
+                                "domains": [
+                                    "shapermint.com"
+                                ]
+                            }
+                        ]
+                    },
                     "datadome.co": {
                         "rules": [
                             {
@@ -5353,6 +5403,12 @@
                     },
                     "facebook.net": {
                         "rules": [
+                            {
+                                "rule": "connect.facebook.net/en_UK/sdk.js",
+                                "domains": [
+                                    "globalcyclingnetwork.com"
+                                ]
+                            },
                             {
                                 "rule": "connect.facebook.net/en_US/sdk.js",
                                 "domains": [
@@ -5624,6 +5680,7 @@
                                 "rule": "imasdk.googleapis.com/js/sdkloader/ima3.js",
                                 "domains": [
                                     "bloomberg.com",
+                                    "gamak.tv",
                                     "games.washingtonpost.com",
                                     "metro.co.uk",
                                     "nfl.com",
@@ -5841,6 +5898,22 @@
                                     "wutv29.com",
                                     "wvah.com",
                                     "wwmt.com"
+                                ]
+                            }
+                        ]
+                    },
+                    "gorgias.chat": {
+                        "rules": [
+                            {
+                                "rule": "config.gorgias.chat",
+                                "domains": [
+                                    "help.athleticbrewing.com"
+                                ]
+                            },
+                            {
+                                "rule": "assets.gorgias.chat",
+                                "domains": [
+                                    "help.athleticbrewing.com"
                                 ]
                             }
                         ]
@@ -6128,17 +6201,6 @@
                                 "rule": "cdn.listrakbi.com/scripts/script.js",
                                 "domains": [
                                     "<all>"
-                                ]
-                            }
-                        ]
-                    },
-                    "live.primis.tech": {
-                        "rules": [
-                            {
-                                "rule": "live.primis.tech/live/liveView.php",
-                                "domains": [
-                                    "belfastlive.co.uk",
-                                    "cornwalllive.com"
                                 ]
                             }
                         ]
@@ -6482,6 +6544,17 @@
                             }
                         ]
                     },
+                    "primis.tech": {
+                        "rules": [
+                            {
+                                "rule": "live.primis.tech/live/liveView.php",
+                                "domains": [
+                                    "belfastlive.co.uk",
+                                    "cornwalllive.com"
+                                ]
+                            }
+                        ]
+                    },
                     "privacy-center.org": {
                         "rules": [
                             {
@@ -6611,7 +6684,8 @@
                             {
                                 "rule": "protection-widget.route.com/protect.core.js",
                                 "domains": [
-                                    "littleunicorn.com"
+                                    "littleunicorn.com",
+                                    "olfactif.com"
                                 ]
                             }
                         ]
@@ -6704,6 +6778,16 @@
                                 "rule": "rokt.com/wsdk/integrations/snippet.js",
                                 "domains": [
                                     "pch.com"
+                                ]
+                            }
+                        ]
+                    },
+                    "route.com": {
+                        "rules": [
+                            {
+                                "rule": "protection-widget.route.com/protect.core.js",
+                                "domains": [
+                                    "littleunicorn.com"
                                 ]
                             }
                         ]
@@ -6804,6 +6888,16 @@
                         "rules": [
                             {
                                 "rule": "cdn.shortpixel.ai/assets/js/bundles/spai-lib-bg",
+                                "domains": [
+                                    "<all>"
+                                ]
+                            }
+                        ]
+                    },
+                    "slickstream.com": {
+                        "rules": [
+                            {
+                                "rule": "app.slickstream.com",
                                 "domains": [
                                     "<all>"
                                 ]
@@ -6967,6 +7061,7 @@
                             {
                                 "rule": "widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js",
                                 "domains": [
+                                    "azurestandard.com",
                                     "domesticandgeneral.com"
                                 ]
                             }
@@ -7284,7 +7379,7 @@
                     "domain": "sundancecatalog.com"
                 }
             ],
-            "hash": "f5e54d051c76c97e2ebaf3014037d10a"
+            "hash": "1ce506662b48fccc1bf37a3133fd3f1e"
         },
         "trackingCookies1p": {
             "settings": {

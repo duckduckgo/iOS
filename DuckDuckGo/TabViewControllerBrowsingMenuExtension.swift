@@ -311,10 +311,40 @@ extension TabViewController {
             if let webView = self.webView {
                 items.append(webView)
             }
-            self.presentShareSheet(withItems: items, fromView: view)
+
+            self.presentShareSheet(withItems: items, fromView: view) { [weak self] activityType, result, _, error in
+                if result {
+                    Pixel.fire(pixel: .shareSheetResultSuccess)
+                } else {
+                    Pixel.fire(pixel: .shareSheetResultFail, error: error)
+                }
+
+                if let activityType {
+                    self?.firePixelForActivityType(activityType)
+                }
+            }
         }
     }
     
+    private func firePixelForActivityType(_ activityType: UIActivity.ActivityType) {
+        switch activityType {
+        case .copyToPasteboard:
+            Pixel.fire(pixel: .shareSheetActivityCopy)
+        case .saveBookmarkInDuckDuckGo:
+            Pixel.fire(pixel: .shareSheetActivityAddBookmark)
+        case .saveFavoriteInDuckDuckGo:
+            Pixel.fire(pixel: .shareSheetActivityAddFavorite)
+        case .findInPage:
+            Pixel.fire(pixel: .shareSheetActivityFindInPage)
+        case .print:
+            Pixel.fire(pixel: .shareSheetActivityPrint)
+        case .addToReadingList:
+            Pixel.fire(pixel: .shareSheetActivityAddToReadingList)
+        default:
+            Pixel.fire(pixel: .shareSheetActivityOther)
+        }
+    }
+
     private func shareLinkWithTemporaryDownload(_ temporaryDownload: Download?,
                                                 originalLink: Link,
                                                 completion: @escaping(Link) -> Void) {

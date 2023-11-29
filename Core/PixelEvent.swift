@@ -77,6 +77,16 @@ extension Pixel {
         case addressBarShare
         case addressBarSettings
 
+        case shareSheetResultSuccess
+        case shareSheetResultFail
+        case shareSheetActivityCopy
+        case shareSheetActivityAddBookmark
+        case shareSheetActivityAddFavorite
+        case shareSheetActivityFindInPage
+        case shareSheetActivityPrint
+        case shareSheetActivityAddToReadingList
+        case shareSheetActivityOther
+
         case tabBarBackPressed
         case tabBarForwardPressed
         case bookmarksButtonPressed
@@ -563,7 +573,6 @@ extension Pixel.Event {
         case .browsingMenuRemoveFromFavorites: return "mb_df"
         case .browsingMenuAddToFavoritesAddFavoriteFlow: return "mb_aff"
         case .browsingMenuToggleBrowsingMode: return "mb_dm"
-        case .browsingMenuShare: return "mb_sh"
         case .browsingMenuCopy: return "mb_cp"
         case .browsingMenuPrint: return "mb_pr"
         case .browsingMenuSettings: return "mb_st"
@@ -574,8 +583,19 @@ extension Pixel.Event {
         case .browsingMenuFireproof: return "mb_f"
         case .browsingMenuAutofill: return "m_nav_autofill_menu_item_pressed"
 
+        case .browsingMenuShare: return "m_browsingmenu_share"
+
         case .addressBarShare: return "m_addressbar_share"
         case .addressBarSettings: return "m_addressbar_settings"
+        case .shareSheetResultSuccess: return "m_sharesheet_result_success"
+        case .shareSheetResultFail: return "m_sharesheet_result_fail"
+        case .shareSheetActivityCopy: return "m_sharesheet_activity_copy"
+        case .shareSheetActivityAddBookmark: return "m_sharesheet_activity_addbookmark"
+        case .shareSheetActivityAddFavorite: return "m_sharesheet_activity_addfavorite"
+        case .shareSheetActivityFindInPage: return "m_sharesheet_activity_findinpage"
+        case .shareSheetActivityPrint: return "m_sharesheet_activity_print"
+        case .shareSheetActivityAddToReadingList: return "m_sharesheet_activity_addtoreadinglist"
+        case .shareSheetActivityOther: return "m_sharesheet_activity_other"
 
         case .tabBarBackPressed: return "mt_bk"
         case .tabBarForwardPressed: return "mt_fw"

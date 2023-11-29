@@ -26,13 +26,45 @@ import WebKit
 import UserScript
 
 final class SubscriptionPagesUseSubscriptionFeature: Subfeature {
+    
+    struct Constants {
+        static let featureName = "useSubscription"
+        static let os = "ios"
+        static let empty = ""
+    }
+    
+    struct OriginDomains {
+        static let duckduckgo = "duckduckgo.com"
+        static let abrown = "abrown.duckduckgo.com"
+    }
+    
+    struct Handlers {
+        static let getSubscription = "getSubscription"
+        static let setSubscription = "setSubscription"
+        static let backToSettings = "backToSettings"
+        static let getSubscriptionOptions = "getSubscriptionOptions"
+        static let subscriptionSelected = "subscriptionSelected"
+        static let activateSubscription = "activateSubscription"
+        static let featureSelected = "featureSelected"
+    }
+    
+    struct ProductIDs {
+        static let monthly = "1month"
+        static let yearly = "1year"
+    }
+    
+    struct RecurrenceOptions {
+        static let month = "monthly"
+        static let year = "yearly"
+    }
+    
     var broker: UserScriptMessageBroker?
 
-    var featureName = "useSubscription"
+    var featureName = Constants.featureName
 
     var messageOriginPolicy: MessageOriginPolicy = .only(rules: [
-        .exact(hostname: "duckduckgo.com"),
-        .exact(hostname: "abrown.duckduckgo.com")
+        .exact(hostname: OriginDomains.duckduckgo),
+        .exact(hostname: OriginDomains.abrown)
     ])
 
     func with(broker: UserScriptMessageBroker) {
@@ -41,96 +73,50 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature {
 
     func handler(forMethodNamed methodName: String) -> Subfeature.Handler? {
         switch methodName {
-        case "getSubscription": return getSubscription
-        case "setSubscription": return setSubscription
-        case "backToSettings": return backToSettings
-        case "getSubscriptionOptions": return getSubscriptionOptions
-        case "subscriptionSelected": return subscriptionSelected
-        case "activateSubscription": return activateSubscription
-        case "featureSelected": return featureSelected
+        case Handlers.getSubscription: return getSubscription
+        case Handlers.setSubscription: return setSubscription
+        case Handlers.backToSettings: return backToSettings
+        case Handlers.getSubscriptionOptions: return getSubscriptionOptions
+        case Handlers.subscriptionSelected: return subscriptionSelected
+        case Handlers.activateSubscription: return activateSubscription
+        case Handlers.featureSelected: return featureSelected
         default:
             return nil
         }
     }
 
-    struct Subscription: Encodable {
-        let token: String
-    }
-
-    /// Values that the Frontend can use to determine the current state.
-    struct SubscriptionValues: Codable {
-        enum CodingKeys: String, CodingKey {
-            case token
-        }
-        let token: String
-    }
-
     func getSubscription(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        var authToken = AccountManager().authToken ?? ""
+        var authToken = AccountManager().authToken ?? Constants.empty
         return Subscription(token: authToken)
     }
 
     func setSubscription(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        guard let subscriptionValues: SubscriptionValues = DecodableHelper.decode(from: params) else {
-            assertionFailure("SubscriptionPagesUserScript: expected JSON representation of SubscriptionValues")
-            return nil
-        }
-
-        await AccountManager().exchangeAndStoreTokens(with: subscriptionValues.token)
+        // WIP
         return nil
     }
 
     func backToSettings(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        await AccountManager().refreshAccountData()
+        // WIP
         return nil
     }
 
     func getSubscriptionOptions(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        struct SubscriptionOptions: Encodable {
-            let platform: String
-            let options: [SubscriptionOption]
-            let features: [SubscriptionFeature]
-        }
-
-        struct SubscriptionOption: Encodable {
-            let id: String
-            let cost: SubscriptionCost
-
-            struct SubscriptionCost: Encodable {
-                let displayPrice: String
-                let recurrence: String
-            }
-        }
-
-        enum SubscriptionFeatureName: String, CaseIterable {
-            case privateBrowsing = "private-browsing"
-            case privateSearch = "private-search"
-            case emailProtection = "email-protection"
-            case appTrackingProtection = "app-tracking-protection"
-            case vpn = "vpn"
-            case personalInformationRemoval = "personal-information-removal"
-            case identityTheftRestoration = "identity-theft-restoration"
-        }
-
-        struct SubscriptionFeature: Encodable {
-            let name: String
-        }
 
         let subscriptionOptions: [SubscriptionOption]
 
-        if #available(macOS 12.0, iOS 15, *) {
-            let monthly = PurchaseManager.shared.availableProducts.first(where: { $0.id.contains("1month") })
-            let yearly = PurchaseManager.shared.availableProducts.first(where: { $0.id.contains("1year") })
+        if #available(iOS 15, *) {
+            let monthly = PurchaseManager.shared.availableProducts.first(where: { $0.id.contains(ProductIDs.monthly) })
+            let yearly = PurchaseManager.shared.availableProducts.first(where: { $0.id.contains(ProductIDs.yearly) })
 
             guard let monthly, let yearly else { return nil }
 
-            subscriptionOptions = [SubscriptionOption(id: monthly.id, cost: .init(displayPrice: monthly.displayPrice, recurrence: "monthly")),
-                                   SubscriptionOption(id: yearly.id, cost: .init(displayPrice: yearly.displayPrice, recurrence: "yearly"))]
+            subscriptionOptions = [SubscriptionOption(id: monthly.id, cost: .init(displayPrice: monthly.displayPrice, recurrence: RecurrenceOptions.month)),
+                                   SubscriptionOption(id: yearly.id, cost: .init(displayPrice: yearly.displayPrice, recurrence: RecurrenceOptions.year))]
         } else {
             return nil
         }
 
-        let message = SubscriptionOptions(platform: "macos",
+        let message = SubscriptionOptions(platform: Constants.os,
                                           options: subscriptionOptions,
                                           features: SubscriptionFeatureName.allCases.map { SubscriptionFeature(name: $0.rawValue) })
 
@@ -138,9 +124,6 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature {
     }
 
     func subscriptionSelected(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        struct SubscriptionSelection: Decodable {
-            let id: String
-        }
 
         let message = original
 

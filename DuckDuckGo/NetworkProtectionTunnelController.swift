@@ -67,6 +67,10 @@ final class NetworkProtectionTunnelController: TunnelController {
         tunnelManager.connection.stopVPNTunnel()
     }
 
+    func removeVPN() async {
+        try? await tunnelManager?.removeFromPreferences()
+    }
+
     // MARK: - Connection Status Querying
 
     /// Queries Network Protection to know if its VPN is connected.

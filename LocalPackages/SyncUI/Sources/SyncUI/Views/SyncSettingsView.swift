@@ -273,18 +273,20 @@ extension SyncSettingsView {
             Toggle(isOn: $model.isFaviconsFetchingEnabled) {
                 VStack(alignment: .leading, spacing: 5) {
                     Text(UserText.fetchFaviconsOptionTitle)
+                        .daxBodyRegular()
                         .foregroundColor(.primary)
                     Text(UserText.fetchFaviconsOptionCaption)
-                        .daxBodyRegular()
+                        .daxFootnoteRegular()
                         .foregroundColor(.secondary)
                 }
             }
             Toggle(isOn: $model.isUnifiedFavoritesEnabled) {
                 VStack(alignment: .leading, spacing: 5) {
                     Text(UserText.unifiedFavoritesTitle)
+                        .daxBodyRegular()
                         .foregroundColor(.primary)
                     Text(UserText.unifiedFavoritesInstruction)
-                        .daxBodyRegular()
+                        .daxFootnoteRegular()
                         .foregroundColor(.secondary)
                 }
             }

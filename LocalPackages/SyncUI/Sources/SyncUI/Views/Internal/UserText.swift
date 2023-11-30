@@ -152,7 +152,8 @@ struct UserText {
     static let nextButton = NSLocalizedString("next.button", value: "Next", comment: "Standard Buttons - Next Button")
     static let backButton = NSLocalizedString("back.button", value: "Back", comment: "Standard Buttons - Back Button")
     static let pasteButton = NSLocalizedString("paste.button", value: "Paste", comment: "Standard Buttons - Paste Button")
-    
+    static let notNowButton = NSLocalizedString("not.now.button", value: "Not Now", comment: "Standard Buttons - Not Now Button")
+
     // Fetch favicons
     static let fetchFaviconsOnboardingTitle = NSLocalizedString("fetch.favicons.onboarding.title", value: "Download Missing Icons?", comment: "Fetch Favicons Onboarding - Title")
     static let fetchFaviconsOnboardingMessage = NSLocalizedString("fetch.favicons.onboarding.message", value: "Do you want this device to automatically download icons for any new bookmarks synced from your other devices? This will expose the download to your network any time a bookmark is synced.", comment: "Fetch Favicons Onboarding - Message")

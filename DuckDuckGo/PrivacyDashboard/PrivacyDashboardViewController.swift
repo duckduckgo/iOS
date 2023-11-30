@@ -84,6 +84,9 @@ class PrivacyDashboardViewController: UIViewController {
     }
 
     private func privacyDashboardProtectionSwitchChangeHandler(state: ProtectionState) {
+        
+        dismiss(animated: true)
+        
         guard let domain = privacyDashboardController.privacyInfo?.url.host else { return }
         
         let privacyConfiguration = privacyConfigurationManager.privacyConfig

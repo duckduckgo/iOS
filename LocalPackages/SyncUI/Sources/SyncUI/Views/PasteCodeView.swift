@@ -102,12 +102,24 @@ public struct PasteCodeView: View {
     }
 
     func instructionsText() -> some View {
-        (Text(UserText.manuallyEnterCodeInstructionPart1) +
-            Text(UserText.manuallyEnterCodeInstructionPart2).bold() +
-            Text(UserText.manuallyEnterCodeInstructionPart3) +
-            Text(UserText.manuallyEnterCodeInstructionPart4).bold() +
-            Text(UserText.manuallyEnterCodeInstructionPart5)
-        )
+        if #available(iOS 15.0, *) {
+            Text(instructionsString)
+        } else {
+            Text(UserText.manuallyEnterCodeInstruction)
+        }
+    }
+
+    @available(iOS 15, *)
+    var instructionsString: AttributedString {
+        let baseString = UserText.manuallyEnterCodeInstructionAttributed(syncMenuPath: UserText.syncMenuPath, menuItem: UserText.viewTextCodeMenuItem)
+        var instructions = AttributedString(baseString)
+        if let range1 = instructions.range(of: UserText.syncMenuPath) {
+            instructions[range1].font = .boldSystemFont(ofSize: 16)
+        }
+        if let range2 = instructions.range(of: UserText.viewTextCodeMenuItem) {
+            instructions[range2].font = .boldSystemFont(ofSize: 16)
+        }
+        return instructions
     }
 
     @ViewBuilder

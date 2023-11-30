@@ -88,7 +88,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
 
     func showPreparingSync() {
-        let controller = UIHostingController(rootView: PreparingToSync())
+        let controller = UIHostingController(rootView: PreparingToSyncView())
         navigationController?.present(controller, animated: true)
     }
 
@@ -113,7 +113,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         if showConnectMode {
             controller = UIHostingController(rootView: AnyView(ScanOrSeeCode(model: model)))
         } else {
-            controller = UIHostingController(rootView: AnyView(ScanOrEnterCodeToRecoverSyncedData(model: model)))
+            controller = UIHostingController(rootView: AnyView(ScanOrEnterCodeToRecoverSyncedDataView(model: model)))
         }
 
         let navController = UIDevice.current.userInterfaceIdiom == .phone

@@ -131,12 +131,10 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     }
 
     func dismissPresentedViewController() {
-        if let presentedViewController = navigationController?.presentedViewController {
-            if !(presentedViewController is UIHostingController<SyncSettingsView>) {
-                presentedViewController.dismiss(animated: true, completion: nil)
-                endConnectMode()
-            }
-        }
+        guard let presentedViewController = navigationController?.presentedViewController,
+              !(presentedViewController is UIHostingController<SyncSettingsView>) else { return }
+        presentedViewController.dismiss(animated: true, completion: nil)
+        endConnectMode()
     }
 
     func refreshDevices(clearDevices: Bool = true) {

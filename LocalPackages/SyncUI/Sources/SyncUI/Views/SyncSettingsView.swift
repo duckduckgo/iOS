@@ -149,7 +149,7 @@ extension SyncSettingsView {
                     isRecoverSyncedDataSheetVisible = true
                 }
                 .sheet(isPresented: $isRecoverSyncedDataSheetVisible, content: {
-                    RecoverSyncedData(model: model, onCancel: {
+                    RecoverSyncedDataView(model: model, onCancel: {
                         isRecoverSyncedDataSheetVisible = false
                     })
                 })

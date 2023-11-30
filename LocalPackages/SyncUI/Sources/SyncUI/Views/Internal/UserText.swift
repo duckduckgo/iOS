@@ -107,16 +107,22 @@ struct UserText {
     static let manuallyEnterCodeTitle = NSLocalizedString("manually.enter.code.title", value: "Manually Enter Code", comment: "Manually Enter Code View - Title")
     static let manuallyEnterCodeValidatingCodeAction = NSLocalizedString("manually.enter.code.validating.code.action", value: "Validating code", comment: "Manually Enter Code View - Validating Code Action")
     static let manuallyEnterCodeValidatingCodeFailedAction = NSLocalizedString("manually.enter.code.validating.code.failed.action", value: "Invalid code.", comment: "Manually Enter Code View - Validating Code Failed Action")
-    static let manuallyEnterCodeInstructionPart1 = NSLocalizedString("manually.enter.code.instruction.part1", value: "Go to ", comment: "Manually Enter Code View - Instruction Part 1")
-    static let manuallyEnterCodeInstructionPart2 = NSLocalizedString("manually.enter.code.instruction.part2", value: "Settings > Sync & Backup > Sync With Another Device ", comment: "Manually Enter Code View - Instruction Part 2")
-    static let manuallyEnterCodeInstructionPart3 = NSLocalizedString("manually.enter.code.instruction.part3", value: "and select ", comment: "Manually Enter Code View - Instruction Part 3")
-    static let manuallyEnterCodeInstructionPart4 = NSLocalizedString("manually.enter.code.instruction.part4", value: "View Text Code ", comment: "Manually Enter Code View - Instruction Part 4")
-    static let manuallyEnterCodeInstructionPart5 = NSLocalizedString("manually.enter.code.instruction.part5", value: "in the DuckDuckGo App on another synced device and paste the code here to sync this device.", comment: "Manually Enter Code View - Instruction Part 5")
+    static func manuallyEnterCodeInstructionAttributed(syncMenuPath: String, menuItem: String) -> String {
+        let localized = NSLocalizedString("manually.enter.code.instruction.attributed", value: "Go to %@ and select %@ in the DuckDuckGo App on another synced device and paste the code here to sync this device.", comment: "Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted")
+        return String(format: localized, syncMenuPath, menuItem)
+    }
+    static let manuallyEnterCodeInstruction = NSLocalizedString("manually.enter.code.instruction", value: "Go to Settings > Sync & Backup > Sync With Another Device and select Sync Menu Path in the DuckDuckGo App on another synced device and paste the code here to sync this device.", comment: "Manually Enter Code View - Instruction with sync menu path and view text code menu item inserted")
+    static let syncMenuPath = NSLocalizedString("sync.menu.path", value: "Settings > Sync & Backup > Sync With Another Device", comment: "Sync Menu Path")
+    static let viewTextCodeMenuItem = NSLocalizedString("view.text.code.menu.item", value: "View Text Code", comment: "View Text Code menu item")
 
     // Scan or See Code View
     static let scanOrSeeCodeTitle = NSLocalizedString("scan.or.see.code.title", value: "Scan QR Code", comment: "Scan or See Code View - Title")
-    static let scanOrSeeCodeInstructionPart1 = NSLocalizedString("scan.or.see.code.instruction.part1", value: "Go to ", comment: "Scan or See Code View - Instruction Part 1")
-    static let scanOrSeeCodeInstructionPart2 = NSLocalizedString("scan.or.see.code.instruction.part2", value: "Settings › Sync & Backup ", comment: "Scan or See Code View - Instruction Part 2")
+    static let scanOrSeeCodeInstruction = NSLocalizedString("scan.or.see.code.instruction", value: "Go to Settings › Sync & Backup in the DuckDuckGo Browser on another device and select ”Sync with Another Device.”", comment: "Scan or See Code View - Instruction")
+    static func scanOrSeeCodeInstructionAttributed(syncMenuPath: String) -> String {
+        let localized = NSLocalizedString("scan.or.see.code.instruction.attributed", value: "Go to %@ in the DuckDuckGo Browser on another device and select ”Sync with Another Device.”.", comment: "Scan or See Code View - Instruction with syncMenuPath")
+        return String(format: localized, syncMenuPath)
+    }
+
     static let scanOrSeeCodeInstructionPart3 = NSLocalizedString("scan.or.see.code.instruction.part3", value: "in the DuckDuckGo Browser on another device and select ”Sync with Another Device.”", comment: "Scan or See Code View - Instruction Part 3")
     static let scanOrSeeCodeManuallyEnterCodeLink = NSLocalizedString("scan.or.see.code.manually.enter.code.link", value: "Manually Enter Code", comment: "Scan or See Code View - Manually Enter Code Link")
     static let scanOrSeeCodeScanCodeInstructionsTitle = NSLocalizedString("scan.or.see.code.scan.code.instructions.title", value: "Mobile-to-Mobile?", comment: "Scan or See Code View - Scan Code Instructions Title")

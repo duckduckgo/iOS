@@ -22,7 +22,7 @@ import DuckUI
 import DesignResourcesKit
 
 
-public struct PreparingToSync: View {
+public struct PreparingToSyncView: View {
 
     public init() {}
 

@@ -21,7 +21,7 @@ import SwiftUI
 import DuckUI
 import DesignResourcesKit
 
-public struct RecoverSyncedData: View {
+public struct RecoverSyncedDataView: View {
 
     @ObservedObject public var model: SyncSettingsViewModel
     var onCancel: () -> Void

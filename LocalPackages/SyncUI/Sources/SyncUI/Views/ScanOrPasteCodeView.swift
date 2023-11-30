@@ -65,13 +65,24 @@ public struct ScanOrSeeCode: View {
         .padding(.top, 10)
     }
 
-    @ViewBuilder
     func instructionsText() -> some View {
-        (Text(UserText.scanOrSeeCodeInstructionPart1) +
-            Text(UserText.scanOrSeeCodeInstructionPart2).bold() +
-            Text(UserText.scanOrSeeCodeInstructionPart3)
-        )
+        if #available(iOS 15.0, *) {
+            Text(instructionsString)
+        } else {
+            Text(UserText.scanOrSeeCodeInstruction)
+        }
     }
+
+    @available(iOS 15, *)
+    var instructionsString: AttributedString {
+        let baseString = UserText.scanOrSeeCodeInstructionAttributed(syncMenuPath: UserText.syncMenuPath)
+        var instructions = AttributedString(baseString)
+        if let range = instructions.range(of: UserText.syncMenuPath) {
+            instructions[range].font = .boldSystemFont(ofSize: 13)
+        }
+        return instructions
+    }
+
 
     @ViewBuilder
     func qrCodeView() -> some View {

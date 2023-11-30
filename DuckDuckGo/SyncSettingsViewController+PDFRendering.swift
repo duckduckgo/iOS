@@ -41,7 +41,7 @@ extension SyncSettingsViewController {
 
         navigationController?.visibleViewController?.presentShareSheet(withItems: [code],
                                                                        fromView: view,
-                                                                       overrideInterfaceStyle: .dark) { _, _, _, _ in }
+                                                                       overrideInterfaceStyle: .dark)
     }
 
 }

@@ -20,7 +20,7 @@
 import SwiftUI
 import DuckUI
 
-public struct ScanOrEnterCodeToRecoverSyncedData: View {
+public struct ScanOrEnterCodeToRecoverSyncedDataView: View {
 
     @ObservedObject var model: ScanOrPasteCodeViewModel
 

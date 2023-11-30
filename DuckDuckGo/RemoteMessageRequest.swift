@@ -28,7 +28,7 @@ public struct RemoteMessageRequest {
 
     private var endpoint: URL {
         #if DEBUG
-        return URL(string: "https://gist.githubusercontent.com/samsymons/980a3b3a2050df0d4695879e042b8ba4/raw/799105fe64c9adee62f859ac9f3a77c36ad98cbc/vpn-sample.json")!
+        return URL(string: "https://gist.githubusercontent.com/samsymons/980a3b3a2050df0d4695879e042b8ba4/raw/04a5ba7e3072173118c2bf52dd6c952188a08f79/vpn-sample.json")!
         #else
         return URL(string: "https://staticcdn.duckduckgo.com/remotemessaging/config/v1/ios-config.json")!
         #endif

@@ -77,7 +77,19 @@ public struct PasteCodeView: View {
                     .padding(.horizontal)
                 } else {
 
-                    instructions()
+                    if #available(iOS 15.0, *) {
+                        Text(instructionsString)
+                            .lineLimit(nil)
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.white.opacity(0.6))
+                            .padding()
+                    } else {
+                        Text(UserText.manuallyEnterCodeInstruction)
+                            .lineLimit(nil)
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.white.opacity(0.6))
+                            .padding()
+                    }
 
                     Spacer()
                 }
@@ -90,23 +102,6 @@ public struct PasteCodeView: View {
         }
         .frame(maxWidth: 350, maxHeight: 350)
         .padding()
-    }
-
-    @ViewBuilder
-    func instructions() -> some View {
-        instructionsText()
-            .lineLimit(nil)
-            .multilineTextAlignment(.center)
-            .foregroundColor(.white.opacity(0.6))
-            .padding()
-    }
-
-    func instructionsText() -> some View {
-        if #available(iOS 15.0, *) {
-            Text(instructionsString)
-        } else {
-            Text(UserText.manuallyEnterCodeInstruction)
-        }
     }
 
     @available(iOS 15, *)

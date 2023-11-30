@@ -36,7 +36,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
     private let errorObserver: ConnectionErrorObserver
-    private let activationDateStore: WaitlistActivationDateStore
+    private let activationDateStore: VPNWaitlistActivationDateStore
     private var cancellables: Set<AnyCancellable> = []
 
     // MARK: Error
@@ -74,7 +74,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
                 serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
                 errorObserver: ConnectionErrorObserver = ConnectionErrorObserverThroughSession(),
                 locationListRepository: NetworkProtectionLocationListRepository = NetworkProtectionLocationListCompositeRepository(),
-                activationDateStore: WaitlistActivationDateStore = DefaultWaitlistActivationDateStore()) {
+                activationDateStore: VPNWaitlistActivationDateStore = DefaultVPNWaitlistActivationDateStore()) {
         self.tunnelController = tunnelController
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver

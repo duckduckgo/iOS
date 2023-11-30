@@ -19,14 +19,14 @@
 
 import Foundation
 
-protocol WaitlistActivationDateStore {
+protocol VPNWaitlistActivationDateStore {
 
     func setActivationDateIfNecessary()
     func daysSinceActivation() -> Int?
 
 }
 
-struct DefaultWaitlistActivationDateStore: WaitlistActivationDateStore {
+struct DefaultVPNWaitlistActivationDateStore: VPNWaitlistActivationDateStore {
 
     private enum Constants {
         static let networkProtectionActivationDateKey = "com.duckduckgo.network-protection.activation-date"

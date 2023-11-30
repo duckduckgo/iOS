@@ -289,6 +289,7 @@
 		4B6484FC27FFD14F0050A7A1 /* WindowsBrowserWaitlistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484FB27FFD14F0050A7A1 /* WindowsBrowserWaitlistTests.swift */; };
 		4B75EA9226A266CB00018634 /* PrintingUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75EA9126A266CB00018634 /* PrintingUserScript.swift */; };
 		4B78074C2B1823C5009DB2CF /* VPNWaitlistActivationDateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B78074B2B1823C5009DB2CF /* VPNWaitlistActivationDateStore.swift */; };
+		4B78074E2B183A1F009DB2CF /* SurveyURLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B78074D2B183A1F009DB2CF /* SurveyURLBuilder.swift */; };
 		4B83396C29AC0701003F7EA9 /* AppTrackingProtectionStoringModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B470EE2299C6DD10086EBDC /* AppTrackingProtectionStoringModel.swift */; };
 		4B83396F29AC1437003F7EA9 /* AppTrackingProtectionListModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B83396E29AC1437003F7EA9 /* AppTrackingProtectionListModelTests.swift */; };
 		4B83397129AC18C9003F7EA9 /* AppTrackingProtectionStoringModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B83397029AC18C9003F7EA9 /* AppTrackingProtectionStoringModelTests.swift */; };
@@ -1325,6 +1326,7 @@
 		4B6484FB27FFD14F0050A7A1 /* WindowsBrowserWaitlistTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowsBrowserWaitlistTests.swift; sourceTree = "<group>"; };
 		4B75EA9126A266CB00018634 /* PrintingUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintingUserScript.swift; sourceTree = "<group>"; };
 		4B78074B2B1823C5009DB2CF /* VPNWaitlistActivationDateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNWaitlistActivationDateStore.swift; sourceTree = "<group>"; };
+		4B78074D2B183A1F009DB2CF /* SurveyURLBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyURLBuilder.swift; sourceTree = "<group>"; };
 		4B83396E29AC1437003F7EA9 /* AppTrackingProtectionListModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionListModelTests.swift; sourceTree = "<group>"; };
 		4B83397029AC18C9003F7EA9 /* AppTrackingProtectionStoringModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionStoringModelTests.swift; sourceTree = "<group>"; };
 		4B83397229AFB8D2003F7EA9 /* AppTrackingProtectionFeedbackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingProtectionFeedbackModel.swift; sourceTree = "<group>"; };
@@ -3498,6 +3500,7 @@
 				4BBBBA8A2B031B4200D965DA /* VPNWaitlistViewController.swift */,
 				4BCD146A2B05C4B5000B1E4C /* VPNWaitlistTermsAndConditionsViewController.swift */,
 				4B78074B2B1823C5009DB2CF /* VPNWaitlistActivationDateStore.swift */,
+				4B78074D2B183A1F009DB2CF /* SurveyURLBuilder.swift */,
 			);
 			name = VPN;
 			sourceTree = "<group>";
@@ -6314,6 +6317,7 @@
 				F1386BA41E6846C40062FC3C /* TabDelegate.swift in Sources */,
 				C1B924B72ACD6E6800EE7B06 /* AutofillNeverSavedTableViewCell.swift in Sources */,
 				020108A929A7C1CD00644F9D /* AppTrackerImageCache.swift in Sources */,
+				4B78074E2B183A1F009DB2CF /* SurveyURLBuilder.swift in Sources */,
 				3132FA2A27A0788F00DD7A12 /* QuickLookPreviewHelper.swift in Sources */,
 				C1D21E2D293A5965006E5A05 /* AutofillLoginSession.swift in Sources */,
 				4B53648A26718D0E001AA041 /* EmailWaitlist.swift in Sources */,

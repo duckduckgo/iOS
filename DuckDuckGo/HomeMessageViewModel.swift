@@ -141,8 +141,14 @@ struct HomeMessageViewModel {
             }
         case .surveyURL(let value):
             return {
-                print("DEBUG: OPENING SURVEY URL")
-                LaunchTabNotification.postLaunchTabNotification(urlString: value)
+                if let surveyURL = URL(string: value) {
+                    let surveyURLBuilder = DefaultSurveyURLBuilder()
+                    let surveyURLWithParameters = surveyURLBuilder.addSurveyParameters(to: surveyURL)
+                    LaunchTabNotification.postLaunchTabNotification(urlString: surveyURLWithParameters.absoluteString)
+                } else {
+                    LaunchTabNotification.postLaunchTabNotification(urlString: value)
+                }
+
                 onDidClose(buttonAction)
             }
         case .appStore:

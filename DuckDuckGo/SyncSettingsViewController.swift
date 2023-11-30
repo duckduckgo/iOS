@@ -228,10 +228,12 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
         }
     }
 
-    func loginAndShowDeviceConnected(recoveryKey: SyncCode.RecoveryKey, isActiveSyncDevice: Bool) async throws {
+    func loginAndShowDeviceConnected(recoveryKey: SyncCode.RecoveryKey) async throws {
         let registeredDevices = try await syncService.login(recoveryKey, deviceName: deviceName, deviceType: deviceType)
         mapDevices(registeredDevices)
-        dismissVCAndShowRecoveryPDF()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.dismissVCAndShowRecoveryPDF()
+        }
     }
 
     func startPolling() {
@@ -240,7 +242,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                 if let recoveryKey = try await connector?.pollForRecoveryKey() {
                     dismissPresentedViewController()
                     showPreparingSync()
-                    try await loginAndShowDeviceConnected(recoveryKey: recoveryKey, isActiveSyncDevice: false)
+                    try await loginAndShowDeviceConnected(recoveryKey: recoveryKey)
                 } else {
                     // Likely cancelled elsewhere
                     return
@@ -260,7 +262,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
             if let recoveryKey = syncCode.recovery {
                 dismissPresentedViewController()
                 showPreparingSync()
-                try await loginAndShowDeviceConnected(recoveryKey: recoveryKey, isActiveSyncDevice: true)
+                try await loginAndShowDeviceConnected(recoveryKey: recoveryKey)
                 return true
             } else if let connectKey = syncCode.connect {
                 dismissPresentedViewController()

@@ -75,7 +75,7 @@ public class SyncSettingsViewModel: ObservableObject {
     }
 
     @Published public var devices = [Device]()
-    @Published public var isFaviconsSyncEnabled = false
+    @Published public var isFaviconsFetchingEnabled = false
     @Published public var isUnifiedFavoritesEnabled = true
     @Published public var isSyncingDevices = false
     @Published public var isSyncBookmarksPaused = false

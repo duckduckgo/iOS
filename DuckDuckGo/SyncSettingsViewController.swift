@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import Core
 import Combine
 import SyncUI
 import DDGSync
@@ -27,7 +28,8 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
     lazy var authenticator = Authenticator()
 
-    let syncService: DDGSyncing! = (UIApplication.shared.delegate as? AppDelegate)!.syncService
+    let syncService: DDGSyncing
+    let syncBookmarksAdapter: SyncBookmarksAdapter
     var connector: RemoteConnecting?
 
     var recoveryCode: String {
@@ -49,11 +51,15 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     var cancellables = Set<AnyCancellable>()
 
     // For some reason, on iOS 14, the viewDidLoad wasn't getting called so do some setup here
-    convenience init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
+    init(syncService: DDGSyncing, syncBookmarksAdapter: SyncBookmarksAdapter, appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
+        self.syncService = syncService
+        self.syncBookmarksAdapter = syncBookmarksAdapter
+
         let viewModel = SyncSettingsViewModel()
 
-        self.init(rootView: SyncSettingsView(model: viewModel))
+        super.init(rootView: SyncSettingsView(model: viewModel))
 
+        setUpFaviconsFetcherSwitch(viewModel)
         setUpFavoritesDisplayModeSwitch(viewModel, appSettings)
         setUpSyncPaused(viewModel, appSettings)
         refreshForState(syncService.authState)
@@ -68,6 +74,41 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
         rootView.model.delegate = self
         navigationItem.title = UserText.syncTitle
+    }
+    
+    @MainActor required dynamic init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setUpFaviconsFetcherSwitch(_ viewModel: SyncSettingsViewModel) {
+        viewModel.isFaviconsFetchingEnabled = syncBookmarksAdapter.isFaviconsFetchingEnabled
+
+        syncBookmarksAdapter.$isFaviconsFetchingEnabled
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .sink { isFaviconsFetchingEnabled in
+                if viewModel.isFaviconsFetchingEnabled != isFaviconsFetchingEnabled {
+                    viewModel.isFaviconsFetchingEnabled = isFaviconsFetchingEnabled
+                }
+            }
+            .store(in: &cancellables)
+
+        viewModel.$devices
+            .map { $0.count > 1 }
+            .removeDuplicates()
+            .sink { [weak self] hasMoreThanOneDevice in
+                self?.syncBookmarksAdapter.isEligibleForFaviconsFetcherOnboarding = hasMoreThanOneDevice
+            }
+            .store(in: &cancellables)
+
+        viewModel.$isFaviconsFetchingEnabled
+            .sink { [weak self] isFaviconsFetchingEnabled in
+                self?.syncBookmarksAdapter.isFaviconsFetchingEnabled = isFaviconsFetchingEnabled
+                if isFaviconsFetchingEnabled {
+                    self?.syncService.scheduler.notifyDataChanged()
+                }
+            }
+            .store(in: &cancellables)
     }
 
     private func setUpFavoritesDisplayModeSwitch(_ viewModel: SyncSettingsViewModel, _ appSettings: AppSettings) {

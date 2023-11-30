@@ -634,9 +634,15 @@ class MainViewController: UIViewController {
         let controller = HomeViewController.loadFromStoryboard(model: tabModel!,
                                                                favoritesViewModel: favoritesViewModel,
                                                                appSettings: appSettings,
+                                                               syncService: syncService,
+                                                               syncDataProviders: syncDataProviders,
                                                                appTPDatabase: appTrackingProtectionDatabase)
 #else
-        let controller = HomeViewController.loadFromStoryboard(model: tabModel!, favoritesViewModel: favoritesViewModel, appSettings: appSettings)
+        let controller = HomeViewController.loadFromStoryboard(model: tabModel!,
+                                                               favoritesViewModel: favoritesViewModel,
+                                                               appSettings: appSettings,
+                                                               syncService: syncService,
+                                                               syncDataProviders: syncDataProviders)
 #endif
 
         homeController = controller

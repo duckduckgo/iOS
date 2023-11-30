@@ -56,6 +56,9 @@ struct UserText {
     static let optionsSectionHeader = NSLocalizedString("options.section.header", value: "Options", comment: "Options - Section Header")
     static let unifiedFavoritesTitle = NSLocalizedString("unified.favorites.title", value: "Unify Favorites", comment: "Options - Unify Favorites Title")
     static let unifiedFavoritesInstruction = NSLocalizedString("unified.favorites.instruction", value: "Use the same favorite bookmarks on all your devices. Leave off to keep mobile and desktop favorites separate.", comment: "Options - Unify Favorites Instruction")
+    static let fetchFaviconsOptionTitle = NSLocalizedString("fetch.favicons.option.title", value: "Auto-Download Icons", comment: "Automatically download icons for your synced bookmarks. Icon downloads are exposed to your network.")
+    static let fetchFaviconsOptionCaption = NSLocalizedString("fetch.favicons.option.caption", value: "Automatically download icons for synced bookmarks.", comment: "Options - Fetch Favicons Caption")
+
     // Save RecoveryPDF
     static let saveRecoveryPDFButton = NSLocalizedString("save.recovery.pdf.button", value: "Save Recovery PDF", comment: "Save RecoveryPDF - Button")
     static let saveRecoveryPDFFooter = NSLocalizedString("save.recovery.pdf.footer", value: "If you lose your device, you will need this recovery code to restore your synced data.", comment: "Save RecoveryPDF - Footer")
@@ -149,6 +152,12 @@ struct UserText {
     static let nextButton = NSLocalizedString("next.button", value: "Next", comment: "Standard Buttons - Next Button")
     static let backButton = NSLocalizedString("back.button", value: "Back", comment: "Standard Buttons - Back Button")
     static let pasteButton = NSLocalizedString("paste.button", value: "Paste", comment: "Standard Buttons - Paste Button")
+    
+    // Fetch favicons
+    static let fetchFaviconsOnboardingTitle = NSLocalizedString("fetch.favicons.onboarding.title", value: "Download Missing Icons?", comment: "Fetch Favicons Onboarding - Title")
+    static let fetchFaviconsOnboardingMessage = NSLocalizedString("fetch.favicons.onboarding.message", value: "Do you want this device to automatically download icons for any new bookmarks synced from your other devices? This will expose the download to your network any time a bookmark is synced.", comment: "Fetch Favicons Onboarding - Message")
+    static let fetchFaviconsOnboardingButtonTitle = NSLocalizedString("fetch.favicons.onboarding.button.title", value: "Keep Bookmarks Icons Updated", comment: "Fetch Favicons Onboarding - Button Title")
+
 
     // swiftlint:enable line_length
 }

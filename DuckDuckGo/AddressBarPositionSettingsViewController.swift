@@ -43,7 +43,6 @@ class AddressBarPositionSettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let theme = ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
 
         cell.tintColor = theme.buttonTintColor
         cell.textLabel?.textColor = theme.tableCellTextColor

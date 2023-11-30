@@ -21,20 +21,46 @@ import SwiftUI
 
 public struct RoundedButtonStyle: ButtonStyle {
 
-    public let enabled: Bool
+    public enum Style {
+        case solid
+        case bordered
+    }
 
-    public init(enabled: Bool) {
+    public let enabled: Bool
+    private let style: Style
+
+    public init(enabled: Bool, style: Style = .solid) {
         self.enabled = enabled
+        self.style = style
     }
 
     public func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
+        let backgroundColor: Color
+        let foregroundColor: Color
+        let borderColor: Color
+        let borderWidth: CGFloat
+
+        switch style {
+        case .solid:
+            backgroundColor = enabled ? Color.waitlistBlue : Color.waitlistBlue.opacity(0.2)
+            foregroundColor = Color.waitlistButtonText
+            borderColor = Color.clear
+            borderWidth = 0
+        case .bordered:
+            backgroundColor = Color.clear
+            foregroundColor = Color.waitlistBlue
+            borderColor = Color.waitlistBlue
+            borderWidth = 2
+        }
+
+        return configuration.label
             .daxHeadline()
             .frame(maxWidth: .infinity)
             .padding([.top, .bottom], 16)
-            .background(enabled ? Color.waitlistBlue : Color.waitlistBlue.opacity(0.2))
-            .foregroundColor(.waitlistButtonText)
+            .background(backgroundColor)
+            .foregroundColor(foregroundColor)
             .clipShape(RoundedRectangle(cornerRadius: 8))
+            .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(borderColor, lineWidth: borderWidth))
     }
 
 }

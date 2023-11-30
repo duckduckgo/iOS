@@ -270,6 +270,15 @@ extension SyncSettingsView {
     @ViewBuilder
     func options() -> some View {
         Section {
+            Toggle(isOn: $model.isFaviconsFetchingEnabled) {
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(UserText.fetchFaviconsOptionTitle)
+                        .foregroundColor(.primary)
+                    Text(UserText.fetchFaviconsOptionCaption)
+                        .daxBodyRegular()
+                        .foregroundColor(.secondary)
+                }
+            }
             Toggle(isOn: $model.isUnifiedFavoritesEnabled) {
                 VStack(alignment: .leading, spacing: 5) {
                     Text(UserText.unifiedFavoritesTitle)

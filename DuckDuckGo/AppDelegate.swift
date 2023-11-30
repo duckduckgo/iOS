@@ -21,6 +21,7 @@ import UIKit
 import Combine
 import Common
 import Core
+import CoreData
 import UserNotifications
 import Kingfisher
 import WidgetKit
@@ -167,6 +168,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         var shouldResetBookmarksSyncTimestamp = false
 
+        let preMigrationErrorHandling = EventMapping<BookmarkFormFactorFavoritesMigration.MigrationErrors> { _, error, _, _ in
+            if let error = error {
+                Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
+                           error: error)
+            } else {
+                Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase)
+            }
+
+            if shouldPresentInsufficientDiskSpaceAlertAndCrash {
+                return
+            } else {
+                Thread.sleep(forTimeInterval: 1)
+                fatalError("Could not create Bookmarks database stack: \(error?.localizedDescription ?? "err")")
+            }
+        }
+
+        let oldFavoritesOrder = BookmarkFormFactorFavoritesMigration
+            .getFavoritesOrderFromPreV4Model(
+                dbContainerLocation: BookmarksDatabase.defaultDBLocation,
+                dbFileURL: BookmarksDatabase.defaultDBFileURL,
+                errorEvents: preMigrationErrorHandling
+            )
+
         bookmarksDatabase.loadStore { [weak self] context, error in
             guard let context = context else {
                 if let error = error {
@@ -191,7 +215,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             legacyStorage?.removeStore()
 
             do {
-                BookmarkUtils.migrateToFormFactorSpecificFavorites(byCopyingExistingTo: .mobile, in: context)
+                BookmarkFormFactorFavoritesMigration.migrateToFormFactorSpecificFavorites(byCopyingExistingTo: .mobile,
+                                                                                          preservingOrderOf: oldFavoritesOrder,
+                                                                                          in: context)
                 if context.hasChanges {
                     try context.save(onErrorFire: .bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders)
                     if let syncDataProviders = self?.syncDataProviders {
@@ -304,6 +330,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
         WindowsBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
+
+#if NETWORK_PROTECTION
+        VPNWaitlist.shared.registerBackgroundRefreshTaskHandler()
+#endif
+
         RemoteMessaging.registerBackgroundRefreshTaskHandler(
             bookmarksDatabase: bookmarksDatabase,
             favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
@@ -323,6 +354,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #if NETWORK_PROTECTION
         widgetRefreshModel.beginObservingVPNStatus()
+        NetworkProtectionAccessController().refreshNetworkProtectionAccess()
 #endif
 
         return true
@@ -405,18 +437,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        WindowsBrowserWaitlist.shared.fetchInviteCodeIfAvailable { error in
-            guard error == nil else { return }
-            WindowsBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
-        }
-
-        BGTaskScheduler.shared.getPendingTaskRequests { tasks in
-            let hasWindowsBrowserWaitlistTask = tasks.contains { $0.identifier == WindowsBrowserWaitlist.backgroundRefreshTaskIdentifier }
-            if !hasWindowsBrowserWaitlistTask {
-                WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
-            }
-        }
-
+        checkWaitlists()
         syncService.scheduler.notifyAppLifecycleEvent()
         fireFailedCompilationsPixelIfNeeded()
         refreshShortcuts()
@@ -541,6 +562,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         lastBackgroundDate = Date()
         AppDependencyProvider.shared.autofillLoginSession.endSession()
         suspendSync()
+        syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
     }
 
     private func suspendSync() {
@@ -812,13 +834,17 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
             let identifier = response.notification.request.identifier
-            if identifier == WindowsBrowserWaitlist.notificationIdentitier {
+            if identifier == WindowsBrowserWaitlist.notificationIdentifier {
                 presentWindowsBrowserWaitlistSettingsModal()
             }
 
 #if NETWORK_PROTECTION
             if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
                 presentNetworkProtectionStatusSettingsModal()
+            }
+
+            if identifier == VPNWaitlist.notificationIdentifier {
+                presentNetworkProtectionWaitlistModal()
             }
 #endif
         }
@@ -832,6 +858,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
 #if NETWORK_PROTECTION
+    private func presentNetworkProtectionWaitlistModal() {
+        if #available(iOS 15, *) {
+            let networkProtectionRoot = VPNWaitlistViewController(nibName: nil, bundle: nil)
+            presentSettings(with: networkProtectionRoot)
+        }
+    }
+
     func presentNetworkProtectionStatusSettingsModal() {
         if #available(iOS 15, *) {
             let networkProtectionRoot = NetworkProtectionRootViewController()

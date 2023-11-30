@@ -184,6 +184,10 @@ class SettingsViewController: UITableViewController {
         configureWindowsBrowserWaitlistCell()
         configureSyncCell()
 
+#if NETWORK_PROTECTION
+        updateNetPCellSubtitle(connectionStatus: connectionObserver.recentValue)
+#endif
+
         // Make sure multiline labels are correctly presented
         tableView.setNeedsLayout()
         tableView.layoutIfNeeded()
@@ -355,28 +359,36 @@ class SettingsViewController: UITableViewController {
     private func configureNetPCell() {
         netPCell.isHidden = !shouldShowNetPCell
 #if NETWORK_PROTECTION
+        updateNetPCellSubtitle(connectionStatus: connectionObserver.recentValue)
         connectionObserver.publisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] status in
-                let detailText: String
-                switch status {
-                case .connected:
-                    detailText = UserText.netPCellConnected
-                default:
-                    detailText = UserText.netPCellDisconnected
-                }
-                self?.netPCell.detailTextLabel?.text = detailText
+                self?.updateNetPCellSubtitle(connectionStatus: status)
             }
             .store(in: &cancellables)
 #endif
     }
+
+#if NETWORK_PROTECTION
+    private func updateNetPCellSubtitle(connectionStatus: ConnectionStatus) {
+        switch NetworkProtectionAccessController().networkProtectionAccessType() {
+        case .none, .waitlistAvailable, .waitlistJoined, .waitlistInvitedPendingTermsAcceptance:
+            netPCell.detailTextLabel?.text = VPNWaitlist.shared.settingsSubtitle
+        case .waitlistInvited, .inviteCodeInvited:
+            switch connectionStatus {
+            case .connected: netPCell.detailTextLabel?.text = UserText.netPCellConnected
+            default: netPCell.detailTextLabel?.text = UserText.netPCellDisconnected
+            }
+        }
+    }
+#endif
 
     private func configureDebugCell() {
         debugCell.isHidden = !shouldShowDebugCell
     }
 
     func showSync(animated: Bool = true) {
-        let controller = SyncSettingsViewController()
+        let controller = SyncSettingsViewController(syncService: syncService, syncBookmarksAdapter: syncDataProviders.bookmarksAdapter)
         navigationController?.pushViewController(controller, animated: animated)
     }
 
@@ -387,8 +399,7 @@ class SettingsViewController: UITableViewController {
             syncDataProviders: syncDataProviders
         )
         autofillController.delegate = self
-        Pixel.fire(pixel: .autofillSettingsOpened,
-                   withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
+        Pixel.fire(pixel: .autofillSettingsOpened)
         navigationController?.pushViewController(autofillController, animated: animated)
     }
     
@@ -426,14 +437,21 @@ class SettingsViewController: UITableViewController {
 #if NETWORK_PROTECTION
     @available(iOS 15, *)
     private func showNetP() {
-        // This will be tidied up as part of https://app.asana.com/0/0/1205084446087078/f
-        let rootViewController = NetworkProtectionRootViewController { [weak self] in
-            self?.navigationController?.popViewController(animated: true)
-            let newRootViewController = NetworkProtectionRootViewController()
-            self?.pushNetP(newRootViewController)
+        switch NetworkProtectionAccessController().networkProtectionAccessType() {
+        case .inviteCodeInvited, .waitlistInvited:
+            // This will be tidied up as part of https://app.asana.com/0/0/1205084446087078/f
+            let rootViewController = NetworkProtectionRootViewController { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
+                let newRootViewController = NetworkProtectionRootViewController()
+                self?.pushNetP(newRootViewController)
+            }
+
+            pushNetP(rootViewController)
+        default:
+            navigationController?.pushViewController(VPNWaitlistViewController(nibName: nil, bundle: nil), animated: true)
         }
-        pushNetP(rootViewController)
     }
+
     @available(iOS 15, *)
     private func pushNetP(_ rootViewController: NetworkProtectionRootViewController) {
         navigationController?.pushViewController(
@@ -492,17 +510,8 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
         let theme = ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
-        
-        if cell.accessoryType == .disclosureIndicator {
-            let accesoryImage = UIImageView(image: UIImage(named: "DisclosureIndicator"))
-            accesoryImage.frame = CGRect(x: 0, y: 0, width: 8, height: 13)
-            accesoryImage.tintColor = theme.tableCellAccessoryColor
-            cell.accessoryView = accesoryImage
-        }
     }
 
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection: Int) {

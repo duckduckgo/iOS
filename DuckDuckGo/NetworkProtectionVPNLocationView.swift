@@ -53,7 +53,7 @@ struct NetworkProtectionVPNLocationView: View {
                 }, label: {
                     Text(UserText.netPPreferredLocationNearest)
                         .foregroundStyle(Color.textPrimary)
-                        .font(.system(size: 16))
+                        .daxBodyRegular()
                 }
             )
         } header: {
@@ -62,7 +62,7 @@ struct NetworkProtectionVPNLocationView: View {
         } footer: {
             Text(UserText.netPVPNLocationRecommendedSectionFooter)
                 .foregroundStyle(Color.textSecondary)
-                .font(.system(size: 13))
+                .daxFootnoteRegular()
                 .padding(.top, 6)
         }
     }
@@ -115,11 +115,11 @@ private struct CountryItem: View {
                 Text(itemModel.emoji)
                 VStack(alignment: .leading, spacing: 4) {
                     Text(itemModel.title)
-                        .font(.system(size: 16))
+                        .daxBodyRegular()
                         .foregroundStyle(Color.textPrimary)
                     if let subtitle = itemModel.subtitle {
                         Text(subtitle)
-                            .font(.system(size: 13))
+                            .daxFootnoteRegular()
                             .foregroundStyle(Color.textSecondary)
                     }
                 }
@@ -178,7 +178,7 @@ private struct MenuItem: View {
             action: action,
             label: {
                 HStack(spacing: 12) {
-                    Text(title)
+                    Text(title).daxBodyRegular()
                     Spacer()
                     Image(systemName: "checkmark")
                         .if(!isSelected) {

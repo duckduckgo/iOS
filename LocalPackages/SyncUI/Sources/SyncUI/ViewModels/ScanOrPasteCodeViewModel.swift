@@ -109,12 +109,10 @@ public class ScanOrPasteCodeViewModel: ObservableObject {
     }
 
     func startConnectMode() -> ShowQRCodeViewModel {
-        let model = ShowQRCodeViewModel()
-        showQRCodeModel = model
         Task { @MainActor in
             showQRCodeModel.code = await delegate?.startConnectMode()
         }
-        return model
+        return showQRCodeModel
     }
 
     func showShareCodeSheet() {

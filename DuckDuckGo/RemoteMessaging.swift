@@ -158,7 +158,7 @@ struct RemoteMessaging {
             daysSinceNetworkProtectionEnabled = 5
 #else
             isNetworkProtectionWaitlistUser = false
-            daysSinceNetworkProtectionEnabled = 0
+            daysSinceNetworkProtectionEnabled = -1
 #endif
 
             let remoteMessagingConfigMatcher = RemoteMessagingConfigMatcher(

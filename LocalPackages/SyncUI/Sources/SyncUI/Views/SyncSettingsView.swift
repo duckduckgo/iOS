@@ -58,11 +58,14 @@ public struct SyncSettingsView: View {
                     
                     syncNewDevice()
                     
-                    OptionsView(isUnifiedFavoritesEnabled: $model.isUnifiedFavoritesEnabled)
-                        .onAppear(perform: {
-                            model.delegate?.updateOptions()
-                        })
-                    
+                    OptionsView(
+                        isFaviconsFetchingEnabled: $model.isFaviconsFetchingEnabled,
+                        isUnifiedFavoritesEnabled: $model.isUnifiedFavoritesEnabled
+                    )
+                    .onAppear {
+                        model.delegate?.updateOptions()
+                    }
+
                     saveRecoveryPDF()
                     
                     deleteAllData()
@@ -359,9 +362,23 @@ extension View {
 
 
 public struct OptionsView: View {
+    @Binding var isFaviconsFetchingEnabled: Bool
     @Binding var isUnifiedFavoritesEnabled: Bool
+
     public var body: some View {
         Section {
+            Toggle(isOn: $isFaviconsFetchingEnabled) {
+                HStack(spacing: 16) {
+                    Image("SyncFetchFavicons")
+                    VStack(alignment: .leading) {
+                        Text(UserText.fetchFaviconsOptionTitle)
+                            .foregroundColor(.primary)
+                        Text(UserText.fetchFaviconsOptionCaption)
+                            .daxBodyRegular()
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
             Toggle(isOn: $isUnifiedFavoritesEnabled) {
                 HStack(spacing: 16) {
                     Image("SyncAllDevices")

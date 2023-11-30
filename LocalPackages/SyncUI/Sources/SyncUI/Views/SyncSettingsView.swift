@@ -122,9 +122,13 @@ extension SyncSettingsView {
                 Spacer()
             }
         } footer: {
-            Text(UserText.syncWithAnotherDeviceFooter)
-                .daxFootnoteRegular()
-                .multilineTextAlignment(.center)
+            HStack {
+                Spacer()
+                Text(UserText.syncWithAnotherDeviceFooter)
+                    .daxFootnoteRegular()
+                    .multilineTextAlignment(.center)
+                Spacer()
+            }
         }
     }
 

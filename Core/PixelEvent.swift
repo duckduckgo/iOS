@@ -354,6 +354,14 @@ extension Pixel {
 
         case networkProtectionUnhandledError
 
+        case networkProtectionWaitlistUserActive
+        case networkProtectionSettingsRowDisplayed
+        case networkProtectionWaitlistIntroScreenDisplayed
+        case networkProtectionWaitlistTermsDisplayed
+        case networkProtectionWaitlistTermsAccepted
+        case networkProtectionWaitlistNotificationShown
+        case networkProtectionWaitlistNotificationLaunched
+
         // MARK: remote messaging pixels
 
         case remoteMessageShown
@@ -847,6 +855,14 @@ extension Pixel.Event {
         case .networkProtectionMemoryWarning: return "m_netp_vpn_memory_warning"
         case .networkProtectionMemoryCritical: return "m_netp_vpn_memory_critical"
         case .networkProtectionUnhandledError: return "m_netp_unhandled_error"
+
+        case .networkProtectionWaitlistUserActive: return "m_netp_waitlist_user_active"
+        case .networkProtectionSettingsRowDisplayed: return "m_netp_waitlist_settings_entry_viewed"
+        case .networkProtectionWaitlistIntroScreenDisplayed: return "m_netp_waitlist_intro_screen_viewed"
+        case .networkProtectionWaitlistTermsDisplayed: return "m_netp_waitlist_terms_viewed"
+        case .networkProtectionWaitlistTermsAccepted: return "m_netp_waitlist_terms_accepted"
+        case .networkProtectionWaitlistNotificationShown: return "m_netp_waitlist_notification_shown"
+        case .networkProtectionWaitlistNotificationLaunched: return "m_netp_waitlist_notification_launched"
 
         // MARK: remote messaging pixels
 

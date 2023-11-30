@@ -87,7 +87,7 @@ class FavoriteHomeCell: UICollectionViewCell {
         self.onRemove?()
     }
 
-    func updateFor(favorite: BookmarkEntity) {
+    func updateFor(favorite: BookmarkEntity, onFaviconMissing: ((String) -> Void)? = nil) {
         self.favorite = favorite
         
         let host = favorite.host
@@ -111,6 +111,7 @@ class FavoriteHomeCell: UICollectionViewCell {
         iconImage?.loadFavicon(forDomain: domain, usingCache: .fireproof, useFakeFavicon: false) { image, _ in
             guard let image = image else {
                 iconImage?.image = fakeFavicon
+                onFaviconMissing?(domain)
                 return
             }
 

@@ -39,6 +39,9 @@ struct UserText {
     static let recoverYourData = "Recover Your Data"
 
     static let options = "Options"
+    static let fetchFaviconsOptionTitle = "Fetch Bookmark Icons"
+    static let fetchFaviconsOptionCaption = "Automatically download icons for synced bookmarks."
+
     static let unifiedFavoritesTitle = "Share Favorites"
     static let unifiedFavoritesInstruction = "Use the same favorites on all devices. Leave off to keep mobile and desktop favorites separate."
 
@@ -118,6 +121,9 @@ struct UserText {
     static let bookmarksLimitExceededAction = "Manage Bookmarks"
     static let credentialsLimitExceededAction = "Manage Logins"
     
+    static let fetchFaviconsOnboardingTitle = "Download Missing Icons?"
+    static let fetchFaviconsOnboardingMessage = "Do you want this device to automatically download icons for any new bookmarks synced from your other devices? This will expose the download to your network any time a bookmark is synced."
+    static let fetchFaviconsOnboardingButtonTitle = "Keep Bookmarks Icons Updated"
 
 }
 // swiftlint:enable line_length

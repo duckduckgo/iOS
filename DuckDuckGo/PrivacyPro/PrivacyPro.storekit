@@ -1,5 +1,5 @@
 {
-  "identifier" : "5935A809",
+  "identifier" : "A2F4D5EE",
   "nonRenewingSubscriptions" : [
 
   ],
@@ -8,9 +8,12 @@
   ],
   "settings" : {
     "_applicationInternalID" : "6458101566",
+    "_compatibilityTimeRate" : {
+      "3" : 6
+    },
     "_developerTeamID" : "HKE973VLUW",
     "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 722974434.57783198,
+    "_lastSynchronizedDate" : 723054177.219136,
     "_locale" : "en_US",
     "_storefront" : "USA",
     "_storeKitErrors" : [
@@ -59,7 +62,8 @@
         "enabled" : false,
         "name" : "Offer Code Redeem Sheet"
       }
-    ]
+    ],
+    "_timeRate" : 1002
   },
   "subscriptionGroups" : [
     {

@@ -84,9 +84,22 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature {
             return nil
         }
     }
+    
+    struct Subscription: Encodable {
+        let token: String
+    }
+
+    /// Values that the Frontend can use to determine the current state.
+    struct SubscriptionValues: Codable {
+        enum CodingKeys: String, CodingKey {
+            case token
+        }
+        let token: String
+    }
 
     func getSubscription(params: Any, original: WKScriptMessage) async throws -> Encodable? {
         var authToken = AccountManager().authToken ?? Constants.empty
+        // let authToken = ""
         return Subscription(token: authToken)
     }
     
@@ -114,7 +127,11 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature {
     }
     
     func subscriptionSelected(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-
+        
+        struct SubscriptionSelection: Decodable {
+            let id: String
+        }
+        
         let message = original
 
         if #available(iOS 15, *) {

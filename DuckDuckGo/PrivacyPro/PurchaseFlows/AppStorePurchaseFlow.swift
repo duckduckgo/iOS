@@ -19,35 +19,53 @@
 import Foundation
 import StoreKit
 
-@available(macOS 12.0, *)
+@available(macOS 12.0, iOS 15.0, *)
 public final class AppStorePurchaseFlow {
 
     public enum Error: Swift.Error {
-        case appStoreAuthenticationFailed
+        case noProductsFound
+
+        case activeSubscriptionAlreadyPresent
         case authenticatingWithTransactionFailed
         case accountCreationFailed
         case purchaseFailed
+
+        case missingEntitlements
+
         case somethingWentWrong
     }
 
-    public static func purchaseSubscription(with identifier: String, emailAccessToken: String?) async -> Result<Void, AppStorePurchaseFlow.Error> {
-        // Trigger sign in pop-up
-        switch await PurchaseManager.shared.syncAppleIDAccount() {
-        case .success:
-            break
-        case .failure:
-            return .failure(.appStoreAuthenticationFailed)
-        }
+    public static func subscriptionOptions() async -> Result<SubscriptionOptions, AppStorePurchaseFlow.Error> {
 
+        let products = PurchaseManager.shared.availableProducts
+
+        let monthly = products.first(where: { $0.id.contains("1month") })
+        let yearly = products.first(where: { $0.id.contains("1year") })
+
+        guard let monthly, let yearly else { return .failure(.noProductsFound) }
+
+        let options = [SubscriptionOption(id: monthly.id, cost: .init(displayPrice: monthly.displayPrice, recurrence: "monthly")),
+                       SubscriptionOption(id: yearly.id, cost: .init(displayPrice: yearly.displayPrice, recurrence: "yearly"))]
+
+        let features = SubscriptionFeatureName.allCases.map { SubscriptionFeature(name: $0.rawValue) }
+
+        return .success(SubscriptionOptions(platform: SubscriptionPlatformName.macos.rawValue,
+                                            options: options,
+                                            features: features))
+    }
+
+    public static func purchaseSubscription(with subscriptionIdentifier: String, emailAccessToken: String?) async -> Result<Void, AppStorePurchaseFlow.Error> {
         let externalID: String
 
         // Check for past transactions most recent
+        
         switch await AppStoreRestoreFlow.restoreAccountFromPastPurchase() {
-        case .success(let existingExternalID):
-            externalID = existingExternalID
+        case .success(let success):
+            guard !success.isActive else { return .failure(.activeSubscriptionAlreadyPresent)}
+            externalID = success.externalID
         case .failure(let error):
             switch error {
-            case .missingAccountOrTransactions:
+            case .missingAccountOrTransactions, .pastTransactionAuthenticationFailure:
                 // No history, create new account
                 switch await AuthService.createAccount(emailAccessToken: emailAccessToken) {
                 case .success(let response):
@@ -62,7 +80,7 @@ public final class AppStorePurchaseFlow {
         }
 
         // Make the purchase
-        switch await PurchaseManager.shared.purchaseSubscription(with: identifier, externalID: externalID) {
+        switch await PurchaseManager.shared.purchaseSubscription(with: subscriptionIdentifier, externalID: externalID) {
         case .success:
             return .success(())
         case .failure(let error):
@@ -70,6 +88,14 @@ public final class AppStorePurchaseFlow {
             AccountManager().signOut()
             return .failure(.purchaseFailed)
         }
+    }
+
+    @discardableResult
+    public static func completeSubscriptionPurchase() async -> Result<PurchaseUpdate, AppStorePurchaseFlow.Error> {
+
+        let result = await checkForEntitlements(wait: 2.0, retry: 15)
+
+        return result ? .success(PurchaseUpdate(type: "completed")) : .failure(.missingEntitlements)
     }
 
     @discardableResult

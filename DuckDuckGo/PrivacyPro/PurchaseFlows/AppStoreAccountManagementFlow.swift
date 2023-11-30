@@ -34,7 +34,7 @@ public final class AppStoreAccountManagementFlow {
         if case let .failure(error) = await AuthService.validateToken(accessToken: authToken) {
             print(error)
 
-            if #available(macOS 12.0, *) {
+            if #available(macOS 12.0, iOS 15.0, *) {
                 // In case of invalid token attempt store based authentication to obtain a new one
                 guard let lastTransactionJWSRepresentation = await PurchaseManager.mostRecentTransaction() else { return .failure(.noPastTransaction) }
 

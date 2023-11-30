@@ -22,6 +22,7 @@ import WebKit
 import UserScript
 import SwiftUI
 import DesignResourcesKit
+import Core
 
 struct HeadlessWebview: UIViewRepresentable {
     let userScript: UserScriptMessaging
@@ -38,7 +39,12 @@ struct HeadlessWebview: UIViewRepresentable {
         configuration.userContentController = userContentController
 
         let webView = WKWebView(frame: .zero, configuration: configuration)
-        webView.load(URLRequest(url: url))
+        // webView.customUserAgent = DefaultUserAgentManager.duckDuckGoUserAgent
+        webView.customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)"
+        
+        // DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+            webView.load(URLRequest(url: url))
+        // }
         
         if #available(iOS 16.4, *) {
             webView.isInspectable = true

@@ -19,17 +19,20 @@
 import Foundation
 import StoreKit
 
-@available(macOS 12.0, *)
+@available(macOS 12.0, iOS 15.0, *)
 public final class AppStoreRestoreFlow {
+
+    public typealias Success = (externalID: String, isActive: Bool)
 
     public enum Error: Swift.Error {
         case missingAccountOrTransactions
         case pastTransactionAuthenticationFailure
         case accessTokenObtainingError
+//        case subscriptionExpired
         case somethingWentWrong
     }
 
-    public static func restoreAccountFromPastPurchase() async -> Result<String, AppStoreRestoreFlow.Error> {
+    public static func restoreAccountFromPastPurchase() async -> Result<AppStoreRestoreFlow.Success, AppStoreRestoreFlow.Error> {
         guard let lastTransactionJWSRepresentation = await PurchaseManager.mostRecentTransaction() else { return .failure(.missingAccountOrTransactions) }
 
         // Do the store login to get short-lived token
@@ -42,11 +45,26 @@ public final class AppStoreRestoreFlow {
             return .failure(.pastTransactionAuthenticationFailure)
         }
 
+        let externalID: String
+
         switch await AccountManager().exchangeAndStoreTokens(with: authToken) {
-        case .success(let externalID):
-            return .success(externalID)
+        case .success(let existingExternalID):
+            externalID = existingExternalID
         case .failure:
             return .failure(.accessTokenObtainingError)
         }
+
+        let accessToken = AccountManager().accessToken ?? ""
+        var isActive = false
+
+        switch await SubscriptionService.getSubscriptionInfo(token: accessToken) {
+        case .success(let response):
+            isActive = response.status != "Expired" && response.status != "Inactive"
+        case .failure:
+            return .failure(.somethingWentWrong)
+        }
+
+        // TOOD: Fix this by probably splitting/changing result of exchangeAndStoreTokens
+        return .success((externalID: externalID, isActive: isActive))
     }
 }

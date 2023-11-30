@@ -1,6 +1,5 @@
 //
-//  Subscription.swift
-//  DuckDuckGo
+//  AppStorePurchaseFlow.swift
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
 //
@@ -19,35 +18,33 @@
 
 import Foundation
 
-struct Subscription: Encodable {
-    let token: String
+protocol PurchaseFlow {
+
 }
 
-/// Values that the Frontend can use to determine the current state.
-struct SubscriptionValues: Codable {
-    enum CodingKeys: String, CodingKey {
-        case token
-    }
-    let token: String
-}
-
-struct SubscriptionOptions: Encodable {
+public struct SubscriptionOptions: Encodable {
     let platform: String
     let options: [SubscriptionOption]
     let features: [SubscriptionFeature]
 }
 
-struct SubscriptionOption: Encodable {
+public struct SubscriptionOption: Encodable {
     let id: String
-    let cost: SubscriptionCost
-
-    struct SubscriptionCost: Encodable {
-        let displayPrice: String
-        let recurrence: String
-    }
+    let cost: SubscriptionOptionCost
 }
 
-enum SubscriptionFeatureName: String, CaseIterable {
+struct SubscriptionOptionCost: Encodable {
+    let displayPrice: String
+    let recurrence: String
+}
+
+public struct SubscriptionFeature: Encodable {
+    let name: String
+}
+
+// MARK: -
+
+public enum SubscriptionFeatureName: String, CaseIterable {
     case privateBrowsing = "private-browsing"
     case privateSearch = "private-search"
     case emailProtection = "email-protection"
@@ -57,10 +54,19 @@ enum SubscriptionFeatureName: String, CaseIterable {
     case identityTheftRestoration = "identity-theft-restoration"
 }
 
-struct SubscriptionFeature: Encodable {
-    let name: String
+public enum SubscriptionPlatformName: String {
+    case macos
+    case stripe
 }
 
-struct SubscriptionSelection: Decodable {
-    let id: String
+// MARK: -
+
+public struct PurchaseUpdate: Codable {
+    let type: String
+    let token: String?
+
+    public init(type: String, token: String? = nil) {
+        self.type = type
+        self.token = token
+    }
 }

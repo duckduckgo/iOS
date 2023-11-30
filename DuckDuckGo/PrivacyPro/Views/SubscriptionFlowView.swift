@@ -34,7 +34,9 @@ struct SubscriptionFlowView: View {
                 SwiftUI.ProgressView()
             }
         }
-        
+        .onAppear(perform: {
+            Task { await viewModel.setupProductObserver() }
+        })
         .navigationTitle(viewModel.viewTitle)
     }
 }

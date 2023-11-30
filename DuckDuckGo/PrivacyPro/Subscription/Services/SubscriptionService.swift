@@ -41,4 +41,21 @@ public struct SubscriptionService: APIService {
         public let platform: String
         public let status: String
     }
+
+    // MARK: -
+
+    public static func getProducts() async -> Result<GetProductsResponse, APIServiceError> {
+        await executeAPICall(method: "GET", endpoint: "products")
+    }
+    
+    public typealias GetProductsResponse = [GetProductsItem]
+
+    public struct GetProductsItem: Decodable {
+        public let productId: String
+        public let productLabel: String
+        public let billingPeriod: String
+        public let price: String
+        public let currency: String
+    }
+
 }

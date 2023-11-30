@@ -36,20 +36,14 @@ class SubscriptionFlowViewModel: ObservableObject {
          subFeature: Subfeature = SubscriptionPagesUseSubscriptionFeature()) {
         self.userScript = userScript
         self.subFeature = subFeature
-        Task { await setupProductObserver() }
     }
     
     // Fetch available Products from the AppStore
-    private func setupProductObserver() async {
+    func setupProductObserver() async {
         purchaseManager.$availableProducts
-            .dropFirst()
-            .sink { [weak self] products in
+            .sink { [weak self] _ in
                 guard let self = self else { return }
-                if !products.isEmpty {
-                    Task { await self.setProductsLoading(false) }
-                } else {
-                    assertionFailure("Could not load products from the App Store")
-                }
+                Task { await self.setProductsLoading(false) }
             }
             .store(in: &cancellables)
         await purchaseManager.updateAvailableProducts()

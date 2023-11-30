@@ -89,17 +89,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature {
         var authToken = AccountManager().authToken ?? Constants.empty
         return Subscription(token: authToken)
     }
-
-    func setSubscription(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        // WIP
-        return nil
-    }
-
-    func backToSettings(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        // WIP
-        return nil
-    }
-
+    
     func getSubscriptionOptions(params: Any, original: WKScriptMessage) async throws -> Encodable? {
 
         let subscriptionOptions: [SubscriptionOption]
@@ -122,12 +112,12 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature {
 
         return message
     }
-
+    
     func subscriptionSelected(params: Any, original: WKScriptMessage) async throws -> Encodable? {
 
         let message = original
 
-        if #available(macOS 12.0, iOS 15, *) {
+        if #available(iOS 15, *) {
             guard let subscriptionSelection: SubscriptionSelection = DecodableHelper.decode(from: params) else {
                 assertionFailure("SubscriptionPagesUserScript: expected JSON representation of SubscriptionSelection")
                 return nil
@@ -152,6 +142,16 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature {
             }
         }
 
+        return nil
+    }
+
+    func setSubscription(params: Any, original: WKScriptMessage) async throws -> Encodable? {
+        // WIP
+        return nil
+    }
+
+    func backToSettings(params: Any, original: WKScriptMessage) async throws -> Encodable? {
+        // WIP
         return nil
     }
 

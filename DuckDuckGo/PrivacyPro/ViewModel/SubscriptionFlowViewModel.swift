@@ -19,6 +19,7 @@
 
 import Foundation
 import UserScript
+import Combine
 
 class SubscriptionFlowViewModel: ObservableObject {
     
@@ -26,20 +27,32 @@ class SubscriptionFlowViewModel: ObservableObject {
     let subFeature: Subfeature
     let purchaseURL = URL.purchaseSubscription
     let viewTitle = SubscriptionUserText.navigationTitle
+    let purchaseManager = PurchaseManager.shared
     
     @Published var isLoadingProducts = true
+    private var cancellables = Set<AnyCancellable>()
 
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: Subfeature = SubscriptionPagesUseSubscriptionFeature()) {
         self.userScript = userScript
         self.subFeature = subFeature
-        Task { await updateStoreProducts() }
+        Task { await setupProductObserver() }
     }
     
-    // Fetch available products from Storekit
-    private func updateStoreProducts() async {
-        await PurchaseManager.shared.updateAvailableProducts()
-        await setProductsLoading(false)
+    // Fetch available Products from the AppStore
+    private func setupProductObserver() async {
+        purchaseManager.$availableProducts
+            .dropFirst()
+            .sink { [weak self] products in
+                guard let self = self else { return }
+                if !products.isEmpty {
+                    Task { await self.setProductsLoading(false) }
+                } else {
+                    assertionFailure("Could not load products from the App Store")
+                }
+            }
+            .store(in: &cancellables)
+        await purchaseManager.updateAvailableProducts()
     }
     
     @MainActor

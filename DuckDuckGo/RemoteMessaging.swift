@@ -25,6 +25,7 @@ import BrowserServicesKit
 import Persistence
 import Bookmarks
 import RemoteMessaging
+import NetworkProtection
 
 struct RemoteMessaging {
 
@@ -153,9 +154,13 @@ struct RemoteMessaging {
             let daysSinceNetworkProtectionEnabled: Int
 
 #if NETWORK_PROTECTION
-            // TODO: Use real values
-            isNetworkProtectionWaitlistUser = true
-            daysSinceNetworkProtectionEnabled = 5
+            let vpnAccess = NetworkProtectionAccessController()
+            let accessType = vpnAccess.networkProtectionAccessType()
+            let isVPNActivated = NetworkProtectionKeychainTokenStore().isFeatureActivated
+            let activationDateStore = DefaultWaitlistActivationDateStore()
+
+            isNetworkProtectionWaitlistUser = (accessType == .waitlistInvited) && isVPNActivated
+            daysSinceNetworkProtectionEnabled = activationDateStore.daysSinceActivation() ?? -1
 #else
             isNetworkProtectionWaitlistUser = false
             daysSinceNetworkProtectionEnabled = -1

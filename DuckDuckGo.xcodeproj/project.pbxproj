@@ -765,7 +765,6 @@
 		CBDD5DDF29A6736A00832877 /* APIHeadersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDD5DDE29A6736A00832877 /* APIHeadersTests.swift */; };
 		CBDD5DE129A6741300832877 /* MockBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDD5DE029A6741300832877 /* MockBundle.swift */; };
 		CBEFB9142AE0844700DEDE7B /* CriticalAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEFB9102ADFFE7900DEDE7B /* CriticalAlerts.swift */; };
-		D62529672B154637002A372F /* PrivacyPro in Resources */ = {isa = PBXBuildFile; fileRef = D62529662B154637002A372F /* PrivacyPro */; };
 		D62529752B155BCB002A372F /* SubscriptionFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62529742B155BCB002A372F /* SubscriptionFlowView.swift */; };
 		D62529922B15E44A002A372F /* SubscriptionPagesUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62529892B15E449002A372F /* SubscriptionPagesUserScript.swift */; };
 		D62529942B15E454002A372F /* URL+Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62529932B15E454002A372F /* URL+Subscription.swift */; };
@@ -2385,7 +2384,6 @@
 		CBF14FC227970072001D94D0 /* HomeMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageView.swift; sourceTree = "<group>"; };
 		CBF14FC427970AB0001D94D0 /* HomeMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageViewModel.swift; sourceTree = "<group>"; };
 		CBF14FC627970C8A001D94D0 /* HomeMessageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageCollectionViewCell.swift; sourceTree = "<group>"; };
-		D62529662B154637002A372F /* PrivacyPro */ = {isa = PBXFileReference; lastKnownFileType = folder; path = PrivacyPro; sourceTree = "<group>"; };
 		D62529742B155BCB002A372F /* SubscriptionFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionFlowView.swift; sourceTree = "<group>"; };
 		D62529892B15E449002A372F /* SubscriptionPagesUserScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionPagesUserScript.swift; sourceTree = "<group>"; };
 		D62529932B15E454002A372F /* URL+Subscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Subscription.swift"; sourceTree = "<group>"; };
@@ -2894,7 +2892,6 @@
 		02025B0A29884CF300E694E7 /* AppTrackingProtection */ = {
 			isa = PBXGroup;
 			children = (
-				D62529662B154637002A372F /* PrivacyPro */,
 				02341FA22A435E42008A1531 /* AppTPOnboarding */,
 				0290471C29E7085D0008FE3C /* AppTPManageTrackersView */,
 				0290472629E8619B0008FE3C /* AppTPTrackerDetailView */,
@@ -5985,7 +5982,6 @@
 				85F98F98296F4CB100742F4A /* SyncAssets.xcassets in Resources */,
 				984147AB24F025F700362052 /* Autocomplete.storyboard in Resources */,
 				AA4D6A9423DE49A5007E8790 /* AppIconBlack29x29@2x.png in Resources */,
-				D62529672B154637002A372F /* PrivacyPro in Resources */,
 				98B001B3251EABB40090EC07 /* InfoPlist.strings in Resources */,
 				AA4D6ACE23DE4D27007E8790 /* AppIconPurple60x60@3x.png in Resources */,
 				F1E4A4451EE89460006F2EAE /* Bookmarks.storyboard in Resources */,

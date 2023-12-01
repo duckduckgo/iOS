@@ -24,7 +24,7 @@ struct PurchaseInProgressView: View {
     var body: some View {
         ZStack {
             Color(colorScheme == .dark ? .black : .white)
-                .opacity(0.4)
+                .opacity(0.0)
                 .edgesIgnoringSafeArea(.all)
                 .disabled(true)
                         
@@ -32,7 +32,7 @@ struct PurchaseInProgressView: View {
                 RoundedRectangle(cornerRadius: 12)
                     .fill(colorScheme == .dark ? .black : .white)
                     .frame(width: 120, height: 120)
-                    .shadow(color: colorScheme == .dark ? .gray90 : .gray10, radius: 10)
+                    .shadow(color: colorScheme == .dark ? .black : .gray30, radius: 10)
 
                 // ProgressView
                 SwiftUI.ProgressView()

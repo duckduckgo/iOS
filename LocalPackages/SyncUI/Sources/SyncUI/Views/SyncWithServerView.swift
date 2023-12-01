@@ -1,5 +1,5 @@
 //
-//  SyncWithServer.swift
+//  SyncWithServerView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -21,7 +21,7 @@ import SwiftUI
 import DuckUI
 import DesignResourcesKit
 
-public struct SyncWithServer: View {
+public struct SyncWithServerView: View {
 
     @ObservedObject public var model: SyncSettingsViewModel
     var onCancel: () -> Void

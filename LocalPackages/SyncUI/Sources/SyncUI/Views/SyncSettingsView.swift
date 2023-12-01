@@ -142,7 +142,7 @@ extension SyncSettingsView {
                     isSyncWithSetUpSheetVisible = true
                 }
                 .sheet(isPresented: $isSyncWithSetUpSheetVisible, content: {
-                    SyncWithServer(model: model, onCancel: {
+                    SyncWithServerView(model: model, onCancel: {
                         isSyncWithSetUpSheetVisible = false
                     })
                 })

@@ -58,7 +58,7 @@ struct NetworkProtectionVPNNotificationsView: View {
         } footer: {
             Text(UserText.netPTurnOnNotificationsSectionFooter)
                 .foregroundColor(.textSecondary)
-                .font(.system(size: 13))
+                .daxFootnoteRegular()
                 .padding(.top, 6)
         }
     }
@@ -74,7 +74,7 @@ struct NetworkProtectionVPNNotificationsView: View {
         } footer: {
             Text(UserText.netPVPNAlertsToggleSectionFooter)
                 .foregroundColor(.textSecondary)
-                .font(.system(size: 13))
+                .daxFootnoteRegular()
                 .padding(.top, 6)
         }
     }

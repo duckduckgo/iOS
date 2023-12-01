@@ -56,10 +56,10 @@ struct NetworkProtectionStatusView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(UserText.netPStatusViewTitle)
-                        .font(.system(size: 16))
+                        .daxBodyRegular()
                         .foregroundColor(.textPrimary)
                     Text(statusModel.statusMessage)
-                        .font(.system(size: 13))
+                        .daxFootnoteRegular()
                         .foregroundColor(.textSecondary)
                 }
 
@@ -92,11 +92,11 @@ struct NetworkProtectionStatusView: View {
                     .frame(height: 96)
                     .padding(8)
                 Text(statusModel.headerTitle)
-                    .font(.system(size: 17, weight: .semibold))
+                    .daxHeadline()
                     .multilineTextAlignment(.center)
                     .foregroundColor(.textPrimary)
                 Text(UserText.netPStatusHeaderMessage)
-                    .font(.system(size: 13))
+                    .daxFootnoteRegular()
                     .multilineTextAlignment(.center)
                     .foregroundColor(.textSecondary)
                     .padding(.bottom, 8)
@@ -137,10 +137,10 @@ struct NetworkProtectionStatusView: View {
     private func settings() -> some View {
         Section {
             NavigationLink(UserText.netPVPNSettingsTitle, destination: NetworkProtectionVPNSettingsView())
-                .font(.system(size: 16))
+                .daxBodyRegular()
                 .foregroundColor(.textPrimary)
             NavigationLink(UserText.netPVPNNotificationsTitle, destination: NetworkProtectionVPNNotificationsView())
-                .font(.system(size: 16))
+                .daxBodyRegular()
                 .foregroundColor(.textPrimary)
         } header: {
             Text(UserText.netPStatusViewSettingsSectionTitle).foregroundColor(.textSecondary)
@@ -155,7 +155,7 @@ struct NetworkProtectionStatusView: View {
         Text("\(UserText.netPInviteOnlyMessage) [\(UserText.netPStatusViewShareFeedback)](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)")
             .foregroundColor(.textSecondary)
             .accentColor(Color.controlColor)
-            .font(.system(size: 13))
+            .daxFootnoteRegular()
             .padding(.top, 6)
     }
 }
@@ -169,12 +169,11 @@ private struct NetworkProtectionErrorView: View {
             HStack {
                 Image("Alert-Color-16")
                 Text(title)
-                    .font(.system(size: 16))
+                    .daxBodyBold()
                     .foregroundColor(.primary)
-                    .bold()
             }
             Text(message)
-                .font(.system(size: 16))
+                .daxBodyRegular()
                 .foregroundColor(.primary)
         }
         .listRowBackground(Color.cellBackground)
@@ -190,11 +189,11 @@ private struct NetworkProtectionServerItemView: View {
         HStack(spacing: 16) {
             Image(imageID)
             Text(title)
-                .font(.system(size: 16))
+                .daxBodyRegular()
                 .foregroundColor(.textPrimary)
             Spacer(minLength: 2)
             Text(value)
-                .font(.system(size: 16))
+                .daxBodyRegular()
                 .foregroundColor(.textSecondary)
         }
         .listRowBackground(Color.cellBackground)

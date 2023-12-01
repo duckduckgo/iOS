@@ -61,6 +61,7 @@ struct NetworkProtectionVPNNotificationsView: View {
                 .daxFootnoteRegular()
                 .padding(.top, 6)
         }
+        .listRowBackground(Color(designSystemColor: .surface))
     }
 
     @ViewBuilder
@@ -77,6 +78,7 @@ struct NetworkProtectionVPNNotificationsView: View {
                 .daxFootnoteRegular()
                 .padding(.top, 6)
         }
+        .listRowBackground(Color(designSystemColor: .surface))
     }
 }
 

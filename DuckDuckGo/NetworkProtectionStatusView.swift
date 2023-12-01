@@ -74,11 +74,11 @@ struct NetworkProtectionStatusView: View {
                 .disabled(statusModel.shouldDisableToggle)
                 .toggleStyle(SwitchToggleStyle(tint: .controlColor))
             }
-            .listRowBackground(Color.cellBackground)
         } header: {
             header()
         }
         .increaseHeaderProminence()
+        .listRowBackground(Color(designSystemColor: .surface))
     }
 
     @ViewBuilder
@@ -131,6 +131,7 @@ struct NetworkProtectionStatusView: View {
         } header: {
             Text(UserText.netPStatusViewConnectionDetails).foregroundColor(.textSecondary)
         }
+        .listRowBackground(Color(designSystemColor: .surface))
     }
 
     @ViewBuilder
@@ -147,6 +148,7 @@ struct NetworkProtectionStatusView: View {
         } footer: {
             inviteOnlyFooter()
         }
+        .listRowBackground(Color(designSystemColor: .surface))
     }
 
     @ViewBuilder

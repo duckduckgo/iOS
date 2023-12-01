@@ -49,6 +49,7 @@ struct NetworkProtectionVPNSettingsView: View {
                         }
                     }
                 }
+                .listRowBackground(Color(designSystemColor: .surface))
                 toggleSection(
                     text: UserText.netPExcludeLocalNetworksSettingTitle,
                     footerText: UserText.netPExcludeLocalNetworksSettingFooter
@@ -67,6 +68,7 @@ struct NetworkProtectionVPNSettingsView: View {
                             .foregroundColor(.textSecondary)
                     }
                 }
+                .listRowBackground(Color(designSystemColor: .surface))
             }
         }
         .applyInsetGroupedListStyle()
@@ -87,7 +89,6 @@ struct NetworkProtectionVPNSettingsView: View {
                 toggle()
                     .toggleStyle(SwitchToggleStyle(tint: .controlColor))
             }
-            .listRowBackground(Color.cellBackground)
         } footer: {
             Text(footerText)
                 .foregroundColor(.textSecondary)
@@ -95,13 +96,13 @@ struct NetworkProtectionVPNSettingsView: View {
                 .daxFootnoteRegular()
                 .padding(.top, 6)
         }
+        .listRowBackground(Color(designSystemColor: .surface))
     }
 }
 
 private extension Color {
     static let textPrimary = Color(designSystemColor: .textPrimary)
     static let textSecondary = Color(designSystemColor: .textSecondary)
-    static let cellBackground = Color(designSystemColor: .surface)
     static let controlColor = Color(designSystemColor: .accent)
     static let icon = Color(designSystemColor: .icons).opacity(0.3)
 }

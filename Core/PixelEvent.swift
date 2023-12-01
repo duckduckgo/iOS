@@ -450,7 +450,8 @@ extension Pixel {
         case debugCantSaveBookmarkFix
 
         case debugCannotClearObservationsDatabase
-
+        case debugCouldNotRemoveWebsiteDataStore
+        
         // Return user measurement
         case debugReturnUserReadATB
         case debugReturnUserAddATB
@@ -931,7 +932,8 @@ extension Pixel.Event {
         case .debugCantSaveBookmarkFix: return "m_d_cant_save_bookmark_fix"
 
         case .debugCannotClearObservationsDatabase: return "m_d_cannot_clear_observations_database"
-            
+        case .debugCouldNotRemoveWebsiteDataStore: return "m_d_cannot_remove_wkwebsitedatastore"
+
         
         // MARK: Ad Attribution
             

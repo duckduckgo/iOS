@@ -344,12 +344,13 @@ extension WKWebsiteDataStore {
     @MainActor
     public func removeAllData() async {
         let uuids = await WKWebsiteDataStore.allDataStoreIdentifiers
-        print("***", #function)
+        print("***", #function, uuids)
         for uuid in uuids {
             print("*** removing", uuid)
             do {
                 try await WKWebsiteDataStore.remove(forIdentifier: uuid)
             } catch {
+                Pixel.fire(pixel: .debugCouldNotRemoveWebsiteDataStore, error: error)
                 print("***", #function, error.localizedDescription, uuid)
             }
         }

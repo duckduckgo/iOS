@@ -1,5 +1,5 @@
 //
-//  DeviceConnectedView.swift
+//  RecoverSyncedDataView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -19,41 +19,50 @@
 
 import SwiftUI
 import DuckUI
+import DesignResourcesKit
 
-public struct DeviceConnectedView: View {
+public struct RecoverSyncedDataView: View {
 
-    @Environment(\.presentationMode) var presentation
+    @ObservedObject public var model: SyncSettingsViewModel
+    var onCancel: () -> Void
 
-    public init() {}
+    public init(model: SyncSettingsViewModel, onCancel: @escaping () -> Void) {
+        self.model = model
+        self.onCancel = onCancel
+    }
 
-    @ViewBuilder
-    func deviceSyncedView() -> some View {
+    public var body: some View {
         UnderflowContainer {
             VStack(spacing: 0) {
-                Image("Sync-Start-128")
+                HStack {
+                    Button(action: onCancel, label: {
+                        Text(UserText.cancelButton)
+                            .foregroundColor(.primary)
+                    })
+                    Spacer()
+                }
+                .frame(height: 56)
+                Image("Sync-Recover-128")
                     .padding(20)
 
-                Text(UserText.deviceSyncedSheetTitle)
+                Text(UserText.recoverSyncedDataTitle)
                     .daxTitle1()
+                    .multilineTextAlignment(.center)
                     .padding(.bottom, 24)
+
+                Text(UserText.recoverSyncedDataDescription)
+                        .multilineTextAlignment(.center)
             }
             .padding(.horizontal, 20)
-            .padding(.top, 56)
         } foregroundContent: {
             Button {
-                presentation.wrappedValue.dismiss()
+                model.recoverSyncDataPressed()
             } label: {
-                Text(UserText.doneButton)
+                Text(UserText.recoverSyncedDataButton)
             }
             .buttonStyle(PrimaryButtonStyle())
             .frame(maxWidth: 360)
             .padding(.horizontal, 30)
         }
-        .padding(.bottom)
-    }
-
-    public var body: some View {
-        deviceSyncedView()
-            .transition(.move(edge: .leading))
     }
 }

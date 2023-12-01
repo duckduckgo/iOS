@@ -37,6 +37,7 @@ final class VPNWaitlistDebugViewController: UITableViewController {
         WaitlistInformationRows.waitlistTimestamp: "Timestamp",
         WaitlistInformationRows.waitlistToken: "Token",
         WaitlistInformationRows.waitlistInviteCode: "Invite Code",
+        WaitlistInformationRows.termsAccepted: "T&C Accepted",
         WaitlistInformationRows.backgroundTask: "Earliest Refresh Date"
     ]
 
@@ -45,6 +46,7 @@ final class VPNWaitlistDebugViewController: UITableViewController {
         case waitlistTimestamp
         case waitlistToken
         case waitlistInviteCode
+        case termsAccepted
         case backgroundTask
 
     }
@@ -128,6 +130,13 @@ final class VPNWaitlistDebugViewController: UITableViewController {
             case .waitlistInviteCode:
                 cell.detailTextLabel?.text = storage.getWaitlistInviteCode() ?? "None"
 
+            case .termsAccepted:
+                if NetworkProtectionTermsAndConditionsUserDefaultsStore().networkProtectionWaitlistTermsAndConditionsAccepted {
+                    cell.detailTextLabel?.text = "Yes"
+                } else {
+                    cell.detailTextLabel?.text = "No"
+                }
+
             case .backgroundTask:
                 cell.detailTextLabel?.text = backgroundTaskExecutionDate ?? "None"
             }
@@ -192,6 +201,9 @@ final class VPNWaitlistDebugViewController: UITableViewController {
 
     private func clearDataAndReload() {
         storage.deleteWaitlistState()
+        var termsAndConditionsStore = NetworkProtectionTermsAndConditionsUserDefaultsStore()
+        termsAndConditionsStore.networkProtectionWaitlistTermsAndConditionsAccepted = false
+
         tableView.reloadData()
     }
 }

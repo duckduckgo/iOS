@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "graeme/remove-port-from-server-ip",
-          "revision": "900bd0785c80ee9fd364309f65dfbe82b8b7e0b3",
-          "version": null
+          "branch": null,
+          "revision": "9228f64c71e1f2ed76792482f1cfaca6ff9eb5e2",
+          "version": "87.3.0"
         }
       },
       {

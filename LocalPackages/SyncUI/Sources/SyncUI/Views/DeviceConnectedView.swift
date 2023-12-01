@@ -19,8 +19,6 @@
 
 import SwiftUI
 import DuckUI
-import DesignResourcesKit
-
 
 public struct DeviceConnectedView: View {
 

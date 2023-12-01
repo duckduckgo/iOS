@@ -562,6 +562,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         lastBackgroundDate = Date()
         AppDependencyProvider.shared.autofillLoginSession.endSession()
         suspendSync()
+        syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
     }
 
     private func suspendSync() {

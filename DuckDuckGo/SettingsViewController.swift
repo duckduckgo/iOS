@@ -388,7 +388,7 @@ class SettingsViewController: UITableViewController {
     }
 
     func showSync(animated: Bool = true) {
-        let controller = SyncSettingsViewController()
+        let controller = SyncSettingsViewController(syncService: syncService, syncBookmarksAdapter: syncDataProviders.bookmarksAdapter)
         navigationController?.pushViewController(controller, animated: animated)
     }
 

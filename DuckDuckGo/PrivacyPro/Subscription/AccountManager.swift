@@ -39,7 +39,6 @@ public class AccountManager {
 
     public init(storage: AccountStorage = AccountKeychainStorage()) {
         self.storage = storage
-        try? self.storage.clearAuthenticationState()
     }
 
     public var authToken: String? {

@@ -20,7 +20,8 @@ import SwiftUI
 
 struct PurchaseInProgressView: View {
     @Environment(\.colorScheme) var colorScheme
-
+    
+    // TODO: Update colors and design
     var body: some View {
         ZStack {
             Color(colorScheme == .dark ? .black : .white)
@@ -33,8 +34,7 @@ struct PurchaseInProgressView: View {
                     .fill(colorScheme == .dark ? .black : .white)
                     .frame(width: 120, height: 120)
                     .shadow(color: colorScheme == .dark ? .black : .gray30, radius: 10)
-
-                // ProgressView
+                
                 SwiftUI.ProgressView()
                     .scaleEffect(2)
                     .progressViewStyle(CircularProgressViewStyle(tint: Color(colorScheme == .dark ? .gray30 : .gray70)))

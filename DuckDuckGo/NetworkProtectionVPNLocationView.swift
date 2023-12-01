@@ -52,19 +52,20 @@ struct NetworkProtectionVPNLocationView: View {
                     }
                 }, label: {
                     Text(UserText.netPPreferredLocationNearest)
-                        .foregroundStyle(Color.textPrimary)
+                        .foregroundStyle(Color(designSystemColor: .textPrimary))
                         .daxBodyRegular()
                 }
             )
         } header: {
             Text(UserText.netPVPNLocationRecommendedSectionTitle)
-                .foregroundStyle(Color.textPrimary)
+                .foregroundStyle(Color(designSystemColor: .textPrimary))
         } footer: {
             Text(UserText.netPVPNLocationRecommendedSectionFooter)
-                .foregroundStyle(Color.textSecondary)
+                .foregroundStyle(Color(designSystemColor: .textSecondary))
                 .daxFootnoteRegular()
                 .padding(.top, 6)
         }
+        .listRowBackground(Color(designSystemColor: .surface))
     }
 
     @ViewBuilder
@@ -89,9 +90,10 @@ struct NetworkProtectionVPNLocationView: View {
             }
         } header: {
             Text(UserText.netPVPNLocationAllCountriesSectionTitle)
-                .foregroundStyle(Color.textPrimary)
+                .foregroundStyle(Color(designSystemColor: .textPrimary))
         }
         .animation(.default, value: model.state.isLoading)
+        .listRowBackground(Color(designSystemColor: .surface))
     }
 }
 
@@ -116,11 +118,11 @@ private struct CountryItem: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(itemModel.title)
                         .daxBodyRegular()
-                        .foregroundStyle(Color.textPrimary)
+                        .foregroundStyle(Color(designSystemColor: .textPrimary))
                     if let subtitle = itemModel.subtitle {
                         Text(subtitle)
                             .daxFootnoteRegular()
-                            .foregroundStyle(Color.textSecondary)
+                            .foregroundStyle(Color(designSystemColor: .textSecondary))
                     }
                 }
                 if itemModel.shouldShowPicker {
@@ -134,7 +136,8 @@ private struct CountryItem: View {
                     } label: {
                         Image(systemName: "ellipsis.circle")
                             .resizable()
-                            .frame(width: 22, height: 22).tint(.textSecondary)
+                            .frame(width: 22, height: 22)
+                            .tint(.init(designSystemColor: .textSecondary))
                     }
                 }
             }
@@ -154,7 +157,7 @@ private struct ChecklistItem<Content>: View where Content: View {
             label: {
                 HStack(spacing: 12) {
                     Image(systemName: "checkmark")
-                        .tint(.controlColor)
+                        .tint(.init(designSystemColor: .accent))
                         .if(!isSelected) {
                             $0.hidden()
                         }
@@ -184,18 +187,12 @@ private struct MenuItem: View {
                         .if(!isSelected) {
                             $0.hidden()
                         }
-                        .tint(.textPrimary)
+                        .tint(Color(designSystemColor: .textPrimary))
                 }
             }
         )
         .tint(Color(designSystemColor: .textPrimary))
     }
-}
-
-private extension Color {
-    static let textPrimary = Color(designSystemColor: .textPrimary)
-    static let textSecondary = Color(designSystemColor: .textSecondary)
-    static let controlColor = Color(designSystemColor: .accent)
 }
 
 #endif

@@ -781,6 +781,7 @@
 		D647EA442B1908E500BABD93 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D647EA3C2B1908E500BABD93 /* APIService.swift */; };
 		D647EA452B1908E500BABD93 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D647EA3D2B1908E500BABD93 /* AuthService.swift */; };
 		D647EA462B1908E500BABD93 /* PurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D647EA3E2B1908E500BABD93 /* PurchaseManager.swift */; };
+		D69D3D862B1968220090E88A /* PurchaseInProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69D3D852B1968220090E88A /* PurchaseInProgressView.swift */; };
 		D6BA60EE2B17BAE20032C67F /* SubscriptionUserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BA60ED2B17BAE20032C67F /* SubscriptionUserText.swift */; };
 		D6BBC4622B1663190027507E /* HeadlessWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BBC4612B1663190027507E /* HeadlessWebView.swift */; };
 		D6BBC4652B1665EB0027507E /* SubscriptionFlowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BBC4642B1665EB0027507E /* SubscriptionFlowViewModel.swift */; };
@@ -2400,6 +2401,7 @@
 		D647EA3C2B1908E500BABD93 /* APIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		D647EA3D2B1908E500BABD93 /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		D647EA3E2B1908E500BABD93 /* PurchaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
+		D69D3D852B1968220090E88A /* PurchaseInProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseInProgressView.swift; sourceTree = "<group>"; };
 		D6BA60ED2B17BAE20032C67F /* SubscriptionUserText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionUserText.swift; sourceTree = "<group>"; };
 		D6BA61002B18EE5E0032C67F /* PrivacyPro.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = PrivacyPro.storekit; sourceTree = "<group>"; };
 		D6BBC4612B1663190027507E /* HeadlessWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlessWebView.swift; sourceTree = "<group>"; };
@@ -4495,6 +4497,7 @@
 			children = (
 				D6BBC4612B1663190027507E /* HeadlessWebView.swift */,
 				D62529742B155BCB002A372F /* SubscriptionFlowView.swift */,
+				D69D3D852B1968220090E88A /* PurchaseInProgressView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -6731,6 +6734,7 @@
 				85864FBC24D31EF300E756FF /* SuggestionTrayViewController.swift in Sources */,
 				1EF24235273BB9D200DE3D02 /* IntervalSlider.swift in Sources */,
 				027F48782A4B663C001A1C6C /* AppTPFAQView.swift in Sources */,
+				D69D3D862B1968220090E88A /* PurchaseInProgressView.swift in Sources */,
 				02A4EACA29B0F464009BE006 /* AppTPToggleViewModel.swift in Sources */,
 				4B6484EE27FD1E350050A7A1 /* WindowsBrowserWaitlistDebugViewController.swift in Sources */,
 				D637D1B72B19028E00C94784 /* AppStoreRestoreFlow.swift in Sources */,

@@ -21,21 +21,22 @@ import SwiftUI
 import Foundation
 
 struct SubscriptionFlowView: View {
-    
+        
     @ObservedObject var viewModel: SubscriptionFlowViewModel
     
     var body: some View {
         ZStack {
-            if !viewModel.isLoadingProducts {
-                AsyncHeadlessWebView(url: viewModel.purchaseURL,
-                                     userScript: viewModel.userScript,
-                                     subFeature: viewModel.subFeature).background()
-            } else {
-                SwiftUI.ProgressView()
+            AsyncHeadlessWebView(url: viewModel.purchaseURL,
+                                 userScript: viewModel.userScript,
+                                 subFeature: viewModel.subFeature).background()
+
+            // Overlay that appears when transaction is in progress
+            if viewModel.transactionInProgress {
+                PurchaseInProgressView()
             }
         }
         .onAppear(perform: {
-            Task { await viewModel.setupProductObserver() }
+            Task { await viewModel.initializeViewData() }
         })
         .navigationTitle(viewModel.viewTitle)
     }

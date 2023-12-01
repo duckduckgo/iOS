@@ -21,36 +21,44 @@ import Foundation
 import UserScript
 import Combine
 
-class SubscriptionFlowViewModel: ObservableObject {
+final class SubscriptionFlowViewModel: ObservableObject {
     
     let userScript: SubscriptionPagesUserScript
-    let subFeature: Subfeature
+    let subFeature: SubscriptionPagesUseSubscriptionFeature
+    let purchaseManager: PurchaseManager
+    
     let purchaseURL = URL.purchaseSubscription
     let viewTitle = SubscriptionUserText.navigationTitle
-    let purchaseManager = PurchaseManager.shared
-    
-    @Published var isLoadingProducts = true
+        
+    @Published var transactionInProgress = false
     private var cancellables = Set<AnyCancellable>()
 
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
-         subFeature: Subfeature = SubscriptionPagesUseSubscriptionFeature()) {
+         subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
+         purchaseManager: PurchaseManager = PurchaseManager.shared) {
         self.userScript = userScript
         self.subFeature = subFeature
+        self.purchaseManager = purchaseManager
     }
     
-    // Fetch available Products from the AppStore
-    func setupProductObserver() async {
-        purchaseManager.$availableProducts
-            .sink { [weak self] _ in
+    // Observe transaction status
+    private func setupTransactionObserver() async {
+        subFeature.$transactionInProgress
+            .sink { [weak self] status in
                 guard let self = self else { return }
-                Task { await self.setProductsLoading(false) }
+                Task { await self.setTransactionInProgress(status) }
             }
             .store(in: &cancellables)
-        await purchaseManager.updateAvailableProducts()
     }
     
     @MainActor
-    private func setProductsLoading(_ isLoading: Bool) {
-        self.isLoadingProducts = isLoading
+    private func setTransactionInProgress(_ inProgress: Bool) {
+        self.transactionInProgress = inProgress
     }
+    
+    func initializeViewData() async {
+        await self.setupTransactionObserver()
+        await purchaseManager.updateAvailableProducts()
+    }
+    
 }

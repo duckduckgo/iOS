@@ -11,15 +11,6 @@
         }
       },
       {
-        "package": "BrowserServicesKit",
-        "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
-        "state": {
-          "branch": null,
-          "revision": "fe6b0097f2f03665475473f7e235eb891ddd2f16",
-          "version": "87.1.0"
-        }
-      },
-      {
         "package": "CocoaAsyncSocket",
         "repositoryURL": "https://github.com/robbiehanson/CocoaAsyncSocket",
         "state": {
@@ -156,7 +147,7 @@
       },
       {
         "package": "TrackerRadarKit",
-        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
+        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit",
         "state": {
           "branch": null,
           "revision": "4684440d03304e7638a2c8086895367e90987463",

@@ -451,7 +451,8 @@ extension Pixel {
 
         case debugCannotClearObservationsDatabase
         case debugCouldNotRemoveWebsiteDataStore
-        
+        case debugUnexpectedWebsiteDataStores
+
         // Return user measurement
         case debugReturnUserReadATB
         case debugReturnUserAddATB
@@ -933,8 +934,8 @@ extension Pixel.Event {
 
         case .debugCannotClearObservationsDatabase: return "m_d_cannot_clear_observations_database"
         case .debugCouldNotRemoveWebsiteDataStore: return "m_d_cannot_remove_wkwebsitedatastore"
+        case .debugUnexpectedWebsiteDataStores: return "m_d_unexpected_wkwebsitedatastores"
 
-        
         // MARK: Ad Attribution
             
         case .adAttributionGlobalAttributedRulesDoNotExist: return "m_attribution_global_attributed_rules_do_not_exist"

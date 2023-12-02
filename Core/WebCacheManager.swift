@@ -143,7 +143,12 @@ public class WebCacheManager {
 
     @available(iOS 17, *)
     func checkDataStores() async {
-        print("***", #function, await WKWebsiteDataStore.allDataStoreIdentifiers)
+        let ids = await WKWebsiteDataStore.allDataStoreIdentifiers
+        print("***", #function, ids)
+        if ids.count >  0 {
+            Pixel.fire(pixel: .debugUnexpectedWebsiteDataStores)
+            assertionFailure("Unexpected number of data stores")
+        }
     }
 
     @available(iOS 17, *)

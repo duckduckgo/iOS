@@ -80,16 +80,6 @@ public class DataStoreIdManager {
     }
 
     public func reset() {
-        guard let containerId else { return }
-        if #available(iOS 17, *) {
-            if let uuid = UUID(uuidString: containerId) {
-                WKWebsiteDataStore.remove(forIdentifier: uuid) { error in
-                    if let error {
-                        print("***", error.localizedDescription)
-                    }
-                }
-            }
-        }
         self.containerId = nil
     }
 

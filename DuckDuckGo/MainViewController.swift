@@ -117,7 +117,7 @@ class MainViewController: UIViewController {
 
     lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
-        return tabManager?.current
+        return tabManager?.current(create: false)
     }
 
     var searchBarRect: CGRect {
@@ -592,7 +592,12 @@ class MainViewController: UIViewController {
     }
 
     private func loadInitialView() {
-        if let tab = currentTab, tab.link != nil {
+        // if let tab = currentTab, tab.link != nil {
+        // if let tab = tabManager.current(create: true), tab.link != nil {
+        if tabManager.model.currentTab?.link != nil {
+            guard let tab = tabManager.current(create: true) else {
+                fatalError("Unable to create tab")
+            }
             addToView(tab: tab)
             refreshControls()
         } else {
@@ -628,15 +633,18 @@ class MainViewController: UIViewController {
         removeHomeScreen()
         AppDependencyProvider.shared.homePageConfiguration.refresh()
 
-        let tabModel = currentTab?.tabModel
+        // Access the tab model directly as we don't want to create a new tab controller here
+        guard let tabModel = tabManager.model.currentTab else {
+            fatalError("No tab model")
+        }
 
 #if APP_TRACKING_PROTECTION
-        let controller = HomeViewController.loadFromStoryboard(model: tabModel!,
+        let controller = HomeViewController.loadFromStoryboard(model: tabModel,
                                                                favoritesViewModel: favoritesViewModel,
                                                                appSettings: appSettings,
                                                                appTPDatabase: appTrackingProtectionDatabase)
 #else
-        let controller = HomeViewController.loadFromStoryboard(model: tabModel!, favoritesViewModel: favoritesViewModel, appSettings: appSettings)
+        let controller = HomeViewController.loadFromStoryboard(model: tabModel, favoritesViewModel: favoritesViewModel, appSettings: appSettings)
 #endif
 
         homeController = controller
@@ -773,8 +781,8 @@ class MainViewController: UIViewController {
     private func prepareTabForRequest(request: () -> Void) {
         viewCoordinator.navigationBarContainer.alpha = 1
         allowContentUnderflow = false
+        guard let tab = currentTab ?? tabManager.current(create: true) else { fatalError("no tab") }
         request()
-        guard let tab = currentTab else { fatalError("no tab") }
         dismissOmniBar()
         select(tab: tab)
     }
@@ -1657,13 +1665,13 @@ extension MainViewController: TabDelegate {
             showBars()
             newTabAnimation {
                 self.loadUrlInNewTab(url, inheritedAttribution: attribution)
-                self.tabManager.current?.openedByPage = true
-                self.tabManager.current?.openingTab = tab
+                self.currentTab?.openedByPage = true
+                self.currentTab?.openingTab = tab
             }
             tabSwitcherButton.incrementAnimated()
         } else {
             loadUrlInNewTab(url, inheritedAttribution: attribution)
-            self.tabManager.current?.openingTab = tab
+            self.currentTab?.openingTab = tab
         }
 
     }
@@ -1743,7 +1751,7 @@ extension MainViewController: TabDelegate {
     func tab(_ tab: TabViewController,
              didRequestPresentingTrackerAnimation privacyInfo: PrivacyInfo,
              isCollapsing: Bool) {
-        guard tabManager.current === tab else { return }
+        guard currentTab === tab else { return }
         viewCoordinator.omniBar?.startTrackersAnimation(privacyInfo, forDaxDialog: !isCollapsing)
     }
     
@@ -1787,7 +1795,7 @@ extension MainViewController: TabDelegate {
     }
 
     func tabCheckIfItsBeingCurrentlyPresented(_ tab: TabViewController) -> Bool {
-        return tabManager.current === tab
+        return currentTab === tab
     }
 }
 
@@ -1911,9 +1919,11 @@ extension MainViewController: AutoClearWorker {
     }
 
     func forgetTabs() {
-        DaxDialogs.shared.resumeRegularFlow()
         findInPageView?.done()
         tabManager.removeAll()
+    }
+
+    func refreshUIAfterClear() {
         showBars()
         attachHomeScreen()
         tabsBarController?.refresh(tabsModel: tabManager.model)
@@ -1921,22 +1931,22 @@ extension MainViewController: AutoClearWorker {
     }
     
     func forgetData() {
-        findInPageView?.done()
-        
         URLSession.shared.configuration.urlCache?.removeAllCachedResponses()
 
         let pixel = TimedPixel(.forgetAllDataCleared)
-        let dataStore = WKWebViewConfiguration.persistent().websiteDataStore
-        WebCacheManager.shared.clear(dataStore: dataStore, tabCountInfo: tabCountInfo) {
+        WebCacheManager.shared.clear(tabCountInfo: tabCountInfo) {
             pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
-        }
-        
-        AutoconsentManagement.shared.clearCache()
-        DaxDialogs.shared.clearHeldURLData()
 
-        if syncService.authState == .inactive {
-            bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
+            AutoconsentManagement.shared.clearCache()
+            DaxDialogs.shared.clearHeldURLData()
+
+            if self.syncService.authState == .inactive {
+                self.bookmarksDatabaseCleaner?.cleanUpDatabaseNow()
+            }
+
+            self.refreshUIAfterClear()
         }
+
     }
     
     func stopAllOngoingDownloads() {
@@ -1953,11 +1963,10 @@ extension MainViewController: AutoClearWorker {
         
         fireButtonAnimator.animate {
             self.tabManager.prepareCurrentTabForDataClearing()
-            
             self.stopAllOngoingDownloads()
+            self.forgetTabs()
             self.forgetData()
             DaxDialogs.shared.resumeRegularFlow()
-            self.forgetTabs()
         } onTransitionCompleted: {
             ActionMessageView.present(message: UserText.actionForgetAllDone,
                                       presentationLocation: .withBottomBar(andAddressBarBottom: self.appSettings.currentAddressBarPosition.isBottom))

@@ -509,7 +509,7 @@ class TabViewController: UIViewController {
             self?.load(urlRequest: .userInitiated(url))
         })
     }
-    
+
     func prepareForDataClearing() {
         webView.navigationDelegate = nil
         webView.uiDelegate = nil
@@ -541,8 +541,9 @@ class TabViewController: UIViewController {
                                     context: UnsafeMutableRawPointer?) {
         // swiftlint:enable block_based_kvo
 
-        guard let keyPath = keyPath else { return }
-        
+        guard let keyPath = keyPath,
+              let webView = webView else { return }
+
         switch keyPath {
             
         case #keyPath(WKWebView.estimatedProgress):
@@ -863,6 +864,7 @@ class TabViewController: UIViewController {
     }
 
     private func removeObservers() {
+        Swift.print("***", #function)
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.url))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward))

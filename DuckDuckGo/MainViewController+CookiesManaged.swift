@@ -34,7 +34,7 @@ extension MainViewController {
         
         guard let topURL = notification.userInfo?[AutoconsentUserScript.UserInfoKeys.topURL] as? URL,
               let isCosmetic = notification.userInfo?[AutoconsentUserScript.UserInfoKeys.isCosmetic] as? Bool,
-              topURL == tabManager.current?.url
+              topURL == tabManager.current()?.url
         else { return }
         
         viewCoordinator.omniBar.showOrScheduleCookiesManagedNotification(isCosmetic: isCosmetic)

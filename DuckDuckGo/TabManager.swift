@@ -75,18 +75,19 @@ class TabManager {
         return controller
     }
 
-    var current: TabViewController? {
-
+    func current(create: Bool = false) -> TabViewController? {
         let index = model.currentIndex
         let tab = model.tabs[index]
 
         if let controller = controller(for: tab) {
             return controller
-        } else {
+        } else if create {
             os_log("Tab not in cache, creating", log: .generalLog, type: .debug)
             let controller = buildController(forTab: tab, inheritedAttribution: nil)
             tabControllerCache.append(controller)
             return controller
+        } else {
+            return nil
         }
     }
     
@@ -107,11 +108,11 @@ class TabManager {
     }
 
     func select(tabAt index: Int) -> TabViewController {
-        current?.dismiss()
+        current()?.dismiss()
         model.select(tabAt: index)
 
         save()
-        return current!
+        return current(create: true)!
     }
 
     func addURLRequest(_ request: URLRequest,
@@ -177,7 +178,7 @@ class TabManager {
     func add(url: URL?, inBackground: Bool = false, inheritedAttribution: AdClickAttributionLogic.State?) -> TabViewController {
 
         if !inBackground {
-            current?.dismiss()
+            current()?.dismiss()
         }
 
         let link = url == nil ? nil : Link(title: nil, url: url!)
@@ -218,14 +219,15 @@ class TabManager {
         model.clearAll()
         for controller in tabControllerCache {
             removeFromCache(controller)
+            // controller.prepareForDataClearing()
         }
         save()
     }
 
     func invalidateCache(forController controller: TabViewController) {
-        if current === controller {
+        if current() === controller {
             Pixel.fire(pixel: .webKitTerminationDidReloadCurrentTab)
-            current?.reload()
+            current()?.reload()
         } else {
             removeFromCache(controller)
         }
@@ -236,11 +238,11 @@ class TabManager {
     }
     
     func prepareAllTabsExceptCurrentForDataClearing() {
-        tabControllerCache.filter { $0 != current }.forEach { $0.prepareForDataClearing() }
+        tabControllerCache.filter { $0 !== current() }.forEach { $0.prepareForDataClearing() }
     }
     
     func prepareCurrentTabForDataClearing() {
-        current?.prepareForDataClearing()
+        current()?.prepareForDataClearing()
     }
 
     func cleanupTabsFaviconCache() {

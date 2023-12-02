@@ -147,7 +147,7 @@ public class WebCacheManager {
     }
 
     @available(iOS 17, *)
-    func containerBasedClearing(_ dataStore: WebCacheManagerDataStore,
+    func containerBasedClearing(// _ dataStore: WebCacheManagerDataStore,
                                 logins: PreserveLogins,
                                 storeIdManager: DataStoreIdManager = .shared,
                                 completion: @escaping () -> Void) {
@@ -159,34 +159,49 @@ public class WebCacheManager {
         }
 
         Task { @MainActor in
-            let preservedCookies = await dataStore.preservedCookies(logins)
+            var dataStore: WKWebsiteDataStore? = WKWebsiteDataStore(forIdentifier: storeIdManager.id)
+            let preservedCookies = await dataStore?.preservedCookies(logins)
+            dataStore = nil
 
-            await (dataStore as? WKWebsiteDataStore)?.removeAllData()
+            let uuids = await WKWebsiteDataStore.allDataStoreIdentifiers
+            print("***", #function, uuids)
+            for uuid in uuids {
+                print("*** removing", uuid)
+                do {
+                    try await WKWebsiteDataStore.remove(forIdentifier: uuid)
+                    print("*** deleted", uuid)
+                } catch {
+                    print("***", #function, error.localizedDescription, uuid)
+                    Pixel.fire(pixel: .debugCouldNotRemoveWebsiteDataStore, error: error)
+                }
+            }
+
             storeIdManager.reset()
 
             await checkDataStores()
 
             await WKWebViewConfiguration
                 .persistent(idManager: storeIdManager)
-                .websiteDataStore.storeCookies(preservedCookies)
+                .websiteDataStore.storeCookies(preservedCookies ?? [])
 
             completion()
         }
     }
 
     // swiftlint:disable function_body_length
-    public func clear(dataStore: WebCacheManagerDataStore,
+    public func clear(// dataStore: WebCacheManagerDataStore,
                       logins: PreserveLogins = PreserveLogins.shared,
                       tabCountInfo: TabCountInfo? = nil,
                       completion: @escaping () -> Void) {
 
         if #available(iOS 17, *) {
-            containerBasedClearing(dataStore, logins: logins) {
+            containerBasedClearing(logins: logins) {
                 completion()
             }
             return
         }
 
+        let dataStore = WKWebsiteDataStore.default()
         dataStore.removeAllDataExceptCookies {
             guard let cookieStore = dataStore.cookieStore else {
                 completion()
@@ -336,26 +351,6 @@ public class WebCacheManager {
 
 extension WKHTTPCookieStore: WebCacheManagerCookieStore {
         
-}
-
-extension WKWebsiteDataStore {
-
-    @available(iOS 17, *)
-    @MainActor
-    public func removeAllData() async {
-        let uuids = await WKWebsiteDataStore.allDataStoreIdentifiers
-        print("***", #function, uuids)
-        for uuid in uuids {
-            print("*** removing", uuid)
-            do {
-                try await WKWebsiteDataStore.remove(forIdentifier: uuid)
-            } catch {
-                Pixel.fire(pixel: .debugCouldNotRemoveWebsiteDataStore, error: error)
-                print("***", #function, error.localizedDescription, uuid)
-            }
-        }
-    }
-
 }
 
 extension WKWebsiteDataStore: WebCacheManagerDataStore {

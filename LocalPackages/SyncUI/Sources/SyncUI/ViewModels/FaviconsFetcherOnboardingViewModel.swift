@@ -1,5 +1,5 @@
 //
-//  ShowCodeView.swift
+//  FaviconsFetcherOnboardingViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -17,28 +17,12 @@
 //  limitations under the License.
 //
 
-import SwiftUI
+import Foundation
 
-struct ShowCodeView: View {
+final public class FaviconsFetcherOnboardingViewModel: ObservableObject {
+    @Published public var isFaviconsFetchingEnabled: Bool = false
 
-    let code: String
-    let copyCode: () -> Void
+    public var onDismiss: () -> Void = {}
 
-    var body: some View {
-
-        List {
-            Text(code)
-                .monospaceSystemFont(ofSize: 16)
-
-            Button {
-                copyCode()
-            } label: {
-                Label("Copy Code", image: "SyncCopy")
-            }
-        }
-        .lineSpacing(1.47)
-        .navigationTitle("Code")
-        .applyListStyle()
-    }
-
+    public init() {}
 }

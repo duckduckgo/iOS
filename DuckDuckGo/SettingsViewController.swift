@@ -258,9 +258,9 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configureSyncCell() {
-        syncCell.textLabel?.text = "Sync & Back Up"
+        syncCell.textLabel?.text = "Sync & Backup"
         if SyncBookmarksAdapter.isSyncBookmarksPaused || SyncCredentialsAdapter.isSyncCredentialsPaused {
-            syncCell.textLabel?.text = "⚠️ " + "Sync & Back Up"
+            syncCell.textLabel?.text = "⚠️ " + "Sync & Backup"
         }
         syncCell.isHidden = !shouldShowSyncCell
     }
@@ -388,7 +388,7 @@ class SettingsViewController: UITableViewController {
     }
 
     func showSync(animated: Bool = true) {
-        let controller = SyncSettingsViewController()
+        let controller = SyncSettingsViewController(syncService: syncService, syncBookmarksAdapter: syncDataProviders.bookmarksAdapter)
         navigationController?.pushViewController(controller, animated: animated)
     }
 

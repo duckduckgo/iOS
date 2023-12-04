@@ -74,6 +74,19 @@ extension Pixel {
         case browsingMenuFireproof
         case browsingMenuAutofill
         
+        case addressBarShare
+        case addressBarSettings
+
+        case shareSheetResultSuccess
+        case shareSheetResultFail
+        case shareSheetActivityCopy
+        case shareSheetActivityAddBookmark
+        case shareSheetActivityAddFavorite
+        case shareSheetActivityFindInPage
+        case shareSheetActivityPrint
+        case shareSheetActivityAddToReadingList
+        case shareSheetActivityOther
+
         case tabBarBackPressed
         case tabBarForwardPressed
         case bookmarksButtonPressed
@@ -499,6 +512,8 @@ extension Pixel {
         case bookmarksCleanupFailed
         case bookmarksCleanupAttemptedWhileSyncWasEnabled
         case favoritesCleanupFailed
+        case bookmarksFaviconsFetcherStateStoreInitializationFailed
+        case bookmarksFaviconsFetcherFailed
 
         case credentialsDatabaseCleanupFailed
         case credentialsCleanupAttemptedWhileSyncWasEnabled
@@ -561,7 +576,6 @@ extension Pixel.Event {
         case .browsingMenuRemoveFromFavorites: return "mb_df"
         case .browsingMenuAddToFavoritesAddFavoriteFlow: return "mb_aff"
         case .browsingMenuToggleBrowsingMode: return "mb_dm"
-        case .browsingMenuShare: return "mb_sh"
         case .browsingMenuCopy: return "mb_cp"
         case .browsingMenuPrint: return "mb_pr"
         case .browsingMenuSettings: return "mb_st"
@@ -571,7 +585,21 @@ extension Pixel.Event {
         case .browsingMenuReportBrokenSite: return "mb_rb"
         case .browsingMenuFireproof: return "mb_f"
         case .browsingMenuAutofill: return "m_nav_autofill_menu_item_pressed"
-            
+
+        case .browsingMenuShare: return "m_browsingmenu_share"
+
+        case .addressBarShare: return "m_addressbar_share"
+        case .addressBarSettings: return "m_addressbar_settings"
+        case .shareSheetResultSuccess: return "m_sharesheet_result_success"
+        case .shareSheetResultFail: return "m_sharesheet_result_fail"
+        case .shareSheetActivityCopy: return "m_sharesheet_activity_copy"
+        case .shareSheetActivityAddBookmark: return "m_sharesheet_activity_addbookmark"
+        case .shareSheetActivityAddFavorite: return "m_sharesheet_activity_addfavorite"
+        case .shareSheetActivityFindInPage: return "m_sharesheet_activity_findinpage"
+        case .shareSheetActivityPrint: return "m_sharesheet_activity_print"
+        case .shareSheetActivityAddToReadingList: return "m_sharesheet_activity_addtoreadinglist"
+        case .shareSheetActivityOther: return "m_sharesheet_activity_other"
+
         case .tabBarBackPressed: return "mt_bk"
         case .tabBarForwardPressed: return "mt_fw"
         case .bookmarksButtonPressed: return "mt_bm"
@@ -992,6 +1020,8 @@ extension Pixel.Event {
         case .bookmarksCleanupFailed: return "m_d_bookmarks_cleanup_failed"
         case .bookmarksCleanupAttemptedWhileSyncWasEnabled: return "m_d_bookmarks_cleanup_attempted_while_sync_was_enabled"
         case .favoritesCleanupFailed: return "m_d_favorites_cleanup_failed"
+        case .bookmarksFaviconsFetcherStateStoreInitializationFailed: return "m_d_bookmarks_favicons_fetcher_state_store_initialization_failed"
+        case .bookmarksFaviconsFetcherFailed: return "m_d_bookmarks_favicons_fetcher_failed"
 
         case .credentialsDatabaseCleanupFailed: return "m_d_credentials_database_cleanup_failed_2"
         case .credentialsCleanupAttemptedWhileSyncWasEnabled: return "m_d_credentials_cleanup_attempted_while_sync_was_enabled"

@@ -9198,7 +9198,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
-				branch = "anh/netp-active-new-pixels";
+				branch = "anh/netp-pixels";
 				kind = branch;
 			};
 		};

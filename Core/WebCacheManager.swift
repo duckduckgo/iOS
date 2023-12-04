@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+// swiftlint:disable file_length
+
 import Common
 import WebKit
 import GRDB
@@ -41,6 +43,7 @@ public protocol WebCacheManagerDataStore {
 
 }
 
+// swiftlint:disable type_body_length
 public class WebCacheManager {
 
     private struct Constants {
@@ -376,6 +379,7 @@ public class WebCacheManager {
      }
 
 }
+// swiftlint:enable type_body_length
 
 extension WKHTTPCookieStore: WebCacheManagerCookieStore {
         
@@ -466,3 +470,5 @@ public final class TabCountInfo {
          PixelParameters.tabControllerCacheCount: "\(tabControllerCacheCount)"]
     }
 }
+
+// swiftlint:enable file_length

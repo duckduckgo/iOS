@@ -38,6 +38,7 @@ class TabManager {
     @UserDefaultsWrapper(key: .faviconTabsCacheNeedsCleanup, defaultValue: true)
     var tabsCacheNeedsCleanup: Bool
 
+    @MainActor
     init(model: TabsModel,
          previewsSource: TabPreviewsSource,
          bookmarksDatabase: CoreDataDatabase,
@@ -58,11 +59,13 @@ class TabManager {
         registerForNotifications()
     }
 
+    @MainActor
     private func buildController(forTab tab: Tab, inheritedAttribution: AdClickAttributionLogic.State?) -> TabViewController {
         let url = tab.link?.url
         return buildController(forTab: tab, url: url, inheritedAttribution: inheritedAttribution)
     }
 
+    @MainActor
     private func buildController(forTab tab: Tab, url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) -> TabViewController {
         let configuration =  WKWebViewConfiguration.persistent()
         let controller = TabViewController.loadFromStoryboard(model: tab, bookmarksDatabase: bookmarksDatabase, syncService: syncService)
@@ -75,6 +78,7 @@ class TabManager {
         return controller
     }
 
+    @MainActor
     func current(createIfNeeded: Bool = false) -> TabViewController? {
         let index = model.currentIndex
         let tab = model.tabs[index]
@@ -107,6 +111,7 @@ class TabManager {
         return model.count
     }
 
+    @MainActor
     func select(tabAt index: Int) -> TabViewController {
         current()?.dismiss()
         model.select(tabAt: index)
@@ -175,6 +180,7 @@ class TabManager {
         save()
     }
 
+    @MainActor
     func add(url: URL?, inBackground: Bool = false, inheritedAttribution: AdClickAttributionLogic.State?) -> TabViewController {
 
         if !inBackground {
@@ -224,6 +230,7 @@ class TabManager {
         save()
     }
 
+    @MainActor
     func invalidateCache(forController controller: TabViewController) {
         if current() === controller {
             Pixel.fire(pixel: .webKitTerminationDidReloadCurrentTab)
@@ -237,10 +244,12 @@ class TabManager {
         model.save()
     }
     
+    @MainActor
     func prepareAllTabsExceptCurrentForDataClearing() {
         tabControllerCache.filter { $0 !== current() }.forEach { $0.prepareForDataClearing() }
     }
     
+    @MainActor
     func prepareCurrentTabForDataClearing() {
         current()?.prepareForDataClearing()
     }

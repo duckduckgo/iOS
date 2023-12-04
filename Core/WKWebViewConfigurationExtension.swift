@@ -21,7 +21,7 @@ import WebKit
 
 extension WKWebViewConfiguration {
 
-
+    @MainActor
     public static func persistent(idManager: DataStoreIdManager = .shared) -> WKWebViewConfiguration {
         let config = configuration(persistsData: true)
 

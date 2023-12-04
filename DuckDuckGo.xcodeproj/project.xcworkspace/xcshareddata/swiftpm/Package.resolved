@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "sam/netp-waitlist-final-touches",
-          "revision": "5fd695ce31ce84a930709e045103548d1e8fcde0",
-          "version": null
+          "branch": null,
+          "revision": "7b35b4c604f1cf17b48aabf72526b15a2fdcc6ce",
+          "version": "88.0.0"
         }
       },
       {

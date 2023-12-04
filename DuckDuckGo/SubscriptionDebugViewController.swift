@@ -44,7 +44,6 @@ final class SubscriptionDebugViewController: UITableViewController {
 
     enum AuthorizationRows: Int, CaseIterable {
         case showDetails
-        case simulateActive
         case clearAuthData
         
     }
@@ -69,8 +68,6 @@ final class SubscriptionDebugViewController: UITableViewController {
             switch AuthorizationRows(rawValue: indexPath.row) {
             case .clearAuthData:
                 cell.textLabel?.text = "Clear Authorization Data (Sign out)"
-            case .simulateActive:
-                cell.textLabel?.text = "Simulate Active State (Inject Fake Token)"
             case .showDetails:
                 cell.textLabel?.text = "Show Account Details"
             case .none:
@@ -97,7 +94,6 @@ final class SubscriptionDebugViewController: UITableViewController {
         case .authorization:
             switch AuthorizationRows(rawValue: indexPath.row) {
             case .clearAuthData: clearAuthData()
-            case .simulateActive: simulateActive()
             case .showDetails: showDetails()
             default: break
             }

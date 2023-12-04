@@ -258,9 +258,9 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configureSyncCell() {
-        syncCell.textLabel?.text = "Sync & Back Up"
+        syncCell.textLabel?.text = "Sync & Backup"
         if SyncBookmarksAdapter.isSyncBookmarksPaused || SyncCredentialsAdapter.isSyncCredentialsPaused {
-            syncCell.textLabel?.text = "⚠️ " + "Sync & Back Up"
+            syncCell.textLabel?.text = "⚠️ " + "Sync & Backup"
         }
         syncCell.isHidden = !shouldShowSyncCell
     }
@@ -512,6 +512,10 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let theme = ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor
+
+        if cell == netPCell {
+            DailyPixel.fire(pixel: .networkProtectionSettingsRowDisplayed)
+        }
     }
 
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection: Int) {

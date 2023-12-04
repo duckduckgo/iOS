@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": "dominik/sync-lists-merging",
-          "revision": "d6b974762f4dba7d07e4c2e7a42c946945b8d2e4",
+          "revision": "ebaf9ce0e382ff451ec599e80d855ae2317bbaee",
           "version": null
         }
       },
@@ -105,8 +105,8 @@
         "repositoryURL": "https://github.com/duckduckgo/privacy-dashboard",
         "state": {
           "branch": null,
-          "revision": "b4ac92a444e79d5651930482623b9f6dc9265667",
-          "version": "2.0.0"
+          "revision": "daa9708223b4b4318fb6448ca44801dfabcddc6f",
+          "version": "3.0.0"
         }
       },
       {

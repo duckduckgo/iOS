@@ -87,7 +87,7 @@ struct VPNWaitlistSignUpView: View {
                         action(.custom(.openNetworkProtectionInviteCodeScreen))
                     })
                         .buttonStyle(RoundedButtonStyle(enabled: true, style: .bordered))
-                        .padding(.top, 18)
+                        .padding(.top, 16)
 
                     if requestInFlight {
                         HStack {

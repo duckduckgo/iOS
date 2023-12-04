@@ -552,6 +552,21 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
             return 0
         }
     }
+
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection: Int) {
+        if let view = view as? UITableViewHeaderFooterView {
+            let theme = ThemeManager.shared.currentTheme
+            view.textLabel?.textColor = theme.tableHeaderTextColor
+        }
+    }
+
+    func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection: Int) {
+        if let view = view as? UITableViewHeaderFooterView {
+            let theme = ThemeManager.shared.currentTheme
+            view.textLabel?.textColor = theme.tableHeaderTextColor
+        }
+    }
+
 }
 
 // MARK: UITableViewDataSource

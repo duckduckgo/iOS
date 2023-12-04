@@ -31,13 +31,25 @@ struct NetworkProtectionVPNSettingsView: View {
             List {
                 Section {
                     NavigationLink(destination: NetworkProtectionVPNLocationView()) {
-                        HStack {
-                            Text(UserText.netPPreferredLocationSettingTitle).daxBodyRegular().foregroundColor(.textPrimary)
-                            Spacer()
-                            Text(viewModel.preferredLocation).daxBodyRegular().foregroundColor(.textSecondary)
+                        HStack(spacing: 16) {
+                            switch viewModel.preferredLocation.icon {
+                            case .defaultIcon:
+                                Image("Location-Solid-24")
+                            case .emoji(let string):
+                                Text(string)
+                            }
+                            VStack(alignment: .leading) {
+                                Text(UserText.netPPreferredLocationSettingTitle)
+                                    .daxBodyRegular()
+                                    .foregroundColor(.init(designSystemColor: .textPrimary))
+                                Text(viewModel.preferredLocation.title)
+                                    .daxFootnoteRegular()
+                                    .foregroundColor(.init(designSystemColor: .textSecondary))
+                            }
                         }
                     }
                 }
+                .listRowBackground(Color(designSystemColor: .surface))
                 toggleSection(
                     text: UserText.netPExcludeLocalNetworksSettingTitle,
                     footerText: UserText.netPExcludeLocalNetworksSettingFooter
@@ -50,12 +62,13 @@ struct NetworkProtectionVPNSettingsView: View {
                 Section {
                     HStack(spacing: 16) {
                         Image("Info-Solid-24")
-                            .foregroundColor(.icon)
+                            .foregroundColor(.init(designSystemColor: .icons).opacity(0.3))
                         Text(UserText.netPSecureDNSSettingFooter)
                             .daxFootnoteRegular()
-                            .foregroundColor(.textSecondary)
+                            .foregroundColor(.init(designSystemColor: .textSecondary))
                     }
                 }
+                .listRowBackground(Color(designSystemColor: .surface))
             }
         }
         .applyInsetGroupedListStyle()
@@ -69,30 +82,22 @@ struct NetworkProtectionVPNSettingsView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(text)
                         .daxBodyRegular()
-                        .foregroundColor(.textPrimary)
+                        .foregroundColor(.init(designSystemColor: .textPrimary))
                         .layoutPriority(1)
                 }
 
                 toggle()
-                    .toggleStyle(SwitchToggleStyle(tint: .controlColor))
+                    .toggleStyle(SwitchToggleStyle(tint: .init(designSystemColor: .accent)))
             }
-            .listRowBackground(Color.cellBackground)
         } footer: {
             Text(footerText)
-                .foregroundColor(.textSecondary)
-                .accentColor(Color.controlColor)
+                .foregroundColor(.init(designSystemColor: .textSecondary))
+                .accentColor(Color(designSystemColor: .accent))
                 .daxFootnoteRegular()
                 .padding(.top, 6)
         }
+        .listRowBackground(Color(designSystemColor: .surface))
     }
-}
-
-private extension Color {
-    static let textPrimary = Color(designSystemColor: .textPrimary)
-    static let textSecondary = Color(designSystemColor: .textSecondary)
-    static let cellBackground = Color(designSystemColor: .surface)
-    static let controlColor = Color(designSystemColor: .accent)
-    static let icon = Color(designSystemColor: .icons).opacity(0.3)
 }
 
 #endif

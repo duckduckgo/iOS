@@ -49,7 +49,6 @@ class FireButtonAnimationSettingsViewController: UITableViewController {
         
         let theme = ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
         
         // Checkmark color
         cell.tintColor = theme.buttonTintColor

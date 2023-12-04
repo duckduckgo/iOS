@@ -54,37 +54,35 @@ struct NetworkProtectionVPNNotificationsView: View {
             Button(UserText.netPTurnOnNotificationsButtonTitle) {
                 model.turnOnNotifications()
             }
-            .foregroundColor(.controlColor)
+            .foregroundColor(.init(designSystemColor: .accent))
         } footer: {
             Text(UserText.netPTurnOnNotificationsSectionFooter)
-                .foregroundColor(.textSecondary)
-                .font(.system(size: 13))
+                .foregroundColor(.init(designSystemColor: .textSecondary))
+                .daxFootnoteRegular()
                 .padding(.top, 6)
         }
+        .listRowBackground(Color(designSystemColor: .surface))
     }
 
     @ViewBuilder
     private var authorizedView: some View {
         Section {
-            Toggle(UserText.netPVPNAlertsToggleTitle, isOn: Binding(
-                get: { model.alertsEnabled },
-                set: model.didToggleAlerts(to:)
-            ))
-            .toggleStyle(SwitchToggleStyle(tint: .controlColor))
+            Toggle(
+                UserText.netPVPNAlertsToggleTitle,
+                isOn: Binding(
+                    get: { model.alertsEnabled },
+                    set: model.didToggleAlerts(to:)
+                )
+            )
+            .toggleStyle(SwitchToggleStyle(tint: .init(designSystemColor: .accent)))
         } footer: {
             Text(UserText.netPVPNAlertsToggleSectionFooter)
-                .foregroundColor(.textSecondary)
-                .font(.system(size: 13))
+                .foregroundColor(.init(designSystemColor: .textSecondary))
+                .daxFootnoteRegular()
                 .padding(.top, 6)
         }
+        .listRowBackground(Color(designSystemColor: .surface))
     }
-}
-
-private extension Color {
-    static let textPrimary = Color(designSystemColor: .textPrimary)
-    static let textSecondary = Color(designSystemColor: .textSecondary)
-    static let cellBackground = Color(designSystemColor: .surface)
-    static let controlColor = Color(designSystemColor: .accent)
 }
 
 #endif

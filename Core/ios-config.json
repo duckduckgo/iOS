@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1701253939396,
+    "version": 1701443081218,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -1267,6 +1267,9 @@
                         "domain": "xfinity.com"
                     },
                     {
+                        "domain": "login.xfinity.com"
+                    },
+                    {
                         "domain": "homedepot.ca"
                     },
                     {
@@ -1296,7 +1299,20 @@
             },
             "exceptions": [],
             "state": "enabled",
-            "hash": "4c62237a3eeaf9cfec814fc3fb7af282"
+            "hash": "71e1dfb12e80fdebb9941bf29e6c6960"
+        },
+        "dbp": {
+            "state": "disabled",
+            "features": {
+                "waitlist": {
+                    "state": "disabled"
+                },
+                "waitlistBetaActive": {
+                    "state": "disabled"
+                }
+            },
+            "exceptions": [],
+            "hash": "ba52a36920a4a76343fc3c44d98936f9"
         },
         "duckPlayer": {
             "exceptions": [],
@@ -5745,7 +5761,8 @@
                             {
                                 "rule": "googletagmanager.com/gtag/js",
                                 "domains": [
-                                    "abril.com.br"
+                                    "abril.com.br",
+                                    "cosmicbook.news"
                                 ]
                             }
                         ]
@@ -6282,6 +6299,16 @@
                             }
                         ]
                     },
+                    "mediavine.com": {
+                        "rules": [
+                            {
+                                "rule": "scripts.mediavine.com/tags/cosmic-book-news.js",
+                                "domains": [
+                                    "cosmicbook.news"
+                                ]
+                            }
+                        ]
+                    },
                     "medicare.gov": {
                         "rules": [
                             {
@@ -6420,6 +6447,16 @@
                                 "rule": "omtrdc.net",
                                 "domains": [
                                     "pizzahut.com"
+                                ]
+                            }
+                        ]
+                    },
+                    "onesignal.com": {
+                        "rules": [
+                            {
+                                "rule": "cdn.onesignal.com/sdks/OneSignalSDK.js",
+                                "domains": [
+                                    "cosmicbook.news"
                                 ]
                             }
                         ]
@@ -6684,6 +6721,7 @@
                             {
                                 "rule": "protection-widget.route.com/protect.core.js",
                                 "domains": [
+                                    "clionadhcosmetics.com",
                                     "littleunicorn.com",
                                     "olfactif.com"
                                 ]
@@ -7181,6 +7219,16 @@
                             }
                         ]
                     },
+                    "wovn.io": {
+                        "rules": [
+                            {
+                                "rule": "j.wovn.io/1",
+                                "domains": [
+                                    "tamashiiweb.com"
+                                ]
+                            }
+                        ]
+                    },
                     "wpadmngr.com": {
                         "rules": [
                             {
@@ -7379,7 +7427,7 @@
                     "domain": "sundancecatalog.com"
                 }
             ],
-            "hash": "1ce506662b48fccc1bf37a3133fd3f1e"
+            "hash": "86c6202971fbee4ad408258833ae3474"
         },
         "trackingCookies1p": {
             "settings": {

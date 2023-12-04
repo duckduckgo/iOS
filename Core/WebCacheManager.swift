@@ -196,6 +196,7 @@ public class WebCacheManager {
     }
 
     private func persistCookiesInCurrentContainer(_ cookies: [HTTPCookie], storeIdManager: DataStoreIdManager) async {
+        print("***", #function, cookies.count, storeIdManager.id as Any)
         await WKWebViewConfiguration
             .persistent(idManager: storeIdManager)
             .websiteDataStore.storeCookies(cookies)

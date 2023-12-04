@@ -1882,17 +1882,19 @@ extension MainViewController: TabSwitcherButtonDelegate {
     }
 
     func showTabSwitcher() {
-        if let currentTab = currentTab {
-            currentTab.preparePreview(completion: { image in
-                if let image = image {
-                    self.previewsSource.update(preview: image,
-                                               forTab: currentTab.tabModel)
-                    
-                }
-                ViewHighlighter.hideAll()
-                self.segueToTabSwitcher()
-            })
+        guard let currentTab = currentTab ?? tabManager?.current(createIfNeeded: true) else {
+            fatalError("Unable to get current tab")
         }
+        
+        currentTab.preparePreview(completion: { image in
+            if let image = image {
+                self.previewsSource.update(preview: image,
+                                           forTab: currentTab.tabModel)
+
+            }
+            ViewHighlighter.hideAll()
+            self.segueToTabSwitcher()
+        })
     }
 }
 

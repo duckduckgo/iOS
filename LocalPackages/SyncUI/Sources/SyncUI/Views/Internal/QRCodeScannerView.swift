@@ -25,12 +25,10 @@ struct QRCodeScannerView: UIViewRepresentable {
     let scanningQueue: ScanningQueue
 
     let onCameraUnavailable: () -> Void
-    let onInvalidCodeScanned: () -> Void
 
-    init(onQRCodeScanned: @escaping (String) async -> Bool, onCameraUnavailable: @escaping () -> Void, onInvalidCodeScanned: @escaping () -> Void) {
+    init(onQRCodeScanned: @escaping (String) async -> Bool, onCameraUnavailable: @escaping () -> Void) {
         scanningQueue = ScanningQueue(onQRCodeScanned)
         self.onCameraUnavailable = onCameraUnavailable
-        self.onInvalidCodeScanned = onInvalidCodeScanned
     }
 
     func makeCoordinator() -> Coordinator {
@@ -112,7 +110,6 @@ struct QRCodeScannerView: UIViewRepresentable {
             Task { @MainActor in
                 let codeAccepted = await cameraView.scanningQueue.codeScanned(code)
                 if !codeAccepted {
-                    cameraView.onInvalidCodeScanned()
                     captureCodes = true
                 }
             }

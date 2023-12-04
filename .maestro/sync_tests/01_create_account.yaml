@@ -21,7 +21,6 @@ tags:
 
 
 # Clean up
-- tapOn: Not Now
-- assertVisible: Sync & Back Up
+- assertVisible: Sync & Backup
 - runFlow:
     file: ../shared/sync_delete.yaml

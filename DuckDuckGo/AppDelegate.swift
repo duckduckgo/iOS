@@ -562,6 +562,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         lastBackgroundDate = Date()
         AppDependencyProvider.shared.autofillLoginSession.endSession()
         suspendSync()
+        syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
     }
 
     private func suspendSync() {
@@ -844,6 +845,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
             if identifier == VPNWaitlist.notificationIdentifier {
                 presentNetworkProtectionWaitlistModal()
+                DailyPixel.fire(pixel: .networkProtectionWaitlistNotificationLaunched)
             }
 #endif
         }

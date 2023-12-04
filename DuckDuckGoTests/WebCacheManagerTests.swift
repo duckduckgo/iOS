@@ -19,10 +19,23 @@
 
 import XCTest
 @testable import Core
+import WebKit
 
 class WebCacheManagerTests: XCTestCase {
     
     let dataStoreIdManager = DataStoreIdManager()
+
+    override func setUp() {
+        super.setUp()
+        UserDefaults.standard.removeObject(forKey: UserDefaultsWrapper<Any>.Key.webContainerId.rawValue)
+        if #available(iOS 17, *) {
+            WKWebsiteDataStore.fetchAllDataStoreIdentifiers { uuids in
+                uuids.forEach {
+                    WKWebsiteDataStore.remove(forIdentifier: $0, completionHandler: { _ in })
+                }
+            }
+        }
+    }
 
     func testWhenCookiesHaveSubDomainsOnSubDomainsAndWidlcardsThenOnlyMatchingCookiesRetained() {
         let logins = MockPreservedLogins(domains: [

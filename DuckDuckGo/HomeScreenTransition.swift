@@ -102,14 +102,15 @@ class FromHomeScreenTransition: HomeScreenTransition {
         tabSwitcherViewController.prepareForPresentation()
         
         guard let homeScreen = mainViewController.homeController,
-            let tab = mainViewController.currentTab?.tabModel,
-        let rowIndex = tabSwitcherViewController.tabsModel.indexOf(tab: tab),
-        let layoutAttr = tabSwitcherViewController.collectionView.layoutAttributesForItem(at: IndexPath(row: rowIndex, section: 0))
-            else {
-                tabSwitcherViewController.view.alpha = 1
-                return
+              let tab = mainViewController.tabManager.model.currentTab,
+              let rowIndex = tabSwitcherViewController.tabsModel.indexOf(tab: tab),
+              let layoutAttr = tabSwitcherViewController.collectionView.layoutAttributesForItem(at: IndexPath(row: rowIndex, section: 0))
+        else {
+            tabSwitcherViewController.view.alpha = 1
+            transitionContext.completeTransition(true)
+            return
         }
-        
+
         let theme = ThemeManager.shared.currentTheme
         
         solidBackground.frame = homeScreen.view.convert(homeScreen.collectionView.frame, to: nil)
@@ -175,14 +176,15 @@ class ToHomeScreenTransition: HomeScreenTransition {
         prepareSubviews(using: transitionContext)
         
         guard let mainViewController = transitionContext.viewController(forKey: .to) as? MainViewController,
-            let homeScreen = mainViewController.homeController,
-            let tab = mainViewController.currentTab?.tabModel,
-            let rowIndex = tabSwitcherViewController.tabsModel.indexOf(tab: tab),
-            let layoutAttr = tabSwitcherViewController.collectionView.layoutAttributesForItem(at: IndexPath(row: rowIndex, section: 0))
-            else {
-                return
+              let homeScreen = mainViewController.homeController,
+              let tab = mainViewController.tabManager.model.currentTab,
+              let rowIndex = tabSwitcherViewController.tabsModel.indexOf(tab: tab),
+              let layoutAttr = tabSwitcherViewController.collectionView.layoutAttributesForItem(at: IndexPath(row: rowIndex, section: 0))
+        else {
+            transitionContext.completeTransition(true)
+            return
         }
-        
+
         mainViewController.view.alpha = 1
         
         let theme = ThemeManager.shared.currentTheme

@@ -147,7 +147,6 @@ public class WebCacheManager {
     @available(iOS 17, *)
     func checkDataStores() async {
         let ids = await WKWebsiteDataStore.allDataStoreIdentifiers
-        print("***", #function, ids)
         if ids.count >  0 {
             Pixel.fire(pixel: .debugUnexpectedWebsiteDataStores)
             assertionFailure("Unexpected number of data stores")
@@ -158,7 +157,6 @@ public class WebCacheManager {
     func containerBasedClearing(logins: PreserveLogins,
                                 storeIdManager: DataStoreIdManager,
                                 completion: @escaping () -> Void) {
-        print("***", #function)
 
         guard let containerId = storeIdManager.id else {
             completion()
@@ -171,32 +169,29 @@ public class WebCacheManager {
             dataStore = nil
 
             let uuids = await WKWebsiteDataStore.allDataStoreIdentifiers
-            print("***", #function, uuids)
             for uuid in uuids {
-                print("*** removing", uuid)
                 do {
                     try await WKWebsiteDataStore.remove(forIdentifier: uuid)
-                    print("*** deleted", uuid)
                 } catch {
-                    print("***", #function, error.localizedDescription, uuid)
                     Pixel.fire(pixel: .debugCouldNotRemoveWebsiteDataStore, error: error)
+
+                    // Not a fatal error because it will get deleted next time
+                    assertionFailure("Failed to remove datastore")
                 }
             }
 
-            storeIdManager.allocateNewContainerId()
-
             await checkDataStores()
-            
+
+            storeIdManager.allocateNewContainerId()
             if let cookies {
-                await persistCookiesInCurrentContainer(cookies, storeIdManager: storeIdManager)
+                await persistCookiesToCurrentContainer(cookies, storeIdManager: storeIdManager)
             }
 
             completion()
         }
     }
 
-    private func persistCookiesInCurrentContainer(_ cookies: [HTTPCookie], storeIdManager: DataStoreIdManager) async {
-        print("***", #function, cookies.count, storeIdManager.id as Any)
+    private func persistCookiesToCurrentContainer(_ cookies: [HTTPCookie], storeIdManager: DataStoreIdManager) async {
         await WKWebViewConfiguration
             .persistent(idManager: storeIdManager)
             .websiteDataStore.storeCookies(cookies)
@@ -218,7 +213,7 @@ public class WebCacheManager {
                     // From this point onwards... use containers
                     dataStoreIdManager.allocateNewContainerId()
                     Task { @MainActor in
-                        await self.persistCookiesInCurrentContainer(cookies, storeIdManager: dataStoreIdManager)
+                        await self.persistCookiesToCurrentContainer(cookies, storeIdManager: dataStoreIdManager)
                         completion()
                     }
                 } else {

@@ -214,13 +214,14 @@ extension Pixel {
     
     public static func fire(pixel: Pixel.Event,
                             error: Error?,
+                            includedParameters: [QueryParameters] = [.appVersion],
                             withAdditionalParameters params: [String: String] = [:],
                             onComplete: @escaping (Error?) -> Void = { _ in }) {
         var newParams = params
         if let error {
             newParams.appendErrorPixelParams(error: error)
         }
-        fire(pixel: pixel, withAdditionalParameters: newParams, includedParameters: [], onComplete: onComplete)
+        fire(pixel: pixel, withAdditionalParameters: newParams, includedParameters: includedParameters, onComplete: onComplete)
     }
 }
 

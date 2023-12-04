@@ -45,6 +45,7 @@ final class SubscriptionDebugViewController: UITableViewController {
     enum AuthorizationRows: Int, CaseIterable {
         case showDetails
         case clearAuthData
+        case injectCredentials
         
     }
 
@@ -70,6 +71,8 @@ final class SubscriptionDebugViewController: UITableViewController {
                 cell.textLabel?.text = "Clear Authorization Data (Sign out)"
             case .showDetails:
                 cell.textLabel?.text = "Show Account Details"
+            case .injectCredentials:
+                cell.textLabel?.text = "Simulate Authentication (Inject Fake token)"
             case .none:
                 break
             }
@@ -95,6 +98,7 @@ final class SubscriptionDebugViewController: UITableViewController {
             switch AuthorizationRows(rawValue: indexPath.row) {
             case .clearAuthData: clearAuthData()
             case .showDetails: showDetails()
+            case .injectCredentials: injectCredentials()
             default: break
             }
         case .none:
@@ -120,7 +124,7 @@ final class SubscriptionDebugViewController: UITableViewController {
         accountManager.signOut()
     }
     
-    private func simulateActive() {
+    private func injectCredentials() {
         accountManager.storeAccount(token: "a-fake-token",
                                     email: "a.fake@email.com",
                                     externalID: "666")

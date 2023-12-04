@@ -164,7 +164,7 @@ public class WebCacheManager {
 
         Task { @MainActor in
             var dataStore: WKWebsiteDataStore? = WKWebsiteDataStore(forIdentifier: containerId)
-            let preservedCookies = await dataStore?.preservedCookies(logins)
+            let cookies = await dataStore?.preservedCookies(logins)
             dataStore = nil
 
             let uuids = await WKWebsiteDataStore.allDataStoreIdentifiers
@@ -183,13 +183,19 @@ public class WebCacheManager {
             storeIdManager.allocateNewContainerId()
 
             await checkDataStores()
-
-            await WKWebViewConfiguration
-                .persistent(idManager: storeIdManager)
-                .websiteDataStore.storeCookies(preservedCookies ?? [])
+            
+            if let cookies {
+                await persistCookiesInCurrentContainer(cookies, storeIdManager: storeIdManager)
+            }
 
             completion()
         }
+    }
+
+    private func persistCookiesInCurrentContainer(_ cookies: [HTTPCookie], storeIdManager: DataStoreIdManager) async {
+        await WKWebViewConfiguration
+            .persistent(idManager: storeIdManager)
+            .websiteDataStore.storeCookies(cookies)
     }
 
     public func clear(logins: PreserveLogins = PreserveLogins.shared,
@@ -200,16 +206,20 @@ public class WebCacheManager {
         if #available(iOS 17, *), dataStoreIdManager.hasId {
             containerBasedClearing(logins: logins, storeIdManager: dataStoreIdManager) {
                 // Perform legacy clearing anyway, just to be sure
-                self.legacyDataClearing(completion: completion)
+                self.legacyDataClearing { _ in completion() }
             }
-            return
         } else {
-            legacyDataClearing {
+            legacyDataClearing { cookies in
                 if #available(iOS 17, *) {
                     // From this point onwards... use containers
                     dataStoreIdManager.allocateNewContainerId()
+                    Task { @MainActor in
+                        await self.persistCookiesInCurrentContainer(cookies, storeIdManager: dataStoreIdManager)
+                        completion()
+                    }
+                } else {
+                    completion()
                 }
-                completion()
             }
         }
 
@@ -217,12 +227,12 @@ public class WebCacheManager {
 
     private func legacyDataClearing(logins: PreserveLogins = PreserveLogins.shared,
                                     tabCountInfo: TabCountInfo? = nil,
-                                    completion: @escaping () -> Void) {
+                                    completion: @escaping ([HTTPCookie]) -> Void) {
 
         let dataStore = WKWebsiteDataStore.default()
         dataStore.removeAllDataExceptCookies {
             guard let cookieStore = dataStore.cookieStore else {
-                completion()
+                completion([])
                 return
             }
 
@@ -276,7 +286,7 @@ public class WebCacheManager {
                     self.performSanityCheck(for: cookieStore, summary: cookieClearingSummary, tabCountInfo: tabCountInfo)
 
                     DispatchQueue.main.async {
-                        completion()
+                        completion(cookies)
                     }
                 }
             }

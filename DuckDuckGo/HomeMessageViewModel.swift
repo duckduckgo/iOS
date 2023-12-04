@@ -141,6 +141,7 @@ struct HomeMessageViewModel {
             }
         case .surveyURL(let value):
             return {
+#if NETWORK_PROTECTION
                 if let surveyURL = URL(string: value) {
                     let surveyURLBuilder = DefaultSurveyURLBuilder()
                     let surveyURLWithParameters = surveyURLBuilder.addSurveyParameters(to: surveyURL)
@@ -148,6 +149,9 @@ struct HomeMessageViewModel {
                 } else {
                     LaunchTabNotification.postLaunchTabNotification(urlString: value)
                 }
+#else
+                LaunchTabNotification.postLaunchTabNotification(urlString: value)
+#endif
 
                 onDidClose(buttonAction)
             }

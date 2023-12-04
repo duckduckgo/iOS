@@ -107,7 +107,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
 
     func getSubscription(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        var authToken = AccountManager().authToken ?? Constants.empty
+        let authToken = AccountManager().authToken ?? Constants.empty
         return Subscription(token: authToken)
     }
     

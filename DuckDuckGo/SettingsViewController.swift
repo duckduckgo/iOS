@@ -75,6 +75,11 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var voiceSearchToggle: UISwitch!
     @IBOutlet weak var privacyProSignupCell: UITableViewCell!
     @IBOutlet weak var privacyProLearnMoreCell: UITableViewCell!
+    @IBOutlet weak var privacyProVPNCell: UITableViewCell!
+    @IBOutlet weak var privacyProDBPCell: UITableViewCell!
+    @IBOutlet weak var privacyProITPCell: UITableViewCell!
+    @IBOutlet weak var privacyProSubscriptionSettingsCell: UITableViewCell!
+    
     
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
@@ -90,7 +95,6 @@ class SettingsViewController: UITableViewController {
     private let bookmarksDatabase: CoreDataDatabase
 
     private lazy var emailManager = EmailManager()
-    
     private lazy var versionProvider: AppVersion = AppVersion.shared
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
     fileprivate lazy var appSettings = AppDependencyProvider.shared.appSettings
@@ -139,6 +143,10 @@ class SettingsViewController: UITableViewController {
         return false
 #endif
     }()
+
+#if SUBSCRIPTION
+    private lazy var accountManger = AccountManager()
+#endif
     
     private lazy var shouldShowPrivacyPro: Bool = {
 #if SUBSCRIPTION
@@ -151,6 +159,18 @@ class SettingsViewController: UITableViewController {
         return false
 #endif
     }()
+    
+    private lazy var privacyProIsAuthenticated: Bool = {
+#if SUBSCRIPTION
+        if accountManger.isUserAuthenticated {
+            return true
+        }
+        return false
+#else
+        return false
+#endif
+    }()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -171,6 +191,7 @@ class SettingsViewController: UITableViewController {
         configureVoiceSearchCell()
         configureNetPCell()
         configurePrivacyPro()
+       
         applyTheme(ThemeManager.shared.currentTheme)
 
         internalUserDecider.isInternalUserPublisher.dropFirst().sink(receiveValue: { [weak self] _ in
@@ -188,6 +209,7 @@ class SettingsViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.isModalInPresentation = false
         configureFireButtonAnimationCellAccessory()
         configureAddressBarPositionCell()
         configureTextSizeCell()
@@ -203,6 +225,10 @@ class SettingsViewController: UITableViewController {
 
 #if NETWORK_PROTECTION
         updateNetPCellSubtitle(connectionStatus: connectionObserver.recentValue)
+#endif
+        
+#if SUBSCRIPTION
+        updatePrivacyProSettings()
 #endif
 
         // Make sure multiline labels are correctly presented
@@ -373,13 +399,36 @@ class SettingsViewController: UITableViewController {
         }
     }
 
-    private func configurePrivacyPro() {
+#if SUBSCRIPTION
+    
+    private func updatePrivacyProSettings() {
+        configurePrivacyPro()
+        UIView.transition(with: tableView,
+                          duration: 0.35,
+                          options: .transitionCrossDissolve,
+                          animations: { self.tableView.reloadData() })
+    }
+    
+    @objc private func configurePrivacyPro() {
+        let isAuthenticated = accountManger.isUserAuthenticated
+        
+        // Signup Cells
+        privacyProSignupCell.isHidden = isAuthenticated
+        privacyProLearnMoreCell.isHidden = isAuthenticated
         privacyProSignupCell.accessoryType = .none
         privacyProSignupCell.isUserInteractionEnabled = false
         
+        // Management Cells
+        privacyProVPNCell.isHidden = !isAuthenticated
+        privacyProDBPCell.isHidden = !isAuthenticated
+        privacyProITPCell.isHidden = !isAuthenticated
+        privacyProSubscriptionSettingsCell.isHidden = !isAuthenticated
+        
+        
     }
-    
-    
+#endif
+
+ 
     private func configureNetPCell() {
         netPCell.isHidden = !shouldShowNetPCell
 #if NETWORK_PROTECTION
@@ -398,10 +447,15 @@ class SettingsViewController: UITableViewController {
         switch NetworkProtectionAccessController().networkProtectionAccessType() {
         case .none, .waitlistAvailable, .waitlistJoined, .waitlistInvitedPendingTermsAcceptance:
             netPCell.detailTextLabel?.text = VPNWaitlist.shared.settingsSubtitle
+            privacyProVPNCell.detailTextLabel?.text = VPNWaitlist.shared.settingsSubtitle
         case .waitlistInvited, .inviteCodeInvited:
             switch connectionStatus {
-            case .connected: netPCell.detailTextLabel?.text = UserText.netPCellConnected
-            default: netPCell.detailTextLabel?.text = UserText.netPCellDisconnected
+            case .connected:
+                netPCell.detailTextLabel?.text = UserText.netPCellConnected
+                privacyProVPNCell.detailTextLabel?.text = UserText.netPCellConnected
+            default:
+                netPCell.detailTextLabel?.text = UserText.netPCellDisconnected
+                privacyProVPNCell.detailTextLabel?.text = UserText.netPCellDisconnected
             }
         }
     }
@@ -488,6 +542,7 @@ class SettingsViewController: UITableViewController {
 #if SUBSCRIPTION
     @available(iOS 15, *)
     private func showPrivacyPro() {
+        self.isModalInPresentation = true
         let privacyProview = SubscriptionFlowView(viewModel: SubscriptionFlowViewModel())
         let hostingController = UIHostingController(rootView: privacyProview)
         navigationController?.pushViewController(hostingController, animated: true)
@@ -536,7 +591,6 @@ class SettingsViewController: UITableViewController {
 #else
                 break
 #endif
-                
             }
             
         case privacyProLearnMoreCell:
@@ -546,7 +600,15 @@ class SettingsViewController: UITableViewController {
 #else
                 break
 #endif
-                
+            }
+            
+        case privacyProVPNCell:
+            if #available(iOS 15, *) {
+#if SUBSCRIPTION && NETWORK_PROTECTION
+                showNetP()
+#else
+                break
+#endif
             }
             
         default: break

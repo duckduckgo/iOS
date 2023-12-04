@@ -117,7 +117,7 @@ class MainViewController: UIViewController {
 
     lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
-        return tabManager?.current(create: false)
+        return tabManager?.current(createIfNeeded: false)
     }
 
     var searchBarRect: CGRect {
@@ -595,7 +595,7 @@ class MainViewController: UIViewController {
         // if let tab = currentTab, tab.link != nil {
         // if let tab = tabManager.current(create: true), tab.link != nil {
         if tabManager.model.currentTab?.link != nil {
-            guard let tab = tabManager.current(create: true) else {
+            guard let tab = tabManager.current(createIfNeeded: true) else {
                 fatalError("Unable to create tab")
             }
             addToView(tab: tab)
@@ -762,7 +762,7 @@ class MainViewController: UIViewController {
 
     func loadUrl(_ url: URL) {
         prepareTabForRequest {
-            currentTab?.load(url: url)
+            self.currentTab?.load(url: url)
         }
     }
 
@@ -781,7 +781,15 @@ class MainViewController: UIViewController {
     private func prepareTabForRequest(request: () -> Void) {
         viewCoordinator.navigationBarContainer.alpha = 1
         allowContentUnderflow = false
-        guard let tab = currentTab ?? tabManager.current(create: true) else { fatalError("no tab") }
+
+        if currentTab == nil {
+            if tabManager.current(createIfNeeded: true) == nil {
+                fatalError("failed to create tab")
+            }
+        }
+
+        guard let tab = currentTab else { fatalError("no tab") }
+        
         request()
         dismissOmniBar()
         select(tab: tab)

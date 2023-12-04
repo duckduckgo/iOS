@@ -75,13 +75,13 @@ class TabManager {
         return controller
     }
 
-    func current(create: Bool = false) -> TabViewController? {
+    func current(createIfNeeded: Bool = false) -> TabViewController? {
         let index = model.currentIndex
         let tab = model.tabs[index]
 
         if let controller = controller(for: tab) {
             return controller
-        } else if create {
+        } else if createIfNeeded {
             os_log("Tab not in cache, creating", log: .generalLog, type: .debug)
             let controller = buildController(forTab: tab, inheritedAttribution: nil)
             tabControllerCache.append(controller)
@@ -112,7 +112,7 @@ class TabManager {
         model.select(tabAt: index)
 
         save()
-        return current(create: true)!
+        return current(createIfNeeded: true)!
     }
 
     func addURLRequest(_ request: URLRequest,

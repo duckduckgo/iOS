@@ -73,7 +73,7 @@ class FromWebViewTransition: WebViewTransition {
         tabSwitcherViewController.view.frame = transitionContext.finalFrame(for: tabSwitcherViewController)
         tabSwitcherViewController.prepareForPresentation()
         
-        guard let webView = mainViewController.currentTab!.webView,
+        guard let webView = mainViewController.currentTab?.webView,
               let tab = mainViewController.tabManager.model.currentTab,
               let rowIndex = tabSwitcherViewController.tabsModel.indexOf(tab: tab),
               let layoutAttr = tabSwitcherViewController.collectionView.layoutAttributesForItem(at: IndexPath(row: rowIndex, section: 0)),
@@ -127,7 +127,7 @@ class ToWebViewTransition: WebViewTransition {
         prepareSubviews(using: transitionContext)
         
         guard let mainViewController = transitionContext.viewController(forKey: .to) as? MainViewController,
-              let webView = mainViewController.currentTab!.webView,
+              let webView = mainViewController.currentTab?.webView,
               let tab = mainViewController.currentTab?.tabModel,
               let rowIndex = tabSwitcherViewController.tabsModel.indexOf(tab: tab),
               let layoutAttr = tabSwitcherViewController.collectionView.layoutAttributesForItem(at: IndexPath(row: rowIndex, section: 0))

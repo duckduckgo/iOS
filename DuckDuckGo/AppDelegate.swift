@@ -265,6 +265,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DefaultVariantManager().assignVariantIfNeeded { _ in
             // MARK: perform first time launch logic here
             DaxDialogs.shared.primeForUse()
+            
+            skadReportFirstLaunch(conversionValue: <#T##Int#>)
         }
 
         // MARK: Sync initialisation

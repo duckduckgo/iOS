@@ -92,9 +92,9 @@ final class FireButtonReferenceTests: XCTestCase {
         
         dataStore.cookieStore?.setCookie(cookie, completionHandler: {
             
-            WebCacheManager.shared.clear(dataStore: self.dataStore,
-                                         logins: self.preservedLogins) {
-                
+            let dataStoreIdManager = DataStoreIdManager()
+            WebCacheManager.shared.clear(logins: self.preservedLogins, dataStoreIdManager: dataStoreIdManager) {
+
                 self.dataStore.cookieStore?.getAllCookies { hotCookies in
                     let testCookie = hotCookies.filter { $0.name == test.cookieName }.first
                     

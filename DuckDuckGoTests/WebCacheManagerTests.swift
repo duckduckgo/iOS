@@ -22,6 +22,8 @@ import XCTest
 
 class WebCacheManagerTests: XCTestCase {
     
+    let dataStoreIdManager = DataStoreIdManager()
+
     func testWhenCookiesHaveSubDomainsOnSubDomainsAndWidlcardsThenOnlyMatchingCookiesRetained() {
         let logins = MockPreservedLogins(domains: [
             "mobile.twitter.com"
@@ -39,7 +41,7 @@ class WebCacheManagerTests: XCTestCase {
         dataStore.cookieStore = cookieStore
         
         let expect = expectation(description: #function)
-        WebCacheManager.shared.clear(dataStore: dataStore, logins: logins) {
+        WebCacheManager.shared.clear(logins: logins, dataStoreIdManager: dataStoreIdManager) {
             expect.fulfill()
         }
         wait(for: [expect], timeout: 5.0)
@@ -81,7 +83,7 @@ class WebCacheManagerTests: XCTestCase {
         dataStore.cookieStore = cookieStore
 
         let expect = expectation(description: #function)
-        WebCacheManager.shared.clear(dataStore: dataStore, logins: logins) {
+        WebCacheManager.shared.clear(logins: logins, dataStoreIdManager: dataStoreIdManager) {
             expect.fulfill()
         }
         wait(for: [expect], timeout: 10.0)
@@ -104,7 +106,7 @@ class WebCacheManagerTests: XCTestCase {
         dataStore.cookieStore = cookieStore
         
         let expect = expectation(description: #function)
-        WebCacheManager.shared.clear(dataStore: dataStore, logins: logins) {
+        WebCacheManager.shared.clear(logins: logins, dataStoreIdManager: dataStoreIdManager) {
             expect.fulfill()
         }
         wait(for: [expect], timeout: 5.0)
@@ -127,7 +129,7 @@ class WebCacheManagerTests: XCTestCase {
         dataStore.cookieStore = cookieStore
         
         let expect = expectation(description: #function)
-        WebCacheManager.shared.clear(dataStore: dataStore, logins: logins) {
+        WebCacheManager.shared.clear(logins: logins, dataStoreIdManager: dataStoreIdManager) {
             expect.fulfill()
         }
         wait(for: [expect], timeout: 10.0)
@@ -142,7 +144,7 @@ class WebCacheManagerTests: XCTestCase {
         let logins = MockPreservedLogins(domains: [])
         
         let expect = expectation(description: #function)
-        WebCacheManager.shared.clear(dataStore: dataStore, logins: logins) {
+        WebCacheManager.shared.clear(logins: logins, dataStoreIdManager: dataStoreIdManager) {
             expect.fulfill()
         }
         wait(for: [expect], timeout: 5.0)
@@ -158,7 +160,11 @@ class WebCacheManagerTests: XCTestCase {
     // MARK: Mocks
     
     class MockDataStore: WebCacheManagerDataStore {
-        
+
+        func preservedCookies(_ preservedLogins: Core.PreserveLogins) async -> [HTTPCookie] {
+            []
+        }
+
         var removeAllDataCalledCount = 0
         
         var cookieStore: WebCacheManagerCookieStore?

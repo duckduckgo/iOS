@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 
 protocol VPNWaitlistActivationDateStore {
 
@@ -34,7 +35,7 @@ struct DefaultVPNWaitlistActivationDateStore: VPNWaitlistActivationDateStore {
 
     private let userDefaults: UserDefaults
 
-    init(userDefaults: UserDefaults = .standard) {
+    init(userDefaults: UserDefaults = .networkProtectionGroupDefaults) {
         self.userDefaults = userDefaults
     }
 

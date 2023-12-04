@@ -36,7 +36,6 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
     private let statusObserver: ConnectionStatusObserver
     private let serverInfoObserver: ConnectionServerInfoObserver
     private let errorObserver: ConnectionErrorObserver
-    private let activationDateStore: VPNWaitlistActivationDateStore
     private var cancellables: Set<AnyCancellable> = []
 
     // MARK: Error
@@ -73,13 +72,11 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
                 statusObserver: ConnectionStatusObserver = ConnectionStatusObserverThroughSession(),
                 serverInfoObserver: ConnectionServerInfoObserver = ConnectionServerInfoObserverThroughSession(),
                 errorObserver: ConnectionErrorObserver = ConnectionErrorObserverThroughSession(),
-                locationListRepository: NetworkProtectionLocationListRepository = NetworkProtectionLocationListCompositeRepository(),
-                activationDateStore: VPNWaitlistActivationDateStore = DefaultVPNWaitlistActivationDateStore()) {
+                locationListRepository: NetworkProtectionLocationListRepository = NetworkProtectionLocationListCompositeRepository()) {
         self.tunnelController = tunnelController
         self.statusObserver = statusObserver
         self.serverInfoObserver = serverInfoObserver
         self.errorObserver = errorObserver
-        self.activationDateStore = activationDateStore
         statusMessage = Self.message(for: statusObserver.recentValue)
         self.headerTitle = Self.titleText(connected: statusObserver.recentValue.isConnected)
         self.statusImageID = Self.statusImageID(connected: statusObserver.recentValue.isConnected)
@@ -108,13 +105,6 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
         isConnectedPublisher
             .map(Self.statusImageID(connected:))
             .assign(to: \.statusImageID, onWeaklyHeld: self)
-            .store(in: &cancellables)
-        isConnectedPublisher
-            .sink { [weak self] isConnected in
-                if isConnected {
-                    self?.activationDateStore.setActivationDateIfNecessary()
-                }
-            }
             .store(in: &cancellables)
     }
 

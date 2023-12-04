@@ -864,7 +864,6 @@ class TabViewController: UIViewController {
     }
 
     private func removeObservers() {
-        Swift.print("***", #function)
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.url))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward))

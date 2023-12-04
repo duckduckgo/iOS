@@ -24,8 +24,10 @@ extension WKWebViewConfiguration {
 
     public static func persistent(idManager: DataStoreIdManager = .shared) -> WKWebViewConfiguration {
         let config = configuration(persistsData: true)
-        if #available(iOS 17, *) {
-            config.websiteDataStore = WKWebsiteDataStore(forIdentifier: idManager.id)
+
+        // Only use a container if there's an id which will be allocated next time the fire button is used.
+        if #available(iOS 17, *), let containerId = idManager.id {
+            config.websiteDataStore = WKWebsiteDataStore(forIdentifier: containerId)
         }
         return config
     }
@@ -61,26 +63,19 @@ public class DataStoreIdManager {
     @UserDefaultsWrapper(key: .webContainerId, defaultValue: nil)
     private var containerId: String?
 
-    var id: UUID {
-        if containerId == nil {
-            containerId = UUID().uuidString
+    var id: UUID? {
+        if let containerId {
+            return UUID(uuidString: containerId)
         }
-
-        if let containerId,
-           let uuid = UUID(uuidString: containerId) {
-            print("***", containerId)
-            return uuid
-        }
-
-        fatalError("Unable to create container ID")
+        return nil
     }
 
     var hasId: Bool {
         return containerId != nil
     }
 
-    public func reset() {
-        self.containerId = nil
+    public func allocateNewContainerId() {
+        self.containerId = UUID().uuidString
     }
 
 }

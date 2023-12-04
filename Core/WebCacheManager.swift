@@ -43,7 +43,6 @@ public protocol WebCacheManagerDataStore {
 
 }
 
-// swiftlint:disable type_body_length
 public class WebCacheManager {
 
     private struct Constants {
@@ -375,7 +374,6 @@ public class WebCacheManager {
      }
 
 }
-// swiftlint:enable type_body_length
 
 extension WKHTTPCookieStore: WebCacheManagerCookieStore {
         

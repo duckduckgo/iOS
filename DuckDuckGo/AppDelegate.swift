@@ -845,6 +845,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
             if identifier == VPNWaitlist.notificationIdentifier {
                 presentNetworkProtectionWaitlistModal()
+                DailyPixel.fire(pixel: .networkProtectionWaitlistNotificationLaunched)
             }
 #endif
         }

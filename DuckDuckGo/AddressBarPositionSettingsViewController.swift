@@ -53,14 +53,6 @@ class AddressBarPositionSettingsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         appSettings.currentAddressBarPosition = AddressBarPosition.allCases[indexPath.row]
-
-        switch appSettings.currentAddressBarPosition {
-        case .top:
-            Pixel.fire(pixel: .navigationBarPositionTop)
-        case .bottom:
-            Pixel.fire(pixel: .navigationbarPositionBottom)
-        }
-
         tableView.performBatchUpdates {
             tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
             tableView.deselectRow(at: indexPath, animated: true)

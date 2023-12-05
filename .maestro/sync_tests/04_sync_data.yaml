@@ -94,20 +94,32 @@ tags:
 - tapOn: Settings
 - runFlow:
     file: ../shared/set_internal_user.yaml
-- assertVisible: Sync & Back Up
-- tapOn: Sync & Back Up
-- assertVisible: Sync & Back up
-- tapOn: Recover Your Data
-- tapOn: Enter Text Code
+- assertVisible: Sync & Backup
+- tapOn: Sync & Backup
+- assertVisible: Begin Syncing
+- tapOn: Recover Synced Data
+- assertVisible: Recover Synced Data
+- assertVisible: Get Started
+- tapOn: Get Started
+- tapOn: Enter Text Code Manually
 - tapOn: Paste
-- assertVisible: Device Synced!
+- assertVisible: Save Recovery Code
 - tapOn: Next
-- tapOn: Not Now
+- assertVisible: Your Data is Synced!
+- tapOn: Done
+- assertVisible: Sync & Backup
 - tapOn: Settings
+- assertVisible: Settings
 - tapOn: Done
 
 # Verify bookmarks and favorites have been merged
 - tapOn: Bookmarks
+- runFlow: 
+    when: 
+      visible:
+        text: Download Missing Icons?
+    commands:
+      - tapOn: Not Now
 
 - assertVisible: Spread Privacy
 - assertVisible: Stack Overflow - Where Developers Learn, Share, & Build Careers
@@ -137,9 +149,10 @@ tags:
 # Enable Share Favorites and expect all favorites
 - tapOn: Done
 - tapOn: Settings
-- tapOn: Sync & Back Up
+- tapOn: Sync & Backup
 - scroll
-- assertVisible: Share Favorites
+- assertVisible: Unify Favorites
+- tapOn: "0"
 - tapOn: "0"
 - tapOn: Settings
 - tapOn: Done

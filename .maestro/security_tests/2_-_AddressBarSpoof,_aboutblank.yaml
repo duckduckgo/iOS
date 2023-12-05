@@ -1,0 +1,17 @@
+appId: com.duckduckgo.mobile.ios
+tags:
+    - securityTest
+---
+- doubleTapOn:
+    id: "searchEntry"
+- pressKey: Backspace
+- inputText: "https://privacy-test-pages.site/security/address-bar-spoofing/spoof-about-blank-rewrite.html"
+- pressKey: Enter
+- tapOn: "Start"
+# This test is expected to load "about:blank" not spoof the address bar with duckduckgo.com with the spoofed content.
+- extendedWaitUntil:
+    visible: "Not DDG."  # Spoofed content is visible
+    timeout: 10000
+- copyTextFrom:
+    id: "searchEntry"
+- assertTrue: ${maestro.copiedText == "about:blank"}

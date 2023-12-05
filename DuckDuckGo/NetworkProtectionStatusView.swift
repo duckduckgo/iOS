@@ -57,10 +57,10 @@ struct NetworkProtectionStatusView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(UserText.netPStatusViewTitle)
                         .daxBodyRegular()
-                        .foregroundColor(.textPrimary)
+                        .foregroundColor(.init(designSystemColor: .textPrimary))
                     Text(statusModel.statusMessage)
                         .daxFootnoteRegular()
-                        .foregroundColor(.textSecondary)
+                        .foregroundColor(.init(designSystemColor: .textSecondary))
                 }
 
                 Toggle("", isOn: Binding(
@@ -72,13 +72,13 @@ struct NetworkProtectionStatusView: View {
                     }
                 ))
                 .disabled(statusModel.shouldDisableToggle)
-                .toggleStyle(SwitchToggleStyle(tint: .controlColor))
+                .toggleStyle(SwitchToggleStyle(tint: .init(designSystemColor: .accent)))
             }
-            .listRowBackground(Color.cellBackground)
         } header: {
             header()
         }
         .increaseHeaderProminence()
+        .listRowBackground(Color(designSystemColor: .surface))
     }
 
     @ViewBuilder
@@ -94,17 +94,17 @@ struct NetworkProtectionStatusView: View {
                 Text(statusModel.headerTitle)
                     .daxHeadline()
                     .multilineTextAlignment(.center)
-                    .foregroundColor(.textPrimary)
+                    .foregroundColor(.init(designSystemColor: .textPrimary))
                 Text(UserText.netPStatusHeaderMessage)
                     .daxFootnoteRegular()
                     .multilineTextAlignment(.center)
-                    .foregroundColor(.textSecondary)
+                    .foregroundColor(.init(designSystemColor: .textSecondary))
                     .padding(.bottom, 8)
             }
             .padding(.bottom, 4)
             // Pads beyond the default header inset
             .padding(.horizontal, -16)
-            .background(Color.viewBackground)
+            .background(Color(designSystemColor: .background))
             Spacer(minLength: 0)
         }
     }
@@ -129,8 +129,9 @@ struct NetworkProtectionStatusView: View {
                 )
             }
         } header: {
-            Text(UserText.netPStatusViewConnectionDetails).foregroundColor(.textSecondary)
+            Text(UserText.netPStatusViewConnectionDetails).foregroundColor(.init(designSystemColor: .textSecondary))
         }
+        .listRowBackground(Color(designSystemColor: .surface))
     }
 
     @ViewBuilder
@@ -138,23 +139,24 @@ struct NetworkProtectionStatusView: View {
         Section {
             NavigationLink(UserText.netPVPNSettingsTitle, destination: NetworkProtectionVPNSettingsView())
                 .daxBodyRegular()
-                .foregroundColor(.textPrimary)
+                .foregroundColor(.init(designSystemColor: .textPrimary))
             NavigationLink(UserText.netPVPNNotificationsTitle, destination: NetworkProtectionVPNNotificationsView())
                 .daxBodyRegular()
-                .foregroundColor(.textPrimary)
+                .foregroundColor(.init(designSystemColor: .textPrimary))
         } header: {
-            Text(UserText.netPStatusViewSettingsSectionTitle).foregroundColor(.textSecondary)
+            Text(UserText.netPStatusViewSettingsSectionTitle).foregroundColor(.init(designSystemColor: .textSecondary))
         } footer: {
             inviteOnlyFooter()
         }
+        .listRowBackground(Color(designSystemColor: .surface))
     }
 
     @ViewBuilder
     private func inviteOnlyFooter() -> some View {
         // Needs to be inlined like this for the markdown parsing to work
         Text("\(UserText.networkProtectionWaitlistAvailabilityDisclaimer) [\(UserText.netPStatusViewShareFeedback)](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)")
-            .foregroundColor(.textSecondary)
-            .accentColor(Color.controlColor)
+            .foregroundColor(.init(designSystemColor: .textSecondary))
+            .accentColor(.init(designSystemColor: .accent))
             .daxFootnoteRegular()
             .padding(.top, 6)
     }
@@ -176,7 +178,7 @@ private struct NetworkProtectionErrorView: View {
                 .daxBodyRegular()
                 .foregroundColor(.primary)
         }
-        .listRowBackground(Color.cellBackground)
+        .listRowBackground(Color(designSystemColor: .accent))
     }
 }
 
@@ -190,22 +192,14 @@ private struct NetworkProtectionServerItemView: View {
             Image(imageID)
             Text(title)
                 .daxBodyRegular()
-                .foregroundColor(.textPrimary)
+                .foregroundColor(.init(designSystemColor: .textPrimary))
             Spacer(minLength: 2)
             Text(value)
                 .daxBodyRegular()
-                .foregroundColor(.textSecondary)
+                .foregroundColor(.init(designSystemColor: .textSecondary))
         }
-        .listRowBackground(Color.cellBackground)
+        .listRowBackground(Color(designSystemColor: .surface))
     }
-}
-
-private extension Color {
-    static let textPrimary = Color(designSystemColor: .textPrimary)
-    static let textSecondary = Color(designSystemColor: .textSecondary)
-    static let cellBackground = Color(designSystemColor: .surface)
-    static let viewBackground = Color(designSystemColor: .background)
-    static let controlColor = Color(designSystemColor: .accent)
 }
 
 #endif

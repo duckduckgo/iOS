@@ -867,7 +867,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     }
     public static let syncRemoveDeviceConfirmAction = "Remove"
     public static let syncCodeCopied = "Recovery Code copied"
-    public static let syncTitle = "Sync & Back Up"
+    public static let syncTitle = "Sync & Backup"
 
     // MARK: Errors
 

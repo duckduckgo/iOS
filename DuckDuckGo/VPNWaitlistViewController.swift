@@ -68,6 +68,10 @@ final class VPNWaitlistViewController: UIViewController {
     private func updateViewState() {
         Task {
             await self.viewModel.updateViewState()
+
+            if self.viewModel.viewState == .notJoinedQueue {
+                DailyPixel.fire(pixel: .networkProtectionWaitlistIntroScreenDisplayed)
+            }
         }
     }
 

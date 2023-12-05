@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "7b35b4c604f1cf17b48aabf72526b15a2fdcc6ce",
-          "version": "88.0.0"
+          "branch": "sam/disable-rekeying",
+          "revision": "6cc282326c2694d09ef089563fbf087cf52a4d26",
+          "version": null
         }
       },
       {

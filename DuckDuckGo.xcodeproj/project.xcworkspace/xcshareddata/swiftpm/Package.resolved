@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": "sam/disable-rekeying",
-          "revision": "6cc282326c2694d09ef089563fbf087cf52a4d26",
+          "revision": "619e1887ed780828ea6c2852b122bced31e968e8",
           "version": null
         }
       },
@@ -156,7 +156,7 @@
       },
       {
         "package": "TrackerRadarKit",
-        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
+        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit",
         "state": {
           "branch": null,
           "revision": "4684440d03304e7638a2c8086895367e90987463",

@@ -37,6 +37,7 @@ import SyncDataProviders
 
 #if NETWORK_PROTECTION
 import NetworkProtection
+import WebKit
 #endif
 
 // swiftlint:disable file_length
@@ -392,7 +393,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func clearLegacyAllowedDomainCookies() {
         let domains = PreserveLogins.shared.legacyAllowedDomains
         guard !domains.isEmpty else { return }
-        WebCacheManager.shared.removeCookies(forDomains: domains, completion: {
+        WebCacheManager.shared.removeCookies(forDomains: domains, dataStore: WKWebsiteDataStore.current(), completion: {
             os_log("Removed cookies for %d legacy allowed domains", domains.count)
             PreserveLogins.shared.clearLegacyAllowedDomains()
         })

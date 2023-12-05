@@ -43,6 +43,19 @@ public protocol WebCacheManagerDataStore {
 
 }
 
+extension WebCacheManagerDataStore {
+
+    public static func current(dataStoreIdManager: DataStoreIdManager = .shared) -> WebCacheManagerDataStore {
+        if #available(iOS 17, *), let id = dataStoreIdManager.id {
+            return WKWebsiteDataStore(forIdentifier: id)
+        } else {
+            return WKWebsiteDataStore.default()
+        }
+    }
+
+}
+
+// swiftlint:disable type_body_length
 public class WebCacheManager {
 
     private struct Constants {
@@ -50,7 +63,7 @@ public class WebCacheManager {
     }
     
     public static var shared = WebCacheManager()
-    
+
     private init() { }
 
     /// This function is used to extract cookies stored in CookieStorage and restore them to WKWebView's HTTP cookie store during the Fire button operation.
@@ -102,7 +115,7 @@ public class WebCacheManager {
     }
 
     public func removeCookies(forDomains domains: [String],
-                              dataStore: WebCacheManagerDataStore = WKWebsiteDataStore.default(),
+                              dataStore: WebCacheManagerDataStore,
                               completion: @escaping () -> Void) {
 
         guard let cookieStore = dataStore.cookieStore else {
@@ -221,7 +234,8 @@ public class WebCacheManager {
         }
 
     }
-
+    
+    // swiftlint:disable function_body_length
     private func legacyDataClearing(logins: PreserveLogins,
                                     tabCountInfo: TabCountInfo? = nil,
                                     completion: @escaping ([HTTPCookie]) -> Void) {
@@ -299,6 +313,7 @@ public class WebCacheManager {
         }
 
     }
+    // swiftlint:enable function_body_length
 
     private func performSanityCheck(for cookieStore: WebCacheManagerCookieStore, summary: WebStoreCookieClearingSummary, tabCountInfo: TabCountInfo?) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -382,6 +397,7 @@ public class WebCacheManager {
      }
 
 }
+// swiftlint:enable type_body_length
 
 extension WKHTTPCookieStore: WebCacheManagerCookieStore {
         

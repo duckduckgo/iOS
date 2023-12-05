@@ -1598,7 +1598,7 @@ https://duckduckgo.com/mac";
 "network.protection.status.view.title" = "Network Protection";
 
 /* Title for the button to link to the iOS app settings and enable notifications app-wide. */
-"network.protection.turn.on.notifications.button.title" = "Turn on Notifications";
+"network.protection.turn.on.notifications.button.title" = "Turn On Notifications";
 
 /* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
 "network.protection.turn.on.notifications.section.footer" = "Allow DuckDuckGo to notify you if your connection drops or VPN status changes.";
@@ -1610,7 +1610,7 @@ https://duckduckgo.com/mac";
 "network.protection.vpn.alerts.toggle.title" = "VPN Alerts";
 
 /* Footer text for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.footer" = "Bypass the VPN for local network connections, like to a printer.";
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Let local traffic bypass the VPN and connect to devices on your local network, like a printer.";
 
 /* Title for the Exclude Local Networks setting item. */
 "network.protection.vpn.exclude.local.networks.setting.title" = "Exclude Local Networks";

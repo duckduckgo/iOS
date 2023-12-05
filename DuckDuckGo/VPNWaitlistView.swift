@@ -64,7 +64,7 @@ struct VPNWaitlistSignUpView: View {
         GeometryReader { proxy in
             ScrollView {
                 VStack(alignment: .center, spacing: 8) {
-                    HeaderView(imageName: "JoinVPNWaitlist", title: UserText.networkProtectionWaitlistJoinTitle)
+                    HeaderView(imageName: "JoinVPNWaitlist", title: UserText.netPNavTitle)
 
                     Text(UserText.networkProtectionWaitlistJoinSubtitle1)
                         .daxBodyRegular()

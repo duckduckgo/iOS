@@ -19,34 +19,55 @@ tags:
 - tapOn:
     id: searchEntry
 - inputText: ${CODE}
+
+- evalScript: ${output.counter = 0}
 - repeat:
     while:
-      notVisible: "Select All"
+      true: ${output.counter < 3}
+      notVisible: Select All
     commands:
-      - tapOn:
-            id: searchEntry
-- tapOn: Select All
+      - longPressOn: 
+          id: "searchEntry"
+      - evalScript: ${output.counter = output.counter + 1}
+
+- tapOn: 'Select All'
 - tapOn: Cut
-- tapOn:
-    id: searchEntry
-- longPressOn:
-    id: searchEntry
+- evalScript: ${output.counter = 0}
+- repeat:
+    while:
+      true: ${output.counter < 3}
+      notVisible: Paste
+    commands:
+      - tapOn: 
+          id: "searchEntry"
+      - evalScript: ${output.counter = output.counter + 1}
 - tapOn: Paste
 - tapOn: Cancel
+
+- tapOn: Close Tabs and Clear Data
+- tapOn: Close Tabs and Clear Data
+- runFlow:
+    when:
+      visible:
+        text: Cancel
+    commands:
+      - tapOn: Cancel
 #</WORKAROUND>
 
 # Recover Account test
 - tapOn: Settings
 - runFlow:
     file: ../shared/set_internal_user.yaml
-- assertVisible: Sync & Back Up
-- tapOn: Sync & Back Up
-- assertVisible: Sync & Back up
-- tapOn: Recover Your Data
-- tapOn: Enter Text Code
+- assertVisible: Sync & Backup
+- tapOn: Sync & Backup
+- assertVisible: Begin Syncing
+- tapOn: Recover Synced Data
+- assertVisible: Recover Synced Data
+- assertVisible: Get Started
+- tapOn: Get Started
+- tapOn: Enter Text Code Manually
 - tapOn: Paste
-- assertVisible: Device Synced!
+- assertVisible: Save Recovery Code
 - tapOn: Next
-- tapOn: Not Now
-- tapOn: Settings
+- assertVisible: Your Data is Synced!
 - tapOn: Done

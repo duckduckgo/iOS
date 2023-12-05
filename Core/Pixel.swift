@@ -126,8 +126,6 @@ public struct PixelParameters {
     public static let returnUserErrorCode = "error_code"
     public static let returnUserOldATB = "old_atb"
     public static let returnUserNewATB = "new_atb"
-
-    public static let autofillDefaultState = "default_state"
 }
 
 public struct PixelValues {
@@ -216,13 +214,14 @@ extension Pixel {
     
     public static func fire(pixel: Pixel.Event,
                             error: Error?,
+                            includedParameters: [QueryParameters] = [.appVersion],
                             withAdditionalParameters params: [String: String] = [:],
                             onComplete: @escaping (Error?) -> Void = { _ in }) {
         var newParams = params
         if let error {
             newParams.appendErrorPixelParams(error: error)
         }
-        fire(pixel: pixel, withAdditionalParameters: newParams, includedParameters: [], onComplete: onComplete)
+        fire(pixel: pixel, withAdditionalParameters: newParams, includedParameters: includedParameters, onComplete: onComplete)
     }
 }
 

@@ -19,133 +19,41 @@
 
 import SwiftUI
 import DuckUI
-import DesignResourcesKit
-
 
 public struct DeviceConnectedView: View {
 
-    @Environment(\.verticalSizeClass) var verticalSizeClass
+    @Environment(\.presentationMode) var presentation
 
-    var isCompact: Bool {
-        verticalSizeClass == .compact
-    }
-    let isSingleSetUp: Bool
-    let shouldShowOptions: Bool
-    @State var showRecoveryPDF = false
-
-    let saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel
-    @ObservedObject var optionsViewModel: SyncSettingsViewModel
-    let devices: [SyncSettingsViewModel.Device]
-
-    public init(_ saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel, optionsViewModel: SyncSettingsViewModel, devices: [SyncSettingsViewModel.Device], isSingleSetUp: Bool, shouldShowOptions: Bool) {
-        self.saveRecoveryKeyViewModel = saveRecoveryKeyViewModel
-        self.devices = devices
-        self.optionsViewModel = optionsViewModel
-        self.isSingleSetUp = isSingleSetUp
-        self.shouldShowOptions = shouldShowOptions
-    }
-
-    var title: String {
-        if isSingleSetUp {
-            return UserText.syngleDeviceConnectedTitle
-        }
-        return UserText.deviceSyncedTitle
-    }
-
-    var message: String {
-        if isSingleSetUp {
-            return UserText.firstDeviceSyncedMessage
-        }
-        if devices.count == 1 {
-            return UserText.deviceSyncedMessage
-        }
-        return UserText.multipleDevicesSyncedMessage
-    }
-
-    var devicesOnMessageText: String {
-        if devices.isEmpty {
-            return ""
-        }
-        if devices.count == 1 {
-            return devices[0].name
-        }
-        return "\(devices.count + 1) " + UserText.wordDevices
-    }
+    public init() {}
 
     @ViewBuilder
     func deviceSyncedView() -> some View {
         UnderflowContainer {
             VStack(spacing: 0) {
                 Image("Sync-Start-128")
-                    .padding(.bottom, 20)
+                    .padding(20)
 
-                Text(title)
+                Text(UserText.deviceSyncedSheetTitle)
                     .daxTitle1()
                     .padding(.bottom, 24)
-
-                Text("\(message) \(Text(devicesOnMessageText).bold())")
-                    .multilineTextAlignment(.center)
-                
-                if shouldShowOptions {
-                    options()
-                }
             }
             .padding(.horizontal, 20)
+            .padding(.top, 56)
         } foregroundContent: {
             Button {
-                withAnimation {
-                    self.showRecoveryPDF = true
-                }
+                presentation.wrappedValue.dismiss()
             } label: {
-                Text(UserText.nextButton)
+                Text(UserText.doneButton)
             }
             .buttonStyle(PrimaryButtonStyle())
             .frame(maxWidth: 360)
             .padding(.horizontal, 30)
         }
-        .padding(.top, isCompact ? 0 : 56)
         .padding(.bottom)
     }
 
-    @ViewBuilder
-    func options() -> some View {
-        VStack {
-            Spacer(minLength: 71)
-            Text(UserText.options.uppercased())
-                .daxFootnoteRegular()
-            Toggle(isOn: $optionsViewModel.isUnifiedFavoritesEnabled) {
-                HStack(spacing: 16) {
-                    Image("SyncAllDevices")
-                    VStack(alignment: .leading) {
-                        Text(UserText.unifiedFavoritesTitle)
-                            .foregroundColor(.primary)
-                            .daxBodyRegular()
-                        Text(UserText.unifiedFavoritesInstruction)
-                            .daxCaption()
-                            .foregroundColor(.secondary)
-                    }
-                }
-            }
-            .padding(16)
-            .background(
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(.black.opacity(0.01))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(.black.opacity(0.2), lineWidth: 0.2)
-            )
-        }
-    }
-
     public var body: some View {
-        if showRecoveryPDF {
-            SaveRecoveryKeyView(model: saveRecoveryKeyViewModel)
-                .transition(.move(edge: .trailing))
-        } else {
-            deviceSyncedView()
-                .transition(.move(edge: .leading))
-        }
+        deviceSyncedView()
+            .transition(.move(edge: .leading))
     }
-
 }

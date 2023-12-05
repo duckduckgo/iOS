@@ -1,3 +1,4 @@
+We fixed a rare issue that caused text selection in the address bar to not work as expected.
 Bug fixes and other improvements.
 
 Join our fully distributed team and help raise the standard of trust online! https://duckduckgo.com/hiring

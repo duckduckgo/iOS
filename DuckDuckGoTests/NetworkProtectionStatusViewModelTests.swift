@@ -54,6 +54,12 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
         super.tearDown()
     }
 
+    func testInit_prefetchesLocationList() throws {
+        let locationListRepo = MockNetworkProtectionLocationListRepository()
+        viewModel = NetworkProtectionStatusViewModel(locationListRepository: locationListRepo)
+        waitFor(condition: locationListRepo.didCallFetchLocationList)
+    }
+
     func testStatusUpdate_connected_setsIsNetPEnabledToTrue() throws {
         whenStatusUpdate_connected()
     }

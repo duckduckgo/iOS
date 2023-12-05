@@ -46,6 +46,7 @@ class SyncDebugViewController: UITableViewController {
         case syncNow
         case logOut
         case toggleFavoritesDisplayMode
+        case resetFaviconsFetcherOnboardingDialog
 
     }
 
@@ -111,6 +112,8 @@ class SyncDebugViewController: UITableViewController {
                 cell.textLabel?.text = "Log out of sync in 10 seconds"
             case .toggleFavoritesDisplayMode:
                 cell.textLabel?.text = "Toggle favorites display mode in 10 seconds"
+            case .resetFaviconsFetcherOnboardingDialog:
+                cell.textLabel?.text = "Reset Favicons Fetcher onboarding dialog"
             case .none:
                 break
             }
@@ -161,6 +164,7 @@ class SyncDebugViewController: UITableViewController {
         }
     }
 
+    // swiftlint:disable:next cyclomatic_complexity
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch Sections(rawValue: indexPath.section) {
         case .info:
@@ -184,6 +188,10 @@ class SyncDebugViewController: UITableViewController {
                     AppDependencyProvider.shared.appSettings.favoritesDisplayMode = displayMode
                     NotificationCenter.default.post(name: AppUserDefaults.Notifications.favoritesDisplayModeChange, object: nil)
                 }
+            case .resetFaviconsFetcherOnboardingDialog:
+                var udWrapper = UserDefaultsWrapper(key: .syncDidPresentFaviconsFetcherOnboarding, defaultValue: false)
+                udWrapper.wrappedValue = false
+
             default: break
             }
         case .environment:

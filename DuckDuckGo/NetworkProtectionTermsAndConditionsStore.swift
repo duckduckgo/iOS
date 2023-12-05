@@ -1,5 +1,5 @@
 //
-//  ShowCodeView.swift
+//  NetworkProtectionTermsAndConditionsStore.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -17,28 +17,16 @@
 //  limitations under the License.
 //
 
-import SwiftUI
+import Foundation
+import Core
 
-struct ShowCodeView: View {
+protocol NetworkProtectionTermsAndConditionsStore {
+    var networkProtectionWaitlistTermsAndConditionsAccepted: Bool { get set }
+}
 
-    let code: String
-    let copyCode: () -> Void
+struct NetworkProtectionTermsAndConditionsUserDefaultsStore: NetworkProtectionTermsAndConditionsStore {
 
-    var body: some View {
-
-        List {
-            Text(code)
-                .monospaceSystemFont(ofSize: 16)
-
-            Button {
-                copyCode()
-            } label: {
-                Label("Copy Code", image: "SyncCopy")
-            }
-        }
-        .lineSpacing(1.47)
-        .navigationTitle("Code")
-        .applyListStyle()
-    }
+    @UserDefaultsWrapper(key: .networkProtectionWaitlistTermsAndConditionsAccepted, defaultValue: false)
+    var networkProtectionWaitlistTermsAndConditionsAccepted: Bool
 
 }

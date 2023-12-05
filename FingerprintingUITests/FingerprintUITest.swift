@@ -148,7 +148,11 @@ class FingerprintUITest: XCTestCase {
         } else {
             XCTFail("Bookmarks button missing")
         }
-        app.tables.staticTexts["DuckDuckGo — Privacy, simplified."].tap()
+        if app.tables.staticTexts["DuckDuckGo — Privacy, simplified."].waitForExistence(timeout: 25) {
+            app.staticTexts["DuckDuckGo — Privacy, simplified."].tap()
+        } else {
+            XCTFail("Could not find bookmark")
+        }
         
         // Verify the test passed
         XCTAssertTrue(webview.staticTexts["TEST PASSED"].waitForExistence(timeout: 25), "Test not run")

@@ -37,31 +37,44 @@ class WebCacheManagerTests: XCTestCase {
         }
     }
 
-    func testWhenCookiesHaveSubDomainsOnSubDomainsAndWidlcardsThenOnlyMatchingCookiesRetained() {
+    @available(iOS 17, *)
+    @MainActor
+    func testWhenCookiesHaveSubDomainsOnSubDomainsAndWidlcardsThenOnlyMatchingCookiesRetained() async throws {
         let logins = MockPreservedLogins(domains: [
             "mobile.twitter.com"
         ])
 
-        let dataStore = MockDataStore()
-        let cookieStore = MockHTTPCookieStore(cookies: [
-            .make(domain: "twitter.com"),
-            .make(domain: ".twitter.com"),
-            .make(domain: "mobile.twitter.com"),
-            .make(domain: "fake.mobile.twitter.com"),
-            .make(domain: ".fake.mobile.twitter.com")
-        ])
+        let defaultStore = WKWebsiteDataStore.default()
+        await defaultStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), modifiedSince: .distantPast)
+        await defaultStore.httpCookieStore.setCookie(.make(domain: "twitter.com"))
+        await defaultStore.httpCookieStore.setCookie(.make(domain: ".twitter.com"))
+        await defaultStore.httpCookieStore.setCookie(.make(domain: "mobile.twitter.com"))
+        await defaultStore.httpCookieStore.setCookie(.make(domain: "fake.mobile.twitter.com"))
+        await defaultStore.httpCookieStore.setCookie(.make(domain: ".fake.mobile.twitter.com"))
 
-        dataStore.cookieStore = cookieStore
-        
-        let expect = expectation(description: #function)
-        WebCacheManager.shared.clear(logins: logins, dataStoreIdManager: dataStoreIdManager) {
-            expect.fulfill()
+        let cookieCount = await defaultStore.httpCookieStore.allCookies().count
+        XCTAssertEqual(5, cookieCount)
+
+        await withCheckedContinuation { continuation in
+            WebCacheManager.shared.clear(logins: logins, dataStoreIdManager: dataStoreIdManager) {
+                continuation.resume()
+            }
         }
-        wait(for: [expect], timeout: 5.0)
-        
-        XCTAssertEqual(cookieStore.cookies.count, 2)
-        XCTAssertEqual(cookieStore.cookies[0].domain, ".twitter.com")
-        XCTAssertEqual(cookieStore.cookies[1].domain, "mobile.twitter.com")
+
+        let remainingCookieCount = await defaultStore.httpCookieStore.allCookies().count
+        XCTAssertEqual(2, remainingCookieCount)
+
+        try await Task.sleep(interval: 1)
+
+        if let id = self.dataStoreIdManager.id {
+            let store = WKWebsiteDataStore(forIdentifier: id)
+            let cookies = await store.httpCookieStore.allCookies()
+            XCTAssertEqual(cookies.count, 2)
+            XCTAssertEqual(cookies[0].domain, ".twitter.com")
+            XCTAssertEqual(cookies[1].domain, "mobile.twitter.com")
+        } else {
+            XCTFail("No container id")
+        }
     }
     
     func testWhenRemovingCookieForDomainThenItIsRemovedFromCookieStorage() {

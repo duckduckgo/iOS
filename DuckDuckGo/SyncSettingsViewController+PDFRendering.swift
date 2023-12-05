@@ -31,10 +31,14 @@ extension SyncSettingsViewController {
 
         let pdf = RecoveryCodeItem(data: data)
         navigationController?.visibleViewController?.presentShareSheet(withItems: [pdf],
-                                                                       fromView: view) { [weak self] _, success, _, _ in
-            guard success else { return }
-            self?.navigationController?.visibleViewController?.dismiss(animated: true)
-        }
+                                                                       fromView: view)
+    }
+
+    func shareCode(_ code: String) {
+
+        navigationController?.visibleViewController?.presentShareSheet(withItems: [code],
+                                                                       fromView: view,
+                                                                       overrideInterfaceStyle: .dark)
     }
 
 }

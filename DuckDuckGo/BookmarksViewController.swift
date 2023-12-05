@@ -96,7 +96,14 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     fileprivate let viewModel: BookmarkListInteracting
 
     fileprivate lazy var dataSource: BookmarksDataSource = {
-        return BookmarksDataSource(viewModel: viewModel)
+        let dataSource = BookmarksDataSource(viewModel: viewModel)
+        dataSource.onFaviconMissing = { [weak self] _ in
+            guard let self else {
+                return
+            }
+            self.faviconsFetcherOnboarding.presentOnboardingIfNeeded(from: self)
+        }
+        return dataSource
     }()
 
     var searchDataSource: SearchBookmarksDataSource
@@ -833,6 +840,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         }
     }
 
+    private(set) lazy var faviconsFetcherOnboarding: FaviconsFetcherOnboarding =
+        .init(syncService: syncService, syncBookmarksAdapter: syncDataProviders.bookmarksAdapter)
 }
 
 extension BookmarksViewController: UISearchBarDelegate {

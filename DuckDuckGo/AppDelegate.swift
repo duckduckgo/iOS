@@ -166,8 +166,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DatabaseMigration.migrate(to: context)
         }
 
-        var shouldResetBookmarksSyncTimestamp = false
-
         let preMigrationErrorHandling = EventMapping<BookmarkFormFactorFavoritesMigration.MigrationErrors> { _, error, _, _ in
             if let error = error {
                 Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
@@ -220,11 +218,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                                                           in: context)
                 if context.hasChanges {
                     try context.save(onErrorFire: .bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders)
-                    if let syncDataProviders = self?.syncDataProviders {
-                        syncDataProviders.bookmarksAdapter.shouldResetBookmarksSyncTimestamp = true
-                    } else {
-                        shouldResetBookmarksSyncTimestamp = true
-                    }
                 }
             } catch {
                 Thread.sleep(forTimeInterval: 1)
@@ -288,7 +281,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage()
         )
-        syncDataProviders.bookmarksAdapter.shouldResetBookmarksSyncTimestamp = shouldResetBookmarksSyncTimestamp
 
         let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog, environment: environment)
         syncService.initializeIfNeeded()
@@ -562,6 +554,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         lastBackgroundDate = Date()
         AppDependencyProvider.shared.autofillLoginSession.endSession()
         suspendSync()
+        syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
     }
 
     private func suspendSync() {
@@ -844,6 +837,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
             if identifier == VPNWaitlist.notificationIdentifier {
                 presentNetworkProtectionWaitlistModal()
+                DailyPixel.fire(pixel: .networkProtectionWaitlistNotificationLaunched)
             }
 #endif
         }

@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 import BackgroundTasks
 import NetworkProtection
 
@@ -42,6 +43,10 @@ extension AppDelegate {
 
 #if NETWORK_PROTECTION
     private func checkNetworkProtectionWaitlist() {
+        if AppDependencyProvider.shared.featureFlagger.isFeatureOn(.networkProtectionWaitlistAccess) {
+            DailyPixel.fire(pixel: .networkProtectionWaitlistUserActive)
+        }
+
         VPNWaitlist.shared.fetchInviteCodeIfAvailable { [weak self] error in
             guard error == nil else {
 #if !DEBUG
@@ -89,6 +94,8 @@ extension AppDelegate {
             do {
                 try await NetworkProtectionCodeRedemptionCoordinator().redeem(inviteCode)
                 VPNWaitlist.shared.sendInviteCodeAvailableNotification()
+
+                DailyPixel.fire(pixel: .networkProtectionWaitlistNotificationShown)
             } catch {}
         }
     }

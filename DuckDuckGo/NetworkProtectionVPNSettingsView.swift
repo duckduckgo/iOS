@@ -27,60 +27,77 @@ struct NetworkProtectionVPNSettingsView: View {
     @StateObject var viewModel = NetworkProtectionVPNSettingsViewModel()
 
     var body: some View {
-        List {
-            NavigationLink(destination: NetworkProtectionVPNLocationView()) {
-                HStack {
-                    Text(UserText.netPPreferredLocationSettingTitle).daxBodyRegular().foregroundColor(.textPrimary)
-                    Spacer()
-                    Text(viewModel.preferredLocation).daxBodyRegular().foregroundColor(.textSecondary)
+        VStack {
+            List {
+                Section {
+                    NavigationLink(destination: NetworkProtectionVPNLocationView()) {
+                        HStack(spacing: 16) {
+                            switch viewModel.preferredLocation.icon {
+                            case .defaultIcon:
+                                Image("Location-Solid-24")
+                            case .emoji(let string):
+                                Text(string)
+                            }
+                            VStack(alignment: .leading) {
+                                Text(UserText.netPVPNLocationTitle)
+                                    .daxBodyRegular()
+                                    .foregroundColor(.init(designSystemColor: .textPrimary))
+                                Text(viewModel.preferredLocation.title)
+                                    .daxFootnoteRegular()
+                                    .foregroundColor(.init(designSystemColor: .textSecondary))
+                            }
+                        }
+                    }
                 }
+                .listRowBackground(Color(designSystemColor: .surface))
+                toggleSection(
+                    text: UserText.netPExcludeLocalNetworksSettingTitle,
+                    footerText: UserText.netPExcludeLocalNetworksSettingFooter
+                ) {
+                    Toggle("", isOn: $viewModel.excludeLocalNetworks)
+                        .onTapGesture {
+                            viewModel.toggleExcludeLocalNetworks()
+                        }
+                }
+                Section {
+                    HStack(spacing: 16) {
+                        Image("Info-Solid-24")
+                            .foregroundColor(.init(designSystemColor: .icons).opacity(0.3))
+                        Text(UserText.netPSecureDNSSettingFooter)
+                            .daxFootnoteRegular()
+                            .foregroundColor(.init(designSystemColor: .textSecondary))
+                    }
+                }
+                .listRowBackground(Color(designSystemColor: .surface))
             }
-            toggleSection(
-                text: UserText.netPAlwaysOnSettingTitle,
-                footerText: UserText.netPAlwaysOnSettingFooter
-            )
-            toggleSection(
-                text: UserText.netPSecureDNSSettingTitle,
-                footerText: UserText.netPSecureDNSSettingFooter
-            )
         }
         .applyInsetGroupedListStyle()
         .navigationTitle(UserText.netPVPNSettingsTitle)
     }
 
     @ViewBuilder
-    func toggleSection(text: String, footerText: String) -> some View {
+    func toggleSection(text: String, footerText: String, @ViewBuilder toggle: () -> some View) -> some View {
         Section {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(text)
-                        .font(.system(size: 16))
-                        .foregroundColor(.textPrimary.opacity(0.4))
-                        .font(.system(size: 13))
-                        .foregroundColor(.textSecondary.opacity(0.4))
+                        .daxBodyRegular()
+                        .foregroundColor(.init(designSystemColor: .textPrimary))
+                        .layoutPriority(1)
                 }
 
-                // These toggles are permanantly disabled as the features are permanantly enabled. Product decision.
-                Toggle("", isOn: .constant(true))
-                    .disabled(true)
-                    .toggleStyle(SwitchToggleStyle(tint: .controlColor))
+                toggle()
+                    .toggleStyle(SwitchToggleStyle(tint: .init(designSystemColor: .accent)))
             }
-            .listRowBackground(Color.cellBackground)
         } footer: {
             Text(footerText)
-                .foregroundColor(.textSecondary)
-                .accentColor(Color.controlColor)
-                .font(.system(size: 13))
+                .foregroundColor(.init(designSystemColor: .textSecondary))
+                .accentColor(Color(designSystemColor: .accent))
+                .daxFootnoteRegular()
                 .padding(.top, 6)
         }
+        .listRowBackground(Color(designSystemColor: .surface))
     }
-}
-
-private extension Color {
-    static let textPrimary = Color(designSystemColor: .textPrimary)
-    static let textSecondary = Color(designSystemColor: .textSecondary)
-    static let cellBackground = Color(designSystemColor: .surface)
-    static let controlColor = Color(designSystemColor: .accent)
 }
 
 #endif

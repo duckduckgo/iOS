@@ -24,7 +24,6 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
 
     func showRecoverData()
     func showSyncWithAnotherDevice()
-    func showSyncWithAnotherDeviceEnterText()
     func showRecoveryPDF()
     func shareRecoveryPDF()
     func createAccountAndStartSyncing(optionsViewModel: SyncSettingsViewModel)
@@ -76,7 +75,7 @@ public class SyncSettingsViewModel: ObservableObject {
     }
 
     @Published public var devices = [Device]()
-    @Published public var isFaviconsSyncEnabled = false
+    @Published public var isFaviconsFetchingEnabled = false
     @Published public var isUnifiedFavoritesEnabled = true
     @Published public var isSyncingDevices = false
     @Published public var isSyncBookmarksPaused = false
@@ -121,14 +120,6 @@ public class SyncSettingsViewModel: ObservableObject {
         delegate?.showSyncWithAnotherDevice()
     }
 
-    func showEnterTextView() {
-        delegate?.showSyncWithAnotherDeviceEnterText()
-    }
-
-    func showRecoverDataView() {
-        delegate?.showRecoverData()
-    }
-
     func createEditDeviceModel(_ device: Device) -> EditDeviceViewModel {
         return EditDeviceViewModel(device: device) { [weak self] newValue in
             self?.delegate?.updateDeviceName(newValue.name)
@@ -160,4 +151,7 @@ public class SyncSettingsViewModel: ObservableObject {
         delegate?.launchAutofillViewController()
     }
 
+    public func recoverSyncDataPressed() {
+        delegate?.showRecoverData()
+    }
 }

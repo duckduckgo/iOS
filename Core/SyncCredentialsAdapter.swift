@@ -39,6 +39,7 @@ public final class SyncCredentialsAdapter {
             NotificationCenter.default.post(name: syncCredentialsPausedStateChanged, object: nil)
         }
     }
+
     @UserDefaultsWrapper(key: .syncCredentialsPausedErrorDisplayed, defaultValue: false)
     static private var didShowCredentialsSyncPausedError: Bool
 

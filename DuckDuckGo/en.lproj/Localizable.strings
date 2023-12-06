@@ -1780,6 +1780,12 @@ Our privacy protections work without having to know anything about the technical
 
 But if you *do* want a peek under the hood, you can find more information about how DuckDuckGo privacy protections work on our [help pages](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
+/* Title for the Add Widget to home screen view */
+"settings.general.add.widget.title" = "Add Widget to Home Screen";
+
+/* Title for the Settings View */
+"settings.title" = "Settings";
+
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Submit Report";
 

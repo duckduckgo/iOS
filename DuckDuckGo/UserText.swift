@@ -937,4 +937,9 @@ But if you *do* want a peek under the hood, you can find more information about 
 
     static let networkProtectionNotificationPromptTitle = NSLocalizedString("network-protection.waitlist.notification-prompt-title", value: "Know the instant you're invited", comment: "Title for the alert to confirm enabling notifications")
     static let networkProtectionNotificationPromptDescription = NSLocalizedString("network-protection.waitlist.notification-prompt-description", value: "Get a notification when your copy of Network Protection early access is ready.", comment: "Subtitle for the alert to confirm enabling notifications")
+    
+    // Settings
+    public static let settingsTitle = NSLocalizedString("settings.title", value: "Settings", comment: "Title for the Settings View")
+    
+    public static let settingsAddWidgetTitle = NSLocalizedString("settings.general.add.widget.title", value: "Add Widget to Home Screen", comment: "Title for the Add Widget to home screen view")
 }

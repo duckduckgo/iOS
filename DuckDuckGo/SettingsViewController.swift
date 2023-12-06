@@ -396,7 +396,8 @@ class SettingsViewController: UITableViewController {
         let autofillController = AutofillLoginSettingsListViewController(
             appSettings: appSettings,
             syncService: syncService,
-            syncDataProviders: syncDataProviders
+            syncDataProviders: syncDataProviders,
+            selectedAccount: nil
         )
         autofillController.delegate = self
         Pixel.fire(pixel: .autofillSettingsOpened)
@@ -407,7 +408,8 @@ class SettingsViewController: UITableViewController {
         let autofillController = AutofillLoginSettingsListViewController(
             appSettings: appSettings,
             syncService: syncService,
-            syncDataProviders: syncDataProviders
+            syncDataProviders: syncDataProviders,
+            selectedAccount: account
         )
         autofillController.delegate = self
         let detailsController = autofillController.makeAccountDetailsScreen(account)

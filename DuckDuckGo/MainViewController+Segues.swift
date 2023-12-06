@@ -22,6 +22,7 @@ import Common
 import Core
 import Bookmarks
 import BrowserServicesKit
+import SwiftUI
 
 extension MainViewController {
 
@@ -195,7 +196,7 @@ extension MainViewController {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
         launchSettings {
-            $0.openLogins(accountDetails: account)
+            $0.setIsPresentingLoginsViewWithAccount(accountDetails: account)
         }
     }
 
@@ -203,26 +204,22 @@ extension MainViewController {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
         launchSettings {
-            $0.showSync()
+            $0.setIsPresentingSyncView(true)
         }
     }
 
-    private func launchSettings(completion: ((SettingsViewController) -> Void)? = nil) {
+    
+    private func launchSettings(completion: ((SettingsViewModel) -> Void)? = nil) {
         os_log(#function, log: .generalLog, type: .debug)
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-
-        let settings = storyboard.instantiateViewController(identifier: "SettingsViewController") { coder in
-            SettingsViewController(coder: coder,
-                                   bookmarksDatabase: self.bookmarksDatabase,
-                                   syncService: self.syncService,
-                                   syncDataProviders: self.syncDataProviders,
-                                   internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
-        }
-
-        let controller = ThemableNavigationController(rootViewController: settings)
-        controller.modalPresentationStyle = .automatic
-        present(controller, animated: true) {
-            completion?(settings)
+        let settingsModel = SettingsViewModel(bookmarksDatabase: self.bookmarksDatabase,
+                                              syncService: self.syncService,
+                                              syncDataProviders: self.syncDataProviders,
+                                              internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+        let settingsView = SettingsView(viewModel: settingsModel)
+        let settingsController = UIHostingController(rootView: settingsView)
+        settingsController.modalPresentationStyle = .automatic
+        present(settingsController, animated: true) {
+            completion?(settingsModel)
         }
     }
 

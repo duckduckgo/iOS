@@ -19,10 +19,12 @@
 
 import UIKit
 
-enum ThemeName: String {
-    case systemDefault
-    case light
-    case dark
+enum ThemeName: String, CaseIterable, Identifiable {
+    case systemDefault = "System Default"
+    case light = "Light"
+    case dark = "Dark"
+
+    var id: String { self.rawValue }
 }
 
 protocol Theme {

@@ -20,6 +20,7 @@
 import UIKit
 import BackgroundTasks
 import Core
+import Configuration
 
 class ConfigurationDebugViewController: UITableViewController {
 
@@ -43,6 +44,7 @@ class ConfigurationDebugViewController: UITableViewController {
         case resetLastRefreshDate
         case copyConfigLocationPath
         case forceRefresh
+        case configUrl
 
     }
 
@@ -117,6 +119,9 @@ class ConfigurationDebugViewController: UITableViewController {
                 cell.textLabel?.text = "Copy Location of Config Files to Pasteboard"
             case .forceRefresh:
                 cell.textLabel?.text = "Trigger refresh"
+            case .configUrl:
+                cell.textLabel?.text = "Configuration URL"
+                cell.detailTextLabel?.text = AppConfigurationURLProvider().url(for: .privacyConfiguration).absoluteString
             case .none:
                 break
             }
@@ -154,7 +159,41 @@ class ConfigurationDebugViewController: UITableViewController {
         }
     }
 
-    // swiftlint:disable:next cyclomatic_complexity
+    func forceConfigRefresh() {
+        lastConfigurationRefreshDate = Date.distantPast
+        AppConfigurationFetch().start { [weak tableView] result in
+            switch result {
+            case .assetsUpdated(let protectionsUpdated):
+                if protectionsUpdated {
+                    ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+                }
+                DispatchQueue.main.async {
+                    tableView?.reloadData()
+                }
+            case .noData:
+                break
+            }
+        }
+    }
+
+    func displayCustomConfigAlert() {
+        let ac = UIAlertController(title: "Configuration URL",
+                                   message: "Set a custom configuration URL for debugging purposes",
+                                   preferredStyle: .alert)
+        ac.addTextField { textField in
+            textField.text = AppConfigurationURLProvider().url(for: .privacyConfiguration).absoluteString
+        }
+        ac.addAction(title: "Ok", style: .default) {  [weak ac, weak self] in
+            guard let textField = ac?.textFields?.first, let text = textField.text else { return }
+            guard let customUrl = URL(string: text) else { return }
+            Configuration.setURLProvider(AppConfigurationURLProvider(customPrivacyConfiguration: customUrl))
+            self?.forceConfigRefresh()
+            self?.tableView.reloadData()
+        }
+        ac.addAction(title: "Cancel", style: .cancel)
+        self.present(ac, animated: true)
+    }
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch Sections(rawValue: indexPath.section) {
         case .refreshInformation:
@@ -166,19 +205,9 @@ class ConfigurationDebugViewController: UITableViewController {
                 let location = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContentBlockerStoreConstants.groupName)
                 UIPasteboard.general.string = location?.path ?? ""
             case .forceRefresh:
-                AppConfigurationFetch().start { [weak tableView] result in
-                    switch result {
-                    case .assetsUpdated(let protectionsUpdated):
-                        if protectionsUpdated {
-                            ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
-                        }
-                        DispatchQueue.main.async {
-                            tableView?.reloadData()
-                        }
-                    case .noData:
-                        break
-                    }
-                }
+                forceConfigRefresh()
+            case .configUrl:
+                displayCustomConfigAlert()
             default: break
             }
         case .etags:

@@ -23,12 +23,33 @@ import Core
 
 struct AppConfigurationURLProvider: ConfigurationURLProviding {
 
+    internal init(customPrivacyConfiguration: URL? = nil) {
+        if let customPrivacyConfiguration {
+            // Overwrite custom privacy configuration if provided
+            self.customPrivacyConfiguration = customPrivacyConfiguration.absoluteString
+        }
+    }
+
+    @UserDefaultsWrapper(key: .customConfigurationUrl, defaultValue: nil)
+    private var customPrivacyConfiguration: String?
+
+    private var customPrivacyConfigurationUrl: URL? {
+        if let customPrivacyConfiguration {
+            return URL(string: customPrivacyConfiguration)
+        }
+        return nil
+    }
+
+    mutating func resetToDefaultConfigurationUrl() {
+        self.customPrivacyConfiguration = nil
+    }
+
     func url(for configuration: Configuration) -> URL {
         switch configuration {
         case .bloomFilterSpec: return URL.bloomFilterSpec
         case .bloomFilterBinary: return URL.bloomFilter
         case .bloomFilterExcludedDomains: return URL.bloomFilterExcludedDomains
-        case .privacyConfiguration: return URL.privacyConfig
+        case .privacyConfiguration: return customPrivacyConfigurationUrl ?? URL.privacyConfig
         case .trackerDataSet: return URL.trackerDataSet
         case .surrogates: return URL.surrogates
         case .FBConfig: fatalError("This feature is not supported on iOS")

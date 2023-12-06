@@ -32,7 +32,7 @@ final class WindowsBrowserWaitlist: Waitlist {
 
     static let backgroundTaskName = "Windows Browser Waitlist Status Task"
     static let backgroundRefreshTaskIdentifier = "com.duckduckgo.app.windowsBrowserWaitlistStatus"
-    static let notificationIdentitier = "com.duckduckgo.ios.windows-browser.invite-code-available"
+    static let notificationIdentifier = "com.duckduckgo.ios.windows-browser.invite-code-available"
     static let inviteAvailableNotificationTitle = UserText.windowsWaitlistAvailableNotificationTitle
     static let inviteAvailableNotificationBody = UserText.waitlistAvailableNotificationBody
 

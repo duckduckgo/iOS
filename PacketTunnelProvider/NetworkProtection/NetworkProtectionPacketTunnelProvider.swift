@@ -176,9 +176,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                                                              errorEvents: nil)
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
-        let notificationsSettingsStore = NetworkProtectionNotificationsSettingsUserDefaultsStore(userDefaults: .networkProtectionGroupDefaults)
+        let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
         let nofificationsPresenterDecorator = NetworkProtectionNotificationsPresenterTogglableDecorator(
-            notificationSettingsStore: notificationsSettingsStore,
+            settings: settings,
             wrappee: notificationsPresenter
         )
         notificationsPresenter.requestAuthorization()
@@ -189,9 +189,10 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    tokenStore: tokenStore,
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
-                   tunnelSettings: TunnelSettings(defaults: .networkProtectionGroupDefaults))
+                   settings: settings)
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
+        observeStatusChanges()
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
     }
 
@@ -226,6 +227,18 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         }
         .store(in: &cancellables)
     }
+
+    private let activationDateStore = DefaultVPNWaitlistActivationDateStore()
+
+    private func observeStatusChanges() {
+        connectionStatusPublisher.sink { [weak self] status in
+            if case .connected = status {
+                self?.activationDateStore.setActivationDateIfNecessary()
+            }
+        }
+        .store(in: &cancellables)
+    }
+
 }
 
 #endif

@@ -27,13 +27,13 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
 
     func launchAutofillViewController() {
         guard let mainVC = view.window?.rootViewController as? MainViewController else { return }
-        self.dismiss(animated: true)
+        dismiss(animated: true)
         mainVC.launchAutofillLogins()
     }
 
     func launchBookmarksViewController() {
         guard let mainVC = view.window?.rootViewController as? MainViewController else { return }
-        self.dismiss(animated: true)
+        dismiss(animated: true)
         mainVC.segueToBookmarks()
     }
 
@@ -52,10 +52,12 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     func createAccountAndStartSyncing(optionsViewModel: SyncSettingsViewModel) {
         Task { @MainActor in
             do {
+                self.dismissPresentedViewController()
+                self.showPreparingSync()
                 try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
                 self.rootView.model.syncEnabled(recoveryCode: recoveryCode)
                 self.refreshDevices()
-                self.showDeviceConnected([], optionsModel: optionsViewModel, isSingleSetUp: true, shouldShowOptions: false)
+                navigationController?.topViewController?.dismiss(animated: true, completion: showRecoveryPDF)
             } catch {
                 handleError(error)
             }
@@ -69,50 +71,49 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     }
 
     func showSyncWithAnotherDevice() {
-        collectCode(showConnectMode: syncService.account == nil)
-    }
-
-    func showSyncWithAnotherDeviceEnterText() {
-        collectCode(showConnectMode: syncService.account == nil, showEnterTextCode: true)
+        collectCode(showConnectMode: true)
     }
 
     func showRecoverData() {
+        dismissPresentedViewController()
         collectCode(showConnectMode: false)
     }
 
-    func showDeviceConnected(_ devices: [SyncSettingsViewModel.Device], optionsModel: SyncSettingsViewModel, isSingleSetUp: Bool, shouldShowOptions: Bool) {
-        let model = SaveRecoveryKeyViewModel(key: recoveryCode) { [weak self] in
-            self?.shareRecoveryPDF()
-        }
+    func showDeviceConnected() {
         let controller = UIHostingController(
-            rootView: DeviceConnectedView(model,
-                                        optionsViewModel: optionsModel,
-                                          devices: devices,
-                                          isSingleSetUp: isSingleSetUp,
-                                          shouldShowOptions: shouldShowOptions))
+            rootView: DeviceConnectedView())
         navigationController?.present(controller, animated: true) { [weak self] in
             self?.rootView.model.syncEnabled(recoveryCode: self!.recoveryCode)
-            self?.refreshDevices()
         }
     }
 
-    func showRecoveryPDF() {
-        let model = SaveRecoveryKeyViewModel(key: recoveryCode) { [weak self] in
-            self?.shareRecoveryPDF()
-        }
-        let controller = UIHostingController(rootView: SaveRecoveryKeyView(model: model))
+    func showPreparingSync() {
+        let controller = UIHostingController(rootView: PreparingToSyncView())
         navigationController?.present(controller, animated: true)
     }
 
-    private func collectCode(showConnectMode: Bool, showEnterTextCode: Bool = false) {
-        let model = ScanOrPasteCodeViewModel(showConnectMode: showConnectMode)
+    @MainActor
+    func showRecoveryPDF() {
+        let model = SaveRecoveryKeyViewModel(key: recoveryCode) { [weak self] in
+            self?.shareRecoveryPDF()
+        } onDismiss: {
+            self.showDeviceConnected()
+        }
+        let controller = UIHostingController(rootView: SaveRecoveryKeyView(model: model))
+        navigationController?.present(controller, animated: true) { [weak self] in
+            self?.rootView.model.syncEnabled(recoveryCode: self!.recoveryCode)
+        }
+    }
+
+    private func collectCode(showConnectMode: Bool) {
+        let model = ScanOrPasteCodeViewModel(showConnectMode: showConnectMode, recoveryCode: recoveryCode.isEmpty ? nil : recoveryCode)
         model.delegate = self
 
         var controller: UIHostingController<AnyView>
-        if showEnterTextCode {
-            controller = UIHostingController(rootView: AnyView(PasteCodeView(model: model, isfirstScreen: true)))
+        if showConnectMode {
+            controller = UIHostingController(rootView: AnyView(ScanOrSeeCode(model: model)))
         } else {
-            controller = UIHostingController(rootView: AnyView(ScanOrPasteCodeView(model: model)))
+            controller = UIHostingController(rootView: AnyView(ScanOrEnterCodeToRecoverSyncedDataView(model: model)))
         }
 
         let navController = UIDevice.current.userInterfaceIdiom == .phone

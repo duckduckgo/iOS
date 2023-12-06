@@ -25,6 +25,7 @@ import BrowserServicesKit
 import Persistence
 import Bookmarks
 import RemoteMessaging
+import NetworkProtection
 
 struct RemoteMessaging {
 
@@ -149,17 +150,35 @@ struct RemoteMessaging {
         case .success(let statusResponse):
             os_log("Successfully fetched remote messages", log: .remoteMessaging, type: .debug)
 
+            let isNetworkProtectionWaitlistUser: Bool
+            let daysSinceNetworkProtectionEnabled: Int
+
+#if NETWORK_PROTECTION
+            let vpnAccess = NetworkProtectionAccessController()
+            let accessType = vpnAccess.networkProtectionAccessType()
+            let isVPNActivated = NetworkProtectionKeychainTokenStore().isFeatureActivated
+            let activationDateStore = DefaultVPNWaitlistActivationDateStore()
+
+            isNetworkProtectionWaitlistUser = (accessType == .waitlistInvited) && isVPNActivated
+            daysSinceNetworkProtectionEnabled = activationDateStore.daysSinceActivation() ?? -1
+#else
+            isNetworkProtectionWaitlistUser = false
+            daysSinceNetworkProtectionEnabled = -1
+#endif
+
             let remoteMessagingConfigMatcher = RemoteMessagingConfigMatcher(
-                    appAttributeMatcher: AppAttributeMatcher(statisticsStore: statisticsStore,
-                                                             variantManager: variantManager,
-                                                             isInternalUser: AppDependencyProvider.shared.internalUserDecider.isInternalUser),
-                    userAttributeMatcher: UserAttributeMatcher(statisticsStore: statisticsStore,
-                                                               variantManager: variantManager,
-                                                               bookmarksCount: bookmarksCount,
-                                                               favoritesCount: favoritesCount,
-                                                               appTheme: AppUserDefaults().currentThemeName.rawValue,
-                                                               isWidgetInstalled: isWidgetInstalled),
-                    dismissedMessageIds: remoteMessagingStore.fetchDismissedRemoteMessageIds()
+                appAttributeMatcher: AppAttributeMatcher(statisticsStore: statisticsStore,
+                                                         variantManager: variantManager,
+                                                         isInternalUser: AppDependencyProvider.shared.internalUserDecider.isInternalUser),
+                userAttributeMatcher: UserAttributeMatcher(statisticsStore: statisticsStore,
+                                                           variantManager: variantManager,
+                                                           bookmarksCount: bookmarksCount,
+                                                           favoritesCount: favoritesCount,
+                                                           appTheme: AppUserDefaults().currentThemeName.rawValue,
+                                                           isWidgetInstalled: isWidgetInstalled,
+                                                           isNetPWaitlistUser: isNetworkProtectionWaitlistUser,
+                                                           daysSinceNetPEnabled: daysSinceNetworkProtectionEnabled),
+                dismissedMessageIds: remoteMessagingStore.fetchDismissedRemoteMessageIds()
             )
 
             let processor = RemoteMessagingConfigProcessor(remoteMessagingConfigMatcher: remoteMessagingConfigMatcher)

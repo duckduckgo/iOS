@@ -37,8 +37,10 @@ extension Pixel {
         case forgetAllDataCleared
         
         case privacyDashboardOpened
-        case privacyDashboardProtectionDisabled
-        case privacyDashboardProtectionEnabled
+        
+        case dashboardProtectionAllowlistAdd
+        case dashboardProtectionAllowlistRemove
+        
         case privacyDashboardReportBrokenSite
         case privacyDashboardPixelFromJS(rawPixel: String)
         
@@ -74,6 +76,19 @@ extension Pixel {
         case browsingMenuFireproof
         case browsingMenuAutofill
         
+        case addressBarShare
+        case addressBarSettings
+
+        case shareSheetResultSuccess
+        case shareSheetResultFail
+        case shareSheetActivityCopy
+        case shareSheetActivityAddBookmark
+        case shareSheetActivityAddFavorite
+        case shareSheetActivityFindInPage
+        case shareSheetActivityPrint
+        case shareSheetActivityAddToReadingList
+        case shareSheetActivityOther
+
         case tabBarBackPressed
         case tabBarForwardPressed
         case bookmarksButtonPressed
@@ -249,9 +264,6 @@ extension Pixel {
 
         case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
         
-        case navigationbarPositionBottom
-        case navigationBarPositionTop
-
         case secureVaultInitError
         case secureVaultError
         
@@ -353,6 +365,14 @@ extension Pixel {
         case networkProtectionMemoryCritical
 
         case networkProtectionUnhandledError
+
+        case networkProtectionWaitlistUserActive
+        case networkProtectionSettingsRowDisplayed
+        case networkProtectionWaitlistIntroScreenDisplayed
+        case networkProtectionWaitlistTermsDisplayed
+        case networkProtectionWaitlistTermsAccepted
+        case networkProtectionWaitlistNotificationShown
+        case networkProtectionWaitlistNotificationLaunched
 
         // MARK: remote messaging pixels
 
@@ -499,6 +519,8 @@ extension Pixel {
         case bookmarksCleanupFailed
         case bookmarksCleanupAttemptedWhileSyncWasEnabled
         case favoritesCleanupFailed
+        case bookmarksFaviconsFetcherStateStoreInitializationFailed
+        case bookmarksFaviconsFetcherFailed
 
         case credentialsDatabaseCleanupFailed
         case credentialsCleanupAttemptedWhileSyncWasEnabled
@@ -534,9 +556,10 @@ extension Pixel.Event {
         case .forgetAllDataCleared: return "mf_dc"
             
         case .privacyDashboardOpened: return "mp"
-
-        case .privacyDashboardProtectionDisabled: return "mp_wla"
-        case .privacyDashboardProtectionEnabled: return "mp_wlr"
+           
+        case .dashboardProtectionAllowlistAdd: return "mp_wla"
+        case .dashboardProtectionAllowlistRemove: return "mp_wlr"
+            
         case .privacyDashboardReportBrokenSite: return "mp_rb"
         case .privacyDashboardPixelFromJS(let rawPixel): return rawPixel
             
@@ -561,7 +584,6 @@ extension Pixel.Event {
         case .browsingMenuRemoveFromFavorites: return "mb_df"
         case .browsingMenuAddToFavoritesAddFavoriteFlow: return "mb_aff"
         case .browsingMenuToggleBrowsingMode: return "mb_dm"
-        case .browsingMenuShare: return "mb_sh"
         case .browsingMenuCopy: return "mb_cp"
         case .browsingMenuPrint: return "mb_pr"
         case .browsingMenuSettings: return "mb_st"
@@ -571,7 +593,21 @@ extension Pixel.Event {
         case .browsingMenuReportBrokenSite: return "mb_rb"
         case .browsingMenuFireproof: return "mb_f"
         case .browsingMenuAutofill: return "m_nav_autofill_menu_item_pressed"
-            
+
+        case .browsingMenuShare: return "m_browsingmenu_share"
+
+        case .addressBarShare: return "m_addressbar_share"
+        case .addressBarSettings: return "m_addressbar_settings"
+        case .shareSheetResultSuccess: return "m_sharesheet_result_success"
+        case .shareSheetResultFail: return "m_sharesheet_result_fail"
+        case .shareSheetActivityCopy: return "m_sharesheet_activity_copy"
+        case .shareSheetActivityAddBookmark: return "m_sharesheet_activity_addbookmark"
+        case .shareSheetActivityAddFavorite: return "m_sharesheet_activity_addfavorite"
+        case .shareSheetActivityFindInPage: return "m_sharesheet_activity_findinpage"
+        case .shareSheetActivityPrint: return "m_sharesheet_activity_print"
+        case .shareSheetActivityAddToReadingList: return "m_sharesheet_activity_addtoreadinglist"
+        case .shareSheetActivityOther: return "m_sharesheet_activity_other"
+
         case .tabBarBackPressed: return "mt_bk"
         case .tabBarForwardPressed: return "mt_fw"
         case .bookmarksButtonPressed: return "mt_bm"
@@ -589,9 +625,6 @@ extension Pixel.Event {
             
         case .autocompleteSelectedLocal: return "m_au_l"
         case .autocompleteSelectedRemote: return "m_au_r"
-
-        case .navigationbarPositionBottom: return "m_seturlbar_bottom"
-        case .navigationBarPositionTop: return "m_seturlbar_top"
 
         case .feedbackPositive: return "mfbs_positive_submit"
         case .feedbackNegativePrefix(category: let category): return "mfbs_negative_\(category)"
@@ -849,6 +882,14 @@ extension Pixel.Event {
         case .networkProtectionMemoryCritical: return "m_netp_vpn_memory_critical"
         case .networkProtectionUnhandledError: return "m_netp_unhandled_error"
 
+        case .networkProtectionWaitlistUserActive: return "m_netp_waitlist_user_active"
+        case .networkProtectionSettingsRowDisplayed: return "m_netp_waitlist_settings_entry_viewed"
+        case .networkProtectionWaitlistIntroScreenDisplayed: return "m_netp_waitlist_intro_screen_viewed"
+        case .networkProtectionWaitlistTermsDisplayed: return "m_netp_waitlist_terms_viewed"
+        case .networkProtectionWaitlistTermsAccepted: return "m_netp_waitlist_terms_accepted"
+        case .networkProtectionWaitlistNotificationShown: return "m_netp_waitlist_notification_shown"
+        case .networkProtectionWaitlistNotificationLaunched: return "m_netp_waitlist_notification_launched"
+
         // MARK: remote messaging pixels
 
         case .remoteMessageShown: return "m_remote_message_shown"
@@ -993,6 +1034,8 @@ extension Pixel.Event {
         case .bookmarksCleanupFailed: return "m_d_bookmarks_cleanup_failed"
         case .bookmarksCleanupAttemptedWhileSyncWasEnabled: return "m_d_bookmarks_cleanup_attempted_while_sync_was_enabled"
         case .favoritesCleanupFailed: return "m_d_favorites_cleanup_failed"
+        case .bookmarksFaviconsFetcherStateStoreInitializationFailed: return "m_d_bookmarks_favicons_fetcher_state_store_initialization_failed"
+        case .bookmarksFaviconsFetcherFailed: return "m_d_bookmarks_favicons_fetcher_failed"
 
         case .credentialsDatabaseCleanupFailed: return "m_d_credentials_database_cleanup_failed_2"
         case .credentialsCleanupAttemptedWhileSyncWasEnabled: return "m_d_credentials_cleanup_attempted_while_sync_was_enabled"

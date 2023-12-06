@@ -4,6 +4,9 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
+/* No comment provided by engineer. */
+"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Redigeeri";
 
@@ -132,6 +135,24 @@
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Olemasolevaid järjehoidjaid ei dubleerita.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Oled järjehoidjate sünkroonimise limiidi ületanud. Proovi mõned järjehoidjad kustutada. Kuni see pole lahendatud, ei varundata sinu järjehoidjaid.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Järjehoidjate sünkroonimine on peatatud";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Oled paroolide sünkroonimise limiidi ületanud. Proovi mõned paroolid kustutada. Kuni see pole lahendatud, ei varundata sinu paroole.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Paroolide sünkroonimine on peatatud";
+
+/* Learn more button in alert */
+"alert.sync-paused-alert-learn-more-button" = "Loe edasi";
+
+/* Confirmation button in alert */
+"alert.sync-paused-alert-ok-button" = "OK";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Kas lisada kõik vahekaardid järjehoidjasse?";
@@ -754,48 +775,6 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Impordi järjehoidjate HTML-fail teisest brauserist või ekspordi oma olemas olevad järjehoidjad.";
 
-/* Broken Site Category */
-"brokensite.category.comments" = "Kommentaare ei laaditud";
-
-/* Broken Site Category */
-"brokensite.category.content" = "Sisu puudub";
-
-/* Broken Site Category */
-"brokensite.category.cookieprompt" = "Küpsise hüpikakent ei hallatud";
-
-/* Broken Site Category */
-"brokensite.category.images" = "Pilte ei laaditud";
-
-/* Broken Site Category */
-"brokensite.category.links" = "Lingid või nupud ei töötanud";
-
-/* Broken Site Category */
-"brokensite.category.login" = "Ma ei saa sisse logida";
-
-/* Broken Site Category */
-"brokensite.category.other" = "Midagi muud";
-
-/* Broken Site Category */
-"brokensite.category.paywall" = "Sait palus mul välja lülitada";
-
-/* Broken Site Category */
-"brokensite.category.unsupported" = "Brauser ei ühildu";
-
-/* Broken Site Category */
-"brokensite.category.videos" = "Videot ei esitatud";
-
-/* Broken Site Category Placeholder */
-"brokensite.categoryPlaceholder" = "Vali loendist oma probleem...";
-
-/* Broken Site Category Section Title */
-"brokensite.categoryTitle" = "VALI KATEGOORIA";
-
-/* Broken Site Comment Placeholder */
-"brokensite.commentPlaceholder" = "Probleemi täpsem kirjeldamine võib meil aidata seda lahendada";
-
-/* Broken Site Section Title */
-"brokensite.sectionTitle" = "KIRJELDAGE TOIMUNUT";
-
 /* No comment provided by engineer. */
 "bucket: %@" = "andmekogum: %@";
 
@@ -1071,6 +1050,18 @@
 
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Eemaldage";
+
+/* Display Mode for favorites */
+"favorites.settings.all-devices" = "Kõik seadme lemmikud";
+
+/* Footer of the favorites settings table */
+"favorites.settings.footer" = "Vali, milliseid lemmikuid uuel vahekaardil kuvada, lähtudes nende päritolust.";
+
+/* Header of the favorites settings table */
+"favorites.settings.header" = "Kuvamise seaded";
+
+/* Display Mode for favorites */
+"favorites.settings.mobile-only" = "Ainult mobiililemmikud";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Reklaami ja hüpikakende blokeerimine";
@@ -1438,6 +1429,9 @@
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
 
+/* Title text for an iOS quick action that opens VPN settings */
+"network.protection.quick-action.open-vpn" = "Ava VPN";
+
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Connected - %@";
 
@@ -1477,8 +1471,59 @@
 /* Location label shown in NetworkProtection's status view. */
 "network.protection.status.view.location" = "Location";
 
+/* Label shown on the title of the settings section in NetworkProtection's status view. */
+"network.protection.status.view.settings.section.title" = "Halda";
+
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "Network Protection";
+
+/* Title for the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.button.title" = "Lülita teavitused sisse";
+
+/* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.section.footer" = "Lubab DuckDuckGol sulle teada anda, kui sinu ühendus katkeb või VPN-i olek muutub.";
+
+/* List section footer for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.section.footer" = "Saad teate, kui sinu ühendus katkeb või VPN-i olek muutub.";
+
+/* Title for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.title" = "VPN-i hoiatused";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.footer" = "VPN-ühendus taastatakse pärast katkestust automaatselt.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.title" = "Alati sisse lülitatud";
+
+/* Title for the VPN Location screen's All Countries section. */
+"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Title for the VPN Location screen's Nearest Available selection item. */
+"network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
+
+/* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+
+/* Title for the VPN Location screen's Recommended section. */
+"network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Title for the VPN Notifications management screen. */
+"network.protection.vpn.notifications.title" = "VPN-i teavitused";
+
+/* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
+"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+
+/* Title for the Preferred Location VPN Settings item. */
+"network.protection.vpn.preferred.location.title" = "Preferred Location";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.footer" = "Network Protection takistab DNS-i lekkeid sinu internetiteenuse pakkujale, suunates DNS-päringud läbi VPN-tunneli meie enda aadressiteisendusteenusesse.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.title" = "Turvaline DNS";
+
+/* Title for the VPN Settings screen. */
+"network.protection.vpn.settings.title" = "VPN-i seaded";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
@@ -1593,9 +1638,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Avada teises rakenduses?";
-
-/* No comment provided by engineer. */
-"report.brokensite.header" = "Anonüümse katkise saidi aruande esitamine aitab meil neid probleeme siluda ja rakendust täiustada.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Otsi või sisesta aadress";

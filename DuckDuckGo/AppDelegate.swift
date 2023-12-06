@@ -220,7 +220,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage()
         )
-        syncDataProviders.bookmarksAdapter.shouldResetBookmarksSyncTimestamp = shouldResetBookmarksSyncTimestamp
 
         let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog, environment: environment)
         syncService.initializeIfNeeded()
@@ -262,6 +261,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
         WindowsBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
+
+#if NETWORK_PROTECTION
+        VPNWaitlist.shared.registerBackgroundRefreshTaskHandler()
+#endif
+
         RemoteMessaging.registerBackgroundRefreshTaskHandler(
             bookmarksDatabase: bookmarksDatabase,
             favoritesDisplayMode: AppDependencyProvider.shared.appSettings.favoritesDisplayMode
@@ -281,6 +285,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #if NETWORK_PROTECTION
         widgetRefreshModel.beginObservingVPNStatus()
+        NetworkProtectionAccessController().refreshNetworkProtectionAccess()
 #endif
 
         return true
@@ -375,18 +380,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        WindowsBrowserWaitlist.shared.fetchInviteCodeIfAvailable { error in
-            guard error == nil else { return }
-            WindowsBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
-        }
-
-        BGTaskScheduler.shared.getPendingTaskRequests { tasks in
-            let hasWindowsBrowserWaitlistTask = tasks.contains { $0.identifier == WindowsBrowserWaitlist.backgroundRefreshTaskIdentifier }
-            if !hasWindowsBrowserWaitlistTask {
-                WindowsBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
-            }
-        }
-
+        checkWaitlists()
         syncService.scheduler.notifyAppLifecycleEvent()
         fireFailedCompilationsPixelIfNeeded()
         refreshShortcuts()
@@ -511,6 +505,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         lastBackgroundDate = Date()
         AppDependencyProvider.shared.autofillLoginSession.endSession()
         suspendSync()
+        syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
     }
 
     private func suspendSync() {
@@ -782,13 +777,18 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
             let identifier = response.notification.request.identifier
-            if identifier == WindowsBrowserWaitlist.notificationIdentitier {
+            if identifier == WindowsBrowserWaitlist.notificationIdentifier {
                 presentWindowsBrowserWaitlistSettingsModal()
             }
 
 #if NETWORK_PROTECTION
             if NetworkProtectionNotificationIdentifier(rawValue: identifier) != nil {
                 presentNetworkProtectionStatusSettingsModal()
+            }
+
+            if identifier == VPNWaitlist.notificationIdentifier {
+                presentNetworkProtectionWaitlistModal()
+                DailyPixel.fire(pixel: .networkProtectionWaitlistNotificationLaunched)
             }
 #endif
         }
@@ -802,6 +802,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
 #if NETWORK_PROTECTION
+    private func presentNetworkProtectionWaitlistModal() {
+        if #available(iOS 15, *) {
+            let networkProtectionRoot = VPNWaitlistViewController(nibName: nil, bundle: nil)
+            presentSettings(with: networkProtectionRoot)
+        }
+    }
+
     func presentNetworkProtectionStatusSettingsModal() {
         if #available(iOS 15, *) {
             let networkProtectionRoot = NetworkProtectionRootViewController()

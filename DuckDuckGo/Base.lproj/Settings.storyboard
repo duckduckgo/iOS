@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="w88-u3-TgK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="w88-u3-TgK">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -104,7 +104,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="343.66666666666669" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Sync &amp; Back Up" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oXN-ez-gct" userLabel="Sync">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Sync &amp; Backup" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oXN-ez-gct" userLabel="Sync">
                                                     <rect key="frame" x="20" y="0.0" width="315.66666666666669" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
@@ -753,11 +753,11 @@
                                         <rect key="frame" x="20" y="1324.6666603088379" width="374" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nAl-CW-4R7" id="eQZ-vi-vuJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="343.66666666666669" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="355.66666666666669" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="Email Protection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="azf-Nc-kvW">
-                                                    <rect key="frame" x="20" y="7.3333333333333339" width="118" height="19.333333333333332"/>
+                                                    <rect key="frame" x="8" y="7.3333333333333339" width="118" height="19.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
@@ -767,7 +767,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" text="Block email trackers and hide your address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Y6Y-wA-n6Z">
-                                                    <rect key="frame" x="20" y="29.333333333333332" width="260" height="15.666666666666666"/>
+                                                    <rect key="frame" x="8" y="29.333333333333332" width="260" height="15.666666666666666"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -781,11 +781,11 @@
                                         <rect key="frame" x="20" y="1379.6666603088379" width="374" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WpO-kq-QM6" id="jdM-R6-KZO">
-                                            <rect key="frame" x="0.0" y="0.0" width="343.66666666666669" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="355.66666666666669" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="DuckDuckGo Mac App" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Yz9-17-qnn">
-                                                    <rect key="frame" x="20" y="7.3333333333333339" width="164.33333333333334" height="19.333333333333332"/>
+                                                    <rect key="frame" x="8" y="7.3333333333333339" width="164.33333333333334" height="19.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
@@ -795,7 +795,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" text="Browse privately with our app for Mac " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="P0F-ts-ekd">
-                                                    <rect key="frame" x="20" y="29.333333333333332" width="232" height="15.666666666666666"/>
+                                                    <rect key="frame" x="8" y="29.333333333333332" width="232" height="15.666666666666666"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -809,11 +809,11 @@
                                         <rect key="frame" x="20" y="1434.6666603088379" width="374" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ubu-Mf-iUH" id="Sm8-Lv-wFY">
-                                            <rect key="frame" x="0.0" y="0.0" width="343.66666666666669" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="355.66666666666669" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="DuckDuckGo Windows App" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RQ8-H1-Ez1">
-                                                    <rect key="frame" x="20" y="7.3333333333333339" width="199.33333333333334" height="19.333333333333332"/>
+                                                    <rect key="frame" x="8" y="7.3333333333333339" width="199.33333333333334" height="19.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
@@ -823,7 +823,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" text="Browse privately with our app for Windows" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hoT-Nu-KXP">
-                                                    <rect key="frame" x="20" y="29.333333333333332" width="257.66666666666669" height="15.666666666666666"/>
+                                                    <rect key="frame" x="8" y="29.333333333333332" width="257.66666666666669" height="15.666666666666666"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -837,11 +837,11 @@
                                         <rect key="frame" x="20" y="1489.6666603088379" width="374" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7pF-cg-5QN" id="5Yk-5T-8YE">
-                                            <rect key="frame" x="0.0" y="0.0" width="343.66666666666669" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="355.66666666666669" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="Network Protection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qah-gb-udB" userLabel="Network Protection">
-                                                    <rect key="frame" x="20" y="7.3333333333333339" width="140" height="19.333333333333332"/>
+                                                    <rect key="frame" x="8" y="7.3333333333333339" width="140" height="19.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
@@ -851,7 +851,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" text="Hide your location and conceal your online activity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Cyw-ir-cSK">
-                                                    <rect key="frame" x="20" y="29.333333333333332" width="304.66666666666669" height="15.666666666666666"/>
+                                                    <rect key="frame" x="8" y="29.333333333333332" width="304.66666666666669" height="15.666666666666666"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -869,11 +869,11 @@
                                         <rect key="frame" x="20" y="1611.9999923706055" width="374" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iy0-gV-9MR" id="Msh-jY-fMD">
-                                            <rect key="frame" x="0.0" y="0.0" width="343.66666666666669" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="355.66666666666669" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="About DuckDuckGo" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oM7-1o-9oY">
-                                                    <rect key="frame" x="20" y="0.0" width="315.66666666666669" height="43.666667938232422"/>
+                                                    <rect key="frame" x="8" y="0.0" width="339.66666666666669" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
@@ -900,14 +900,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="Version" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2ky-s9-1aZ">
-                                                    <rect key="frame" x="20.000000000000004" y="12.999999999999998" width="54.333333333333336" height="19.333333333333332"/>
+                                                    <rect key="frame" x="8.0000000000000036" y="12.999999999999998" width="54.333333333333336" height="19.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="10.0.1 (Build 10005)" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d5n-vG-8kF">
-                                                    <rect key="frame" x="211.33333333333337" y="12.999999999999998" width="142.66666666666666" height="19.333333333333332"/>
+                                                    <rect key="frame" x="223.33333333333337" y="12.999999999999998" width="142.66666666666666" height="19.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.74509803919999995" green="0.76078431369999999" blue="0.79607843140000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -925,7 +925,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="Share Feedback" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="m23-t6-9cb">
-                                                    <rect key="frame" x="20" y="0.0" width="334" height="43.666667938232422"/>
+                                                    <rect key="frame" x="8" y="0.0" width="358" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -949,11 +949,11 @@
                                         <rect key="frame" x="20" y="1782.9999961853027" width="374" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FqT-nq-YvQ" id="DgP-Pj-wOt">
-                                            <rect key="frame" x="0.0" y="0.0" width="343.66666666666669" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="355.66666666666669" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="Debug Menu" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="A9G-5I-RSn">
-                                                    <rect key="frame" x="20" y="0.0" width="315.66666666666669" height="43.666667938232422"/>
+                                                    <rect key="frame" x="8" y="0.0" width="339.66666666666669" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
@@ -1102,7 +1102,7 @@
                 <viewControllerPlaceholder storyboardName="HomeRow" id="4xy-dB-g65" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f7V-ze-SNX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2526" y="96"/>
+            <point key="canvasLocation" x="2564" y="-129"/>
         </scene>
         <!--Text Size-->
         <scene sceneID="27H-Zj-xSY">
@@ -1278,15 +1278,15 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ztc-dF-sSr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2540" y="-72"/>
+            <point key="canvasLocation" x="2573" y="-61"/>
         </scene>
         <!--Feedback-->
         <scene sceneID="AdS-SO-faF">
             <objects>
-                <viewControllerPlaceholder storyboardName="Feedback" referencedIdentifier="Feedback" id="Hvb-oi-0lX" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Feedback" id="Hvb-oi-0lX" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TVx-JL-4ci" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2524" y="148"/>
+            <point key="canvasLocation" x="2572" y="53"/>
         </scene>
         <!--Automatically Clear Data-->
         <scene sceneID="y9R-2c-mBz">
@@ -2346,7 +2346,7 @@
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

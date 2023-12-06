@@ -56,18 +56,28 @@ tags:
 - tapOn:
     id: searchEntry
 - inputText: ${CODE}
+
+- evalScript: ${output.counter = 0}
 - repeat:
     while:
-      notVisible: "Select All"
+      true: ${output.counter < 3}
+      notVisible: Select All
     commands:
-      - tapOn:
-            id: searchEntry
-- tapOn: Select All
+      - longPressOn: 
+          id: "searchEntry"
+      - evalScript: ${output.counter = output.counter + 1}
+
+- tapOn: 'Select All'
 - tapOn: Cut
-- tapOn:
-    id: searchEntry
-- longPressOn:
-    id: searchEntry
+- evalScript: ${output.counter = 0}
+- repeat:
+    while:
+      true: ${output.counter < 3}
+      notVisible: Paste
+    commands:
+      - tapOn: 
+          id: "searchEntry"
+      - evalScript: ${output.counter = output.counter + 1}
 - tapOn: Paste
 - tapOn: Cancel
 
@@ -76,7 +86,7 @@ tags:
 - runFlow:
     when:
       visible:
-        text: "Cancel"
+        text: Cancel
     commands:
       - tapOn: Cancel
 #</WORKAROUND>
@@ -84,20 +94,32 @@ tags:
 - tapOn: Settings
 - runFlow:
     file: ../shared/set_internal_user.yaml
-- assertVisible: Sync & Back Up
-- tapOn: Sync & Back Up
-- assertVisible: Sync & Back up
-- tapOn: Recover Your Data
-- tapOn: Enter Text Code
+- assertVisible: Sync & Backup
+- tapOn: Sync & Backup
+- assertVisible: Begin Syncing
+- tapOn: Recover Synced Data
+- assertVisible: Recover Synced Data
+- assertVisible: Get Started
+- tapOn: Get Started
+- tapOn: Enter Text Code Manually
 - tapOn: Paste
-- assertVisible: Device Synced!
+- assertVisible: Save Recovery Code
 - tapOn: Next
-- tapOn: Not Now
+- assertVisible: Your Data is Synced!
+- tapOn: Done
+- assertVisible: Sync & Backup
 - tapOn: Settings
+- assertVisible: Settings
 - tapOn: Done
 
 # Verify bookmarks and favorites have been merged
 - tapOn: Bookmarks
+- runFlow: 
+    when: 
+      visible:
+        text: Download Missing Icons?
+    commands:
+      - tapOn: Not Now
 
 - assertVisible: Spread Privacy
 - assertVisible: Stack Overflow - Where Developers Learn, Share, & Build Careers
@@ -119,8 +141,23 @@ tags:
 - assertVisible: NFL.com | Official Site of the National Football League
 - assertVisible: AS.com - Diario online deportivo. Fútbol, motor y mucho más
 - tapOn: Bookmarks
+
+# Only expect local favorites when Share Favorites is off
 - tapOn: Favorites
 - assertVisible: DuckDuckGo — Privacy, simplified.
+
+# Enable Share Favorites and expect all favorites
+- tapOn: Done
+- tapOn: Settings
+- tapOn: Sync & Backup
+- scroll
+- assertVisible: Unify Favorites
+- tapOn: "0"
+- tapOn: "0"
+- tapOn: Settings
+- tapOn: Done
+- tapOn: Bookmarks
+- tapOn: Favorites
 - assertVisible: NFL.com | Official Site of the National Football League
 - assertVisible: DuckDuckGo · GitHub
 - assertVisible: Stack Overflow - Where Developers Learn, Share, & Build Careers

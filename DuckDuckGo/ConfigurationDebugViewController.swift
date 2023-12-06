@@ -45,6 +45,7 @@ class ConfigurationDebugViewController: UITableViewController {
         case copyConfigLocationPath
         case forceRefresh
         case configUrl
+        case resetConfig
 
     }
 
@@ -122,6 +123,8 @@ class ConfigurationDebugViewController: UITableViewController {
             case .configUrl:
                 cell.textLabel?.text = "Configuration URL"
                 cell.detailTextLabel?.text = AppConfigurationURLProvider().url(for: .privacyConfiguration).absoluteString
+            case .resetConfig:
+                cell.textLabel?.text = "Reset Configuration URL"
             case .none:
                 break
             }
@@ -159,6 +162,42 @@ class ConfigurationDebugViewController: UITableViewController {
         }
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch Sections(rawValue: indexPath.section) {
+        case .refreshInformation:
+            switch RefreshInformationRows(rawValue: indexPath.row) {
+            case .resetLastRefreshDate:
+                lastConfigurationRefreshDate = Date.distantPast
+                tableView.reloadData()
+            case .copyConfigLocationPath:
+                let location = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContentBlockerStoreConstants.groupName)
+                UIPasteboard.general.string = location?.path ?? ""
+            case .forceRefresh:
+                forceConfigRefresh()
+            case .configUrl:
+                displayCustomConfigAlert()
+            case .resetConfig:
+                resetConfigUrl()
+            default: break
+            }
+        case .etags:
+            switch ETagRows.allCases[indexPath.row] {
+            case .resetEtags:
+                etagStorage.resetAll()
+                tableView.reloadData()
+            default: break
+            }
+        default: break
+        }
+
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+}
+
+// MARK: - Config Actions
+
+extension ConfigurationDebugViewController {
     func forceConfigRefresh() {
         lastConfigurationRefreshDate = Date.distantPast
         AppConfigurationFetch().start { [weak tableView] result in
@@ -194,33 +233,9 @@ class ConfigurationDebugViewController: UITableViewController {
         self.present(ac, animated: true)
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch Sections(rawValue: indexPath.section) {
-        case .refreshInformation:
-            switch RefreshInformationRows(rawValue: indexPath.row) {
-            case .resetLastRefreshDate:
-                lastConfigurationRefreshDate = Date.distantPast
-                tableView.reloadData()
-            case .copyConfigLocationPath:
-                let location = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContentBlockerStoreConstants.groupName)
-                UIPasteboard.general.string = location?.path ?? ""
-            case .forceRefresh:
-                forceConfigRefresh()
-            case .configUrl:
-                displayCustomConfigAlert()
-            default: break
-            }
-        case .etags:
-            switch ETagRows.allCases[indexPath.row] {
-            case .resetEtags:
-                etagStorage.resetAll()
-                tableView.reloadData()
-            default: break
-            }
-        default: break
-        }
-
-        tableView.deselectRow(at: indexPath, animated: true)
+    func resetConfigUrl() {
+        var provider = AppConfigurationURLProvider()
+        provider.resetToDefaultConfigurationUrl()
+        Configuration.setURLProvider(provider)
     }
-
 }

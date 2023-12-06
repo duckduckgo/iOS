@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "fcappelli/breakage_report_improvements",
-          "revision": "14a78c7931c0b5230b4d07d3a26d3a702e5fb4bc",
-          "version": null
+          "branch": null,
+          "revision": "074af9d2f5025b84d7801763cae13c91a54b9acf",
+          "version": "91.0.0"
         }
       },
       {

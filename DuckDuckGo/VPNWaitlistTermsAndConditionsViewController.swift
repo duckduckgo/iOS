@@ -38,7 +38,7 @@ final class VPNWaitlistTermsAndConditionsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = UserText.networkProtectionWaitlistJoinTitle
+        title = UserText.netPNavTitle
         addHostingControllerToViewHierarchy()
 
         DailyPixel.fire(pixel: .networkProtectionWaitlistTermsDisplayed)

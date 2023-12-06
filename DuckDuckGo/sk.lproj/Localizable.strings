@@ -4,6 +4,9 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
+/* No comment provided by engineer. */
+"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Upraviť";
 
@@ -132,6 +135,24 @@
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existujúce záložky sa nebudú duplikovať.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Prekročili ste limit na synchronizáciu záložiek. Skúste niektoré záložky odstrániť. Kým to nevyriešite, vaše záložky sa nebudú zálohovať.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Synchronizácia záložiek je pozastavená.";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Prekročili ste limit na synchronizáciu hesiel. Skúste niektoré heslá odstrániť. Kým to nevyriešite, vaše heslá sa nebudú zálohovať.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Synchronizácia hesiel je pozastavená.";
+
+/* Learn more button in alert */
+"alert.sync-paused-alert-learn-more-button" = "Zistite viac";
+
+/* Confirmation button in alert */
+"alert.sync-paused-alert-ok-button" = "OK";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Uložiť všetky karty medzi záložky?";
@@ -754,48 +775,6 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Importujte súbor HTML so záložkami z iného prehliadača alebo exportujte svoje existujúce záložky.";
 
-/* Broken Site Category */
-"brokensite.category.comments" = "Komentáre sa nepodarilo načítať";
-
-/* Broken Site Category */
-"brokensite.category.content" = "Chýba obsah";
-
-/* Broken Site Category */
-"brokensite.category.cookieprompt" = "Automaticky otvárané okno pre súbory cookie nebolo spravované";
-
-/* Broken Site Category */
-"brokensite.category.images" = "Obrázky sa nepodarilo načítať";
-
-/* Broken Site Category */
-"brokensite.category.links" = "Odkazy alebo tlačidlá nefungujú";
-
-/* Broken Site Category */
-"brokensite.category.login" = "Nemôžem sa prihlásiť";
-
-/* Broken Site Category */
-"brokensite.category.other" = "Niečo iné";
-
-/* Broken Site Category */
-"brokensite.category.paywall" = "Táto stránka ma požiadala o deaktiváciu";
-
-/* Broken Site Category */
-"brokensite.category.unsupported" = "Prehliadač je nekompatibilný";
-
-/* Broken Site Category */
-"brokensite.category.videos" = "Video sa neprehráva";
-
-/* Broken Site Category Placeholder */
-"brokensite.categoryPlaceholder" = "Vyberte problém zo zoznamu...";
-
-/* Broken Site Category Section Title */
-"brokensite.categoryTitle" = "VYBERTE KATEGÓRIU";
-
-/* Broken Site Comment Placeholder */
-"brokensite.commentPlaceholder" = "Zdieľanie ďalších podrobností nám môže pomôcť vyriešiť tento problém";
-
-/* Broken Site Section Title */
-"brokensite.sectionTitle" = "POPÍŠTE, ČO SA STALO";
-
 /* No comment provided by engineer. */
 "bucket: %@" = "vedro: %@";
 
@@ -1071,6 +1050,18 @@
 
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Odstrániť";
+
+/* Display Mode for favorites */
+"favorites.settings.all-devices" = "Obľúbené položky zo všetkých zariadení";
+
+/* Footer of the favorites settings table */
+"favorites.settings.footer" = "Vyberte, ktoré obľúbené položky sa majú zobraziť na novej karte na základe ich zdroja.";
+
+/* Header of the favorites settings table */
+"favorites.settings.header" = "Nastavenia zobrazenia";
+
+/* Display Mode for favorites */
+"favorites.settings.mobile-only" = "Iba obľúbené mobilné položky";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blokovanie reklám a automaticky otváraných okien";
@@ -1438,6 +1429,9 @@
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
 
+/* Title text for an iOS quick action that opens VPN settings */
+"network.protection.quick-action.open-vpn" = "Otvoriť VPN sieť";
+
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Connected - %@";
 
@@ -1477,8 +1471,59 @@
 /* Location label shown in NetworkProtection's status view. */
 "network.protection.status.view.location" = "Location";
 
+/* Label shown on the title of the settings section in NetworkProtection's status view. */
+"network.protection.status.view.settings.section.title" = "Spravujte stránku";
+
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "Network Protection";
+
+/* Title for the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.button.title" = "Zapnúť oznámenia";
+
+/* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.section.footer" = "Povoľte službe DuckDuckGo, aby vás upozornila, ak dôjde k prerušeniu pripojenia alebo zmene stavu VPN siete.";
+
+/* List section footer for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.section.footer" = "Dostávajte upozornenia, ak dôjde k prerušeniu pripojenia alebo sa zmení stav VPN siete.";
+
+/* Title for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.title" = "Upozornenia týkajúce sa VPN siete";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.footer" = "Automatické obnovenie pripojenia VPN po prerušení.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.title" = "Vždy zapnuté";
+
+/* Title for the VPN Location screen's All Countries section. */
+"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Title for the VPN Location screen's Nearest Available selection item. */
+"network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
+
+/* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+
+/* Title for the VPN Location screen's Recommended section. */
+"network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Title for the VPN Notifications management screen. */
+"network.protection.vpn.notifications.title" = "Oznámenia VPN";
+
+/* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
+"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+
+/* Title for the Preferred Location VPN Settings item. */
+"network.protection.vpn.preferred.location.title" = "Preferred Location";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.footer" = "Ochrana siete zabraňuje úniku informácií DNS k poskytovateľovi internetových služieb tým, že presmeruje DNS požiadavky cez VPN tunel na náš vlastný, tzv. „DNS resolver“.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.title" = "Zabezpečený systém DNS";
+
+/* Title for the VPN Settings screen. */
+"network.protection.vpn.settings.title" = "Nastavenia siete VPN";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
@@ -1593,9 +1638,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Otvoriť v inej aplikácii?";
-
-/* No comment provided by engineer. */
-"report.brokensite.header" = "Odoslaním anonymného hlásenia o nefunkčnom webe nám pomôžete tieto problémy odstrániť a vylepšiť aplikáciu.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Vyhľadajte alebo zadajte adresu";

@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": null,
-          "revision": "7fbe19fe3013549eae602001d7524accfb8f1d7e",
-          "version": null
+          "revision": "822e284a50ebb42f0880ebcae87dc36e007f8c31",
+          "version": "91.0.1"
         }
       },
       {
@@ -105,8 +105,8 @@
         "repositoryURL": "https://github.com/duckduckgo/privacy-dashboard",
         "state": {
           "branch": null,
-          "revision": "daa9708223b4b4318fb6448ca44801dfabcddc6f",
-          "version": "3.0.0"
+          "revision": "38336a574e13090764ba09a6b877d15ee514e371",
+          "version": "3.1.1"
         }
       },
       {

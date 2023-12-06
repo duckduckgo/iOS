@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "822e284a50ebb42f0880ebcae87dc36e007f8c31",
-          "version": "91.0.1"
+          "branch": "update-autofill-10.0.1",
+          "revision": "19c1b173ee43f97929459715a10f50c8054ccc10",
+          "version": null
         }
       },
       {
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
           "branch": null,
-          "revision": "93677cc02cfe650ce7f417246afd0e8e972cd83e",
-          "version": "10.0.0"
+          "revision": "dbecae0df07650a21b5632a92fa2e498c96af7b5",
+          "version": "10.0.1"
         }
       },
       {

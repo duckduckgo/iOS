@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "11a5fb5e7bf1f4fb4e2a79ce8dbe2eb39b583495",
-          "version": "92.0.0"
+          "branch": "dominik/fix-favicons-fetcher-crash",
+          "revision": "70c67be570df3ebdcdc1078288db2dcc80f58ce0",
+          "version": null
         }
       },
       {

@@ -14,8 +14,8 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "6173444ae81216f0ca1f6c9b997365e596db4b63",
+          "branch": "diego/fix-vpn-dns-routing",
+          "revision": "8950aacee05c50792b35bd869836ed31908c1c82",
           "version": null
         }
       },

@@ -152,8 +152,9 @@ tags:
 - tapOn: Sync & Backup
 - scroll
 - assertVisible: Unify Favorites
-- tapOn: "0"
-- tapOn: "0"
+- tapOn:
+    text: "0"
+    index: "1"
 - tapOn: Settings
 - tapOn: Done
 - tapOn: Bookmarks

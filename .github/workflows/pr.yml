@@ -81,6 +81,7 @@ jobs:
           -scheme "DuckDuckGo" \
           -destination "platform=iOS Simulator,name=iPhone 14,OS=16.4" \
           -derivedDataPath "DerivedData" \
+          -skipPackagePluginValidation \
           DDG_SLOW_COMPILE_CHECK_THRESHOLD=250 \
           | tee xcodebuild.log \
           | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml
@@ -183,6 +184,7 @@ jobs:
         -destination "platform=iOS Simulator,name=iPhone 14" \
         -derivedDataPath "DerivedData" \
         -configuration "Release" \
+        -skipPackagePluginValidation \
         | xcbeautify
 
   create-asana-task:

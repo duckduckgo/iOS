@@ -1,5 +1,5 @@
 //
-//  GeneralSection.swift
+//  SettingsState.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -17,24 +17,17 @@
 //  limitations under the License.
 //
 
-import SwiftUI
-import UIKit
-import Core
-import DDGSync
+import BrowserServicesKit
 
-struct SettingsSyncView: View {
-    
-    @EnvironmentObject var viewModel: SettingsViewModel
-    @State var isPresentingSyncView: Bool = false
-    
-    var body: some View {
-        if viewModel.shouldShowSyncCell {
-            Section {
-                NavigationLink(destination: viewModel.syncSettingsControllerRepresentable, isActive: $isPresentingSyncView) {
-                    SettingsCellView(label: UserText.syncTitle,
-                                     action: { viewModel.isPresentingSyncView = true })
-                }
-            }
-        }
-    }
+struct SettingsState {
+    var general: SettingsStateGeneral
+    // Add state for other sections here...
+}
+
+struct SettingsStateGeneral {
+    var appTheme: ThemeName = ThemeManager.shared.currentTheme.name
+    var appIcon: AppIcon = AppIconManager.shared.appIcon
+    var fireButtonAnimation: FireButtonAnimationType = .fireRising
+    var textSize: Int = 100
+    var activeWebsiteAccount: SecureVaultModels.WebsiteAccount?
 }

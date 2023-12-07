@@ -171,9 +171,6 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <connections>
-                                            <segue destination="gMx-K0-9ev" kind="show" id="Pes-Ig-9hs"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="Cx1-3k-5Be">
                                         <rect key="frame" x="20" y="416.00000762939453" width="374" height="44.333332061767578"/>
@@ -256,9 +253,6 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <connections>
-                                            <segue destination="cQ5-DF-7xY" kind="show" identifier="" id="TEm-g2-Oq3"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="9Ko-0g-T3h" detailTextLabel="EB8-09-gt2" style="IBUITableViewCellStyleValue1" id="S20-Qg-xka" userLabel="TextSize Cell">
                                         <rect key="frame" x="20" y="504.66667175292969" width="374" height="43.666667938232422"/>
@@ -1107,7 +1101,7 @@
         <!--Text Size-->
         <scene sceneID="27H-Zj-xSY">
             <objects>
-                <tableViewController id="Z3c-9H-Usp" customClass="TextSizeSettingsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="TextSize" id="Z3c-9H-Usp" customClass="TextSizeSettingsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="5hH-aV-3P1">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1723,62 +1717,6 @@
             </objects>
             <point key="canvasLocation" x="1932" y="930"/>
         </scene>
-        <!--Theme-->
-        <scene sceneID="Fn1-Ld-WqV">
-            <objects>
-                <tableViewController id="gMx-K0-9ev" customClass="ThemeSettingsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="mlK-PZ-aXX">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="separatorColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ThemeItemCell" id="Yae-R5-CPt" userLabel="ThemeItemCell" customClass="ThemeItemCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="20" y="55.333332061767578" width="374" height="43.666667938232422"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Yae-R5-CPt" id="Jae-Iy-uPB">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="43.666667938232422"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="vtB-4n-8Qi">
-                                            <rect key="frame" x="20" y="12.333333333333334" width="334" height="19.333333333333329"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qeN-SV-zy7">
-                                                    <rect key="frame" x="0.0" y="0.0" width="334" height="19.333333333333332"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </stackView>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstItem="vtB-4n-8Qi" firstAttribute="leading" secondItem="Jae-Iy-uPB" secondAttribute="leadingMargin" id="ccg-BS-yOL"/>
-                                        <constraint firstItem="vtB-4n-8Qi" firstAttribute="centerY" secondItem="Jae-Iy-uPB" secondAttribute="centerY" id="hMu-Np-LSu"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="vtB-4n-8Qi" secondAttribute="trailing" id="yhm-Xc-d2g"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <accessibility key="accessibilityConfiguration">
-                                    <accessibilityTraits key="traits" button="YES"/>
-                                </accessibility>
-                                <connections>
-                                    <outlet property="themeNameLabel" destination="qeN-SV-zy7" id="F70-Rc-Ag2"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="gMx-K0-9ev" id="zto-CS-w8l"/>
-                            <outlet property="delegate" destination="gMx-K0-9ev" id="uQC-Pq-Cwv"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Theme" id="gS2-mg-l7R"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dty-fX-sNc" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4942" y="930"/>
-        </scene>
         <!--Fireproof Sites-->
         <scene sceneID="Kfp-VW-T6P">
             <objects>
@@ -2228,66 +2166,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wb8-jY-5ve" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3416" y="929"/>
-        </scene>
-        <!--FireButton-->
-        <scene sceneID="F6y-i5-ywC">
-            <objects>
-                <tableViewController id="cQ5-DF-7xY" userLabel="FireButton" customClass="FireButtonAnimationSettingsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="Hya-AN-dUT">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="separatorColor" red="0.2666666667" green="0.2666666667" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FireAnimationTypeCell" id="r96-C2-wfH" userLabel="FireAnimationTypeCell" customClass="FireAnimationTypeCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="20" y="55.333332061767578" width="374" height="43.666667938232422"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="r96-C2-wfH" id="5TG-WC-Aa3">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="43.666667938232422"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Q28-3X-vN4">
-                                            <rect key="frame" x="20" y="12.333333333333334" width="334" height="19.333333333333329"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CR5-Al-WIW">
-                                                    <rect key="frame" x="0.0" y="0.0" width="334" height="19.333333333333332"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </stackView>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstItem="Q28-3X-vN4" firstAttribute="centerY" secondItem="5TG-WC-Aa3" secondAttribute="centerY" id="4PT-jC-OiC"/>
-                                        <constraint firstItem="Q28-3X-vN4" firstAttribute="leading" secondItem="5TG-WC-Aa3" secondAttribute="leadingMargin" id="RdQ-NB-vzW"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Q28-3X-vN4" secondAttribute="trailing" id="TbN-Rl-amd"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <accessibility key="accessibilityConfiguration">
-                                    <accessibilityTraits key="traits" button="YES"/>
-                                </accessibility>
-                                <connections>
-                                    <outlet property="nameLabel" destination="CR5-Al-WIW" id="4A9-Re-hj5"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="cQ5-DF-7xY" id="CDo-Y2-Eh8"/>
-                            <outlet property="delegate" destination="cQ5-DF-7xY" id="1FC-9G-vfG"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Fire Button Animation" id="uns-8w-IwL">
-                        <attributedString key="userComments">
-                            <fragment content="Fire button animation setting page title"/>
-                        </attributedString>
-                    </navigationItem>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Kav-l0-Xbo" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="7191" y="929"/>
         </scene>
         <!--FireButton-->
         <scene sceneID="g2Q-o7-mdy">

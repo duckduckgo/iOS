@@ -21,76 +21,49 @@ import SwiftUI
 import UIKit
 
 struct SettingsAppeareanceView: View {
-    
+        
     @EnvironmentObject var viewModel: SettingsViewModel
-    @State var selectedTheme: ThemeName = .systemDefault
+    
     @State var setIsPresentingAppIconView: Bool = false
-    @State var selectedFireButtonAnimation: FireButtonAnimationType = .fireRising
-    @State private var isFirstUpdate = true
+    
+    @State var selectedTheme: ThemeName = .systemDefault
+    @State var selectedTextSize: Int = 100
+    
     
     var body: some View {
         Section(header: Text("Appeareance")) {
-            Picker("Theme", selection: $selectedTheme) {
-                ForEach(ThemeName.allCases) { option in
-                    Text(option.rawValue).tag(option)
-                }
-            }
+            SettingsPickerCellView(label: "Theme",
+                                   options: ThemeName.allCases,
+                                   selectedOption: Binding(
+                                        get: { viewModel.state.general.appTheme },
+                                        set: { viewModel.setTheme($0) }
+                                   ))
+            
             NavigationLink(destination: AppIconSettingsViewControllerRepresentable(), isActive: $setIsPresentingAppIconView) {
-                ImageCell(label: "App Icon", image: Image(uiImage: viewModel.state.appIcon.smallImage ?? UIImage()))
+                let image = Image(uiImage: viewModel.state.general.appIcon.smallImage ?? UIImage())
+                SettingsCellView(label: "App Icon",
+                                 accesory: .image(image))
             }
             
-            Picker("Fire Button Animation", selection: $selectedFireButtonAnimation) {
-                ForEach(FireButtonAnimationType.allCases) { option in
-                    Text(option.descriptionText).tag(option)
-                }
+            SettingsPickerCellView(label: "Fire Button Animation",
+                                   options: FireButtonAnimationType.allCases,
+                                   selectedOption: Binding(
+                                        get: { viewModel.state.general.fireButtonAnimation },
+                                        set: { viewModel.setFireButtonAnimation($0) }
+                                   ))
+            
+            // The textsize settings view has a special behavior (detent adjustment) that requires access to a navigation controller
+            // The current implementation will not work on top of the SwiftUI stack, so we need to push it via the UIKit Container
+            if viewModel.shouldShowTextSizeCell {
+                SettingsCellView(label: "Text Size",
+                                 action: { viewModel.shouldPresentTextSettingsView() },
+                                 accesory: .rightDetail("\(selectedTextSize)%"),
+                                 asLink: true)
             }
             
-            /*
-            RightDetailCell(label: "Text Size", value: "100%", action: viewModel.selectTextSize)
-            RightDetailCell(label: "Address Bar Position", value: "Top", action: viewModel.selectBarPosition)
-            */
+            // RightDetailCell(label: "Address Bar Position", value: "Top", action: viewModel.selectBarPosition)
         }
-        
-        .onAppear {
-            selectedTheme = viewModel.state.appTheme
-            selectedFireButtonAnimation = viewModel.state.fireButtonAnimation
-            isFirstUpdate = true
-        }
-        
-        .onChange(of: selectedTheme) { newValue in
-            viewModel.setTheme(theme: newValue)
-        }
-        
-        .onChange(of: selectedFireButtonAnimation) { newValue in
-            if isFirstUpdate {
-                isFirstUpdate = false
-                viewModel.setFireButtonAnimation(newValue, showAnimation: false)
-            } else {
-                viewModel.setFireButtonAnimation(newValue)
-            }
-        }
-        
-    }
-}
-
-struct AppIconSettingsViewControllerRepresentable: UIViewControllerRepresentable {
     
-    typealias UIViewControllerType = AppIconSettingsViewController
-
-    class Coordinator {
-        var parentObserver: NSKeyValueObservation?
+        
     }
-
-    func makeUIViewController(context: Self.Context) -> AppIconSettingsViewController {
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        let viewController = storyboard.instantiateViewController(identifier: "AppIcon") as! AppIconSettingsViewController
-        context.coordinator.parentObserver = viewController.observe(\.parent, changeHandler: { vc, _ in
-            vc.parent?.title = vc.title
-        })
-        return viewController
-    }
-
-    func updateUIViewController(_ uiViewController: AppIconSettingsViewController, context: Context) {}
-
-    func makeCoordinator() -> Self.Coordinator { Coordinator() }
 }

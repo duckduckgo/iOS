@@ -25,19 +25,20 @@ struct SettingsView: View {
     @StateObject var viewModel: SettingsViewModel
     
     var body: some View {
-        NavigationView {
-            List {
-                SettingsGeneralView()
-                SettingsSyncView()
-                SettingsLoginsView()
-                SettingsAppeareanceView()
-            }
-            .navigationBarTitle(UserText.settingsTitle, displayMode: .inline)
-            .navigationBarItems(trailing: Button(UserText.navigationTitleDone) {
-            })
-            .environmentObject(viewModel)
+        List {
+            SettingsGeneralView()
+            SettingsSyncView()
+            SettingsLoginsView()
+            SettingsAppeareanceView()
         }
-     
+        .navigationBarTitle(UserText.settingsTitle, displayMode: .inline)
+        .navigationBarItems(trailing: Button(UserText.navigationTitleDone) {
+        })
+        .environmentObject(viewModel)
+        
+        .onAppear {
+            viewModel.configureView()
+        }
     }
     
 }

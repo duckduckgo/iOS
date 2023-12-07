@@ -33,106 +33,87 @@ import NetworkExtension
 import NetworkProtection
 #endif
 
-struct SettingsState {
-    var isPresentingAddToDockView = false
-    var isPresentingAddWidgetView = false
-    var isPresentingSyncView = false
-    var isPresentingLoginsView = false
-    var loginsViewSelectedAccount: SecureVaultModels.WebsiteAccount?
-    var isPresentingAppIconView = false
-    
-    var shouldShowSyncCell = false
-    var shouldShowLoginsCell = false
-    var appTheme: ThemeName = .systemDefault
-    var appIcon: AppIcon = .defaultAppIcon
-    var fireButtonAnimation: FireButtonAnimationType = .fireRising
-}
-
 final class SettingsViewModel: ObservableObject {
-
-    private let bookmarksDatabase: CoreDataDatabase
-    private lazy var emailManager = EmailManager()
-    private lazy var versionProvider: AppVersion = AppVersion.shared
-    fileprivate lazy var privacyStore = PrivacyUserDefaults()
-    private lazy var animator: FireButtonAnimator = FireButtonAnimator(appSettings: AppUserDefaults())
-    fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager
-    fileprivate lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
-    
-    private(set) lazy var appSettings = AppDependencyProvider.shared.appSettings
-    let syncService: DDGSyncing
-    let syncDataProviders: SyncDataProviders
-    
-    fileprivate let internalUserDecider: InternalUserDecider
-    
-#if NETWORK_PROTECTION
-    private let connectionObserver = ConnectionStatusObserverThroughSession()
-#endif
-    private var cancellables: Set<AnyCancellable> = []
-    
-    private var shouldShowDebugCell: Bool {
-        return featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild
-    }
-    
-    private var shouldShowVoiceSearchCell: Bool {
-        AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
-    }
-        
-    private var shouldShowTextSizeCell: Bool {
-        return UIDevice.current.userInterfaceIdiom != .pad
-    }
-    
-    private var shouldShowAddressBarPositionCell: Bool {
-        return UIDevice.current.userInterfaceIdiom != .pad
-    }
-    
-    private lazy var shouldShowNetPCell: Bool = {
-#if NETWORK_PROTECTION
-        if #available(iOS 15, *) {
-            return featureFlagger.isFeatureOn(.networkProtection)
-        } else {
-            return false
-        }
-#else
-        return false
-#endif
-    }()
     
     // MARK: 
     var appIconSubscription: AnyCancellable?
+    var stateSubscriber: AnyCancellable?
     
+    // Closure to request a legacy view controller presentation
+    var onRequestPushLegacyView: ((UIViewController) -> Void)?
+    var onRequestPresentLegacyView: ((UIViewController, _ modal: Bool) -> Void)?
+    
+    private(set) var model: SettingsModel
     @Published private(set) var state: SettingsState
     
-    init(bookmarksDatabase: CoreDataDatabase,
-         syncService: DDGSyncing,
-         syncDataProviders: SyncDataProviders,
-         internalUserDecider: InternalUserDecider,
-         state: SettingsState = SettingsState()) {
-        self.bookmarksDatabase = bookmarksDatabase
-        self.syncService = syncService
-        self.syncDataProviders = syncDataProviders
-        self.internalUserDecider = internalUserDecider
+    // MARK: Presentation
+    var isPresentingAddToDockView: Bool = false
+    var isPresentingAddWidgetView = false
+    var isPresentingSyncView = false
+    var isPresentingLoginsView = false
+    var isPresentingAppIconView = false
+    var isPresentingTextSettingsView = false
+    
+    var shouldShowSyncCell: Bool { model.isFeatureAvailable(.sync) }
+    var shouldShowLoginsCell: Bool { model.isFeatureAvailable(.autofillAccessCredentialManagement) }
+    var shouldShowTextSizeCell: Bool { model.isFeatureAvailable(.textSize) }
+    var shouldShowDebugCell: Bool { model.isFeatureAvailable(.networkProtection) }
+    var shouldShowVoiceSearchCell: Bool { model.isFeatureAvailable(.voiceSearch) }
+    var shouldShowAddressBarPositionCell: Bool { model.isFeatureAvailable(.addressbarPosition) }
+    var shouldShowNetworkProtectionCell: Bool { model.isFeatureAvailable(.networkProtection) }
+        
+    init(model: SettingsModel, state: SettingsState = SettingsState(general: SettingsStateGeneral())) {
+        self.model = model
         self.state = state
-        configureView()
     }
     
     func configureView() {
-        state.shouldShowSyncCell = featureFlagger.isFeatureOn(.sync)
-        state.shouldShowLoginsCell = featureFlagger.isFeatureOn(.autofillAccessCredentialManagement)
-        state.appTheme = appSettings.currentThemeName
-        state.appIcon = AppIconManager.shared.appIcon
-        createAppIconSubscriber()
-        state.fireButtonAnimation = appSettings.currentFireButtonAnimation
+        state.general.appIcon = model.appIconManager.appIcon
+        state.general.fireButtonAnimation = model.appSettings.currentFireButtonAnimation
+        state.general.appTheme = model.appSettings.currentThemeName
+        setupSubscribers()
     }
     
-    private func createAppIconSubscriber() {
-        appIconSubscription = AppIconManager.shared.$appIcon
+    private func setupSubscribers() {
+        
+        appIconSubscription = model.appIconManager.$appIcon
             .sink { newIcon in
-                self.state.appIcon = newIcon
+                self.state.general.appIcon = newIcon
             }
     }
     
     func openCookiePopupManagement() {
         // showCookiePopupManagement(animated: true)
+    }
+    
+}
+
+// MARK: Legacy View Presentation
+// These UIKit views have issues when presented via UIHostingController so
+// we fall back to UIKit navigation
+extension SettingsViewModel {
+    
+    private func pushLegacyView(_ view: UIViewController) {
+        onRequestPushLegacyView?(view)
+    }
+    
+    private func presentLegacyView(_ view: UIViewController, modal: Bool) {
+        onRequestPresentLegacyView?(view, modal)
+    }
+
+    func shouldPresentAddToDockView() {
+        let storyboard = UIStoryboard(name: "HomeRow", bundle: nil)
+        let viewController = storyboard.instantiateViewController(identifier: "instructions") as! HomeRowInstructionsViewController
+        presentLegacyView(viewController, modal: true)
+        isPresentingAddToDockView = false
+    }
+    
+    func shouldPresentTextSettingsView() {
+        Pixel.fire(pixel: .textSizeSettingsShown)
+        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
+        let controller = storyboard.instantiateViewController(identifier: "TextSize") as! TextSizeSettingsViewController
+        pushLegacyView(controller)
+        isPresentingTextSettingsView = false
     }
     
 }
@@ -145,61 +126,43 @@ extension SettingsViewModel {
         UIApplication.shared.open(url)
     }
     
-    func setIsPresentingAddToDockView(_ value: Bool) {
-        state.isPresentingAddToDockView = value
-    }
-    
-    func setIsPresentingAddWidgetView(_ value: Bool) {
-        state.isPresentingAddWidgetView = value
-    }
-    
-    func setIsPresentingSyncView(_ value: Bool) {
-        state.isPresentingSyncView = value
-    }
-    
-    func setIsPresentingLoginsView(_ value: Bool) {
-        state.isPresentingLoginsView = value
-        if !state.isPresentingLoginsView {
-            Pixel.fire(pixel: .autofillSettingsOpened)
-        }
-    }
-    
     func setIsPresentingLoginsViewWithAccount(accountDetails: SecureVaultModels.WebsiteAccount) {
-        state.loginsViewSelectedAccount = accountDetails
-        setIsPresentingLoginsView(true)
+        state.general.activeWebsiteAccount = accountDetails
+        isPresentingLoginsView = true
     }
     
-    func setTheme(theme: ThemeName) {
-        appSettings.currentThemeName = theme
-        state.appTheme = theme
-        ThemeManager.shared.enableTheme(with: theme)
-        ThemeManager.shared.updateUserInterfaceStyle()
+    func setTheme(_ theme: ThemeName) {
+        model.setTheme(theme: theme)
+        state.general.appTheme = theme
     }
     
     func setIsPresentingAppIconView(_ value: Bool) {
-        state.isPresentingAppIconView = value
+        isPresentingAppIconView = value
+    }
+
+    func setFireButtonAnimation(_ value: FireButtonAnimationType) {
+        model.setFireButtonAnimetion(value)
+        state.general.fireButtonAnimation = value
     }
     
-    func setFireButtonAnimation(_ value: FireButtonAnimationType, showAnimation: Bool = true) {
-        appSettings.currentFireButtonAnimation = value
-        NotificationCenter.default.post(name: AppUserDefaults.Notifications.currentFireButtonAnimationChange, object: self)
-        
-        if showAnimation {
-            animator.animate {
-                // no op
-            } onTransitionCompleted: {
-                // no op
-            } completion: {
-                // no op
-            }
-        }
-        
-    }
-    
-    func selectFireAnimation() {}
-    func selectTextSize() {}
     func selectBarPosition() {}
 }
+
+extension SettingsViewModel {
+    
+    var autofillControllerRepresentable: AutofillLoginSettingsListViewControllerRepresentable {
+        return AutofillLoginSettingsListViewControllerRepresentable(appSettings: model.appSettings,
+                                                                                       syncService: model.syncService,
+                                                                                       syncDataProviders: model.syncDataProviders,
+                                                                                       delegate: self,
+                                                                    selectedAccount: state.general.activeWebsiteAccount)
+    }
+    
+    var syncSettingsControllerRepresentable: SyncSettingsViewControllerRepresentable { return SyncSettingsViewControllerRepresentable(syncService: model.syncService,
+                                                syncDataProviders: model.syncDataProviders)
+    }
+}
+
 
 extension SettingsViewModel {
     static var fontSizeForHeaderView: CGFloat {
@@ -237,6 +200,6 @@ extension SettingsViewModel {
 
 extension SettingsViewModel: AutofillLoginSettingsListViewControllerDelegate {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController) {
-        state.isPresentingLoginsView = false
+        isPresentingLoginsView = false
     }
 }

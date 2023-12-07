@@ -19,6 +19,30 @@
 
 import UIKit
 import Core
+import SwiftUI
+
+// MARK: App Icon Settings Representable
+struct AppIconSettingsViewControllerRepresentable: UIViewControllerRepresentable {
+    
+    typealias UIViewControllerType = AppIconSettingsViewController
+
+    class Coordinator {
+        var parentObserver: NSKeyValueObservation?
+    }
+
+    func makeUIViewController(context: Self.Context) -> AppIconSettingsViewController {
+        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
+        let viewController = storyboard.instantiateViewController(identifier: "AppIcon") as! AppIconSettingsViewController
+        context.coordinator.parentObserver = viewController.observe(\.parent, changeHandler: { vc, _ in
+            vc.parent?.title = vc.title
+        })
+        return viewController
+    }
+
+    func updateUIViewController(_ uiViewController: AppIconSettingsViewController, context: Context) {}
+
+    func makeCoordinator() -> Self.Coordinator { Coordinator() }
+}
 
 class AppIconSettingsViewController: UICollectionViewController {
     

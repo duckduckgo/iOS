@@ -292,7 +292,7 @@ class SettingsViewController: UITableViewController {
 
     private func configureTextSizeCell() {
         textSizeCell.isHidden = !shouldShowTextSizeCell
-        textSizeAccessoryText.text = "\(appSettings.textSize)%"
+        textSizeAccessoryText.text = "\(appSettings.textSize)s"
     }
 
     private func configureIconViews() {

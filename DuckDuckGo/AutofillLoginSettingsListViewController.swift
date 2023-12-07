@@ -24,8 +24,47 @@ import BrowserServicesKit
 import Common
 import DDGSync
 import DesignResourcesKit
+import SwiftUI
 
 // swiftlint:disable file_length type_body_length
+
+struct AutofillLoginSettingsListViewControllerRepresentable: UIViewControllerRepresentable {
+    
+    let appSettings: AppSettings
+    let syncService: DDGSyncing
+    let syncDataProviders: SyncDataProviders
+    let delegate: AutofillLoginSettingsListViewControllerDelegate
+    let selectedAccount: SecureVaultModels.WebsiteAccount?
+    
+    typealias UIViewControllerType = AutofillLoginSettingsListViewController
+
+    class Coordinator {
+        var parentObserver: NSKeyValueObservation?
+    }
+
+    func makeUIViewController(context: Self.Context) -> AutofillLoginSettingsListViewController {
+        let autofillController = AutofillLoginSettingsListViewController(
+            appSettings: appSettings,
+            syncService: syncService,
+            syncDataProviders: syncDataProviders,
+            selectedAccount: selectedAccount
+        )
+       
+        context.coordinator.parentObserver = autofillController.observe(\.parent, changeHandler: { vc, _ in
+            vc.parent?.title = vc.title
+            vc.parent?.navigationItem.rightBarButtonItems = vc.navigationItem.rightBarButtonItems
+            
+        })
+        
+        return autofillController
+    }
+
+    func updateUIViewController(_ uiViewController: AutofillLoginSettingsListViewController, context: Self.Context) {
+        
+    }
+
+    func makeCoordinator() -> Self.Coordinator { Coordinator() }
+}
 
 protocol AutofillLoginSettingsListViewControllerDelegate: AnyObject {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController)
@@ -302,7 +341,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     
     private func showSelectedAccountIfRequired() {
         if let account = selectedAccount {
-            showAccountDetails(account, animated: false)
+            showAccountDetails(account)
             selectedAccount = nil
         }
     }

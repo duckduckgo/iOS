@@ -1,5 +1,5 @@
 //
-//  GeneralSection.swift
+//  NavigationLink+Empty.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -18,23 +18,12 @@
 //
 
 import SwiftUI
-import UIKit
-import Core
-import DDGSync
 
-struct SettingsSyncView: View {
-    
-    @EnvironmentObject var viewModel: SettingsViewModel
-    @State var isPresentingSyncView: Bool = false
-    
-    var body: some View {
-        if viewModel.shouldShowSyncCell {
-            Section {
-                NavigationLink(destination: viewModel.syncSettingsControllerRepresentable, isActive: $isPresentingSyncView) {
-                    SettingsCellView(label: UserText.syncTitle,
-                                     action: { viewModel.isPresentingSyncView = true })
-                }
-            }
-        }
-    }
+extension NavigationLink where Label == EmptyView, Destination == EmptyView {
+
+   /// Useful in cases where a `NavigationLink` is needed but there should not be
+   /// a destination. e.g. for programmatic navigation.
+   static var empty: NavigationLink {
+       self.init(destination: EmptyView(), label: { EmptyView() })
+   }
 }

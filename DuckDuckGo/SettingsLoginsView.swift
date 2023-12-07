@@ -29,72 +29,17 @@ struct SettingsLoginsView: View {
     @State var isPresentingLoginsView: Bool = false
     
     var body: some View {
-        if viewModel.state.shouldShowLoginsCell {
-            let autofillController =  AutofillLoginSettingsListViewControllerRepresentable(appSettings: viewModel.appSettings,
-                                                                                           syncService: viewModel.syncService,
-                                                                                           syncDataProviders: viewModel.syncDataProviders,
-                                                                                           delegate: viewModel,
-                                                                                           selectedAccount: viewModel.state.loginsViewSelectedAccount)
+        if viewModel.shouldShowLoginsCell {
             Section {
                 // TODO: Remove transition animation if showing a selected account
-                NavigationLink(destination: autofillController, isActive: $isPresentingLoginsView) {
-                    PlainCell(label: UserText.autofillLoginListTitle, action: { viewModel.setIsPresentingLoginsView(true) })
+                NavigationLink(destination: viewModel.autofillControllerRepresentable, isActive: $isPresentingLoginsView) {
+                    SettingsCellView(label: UserText.autofillLoginListTitle,
+                                     action: { viewModel.isPresentingLoginsView = true })
                     
                 }
-            }
-            
-            .onAppear {
-                isPresentingLoginsView = viewModel.state.isPresentingLoginsView
-            }
-            
-            .onChange(of: isPresentingLoginsView) { _ in
-                viewModel.setIsPresentingLoginsView(true)
-            }
-            
-            .onChange(of: viewModel.state.isPresentingLoginsView) { newValue in
-                isPresentingLoginsView = newValue
             }
 
         }
     }
  
-}
-
-
-struct AutofillLoginSettingsListViewControllerRepresentable: UIViewControllerRepresentable {
-    
-    let appSettings: AppSettings
-    let syncService: DDGSyncing
-    let syncDataProviders: SyncDataProviders
-    let delegate: AutofillLoginSettingsListViewControllerDelegate
-    let selectedAccount: SecureVaultModels.WebsiteAccount?
-    
-    typealias UIViewControllerType = AutofillLoginSettingsListViewController
-
-    class Coordinator {
-        var parentObserver: NSKeyValueObservation?
-    }
-
-    func makeUIViewController(context: Self.Context) -> AutofillLoginSettingsListViewController {
-        let autofillController = AutofillLoginSettingsListViewController(
-            appSettings: appSettings,
-            syncService: syncService,
-            syncDataProviders: syncDataProviders,
-            selectedAccount: selectedAccount
-        )
-       
-        context.coordinator.parentObserver = autofillController.observe(\.parent, changeHandler: { vc, _ in
-            vc.parent?.title = vc.title
-            vc.parent?.navigationItem.rightBarButtonItems = vc.navigationItem.rightBarButtonItems
-            
-        })
-        
-        return autofillController
-    }
-
-    func updateUIViewController(_ uiViewController: AutofillLoginSettingsListViewController, context: Self.Context) {
-        
-    }
-
-    func makeCoordinator() -> Self.Coordinator { Coordinator() }
 }

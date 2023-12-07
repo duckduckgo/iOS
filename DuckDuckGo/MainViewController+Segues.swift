@@ -204,29 +204,94 @@ extension MainViewController {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
         launchSettings {
-            $0.setIsPresentingSyncView(true)
+            $0.isPresentingSyncView = true
         }
     }
-
     
+    class HostingControllerCommunicator: ObservableObject {
+        var pushView: (() -> Void)?
+
+        func requestPush() {
+            pushView?()
+        }
+    }
+    
+    private func launchSettings(completion: ((SettingsViewModel) -> Void)? = nil) {
+        let model = SettingsModel(bookmarksDatabase: self.bookmarksDatabase,
+                                  syncService: self.syncService,
+                                  syncDataProviders: self.syncDataProviders,
+                                  internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+        let settingsViewModel = SettingsViewModel(model: model)
+        let settingsController = SettingsHostingController(viewModel: settingsViewModel)
+        
+        // We are still presenting legacy views, so use a Navcontroller
+        let navController = UINavigationController(rootViewController: settingsController)
+        settingsController.modalPresentationStyle = .automatic
+
+        present(navController, animated: true) {
+            completion?(settingsViewModel)
+        }
+    }
+    
+    /*
     private func launchSettings(completion: ((SettingsViewModel) -> Void)? = nil) {
         os_log(#function, log: .generalLog, type: .debug)
         let settingsModel = SettingsViewModel(bookmarksDatabase: self.bookmarksDatabase,
                                               syncService: self.syncService,
                                               syncDataProviders: self.syncDataProviders,
                                               internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
-        let settingsView = SettingsView(viewModel: settingsModel)
-        let settingsController = UIHostingController(rootView: settingsView)
+        
+        let settingsController = SettingsHostingController(viewModel: settingsModel, rootView: AnyView(EmptyView()))
+        settingsController.viewModel = settingsModel
+        
+        let settingsView = SettingsView(viewModel: settingsModel) { [weak settingsController] legacyVC in
+            settingsController?.pushLegacyViewController(legacyVC)
+        }
+        settingsController.rootView = AnyView(settingsView)
         settingsController.modalPresentationStyle = .automatic
         present(settingsController, animated: true) {
             completion?(settingsModel)
         }
     }
+     */
 
     private func hideAllHighlightsIfNeeded() {
         os_log(#function, log: .generalLog, type: .debug)
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
+    }
+    
+    
+    func presentTextSizeSettings() {
+        if let presentingVC = self.presentedViewController {
+            presentingVC.dismiss(animated: true) { [weak self] in
+                self?.presentTextSizeSettingsViewController()
+            }
+        } else {
+            presentTextSizeSettingsViewController()
+        }
+    }
+    
+    private func presentTextSizeSettingsViewController() {
+        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
+        let viewController = storyboard.instantiateViewController(identifier: "TextSize") as! TextSizeSettingsViewController
+        Pixel.fire(pixel: .textSizeSettingsShown)
+        presentationController?.delegate = viewController
+                
+        if #available(iOS 15.0, *) {
+            // Configure settingsVC as a sheet
+            viewController.modalPresentationStyle = .pageSheet
+            viewController.modalTransitionStyle = .coverVertical
+
+            let presentationController = viewController.presentationController as? UISheetPresentationController
+            presentationController?.detents = [.medium(), .large()]
+            presentationController?.preferredCornerRadius = 16
+            presentationController?.largestUndimmedDetentIdentifier = .medium
+            presentationController?.prefersScrollingExpandsWhenScrolledToEdge = false
+            
+        }
+        
+        self.present(viewController, animated: true, completion: nil)
     }
 }

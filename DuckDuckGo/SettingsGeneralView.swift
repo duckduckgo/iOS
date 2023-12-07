@@ -23,58 +23,31 @@ import UIKit
 struct SettingsGeneralView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
-    @State var isPresentingAddToDockView: Bool = false
     @State var isPresentingAddWidgetView: Bool = false
     
     var body: some View {
         Section {
-            PlainCell(label: "Set as Default Browser", action: viewModel.setAsDefaultBrowser)
-            PlainCell(label: "Add App to Your Dock", action: {
-                { viewModel.setIsPresentingAddToDockView(true) }()
-            })
+            // The homeRow view controller has
+            // The current implementation will not work on top of the SwiftUI stack, so we need to push it via the UIKit Container
+            SettingsCellView(label: "Set as Default Browser",
+                             action: { viewModel.setAsDefaultBrowser() },
+                             asLink: true)
+            
+            SettingsCellView(label: "Add App to Your Dock",
+                             action: { viewModel.shouldPresentAddToDockView() },
+                             asLink: true)
+            
             NavigationLink(destination: WidgetEducationView(), isActive: $isPresentingAddWidgetView) {
-                PlainCell(label: "Add Widget to Home Screen", action: { viewModel.setIsPresentingAddWidgetView(true) })
+                SettingsCellView(label: "Add Widget to Home Screen",
+                                 action: { viewModel.isPresentingAddWidgetView = true })
             }
         }
         
-        .onChange(of: viewModel.state.isPresentingAddToDockView) { newValue in
-            isPresentingAddToDockView = newValue
-        }
-        
-        .onChange(of: isPresentingAddToDockView) { newValue in
-            viewModel.setIsPresentingAddToDockView(newValue)
-        }
-        
         .onChange(of: isPresentingAddWidgetView) { newValue in
-            viewModel.setIsPresentingAddWidgetView(newValue)
+            viewModel.isPresentingAddWidgetView = newValue
         }
         
-        // Modal View
-        .fullScreenCover(isPresented: $isPresentingAddToDockView) {
-            HomeRowInstructionsViewControllerRepresentable()
-        }
+
     }
  
-}
-
-struct HomeRowInstructionsViewControllerRepresentable: UIViewControllerRepresentable {
-    
-    typealias UIViewControllerType = HomeRowInstructionsViewController
-
-    class Coordinator {
-        var parentObserver: NSKeyValueObservation?
-    }
-
-    func makeUIViewController(context: Self.Context) -> HomeRowInstructionsViewController {
-        let storyboard = UIStoryboard(name: "HomeRow", bundle: nil)
-        let viewController = storyboard.instantiateViewController(identifier: "instructions") as! HomeRowInstructionsViewController
-        context.coordinator.parentObserver = viewController.observe(\.parent, changeHandler: { vc, _ in
-            vc.parent?.title = vc.title
-        })
-        return viewController
-    }
-
-    func updateUIViewController(_ uiViewController: HomeRowInstructionsViewController, context: Context) {}
-
-    func makeCoordinator() -> Self.Coordinator { Coordinator() }
 }

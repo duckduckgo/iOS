@@ -204,6 +204,7 @@ extension SyncSettingsView {
                     }
                 }
             }
+            .accessibility(identifier: "device")
         }
     }
 

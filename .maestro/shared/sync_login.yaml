@@ -11,4 +11,6 @@ appId: com.duckduckgo.mobile.ios
 - assertVisible: Your Data is Synced!
 - tapOn: Done
 - assertVisible: Sync Enabled
-- assertVisible: github:duckduckgo/sync_crypto
+- assertVisible: 
+    id: "device"
+    index: 1

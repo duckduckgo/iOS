@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": null,
-          "revision": "fe577c508ad4ea163075ac8fab20673d0a7565f6",
-          "version": "92.0.1"
+          "branch": "dominik/sync-delete-account",
+          "revision": "040badb4ae611c35fd405a1fdcb52b947dd20010",
+          "version": null
         }
       },
       {

@@ -1,6 +1,9 @@
 name: Sync-End-to-End tests
 
 on:
+  push:
+    branches:
+      - dominik/fix-favicons-fetcher-crash
   schedule:
     - cron: '0 5 * * *' # run at 5 AM UTC
 

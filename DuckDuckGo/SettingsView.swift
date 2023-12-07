@@ -23,6 +23,7 @@ import UIKit
 struct SettingsView: View {
     
     @StateObject var viewModel: SettingsViewModel
+    @StateObject var viewProvider: SettingsViewProvider
     
     var body: some View {
         List {
@@ -30,11 +31,13 @@ struct SettingsView: View {
             SettingsSyncView()
             SettingsLoginsView()
             SettingsAppeareanceView()
+            SettingsPrivacyView()
         }
         .navigationBarTitle(UserText.settingsTitle, displayMode: .inline)
         .navigationBarItems(trailing: Button(UserText.navigationTitleDone) {
         })
         .environmentObject(viewModel)
+        .environmentObject(viewProvider)
         
         .onAppear {
             viewModel.initializeState()

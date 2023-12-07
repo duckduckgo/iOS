@@ -23,7 +23,7 @@ import DDGSync
 import Core
 import BrowserServicesKit
 
-class SettingsLegacyViewProvider {
+class SettingsViewProvider: ObservableObject {
     
     let syncService: DDGSyncing
     let syncDataProviders: SyncDataProviders
@@ -35,18 +35,26 @@ class SettingsLegacyViewProvider {
         self.appSettings = appSettings
     }
     
-    func createAddToDockViewController() -> UIViewController {
+    var addToDock: UIViewController {
         let storyboard = UIStoryboard(name: "HomeRow", bundle: nil)
         return storyboard.instantiateViewController(identifier: "instructions") as! HomeRowInstructionsViewController
     }
+    
+    var addWidget: some View {
+        return WidgetEducationView()
+    }
 
-    func createTextSizeSettingsViewController() -> UIViewController {
+    var textSettings: UIViewController {
         let storyboard = UIStoryboard(name: "Settings", bundle: nil)
         return storyboard.instantiateViewController(identifier: "TextSize") as! TextSizeSettingsViewController
     }
     
-    func createAutofillLoginSettingsListViewControllerRepresentable(delegate: AutofillLoginSettingsListViewControllerDelegate,
-                                                                    selectedAccount: SecureVaultModels.WebsiteAccount?) -> AutofillLoginSettingsListViewControllerRepresentable {
+    var syncSettings: some View {
+        return SyncSettingsViewControllerRepresentable(syncService: syncService, syncDataProviders: syncDataProviders)
+    }
+    
+    func loginSettings(delegate: AutofillLoginSettingsListViewControllerDelegate,
+                       selectedAccount: SecureVaultModels.WebsiteAccount?) -> some View {
             AutofillLoginSettingsListViewControllerRepresentable(appSettings: appSettings,
                                                                  syncService: syncService,
                                                                  syncDataProviders: syncDataProviders,
@@ -54,9 +62,29 @@ class SettingsLegacyViewProvider {
                                                                  selectedAccount: selectedAccount)
     }
     
-    func createSyncSettingsControllerRepresentable() -> SyncSettingsViewControllerRepresentable {
-        return SyncSettingsViewControllerRepresentable(syncService: syncService, syncDataProviders: syncDataProviders)
+    var appIcon: some View {
+        AppIconSettingsViewControllerRepresentable()
     }
-
+    
+    var doNotSell: some View {
+        DoNotSellSettingsViewControllerRepresentable()
+    }
+    
+    var autoConsent: some View {
+        AutoconsentSettingsViewControllerRepresentable()
+    }
+    
+    var unprotectedSites: some View {
+        UnprotectedSitesViewControllerRepresentable()
+    }
+    
+    var fireproofSites: some View {
+        PreserveLoginsSettingsViewControllerRepresentable()
+    }
+    
+    var autoclearData: some View {
+        AutoClearSettingsViewControllerRepresentable()
+    }
+    
 
 }

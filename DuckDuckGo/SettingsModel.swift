@@ -48,6 +48,15 @@ class SettingsModel {
     var appTheme: ThemeName { appSettings.currentThemeName }
     var textSize: Int { appSettings.textSize }
     var addressBarPosition: AddressBarPosition { appSettings.currentAddressBarPosition }
+    var sendDoNotSell: Bool { appSettings.sendDoNotSell }
+    var autoconsentEnabled: Bool { appSettings.autoconsentEnabled }
+    var autoclearDataEnabled: Bool {
+        if AutoClearSettingsModel(settings: appSettings) != nil {
+            return true
+        } else {
+            return false
+        }
+    }
     
 
 #if NETWORK_PROTECTION
@@ -109,6 +118,7 @@ class SettingsModel {
     }
     
     func setTheme(theme: ThemeName) {
+        appSettings.currentThemeName = theme
         ThemeManager.shared.enableTheme(with: theme)
         ThemeManager.shared.updateUserInterfaceStyle()
     }

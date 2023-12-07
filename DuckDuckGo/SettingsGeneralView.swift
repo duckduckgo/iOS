@@ -23,7 +23,7 @@ import UIKit
 struct SettingsGeneralView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
-    @State var isPresentingAddWidgetView: Bool = false
+    @EnvironmentObject var viewProvider: SettingsViewProvider
     
     var body: some View {
         Section {
@@ -34,19 +34,15 @@ struct SettingsGeneralView: View {
             // This old VC has a special behavior does not work as expected when presented in the SwiftUI Stack
             // so we need to push it via the UIKit Containe
             SettingsCellView(label: "Add App to Your Dock",
-                             action: { viewModel.isPresentingAddToDockView = true },
+                             action: {
+                                viewModel.presentLegacyView(viewProvider.addToDock, modal: true)
+                              },
                              asLink: true)
             
-            NavigationLink(destination: LazyView(WidgetEducationView()), isActive: $isPresentingAddWidgetView) {
-                SettingsCellView(label: "Add Widget to Home Screen",
-                                 action: { viewModel.isPresentingAddWidgetView = true })
+            NavigationLink(destination: viewProvider.addWidget) {
+                SettingsCellView(label: "Add Widget to Home Screen")
             }
         }
-        
-        .onChange(of: viewModel.isPresentingAddWidgetView) { newValue in
-            isPresentingAddWidgetView = newValue
-        }
-        
 
     }
  

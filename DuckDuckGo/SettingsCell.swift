@@ -42,7 +42,7 @@ struct SettingsCellView: View {
     /// Use this initializer for standard cell types that require a label.
     /// - Parameters:
     ///   - label: The text to display in the cell.
-    ///   - action: The closure to execute when the cell is tapped.
+    ///   - action: The closure to execute when the view is tapped. (If not embedded in a NavigationLink)
     ///   - accesory: The type of cell to display. Excludes the custom cell type.
     ///   - enabled: A Boolean value that determines whether the cell is enabled.
     ///   - asLink: Wraps the view inside a Button.  Used for views not wrapped in a NavigationLink
@@ -61,7 +61,7 @@ struct SettingsCellView: View {
     /// Use this initializer for creating a cell that displays custom content.
     /// This initializer does not require a label, as the content is entirely custom.
     /// - Parameters:
-    ///   - action: The closure to execute when the cell is tapped.
+    ///   - action: The closure to execute when the view is tapped. (If not embedded in a NavigationLink)    
     ///   - customView: A closure that returns the custom view (`AnyView`) to be displayed in the cell.
     ///   - enabled: A Boolean value that determines whether the cell is enabled.
     init(action: @escaping () -> Void = {}, @ViewBuilder customView: () -> AnyView, enabled: Bool = true) {
@@ -139,7 +139,7 @@ struct SettingsPickerCellView<T: CaseIterable & Hashable & CustomStringConvertib
     /// - Parameters:
     ///   - label: The label to display above the Picker.
     ///   - options: An array of options of generic type `T` that conforms to CustomStringConvertible.
-    ///   - selectedOption: A binding to a local state variable that represents the selected option.
+    ///   - selectedOption: A binding to a state variable that represents the selected option.
     init(label: String, options: [T], selectedOption: Binding<T>) {
         self.label = label
         self.options = options

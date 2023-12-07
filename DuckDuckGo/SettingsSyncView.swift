@@ -25,20 +25,27 @@ import DDGSync
 struct SettingsSyncView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
+    @EnvironmentObject var viewProvider: SettingsViewProvider
+    
     @State var isPresentingSyncView: Bool = false
 
     
     var body: some View {
         if viewModel.shouldShowSyncCell {
             Section {
-                NavigationLink(destination: LazyView(viewModel.syncSettingsControllerRepresentable), isActive: $isPresentingSyncView) {
-                    SettingsCellView(label: UserText.syncTitle,
-                                     action: { viewModel.isPresentingSyncView = true })
+                NavigationLink(destination: viewProvider.syncSettings, isActive: $isPresentingSyncView) {
+                    SettingsCellView(label: UserText.syncTitle)
                 }
             }
-                        
+            
             .onChange(of: viewModel.isPresentingSyncView) { newValue in
                 isPresentingSyncView = newValue
+            }
+            
+            .onChange(of: isPresentingSyncView) { isActive in
+                if !isActive {
+                    viewModel.isPresentingSyncView = false
+                }
             }
         }
     }

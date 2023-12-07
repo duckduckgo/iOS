@@ -22,9 +22,11 @@ import SwiftUI
 
 class SettingsHostingController: UIHostingController<AnyView> {
     var viewModel: SettingsViewModel
+    var viewProvider: SettingsViewProvider
 
-    init(viewModel: SettingsViewModel) {
+    init(viewModel: SettingsViewModel, viewProvider: SettingsViewProvider) {
         self.viewModel = viewModel
+        self.viewProvider = viewProvider
         super.init(rootView: AnyView(EmptyView()))
 
         viewModel.onRequestPushLegacyView = { [weak self] vc in
@@ -35,7 +37,7 @@ class SettingsHostingController: UIHostingController<AnyView> {
             self?.presentLegacyViewCOntroller(vc, modal: modal)
         }
 
-        let settingsView = SettingsView(viewModel: viewModel)
+        let settingsView = SettingsView(viewModel: viewModel, viewProvider: viewProvider)
         self.rootView = AnyView(settingsView)
     }
 

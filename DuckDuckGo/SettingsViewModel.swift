@@ -43,39 +43,13 @@ final class SettingsViewModel: ObservableObject {
     var onRequestPresentLegacyView: ((UIViewController, _ modal: Bool) -> Void)?
     
     private(set) var model: SettingsModel
-    private let legacyViewProvider: SettingsLegacyViewProvider
     @Published private(set) var state: SettingsState
     
-    // MARK: Presentation
-    var isPresentingAddToDockView = false {
-        didSet {
-            if isPresentingAddToDockView == true {
-                let viewController = legacyViewProvider.createAddToDockViewController()
-                presentLegacyView(viewController, modal: true)
-                isPresentingAddToDockView = false
-            }
-        }
-    }
-    var isPresentingAddWidgetView = false
+    // Support Programatic Navigation
     var isPresentingSyncView = false
-    var isPresentingLoginsView = false {
-        didSet {
-            if isPresentingLoginsView == true {
-                Pixel.fire(pixel: .autofillSettingsOpened)
-            }
-        }
-    }
-    var isPresentingAppIconView = false
-    var isPresentingTextSettingsView = false {
-        didSet {
-            if isPresentingTextSettingsView == true {
-                Pixel.fire(pixel: .textSizeSettingsShown)
-                let viewController = legacyViewProvider.createTextSizeSettingsViewController()
-                pushLegacyView(viewController)
-            }
-        }
-    }
+    var isPresentingLoginsView = false
     
+    // Cell Visibility
     var shouldShowSyncCell: Bool { model.isFeatureAvailable(.sync) }
     var shouldShowLoginsCell: Bool { model.isFeatureAvailable(.autofillAccessCredentialManagement) }
     var shouldShowTextSizeCell: Bool { model.isFeatureAvailable(.textSize) }
@@ -84,37 +58,87 @@ final class SettingsViewModel: ObservableObject {
     var shouldShowAddressBarPositionCell: Bool { model.isFeatureAvailable(.addressbarPosition) }
     var shouldShowNetworkProtectionCell: Bool { model.isFeatureAvailable(.networkProtection) }
     
-    var autofillControllerRepresentable: AutofillLoginSettingsListViewControllerRepresentable {
-        legacyViewProvider.createAutofillLoginSettingsListViewControllerRepresentable(delegate: self,
-                                                                                      selectedAccount: state.general.activeWebsiteAccount)
+    // Bindings
+    var themeBinding: Binding<ThemeName> {
+        Binding<ThemeName>(
+            get: { self.state.general.appTheme },
+            set: {
+                self.model.setTheme(theme: $0)
+                self.state.general.appTheme = $0
+            }
+        )
     }
-    
-    var syncSettingsControllerRepresentable: SyncSettingsViewControllerRepresentable {
-        legacyViewProvider.createSyncSettingsControllerRepresentable()
+    var fireButtonAnimationBinding: Binding<FireButtonAnimationType> {
+        Binding<FireButtonAnimationType>(
+            get: { self.state.general.fireButtonAnimation },
+            set: {
+                self.model.setFireButtonAnimetion($0)
+                self.state.general.fireButtonAnimation = $0
+            }
+        )
     }
-
+    var addressBarPositionBinding: Binding<AddressBarPosition> {
+        Binding<AddressBarPosition>(
+            get: {
+                self.state.general.addressBarPosition
+            },
+            set: {
+                self.state.general.addressBarPosition = $0
+                self.model.setAddressBarPosition($0)
+            }
+        )
+    }
         
-    init(model: SettingsModel, state: SettingsState = SettingsState(general: SettingsStateGeneral()),
-         legacyViewProvider: SettingsLegacyViewProvider) {
+    init(model: SettingsModel, state: SettingsState = SettingsState(general: SettingsStateGeneral())) {
         self.model = model
         self.state = state
-        self.legacyViewProvider = legacyViewProvider
         initializeState()
     }
     
     func initializeState() {
-        // Model should eventually be Observable
+        // Model should eventually be Observable, but that Requires appSettings to be update
         state.general.appIcon = model.appIcon
         state.general.fireButtonAnimation = model.fireButtonAnimation
         state.general.appTheme = model.appTheme
         state.general.textSize = model.textSize
         state.general.addressBarPosition = model.addressBarPosition
+        state.general.sendDoNotSell = model.sendDoNotSell
+        state.general.autoconsentEnabled = model.autoconsentEnabled
+        state.general.autoclearDataEnabled = model.autoclearDataEnabled
+    }
+    
+    
+}
+
+extension SettingsViewModel {
+    
+    func setAsDefaultBrowser() {
+        firePixel(.defaultBrowserButtonPressedSettings)
+        guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+        UIApplication.shared.open(url)
+    }
+    
+    func shouldPresentLoginsViewWithAccount(accountDetails: SecureVaultModels.WebsiteAccount) {
+        state.general.activeWebsiteAccount = accountDetails
+        isPresentingLoginsView = true
+    }
+    
+    func autofillViewPresentationAction() {
+        firePixel(.autofillSettingsOpened)
+    }
+    
+    func gpcViewPresentationAction() {
+        firePixel(.settingsDoNotSellShown)
+    }
+    
+    func autoConsentPresentationAction() {
+        firePixel(.settingsAutoconsentShown)
     }
     
     func openCookiePopupManagement() {
         // showCookiePopupManagement(animated: true)
     }
-    
+
 }
 
 // MARK: Legacy View Presentation
@@ -122,47 +146,21 @@ final class SettingsViewModel: ObservableObject {
 // we fall back to UIKit navigation
 extension SettingsViewModel {
     
-    private func pushLegacyView(_ view: UIViewController) {
+    func presentTextSettingsView(_ view: UIViewController) {
+        firePixel(.textSizeSettingsShown)
+        pushLegacyView(view)
+    }
+        
+    func pushLegacyView(_ view: UIViewController) {
         onRequestPushLegacyView?(view)
     }
     
-    private func presentLegacyView(_ view: UIViewController, modal: Bool) {
+    func presentLegacyView(_ view: UIViewController, modal: Bool) {
         onRequestPresentLegacyView?(view, modal)
     }
     
-}
-
-// MARK: User Actions
-extension SettingsViewModel {
-    
-    func setAsDefaultBrowser() {
-        Pixel.fire(pixel: .defaultBrowserButtonPressedSettings)
-        guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
-        UIApplication.shared.open(url)
-    }
-    
-    func setIsPresentingLoginsViewWithAccount(accountDetails: SecureVaultModels.WebsiteAccount) {
-        state.general.activeWebsiteAccount = accountDetails
-        isPresentingLoginsView = true
-    }
-    
-    func setTheme(_ theme: ThemeName) {
-        model.setTheme(theme: theme)
-        state.general.appTheme = theme
-    }
-    
-    func setIsPresentingAppIconView(_ value: Bool) {
-        isPresentingAppIconView = value
-    }
-
-    func setFireButtonAnimation(_ value: FireButtonAnimationType) {
-        model.setFireButtonAnimetion(value)
-        state.general.fireButtonAnimation = value
-    }
-    
-    func setAddressBarPosition(_ value: AddressBarPosition) {
-        model.setAddressBarPosition(value)
-        state.general.addressBarPosition = value
+    private func firePixel(_ event: Pixel.Event) {
+        Pixel.fire(pixel: event)
     }
     
 }

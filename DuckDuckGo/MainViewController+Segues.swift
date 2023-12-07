@@ -196,7 +196,7 @@ extension MainViewController {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
         launchSettings {
-            $0.setIsPresentingLoginsViewWithAccount(accountDetails: account)
+            $0.shouldPresentLoginsViewWithAccount(accountDetails: account)
         }
     }
 
@@ -217,16 +217,16 @@ extension MainViewController {
     }
     
     private func launchSettings(completion: ((SettingsViewModel) -> Void)? = nil) {
-        let legacyViewProvider = SettingsLegacyViewProvider(syncService: syncService,
+        let legacyViewProvider = SettingsViewProvider(syncService: syncService,
                                                     syncDataProviders: syncDataProviders,
                                                     appSettings: appSettings)
         
         let model = SettingsModel(bookmarksDatabase: self.bookmarksDatabase,
                                   internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
         
-        let settingsViewModel = SettingsViewModel(model: model, legacyViewProvider: legacyViewProvider)
+        let settingsViewModel = SettingsViewModel(model: model)
         
-        let settingsController = SettingsHostingController(viewModel: settingsViewModel)
+        let settingsController = SettingsHostingController(viewModel: settingsViewModel, viewProvider: legacyViewProvider)
         
         // We are still presenting legacy views, so use a Navcontroller
         let navController = UINavigationController(rootViewController: settingsController)

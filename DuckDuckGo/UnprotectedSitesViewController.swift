@@ -20,6 +20,30 @@
 import UIKit
 import Core
 import BrowserServicesKit
+import SwiftUI
+
+// MARK: UnprotectedSitesViewController Representable
+struct UnprotectedSitesViewControllerRepresentable: UIViewControllerRepresentable {
+    
+    typealias UIViewControllerType = UnprotectedSitesViewController
+
+    class Coordinator {
+        var parentObserver: NSKeyValueObservation?
+    }
+
+    func makeUIViewController(context: Self.Context) -> UnprotectedSitesViewController {
+        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
+        let viewController = storyboard.instantiateViewController(identifier: "UnprotectedSites") as! UnprotectedSitesViewController
+        context.coordinator.parentObserver = viewController.observe(\.parent, changeHandler: { vc, _ in
+            vc.parent?.title = vc.title
+        })
+        return viewController
+    }
+
+    func updateUIViewController(_ uiViewController: UnprotectedSitesViewController, context: Context) {}
+
+    func makeCoordinator() -> Self.Coordinator { Coordinator() }
+}
 
 class UnprotectedSitesViewController: UITableViewController {
     

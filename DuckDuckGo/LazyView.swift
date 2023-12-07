@@ -19,9 +19,8 @@
 
 import SwiftUI
 
-/// `Conforms to the `View` protocol
-/// Delays the instantiation of its content view until necessary.
-/// This prevents SwiftUI from preloading views that are not immediately 
+/// Delays the instantiation of a view content until necessary.
+/// This prevents SwiftUI from preloading views that are not immediately
 /// visible, sucn as in NavigationLink
 
 struct LazyView<Content: View>: View {

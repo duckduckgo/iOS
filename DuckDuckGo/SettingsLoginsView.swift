@@ -26,22 +26,30 @@ import BrowserServicesKit
 struct SettingsLoginsView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
+    @EnvironmentObject var viewProvider: SettingsViewProvider
     @State var isPresentingLoginsView: Bool = false
     
     var body: some View {
         if viewModel.shouldShowLoginsCell {
             Section {
-                NavigationLink(destination: LazyView(viewModel.autofillControllerRepresentable),
+                NavigationLink(destination: viewProvider.loginSettings(delegate: viewModel, selectedAccount: viewModel.state.general.activeWebsiteAccount),
                                isActive: $isPresentingLoginsView) {
-                    SettingsCellView(label: UserText.autofillLoginListTitle,
-                                     action: { viewModel.isPresentingLoginsView = true })
+                    SettingsCellView(label: UserText.autofillLoginListTitle )
                     
                 }
+                .onChange(of: viewModel.isPresentingLoginsView) { newValue in
+                    isPresentingLoginsView = newValue
+                }
+                
+                .onChange(of: isPresentingLoginsView) { isActive in
+                    if isActive {
+                        viewModel.autofillViewPresentationAction()
+                    } else {
+                        viewModel.isPresentingLoginsView = false
+                    }
+                }
+                
             }
-            .onChange(of: viewModel.isPresentingLoginsView) { newValue in
-                isPresentingLoginsView = newValue
-            }
-    
         }
             
     }

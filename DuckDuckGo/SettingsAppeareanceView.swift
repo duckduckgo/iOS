@@ -23,18 +23,15 @@ import UIKit
 struct SettingsAppeareanceView: View {
         
     @EnvironmentObject var viewModel: SettingsViewModel
+    @EnvironmentObject var viewProvider: SettingsViewProvider
 
     var body: some View {
         Section(header: Text("Appeareance")) {
             SettingsPickerCellView(label: "Theme",
                                    options: ThemeName.allCases,
-                                   selectedOption: Binding(
-                                        get: { viewModel.state.general.appTheme },
-                                        set: { viewModel.setTheme($0) }
-                                   ))
+                                   selectedOption: viewModel.themeBinding)
              
-            NavigationLink(destination: LazyView(AppIconSettingsViewControllerRepresentable()),
-                           isActive: $viewModel.isPresentingAppIconView) {
+            NavigationLink(destination: viewProvider.appIcon) {
                 let image = Image(uiImage: viewModel.state.general.appIcon.smallImage ?? UIImage())
                 SettingsCellView(label: "App Icon",
                                  accesory: .image(image))
@@ -42,16 +39,15 @@ struct SettingsAppeareanceView: View {
              
             SettingsPickerCellView(label: "Fire Button Animation",
                                    options: FireButtonAnimationType.allCases,
-                                   selectedOption: Binding(
-                                        get: { viewModel.state.general.fireButtonAnimation },
-                                        set: { viewModel.setFireButtonAnimation($0) }
-                                   ))
+                                   selectedOption: viewModel.fireButtonAnimationBinding)
              
             // The textsize settings view has a special behavior (detent adjustment) that requires access to a navigation controller
             // The current implementation will not work on top of the SwiftUI stack, so we need to push it via the UIKit Container
             if viewModel.shouldShowTextSizeCell {
                 SettingsCellView(label: "Text Size",
-                                 action: { viewModel.isPresentingTextSettingsView = true },
+                                 action: {
+                                    viewModel.presentTextSettingsView(viewProvider.textSettings)
+                                  },
                                  accesory: .rightDetail("\(viewModel.state.general.textSize)%"),
                                  asLink: true)
             }
@@ -59,10 +55,7 @@ struct SettingsAppeareanceView: View {
             if viewModel.shouldShowAddressBarPositionCell {
                 SettingsPickerCellView(label: "Address Bar Position",
                                        options: AddressBarPosition.allCases,
-                                       selectedOption: Binding(
-                                            get: { viewModel.state.general.addressBarPosition },
-                                            set: { viewModel.setAddressBarPosition($0) }
-                                       ))
+                                       selectedOption: viewModel.addressBarPositionBinding)
             }
             
             

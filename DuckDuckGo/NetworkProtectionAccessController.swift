@@ -56,32 +56,53 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
     private let networkProtectionWaitlistStorage: WaitlistStorage
     private let networkProtectionTermsAndConditionsStore: NetworkProtectionTermsAndConditionsStore
     private let featureFlagger: FeatureFlagger
+    private let internalUserDecider: InternalUserDecider
+
+    private var isUserLocaleAllowed: Bool {
+        var regionCode: String?
+
+        if #available(iOS 16.0, *) {
+            regionCode = Locale.current.region?.identifier
+        } else {
+            regionCode = Locale.current.regionCode
+        }
+
+        return (regionCode ?? "US") == "US"
+    }
+
 
     init(
         networkProtectionActivation: NetworkProtectionFeatureActivation = NetworkProtectionKeychainTokenStore(),
         networkProtectionWaitlistStorage: WaitlistStorage = WaitlistKeychainStore(waitlistIdentifier: VPNWaitlist.identifier),
         networkProtectionTermsAndConditionsStore: NetworkProtectionTermsAndConditionsStore = NetworkProtectionTermsAndConditionsUserDefaultsStore(),
-        featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger
+        featureFlagger: FeatureFlagger = AppDependencyProvider.shared.featureFlagger,
+        internalUserDecider: InternalUserDecider = AppDependencyProvider.shared.internalUserDecider
     ) {
         self.networkProtectionActivation = networkProtectionActivation
         self.networkProtectionWaitlistStorage = networkProtectionWaitlistStorage
         self.networkProtectionTermsAndConditionsStore = networkProtectionTermsAndConditionsStore
         self.featureFlagger = featureFlagger
+        self.internalUserDecider = internalUserDecider
     }
 
     func networkProtectionAccessType() -> NetworkProtectionAccessType {
-        // First, check for users who have activated the VPN via an invite code:
+        // Only show NetP to US or internal users:
+        guard isUserLocaleAllowed || internalUserDecider.isInternalUser else {
+            return .none
+        }
+
+        // Check for users who have activated the VPN via an invite code:
         if networkProtectionActivation.isFeatureActivated && !networkProtectionWaitlistStorage.isInvited {
             return .inviteCodeInvited
         }
 
-        // Next, check if the waitlist is still active; if not, the user has no access.
+        // Check if the waitlist is still active; if not, the user has no access.
         let isWaitlistActive = featureFlagger.isFeatureOn(.networkProtectionWaitlistActive)
         if !isWaitlistActive {
             return .none
         }
 
-        // Next, check if a waitlist user has NetP access and whether they need to accept T&C.
+        // Check if a waitlist user has NetP access and whether they need to accept T&C.
         if networkProtectionActivation.isFeatureActivated && networkProtectionWaitlistStorage.isInvited {
             if networkProtectionTermsAndConditionsStore.networkProtectionWaitlistTermsAndConditionsAccepted {
                 return .waitlistInvited
@@ -90,7 +111,7 @@ struct NetworkProtectionAccessController: NetworkProtectionAccess {
             }
         }
 
-        // Next, check if the user has waitlist access at all and whether they've already joined.
+        // Check if the user has waitlist access at all and whether they've already joined.
         let hasWaitlistAccess = featureFlagger.isFeatureOn(.networkProtectionWaitlistAccess)
         if hasWaitlistAccess {
             if networkProtectionWaitlistStorage.isOnWaitlist {

@@ -31,11 +31,11 @@ struct EditDeviceView: View {
                 Section {
                     TextField("", text: $model.name)
                 } header: {
-                    Text(UserText.editDeviceLabel)
+                    Text(UserText.editDeviceHeader)
                 }
             }
             .applyListStyle()
-            .navigationTitle(UserText.editDevice(model.name))
+            .navigationTitle(UserText.editDeviceTitle(model.name))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {

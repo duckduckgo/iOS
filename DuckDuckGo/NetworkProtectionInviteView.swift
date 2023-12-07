@@ -55,7 +55,7 @@ struct NetworkProtectionInviteView: View {
             )
             .frame(height: 44)
             .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-            .background(Color.textFieldBackground)
+            .background(Color(designSystemColor: .surface))
             .cornerRadius(10)
             .disabled(model.shouldDisableTextField)
             Button(UserText.inviteDialogContinueButton) {
@@ -102,27 +102,27 @@ private struct NetworkProtectionInviteMessageView<Content>: View where Content: 
                         .scaledToFit()
                         .frame(height: 102.5)
                     Text(messageData.title)
-                        .font(.system(size: 22, weight: .semibold))
+                        .daxTitle2()
                         .multilineTextAlignment(.center)
-                        .foregroundColor(.textPrimary)
+                        .foregroundColor(.init(designSystemColor: .textPrimary))
                     Text(messageData.message)
-                        .font(.system(size: 16))
+                        .daxBodyRegular()
                         .multilineTextAlignment(.center)
-                        .foregroundColor(.textSecondary)
+                        .foregroundColor(.init(designSystemColor: .textSecondary))
                         .padding(.bottom, 16)
                     interactiveContent()
                     Spacer()
-                    Text(UserText.netPInviteOnlyMessage)
-                        .foregroundColor(.textSecondary)
-                        .font(.system(size: 13))
+                    Text(UserText.networkProtectionWaitlistAvailabilityDisclaimer)
+                        .foregroundColor(.init(designSystemColor: .textSecondary))
+                        .daxFootnoteRegular()
                         .multilineTextAlignment(.center)
                 }
                 .padding(24)
                 .frame(minHeight: proxy.size.height)
-                .background(Color.viewBackground)
+                .background(Color(designSystemColor: .background))
             }
         }
-        .background(Color.viewBackground)
+        .background(Color(designSystemColor: .background))
     }
 }
 
@@ -130,21 +130,16 @@ private struct NetworkProtectionInviteMessageData {
     let imageIdentifier: String
     let title: String
     let message: String
-    let footer = UserText.netPInviteOnlyMessage
+    let footer = UserText.networkProtectionWaitlistAvailabilityDisclaimer
 }
 
 extension AnyTransition {
     static var slideFromRight: AnyTransition {
         AnyTransition.asymmetric(
             insertion: .move(edge: .trailing),
-            removal: .move(edge: .leading))}
-}
-
-private extension Color {
-    static let textPrimary = Color(designSystemColor: .textPrimary)
-    static let textSecondary = Color(designSystemColor: .textSecondary)
-    static let textFieldBackground = Color(designSystemColor: .surface)
-    static let viewBackground = Color(designSystemColor: .background)
+            removal: .move(edge: .leading)
+        )
+    }
 }
 
 import NetworkProtection

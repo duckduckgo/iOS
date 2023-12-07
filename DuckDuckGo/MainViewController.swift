@@ -680,10 +680,10 @@ class MainViewController: UIViewController {
     func onQuickFirePressed() {
         wakeLazyFireButtonAnimator()
         
-        self.forgetAllWithAnimation {}
-        self.dismiss(animated: true)
+        forgetAllWithAnimation {}
+        dismiss(animated: true)
         if KeyboardSettings().onAppLaunch {
-            self.enterSearch()
+            enterSearch()
         }
     }
     
@@ -1463,7 +1463,7 @@ extension MainViewController: OmniBarDelegate {
     func onSharePressed() {
         hideSuggestionTray()
         guard let link = currentTab?.link else { return }
-        currentTab?.onShareAction(forLink: link, fromView: viewCoordinator.omniBar.shareButton, orginatedFromMenu: false)
+        currentTab?.onShareAction(forLink: link, fromView: viewCoordinator.omniBar.shareButton)
     }
     
     func onVoiceSearchPressed() {

@@ -4,8 +4,11 @@ tags:
 
 ---
 
+# Clear and launch
 - clearState
 - launchApp
+
+# Run onboarding Flow
 - runFlow: 
     when: 
       visible: 
@@ -13,9 +16,14 @@ tags:
         index: 0
     file: ../shared/onboarding.yaml
 
+# Set Internal User
 - tapOn: Settings
 - runFlow:
     file: ../shared/set_internal_user.yaml
+    env:
+        SHOULD_GET_CODE: false
+
+# Create account
 - runFlow:
     file: ../shared/sync_create.yaml
 

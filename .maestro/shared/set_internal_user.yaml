@@ -6,5 +6,11 @@ appId: com.duckduckgo.mobile.ios
 - scroll
 - assertVisible: Debug Menu
 - tapOn: Debug Menu
+- runFlow:
+    when:
+      true: ${SHOULD_GET_CODE}
+    file: ../shared/copy_recovery_code.yaml
+    env:
+      CODE: ${CODE}
 - tapOn: Internal User State
 - tapOn: Settings

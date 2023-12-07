@@ -88,6 +88,15 @@ final class SettingsViewModel: ObservableObject {
             }
         )
     }
+    var applicationLockBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.state.general.applicationLock },
+            set: {
+                self.state.general.applicationLock = $0
+                self.model.setApplicationLock($0)
+            }
+        )
+    }
         
     init(model: SettingsModel, state: SettingsState = SettingsState(general: SettingsStateGeneral())) {
         self.model = model
@@ -105,6 +114,7 @@ final class SettingsViewModel: ObservableObject {
         state.general.sendDoNotSell = model.sendDoNotSell
         state.general.autoconsentEnabled = model.autoconsentEnabled
         state.general.autoclearDataEnabled = model.autoclearDataEnabled
+        state.general.applicationLock = model.applicationLock
     }
     
     

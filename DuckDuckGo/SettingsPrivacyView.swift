@@ -59,6 +59,8 @@ struct SettingsPrivacyView: View {
                                                          : UserText.autoClearAccessoryOff))
              }
              
+             SettingsCellView(label: "Application Lock", accesory: .toggle(isOn: viewModel.applicationLockBinding))
+             
          }
         
          .onChange(of: isPresentingGPCView) { isActive in

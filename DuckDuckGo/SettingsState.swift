@@ -34,4 +34,5 @@ struct SettingsStateGeneral {
     var sendDoNotSell: Bool = true
     var autoconsentEnabled: Bool = true
     var autoclearDataEnabled: Bool = true
+    var applicationLock: Bool = true
 }

@@ -42,6 +42,7 @@ class SettingsModel {
     private lazy var animator: FireButtonAnimator = FireButtonAnimator(appSettings: AppUserDefaults())
     private(set) lazy var appSettings = AppDependencyProvider.shared.appSettings
     private lazy var isPad = UIDevice.current.userInterfaceIdiom == .pad
+    private var privacyStore = PrivacyUserDefaults()
     
     var appIcon: AppIcon = AppIcon.defaultAppIcon
     var fireButtonAnimation: FireButtonAnimationType { appSettings.currentFireButtonAnimation }
@@ -57,6 +58,7 @@ class SettingsModel {
             return false
         }
     }
+    var applicationLock: Bool { privacyStore.authenticationEnabled }
     
 
 #if NETWORK_PROTECTION
@@ -138,6 +140,10 @@ class SettingsModel {
     
     func setAddressBarPosition(_ position: AddressBarPosition) {
         appSettings.currentAddressBarPosition = position
+    }
+    
+    func setApplicationLock(_ value: Bool) {
+        privacyStore.authenticationEnabled = value
     }
 
 }

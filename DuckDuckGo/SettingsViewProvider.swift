@@ -23,6 +23,16 @@ import DDGSync
 import Core
 import BrowserServicesKit
 
+struct LazyView<Content: View>: View {
+    let build: () -> Content
+    init(_ build: @autoclosure @escaping () -> Content) {
+        self.build = build
+    }
+    var body: some View {
+        build()
+    }
+}
+
 class SettingsViewProvider: ObservableObject {
     
     let syncService: DDGSyncing
@@ -41,7 +51,7 @@ class SettingsViewProvider: ObservableObject {
     }
     
     var addWidget: some View {
-        return WidgetEducationView()
+        return LazyView(WidgetEducationView())
     }
 
     var textSettings: UIViewController {
@@ -50,40 +60,41 @@ class SettingsViewProvider: ObservableObject {
     }
     
     var syncSettings: some View {
-        return SyncSettingsViewControllerRepresentable(syncService: syncService, syncDataProviders: syncDataProviders)
+        return LazyView(SyncSettingsViewControllerRepresentable(syncService: self.syncService,
+                                                                syncDataProviders: self.syncDataProviders))
     }
     
     func loginSettings(delegate: AutofillLoginSettingsListViewControllerDelegate,
                        selectedAccount: SecureVaultModels.WebsiteAccount?) -> some View {
-            AutofillLoginSettingsListViewControllerRepresentable(appSettings: appSettings,
-                                                                 syncService: syncService,
-                                                                 syncDataProviders: syncDataProviders,
+        LazyView(AutofillLoginSettingsListViewControllerRepresentable(appSettings: self.appSettings,
+                                                                      syncService: self.syncService,
+                                                                      syncDataProviders: self.syncDataProviders,
                                                                  delegate: delegate,
-                                                                 selectedAccount: selectedAccount)
+                                                                 selectedAccount: selectedAccount))
     }
     
     var appIcon: some View {
-        AppIconSettingsViewControllerRepresentable()
+        LazyView(AppIconSettingsViewControllerRepresentable())
     }
     
     var doNotSell: some View {
-        DoNotSellSettingsViewControllerRepresentable()
+        LazyView(DoNotSellSettingsViewControllerRepresentable())
     }
     
     var autoConsent: some View {
-        AutoconsentSettingsViewControllerRepresentable()
+        LazyView(AutoconsentSettingsViewControllerRepresentable())
     }
     
     var unprotectedSites: some View {
-        UnprotectedSitesViewControllerRepresentable()
+        LazyView(UnprotectedSitesViewControllerRepresentable())
     }
     
     var fireproofSites: some View {
-        PreserveLoginsSettingsViewControllerRepresentable()
+        LazyView(PreserveLoginsSettingsViewControllerRepresentable())
     }
     
     var autoclearData: some View {
-        AutoClearSettingsViewControllerRepresentable()
+        LazyView(AutoClearSettingsViewControllerRepresentable())
     }
     
 

@@ -78,6 +78,7 @@ tags:
 
 # Verify bookmarks have been merged
 - tapOn: Settings
+- tapOn: Done
 - tapOn: Browsing Menu
 - tapOn: Bookmarks
 - runFlow: 
@@ -124,6 +125,7 @@ tags:
 - tapOn: "0"
 - tapOn: Settings
 - tapOn: Done
+- tapOn: Browsing Menu
 - tapOn: Bookmarks
 - tapOn: Favorites
 - assertVisible: NFL.com | Official Site of the National Football League

@@ -19,7 +19,7 @@ tags:
 # Set Internal User
 - tapOn: Settings
 - runFlow:
-    file: ../shared/set_internal_user.yaml
+    file: ../shared/set_internal_user_from_settings.yaml
 
 # Create account
 - runFlow:

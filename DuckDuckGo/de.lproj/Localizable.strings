@@ -4,6 +4,9 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
+/* No comment provided by engineer. */
+"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Bearbeiten";
 
@@ -132,6 +135,24 @@
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Bestehende Lesezeichen werden nicht kopiert.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Du hast das Limit für die Synchronisierung von Lesezeichen überschritten. Versuche, einige Lesezeichen zu löschen. Bis dieses Problem behoben ist, werden deine Lesezeichen nicht gesichert.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Lesezeichen-Synchronisierung ist angehalten";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Du hast das Limit für die Synchronisierung von Passwörtern überschritten. Versuche, einige Passwörter zu löschen. Bis dieses Problem behoben ist, werden deine Passwörter nicht gesichert.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Passwortsynchronisierung ist angehalten";
+
+/* Learn more button in alert */
+"alert.sync-paused-alert-learn-more-button" = "Mehr erfahren";
+
+/* Confirmation button in alert */
+"alert.sync-paused-alert-ok-button" = "OK";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Alle Tabs mit Lesezeichen versehen?";
@@ -754,48 +775,6 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Importiere eine HTML-Datei mit Lesezeichen aus einem anderen Browser oder exportieren deine vorhandenen Lesezeichen.";
 
-/* Broken Site Category */
-"brokensite.category.comments" = "Kommentare wurden nicht geladen";
-
-/* Broken Site Category */
-"brokensite.category.content" = "Inhalt fehlt";
-
-/* Broken Site Category */
-"brokensite.category.cookieprompt" = "Cookie-Pop-up wurde nicht verwaltet";
-
-/* Broken Site Category */
-"brokensite.category.images" = "Bilder wurden nicht geladen";
-
-/* Broken Site Category */
-"brokensite.category.links" = "Links oder Schaltflächen funktionieren nicht";
-
-/* Broken Site Category */
-"brokensite.category.login" = "Ich kann mich nicht anmelden";
-
-/* Broken Site Category */
-"brokensite.category.other" = "Etwas anderes";
-
-/* Broken Site Category */
-"brokensite.category.paywall" = "Die Seite hat mich aufgefordert zu deaktivieren";
-
-/* Broken Site Category */
-"brokensite.category.unsupported" = "Der Browser ist nicht kompatibel";
-
-/* Broken Site Category */
-"brokensite.category.videos" = "Video wurde nicht abgespielt";
-
-/* Broken Site Category Placeholder */
-"brokensite.categoryPlaceholder" = "Wähle dein Problem aus der Liste aus...";
-
-/* Broken Site Category Section Title */
-"brokensite.categoryTitle" = "EINE KATEGORIE AUSWÄHLEN";
-
-/* Broken Site Comment Placeholder */
-"brokensite.commentPlaceholder" = "Das Teilen weiterer Details kann uns helfen, dieses Problem zu lösen";
-
-/* Broken Site Section Title */
-"brokensite.sectionTitle" = "BESCHREIBE, WAS PASSIERT IST";
-
 /* No comment provided by engineer. */
 "bucket: %@" = "Bucket: %@";
 
@@ -1071,6 +1050,18 @@
 
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Entfernen";
+
+/* Display Mode for favorites */
+"favorites.settings.all-devices" = "Alle Gerätefavoriten";
+
+/* Footer of the favorites settings table */
+"favorites.settings.footer" = "Wähle aus, welche Favoriten auf in einem neuen Tab angezeigt werden sollen, je nachdem, woher sie stammen.";
+
+/* Header of the favorites settings table */
+"favorites.settings.header" = "Anzeigeeinstellungen";
+
+/* Display Mode for favorites */
+"favorites.settings.mobile-only" = "Nur mobile Favoriten";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blockieren von Werbungen und Pop-ups";
@@ -1438,6 +1429,9 @@
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
 
+/* Title text for an iOS quick action that opens VPN settings */
+"network.protection.quick-action.open-vpn" = "VPN öffnen";
+
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Connected - %@";
 
@@ -1477,8 +1471,59 @@
 /* Location label shown in NetworkProtection's status view. */
 "network.protection.status.view.location" = "Location";
 
+/* Label shown on the title of the settings section in NetworkProtection's status view. */
+"network.protection.status.view.settings.section.title" = "Verwalten";
+
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "Network Protection";
+
+/* Title for the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.button.title" = "Benachrichtigungen aktivieren";
+
+/* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.section.footer" = "Erlaube DuckDuckGo, dich zu benachrichtigen, wenn deine Verbindung abbricht oder sich dein VPN-Status ändert.";
+
+/* List section footer for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.section.footer" = "Lass dich benachrichtigen, wenn deine Verbindung abbricht oder sich der VPN-Status ändert.";
+
+/* Title for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.title" = "VPN-Benachrichtigungen";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.footer" = "Stelle eine VPN-Verbindung nach einer Unterbrechung automatisch wieder her.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.title" = "Immer aktiviert";
+
+/* Title for the VPN Location screen's All Countries section. */
+"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Title for the VPN Location screen's Nearest Available selection item. */
+"network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
+
+/* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+
+/* Title for the VPN Location screen's Recommended section. */
+"network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Title for the VPN Notifications management screen. */
+"network.protection.vpn.notifications.title" = "VPN-Benachrichtigungen";
+
+/* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
+"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+
+/* Title for the Preferred Location VPN Settings item. */
+"network.protection.vpn.preferred.location.title" = "Preferred Location";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.footer" = "Network Protection verhindert DNS-Lecks zu deinem Internetanbieter, indem DNS-Anfragen über den VPN-Tunnel an unseren eigenen Resolver weitergeleitet werden.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.title" = "Sicheres DNS";
+
+/* Title for the VPN Settings screen. */
+"network.protection.vpn.settings.title" = "VPN-Einstellungen";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
@@ -1593,9 +1638,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "In einer anderen App öffnen?";
-
-/* No comment provided by engineer. */
-"report.brokensite.header" = "Das Senden eines anonymen Berichts über fehlerhafte Websites hilft uns, diese Probleme zu beheben und die App zu verbessern.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Adresse suchen oder eingeben";

@@ -91,24 +91,6 @@ public struct UserText {
     public static let navigationTitleEdit = NSLocalizedString("navigation.title.edit", value: "Edit", comment: "Edit button")
     public static let navigationTitleDone = NSLocalizedString("navigation.title.done", value: "Done", comment: "Finish editing bookmarks button")
     
-    static let reportBrokenSiteHeader = NSLocalizedString("report.brokensite.header", value: "Submitting an anonymous broken site report helps us debug these issues and improve the app.", comment: "")
-    
-    static let brokenSiteSectionTitle = NSLocalizedString("brokensite.sectionTitle", value: "DESCRIBE WHAT HAPPENED", comment: "Broken Site Section Title")
-    static let brokenSiteCategoryTitle = NSLocalizedString("brokensite.categoryTitle", value: "SELECT A CATEGORY", comment: "Broken Site Category Section Title")
-    static let brokenSiteCategoryPlaceholder = NSLocalizedString("brokensite.categoryPlaceholder", value: "Pick your issue from the list...", comment: "Broken Site Category Placeholder")
-    static let brokenSiteCommentPlaceholder = NSLocalizedString("brokensite.commentPlaceholder", value: "Sharing more details can help us address this issue", comment: "Broken Site Comment Placeholder")
-    
-    static let brokenSiteCategoryImages = NSLocalizedString("brokensite.category.images", value: "Images didn’t load", comment: "Broken Site Category")
-    static let brokenSiteCategoryPaywall = NSLocalizedString("brokensite.category.paywall", value: "The site asked me to disable", comment: "Broken Site Category")
-    static let brokenSiteCategoryComments = NSLocalizedString("brokensite.category.comments", value: "Comments didn’t load", comment: "Broken Site Category")
-    static let brokenSiteCategoryVideos = NSLocalizedString("brokensite.category.videos", value: "Video didn’t play", comment: "Broken Site Category")
-    static let brokenSiteCategoryLinks = NSLocalizedString("brokensite.category.links", value: "Links or buttons don’t work", comment: "Broken Site Category")
-    static let brokenSiteCategoryContent = NSLocalizedString("brokensite.category.content", value: "Content is missing", comment: "Broken Site Category")
-    static let brokenSiteCategoryLogin = NSLocalizedString("brokensite.category.login", value: "I can’t sign in", comment: "Broken Site Category")
-    static let brokenSiteCategoryUnsupported = NSLocalizedString("brokensite.category.unsupported", value: "The browser is incompatible", comment: "Broken Site Category")
-    static let brokenSiteCategoryCookiePrompt = NSLocalizedString("brokensite.category.cookieprompt", value: "Cookie pop-up wasn't managed", comment: "Broken Site Category")
-    static let brokenSiteCategoryOther = NSLocalizedString("brokensite.category.other", value: "Something else", comment: "Broken Site Category")
-        
     public static let homeRowReminderTitle = NSLocalizedString("home.row.reminder.title", value: "Take DuckDuckGo home", comment: "Home is this context is the bottom home row (dock)")
     public static let homeRowReminderMessage = NSLocalizedString("home.row.reminder.message", value: "Add DuckDuckGo to your dock for easy access!", comment: "")
     
@@ -627,7 +609,6 @@ In addition to the details entered into this form, your app issue report will co
     static let netPInviteFieldPrompt = NSLocalizedString("network.protection.invite.field.prompt", value: "Invite Code", comment: "Prompt for the network protection invite code text field")
     static let netPInviteSuccessTitle = NSLocalizedString("network.protection.invite.success.title", value: "Success! You’re in.", comment: "Title for the network protection invite success view")
     static let netPInviteSuccessMessage = NSLocalizedString("network.protection.invite.success.message", value: "Hide your location from websites and conceal your online activity from Internet providers and others on your network.", comment: "Message for the network protection invite success view")
-    static let netPInviteOnlyMessage = NSLocalizedString("network.protection.invite.only.message", value: "DuckDuckGo Network Protection is currently invite-only.", comment: "Message explaining that netP is invite only")
     
     static let netPStatusViewTitle = NSLocalizedString("network.protection.status.view.title", value: "Network Protection", comment: "Title label text for the status view when netP is disconnected")
     static let netPStatusHeaderTitleOff = NSLocalizedString("network.protection.status.header.title.off", value: "Network Protection is Off", comment: "Header title label text for the status view when netP is disconnected")
@@ -650,7 +631,7 @@ In addition to the details entered into this form, your app issue report will co
         return localized.format(arguments: city, country)
     }
     static let netPVPNNotificationsTitle = NSLocalizedString("network.protection.vpn.notifications.title", value: "VPN Notifications", comment: "Title for the VPN Notifications management screen.")
-    static let netPStatusViewShareFeedback = NSLocalizedString("network.protection.status.menu.share.feedback", value: "Share Feedback", comment: "The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text")
+    static let netPStatusViewShareFeedback = NSLocalizedString("network.protection.status.menu.share.feedback", value: "Share Feedback", comment: "The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text")
     static let netPStatusViewErrorConnectionFailedTitle = NSLocalizedString("network.protection.status.view.error.connection.failed.title", value: "Failed to Connect.", comment: "Generic connection failed error title shown in NetworkProtection's status view.")
     static let netPStatusViewErrorConnectionFailedMessage = NSLocalizedString("network.protection.status.view.error.connection.failed.message", value: "Please try again later.", comment: "Generic connection failed error message shown in NetworkProtection's status view.")
     static let netPPreferredLocationSettingTitle = NSLocalizedString("network.protection.vpn.preferred.location.title", value: "Preferred Location", comment: "Title for the Preferred Location VPN Settings item.")
@@ -665,9 +646,9 @@ In addition to the details entered into this form, your app issue report will co
         return message.format(arguments: count)
     }
     static let netPExcludeLocalNetworksSettingTitle = NSLocalizedString("network.protection.vpn.exclude.local.networks.setting.title", value: "Exclude Local Networks", comment: "Title for the Exclude Local Networks setting item.")
-    static let netPExcludeLocalNetworksSettingFooter = NSLocalizedString("network.protection.vpn.exclude.local.networks.setting.footer", value: "Bypass the VPN for local network connections, like to a printer.", comment: "Footer text for the Exclude Local Networks setting item.")
+    static let netPExcludeLocalNetworksSettingFooter = NSLocalizedString("network.protection.vpn.exclude.local.networks.setting.footer", value: "Let local traffic bypass the VPN and connect to devices on your local network, like a printer.", comment: "Footer text for the Exclude Local Networks setting item.")
     static let netPSecureDNSSettingFooter = NSLocalizedString("network.protection.vpn.secure.dns.setting.footer", value: "Our VPN uses Secure DNS to keep your online activity private, so that your Internet provider can't see what websites you visit.", comment: "Footer text for the Always on VPN setting item.")
-    static let netPTurnOnNotificationsButtonTitle = NSLocalizedString("network.protection.turn.on.notifications.button.title", value: "Turn on Notifications", comment: "Title for the button to link to the iOS app settings and enable notifications app-wide.")
+    static let netPTurnOnNotificationsButtonTitle = NSLocalizedString("network.protection.turn.on.notifications.button.title", value: "Turn On Notifications", comment: "Title for the button to link to the iOS app settings and enable notifications app-wide.")
     static let netPTurnOnNotificationsSectionFooter = NSLocalizedString("network.protection.turn.on.notifications.section.footer", value: "Allow DuckDuckGo to notify you if your connection drops or VPN status changes.", comment: "Footer text under the button to link to the iOS app settings and enable notifications app-wide.")
     static let netPVPNAlertsToggleTitle = NSLocalizedString("network.protection.vpn.alerts.toggle.title", value: "VPN Alerts", comment: "Title for the toggle for VPN alerts.")
     static let netPVPNAlertsToggleSectionFooter = NSLocalizedString("network.protection.vpn.alerts.toggle.section.footer", value: "Get notified if your connection drops or VPN status changes.", comment: "List section footer for the toggle for VPN alerts.")
@@ -894,7 +875,6 @@ But if you *do* want a peek under the hood, you can find more information about 
 
     // MARK: - VPN Waitlist
 
-    static let networkProtectionWaitlistJoinTitle = NSLocalizedString("network-protection.waitlist.join.title", value: "Network Protection Early Access", comment: "Title for Network Protection join waitlist screen")
     static let networkProtectionWaitlistJoinSubtitle1 = NSLocalizedString("network-protection.waitlist.join.subtitle.1", value: "Secure your connection anytime, anywhere with Network Protection, the VPN from DuckDuckGo.", comment: "First subtitle for Network Protection join waitlist screen")
     static let networkProtectionWaitlistJoinSubtitle2 = NSLocalizedString("network-protection.waitlist.join.subtitle.2", value: "Join the waitlist, and we’ll notify you when it’s your turn.", comment: "Second subtitle for Network Protection join waitlist screen")
 

@@ -4,6 +4,9 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
+/* No comment provided by engineer. */
+"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Szerkesztés";
 
@@ -132,6 +135,24 @@
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "A meglévő könyvjelzők nem kettőződnek.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Túllépted a szinkronizálható könyvjelzők maximális számát. Próbálj törölni néhány könyvjelzőt. Amíg ezt nem sikerül megoldani, a könyvjelzőkről nem készül biztonsági másolat.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "A könyvjelzők szinkronizálása szünetel";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Túllépted a szinkronizálható jelszavak maximális számát. Próbálj törölni néhány jelszót. Amíg ezt nem sikerül megoldani, a jelszavakról nem készül biztonsági másolat.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "A jelszavak szinkronizálása szünetel";
+
+/* Learn more button in alert */
+"alert.sync-paused-alert-learn-more-button" = "További részletek";
+
+/* Confirmation button in alert */
+"alert.sync-paused-alert-ok-button" = "OK";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Az összes lapot könyvjelzőzöd?";
@@ -754,48 +775,6 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Könyvjelzőket tartalmazó HTML-fájl importálása másik gépről, vagy a meglévő könyvjelzők exportálása.";
 
-/* Broken Site Category */
-"brokensite.category.comments" = "A megjegyzések nem töltődtek be";
-
-/* Broken Site Category */
-"brokensite.category.content" = "Hiányzik a tartalom";
-
-/* Broken Site Category */
-"brokensite.category.cookieprompt" = "A felugró sütiablak nem lett kezelve";
-
-/* Broken Site Category */
-"brokensite.category.images" = "A képek nem töltődtek be";
-
-/* Broken Site Category */
-"brokensite.category.links" = "A hivatkozások vagy a gombok nem működnek";
-
-/* Broken Site Category */
-"brokensite.category.login" = "Nem tudok bejelentkezni";
-
-/* Broken Site Category */
-"brokensite.category.other" = "Valami más";
-
-/* Broken Site Category */
-"brokensite.category.paywall" = "A webhely kérte tőlem a letiltást";
-
-/* Broken Site Category */
-"brokensite.category.unsupported" = "A böngésző nem kompatibilis";
-
-/* Broken Site Category */
-"brokensite.category.videos" = "A videót nem játszotta le";
-
-/* Broken Site Category Placeholder */
-"brokensite.categoryPlaceholder" = "Válaszd ki a problémát a listából…";
-
-/* Broken Site Category Section Title */
-"brokensite.categoryTitle" = "VÁLASSZ KATEGÓRIÁT";
-
-/* Broken Site Comment Placeholder */
-"brokensite.commentPlaceholder" = "A további részletek segítségünkre lehetnek a probléma megoldásában";
-
-/* Broken Site Section Title */
-"brokensite.sectionTitle" = "ESEMÉNY LEÍRÁSA";
-
 /* No comment provided by engineer. */
 "bucket: %@" = "gyűjtő: %@";
 
@@ -1071,6 +1050,18 @@
 
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Eltávolítás";
+
+/* Display Mode for favorites */
+"favorites.settings.all-devices" = "Eszközön lévő minden kedvenc";
+
+/* Footer of the favorites settings table */
+"favorites.settings.footer" = "Válaszd ki, hogy az eredetük alapján melyik kedvencek jelenjenek meg az új lapon.";
+
+/* Header of the favorites settings table */
+"favorites.settings.header" = "Megjelenítési beállítások";
+
+/* Display Mode for favorites */
+"favorites.settings.mobile-only" = "Csak mobilon lévő kedvencek";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Hirdetések és felugró ablakok letiltása";
@@ -1438,6 +1429,9 @@
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
 
+/* Title text for an iOS quick action that opens VPN settings */
+"network.protection.quick-action.open-vpn" = "VPN megnyitása";
+
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Connected - %@";
 
@@ -1477,8 +1471,59 @@
 /* Location label shown in NetworkProtection's status view. */
 "network.protection.status.view.location" = "Location";
 
+/* Label shown on the title of the settings section in NetworkProtection's status view. */
+"network.protection.status.view.settings.section.title" = "Kezelés";
+
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "Network Protection";
+
+/* Title for the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.button.title" = "Értesítések bekapcsolása";
+
+/* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.section.footer" = "Engedélyezd, hogy a DuckDuckGo értesítsen, ha a kapcsolat megszakad vagy a VPN állapota megváltozik.";
+
+/* List section footer for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.section.footer" = "Kapj értesítést, ha a kapcsolat megszakad vagy a VPN állapota megváltozik.";
+
+/* Title for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.title" = "VPN-figyelmeztetések";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.footer" = "A VPN-kapcsolat automatikus helyreállítása megszakítás után.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.title" = "Mindig be van kapcsolva";
+
+/* Title for the VPN Location screen's All Countries section. */
+"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Title for the VPN Location screen's Nearest Available selection item. */
+"network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
+
+/* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+
+/* Title for the VPN Location screen's Recommended section. */
+"network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Title for the VPN Notifications management screen. */
+"network.protection.vpn.notifications.title" = "VPN-értesítések";
+
+/* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
+"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+
+/* Title for the Preferred Location VPN Settings item. */
+"network.protection.vpn.preferred.location.title" = "Preferred Location";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.footer" = "A hálózatvédelem megakadályozza a DNS-szivárgást az internetszolgáltatód felé azáltal, hogy a DNS-lekérdezéseket a VPN-alagúton keresztül a saját feloldónkhoz irányítja.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.title" = "Biztonságos DNS";
+
+/* Title for the VPN Settings screen. */
+"network.protection.vpn.settings.title" = "VPN-beállítások";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
@@ -1593,9 +1638,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Megnyitás másik alkalmazásban?";
-
-/* No comment provided by engineer. */
-"report.brokensite.header" = "Egy hibás webhelyről szóló névtelen bejelentés segít a hibakeresésben és az alkalmazás fejlesztésében.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Keresés vagy cím megadása";

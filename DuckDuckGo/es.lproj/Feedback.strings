@@ -10,9 +10,6 @@
 /* Class = "UIButton"; normalTitle = "No Thanks! I’m Done"; ObjectID = "A1s-GY-hbq"; */
 "A1s-GY-hbq.normalTitle" = "No, gracias. He terminado";
 
-/* Class = "UIBarButtonItem"; title = "Close"; ObjectID = "cZl-qB-kSL"; */
-"cZl-qB-kSL.title" = "Cerrar";
-
 /* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "D8A-B7-Dqu"; */
 "D8A-B7-Dqu.title" = "Compartir opiniones";
 
@@ -51,9 +48,6 @@
 
 /* Class = "UITextField"; placeholder = "Which website is broken?"; ObjectID = "TMj-NM-j3b"; */
 "TMj-NM-j3b.placeholder" = "¿Qué sitio web no funciona?";
-
-/* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
-"WjT-HM-yim.title" = "Informar de sitio web dañado";
 
 /* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "Xb0-Zu-opM"; */
 "Xb0-Zu-opM.title" = "Compartir opiniones";

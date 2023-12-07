@@ -4,6 +4,9 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
+/* No comment provided by engineer. */
+"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Düzenle";
 
@@ -132,6 +135,24 @@
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Mevcut yer imleri çoğaltılmayacaktır.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Yer işaretleri senkronizasyon sınırını aştınız. Bazı yer işaretlerini silmeyi deneyin. Bu sorun çözülene kadar yer işaretleriniz yedeklenmeyecektir.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Yer İşaretleri Senkronizasyonu Duraklatıldı";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Şifre senkronizasyon sınırını aştınız. Bazı şifreleri silmeyi deneyin. Bu sorun çözülene kadar şifreleriniz yedeklenmeyecektir.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Şifre Senkronizasyonu Duraklatıldı";
+
+/* Learn more button in alert */
+"alert.sync-paused-alert-learn-more-button" = "Daha Fazla Bilgi";
+
+/* Confirmation button in alert */
+"alert.sync-paused-alert-ok-button" = "Tamam";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Tüm Sekmelere Yer İmi Eklensin mi?";
@@ -754,48 +775,6 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Yer işaretleri HTML dosyasını başka bir tarayıcıdan içeri aktarın veya mevcut yer işaretlerinizi dışarı aktarın.";
 
-/* Broken Site Category */
-"brokensite.category.comments" = "Yorumlar yüklenmedi";
-
-/* Broken Site Category */
-"brokensite.category.content" = "İçerik eksik";
-
-/* Broken Site Category */
-"brokensite.category.cookieprompt" = "Çerez açılır penceresi yönetilemedi";
-
-/* Broken Site Category */
-"brokensite.category.images" = "Resimler yüklenmedi";
-
-/* Broken Site Category */
-"brokensite.category.links" = "Bağlantılar veya düğmeler çalışmıyor";
-
-/* Broken Site Category */
-"brokensite.category.login" = "Oturum açamıyorum";
-
-/* Broken Site Category */
-"brokensite.category.other" = "Başka bir şey";
-
-/* Broken Site Category */
-"brokensite.category.paywall" = "Site benden devre dışı bırakmamı istedi";
-
-/* Broken Site Category */
-"brokensite.category.unsupported" = "Tarayıcı uyumsuz";
-
-/* Broken Site Category */
-"brokensite.category.videos" = "Video oynatılamadı";
-
-/* Broken Site Category Placeholder */
-"brokensite.categoryPlaceholder" = "Listeden yaşadığınız sorunu seçin...";
-
-/* Broken Site Category Section Title */
-"brokensite.categoryTitle" = "BİR KATEGORİ SEÇİN";
-
-/* Broken Site Comment Placeholder */
-"brokensite.commentPlaceholder" = "Daha fazla ayrıntı paylaşmak, bu sorunu çözmemize yardımcı olabilir";
-
-/* Broken Site Section Title */
-"brokensite.sectionTitle" = "NE OLDUĞUNU AÇIKLAYIN";
-
 /* No comment provided by engineer. */
 "bucket: %@" = "kova: %@";
 
@@ -1071,6 +1050,18 @@
 
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Kaldır";
+
+/* Display Mode for favorites */
+"favorites.settings.all-devices" = "Tüm Cihaz Sık Kullanılanları";
+
+/* Footer of the favorites settings table */
+"favorites.settings.footer" = "Kaynaklarına göre hangi favorilerin yeni bir sekmede görüntüleneceğini seçin.";
+
+/* Header of the favorites settings table */
+"favorites.settings.header" = "Ekran Tercihleri";
+
+/* Display Mode for favorites */
+"favorites.settings.mobile-only" = "Yalnızca Mobil Favoriler";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Reklam ve pop-up engelleme";
@@ -1438,6 +1429,9 @@
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
 
+/* Title text for an iOS quick action that opens VPN settings */
+"network.protection.quick-action.open-vpn" = "VPN'i aç";
+
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Connected - %@";
 
@@ -1477,8 +1471,59 @@
 /* Location label shown in NetworkProtection's status view. */
 "network.protection.status.view.location" = "Location";
 
+/* Label shown on the title of the settings section in NetworkProtection's status view. */
+"network.protection.status.view.settings.section.title" = "Yönet";
+
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "Network Protection";
+
+/* Title for the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.button.title" = "Bildirimleri Açın";
+
+/* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.section.footer" = "Bağlantınız kesilirse veya VPN durumunuz değişirse DuckDuckGo'nun sizi bilgilendirmesine izin verin.";
+
+/* List section footer for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.section.footer" = "Bağlantınız kesilirse veya VPN durumunuz değişirse bildirim alın.";
+
+/* Title for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.title" = "VPN Uyarıları";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.footer" = "Kesintiden sonra VPN bağlantısını otomatik olarak geri yükleyin.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.title" = "Her Zaman Açık";
+
+/* Title for the VPN Location screen's All Countries section. */
+"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Title for the VPN Location screen's Nearest Available selection item. */
+"network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
+
+/* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+
+/* Title for the VPN Location screen's Recommended section. */
+"network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Title for the VPN Notifications management screen. */
+"network.protection.vpn.notifications.title" = "VPN Bildirimleri";
+
+/* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
+"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+
+/* Title for the Preferred Location VPN Settings item. */
+"network.protection.vpn.preferred.location.title" = "Preferred Location";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.footer" = "Ağ Koruması, DNS sorgularını VPN tüneli üzerinden kendi çözümleyicimize yönlendirerek İnternet Servis Sağlayıcınıza DNS sızıntılarını önler.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.title" = "Güvenli DNS";
+
+/* Title for the VPN Settings screen. */
+"network.protection.vpn.settings.title" = "VPN Ayarları";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
@@ -1593,9 +1638,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Başka Bir Uygulamada Açılsın mı?";
-
-/* No comment provided by engineer. */
-"report.brokensite.header" = "Anonim olarak hatalı site raporu göndermeniz, bu sorunları ayıklamamıza ve uygulamayı geliştirmemize yardımcı olur.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Adres ara veya gir";

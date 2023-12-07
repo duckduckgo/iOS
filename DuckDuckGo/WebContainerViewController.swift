@@ -63,7 +63,7 @@ class WebContainerViewController: UIViewController {
     }
 
     @IBAction func dismiss() {
-        self.dismiss(animated: true)
+        dismiss(animated: true)
     }
 
     private func load(url: URL) {

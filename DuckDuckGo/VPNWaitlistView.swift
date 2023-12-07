@@ -64,7 +64,7 @@ struct VPNWaitlistSignUpView: View {
         GeometryReader { proxy in
             ScrollView {
                 VStack(alignment: .center, spacing: 8) {
-                    HeaderView(imageName: "JoinVPNWaitlist", title: UserText.networkProtectionWaitlistJoinTitle)
+                    HeaderView(imageName: "JoinVPNWaitlist", title: UserText.netPNavTitle)
 
                     Text(UserText.networkProtectionWaitlistJoinSubtitle1)
                         .daxBodyRegular()
@@ -87,7 +87,7 @@ struct VPNWaitlistSignUpView: View {
                         action(.custom(.openNetworkProtectionInviteCodeScreen))
                     })
                         .buttonStyle(RoundedButtonStyle(enabled: true, style: .bordered))
-                        .padding(.top, 18)
+                        .padding(.top, 8)
 
                     if requestInFlight {
                         HStack {
@@ -99,13 +99,11 @@ struct VPNWaitlistSignUpView: View {
                         }
                         .padding(.top, 14)
                     }
-
+                    Spacer()
                     Text(UserText.networkProtectionWaitlistAvailabilityDisclaimer)
                         .font(.footnote)
                         .foregroundStyle(Color.secondary)
                         .padding(.top, 24)
-
-                    Spacer()
                 }
                 .padding([.leading, .trailing], 24)
                 .frame(minHeight: proxy.size.height)
@@ -181,17 +179,22 @@ private struct AllowNotificationsView: View {
                 .fixMultilineScrollableText()
                 .lineSpacing(5)
 
-            Button(UserText.waitlistAllowNotifications) {
+
+            Button {
                 action(.openNotificationSettings)
+            } label: {
+                HStack {
+                    Image("Bell-16")
+                    Text(UserText.waitlistAllowNotifications)
+                        .daxButton()
+                }
             }
             .buttonStyle(RoundedButtonStyle(enabled: true))
-
         }
-        .padding(24)
+        .padding(20)
         .background(Color.waitlistNotificationBackground)
         .cornerRadius(8)
         .shadow(color: .black.opacity(0.05), radius: 12, x: 0, y: 4)
-
     }
 
 }
@@ -208,17 +211,17 @@ struct VPNWaitlistInvitedView: View {
 
     let benefitsList: [VPNWaitlistBenefit] = [
         .init(
-            imageName: "Shield-16",
+            imageName: "Shield-24",
             title: UserText.networkProtectionWaitlistInvitedSection1Title,
             subtitle: UserText.networkProtectionWaitlistInvitedSection1Subtitle
         ),
         .init(
-            imageName: "Rocket-16",
+            imageName: "Rocket-24",
             title: UserText.networkProtectionWaitlistInvitedSection2Title,
             subtitle: UserText.networkProtectionWaitlistInvitedSection2Subtitle
         ),
         .init(
-            imageName: "Card-16",
+            imageName: "Card-24",
             title: UserText.networkProtectionWaitlistInvitedSection3Title,
             subtitle: UserText.networkProtectionWaitlistInvitedSection3Subtitle
         ),
@@ -232,7 +235,10 @@ struct VPNWaitlistInvitedView: View {
         GeometryReader { proxy in
             ScrollView {
                 VStack(alignment: .center, spacing: 0) {
-                    HeaderView(imageName: "InvitedVPNWaitlist", title: UserText.networkProtectionWaitlistInvitedTitle)
+                    HeaderView(
+                        imageName: "InvitedVPNWaitlist",
+                        title: UserText.networkProtectionWaitlistInvitedTitle
+                    )
 
                     Text(UserText.networkProtectionWaitlistInvitedSubtitle)
                         .daxBodyRegular()
@@ -249,14 +255,11 @@ struct VPNWaitlistInvitedView: View {
                     Button(UserText.networkProtectionWaitlistGetStarted, action: { action(.custom(.openNetworkProtectionPrivacyPolicyScreen)) })
                         .buttonStyle(RoundedButtonStyle(enabled: true))
                         .padding(.top, 32)
-
+                    Spacer()
                     Text(UserText.networkProtectionWaitlistAvailabilityDisclaimer)
                         .font(.footnote)
-                        .foregroundStyle(Color.secondary)
+                        .foregroundStyle(Color(designSystemColor: .textSecondary))
                         .padding(.top, 24)
-
-                    Spacer()
-
                 }
                 .frame(maxWidth: .infinity, minHeight: proxy.size.height)
                 .padding([.leading, .trailing], 18)
@@ -344,7 +347,6 @@ private struct WaitlistListEntryView: View {
     var body: some View {
         HStack(alignment: .center, spacing: 16) {
             Image(viewData.imageName)
-                .frame(maxWidth: 16, maxHeight: 16)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(viewData.title)

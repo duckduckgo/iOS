@@ -774,7 +774,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let autofillCopyToastNotesCopied = NSLocalizedString("autofill.logins.copy-toast.notes-copied", value:"Notes copied", comment: "Title for toast when copying notes")
 
     public static func autofillLoginDetailsLastUpdated(for date: String) -> String {
-        let message = NSLocalizedString("autofill.logins.details.last-updated", value: "Password last updated %@", comment: "Message displaying when the login was last updated by")
+        let message = NSLocalizedString("autofill.logins.details.last-updated", value: "Last updated %@", comment: "Message displaying when the login was last updated")
         return message.format(arguments: date)
     }
     public static let autofillLoginListAuthenticationCancelButton = NSLocalizedString("autofill.logins.list.auth.cancel", value:"Cancel", comment: "Cancel button for auth when opening login list")

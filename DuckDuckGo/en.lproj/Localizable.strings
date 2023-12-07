@@ -490,8 +490,8 @@
 /* Placeholder for userbane field on autofill login details */
 "autofill.logins.details.edit.username-placeholder" = "username@example.com";
 
-/* Message displaying when the login was last updated by */
-"autofill.logins.details.last-updated" = "Password last updated %@";
+/* Message displaying when the login was last updated */
+"autofill.logins.details.last-updated" = "Last updated %@";
 
 /* Login name label for login details on autofill */
 "autofill.logins.details.login-name" = "Title";

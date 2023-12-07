@@ -1,5 +1,5 @@
 //
-//  GeneralSection.swift
+//  SettingsSyncView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -25,7 +25,7 @@ import DDGSync
 struct SettingsSyncView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
-    @EnvironmentObject var viewProvider: SettingsViewProvider
+    @EnvironmentObject var viewProvider: SettingsLegacyViewProvider
     
     @State var isPresentingSyncView: Bool = false
 
@@ -33,20 +33,12 @@ struct SettingsSyncView: View {
     var body: some View {
         if viewModel.shouldShowSyncCell {
             Section {
-                NavigationLink(destination: viewProvider.syncSettings, isActive: $isPresentingSyncView) {
-                    SettingsCellView(label: UserText.syncTitle)
-                }
+                SettingsCellView(label: UserText.syncTitle,
+                                 action: { viewModel.presentView(.sync) },
+                                 asLink: true,
+                                 disclosureIndicator: true)
             }
-            
-            .onChange(of: viewModel.isPresentingSyncView) { newValue in
-                isPresentingSyncView = newValue
-            }
-            
-            .onChange(of: isPresentingSyncView) { isActive in
-                if !isActive {
-                    viewModel.isPresentingSyncView = false
-                }
-            }
+
         }
     }
 }

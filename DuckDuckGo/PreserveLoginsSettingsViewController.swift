@@ -19,30 +19,6 @@
 
 import UIKit
 import Core
-import SwiftUI
-
-// MARK: PreserveLoginsSettingsViewController Representable
-struct PreserveLoginsSettingsViewControllerRepresentable: UIViewControllerRepresentable {
-    
-    typealias UIViewControllerType = PreserveLoginsSettingsViewController
-
-    class Coordinator {
-        var parentObserver: NSKeyValueObservation?
-    }
-
-    func makeUIViewController(context: Self.Context) -> PreserveLoginsSettingsViewController {
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        let viewController = storyboard.instantiateViewController(identifier: "FireProofSites") as! PreserveLoginsSettingsViewController
-        context.coordinator.parentObserver = viewController.observe(\.parent, changeHandler: { vc, _ in
-            vc.parent?.title = vc.title
-        })
-        return viewController
-    }
-
-    func updateUIViewController(_ uiViewController: PreserveLoginsSettingsViewController, context: Context) {}
-
-    func makeCoordinator() -> Self.Coordinator { Coordinator() }
-}
 
 class PreserveLoginsSettingsViewController: UITableViewController {
     

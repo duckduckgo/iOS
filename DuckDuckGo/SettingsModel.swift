@@ -45,10 +45,34 @@ class SettingsModel {
     private var privacyStore = PrivacyUserDefaults()
     
     var appIcon: AppIcon = AppIcon.defaultAppIcon
-    var fireButtonAnimation: FireButtonAnimationType { appSettings.currentFireButtonAnimation }
-    var appTheme: ThemeName { appSettings.currentThemeName }
+    var fireButtonAnimation: FireButtonAnimationType {
+        get { appSettings.currentFireButtonAnimation }
+        set {
+            appSettings.currentFireButtonAnimation = newValue
+            NotificationCenter.default.post(name: AppUserDefaults.Notifications.currentFireButtonAnimationChange, object: self)
+            
+            animator.animate {
+                // no op
+            } onTransitionCompleted: {
+                // no op
+            } completion: {
+                // no op
+            }
+        }
+    }
+    var appTheme: ThemeName {
+        get { appSettings.currentThemeName }
+        set {
+            appSettings.currentThemeName = newValue
+            ThemeManager.shared.enableTheme(with: newValue)
+            ThemeManager.shared.updateUserInterfaceStyle()
+        }
+    }
     var textSize: Int { appSettings.textSize }
-    var addressBarPosition: AddressBarPosition { appSettings.currentAddressBarPosition }
+    var addressBarPosition: AddressBarPosition {
+        get { appSettings.currentAddressBarPosition }
+        set { appSettings.currentAddressBarPosition = newValue }
+    }
     var sendDoNotSell: Bool { appSettings.sendDoNotSell }
     var autoconsentEnabled: Bool { appSettings.autoconsentEnabled }
     var autoclearDataEnabled: Bool {
@@ -58,7 +82,20 @@ class SettingsModel {
             return false
         }
     }
-    var applicationLock: Bool { privacyStore.authenticationEnabled }
+    var applicationLock: Bool {
+        get { privacyStore.authenticationEnabled }
+        set { privacyStore.authenticationEnabled = newValue }
+    }
+    var autocomplete: Bool {
+        get { appSettings.autocomplete }
+        set { appSettings.autocomplete = newValue }
+    }
+    var voiceSearchEnabled: Bool {
+        get { appSettings.voiceSearchEnabled }
+        set { appSettings.autocomplete = newValue }
+    }
+    var longPressPreviews: Bool { appSettings.longPressPreviews }
+    var allowUniversalLinks: Bool { appSettings.allowUniversalLinks }
     
 
 #if NETWORK_PROTECTION
@@ -79,6 +116,7 @@ class SettingsModel {
         case textSize
         case voiceSearch
         case addressbarPosition
+        case speechRecognition
 
 #if NETWORK_PROTECTION
         case networkProtection
@@ -116,34 +154,9 @@ class SettingsModel {
             return AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
         case .addressbarPosition:
             return !isPad
+        case .speechRecognition:
+            return AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
         }
     }
     
-    func setTheme(theme: ThemeName) {
-        appSettings.currentThemeName = theme
-        ThemeManager.shared.enableTheme(with: theme)
-        ThemeManager.shared.updateUserInterfaceStyle()
-    }
-    
-    func setFireButtonAnimetion(_ value: FireButtonAnimationType) {
-        appSettings.currentFireButtonAnimation = value
-        NotificationCenter.default.post(name: AppUserDefaults.Notifications.currentFireButtonAnimationChange, object: self)
-        
-            animator.animate {
-                // no op
-            } onTransitionCompleted: {
-                // no op
-            } completion: {
-                // no op
-            }
-    }
-    
-    func setAddressBarPosition(_ position: AddressBarPosition) {
-        appSettings.currentAddressBarPosition = position
-    }
-    
-    func setApplicationLock(_ value: Bool) {
-        privacyStore.authenticationEnabled = value
-    }
-
 }

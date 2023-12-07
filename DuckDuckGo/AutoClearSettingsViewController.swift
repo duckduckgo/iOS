@@ -22,29 +22,6 @@ import MessageUI
 import Core
 import SwiftUI
 
-// MARK: AutoClearSettingsViewController Representable
-struct AutoClearSettingsViewControllerRepresentable: UIViewControllerRepresentable {
-    
-    typealias UIViewControllerType = AutoClearSettingsViewController
-
-    class Coordinator {
-        var parentObserver: NSKeyValueObservation?
-    }
-
-    func makeUIViewController(context: Self.Context) -> AutoClearSettingsViewController {
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        let viewController = storyboard.instantiateViewController(identifier: "AutoClearSettingsViewController") as! AutoClearSettingsViewController
-        context.coordinator.parentObserver = viewController.observe(\.parent, changeHandler: { vc, _ in
-            vc.parent?.title = vc.title
-        })
-        return viewController
-    }
-
-    func updateUIViewController(_ uiViewController: AutoClearSettingsViewController, context: Context) {}
-
-    func makeCoordinator() -> Self.Coordinator { Coordinator() }
-}
-
 class AutoClearSettingsViewController: UITableViewController {
     
     enum Sections: Int, CaseIterable {

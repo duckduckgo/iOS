@@ -23,33 +23,6 @@ import Combine
 import SyncUI
 import DDGSync
 
-// TODO: Sync is already SwiftUI and we should not need a representale
-struct SyncSettingsViewControllerRepresentable: UIViewControllerRepresentable {
-    
-    let syncService: DDGSyncing
-    let syncDataProviders: SyncDataProviders
-    
-    typealias UIViewControllerType = SyncSettingsViewController
-
-    class Coordinator {
-        var parentObserver: NSKeyValueObservation?
-    }
-
-    func makeUIViewController(context: Context) -> SyncSettingsViewController {
-        let viewController =  SyncSettingsViewController(syncService: syncService,
-                                          syncBookmarksAdapter: syncDataProviders.bookmarksAdapter)
-        context.coordinator.parentObserver = viewController.observe(\.parent, changeHandler: { vc, _ in
-            vc.parent?.title = vc.title
-            vc.parent?.navigationItem.rightBarButtonItems = vc.navigationItem.rightBarButtonItems
-        })
-        return viewController
-    }
-
-    func updateUIViewController(_ uiViewController: SyncSettingsViewController, context: Context) {}
-
-    func makeCoordinator() -> Self.Coordinator { Coordinator() }
-}
-
 @MainActor
 class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 

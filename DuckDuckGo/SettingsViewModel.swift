@@ -34,9 +34,7 @@ import NetworkProtection
 
 final class SettingsViewModel: ObservableObject {
     
-    // MARK: 
-    var appIconSubscription: AnyCancellable?
-    var stateSubscriber: AnyCancellable?
+    var legacyViewProvider: SettingsLegacyViewProvider
     
     // Closure to request a legacy view controller presentation
     var onRequestPushLegacyView: ((UIViewController) -> Void)?
@@ -46,7 +44,6 @@ final class SettingsViewModel: ObservableObject {
     @Published private(set) var state: SettingsState
     
     // Support Programatic Navigation
-    var isPresentingSyncView = false
     var isPresentingLoginsView = false
     
     // Cell Visibility
@@ -57,13 +54,14 @@ final class SettingsViewModel: ObservableObject {
     var shouldShowVoiceSearchCell: Bool { model.isFeatureAvailable(.voiceSearch) }
     var shouldShowAddressBarPositionCell: Bool { model.isFeatureAvailable(.addressbarPosition) }
     var shouldShowNetworkProtectionCell: Bool { model.isFeatureAvailable(.networkProtection) }
+    var shouldShowSpeechRecognitionCell: Bool { model.isFeatureAvailable(.speechRecognition) }
     
     // Bindings
     var themeBinding: Binding<ThemeName> {
         Binding<ThemeName>(
             get: { self.state.general.appTheme },
             set: {
-                self.model.setTheme(theme: $0)
+                self.model.appTheme = $0
                 self.state.general.appTheme = $0
             }
         )
@@ -72,7 +70,7 @@ final class SettingsViewModel: ObservableObject {
         Binding<FireButtonAnimationType>(
             get: { self.state.general.fireButtonAnimation },
             set: {
-                self.model.setFireButtonAnimetion($0)
+                self.model.fireButtonAnimation = $0
                 self.state.general.fireButtonAnimation = $0
             }
         )
@@ -84,7 +82,7 @@ final class SettingsViewModel: ObservableObject {
             },
             set: {
                 self.state.general.addressBarPosition = $0
-                self.model.setAddressBarPosition($0)
+                self.model.addressBarPosition = $0
             }
         )
     }
@@ -93,14 +91,35 @@ final class SettingsViewModel: ObservableObject {
             get: { self.state.general.applicationLock },
             set: {
                 self.state.general.applicationLock = $0
-                self.model.setApplicationLock($0)
+                self.model.applicationLock = $0
+            }
+        )
+    }
+    var autocompleteBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.state.general.autocomplete },
+            set: {
+                self.state.general.autocomplete = $0
+                self.model.autocomplete = $0
+            }
+        )
+    }
+    var voiceSearchEnabledBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.state.general.voiceSearchEnabled },
+            set: {
+                self.model.voiceSearchEnabled = $0
+                self.state.general.voiceSearchEnabled = $0
             }
         )
     }
         
-    init(model: SettingsModel, state: SettingsState = SettingsState(general: SettingsStateGeneral())) {
+    init(model: SettingsModel,
+         state: SettingsState = SettingsState(general: SettingsStateGeneral()),
+         legacyViewProvider: SettingsLegacyViewProvider) {
         self.model = model
         self.state = state
+        self.legacyViewProvider = legacyViewProvider
         initializeState()
     }
     
@@ -115,12 +134,17 @@ final class SettingsViewModel: ObservableObject {
         state.general.autoconsentEnabled = model.autoconsentEnabled
         state.general.autoclearDataEnabled = model.autoclearDataEnabled
         state.general.applicationLock = model.applicationLock
+        state.general.voiceSearchEnabled = model.voiceSearchEnabled
+        state.general.longPressPreviews = model.longPressPreviews
+        state.general.allowUniversalLinks = model.allowUniversalLinks
     }
-    
-    
 }
 
 extension SettingsViewModel {
+    
+    private func firePixel(_ event: Pixel.Event) {
+        Pixel.fire(pixel: event)
+    }
     
     func setAsDefaultBrowser() {
         firePixel(.defaultBrowserButtonPressedSettings)
@@ -131,18 +155,6 @@ extension SettingsViewModel {
     func shouldPresentLoginsViewWithAccount(accountDetails: SecureVaultModels.WebsiteAccount) {
         state.general.activeWebsiteAccount = accountDetails
         isPresentingLoginsView = true
-    }
-    
-    func autofillViewPresentationAction() {
-        firePixel(.autofillSettingsOpened)
-    }
-    
-    func gpcViewPresentationAction() {
-        firePixel(.settingsDoNotSellShown)
-    }
-    
-    func autoConsentPresentationAction() {
-        firePixel(.settingsAutoconsentShown)
     }
     
     func openCookiePopupManagement() {
@@ -156,25 +168,73 @@ extension SettingsViewModel {
 // we fall back to UIKit navigation
 extension SettingsViewModel {
     
-    func presentTextSettingsView(_ view: UIViewController) {
-        firePixel(.textSizeSettingsShown)
-        pushLegacyView(view)
+    enum LegacyView {
+        case addToDock,
+             sync,
+             logins,
+             textSize,
+             appIcon,
+             gpc,
+             autoconsent,
+             unprotectedSites,
+             fireproofSites,
+             autoclearData,
+             keyboard
+    }
+    
+    @MainActor
+    func presentView(_ view: LegacyView) {
+        switch view {
+        
+        case .addToDock:
+            presentLegacyView(legacyViewProvider.addToDock, modal: true)
+        
+        case .sync:
+            pushLegacyView(legacyViewProvider.syncSettings)
+        
+        case .logins:
+            firePixel(.autofillSettingsOpened)
+            pushLegacyView(legacyViewProvider.loginSettings(delegate: self,
+                                                            selectedAccount: state.general.activeWebsiteAccount))
+        
+        case .textSize:
+            firePixel(.textSizeSettingsShown)
+            pushLegacyView(legacyViewProvider.textSettings)
+        
+        case .appIcon:
+            pushLegacyView(legacyViewProvider.appIcon)
+        
+        case .gpc:
+            firePixel(.settingsDoNotSellShown)
+            pushLegacyView(legacyViewProvider.gpc)
+        
+        case .autoconsent:
+            firePixel(.settingsAutoconsentShown)
+            pushLegacyView(legacyViewProvider.autoConsent)
+        
+        case .unprotectedSites:
+            pushLegacyView(legacyViewProvider.unprotectedSites)
+        
+        case .fireproofSites:
+            pushLegacyView(legacyViewProvider.fireproofSites)
+        
+        case .autoclearData:
+            pushLegacyView(legacyViewProvider.autoclearData)
+        
+        case .keyboard:
+            pushLegacyView(legacyViewProvider.keyboard)
+        }
     }
         
-    func pushLegacyView(_ view: UIViewController) {
+    private func pushLegacyView(_ view: UIViewController) {
         onRequestPushLegacyView?(view)
     }
     
-    func presentLegacyView(_ view: UIViewController, modal: Bool) {
+    private func presentLegacyView(_ view: UIViewController, modal: Bool) {
         onRequestPresentLegacyView?(view, modal)
     }
     
-    private func firePixel(_ event: Pixel.Event) {
-        Pixel.fire(pixel: event)
-    }
-    
 }
-
 
 extension SettingsViewModel {
     static var fontSizeForHeaderView: CGFloat {

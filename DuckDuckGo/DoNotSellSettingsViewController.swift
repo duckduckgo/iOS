@@ -19,30 +19,6 @@
 
 import UIKit
 import Core
-import SwiftUI
-
-// MARK: DoNotSellSettingsView Settings Representable
-struct DoNotSellSettingsViewControllerRepresentable: UIViewControllerRepresentable {
-    
-    typealias UIViewControllerType = DoNotSellSettingsViewController
-
-    class Coordinator {
-        var parentObserver: NSKeyValueObservation?
-    }
-
-    func makeUIViewController(context: Self.Context) -> DoNotSellSettingsViewController {
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        let viewController = storyboard.instantiateViewController(identifier: "DoNotSell") as! DoNotSellSettingsViewController
-        context.coordinator.parentObserver = viewController.observe(\.parent, changeHandler: { vc, _ in
-            vc.parent?.title = vc.title
-        })
-        return viewController
-    }
-
-    func updateUIViewController(_ uiViewController: DoNotSellSettingsViewController, context: Context) {}
-
-    func makeCoordinator() -> Self.Coordinator { Coordinator() }
-}
 
 class DoNotSellSettingsViewController: UITableViewController {
 

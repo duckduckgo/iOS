@@ -20,7 +20,8 @@
 import SwiftUI
 
 /// Encapsulates a View representing a Cell with different configurations
-struct SettingsCellView: View {
+struct SettingsCellView: View, Identifiable {
+    
     enum Accesory {
         case none
         case rightDetail(String)
@@ -36,6 +37,7 @@ struct SettingsCellView: View {
     var accesory: Accesory
     var asLink: Bool
     var disclosureIndicator: Bool
+    var id: UUID = UUID()
     
     /// Initializes a `SettingsCellView` with the specified label and accesory.
     ///

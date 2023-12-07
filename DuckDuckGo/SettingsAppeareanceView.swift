@@ -1,5 +1,4 @@
-// TODO: Remove transition animation if showing a selected account//
-//  GeneralSection.swift
+//  SettingsAppeareanceView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -23,20 +22,21 @@ import UIKit
 struct SettingsAppeareanceView: View {
         
     @EnvironmentObject var viewModel: SettingsViewModel
-    @EnvironmentObject var viewProvider: SettingsViewProvider
 
     var body: some View {
+        
         Section(header: Text("Appeareance")) {
             SettingsPickerCellView(label: "Theme",
                                    options: ThemeName.allCases,
                                    selectedOption: viewModel.themeBinding)
-             
-            NavigationLink(destination: viewProvider.appIcon) {
-                let image = Image(uiImage: viewModel.state.general.appIcon.smallImage ?? UIImage())
-                SettingsCellView(label: "App Icon",
-                                 accesory: .image(image))
-            }
-             
+            
+            let image = Image(uiImage: viewModel.state.general.appIcon.smallImage ?? UIImage())
+            SettingsCellView(label: "App Icon",
+                             action: { viewModel.presentView(.appIcon ) },
+                             accesory: .image(image),
+                             asLink: true,
+                             disclosureIndicator: true)
+            
             SettingsPickerCellView(label: "Fire Button Animation",
                                    options: FireButtonAnimationType.allCases,
                                    selectedOption: viewModel.fireButtonAnimationBinding)
@@ -45,9 +45,7 @@ struct SettingsAppeareanceView: View {
             // The current implementation will not work on top of the SwiftUI stack, so we need to push it via the UIKit Container
             if viewModel.shouldShowTextSizeCell {
                 SettingsCellView(label: "Text Size",
-                                 action: {
-                                    viewModel.presentTextSettingsView(viewProvider.textSettings)
-                                  },
+                                 action: { viewModel.presentView(.textSize) },
                                  accesory: .rightDetail("\(viewModel.state.general.textSize)%"),
                                  asLink: true)
             }

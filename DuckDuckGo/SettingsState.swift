@@ -35,4 +35,8 @@ struct SettingsStateGeneral {
     var autoconsentEnabled: Bool = true
     var autoclearDataEnabled: Bool = true
     var applicationLock: Bool = true
+    var autocomplete: Bool = true
+    var voiceSearchEnabled = true
+    var longPressPreviews = true
+    var allowUniversalLinks = true
 }

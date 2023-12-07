@@ -22,9 +22,14 @@ import SwiftUI
 
 class SettingsHostingController: UIHostingController<AnyView> {
     var viewModel: SettingsViewModel
-    var viewProvider: SettingsViewProvider
+    var viewProvider: SettingsLegacyViewProvider
 
-    init(viewModel: SettingsViewModel, viewProvider: SettingsViewProvider) {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        applyTheme(ThemeManager.shared.currentTheme)
+    }
+    
+    init(viewModel: SettingsViewModel, viewProvider: SettingsLegacyViewProvider) {
         self.viewModel = viewModel
         self.viewProvider = viewProvider
         super.init(rootView: AnyView(EmptyView()))
@@ -37,7 +42,7 @@ class SettingsHostingController: UIHostingController<AnyView> {
             self?.presentLegacyViewCOntroller(vc, modal: modal)
         }
 
-        let settingsView = SettingsView(viewModel: viewModel, viewProvider: viewProvider)
+        let settingsView = SettingsView(viewModel: viewModel)
         self.rootView = AnyView(settingsView)
     }
 

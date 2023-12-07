@@ -19,30 +19,6 @@
 
 import UIKit
 import Core
-import SwiftUI
-
-// MARK: AutoconsentSettingsViewController Representable
-struct AutoconsentSettingsViewControllerRepresentable: UIViewControllerRepresentable {
-    
-    typealias UIViewControllerType = AutoconsentSettingsViewController
-
-    class Coordinator {
-        var parentObserver: NSKeyValueObservation?
-    }
-
-    func makeUIViewController(context: Self.Context) -> AutoconsentSettingsViewController {
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        let viewController = storyboard.instantiateViewController(identifier: "AutoconsentSettingsViewController") as! AutoconsentSettingsViewController
-        context.coordinator.parentObserver = viewController.observe(\.parent, changeHandler: { vc, _ in
-            vc.parent?.title = vc.title
-        })
-        return viewController
-    }
-
-    func updateUIViewController(_ uiViewController: AutoconsentSettingsViewController, context: Context) {}
-
-    func makeCoordinator() -> Self.Coordinator { Coordinator() }
-}
 
 final class AutoconsentSettingsViewController: UITableViewController {
     

@@ -1,5 +1,5 @@
 //
-//  GeneralSection.swift
+//  SettingsGeneralView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -23,7 +23,6 @@ import UIKit
 struct SettingsGeneralView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
-    @EnvironmentObject var viewProvider: SettingsViewProvider
     
     var body: some View {
         Section {
@@ -34,12 +33,10 @@ struct SettingsGeneralView: View {
             // This old VC has a special behavior does not work as expected when presented in the SwiftUI Stack
             // so we need to push it via the UIKit Containe
             SettingsCellView(label: "Add App to Your Dock",
-                             action: {
-                                viewModel.presentLegacyView(viewProvider.addToDock, modal: true)
-                              },
+                             action: { viewModel.presentView(.addToDock) },
                              asLink: true)
             
-            NavigationLink(destination: viewProvider.addWidget) {
+            NavigationLink(destination: WidgetEducationView()) {
                 SettingsCellView(label: "Add Widget to Home Screen")
             }
         }

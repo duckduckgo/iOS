@@ -1,5 +1,4 @@
-// TODO: Remove transition animation if showing a selected account//
-//  GeneralSection.swift
+//  SettingsPrivacyView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -23,52 +22,47 @@ import UIKit
 struct SettingsPrivacyView: View {
         
     @EnvironmentObject var viewModel: SettingsViewModel
-    @EnvironmentObject var viewProvider: SettingsViewProvider
-    @State var isPresentingGPCView = false
 
     var body: some View {
          Section(header: Text("Privacy"),
                  footer: Text("If Touch ID, Face ID or a system passcode is set, you'll be requested to unlock the app when opening.")) {
              
-             NavigationLink(destination: viewProvider.doNotSell, isActive: $isPresentingGPCView) {
-                 SettingsCellView(label: "Global Privacy Control (GPC)",
-                                  accesory: .rightDetail(viewModel.state.general.sendDoNotSell
-                                                         ? UserText.doNotSellEnabled
-                                                         : UserText.doNotSellDisabled))
-             }
+             SettingsCellView(label: "Global Privacy Control (GPC)",
+                          action: { viewModel.presentView(.gpc) },
+                          accesory: .rightDetail(viewModel.state.general.sendDoNotSell
+                                                 ? UserText.doNotSellEnabled
+                                                 : UserText.doNotSellDisabled),
+                          asLink: true,
+                          disclosureIndicator: true)
+
+             SettingsCellView(label: "Manage Cookie Popups",
+                              action: { viewModel.presentView(.autoconsent) },
+                              accesory: .rightDetail(viewModel.state.general.autoconsentEnabled
+                                                     ? UserText.autoconsentEnabled
+                                                     : UserText.autoconsentDisabled),
+                              asLink: true,
+                              disclosureIndicator: true)
+
+             SettingsCellView(label: "Unprotected SItes",
+                              action: { viewModel.presentView(.unprotectedSites) },
+                              asLink: true,
+                              disclosureIndicator: true)
              
-             NavigationLink(destination: viewProvider.autoConsent) {
-                 SettingsCellView(label: "Manage Cookie Popups",
-                                  accesory: .rightDetail(viewModel.state.general.autoconsentEnabled
-                                                         ? UserText.autoconsentEnabled
-                                                         : UserText.autoconsentDisabled))
-             }
+             SettingsCellView(label: "Fireproof Sites",
+                              action: { viewModel.presentView(.fireproofSites) },
+                              asLink: true,
+                              disclosureIndicator: true)
              
-             NavigationLink(destination: viewProvider.unprotectedSites) {
-                 SettingsCellView(label: "Unprotected SItes")
-             }
-             
-             NavigationLink(destination: viewProvider.fireproofSites) {
-                 SettingsCellView(label: "Fireproof SItes")
-             }
-             
-             NavigationLink(destination: viewProvider.autoclearData) {
-                 SettingsCellView(label: "Automatically Clear Data",
-                                  accesory: .rightDetail(viewModel.state.general.autoclearDataEnabled
-                                                         ? UserText.autoClearAccessoryOn
-                                                         : UserText.autoClearAccessoryOff))
-             }
+             SettingsCellView(label: "Automatically Clear Data",
+                              action: { viewModel.presentView(.autoclearData) },
+                              accesory: .rightDetail(viewModel.state.general.autoclearDataEnabled
+                                                     ? UserText.autoClearAccessoryOn
+                                                     : UserText.autoClearAccessoryOff),
+                              asLink: true,
+                              disclosureIndicator: true)
              
              SettingsCellView(label: "Application Lock", accesory: .toggle(isOn: viewModel.applicationLockBinding))
              
          }
-        
-         .onChange(of: isPresentingGPCView) { isActive in
-             if isActive {
-                 viewModel.gpcViewPresentationAction()
-             }
-         }
-
-        
     }
 }

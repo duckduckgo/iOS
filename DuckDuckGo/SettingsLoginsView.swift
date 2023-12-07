@@ -1,5 +1,4 @@
-// TODO: Remove transition animation if showing a selected account//
-//  GeneralSection.swift
+//  SettingsLoginsView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -26,29 +25,14 @@ import BrowserServicesKit
 struct SettingsLoginsView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
-    @EnvironmentObject var viewProvider: SettingsViewProvider
-    @State var isPresentingLoginsView: Bool = false
     
     var body: some View {
         if viewModel.shouldShowLoginsCell {
             Section {
-                NavigationLink(destination: viewProvider.loginSettings(delegate: viewModel, selectedAccount: viewModel.state.general.activeWebsiteAccount),
-                               isActive: $isPresentingLoginsView) {
-                    SettingsCellView(label: UserText.autofillLoginListTitle )
-                    
-                }
-                .onChange(of: viewModel.isPresentingLoginsView) { newValue in
-                    isPresentingLoginsView = newValue
-                }
-                
-                .onChange(of: isPresentingLoginsView) { isActive in
-                    if isActive {
-                        viewModel.autofillViewPresentationAction()
-                    } else {
-                        viewModel.isPresentingLoginsView = false
-                    }
-                }
-                
+                SettingsCellView(label: "Logins",
+                                 action: { viewModel.presentView(.logins) },
+                                 asLink: true,
+                                 disclosureIndicator: true)
             }
         }
             

@@ -204,7 +204,7 @@ extension MainViewController {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
         launchSettings {
-            $0.isPresentingSyncView = true
+            $0.presentView(.sync)
         }
     }
     
@@ -217,19 +217,22 @@ extension MainViewController {
     }
     
     private func launchSettings(completion: ((SettingsViewModel) -> Void)? = nil) {
-        let legacyViewProvider = SettingsViewProvider(syncService: syncService,
-                                                    syncDataProviders: syncDataProviders,
-                                                    appSettings: appSettings)
+        let legacyViewProvider = SettingsLegacyViewProvider(syncService: syncService,
+                                                            syncDataProviders: syncDataProviders,
+                                                            appSettings: appSettings)
         
         let model = SettingsModel(bookmarksDatabase: self.bookmarksDatabase,
                                   internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
         
-        let settingsViewModel = SettingsViewModel(model: model)
+        let settingsViewModel = SettingsViewModel(model: model,
+                                                  legacyViewProvider: legacyViewProvider)
         
         let settingsController = SettingsHostingController(viewModel: settingsViewModel, viewProvider: legacyViewProvider)
+        settingsController.applyTheme(ThemeManager.shared.currentTheme)
         
         // We are still presenting legacy views, so use a Navcontroller
         let navController = UINavigationController(rootViewController: settingsController)
+        navController.applyTheme(ThemeManager.shared.currentTheme)
         settingsController.modalPresentationStyle = .automatic
 
         present(navController, animated: true) {

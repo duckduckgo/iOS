@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": null,
-          "revision": "fe577c508ad4ea163075ac8fab20673d0a7565f6",
-          "version": "92.0.1"
+          "revision": "d64d2a635a32e098953456e15d47530806e2765a",
+          "version": null
         }
       },
       {
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
           "branch": null,
-          "revision": "93677cc02cfe650ce7f417246afd0e8e972cd83e",
-          "version": "10.0.0"
+          "revision": "dbecae0df07650a21b5632a92fa2e498c96af7b5",
+          "version": "10.0.1"
         }
       },
       {
@@ -123,8 +123,8 @@
         "repositoryURL": "https://github.com/apple/swift-argument-parser",
         "state": {
           "branch": null,
-          "revision": "8f4d2753f0e4778c76d5f05ad16c74f707390531",
-          "version": "1.2.3"
+          "revision": "c8ed701b513cf5177118a175d85fbbbcd707ab41",
+          "version": "1.3.0"
         }
       },
       {

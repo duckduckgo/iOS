@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": null,
-          "revision": "26a0aea93c56552803144da3d57f8a06a9df777b",
+          "revision": "fb25ff6a2945448213b8422b6a7416ee48802278",
           "version": null
         }
       },
@@ -123,8 +123,8 @@
         "repositoryURL": "https://github.com/apple/swift-argument-parser",
         "state": {
           "branch": null,
-          "revision": "6b2aa2748a7881eebb9f84fb10c01293e15b52ca",
-          "version": "0.5.0"
+          "revision": "c8ed701b513cf5177118a175d85fbbbcd707ab41",
+          "version": "1.3.0"
         }
       },
       {
@@ -159,8 +159,8 @@
         "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
         "state": {
           "branch": null,
-          "revision": "4684440d03304e7638a2c8086895367e90987463",
-          "version": "1.2.1"
+          "revision": "a6b7ba151d9dc6684484f3785293875ec01cc1ff",
+          "version": "1.2.2"
         }
       },
       {

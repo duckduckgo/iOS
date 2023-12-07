@@ -23,13 +23,8 @@ import UIKit
 struct SettingsAppeareanceView: View {
         
     @EnvironmentObject var viewModel: SettingsViewModel
-    
     @State var setIsPresentingAppIconView: Bool = false
-    
-    @State var selectedTheme: ThemeName = .systemDefault
-    @State var selectedTextSize: Int = 100
-    
-    
+
     var body: some View {
         Section(header: Text("Appeareance")) {
             SettingsPickerCellView(label: "Theme",
@@ -39,7 +34,7 @@ struct SettingsAppeareanceView: View {
                                         set: { viewModel.setTheme($0) }
                                    ))
             
-            NavigationLink(destination: AppIconSettingsViewControllerRepresentable(), isActive: $setIsPresentingAppIconView) {
+            NavigationLink(destination: LazyView(AppIconSettingsViewControllerRepresentable()), isActive: $setIsPresentingAppIconView) {
                 let image = Image(uiImage: viewModel.state.general.appIcon.smallImage ?? UIImage())
                 SettingsCellView(label: "App Icon",
                                  accesory: .image(image))
@@ -57,7 +52,7 @@ struct SettingsAppeareanceView: View {
             if viewModel.shouldShowTextSizeCell {
                 SettingsCellView(label: "Text Size",
                                  action: { viewModel.shouldPresentTextSettingsView() },
-                                 accesory: .rightDetail("\(selectedTextSize)%"),
+                                 accesory: .rightDetail("\(viewModel.state.general.textSize)%"),
                                  asLink: true)
             }
             

@@ -20,7 +20,6 @@
 import Foundation
 import BrowserServicesKit
 import Persistence
-import Common
 import DDGSync
 import Combine
 import UIKit
@@ -35,45 +34,52 @@ import Core
 #endif
 
 class SettingsModel {
-    
-    // MARK: Dependencies
-    let syncService: DDGSyncing
-    let syncDataProviders: SyncDataProviders
-    let appIconManager = AppIconManager.shared
-    
+        
+    private let appIconManager = AppIconManager.shared
     private let bookmarksDatabase: CoreDataDatabase
     private let internalUserDecider: InternalUserDecider
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var animator: FireButtonAnimator = FireButtonAnimator(appSettings: AppUserDefaults())
     private(set) lazy var appSettings = AppDependencyProvider.shared.appSettings
+    private lazy var isPad = UIDevice.current.userInterfaceIdiom == .pad
+    
+    var appIcon: AppIcon = AppIcon.defaultAppIcon
+    var fireButtonAnimation: FireButtonAnimationType { appSettings.currentFireButtonAnimation }
+    var appTheme: ThemeName { appSettings.currentThemeName }
+    var textSize: Int { appSettings.textSize }
+    
 
-    // MARK: Other Properties
-    private lazy var isPad = UIDevice.current.userInterfaceIdiom != .pad
-    #if NETWORK_PROTECTION
+#if NETWORK_PROTECTION
     private let connectionObserver = ConnectionStatusObserverThroughSession()
-    #endif
+#endif
     private var cancellables: Set<AnyCancellable> = []
     
     init(bookmarksDatabase: CoreDataDatabase,
-         syncService: DDGSyncing,
-         syncDataProviders: SyncDataProviders,
          internalUserDecider: InternalUserDecider) {
         self.bookmarksDatabase = bookmarksDatabase
-        self.syncService = syncService
-        self.syncDataProviders = syncDataProviders
         self.internalUserDecider = internalUserDecider
+        setupSubscribers()
     }
     
     enum Features {
         case sync
         case autofillAccessCredentialManagement
         case textSize
-        #if NETWORK_PROTECTION
-        case networkProtection
-        #endif
         case voiceSearch
         case addressbarPosition
-            
+
+#if NETWORK_PROTECTION
+        case networkProtection
+#endif
+    }
+    
+    func setupSubscribers() {
+        
+        appIconManager.$appIcon
+            .sink { [weak self] newIcon in
+                self?.appIcon = newIcon
+            }
+            .store(in: &cancellables)
     }
     
     func isFeatureAvailable(_ feature: Features) -> Bool {

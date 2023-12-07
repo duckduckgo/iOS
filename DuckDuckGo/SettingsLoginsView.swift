@@ -31,15 +31,16 @@ struct SettingsLoginsView: View {
     var body: some View {
         if viewModel.shouldShowLoginsCell {
             Section {
-                // TODO: Remove transition animation if showing a selected account
-                NavigationLink(destination: viewModel.autofillControllerRepresentable, isActive: $isPresentingLoginsView) {
+                NavigationLink(destination: LazyView(viewModel.autofillControllerRepresentable),
+                               isActive: $viewModel.isPresentingLoginsView) {
                     SettingsCellView(label: UserText.autofillLoginListTitle,
                                      action: { viewModel.isPresentingLoginsView = true })
                     
                 }
             }
-
+    
         }
+            
     }
  
 }

@@ -37,7 +37,7 @@ struct SettingsGeneralView: View {
                              action: { viewModel.shouldPresentAddToDockView() },
                              asLink: true)
             
-            NavigationLink(destination: WidgetEducationView(), isActive: $isPresentingAddWidgetView) {
+            NavigationLink(destination: LazyView(WidgetEducationView()), isActive: $isPresentingAddWidgetView) {
                 SettingsCellView(label: "Add Widget to Home Screen",
                                  action: { viewModel.isPresentingAddWidgetView = true })
             }

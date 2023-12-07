@@ -1,5 +1,5 @@
 //
-//  GeneralSection.swift
+//  LazyView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -18,23 +18,18 @@
 //
 
 import SwiftUI
-import UIKit
-import Core
-import DDGSync
 
-struct SettingsSyncView: View {
-    
-    @EnvironmentObject var viewModel: SettingsViewModel
-    @State var isPresentingSyncView: Bool = false
-    
+/// `Conforms to the `View` protocol
+/// Delays the instantiation of its content view until necessary.
+/// This prevents SwiftUI from preloading views that are not immediately 
+/// visible, sucn as in NavigationLink
+
+struct LazyView<Content: View>: View {
+    let build: () -> Content
+    init(_ build: @autoclosure @escaping () -> Content) {
+        self.build = build
+    }
     var body: some View {
-        if viewModel.shouldShowSyncCell {
-            Section {
-                NavigationLink(destination: LazyView(viewModel.syncSettingsControllerRepresentable), isActive: $isPresentingSyncView) {
-                    SettingsCellView(label: UserText.syncTitle,
-                                     action: { viewModel.isPresentingSyncView = true })
-                }
-            }
-        }
+        build()
     }
 }

@@ -22,7 +22,6 @@ import BrowserServicesKit
 import Persistence
 import SwiftUI
 import Common
-import DDGSync
 import Combine
 
 #if APP_TRACKING_PROTECTION
@@ -44,6 +43,7 @@ final class SettingsViewModel: ObservableObject {
     var onRequestPresentLegacyView: ((UIViewController, _ modal: Bool) -> Void)?
     
     private(set) var model: SettingsModel
+    private let legacyViewProvider: SettingsLegacyViewProvider
     @Published private(set) var state: SettingsState
     
     // MARK: Presentation
@@ -61,25 +61,31 @@ final class SettingsViewModel: ObservableObject {
     var shouldShowVoiceSearchCell: Bool { model.isFeatureAvailable(.voiceSearch) }
     var shouldShowAddressBarPositionCell: Bool { model.isFeatureAvailable(.addressbarPosition) }
     var shouldShowNetworkProtectionCell: Bool { model.isFeatureAvailable(.networkProtection) }
+    
+    var autofillControllerRepresentable: AutofillLoginSettingsListViewControllerRepresentable {
+        legacyViewProvider.createAutofillLoginSettingsListViewControllerRepresentable(delegate: self,
+                                                                                      selectedAccount: state.general.activeWebsiteAccount)
+    }
+    
+    var syncSettingsControllerRepresentable: SyncSettingsViewControllerRepresentable {
+        legacyViewProvider.createSyncSettingsControllerRepresentable()
+    }
+
         
-    init(model: SettingsModel, state: SettingsState = SettingsState(general: SettingsStateGeneral())) {
+    init(model: SettingsModel, state: SettingsState = SettingsState(general: SettingsStateGeneral()),
+         legacyViewProvider: SettingsLegacyViewProvider) {
         self.model = model
         self.state = state
+        self.legacyViewProvider = legacyViewProvider
+        initializeState()
     }
     
-    func configureView() {
-        state.general.appIcon = model.appIconManager.appIcon
-        state.general.fireButtonAnimation = model.appSettings.currentFireButtonAnimation
-        state.general.appTheme = model.appSettings.currentThemeName
-        setupSubscribers()
-    }
-    
-    private func setupSubscribers() {
-        
-        appIconSubscription = model.appIconManager.$appIcon
-            .sink { newIcon in
-                self.state.general.appIcon = newIcon
-            }
+    func initializeState() {
+        // Model should eventually be Observable
+        state.general.appIcon = model.appIcon
+        state.general.fireButtonAnimation = model.fireButtonAnimation
+        state.general.appTheme = model.appTheme
+        state.general.textSize = model.textSize
     }
     
     func openCookiePopupManagement() {
@@ -102,17 +108,15 @@ extension SettingsViewModel {
     }
 
     func shouldPresentAddToDockView() {
-        let storyboard = UIStoryboard(name: "HomeRow", bundle: nil)
-        let viewController = storyboard.instantiateViewController(identifier: "instructions") as! HomeRowInstructionsViewController
+        let viewController = legacyViewProvider.createAddToDockViewController()
         presentLegacyView(viewController, modal: true)
         isPresentingAddToDockView = false
     }
     
     func shouldPresentTextSettingsView() {
         Pixel.fire(pixel: .textSizeSettingsShown)
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        let controller = storyboard.instantiateViewController(identifier: "TextSize") as! TextSizeSettingsViewController
-        pushLegacyView(controller)
+        let viewController = legacyViewProvider.createTextSizeSettingsViewController()
+        pushLegacyView(viewController)
         isPresentingTextSettingsView = false
     }
     
@@ -146,21 +150,6 @@ extension SettingsViewModel {
     }
     
     func selectBarPosition() {}
-}
-
-extension SettingsViewModel {
-    
-    var autofillControllerRepresentable: AutofillLoginSettingsListViewControllerRepresentable {
-        return AutofillLoginSettingsListViewControllerRepresentable(appSettings: model.appSettings,
-                                                                                       syncService: model.syncService,
-                                                                                       syncDataProviders: model.syncDataProviders,
-                                                                                       delegate: self,
-                                                                    selectedAccount: state.general.activeWebsiteAccount)
-    }
-    
-    var syncSettingsControllerRepresentable: SyncSettingsViewControllerRepresentable { return SyncSettingsViewControllerRepresentable(syncService: model.syncService,
-                                                syncDataProviders: model.syncDataProviders)
-    }
 }
 
 

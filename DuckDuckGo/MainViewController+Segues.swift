@@ -217,11 +217,15 @@ extension MainViewController {
     }
     
     private func launchSettings(completion: ((SettingsViewModel) -> Void)? = nil) {
+        let legacyViewProvider = SettingsLegacyViewProvider(syncService: syncService,
+                                                    syncDataProviders: syncDataProviders,
+                                                    appSettings: appSettings)
+        
         let model = SettingsModel(bookmarksDatabase: self.bookmarksDatabase,
-                                  syncService: self.syncService,
-                                  syncDataProviders: self.syncDataProviders,
                                   internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
-        let settingsViewModel = SettingsViewModel(model: model)
+        
+        let settingsViewModel = SettingsViewModel(model: model, legacyViewProvider: legacyViewProvider)
+        
         let settingsController = SettingsHostingController(viewModel: settingsViewModel)
         
         // We are still presenting legacy views, so use a Navcontroller

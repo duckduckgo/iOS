@@ -26,6 +26,7 @@ struct SettingsSyncView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
     @State var isPresentingSyncView: Bool = false
+
     
     var body: some View {
         if viewModel.shouldShowSyncCell {
@@ -34,6 +35,10 @@ struct SettingsSyncView: View {
                     SettingsCellView(label: UserText.syncTitle,
                                      action: { viewModel.isPresentingSyncView = true })
                 }
+            }
+                        
+            .onChange(of: viewModel.isPresentingSyncView) { newValue in
+                isPresentingSyncView = newValue
             }
         }
     }

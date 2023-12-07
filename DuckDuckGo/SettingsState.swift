@@ -30,4 +30,5 @@ struct SettingsStateGeneral {
     var fireButtonAnimation: FireButtonAnimationType = .fireRising
     var textSize: Int = 100
     var activeWebsiteAccount: SecureVaultModels.WebsiteAccount?
+    var addressBarPosition: AddressBarPosition = .top
 }

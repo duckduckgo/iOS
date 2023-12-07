@@ -32,11 +32,14 @@ struct SettingsLoginsView: View {
         if viewModel.shouldShowLoginsCell {
             Section {
                 NavigationLink(destination: LazyView(viewModel.autofillControllerRepresentable),
-                               isActive: $viewModel.isPresentingLoginsView) {
+                               isActive: $isPresentingLoginsView) {
                     SettingsCellView(label: UserText.autofillLoginListTitle,
                                      action: { viewModel.isPresentingLoginsView = true })
                     
                 }
+            }
+            .onChange(of: viewModel.isPresentingLoginsView) { newValue in
+                isPresentingLoginsView = newValue
             }
     
         }

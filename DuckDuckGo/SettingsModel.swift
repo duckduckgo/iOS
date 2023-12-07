@@ -47,6 +47,7 @@ class SettingsModel {
     var fireButtonAnimation: FireButtonAnimationType { appSettings.currentFireButtonAnimation }
     var appTheme: ThemeName { appSettings.currentThemeName }
     var textSize: Int { appSettings.textSize }
+    var addressBarPosition: AddressBarPosition { appSettings.currentAddressBarPosition }
     
 
 #if NETWORK_PROTECTION
@@ -123,6 +124,10 @@ class SettingsModel {
             } completion: {
                 // no op
             }
+    }
+    
+    func setAddressBarPosition(_ position: AddressBarPosition) {
+        appSettings.currentAddressBarPosition = position
     }
 
 }

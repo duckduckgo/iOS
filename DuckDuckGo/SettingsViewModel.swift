@@ -47,12 +47,34 @@ final class SettingsViewModel: ObservableObject {
     @Published private(set) var state: SettingsState
     
     // MARK: Presentation
-    var isPresentingAddToDockView: Bool = false
+    var isPresentingAddToDockView = false {
+        didSet {
+            if isPresentingAddToDockView == true {
+                let viewController = legacyViewProvider.createAddToDockViewController()
+                presentLegacyView(viewController, modal: true)
+                isPresentingAddToDockView = false
+            }
+        }
+    }
     var isPresentingAddWidgetView = false
     var isPresentingSyncView = false
-    var isPresentingLoginsView = false
+    var isPresentingLoginsView = false {
+        didSet {
+            if isPresentingLoginsView == true {
+                Pixel.fire(pixel: .autofillSettingsOpened)
+            }
+        }
+    }
     var isPresentingAppIconView = false
-    var isPresentingTextSettingsView = false
+    var isPresentingTextSettingsView = false {
+        didSet {
+            if isPresentingTextSettingsView == true {
+                Pixel.fire(pixel: .textSizeSettingsShown)
+                let viewController = legacyViewProvider.createTextSizeSettingsViewController()
+                pushLegacyView(viewController)
+            }
+        }
+    }
     
     var shouldShowSyncCell: Bool { model.isFeatureAvailable(.sync) }
     var shouldShowLoginsCell: Bool { model.isFeatureAvailable(.autofillAccessCredentialManagement) }
@@ -86,6 +108,7 @@ final class SettingsViewModel: ObservableObject {
         state.general.fireButtonAnimation = model.fireButtonAnimation
         state.general.appTheme = model.appTheme
         state.general.textSize = model.textSize
+        state.general.addressBarPosition = model.addressBarPosition
     }
     
     func openCookiePopupManagement() {
@@ -106,19 +129,6 @@ extension SettingsViewModel {
     private func presentLegacyView(_ view: UIViewController, modal: Bool) {
         onRequestPresentLegacyView?(view, modal)
     }
-
-    func shouldPresentAddToDockView() {
-        let viewController = legacyViewProvider.createAddToDockViewController()
-        presentLegacyView(viewController, modal: true)
-        isPresentingAddToDockView = false
-    }
-    
-    func shouldPresentTextSettingsView() {
-        Pixel.fire(pixel: .textSizeSettingsShown)
-        let viewController = legacyViewProvider.createTextSizeSettingsViewController()
-        pushLegacyView(viewController)
-        isPresentingTextSettingsView = false
-    }
     
 }
 
@@ -126,6 +136,7 @@ extension SettingsViewModel {
 extension SettingsViewModel {
     
     func setAsDefaultBrowser() {
+        Pixel.fire(pixel: .defaultBrowserButtonPressedSettings)
         guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
         UIApplication.shared.open(url)
     }
@@ -149,7 +160,11 @@ extension SettingsViewModel {
         state.general.fireButtonAnimation = value
     }
     
-    func selectBarPosition() {}
+    func setAddressBarPosition(_ value: AddressBarPosition) {
+        model.setAddressBarPosition(value)
+        state.general.addressBarPosition = value
+    }
+    
 }
 
 

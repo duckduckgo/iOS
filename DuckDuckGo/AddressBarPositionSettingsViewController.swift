@@ -79,12 +79,16 @@ extension AddressBarPositionSettingsViewController: Themable {
     }
 }
 
-enum AddressBarPosition: String, CaseIterable {
+enum AddressBarPosition: String, CaseIterable, CustomStringConvertible {
     case top
     case bottom
 
     var isBottom: Bool {
         self == .bottom
+    }
+    
+    var description: String {
+        return descriptionText
     }
 
     var descriptionText: String {

@@ -27,14 +27,14 @@ struct SettingsGeneralView: View {
     
     var body: some View {
         Section {
-            // The homeRow view controller has
-            // The current implementation will not work on top of the SwiftUI stack, so we need to push it via the UIKit Container
             SettingsCellView(label: "Set as Default Browser",
                              action: { viewModel.setAsDefaultBrowser() },
                              asLink: true)
             
+            // This old VC has a special behavior does not work as expected when presented in the SwiftUI Stack
+            // so we need to push it via the UIKit Containe
             SettingsCellView(label: "Add App to Your Dock",
-                             action: { viewModel.shouldPresentAddToDockView() },
+                             action: { viewModel.isPresentingAddToDockView = true },
                              asLink: true)
             
             NavigationLink(destination: LazyView(WidgetEducationView()), isActive: $isPresentingAddWidgetView) {
@@ -43,8 +43,8 @@ struct SettingsGeneralView: View {
             }
         }
         
-        .onChange(of: isPresentingAddWidgetView) { newValue in
-            viewModel.isPresentingAddWidgetView = newValue
+        .onChange(of: viewModel.isPresentingAddWidgetView) { newValue in
+            isPresentingAddWidgetView = newValue
         }
         
 

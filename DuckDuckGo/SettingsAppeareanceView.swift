@@ -23,7 +23,6 @@ import UIKit
 struct SettingsAppeareanceView: View {
         
     @EnvironmentObject var viewModel: SettingsViewModel
-    @State var setIsPresentingAppIconView: Bool = false
 
     var body: some View {
         Section(header: Text("Appeareance")) {
@@ -33,30 +32,40 @@ struct SettingsAppeareanceView: View {
                                         get: { viewModel.state.general.appTheme },
                                         set: { viewModel.setTheme($0) }
                                    ))
-            
-            NavigationLink(destination: LazyView(AppIconSettingsViewControllerRepresentable()), isActive: $setIsPresentingAppIconView) {
+             
+            NavigationLink(destination: LazyView(AppIconSettingsViewControllerRepresentable()),
+                           isActive: $viewModel.isPresentingAppIconView) {
                 let image = Image(uiImage: viewModel.state.general.appIcon.smallImage ?? UIImage())
                 SettingsCellView(label: "App Icon",
                                  accesory: .image(image))
             }
-            
+             
             SettingsPickerCellView(label: "Fire Button Animation",
                                    options: FireButtonAnimationType.allCases,
                                    selectedOption: Binding(
                                         get: { viewModel.state.general.fireButtonAnimation },
                                         set: { viewModel.setFireButtonAnimation($0) }
                                    ))
-            
+             
             // The textsize settings view has a special behavior (detent adjustment) that requires access to a navigation controller
             // The current implementation will not work on top of the SwiftUI stack, so we need to push it via the UIKit Container
             if viewModel.shouldShowTextSizeCell {
                 SettingsCellView(label: "Text Size",
-                                 action: { viewModel.shouldPresentTextSettingsView() },
+                                 action: { viewModel.isPresentingTextSettingsView = true },
                                  accesory: .rightDetail("\(viewModel.state.general.textSize)%"),
                                  asLink: true)
             }
             
-            // RightDetailCell(label: "Address Bar Position", value: "Top", action: viewModel.selectBarPosition)
+            if viewModel.shouldShowAddressBarPositionCell {
+                SettingsPickerCellView(label: "Address Bar Position",
+                                       options: AddressBarPosition.allCases,
+                                       selectedOption: Binding(
+                                            get: { viewModel.state.general.addressBarPosition },
+                                            set: { viewModel.setAddressBarPosition($0) }
+                                       ))
+            }
+            
+            
         }
     
         

@@ -779,8 +779,8 @@
 		D6E83C4B2B20C88E006C8AFB /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E83C4A2B20C88E006C8AFB /* SettingsModel.swift */; };
 		D6E83C4D2B20DD51006C8AFB /* NavigationLink+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E83C4C2B20DD51006C8AFB /* NavigationLink+Empty.swift */; };
 		D6E83C502B2147B0006C8AFB /* SettingsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E83C4F2B2147B0006C8AFB /* SettingsState.swift */; };
-		D6E83C522B21CDC1006C8AFB /* LazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E83C512B21CDC1006C8AFB /* LazyView.swift */; };
 		D6E83C562B21ECC1006C8AFB /* SettingsLegacyViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E83C552B21ECC1006C8AFB /* SettingsLegacyViewProvider.swift */; };
+		D6E83C582B22020D006C8AFB /* LazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E83C572B22020D006C8AFB /* LazyView.swift */; };
 		EA39B7E2268A1A35000C62CD /* privacy-reference-tests in Resources */ = {isa = PBXBuildFile; fileRef = EA39B7E1268A1A35000C62CD /* privacy-reference-tests */; };
 		EAB19EDA268963510015D3EA /* DomainMatchingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB19ED9268963510015D3EA /* DomainMatchingTests.swift */; };
 		EE0153E12A6EABE0002A8B26 /* NetworkProtectionConvenienceInitialisers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0153E02A6EABE0002A8B26 /* NetworkProtectionConvenienceInitialisers.swift */; };
@@ -2416,8 +2416,8 @@
 		D6E83C4A2B20C88E006C8AFB /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
 		D6E83C4C2B20DD51006C8AFB /* NavigationLink+Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NavigationLink+Empty.swift"; sourceTree = "<group>"; };
 		D6E83C4F2B2147B0006C8AFB /* SettingsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsState.swift; sourceTree = "<group>"; };
-		D6E83C512B21CDC1006C8AFB /* LazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyView.swift; sourceTree = "<group>"; };
 		D6E83C552B21ECC1006C8AFB /* SettingsLegacyViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsLegacyViewProvider.swift; sourceTree = "<group>"; };
+		D6E83C572B22020D006C8AFB /* LazyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LazyView.swift; sourceTree = "<group>"; };
 		EA39B7E1268A1A35000C62CD /* privacy-reference-tests */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "privacy-reference-tests"; path = "submodules/privacy-reference-tests"; sourceTree = SOURCE_ROOT; };
 		EAB19ED9268963510015D3EA /* DomainMatchingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainMatchingTests.swift; sourceTree = "<group>"; };
 		EE0153E02A6EABE0002A8B26 /* NetworkProtectionConvenienceInitialisers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionConvenienceInitialisers.swift; sourceTree = "<group>"; };
@@ -4521,7 +4521,6 @@
 		D6E83C442B1FFCF9006C8AFB /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				D6E83C512B21CDC1006C8AFB /* LazyView.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -5165,6 +5164,7 @@
 		F1AB2B401E3F75A000868554 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				D6E83C572B22020D006C8AFB /* LazyView.swift */,
 				D6E83C492B20C883006C8AFB /* Model */,
 				D6E83C3B2B1F27BA006C8AFB /* Views */,
 				D6E83C442B1FFCF9006C8AFB /* Extensions */,
@@ -6379,6 +6379,7 @@
 				855D914D2063EF6A00C4B448 /* TabSwitcherTransition.swift in Sources */,
 				4BBBBA8F2B031B4200D965DA /* VPNWaitlistView.swift in Sources */,
 				CB258D1229A4F24900DEBA24 /* ConfigurationManager.swift in Sources */,
+				D6E83C582B22020D006C8AFB /* LazyView.swift in Sources */,
 				8546A54A2A672959003929BF /* MainViewController+Email.swift in Sources */,
 				F4F6DFB226E6AEC100ED7E12 /* AddOrEditBookmarkViewController.swift in Sources */,
 				EE458D0D2AB1DA4600FC651A /* EventMapping+NetworkProtectionError.swift in Sources */,
@@ -6557,7 +6558,6 @@
 				98DA6ECA2181E41F00E65433 /* ThemeManager.swift in Sources */,
 				C159DF072A430B60007834BB /* EmailSignupViewController.swift in Sources */,
 				37A6A8FE2AFD0208008580A3 /* FaviconsFetcherOnboarding.swift in Sources */,
-				D6E83C522B21CDC1006C8AFB /* LazyView.swift in Sources */,
 				1E016AB6294A5EB100F21625 /* CustomDaxDialog.swift in Sources */,
 				02341FA42A437999008A1531 /* OnboardingStepView.swift in Sources */,
 				F1CA3C3B1F045B65005FADB3 /* Authenticator.swift in Sources */,

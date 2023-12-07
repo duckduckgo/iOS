@@ -41,7 +41,7 @@ public struct SaveRecoveryKeyView: View {
     func recoveryInfo() -> some View {
             VStack(spacing: 26) {
                 HStack(spacing: 16) {
-                    QRCodeView(string: model.key, size: 64, style: .dark)
+                    QRCodeView(string: model.key, size: 64)
 
                     Text(model.key)
                         .fontWeight(.light)

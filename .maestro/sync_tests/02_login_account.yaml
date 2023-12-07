@@ -36,4 +36,4 @@ tags:
 
 # Clean up
 - runFlow:
-    file: ../shared/sync_delete.yaml
+    file: ../shared/sync_logout.yaml

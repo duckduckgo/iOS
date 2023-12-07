@@ -16,28 +16,23 @@ tags:
         index: 0
     file: ../shared/onboarding.yaml
 
-# Set Internal User
+#  Copy Recovery Code
 - tapOn: Settings
 - runFlow:
-    file: ../shared/set_internal_user.yaml
+    file: ../shared/copy_recovery_code_from_settings.yaml
     env:
-      CODE: ${CODE}
-      SHOULD_GET_CODE: true
+        CODE: ${CODE}
+
+# Set Internal User
+- runFlow:
+    file: ../shared/set_internal_user.yaml
 
 # Login
 - assertVisible: Sync & Backup
 - tapOn: Sync & Backup
-- assertVisible: Begin Syncing
-- tapOn: Sync with Another Device
-- assertVisible: Scan QR Code
-- tapOn: Manually Enter Code
-- tapOn: Paste
-- assertVisible: Save Recovery Code
-- tapOn: Next
-- assertVisible: Your Data is Synced!
-- tapOn: Done
-- assertVisible: Sync Enabled
-- assertVisible: github:duckduckgo/sync_crypto
+- runFlow:
+    file: ../shared/sync_login.yaml
+- assertVisible: Sync & Backup
 
 # Clean up
 - runFlow:

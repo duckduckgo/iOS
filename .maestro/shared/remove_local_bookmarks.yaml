@@ -1,0 +1,11 @@
+appId: com.duckduckgo.mobile.ios
+---
+
+- tapOn: Browsing Menu
+- tapOn: Bookmarks
+- tapOn: Edit
+- tapOn: Spread Privacy
+- tapOn: Delete
+- tapOn: Delete
+- tapOn: Done
+- tapOn: Done

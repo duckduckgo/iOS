@@ -1,0 +1,18 @@
+appId: com.duckduckgo.mobile.ios
+---
+
+- tapOn: Sync & Backup
+- scroll
+- assertVisible: Unify Favorites
+- tapOn:
+     rightOf: 
+      id: "UnifiedFavoritesToggle"
+- tapOn: Settings
+- tapOn: Done
+- tapOn: Browsing Menu
+- tapOn: Bookmarks
+- tapOn: Favorites
+- assertVisible: NFL.com | Official Site of the National Football League
+- assertVisible: DuckDuckGo · GitHub
+- assertVisible: Stack Overflow - Where Developers Learn, Share, & Build Careers
+- tapOn: Done

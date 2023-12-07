@@ -24,32 +24,14 @@ tags:
 # Create account
 - runFlow:
     file: ../shared/sync_create.yaml
-    env:
-        SHOULD_GET_CODE: false
 
 # Log Out
-- assertVisible: Sync & Backup
-- tapOn: Turn Off Sync & Backup...
-- assertVisible: Turn Off Sync?
-- tapOn: Remove
-- assertVisible: Begin Syncing
+- runFlow:
+    file: ../shared/sync_logout.yaml
 
 # Recover Data
-- assertVisible: Sync & Backup
-- tapOn: Sync & Backup
-- assertVisible: Begin Syncing
-- tapOn: Recover Synced Data
-- assertVisible: Recover Synced Data
-- assertVisible: Get Started
-- tapOn: Get Started
-- tapOn: Enter Text Code Manually
-- tapOn: Paste
-- assertVisible: Save Recovery Code
-- tapOn: Next
-- assertVisible: Your Data is Synced!
-- tapOn: Done
-- assertVisible: Sync Enabled
-
+- runFlow:
+    file: ../shared/sync_recover_data.yaml
 
 # Clean up
 - runFlow:

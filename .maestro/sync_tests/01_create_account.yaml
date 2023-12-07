@@ -19,9 +19,7 @@ tags:
 # Set Internal User
 - tapOn: Settings
 - runFlow:
-    file: ../shared/set_internal_user.yaml
-    env:
-        SHOULD_GET_CODE: false
+    file: ../shared/set_internal_user_from_settings.yaml
 
 # Create account
 - runFlow:

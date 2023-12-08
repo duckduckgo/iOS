@@ -5,6 +5,7 @@ appId: com.duckduckgo.mobile.ios
 - tapOn: Bookmarks
 - tapOn: Edit
 - tapOn: Spread Privacy
+- pressKey: Enter
 - tapOn: Delete
 - tapOn: Delete
 - tapOn: Done

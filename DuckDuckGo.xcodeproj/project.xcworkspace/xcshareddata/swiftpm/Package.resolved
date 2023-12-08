@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
           "branch": "anh/netp-pixels",
-          "revision": "99e460e1a2019a82a6425903c6ad2e094153fc2c",
+          "revision": "c48c55f2d9b343258333483186a58560f56bedaf",
           "version": null
         }
       },
@@ -123,8 +123,8 @@
         "repositoryURL": "https://github.com/apple/swift-argument-parser",
         "state": {
           "branch": null,
-          "revision": "8f4d2753f0e4778c76d5f05ad16c74f707390531",
-          "version": "1.2.3"
+          "revision": "c8ed701b513cf5177118a175d85fbbbcd707ab41",
+          "version": "1.3.0"
         }
       },
       {

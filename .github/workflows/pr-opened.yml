@@ -12,7 +12,7 @@ jobs:
           uses: duckduckgo/native-github-asana-sync@v1.0
           with:
             asana-pat: ${{ secrets.ASANA_ACCESS_TOKEN }}
-            trigger-phrase: 'Task/Issue URL:'
+            trigger-phrase: 'ASANA TASK:'
             asana-project: '414235014887631'
             asana-section: '414413334607374'
             action: 'add-task-asana-project'

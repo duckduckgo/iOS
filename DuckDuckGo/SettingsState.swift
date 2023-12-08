@@ -26,7 +26,6 @@ struct SettingsState {
     var logins: SettingsStateLogins
     var netP: SettingsStateNetP
     var about: SettingsStateAbout
-    // Add state for other sections here...
     
     static var defaults: SettingsState {
         return SettingsState(

@@ -32,6 +32,7 @@ struct SettingsCellView: View, Identifiable {
     
     var label: String
     var subtitle: String?
+    var image: Image?
     var action: () -> Void = {}
     var enabled: Bool = true
     var accesory: Accesory
@@ -45,14 +46,16 @@ struct SettingsCellView: View, Identifiable {
     /// - Parameters:
     ///   - label: The text to display in the cell.
     ///   - subtitle: Displayed below title (if present)
+    ///   - image: Image displayed to the left of label
     ///   - action: The closure to execute when the view is tapped. (If not embedded in a NavigationLink)
     ///   - accesory: The type of cell to display. Excludes the custom cell type.
     ///   - enabled: A Boolean value that determines whether the cell is enabled.
     ///   - asLink: Wraps the view inside a Button.  Used for views not wrapped in a NavigationLink
     ///   - disclosureIndicator: Forces Adds a disclosure indicator on the right (chevron)
-    init(label: String, subtitle: String? = nil, action: @escaping () -> Void = {}, accesory: Accesory = .none, enabled: Bool = true, asLink: Bool = false, disclosureIndicator: Bool = false) {
+    init(label: String, subtitle: String? = nil, image: Image? = nil, action: @escaping () -> Void = {}, accesory: Accesory = .none, enabled: Bool = true, asLink: Bool = false, disclosureIndicator: Bool = false) {
         self.label = label
         self.subtitle = subtitle
+        self.image = image
         self.action = action
         self.enabled = enabled
         self.accesory = accesory
@@ -99,7 +102,9 @@ struct SettingsCellView: View, Identifiable {
     private var defaultView: some View {
         Group {
             HStack {
-                
+                if let image {
+                    image
+                }
                 VStack(alignment: .leading) {
                     Text(label)
                     if let subtitleText = subtitle {
@@ -275,19 +280,35 @@ struct SettingsCellView_Previews: PreviewProvider {
                 SettingsPickerCellView(label: "Proin tempor urna", options: SampleOption.allCases, selectedOption: $selectedOption)
                     .previewLayout(.sizeThatFits)
                 
+                SettingsCellView(label: "Proin tempor urna",
+                                 subtitle: "Fusce elementum quis",
+                                 accesory: .toggle(isOn: .constant(true)),
+                                 asLink: false,
+                                 disclosureIndicator: false)
+                    .previewLayout(.sizeThatFits)
+                
+                
                 SettingsCustomCell(content: {
                     HStack(spacing: 15) {
-                        Image(systemName: "bell.fill")
+                        Image(systemName: "hand.wave")
                             .foregroundColor(.orange)
                             .imageScale(.large)
-
+                        Image(systemName: "hand.wave")
+                            .foregroundColor(.orange)
+                            .imageScale(.medium)
+                      
+                        Spacer()
                         VStack(alignment: .leading) {
-                            Text("Notifications")
+                            Text("LOREM IPSUM")
                                 .font(.headline)
-                            Text("Manage alerts and sounds")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
                         }
+                        Spacer()
+                        Image(systemName: "hand.wave")
+                            .foregroundColor(.orange)
+                            .imageScale(.medium)
+                        Image(systemName: "hand.wave")
+                            .foregroundColor(.orange)
+                            .imageScale(.large)
                     }
                 }, disclosureIndicator: true)
                 .previewLayout(.sizeThatFits)

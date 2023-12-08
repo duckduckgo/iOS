@@ -25,9 +25,9 @@ struct SettingsDebugView: View {
     @EnvironmentObject var viewModel: SettingsViewModel
     
     var body: some View {
-        Section(header: Text("Debug Menus")) {
+        Section(header: Text("Debug")) {
             
-            SettingsCellView(label: "General",
+            SettingsCellView(label: "All debug options",
                              action: { viewModel.presentLegacyView(.debug) },
                              asLink: true,
                              disclosureIndicator: true)

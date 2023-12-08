@@ -781,6 +781,7 @@
 		D6E83C622B23298B006C8AFB /* SettingsMoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E83C612B23298B006C8AFB /* SettingsMoreView.swift */; };
 		D6E83C642B238432006C8AFB /* SettingsAboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E83C632B238432006C8AFB /* SettingsAboutView.swift */; };
 		D6E83C662B23936F006C8AFB /* SettingsDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E83C652B23936F006C8AFB /* SettingsDebugView.swift */; };
+		D6E83C682B23B6A3006C8AFB /* FontSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E83C672B23B6A3006C8AFB /* FontSettings.swift */; };
 		EA39B7E2268A1A35000C62CD /* privacy-reference-tests in Resources */ = {isa = PBXBuildFile; fileRef = EA39B7E1268A1A35000C62CD /* privacy-reference-tests */; };
 		EAB19EDA268963510015D3EA /* DomainMatchingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB19ED9268963510015D3EA /* DomainMatchingTests.swift */; };
 		EE0153E12A6EABE0002A8B26 /* NetworkProtectionConvenienceInitialisers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0153E02A6EABE0002A8B26 /* NetworkProtectionConvenienceInitialisers.swift */; };
@@ -2417,6 +2418,7 @@
 		D6E83C612B23298B006C8AFB /* SettingsMoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsMoreView.swift; sourceTree = "<group>"; };
 		D6E83C632B238432006C8AFB /* SettingsAboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsAboutView.swift; sourceTree = "<group>"; };
 		D6E83C652B23936F006C8AFB /* SettingsDebugView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsDebugView.swift; sourceTree = "<group>"; };
+		D6E83C672B23B6A3006C8AFB /* FontSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSettings.swift; sourceTree = "<group>"; };
 		EA39B7E1268A1A35000C62CD /* privacy-reference-tests */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "privacy-reference-tests"; path = "submodules/privacy-reference-tests"; sourceTree = SOURCE_ROOT; };
 		EAB19ED9268963510015D3EA /* DomainMatchingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainMatchingTests.swift; sourceTree = "<group>"; };
 		EE0153E02A6EABE0002A8B26 /* NetworkProtectionConvenienceInitialisers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionConvenienceInitialisers.swift; sourceTree = "<group>"; };
@@ -3844,9 +3846,10 @@
 			name = Renderers;
 			sourceTree = "<group>";
 		};
-		85449EF623FDA03100512AAF /* UI */ = {
+		85449EF623FDA03100512AAF /* Legacy UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				F176699D1E40BC86003D3222 /* Settings.storyboard */,
 				F1CDD3F11F16911700BE0581 /* AboutViewController.swift */,
 				AA3D854623D9E88E00788410 /* AppIconSettingsCell.swift */,
 				AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */,
@@ -3855,21 +3858,12 @@
 				02C57C4A2514FEFB009E5129 /* DoNotSellSettingsViewController.swift */,
 				85449EF423FDA02800512AAF /* KeyboardSettingsViewController.swift */,
 				8540BD5523D9E9C20057FDD2 /* PreserveLoginsSettingsViewController.swift */,
-				F176699D1E40BC86003D3222 /* Settings.storyboard */,
 				F1AB2B411E3F7D5C00868554 /* SettingsViewController.swift */,
 				1E865AEF272042DB001C74F3 /* TextSizeSettingsViewController.swift */,
 				8531A08D1F9950E6000484F0 /* UnprotectedSitesViewController.swift */,
+				D6E83C672B23B6A3006C8AFB /* FontSettings.swift */,
 			);
-			name = UI;
-			sourceTree = "<group>";
-		};
-		85449EF723FDA03D00512AAF /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				85449EFC23FDA71F00512AAF /* KeyboardSettings.swift */,
-				4B53648926718D0E001AA041 /* EmailWaitlist.swift */,
-			);
-			name = Model;
+			name = "Legacy UIKit";
 			sourceTree = "<group>";
 		};
 		85482D892462DCD100EDEDD1 /* OpenAction */ = {
@@ -4509,6 +4503,7 @@
 		D6E83C3B2B1F27BA006C8AFB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				85449EF623FDA03100512AAF /* Legacy UIKit */,
 				D6E83C472B20C812006C8AFB /* SettingsHostingController.swift */,
 				D6E83C112B1E6AB3006C8AFB /* SettingsView.swift */,
 				D6E83C302B1EA309006C8AFB /* SettingsCell.swift */,
@@ -4523,6 +4518,8 @@
 				D6E83C5F2B22B3C9006C8AFB /* SettingsState.swift */,
 				D6E83C2D2B1EA06E006C8AFB /* SettingsViewModel.swift */,
 				D6E83C552B21ECC1006C8AFB /* SettingsLegacyViewProvider.swift */,
+				85449EFC23FDA71F00512AAF /* KeyboardSettings.swift */,
+				4B53648926718D0E001AA041 /* EmailWaitlist.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -5158,8 +5155,6 @@
 				D6E83C492B20C883006C8AFB /* Model */,
 				D6E83C3B2B1F27BA006C8AFB /* Views */,
 				858566F1252E55AE007501B8 /* Debug */,
-				85449EF723FDA03D00512AAF /* Model */,
-				85449EF623FDA03100512AAF /* UI */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -6680,6 +6675,7 @@
 				02EC02C429AFA33000557F1A /* AppTPBreakageFormView.swift in Sources */,
 				F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */,
 				98728E822417E3300033960E /* BrokenSiteInfo.swift in Sources */,
+				D6E83C682B23B6A3006C8AFB /* FontSettings.swift in Sources */,
 				31EF52E1281B3BDC0034796E /* AutofillLoginListItemViewModel.swift in Sources */,
 				1E4FAA6627D8DFC800ADC5B3 /* CompleteDownloadRowViewModel.swift in Sources */,
 				83004E862193E5ED00DA013C /* TabViewControllerBrowsingMenuExtension.swift in Sources */,

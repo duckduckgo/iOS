@@ -230,7 +230,7 @@ extension SettingsViewModel {
         setupSubscribers()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            self.onRequestDismissLegacyView?()
+            // self.onRequestDismissLegacyView?()
         }
         
     }
@@ -271,6 +271,7 @@ extension SettingsViewModel {
 extension SettingsViewModel {
     
     private func setupSubscribers() {
+               
 
 #if NETWORK_PROTECTION
         connectionObserver.publisher
@@ -331,7 +332,8 @@ extension SettingsViewModel {
              autoclearData,
              keyboard,
              macApp,
-             windowsApp
+             windowsApp,
+             netP
     }
     
     @MainActor
@@ -381,7 +383,20 @@ extension SettingsViewModel {
         
         case .macApp:
             pushLegacyView(legacyViewProvider.mac)
+
+#if NETWORK_PROTECTION
+        case .netP:
+            if #available(iOS 15, *) {
+                switch NetworkProtectionAccessController().networkProtectionAccessType() {
+                case .inviteCodeInvited, .waitlistInvited:
+                    pushLegacyView(legacyViewProvider.netP)
+                default:
+                    pushLegacyView(legacyViewProvider.netPWaitlist)
+                }
+            }
+#endif
         }
+        
     }
         
     private func pushLegacyView(_ view: UIViewController) {

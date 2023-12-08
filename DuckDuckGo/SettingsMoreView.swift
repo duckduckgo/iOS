@@ -49,7 +49,7 @@ struct SettingsMoreView: View {
             if viewModel.shouldShowNetworkProtectionCell {
                 SettingsCellView(label: "Network Protection",
                                  subtitle: viewModel.state.netP.subtitle,
-                                 action: { viewModel.presentLegacyView(.keyboard) },
+                                 action: { viewModel.presentLegacyView(.netP) },
                                  asLink: true,
                                  disclosureIndicator: true)
             }

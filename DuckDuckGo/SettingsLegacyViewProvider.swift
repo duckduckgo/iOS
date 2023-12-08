@@ -114,4 +114,16 @@ class SettingsLegacyViewProvider: ObservableObject {
     var windows: UIViewController {
         WindowsWaitlistViewController(nibName: nil, bundle: nil)
     }
+    
+    @available(iOS 15.0, *)
+    var netPWaitlist: UIViewController {
+        VPNWaitlistViewController(nibName: nil, bundle: nil)
+    }
+    
+    @available(iOS 15, *)
+    var netP: UIViewController {
+        NetworkProtectionRootViewController()
+    }
+    
+    
 }

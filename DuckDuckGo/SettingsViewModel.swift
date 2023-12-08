@@ -80,6 +80,7 @@ final class SettingsViewModel: ObservableObject {
     var shouldShowNetworkProtectionCell: Bool {
 #if NETWORK_PROTECTION
         if #available(iOS 15, *) {
+            print(featureFlagger.isFeatureOn(.networkProtection))
             return featureFlagger.isFeatureOn(.networkProtection)
         } else {
             return false
@@ -193,7 +194,6 @@ final class SettingsViewModel: ObservableObject {
     init(state: SettingsState? = nil, legacyViewProvider: SettingsLegacyViewProvider) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
-        self.state = state ?? createSettingsState()
         setupSubscribers()
     }
 }
@@ -201,11 +201,12 @@ final class SettingsViewModel: ObservableObject {
 // MARK: Private methods
 extension SettingsViewModel {
     
-    private func createSettingsState() -> SettingsState {
-        // This manual (re)initialzation will go away once appSettings and
-        // other dependencies are observable (Such as AppIcon and netP)
-        // and we can use subscribers
+    // This manual (re)initialzation will go away once appSettings and
+    // other dependencies are observable (Such as AppIcon and netP)
+    // and we can use subscribers (Currently called from the view onAppear)
+    private func updateState() -> SettingsState {
         let appereance = SettingsStateAppeareance(appTheme: appSettings.currentThemeName,
+                                                  appIcon: AppIconManager.shared.appIcon,
                                                   fireButtonAnimation: appSettings.currentFireButtonAnimation,
                                                   textSize: appSettings.textSize,
                                                   addressBarPosition: appSettings.currentAddressBarPosition)
@@ -263,12 +264,6 @@ extension SettingsViewModel {
 extension SettingsViewModel {
     
     private func setupSubscribers() {
-    
-        AppIconManager.shared.$appIcon
-            .sink { [weak self] newIcon in
-                self?.state.appeareance.appIcon = newIcon
-            }
-            .store(in: &cancellables)
 
 #if NETWORK_PROTECTION
         connectionObserver.publisher
@@ -285,8 +280,8 @@ extension SettingsViewModel {
 // MARK: Public Methods
 extension SettingsViewModel {
     
-    func updateState() {
-        state = createSettingsState()
+    func onAppear() {
+        state = updateState()
     }
     
     func setAsDefaultBrowser() {

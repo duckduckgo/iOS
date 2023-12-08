@@ -107,7 +107,7 @@ struct SettingsCellView: View, Identifiable {
                             .foregroundColor(Color(UIColor.secondaryLabel))
                     }
                 }.fixedSize(horizontal: false, vertical: true)
-                    .layoutPriority(1)
+                    .layoutPriority(0.7)
                 
                 Spacer()
                 
@@ -166,6 +166,134 @@ struct SettingsPickerCellView<T: CaseIterable & Hashable & CustomStringConvertib
                 Text(option.description).tag(option)
             }
         .pickerStyle(MenuPickerStyle())
+        }
+    }
+}
+
+
+/// A simple settings cell that can act as a link and include a disclosure indicator
+struct SettingsCustomCell<Content: View>: View {
+    var content: Content
+    var action: () -> Void
+    var asLink: Bool
+    var disclosureIndicator: Bool
+
+    /// Initializes a `SettingsCustomCell`.
+    /// - Parameters:
+    ///   - content: A SwiftUI View to be displayed in the cell.
+    ///   - action: The closure to execute when the view is tapped.
+    ///   - asLink: A Boolean value that determines if the cell behaves like a link.
+    ///   - disclosureIndicator: A Boolean value that determines if the cell shows a disclosure indicator.
+    init(@ViewBuilder content: () -> Content, action: @escaping () -> Void = {}, asLink: Bool = false, disclosureIndicator: Bool = false) {
+        self.content = content()
+        self.action = action
+        self.asLink = asLink
+        self.disclosureIndicator = disclosureIndicator
+    }
+
+    var body: some View {
+        HStack {
+            content
+            
+            Spacer()
+
+            Image(systemName: "chevron.forward")
+                .font(Font.system(.footnote).weight(.bold))
+                .foregroundColor(Color(UIColor.tertiaryLabel))
+                .padding(.leading, 8)
+        }
+        .onTapGesture(perform: action)
+    }
+}
+
+
+struct SettingsCellView_Previews: PreviewProvider {
+    enum SampleOption: String, CaseIterable, Hashable, CustomStringConvertible {
+        case optionOne = "Lorem"
+        case optionTwo = "Ipsum"
+        case optionThree = "Dolor"
+
+        var description: String {
+            return self.rawValue
+        }
+    }
+    
+    static var previews: some View {
+        Group {
+            List {
+                SettingsCellView(label: "Nulla commodo augue nec",
+                                 asLink: true,
+                                 disclosureIndicator: true)
+                    .previewLayout(.sizeThatFits)
+                
+                SettingsCellView(label: "Nulla commodo augue nec",
+                                 subtitle: "Curabitur erat massa, cursus sed velit",
+                                 asLink: true,
+                                 disclosureIndicator: true)
+                    .previewLayout(.sizeThatFits)
+                
+                SettingsCellView(label: "Maecenas ac purus",
+                                 accesory: .image(Image(systemName: "person.circle")),
+                                 asLink: true,
+                                 disclosureIndicator: true)
+                    .previewLayout(.sizeThatFits)
+                
+                SettingsCellView(label: "Maecenas ac purus",
+                                 subtitle: "Curabitur erat massa",
+                                 accesory: .image(Image(systemName: "person.circle")),
+                                 asLink: true,
+                                 disclosureIndicator: true)
+                    .previewLayout(.sizeThatFits)
+                
+                SettingsCellView(label: "Curabitur erat",
+                                 accesory: .rightDetail("Curabi"),
+                                 asLink: true,
+                                 disclosureIndicator: true)
+                    .previewLayout(.sizeThatFits)
+
+                SettingsCellView(label: "Curabitur erat",
+                                 subtitle: "Nulla commodo augue",
+                                 accesory: .rightDetail("Aagittis"),
+                                 asLink: true,
+                                 disclosureIndicator: true)
+                    .previewLayout(.sizeThatFits)
+                
+                SettingsCellView(label: "Proin tempor urna",
+                                 accesory: .toggle(isOn: .constant(true)),
+                                 asLink: false,
+                                 disclosureIndicator: false)
+                    .previewLayout(.sizeThatFits)
+                
+                SettingsCellView(label: "Proin tempor urna",
+                                 subtitle: "Fusce elementum quis",
+                                 accesory: .toggle(isOn: .constant(true)),
+                                 asLink: false,
+                                 disclosureIndicator: false)
+                    .previewLayout(.sizeThatFits)
+                
+                @State var selectedOption: SampleOption = .optionOne
+                SettingsPickerCellView(label: "Proin tempor urna", options: SampleOption.allCases, selectedOption: $selectedOption)
+                    .previewLayout(.sizeThatFits)
+                
+                SettingsCustomCell(content: {
+                    HStack(spacing: 15) {
+                        Image(systemName: "bell.fill")
+                            .foregroundColor(.orange)
+                            .imageScale(.large)
+
+                        VStack(alignment: .leading) {
+                            Text("Notifications")
+                                .font(.headline)
+                            Text("Manage alerts and sounds")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                        }
+                    }
+                }, disclosureIndicator: true)
+                .previewLayout(.sizeThatFits)
+
+                               
+            }
         }
     }
 }

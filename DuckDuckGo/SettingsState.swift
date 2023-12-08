@@ -39,7 +39,7 @@ struct SettingsState {
 
 struct SettingsStateAppeareance {
     var appTheme: ThemeName
-    var appIcon: AppIcon = AppIconManager.shared.appIcon
+    var appIcon: AppIcon
     var fireButtonAnimation: FireButtonAnimationType
     var textSize: Int
     var addressBarPosition: AddressBarPosition
@@ -47,6 +47,7 @@ struct SettingsStateAppeareance {
     static var defaults: SettingsStateAppeareance {
         return SettingsStateAppeareance(
             appTheme: .systemDefault,
+            appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: .fireRising,
             textSize: 100,
             addressBarPosition: .top

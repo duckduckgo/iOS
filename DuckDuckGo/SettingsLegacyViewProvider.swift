@@ -112,6 +112,6 @@ class SettingsLegacyViewProvider: ObservableObject {
     }
     
     var windows: UIViewController {
-        MacWaitlistViewController(nibName: nil, bundle: nil)
+        WindowsWaitlistViewController(nibName: nil, bundle: nil)
     }
 }

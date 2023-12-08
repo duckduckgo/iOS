@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "anh/netp-pixels",
-          "revision": "c48c55f2d9b343258333483186a58560f56bedaf",
-          "version": null
+          "branch": null,
+          "revision": "6d67e41feb5d7d22fec40fcede6b82eb88673900",
+          "version": "92.1.0"
         }
       },
       {

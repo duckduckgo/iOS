@@ -42,7 +42,7 @@ final class VPNWaitlistViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = UserText.networkProtectionWaitlistJoinTitle
+        title = UserText.netPNavTitle
 
         addHostingControllerToViewHierarchy()
 
@@ -68,6 +68,10 @@ final class VPNWaitlistViewController: UIViewController {
     private func updateViewState() {
         Task {
             await self.viewModel.updateViewState()
+
+            if self.viewModel.viewState == .notJoinedQueue {
+                DailyPixel.fire(pixel: .networkProtectionWaitlistIntroScreenDisplayed)
+            }
         }
     }
 

@@ -188,6 +188,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    settings: settings)
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
+        observeStatusChanges()
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
     }
 
@@ -222,6 +223,18 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         }
         .store(in: &cancellables)
     }
+
+    private let activationDateStore = DefaultVPNWaitlistActivationDateStore()
+
+    private func observeStatusChanges() {
+        connectionStatusPublisher.sink { [weak self] status in
+            if case .connected = status {
+                self?.activationDateStore.setActivationDateIfNecessary()
+            }
+        }
+        .store(in: &cancellables)
+    }
+
 }
 
 #endif

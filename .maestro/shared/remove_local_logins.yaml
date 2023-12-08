@@ -1,7 +1,6 @@
 appId: com.duckduckgo.mobile.ios
 ---
 
-- tapOn: Browsing Menu
 - tapOn: Settings
 - tapOn: Logins
 - assertVisible: Unlock device to access saved Logins

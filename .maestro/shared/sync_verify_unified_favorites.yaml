@@ -9,7 +9,6 @@ appId: com.duckduckgo.mobile.ios
       id: "UnifiedFavoritesToggle"
 - tapOn: Settings
 - tapOn: Done
-- tapOn: Browsing Menu
 - tapOn: Bookmarks
 - tapOn: Favorites
 - assertVisible: NFL.com | Official Site of the National Football League

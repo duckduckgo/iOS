@@ -3,7 +3,6 @@ appId: com.duckduckgo.mobile.ios
 
 - tapOn: Settings
 - tapOn: Done
-- tapOn: Browsing Menu
 - tapOn: Bookmarks
 - runFlow: 
     when: 

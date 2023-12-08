@@ -24,16 +24,6 @@ import Core
 import BrowserServicesKit
 import SyncUI
 
-struct LazyView<Content: View>: View {
-    let build: () -> Content
-    init(_ build: @autoclosure @escaping () -> Content) {
-        self.build = build
-    }
-    var body: some View {
-        build()
-    }
-}
-
 class SettingsLegacyViewProvider: ObservableObject {
     
     let syncService: DDGSyncing
@@ -46,11 +36,36 @@ class SettingsLegacyViewProvider: ObservableObject {
         self.appSettings = appSettings
     }
     
-    // Legacy UIKit Views (Pushed unmodified)
-    var addToDock: UIViewController {
-        let storyboard = UIStoryboard(name: "HomeRow", bundle: nil)
-        return storyboard.instantiateViewController(identifier: "instructions") as! HomeRowInstructionsViewController
+    enum LegacyView {
+        case addToDock, sync, logins, textSize, appIcon, gpc, autoconsent, unprotectedSites, fireproofSites, autoclearData, keyboard, macApp, windowsApp, netP, about, feedback
     }
+    
+    private func instantiate(_ identifier: String, fromStoryboard name: String) -> UIViewController {
+            let storyboard = UIStoryboard(name: name, bundle: nil)
+            return storyboard.instantiateViewController(withIdentifier: identifier)
+        }
+    
+    // Legacy UIKit Views (Pushed unmodified)
+    var addToDock: UIViewController { instantiate( "instructions", fromStoryboard: "HomeRow") }
+    var textSettings: UIViewController { return instantiate("TextSize", fromStoryboard: "Settings") }
+    var appIcon: UIViewController { instantiate("AppIcon", fromStoryboard: "Settings") }
+    var gpc: UIViewController { instantiate("DoNotSell", fromStoryboard: "Settings") }
+    var autoConsent: UIViewController { instantiate("AutoconsentSettingsViewController", fromStoryboard: "Settings") }
+    var unprotectedSites: UIViewController { instantiate("UnprotectedSites", fromStoryboard: "Settings") }
+    var fireproofSites: UIViewController { instantiate("FireProofSites", fromStoryboard: "Settings") }
+    var autoclearData: UIViewController { instantiate("AutoClearSettingsViewController", fromStoryboard: "Settings") }
+    var keyboard: UIViewController { instantiate("Keyboard", fromStoryboard: "Settings") }
+    var feedback: UIViewController { instantiate("Feedback", fromStoryboard: "Feedback") }
+    var mac: UIViewController { MacWaitlistViewController(nibName: nil, bundle: nil) }
+    var windows: UIViewController { WindowsWaitlistViewController(nibName: nil, bundle: nil) }
+    var about: UIViewController { AboutViewController() }
+    
+    @available(iOS 15.0, *)
+    var netPWaitlist: UIViewController { VPNWaitlistViewController(nibName: nil, bundle: nil) }
+    
+    @available(iOS 15, *)
+    var netP: UIViewController { NetworkProtectionRootViewController() }
+    
     
     @MainActor
     var syncSettings: UIViewController {
@@ -65,64 +80,6 @@ class SettingsLegacyViewProvider: ObservableObject {
                                                        syncService: self.syncService,
                                                        syncDataProviders: self.syncDataProviders,
                                                        selectedAccount: selectedAccount)
-    }
-    
-    var textSettings: UIViewController {
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        return storyboard.instantiateViewController(identifier: "TextSize") as! TextSizeSettingsViewController
-    }
-    
-    var appIcon: UIViewController {
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        return storyboard.instantiateViewController(identifier: "AppIcon") as! AppIconSettingsViewController
-    }
-    
-    var gpc: UIViewController {
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        return storyboard.instantiateViewController(identifier: "DoNotSell") as! DoNotSellSettingsViewController
-    }
-    
-    var autoConsent: UIViewController {
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        return storyboard.instantiateViewController(identifier: "AutoconsentSettingsViewController") as! AutoconsentSettingsViewController
-    }
-    
-    var unprotectedSites: UIViewController {
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        return storyboard.instantiateViewController(identifier: "UnprotectedSites") as! UnprotectedSitesViewController
-    }
-    
-    var fireproofSites: UIViewController {
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        return storyboard.instantiateViewController(identifier: "FireProofSites") as! PreserveLoginsSettingsViewController
-    }
-    
-    var autoclearData: UIViewController {
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        return storyboard.instantiateViewController(identifier: "AutoClearSettingsViewController") as! AutoClearSettingsViewController
-    }
-    
-    var keyboard: UIViewController {
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        return storyboard.instantiateViewController(identifier: "Keyboard") as! KeyboardSettingsViewController
-    }
-    
-    var mac: UIViewController {
-        MacWaitlistViewController(nibName: nil, bundle: nil)
-    }
-    
-    var windows: UIViewController {
-        WindowsWaitlistViewController(nibName: nil, bundle: nil)
-    }
-    
-    @available(iOS 15.0, *)
-    var netPWaitlist: UIViewController {
-        VPNWaitlistViewController(nibName: nil, bundle: nil)
-    }
-    
-    @available(iOS 15, *)
-    var netP: UIViewController {
-        NetworkProtectionRootViewController()
     }
     
     

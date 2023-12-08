@@ -25,6 +25,7 @@ struct SettingsState {
     var customization: SettingsStateCustomization
     var logins: SettingsStateLogins
     var netP: SettingsStateNetP
+    var about: SettingsStateAbout
     // Add state for other sections here...
     
     static var defaults: SettingsState {
@@ -33,7 +34,9 @@ struct SettingsState {
             privacy: SettingsStatePrivacy.defaults,
             customization: SettingsStateCustomization.defaults,
             logins: SettingsStateLogins.defaults,
-            netP: SettingsStateNetP.defaults)
+            netP: SettingsStateNetP.defaults,
+            about: SettingsStateAbout.defaults
+        )
     }
 }
 
@@ -101,4 +104,13 @@ struct SettingsStateNetP {
     static var defaults: SettingsStateNetP {
         return SettingsStateNetP(subtitle: "")
     }
+}
+
+struct SettingsStateAbout {
+    var version: String
+
+    static var defaults: SettingsStateAbout {
+        return SettingsStateAbout(version: "0.0.0.0")
+    }
+    
 }

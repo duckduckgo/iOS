@@ -40,6 +40,8 @@ final class SettingsViewModel: ObservableObject {
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var animator: FireButtonAnimator = FireButtonAnimator(appSettings: AppUserDefaults())
     private var legacyViewProvider: SettingsLegacyViewProvider
+    private lazy var versionProvider: AppVersion = AppVersion.shared
+
 #if NETWORK_PROTECTION
     private let connectionObserver = ConnectionStatusObserverThroughSession()
 #endif
@@ -221,17 +223,17 @@ extension SettingsViewModel {
                                                        longPressPreviews: appSettings.longPressPreviews,
                                                        allowUniversalLinks: appSettings.allowUniversalLinks)
         
+        let about = SettingsStateAbout(version: versionProvider.versionAndBuildNumber)
+        
+        
         self.state = SettingsState(appeareance: appereance,
-                             privacy: privacy,
-                             customization: customization,
-                             logins: SettingsStateLogins.defaults,
-                             netP: SettingsStateNetP.defaults)
+                                   privacy: privacy,
+                                   customization: customization,
+                                   logins: SettingsStateLogins.defaults,
+                                   netP: SettingsStateNetP.defaults,
+                                   about: about)
         
         setupSubscribers()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            // self.onRequestDismissLegacyView?()
-        }
         
     }
         
@@ -318,26 +320,10 @@ extension SettingsViewModel {
 // These UIKit views have issues when presented via UIHostingController so
 // we fall back to UIKit navigation
 extension SettingsViewModel {
-    
-    enum LegacyView {
-        case addToDock,
-             sync,
-             logins,
-             textSize,
-             appIcon,
-             gpc,
-             autoconsent,
-             unprotectedSites,
-             fireproofSites,
-             autoclearData,
-             keyboard,
-             macApp,
-             windowsApp,
-             netP
-    }
-    
+
     @MainActor
-    func presentLegacyView(_ view: LegacyView) {
+    func presentLegacyView(_ view: SettingsLegacyViewProvider.LegacyView) {
+        
         switch view {
         
         case .addToDock:
@@ -383,6 +369,12 @@ extension SettingsViewModel {
         
         case .macApp:
             pushLegacyView(legacyViewProvider.mac)
+            
+        case .about:
+            pushLegacyView(legacyViewProvider.about)
+            
+        case .feedback:
+            presentLegacyView(legacyViewProvider.feedback, modal: false)
 
 #if NETWORK_PROTECTION
         case .netP:
@@ -395,6 +387,7 @@ extension SettingsViewModel {
                 }
             }
 #endif
+        
         }
         
     }

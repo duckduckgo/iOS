@@ -33,6 +33,7 @@ struct SettingsView: View {
             SettingsPrivacyView()
             SettingsCustomizeView()
             SettingsMoreView()
+            SettingsAboutView()
         }
         .navigationBarTitle(UserText.settingsTitle, displayMode: .inline)
         .navigationBarItems(trailing: Button(UserText.navigationTitleDone) {

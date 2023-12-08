@@ -10,7 +10,7 @@ jobs:
       steps:
         - name: Get Asana task ID from description
           id: get-asana-task-id
-          run: echo "task-id=${ $${{ github.event.pull_request.body }} | grep 'Task.*URL.*asana.*' | awk '{ print $3; }' }" >> $GITHUB_OUTPUT
+          run: echo "task-id=$( echo "$${{ github.event.pull_request.body }}" | grep 'Task.*URL.*asana.*' | awk '{ print $3; }' )" >> $GITHUB_OUTPUT
 
         - name: Add Asana task to Project
           uses: duckduckgo/native-github-asana-sync@v1.0

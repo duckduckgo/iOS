@@ -154,7 +154,7 @@ class SettingsViewController: UITableViewController {
         configureDebugCell()
         configureVoiceSearchCell()
         configureNetPCell()
-        applyTheme(ThemeManager.shared.currentTheme)
+        (ThemeManager.shared.currentTheme)
 
         internalUserDecider.isInternalUserPublisher.dropFirst().sink(receiveValue: { [weak self] _ in
             self?.configureAutofillCell()

@@ -39,7 +39,7 @@ struct SettingsView: View {
         .environmentObject(viewModel)
         
         .onAppear {
-            viewModel.initializeState()
+            // viewModel.initalizeState()
         }
     }
     

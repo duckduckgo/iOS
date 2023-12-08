@@ -22,7 +22,11 @@ import UIKit
 struct SettingsCustomizeView: View {
         
     @EnvironmentObject var viewModel: SettingsViewModel
-    @EnvironmentObject var viewProvider: SettingsLegacyViewProvider
+    @State var shouldShowNoMicrophonePermissionAlert = false {
+        didSet {
+            print("Set alert!!! \(shouldShowNoMicrophonePermissionAlert)")
+        }
+    }
 
     var body: some View {
         Section(header: Text("Customize"),
@@ -33,13 +37,33 @@ struct SettingsCustomizeView: View {
                              asLink: true,
                              disclosureIndicator: true)
             
-            SettingsCellView(label: "Autocomplete Suggestions", accesory: .toggle(isOn: viewModel.autocompleteBinding))
+            SettingsCellView(label: "Autocomplete Suggestions",
+                             accesory: .toggle(isOn: viewModel.autocompleteBinding))
+            
             if viewModel.shouldShowSpeechRecognitionCell {
-                SettingsCellView(label: "Private Voice Search", accesory: .toggle(isOn: viewModel.applicationLockBinding))
+                SettingsCellView(label: "Private Voice Search",
+                                 accesory: .toggle(isOn: viewModel.voiceSearchEnabledBinding))
             }
             SettingsCellView(label: "Long-Press Previews", accesory: .toggle(isOn: viewModel.applicationLockBinding))
-            SettingsCellView(label: "Open Links in Associated Apps", accesory: .toggle(isOn: viewModel.applicationLockBinding))
             
+            SettingsCellView(label: "Open Links in Associated Apps", accesory: .toggle(isOn: viewModel.applicationLockBinding))
         }
-         }
+                
+                .alert(isPresented: $shouldShowNoMicrophonePermissionAlert) {
+                    Alert(title: Text(UserText.noVoicePermissionAlertTitle),
+                          message: Text(UserText.noVoicePermissionAlertMessage),
+                          dismissButton: .default(Text("OK"),
+                          action: {
+                            viewModel.shouldShowNoMicrophonePermissionAlert = false
+                        })
+                    )
+                }
+                .onChange(of: viewModel.shouldShowNoMicrophonePermissionAlert) { value in
+                    shouldShowNoMicrophonePermissionAlert = value
+                }
+                
+        
+    }
+        
+        
 }

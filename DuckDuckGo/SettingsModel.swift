@@ -33,7 +33,7 @@ import NetworkProtection
 import Core
 #endif
 
-class SettingsModel {
+class SettingsModel: ObservableObject {
         
     private let appIconManager = AppIconManager.shared
     private let bookmarksDatabase: CoreDataDatabase
@@ -43,8 +43,15 @@ class SettingsModel {
     private(set) lazy var appSettings = AppDependencyProvider.shared.appSettings
     private lazy var isPad = UIDevice.current.userInterfaceIdiom == .pad
     private var privacyStore = PrivacyUserDefaults()
+    private var cancellables = Set<AnyCancellable>()
     
     var appIcon: AppIcon = AppIcon.defaultAppIcon
+    var textSize: Int { appSettings.textSize }
+    var sendDoNotSell: Bool { appSettings.sendDoNotSell }
+    var autoconsentEnabled: Bool { appSettings.autoconsentEnabled }
+    var longPressPreviews: Bool { appSettings.longPressPreviews }
+    var allowUniversalLinks: Bool { appSettings.allowUniversalLinks }
+    
     var fireButtonAnimation: FireButtonAnimationType {
         get { appSettings.currentFireButtonAnimation }
         set {
@@ -60,6 +67,7 @@ class SettingsModel {
             }
         }
     }
+    
     var appTheme: ThemeName {
         get { appSettings.currentThemeName }
         set {
@@ -68,13 +76,12 @@ class SettingsModel {
             ThemeManager.shared.updateUserInterfaceStyle()
         }
     }
-    var textSize: Int { appSettings.textSize }
+    
     var addressBarPosition: AddressBarPosition {
         get { appSettings.currentAddressBarPosition }
         set { appSettings.currentAddressBarPosition = newValue }
     }
-    var sendDoNotSell: Bool { appSettings.sendDoNotSell }
-    var autoconsentEnabled: Bool { appSettings.autoconsentEnabled }
+    
     var autoclearDataEnabled: Bool {
         if AutoClearSettingsModel(settings: appSettings) != nil {
             return true
@@ -86,22 +93,23 @@ class SettingsModel {
         get { privacyStore.authenticationEnabled }
         set { privacyStore.authenticationEnabled = newValue }
     }
+    
     var autocomplete: Bool {
         get { appSettings.autocomplete }
         set { appSettings.autocomplete = newValue }
     }
-    var voiceSearchEnabled: Bool {
-        get { appSettings.voiceSearchEnabled }
-        set { appSettings.autocomplete = newValue }
-    }
-    var longPressPreviews: Bool { appSettings.longPressPreviews }
-    var allowUniversalLinks: Bool { appSettings.allowUniversalLinks }
     
+    var voiceSearchEnabled: Bool {
+        get {
+            appSettings.voiceSearchEnabled && AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable }
+        set {
+            appSettings.voiceSearchEnabled = newValue
+        }
+    }
 
 #if NETWORK_PROTECTION
     private let connectionObserver = ConnectionStatusObserverThroughSession()
 #endif
-    private var cancellables: Set<AnyCancellable> = []
     
     init(bookmarksDatabase: CoreDataDatabase,
          internalUserDecider: InternalUserDecider) {
@@ -156,6 +164,19 @@ class SettingsModel {
             return !isPad
         case .speechRecognition:
             return AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
+        }
+    }
+    
+    func enableVoiceSearch(completion: @escaping (Bool) -> Void) {
+        let isFirstTimeAskingForPermission = SpeechRecognizer.recordPermission == .undetermined
+
+        SpeechRecognizer.requestMicAccess { permission in
+            if !permission {
+                completion(false)
+                return
+            }
+            AppDependencyProvider.shared.voiceSearchHelper.enableVoiceSearch(true)
+            completion(true)
         }
     }
     

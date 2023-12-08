@@ -55,6 +55,7 @@ final class SettingsViewModel: ObservableObject {
     var shouldShowAddressBarPositionCell: Bool { model.isFeatureAvailable(.addressbarPosition) }
     var shouldShowNetworkProtectionCell: Bool { model.isFeatureAvailable(.networkProtection) }
     var shouldShowSpeechRecognitionCell: Bool { model.isFeatureAvailable(.speechRecognition) }
+    var shouldShowNoMicrophonePermissionAlert: Bool = false
     
     // Bindings
     var themeBinding: Binding<ThemeName> {
@@ -107,9 +108,22 @@ final class SettingsViewModel: ObservableObject {
     var voiceSearchEnabledBinding: Binding<Bool> {
         Binding<Bool>(
             get: { self.state.general.voiceSearchEnabled },
-            set: {
-                self.model.voiceSearchEnabled = $0
-                self.state.general.voiceSearchEnabled = $0
+            set: { value in
+                if value {
+                    self.model.enableVoiceSearch { [weak self] result in
+                        DispatchQueue.main.async {
+                            self?.state.general.voiceSearchEnabled = result
+                            self?.model.voiceSearchEnabled = result
+                            if !result {
+                                // Permission is denied
+                                self?.shouldShowNoMicrophonePermissionAlert = true
+                            }
+                        }
+                    }
+                } else {
+                    self.state.general.voiceSearchEnabled = false
+                    self.model.voiceSearchEnabled = false
+                }
             }
         )
     }
@@ -138,6 +152,7 @@ final class SettingsViewModel: ObservableObject {
         state.general.longPressPreviews = model.longPressPreviews
         state.general.allowUniversalLinks = model.allowUniversalLinks
     }
+    
 }
 
 extension SettingsViewModel {

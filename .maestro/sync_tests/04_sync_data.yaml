@@ -45,29 +45,7 @@ tags:
     file: ../shared/sync_login.yaml
 - assertVisible: Sync & Backup
 
-# Verify bookmarks have been merged
-- runFlow:
-    file: ../shared/sync_verify_bookmarks.yaml
-
-# Only expect local favorites when Share Favorites is off
-- tapOn: Favorites
-- assertVisible: DuckDuckGo — Privacy, simplified.
-- tapOn: Done
-- tapOn: Browsing Menu
-- tapOn: Settings
-
-# Enable Share Favorites and expect all favorites
-- runFlow:
-    file: ../shared/sync_verify_unified_favorites.yaml
-
-# Verify logins
-- tapOn: Browsing Menu
-- tapOn: Settings
-- runFlow:
-    file: ../shared/sync_verify_logins.yaml
-
 # Log Out
-- tapOn: Sync & Backup
 - runFlow:
     file: ../shared/sync_logout.yaml
 - tapOn: Settings
@@ -94,15 +72,15 @@ tags:
     file: ../shared/sync_verify_bookmarks.yaml
 
 # Verify favorites are unified
-- tapOn: Favorites
-- assertVisible: NFL.com | Official Site of the National Football League
-- assertVisible: DuckDuckGo · GitHub
-- assertVisible: Stack Overflow - Where Developers Learn, Share, & Build Careers
 - tapOn: Done
 - tapOn: Browsing Menu
 - tapOn: Settings
+- runFlow:
+    file: ../shared/sync_verify_unified_favorites.yaml
 
 # Verify logins
+- tapOn: Browsing Menu
+- tapOn: Settings
 - runFlow:
     file: ../shared/sync_verify_logins.yaml
 

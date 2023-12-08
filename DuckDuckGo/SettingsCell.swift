@@ -27,11 +27,11 @@ struct SettingsCellView: View, Identifiable {
         case rightDetail(String)
         case toggle(isOn: Binding<Bool>)
         case image(Image)
-        case subtitle(String)
         case custom(AnyView)
     }
     
     var label: String
+    var subtitle: String?
     var action: () -> Void = {}
     var enabled: Bool = true
     var accesory: Accesory
@@ -44,13 +44,15 @@ struct SettingsCellView: View, Identifiable {
     /// Use this initializer for standard cell types that require a label.
     /// - Parameters:
     ///   - label: The text to display in the cell.
+    ///   - subtitle: Displayed below title (if present)
     ///   - action: The closure to execute when the view is tapped. (If not embedded in a NavigationLink)
     ///   - accesory: The type of cell to display. Excludes the custom cell type.
     ///   - enabled: A Boolean value that determines whether the cell is enabled.
     ///   - asLink: Wraps the view inside a Button.  Used for views not wrapped in a NavigationLink
     ///   - disclosureIndicator: Forces Adds a disclosure indicator on the right (chevron)
-    init(label: String, action: @escaping () -> Void = {}, accesory: Accesory = .none, enabled: Bool = true, asLink: Bool = false, disclosureIndicator: Bool = false) {
+    init(label: String, subtitle: String? = nil, action: @escaping () -> Void = {}, accesory: Accesory = .none, enabled: Bool = true, asLink: Bool = false, disclosureIndicator: Bool = false) {
         self.label = label
+        self.subtitle = subtitle
         self.action = action
         self.enabled = enabled
         self.accesory = accesory
@@ -97,20 +99,32 @@ struct SettingsCellView: View, Identifiable {
     private var defaultView: some View {
         Group {
             HStack {
-                Text(label)
+                
+                VStack(alignment: .leading) {
+                    Text(label)
+                    if let subtitleText = subtitle {
+                        Text(subtitleText).font(.subheadline)
+                            .foregroundColor(Color(UIColor.secondaryLabel))
+                    }
+                }.fixedSize(horizontal: false, vertical: true)
+                    .layoutPriority(1)
+                
                 Spacer()
-                cellView()
+                
+                accesoryView()
+                
                 if disclosureIndicator {
                     Image(systemName: "chevron.forward")
                         .font(Font.system(.footnote).weight(.bold))
                         .foregroundColor(Color(UIColor.tertiaryLabel))
+                        .padding(.leading, 8)
                 }
             }
         }.contentShape(Rectangle())
     }
     
     @ViewBuilder
-    private func cellView() -> some View {
+    private func accesoryView() -> some View {
         switch accesory {
         case .none:
             EmptyView()
@@ -123,8 +137,6 @@ struct SettingsCellView: View, Identifiable {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 25, height: 25)
-        case .subtitle(let subtitle):
-            Text(subtitle).font(.subheadline)
         case .custom(let customView):
             customView
         }

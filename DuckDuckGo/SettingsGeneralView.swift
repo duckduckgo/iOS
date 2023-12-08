@@ -33,7 +33,7 @@ struct SettingsGeneralView: View {
             // This old VC has a special behavior does not work as expected when presented in the SwiftUI Stack
             // so we need to push it via the UIKit Containe
             SettingsCellView(label: "Add App to Your Dock",
-                             action: { viewModel.presentView(.addToDock) },
+                             action: { viewModel.presentLegacyView(.addToDock) },
                              asLink: true)
             
             NavigationLink(destination: WidgetEducationView()) {

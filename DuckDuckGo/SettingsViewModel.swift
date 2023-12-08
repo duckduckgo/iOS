@@ -34,36 +34,67 @@ import NetworkProtection
 
 final class SettingsViewModel: ObservableObject {
     
-    var legacyViewProvider: SettingsLegacyViewProvider
+    // Dependencies
+    private(set) lazy var appSettings = AppDependencyProvider.shared.appSettings
+    private(set) var privacyStore = PrivacyUserDefaults()
+    private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
+    private lazy var animator: FireButtonAnimator = FireButtonAnimator(appSettings: AppUserDefaults())
+    private var legacyViewProvider: SettingsLegacyViewProvider
+    
+    // Properties
+    private lazy var isPad = UIDevice.current.userInterfaceIdiom == .pad
+    private var cancellables = Set<AnyCancellable>()
     
     // Closure to request a legacy view controller presentation
     var onRequestPushLegacyView: ((UIViewController) -> Void)?
     var onRequestPresentLegacyView: ((UIViewController, _ modal: Bool) -> Void)?
     
-    private(set) var model: SettingsModel
+    // Our View State
     @Published private(set) var state: SettingsState
-    
-    // Support Programatic Navigation
-    var isPresentingLoginsView = false
-    
+        
     // Cell Visibility
-    var shouldShowSyncCell: Bool { model.isFeatureAvailable(.sync) }
-    var shouldShowLoginsCell: Bool { model.isFeatureAvailable(.autofillAccessCredentialManagement) }
-    var shouldShowTextSizeCell: Bool { model.isFeatureAvailable(.textSize) }
-    var shouldShowDebugCell: Bool { model.isFeatureAvailable(.networkProtection) }
-    var shouldShowVoiceSearchCell: Bool { model.isFeatureAvailable(.voiceSearch) }
-    var shouldShowAddressBarPositionCell: Bool { model.isFeatureAvailable(.addressbarPosition) }
-    var shouldShowNetworkProtectionCell: Bool { model.isFeatureAvailable(.networkProtection) }
-    var shouldShowSpeechRecognitionCell: Bool { model.isFeatureAvailable(.speechRecognition) }
+    enum Features {
+        case sync
+        case autofillAccessCredentialManagement
+        case textSize
+        case voiceSearch
+        case addressbarPosition
+        case speechRecognition
+#if NETWORK_PROTECTION
+        case networkProtection
+#endif
+    }
+    
+    var shouldShowSyncCell: Bool { featureFlagger.isFeatureOn(.sync) }
+    var shouldShowLoginsCell: Bool { featureFlagger.isFeatureOn(.autofillAccessCredentialManagement) }
+    var shouldShowTextSizeCell: Bool { !isPad }
+    var shouldShowVoiceSearchCell: Bool { AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable }
+    var shouldShowAddressBarPositionCell: Bool { !isPad }
+    var shouldShowSpeechRecognitionCell: Bool { AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable }
     var shouldShowNoMicrophonePermissionAlert: Bool = false
+    // var shouldShowDebugCell: Bool { isFeatureAvailable(.networkProtection) }
+    
+    var shouldShowNetworkProtectionCell: Bool {
+#if NETWORK_PROTECTION
+        if #available(iOS 15, *) {
+            return featureFlagger.isFeatureOn(.networkProtection)
+        } else {
+            return false
+        }
+#else
+        return false
+#endif
+    }
     
     // Bindings
     var themeBinding: Binding<ThemeName> {
         Binding<ThemeName>(
             get: { self.state.general.appTheme },
             set: {
-                self.model.appTheme = $0
                 self.state.general.appTheme = $0
+                self.appSettings.currentThemeName = $0
+                ThemeManager.shared.enableTheme(with: $0)
+                ThemeManager.shared.updateUserInterfaceStyle()
             }
         )
     }
@@ -71,8 +102,16 @@ final class SettingsViewModel: ObservableObject {
         Binding<FireButtonAnimationType>(
             get: { self.state.general.fireButtonAnimation },
             set: {
-                self.model.fireButtonAnimation = $0
+                self.appSettings.currentFireButtonAnimation = $0
                 self.state.general.fireButtonAnimation = $0
+                NotificationCenter.default.post(name: AppUserDefaults.Notifications.currentFireButtonAnimationChange, object: self)
+                self.animator.animate {
+                    // no op
+                } onTransitionCompleted: {
+                    // no op
+                } completion: {
+                    // no op
+                }
             }
         )
     }
@@ -82,8 +121,8 @@ final class SettingsViewModel: ObservableObject {
                 self.state.general.addressBarPosition
             },
             set: {
+                self.appSettings.currentAddressBarPosition = $0
                 self.state.general.addressBarPosition = $0
-                self.model.addressBarPosition = $0
             }
         )
     }
@@ -91,8 +130,8 @@ final class SettingsViewModel: ObservableObject {
         Binding<Bool>(
             get: { self.state.general.applicationLock },
             set: {
+                self.privacyStore.authenticationEnabled = $0
                 self.state.general.applicationLock = $0
-                self.model.applicationLock = $0
             }
         )
     }
@@ -100,8 +139,8 @@ final class SettingsViewModel: ObservableObject {
         Binding<Bool>(
             get: { self.state.general.autocomplete },
             set: {
+                self.appSettings.autocomplete = $0
                 self.state.general.autocomplete = $0
-                self.model.autocomplete = $0
             }
         )
     }
@@ -110,10 +149,10 @@ final class SettingsViewModel: ObservableObject {
             get: { self.state.general.voiceSearchEnabled },
             set: { value in
                 if value {
-                    self.model.enableVoiceSearch { [weak self] result in
+                    self.enableVoiceSearch { [weak self] result in
                         DispatchQueue.main.async {
                             self?.state.general.voiceSearchEnabled = result
-                            self?.model.voiceSearchEnabled = result
+                            self?.appSettings.voiceSearchEnabled = result
                             if !result {
                                 // Permission is denied
                                 self?.shouldShowNoMicrophonePermissionAlert = true
@@ -121,44 +160,90 @@ final class SettingsViewModel: ObservableObject {
                         }
                     }
                 } else {
+                    self.appSettings.voiceSearchEnabled = false
                     self.state.general.voiceSearchEnabled = false
-                    self.model.voiceSearchEnabled = false
                 }
             }
         )
     }
+    var longPressBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.state.general.longPressPreviews },
+            set: {
+                self.appSettings.longPressPreviews = $0
+                self.state.general.longPressPreviews = $0
+            }
+        )
+    }
+    
+    var universalLinksBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.state.general.allowUniversalLinks },
+            set: {
+                self.appSettings.allowUniversalLinks = $0
+                self.state.general.allowUniversalLinks = $0
+            }
+        )
+    }
         
-    init(model: SettingsModel,
-         state: SettingsState = SettingsState(general: SettingsStateGeneral()),
+    init(state: SettingsState = SettingsState(general: SettingsStateGeneral()),
          legacyViewProvider: SettingsLegacyViewProvider) {
-        self.model = model
         self.state = state
         self.legacyViewProvider = legacyViewProvider
-        initializeState()
+        setupSubscribers()
+        
     }
     
-    func initializeState() {
-        // Model should eventually be Observable, but that Requires appSettings to be update
-        state.general.appIcon = model.appIcon
-        state.general.fireButtonAnimation = model.fireButtonAnimation
-        state.general.appTheme = model.appTheme
-        state.general.textSize = model.textSize
-        state.general.addressBarPosition = model.addressBarPosition
-        state.general.sendDoNotSell = model.sendDoNotSell
-        state.general.autoconsentEnabled = model.autoconsentEnabled
-        state.general.autoclearDataEnabled = model.autoclearDataEnabled
-        state.general.applicationLock = model.applicationLock
-        state.general.voiceSearchEnabled = model.voiceSearchEnabled
-        state.general.longPressPreviews = model.longPressPreviews
-        state.general.allowUniversalLinks = model.allowUniversalLinks
+    private func createSettingsState() -> SettingsState {
+        // This manual initialzation will go away once appSettings and
+        // other dependencies are observable (Such as AppIcon)
+        return SettingsState(
+            general: SettingsStateGeneral(
+                appTheme: appSettings.currentThemeName,
+                fireButtonAnimation: appSettings.currentFireButtonAnimation,
+                textSize: appSettings.textSize,
+                addressBarPosition: appSettings.currentAddressBarPosition,
+                sendDoNotSell: appSettings.sendDoNotSell,
+                autoconsentEnabled: appSettings.autoconsentEnabled,
+                autoclearDataEnabled: AutoClearSettingsModel(settings: appSettings) != nil,
+                applicationLock: privacyStore.authenticationEnabled,
+                autocomplete: appSettings.autocomplete,
+                voiceSearchEnabled: appSettings.voiceSearchEnabled && AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
+                longPressPreviews: appSettings.longPressPreviews,
+                allowUniversalLinks: appSettings.allowUniversalLinks
+            )
+        )
     }
     
+    private func setupSubscribers() {
+        AppIconManager.shared.$appIcon
+            .sink { [weak self] newIcon in
+                self?.state.general.appIcon = newIcon
+            }
+            .store(in: &cancellables)
+    }
+    private func firePixel(_ event: Pixel.Event) {
+        Pixel.fire(pixel: event)
+    }
+    
+    private func enableVoiceSearch(completion: @escaping (Bool) -> Void) {
+        SpeechRecognizer.requestMicAccess { permission in
+            if !permission {
+                completion(false)
+                return
+            }
+            AppDependencyProvider.shared.voiceSearchHelper.enableVoiceSearch(true)
+            completion(true)
+        }
+    }
 }
 
 extension SettingsViewModel {
     
-    private func firePixel(_ event: Pixel.Event) {
-        Pixel.fire(pixel: event)
+    func updateState() {
+        // Eventually the model should be Observable, but that requires all
+        // dependencies (appSettings, privacyStore etc, to be reactive)
+        state = createSettingsState()
     }
     
     func setAsDefaultBrowser() {
@@ -169,9 +254,14 @@ extension SettingsViewModel {
     
     func shouldPresentLoginsViewWithAccount(accountDetails: SecureVaultModels.WebsiteAccount) {
         state.general.activeWebsiteAccount = accountDetails
-        isPresentingLoginsView = true
     }
     
+    func openEmailProtection() {
+        UIApplication.shared.open(URL.emailProtectionQuickLink,
+                                  options: [:],
+                                  completionHandler: nil)
+    }
+        
     func openCookiePopupManagement() {
         // showCookiePopupManagement(animated: true)
     }
@@ -194,11 +284,13 @@ extension SettingsViewModel {
              unprotectedSites,
              fireproofSites,
              autoclearData,
-             keyboard
+             keyboard,
+             macApp,
+             windowsApp
     }
     
     @MainActor
-    func presentView(_ view: LegacyView) {
+    func presentLegacyView(_ view: LegacyView) {
         switch view {
         
         case .addToDock:
@@ -211,7 +303,7 @@ extension SettingsViewModel {
             firePixel(.autofillSettingsOpened)
             pushLegacyView(legacyViewProvider.loginSettings(delegate: self,
                                                             selectedAccount: state.general.activeWebsiteAccount))
-        
+
         case .textSize:
             firePixel(.textSizeSettingsShown)
             pushLegacyView(legacyViewProvider.textSettings)
@@ -238,6 +330,12 @@ extension SettingsViewModel {
         
         case .keyboard:
             pushLegacyView(legacyViewProvider.keyboard)
+        
+        case .windowsApp:
+            pushLegacyView(legacyViewProvider.mac)
+        
+        case .macApp:
+            pushLegacyView(legacyViewProvider.mac)
         }
     }
         
@@ -287,6 +385,6 @@ extension SettingsViewModel {
 
 extension SettingsViewModel: AutofillLoginSettingsListViewControllerDelegate {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController) {
-        isPresentingLoginsView = false
+        // isPresentingLoginsView = false
     }
 }

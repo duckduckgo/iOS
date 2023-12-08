@@ -1,4 +1,4 @@
-//  SettingsPrivacyView.swift
+//  SettingsCustomizeView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -22,18 +22,14 @@ import UIKit
 struct SettingsCustomizeView: View {
         
     @EnvironmentObject var viewModel: SettingsViewModel
-    @State var shouldShowNoMicrophonePermissionAlert = false {
-        didSet {
-            print("Set alert!!! \(shouldShowNoMicrophonePermissionAlert)")
-        }
-    }
+    @State var shouldShowNoMicrophonePermissionAlert = false
 
     var body: some View {
         Section(header: Text("Customize"),
                 footer: Text("Disable to prevent links from automatically opening in other installed apps")) {
             
             SettingsCellView(label: "Keyboard",
-                             action: { viewModel.presentView(.keyboard) },
+                             action: { viewModel.presentLegacyView(.keyboard) },
                              asLink: true,
                              disclosureIndicator: true)
             
@@ -44,9 +40,11 @@ struct SettingsCustomizeView: View {
                 SettingsCellView(label: "Private Voice Search",
                                  accesory: .toggle(isOn: viewModel.voiceSearchEnabledBinding))
             }
-            SettingsCellView(label: "Long-Press Previews", accesory: .toggle(isOn: viewModel.applicationLockBinding))
+            SettingsCellView(label: "Long-Press Previews",
+                             accesory: .toggle(isOn: viewModel.longPressBinding))
             
-            SettingsCellView(label: "Open Links in Associated Apps", accesory: .toggle(isOn: viewModel.applicationLockBinding))
+            SettingsCellView(label: "Open Links in Associated Apps",
+                             accesory: .toggle(isOn: viewModel.universalLinksBinding))
         }
                 
                 .alert(isPresented: $shouldShowNoMicrophonePermissionAlert) {

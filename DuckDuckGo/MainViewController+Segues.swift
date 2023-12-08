@@ -204,7 +204,7 @@ extension MainViewController {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
         launchSettings {
-            $0.presentView(.sync)
+            $0.presentLegacyView(.sync)
         }
     }
     
@@ -220,13 +220,8 @@ extension MainViewController {
         let legacyViewProvider = SettingsLegacyViewProvider(syncService: syncService,
                                                             syncDataProviders: syncDataProviders,
                                                             appSettings: appSettings)
-        
-        let model = SettingsModel(bookmarksDatabase: self.bookmarksDatabase,
-                                  internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
-        
-        let settingsViewModel = SettingsViewModel(model: model,
-                                                  legacyViewProvider: legacyViewProvider)
-        
+                        
+        let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider)
         let settingsController = SettingsHostingController(viewModel: settingsViewModel, viewProvider: legacyViewProvider)
         settingsController.applyTheme(ThemeManager.shared.currentTheme)
         

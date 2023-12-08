@@ -32,7 +32,7 @@ struct SettingsAppeareanceView: View {
             
             let image = Image(uiImage: viewModel.state.general.appIcon.smallImage ?? UIImage())
             SettingsCellView(label: "App Icon",
-                             action: { viewModel.presentView(.appIcon ) },
+                             action: { viewModel.presentLegacyView(.appIcon ) },
                              accesory: .image(image),
                              asLink: true,
                              disclosureIndicator: true)
@@ -45,7 +45,7 @@ struct SettingsAppeareanceView: View {
             // The current implementation will not work on top of the SwiftUI stack, so we need to push it via the UIKit Container
             if viewModel.shouldShowTextSizeCell {
                 SettingsCellView(label: "Text Size",
-                                 action: { viewModel.presentView(.textSize) },
+                                 action: { viewModel.presentLegacyView(.textSize) },
                                  accesory: .rightDetail("\(viewModel.state.general.textSize)%"),
                                  asLink: true)
             }

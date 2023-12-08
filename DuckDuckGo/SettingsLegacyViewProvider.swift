@@ -106,4 +106,12 @@ class SettingsLegacyViewProvider: ObservableObject {
         let storyboard = UIStoryboard(name: "Settings", bundle: nil)
         return storyboard.instantiateViewController(identifier: "Keyboard") as! KeyboardSettingsViewController
     }
+    
+    var mac: UIViewController {
+        MacWaitlistViewController(nibName: nil, bundle: nil)
+    }
+    
+    var windows: UIViewController {
+        MacWaitlistViewController(nibName: nil, bundle: nil)
+    }
 }

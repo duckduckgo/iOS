@@ -28,7 +28,7 @@ struct SettingsPrivacyView: View {
                  footer: Text("If Touch ID, Face ID or a system passcode is set, you'll be requested to unlock the app when opening.")) {
              
              SettingsCellView(label: "Global Privacy Control (GPC)",
-                          action: { viewModel.presentView(.gpc) },
+                          action: { viewModel.presentLegacyView(.gpc) },
                           accesory: .rightDetail(viewModel.state.general.sendDoNotSell
                                                  ? UserText.doNotSellEnabled
                                                  : UserText.doNotSellDisabled),
@@ -36,7 +36,7 @@ struct SettingsPrivacyView: View {
                           disclosureIndicator: true)
 
              SettingsCellView(label: "Manage Cookie Popups",
-                              action: { viewModel.presentView(.autoconsent) },
+                              action: { viewModel.presentLegacyView(.autoconsent) },
                               accesory: .rightDetail(viewModel.state.general.autoconsentEnabled
                                                      ? UserText.autoconsentEnabled
                                                      : UserText.autoconsentDisabled),
@@ -44,17 +44,17 @@ struct SettingsPrivacyView: View {
                               disclosureIndicator: true)
 
              SettingsCellView(label: "Unprotected SItes",
-                              action: { viewModel.presentView(.unprotectedSites) },
+                              action: { viewModel.presentLegacyView(.unprotectedSites) },
                               asLink: true,
                               disclosureIndicator: true)
              
              SettingsCellView(label: "Fireproof Sites",
-                              action: { viewModel.presentView(.fireproofSites) },
+                              action: { viewModel.presentLegacyView(.fireproofSites) },
                               asLink: true,
                               disclosureIndicator: true)
              
              SettingsCellView(label: "Automatically Clear Data",
-                              action: { viewModel.presentView(.autoclearData) },
+                              action: { viewModel.presentLegacyView(.autoclearData) },
                               accesory: .rightDetail(viewModel.state.general.autoclearDataEnabled
                                                      ? UserText.autoClearAccessoryOn
                                                      : UserText.autoClearAccessoryOff),

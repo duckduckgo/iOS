@@ -32,6 +32,7 @@ struct SettingsView: View {
             SettingsAppeareanceView()
             SettingsPrivacyView()
             SettingsCustomizeView()
+            SettingsMoreView()
         }
         .navigationBarTitle(UserText.settingsTitle, displayMode: .inline)
         .navigationBarItems(trailing: Button(UserText.navigationTitleDone) {
@@ -39,7 +40,7 @@ struct SettingsView: View {
         .environmentObject(viewModel)
         
         .onAppear {
-            // viewModel.initalizeState()
+            viewModel.updateState()
         }
     }
     

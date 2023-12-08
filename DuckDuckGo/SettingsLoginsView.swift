@@ -30,7 +30,7 @@ struct SettingsLoginsView: View {
         if viewModel.shouldShowLoginsCell {
             Section {
                 SettingsCellView(label: "Logins",
-                                 action: { viewModel.presentView(.logins) },
+                                 action: { viewModel.presentLegacyView(.logins) },
                                  asLink: true,
                                  disclosureIndicator: true)
             }

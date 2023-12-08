@@ -119,7 +119,11 @@ public final class SyncBookmarksAdapter {
         }
     }
 
-    public func setUpProviderIfNeeded(database: CoreDataDatabase, metadataStore: SyncMetadataStore) {
+    public func setUpProviderIfNeeded(
+        database: CoreDataDatabase,
+        metadataStore: SyncMetadataStore,
+        metricsEventsHandler: EventMapping<MetricsEvent>? = nil
+    ) {
         guard provider == nil else {
             return
         }
@@ -129,6 +133,7 @@ public final class SyncBookmarksAdapter {
         let provider = BookmarksProvider(
             database: database,
             metadataStore: metadataStore,
+            metricsEvents: metricsEventsHandler,
             syncDidUpdateData: { [weak self] in
                 self?.syncDidCompleteSubject.send()
                 Self.isSyncBookmarksPaused = false

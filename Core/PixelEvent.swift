@@ -503,6 +503,15 @@ extension Pixel {
         case bookmarksMigrationCouldNotRemoveOldStore
         case bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders
 
+        case syncSignupDirect
+        case syncSignupConnect
+        case syncLogin
+        case syncDaily
+        case syncDuckAddressOverride
+        case syncSuccessRateDaily
+        case syncBookmarksLocalTimestampResolutionTriggered
+        case syncCredentialsLocalTimestampResolutionTriggered
+        case syncSettingsLocalTimestampResolutionTriggered
         case syncFailedToMigrate
         case syncFailedToLoadAccount
         case syncFailedToSetupEngine
@@ -1020,6 +1029,15 @@ extension Pixel.Event {
         case .bookmarksMigrationCouldNotRemoveOldStore: return "m_d_bookmarks_migration_could_not_remove_old_store"
         case .bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders: return "m_d_bookmarks_migration_could_not_prepare_multiple_favorite_folders"
 
+        case .syncSignupDirect: return "m_d_sync_signup_direct"
+        case .syncSignupConnect: return "m_d_sync_signup_connect"
+        case .syncLogin: return "m_d_sync_login"
+        case .syncDaily: return "m_d_sync_daily"
+        case .syncDuckAddressOverride: return "m_d_sync_duck_address_override"
+        case .syncSuccessRateDaily: return "m_d_sync_success_rate_daily"
+        case .syncBookmarksLocalTimestampResolutionTriggered: return "m_d_sync_bookmarks_local_timestamp_resolution_triggered"
+        case .syncCredentialsLocalTimestampResolutionTriggered: return "m_d_sync_credentials_local_timestamp_resolution_triggered"
+        case .syncSettingsLocalTimestampResolutionTriggered: return "m_d_sync_settings_local_timestamp_resolution_triggered"
         case .syncFailedToMigrate: return "m_d_sync_failed_to_migrate"
         case .syncFailedToLoadAccount: return "m_d_sync_failed_to_load_account"
         case .syncFailedToSetupEngine: return "m_d_sync_failed_to_setup_engine"

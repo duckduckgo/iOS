@@ -28,7 +28,7 @@ final class FavoritesDisplayModeSyncHandler: FavoritesDisplayModeSyncHandlerBase
         appSettings.favoritesDisplayMode.description
     }
 
-    override func setValue(_ value: String?) throws {
+    override func setValue(_ value: String?, shouldDetectOverride: Bool) throws {
         if let value, let displayMode = FavoritesDisplayMode(value) {
             appSettings.favoritesDisplayMode = displayMode
             NotificationCenter.default.post(name: AppUserDefaults.Notifications.favoritesDisplayModeChange, object: nil)

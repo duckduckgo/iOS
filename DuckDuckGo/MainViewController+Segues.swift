@@ -219,7 +219,8 @@ extension MainViewController {
     private func launchSettings(completion: ((SettingsViewModel) -> Void)? = nil) {
         let legacyViewProvider = SettingsLegacyViewProvider(syncService: syncService,
                                                             syncDataProviders: syncDataProviders,
-                                                            appSettings: appSettings)
+                                                            appSettings: appSettings,
+                                                            bookmarksDatabase: bookmarksDatabase)
                         
         let settingsViewModel = SettingsViewModel(legacyViewProvider: legacyViewProvider)
         let settingsController = SettingsHostingController(viewModel: settingsViewModel, viewProvider: legacyViewProvider)

@@ -23,27 +23,34 @@ import DDGSync
 import Core
 import BrowserServicesKit
 import SyncUI
+import Persistence
+import Common
 
 class SettingsLegacyViewProvider: ObservableObject {
     
     let syncService: DDGSyncing
     let syncDataProviders: SyncDataProviders
     let appSettings: AppSettings
+    let bookmarksDatabase: CoreDataDatabase
     
-    init(syncService: DDGSyncing, syncDataProviders: SyncDataProviders, appSettings: AppSettings) {
+    init(syncService: DDGSyncing,
+         syncDataProviders: SyncDataProviders,
+         appSettings: AppSettings,
+         bookmarksDatabase: CoreDataDatabase) {
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
         self.appSettings = appSettings
+        self.bookmarksDatabase = bookmarksDatabase
     }
     
     enum LegacyView {
-        case addToDock, sync, logins, textSize, appIcon, gpc, autoconsent, unprotectedSites, fireproofSites, autoclearData, keyboard, macApp, windowsApp, netP, about, feedback
+        case addToDock, sync, logins, textSize, appIcon, gpc, autoconsent, unprotectedSites, fireproofSites, autoclearData, keyboard, macApp, windowsApp, netP, about, feedback, debug
     }
     
     private func instantiate(_ identifier: String, fromStoryboard name: String) -> UIViewController {
-            let storyboard = UIStoryboard(name: name, bundle: nil)
-            return storyboard.instantiateViewController(withIdentifier: identifier)
-        }
+        let storyboard = UIStoryboard(name: name, bundle: nil)
+        return storyboard.instantiateViewController(withIdentifier: identifier)
+    }
     
     // Legacy UIKit Views (Pushed unmodified)
     var addToDock: UIViewController { instantiate( "instructions", fromStoryboard: "HomeRow") }
@@ -66,7 +73,6 @@ class SettingsLegacyViewProvider: ObservableObject {
     @available(iOS 15, *)
     var netP: UIViewController { NetworkProtectionRootViewController() }
     
-    
     @MainActor
     var syncSettings: UIViewController {
         return SyncSettingsViewController(syncService: self.syncService,
@@ -82,5 +88,11 @@ class SettingsLegacyViewProvider: ObservableObject {
                                                        selectedAccount: selectedAccount)
     }
     
-    
+    var debug: UIViewController {
+        let storyboard = UIStoryboard(name: "Debug", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "DebugMenu") as! RootDebugViewController
+        viewController.configure(sync: syncService, bookmarksDatabase: bookmarksDatabase, internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+        return viewController
+    }
+        
 }

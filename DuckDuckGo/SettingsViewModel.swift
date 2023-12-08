@@ -78,7 +78,7 @@ final class SettingsViewModel: ObservableObject {
     var shouldShowAddressBarPositionCell: Bool { !isPad }
     var shouldShowSpeechRecognitionCell: Bool { AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable }
     var shouldShowNoMicrophonePermissionAlert: Bool = false
-    // var shouldShowDebugCell: Bool { isFeatureAvailable(.networkProtection) }
+    var shouldShowDebugCell: Bool { return featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild }
     
     var shouldShowNetworkProtectionCell: Bool {
 #if NETWORK_PROTECTION
@@ -317,8 +317,9 @@ extension SettingsViewModel {
 }
 
 // MARK: Legacy View Presentation
-// These UIKit views have issues when presented via UIHostingController so
-// we fall back to UIKit navigation
+// Some UIKit views have visual issues when presented via UIHostingController so
+// for all existing subviews, default to UIKit based presentation until we
+// can review and migrate
 extension SettingsViewModel {
 
     @MainActor
@@ -326,12 +327,20 @@ extension SettingsViewModel {
         
         switch view {
         
-        case .addToDock:
-            presentLegacyView(legacyViewProvider.addToDock, modal: true)
-        
-        case .sync:
-            pushLegacyView(legacyViewProvider.syncSettings)
-        
+        case .addToDock: presentLegacyView(legacyViewProvider.addToDock, modal: true)
+        case .sync: pushLegacyView(legacyViewProvider.syncSettings)
+        case .appIcon: pushLegacyView(legacyViewProvider.appIcon)
+        case .unprotectedSites: pushLegacyView(legacyViewProvider.unprotectedSites)
+        case .fireproofSites: pushLegacyView(legacyViewProvider.fireproofSites)
+        case .autoclearData: pushLegacyView(legacyViewProvider.autoclearData)
+        case .keyboard: pushLegacyView(legacyViewProvider.keyboard)
+        case .windowsApp: pushLegacyView(legacyViewProvider.mac)
+        case .macApp: pushLegacyView(legacyViewProvider.mac)
+        case .about: pushLegacyView(legacyViewProvider.about)
+        case .debug: pushLegacyView(legacyViewProvider.debug)
+            
+        case .feedback:
+            presentLegacyView(legacyViewProvider.feedback, modal: false)
         case .logins:
             firePixel(.autofillSettingsOpened)
             pushLegacyView(legacyViewProvider.loginSettings(delegate: self,
@@ -340,10 +349,7 @@ extension SettingsViewModel {
         case .textSize:
             firePixel(.textSizeSettingsShown)
             pushLegacyView(legacyViewProvider.textSettings)
-        
-        case .appIcon:
-            pushLegacyView(legacyViewProvider.appIcon)
-        
+
         case .gpc:
             firePixel(.settingsDoNotSellShown)
             pushLegacyView(legacyViewProvider.gpc)
@@ -351,31 +357,7 @@ extension SettingsViewModel {
         case .autoconsent:
             firePixel(.settingsAutoconsentShown)
             pushLegacyView(legacyViewProvider.autoConsent)
-        
-        case .unprotectedSites:
-            pushLegacyView(legacyViewProvider.unprotectedSites)
-        
-        case .fireproofSites:
-            pushLegacyView(legacyViewProvider.fireproofSites)
-        
-        case .autoclearData:
-            pushLegacyView(legacyViewProvider.autoclearData)
-        
-        case .keyboard:
-            pushLegacyView(legacyViewProvider.keyboard)
-        
-        case .windowsApp:
-            pushLegacyView(legacyViewProvider.mac)
-        
-        case .macApp:
-            pushLegacyView(legacyViewProvider.mac)
-            
-        case .about:
-            pushLegacyView(legacyViewProvider.about)
-            
-        case .feedback:
-            presentLegacyView(legacyViewProvider.feedback, modal: false)
-
+     
 #if NETWORK_PROTECTION
         case .netP:
             if #available(iOS 15, *) {

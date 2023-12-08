@@ -780,6 +780,7 @@
 		D6E83C602B22B3C9006C8AFB /* SettingsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E83C5F2B22B3C9006C8AFB /* SettingsState.swift */; };
 		D6E83C622B23298B006C8AFB /* SettingsMoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E83C612B23298B006C8AFB /* SettingsMoreView.swift */; };
 		D6E83C642B238432006C8AFB /* SettingsAboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E83C632B238432006C8AFB /* SettingsAboutView.swift */; };
+		D6E83C662B23936F006C8AFB /* SettingsDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E83C652B23936F006C8AFB /* SettingsDebugView.swift */; };
 		EA39B7E2268A1A35000C62CD /* privacy-reference-tests in Resources */ = {isa = PBXBuildFile; fileRef = EA39B7E1268A1A35000C62CD /* privacy-reference-tests */; };
 		EAB19EDA268963510015D3EA /* DomainMatchingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB19ED9268963510015D3EA /* DomainMatchingTests.swift */; };
 		EE0153E12A6EABE0002A8B26 /* NetworkProtectionConvenienceInitialisers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0153E02A6EABE0002A8B26 /* NetworkProtectionConvenienceInitialisers.swift */; };
@@ -2415,6 +2416,7 @@
 		D6E83C5F2B22B3C9006C8AFB /* SettingsState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsState.swift; sourceTree = "<group>"; };
 		D6E83C612B23298B006C8AFB /* SettingsMoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsMoreView.swift; sourceTree = "<group>"; };
 		D6E83C632B238432006C8AFB /* SettingsAboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsAboutView.swift; sourceTree = "<group>"; };
+		D6E83C652B23936F006C8AFB /* SettingsDebugView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsDebugView.swift; sourceTree = "<group>"; };
 		EA39B7E1268A1A35000C62CD /* privacy-reference-tests */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "privacy-reference-tests"; path = "submodules/privacy-reference-tests"; sourceTree = SOURCE_ROOT; };
 		EAB19ED9268963510015D3EA /* DomainMatchingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainMatchingTests.swift; sourceTree = "<group>"; };
 		EE0153E02A6EABE0002A8B26 /* NetworkProtectionConvenienceInitialisers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtectionConvenienceInitialisers.swift; sourceTree = "<group>"; };
@@ -4499,6 +4501,7 @@
 				D6E83C5D2B224676006C8AFB /* SettingsCustomizeView.swift */,
 				D6E83C612B23298B006C8AFB /* SettingsMoreView.swift */,
 				D6E83C632B238432006C8AFB /* SettingsAboutView.swift */,
+				D6E83C652B23936F006C8AFB /* SettingsDebugView.swift */,
 			);
 			name = Sections;
 			sourceTree = "<group>";
@@ -6510,6 +6513,7 @@
 				85582E0029D7409700E9AE35 /* SyncSettingsViewController+PDFRendering.swift in Sources */,
 				EE0153EF2A70021E002A8B26 /* NetworkProtectionInviteView.swift in Sources */,
 				9888F77B2224980500C46159 /* FeedbackViewController.swift in Sources */,
+				D6E83C662B23936F006C8AFB /* SettingsDebugView.swift in Sources */,
 				982686AD2600C0850011A8D6 /* ActionMessageView.swift in Sources */,
 				F446B9B5251150AC00324016 /* HomeMessageViewSectionRenderer.swift in Sources */,
 				98D98A8225ED88E300D8E3DF /* BrowsingMenuSeparatorViewCell.swift in Sources */,

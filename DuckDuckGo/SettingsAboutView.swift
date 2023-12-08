@@ -25,7 +25,7 @@ struct SettingsAboutView: View {
     @EnvironmentObject var viewModel: SettingsViewModel
     
     var body: some View {
-        Section {
+        Section(header: Text("About")) {
             
             SettingsCellView(label: "About DuckDuckGo",
                              action: { viewModel.presentLegacyView(.about) },

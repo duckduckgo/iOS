@@ -1,5 +1,5 @@
 //
-//  SettingsView.swift
+//  SettingsDebugView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -20,30 +20,20 @@
 import SwiftUI
 import UIKit
 
-struct SettingsView: View {
+struct SettingsDebugView: View {
     
-    @StateObject var viewModel: SettingsViewModel
+    @EnvironmentObject var viewModel: SettingsViewModel
     
     var body: some View {
-        List {
-            SettingsGeneralView()
-            SettingsSyncView()
-            SettingsLoginsView()
-            SettingsAppeareanceView()
-            SettingsPrivacyView()
-            SettingsCustomizeView()
-            SettingsMoreView()
-            SettingsAboutView()
-            SettingsDebugView()
+        Section(header: Text("Debug Menus")) {
+            
+            SettingsCellView(label: "General",
+                             action: { viewModel.presentLegacyView(.debug) },
+                             asLink: true,
+                             disclosureIndicator: true)
+                        
         }
-        .navigationBarTitle(UserText.settingsTitle, displayMode: .inline)
-        .navigationBarItems(trailing: Button(UserText.navigationTitleDone) {
-        })
-        .environmentObject(viewModel)
-        
-        .onAppear {
-            viewModel.onAppear()
-        }
+
     }
-    
+ 
 }

@@ -21,7 +21,6 @@ tags:
     file: ../shared/add_bookmarks_and_favorites.yaml
 - tapOn: Close Tabs and Clear Data
 - tapOn: Close Tabs and Clear Data
-- tapOn: Cancel
 
 # Add local login
 - tapOn: Settings

@@ -48,9 +48,10 @@ final class SettingsViewModel: ObservableObject {
     private lazy var isPad = UIDevice.current.userInterfaceIdiom == .pad
     private var cancellables = Set<AnyCancellable>()
     
-    // Closure to request a legacy view controller presentation
+    // Closures to interact with legacy view controllers throught the container
     var onRequestPushLegacyView: ((UIViewController) -> Void)?
     var onRequestPresentLegacyView: ((UIViewController, _ modal: Bool) -> Void)?
+    var onRequestDismissLegacyView: (() -> Void)?
     
     // Our View State
     @Published private(set) var state: SettingsState
@@ -194,7 +195,6 @@ final class SettingsViewModel: ObservableObject {
     init(state: SettingsState? = nil, legacyViewProvider: SettingsLegacyViewProvider) {
         self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
-        setupSubscribers()
     }
 }
  
@@ -204,12 +204,13 @@ extension SettingsViewModel {
     // This manual (re)initialzation will go away once appSettings and
     // other dependencies are observable (Such as AppIcon and netP)
     // and we can use subscribers (Currently called from the view onAppear)
-    private func updateState() -> SettingsState {
+    private func initState() {
         let appereance = SettingsStateAppeareance(appTheme: appSettings.currentThemeName,
                                                   appIcon: AppIconManager.shared.appIcon,
                                                   fireButtonAnimation: appSettings.currentFireButtonAnimation,
                                                   textSize: appSettings.textSize,
                                                   addressBarPosition: appSettings.currentAddressBarPosition)
+        
         let privacy = SettingsStatePrivacy(sendDoNotSell: appSettings.sendDoNotSell,
                                            autoconsentEnabled: appSettings.autoconsentEnabled,
                                            autoclearDataEnabled: AutoClearSettingsModel(settings: appSettings) != nil,
@@ -220,11 +221,17 @@ extension SettingsViewModel {
                                                        longPressPreviews: appSettings.longPressPreviews,
                                                        allowUniversalLinks: appSettings.allowUniversalLinks)
         
-        return SettingsState(appeareance: appereance,
+        self.state = SettingsState(appeareance: appereance,
                              privacy: privacy,
                              customization: customization,
-                             logins: SettingsStateLogins(),
-                             netP: SettingsStateNetP())
+                             logins: SettingsStateLogins.defaults,
+                             netP: SettingsStateNetP.defaults)
+        
+        setupSubscribers()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            self.onRequestDismissLegacyView?()
+        }
         
     }
         
@@ -247,13 +254,13 @@ extension SettingsViewModel {
     private func updateNetPCellSubtitle(connectionStatus: ConnectionStatus) {
         switch NetworkProtectionAccessController().networkProtectionAccessType() {
         case .none, .waitlistAvailable, .waitlistJoined, .waitlistInvitedPendingTermsAcceptance:
-            state.netP.subtitle = VPNWaitlist.shared.settingsSubtitle
+            self.state.netP.subtitle = VPNWaitlist.shared.settingsSubtitle
         case .waitlistInvited, .inviteCodeInvited:
             switch connectionStatus {
             case .connected:
-                state.netP.subtitle = UserText.netPCellConnected
+                self.state.netP.subtitle = UserText.netPCellConnected
             default:
-                state.netP.subtitle = UserText.netPCellDisconnected
+                self.state.netP.subtitle = UserText.netPCellDisconnected
             }
         }
     }
@@ -281,7 +288,7 @@ extension SettingsViewModel {
 extension SettingsViewModel {
     
     func onAppear() {
-        state = updateState()
+        initState()
     }
     
     func setAsDefaultBrowser() {
@@ -425,6 +432,6 @@ extension SettingsViewModel {
 // MARK: AutofillLoginSettingsListViewControllerDelegate
 extension SettingsViewModel: AutofillLoginSettingsListViewControllerDelegate {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController) {
-        // isPresentingLoginsView = false
+        onRequestDismissLegacyView?()
     }
 }

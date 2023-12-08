@@ -91,14 +91,14 @@ struct SettingsStateLogins {
     var activeWebsiteAccount: SecureVaultModels.WebsiteAccount?
 
     static var defaults: SettingsStateLogins {
-        return SettingsStateLogins(activeWebsiteAccount: nil) // Provide a default value
+        return SettingsStateLogins(activeWebsiteAccount: nil)
     }
 }
 
 struct SettingsStateNetP {
-    var subtitle: String = ""
+    var subtitle: String
 
     static var defaults: SettingsStateNetP {
-        return SettingsStateNetP(subtitle: "") // Provide a default value
+        return SettingsStateNetP(subtitle: "")
     }
 }

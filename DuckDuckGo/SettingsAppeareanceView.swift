@@ -41,8 +41,6 @@ struct SettingsAppeareanceView: View {
                                    options: FireButtonAnimationType.allCases,
                                    selectedOption: viewModel.fireButtonAnimationBinding)
              
-            // The textsize settings view has a special behavior (detent adjustment) that requires access to a navigation controller
-            // The current implementation will not work on top of the SwiftUI stack, so we need to push it via the UIKit Container
             if viewModel.shouldShowTextSizeCell {
                 SettingsCellView(label: "Text Size",
                                  action: { viewModel.presentLegacyView(.textSize) },

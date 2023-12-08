@@ -30,8 +30,6 @@ struct SettingsGeneralView: View {
                              action: { viewModel.setAsDefaultBrowser() },
                              asLink: true)
             
-            // This old VC has a special behavior does not work as expected when presented in the SwiftUI Stack
-            // so we need to push it via the UIKit Containe
             SettingsCellView(label: "Add App to Your Dock",
                              action: { viewModel.presentLegacyView(.addToDock) },
                              asLink: true)

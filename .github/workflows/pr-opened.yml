@@ -8,11 +8,15 @@ jobs:
     add-task-to-app-board:
       runs-on: ubuntu-latest
       steps:
+        - name: Get Asana task ID from description
+          id: get-asana-task-id
+          run: echo "task-id=${ $${{ github.event.pull_request.body }} | grep 'Task.*URL.*asana.*' | awk '{ print $3; }' }" >> $GITHUB_OUTPUT
+
         - name: Add Asana task to Project
           uses: duckduckgo/native-github-asana-sync@v1.0
           with:
             asana-pat: ${{ secrets.ASANA_ACCESS_TOKEN }}
-            trigger-phrase: 'ASANA TASK:'
             asana-project: '414235014887631'
             asana-section: '414413334607374'
+            asana-task-id: ${{ steps.get-asana-task-id.outputs.task-id }}
             action: 'add-task-asana-project'

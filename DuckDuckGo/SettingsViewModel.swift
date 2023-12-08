@@ -40,6 +40,9 @@ final class SettingsViewModel: ObservableObject {
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var animator: FireButtonAnimator = FireButtonAnimator(appSettings: AppUserDefaults())
     private var legacyViewProvider: SettingsLegacyViewProvider
+#if NETWORK_PROTECTION
+    private let connectionObserver = ConnectionStatusObserverThroughSession()
+#endif
     
     // Properties
     private lazy var isPad = UIDevice.current.userInterfaceIdiom == .pad
@@ -51,8 +54,8 @@ final class SettingsViewModel: ObservableObject {
     
     // Our View State
     @Published private(set) var state: SettingsState
-        
-    // Cell Visibility
+    
+    // MARK: Cell Visibility
     enum Features {
         case sync
         case autofillAccessCredentialManagement
@@ -86,12 +89,12 @@ final class SettingsViewModel: ObservableObject {
 #endif
     }
     
-    // Bindings
+    // MARK: Bindings
     var themeBinding: Binding<ThemeName> {
         Binding<ThemeName>(
-            get: { self.state.general.appTheme },
+            get: { self.state.appeareance.appTheme },
             set: {
-                self.state.general.appTheme = $0
+                self.state.appeareance.appTheme = $0
                 self.appSettings.currentThemeName = $0
                 ThemeManager.shared.enableTheme(with: $0)
                 ThemeManager.shared.updateUserInterfaceStyle()
@@ -100,10 +103,10 @@ final class SettingsViewModel: ObservableObject {
     }
     var fireButtonAnimationBinding: Binding<FireButtonAnimationType> {
         Binding<FireButtonAnimationType>(
-            get: { self.state.general.fireButtonAnimation },
+            get: { self.state.appeareance.fireButtonAnimation },
             set: {
                 self.appSettings.currentFireButtonAnimation = $0
-                self.state.general.fireButtonAnimation = $0
+                self.state.appeareance.fireButtonAnimation = $0
                 NotificationCenter.default.post(name: AppUserDefaults.Notifications.currentFireButtonAnimationChange, object: self)
                 self.animator.animate {
                     // no op
@@ -118,40 +121,40 @@ final class SettingsViewModel: ObservableObject {
     var addressBarPositionBinding: Binding<AddressBarPosition> {
         Binding<AddressBarPosition>(
             get: {
-                self.state.general.addressBarPosition
+                self.state.appeareance.addressBarPosition
             },
             set: {
                 self.appSettings.currentAddressBarPosition = $0
-                self.state.general.addressBarPosition = $0
+                self.state.appeareance.addressBarPosition = $0
             }
         )
     }
     var applicationLockBinding: Binding<Bool> {
         Binding<Bool>(
-            get: { self.state.general.applicationLock },
+            get: { self.state.privacy.applicationLock },
             set: {
                 self.privacyStore.authenticationEnabled = $0
-                self.state.general.applicationLock = $0
+                self.state.privacy.applicationLock = $0
             }
         )
     }
     var autocompleteBinding: Binding<Bool> {
         Binding<Bool>(
-            get: { self.state.general.autocomplete },
+            get: { self.state.customization.autocomplete },
             set: {
                 self.appSettings.autocomplete = $0
-                self.state.general.autocomplete = $0
+                self.state.customization.autocomplete = $0
             }
         )
     }
     var voiceSearchEnabledBinding: Binding<Bool> {
         Binding<Bool>(
-            get: { self.state.general.voiceSearchEnabled },
+            get: { self.state.customization.voiceSearchEnabled },
             set: { value in
                 if value {
                     self.enableVoiceSearch { [weak self] result in
                         DispatchQueue.main.async {
-                            self?.state.general.voiceSearchEnabled = result
+                            self?.state.customization.voiceSearchEnabled = result
                             self?.appSettings.voiceSearchEnabled = result
                             if !result {
                                 // Permission is denied
@@ -161,67 +164,69 @@ final class SettingsViewModel: ObservableObject {
                     }
                 } else {
                     self.appSettings.voiceSearchEnabled = false
-                    self.state.general.voiceSearchEnabled = false
+                    self.state.customization.voiceSearchEnabled = false
                 }
             }
         )
     }
     var longPressBinding: Binding<Bool> {
         Binding<Bool>(
-            get: { self.state.general.longPressPreviews },
+            get: { self.state.customization.longPressPreviews },
             set: {
                 self.appSettings.longPressPreviews = $0
-                self.state.general.longPressPreviews = $0
+                self.state.customization.longPressPreviews = $0
             }
         )
     }
     
     var universalLinksBinding: Binding<Bool> {
         Binding<Bool>(
-            get: { self.state.general.allowUniversalLinks },
+            get: { self.state.customization.allowUniversalLinks },
             set: {
                 self.appSettings.allowUniversalLinks = $0
-                self.state.general.allowUniversalLinks = $0
+                self.state.customization.allowUniversalLinks = $0
             }
         )
     }
-        
-    init(state: SettingsState = SettingsState(general: SettingsStateGeneral()),
-         legacyViewProvider: SettingsLegacyViewProvider) {
-        self.state = state
+
+    // MARK: Default Init
+    init(state: SettingsState? = nil, legacyViewProvider: SettingsLegacyViewProvider) {
+        self.state = SettingsState.defaults
         self.legacyViewProvider = legacyViewProvider
+        self.state = state ?? createSettingsState()
         setupSubscribers()
-        
     }
+}
+ 
+// MARK: Private methods
+extension SettingsViewModel {
     
     private func createSettingsState() -> SettingsState {
-        // This manual initialzation will go away once appSettings and
-        // other dependencies are observable (Such as AppIcon)
-        return SettingsState(
-            general: SettingsStateGeneral(
-                appTheme: appSettings.currentThemeName,
-                fireButtonAnimation: appSettings.currentFireButtonAnimation,
-                textSize: appSettings.textSize,
-                addressBarPosition: appSettings.currentAddressBarPosition,
-                sendDoNotSell: appSettings.sendDoNotSell,
-                autoconsentEnabled: appSettings.autoconsentEnabled,
-                autoclearDataEnabled: AutoClearSettingsModel(settings: appSettings) != nil,
-                applicationLock: privacyStore.authenticationEnabled,
-                autocomplete: appSettings.autocomplete,
-                voiceSearchEnabled: appSettings.voiceSearchEnabled && AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
-                longPressPreviews: appSettings.longPressPreviews,
-                allowUniversalLinks: appSettings.allowUniversalLinks
-            )
-        )
+        // This manual (re)initialzation will go away once appSettings and
+        // other dependencies are observable (Such as AppIcon and netP)
+        // and we can use subscribers
+        let appereance = SettingsStateAppeareance(appTheme: appSettings.currentThemeName,
+                                                  fireButtonAnimation: appSettings.currentFireButtonAnimation,
+                                                  textSize: appSettings.textSize,
+                                                  addressBarPosition: appSettings.currentAddressBarPosition)
+        let privacy = SettingsStatePrivacy(sendDoNotSell: appSettings.sendDoNotSell,
+                                           autoconsentEnabled: appSettings.autoconsentEnabled,
+                                           autoclearDataEnabled: AutoClearSettingsModel(settings: appSettings) != nil,
+                                           applicationLock: privacyStore.authenticationEnabled)
+        
+        let customization = SettingsStateCustomization(autocomplete: appSettings.autocomplete,
+                                                       voiceSearchEnabled: appSettings.voiceSearchEnabled && AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
+                                                       longPressPreviews: appSettings.longPressPreviews,
+                                                       allowUniversalLinks: appSettings.allowUniversalLinks)
+        
+        return SettingsState(appeareance: appereance,
+                             privacy: privacy,
+                             customization: customization,
+                             logins: SettingsStateLogins(),
+                             netP: SettingsStateNetP())
+        
     }
-    
-    private func setupSubscribers() {
-        AppIconManager.shared.$appIcon
-            .sink { [weak self] newIcon in
-                self?.state.general.appIcon = newIcon
-            }
-            .store(in: &cancellables)
-    }
+        
     private func firePixel(_ event: Pixel.Event) {
         Pixel.fire(pixel: event)
     }
@@ -236,13 +241,51 @@ final class SettingsViewModel: ObservableObject {
             completion(true)
         }
     }
+    
+#if NETWORK_PROTECTION
+    private func updateNetPCellSubtitle(connectionStatus: ConnectionStatus) {
+        switch NetworkProtectionAccessController().networkProtectionAccessType() {
+        case .none, .waitlistAvailable, .waitlistJoined, .waitlistInvitedPendingTermsAcceptance:
+            state.netP.subtitle = VPNWaitlist.shared.settingsSubtitle
+        case .waitlistInvited, .inviteCodeInvited:
+            switch connectionStatus {
+            case .connected:
+                state.netP.subtitle = UserText.netPCellConnected
+            default:
+                state.netP.subtitle = UserText.netPCellDisconnected
+            }
+        }
+    }
+#endif
 }
 
+// MARK: Subscribers
+extension SettingsViewModel {
+    
+    private func setupSubscribers() {
+    
+        AppIconManager.shared.$appIcon
+            .sink { [weak self] newIcon in
+                self?.state.appeareance.appIcon = newIcon
+            }
+            .store(in: &cancellables)
+
+#if NETWORK_PROTECTION
+        connectionObserver.publisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] status in
+                self?.updateNetPCellSubtitle(connectionStatus: status)
+            }
+            .store(in: &cancellables)
+#endif
+        
+    }
+}
+
+// MARK: Public Methods
 extension SettingsViewModel {
     
     func updateState() {
-        // Eventually the model should be Observable, but that requires all
-        // dependencies (appSettings, privacyStore etc, to be reactive)
         state = createSettingsState()
     }
     
@@ -253,7 +296,7 @@ extension SettingsViewModel {
     }
     
     func shouldPresentLoginsViewWithAccount(accountDetails: SecureVaultModels.WebsiteAccount) {
-        state.general.activeWebsiteAccount = accountDetails
+        state.logins.activeWebsiteAccount = accountDetails
     }
     
     func openEmailProtection() {
@@ -302,7 +345,7 @@ extension SettingsViewModel {
         case .logins:
             firePixel(.autofillSettingsOpened)
             pushLegacyView(legacyViewProvider.loginSettings(delegate: self,
-                                                            selectedAccount: state.general.activeWebsiteAccount))
+                                                            selectedAccount: state.logins.activeWebsiteAccount))
 
         case .textSize:
             firePixel(.textSizeSettingsShown)
@@ -349,6 +392,7 @@ extension SettingsViewModel {
     
 }
 
+// MARK: Old stuff from SettingsViewController
 extension SettingsViewModel {
     static var fontSizeForHeaderView: CGFloat {
         let contentSize = UIApplication.shared.preferredContentSizeCategory
@@ -383,6 +427,7 @@ extension SettingsViewModel {
     }
 }
 
+// MARK: AutofillLoginSettingsListViewControllerDelegate
 extension SettingsViewModel: AutofillLoginSettingsListViewControllerDelegate {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController) {
         // isPresentingLoginsView = false

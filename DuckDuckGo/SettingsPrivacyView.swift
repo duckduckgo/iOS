@@ -29,7 +29,7 @@ struct SettingsPrivacyView: View {
              
              SettingsCellView(label: "Global Privacy Control (GPC)",
                           action: { viewModel.presentLegacyView(.gpc) },
-                          accesory: .rightDetail(viewModel.state.general.sendDoNotSell
+                          accesory: .rightDetail(viewModel.state.privacy.sendDoNotSell
                                                  ? UserText.doNotSellEnabled
                                                  : UserText.doNotSellDisabled),
                           asLink: true,
@@ -37,7 +37,7 @@ struct SettingsPrivacyView: View {
 
              SettingsCellView(label: "Manage Cookie Popups",
                               action: { viewModel.presentLegacyView(.autoconsent) },
-                              accesory: .rightDetail(viewModel.state.general.autoconsentEnabled
+                              accesory: .rightDetail(viewModel.state.privacy.autoconsentEnabled
                                                      ? UserText.autoconsentEnabled
                                                      : UserText.autoconsentDisabled),
                               asLink: true,
@@ -55,7 +55,7 @@ struct SettingsPrivacyView: View {
              
              SettingsCellView(label: "Automatically Clear Data",
                               action: { viewModel.presentLegacyView(.autoclearData) },
-                              accesory: .rightDetail(viewModel.state.general.autoclearDataEnabled
+                              accesory: .rightDetail(viewModel.state.privacy.autoclearDataEnabled
                                                      ? UserText.autoClearAccessoryOn
                                                      : UserText.autoClearAccessoryOff),
                               asLink: true,

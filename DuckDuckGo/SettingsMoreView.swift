@@ -48,7 +48,7 @@ struct SettingsMoreView: View {
 #if NETWORK_PROTECTION
             if viewModel.shouldShowNetworkProtectionCell {
                 SettingsCellView(label: "Network Protection",
-                                 subtitle: "Join the private waitlist",
+                                 subtitle: viewModel.state.netP.subtitle,
                                  action: { viewModel.presentLegacyView(.keyboard) },
                                  asLink: true,
                                  disclosureIndicator: true)

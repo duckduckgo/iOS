@@ -20,23 +20,84 @@
 import BrowserServicesKit
 
 struct SettingsState {
-    var general: SettingsStateGeneral
+    var appeareance: SettingsStateAppeareance
+    var privacy: SettingsStatePrivacy
+    var customization: SettingsStateCustomization
+    var logins: SettingsStateLogins
+    var netP: SettingsStateNetP
     // Add state for other sections here...
+    
+    static var defaults: SettingsState {
+        return SettingsState(
+            appeareance: SettingsStateAppeareance.defaults,
+            privacy: SettingsStatePrivacy.defaults,
+            customization: SettingsStateCustomization.defaults,
+            logins: SettingsStateLogins.defaults,
+            netP: SettingsStateNetP.defaults)
+    }
 }
 
-struct SettingsStateGeneral {
-    var appTheme: ThemeName = ThemeManager.shared.currentTheme.name
+struct SettingsStateAppeareance {
+    var appTheme: ThemeName
     var appIcon: AppIcon = AppIconManager.shared.appIcon
-    var fireButtonAnimation: FireButtonAnimationType = .fireRising
-    var textSize: Int = 100
+    var fireButtonAnimation: FireButtonAnimationType
+    var textSize: Int
+    var addressBarPosition: AddressBarPosition
+    
+    static var defaults: SettingsStateAppeareance {
+        return SettingsStateAppeareance(
+            appTheme: .systemDefault,
+            fireButtonAnimation: .fireRising,
+            textSize: 100,
+            addressBarPosition: .top
+        )
+    }
+}
+
+struct SettingsStatePrivacy {
+    var sendDoNotSell: Bool
+    var autoconsentEnabled: Bool
+    var autoclearDataEnabled: Bool
+    var applicationLock: Bool
+    
+    static var defaults: SettingsStatePrivacy {
+        return SettingsStatePrivacy(
+            sendDoNotSell: true,
+            autoconsentEnabled: false,
+            autoclearDataEnabled: false,
+            applicationLock: false
+        )
+    }
+}
+
+struct SettingsStateCustomization {
+    var autocomplete: Bool
+    var voiceSearchEnabled: Bool
+    var longPressPreviews: Bool
+    var allowUniversalLinks: Bool
+    
+    static var defaults: SettingsStateCustomization {
+        return SettingsStateCustomization(
+            autocomplete: true,
+            voiceSearchEnabled: false,
+            longPressPreviews: true,
+            allowUniversalLinks: true
+        )
+    }
+}
+
+struct SettingsStateLogins {
     var activeWebsiteAccount: SecureVaultModels.WebsiteAccount?
-    var addressBarPosition: AddressBarPosition = .top
-    var sendDoNotSell: Bool = true
-    var autoconsentEnabled: Bool = true
-    var autoclearDataEnabled: Bool = true
-    var applicationLock: Bool = true
-    var autocomplete: Bool = true
-    var voiceSearchEnabled = true
-    var longPressPreviews = true
-    var allowUniversalLinks = true
+
+    static var defaults: SettingsStateLogins {
+        return SettingsStateLogins(activeWebsiteAccount: nil) // Provide a default value
+    }
+}
+
+struct SettingsStateNetP {
+    var subtitle: String = ""
+
+    static var defaults: SettingsStateNetP {
+        return SettingsStateNetP(subtitle: "") // Provide a default value
+    }
 }

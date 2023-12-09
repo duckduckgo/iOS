@@ -23,11 +23,6 @@ import SwiftUI
 class SettingsHostingController: UIHostingController<AnyView> {
     var viewModel: SettingsViewModel
     var viewProvider: SettingsLegacyViewProvider
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        applyTheme(ThemeManager.shared.currentTheme)
-    }
     
     init(viewModel: SettingsViewModel, viewProvider: SettingsLegacyViewProvider) {
         self.viewModel = viewModel

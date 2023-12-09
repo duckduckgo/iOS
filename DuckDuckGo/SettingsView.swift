@@ -38,12 +38,12 @@ struct SettingsView: View {
             SettingsAboutView()
             SettingsDebugView()
         }
-        .background(Color(designSystemColor: .accent))
         .navigationBarTitle(UserText.settingsTitle, displayMode: .inline)
         .navigationBarItems(trailing: Button(UserText.navigationTitleDone) {
             viewModel.onRequestDismissSettings?()
         })
         .accentColor(Color(designSystemColor: .textPrimary))
+        
         .environmentObject(viewModel)
         
         .onAppear {

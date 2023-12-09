@@ -42,8 +42,12 @@ class SettingsHostingController: UIHostingController<AnyView> {
             self?.presentLegacyViewCOntroller(vc, modal: modal)
         }
         
-        viewModel.onRequestDismissLegacyView = { [weak self] in
+        viewModel.onRequestPopLegacyView = { [weak self] in
             self?.navigationController?.popViewController(animated: true)
+        }
+        
+        viewModel.onRequestDismissSettings = { [weak self] in
+            self?.navigationController?.dismiss(animated: true)
         }
 
         let settingsView = SettingsView(viewModel: viewModel)

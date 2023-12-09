@@ -53,7 +53,8 @@ final class SettingsViewModel: ObservableObject {
     // Closures to interact with legacy view controllers throught the container
     var onRequestPushLegacyView: ((UIViewController) -> Void)?
     var onRequestPresentLegacyView: ((UIViewController, _ modal: Bool) -> Void)?
-    var onRequestDismissLegacyView: (() -> Void)?
+    var onRequestPopLegacyView: (() -> Void)?
+    var onRequestDismissSettings: (() -> Void)?
     
     // Our View State
     @Published private(set) var state: SettingsState
@@ -304,6 +305,10 @@ extension SettingsViewModel {
     @MainActor func openCookiePopupManagement() {
         pushViewController(legacyViewProvider.autoConsent)
     }
+    
+    @MainActor func dismissSettings() {
+        onRequestDismissSettings?()
+    }
 
 }
 
@@ -379,7 +384,9 @@ extension SettingsViewModel {
 
 // MARK: AutofillLoginSettingsListViewControllerDelegate
 extension SettingsViewModel: AutofillLoginSettingsListViewControllerDelegate {
+    
+    @MainActor
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController) {
-        onRequestDismissLegacyView?()
+        onRequestPopLegacyView?()
     }
 }

@@ -20,7 +20,7 @@
 import SwiftUI
 import DesignResourcesKit
 
-private struct Components {
+struct SettingsCellComponents {
     static var chevron: some View {
         Image(systemName: "chevron.forward")
             .font(Font.system(.footnote).weight(.bold))
@@ -130,7 +130,7 @@ struct SettingsCellView: View, Identifiable {
                 accesoryView()
                 
                 if disclosureIndicator {
-                    Components.chevron
+                    SettingsCellComponents.chevron
                 }
             }.padding(EdgeInsets(top: 2, leading: 0, bottom: 2, trailing: 0))
         }.contentShape(Rectangle())
@@ -234,7 +234,7 @@ struct SettingsCustomCell<Content: View>: View {
         HStack {
             content
             Spacer()
-            Components.chevron
+            SettingsCellComponents.chevron
         }
         .onTapGesture(perform: action)
     }

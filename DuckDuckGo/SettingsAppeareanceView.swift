@@ -30,7 +30,7 @@ struct SettingsAppeareanceView: View {
                                    options: ThemeName.allCases,
                                    selectedOption: viewModel.themeBinding)
             
-            let image = Image(uiImage: viewModel.state.appeareance.appIcon.smallImage ?? UIImage())
+            let image = Image(uiImage: viewModel.state.appIcon.smallImage ?? UIImage())
             SettingsCellView(label: "App Icon",
                              action: { viewModel.presentLegacyView(.appIcon ) },
                              accesory: .image(image),
@@ -44,7 +44,7 @@ struct SettingsAppeareanceView: View {
             if viewModel.shouldShowTextSizeCell {
                 SettingsCellView(label: "Text Size",
                                  action: { viewModel.presentLegacyView(.textSize) },
-                                 accesory: .rightDetail("\(viewModel.state.appeareance.textSize)%"),
+                                 accesory: .rightDetail("\(viewModel.state.textSize)%"),
                                  asLink: true)
             }
             

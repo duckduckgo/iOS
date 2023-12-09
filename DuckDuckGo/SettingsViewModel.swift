@@ -83,7 +83,6 @@ final class SettingsViewModel: ObservableObject {
     var shouldShowNetworkProtectionCell: Bool {
 #if NETWORK_PROTECTION
         if #available(iOS 15, *) {
-            print(featureFlagger.isFeatureOn(.networkProtection))
             return featureFlagger.isFeatureOn(.networkProtection)
         } else {
             return false
@@ -96,9 +95,9 @@ final class SettingsViewModel: ObservableObject {
     // MARK: Bindings
     var themeBinding: Binding<ThemeName> {
         Binding<ThemeName>(
-            get: { self.state.appeareance.appTheme },
+            get: { self.state.appTheme },
             set: {
-                self.state.appeareance.appTheme = $0
+                self.state.appTheme = $0
                 self.appSettings.currentThemeName = $0
                 ThemeManager.shared.enableTheme(with: $0)
                 ThemeManager.shared.updateUserInterfaceStyle()
@@ -107,10 +106,10 @@ final class SettingsViewModel: ObservableObject {
     }
     var fireButtonAnimationBinding: Binding<FireButtonAnimationType> {
         Binding<FireButtonAnimationType>(
-            get: { self.state.appeareance.fireButtonAnimation },
+            get: { self.state.fireButtonAnimation },
             set: {
                 self.appSettings.currentFireButtonAnimation = $0
-                self.state.appeareance.fireButtonAnimation = $0
+                self.state.fireButtonAnimation = $0
                 NotificationCenter.default.post(name: AppUserDefaults.Notifications.currentFireButtonAnimationChange, object: self)
                 self.animator.animate {
                     // no op
@@ -125,40 +124,40 @@ final class SettingsViewModel: ObservableObject {
     var addressBarPositionBinding: Binding<AddressBarPosition> {
         Binding<AddressBarPosition>(
             get: {
-                self.state.appeareance.addressBarPosition
+                self.state.addressBarPosition
             },
             set: {
                 self.appSettings.currentAddressBarPosition = $0
-                self.state.appeareance.addressBarPosition = $0
+                self.state.addressBarPosition = $0
             }
         )
     }
     var applicationLockBinding: Binding<Bool> {
         Binding<Bool>(
-            get: { self.state.privacy.applicationLock },
+            get: { self.state.applicationLock },
             set: {
                 self.privacyStore.authenticationEnabled = $0
-                self.state.privacy.applicationLock = $0
+                self.state.applicationLock = $0
             }
         )
     }
     var autocompleteBinding: Binding<Bool> {
         Binding<Bool>(
-            get: { self.state.customization.autocomplete },
+            get: { self.state.autocomplete },
             set: {
                 self.appSettings.autocomplete = $0
-                self.state.customization.autocomplete = $0
+                self.state.autocomplete = $0
             }
         )
     }
     var voiceSearchEnabledBinding: Binding<Bool> {
         Binding<Bool>(
-            get: { self.state.customization.voiceSearchEnabled },
+            get: { self.state.voiceSearchEnabled },
             set: { value in
                 if value {
                     self.enableVoiceSearch { [weak self] result in
                         DispatchQueue.main.async {
-                            self?.state.customization.voiceSearchEnabled = result
+                            self?.state.voiceSearchEnabled = result
                             self?.appSettings.voiceSearchEnabled = result
                             if !result {
                                 // Permission is denied
@@ -168,27 +167,27 @@ final class SettingsViewModel: ObservableObject {
                     }
                 } else {
                     self.appSettings.voiceSearchEnabled = false
-                    self.state.customization.voiceSearchEnabled = false
+                    self.state.voiceSearchEnabled = false
                 }
             }
         )
     }
     var longPressBinding: Binding<Bool> {
         Binding<Bool>(
-            get: { self.state.customization.longPressPreviews },
+            get: { self.state.longPressPreviews },
             set: {
                 self.appSettings.longPressPreviews = $0
-                self.state.customization.longPressPreviews = $0
+                self.state.longPressPreviews = $0
             }
         )
     }
     
     var universalLinksBinding: Binding<Bool> {
         Binding<Bool>(
-            get: { self.state.customization.allowUniversalLinks },
+            get: { self.state.allowUniversalLinks },
             set: {
                 self.appSettings.allowUniversalLinks = $0
-                self.state.customization.allowUniversalLinks = $0
+                self.state.allowUniversalLinks = $0
             }
         )
     }
@@ -207,34 +206,25 @@ extension SettingsViewModel {
     // other dependencies are observable (Such as AppIcon and netP)
     // and we can use subscribers (Currently called from the view onAppear)
     private func initState() {
-        let appereance = SettingsStateAppeareance(appTheme: appSettings.currentThemeName,
-                                                  appIcon: AppIconManager.shared.appIcon,
-                                                  fireButtonAnimation: appSettings.currentFireButtonAnimation,
-                                                  textSize: appSettings.textSize,
-                                                  addressBarPosition: appSettings.currentAddressBarPosition)
-        
-        let privacy = SettingsStatePrivacy(sendDoNotSell: appSettings.sendDoNotSell,
-                                           autoconsentEnabled: appSettings.autoconsentEnabled,
-                                           autoclearDataEnabled: AutoClearSettingsModel(settings: appSettings) != nil,
-                                           applicationLock: privacyStore.authenticationEnabled)
-        
-        let customization = SettingsStateCustomization(autocomplete: appSettings.autocomplete,
-                                                       voiceSearchEnabled: appSettings.voiceSearchEnabled && AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
-                                                       longPressPreviews: appSettings.longPressPreviews,
-                                                       allowUniversalLinks: appSettings.allowUniversalLinks)
-        
-        let about = SettingsStateAbout(version: versionProvider.versionAndBuildNumber)
-        
-        
-        self.state = SettingsState(appeareance: appereance,
-                                   privacy: privacy,
-                                   customization: customization,
-                                   logins: SettingsStateLogins.defaults,
-                                   netP: SettingsStateNetP.defaults,
-                                   about: about)
-        
+        self.state = SettingsState(
+            appTheme: appSettings.currentThemeName,
+            appIcon: AppIconManager.shared.appIcon,
+            fireButtonAnimation: appSettings.currentFireButtonAnimation,
+            textSize: appSettings.textSize,
+            addressBarPosition: appSettings.currentAddressBarPosition,
+            sendDoNotSell: appSettings.sendDoNotSell,
+            autoconsentEnabled: appSettings.autoconsentEnabled,
+            autoclearDataEnabled: AutoClearSettingsModel(settings: appSettings) != nil,
+            applicationLock: privacyStore.authenticationEnabled,
+            autocomplete: appSettings.autocomplete,
+            voiceSearchEnabled: appSettings.voiceSearchEnabled && AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
+            longPressPreviews: appSettings.longPressPreviews,
+            allowUniversalLinks: appSettings.allowUniversalLinks,
+            activeWebsiteAccount: nil, // Default value for logins
+            netPSubtitle: "", // Default value for Network Protection
+            version: versionProvider.versionAndBuildNumber
+        )
         setupSubscribers()
-        
     }
         
     private func firePixel(_ event: Pixel.Event) {
@@ -256,13 +246,13 @@ extension SettingsViewModel {
     private func updateNetPCellSubtitle(connectionStatus: ConnectionStatus) {
         switch NetworkProtectionAccessController().networkProtectionAccessType() {
         case .none, .waitlistAvailable, .waitlistJoined, .waitlistInvitedPendingTermsAcceptance:
-            self.state.netP.subtitle = VPNWaitlist.shared.settingsSubtitle
+            self.state.netPSubtitle = VPNWaitlist.shared.settingsSubtitle
         case .waitlistInvited, .inviteCodeInvited:
             switch connectionStatus {
             case .connected:
-                self.state.netP.subtitle = UserText.netPCellConnected
+                self.state.netPSubtitle = UserText.netPCellConnected
             default:
-                self.state.netP.subtitle = UserText.netPCellDisconnected
+                self.state.netPSubtitle = UserText.netPCellDisconnected
             }
         }
     }
@@ -300,8 +290,9 @@ extension SettingsViewModel {
         UIApplication.shared.open(url)
     }
     
-    func shouldPresentLoginsViewWithAccount(accountDetails: SecureVaultModels.WebsiteAccount) {
-        state.logins.activeWebsiteAccount = accountDetails
+    @MainActor func shouldPresentLoginsViewWithAccount(accountDetails: SecureVaultModels.WebsiteAccount) {
+        state.activeWebsiteAccount = accountDetails
+        presentLegacyView(.logins)
     }
     
     func openEmailProtection() {
@@ -310,8 +301,8 @@ extension SettingsViewModel {
                                   completionHandler: nil)
     }
         
-    func openCookiePopupManagement() {
-        pushLegacyView(legacyViewProvider.autoConsent)
+    @MainActor func openCookiePopupManagement() {
+        pushViewController(legacyViewProvider.autoConsent)
     }
 
 }
@@ -327,45 +318,45 @@ extension SettingsViewModel {
         
         switch view {
         
-        case .addToDock: presentLegacyView(legacyViewProvider.addToDock, modal: true)
-        case .sync: pushLegacyView(legacyViewProvider.syncSettings)
-        case .appIcon: pushLegacyView(legacyViewProvider.appIcon)
-        case .unprotectedSites: pushLegacyView(legacyViewProvider.unprotectedSites)
-        case .fireproofSites: pushLegacyView(legacyViewProvider.fireproofSites)
-        case .autoclearData: pushLegacyView(legacyViewProvider.autoclearData)
-        case .keyboard: pushLegacyView(legacyViewProvider.keyboard)
-        case .windowsApp: pushLegacyView(legacyViewProvider.mac)
-        case .macApp: pushLegacyView(legacyViewProvider.mac)
-        case .about: pushLegacyView(legacyViewProvider.about)
-        case .debug: pushLegacyView(legacyViewProvider.debug)
+        case .addToDock: presentViewController(legacyViewProvider.addToDock, modal: true)
+        case .sync: pushViewController(legacyViewProvider.syncSettings)
+        case .appIcon: pushViewController(legacyViewProvider.appIcon)
+        case .unprotectedSites: pushViewController(legacyViewProvider.unprotectedSites)
+        case .fireproofSites: pushViewController(legacyViewProvider.fireproofSites)
+        case .autoclearData: pushViewController(legacyViewProvider.autoclearData)
+        case .keyboard: pushViewController(legacyViewProvider.keyboard)
+        case .windowsApp: pushViewController(legacyViewProvider.windows)
+        case .macApp: pushViewController(legacyViewProvider.mac)
+        case .about: pushViewController(legacyViewProvider.about)
+        case .debug: pushViewController(legacyViewProvider.debug)
             
         case .feedback:
-            presentLegacyView(legacyViewProvider.feedback, modal: false)
+            presentViewController(legacyViewProvider.feedback, modal: false)
         case .logins:
             firePixel(.autofillSettingsOpened)
-            pushLegacyView(legacyViewProvider.loginSettings(delegate: self,
-                                                            selectedAccount: state.logins.activeWebsiteAccount))
+            pushViewController(legacyViewProvider.loginSettings(delegate: self,
+                                                            selectedAccount: state.activeWebsiteAccount))
 
         case .textSize:
             firePixel(.textSizeSettingsShown)
-            pushLegacyView(legacyViewProvider.textSettings)
+            pushViewController(legacyViewProvider.textSettings)
 
         case .gpc:
             firePixel(.settingsDoNotSellShown)
-            pushLegacyView(legacyViewProvider.gpc)
+            pushViewController(legacyViewProvider.gpc)
         
         case .autoconsent:
             firePixel(.settingsAutoconsentShown)
-            pushLegacyView(legacyViewProvider.autoConsent)
+            pushViewController(legacyViewProvider.autoConsent)
      
 #if NETWORK_PROTECTION
         case .netP:
             if #available(iOS 15, *) {
                 switch NetworkProtectionAccessController().networkProtectionAccessType() {
                 case .inviteCodeInvited, .waitlistInvited:
-                    pushLegacyView(legacyViewProvider.netP)
+                    pushViewController(legacyViewProvider.netP)
                 default:
-                    pushLegacyView(legacyViewProvider.netPWaitlist)
+                    pushViewController(legacyViewProvider.netPWaitlist)
                 }
             }
 #endif
@@ -373,12 +364,14 @@ extension SettingsViewModel {
         }
         
     }
-        
-    private func pushLegacyView(_ view: UIViewController) {
+ 
+    @MainActor
+    private func pushViewController(_ view: UIViewController) {
         onRequestPushLegacyView?(view)
     }
     
-    private func presentLegacyView(_ view: UIViewController, modal: Bool) {
+    @MainActor
+    private func presentViewController(_ view: UIViewController, modal: Bool) {
         onRequestPresentLegacyView?(view, modal)
     }
     

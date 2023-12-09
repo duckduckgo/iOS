@@ -33,7 +33,7 @@ struct SettingsAboutView: View {
                              disclosureIndicator: true)
             
             SettingsCellView(label: "Version",
-                             accesory: .rightDetail(viewModel.state.about.version),
+                             accesory: .rightDetail(viewModel.state.version),
                              asLink: true)
             
             SettingsCellView(label: "Share Feedback",

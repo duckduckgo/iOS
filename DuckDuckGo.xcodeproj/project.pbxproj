@@ -3846,7 +3846,7 @@
 			name = Renderers;
 			sourceTree = "<group>";
 		};
-		85449EF623FDA03100512AAF /* Legacy UIKit */ = {
+		85449EF623FDA03100512AAF /* UIkit */ = {
 			isa = PBXGroup;
 			children = (
 				F176699D1E40BC86003D3222 /* Settings.storyboard */,
@@ -3863,7 +3863,7 @@
 				8531A08D1F9950E6000484F0 /* UnprotectedSitesViewController.swift */,
 				D6E83C672B23B6A3006C8AFB /* FontSettings.swift */,
 			);
-			name = "Legacy UIKit";
+			name = UIkit;
 			sourceTree = "<group>";
 		};
 		85482D892462DCD100EDEDD1 /* OpenAction */ = {
@@ -4503,11 +4503,11 @@
 		D6E83C3B2B1F27BA006C8AFB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				85449EF623FDA03100512AAF /* Legacy UIKit */,
 				D6E83C472B20C812006C8AFB /* SettingsHostingController.swift */,
 				D6E83C112B1E6AB3006C8AFB /* SettingsView.swift */,
 				D6E83C302B1EA309006C8AFB /* SettingsCell.swift */,
 				D6E83C322B1F1279006C8AFB /* Sections */,
+				85449EF623FDA03100512AAF /* UIkit */,
 			);
 			name = Views;
 			sourceTree = "<group>";

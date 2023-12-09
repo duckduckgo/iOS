@@ -20,96 +20,53 @@
 import BrowserServicesKit
 
 struct SettingsState {
-    var appeareance: SettingsStateAppeareance
-    var privacy: SettingsStatePrivacy
-    var customization: SettingsStateCustomization
-    var logins: SettingsStateLogins
-    var netP: SettingsStateNetP
-    var about: SettingsStateAbout
     
-    static var defaults: SettingsState {
-        return SettingsState(
-            appeareance: SettingsStateAppeareance.defaults,
-            privacy: SettingsStatePrivacy.defaults,
-            customization: SettingsStateCustomization.defaults,
-            logins: SettingsStateLogins.defaults,
-            netP: SettingsStateNetP.defaults,
-            about: SettingsStateAbout.defaults
-        )
-    }
-}
-
-struct SettingsStateAppeareance {
+    // Appearance properties
     var appTheme: ThemeName
     var appIcon: AppIcon
     var fireButtonAnimation: FireButtonAnimationType
     var textSize: Int
     var addressBarPosition: AddressBarPosition
-    
-    static var defaults: SettingsStateAppeareance {
-        return SettingsStateAppeareance(
-            appTheme: .systemDefault,
-            appIcon: AppIconManager.shared.appIcon,
-            fireButtonAnimation: .fireRising,
-            textSize: 100,
-            addressBarPosition: .top
-        )
-    }
-}
 
-struct SettingsStatePrivacy {
+    // Privacy properties
     var sendDoNotSell: Bool
     var autoconsentEnabled: Bool
     var autoclearDataEnabled: Bool
     var applicationLock: Bool
-    
-    static var defaults: SettingsStatePrivacy {
-        return SettingsStatePrivacy(
-            sendDoNotSell: true,
-            autoconsentEnabled: false,
-            autoclearDataEnabled: false,
-            applicationLock: false
-        )
-    }
-}
 
-struct SettingsStateCustomization {
+    // Customization properties
     var autocomplete: Bool
     var voiceSearchEnabled: Bool
     var longPressPreviews: Bool
     var allowUniversalLinks: Bool
-    
-    static var defaults: SettingsStateCustomization {
-        return SettingsStateCustomization(
+
+    // Logins properties
+    var activeWebsiteAccount: SecureVaultModels.WebsiteAccount?
+
+    // Network Protection properties
+    var netPSubtitle: String
+
+    // About properties
+    var version: String
+
+    static var defaults: SettingsState {
+        return SettingsState(
+            appTheme: .systemDefault,
+            appIcon: AppIconManager.shared.appIcon,
+            fireButtonAnimation: .fireRising,
+            textSize: 100,
+            addressBarPosition: .top,
+            sendDoNotSell: true,
+            autoconsentEnabled: false,
+            autoclearDataEnabled: false,
+            applicationLock: false,
             autocomplete: true,
             voiceSearchEnabled: false,
             longPressPreviews: true,
-            allowUniversalLinks: true
+            allowUniversalLinks: true,
+            activeWebsiteAccount: nil,
+            netPSubtitle: "",
+            version: "0.0.0.0"
         )
     }
-}
-
-struct SettingsStateLogins {
-    var activeWebsiteAccount: SecureVaultModels.WebsiteAccount?
-
-    static var defaults: SettingsStateLogins {
-        return SettingsStateLogins(activeWebsiteAccount: nil)
-    }
-}
-
-struct SettingsStateNetP {
-    var subtitle: String
-
-    static var defaults: SettingsStateNetP {
-        return SettingsStateNetP(subtitle: "")
-    }
-}
-
-struct SettingsStateAbout {
-    var version: String
-
-    static var defaults: SettingsStateAbout {
-        return SettingsStateAbout(version: "0.0.0.0")
-    }
-    
 }

@@ -23,6 +23,7 @@ import UIKit
 struct SettingsView: View {
     
     @StateObject var viewModel: SettingsViewModel
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         List {
@@ -38,6 +39,7 @@ struct SettingsView: View {
         }
         .navigationBarTitle(UserText.settingsTitle, displayMode: .inline)
         .navigationBarItems(trailing: Button(UserText.navigationTitleDone) {
+            
         })
         .environmentObject(viewModel)
         

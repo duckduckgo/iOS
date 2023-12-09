@@ -769,48 +769,6 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Import an HTML file of bookmarks from another browser, or export your existing bookmarks.";
 
-/* Broken Site Category */
-"brokensite.category.comments" = "Comments didn’t load";
-
-/* Broken Site Category */
-"brokensite.category.content" = "Content is missing";
-
-/* Broken Site Category */
-"brokensite.category.cookieprompt" = "Cookie pop-up wasn't managed";
-
-/* Broken Site Category */
-"brokensite.category.images" = "Images didn’t load";
-
-/* Broken Site Category */
-"brokensite.category.links" = "Links or buttons don’t work";
-
-/* Broken Site Category */
-"brokensite.category.login" = "I can’t sign in";
-
-/* Broken Site Category */
-"brokensite.category.other" = "Something else";
-
-/* Broken Site Category */
-"brokensite.category.paywall" = "The site asked me to disable";
-
-/* Broken Site Category */
-"brokensite.category.unsupported" = "The browser is incompatible";
-
-/* Broken Site Category */
-"brokensite.category.videos" = "Video didn’t play";
-
-/* Broken Site Category Placeholder */
-"brokensite.categoryPlaceholder" = "Pick your issue from the list...";
-
-/* Broken Site Category Section Title */
-"brokensite.categoryTitle" = "SELECT A CATEGORY";
-
-/* Broken Site Comment Placeholder */
-"brokensite.commentPlaceholder" = "Sharing more details can help us address this issue";
-
-/* Broken Site Section Title */
-"brokensite.sectionTitle" = "DESCRIBE WHAT HAPPENED";
-
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Past month";
 
@@ -1752,9 +1710,6 @@ https://duckduckgo.com/mac";
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Open in Another App?";
-
-/* No comment provided by engineer. */
-"report.brokensite.header" = "Submitting an anonymous broken site report helps us debug these issues and improve the app.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Search or enter address";

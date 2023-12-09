@@ -4,6 +4,9 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
+/* No comment provided by engineer. */
+"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Muokkaa";
 
@@ -132,6 +135,24 @@
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Olemassa olevia kirjanmerkkejä ei kopioida.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Olet ylittänyt kirjanmerkkien synkronointirajan. Yritä poistaa joitakin kirjanmerkkejä. Kirjanmerkkejäsi ei varmuuskopioida ennen kuin tämä ongelma on ratkaistu.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Kirjanmerkkien synkronointi on keskeytetty";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Olet ylittänyt salasanojen synkronointirajan. Yritä poistaa joitakin salasanoja. Salasanojasi ei varmuuskopioida ennen kuin tämä ongelma on ratkaistu.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Salasanojen synkronointi on keskeytetty";
+
+/* Learn more button in alert */
+"alert.sync-paused-alert-learn-more-button" = "Lue lisää";
+
+/* Confirmation button in alert */
+"alert.sync-paused-alert-ok-button" = "OK";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Lisätäänkö kaikki välilehdet kirjanmerkkeihin?";
@@ -754,48 +775,6 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Tuo HTML-kirjanmerkkitiedosto toisesta selaimesta tai vie olemassa olevat kirjanmerkkisi.";
 
-/* Broken Site Category */
-"brokensite.category.comments" = "Kommentit eivät latautuneet";
-
-/* Broken Site Category */
-"brokensite.category.content" = "Sisältöä puuttuu";
-
-/* Broken Site Category */
-"brokensite.category.cookieprompt" = "Evästeen ponnahdusikkunaa ei hallittu";
-
-/* Broken Site Category */
-"brokensite.category.images" = "Kuvat eivät latautuneet";
-
-/* Broken Site Category */
-"brokensite.category.links" = "Linkit tai painikkeet eivät toimi";
-
-/* Broken Site Category */
-"brokensite.category.login" = "En pysty kirjautumaan sisään";
-
-/* Broken Site Category */
-"brokensite.category.other" = "Jotain muuta";
-
-/* Broken Site Category */
-"brokensite.category.paywall" = "Sivusto pyysi minua poistamaan käytöstä";
-
-/* Broken Site Category */
-"brokensite.category.unsupported" = "Selain ei ole yhteensopiva";
-
-/* Broken Site Category */
-"brokensite.category.videos" = "Videota ei toistettu";
-
-/* Broken Site Category Placeholder */
-"brokensite.categoryPlaceholder" = "Valitse ongelma luettelosta...";
-
-/* Broken Site Category Section Title */
-"brokensite.categoryTitle" = "VALITSE KATEGORIA";
-
-/* Broken Site Comment Placeholder */
-"brokensite.commentPlaceholder" = "Lisätiedot saattavat auttaa meitä ratkaisemaan tämän ongelman";
-
-/* Broken Site Section Title */
-"brokensite.sectionTitle" = "KUVAILE MITÄ TAPAHTUI";
-
 /* No comment provided by engineer. */
 "bucket: %@" = "bucket: %@";
 
@@ -1071,6 +1050,18 @@
 
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Poista";
+
+/* Display Mode for favorites */
+"favorites.settings.all-devices" = "Kaikki laitteen suosikit";
+
+/* Footer of the favorites settings table */
+"favorites.settings.footer" = "Valitse alkuperän perusteella, mitkä suosikit näytetään uudessa välilehdessä.";
+
+/* Header of the favorites settings table */
+"favorites.settings.header" = "Näytön asetukset";
+
+/* Display Mode for favorites */
+"favorites.settings.mobile-only" = "Vain mobiilisuosikit";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Mainosten ja ponnahdusikkunoiden esto";
@@ -1438,6 +1429,9 @@
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
 
+/* Title text for an iOS quick action that opens VPN settings */
+"network.protection.quick-action.open-vpn" = "Avaa VPN";
+
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Connected - %@";
 
@@ -1477,8 +1471,59 @@
 /* Location label shown in NetworkProtection's status view. */
 "network.protection.status.view.location" = "Location";
 
+/* Label shown on the title of the settings section in NetworkProtection's status view. */
+"network.protection.status.view.settings.section.title" = "Hallitse";
+
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "Network Protection";
+
+/* Title for the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.button.title" = "Ota ilmoitukset käyttöön";
+
+/* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.section.footer" = "Anna DuckDuckGon ilmoittaa sinulle, jos yhteys katkeaa tai VPN:n tila muuttuu.";
+
+/* List section footer for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.section.footer" = "Saat ilmoituksen, jos yhteytesi katkeaa tai VPN:n tila muuttuu.";
+
+/* Title for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.title" = "VPN-ilmoitukset";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.footer" = "Palauta VPN-yhteys automaattisesti keskeytyksen jälkeen.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.title" = "Aina käytössä";
+
+/* Title for the VPN Location screen's All Countries section. */
+"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Title for the VPN Location screen's Nearest Available selection item. */
+"network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
+
+/* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+
+/* Title for the VPN Location screen's Recommended section. */
+"network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Title for the VPN Notifications management screen. */
+"network.protection.vpn.notifications.title" = "VPN-ilmoitukset";
+
+/* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
+"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+
+/* Title for the Preferred Location VPN Settings item. */
+"network.protection.vpn.preferred.location.title" = "Preferred Location";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.footer" = "Network Protection estää DNS-vuodot internetpalveluntarjoajallesi ohjaamalla DNS-pyynnöt VPN-verkon kautta omalle välittäjällemme.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.title" = "Suojattu DNS";
+
+/* Title for the VPN Settings screen. */
+"network.protection.vpn.settings.title" = "VPN-asetukset";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
@@ -1593,9 +1638,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Avataanko toisessa sovelluksessa?";
-
-/* No comment provided by engineer. */
-"report.brokensite.header" = "Anonyymin raportin lähettäminen toimimattomasta sivustosta auttaa meitä korjaamaan nämä ongelmat ja parantamaan sovellusta.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Hae tai anna osoite";

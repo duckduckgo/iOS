@@ -45,7 +45,8 @@ struct SettingsAppeareanceView: View {
                 SettingsCellView(label: "Text Size",
                                  action: { viewModel.presentLegacyView(.textSize) },
                                  accesory: .rightDetail("\(viewModel.state.textSize)%"),
-                                 asLink: true)
+                                 asLink: true,
+                                 disclosureIndicator: true)
             }
             
             if viewModel.shouldShowAddressBarPositionCell {

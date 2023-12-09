@@ -18,7 +18,15 @@
 //
 
 import SwiftUI
+import DesignResourcesKit
 
+private struct Components {
+    static var chevron: some View {
+        Image(systemName: "chevron.forward")
+            .font(Font.system(.footnote).weight(.bold))
+            .foregroundColor(Color(UIColor.tertiaryLabel))
+    }
+}
 /// Encapsulates a View representing a Cell with different configurations
 struct SettingsCellView: View, Identifiable {
     
@@ -107,9 +115,12 @@ struct SettingsCellView: View, Identifiable {
                 }
                 VStack(alignment: .leading) {
                     Text(label)
+                        .daxBodyRegular()
+                        .foregroundColor(Color(designSystemColor: .textPrimary))
                     if let subtitleText = subtitle {
-                        Text(subtitleText).font(.subheadline)
-                            .foregroundColor(Color(UIColor.secondaryLabel))
+                        Text(subtitleText)
+                            .daxCaption()
+                            .foregroundColor(Color(designSystemColor: .textSecondary))
                     }
                 }.fixedSize(horizontal: false, vertical: true)
                     .layoutPriority(0.7)
@@ -119,12 +130,9 @@ struct SettingsCellView: View, Identifiable {
                 accesoryView()
                 
                 if disclosureIndicator {
-                    Image(systemName: "chevron.forward")
-                        .font(Font.system(.footnote).weight(.bold))
-                        .foregroundColor(Color(UIColor.tertiaryLabel))
-                        .padding(.leading, 8)
+                    Components.chevron
                 }
-            }
+            }.padding(EdgeInsets(top: 2, leading: 0, bottom: 2, trailing: 0))
         }.contentShape(Rectangle())
     }
     
@@ -134,14 +142,18 @@ struct SettingsCellView: View, Identifiable {
         case .none:
             EmptyView()
         case .rightDetail(let value):
-            Text(value).foregroundColor(Color(UIColor.tertiaryLabel))
+            Text(value)
+                .daxSubheadRegular()
+                .foregroundColor(Color(designSystemColor: .textSecondary))
         case .toggle(let isOn):
             Toggle("", isOn: isOn)
+                .toggleStyle(SwitchToggleStyle(tint: Color(designSystemColor: .accent)))
         case .image(let image):
             image
                 .resizable()
                 .scaledToFit()
                 .frame(width: 25, height: 25)
+                .cornerRadius(4)
         case .custom(let customView):
             customView
         }
@@ -155,6 +167,8 @@ struct SettingsPickerCellView<T: CaseIterable & Hashable & CustomStringConvertib
     @Binding var selectedOption: T
     
     /// Initializes a SettingsPickerCellView.
+    /// Use a custom picker that mimics the MenuPickerStyle
+    /// But with specific design
     /// - Parameters:
     ///   - label: The label to display above the Picker.
     ///   - options: An array of options of generic type `T` that conforms to CustomStringConvertible.
@@ -166,11 +180,31 @@ struct SettingsPickerCellView<T: CaseIterable & Hashable & CustomStringConvertib
     }
 
     var body: some View {
-        Picker(label, selection: $selectedOption) {
-            ForEach(options, id: \.self) { option in
-                Text(option.description).tag(option)
+        HStack {
+            Text(label)
+                .daxBodyRegular()
+                .foregroundColor(Color(designSystemColor: .textPrimary))
+            Spacer()
+            Menu {
+                ForEach(options, id: \.self) { option in
+                    Button(action: {
+                        self.selectedOption = option
+                    }) {
+                        Text(option.description)
+                            .daxBodyRegular()
+                            .foregroundColor(Color(designSystemColor: .textSecondary))
+                    }
+                }
+            } label: {
+                HStack {
+                    Text(selectedOption.description)
+                        .daxSubheadRegular()
+                        .foregroundColor(Color(designSystemColor: .textSecondary))
+                    Image(systemName: "chevron.up.chevron.down")
+                        .font(Font.system(.footnote).weight(.bold))
+                        .foregroundColor(Color(UIColor.tertiaryLabel))
+                }
             }
-        .pickerStyle(MenuPickerStyle())
         }
     }
 }
@@ -199,13 +233,8 @@ struct SettingsCustomCell<Content: View>: View {
     var body: some View {
         HStack {
             content
-            
             Spacer()
-
-            Image(systemName: "chevron.forward")
-                .font(Font.system(.footnote).weight(.bold))
-                .foregroundColor(Color(UIColor.tertiaryLabel))
-                .padding(.leading, 8)
+            Components.chevron
         }
         .onTapGesture(perform: action)
     }

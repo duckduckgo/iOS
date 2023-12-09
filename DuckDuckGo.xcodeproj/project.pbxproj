@@ -6122,7 +6122,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Conditionally embeds PacketTunnelProvider extension for Debug and Alpha builds.\n\n# Conditionally embeds the PacketTunnelProvider extension for debug builds.\\n# To be moved to the Embed App Extensions phase on release.\n\nif [ \"${CONFIGURATION}\" = \"Debug\" ] || [ \"${CONFIGURATION}\" = \"Alpha\" ]; then\n# Copy the extension    \n    rsync -r --copy-links \"${CONFIGURATION_BUILD_DIR}/PacketTunnelProvider.appex\" \"${CONFIGURATION_BUILD_DIR}/${PLUGINS_FOLDER_PATH}\"\nfi\n";
+			shellScript = "# Conditionally embeds PacketTunnelProvider extension for Debug and Alpha builds.\n\n# Conditionally embeds the PacketTunnelProvider extension for debug builds.\\n# To be moved to the Embed App Extensions phase on release.\n\nif [ \"${CONFIGURATION}\" = \"Debug\" ] || [ \"${CONFIGURATION}\" = \"Release\" ] || [ \"${CONFIGURATION}\" = \"Alpha\" ]; then\n# Copy the extension    \n    rsync -r --copy-links \"${CONFIGURATION_BUILD_DIR}/PacketTunnelProvider.appex\" \"${CONFIGURATION_BUILD_DIR}/${PLUGINS_FOLDER_PATH}\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -8102,6 +8102,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = NETWORK_PROTECTION;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";

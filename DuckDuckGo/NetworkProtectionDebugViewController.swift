@@ -35,7 +35,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         Sections.debugFeature: "Debug Features",
         Sections.simulateFailure: "Simulate Failure",
         Sections.registrationKey: "Registration Key",
-        Sections.notifications: "Notifications"
+        Sections.notifications: "Notifications",
+        Sections.configuration: "VPN Configuration"
 
     ]
 
@@ -46,6 +47,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case simulateFailure
         case registrationKey
         case notifications
+        case configuration
 
     }
 
@@ -60,7 +62,6 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     }
 
     enum SimulateFailureRows: Int, CaseIterable {
-
         case tunnelFailure
         case controllerFailure
         case crashFatalError
@@ -69,15 +70,15 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     }
 
     enum RegistrationKeyRows: Int, CaseIterable {
-
         case expireNow
-
     }
 
     enum NotificationsRows: Int, CaseIterable {
-
         case triggerTestNotification
+    }
 
+    enum ConfigurationRows: Int, CaseIterable {
+        case configurationData
     }
 
     private let debugFeatures: NetworkProtectionDebugFeatures
@@ -133,6 +134,9 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .notifications:
             configure(cell, forNotificationRow: indexPath.row)
 
+        case .configuration:
+            configure(cell, forConfigurationRow: indexPath.row)
+
         case.none:
             break
         }
@@ -147,6 +151,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .simulateFailure: return SimulateFailureRows.allCases.count
         case .registrationKey: return RegistrationKeyRows.allCases.count
         case .notifications: return NotificationsRows.allCases.count
+        case .configuration: return ConfigurationRows.allCases.count
         case .none: return 0
 
         }
@@ -164,9 +169,11 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .simulateFailure:
             didSelectSimulateFailure(at: indexPath)
         case .registrationKey:
-            didSelectRegistationKeyAction(at: indexPath)
+            didSelectRegistrationKeyAction(at: indexPath)
         case .notifications:
             didSelectTestNotificationAction(at: indexPath)
+        case .configuration:
+            break
         case .none:
             break
         }
@@ -254,7 +261,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         }
     }
 
-    private func didSelectRegistationKeyAction(at indexPath: IndexPath) {
+    private func didSelectRegistrationKeyAction(at indexPath: IndexPath) {
         switch RegistrationKeyRows(rawValue: indexPath.row) {
         case .expireNow:
             Task {
@@ -285,6 +292,12 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .none:
             break
         }
+    }
+
+    // MARK: Configuration
+
+    private func configure(_ cell: UITableViewCell, forConfigurationRow row: Int) {
+        cell.textLabel?.text = "Test\nTest\nTest\nTestTest\nTestTest\nTest"
     }
 
     // MARK: Selection Actions

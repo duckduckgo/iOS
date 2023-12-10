@@ -1,6 +1,8 @@
 name: Sync-End-to-End tests
 
 on:
+  push:
+    branches: [ sabrina/Sync_e2e_tests ]
   schedule:
     - cron: '0 5 * * *' # run at 5 AM UTC
 

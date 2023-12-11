@@ -342,7 +342,9 @@ struct SettingsCellView_Previews: PreviewProvider {
                             .foregroundColor(.orange)
                             .imageScale(.large)
                     }
-                }, disclosureIndicator: true)
+                }, action: {},
+                   asLink: false,
+                   disclosureIndicator: true)
                 .previewLayout(.sizeThatFits)
 
                                

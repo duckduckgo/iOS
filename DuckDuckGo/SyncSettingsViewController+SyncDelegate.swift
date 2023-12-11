@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+import Core
 import UIKit
 import SwiftUI
 import SyncUI
@@ -55,6 +56,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 self.dismissPresentedViewController()
                 self.showPreparingSync()
                 try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
+                Pixel.fire(pixel: .syncSignupDirect)
                 self.rootView.model.syncEnabled(recoveryCode: recoveryCode)
                 self.refreshDevices()
                 navigationController?.topViewController?.dismiss(animated: true, completion: showRecoveryPDF)

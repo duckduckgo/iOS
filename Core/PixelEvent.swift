@@ -37,8 +37,10 @@ extension Pixel {
         case forgetAllDataCleared
         
         case privacyDashboardOpened
-        case privacyDashboardProtectionDisabled
-        case privacyDashboardProtectionEnabled
+        
+        case dashboardProtectionAllowlistAdd
+        case dashboardProtectionAllowlistRemove
+        
         case privacyDashboardReportBrokenSite
         case privacyDashboardPixelFromJS(rawPixel: String)
         
@@ -262,9 +264,6 @@ extension Pixel {
 
         case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
         
-        case navigationbarPositionBottom
-        case navigationBarPositionTop
-
         case secureVaultInitError
         case secureVaultError
         
@@ -314,6 +313,7 @@ extension Pixel {
         // MARK: Network Protection
 
         case networkProtectionActiveUser
+        case networkProtectionNewUser
 
         case networkProtectionRekeyCompleted
         case networkProtectionLatency
@@ -374,6 +374,11 @@ extension Pixel {
         case networkProtectionWaitlistTermsAccepted
         case networkProtectionWaitlistNotificationShown
         case networkProtectionWaitlistNotificationLaunched
+
+        case networkProtectionGeoswitchingOpened
+        case networkProtectionGeoswitchingSetNearest
+        case networkProtectionGeoswitchingSetCustom
+        case networkProtectionGeoswitchingNoLocations
 
         // MARK: remote messaging pixels
 
@@ -556,9 +561,10 @@ extension Pixel.Event {
         case .forgetAllDataCleared: return "mf_dc"
             
         case .privacyDashboardOpened: return "mp"
-
-        case .privacyDashboardProtectionDisabled: return "mp_wla"
-        case .privacyDashboardProtectionEnabled: return "mp_wlr"
+           
+        case .dashboardProtectionAllowlistAdd: return "mp_wla"
+        case .dashboardProtectionAllowlistRemove: return "mp_wlr"
+            
         case .privacyDashboardReportBrokenSite: return "mp_rb"
         case .privacyDashboardPixelFromJS(let rawPixel): return rawPixel
             
@@ -624,9 +630,6 @@ extension Pixel.Event {
             
         case .autocompleteSelectedLocal: return "m_au_l"
         case .autocompleteSelectedRemote: return "m_au_r"
-
-        case .navigationbarPositionBottom: return "m_seturlbar_bottom"
-        case .navigationBarPositionTop: return "m_seturlbar_top"
 
         case .feedbackPositive: return "mfbs_positive_submit"
         case .feedbackNegativePrefix(category: let category): return "mfbs_negative_\(category)"
@@ -839,6 +842,7 @@ extension Pixel.Event {
         // MARK: Network Protection pixels
 
         case .networkProtectionActiveUser: return "m_netp_daily_active_d"
+        case .networkProtectionNewUser: return "m_netp_daily_active_u"
         case .networkProtectionRekeyCompleted: return "m_netp_rekey_completed"
         case .networkProtectionLatency: return "m_netp_latency"
         case .networkProtectionTunnelConfigurationNoServerRegistrationInfo: return "m_netp_tunnel_config_error_no_server_registration_info"
@@ -891,6 +895,11 @@ extension Pixel.Event {
         case .networkProtectionWaitlistTermsAccepted: return "m_netp_waitlist_terms_accepted"
         case .networkProtectionWaitlistNotificationShown: return "m_netp_waitlist_notification_shown"
         case .networkProtectionWaitlistNotificationLaunched: return "m_netp_waitlist_notification_launched"
+
+        case .networkProtectionGeoswitchingOpened: return "m_netp_imp_geoswitching"
+        case .networkProtectionGeoswitchingSetNearest: return "m_netp_ev_geoswitching_set_nearest"
+        case .networkProtectionGeoswitchingSetCustom: return "m_netp_ev_geoswitching_set_custom"
+        case .networkProtectionGeoswitchingNoLocations: return "m_netp_ev_geoswitching_no_locations"
 
         // MARK: remote messaging pixels
 

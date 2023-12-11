@@ -769,48 +769,6 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Import an HTML file of bookmarks from another browser, or export your existing bookmarks.";
 
-/* Broken Site Category */
-"brokensite.category.comments" = "Comments didn’t load";
-
-/* Broken Site Category */
-"brokensite.category.content" = "Content is missing";
-
-/* Broken Site Category */
-"brokensite.category.cookieprompt" = "Cookie pop-up wasn't managed";
-
-/* Broken Site Category */
-"brokensite.category.images" = "Images didn’t load";
-
-/* Broken Site Category */
-"brokensite.category.links" = "Links or buttons don’t work";
-
-/* Broken Site Category */
-"brokensite.category.login" = "I can’t sign in";
-
-/* Broken Site Category */
-"brokensite.category.other" = "Something else";
-
-/* Broken Site Category */
-"brokensite.category.paywall" = "The site asked me to disable";
-
-/* Broken Site Category */
-"brokensite.category.unsupported" = "The browser is incompatible";
-
-/* Broken Site Category */
-"brokensite.category.videos" = "Video didn’t play";
-
-/* Broken Site Category Placeholder */
-"brokensite.categoryPlaceholder" = "Pick your issue from the list...";
-
-/* Broken Site Category Section Title */
-"brokensite.categoryTitle" = "SELECT A CATEGORY";
-
-/* Broken Site Comment Placeholder */
-"brokensite.commentPlaceholder" = "Sharing more details can help us address this issue";
-
-/* Broken Site Section Title */
-"brokensite.sectionTitle" = "DESCRIBE WHAT HAPPENED";
-
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Past month";
 
@@ -1495,9 +1453,6 @@ https://duckduckgo.com/mac";
 /* Second subtitle for Network Protection join waitlist screen */
 "network-protection.waitlist.join.subtitle.2" = "Join the waitlist, and we’ll notify you when it’s your turn.";
 
-/* Title for Network Protection join waitlist screen */
-"network-protection.waitlist.join.title" = "Network Protection Early Access";
-
 /* Title for Network Protection joined waitlist screen */
 "network-protection.waitlist.joined.title" = "You’re on the list!";
 
@@ -1540,9 +1495,6 @@ https://duckduckgo.com/mac";
 /* Prompt for the network protection invite code text field */
 "network.protection.invite.field.prompt" = "Invite Code";
 
-/* Message explaining that netP is invite only */
-"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
-
 /* Message for the network protection invite success view */
 "network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
 
@@ -1573,7 +1525,7 @@ https://duckduckgo.com/mac";
 /* Header title label text for the status view when netP is connected */
 "network.protection.status.header.title.on" = "Network Protection is On";
 
-/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+/* The status view 'Share Feedback' button which is shown inline on the status view after the temporary free use footer text */
 "network.protection.status.menu.share.feedback" = "Share Feedback";
 
 /* Connection details label shown in NetworkProtection's status view. */
@@ -1598,7 +1550,7 @@ https://duckduckgo.com/mac";
 "network.protection.status.view.title" = "Network Protection";
 
 /* Title for the button to link to the iOS app settings and enable notifications app-wide. */
-"network.protection.turn.on.notifications.button.title" = "Turn on Notifications";
+"network.protection.turn.on.notifications.button.title" = "Turn On Notifications";
 
 /* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
 "network.protection.turn.on.notifications.section.footer" = "Allow DuckDuckGo to notify you if your connection drops or VPN status changes.";
@@ -1610,7 +1562,7 @@ https://duckduckgo.com/mac";
 "network.protection.vpn.alerts.toggle.title" = "VPN Alerts";
 
 /* Footer text for the Exclude Local Networks setting item. */
-"network.protection.vpn.exclude.local.networks.setting.footer" = "Bypass the VPN for local network connections, like to a printer.";
+"network.protection.vpn.exclude.local.networks.setting.footer" = "Let local traffic bypass the VPN and connect to devices on your local network, like a printer.";
 
 /* Title for the Exclude Local Networks setting item. */
 "network.protection.vpn.exclude.local.networks.setting.title" = "Exclude Local Networks";
@@ -1758,9 +1710,6 @@ https://duckduckgo.com/mac";
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Open in Another App?";
-
-/* No comment provided by engineer. */
-"report.brokensite.header" = "Submitting an anonymous broken site report helps us debug these issues and improve the app.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Search or enter address";

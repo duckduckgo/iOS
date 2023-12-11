@@ -27,6 +27,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
 #else
 
+import NetworkExtension
 import NetworkProtection
 
 final class NetworkProtectionDebugViewController: UITableViewController {
@@ -36,7 +37,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         Sections.simulateFailure: "Simulate Failure",
         Sections.registrationKey: "Registration Key",
         Sections.notifications: "Notifications",
-        Sections.configuration: "VPN Configuration"
+        Sections.protocolConfiguration: "Full Protocol Configuration"
 
     ]
 
@@ -47,7 +48,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case simulateFailure
         case registrationKey
         case notifications
-        case configuration
+        case protocolConfiguration
 
     }
 
@@ -83,6 +84,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
     private let debugFeatures: NetworkProtectionDebugFeatures
     private let tokenStore: NetworkProtectionTokenStore
+    private var configurationData: String?
 
     init?(coder: NSCoder,
           tokenStore: NetworkProtectionTokenStore,
@@ -98,6 +100,37 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         self.init(coder: coder, tokenStore: NetworkProtectionKeychainTokenStore())
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadConfigurationData()
+    }
+
+    private func loadConfigurationData() {
+        Task { @MainActor in
+            do {
+                let tunnels = try await NETunnelProviderManager.loadAllFromPreferences()
+
+                guard let tunnel = tunnels.first else {
+                    self.configurationData = "No configurations found"
+                    return
+                }
+
+                guard let protocolConfiguration = tunnel.protocolConfiguration else {
+                    self.configurationData = "No protocol configuration found"
+                    return
+                }
+
+                self.configurationData = String(describing: protocolConfiguration)
+                    .replacingOccurrences(of: "    ", with: "")
+                    .dropping(prefix: "\n")
+            } catch {
+                self.configurationData = "Failed to load configuration: \(error.localizedDescription)"
+            }
+
+            self.tableView.reloadData()
+        }
+    }
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         return Sections.allCases.count
     }
@@ -110,6 +143,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
+        cell.textLabel?.font = .daxBodyRegular()
         cell.detailTextLabel?.text = nil
 
         switch Sections(rawValue: indexPath.section) {
@@ -134,7 +168,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .notifications:
             configure(cell, forNotificationRow: indexPath.row)
 
-        case .configuration:
+        case .protocolConfiguration:
             configure(cell, forConfigurationRow: indexPath.row)
 
         case.none:
@@ -151,7 +185,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .simulateFailure: return SimulateFailureRows.allCases.count
         case .registrationKey: return RegistrationKeyRows.allCases.count
         case .notifications: return NotificationsRows.allCases.count
-        case .configuration: return ConfigurationRows.allCases.count
+        case .protocolConfiguration: return ConfigurationRows.allCases.count
         case .none: return 0
 
         }
@@ -172,7 +206,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             didSelectRegistrationKeyAction(at: indexPath)
         case .notifications:
             didSelectTestNotificationAction(at: indexPath)
-        case .configuration:
+        case .protocolConfiguration:
             break
         case .none:
             break
@@ -297,7 +331,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     // MARK: Configuration
 
     private func configure(_ cell: UITableViewCell, forConfigurationRow row: Int) {
-        cell.textLabel?.text = "Test\nTest\nTest\nTestTest\nTestTest\nTest"
+        cell.textLabel?.font = .monospacedSystemFont(ofSize: 13.0, weight: .regular)
+        cell.textLabel?.text = configurationData ?? "Loading..."
     }
 
     // MARK: Selection Actions

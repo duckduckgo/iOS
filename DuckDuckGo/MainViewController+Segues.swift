@@ -252,28 +252,6 @@ extension MainViewController {
             completion?(settingsViewModel)
         }
     }
-    
-    /*
-    private func launchSettings(completion: ((SettingsViewModel) -> Void)? = nil) {
-        os_log(#function, log: .generalLog, type: .debug)
-        let settingsModel = SettingsViewModel(bookmarksDatabase: self.bookmarksDatabase,
-                                              syncService: self.syncService,
-                                              syncDataProviders: self.syncDataProviders,
-                                              internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
-        
-        let settingsController = SettingsHostingController(viewModel: settingsModel, rootView: AnyView(EmptyView()))
-        settingsController.viewModel = settingsModel
-        
-        let settingsView = SettingsView(viewModel: settingsModel) { [weak settingsController] legacyVC in
-            settingsController?.pushLegacyViewController(legacyVC)
-        }
-        settingsController.rootView = AnyView(settingsView)
-        settingsController.modalPresentationStyle = .automatic
-        present(settingsController, animated: true) {
-            completion?(settingsModel)
-        }
-    }
-     */
 
     private func hideAllHighlightsIfNeeded() {
         os_log(#function, log: .generalLog, type: .debug)
@@ -282,36 +260,4 @@ extension MainViewController {
         }
     }
     
-    
-    func presentTextSizeSettings() {
-        if let presentingVC = self.presentedViewController {
-            presentingVC.dismiss(animated: true) { [weak self] in
-                self?.presentTextSizeSettingsViewController()
-            }
-        } else {
-            presentTextSizeSettingsViewController()
-        }
-    }
-    
-    private func presentTextSizeSettingsViewController() {
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        let viewController = storyboard.instantiateViewController(identifier: "TextSize") as! TextSizeSettingsViewController
-        Pixel.fire(pixel: .textSizeSettingsShown)
-        presentationController?.delegate = viewController
-                
-        if #available(iOS 15.0, *) {
-            // Configure settingsVC as a sheet
-            viewController.modalPresentationStyle = .pageSheet
-            viewController.modalTransitionStyle = .coverVertical
-
-            let presentationController = viewController.presentationController as? UISheetPresentationController
-            presentationController?.detents = [.medium(), .large()]
-            presentationController?.preferredCornerRadius = 16
-            presentationController?.largestUndimmedDetentIdentifier = .medium
-            presentationController?.prefersScrollingExpandsWhenScrolledToEdge = false
-            
-        }
-        
-        self.present(viewController, animated: true, completion: nil)
-    }
 }

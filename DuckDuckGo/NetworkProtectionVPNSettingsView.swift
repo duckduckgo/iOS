@@ -39,7 +39,7 @@ struct NetworkProtectionVPNSettingsView: View {
                                 Text(string)
                             }
                             VStack(alignment: .leading) {
-                                Text(UserText.netPPreferredLocationSettingTitle)
+                                Text(UserText.netPVPNLocationTitle)
                                     .daxBodyRegular()
                                     .foregroundColor(.init(designSystemColor: .textPrimary))
                                 Text(viewModel.preferredLocation.title)

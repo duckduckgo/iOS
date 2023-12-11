@@ -1,0 +1,15 @@
+appId: com.duckduckgo.mobile.ios
+tags:
+    - securityTest
+---
+# Test 1
+- doubleTapOn:
+    id: "searchEntry"
+- pressKey: Backspace
+- inputText: "https://privacy-test-pages.site/security/address-bar-spoofing/spoof-open-b64-html.html"
+- pressKey: Enter
+- tapOn: "Start"
+# This test is expected to do nothing: loading base64 encoded HTML content in a new tab is blocked.
+- copyTextFrom:
+    id: "searchEntry"
+- assertTrue: ${maestro.copiedText == "https://privacy-test-pages.site/security/address-bar-spoofing/spoof-open-b64-html.html"}

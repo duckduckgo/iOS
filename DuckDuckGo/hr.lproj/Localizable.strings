@@ -4,6 +4,9 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
+/* No comment provided by engineer. */
+"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Uredi";
 
@@ -132,6 +135,24 @@
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Postojeće knjižne oznake neće se duplicirati.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Prekoračeno je ograničenje sinkronizacije oznaka. Pokušaj izbrisati neke oznake. Dok se to ne riješi, tvoje se oznake neće sigurnosno kopirati.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Sinkronizacija oznaka je pauzirana";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Prekoračeno je ograničenje sinkronizacije lozinki. Pokušaj izbrisati neke lozinke. Dok se to ne riješi, tvoje se lozinke neće sigurnosno kopirati.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Sinkronizacija lozinki je pauzirana";
+
+/* Learn more button in alert */
+"alert.sync-paused-alert-learn-more-button" = "Saznajte više";
+
+/* Confirmation button in alert */
+"alert.sync-paused-alert-ok-button" = "U redu";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Označi sve kartice?";
@@ -754,48 +775,6 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Uvezite HTML datoteku oznaka iz drugog preglednika ili izvezite postojeće oznake.";
 
-/* Broken Site Category */
-"brokensite.category.comments" = "Komentari se nisu učitali";
-
-/* Broken Site Category */
-"brokensite.category.content" = "Nedostaje sadržaj";
-
-/* Broken Site Category */
-"brokensite.category.cookieprompt" = "Nisu određena pravila za skočne prozore kolačića";
-
-/* Broken Site Category */
-"brokensite.category.images" = "Slike se nisu učitale";
-
-/* Broken Site Category */
-"brokensite.category.links" = "Poveznice ili gumbi ne funkcioniraju";
-
-/* Broken Site Category */
-"brokensite.category.login" = "Ne mogu se prijaviti";
-
-/* Broken Site Category */
-"brokensite.category.other" = "Nešto drugo";
-
-/* Broken Site Category */
-"brokensite.category.paywall" = "Web-mjesto zatražilo je da onemogućim";
-
-/* Broken Site Category */
-"brokensite.category.unsupported" = "Preglednik nije kompatibilan";
-
-/* Broken Site Category */
-"brokensite.category.videos" = "Videozapis se nije reproducirao";
-
-/* Broken Site Category Placeholder */
-"brokensite.categoryPlaceholder" = "Odaberi svoj problem s popisa...";
-
-/* Broken Site Category Section Title */
-"brokensite.categoryTitle" = "ODABERI KATEGORIJU";
-
-/* Broken Site Comment Placeholder */
-"brokensite.commentPlaceholder" = "Dijeljenje više pojedinosti može nam pomoći u rješavanju ovog problema";
-
-/* Broken Site Section Title */
-"brokensite.sectionTitle" = "OPIŠITE ŠTO SE DOGODILO";
-
 /* No comment provided by engineer. */
 "bucket: %@" = "bucket: %@";
 
@@ -1071,6 +1050,18 @@
 
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Ukloni";
+
+/* Display Mode for favorites */
+"favorites.settings.all-devices" = "Svi favoriti na uređaju";
+
+/* Footer of the favorites settings table */
+"favorites.settings.footer" = "Odaberi koje favorite želiš prikazati na novoj kartici na temelju njihove izvorne lokacije.";
+
+/* Header of the favorites settings table */
+"favorites.settings.header" = "Željeni prikaz";
+
+/* Display Mode for favorites */
+"favorites.settings.mobile-only" = "Samo favoriti na mobilnom uređaju";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blokiranje oglasa i skočnih prozora";
@@ -1438,6 +1429,9 @@
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
 
+/* Title text for an iOS quick action that opens VPN settings */
+"network.protection.quick-action.open-vpn" = "Otvori VPN";
+
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Connected - %@";
 
@@ -1477,8 +1471,59 @@
 /* Location label shown in NetworkProtection's status view. */
 "network.protection.status.view.location" = "Location";
 
+/* Label shown on the title of the settings section in NetworkProtection's status view. */
+"network.protection.status.view.settings.section.title" = "Upravljanje";
+
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "Network Protection";
+
+/* Title for the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.button.title" = "Uključi obavijesti";
+
+/* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.section.footer" = "Dopusti DuckDuckGou da te obavijesti ako se tvoja veza prekine ili se status VPN-a promijeni.";
+
+/* List section footer for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.section.footer" = "Primaj obavijesti ako se tvoja veza prekine ili se status VPN-a promijeni.";
+
+/* Title for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.title" = "VPN upozorenja";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.footer" = "Automatski obnovi VPN vezu nakon prekida.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.title" = "Uvijek uključeno";
+
+/* Title for the VPN Location screen's All Countries section. */
+"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Title for the VPN Location screen's Nearest Available selection item. */
+"network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
+
+/* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+
+/* Title for the VPN Location screen's Recommended section. */
+"network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Title for the VPN Notifications management screen. */
+"network.protection.vpn.notifications.title" = "VPN obavijesti";
+
+/* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
+"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+
+/* Title for the Preferred Location VPN Settings item. */
+"network.protection.vpn.preferred.location.title" = "Preferred Location";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.footer" = "Mrežna zaštita sprječava curenje DNS-a tvom davatelju internetskih usluga usmjeravanjem DNS upita kroz VPN tunel na naš vlastiti rješavač.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.title" = "Siguran DNS";
+
+/* Title for the VPN Settings screen. */
+"network.protection.vpn.settings.title" = "VPN postavke";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
@@ -1593,9 +1638,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Otvori u drugoj aplikaciji?";
-
-/* No comment provided by engineer. */
-"report.brokensite.header" = "Slanje anonimnog izvješća o neispravnom web-mjestu pomaže nam da ispravimo te probleme i poboljšamo aplikaciju.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Pretraži ili unesi adresu";

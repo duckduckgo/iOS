@@ -83,7 +83,8 @@ extension NetworkProtectionLocationListCompositeRepository {
         let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
         self.init(
             environment: settings.selectedEnvironment,
-            tokenStore: NetworkProtectionKeychainTokenStore()
+            tokenStore: NetworkProtectionKeychainTokenStore(),
+            errorEvents: .networkProtectionAppDebugEvents
         )
     }
 }

@@ -112,7 +112,7 @@ private struct NetworkProtectionInviteMessageView<Content>: View where Content: 
                         .padding(.bottom, 16)
                     interactiveContent()
                     Spacer()
-                    Text(UserText.netPInviteOnlyMessage)
+                    Text(UserText.networkProtectionWaitlistAvailabilityDisclaimer)
                         .foregroundColor(.init(designSystemColor: .textSecondary))
                         .daxFootnoteRegular()
                         .multilineTextAlignment(.center)
@@ -130,7 +130,7 @@ private struct NetworkProtectionInviteMessageData {
     let imageIdentifier: String
     let title: String
     let message: String
-    let footer = UserText.netPInviteOnlyMessage
+    let footer = UserText.networkProtectionWaitlistAvailabilityDisclaimer
 }
 
 extension AnyTransition {

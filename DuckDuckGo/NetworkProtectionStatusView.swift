@@ -154,7 +154,7 @@ struct NetworkProtectionStatusView: View {
     @ViewBuilder
     private func inviteOnlyFooter() -> some View {
         // Needs to be inlined like this for the markdown parsing to work
-        Text("\(UserText.netPInviteOnlyMessage) [\(UserText.netPStatusViewShareFeedback)](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)")
+        Text("\(UserText.networkProtectionWaitlistAvailabilityDisclaimer) [\(UserText.netPStatusViewShareFeedback)](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)")
             .foregroundColor(.init(designSystemColor: .textSecondary))
             .accentColor(.init(designSystemColor: .accent))
             .daxFootnoteRegular()

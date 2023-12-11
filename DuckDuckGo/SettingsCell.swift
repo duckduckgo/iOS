@@ -188,13 +188,8 @@ struct SettingsPickerCellView<T: CaseIterable & Hashable & CustomStringConvertib
             Spacer()
             Menu {
                 ForEach(options, id: \.self) { option in
-                    Button(action: {
-                        self.selectedOption = option
-                    }) {
-                        Text(option.description)
-                            .daxBodyRegular()
-                            .foregroundColor(Color(designSystemColor: .textSecondary))
-                    }
+                    getButtonWithAction(action: { self.selectedOption = option },
+                                        option: option.description)
                 }
             } label: {
                 HStack {
@@ -206,6 +201,14 @@ struct SettingsPickerCellView<T: CaseIterable & Hashable & CustomStringConvertib
                         .foregroundColor(Color(UIColor.tertiaryLabel))
                 }
             }
+        }
+    }
+    
+    private func getButtonWithAction(action: @escaping () -> Void, option: String) -> some View {
+        return Button(action: action) {
+            Text(option)
+                .daxBodyRegular()
+                .foregroundColor(Color(designSystemColor: .textSecondary))
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  LegacyViewProvider.swift
+//  SettingsLegacyViewProvider.swift
 //  DuckDuckGo
 //
 //  Copyright © 2023 DuckDuckGo. All rights reserved.
@@ -105,9 +105,13 @@ class SettingsLegacyViewProvider: ObservableObject {
     
     var debug: UIViewController {
         let storyboard = UIStoryboard(name: "Debug", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "DebugMenu") as! RootDebugViewController
-        viewController.configure(sync: syncService, bookmarksDatabase: bookmarksDatabase, internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
-        return viewController
+        if let viewController = storyboard.instantiateViewController(withIdentifier: "DebugMenu") as? RootDebugViewController {
+            viewController.configure(sync: syncService,
+                                     bookmarksDatabase: bookmarksDatabase,
+                                     internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+            return viewController
+        }
+        return UIViewController()
     }
         
 }

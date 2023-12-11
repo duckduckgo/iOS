@@ -317,9 +317,9 @@ extension SettingsViewModel {
 // for all existing subviews, default to UIKit based presentation until we
 // can review and migrate
 extension SettingsViewModel {
-
-    @MainActor
-    func presentLegacyView(_ view: SettingsLegacyViewProvider.LegacyView) {
+    
+    // swiftlint:disable:next cyclomatic_complexity
+    @MainActor func presentLegacyView(_ view: SettingsLegacyViewProvider.LegacyView) {
         
         switch view {
         

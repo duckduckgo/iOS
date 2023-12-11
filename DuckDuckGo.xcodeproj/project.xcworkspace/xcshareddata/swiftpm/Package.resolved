@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "sam/fix-ipv6-connectivity",
-          "revision": "79aabd549e274515e306aa49dccc175c69ca6308",
-          "version": null
+          "branch": null,
+          "revision": "e4f4ae624174c1398d345cfc387db38f8f69986d",
+          "version": "94.0.0"
         }
       },
       {

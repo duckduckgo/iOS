@@ -4,8 +4,11 @@ tags:
 
 ---
 
+# Clear and launch
 - clearState
 - launchApp
+
+# Run onboarding Flow
 - runFlow: 
     when: 
       visible: 
@@ -13,61 +16,23 @@ tags:
         index: 0
     file: ../shared/onboarding.yaml
 
-# <WORKAROUND>This is a workaround to:
-# - Put the code in the clipboard on Maestro Cloud
-# - Prevent iOS from showing the Paste permission alert as Maestro can't handle it
-- tapOn:
-    id: searchEntry
-- inputText: ${CODE}
-
-- evalScript: ${output.counter = 0}
-- repeat:
-    while:
-      true: ${output.counter < 3}
-      notVisible: Select All
-    commands:
-      - longPressOn: 
-          id: "searchEntry"
-      - evalScript: ${output.counter = output.counter + 1}
-
-- tapOn: 'Select All'
-- tapOn: Cut
-- evalScript: ${output.counter = 0}
-- repeat:
-    while:
-      true: ${output.counter < 3}
-      notVisible: Paste
-    commands:
-      - tapOn: 
-          id: "searchEntry"
-      - evalScript: ${output.counter = output.counter + 1}
-- tapOn: Paste
-- tapOn: Cancel
-
-- tapOn: Close Tabs and Clear Data
-- tapOn: Close Tabs and Clear Data
-- runFlow:
-    when:
-      visible:
-        text: Cancel
-    commands:
-      - tapOn: Cancel
-#</WORKAROUND>
-
-# Recover Account test
+# Set Internal User
 - tapOn: Settings
 - runFlow:
-    file: ../shared/set_internal_user.yaml
-- assertVisible: Sync & Backup
-- tapOn: Sync & Backup
-- assertVisible: Begin Syncing
-- tapOn: Recover Synced Data
-- assertVisible: Recover Synced Data
-- assertVisible: Get Started
-- tapOn: Get Started
-- tapOn: Enter Text Code Manually
-- tapOn: Paste
-- assertVisible: Save Recovery Code
-- tapOn: Next
-- assertVisible: Your Data is Synced!
-- tapOn: Done
+    file: ../shared/set_internal_user_from_settings.yaml
+
+# Create account
+- runFlow:
+    file: ../shared/sync_create.yaml
+
+# Log Out
+- runFlow:
+    file: ../shared/sync_logout.yaml
+
+# Recover Data
+- runFlow:
+    file: ../shared/sync_recover_data.yaml
+
+# Clean up
+- runFlow:
+    file: ../shared/sync_delete.yaml

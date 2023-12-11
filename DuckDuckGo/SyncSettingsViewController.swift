@@ -270,7 +270,6 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                 showPreparingSync()
                 if syncService.account == nil {
                     try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
-                    Pixel.fire(pixel: .syncSignupDirect)
                     self.dismissVCAndShowRecoveryPDF()
                     shouldShowSyncEnabled = false
                     rootView.model.syncEnabled(recoveryCode: recoveryCode)

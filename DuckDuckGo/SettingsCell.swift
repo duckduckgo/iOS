@@ -319,7 +319,7 @@ struct SettingsCellView_Previews: PreviewProvider {
                                  disclosureIndicator: false)
                     .previewLayout(.sizeThatFits)
                 
-                
+                /*
                 SettingsCustomCell(content: {
                     HStack(spacing: 15) {
                         Image(systemName: "hand.wave")
@@ -346,6 +346,7 @@ struct SettingsCellView_Previews: PreviewProvider {
                    asLink: false,
                    disclosureIndicator: true)
                 .previewLayout(.sizeThatFits)
+                 */
 
                                
             }

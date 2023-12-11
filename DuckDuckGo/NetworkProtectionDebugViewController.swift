@@ -17,6 +17,8 @@
 //  limitations under the License.
 //
 
+// swiftlint:disable file_length
+
 import UIKit
 
 #if !NETWORK_PROTECTION
@@ -577,3 +579,5 @@ extension NWConnection {
 }
 
 #endif
+
+// swiftlint:enable file_length

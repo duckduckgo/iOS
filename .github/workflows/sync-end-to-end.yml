@@ -41,7 +41,7 @@ jobs:
       run: |
         set -o pipefail && xcodebuild \
           -scheme "DuckDuckGo" \
-          -destination "platform=iOS Simulator" \
+          -destination "platform=iOS Simulator,name=iPhone 14" \
           -derivedDataPath "DerivedData" \
         | tee xcodebuild.log
     

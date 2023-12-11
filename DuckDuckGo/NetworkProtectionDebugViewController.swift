@@ -27,6 +27,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
 #else
 
+import Common
+import Network
 import NetworkExtension
 import NetworkProtection
 
@@ -39,6 +41,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         Sections.registrationKey: "Registration Key",
         Sections.notifications: "Notifications",
         Sections.networkPath: "Network Path",
+        Sections.connectionTest: "Connection Test",
         Sections.vpnConfiguration: "VPN Configuration"
 
     ]
@@ -49,6 +52,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case simulateFailure
         case registrationKey
         case notifications
+        case connectionTest
         case networkPath
         case vpnConfiguration
     }
@@ -83,10 +87,16 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case networkPath
     }
 
+    enum ConnectionTestRows: Int, CaseIterable {
+        case runConnectionTest
+    }
+
     enum ConfigurationRows: Int, CaseIterable {
         case baseConfigurationData
         case fullProtocolConfigurationData
     }
+
+    // MARK: Properties
 
     private let debugFeatures: NetworkProtectionDebugFeatures
     private let tokenStore: NetworkProtectionTokenStore
@@ -95,6 +105,19 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     private var currentNetworkPath: String?
     private var baseConfigurationData: String?
     private var fullProtocolConfigurationData: String?
+
+    private struct ConnectionTestResult {
+        let interface: String
+        let version: String
+        let success: Bool
+        let errorDescription: String?
+    }
+
+    private var connectionTestResults: [ConnectionTestResult] = []
+    private var connectionTestResultError: String?
+    private let connectionTestQueue = DispatchQueue(label: "com.duckduckgo.ios.vpnDebugConnectionTestQueue")
+
+    // MARK: Lifecycle
 
     init?(coder: NSCoder,
           tokenStore: NetworkProtectionTokenStore,
@@ -116,64 +139,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         startPathMonitor()
     }
 
-    private func startPathMonitor() {
-        pathMonitor.pathUpdateHandler = { [weak self] path in
-            var pathDescription: String = """
-            Status: \(path.status)
-            Interfaces (preferred order): \(path.availableInterfaces)
-            Gateways: \(path.gateways)
-            Is Expensive: \(path.isExpensive)
-            Is Constrained: \(path.isConstrained)
-            Supports DNS: \(path.supportsDNS)
-            Supports IPv4: \(path.supportsIPv4)
-            Supports IPv6: \(path.supportsIPv6)
-            """
-
-            if #available(iOS 14.2, *), path.status == .unsatisfied {
-                pathDescription.append("\nUnsatisfied Reason: \(path.unsatisfiedReason)")
-            }
-
-            self?.currentNetworkPath = pathDescription
-            self?.tableView.reloadData()
-        }
-
-        pathMonitor.start(queue: .main)
-    }
-
-    private func loadConfigurationData() {
-        Task { @MainActor in
-            do {
-                let tunnels = try await NETunnelProviderManager.loadAllFromPreferences()
-
-                guard let tunnel = tunnels.first else {
-                    self.baseConfigurationData = "No configurations found"
-                    self.fullProtocolConfigurationData = ""
-                    return
-                }
-
-                guard let protocolConfiguration = tunnel.protocolConfiguration else {
-                    self.baseConfigurationData = "No protocol configuration found"
-                    self.fullProtocolConfigurationData = ""
-                    return
-                }
-
-                let configurationDescriptionString = String(describing: tunnel)
-                    .replacingOccurrences(of: "    ", with: "  ")
-
-                let protocolConfigurationString = String(describing: protocolConfiguration)
-                    .replacingOccurrences(of: "    ", with: "")
-                    .dropping(prefix: "\n")
-
-                self.baseConfigurationData = "CONFIGURATION OVERVIEW:\n\n" + configurationDescriptionString
-                self.fullProtocolConfigurationData = "FULL PROTOCOL CONFIGURATION:\n\n" + protocolConfigurationString
-            } catch {
-                self.baseConfigurationData = "Failed to load configuration: \(error.localizedDescription)"
-                self.fullProtocolConfigurationData = ""
-            }
-
-            self.tableView.reloadData()
-        }
-    }
+    // MARK: Table View
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return Sections.allCases.count
@@ -215,6 +181,9 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .networkPath:
             configure(cell, forNetworkPathRow: indexPath.row)
 
+        case .connectionTest:
+            configure(cell, forConnectionTestRow: indexPath.row)
+
         case .vpnConfiguration:
             configure(cell, forConfigurationRow: indexPath.row)
 
@@ -233,12 +202,14 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .registrationKey: return RegistrationKeyRows.allCases.count
         case .notifications: return NotificationsRows.allCases.count
         case .networkPath: return NetworkPathRows.allCases.count
+        case .connectionTest: return ConnectionTestRows.allCases.count + connectionTestResults.count
         case .vpnConfiguration: return ConfigurationRows.allCases.count
         case .none: return 0
 
         }
     }
 
+    // swiftlint:disable:next cyclomatic_complexity
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch Sections(rawValue: indexPath.section) {
         case .keychain:
@@ -256,6 +227,12 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             didSelectTestNotificationAction(at: indexPath)
         case .networkPath:
             break
+        case .connectionTest:
+            if indexPath.row == connectionTestResults.count {
+                Task {
+                    await runConnectionTest()
+                }
+            }
         case .vpnConfiguration:
             break
         case .none:
@@ -385,6 +362,126 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         cell.textLabel?.text = currentNetworkPath ?? "Loading path..."
     }
 
+    private func startPathMonitor() {
+        pathMonitor.pathUpdateHandler = { [weak self] path in
+            var pathDescription: String = """
+            Status: \(path.status)
+            Interfaces: \(path.availableInterfaces)
+            Gateways: \(path.gateways)
+            Is Expensive: \(path.isExpensive)
+            Is Constrained: \(path.isConstrained)
+            Supports DNS: \(path.supportsDNS)
+            Supports IPv4: \(path.supportsIPv4)
+            Supports IPv6: \(path.supportsIPv6)
+            """
+
+            if #available(iOS 14.2, *), path.status == .unsatisfied {
+                pathDescription.append("\nUnsatisfied Reason: \(path.unsatisfiedReason)")
+            }
+
+            self?.currentNetworkPath = pathDescription
+            self?.tableView.reloadData()
+        }
+
+        pathMonitor.start(queue: .main)
+    }
+
+    // MARK: Connection Test
+
+    private func configure(_ cell: UITableViewCell, forConnectionTestRow row: Int) {
+        if row == connectionTestResults.count {
+            cell.textLabel?.text = "Run Connection Test"
+        } else {
+            let result = self.connectionTestResults[row]
+
+            if result.success {
+                cell.textLabel?.text = "✅ \(result.interface) IP\(result.version)"
+            } else {
+                cell.textLabel?.text = "❌ \(result.interface) IP\(result.version), error: \(result.errorDescription ?? "None")"
+            }
+        }
+    }
+
+    @MainActor
+    private func runConnectionTest() async {
+        let interfaces = pathMonitor.currentPath.availableInterfaces
+
+        guard !interfaces.isEmpty else {
+            self.connectionTestResultError = "No interfaces available"
+            return
+        }
+
+        var results = [ConnectionTestResult]()
+
+        for interface in interfaces {
+            let ipv4Result = await testConnection(interface: interface, version: .v4)
+            let ipv6Result = await testConnection(interface: interface, version: .v6)
+
+            results.append(ipv4Result)
+            results.append(ipv6Result)
+        }
+
+        self.connectionTestResults = results
+        self.tableView.reloadData()
+    }
+
+    private func testConnection(interface: NWInterface, version: NWProtocolIP.Options.Version) async -> ConnectionTestResult {
+        let interfaceString = interface.debugDescription
+        let versionString = String(describing: version)
+
+        let endpoint = NWEndpoint.hostPort(host: .name("apple.com", nil), port: .https)
+        let parameters = NWParameters.tcp
+        parameters.requiredInterface = interface
+
+        // swiftlint:disable force_cast
+        let ip = parameters.defaultProtocolStack.internetProtocol! as! NWProtocolIP.Options
+        ip.version = version
+        // swiftlint:enable force_cast
+
+        let connection = NWConnection(to: endpoint, using: parameters)
+        let stateUpdateStream = connection.stateUpdateStream
+        connection.start(queue: self.connectionTestQueue)
+
+        defer {
+            connection.cancel()
+        }
+
+        do {
+            return try await withTimeout(.seconds(5)) {
+                for await state in stateUpdateStream {
+                    if case .ready = state {
+                        return ConnectionTestResult(
+                            interface: connection.endpoint.interface?.debugDescription ?? interfaceString,
+                            version: versionString,
+                            success: true,
+                            errorDescription: nil
+                        )
+                    }
+
+                    if case .waiting(let error) = state {
+                        return ConnectionTestResult(
+                            interface: interface.debugDescription,
+                            version: versionString,
+                            success: false,
+                            errorDescription: error.localizedDescription
+                        )
+                    }
+                }
+
+                let currentConnectionState = connection.state
+                return ConnectionTestResult(
+                    interface: interfaceString,
+                    version: versionString,
+                    success: false,
+                    errorDescription: String(describing: currentConnectionState)
+                )
+            }
+        } catch {
+            return ConnectionTestResult(interface: interfaceString, version: versionString, success: false, errorDescription: "Timeout reached")
+        }
+
+    }
+
     // MARK: Configuration
 
     private func configure(_ cell: UITableViewCell, forConfigurationRow row: Int) {
@@ -401,11 +498,80 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
     }
 
+    private func loadConfigurationData() {
+        Task { @MainActor in
+            do {
+                let tunnels = try await NETunnelProviderManager.loadAllFromPreferences()
+
+                guard let tunnel = tunnels.first else {
+                    self.baseConfigurationData = "No configurations found"
+                    self.fullProtocolConfigurationData = ""
+                    return
+                }
+
+                guard let protocolConfiguration = tunnel.protocolConfiguration else {
+                    self.baseConfigurationData = "No protocol configuration found"
+                    self.fullProtocolConfigurationData = ""
+                    return
+                }
+
+                let configurationDescriptionString = String(describing: tunnel)
+                    .replacingOccurrences(of: "    ", with: "  ")
+
+                let protocolConfigurationString = String(describing: protocolConfiguration)
+                    .replacingOccurrences(of: "    ", with: "")
+                    .dropping(prefix: "\n")
+
+                self.baseConfigurationData = "CONFIGURATION OVERVIEW:\n\n" + configurationDescriptionString
+                self.fullProtocolConfigurationData = "FULL PROTOCOL CONFIGURATION:\n\n" + protocolConfigurationString
+            } catch {
+                self.baseConfigurationData = "Failed to load configuration: \(error.localizedDescription)"
+                self.fullProtocolConfigurationData = ""
+            }
+
+            self.tableView.reloadData()
+        }
+    }
+
     // MARK: Selection Actions
 
     private func clearAuthToken() {
         try? tokenStore.deleteToken()
     }
+}
+
+
+extension NWConnection {
+
+    var stateUpdateStream: AsyncStream<State> {
+        let (stream, continuation) = AsyncStream.makeStream(of: State.self)
+
+        class ConnectionLifeTimeTracker {
+            let continuation: AsyncStream<State>.Continuation
+            init(continuation: AsyncStream<State>.Continuation) {
+                self.continuation = continuation
+            }
+            deinit {
+                continuation.finish()
+            }
+        }
+        let connectionLifeTimeTracker = ConnectionLifeTimeTracker(continuation: continuation)
+
+        self.stateUpdateHandler = { state in
+            withExtendedLifetime(connectionLifeTimeTracker) {
+                _=continuation.yield(state)
+
+                switch state {
+                case .cancelled, .failed:
+                    continuation.finish()
+                default: break
+                }
+            }
+        }
+
+        return stream
+    }
+
 }
 
 #endif

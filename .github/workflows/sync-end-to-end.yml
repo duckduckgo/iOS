@@ -40,7 +40,7 @@ jobs:
       run: |
         set -o pipefail && xcodebuild \
           -scheme "DuckDuckGo" \
-          -destination "platform=iOS Simulator,name=iPhone 14,OS=16.4" \
+          -destination "platform=iOS Simulator" \
           -derivedDataPath "DerivedData" \
         | tee xcodebuild.log
     
@@ -50,11 +50,33 @@ jobs:
       with:
         debug: true
     
-    - name: Sync e2e tests
-      uses: mobile-dev-inc/action-maestro-cloud@v1.6.0
+    - name: Sync e2e tests - iOS 15
+      uses: mobile-dev-inc/action-maestro-cloud@v1.8.0
       with:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
         app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
+        workspace: .maestro
+        include-tags: sync
+        env: |
+            CODE=${{ steps.sync-recovery-code.outputs.recovery-code }}
+    
+    - name: Sync e2e tests - iOS 16
+      uses: mobile-dev-inc/action-maestro-cloud@v1.8.0
+      with:
+        api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
+        app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
+        ios-version: 16
+        workspace: .maestro
+        include-tags: sync
+        env: |
+            CODE=${{ steps.sync-recovery-code.outputs.recovery-code }}
+
+    - name: Sync e2e tests - iOS 17
+      uses: mobile-dev-inc/action-maestro-cloud@v1.8.0
+      with:
+        api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
+        app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
+        ios-version: 17
         workspace: .maestro
         include-tags: sync
         env: |

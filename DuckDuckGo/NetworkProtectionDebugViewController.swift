@@ -37,7 +37,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         Sections.simulateFailure: "Simulate Failure",
         Sections.registrationKey: "Registration Key",
         Sections.notifications: "Notifications",
-        Sections.protocolConfiguration: "Full Protocol Configuration"
+        Sections.vpnConfiguration: "VPN Configuration"
 
     ]
 
@@ -48,7 +48,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case simulateFailure
         case registrationKey
         case notifications
-        case protocolConfiguration
+        case vpnConfiguration
 
     }
 
@@ -79,12 +79,15 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     }
 
     enum ConfigurationRows: Int, CaseIterable {
-        case configurationData
+        case baseConfigurationData
+        case fullProtocolConfigurationData
     }
 
     private let debugFeatures: NetworkProtectionDebugFeatures
     private let tokenStore: NetworkProtectionTokenStore
-    private var configurationData: String?
+
+    private var baseConfigurationData: String?
+    private var fullProtocolConfigurationData: String?
 
     init?(coder: NSCoder,
           tokenStore: NetworkProtectionTokenStore,
@@ -111,20 +114,29 @@ final class NetworkProtectionDebugViewController: UITableViewController {
                 let tunnels = try await NETunnelProviderManager.loadAllFromPreferences()
 
                 guard let tunnel = tunnels.first else {
-                    self.configurationData = "No configurations found"
+                    self.baseConfigurationData = "No configurations found"
+                    self.fullProtocolConfigurationData = ""
                     return
                 }
 
                 guard let protocolConfiguration = tunnel.protocolConfiguration else {
-                    self.configurationData = "No protocol configuration found"
+                    self.baseConfigurationData = "No protocol configuration found"
+                    self.fullProtocolConfigurationData = ""
                     return
                 }
 
-                self.configurationData = String(describing: protocolConfiguration)
+                let configurationDescriptionString = String(describing: tunnel)
+                    .replacingOccurrences(of: "    ", with: "  ")
+
+                let protocolConfigurationString = String(describing: protocolConfiguration)
                     .replacingOccurrences(of: "    ", with: "")
                     .dropping(prefix: "\n")
+
+                self.baseConfigurationData = "CONFIGURATION OVERVIEW:\n\n" + configurationDescriptionString
+                self.fullProtocolConfigurationData = "FULL PROTOCOL CONFIGURATION:\n\n" + protocolConfigurationString
             } catch {
-                self.configurationData = "Failed to load configuration: \(error.localizedDescription)"
+                self.baseConfigurationData = "Failed to load configuration: \(error.localizedDescription)"
+                self.fullProtocolConfigurationData = ""
             }
 
             self.tableView.reloadData()
@@ -168,7 +180,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .notifications:
             configure(cell, forNotificationRow: indexPath.row)
 
-        case .protocolConfiguration:
+        case .vpnConfiguration:
             configure(cell, forConfigurationRow: indexPath.row)
 
         case.none:
@@ -185,7 +197,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .simulateFailure: return SimulateFailureRows.allCases.count
         case .registrationKey: return RegistrationKeyRows.allCases.count
         case .notifications: return NotificationsRows.allCases.count
-        case .protocolConfiguration: return ConfigurationRows.allCases.count
+        case .vpnConfiguration: return ConfigurationRows.allCases.count
         case .none: return 0
 
         }
@@ -206,7 +218,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             didSelectRegistrationKeyAction(at: indexPath)
         case .notifications:
             didSelectTestNotificationAction(at: indexPath)
-        case .protocolConfiguration:
+        case .vpnConfiguration:
             break
         case .none:
             break
@@ -332,7 +344,16 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
     private func configure(_ cell: UITableViewCell, forConfigurationRow row: Int) {
         cell.textLabel?.font = .monospacedSystemFont(ofSize: 13.0, weight: .regular)
-        cell.textLabel?.text = configurationData ?? "Loading..."
+
+        switch ConfigurationRows(rawValue: row) {
+        case .baseConfigurationData:
+            cell.textLabel?.text = baseConfigurationData ?? "Loading base configuration..."
+        case .fullProtocolConfigurationData:
+            cell.textLabel?.text = fullProtocolConfigurationData ?? "Loading protocol configuration..."
+        case .none:
+            assertionFailure("Couldn't map configuration row")
+        }
+
     }
 
     // MARK: Selection Actions

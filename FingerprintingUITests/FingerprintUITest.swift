@@ -127,7 +127,7 @@ class FingerprintUITest: XCTestCase {
         
         // Clear all tabs and data
         app.toolbars["Toolbar"].buttons["Close Tabs and Clear Data"].tap()
-        app.buttons.matching(identifier: "Close Tabs and Clear Data").allElementsBoundByIndex.last?.tap()
+        app.buttons["alert.forget-data.confirm"].tap()
         
         sleep(2)
         

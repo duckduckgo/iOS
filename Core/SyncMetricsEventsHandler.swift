@@ -28,17 +28,8 @@ public class SyncMetricsEventsHandler: EventMapping<MetricsEvent> {
             switch event {
             case .overrideEmailProtectionSettings:
                 Pixel.fire(pixel: .syncDuckAddressOverride)
-            case .localTimestampResolutionTriggered(let featureName):
-                switch featureName {
-                case "bookmarks":
-                    Pixel.fire(pixel: .syncBookmarksLocalTimestampResolutionTriggered)
-                case "credentials":
-                    Pixel.fire(pixel: .syncCredentialsLocalTimestampResolutionTriggered)
-                case "settings":
-                    Pixel.fire(pixel: .syncSettingsLocalTimestampResolutionTriggered)
-                default:
-                    break
-                }
+            case .localTimestampResolutionTriggered(let feature):
+                Pixel.fire(pixel: .syncLocalTimestampResolutionTriggered(feature))
             }
         }
     }

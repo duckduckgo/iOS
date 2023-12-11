@@ -21,6 +21,7 @@ import Foundation
 import BrowserServicesKit
 import Bookmarks
 import Configuration
+import DDGSync
 
 // swiftlint:disable file_length
 extension Pixel {
@@ -509,9 +510,7 @@ extension Pixel {
         case syncDaily
         case syncDuckAddressOverride
         case syncSuccessRateDaily
-        case syncBookmarksLocalTimestampResolutionTriggered
-        case syncCredentialsLocalTimestampResolutionTriggered
-        case syncSettingsLocalTimestampResolutionTriggered
+        case syncLocalTimestampResolutionTriggered(Feature)
         case syncFailedToMigrate
         case syncFailedToLoadAccount
         case syncFailedToSetupEngine
@@ -1035,9 +1034,7 @@ extension Pixel.Event {
         case .syncDaily: return "m_d_sync_daily"
         case .syncDuckAddressOverride: return "m_d_sync_duck_address_override"
         case .syncSuccessRateDaily: return "m_d_sync_success_rate_daily"
-        case .syncBookmarksLocalTimestampResolutionTriggered: return "m_d_sync_bookmarks_local_timestamp_resolution_triggered"
-        case .syncCredentialsLocalTimestampResolutionTriggered: return "m_d_sync_credentials_local_timestamp_resolution_triggered"
-        case .syncSettingsLocalTimestampResolutionTriggered: return "m_d_sync_settings_local_timestamp_resolution_triggered"
+        case .syncLocalTimestampResolutionTriggered(let feature): return "m_d_sync_\(feature.name)_local_timestamp_resolution_triggered"
         case .syncFailedToMigrate: return "m_d_sync_failed_to_migrate"
         case .syncFailedToLoadAccount: return "m_d_sync_failed_to_load_account"
         case .syncFailedToSetupEngine: return "m_d_sync_failed_to_setup_engine"

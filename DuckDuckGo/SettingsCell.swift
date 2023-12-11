@@ -210,7 +210,6 @@ struct SettingsPickerCellView<T: CaseIterable & Hashable & CustomStringConvertib
     }
 }
 
-
 /// A simple settings cell that can act as a link and include a disclosure indicator
 struct SettingsCustomCell<Content: View>: View {
     var content: Content

@@ -1,3 +1,4 @@
+//
 //  SettingsPrivacyView.swift
 //  DuckDuckGo
 //

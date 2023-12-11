@@ -44,7 +44,22 @@ class SettingsLegacyViewProvider: ObservableObject {
     }
     
     enum LegacyView {
-        case addToDock, sync, logins, textSize, appIcon, gpc, autoconsent, unprotectedSites, fireproofSites, autoclearData, keyboard, macApp, windowsApp, netP, about, feedback, debug
+        case addToDock,
+             sync,
+             logins,
+             textSize,
+             appIcon,
+             gpc,
+             autoconsent,
+             unprotectedSites,
+             fireproofSites,
+             autoclearData,
+             keyboard,
+             macApp,
+             windowsApp,
+             netP,
+             about,
+             feedback, debug
     }
     
     private func instantiate(_ identifier: String, fromStoryboard name: String) -> UIViewController {

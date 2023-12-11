@@ -1,3 +1,4 @@
+//
 //  SettingsCustomizeView.swift
 //  DuckDuckGo
 //

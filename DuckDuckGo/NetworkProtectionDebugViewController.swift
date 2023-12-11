@@ -150,11 +150,13 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         return titles[section]
     }
 
+    // swiftlint:disable:next cyclomatic_complexity
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
         cell.textLabel?.font = .daxBodyRegular()
         cell.detailTextLabel?.text = nil
+        cell.accessoryType = .none
 
         switch Sections(rawValue: indexPath.section) {
 

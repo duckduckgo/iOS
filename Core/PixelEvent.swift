@@ -314,6 +314,7 @@ extension Pixel {
         // MARK: Network Protection
 
         case networkProtectionActiveUser
+        case networkProtectionNewUser
 
         case networkProtectionRekeyCompleted
         case networkProtectionLatency
@@ -849,6 +850,7 @@ extension Pixel.Event {
         // MARK: Network Protection pixels
 
         case .networkProtectionActiveUser: return "m_netp_daily_active_d"
+        case .networkProtectionNewUser: return "m_netp_daily_active_u"
         case .networkProtectionRekeyCompleted: return "m_netp_rekey_completed"
         case .networkProtectionLatency: return "m_netp_latency"
         case .networkProtectionTunnelConfigurationNoServerRegistrationInfo: return "m_netp_tunnel_config_error_no_server_registration_info"

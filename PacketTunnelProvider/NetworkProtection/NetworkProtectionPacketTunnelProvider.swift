@@ -38,13 +38,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         switch event {
         case .userBecameActive:
             DailyPixel.fire(pixel: .networkProtectionActiveUser)
-        case .reportLatency(ms: let ms, server: let server, networkType: let networkType):
-            let params = [
-                PixelParameters.latency: String(ms),
-                PixelParameters.server: server,
-                PixelParameters.networkType: networkType.rawValue
-            ]
-            Pixel.fire(pixel: .networkProtectionLatency, withAdditionalParameters: params)
+        case .reportLatency, .reportTunnelFailure, .reportConnectionAttempt:
+            // TODO: Fire these pixels
+            break
         case .rekeyCompleted:
             Pixel.fire(pixel: .networkProtectionRekeyCompleted)
         }
@@ -234,6 +230,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         connectionStatusPublisher.sink { [weak self] status in
             if case .connected = status {
                 self?.activationDateStore.setActivationDateIfNecessary()
+                self?.activationDateStore.updateLastActiveDate()
             }
         }
         .store(in: &cancellables)

@@ -14,9 +14,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/DuckDuckGo/BrowserServicesKit",
         "state": {
-          "branch": "dominik/sync-pixels",
-          "revision": "eb959533a04f7676bc134f3f4046ba23e82788cd",
-          "version": null
+          "branch": null,
+          "revision": "6d67e41feb5d7d22fec40fcede6b82eb88673900",
+          "version": "92.1.0"
         }
       },
       {

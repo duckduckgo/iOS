@@ -204,6 +204,7 @@ extension SyncSettingsView {
                     }
                 }
             }
+            .accessibility(identifier: "device")
         }
     }
 
@@ -282,6 +283,7 @@ extension SyncSettingsView {
                     Text(UserText.fetchFaviconsOptionCaption)
                         .daxFootnoteRegular()
                         .foregroundColor(.secondary)
+                        .accessibility(identifier: "FaviconFetchingToggle")
                 }
             }
             Toggle(isOn: $model.isUnifiedFavoritesEnabled) {
@@ -289,9 +291,12 @@ extension SyncSettingsView {
                     Text(UserText.unifiedFavoritesTitle)
                         .daxBodyRegular()
                         .foregroundColor(.primary)
+                        .accessibility(label: Text(UserText.unifiedFavoritesTitle))
+                        .accessibility(addTraits: .isStaticText)
                     Text(UserText.unifiedFavoritesInstruction)
                         .daxFootnoteRegular()
                         .foregroundColor(.secondary)
+                        .accessibility(identifier: "UnifiedFavoritesToggle")
                 }
             }
         } header: {

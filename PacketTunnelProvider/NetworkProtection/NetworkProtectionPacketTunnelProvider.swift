@@ -230,6 +230,7 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         connectionStatusPublisher.sink { [weak self] status in
             if case .connected = status {
                 self?.activationDateStore.setActivationDateIfNecessary()
+                self?.activationDateStore.updateLastActiveDate()
             }
         }
         .store(in: &cancellables)

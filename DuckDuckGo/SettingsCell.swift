@@ -237,7 +237,9 @@ struct SettingsCustomCell<Content: View>: View {
         HStack {
             content
             Spacer()
-            SettingsCellComponents.chevron
+            if disclosureIndicator {
+                SettingsCellComponents.chevron
+            }
         }
         .onTapGesture(perform: action)
     }
@@ -342,10 +344,7 @@ struct SettingsCellView_Previews: PreviewProvider {
                             .imageScale(.large)
                     }
                 }
-                SettingsCustomCell(content: cellContent,
-                                   action: {},
-                                   asLink: false,
-                                   disclosureIndicator: true)
+                SettingsCustomCell(content: cellContent)
                     .previewLayout(.sizeThatFits)
 
                                

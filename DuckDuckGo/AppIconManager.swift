@@ -21,18 +21,18 @@ import Common
 import UIKit
 import Core
 
-class AppIconManager: ObservableObject {
+class AppIconManager {
 
     static var shared = AppIconManager()
     
-    @Published var appIcon: AppIcon = {
+    var appIcon: AppIcon {
         guard let appIconName = UIApplication.shared.alternateIconName,
             let appIcon = AppIcon(rawValue: appIconName) else {
              return AppIcon.defaultAppIcon
         }
 
         return appIcon
-    }()
+    }
 
     var isAppIconChangeSupported: Bool {
         UIApplication.shared.supportsAlternateIcons
@@ -45,17 +45,13 @@ class AppIconManager: ObservableObject {
         }
 
         let alternateIconName = appIcon != AppIcon.defaultAppIcon ? appIcon.rawValue : nil
-        UIApplication.shared.setAlternateIconName(alternateIconName) { error in
-            DispatchQueue.main.async {
+            UIApplication.shared.setAlternateIconName(alternateIconName) { error in
                 if let error = error {
                     os_log("Error while changing app icon: %s", log: .generalLog, type: .debug, error.localizedDescription)
                     completionHandler?(error)
                 } else {
-                    self.appIcon = appIcon
                     completionHandler?(nil)
                 }
             }
-        }
     }
-
 }

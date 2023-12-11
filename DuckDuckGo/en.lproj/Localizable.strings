@@ -1453,6 +1453,9 @@ https://duckduckgo.com/mac";
 /* Second subtitle for Network Protection join waitlist screen */
 "network-protection.waitlist.join.subtitle.2" = "Join the waitlist, and we’ll notify you when it’s your turn.";
 
+/* Title for Network Protection join waitlist screen */
+"network-protection.waitlist.join.title" = "Network Protection Early Access";
+
 /* Title for Network Protection joined waitlist screen */
 "network-protection.waitlist.joined.title" = "You’re on the list!";
 
@@ -1723,7 +1726,7 @@ https://duckduckgo.com/mac";
 /* Settings cell for About DDG */
 "settings.about.ddg" = "About DuckDuckGo";
 
-/* Settings section title for About */
+/* Settings section title for About DuckDuckGo */
 "settings.about.section" = "About";
 
 /* about page */
@@ -1735,10 +1738,10 @@ Our privacy protections work without having to know anything about the technical
 
 But if you *do* want a peek under the hood, you can find more information about how DuckDuckGo privacy protections work on our [help pages](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
-/* Settings screen cell text for add to dock */
+/* Settings screen cell text for adding the app to the dock */
 "settings.add.to.dock" = "Add App to Your Dock";
 
-/* Settings screen cell text for add widget */
+/* Settings screen cell text for add widget to the home screen */
 "settings.add.widget" = "Add Widget to Home Screen";
 
 /* Settings screen cell text for addess bar position */
@@ -1771,7 +1774,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Settings title for the customize section */
 "settings.customize" = "Customize";
 
-/* Settings screen cell text for default browser */
+/* Settings screen cell text for setting the app as default browser */
 "settings.default.browser" = "Set as Default Browser";
 
 /* Settings cell for Email Protection */
@@ -1792,7 +1795,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Settings screen cell text for GPC */
 "settings.gpc" = "Global Privacy Control";
 
-/* Settings screen cell text for app icon */
+/* Settings screen cell text for app icon selection */
 "settings.icon" = "App Icon";
 
 /* Settings screen cell for Keyboard */
@@ -1810,13 +1813,13 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Settings title for the privacy section */
 "settings.privacy" = "Privacy";
 
-/* Settings screen cell text for sync */
+/* Settings screen cell text for sync and backup */
 "settings.sync" = "Sync & Backup";
 
 /* Settings screen cell text for text size */
 "settings.text.size" = "Text Size";
 
-/* Settings screen cell text for them */
+/* Settings screen cell text for theme */
 "settings.theme" = "Theme";
 
 /* Title for the Settings View */

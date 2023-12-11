@@ -26,16 +26,16 @@ struct SettingsGeneralView: View {
     
     var body: some View {
         Section {
-            SettingsCellView(label: "Set as Default Browser",
+            SettingsCellView(label: UserText.settingsSetDefault,
                              action: { viewModel.setAsDefaultBrowser() },
                              asLink: true)
             
-            SettingsCellView(label: "Add App to Your Dock",
+            SettingsCellView(label: UserText.settingsAddToDock,
                              action: { viewModel.presentLegacyView(.addToDock) },
                              asLink: true)
             
             NavigationLink(destination: WidgetEducationView()) {
-                SettingsCellView(label: "Add Widget to Home Screen")
+                SettingsCellView(label: UserText.settingsAddWidget)
             }
         }
 

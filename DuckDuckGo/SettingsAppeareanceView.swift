@@ -25,24 +25,24 @@ struct SettingsAppeareanceView: View {
 
     var body: some View {
         
-        Section(header: Text("Appeareance")) {
-            SettingsPickerCellView(label: "Theme",
+        Section(header: Text(UserText.settingsAppearanceSection)) {
+            SettingsPickerCellView(label: UserText.settingsTheme,
                                    options: ThemeName.allCases,
                                    selectedOption: viewModel.themeBinding)
             
             let image = Image(uiImage: viewModel.state.appIcon.smallImage ?? UIImage())
-            SettingsCellView(label: "App Icon",
+            SettingsCellView(label: UserText.settingsIcon,
                              action: { viewModel.presentLegacyView(.appIcon ) },
                              accesory: .image(image),
                              asLink: true,
                              disclosureIndicator: true)
             
-            SettingsPickerCellView(label: "Fire Button Animation",
+            SettingsPickerCellView(label: UserText.settingsFirebutton,
                                    options: FireButtonAnimationType.allCases,
                                    selectedOption: viewModel.fireButtonAnimationBinding)
              
             if viewModel.shouldShowTextSizeCell {
-                SettingsCellView(label: "Text Size",
+                SettingsCellView(label: UserText.settingsText,
                                  action: { viewModel.presentLegacyView(.textSize) },
                                  accesory: .rightDetail("\(viewModel.state.textSize)%"),
                                  asLink: true,
@@ -50,7 +50,7 @@ struct SettingsAppeareanceView: View {
             }
             
             if viewModel.shouldShowAddressBarPositionCell {
-                SettingsPickerCellView(label: "Address Bar Position",
+                SettingsPickerCellView(label: UserText.settingsAddressBar,
                                        options: AddressBarPosition.allCases,
                                        selectedOption: viewModel.addressBarPositionBinding)
             }

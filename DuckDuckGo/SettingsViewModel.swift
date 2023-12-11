@@ -367,7 +367,6 @@ extension SettingsViewModel {
 #endif
         
         }
-        
     }
  
     @MainActor

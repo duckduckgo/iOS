@@ -25,32 +25,32 @@ struct SettingsCustomizeView: View {
     @State var shouldShowNoMicrophonePermissionAlert = false
 
     var body: some View {
-        Section(header: Text("Customize"),
-                footer: Text("Disable to prevent links from automatically opening in other installed apps")) {
+        Section(header: Text(UserText.settingsCustomizesection),
+                footer: Text(UserText.settingsAssociatedAppsDescription)) {
             
-            SettingsCellView(label: "Keyboard",
+            SettingsCellView(label: UserText.settingsKeyboard,
                              action: { viewModel.presentLegacyView(.keyboard) },
                              asLink: true,
                              disclosureIndicator: true)
             
-            SettingsCellView(label: "Autocomplete Suggestions",
+            SettingsCellView(label: UserText.settingsAutocomplete,
                              accesory: .toggle(isOn: viewModel.autocompleteBinding))
             
             if viewModel.shouldShowSpeechRecognitionCell {
-                SettingsCellView(label: "Private Voice Search",
+                SettingsCellView(label: UserText.settingsVoiceSearch,
                                  accesory: .toggle(isOn: viewModel.voiceSearchEnabledBinding))
             }
-            SettingsCellView(label: "Long-Press Previews",
+            SettingsCellView(label: UserText.settingsPreviews,
                              accesory: .toggle(isOn: viewModel.longPressBinding))
             
-            SettingsCellView(label: "Open Links in Associated Apps",
+            SettingsCellView(label: UserText.settingsAssociatedApps,
                              accesory: .toggle(isOn: viewModel.universalLinksBinding))
         }
                 
                 .alert(isPresented: $shouldShowNoMicrophonePermissionAlert) {
                     Alert(title: Text(UserText.noVoicePermissionAlertTitle),
                           message: Text(UserText.noVoicePermissionAlertMessage),
-                          dismissButton: .default(Text("OK"),
+                          dismissButton: .default(Text(UserText.noVoicePermissionAlertOKbutton),
                           action: {
                             viewModel.shouldShowNoMicrophonePermissionAlert = false
                         })

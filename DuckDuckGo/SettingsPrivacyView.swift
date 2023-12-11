@@ -24,10 +24,10 @@ struct SettingsPrivacyView: View {
     @EnvironmentObject var viewModel: SettingsViewModel
 
     var body: some View {
-         Section(header: Text("Privacy"),
-                 footer: Text("If Touch ID, Face ID or a system passcode is set, you'll be requested to unlock the app when opening.")) {
+        Section(header: Text(UserText.settingsPrivacySection),
+                footer: Text(UserText.settingsAutoLockDescription)) {
              
-             SettingsCellView(label: "Global Privacy Control (GPC)",
+            SettingsCellView(label: UserText.settingsGPC,
                           action: { viewModel.presentLegacyView(.gpc) },
                           accesory: .rightDetail(viewModel.state.sendDoNotSell
                                                  ? UserText.doNotSellEnabled
@@ -35,7 +35,7 @@ struct SettingsPrivacyView: View {
                           asLink: true,
                           disclosureIndicator: true)
 
-             SettingsCellView(label: "Manage Cookie Popups",
+            SettingsCellView(label: UserText.settingsCookiePopups,
                               action: { viewModel.presentLegacyView(.autoconsent) },
                               accesory: .rightDetail(viewModel.state.autoconsentEnabled
                                                      ? UserText.autoconsentEnabled
@@ -43,17 +43,17 @@ struct SettingsPrivacyView: View {
                               asLink: true,
                               disclosureIndicator: true)
 
-             SettingsCellView(label: "Unprotected SItes",
+            SettingsCellView(label: UserText.settingsUnprotectedSites,
                               action: { viewModel.presentLegacyView(.unprotectedSites) },
                               asLink: true,
                               disclosureIndicator: true)
              
-             SettingsCellView(label: "Fireproof Sites",
+            SettingsCellView(label: UserText.settingsFireproofSites,
                               action: { viewModel.presentLegacyView(.fireproofSites) },
                               asLink: true,
                               disclosureIndicator: true)
              
-             SettingsCellView(label: "Automatically Clear Data",
+            SettingsCellView(label: UserText.settingsClearData,
                               action: { viewModel.presentLegacyView(.autoclearData) },
                               accesory: .rightDetail(viewModel.state.autoclearDataEnabled
                                                      ? UserText.autoClearAccessoryOn
@@ -61,8 +61,8 @@ struct SettingsPrivacyView: View {
                               asLink: true,
                               disclosureIndicator: true)
              
-             SettingsCellView(label: "Application Lock", accesory: .toggle(isOn: viewModel.applicationLockBinding))
+            SettingsCellView(label: UserText.settingsAutolock, accesory: .toggle(isOn: viewModel.applicationLockBinding))
              
-         }
+        }
     }
 }

@@ -25,21 +25,21 @@ struct SettingsMoreView: View {
     
 
     var body: some View {
-        Section(header: Text("More from DuckDuckGo")) {
+        Section(header: Text(UserText.settingsMoreSction)) {
             
-            SettingsCellView(label: "Email Protection",
-                             subtitle: "Block email trackers and hide your address",
+            SettingsCellView(label: UserText.settingsEmailProtection,
+                             subtitle: UserText.settingsEmailProtectionDescription,
                              action: { viewModel.openEmailProtection() },
                              asLink: true,
                              disclosureIndicator: true)
             
-            SettingsCellView(label: "DuckDuckGo Mac App",
+            SettingsCellView(label: UserText.macBrowserTitle,
                              subtitle: UserText.macWaitlistBrowsePrivately,
                              action: { viewModel.presentLegacyView(.macApp) },
                              asLink: true,
                              disclosureIndicator: true)
             
-            SettingsCellView(label: "DuckDuckGo Windows App",
+            SettingsCellView(label: UserText.windowsWaitlistTitle,
                              subtitle: UserText.windowsWaitlistBrowsePrivately,
                              action: { viewModel.presentLegacyView(.windowsApp) },
                              asLink: true,
@@ -47,7 +47,7 @@ struct SettingsMoreView: View {
 
 #if NETWORK_PROTECTION
             if viewModel.shouldShowNetworkProtectionCell {
-                SettingsCellView(label: "Network Protection",
+                SettingsCellView(label: UserText.netPNavTitle,
                                  subtitle: viewModel.state.netPSubtitle,
                                  action: { viewModel.presentLegacyView(.netP) },
                                  asLink: true,

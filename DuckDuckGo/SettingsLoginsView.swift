@@ -29,7 +29,7 @@ struct SettingsLoginsView: View {
     var body: some View {
         if viewModel.shouldShowLoginsCell {
             Section {
-                SettingsCellView(label: "Logins",
+                SettingsCellView(label: UserText.settingsLogins,
                                  action: { viewModel.presentLegacyView(.logins) },
                                  asLink: true,
                                  disclosureIndicator: true)

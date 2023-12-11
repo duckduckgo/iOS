@@ -33,7 +33,7 @@ struct SettingsSyncView: View {
     var body: some View {
         if viewModel.shouldShowSyncCell {
             Section {
-                SettingsCellView(label: UserText.syncTitle,
+                SettingsCellView(label: UserText.settingsSync,
                                  action: { viewModel.presentLegacyView(.sync) },
                                  asLink: true,
                                  disclosureIndicator: true)

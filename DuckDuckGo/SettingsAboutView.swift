@@ -25,18 +25,18 @@ struct SettingsAboutView: View {
     @EnvironmentObject var viewModel: SettingsViewModel
     
     var body: some View {
-        Section(header: Text("About")) {
+        Section(header: Text(UserText.settingsAboutSection)) {
             
-            SettingsCellView(label: "About DuckDuckGo",
+            SettingsCellView(label: UserText.settingsAboutDDG,
                              action: { viewModel.presentLegacyView(.about) },
                              asLink: true,
                              disclosureIndicator: true)
             
-            SettingsCellView(label: "Version",
+            SettingsCellView(label: UserText.settingsVersion,
                              accesory: .rightDetail(viewModel.state.version),
                              asLink: true)
             
-            SettingsCellView(label: "Share Feedback",
+            SettingsCellView(label: UserText.settingsFeedback,
                              action: { viewModel.presentLegacyView(.feedback) },
                              asLink: true)
                         

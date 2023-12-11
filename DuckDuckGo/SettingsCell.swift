@@ -243,7 +243,7 @@ struct SettingsCustomCell<Content: View>: View {
     }
 }
 
-
+#if DEBUG
 struct SettingsCellView_Previews: PreviewProvider {
     enum SampleOption: String, CaseIterable, Hashable, CustomStringConvertible {
         case optionOne = "Lorem"
@@ -350,3 +350,4 @@ struct SettingsCellView_Previews: PreviewProvider {
         }
     }
 }
+#endif

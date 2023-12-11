@@ -1769,7 +1769,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "settings.clear.data" = "Automatically Clear Data";
 
 /* Settings screen cell text for Cookie popups */
-"settings.cookie.popups" = "Manage Cookie Popups";
+"settings.cookie.popups" = "Manage Cookie Pop-ups";
 
 /* Settings title for the customize section */
 "settings.customize" = "Customize";
@@ -1793,7 +1793,7 @@ But if you *do* want a peek under the hood, you can find more information about 
 "settings.fireproof.sites" = "Fireproof Sites";
 
 /* Settings screen cell text for GPC */
-"settings.gpc" = "Global Privacy Control";
+"settings.gpc" = "Global Privacy Control (GPC)";
 
 /* Settings screen cell text for app icon selection */
 "settings.icon" = "App Icon";

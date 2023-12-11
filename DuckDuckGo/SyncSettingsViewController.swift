@@ -270,6 +270,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                 showPreparingSync()
                 if syncService.account == nil {
                     try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
+                    Pixel.fire(pixel: .syncSignupConnect)
                     self.dismissVCAndShowRecoveryPDF()
                     shouldShowSyncEnabled = false
                     rootView.model.syncEnabled(recoveryCode: recoveryCode)
@@ -283,7 +284,6 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                     .sink { [weak self] _ in
                         guard let self else { return }
                         if shouldShowSyncEnabled {
-                            Pixel.fire(pixel: .syncSignupConnect)
                             self.dismissVCAndShowRecoveryPDF()
                         }
                     }.store(in: &cancellables)

@@ -319,8 +319,7 @@ struct SettingsCellView_Previews: PreviewProvider {
                                  disclosureIndicator: false)
                     .previewLayout(.sizeThatFits)
                 
-                /*
-                SettingsCustomCell(content: {
+                let cellContent: () -> some View = {
                     HStack(spacing: 15) {
                         Image(systemName: "hand.wave")
                             .foregroundColor(.orange)
@@ -342,11 +341,12 @@ struct SettingsCellView_Previews: PreviewProvider {
                             .foregroundColor(.orange)
                             .imageScale(.large)
                     }
-                }, action: {},
-                   asLink: false,
-                   disclosureIndicator: true)
-                .previewLayout(.sizeThatFits)
-                 */
+                }
+                SettingsCustomCell(content: cellContent,
+                                   action: {},
+                                   asLink: false,
+                                   disclosureIndicator: true)
+                    .previewLayout(.sizeThatFits)
 
                                
             }

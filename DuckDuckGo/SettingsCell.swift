@@ -145,6 +145,7 @@ struct SettingsCellView: View, Identifiable {
             Text(value)
                 .daxSubheadRegular()
                 .foregroundColor(Color(designSystemColor: .textSecondary))
+                .layoutPriority(1)
         case .toggle(let isOn):
             Toggle("", isOn: isOn)
                 .toggleStyle(SwitchToggleStyle(tint: Color(designSystemColor: .accent)))

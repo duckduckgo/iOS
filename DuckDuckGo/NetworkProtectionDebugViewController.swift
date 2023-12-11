@@ -30,6 +30,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 import NetworkExtension
 import NetworkProtection
 
+// swiftlint:disable:next type_body_length
 final class NetworkProtectionDebugViewController: UITableViewController {
     private let titles = [
         Sections.keychain: "Keychain",
@@ -37,19 +38,19 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         Sections.simulateFailure: "Simulate Failure",
         Sections.registrationKey: "Registration Key",
         Sections.notifications: "Notifications",
+        Sections.networkPath: "Network Path",
         Sections.vpnConfiguration: "VPN Configuration"
 
     ]
 
     enum Sections: Int, CaseIterable {
-
         case keychain
         case debugFeature
         case simulateFailure
         case registrationKey
         case notifications
+        case networkPath
         case vpnConfiguration
-
     }
 
     enum KeychainRows: Int, CaseIterable {
@@ -78,6 +79,10 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case triggerTestNotification
     }
 
+    enum NetworkPathRows: Int, CaseIterable {
+        case networkPath
+    }
+
     enum ConfigurationRows: Int, CaseIterable {
         case baseConfigurationData
         case fullProtocolConfigurationData
@@ -85,7 +90,9 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
     private let debugFeatures: NetworkProtectionDebugFeatures
     private let tokenStore: NetworkProtectionTokenStore
+    private let pathMonitor = NWPathMonitor()
 
+    private var currentNetworkPath: String?
     private var baseConfigurationData: String?
     private var fullProtocolConfigurationData: String?
 
@@ -106,6 +113,31 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadConfigurationData()
+        startPathMonitor()
+    }
+
+    private func startPathMonitor() {
+        pathMonitor.pathUpdateHandler = { [weak self] path in
+            var pathDescription: String = """
+            Status: \(path.status)
+            Interfaces (preferred order): \(path.availableInterfaces)
+            Gateways: \(path.gateways)
+            Is Expensive: \(path.isExpensive)
+            Is Constrained: \(path.isConstrained)
+            Supports DNS: \(path.supportsDNS)
+            Supports IPv4: \(path.supportsIPv4)
+            Supports IPv6: \(path.supportsIPv6)
+            """
+
+            if #available(iOS 14.2, *), path.status == .unsatisfied {
+                pathDescription.append("\nUnsatisfied Reason: \(path.unsatisfiedReason)")
+            }
+
+            self?.currentNetworkPath = pathDescription
+            self?.tableView.reloadData()
+        }
+
+        pathMonitor.start(queue: .main)
     }
 
     private func loadConfigurationData() {
@@ -180,6 +212,9 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .notifications:
             configure(cell, forNotificationRow: indexPath.row)
 
+        case .networkPath:
+            configure(cell, forNetworkPathRow: indexPath.row)
+
         case .vpnConfiguration:
             configure(cell, forConfigurationRow: indexPath.row)
 
@@ -197,6 +232,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .simulateFailure: return SimulateFailureRows.allCases.count
         case .registrationKey: return RegistrationKeyRows.allCases.count
         case .notifications: return NotificationsRows.allCases.count
+        case .networkPath: return NetworkPathRows.allCases.count
         case .vpnConfiguration: return ConfigurationRows.allCases.count
         case .none: return 0
 
@@ -218,6 +254,8 @@ final class NetworkProtectionDebugViewController: UITableViewController {
             didSelectRegistrationKeyAction(at: indexPath)
         case .notifications:
             didSelectTestNotificationAction(at: indexPath)
+        case .networkPath:
+            break
         case .vpnConfiguration:
             break
         case .none:
@@ -338,6 +376,13 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case .none:
             break
         }
+    }
+
+    // MARK: Network Path
+
+    private func configure(_ cell: UITableViewCell, forNetworkPathRow row: Int) {
+        cell.textLabel?.font = .monospacedSystemFont(ofSize: 13.0, weight: .regular)
+        cell.textLabel?.text = currentNetworkPath ?? "Loading path..."
     }
 
     // MARK: Configuration

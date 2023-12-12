@@ -1685,7 +1685,7 @@
 "settings.autolock" = "Κλείδωμα εφαρμογής";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Αυτόματη απαλοιφή δεδομένων";
+"dOj-jn-mSN.footerTitle" = "Αυτόματη απαλοιφή δεδομένων";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Αυτόματη απαλοιφή δεδομένων";

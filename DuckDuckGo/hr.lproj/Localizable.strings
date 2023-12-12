@@ -1685,7 +1685,7 @@
 "settings.autolock" = "Zaključavanje aplikacije";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Automatsko brisanje podataka";
+"dOj-jn-mSN.footerTitle" = "Automatsko brisanje podataka";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Automatsko brisanje podataka";

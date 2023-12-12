@@ -1685,7 +1685,7 @@
 "settings.autolock" = "Zámok aplikácie";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Automaticky vymazať údaje";
+"dOj-jn-mSN.footerTitle" = "Automaticky vymazať údaje";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Automaticky vymazať údaje";

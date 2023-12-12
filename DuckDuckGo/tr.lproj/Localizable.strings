@@ -1685,7 +1685,7 @@
 "settings.autolock" = "Uygulama Kilidi";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Verileri Otomatik Olarak Temizle";
+"dOj-jn-mSN.footerTitle" = "Verileri Otomatik Olarak Temizle";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Verileri Otomatik Olarak Temizle";

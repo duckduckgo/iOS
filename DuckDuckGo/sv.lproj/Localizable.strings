@@ -1685,7 +1685,7 @@
 "settings.autolock" = "App-lås";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Rensa data automatiskt";
+"dOj-jn-mSN.footerTitle" = "Rensa data automatiskt";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Rensa data automatiskt";

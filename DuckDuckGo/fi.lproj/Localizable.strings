@@ -1685,7 +1685,7 @@
 "settings.autolock" = "Sovelluksen lukitus";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Tyhjennä tiedot automaattisesti";
+"dOj-jn-mSN.footerTitle" = "Tyhjennä tiedot automaattisesti";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Tyhjennä tiedot automaattisesti";

@@ -1685,7 +1685,7 @@
 "settings.autolock" = "Заключване на приложение";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Автоматично изчистване на данните";
+"dOj-jn-mSN.footerTitle" = "Автоматично изчистване на данните";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Автоматично изчистване на данните";

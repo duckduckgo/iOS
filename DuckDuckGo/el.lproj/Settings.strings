@@ -92,7 +92,7 @@
 "dj9-vh-Rig.headerTitle" = "Εμφάνιση";
 
 /* Class = "UITableViewSection"; footerTitle = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening."; ObjectID = "dOj-jn-mSN"; */
-"settings.autolock.description" = "Εάν έχει οριστεί Touch ID, Face ID ή κωδικός πρόσβασης συστήματος, θα σας ζητηθεί να ξεκλειδώσετε την εφαρμογή κατά το άνοιγμά της.";
+"dOj-jn-mSN.footerTitle" = "Εάν έχει οριστεί Touch ID, Face ID ή κωδικός πρόσβασης συστήματος, θα σας ζητηθεί να ξεκλειδώσετε την εφαρμογή κατά το άνοιγμά της.";
 
 /* Class = "UITableViewSection"; headerTitle = "Privacy"; ObjectID = "dOj-jn-mSN"; */
 "dOj-jn-mSN.headerTitle" = "Ιδιωτικότητα";

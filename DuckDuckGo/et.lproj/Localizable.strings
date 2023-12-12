@@ -1685,7 +1685,7 @@
 "settings.autolock" = "Rakenduse lukk";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Kustuta andmed automaatselt";
+"dOj-jn-mSN.footerTitle" = "Kustuta andmed automaatselt";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Kustuta andmed automaatselt";

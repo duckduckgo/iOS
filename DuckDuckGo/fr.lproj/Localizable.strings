@@ -1685,7 +1685,7 @@
 "settings.autolock" = "Verrouillage de l'application";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Effacer automatiquement les données";
+"dOj-jn-mSN.footerTitle" = "Effacer automatiquement les données";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Effacer automatiquement les données";

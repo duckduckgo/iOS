@@ -44,13 +44,14 @@ struct HeadlessWebview: UIViewRepresentable {
         webView.customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)"
         // webView.customUserAgent = DefaultUserAgentManager.duckDuckGoUserAgent
         
-        // DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-            webView.load(URLRequest(url: url))
-        // }
+        webView.load(URLRequest(url: url))
+
         
+#if DEBUG
         if #available(iOS 16.4, *) {
             webView.isInspectable = true
         }
+#endif
         return webView
     }
 

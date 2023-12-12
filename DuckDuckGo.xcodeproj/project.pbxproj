@@ -785,7 +785,6 @@
 		D664C7C82B289AA200CBFA76 /* SubscriptionFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7AE2B289AA000CBFA76 /* SubscriptionFlowView.swift */; };
 		D664C7C92B289AA200CBFA76 /* HeadlessWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7AF2B289AA000CBFA76 /* HeadlessWebView.swift */; };
 		D664C7CA2B289AA200CBFA76 /* SimpleUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7B12B289AA000CBFA76 /* SimpleUserScript.swift */; };
-		D664C7CB2B289AA200CBFA76 /* SubscriptionOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7B22B289AA000CBFA76 /* SubscriptionOptions.swift */; };
 		D664C7CC2B289AA200CBFA76 /* SubscriptionPagesUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7B32B289AA000CBFA76 /* SubscriptionPagesUserScript.swift */; };
 		D664C7CD2B289AA200CBFA76 /* TestUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7B42B289AA000CBFA76 /* TestUserScript.swift */; };
 		D664C7CE2B289AA200CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7B52B289AA000CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift */; };
@@ -2422,7 +2421,6 @@
 		D664C7AE2B289AA000CBFA76 /* SubscriptionFlowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionFlowView.swift; sourceTree = "<group>"; };
 		D664C7AF2B289AA000CBFA76 /* HeadlessWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadlessWebView.swift; sourceTree = "<group>"; };
 		D664C7B12B289AA000CBFA76 /* SimpleUserScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleUserScript.swift; sourceTree = "<group>"; };
-		D664C7B22B289AA000CBFA76 /* SubscriptionOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionOptions.swift; sourceTree = "<group>"; };
 		D664C7B32B289AA000CBFA76 /* SubscriptionPagesUserScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionPagesUserScript.swift; sourceTree = "<group>"; };
 		D664C7B42B289AA000CBFA76 /* TestUserScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUserScript.swift; sourceTree = "<group>"; };
 		D664C7B52B289AA000CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionPagesUseSubscriptionFeature.swift; sourceTree = "<group>"; };
@@ -4601,7 +4599,6 @@
 			isa = PBXGroup;
 			children = (
 				D664C7B12B289AA000CBFA76 /* SimpleUserScript.swift */,
-				D664C7B22B289AA000CBFA76 /* SubscriptionOptions.swift */,
 				D664C7B32B289AA000CBFA76 /* SubscriptionPagesUserScript.swift */,
 				D664C7B42B289AA000CBFA76 /* TestUserScript.swift */,
 				D664C7B52B289AA000CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift */,
@@ -6808,7 +6805,6 @@
 				851DFD87212C39D300D95F20 /* TabSwitcherButton.swift in Sources */,
 				8505836A219F424500ED4EDB /* UIAlertControllerExtension.swift in Sources */,
 				37FCAAB229914232000E420A /* WindowsBrowserWaitlistView.swift in Sources */,
-				D664C7CB2B289AA200CBFA76 /* SubscriptionOptions.swift in Sources */,
 				C12726F22A5FF8CB00215B02 /* EmailSignupPromptViewController.swift in Sources */,
 				0290472C29E8821E0008FE3C /* AppTPBreakageFormHeaderView.swift in Sources */,
 				983EABB8236198F6003948D1 /* DatabaseMigration.swift in Sources */,

@@ -33,6 +33,11 @@ struct SettingsView: View {
             SettingsLoginsView()
             SettingsAppeareanceView()
             SettingsPrivacyView()
+#if SUBSCRIPTION
+            if viewModel.shouldShowPrivacyProCell {
+                SettingsPrivacyProView()
+            }
+#endif
             SettingsCustomizeView()
             SettingsMoreView()
             SettingsAboutView()

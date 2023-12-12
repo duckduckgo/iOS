@@ -80,6 +80,7 @@ final class SettingsViewModel: ObservableObject {
     var shouldShowSpeechRecognitionCell: Bool { AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable }
     var shouldShowNoMicrophonePermissionAlert: Bool = false
     var shouldShowDebugCell: Bool { return featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild }
+    var shouldShowPrivacyProCell: Bool { return featureFlagger.isFeatureOn(.privacyPro) }
     
     var shouldShowNetworkProtectionCell: Bool {
 #if NETWORK_PROTECTION

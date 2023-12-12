@@ -119,7 +119,7 @@ struct SettingsCellView: View, Identifiable {
                         .foregroundColor(Color(designSystemColor: .textPrimary))
                     if let subtitleText = subtitle {
                         Text(subtitleText)
-                            .daxCaption()
+                            .daxFootnoteRegular()
                             .foregroundColor(Color(designSystemColor: .textSecondary))
                     }
                 }.fixedSize(horizontal: false, vertical: true)

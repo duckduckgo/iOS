@@ -1810,6 +1810,22 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Settings title for the 'More' section */
 "settings.more" = "More from DuckDuckGo";
 
+/* Product name for the subscription bundle */
+"settings.ppro" = "Privacy Pro";
+
+/* about page */
+"settings.ppro.description" = "More seamless privacy with three new protections, including:
+
+ • VPN (Virtual Private Network)
+ • Personal Information Removal
+ • Identity Theft Restoration";
+
+/* Learn more button text for privacy pro */
+"settings.ppro.learn.more" = "Learn More";
+
+/* Call to action title for Privacy Pro */
+"settings.ppro.subscribe" = "Subscribe to Privacy Pro";
+
 /* Settings screen cell for long press previews */
 "settings.previews" = "Long-Press Previews";
 

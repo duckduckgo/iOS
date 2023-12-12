@@ -922,12 +922,15 @@ But if you *do* want a peek under the hood, you can find more information about 
     
     // MARK: Settings Screeen
     public static let settingsTitle = NSLocalizedString("settings.title", value: "Settings", comment: "Title for the Settings View")
+    
+    // General Section
     public static let settingsSetDefault = NSLocalizedString("settings.default.browser", value: "Set as Default Browser", comment: "Settings screen cell text for setting the app as default browser")
     public static let settingsAddToDock = NSLocalizedString("settings.add.to.dock", value: "Add App to Your Dock", comment: "Settings screen cell text for adding the app to the dock")
     public static let settingsAddWidget = NSLocalizedString("settings.add.widget", value: "Add Widget to Home Screen", comment: "Settings screen cell text for add widget to the home screen")
     public static let settingsSync = NSLocalizedString("settings.sync", value: "Sync & Backup", comment: "Settings screen cell text for sync and backup")
     public static let settingsLogins = NSLocalizedString("settings.logins", value: "Logins", comment: "Settings screen cell text for logins")
     
+    // Appeareance Section
     public static let settingsAppearanceSection = NSLocalizedString("settings.appearance", value: "Appearance", comment: "Settings screen appearance section title")
     public static let settingsTheme = NSLocalizedString("settings.theme", value: "Theme", comment: "Settings screen cell text for theme")
     public static let settingsIcon = NSLocalizedString("settings.icon", value: "App Icon", comment: "Settings screen cell text for app icon selection")
@@ -935,6 +938,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsText = NSLocalizedString("settings.text.size", value: "Text Size", comment: "Settings screen cell text for text size")
     public static let settingsAddressBar = NSLocalizedString("settings.address.bar", value: "Address Bar Position", comment: "Settings screen cell text for addess bar position")
     
+    // Privacy Section
     public static let settingsPrivacySection = NSLocalizedString("settings.privacy", value: "Privacy", comment: "Settings title for the privacy section")
     public static let settingsGPC = NSLocalizedString("settings.gpc", value: "Global Privacy Control (GPC)", comment: "Settings screen cell text for GPC")
     public static let settingsCookiePopups = NSLocalizedString("settings.cookie.popups", value: "Manage Cookie Pop-ups", comment: "Settings screen cell text for Cookie popups")
@@ -944,6 +948,21 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsAutolock = NSLocalizedString("settings.autolock", value: "Application Lock", comment: "Settings screen cell text for Application Lock")
     public static let settingsAutoLockDescription = NSLocalizedString("settings.autolock.description", value: "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening.", comment: "Section footer Autolock description")
     
+    // Privacy Pro Section
+    public static let settingsPProSection = NSLocalizedString("settings.ppro", value: "Privacy Pro", comment: "Product name for the subscription bundle")
+    public static let settingsPProSubscribe = NSLocalizedString("settings.ppro.subscribe", value: "Subscribe to Privacy Pro", comment: "Call to action title for Privacy Pro")
+    public static let settingsPProDescription = NSLocalizedString("settings.ppro.description", value:
+                                                                """
+                                                                More seamless privacy with three new protections, including:
+                                                                
+                                                                 • VPN (Virtual Private Network)
+                                                                 • Personal Information Removal
+                                                                 • Identity Theft Restoration
+                                                                """, comment: "about page")
+
+    public static let settingsPProLearnMore = NSLocalizedString("settings.ppro.learn.more", value: "Learn More", comment: "Learn more button text for privacy pro")
+    
+    // Customize Section
     public static let settingsCustomizesection = NSLocalizedString("settings.customize", value: "Customize", comment: "Settings title for the customize section")
     public static let settingsKeyboard = NSLocalizedString("settings.keyboard", value: "Keyboard", comment: "Settings screen cell for Keyboard")
     public static let settingsPreviews = NSLocalizedString("settings.previews", value: "Long-Press Previews", comment: "Settings screen cell for long press previews")
@@ -952,6 +971,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsAssociatedApps = NSLocalizedString("settings.associated.apps", value: "Open Links in Associated Apps", comment: "Settings screen cell for opening links in associated apps")
     public static let settingsAssociatedAppsDescription = NSLocalizedString("settings.associated.apps.description", value: "Disable to prevent links from automatically opening in other installed apps.", comment: "Description for associated apps description")
     
+    // More Section
     public static let settingsMoreSction = NSLocalizedString("settings.more", value: "More from DuckDuckGo", comment: "Settings title for the 'More' section")
     public static let settingsEmailProtection = NSLocalizedString("settings.emailProtection", value: "Email Protection", comment: "Settings cell for Email Protection")
     public static let settingsEmailProtectionDescription = NSLocalizedString("settings.emailProtection.description", value: "Block email trackers and hide your address", comment: "Settings cell for Email Protection")

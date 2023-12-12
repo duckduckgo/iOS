@@ -80,6 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private(set) var syncDataProviders: SyncDataProviders!
     private var syncDidFinishCancellable: AnyCancellable?
     private var syncStateCancellable: AnyCancellable?
+    private var isSyncInProgressCancellable: AnyCancellable?
 
     // MARK: lifecycle
 
@@ -285,6 +286,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog, environment: environment)
         syncService.initializeIfNeeded()
         self.syncService = syncService
+
+        isSyncInProgressCancellable = syncService.isSyncInProgressPublisher
+            .filter { $0 }
+            .prefix(1)
+            .sink { _ in
+                DailyPixel.fire(pixel: .syncDaily)
+            }
 
 #if APP_TRACKING_PROTECTION
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,

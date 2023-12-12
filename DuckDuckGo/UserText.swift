@@ -942,7 +942,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsFireproofSites = NSLocalizedString("settings.fireproof.sites", value: "Fireproof Sites", comment: "Settings screen cell text for Fireproof Sites")
     public static let settingsClearData = NSLocalizedString("settings.clear.data", value: "Automatically Clear Data", comment: "Settings screen cell text for Automatically Clearing Data")
     public static let settingsAutolock = NSLocalizedString("settings.autolock", value: "Application Lock", comment: "Settings screen cell text for Application Lock")
-    public static let settingsAutoLockDescription = NSLocalizedString("settings.autolock.description", value: "Automatically Clear Data", comment: "Section footer Autolock description")
+    public static let settingsAutoLockDescription = NSLocalizedString("settings.autolock.description", value: "If Touch ID, Face ID or a system passcode is set, you'll be requested to unlock the app when opening", comment: "Section footer Autolock description")
     
     public static let settingsCustomizesection = NSLocalizedString("settings.customize", value: "Customize", comment: "Settings title for the customize section")
     public static let settingsKeyboard = NSLocalizedString("settings.keyboard", value: "Keyboard", comment: "Settings screen cell for Keyboard")

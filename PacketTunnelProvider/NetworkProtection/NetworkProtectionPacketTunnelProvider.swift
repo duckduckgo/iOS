@@ -40,9 +40,30 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
             let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
             DailyPixel.fire(pixel: .networkProtectionActiveUser,
                             withAdditionalParameters: ["cohort": UniquePixel.dateString(for: settings.vpnFirstEnabled)])
-        case .reportLatency, .reportTunnelFailure, .reportConnectionAttempt:
-            // TODO: Fire these pixels
-            break
+        case .reportConnectionAttempt(attempt: let attempt):
+            switch attempt {
+            case .connecting:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptConnecting)
+            case .success:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptSuccess)
+            case .failure:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptFailure)
+            }
+        case .reportTunnelFailure(result: let result):
+            switch result {
+            case .failureDetected:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelFailureDetected)
+            case .failureRecovered:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelFailureRecovered)
+            }
+        case .reportLatency(result: let result):
+            switch result {
+            case .error:
+                DailyPixel.fire(pixel: .networkProtectionLatencyError)
+            case .quality(let quality):
+                guard quality != .unknown else { return }
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionLatency(quality: quality))
+            }
         case .rekeyCompleted:
             Pixel.fire(pixel: .networkProtectionRekeyCompleted)
         }

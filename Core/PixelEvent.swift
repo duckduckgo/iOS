@@ -327,6 +327,8 @@ extension Pixel {
         case networkProtectionLatency(quality: NetworkProtectionLatencyMonitor.ConnectionQuality)
         case networkProtectionLatencyError
 
+        case networkProtectionEnabledOnSearch
+
         case networkProtectionRekeyCompleted
 
         case networkProtectionTunnelConfigurationNoServerRegistrationInfo
@@ -868,9 +870,8 @@ extension Pixel.Event {
         case .networkProtectionTunnelFailureRecovered: return "m_netp_ev_tunnel_failure_recovered"
         case .networkProtectionLatency(let quality): return "m_netp_ev_\(quality.rawValue)_latency"
         case .networkProtectionLatencyError: return "m_netp_ev_latency_error"
-
         case .networkProtectionRekeyCompleted: return "m_netp_rekey_completed"
-        case .networkProtectionLatency: return "m_netp_latency"
+        case .networkProtectionEnabledOnSearch: return "m_netp_enabled_on_search"
         case .networkProtectionTunnelConfigurationNoServerRegistrationInfo: return "m_netp_tunnel_config_error_no_server_registration_info"
         case .networkProtectionTunnelConfigurationCouldNotSelectClosestServer: return "m_netp_tunnel_config_error_could_not_select_closest_server"
         case .networkProtectionTunnelConfigurationCouldNotGetPeerPublicKey: return "m_netp_tunnel_config_error_could_not_get_peer_public_key"

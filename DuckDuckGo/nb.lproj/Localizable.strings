@@ -4,9 +4,6 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
-/* No comment provided by engineer. */
-"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Rediger";
 
@@ -1781,7 +1778,7 @@
 "settings.autolock" = "Applås";
 
 /* Section footer Autolock description */
-"dOj-jn-mSN.footerTitle" = "Slett data automatisk";
+"settings.autolock.description" = "Hvis du har touch-ID, face-ID eller systempassord, blir du bedt om å låse opp appen når du åpner den.";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Slett data automatisk";

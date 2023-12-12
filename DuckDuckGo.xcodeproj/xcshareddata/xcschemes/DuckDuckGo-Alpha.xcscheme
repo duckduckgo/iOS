@@ -71,7 +71,7 @@
       buildConfiguration = "Alpha Debug">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Alpha"
+      buildConfiguration = "Alpha Debug"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

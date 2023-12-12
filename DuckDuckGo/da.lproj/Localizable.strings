@@ -1685,7 +1685,7 @@
 "settings.autolock" = "Applikationslås";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Ryd data automatisk";
+"dOj-jn-mSN.footerTitle" = "Ryd data automatisk";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Ryd data automatisk";

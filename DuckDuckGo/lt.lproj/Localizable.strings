@@ -1685,7 +1685,7 @@
 "settings.autolock" = "Programos užraktas";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Automatiškai valyti duomenis";
+"dOj-jn-mSN.footerTitle" = "Automatiškai valyti duomenis";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Automatiškai valyti duomenis";

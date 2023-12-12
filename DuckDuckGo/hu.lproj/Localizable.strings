@@ -1685,7 +1685,7 @@
 "settings.autolock" = "Alkalmazás zárolás";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Adatok automatikus törlése";
+"dOj-jn-mSN.footerTitle" = "Adatok automatikus törlése";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Adatok automatikus törlése";

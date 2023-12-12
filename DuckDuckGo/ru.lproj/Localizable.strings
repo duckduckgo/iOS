@@ -1685,7 +1685,7 @@
 "settings.autolock" = "Блокировка";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Автоудаление данных";
+"dOj-jn-mSN.footerTitle" = "Автоудаление данных";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Автоудаление данных";

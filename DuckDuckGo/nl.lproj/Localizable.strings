@@ -1685,7 +1685,7 @@
 "settings.autolock" = "App-vergrendeling";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Gegevens automatisch wissen";
+"dOj-jn-mSN.footerTitle" = "Gegevens automatisch wissen";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Gegevens automatisch wissen";

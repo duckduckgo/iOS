@@ -1685,7 +1685,7 @@
 "settings.autolock" = "Blocarea aplicației";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Șterge automat datele";
+"dOj-jn-mSN.footerTitle" = "Șterge automat datele";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Șterge automat datele";

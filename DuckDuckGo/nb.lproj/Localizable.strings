@@ -1781,7 +1781,7 @@
 "settings.autolock" = "Applås";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Slett data automatisk";
+"dOj-jn-mSN.footerTitle" = "Slett data automatisk";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Slett data automatisk";

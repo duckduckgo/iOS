@@ -1685,7 +1685,7 @@
 "settings.autolock" = "Lietojumprogrammas bloķēšana";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Automātiski notīrīt datus";
+"dOj-jn-mSN.footerTitle" = "Automātiski notīrīt datus";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Automātiski notīrīt datus";

@@ -1685,7 +1685,7 @@
 "settings.autolock" = "Blocco applicazione";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Cancellazione automatica dei dati";
+"dOj-jn-mSN.footerTitle" = "Cancellazione automatica dei dati";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Cancellazione automatica dei dati";

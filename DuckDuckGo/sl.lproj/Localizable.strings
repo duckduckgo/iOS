@@ -1685,7 +1685,7 @@
 "settings.autolock" = "Zaklepanje aplikacije";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Samodejno počisti podatke";
+"dOj-jn-mSN.footerTitle" = "Samodejno počisti podatke";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Samodejno počisti podatke";

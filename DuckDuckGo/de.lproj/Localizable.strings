@@ -1685,7 +1685,7 @@
 "settings.autolock" = "Anwendungssperre";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Daten automatisch löschen";
+"dOj-jn-mSN.footerTitle" = "Daten automatisch löschen";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Daten automatisch löschen";

@@ -1685,7 +1685,7 @@
 "settings.autolock" = "Bloqueo de aplicación";
 
 /* Section footer Autolock description */
-"settings.autolock.description" = "Borrar datos automáticamente";
+"dOj-jn-mSN.footerTitle" = "Borrar datos automáticamente";
 
 /* Settings screen cell text for Automatically Clearing Data */
 "settings.clear.data" = "Borrar datos automáticamente";

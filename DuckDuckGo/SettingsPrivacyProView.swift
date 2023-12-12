@@ -26,11 +26,29 @@ struct SettingsPrivacyProView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
     
+    private var privacyProDescriptionView: some View {
+        VStack(alignment: .leading) {
+            Text(UserText.settingsPProSubscribe).daxBodyRegular()
+            Group {
+                Text(UserText.settingsPProDescription).daxFootnoteRegular().padding(.bottom, 5)
+                Text(UserText.settingsPProFeatures).daxFootnoteRegular()
+            }.foregroundColor(Color(designSystemColor: .textSecondary))
+        }
+    }
+    
+    private var learnMoreView: some View {
+        Text(UserText.settingsPProLearnMore)
+            .daxBodyRegular()
+            .foregroundColor(Color.init(designSystemColor: .accent))
+    }
+    
     var body: some View {
         Section(header: Text(UserText.settingsPrivacySection)) {
-            SettingsCellView(label: UserText.settingsPProSubscribe, subtitle: UserText.settingsPProDescription)
+            
+            SettingsCustomCell(content: { privacyProDescriptionView })
+                        
             NavigationLink(destination: SubscriptionFlowView(viewModel: SubscriptionFlowViewModel())) {
-                SettingsCellView(label: UserText.settingsPProLearnMore)
+                SettingsCustomCell(content: { learnMoreView })
             }
         }
     }

@@ -1813,10 +1813,11 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Product name for the subscription bundle */
 "settings.ppro" = "Privacy Pro";
 
-/* about page */
-"settings.ppro.description" = "More seamless privacy with three new protections, including:
+/* Privacy pro description subtext */
+"settings.ppro.description" = "More seamless privacy with three new protections, including:";
 
- • VPN (Virtual Private Network)
+/* Privacy pro features list */
+"settings.ppro.features" = " • VPN (Virtual Private Network)
  • Personal Information Removal
  • Identity Theft Restoration";
 

@@ -92,7 +92,7 @@
 "dj9-vh-Rig.headerTitle" = "Utseende";
 
 /* Class = "UITableViewSection"; footerTitle = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening."; ObjectID = "dOj-jn-mSN"; */
-"dOj-jn-mSN.footerTitle" = "Hvis du har touch-ID, face-ID eller systempassord, blir du bedt om å låse opp appen når du åpner den.";
+"settings.autolock.description" = "Hvis du har touch-ID, face-ID eller systempassord, blir du bedt om å låse opp appen når du åpner den.";
 
 /* Class = "UITableViewSection"; headerTitle = "Privacy"; ObjectID = "dOj-jn-mSN"; */
 "dOj-jn-mSN.headerTitle" = "Personvern";

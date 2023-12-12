@@ -43,7 +43,7 @@ struct SettingsPrivacyProView: View {
     }
     
     var body: some View {
-        Section(header: Text(UserText.settingsPrivacySection)) {
+        Section(header: Text(UserText.settingsPProSection)) {
             
             SettingsCustomCell(content: { privacyProDescriptionView })
                         

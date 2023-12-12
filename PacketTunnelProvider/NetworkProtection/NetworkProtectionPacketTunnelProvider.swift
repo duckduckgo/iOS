@@ -37,7 +37,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     private static var packetTunnelProviderEvents: EventMapping<PacketTunnelProvider.Event> = .init { event, _, _, _ in
         switch event {
         case .userBecameActive:
-            DailyPixel.fire(pixel: .networkProtectionActiveUser)
+            let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+            DailyPixel.fire(pixel: .networkProtectionActiveUser,
+                            withAdditionalParameters: ["cohort": UniquePixel.dateString(for: settings.vpnFirstEnabled)])
         case .reportLatency, .reportTunnelFailure, .reportConnectionAttempt:
             // TODO: Fire these pixels
             break

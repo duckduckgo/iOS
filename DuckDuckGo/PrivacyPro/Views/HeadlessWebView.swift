@@ -39,8 +39,10 @@ struct HeadlessWebview: UIViewRepresentable {
         configuration.userContentController = userContentController
 
         let webView = WKWebView(frame: .zero, configuration: configuration)
-        // webView.customUserAgent = DefaultUserAgentManager.duckDuckGoUserAgent
+        
+        // We're using the macOS agent as the config for iOS has not been deployed in test env
         webView.customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)"
+        // webView.customUserAgent = DefaultUserAgentManager.duckDuckGoUserAgent
         
         // DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
             webView.load(URLRequest(url: url))

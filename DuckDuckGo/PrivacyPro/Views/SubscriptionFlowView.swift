@@ -21,6 +21,7 @@
 import SwiftUI
 import Foundation
 
+@available(iOS 15.0, *)
 struct SubscriptionFlowView: View {
         
     @ObservedObject var viewModel: SubscriptionFlowViewModel

@@ -35,7 +35,9 @@ struct SettingsView: View {
             SettingsPrivacyView()
 #if SUBSCRIPTION
             if viewModel.shouldShowPrivacyProCell {
-                SettingsPrivacyProView()
+                if #available(iOS 15, *) {
+                    SettingsPrivacyProView()
+                }
             }
 #endif
             SettingsCustomizeView()

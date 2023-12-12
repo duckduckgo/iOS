@@ -21,6 +21,7 @@ import SwiftUI
 import UIKit
 
 #if SUBSCRIPTION
+@available(iOS 15.0, *)
 struct SettingsPrivacyProView: View {
     
     @EnvironmentObject var viewModel: SettingsViewModel
@@ -28,13 +29,10 @@ struct SettingsPrivacyProView: View {
     var body: some View {
         Section(header: Text(UserText.settingsPrivacySection)) {
             SettingsCellView(label: UserText.settingsPProSubscribe, subtitle: UserText.settingsPProDescription)
-            NavigationLink(destination: SubscriptionFlowView()) {
+            NavigationLink(destination: SubscriptionFlowView(viewModel: SubscriptionFlowViewModel())) {
                 SettingsCellView(label: UserText.settingsPProLearnMore)
             }
         }
-
-        
     }
- 
 }
 #endif

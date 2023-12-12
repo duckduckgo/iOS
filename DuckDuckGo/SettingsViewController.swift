@@ -413,16 +413,16 @@ class SettingsViewController: UITableViewController {
         let isAuthenticated = accountManger.isUserAuthenticated
         
         // Signup Cells
-        privacyProSignupCell.isHidden = isAuthenticated
-        privacyProLearnMoreCell.isHidden = isAuthenticated
-        privacyProSignupCell.accessoryType = .none
-        privacyProSignupCell.isUserInteractionEnabled = false
+        // privacyProSignupCell.isHidden = isAuthenticated
+        // privacyProLearnMoreCell.isHidden = isAuthenticated
+        // privacyProSignupCell.accessoryType = .none
+        // privacyProSignupCell.isUserInteractionEnabled = false
         
         // Management Cells
-        privacyProVPNCell.isHidden = !isAuthenticated
-        privacyProDBPCell.isHidden = !isAuthenticated
-        privacyProITPCell.isHidden = !isAuthenticated
-        privacyProSubscriptionSettingsCell.isHidden = !isAuthenticated
+        // privacyProVPNCell.isHidden = !isAuthenticated
+        // privacyProDBPCell.isHidden = !isAuthenticated
+        // privacyProITPCell.isHidden = !isAuthenticated
+        // privacyProSubscriptionSettingsCell.isHidden = !isAuthenticated
         
         
     }
@@ -447,15 +447,15 @@ class SettingsViewController: UITableViewController {
         switch NetworkProtectionAccessController().networkProtectionAccessType() {
         case .none, .waitlistAvailable, .waitlistJoined, .waitlistInvitedPendingTermsAcceptance:
             netPCell.detailTextLabel?.text = VPNWaitlist.shared.settingsSubtitle
-            privacyProVPNCell.detailTextLabel?.text = VPNWaitlist.shared.settingsSubtitle
+            // privacyProVPNCell.detailTextLabel?.text = VPNWaitlist.shared.settingsSubtitle
         case .waitlistInvited, .inviteCodeInvited:
             switch connectionStatus {
             case .connected:
                 netPCell.detailTextLabel?.text = UserText.netPCellConnected
-                privacyProVPNCell.detailTextLabel?.text = UserText.netPCellConnected
+                // privacyProVPNCell.detailTextLabel?.text = UserText.netPCellConnected
             default:
                 netPCell.detailTextLabel?.text = UserText.netPCellDisconnected
-                privacyProVPNCell.detailTextLabel?.text = UserText.netPCellDisconnected
+                // privacyProVPNCell.detailTextLabel?.text = UserText.netPCellDisconnected
             }
         }
     }

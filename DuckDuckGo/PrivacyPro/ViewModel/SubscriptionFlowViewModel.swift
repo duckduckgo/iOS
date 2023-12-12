@@ -21,6 +21,8 @@ import Foundation
 import UserScript
 import Combine
 
+#if SUBSCRIPTION
+@available(iOS 15.0, *)
 final class SubscriptionFlowViewModel: ObservableObject {
     
     let userScript: SubscriptionPagesUserScript
@@ -62,3 +64,4 @@ final class SubscriptionFlowViewModel: ObservableObject {
     }
     
 }
+#endif

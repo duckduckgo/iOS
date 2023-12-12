@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+#if SUBSCRIPTION
 import SwiftUI
 import Foundation
 
@@ -41,3 +42,4 @@ struct SubscriptionFlowView: View {
         .navigationTitle(viewModel.viewTitle)
     }
 }
+#endif

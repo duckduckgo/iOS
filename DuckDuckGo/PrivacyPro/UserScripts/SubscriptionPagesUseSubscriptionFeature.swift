@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+#if SUBSCRIPTION
 import BrowserServicesKit
 import Common
 import Foundation
@@ -218,3 +219,4 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         broker.push(method: method.rawValue, params: params, for: self, into: webView)
     }
 }
+#endif

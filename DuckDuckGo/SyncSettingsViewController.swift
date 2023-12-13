@@ -171,10 +171,10 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         }
     }
 
-    func dismissPresentedViewController() {
+    func dismissPresentedViewController(completion: (() -> Void)? = nil) {
         guard let presentedViewController = navigationController?.presentedViewController,
               !(presentedViewController is UIHostingController<SyncSettingsView>) else { return }
-        presentedViewController.dismiss(animated: true, completion: nil)
+        presentedViewController.dismiss(animated: true, completion: completion)
         endConnectMode()
     }
 
@@ -190,7 +190,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
                 let devices = try await syncService.fetchDevices()
                 mapDevices(devices)
             } catch {
-                handleError(error)
+                handleError(SyncError.unableToGetDevices, error: error)
             }
         }
     }
@@ -223,7 +223,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
             self.startPolling()
             return self.connector?.code
         } catch {
-            self.handleError(error)
+            self.handleError(SyncError.unableToSync, error: error)
             return nil
         }
     }
@@ -249,7 +249,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                     return
                 }
             } catch {
-                handleError(error)
+                handleError(SyncError.unableToSync, error: error)
             }
         }
     }
@@ -292,7 +292,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
             }
 
         } catch {
-            handleError(error)
+            handleError(SyncError.unableToSync, error: error)
         }
         return false
     }

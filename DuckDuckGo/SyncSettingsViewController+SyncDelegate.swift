@@ -45,7 +45,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 let devices = try await syncService.updateDeviceName(name)
                 mapDevices(devices)
             } catch {
-                handleError(error)
+                handleError(SyncError.unableToUpdateDeviceName, error: error)
             }
         }
     }
@@ -61,15 +61,27 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 self.refreshDevices()
                 navigationController?.topViewController?.dismiss(animated: true, completion: showRecoveryPDF)
             } catch {
-                handleError(error)
+                handleError(SyncError.unableToSync, error: error)
             }
         }
     }
 
     @MainActor
-    func handleError(_ error: Error) {
-        // Work out how to handle this properly later
-        assertionFailure(error.localizedDescription)
+    func handleError(_ type: SyncError, error: Error) {
+        self.dismissPresentedViewController()
+        let alertController = UIAlertController(
+            title: type.title,
+            message: type.description + "\n" + error.localizedDescription,
+            preferredStyle: .alert)
+
+        let okAction = UIAlertAction(title: UserText.syncPausedAlertOkButton, style: .default, handler: nil)
+        alertController.addAction(okAction)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.dismissPresentedViewController { [weak self] in
+                self?.navigationController?.topViewController?.present(alertController, animated: true, completion: nil)
+            }
+        }
     }
 
     func showSyncWithAnotherDevice() {
@@ -163,7 +175,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                         AppUserDefaults().isSyncBookmarksPaused = false
                         AppUserDefaults().isSyncCredentialsPaused = false
                     } catch {
-                        self.handleError(error)
+                        self.handleError(SyncError.unableToTurnSyncOff, error: error)
                     }
                     continuation.resume(returning: true)
                 }
@@ -188,7 +200,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                         AppUserDefaults().isSyncBookmarksPaused = false
                         AppUserDefaults().isSyncCredentialsPaused = false
                     } catch {
-                        self.handleError(error)
+                        self.handleError(SyncError.unableToDeleteData, error: error)
                     }
                     continuation.resume(returning: true)
                 }
@@ -224,7 +236,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 try await syncService.disconnect(deviceId: device.id)
                 refreshDevices()
             } catch {
-                handleError(error)
+                handleError(SyncError.unableToRemoveDevice, error: error)
             }
         }
     }
@@ -260,4 +272,34 @@ private class PortraitNavigationController: UINavigationController {
         [.portrait, .portraitUpsideDown]
     }
 
+}
+
+enum SyncError {
+    case unableToSync
+    case unableToGetDevices
+    case unableToUpdateDeviceName
+    case unableToTurnSyncOff
+    case unableToDeleteData
+    case unableToRemoveDevice
+
+    var title: String {
+        return UserText.syncErrorAlertTitle
+    }
+
+    var description: String {
+        switch self {
+        case .unableToSync:
+            return UserText.unableToSyncDescription
+        case .unableToGetDevices:
+            return UserText.unableToGetDevicesDescription
+        case .unableToUpdateDeviceName:
+            return UserText.unableToUpdateDeviceNameDescription
+        case .unableToTurnSyncOff:
+            return UserText.unableToTurnSyncOffDescription
+        case .unableToDeleteData:
+            return UserText.unableToDeleteDataDescription
+        case .unableToRemoveDevice:
+            return UserText.unableToRemoveDeviceDescription
+        }
+    }
 }

@@ -44,6 +44,12 @@ jobs:
           -destination "platform=iOS Simulator,name=iPhone 14" \
           -derivedDataPath "DerivedData" \
         | tee xcodebuild.log
+
+    - name: Store Binary
+      uses: actions/upload-artifact@v3
+      with:
+        name: duckduckgo-ios-app
+        path: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
     
     - name: Upload logs when workflow failed
       uses: actions/upload-artifact@v3
@@ -70,6 +76,12 @@ jobs:
       with:
         debug: true
     
+    - name: Retrieve Binary
+      uses: actions/download-artifact@v3
+      with:
+        name: duckduckgo-ios-app
+        path: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
+
     - name: Sync e2e tests 
       uses: mobile-dev-inc/action-maestro-cloud@v1.8.0
       with:

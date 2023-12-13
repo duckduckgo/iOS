@@ -77,6 +77,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         let okAction = UIAlertAction(title: UserText.syncPausedAlertOkButton, style: .default, handler: nil)
         alertController.addAction(okAction)
 
+        // Give time to the is syncing view to appear
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.dismissPresentedViewController { [weak self] in
                 self?.navigationController?.topViewController?.present(alertController, animated: true, completion: nil)

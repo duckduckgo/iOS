@@ -935,7 +935,6 @@ extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
     func showBookmarkDeletedMessage(_ bookmark: BookmarkEntity) {
         guard let parent = bookmark.parent,
               let index = parent.childrenArray.firstIndex(of: bookmark),
-              let domain = bookmark.urlObject?.host,
               let title = bookmark.title,
               let url = bookmark.url else {
             assertionFailure()
@@ -962,9 +961,11 @@ extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
             self?.tableView.reloadData()
             self?.refreshAll()
         } onDidDismiss: {
-            NotificationCenter.default.post(name: FireproofFaviconUpdater.deleteFireproofFaviconNotification,
-                                            object: nil,
-                                            userInfo: [FireproofFaviconUpdater.UserInfoKeys.faviconDomain: domain])
+            if let domain = bookmark.urlObject?.host {
+                NotificationCenter.default.post(name: FireproofFaviconUpdater.deleteFireproofFaviconNotification,
+                                                object: nil,
+                                                userInfo: [FireproofFaviconUpdater.UserInfoKeys.faviconDomain: domain])
+            }
         }
     }
 

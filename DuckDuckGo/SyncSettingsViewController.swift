@@ -173,7 +173,10 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
     func dismissPresentedViewController(completion: (() -> Void)? = nil) {
         guard let presentedViewController = navigationController?.presentedViewController,
-              !(presentedViewController is UIHostingController<SyncSettingsView>) else { return }
+              !(presentedViewController is UIHostingController<SyncSettingsView>) else { 
+            completion?()
+            return
+        }
         presentedViewController.dismiss(animated: true, completion: completion)
         endConnectMode()
     }
@@ -190,7 +193,8 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
                 let devices = try await syncService.fetchDevices()
                 mapDevices(devices)
             } catch {
-                handleError(SyncError.unableToGetDevices, error: error)
+                // Not displaying error since there is the spinner and it is called every few seconds
+//                assertionFailure(error.localizedDescription)
             }
         }
     }

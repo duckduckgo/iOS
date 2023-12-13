@@ -76,8 +76,14 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         let okAction = UIAlertAction(title: UserText.syncPausedAlertOkButton, style: .default, handler: nil)
         alertController.addAction(okAction)
 
-        // Give time to the is syncing view to appear
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        if type == .unableToSync {
+            // Give time to the is syncing view to appear
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.dismissPresentedViewController { [weak self] in
+                    self?.present(alertController, animated: true, completion: nil)
+                }
+            }
+        } else {
             self.dismissPresentedViewController { [weak self] in
                 self?.present(alertController, animated: true, completion: nil)
             }
@@ -170,14 +176,15 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             alert.addAction(title: UserText.syncTurnOffConfirmAction, style: .destructive) {
                 Task { @MainActor in
                     do {
-                        self.rootView.model.isSyncEnabled = false
                         try await self.syncService.disconnect()
+                        self.rootView.model.isSyncEnabled = false
                         AppUserDefaults().isSyncBookmarksPaused = false
                         AppUserDefaults().isSyncCredentialsPaused = false
+                        continuation.resume(returning: true)
                     } catch {
                         self.handleError(SyncError.unableToTurnSyncOff, error: error)
+                        continuation.resume(returning: false)
                     }
-                    continuation.resume(returning: true)
                 }
             }
             self.present(alert, animated: true)
@@ -195,14 +202,15 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             alert.addAction(title: UserText.syncDeleteAllConfirmAction, style: .destructive) {
                 Task { @MainActor in
                     do {
-                        self.rootView.model.isSyncEnabled = false
                         try await self.syncService.deleteAccount()
+                        self.rootView.model.isSyncEnabled = false
                         AppUserDefaults().isSyncBookmarksPaused = false
                         AppUserDefaults().isSyncCredentialsPaused = false
+                        continuation.resume(returning: true)
                     } catch {
                         self.handleError(SyncError.unableToDeleteData, error: error)
+                        continuation.resume(returning: false)
                     }
-                    continuation.resume(returning: true)
                 }
             }
             self.present(alert, animated: true)

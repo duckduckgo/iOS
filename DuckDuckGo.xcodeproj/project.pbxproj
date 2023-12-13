@@ -770,9 +770,7 @@
 		D664C7C72B289AA200CBFA76 /* PurchaseInProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7AD2B289AA000CBFA76 /* PurchaseInProgressView.swift */; };
 		D664C7C82B289AA200CBFA76 /* SubscriptionFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7AE2B289AA000CBFA76 /* SubscriptionFlowView.swift */; };
 		D664C7C92B289AA200CBFA76 /* HeadlessWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7AF2B289AA000CBFA76 /* HeadlessWebView.swift */; };
-		D664C7CA2B289AA200CBFA76 /* SimpleUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7B12B289AA000CBFA76 /* SimpleUserScript.swift */; };
 		D664C7CC2B289AA200CBFA76 /* SubscriptionPagesUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7B32B289AA000CBFA76 /* SubscriptionPagesUserScript.swift */; };
-		D664C7CD2B289AA200CBFA76 /* TestUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7B42B289AA000CBFA76 /* TestUserScript.swift */; };
 		D664C7CE2B289AA200CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = D664C7B52B289AA000CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift */; };
 		D664C7DD2B28A02800CBFA76 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D664C7DC2B28A02800CBFA76 /* StoreKit.framework */; };
 		D69FBF762B28BE3600B505F1 /* SettingsPrivacyProView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69FBF752B28BE3600B505F1 /* SettingsPrivacyProView.swift */; };
@@ -2407,9 +2405,7 @@
 		D664C7AD2B289AA000CBFA76 /* PurchaseInProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseInProgressView.swift; sourceTree = "<group>"; };
 		D664C7AE2B289AA000CBFA76 /* SubscriptionFlowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionFlowView.swift; sourceTree = "<group>"; };
 		D664C7AF2B289AA000CBFA76 /* HeadlessWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadlessWebView.swift; sourceTree = "<group>"; };
-		D664C7B12B289AA000CBFA76 /* SimpleUserScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleUserScript.swift; sourceTree = "<group>"; };
 		D664C7B32B289AA000CBFA76 /* SubscriptionPagesUserScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionPagesUserScript.swift; sourceTree = "<group>"; };
-		D664C7B42B289AA000CBFA76 /* TestUserScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUserScript.swift; sourceTree = "<group>"; };
 		D664C7B52B289AA000CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionPagesUseSubscriptionFeature.swift; sourceTree = "<group>"; };
 		D664C7DC2B28A02800CBFA76 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		D69FBF752B28BE3600B505F1 /* SettingsPrivacyProView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPrivacyProView.swift; sourceTree = "<group>"; };
@@ -4500,12 +4496,12 @@
 		D664C7922B289AA000CBFA76 /* PrivacyPro */ = {
 			isa = PBXGroup;
 			children = (
-				D6D12C8A2B291CA90054390C /* Subscription */,
 				D664C7952B289AA000CBFA76 /* PrivacyPro.storekit */,
 				D664C7932B289AA000CBFA76 /* ViewModel */,
-				D664C7962B289AA000CBFA76 /* Extensions */,
 				D664C7AC2B289AA000CBFA76 /* Views */,
 				D664C7B02B289AA000CBFA76 /* UserScripts */,
+				D664C7962B289AA000CBFA76 /* Extensions */,
+				D6D12C8A2B291CA90054390C /* Subscription */,
 			);
 			path = PrivacyPro;
 			sourceTree = "<group>";
@@ -4539,10 +4535,8 @@
 		D664C7B02B289AA000CBFA76 /* UserScripts */ = {
 			isa = PBXGroup;
 			children = (
-				D664C7B12B289AA000CBFA76 /* SimpleUserScript.swift */,
 				D664C7B32B289AA000CBFA76 /* SubscriptionPagesUserScript.swift */,
 				D664C7B52B289AA000CBFA76 /* SubscriptionPagesUseSubscriptionFeature.swift */,
-				D664C7B42B289AA000CBFA76 /* TestUserScript.swift */,
 			);
 			path = UserScripts;
 			sourceTree = "<group>";
@@ -6595,7 +6589,6 @@
 				EE0153E12A6EABE0002A8B26 /* NetworkProtectionConvenienceInitialisers.swift in Sources */,
 				C17B595B2A03AAD30055F2D1 /* PasswordGenerationPromptView.swift in Sources */,
 				98AA92B32456FBE100ED4B9E /* SearchFieldContainerView.swift in Sources */,
-				D664C7CD2B289AA200CBFA76 /* TestUserScript.swift in Sources */,
 				3157B43827F4C8490042D3D7 /* FaviconsHelper.swift in Sources */,
 				85F200042216F5D8006BB258 /* FindInPageView.swift in Sources */,
 				8548D95E25262B1B005AAE49 /* ViewHighlighter.swift in Sources */,
@@ -6855,7 +6848,6 @@
 				0290472229E723260008FE3C /* AppTPManageTrackerCell.swift in Sources */,
 				985AAE4524899369007A43EC /* HomeScreenTransition.swift in Sources */,
 				85E58C2C28FDA94F006A801A /* FavoritesViewController.swift in Sources */,
-				D664C7CA2B289AA200CBFA76 /* SimpleUserScript.swift in Sources */,
 				1E8AD1CF27C000A000ABA377 /* CompleteDownloadRow.swift in Sources */,
 				98D98A8F25ED952F00D8E3DF /* BrowsingMenuButton.swift in Sources */,
 				9865DFF922A8220D00D27829 /* FavoritesOverlay.swift in Sources */,

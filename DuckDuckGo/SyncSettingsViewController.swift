@@ -56,7 +56,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
 
-        let viewModel = SyncSettingsViewModel()
+        let viewModel = SyncSettingsViewModel(isOnDevEnvironment: syncService.serverEnvironment == .development)
 
         super.init(rootView: SyncSettingsView(model: viewModel))
 

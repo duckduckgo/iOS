@@ -40,14 +40,9 @@ enum PurchaseManagerError: Error {
 @available(macOS 12.0, iOS 15.0, *)
 public final class PurchaseManager: ObservableObject {
 
-    static let productIdentifiers = ["subscription.1week",
-                                     "subscription.1month",
-                                     "subscription.1year",
-                                     "review.subscription.1week",
-                                     "review.subscription.1month",
-                                     "review.subscription.1year",
-                                     "ios.subscription.1month",
-                                     "ios.subscription.1year"]
+    static let productIdentifiers = ["ios.subscription.1month", "ios.subscription.1year",
+                                     "subscription.1week", "subscription.1month", "subscription.1year",
+                                     "review.subscription.1week", "review.subscription.1month", "review.subscription.1year"]
 
     public static let shared = PurchaseManager()
 
@@ -118,21 +113,6 @@ public final class PurchaseManager: ObservableObject {
             }
         } catch {
             print("Error updating available products: \(error)")
-        }
-    }
-
-    @MainActor
-    func fetchAvailableProducts() async -> [Product] {
-        print(" -- [PurchaseManager] fetchAvailableProducts()")
-
-        do {
-            let availableProducts = try await Product.products(for: Self.productIdentifiers)
-            print(" -- [PurchaseManager] fetchAvailableProducts(): fetched \(availableProducts.count) products")
-
-            return availableProducts
-        } catch {
-            print("Error fetching available products: \(error)")
-            return []
         }
     }
 

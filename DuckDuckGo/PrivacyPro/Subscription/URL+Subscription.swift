@@ -19,7 +19,7 @@
 import Foundation
 
 public extension URL {
-    
+
     static var purchaseSubscription: URL {
         URL(string: "https://abrown.duckduckgo.com/subscriptions/welcome")!
     }
@@ -28,7 +28,6 @@ public extension URL {
         URL(string: "https://duckduckgo.com/about")!
     }
 
-    
     // MARK: - Subscription Email
     static var activateSubscriptionViaEmail: URL {
         URL(string: "https://abrown.duckduckgo.com/subscriptions/activate")!
@@ -40,5 +39,11 @@ public extension URL {
 
     static var manageSubscriptionEmail: URL {
         URL(string: "https://abrown.duckduckgo.com/subscriptions/manage")!
+    }
+
+    // MARK: - App Store app manage subscription URL
+
+    static var manageSubscriptionsInAppStoreAppURL: URL {
+        URL(string: "macappstores://apps.apple.com/account/subscriptions")!
     }
 }

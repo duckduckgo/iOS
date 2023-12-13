@@ -176,44 +176,35 @@ public class AccountManager {
         }
     }
 
-    @discardableResult
-    public func exchangeAndStoreTokens(with authToken: String) async -> Result<String, Error> {
-        // Exchange short-lived auth token to a long-lived access token
-        let accessToken: String
+    public func exchangeAuthTokenToAccessToken(_ authToken: String) async -> Result<String, Error> {
         switch await AuthService.getAccessToken(token: authToken) {
         case .success(let response):
-            accessToken = response.accessToken
-        case .failure(let error):
-            os_log("AccountManager error: %{public}@", log: .error, error.localizedDescription)
-            return .failure(error)
-        }
-
-        // Fetch entitlements and account details and store the data
-        switch await AuthService.validateToken(accessToken: accessToken) {
-        case .success(let response):
-            self.storeAuthToken(token: authToken)
-            self.storeAccount(token: accessToken,
-                              email: response.account.email,
-                              externalID: response.account.externalID)
-
-            return .success(response.account.externalID)
-
+            return .success(response.accessToken)
         case .failure(let error):
             os_log("AccountManager error: %{public}@", log: .error, error.localizedDescription)
             return .failure(error)
         }
     }
 
-    public func refreshAccountData() async {
-        guard let accessToken else { return }
+    public typealias AccountDetails = (email: String?, externalID: String)
 
+    public func fetchAccountDetails(with accessToken: String) async -> Result<AccountDetails, Error> {
         switch await AuthService.validateToken(accessToken: accessToken) {
         case .success(let response):
-            self.storeAccount(token: accessToken,
-                              email: response.account.email,
-                              externalID: response.account.externalID)
-        case .failure:
-            break
+            return .success(AccountDetails(email: response.account.email, externalID: response.account.externalID))
+        case .failure(let error):
+            os_log("AccountManager error: %{public}@", log: .error, error.localizedDescription)
+            return .failure(error)
+        }
+    }
+
+    public func checkSubscriptionState() async {
+        guard let token = accessToken else { return }
+
+        if case .success(let response) = await SubscriptionService.getSubscriptionDetails(token: token) {
+            if !response.isSubscriptionActive {
+                signOut()
+            }
         }
     }
 }

@@ -43,12 +43,13 @@ struct SettingsPrivacyProView: View {
     }
     
     var body: some View {
-        Section(header: Text(UserText.settingsPProSection)) {
-            
-            SettingsCustomCell(content: { privacyProDescriptionView })
-                        
-            NavigationLink(destination: SubscriptionFlowView(viewModel: SubscriptionFlowViewModel())) {
-                SettingsCustomCell(content: { learnMoreView })
+        if viewModel.canPurchaseSubscription {
+            Section(header: Text(UserText.settingsPProSection)) {
+                    SettingsCustomCell(content: { privacyProDescriptionView })
+                    
+                    NavigationLink(destination: SubscriptionFlowView(viewModel: SubscriptionFlowViewModel())) {
+                        SettingsCustomCell(content: { learnMoreView })
+                    }
             }
         }
     }

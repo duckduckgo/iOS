@@ -81,6 +81,7 @@ final class SettingsViewModel: ObservableObject {
     var shouldShowNoMicrophonePermissionAlert: Bool = false
     var shouldShowDebugCell: Bool { return featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild }
     var shouldShowPrivacyProCell: Bool { return featureFlagger.isFeatureOn(.privacyPro) }
+    @Published var canPurchaseSubscription = false
     
     var shouldShowNetworkProtectionCell: Bool {
 #if NETWORK_PROTECTION
@@ -227,6 +228,11 @@ extension SettingsViewModel {
             version: versionProvider.versionAndBuildNumber
         )
         setupSubscribers()
+#if SUBSCRIPTION
+        if #available(iOS 15, *) {
+            Task { await setupSubscriptionEnvironment() }
+        }
+#endif
     }
         
     private func firePixel(_ event: Pixel.Event) {
@@ -243,6 +249,19 @@ extension SettingsViewModel {
             completion(true)
         }
     }
+
+#if SUBSCRIPTION
+        @available(iOS 15.0, *)
+        private func setupSubscriptionEnvironment() async {
+            await PurchaseManager.shared.updateAvailableProducts()
+            PurchaseManager.shared.$availableProducts
+                .receive(on: RunLoop.main)
+                .sink { [weak self] products in
+                    self?.canPurchaseSubscription = !products.isEmpty
+                }.store(in: &cancellables)
+       
+    }
+#endif
     
 #if NETWORK_PROTECTION
     private func updateNetPCellSubtitle(connectionStatus: ConnectionStatus) {

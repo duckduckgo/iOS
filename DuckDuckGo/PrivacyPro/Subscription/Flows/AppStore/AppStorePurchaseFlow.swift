@@ -55,22 +55,30 @@ public final class AppStorePurchaseFlow {
     }
 
     public static func purchaseSubscription(with subscriptionIdentifier: String, emailAccessToken: String?) async -> Result<Void, AppStorePurchaseFlow.Error> {
+        let accountManager = AccountManager()
         let externalID: String
 
         // Check for past transactions most recent
-        
         switch await AppStoreRestoreFlow.restoreAccountFromPastPurchase() {
-        case .success(let success):
-            guard !success.isActive else { return .failure(.activeSubscriptionAlreadyPresent)}
-            externalID = success.externalID
+        case .success:
+            return .failure(.activeSubscriptionAlreadyPresent)
         case .failure(let error):
             switch error {
-            case .missingAccountOrTransactions, .pastTransactionAuthenticationFailure:
+            case .subscriptionExpired(let expiredAccountDetails):
+                externalID = expiredAccountDetails.externalID
+                accountManager.storeAuthToken(token: expiredAccountDetails.authToken)
+                accountManager.storeAccount(token: expiredAccountDetails.accessToken, email: expiredAccountDetails.email, externalID: expiredAccountDetails.externalID)
+            case .missingAccountOrTransactions:
                 // No history, create new account
                 switch await AuthService.createAccount(emailAccessToken: emailAccessToken) {
                 case .success(let response):
                     externalID = response.externalID
-                    await AccountManager().exchangeAndStoreTokens(with: response.authToken)
+
+                    if case let .success(accessToken) = await accountManager.exchangeAuthTokenToAccessToken(response.authToken),
+                       case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
+                        accountManager.storeAuthToken(token: response.authToken)
+                        accountManager.storeAccount(token: accessToken, email: accountDetails.email, externalID: accountDetails.externalID)
+                    }
                 case .failure:
                     return .failure(.accountCreationFailed)
                 }
@@ -93,7 +101,7 @@ public final class AppStorePurchaseFlow {
     @discardableResult
     public static func completeSubscriptionPurchase() async -> Result<PurchaseUpdate, AppStorePurchaseFlow.Error> {
 
-        let result = await checkForEntitlements(wait: 2.0, retry: 15)
+        let result = await checkForEntitlements(wait: 2.0, retry: 10)
 
         return result ? .success(PurchaseUpdate(type: "completed")) : .failure(.missingEntitlements)
     }

@@ -30,7 +30,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     let purchaseManager: PurchaseManager
     
     let purchaseURL = URL.purchaseSubscription
-    let viewTitle = SubscriptionUserText.navigationTitle
+    let viewTitle = "Privacy Pro"
         
     @Published var transactionInProgress = false
     private var cancellables = Set<AnyCancellable>()

@@ -30,24 +30,39 @@ public struct SubscriptionService: APIService {
 
     // MARK: -
 
-    public static func getSubscriptionInfo(token: String) async -> Result<GetSubscriptionInfoResponse, APIServiceError> {
-        await executeAPICall(method: "GET", endpoint: "subscription", headers: makeAuthorizationHeader(for: token))
+    public static func getSubscriptionDetails(token: String) async -> Result<GetSubscriptionDetailsResponse, APIServiceError> {
+        let result: Result<GetSubscriptionDetailsResponse, APIServiceError> = await executeAPICall(method: "GET", endpoint: "subscription", headers: makeAuthorizationHeader(for: token))
+
+        switch result {
+        case .success(let response):
+            cachedSubscriptionDetailsResponse = response
+        case .failure:
+            cachedSubscriptionDetailsResponse = nil
+        }
+
+        return result
     }
 
-    public struct GetSubscriptionInfoResponse: Decodable {
+    public struct GetSubscriptionDetailsResponse: Decodable {
         public let productId: String
         public let startedAt: Date
         public let expiresOrRenewsAt: Date
         public let platform: String
         public let status: String
+
+        public var isSubscriptionActive: Bool {
+            status.lowercased() != "expired" && status.lowercased() != "inactive"
+        }
     }
+
+    public static var cachedSubscriptionDetailsResponse: GetSubscriptionDetailsResponse?
 
     // MARK: -
 
     public static func getProducts() async -> Result<GetProductsResponse, APIServiceError> {
         await executeAPICall(method: "GET", endpoint: "products")
     }
-    
+
     public typealias GetProductsResponse = [GetProductsItem]
 
     public struct GetProductsItem: Decodable {
@@ -56,6 +71,18 @@ public struct SubscriptionService: APIService {
         public let billingPeriod: String
         public let price: String
         public let currency: String
+    }
+
+    // MARK: -
+
+    public static func getCustomerPortalURL(accessToken: String, externalID: String) async -> Result<GetCustomerPortalURLResponse, APIServiceError> {
+        var headers = makeAuthorizationHeader(for: accessToken)
+        headers["externalAccountId"] = externalID
+        return await executeAPICall(method: "GET", endpoint: "checkout/portal", headers: headers)
+    }
+
+    public struct GetCustomerPortalURLResponse: Decodable {
+        public let customerPortalUrl: String
     }
 
 }

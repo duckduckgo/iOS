@@ -115,25 +115,16 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func getSubscriptionOptions(params: Any, original: WKScriptMessage) async throws -> Encodable? {
         
         await withTransactionInProgress {
-            let subscriptionOptions: [SubscriptionOption]
-            
-            if #available(iOS 15, *) {
-                let monthly = PurchaseManager.shared.availableProducts.first(where: { $0.id.contains(ProductIDs.monthly) })
-                let yearly = PurchaseManager.shared.availableProducts.first(where: { $0.id.contains(ProductIDs.yearly) })
-                
-                guard let monthly, let yearly else { return nil }
-                
-                subscriptionOptions = [SubscriptionOption(id: monthly.id, cost: .init(displayPrice: monthly.displayPrice, recurrence: RecurrenceOptions.month)),
-                                       SubscriptionOption(id: yearly.id, cost: .init(displayPrice: yearly.displayPrice, recurrence: RecurrenceOptions.year))]
-            } else {
-                return nil
+            if #available(iOS 15.0, *) {
+                switch await AppStorePurchaseFlow.subscriptionOptions() {
+                case .success(let subscriptionOptions):
+                    return subscriptionOptions
+                case .failure:
+                    // TODO: handle errors - no products found
+                    return nil
+                }
             }
-            
-            let message = SubscriptionOptions(platform: Constants.os,
-                                              options: subscriptionOptions,
-                                              features: SubscriptionFeatureName.allCases.map { SubscriptionFeature(name: $0.rawValue) })
-            
-            return message
+            return nil
         }
     }
     
@@ -154,20 +145,37 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
                 
                 print("Selected: \(subscriptionSelection.id)")
                 
-                let emailAccessToken = try? EmailManager().getToken()
-                
-                switch await AppStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id, emailAccessToken: emailAccessToken) {
+                // Trigger sign in pop-up
+                switch await PurchaseManager.shared.syncAppleIDAccount() {
                 case .success:
                     break
-                case .failure(let error):
-                    print("Purchase failed: \(error)")
+                case .failure:
                     return nil
                 }
                 
-                await AppStorePurchaseFlow.checkForEntitlements(wait: 2.0, retry: 15)
+                // Check for active subscriptions
+                if await PurchaseManager.hasActiveSubscription() {
+                    print("hasActiveSubscription: TRUE")
+                    // TODO: Present something here
+                    // await WindowControllersManager.shared.lastKeyMainWindowController?.showSubscriptionFoundAlert(originalMessage: message)
+                    return nil
+                }
                 
-                DispatchQueue.main.async {
-                    self.pushAction(method: .onPurchaseUpdate, webView: message.webView!, params: PurchaseUpdate(type: "completed"))
+                let emailAccessToken = try? EmailManager().getToken()
+
+                switch await AppStorePurchaseFlow.purchaseSubscription(with: subscriptionSelection.id, emailAccessToken: emailAccessToken) {
+                case .success:
+                    break
+                case .failure:
+                    return nil
+                }
+                
+                switch await AppStorePurchaseFlow.completeSubscriptionPurchase() {
+                case .success(let purchaseUpdate):
+                    await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: purchaseUpdate)
+                case .failure:
+                    // TODO: handle errors - missing entitlements on post purchase check
+                    await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate(type: "completed"))
                 }
             }
             
@@ -176,12 +184,31 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
 
     func setSubscription(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        // WIP
+        guard let subscriptionValues: SubscriptionValues = DecodableHelper.decode(from: params) else {
+            assertionFailure("SubscriptionPagesUserScript: expected JSON representation of SubscriptionValues")
+            return nil
+        }
+
+        let authToken = subscriptionValues.token
+        let accountManager = AccountManager()
+        if case let .success(accessToken) = await accountManager.exchangeAuthTokenToAccessToken(authToken),
+           case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
+            accountManager.storeAuthToken(token: authToken)
+            accountManager.storeAccount(token: accessToken, email: accountDetails.email, externalID: accountDetails.externalID)
+        }
+
         return nil
     }
 
     func backToSettings(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-        // WIP
+        let accountManager = AccountManager()
+        if let accessToken = accountManager.accessToken,
+           case let .success(accountDetails) = await accountManager.fetchAccountDetails(with: accessToken) {
+            accountManager.storeAccount(token: accessToken, email: accountDetails.email, externalID: accountDetails.externalID)
+        }
+
+        // TODO: Navigate back to settings
+
         return nil
     }
 
@@ -204,12 +231,15 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         return nil
     }
 
+    // MARK: Push actions
+
     enum SubscribeActionName: String {
         case onPurchaseUpdate
     }
 
-    struct PurchaseUpdate: Codable {
-        let type: String
+    @MainActor
+    func pushPurchaseUpdate(originalMessage: WKScriptMessage, purchaseUpdate: PurchaseUpdate) async {
+        pushAction(method: .onPurchaseUpdate, webView: originalMessage.webView!, params: purchaseUpdate)
     }
 
     func pushAction(method: SubscribeActionName, webView: WKWebView, params: Encodable) {

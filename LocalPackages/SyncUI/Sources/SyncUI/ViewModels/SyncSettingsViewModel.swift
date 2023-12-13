@@ -85,10 +85,15 @@ public class SyncSettingsViewModel: ObservableObject {
     @Published var recoveryCode = ""
 
     public weak var delegate: SyncManagementViewModelDelegate?
-    let isOnDevEnvironment: Bool
+    private(set) var isOnDevEnvironment: Bool
+    private(set) var switchToProdEnvironment: () -> Void = {}
 
-    public init(isOnDevEnvironment: Bool) {
-        self.isOnDevEnvironment = isOnDevEnvironment
+    public init(isOnDevEnvironment: @escaping () -> Bool, switchToProdEnvironment: @escaping () -> Void) {
+        self.isOnDevEnvironment = isOnDevEnvironment()
+        self.switchToProdEnvironment = { [weak self] in
+            switchToProdEnvironment()
+            self?.isOnDevEnvironment = isOnDevEnvironment()
+        }
     }
 
     func disableSync() {

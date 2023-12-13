@@ -368,9 +368,9 @@ extension SyncSettingsView {
             })
             .alert(isPresented: $isEnvironmentSwitcherInstructionsVisible) {
                 Alert(
-                    title: Text("Sync Development environment is in use"),
-                    message: Text("Go to Debug Menu -> Sync Info to switch to Production environment."),
-                    dismissButton: .default(Text("OK"))
+                    title: Text("You're using Sync Development environment"),
+                    primaryButton: .default(Text("Keep Development")),
+                    secondaryButton: .destructive(Text("Switch to Production"), action: model.switchToProdEnvironment)
                 )
             }
         } else {

@@ -56,7 +56,13 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
 
-        let viewModel = SyncSettingsViewModel(isOnDevEnvironment: syncService.serverEnvironment == .development)
+        let viewModel = SyncSettingsViewModel(
+            isOnDevEnvironment: { syncService.serverEnvironment == .development },
+            switchToProdEnvironment: {
+                syncService.updateServerEnvironment(.production)
+                UserDefaults.standard.set(ServerEnvironment.production.description, forKey: UserDefaultsWrapper<String>.Key.syncEnvironment.rawValue)
+            }
+        )
 
         super.init(rootView: SyncSettingsView(model: viewModel))
 

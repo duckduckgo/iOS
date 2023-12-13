@@ -23,6 +23,7 @@ import Common
 import Foundation
 import WebKit
 import UserScript
+import Combine
 
 final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObject {
     
@@ -58,6 +59,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
     
     @Published var transactionInProgress = false
+    @Published var hasActiveSubscription = false
     
     var broker: UserScriptMessageBroker?
 
@@ -106,6 +108,10 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         }
         return try await work()
     }
+    
+    private func resetSubscriptionFlow() {
+        hasActiveSubscription = false
+    }
 
     func getSubscription(params: Any, original: WKScriptMessage) async throws -> Encodable? {
         let authToken = AccountManager().authToken ?? Constants.empty
@@ -129,8 +135,11 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     }
     
     func subscriptionSelected(params: Any, original: WKScriptMessage) async throws -> Encodable? {
-
+        
         await withTransactionInProgress {
+            
+            resetSubscriptionFlow()
+            
             struct SubscriptionSelection: Decodable {
                 let id: String
             }
@@ -145,19 +154,9 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
                 
                 print("Selected: \(subscriptionSelection.id)")
                 
-                // Trigger sign in pop-up
-                switch await PurchaseManager.shared.syncAppleIDAccount() {
-                case .success:
-                    break
-                case .failure:
-                    return nil
-                }
-                
                 // Check for active subscriptions
                 if await PurchaseManager.hasActiveSubscription() {
-                    print("hasActiveSubscription: TRUE")
-                    // TODO: Present something here
-                    // await WindowControllersManager.shared.lastKeyMainWindowController?.showSubscriptionFoundAlert(originalMessage: message)
+                    hasActiveSubscription = true
                     return nil
                 }
                 

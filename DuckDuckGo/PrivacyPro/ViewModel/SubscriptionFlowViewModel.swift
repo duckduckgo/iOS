@@ -31,9 +31,12 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     let purchaseURL = URL.purchaseSubscription
     let viewTitle = UserText.settingsPProSection
-        
-    @Published var transactionInProgress = false
+    
     private var cancellables = Set<AnyCancellable>()
+    
+    // State variables
+    @Published var shouldShowHasActiveSubscriptionMessage = false
+    @Published var transactionInProgress = false
 
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
@@ -45,10 +48,18 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     // Observe transaction status
     private func setupTransactionObserver() async {
+        
         subFeature.$transactionInProgress
             .sink { [weak self] status in
                 guard let self = self else { return }
                 Task { await self.setTransactionInProgress(status) }
+            }
+            .store(in: &cancellables)
+        
+        subFeature.$hasActiveSubscription
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                self?.shouldShowHasActiveSubscriptionMessage = value
             }
             .store(in: &cancellables)
     }

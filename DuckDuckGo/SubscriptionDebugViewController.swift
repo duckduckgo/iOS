@@ -27,11 +27,10 @@ final class SubscriptionDebugViewController: UITableViewController {
 
 #else
 
+@available(iOS 15.0, *)
 final class SubscriptionDebugViewController: UITableViewController {
     
     private let accountManager = AccountManager()
- 
-    @available(macOS 12.0, iOS 15.0, *)
     fileprivate var purchaseManager: PurchaseManager = PurchaseManager.shared
     
     private let titles = [
@@ -122,12 +121,14 @@ final class SubscriptionDebugViewController: UITableViewController {
     // MARK: Account Status Actions
     private func clearAuthData() {
         accountManager.signOut()
+        showAlert(title: "Data cleared!")
     }
     
     private func injectCredentials() {
         accountManager.storeAccount(token: "a-fake-token",
                                     email: "a.fake@email.com",
                                     externalID: "666")
+        showDetails()
     }
     
     private func showDetails() {

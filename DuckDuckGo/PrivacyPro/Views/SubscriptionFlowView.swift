@@ -41,6 +41,20 @@ struct SubscriptionFlowView: View {
             Task { await viewModel.initializeViewData() }
         })
         .navigationTitle(viewModel.viewTitle)
+        
+        // Active subscription found Alert
+        .alert(isPresented: $viewModel.shouldShowHasActiveSubscriptionMessage) {
+            Alert(
+                title: Text("Subscription Found"),
+                message: Text("We found a subscription associated with this Apple ID."),
+                primaryButton: .cancel(Text("Cancel")) {
+                    print("Cancelling...")
+                },
+                secondaryButton: .default(Text("Restore")) {
+                    print("Restoring...")
+                }
+            )
+        }
     }
 }
 #endif

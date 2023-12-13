@@ -253,7 +253,6 @@ extension SettingsViewModel {
 #if SUBSCRIPTION
         @available(iOS 15.0, *)
         private func setupSubscriptionEnvironment() async {
-            await PurchaseManager.shared.updateAvailableProducts()
             PurchaseManager.shared.$availableProducts
                 .receive(on: RunLoop.main)
                 .sink { [weak self] products in

@@ -68,7 +68,6 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
 
     @MainActor
     func handleError(_ type: SyncError, error: Error) {
-        self.dismissPresentedViewController()
         let alertController = UIAlertController(
             title: type.title,
             message: type.description + "\n" + error.localizedDescription,
@@ -78,9 +77,9 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         alertController.addAction(okAction)
 
         // Give time to the is syncing view to appear
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.dismissPresentedViewController { [weak self] in
-                self?.navigationController?.topViewController?.present(alertController, animated: true, completion: nil)
+                self?.present(alertController, animated: true, completion: nil)
             }
         }
     }

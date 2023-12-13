@@ -174,7 +174,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
     func dismissPresentedViewController(completion: (() -> Void)? = nil) {
         guard let presentedViewController = navigationController?.presentedViewController,
-              !(presentedViewController is UIHostingController<SyncSettingsView>) else { 
+              !(presentedViewController is UIHostingController<SyncSettingsView>) else {
             completion?()
             return
         }

@@ -468,7 +468,7 @@ class TabViewController: UIViewController {
             webView.evaluateJavaScript(js)
         }
     }
-    
+
     public func load(url: URL) {
         webView.stopLoading()
         dismissJSAlertIfNeeded()
@@ -531,6 +531,7 @@ class TabViewController: UIViewController {
         }
 
         webView.stopLoading()
+        dismissJSAlertIfNeeded()
         webView.load(urlRequest)
     }
     
@@ -1325,16 +1326,9 @@ extension TabViewController: WKNavigationDelegate {
                                                                            navigationAction: navigationAction,
                                                                            onStartExtracting: { showProgressIndicator() },
                                                                            onFinishExtracting: { },
-                                                                           onLinkRewrite: { [weak self] newURL, navigationAction in
+                                                                           onLinkRewrite: { [weak self] newRequest, navigationAction in
                 guard let self = self else { return }
-                if self.isNewTargetBlankRequest(navigationAction: navigationAction) {
-                    self.delegate?.tab(self,
-                                       didRequestNewTabForUrl: newURL,
-                                       openedByPage: true,
-                                       inheritingAttribution: self.adClickAttributionLogic.state)
-                } else {
-                    self.load(url: newURL)
-                }
+                self.load(urlRequest: newRequest)
             },
                                                                            policyDecisionHandler: decisionHandler)
 

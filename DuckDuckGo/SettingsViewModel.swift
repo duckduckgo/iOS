@@ -81,7 +81,7 @@ final class SettingsViewModel: ObservableObject {
     var shouldShowNoMicrophonePermissionAlert: Bool = false
     var shouldShowDebugCell: Bool { return featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild }
     var shouldShowPrivacyProCell: Bool { return featureFlagger.isFeatureOn(.privacyPro) }
-    @Published var canPurchaseSubscription = false
+    @Published var canPurchaseSubscription = SubscriptionPurchaseEnvironment.canPurchase
     
     var shouldShowNetworkProtectionCell: Bool {
 #if NETWORK_PROTECTION

@@ -60,7 +60,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     func initializeViewData() async {
         await self.setupTransactionObserver()
-        await purchaseManager.updateAvailableProducts()
     }
     
 }

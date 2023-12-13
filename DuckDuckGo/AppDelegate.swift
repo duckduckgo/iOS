@@ -356,6 +356,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         widgetRefreshModel.beginObservingVPNStatus()
         NetworkProtectionAccessController().refreshNetworkProtectionAccess()
 #endif
+        
+#if SUBSCRIPTION
+        SubscriptionPurchaseEnvironment.current = .appStore
+#endif
 
         return true
     }

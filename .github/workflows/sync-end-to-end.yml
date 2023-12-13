@@ -70,6 +70,9 @@ jobs:
         os-version: [15, 16, 17]
     
     steps:
+    - name: Check out the code
+      uses: actions/checkout@v3 # Don't need submodules here as this is only for the tests folder
+
     - name: Create test account for Sync and return the recovery code
       uses: duckduckgo/sync_crypto/action@main
       id: sync-recovery-code

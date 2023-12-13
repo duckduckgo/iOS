@@ -27,6 +27,7 @@ public struct SyncSettingsView: View {
     let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
     @State var isSyncWithSetUpSheetVisible = false
     @State var isRecoverSyncedDataSheetVisible = false
+    @State var isEnvironmentSwitcherInstructionsVisible = false
 
     public init(model: SyncSettingsViewModel) {
         self.model = model
@@ -121,6 +122,8 @@ extension SyncSettingsView {
                 }
                 Spacer()
             }
+        } header: {
+            devEnvironmentIndicator()
         } footer: {
             HStack {
                 Spacer()
@@ -265,6 +268,7 @@ extension SyncSettingsView {
                     .fill(.green)
                     .frame(width: 8)
                     .padding(.bottom, 1)
+                devEnvironmentIndicator()
             }
         } footer: {
             Text(UserText.turnSyncOffSectionFooter)
@@ -341,6 +345,36 @@ extension SyncSettingsView {
                     model.manageLogins()
                 }
             }
+        }
+    }
+
+    @ViewBuilder
+    func devEnvironmentIndicator() -> some View {
+        if model.isOnDevEnvironment {
+            Button(action: {
+                isEnvironmentSwitcherInstructionsVisible.toggle()
+            }, label: {
+                if #available(iOS 15.0, *) {
+                    Text("Dev environment")
+                        .daxFootnoteRegular()
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 2)
+                        .foregroundColor(.white)
+                        .background(Color.red40)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                } else {
+                    Text("Dev environment")
+                }
+            })
+            .alert(isPresented: $isEnvironmentSwitcherInstructionsVisible) {
+                Alert(
+                    title: Text("You're using Sync Development environment"),
+                    primaryButton: .default(Text("Keep Development")),
+                    secondaryButton: .destructive(Text("Switch to Production"), action: model.switchToProdEnvironment)
+                )
+            }
+        } else {
+            EmptyView()
         }
     }
 

@@ -68,7 +68,7 @@ public final class AppStorePurchaseFlow {
                 externalID = expiredAccountDetails.externalID
                 accountManager.storeAuthToken(token: expiredAccountDetails.authToken)
                 accountManager.storeAccount(token: expiredAccountDetails.accessToken, email: expiredAccountDetails.email, externalID: expiredAccountDetails.externalID)
-            case .missingAccountOrTransactions, .pastTransactionAuthenticationError:
+            case .missingAccountOrTransactions:
                 // No history, create new account
                 switch await AuthService.createAccount(emailAccessToken: emailAccessToken) {
                 case .success(let response):

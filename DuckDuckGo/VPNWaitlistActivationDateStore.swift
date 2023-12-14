@@ -27,12 +27,16 @@ protocol VPNWaitlistActivationDateStore {
     func setActivationDateIfNecessary()
     func daysSinceActivation() -> Int?
 
+    func updateLastActiveDate()
+    func daysSinceLastActive() -> Int?
+
 }
 
 struct DefaultVPNWaitlistActivationDateStore: VPNWaitlistActivationDateStore {
 
     private enum Constants {
         static let networkProtectionActivationDateKey = "com.duckduckgo.network-protection.activation-date"
+        static let networkProtectionLastActiveDateKey = "com.duckduckgo.network-protection.last-active-date"
     }
 
     private let userDefaults: UserDefaults
@@ -51,6 +55,21 @@ struct DefaultVPNWaitlistActivationDateStore: VPNWaitlistActivationDateStore {
 
     func daysSinceActivation() -> Int? {
         let timestamp = userDefaults.double(forKey: Constants.networkProtectionActivationDateKey)
+
+        if timestamp == 0 {
+            return nil
+        }
+
+        let activationDate = Date(timeIntervalSinceReferenceDate: timestamp)
+        return daysSince(date: activationDate)
+    }
+
+    func updateLastActiveDate() {
+        userDefaults.set(Date().timeIntervalSinceReferenceDate, forKey: Constants.networkProtectionLastActiveDateKey)
+    }
+
+    func daysSinceLastActive() -> Int? {
+        let timestamp = userDefaults.double(forKey: Constants.networkProtectionLastActiveDateKey)
 
         if timestamp == 0 {
             return nil

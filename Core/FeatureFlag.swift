@@ -39,8 +39,14 @@ public enum FeatureFlag: String {
 extension FeatureFlag: FeatureFlagSourceProviding {
     public var source: FeatureFlagSource {
         switch self {
-        case .debugMenu, .sync, .appTrackingProtection, .networkProtection, .networkProtectionWaitlistAccess, .networkProtectionWaitlistActive:
+        case .debugMenu, .sync, .appTrackingProtection:
             return .internalOnly
+        case .networkProtection:
+            return .remoteReleasable(.feature(.networkProtection))
+        case .networkProtectionWaitlistAccess:
+            return .remoteReleasable(.subfeature(NetworkProtectionSubfeature.waitlist))
+        case .networkProtectionWaitlistActive:
+            return .remoteReleasable(.subfeature(NetworkProtectionSubfeature.waitlistBetaActive))
         case .autofillCredentialInjecting:
             return .remoteReleasable(.subfeature(AutofillSubfeature.credentialsAutofill))
         case .autofillCredentialsSaving:

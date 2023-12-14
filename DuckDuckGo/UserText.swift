@@ -860,6 +860,13 @@ But if you *do* want a peek under the hood, you can find more information about 
     static let syncCredentialsPausedAlertDescription = NSLocalizedString("alert.sync-credentials-paused-description", value: "You have exceeded the passwords sync limit. Try deleting some passwords. Until this is resolved your passwords will not be backed up.", comment: "Description for alert shown when sync credentials paused for too many items")
     public static let syncPausedAlertOkButton = NSLocalizedString("alert.sync-paused-alert-ok-button", value: "OK", comment: "Confirmation button in alert")
     public static let syncPausedAlertLearnMoreButton = NSLocalizedString("alert.sync-paused-alert-learn-more-button", value: "Learn More", comment: "Learn more button in alert")
+    public static let syncErrorAlertTitle = NSLocalizedString("alert.sync-error", value: "Sync Error", comment: "Title for sync error alert")
+    public static let unableToSyncDescription = NSLocalizedString("alert.unable-to-sync-description", value: "Unable to sync.", comment: "Description for unable to sync error")
+    public static let unableToGetDevicesDescription = NSLocalizedString("alert.unable-to-get-devices-description", value: "Unable to retrieve the list of connected devices.", comment: "Description for unable to get devices error")
+    public static let unableToUpdateDeviceNameDescription = NSLocalizedString("alert.unable-to-update-device-name-description", value: "Unable to update the name of the device.", comment: "Description for unable to update device name error")
+    public static let unableToTurnSyncOffDescription = NSLocalizedString("alert.unable-to-turn-sync-off-description", value: "Unable to turn sync off.", comment: "Description for unable to turn sync off error")
+    public static let unableToDeleteDataDescription = NSLocalizedString("alert.unable-to-delete-data-description", value: "Unable to delete data on the server.", comment: "Description for unable to delete data error")
+    public static let unableToRemoveDeviceDescription = NSLocalizedString("alert.unable-to-remove-device-description", value: "Unable to remove the specified device from the synchronized devices.", comment: "Description for unable to remove device error")
 
     static let preemptiveCrashTitle = NSLocalizedString("error.preemptive-crash.title", value: "App issue detected", comment: "Alert title")
     static let preemptiveCrashBody = NSLocalizedString("error.preemptive-crash.body", value: "Looks like there's an issue with the app and it needs to close. Please reopen to continue.", comment: "Alert message")

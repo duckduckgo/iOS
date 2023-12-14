@@ -1,0 +1,16 @@
+appId: com.duckduckgo.mobile.ios
+---
+
+- assertVisible: Begin Syncing
+- tapOn: Sync with Another Device
+- assertVisible: Scan QR Code
+- tapOn: Manually Enter Code
+- tapOn: Paste
+- assertVisible: Save Recovery Code
+- tapOn: Next
+- assertVisible: Your Data is Synced!
+- tapOn: Done
+- assertVisible: Sync Enabled
+- assertVisible: 
+    id: "device"
+    index: 1

@@ -139,6 +139,9 @@
 /* Title for alert shown when sync credentials paused for too many items */
 "alert.sync-credentials-paused-title" = "Passwords Sync is Paused";
 
+/* Title for sync error alert */
+"alert.sync-error" = "Sync Error";
+
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Learn More";
 
@@ -159,6 +162,24 @@
 
 /* Save Favorite action */
 "alert.title.save.favorite" = "Save Favorite";
+
+/* Description for unable to delete data error */
+"alert.unable-to-delete-data-description" = "Unable to delete data on the server.";
+
+/* Description for unable to get devices error */
+"alert.unable-to-get-devices-description" = "Unable to retrieve the list of connected devices.";
+
+/* Description for unable to remove device error */
+"alert.unable-to-remove-device-description" = "Unable to remove the specified device from the synchronized devices.";
+
+/* Description for unable to sync error */
+"alert.unable-to-sync-description" = "Unable to sync.";
+
+/* Description for unable to turn sync off error */
+"alert.unable-to-turn-sync-off-description" = "Unable to turn sync off.";
+
+/* Description for unable to update device name error */
+"alert.unable-to-update-device-name-description" = "Unable to update the name of the device.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Unlock DuckDuckGo.";

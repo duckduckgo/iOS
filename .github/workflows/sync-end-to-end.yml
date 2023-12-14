@@ -68,7 +68,7 @@ jobs:
     strategy:
       matrix:
         os-version: [15, 16, 17]
-      #max-parallel: 1
+      #max-parallel: 1 # Uncomment this line to run tests sequentially. 
     
     steps:
     - name: Check out the code

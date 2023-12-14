@@ -404,7 +404,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #if SUBSCRIPTION
     private func setupSubscriptionsEnvironment() {
-        SubscriptionPurchaseEnvironment.current = .appStore
+        Task {  SubscriptionPurchaseEnvironment.current = .appStore
+            await AccountManager().checkSubscriptionState()
+        }
     }
 #endif
 

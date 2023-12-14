@@ -43,8 +43,10 @@ struct HeadlessWebview: UIViewRepresentable {
         // We're using the macOS agent as the config for iOS has not been deployed in test env
         webView.customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)"
         // DefaultUserAgentManager.shared.update(webView: webView, isDesktop: false, url: url)
-
-        webView.load(URLRequest(url: url))
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            webView.load(URLRequest(url: url))
+        }
         
 #if DEBUG
         if #available(iOS 16.4, *) {

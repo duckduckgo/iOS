@@ -35,18 +35,32 @@ final class SubscriptionDebugViewController: UITableViewController {
     
     private let titles = [
         Sections.authorization: "Authentication",
+        Sections.subscription: "Subscription",
+        Sections.appstore: "App Store",
     ]
 
     enum Sections: Int, CaseIterable {
         case authorization
+        case subscription
+        case appstore
     }
 
     enum AuthorizationRows: Int, CaseIterable {
-        case showDetails
+        case showAccountDetails
         case clearAuthData
         case injectCredentials
-        
     }
+    
+    enum SubscriptionRows: Int, CaseIterable {
+        case validateToken
+        case getEntitlements
+        case getSubscription
+    }
+    
+    enum AppStoreRows: Int, CaseIterable {
+        case syncAppStoreAccount
+    }
+    
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return Sections.allCases.count
@@ -68,7 +82,7 @@ final class SubscriptionDebugViewController: UITableViewController {
             switch AuthorizationRows(rawValue: indexPath.row) {
             case .clearAuthData:
                 cell.textLabel?.text = "Clear Authorization Data (Sign out)"
-            case .showDetails:
+            case .showAccountDetails:
                 cell.textLabel?.text = "Show Account Details"
             case .injectCredentials:
                 cell.textLabel?.text = "Simulate Authentication (Inject Fake token)"
@@ -78,14 +92,35 @@ final class SubscriptionDebugViewController: UITableViewController {
 
         case.none:
             break
+        
+        case .appstore:
+            switch AppStoreRows(rawValue: indexPath.row) {
+            case .syncAppStoreAccount:
+                cell.textLabel?.text = "Sync App Store Account"
+            case .none:
+                break
+            }
+            
+        case .subscription:
+            switch SubscriptionRows(rawValue: indexPath.row) {
+            case .validateToken:
+                cell.textLabel?.text = "Validate Token"
+            case .getSubscription:
+                cell.textLabel?.text = "Get subscription details"
+            case .getEntitlements:
+                cell.textLabel?.text = "Get Entitlements"
+            case .none:
+                break
+            }
         }
-
         return cell
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section) {
         case .authorization: return AuthorizationRows.allCases.count
+        case .subscription: return SubscriptionRows.allCases.count
+        case .appstore: return AppStoreRows.allCases.count
         case .none: return 0
 
         }
@@ -96,8 +131,20 @@ final class SubscriptionDebugViewController: UITableViewController {
         case .authorization:
             switch AuthorizationRows(rawValue: indexPath.row) {
             case .clearAuthData: clearAuthData()
-            case .showDetails: showDetails()
+            case .showAccountDetails: showAccountDetails()
             case .injectCredentials: injectCredentials()
+            default: break
+            }
+        case .appstore:
+            switch AppStoreRows(rawValue: indexPath.row) {
+            case .syncAppStoreAccount: syncAppleIDAccount()
+            default: break
+            }
+        case .subscription:
+            switch SubscriptionRows(rawValue: indexPath.row) {
+            case .validateToken: validateToken()
+            case .getSubscription: getSubscription()
+            case .getEntitlements: getEntitlements()
             default: break
             }
         case .none:
@@ -112,8 +159,6 @@ final class SubscriptionDebugViewController: UITableViewController {
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alertController.addAction(okAction)
-
-            // Assuming this function is in a UIViewController subclass
             self.present(alertController, animated: true, completion: nil)
         }
     }
@@ -128,15 +173,73 @@ final class SubscriptionDebugViewController: UITableViewController {
         accountManager.storeAccount(token: "a-fake-token",
                                     email: "a.fake@email.com",
                                     externalID: "666")
-        showDetails()
+        showAccountDetails()
     }
     
-    private func showDetails() {
+    private func showAccountDetails() {
         let title = accountManager.isUserAuthenticated ? "Authenticated" : "Not Authenticated"
         let message = accountManager.isUserAuthenticated ? ["AuthToken: \(accountManager.authToken ?? "")",
                                                    "AccessToken: \(accountManager.accessToken ?? "")",
                                                    "Email: \(accountManager.email ?? "")"].joined(separator: "\n") : nil
         showAlert(title: title, message: message)
+    }
+            
+    private func syncAppleIDAccount() {
+        Task {
+            switch await purchaseManager.syncAppleIDAccount() {
+            case .success:
+                showAlert(title: "Account synced!", message: "")
+            case .failure(let error):
+                showAlert(title: "Error syncing!", message: error.localizedDescription)
+            }
+        }
+    }
+    
+    private func validateToken() {
+        Task {
+            guard let token = accountManager.accessToken else {
+                showAlert(title: "Not authenticated", message: "No authenticated user found! - Token not available")
+                return
+            }
+            switch await AuthService.validateToken(accessToken: token) {
+            case .success(let response):
+                showAlert(title: "Token details", message: "\(response)")
+            case .failure(let error):
+                showAlert(title: "Error Validating Token", message: "\(error)")
+            }
+        }
+    }
+    
+    private func getSubscription() {
+        Task {
+            guard let token = accountManager.accessToken else {
+                showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
+                return
+            }
+            switch await SubscriptionService.getSubscriptionDetails(token: token) {
+            case .success(let response):
+                showAlert(title: "Subscription info", message: "\(response)")
+            case .failure(let error):
+                showAlert(title: "Subscription Error", message: "\(error)")
+            }
+        }
+    }
+    
+    private func getEntitlements() {
+        Task {
+            var results: [String] = []
+            guard let token = accountManager.accessToken else {
+                showAlert(title: "Not authenticated", message: "No authenticated user found! - Subscription not available")
+                return
+            }
+            for entitlementName in ["fake", "dummy1", "dummy2", "dummy3"] {
+                let result = await AccountManager().hasEntitlement(for: entitlementName)
+                let resultSummary = "Entitlement check for \(entitlementName): \(result)"
+                results.append(resultSummary)
+                print(resultSummary)
+            }
+            showAlert(title: "Available Entitlements", message: results.joined(separator: "\n"))
+        }
     }
 }
 

@@ -51,7 +51,7 @@ struct SubscriptionFlowView: View {
                     // viewModel.cancelledSubscriptionRestore()
                 },
                 secondaryButton: .default(Text("Restore")) {
-                    // viewModel.restoreSubscription()
+                    viewModel.restoreAppstoreTransaction()
                 }
             )
         }

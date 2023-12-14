@@ -29,7 +29,6 @@ final class SubscriptionFlowViewModel: ObservableObject {
     let subFeature: SubscriptionPagesUseSubscriptionFeature
     let purchaseManager: PurchaseManager
     
-    
     let viewTitle = UserText.settingsPProSection
     
     private var cancellables = Set<AnyCancellable>()
@@ -38,7 +37,8 @@ final class SubscriptionFlowViewModel: ObservableObject {
     @Published var purchaseURL = URL.purchaseSubscription
     @Published var hasActiveSubscription = false
     @Published var transactionInProgress = false
-
+    
+    
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
          subFeature: SubscriptionPagesUseSubscriptionFeature = SubscriptionPagesUseSubscriptionFeature(),
          purchaseManager: PurchaseManager = PurchaseManager.shared) {
@@ -74,6 +74,11 @@ final class SubscriptionFlowViewModel: ObservableObject {
         await self.setupTransactionObserver()
     }
     
+    func restoreAppstoreTransaction() {
+        Task {
+            await subFeature.restoreAccountFromAppStorePurchase()
+        }
+    }
     
 }
 #endif

@@ -25,6 +25,7 @@ import WebKit
 import UserScript
 import Combine
 
+@available(iOS 15.0, *)
 final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObject {
     
     struct Constants {
@@ -60,6 +61,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     @Published var transactionInProgress = false
     @Published var hasActiveSubscription = false
+    @Published var purchaseError: AppStorePurchaseFlow.Error?
     
     var broker: UserScriptMessageBroker?
 
@@ -69,6 +71,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         .exact(hostname: OriginDomains.duckduckgo),
         .exact(hostname: OriginDomains.abrown)
     ])
+    
+    var originalMessage: WKScriptMessage?
 
     func with(broker: UserScriptMessageBroker) {
         self.broker = broker
@@ -111,6 +115,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     
     private func resetSubscriptionFlow() {
         hasActiveSubscription = false
+        purchaseError = nil
     }
 
     func getSubscription(params: Any, original: WKScriptMessage) async throws -> Encodable? {
@@ -121,16 +126,17 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
     func getSubscriptionOptions(params: Any, original: WKScriptMessage) async throws -> Encodable? {
         
         await withTransactionInProgress {
-            if #available(iOS 15.0, *) {
-                switch await AppStorePurchaseFlow.subscriptionOptions() {
-                case .success(let subscriptionOptions):
-                    return subscriptionOptions
-                case .failure:
-                    // TODO: handle errors - no products found
-                    return nil
-                }
+            
+            resetSubscriptionFlow()
+                        
+            switch await AppStorePurchaseFlow.subscriptionOptions() {
+            case .success(let subscriptionOptions):
+                return subscriptionOptions
+            case .failure:
+                // TODO: handle errors - no products found
+                return nil
             }
-            return nil
+                        
         }
     }
     
@@ -166,6 +172,8 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
                 case .success:
                     break
                 case .failure:
+                    purchaseError = .purchaseFailed
+                    originalMessage = original
                     return nil
                 }
                 
@@ -174,6 +182,7 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
                     await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: purchaseUpdate)
                 case .failure:
                     // TODO: handle errors - missing entitlements on post purchase check
+                    purchaseError = .missingEntitlements
                     await pushPurchaseUpdate(originalMessage: message, purchaseUpdate: PurchaseUpdate(type: "completed"))
                 }
             }
@@ -246,6 +255,21 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
 
         print(">>> Pushing into WebView:", method.rawValue, String(describing: params))
         broker.push(method: method.rawValue, params: params, for: self, into: webView)
+    }
+    
+    func restoreAccountFromAppStorePurchase() async {
+        
+        await withTransactionInProgress {
+            switch await AppStoreRestoreFlow.restoreAccountFromPastPurchase() {
+            case .success(let update):
+                // TODO: Have the webview reload the current page to show the subscription
+                break
+            case .failure:
+                // TODO: Handle restore error
+                break
+            }
+        }
+        
     }
 }
 #endif

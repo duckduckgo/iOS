@@ -28,7 +28,7 @@ struct SubscriptionFlowView: View {
     
     var body: some View {
         ZStack {
-            AsyncHeadlessWebView(url: viewModel.purchaseURL,
+            AsyncHeadlessWebView(url: $viewModel.purchaseURL,
                                  userScript: viewModel.userScript,
                                  subFeature: viewModel.subFeature).background()
 
@@ -43,15 +43,15 @@ struct SubscriptionFlowView: View {
         .navigationTitle(viewModel.viewTitle)
         
         // Active subscription found Alert
-        .alert(isPresented: $viewModel.shouldShowHasActiveSubscriptionMessage) {
+        .alert(isPresented: $viewModel.hasActiveSubscription) {
             Alert(
                 title: Text("Subscription Found"),
                 message: Text("We found a subscription associated with this Apple ID."),
                 primaryButton: .cancel(Text("Cancel")) {
-                    print("Cancelling...")
+                    // viewModel.cancelledSubscriptionRestore()
                 },
                 secondaryButton: .default(Text("Restore")) {
-                    print("Restoring...")
+                    // viewModel.restoreSubscription()
                 }
             )
         }

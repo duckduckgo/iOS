@@ -27,7 +27,7 @@ import Core
 struct HeadlessWebview: UIViewRepresentable {
     let userScript: UserScriptMessaging
     let subFeature: Subfeature
-    let url: URL
+    @Binding var url: URL
 
     func makeUIView(context: Context) -> WKWebView {
         let userContentController = WKUserContentController()
@@ -44,7 +44,7 @@ struct HeadlessWebview: UIViewRepresentable {
         webView.customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)"
         // DefaultUserAgentManager.shared.update(webView: webView, isDesktop: false, url: url)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0) {
             webView.load(URLRequest(url: url))
         }
         
@@ -60,7 +60,7 @@ struct HeadlessWebview: UIViewRepresentable {
 }
 
 struct AsyncHeadlessWebView: View {
-    let url: URL
+    @Binding var url: URL
     let userScript: UserScriptMessaging
     let subFeature: Subfeature
 
@@ -68,7 +68,7 @@ struct AsyncHeadlessWebView: View {
         GeometryReader { geometry in
             HeadlessWebview(userScript: userScript,
                             subFeature: subFeature,
-                            url: url)
+                            url: $url)
                 .frame(width: geometry.size.width, height: geometry.size.height)
         }
     }

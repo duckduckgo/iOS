@@ -36,7 +36,9 @@ protocol OmniBarDelegate: AnyObject {
     func onBookmarksPressed()
     
     func onSettingsPressed()
-    
+
+    func onSettingsLongPressed()
+
     func onCancelPressed()
     
     func onEnterPressed()

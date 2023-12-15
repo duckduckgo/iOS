@@ -92,6 +92,7 @@ class OmniBar: UIView {
         super.awakeFromNib()
         configureMenuButton()
         configureTextField()
+        configureSettingsButton()
         registerNotifications()
         
         configureSeparator()
@@ -102,7 +103,19 @@ class OmniBar: UIView {
         
         privacyInfoContainer.isHidden = true
     }
-    
+
+    private func configureSettingsButton() {
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        longPressGesture.minimumPressDuration = 0.7
+        settingsButton.addGestureRecognizer(longPressGesture)
+    }
+
+    @objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            omniDelegate?.onSettingsLongPressed()
+        }
+    }
+
     private func registerNotifications() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(textDidChange),
@@ -448,7 +461,7 @@ class OmniBar: UIView {
     @IBAction func onSettingsButtonPressed(_ sender: Any) {
         omniDelegate?.onSettingsPressed()
     }
-    
+
     @IBAction func onCancelPressed(_ sender: Any) {
         omniDelegate?.onCancelPressed()
     }

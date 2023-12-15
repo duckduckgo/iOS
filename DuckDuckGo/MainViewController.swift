@@ -89,6 +89,8 @@ class MainViewController: UIViewController {
     private var syncUpdatesCancellable: AnyCancellable?
     private var emailCancellables = Set<AnyCancellable>()
 
+    private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
+
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
 
     weak var tabSwitcherController: TabSwitcherViewController?
@@ -1319,7 +1321,15 @@ extension MainViewController: OmniBarDelegate {
         }
         segueToSettings()
     }
-    
+
+    func onSettingsLongPressed() {
+        if featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild {
+            segueToDebugSettings()
+        } else {
+            segueToSettings()
+        }
+    }
+
     func onCancelPressed() {
         dismissOmniBar()
         hideSuggestionTray()

@@ -46,13 +46,13 @@ jobs:
         | tee xcodebuild.log
 
     - name: Store Binary
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: duckduckgo-ios-app
         path: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
     
     - name: Upload logs when workflow failed
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: failure()
       with:
         name: BuildLogs
@@ -82,7 +82,7 @@ jobs:
         debug: true
     
     - name: Retrieve Binary
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: duckduckgo-ios-app
         path: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app

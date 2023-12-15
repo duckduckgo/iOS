@@ -50,7 +50,7 @@ jobs:
           | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml
 
     - name: Upload logs if workflow failed
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: failure()
       with:
         name: BuildLogs

@@ -37,7 +37,7 @@ import NetworkProtection
 // swiftlint:disable:next type_body_length
 final class NetworkProtectionDebugViewController: UITableViewController {
     private let titles = [
-        Sections.keychain: "Keychain",
+        Sections.clearData: "Clear Data",
         Sections.debugFeature: "Debug Features",
         Sections.simulateFailure: "Simulate Failure",
         Sections.registrationKey: "Registration Key",
@@ -49,7 +49,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     ]
 
     enum Sections: Int, CaseIterable {
-        case keychain
+        case clearData
         case debugFeature
         case simulateFailure
         case registrationKey
@@ -59,9 +59,10 @@ final class NetworkProtectionDebugViewController: UITableViewController {
         case vpnConfiguration
     }
 
-    enum KeychainRows: Int, CaseIterable {
+    enum ClearDataRows: Int, CaseIterable {
 
         case clearAuthToken
+        case clearAllVPNData
 
     }
 
@@ -162,10 +163,12 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
         switch Sections(rawValue: indexPath.section) {
 
-        case .keychain:
-            switch KeychainRows(rawValue: indexPath.row) {
+        case .clearData:
+            switch ClearDataRows(rawValue: indexPath.row) {
             case .clearAuthToken:
-                cell.textLabel?.text = "Clear auth token"
+                cell.textLabel?.text = "Clear Auth Token"
+            case .clearAllVPNData:
+                cell.textLabel?.text = "Reset VPN State Completely"
             case .none:
                 break
             }
@@ -200,7 +203,7 @@ final class NetworkProtectionDebugViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section) {
-        case .keychain: return KeychainRows.allCases.count
+        case .clearData: return ClearDataRows.allCases.count
         case .debugFeature: return DebugFeatureRows.allCases.count
         case .simulateFailure: return SimulateFailureRows.allCases.count
         case .registrationKey: return RegistrationKeyRows.allCases.count
@@ -216,9 +219,10 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     // swiftlint:disable:next cyclomatic_complexity
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch Sections(rawValue: indexPath.section) {
-        case .keychain:
-            switch KeychainRows(rawValue: indexPath.row) {
+        case .clearData:
+            switch ClearDataRows(rawValue: indexPath.row) {
             case .clearAuthToken: clearAuthToken()
+            case .clearAllVPNData: clearAllVPNData()
             default: break
             }
         case .debugFeature:
@@ -542,6 +546,12 @@ final class NetworkProtectionDebugViewController: UITableViewController {
     private func clearAuthToken() {
         try? tokenStore.deleteToken()
     }
+
+    private func clearAllVPNData() {
+        let accessController = NetworkProtectionAccessController()
+        accessController.revokeNetworkProtectionAccess()
+    }
+
 }
 
 

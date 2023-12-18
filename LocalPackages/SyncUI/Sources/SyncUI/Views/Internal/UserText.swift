@@ -43,7 +43,7 @@ struct UserText {
     static let turnSyncOffSectionHeader = NSLocalizedString("turn.sync.off.section.header", value: "Sync Enabled", comment: "Turn Sync Off - Section Header")
     static let turnSyncOffSectionFooter = NSLocalizedString("turn.sync.off.section.footer", value: "Bookmarks and passwords are currently synced across your devices.", comment: "Turn Sync Off - Section Footer")
     // Sync Paused Errors
-    static let syncLimitExceededTitle = NSLocalizedString("sync.limit.exceeded.title", value: "⚠️ Sync Paused", comment: "Sync Paused Errors - Title")
+    static let syncLimitExceededTitle = NSLocalizedString("sync.limit.exceeded.title", value: "Sync Paused", comment: "Sync Paused Errors - Title")
     static let bookmarksLimitExceededDescription = NSLocalizedString("bookmarks.limit.exceeded.description", value: "Bookmark limit exceeded. Delete some to resume syncing.", comment: "Sync Paused Errors - Bookmarks Limit Exceeded Description")
     static let credentialsLimitExceededDescription = NSLocalizedString("credentials.limit.exceeded.description", value: "Logins limit exceeded. Delete some to resume syncing.", comment: "Sync Paused Errors - Credentials Limit Exceeded Description")
     static let bookmarksLimitExceededAction = NSLocalizedString("bookmarks.limit.exceeded.action", value: "Manage Bookmarks", comment: "Sync Paused Errors - Bookmarks Limit Exceeded Action")
@@ -159,6 +159,10 @@ struct UserText {
     static let fetchFaviconsOnboardingMessage = NSLocalizedString("fetch.favicons.onboarding.message", value: "Do you want this device to automatically download icons for any new bookmarks synced from your other devices? This will expose the download to your network any time a bookmark is synced.", comment: "Fetch Favicons Onboarding - Message")
     static let fetchFaviconsOnboardingButtonTitle = NSLocalizedString("fetch.favicons.onboarding.button.title", value: "Keep Bookmarks Icons Updated", comment: "Fetch Favicons Onboarding - Button Title")
 
+    // Sync Feature Flags
+    static let serviceUnavailable = NSLocalizedString("sync.warning.service.unavailable", value: "Service Unavailable", comment: "Title of the warning message")
+    static let warningSyncDisabled = NSLocalizedString("sync.warning.sync.disabled", value: "We apologize, but the service is currently unavailable. Please try again later.", comment: "Sync unavailable warning message")
+    static let warningAccountCreationDisabled = NSLocalizedString("sync.warning.account.creation.disabled", value: "We apologize, but new account creation is currently unavailable for this service. Please try again later.", comment: "Sync unavailable warning message")
 
     // swiftlint:enable line_length
 }

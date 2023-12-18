@@ -39,6 +39,7 @@ struct NetworkProtectionStatusView: View {
                 connectionDetails()
             }
             settings()
+            feedback()
         }
         .padding(.top, statusModel.error == nil ? 0 : -20)
         .if(statusModel.animationsOn, transform: {
@@ -153,12 +154,21 @@ struct NetworkProtectionStatusView: View {
 
     @ViewBuilder
     private func inviteOnlyFooter() -> some View {
-        // Needs to be inlined like this for the markdown parsing to work
-        Text("\(UserText.networkProtectionWaitlistAvailabilityDisclaimer) [\(UserText.netPStatusViewShareFeedback)](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)")
+        Text(UserText.networkProtectionWaitlistAvailabilityDisclaimer)
             .foregroundColor(.init(designSystemColor: .textSecondary))
             .accentColor(.init(designSystemColor: .accent))
             .daxFootnoteRegular()
             .padding(.top, 6)
+    }
+
+    @ViewBuilder
+    private func feedback() -> some View {
+        Section {
+            NavigationLink(UserText.netPStatusViewShareFeedback, destination: VPNFeedbackFormCategoryView())
+                .daxBodyRegular()
+                .foregroundColor(.init(designSystemColor: .textPrimary))
+        }
+        .listRowBackground(Color(designSystemColor: .surface))
     }
 }
 

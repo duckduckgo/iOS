@@ -46,10 +46,15 @@ extension View {
     func applyInsetGroupedListStyle() -> some View {
         self
             .listStyle(.insetGrouped)
-            .hideScrollContentBackground()
-            .background(
-                Rectangle().ignoresSafeArea().foregroundColor(Color(designSystemColor: .background))
-            )
+            .applyBackground()
+    }
+
+    @ViewBuilder
+    func applyBackground() -> some View {
+        hideScrollContentBackground()
+        .background(
+            Rectangle().ignoresSafeArea().foregroundColor(Color(designSystemColor: .background))
+        )
     }
 
     @ViewBuilder

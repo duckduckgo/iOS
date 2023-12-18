@@ -60,7 +60,8 @@ final class FaviconsFetcherOnboarding {
     }
 
     private var shouldPresentOnboarding: Bool {
-        !didPresentFaviconsFetchingOnboarding
+        syncService.featureFlag.isSyncVisible
+        && !didPresentFaviconsFetchingOnboarding
         && !syncBookmarksAdapter.isFaviconsFetchingEnabled
         && syncBookmarksAdapter.isEligibleForFaviconsFetcherOnboarding
     }

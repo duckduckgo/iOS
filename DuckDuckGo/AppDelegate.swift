@@ -283,7 +283,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage()
         )
 
-        let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog, environment: environment)
+        let syncService = DDGSync(
+            dataProvidersSource: syncDataProviders,
+            errorEvents: SyncErrorHandler(),
+            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+            log: .syncLog,
+            environment: environment
+        )
         syncService.initializeIfNeeded()
         self.syncService = syncService
 

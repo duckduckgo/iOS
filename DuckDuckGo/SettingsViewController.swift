@@ -113,7 +113,7 @@ class SettingsViewController: UITableViewController {
     }
 
     private var shouldShowSyncCell: Bool {
-        return featureFlagger.isFeatureOn(.sync)
+        return syncService.featureFlag.isSyncVisible || internalUserDecider.isInternalUser
     }
 
     private var shouldShowTextSizeCell: Bool {

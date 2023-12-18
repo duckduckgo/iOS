@@ -169,6 +169,8 @@ private_lane :build_release do |options|
     scheme: "DuckDuckGo",
     export_options: "appStoreExportOptions.plist",
     derived_data_path: "DerivedData"
+    derived_data_path: "DerivedData",
+    xargs: "-skipPackagePluginValidation"
   )
 end
 

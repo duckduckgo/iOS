@@ -23,8 +23,8 @@ import BrowserServicesKit
 final public class AppPrivacyConfigurationDataProvider: EmbeddedDataProvider {
 
     public struct Constants {
-        public static let embeddedDataETag = "\"9f95a5896c461768903058315bf6b931\""
-        public static let embeddedDataSHA = "33bbcc8e715e93f6a6052b92d990860758774d7cf4828b6aedcc958b9f46f50a"
+        public static let embeddedDataETag = "\"f4e8436ab9977e1a8a9d6ee600fc353e\""
+        public static let embeddedDataSHA = "86b3a7bece52da74f7d267c2b522ac929d363a384cacc013f2b2d057ee1e386c"
     }
 
     public var embeddedDataEtag: String {

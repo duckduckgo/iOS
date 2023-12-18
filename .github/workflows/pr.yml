@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: SwiftLint
-      uses: docker://norionomura/swiftlint:0.53.0
+      uses: docker://norionomura/swiftlint:0.54.0_swift-5.9.0
       with:
         args: swiftlint --reporter github-actions-logging --strict
 
@@ -81,6 +81,7 @@ jobs:
           -scheme "DuckDuckGo" \
           -destination "platform=iOS Simulator,name=iPhone 14,OS=16.4" \
           -derivedDataPath "DerivedData" \
+          -skipPackagePluginValidation \
           DDG_SLOW_COMPILE_CHECK_THRESHOLD=250 \
           | tee xcodebuild.log \
           | xcbeautify --report junit --report-path . --junit-report-filename unittests.xml
@@ -183,6 +184,7 @@ jobs:
         -destination "platform=iOS Simulator,name=iPhone 14" \
         -derivedDataPath "DerivedData" \
         -configuration "Release" \
+        -skipPackagePluginValidation \
         | xcbeautify
 
   create-asana-task:

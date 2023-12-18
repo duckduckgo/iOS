@@ -42,6 +42,7 @@ jobs:
           -scheme "DuckDuckGo" \
           -destination "platform=iOS Simulator,name=iPhone 14" \
           -derivedDataPath "DerivedData" \
+          -skipPackagePluginValidation \
         | tee xcodebuild.log
     
     - name: Create test account for Sync and return the recovery code

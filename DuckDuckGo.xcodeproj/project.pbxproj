@@ -5374,6 +5374,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B6080BB52B20B03800B418EF /* PBXTargetDependency */,
 				4B470EE7299C6DFB0086EBDC /* PBXTargetDependency */,
 			);
 			name = PacketTunnelProvider;
@@ -5395,6 +5396,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B6080BBD2B20B05000B418EF /* PBXTargetDependency */,
 				025CCFE82582601C001CD5BB /* PBXTargetDependency */,
 			);
 			name = FingerprintingUITests;
@@ -5414,6 +5416,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B6080BAF2B20B02800B418EF /* PBXTargetDependency */,
 			);
 			name = ShareExtension;
 			productName = ShareExtension;
@@ -5440,6 +5443,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B6080BAD2B20B02400B418EF /* PBXTargetDependency */,
 				F143C2EA1E4A4CD400CFDE3A /* PBXTargetDependency */,
 				8390447520BDCE10006461CD /* PBXTargetDependency */,
 				85482D932462DCD100EDEDD1 /* PBXTargetDependency */,
@@ -5472,6 +5476,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B6080BBB2B20B04D00B418EF /* PBXTargetDependency */,
 				84E341A81E2F7EFB00BDBA6F /* PBXTargetDependency */,
 			);
 			name = UnitTests;
@@ -5495,6 +5500,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B6080BB32B20B03400B418EF /* PBXTargetDependency */,
 				85DF714924F7FE6100C89288 /* PBXTargetDependency */,
 			);
 			name = WidgetsExtension;
@@ -5516,6 +5522,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B6080BB12B20B02B00B418EF /* PBXTargetDependency */,
 			);
 			name = OpenAction;
 			productName = OpenAction;
@@ -5533,6 +5540,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B6080BBF2B20B05300B418EF /* PBXTargetDependency */,
 				85D33FD125C97B6E002B91A6 /* PBXTargetDependency */,
 			);
 			name = IntegrationTests;
@@ -5555,6 +5563,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B6080BB92B20B04A00B418EF /* PBXTargetDependency */,
 				85F21DB3210F5E32002631A6 /* PBXTargetDependency */,
 			);
 			name = AtbUITests;
@@ -5576,6 +5585,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B6080BC12B20B05600B418EF /* PBXTargetDependency */,
 				9825F9CC293F2DE900F220F2 /* PBXTargetDependency */,
 			);
 			name = PerformanceTests;
@@ -5612,6 +5622,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B6080BB72B20B03B00B418EF /* PBXTargetDependency */,
 			);
 			name = Core;
 			packageProductDependencies = (
@@ -6995,6 +7006,50 @@
 			isa = PBXTargetDependency;
 			target = 84E341911E2F7EFB00BDBA6F /* DuckDuckGo */;
 			targetProxy = 9825F9CD293F2DE900F220F2 /* PBXContainerItemProxy */;
+		};
+		B6080BAD2B20B02400B418EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = B6080BAC2B20B02400B418EF /* SwiftLintPlugin */;
+		};
+		B6080BAF2B20B02800B418EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = B6080BAE2B20B02800B418EF /* SwiftLintPlugin */;
+		};
+		B6080BB12B20B02B00B418EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = B6080BB02B20B02B00B418EF /* SwiftLintPlugin */;
+		};
+		B6080BB32B20B03400B418EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = B6080BB22B20B03400B418EF /* SwiftLintPlugin */;
+		};
+		B6080BB52B20B03800B418EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = B6080BB42B20B03800B418EF /* SwiftLintPlugin */;
+		};
+		B6080BB72B20B03B00B418EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = B6080BB62B20B03B00B418EF /* SwiftLintPlugin */;
+		};
+		B6080BB92B20B04A00B418EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = B6080BB82B20B04A00B418EF /* SwiftLintPlugin */;
+		};
+		B6080BBB2B20B04D00B418EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = B6080BBA2B20B04D00B418EF /* SwiftLintPlugin */;
+		};
+		B6080BBD2B20B05000B418EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = B6080BBC2B20B05000B418EF /* SwiftLintPlugin */;
+		};
+		B6080BBF2B20B05300B418EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = B6080BBE2B20B05300B418EF /* SwiftLintPlugin */;
+		};
+		B6080BC12B20B05600B418EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = B6080BC02B20B05600B418EF /* SwiftLintPlugin */;
 		};
 		F143C2EA1E4A4CD400CFDE3A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9166,7 +9221,7 @@
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = exactVersion;
-				version = 94.0.2;
+				version = 94.0.3;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
@@ -9316,6 +9371,61 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = Bookmarks;
+		};
+		B6080BAC2B20B02400B418EF /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		B6080BAE2B20B02800B418EF /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		B6080BB02B20B02B00B418EF /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		B6080BB22B20B03400B418EF /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		B6080BB42B20B03800B418EF /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		B6080BB62B20B03B00B418EF /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		B6080BB82B20B04A00B418EF /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		B6080BBA2B20B04D00B418EF /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		B6080BBC2B20B05000B418EF /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		B6080BBE2B20B05300B418EF /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+		B6080BC02B20B05600B418EF /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = "plugin:SwiftLintPlugin";
 		};
 		C14882EC27F211A000D59F0C /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;

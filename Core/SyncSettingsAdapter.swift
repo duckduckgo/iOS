@@ -38,7 +38,11 @@ public final class SyncSettingsAdapter {
     public func updateDatabaseCleanupSchedule(shouldEnable: Bool) {
     }
 
-    public func setUpProviderIfNeeded(metadataDatabase: CoreDataDatabase, metadataStore: SyncMetadataStore) {
+    public func setUpProviderIfNeeded(
+        metadataDatabase: CoreDataDatabase,
+        metadataStore: SyncMetadataStore,
+        metricsEventsHandler: EventMapping<MetricsEvent>? = nil
+    ) {
         guard provider == nil else {
             return
         }
@@ -50,6 +54,7 @@ public final class SyncSettingsAdapter {
             metadataDatabase: metadataDatabase,
             metadataStore: metadataStore,
             settingsHandlers: settingHandlers + [emailProtectionSyncHandler],
+            metricsEvents: metricsEventsHandler,
             syncDidUpdateData: { [weak self] in
                 self?.syncDidCompleteSubject.send()
             }

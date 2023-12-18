@@ -22,6 +22,7 @@ import Core
 import Combine
 import SyncUI
 import DDGSync
+import Common
 
 @MainActor
 class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
@@ -55,7 +56,13 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         self.syncService = syncService
         self.syncBookmarksAdapter = syncBookmarksAdapter
 
-        let viewModel = SyncSettingsViewModel()
+        let viewModel = SyncSettingsViewModel(
+            isOnDevEnvironment: { syncService.serverEnvironment == .development },
+            switchToProdEnvironment: {
+                syncService.updateServerEnvironment(.production)
+                UserDefaults.standard.set(ServerEnvironment.production.description, forKey: UserDefaultsWrapper<String>.Key.syncEnvironment.rawValue)
+            }
+        )
 
         super.init(rootView: SyncSettingsView(model: viewModel))
 
@@ -171,10 +178,13 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         }
     }
 
-    func dismissPresentedViewController() {
+    func dismissPresentedViewController(completion: (() -> Void)? = nil) {
         guard let presentedViewController = navigationController?.presentedViewController,
-              !(presentedViewController is UIHostingController<SyncSettingsView>) else { return }
-        presentedViewController.dismiss(animated: true, completion: nil)
+              !(presentedViewController is UIHostingController<SyncSettingsView>) else {
+            completion?()
+            return
+        }
+        presentedViewController.dismiss(animated: true, completion: completion)
         endConnectMode()
     }
 
@@ -190,7 +200,8 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
                 let devices = try await syncService.fetchDevices()
                 mapDevices(devices)
             } catch {
-                handleError(error)
+                // Not displaying error since there is the spinner and it is called every few seconds
+                os_log(error.localizedDescription, log: .syncLog, type: .error)
             }
         }
     }
@@ -223,7 +234,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
             self.startPolling()
             return self.connector?.code
         } catch {
-            self.handleError(error)
+            self.handleError(SyncError.unableToSync, error: error)
             return nil
         }
     }
@@ -231,6 +242,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
     func loginAndShowDeviceConnected(recoveryKey: SyncCode.RecoveryKey) async throws {
         let registeredDevices = try await syncService.login(recoveryKey, deviceName: deviceName, deviceType: deviceType)
         mapDevices(registeredDevices)
+        Pixel.fire(pixel: .syncLogin)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.dismissVCAndShowRecoveryPDF()
         }
@@ -248,7 +260,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                     return
                 }
             } catch {
-                handleError(error)
+                handleError(SyncError.unableToSync, error: error)
             }
         }
     }
@@ -269,6 +281,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                 showPreparingSync()
                 if syncService.account == nil {
                     try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
+                    Pixel.fire(pixel: .syncSignupConnect)
                     self.dismissVCAndShowRecoveryPDF()
                     shouldShowSyncEnabled = false
                     rootView.model.syncEnabled(recoveryCode: recoveryCode)
@@ -290,7 +303,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
             }
 
         } catch {
-            handleError(error)
+            handleError(SyncError.unableToSync, error: error)
         }
         return false
     }

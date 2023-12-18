@@ -127,6 +127,7 @@ class BlankSnapshotViewController: UIViewController {
 }
 
 extension BlankSnapshotViewController: OmniBarDelegate {
+    
     func onVoiceSearchPressed() {
        // No-op
     }
@@ -140,10 +141,6 @@ extension BlankSnapshotViewController: OmniBarDelegate {
     }
 
     func onSettingsPressed() {
-        userInteractionDetected()
-    }
-
-    func onSettingsLongPressed() {
         userInteractionDetected()
     }
 

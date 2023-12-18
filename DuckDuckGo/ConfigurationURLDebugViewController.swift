@@ -21,6 +21,7 @@ import UIKit
 import WebKit
 import Core
 import Configuration
+import DesignResourcesKit
 
 final class ConfigurationURLDebugViewController: UITableViewController {
 
@@ -42,10 +43,20 @@ final class ConfigurationURLDebugViewController: UITableViewController {
 
     }
 
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .long
+        return formatter
+    }()
+
     private var customURLProvider = CustomConfigurationURLProvider()
 
     @UserDefaultsWrapper(key: .lastConfigurationRefreshDate, defaultValue: .distantPast)
     private var lastConfigurationRefreshDate: Date
+
+    @UserDefaultsWrapper(key: .lastConfigurationUpdateDate, defaultValue: nil)
+    private var lastConfigurationUpdateDate: Date?
 
     @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
     private var privacyConfigCustomURL: String? {
@@ -65,7 +76,7 @@ final class ConfigurationURLDebugViewController: UITableViewController {
 
     private func url(for row: CustomURLsRows) -> String {
         switch row {
-        case .privacyConfigURL: return customURLProvider.url(for: .privacyConfiguration).absoluteString
+        case .privacyConfigURL: return customURL(for: row) ?? customURLProvider.url(for: .privacyConfiguration).absoluteString
         }
     }
 
@@ -81,16 +92,19 @@ final class ConfigurationURLDebugViewController: UITableViewController {
             case .assetsUpdated(let protectionsUpdated):
                 if protectionsUpdated {
                     ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+                    DispatchQueue.main.async {
+                        self.lastConfigurationUpdateDate = Date()
+                    }
                 }
                 DispatchQueue.main.async {
                     tableView?.reloadData()
                 }
+
             case .noData:
                 break
             }
         }
     }
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,8 +129,9 @@ final class ConfigurationURLDebugViewController: UITableViewController {
         }
         cell.title.text = row.title
         cell.subtitle.text = url(for: row)
-        cell.switchView.isOn = customURL(for: row) != nil
-        cell.switchView.addAction(makeSwitchViewAction(for: row), for: .valueChanged)
+        cell.subtitle.textColor = customURL(for: row) != nil ? UIColor(designSystemColor: .accent) : .black
+        cell.ternary.text = lastConfigurationUpdateDate != nil ? dateFormatter.string(from: lastConfigurationUpdateDate!) : "-"
+        cell.refresh.addAction(makeAction(for: row), for: .allEvents)
         return cell
     }
 
@@ -125,15 +140,11 @@ final class ConfigurationURLDebugViewController: UITableViewController {
         presentCustomURLAlert(for: row)
     }
 
-    private func makeSwitchViewAction(for row: CustomURLsRows) -> UIAction {
-        UIAction { [weak self] act in
-            guard let switchView = act.sender as? UISwitch else { fatalError("Wrong view") }
-            if switchView.isOn {
-                self?.presentCustomURLAlert(for: row)
-            } else {
-                self?.setCustomURL(nil, for: row)
-                self?.tableView.reloadData()
-            }
+    private func makeAction(for row: CustomURLsRows) -> UIAction {
+        UIAction { [weak self] _ in
+            self?.lastConfigurationRefreshDate = Date.distantPast
+            self?.fetchAssets()
+            self?.tableView.reloadData()
         }
     }
 
@@ -146,6 +157,13 @@ final class ConfigurationURLDebugViewController: UITableViewController {
             self.tableView.reloadData()
         }
         alert.addAction(cancelAction)
+
+        if customURL(for: row) != nil {
+            let resetToDefaultAction = UIAlertAction(title: "Reset to default URL", style: .default) { _ in
+                self.privacyConfigCustomURL = nil
+            }
+            alert.addAction(resetToDefaultAction)
+        }
 
         let submitAction = UIAlertAction(title: "Override", style: .default) { _ in
             self.setCustomURL(alert.textFields?.first?.text, for: row)
@@ -194,6 +212,7 @@ final class ConfigurationURLTableViewCell: UITableViewCell {
 
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var subtitle: UILabel!
-    @IBOutlet weak var switchView: UISwitch!
-    
+    @IBOutlet weak var refresh: UIButton!
+    @IBOutlet weak var ternary: UILabel!
+
 }

@@ -32,7 +32,7 @@ protocol OmniBarDelegate: AnyObject {
     func onPrivacyIconPressed()
     
     func onMenuPressed()
-    
+
     func onBookmarksPressed()
     
     func onSettingsPressed()
@@ -50,7 +50,9 @@ protocol OmniBarDelegate: AnyObject {
     func onForwardPressed()
     
     func onSharePressed()
-    
+
+    func onShareLongPressed()
+
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar)
     
     // Returns whether field should select the text or not
@@ -83,7 +85,11 @@ extension OmniBarDelegate {
     func onMenuPressed() {
         
     }
-    
+
+    func onShareLongPressed() {
+        
+    }
+
     func onBookmarksPressed() {
         
     }
@@ -91,7 +97,11 @@ extension OmniBarDelegate {
     func onSettingsPressed() {
         
     }
-    
+
+    func onSettingsLongPressed() {
+
+    }
+
     func onCancelPressed() {
         
     }

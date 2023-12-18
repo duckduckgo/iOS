@@ -1376,7 +1376,15 @@ extension MainViewController: OmniBarDelegate {
         guard let link = currentTab?.link else { return }
         currentTab?.onShareAction(forLink: link, fromView: viewCoordinator.omniBar.shareButton, orginatedFromMenu: false)
     }
-    
+
+    func onShareLongPressed() {
+        if featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild {
+            segueToDebugSettings()
+        } else {
+            onSharePressed()
+        }
+    }
+
     func onVoiceSearchPressed() {
         SpeechRecognizer.requestMicAccess { permission in
             if permission {

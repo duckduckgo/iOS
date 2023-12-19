@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -77,9 +76,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="7wF-sv-V2Q" kind="show" id="Phv-ig-5bi"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="ipY-uG-TJo" style="IBUITableViewCellStyleDefault" id="z8F-23-nqU">
                                         <rect key="frame" x="0.0" y="180.5" width="414" height="43.5"/>
@@ -728,91 +724,9 @@
             </objects>
             <point key="canvasLocation" x="2546" y="968"/>
         </scene>
-        <!--Configuration URLs-->
-        <scene sceneID="V5G-on-Vlg">
-            <objects>
-                <tableViewController id="7wF-sv-V2Q" customClass="ConfigurationURLDebugViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="n7P-Ul-xxz">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ConfigurationURLTableViewCell" id="jmL-W2-PZT" customClass="ConfigurationURLTableViewCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="50" width="414" height="70.5"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jmL-W2-PZT" id="8nr-nN-SdE">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="70.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="gWn-YG-iFq">
-                                            <rect key="frame" x="20" y="11" width="374" height="48.5"/>
-                                            <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Uzf-Zx-YVo">
-                                                    <rect key="frame" x="0.0" y="0.0" width="44" height="48.5"/>
-                                                    <subviews>
-                                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ybz-8K-XIL">
-                                                            <rect key="frame" x="0.0" y="0.0" width="44" height="16"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wBo-BZ-9Gq">
-                                                            <rect key="frame" x="0.0" y="16" width="44" height="16"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                            <color key="textColor" name="accent"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AZq-qk-Hl7">
-                                                            <rect key="frame" x="0.0" y="32.5" width="44" height="16"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                </stackView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nzb-TB-wuL">
-                                                    <rect key="frame" x="350" y="0.0" width="24" height="48.5"/>
-                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal" image="Reload-24"/>
-                                                </button>
-                                            </subviews>
-                                        </stackView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="gWn-YG-iFq" firstAttribute="leading" secondItem="8nr-nN-SdE" secondAttribute="leadingMargin" id="3rH-vL-6Oo"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="gWn-YG-iFq" secondAttribute="bottom" id="Ghm-0Z-rKU"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="gWn-YG-iFq" secondAttribute="trailing" id="eN6-kh-97C"/>
-                                        <constraint firstItem="gWn-YG-iFq" firstAttribute="top" secondItem="8nr-nN-SdE" secondAttribute="topMargin" id="yUq-aj-n5V"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="refresh" destination="nzb-TB-wuL" id="gOH-u0-irx"/>
-                                    <outlet property="subtitle" destination="wBo-BZ-9Gq" id="W8K-Jp-1as"/>
-                                    <outlet property="ternary" destination="AZq-qk-Hl7" id="nrL-5O-Snx"/>
-                                    <outlet property="title" destination="ybz-8K-XIL" id="bE8-1t-ASx"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="7wF-sv-V2Q" id="Z7v-OM-YqG"/>
-                            <outlet property="delegate" destination="7wF-sv-V2Q" id="Sce-Tj-fIH"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Configuration URLs" id="jvQ-x7-B5D"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IHV-wf-FiH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4775" y="988"/>
-        </scene>
     </scenes>
     <resources>
         <image name="Logo" width="128" height="128"/>
-        <image name="Reload-24" width="24" height="24"/>
-        <namedColor name="accent">
-            <color red="0.22352941176470589" green="0.41176470588235292" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

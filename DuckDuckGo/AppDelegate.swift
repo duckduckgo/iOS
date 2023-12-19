@@ -291,7 +291,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .filter { $0 }
             .sink { [weak syncService] _ in
                 DailyPixel.fire(pixel: .syncDaily, includedParameters: [.appVersion])
-                syncService?.syncDailyInfo.sendStatusIfNeeded(handler: { params in
+                syncService?.syncDailyStats.sendStatusIfNeeded(handler: { params in
                     Pixel.fire(pixel: .syncSuccessRateDaily,
                                withAdditionalParameters: params,
                                includedParameters: [.appVersion])

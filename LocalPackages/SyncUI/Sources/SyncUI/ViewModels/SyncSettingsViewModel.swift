@@ -84,9 +84,9 @@ public class SyncSettingsViewModel: ObservableObject {
     @Published var isBusy = false
     @Published var recoveryCode = ""
 
-    @Published public var isSyncAvailable: Bool = true
+    @Published public var isDataSyncingAvailable: Bool = true
     @Published public var isConnectingDevicesAvailable: Bool = true
-    @Published public var isCreatingAccountAvailable: Bool = true
+    @Published public var isAccountCreationAvailable: Bool = true
     @Published public var isAccountRecoveryAvailable: Bool = true
 
     public weak var delegate: SyncManagementViewModelDelegate?

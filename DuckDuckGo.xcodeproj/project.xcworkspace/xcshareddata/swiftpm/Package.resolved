@@ -15,7 +15,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "dominik/sync-feature-flags",
-        "revision" : "b781c119800c6e75514cf2131b2e11ab1beb8181"
+        "revision" : "92d815d9a21f36c5fecf8df827a42e8b19ff314c"
       }
     },
     {

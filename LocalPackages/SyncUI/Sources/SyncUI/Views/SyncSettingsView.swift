@@ -100,9 +100,9 @@ extension SyncSettingsView {
 
     @ViewBuilder
     fileprivate func syncUnavailableViewWhileLoggedOut() -> some View {
-        if !model.isSyncAvailable || !model.isConnectingDevicesAvailable {
+        if !model.isDataSyncingAvailable || !model.isConnectingDevicesAvailable {
             SyncWarningMessageView(title: UserText.serviceUnavailable, message: UserText.warningSyncDisabled)
-        } else if !model.isCreatingAccountAvailable {
+        } else if !model.isAccountCreationAvailable {
             SyncWarningMessageView(title: UserText.serviceUnavailable, message: UserText.warningAccountCreationDisabled)
         } else {
             EmptyView()
@@ -123,9 +123,9 @@ extension SyncSettingsView {
                         .multilineTextAlignment(.center)
                         .foregroundColor(Color(designSystemColor: .textPrimary))
                     Button(UserText.syncWithAnotherDeviceButton, action: model.scanQRCode)
-                        .buttonStyle(PrimaryButtonStyle(disabled: !model.isCreatingAccountAvailable))
+                        .buttonStyle(PrimaryButtonStyle(disabled: !model.isAccountCreationAvailable))
                         .frame(maxWidth: 310)
-                        .disabled(!model.isCreatingAccountAvailable)
+                        .disabled(!model.isAccountCreationAvailable)
                         .padding(.vertical, 16)
                 }
                 Spacer()
@@ -155,7 +155,7 @@ extension SyncSettingsView {
                     isSyncWithSetUpSheetVisible = false
                 })
             })
-            .disabled(!model.isCreatingAccountAvailable)
+            .disabled(!model.isAccountCreationAvailable)
 
             Button(UserText.recoverSyncedDataLink) {
                 isRecoverSyncedDataSheetVisible = true
@@ -179,10 +179,10 @@ extension SyncSettingsView {
 
     @ViewBuilder
     fileprivate func syncUnavailableViewWhileLoggedIn() -> some View {
-        if !model.isSyncAvailable {
-            SyncWarningMessageView(title: UserText.serviceUnavailable, message: UserText.warningSyncDisabled)
-        } else {
+        if model.isDataSyncingAvailable {
             EmptyView()
+        } else {
+            SyncWarningMessageView(title: UserText.serviceUnavailable, message: UserText.warningSyncDisabled)
         }
     }
 

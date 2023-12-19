@@ -89,13 +89,13 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     }
 
     private func setUpSyncFeatureFlags(_ viewModel: SyncSettingsViewModel) {
-        syncService.featureFlagPublisher.prepend(syncService.featureFlag)
+        syncService.featureFlagsPublisher.prepend(syncService.featureFlags)
             .removeDuplicates()
-            .sink { featureFlag in
-                viewModel.isSyncAvailable = featureFlag.isSyncAvailable
-                viewModel.isConnectingDevicesAvailable = featureFlag.canConnectNewDevice
-                viewModel.isCreatingAccountAvailable = featureFlag.canCreateAccount
-                viewModel.isAccountRecoveryAvailable = featureFlag.canRestoreAccount
+            .sink { featureFlags in
+                viewModel.isDataSyncingAvailable = featureFlags.contains(.dataSyncing)
+                viewModel.isConnectingDevicesAvailable = featureFlags.contains(.connectFlows)
+                viewModel.isAccountCreationAvailable = featureFlags.contains(.accountCreation)
+                viewModel.isAccountRecoveryAvailable = featureFlags.contains(.accountRecovery)
             }
             .store(in: &cancellables)
     }

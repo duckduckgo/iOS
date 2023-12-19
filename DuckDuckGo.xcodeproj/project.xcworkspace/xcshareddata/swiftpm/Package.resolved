@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "sam/enhance-vpn-pixels",
-        "revision" : "59a0521d3d5e908eca64a4b27eb4a2a41e8fcb01"
+        "revision" : "ae9e9180f74d92c83fc3cc1d2fc23f4855fb361c",
+        "version" : "95.0.0"
       }
     },
     {

@@ -123,9 +123,9 @@ extension SyncSettingsView {
                         .multilineTextAlignment(.center)
                         .foregroundColor(Color(designSystemColor: .textPrimary))
                     Button(UserText.syncWithAnotherDeviceButton, action: model.scanQRCode)
-                        .buttonStyle(PrimaryButtonStyle(disabled: !model.isConnectingDevicesAvailable))
+                        .buttonStyle(PrimaryButtonStyle(disabled: !model.isCreatingAccountAvailable))
                         .frame(maxWidth: 310)
-                        .disabled(!model.isConnectingDevicesAvailable)
+                        .disabled(!model.isCreatingAccountAvailable)
                         .padding(.vertical, 16)
                 }
                 Spacer()
@@ -165,7 +165,7 @@ extension SyncSettingsView {
                     isRecoverSyncedDataSheetVisible = false
                 })
             })
-            .disabled(!model.isCreatingAccountAvailable)
+            .disabled(!model.isAccountRecoveryAvailable)
 
         } header: {
             Text(UserText.otherOptionsSectionHeader)

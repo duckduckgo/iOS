@@ -142,8 +142,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 params[PixelParameters.keychainErrorCode] = String(status)
             case .wireGuardCannotLocateTunnelFileDescriptor:
                 pixelEvent = .networkProtectionWireguardErrorCannotLocateTunnelFileDescriptor
-            case .wireGuardInvalidState:
+            case .wireGuardInvalidState(reason: let reason):
                 pixelEvent = .networkProtectionWireguardErrorInvalidState
+                params[PixelParameters.reason] = reason
             case .wireGuardDnsResolution:
                 pixelEvent = .networkProtectionWireguardErrorFailedDNSResolution
             case .wireGuardSetNetworkSettings(let error):

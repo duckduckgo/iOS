@@ -22,12 +22,11 @@ import UIKit
 
 public protocol SyncManagementViewModelDelegate: AnyObject {
 
-    func showSyncSetup()
     func showRecoverData()
     func showSyncWithAnotherDevice()
     func showRecoveryPDF()
     func shareRecoveryPDF()
-    func createAccountAndStartSyncing()
+    func createAccountAndStartSyncing(optionsViewModel: SyncSettingsViewModel)
     func confirmAndDisableSync() async -> Bool
     func confirmAndDeleteAllData() async -> Bool
     func copyCode()
@@ -35,7 +34,9 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
     func removeDevice(_ device: SyncSettingsViewModel.Device)
     func updateDeviceName(_ name: String)
     func refreshDevices(clearDevices: Bool)
-
+    func updateOptions()
+    func launchBookmarksViewController()
+    func launchAutofillViewController()
 }
 
 public class SyncSettingsViewModel: ObservableObject {
@@ -74,18 +75,25 @@ public class SyncSettingsViewModel: ObservableObject {
     }
 
     @Published public var devices = [Device]()
+    @Published public var isFaviconsFetchingEnabled = false
+    @Published public var isUnifiedFavoritesEnabled = true
+    @Published public var isSyncingDevices = false
+    @Published public var isSyncBookmarksPaused = false
+    @Published public var isSyncCredentialsPaused = false
+
     @Published var isBusy = false
     @Published var recoveryCode = ""
 
-    var setupFinishedState: TurnOnSyncViewModel.Result?
-
     public weak var delegate: SyncManagementViewModelDelegate?
+    private(set) var isOnDevEnvironment: Bool
+    private(set) var switchToProdEnvironment: () -> Void = {}
 
-    public init() { }
-
-    func enableSync() {
-        isBusy = true
-        delegate!.showSyncSetup()
+    public init(isOnDevEnvironment: @escaping () -> Bool, switchToProdEnvironment: @escaping () -> Void) {
+        self.isOnDevEnvironment = isOnDevEnvironment()
+        self.switchToProdEnvironment = { [weak self] in
+            switchToProdEnvironment()
+            self?.isOnDevEnvironment = isOnDevEnvironment()
+        }
     }
 
     func disableSync() {
@@ -132,37 +140,26 @@ public class SyncSettingsViewModel: ObservableObject {
         }
     }
 
-    // MARK: Called by the view controller
-
     public func syncEnabled(recoveryCode: String) {
         isBusy = false
         isSyncEnabled = true
         self.recoveryCode = recoveryCode
     }
 
-    public func setupFinished(_ model: TurnOnSyncViewModel) {
-        setupFinishedState = model.state
-        switch model.state {
-        case .turnOn:
-            delegate?.createAccountAndStartSyncing()
-
-        case .syncWithAnotherDevice:
-            delegate?.showSyncWithAnotherDevice()
-
-        case .recoverData:
-            delegate?.showRecoverData()
-
-        default:
-            isBusy = false
-        }
+    public func startSyncPressed() {
+        isBusy = true
+        delegate?.createAccountAndStartSyncing(optionsViewModel: self)
     }
 
-    public func codeCollectionCancelled() {
-        if setupFinishedState == .syncWithAnotherDevice {
-            delegate?.createAccountAndStartSyncing()
-        } else {
-            isBusy = false
-        }
+    public func manageBookmarks() {
+        delegate?.launchBookmarksViewController()
     }
 
+    public func manageLogins() {
+        delegate?.launchAutofillViewController()
+    }
+
+    public func recoverSyncDataPressed() {
+        delegate?.showRecoverData()
+    }
 }

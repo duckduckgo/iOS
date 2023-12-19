@@ -31,13 +31,18 @@ class ForgetDataAlert {
         let forgetTabsAndDataAction = UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { _ in
             forgetTabsAndDataHandler()
         }
-        
+
+        forgetTabsAndDataAction.accessibilityIdentifier = "alert.forget-data.confirm"
+
         let cancelAction = UIAlertAction(title: UserText.actionCancel, style: .cancel) { _ in
             cancelHandler?()
         }
 
+        cancelAction.accessibilityIdentifier = "alert.forget-data.cancel"
+
         alert.addAction(forgetTabsAndDataAction)
         alert.addAction(cancelAction)
+
         return alert
     }
     

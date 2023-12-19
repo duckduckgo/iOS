@@ -19,11 +19,13 @@
 
 import SwiftUI
 import DuckUI
+import DesignResourcesKit
 
 public struct SaveRecoveryKeyView: View {
 
     @Environment(\.presentationMode) var presentation
     @Environment(\.verticalSizeClass) var verticalSizeClass
+    @State private var isCopied = false
 
     var isCompact: Bool {
         verticalSizeClass == .compact
@@ -37,50 +39,67 @@ public struct SaveRecoveryKeyView: View {
 
     @ViewBuilder
     func recoveryInfo() -> some View {
-        ZStack {
-            VStack(spacing: 26) {
-                HStack(spacing: 16) {
-                    QRCodeView(string: model.key, size: 94, style: .dark)
-
-                    Text(model.key)
-                        .fontWeight(.light)
-                        .lineSpacing(1.6)
-                        .lineLimit(5)
-                        .applyKerning(2)
-                        .truncationMode(.tail)
-                        .monospaceSystemFont(ofSize: 16)
-                        .frame(maxWidth: .infinity)
-                }
-            }
-            .padding(.top, 20)
+        VStack(spacing: 26) {
+            Text(model.key)
+                .fontWeight(.light)
+                .lineSpacing(1.6)
+                .lineLimit(3)
+                .applyKerning(2)
+                .truncationMode(.tail)
+                .monospaceSystemFont(ofSize: 16)
+                .frame(maxWidth: .infinity)
+            codeButtons()
+        }
+        .padding(.top, 20)
             .padding(.horizontal, 20)
             .padding(.bottom, 12)
-        }
-        .background(RoundedRectangle(cornerRadius: 10).foregroundColor(.black.opacity(0.12)))
+            .background(RoundedRectangle(cornerRadius: 10).foregroundColor(.black.opacity(0.03)))
     }
 
     @ViewBuilder
-    func buttons() -> some View {
+    func codeButtons() -> some View {
         VStack(spacing: isCompact ? 4 : 8) {
-            Button("Save as PDF") {
+            Button(UserText.saveRecoveryCodeSaveAsPdfButton) {
                 model.showRecoveryPDFAction()
             }
-            .buttonStyle(PrimaryButtonStyle(compact: isCompact))
+            .buttonStyle(SecondaryButtonStyle(compact: isCompact))
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                .inset(by: 0.5)
+                .stroke(.blue, lineWidth: 1)
+                )
 
-            Button("Copy Key") {
+            Button(UserText.saveRecoveryCodeCopyCodeButton) {
                 model.copyKey()
+                isCopied = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    isCopied = false
+                }
             }
             .buttonStyle(SecondaryButtonStyle(compact: isCompact))
-
-            Button {
-                presentation.wrappedValue.dismiss()
-            } label: {
-                Text(UserText.notNowButton)
-            }
-            .buttonStyle(SecondaryButtonStyle(compact: isCompact))
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .inset(by: 0.5)
+                    .stroke(.blue, lineWidth: 1)
+            )
         }
-        .frame(maxWidth: 360)
-        .padding(.horizontal, 30)
+    }
+
+    @ViewBuilder
+    func nextButton() -> some View {
+        Button {
+            presentation.wrappedValue.dismiss()
+            model.onDismiss()
+        } label: {
+            Text(UserText.nextButton)
+        }
+        .buttonStyle(PrimaryButtonStyle(compact: isCompact))
+        .overlay(
+            isCopied ?
+            codeCopiedToast()
+            : nil
+        )
+        .padding(.horizontal, 20)
     }
 
     @ViewBuilder
@@ -89,28 +108,48 @@ public struct SaveRecoveryKeyView: View {
             Image("SyncDownloadRecoveryCode")
                 .padding(.bottom, 24)
 
-            Text(UserText.saveRecoveryTitle)
-                .font(.system(size: 28, weight: .bold))
+            Text(UserText.saveRecoveryCodeSheetTitle)
+                .daxTitle1()
                 .padding(.bottom, 28)
 
-            Text(UserText.recoveryMessage)
+            Text(UserText.saveRecoveryCodeSheetDescription)
                 .lineLimit(nil)
-                .font(.system(size: 16))
+                .daxBodyRegular()
                 .lineSpacing(1.32)
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 20)
 
             recoveryInfo()
+                .padding(.bottom, 20)
+            Text(UserText.saveRecoveryCodeSheetFooter)
+                .daxCaption()
+                .multilineTextAlignment(.center)
+                .foregroundColor(.primary.opacity(0.6))
         }
         .padding(.top, isCompact ? 0 : 56)
         .padding(.horizontal, 30)
     }
 
+    @ViewBuilder
+    func codeCopiedToast() -> some View {
+        ZStack(alignment: .leading) {
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color.black)
+                .frame(height: 45)
+            Text(UserText.saveRecoveryCodeSaveCodeCopiedToast)
+                .foregroundColor(.white)
+                .padding()
+
+        }
+        .padding(.bottom, 50)
+    }
+
+
     public var body: some View {
         UnderflowContainer {
             mainContent()
         } foregroundContent: {
-            buttons()
+            nextButton()
         }
     }
 

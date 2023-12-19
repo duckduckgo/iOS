@@ -1,6 +1,12 @@
 /* No comment provided by engineer. */
 "%@" = "%@";
 
+/* No comment provided by engineer. */
+"%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
+
+/* No comment provided by engineer. */
+"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Muokkaa";
 
@@ -103,6 +109,12 @@
 /* Share action */
 "action.title.share" = "Jaa";
 
+/* Settings label for bottom position for the address bar */
+"address.bar.bottom" = "Alareuna";
+
+/* Settings label for top position for the address bar */
+"address.bar.top" = "Suosituin";
+
 /* No comment provided by engineer. */
 "addWidget.button" = "Lisää widget";
 
@@ -124,6 +136,24 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Olemassa olevia kirjanmerkkejä ei kopioida.";
 
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Olet ylittänyt kirjanmerkkien synkronointirajan. Yritä poistaa joitakin kirjanmerkkejä. Kirjanmerkkejäsi ei varmuuskopioida ennen kuin tämä ongelma on ratkaistu.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Kirjanmerkkien synkronointi on keskeytetty";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Olet ylittänyt salasanojen synkronointirajan. Yritä poistaa joitakin salasanoja. Salasanojasi ei varmuuskopioida ennen kuin tämä ongelma on ratkaistu.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Salasanojen synkronointi on keskeytetty";
+
+/* Learn more button in alert */
+"alert.sync-paused-alert-learn-more-button" = "Lue lisää";
+
+/* Confirmation button in alert */
+"alert.sync-paused-alert-ok-button" = "OK";
+
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Lisätäänkö kaikki välilehdet kirjanmerkkeihin?";
 
@@ -141,6 +171,225 @@
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Avaa DuckDuckGo.";
+
+/* First part of about page content (note the trailing space) */
+"appTP.about.content1" = "You’ve probably heard about companies like Google and Facebook tracking you behind the scenes on third-party websites. But did you know they also track your personal information through apps on your device?\n\nIn 2022, DuckDuckGo found that ";
+
+/* Second part of about page content (note the trailing space) */
+"appTP.about.content2" = "over 85% of free iOS apps tested contained hidden trackers from other companies.";
+
+/* Third part of about page content (note the leading space) */
+"appTP.about.content3" = " Of the 395 apps tested, 60% sent data to Google. This happens even while you’re not using your device.\n\nTrackers in apps may have access to a lot more information than their website tracker cousins, such as your location down to which floor of a building you're on, how often you play games while at work, and when and how long you sleep each day. Even if you haven’t given apps explicit permission to collect data, they can still take it without your knowledge.\n\nTracking networks like Facebook and Google use these little pieces of information to build a digital profile about you. With it, tracking networks can manipulate what you see online and allow advertisers to bid on access to you based on your data.\n\nTrackers in apps is a BIG problem for privacy. But DuckDuckGo has a solution that can help.\n\nWhen enabled in the DuckDuckGo Privacy Browser app, App Tracking Protection blocks many trackers in other apps, not just the trackers we find on websites when you browse. These dual layers of protection reduce what companies know about you overall, so you can use your apps with more peace of mind, knowing you’re more protected.";
+
+/* Navigation Title for AppTP about page */
+"appTP.about.navTitle" = "About App Trackers";
+
+/* Title for AppTP about page */
+"appTP.about.title" = "What Are App Trackers?";
+
+/* Title for 'Report an Issue' button in the activity view. */
+"appTP.activityView.reportIssue" = "Report Issue";
+
+/* Text label for switch that turns blocking on or off for a tracker */
+"appTP.blockTrackerText" = "Block this Tracker";
+
+/* Detail string describing what AppTP is */
+"appTP.cell.detail" = "Estä sovellusseuranta laitteessa";
+
+/* String indicating AppTP is disabled when viewed from the settings screen */
+"appTP.cell.disabled" = "Pois käytöstä";
+
+/* String indicating AppTP is enabled when viewed from the settings screen */
+"appTP.cell.enabled" = "Käytössä";
+
+/* Info string informing the user what App Tracking Protection does. */
+"appTP.empty.disabled.info" = "Ota App Tracking Protection käyttöön, jotta voimme estää muiden sovellusten ärsyttävät seurantaohjelmat.";
+
+/* Info string informing the user we're looking for trackers in other apps. */
+"appTP.empty.enabled.heading" = "We’re blocking hidden trackers";
+
+/* Info string informing the user we're looking for trackers in other apps. */
+"appTP.empty.enabled.info" = "Come back soon to see a list of all the app trackers we’ve blocked.";
+
+/* First answer for AppTP FAQ page */
+"appTP.faq.answer1" = "App Tracking Protection blocks app trackers from other companies, like when Facebook tries to track you in a banking app. Companies may still track you in apps they own.";
+
+/* Second answer for AppTP FAQ page */
+"appTP.faq.answer2" = "Yes! App Tracking Protection works across all apps on your device to block the most common hidden trackers we find trying to collect your personal info.";
+
+/* Third answer for AppTP FAQ page */
+"appTP.faq.answer3" = "We currently only block the most common trackers that we find on iOS. This helps us to comprehensively test App Tracking Protection and lower frequency of app breakage, while blocking up to 70% of all tracking requests.";
+
+/* Fourth answer for AppTP FAQ page */
+"appTP.faq.answer4" = "You’ll be asked to set up a virtual private network (VPN) connection, but you don't need to install a VPN app for App Tracking Protection to work.\n\nThis permission, which works only on your device, allows App Tracking Protection to monitor network traffic so that it can block known trackers.";
+
+/* Fifth answer for AppTP FAQ page */
+"appTP.faq.answer5" = "You can use App Tracking Protection at the same time as using an IKEv2 protocol VPN app on an iOS device. You won’t be able to use App Tracking Protection on an iOS device if you’re using a VPN app that uses a different type of protocol, like WireGuard or OpenVPN type VPNs.";
+
+/* Sixth answer for AppTP FAQ page */
+"appTP.faq.answer6" = "A VPN sends your data from the device to its own server, where it secures and anonymizes your data from prying eyes. However, this allows the VPN company to see your network traffic.\n\nApp Tracking Protection is different. Instead of sending your data to a VPN server, App Tracking Protection works only on your device, sitting between your apps and the servers they talk to.\n\nWhenever App Tracking Protection recognizes a known tracker, it blocks the tracker from sending personal information (such as your IP address, activity, and device details) off your device. All other traffic reaches its destination, so your apps work normally.";
+
+/* Seventh answer for AppTP FAQ page */
+"appTP.faq.answer7" = "App Tracking Protection works only on your device and doesn’t send your data off your device to DuckDuckGo. We don’t collect or store any data from your apps.";
+
+/* First question for AppTP FAQ page */
+"appTP.faq.question1" = "How does App Tracking Protection work?";
+
+/* Second question for AppTP FAQ page */
+"appTP.faq.question2" = "Does App Tracking Protection block trackers in all apps on my device?";
+
+/* Third question for AppTP FAQ page */
+"appTP.faq.question3" = "Does App Tracking Protection block all app trackers?";
+
+/* Fourth question for AppTP FAQ page */
+"appTP.faq.question4" = "Why does App Tracking Protection use a VPN connection?";
+
+/* Fifth question for AppTP FAQ page */
+"appTP.faq.question5" = "Will App Tracking Protection work if I also use a VPN app?";
+
+/* Sixth question for AppTP FAQ page */
+"appTP.faq.question6" = "How is App Tracking Protection different from a VPN?";
+
+/* Seventh question for AppTP FAQ page */
+"appTP.faq.question7" = "Is my data private?";
+
+/* Title for AppTP FAQ page */
+"appTP.faq.title" = "App Tracking Protection FAQ";
+
+/* Do not translate. StringsDict entry -- Count part of string 'App Tracking Protection blocked x tracking attempts today' */
+"appTP.home.blockedCount" = "appTP.home.blockedCount";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the trailing space) */
+"appTP.home.blockedPrefix" = "App Tracking Protection estetty ";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the leading space) */
+"appTP.home.blockedSuffix" = " sovelluksissasi tänään.";
+
+/* Prefix of string 'App Tracking Protection disabled. Tap to re-enable.' (note the trailing space) */
+"appTP.home.disabledPrefix" = "App Tracking Protection disabled. ";
+
+/* Suffix of string 'App Tracking Protection disabled. Tap to re-enable.' */
+"appTP.home.disabledSuffix" = "Tap to continue blocking tracking attempts across your apps.";
+
+/* Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now' */
+"appTP.justNow" = "Juuri nyt";
+
+/* View to manage trackers for AppTP. Allows the user to turn trackers on or off. */
+"appTP.manageTrackers" = "Hallitse seurantaohjelmia";
+
+/* Button title for AppTP onboarding */
+"appTP.onboarding.continueButton" = "Continue";
+
+/* Button title for AppTP onboarding to enable AppTP */
+"appTP.onboarding.enableeButton" = "Enable App Tracking Protection";
+
+/* Button title for AppTP onboarding to learn more about AppTP */
+"appTP.onboarding.learnMoreButton" = "Learn More";
+
+/* First part of info on the first AppTP onboarding page */
+"appTP.onboarding.page1Info1" = "Over 85% of free iOS apps";
+
+/* Second part of info on the first AppTP onboarding page (note the leading space) */
+"appTP.onboarding.page1Info2" = " we’ve tested allow other companies to track your personal information, even when you’re sleeping.";
+
+/* Third part of info on the first AppTP onboarding page */
+"appTP.onboarding.page1Info3" = "See who we catch trying to track you in your apps and take back control.";
+
+/* First part of info on the second AppTP onboarding page (note the trailing space) */
+"appTP.onboarding.page2Info1" = "App Tracking Protection ";
+
+/* Second part of info on the second AppTP onboarding page */
+"appTP.onboarding.page2Info2" = "detects and blocks app trackers from other companies,";
+
+/* Third part of info on the second AppTP onboarding page (note the leading space) */
+"appTP.onboarding.page2Info3" = " like when Google attempts to track you in a health app.";
+
+/* Fourth part of info on the second AppTP onboarding page */
+"appTP.onboarding.page2Info4" = "It’s free,";
+
+/* Fifth part of info on the second AppTP onboarding page (note the leading and trailing space) */
+"appTP.onboarding.page2Info5" = " and you can enjoy your apps as you normally would. Working in the background, it helps ";
+
+/* Sixth part of info on the second AppTP onboarding page */
+"appTP.onboarding.page2Info6" = "protect you night and day.";
+
+/* First part of info on the third AppTP onboarding page */
+"appTP.onboarding.page3Info1" = "App Tracking Protection is not a VPN.";
+
+/* Second part of info on the third AppTP onboarding page (note the leading space) */
+"appTP.onboarding.page3Info2" = " However, your device will recognize it as one. This is because it uses a local VPN connection to work.";
+
+/* Third part of info on the third AppTP onboarding page (note the trailing space) */
+"appTP.onboarding.page3Info3" = "App Tracking Protection is different. ";
+
+/* Fourth part of info on the third AppTP onboarding page */
+"appTP.onboarding.page3Info4" = "It never routes app data through an external server.";
+
+/* Title for first AppTP onboarding page */
+"appTP.onboarding.title1" = "One easy step for better app privacy!";
+
+/* Title for second AppTP onboarding page */
+"appTP.onboarding.title2" = "How does it work?";
+
+/* Title for third AppTP onboarding page */
+"appTP.onboarding.title3" = "Who sees your data?";
+
+/* Breakage report app name label */
+"appTP.report.appLabel" = "Which app is having issues?";
+
+/* Breakage report app name placeholder */
+"appTP.report.appPlaceholder" = "App name";
+
+/* Breakage report category label */
+"appTP.report.categoryLabel" = "Mitä tapahtuu?";
+
+/* Breakage report comment label */
+"appTP.report.commentLabel" = "Comments";
+
+/* Breakage report comment placeholder */
+"appTP.report.commentPlaceholder" = "Add additional details";
+
+/* Breakage report footer explaining what is collected in the breakage report */
+"appTP.report.footer" = "In addition to the details entered into this form, your app issue report will contain:\n• A list of trackers blocked in the last 10 min\n• Whether App Tracking Protection is enabled\n• Aggregate DuckDuckGo app diagnostics";
+
+/* Breakage report submit button */
+"appTP.report.submit" = "Lähetä";
+
+/* Breakage report form title */
+"appTP.report.title" = "Report Issue";
+
+/* Breakage report succcess message */
+"appTP.report.toast" = "Kiitos! Palaute lähetetty.";
+
+/* Cancel button for 'Report an Issue' alert. */
+"appTP.reportAlert.cancel" = "Ei nyt";
+
+/* Confirm button for 'Report an Issue' alert. */
+"appTP.reportAlert.confirm" = "Ilmoita ongelmasta";
+
+/* Message for 'Report an Issue' alert. */
+"appTP.reportAlert.message" = "Let us know if you disabled App Tracking Protection for this specific tracker because it caused app issues. Your feedback helps us improve!";
+
+/* Title for 'Report an Issue' alert. */
+"appTP.reportAlert.title" = "Report Issue?";
+
+/* Toast notification diplayed after restoring the blocklist to default settings */
+"appTP.restoreDefaultsToast" = "Default settings restored";
+
+/* Button to restore the blocklist to its default state. */
+"appTP.restoreDefualts" = "Palauta oletusasetukset";
+
+/* Title for the App Tracking Protection feature */
+"appTP.title" = "Sovellusten seurantasuojaus";
+
+/* Text indicating when the tracker was last allowed. Example: Last attempt allowed (timeString) */
+"appTP.trackerAllowedTimestamp" = "Viimeisin sallittu yritys %@";
+
+/* Text indicating when the tracker was last blocked. Example: Last attempt blocked (timeString) */
+"appTP.trackerBlockedTimestamp" = "Viimeisin estetty yritys %@";
+
+/* Do not translate. StringsDict entry -- Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts */
+"appTP.trackingattempts" = "appTP.trackingattempts";
 
 /* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Kirjaudu sisään";
@@ -301,6 +550,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Kirjautumistieto poistettu";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Nollaa poissuljetut sivustot";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Peruuta";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Nollaa poissuljetut sivustot";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Jos nollaat poissuljetut sivustot, sinua pyydetään tallentamaan kirjautumistietosi, kun seuraavan kerran kirjaudut sisään jollekin näistä sivustoista.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Hae kirjautumistietoja";
 
@@ -335,7 +596,7 @@
 "autofill.logins.prompt.password.button.title" = "Sivuston %@ salasana";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Käytä tallennettuja kirjautumistietoja?";
+"autofill.logins.prompt.title" = "Käytetäänkö tallennettua salasanaa?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "kohteelle '%@'";
@@ -385,26 +646,23 @@
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Yksityinen Duck Address -käyttäjätunnus on poistettu";
 
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Älä kysy enää tällä sivustolla";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Kirjautumistiedot tallennetaan turvallisesti laitteellesi kirjautumistiedot-valikkoon.";
+"autofill.save-login.new-user.message" = "Salasanat tallennetaan turvallisesti laitteellesi kirjautumistiedot-valikkoon.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Haluatko, että DuckDuckGo tallentaa kirjautumistietosi?";
+"autofill.save-login.new-user.title" = "Haluatko, että DuckDuckGo tallentaa salasanasi?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Älä tallenna";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Tallenna kirjautumistiedot";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Tallennetaanko kirjautumistiedot?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Tallenna salasana";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Tallennetaanko salasana?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Näytä salasana";
@@ -413,7 +671,7 @@
 "autofill.signin.to.manage" = "%@ hallitaksesi Duck Address -osoitteita tällä laitteella.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo päivittää tämän laitteellesi tallennetun kirjautumistiedon.";
+"autofill.update-password.message" = "DuckDuckGo päivittää tämän tallennetun salasanan laitteellesi.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Päivitä salasana";
@@ -517,38 +775,8 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Tuo HTML-kirjanmerkkitiedosto toisesta selaimesta tai vie olemassa olevat kirjanmerkkisi.";
 
-/* Broken Site Category */
-"brokensite.category.comments" = "Kommentit eivät latautuneet";
-
-/* Broken Site Category */
-"brokensite.category.content" = "Sisältöä puuttuu";
-
-/* Broken Site Category */
-"brokensite.category.cookieprompt" = "Evästeen ponnahdusikkunaa ei hallittu";
-
-/* Broken Site Category */
-"brokensite.category.images" = "Kuvat eivät latautuneet";
-
-/* Broken Site Category */
-"brokensite.category.links" = "Linkit tai painikkeet eivät toimi";
-
-/* Broken Site Category */
-"brokensite.category.login" = "En pysty kirjautumaan sisään";
-
-/* Broken Site Category */
-"brokensite.category.other" = "Jotain muuta";
-
-/* Broken Site Category */
-"brokensite.category.paywall" = "Sivusto pyysi minua poistamaan käytöstä";
-
-/* Broken Site Category */
-"brokensite.category.unsupported" = "Selain ei ole yhteensopiva";
-
-/* Broken Site Category */
-"brokensite.category.videos" = "Videota ei toistettu";
-
-/* Broken Site Section Title */
-"brokensite.sectionTitle" = "KUVAILE MITÄ TAPAHTUI";
+/* No comment provided by engineer. */
+"bucket: %@" = "bucket: %@";
 
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Viime kuukausi";
@@ -782,6 +1010,39 @@
 "empty.search" = "Ei hakutuloksia";
 
 /* No comment provided by engineer. */
+"Error" = "Virhe";
+
+/* Button title to Sign In */
+"error.email-protection-sign-in.action" = "Kirjaudu sisään";
+
+/* Alert message */
+"error.email-protection-sign-in.body" = "Kirjaudu sisään uudelleen, jotta Email Protection -ominaisuudet otetaan käyttöön uudelleen tässä selaimessa.";
+
+/* Alert title */
+"error.email-protection-sign-in.title" = "Email Protection -virhe";
+
+/* Button title to open device settings */
+"error.insufficient-disk-space.action" = "Avaa asetukset";
+
+/* Alert message */
+"error.insufficient-disk-space.body" = "Näyttää siltä, että laitteesi tallennustila on loppunut. Vapauta tilaa jatkaaksesi.";
+
+/* Alert title */
+"error.insufficient-disk-space.title" = "Ei riittävästi tallennustilaa";
+
+/* Button title that is shutting down the app */
+"error.preemptive-crash.action" = "Sulje sovellus";
+
+/* Alert message */
+"error.preemptive-crash.body" = "Näyttää siltä, että sovelluksessa on ongelma, ja se on suljettava. Avaa uudelleen jatkaaksesi.";
+
+/* Alert title */
+"error.preemptive-crash.title" = "Sovellusongelma havaittu";
+
+/* Generic error message on a dialog for when the cause is not known. */
+"error.unknown.try.again" = "An unknown error has occurred";
+
+/* No comment provided by engineer. */
 "favorite" = "Suosikki";
 
 /* No comment provided by engineer. */
@@ -789,6 +1050,18 @@
 
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Poista";
+
+/* Display Mode for favorites */
+"favorites.settings.all-devices" = "Kaikki laitteen suosikit";
+
+/* Footer of the favorites settings table */
+"favorites.settings.footer" = "Valitse alkuperän perusteella, mitkä suosikit näytetään uudessa välilehdessä.";
+
+/* Header of the favorites settings table */
+"favorites.settings.header" = "Näytön asetukset";
+
+/* Display Mode for favorites */
+"favorites.settings.mobile-only" = "Vain mobiilisuosikit";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Mainosten ja ponnahdusikkunoiden esto";
@@ -1000,6 +1273,18 @@
 /* Home tab title */
 "homeTab.title" = "Koti";
 
+/* OK title for invite screen alert dismissal button */
+"invite.alert.ok.button" = "OK";
+
+/* Continue button on an invite dialog */
+"invite.dialog.continue.button" = "Continue";
+
+/* Get Started button on an invite dialog */
+"invite.dialog.get.started.button" = "Get Started";
+
+/* Message to show after user enters an unrecognized invite code */
+"invite.dialog.unrecognized.code.message" = "We didn’t recognize this Invite Code.";
+
 /* No comment provided by engineer. */
 "keyCommandAddBookmark" = "Lisää kirjanmerkki";
 
@@ -1066,14 +1351,14 @@
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "Macin DuckDuckGo tarjoaa kaipaamasi nopeuden, odottamasi selaintoiminnot ja luokkansa parhaat tietosuojaominaisuudet.";
 
-/* Body text for the macOS waitlist notification */
-"mac-waitlist.available.notification.body" = "Avaa kutsusi";
-
 /* Title for the macOS waitlist notification */
 "mac-waitlist.available.notification.title" = "Macin DuckDuckGo on valmis!";
 
 /* Title for the copy action */
 "mac-waitlist.copy" = "Kopioi";
+
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-computer-go-to" = "Siirry Windows-tietokoneella osoitteeseen:";
 
 /* Description text above the Share Link button */
 "mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Siirry Mac-tietokoneellasi osoitteeseen:";
@@ -1087,6 +1372,9 @@
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Windows-versio on tulossa pian!";
 
+/* Title for the macOS waitlist button redirecting to Windows waitlist */
+"mac-waitlist.join-waitlist-screen.windows-waitlist" = "Etsitkö Windows-versiota?";
+
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Selaa yksityisesti Mac-sovelluksellamme";
 
@@ -1097,7 +1385,7 @@
 "mac-waitlist.share-sheet.title" = "DuckDuckGo Mac";
 
 /* Title for the Mac Waitlist feature */
-"mac-waitlist.title" = "DuckDuckGo-työpöytäsovellus";
+"mac-waitlist.title" = "DuckDuckGo-sovellus Mac-laitteelle";
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Selausvalikko";
@@ -1114,8 +1402,134 @@
 /* Edit button */
 "navigation.title.edit" = "Muokkaa";
 
+/* String indicating NetP is connected when viewed from the settings screen */
+"netP.cell.connected" = "Connected";
+
+/* String indicating NetP is disconnected when viewed from the settings screen */
+"netP.cell.disconnected" = "Not connected";
+
+/* Title for the Network Protection feature */
+"netP.title" = "Network Protection";
+
+/* Message for the network protection invite dialog */
+"network.protection.invite.dialog.message" = "Enter your invite code to get started.";
+
+/* Title for the network protection invite screen */
+"network.protection.invite.dialog.title" = "You're invited to try Network Protection";
+
+/* Prompt for the network protection invite code text field */
+"network.protection.invite.field.prompt" = "Invite Code";
+
+/* Message explaining that netP is invite only */
+"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
+
+/* Message for the network protection invite success view */
+"network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
+
+/* Title for the network protection invite success view */
+"network.protection.invite.success.title" = "Success! You’re in.";
+
+/* Title text for an iOS quick action that opens VPN settings */
+"network.protection.quick-action.open-vpn" = "Avaa VPN";
+
+/* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
+"network.protection.status.connected.format" = "Connected - %@";
+
+/* The label for the NetP VPN when connecting */
+"network.protection.status.connecting" = "Connecting...";
+
+/* The label for the NetP VPN when disconnected */
+"network.protection.status.disconnected" = "Not connected";
+
+/* The label for the NetP VPN when disconnecting */
+"network.protection.status.disconnecting" = "Disconnecting...";
+
+/* Message label text for the netP status view */
+"network.protection.status.header.message" = "DuckDuckGo's VPN secures all of your device's Internet traffic anytime, anywhere.";
+
+/* Header title label text for the status view when netP is disconnected */
+"network.protection.status.header.title.off" = "Network Protection is Off";
+
+/* Header title label text for the status view when netP is connected */
+"network.protection.status.header.title.on" = "Network Protection is On";
+
+/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+"network.protection.status.menu.share.feedback" = "Share Feedback";
+
+/* Connection details label shown in NetworkProtection's status view. */
+"network.protection.status.view.connection.details" = "Connection Details";
+
+/* Generic connection failed error message shown in NetworkProtection's status view. */
+"network.protection.status.view.error.connection.failed.message" = "Please try again later.";
+
+/* Generic connection failed error title shown in NetworkProtection's status view. */
+"network.protection.status.view.error.connection.failed.title" = "Failed to Connect.";
+
+/* IP Address label shown in NetworkProtection's status view. */
+"network.protection.status.view.ip.address" = "IP Address";
+
+/* Location label shown in NetworkProtection's status view. */
+"network.protection.status.view.location" = "Location";
+
+/* Label shown on the title of the settings section in NetworkProtection's status view. */
+"network.protection.status.view.settings.section.title" = "Hallitse";
+
+/* Title label text for the status view when netP is disconnected */
+"network.protection.status.view.title" = "Network Protection";
+
+/* Title for the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.button.title" = "Ota ilmoitukset käyttöön";
+
+/* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.section.footer" = "Anna DuckDuckGon ilmoittaa sinulle, jos yhteys katkeaa tai VPN:n tila muuttuu.";
+
+/* List section footer for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.section.footer" = "Saat ilmoituksen, jos yhteytesi katkeaa tai VPN:n tila muuttuu.";
+
+/* Title for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.title" = "VPN-ilmoitukset";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.footer" = "Palauta VPN-yhteys automaattisesti keskeytyksen jälkeen.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.title" = "Aina käytössä";
+
+/* Title for the VPN Location screen's All Countries section. */
+"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Title for the VPN Location screen's Nearest Available selection item. */
+"network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
+
+/* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+
+/* Title for the VPN Location screen's Recommended section. */
+"network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Title for the VPN Notifications management screen. */
+"network.protection.vpn.notifications.title" = "VPN-ilmoitukset";
+
+/* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
+"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+
+/* Title for the Preferred Location VPN Settings item. */
+"network.protection.vpn.preferred.location.title" = "Preferred Location";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.footer" = "Network Protection estää DNS-vuodot internetpalveluntarjoajallesi ohjaamalla DNS-pyynnöt VPN-verkon kautta omalle välittäjällemme.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.title" = "Suojattu DNS";
+
+/* Title for the VPN Settings screen. */
+"network.protection.vpn.settings.title" = "VPN-asetukset";
+
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"Ok" = "OK";
 
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Hallitut evästeet";
@@ -1155,6 +1569,18 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Linkin avaamiseen tarvittavaa sovellusta ei löydy";
+
+/* No comment provided by engineer. */
+"Please enter which app on your device is broken." = "Ilmoita, mikä laitteesi sovellus on rikki.";
+
+/* Activate button */
+"pm.activate" = "Reactivate";
+
+/* Cancel button */
+"pm.cancel" = "Cancel";
+
+/* Deactivate button */
+"pm.deactivate" = "Deactivate";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Verkkosivustot käyttävät evästeitä, joilla pysyt kirjautuneena sisään. Kun teet sivustosta palonkestävän, evästeitä ei poisteta ja pysyt kirjautuneena sisään, vaikka käytät Liekki-painiketta. Estämme edelleen kolmannen osapuolen seurannan palonkestävillä sivustoilla.";
@@ -1214,9 +1640,6 @@
 "prompt.custom.url.scheme.title" = "Avataanko toisessa sovelluksessa?";
 
 /* No comment provided by engineer. */
-"report.brokensite.header" = "Anonyymin raportin lähettäminen toimimattomasta sivustosta auttaa meitä korjaamaan nämä ongelmat ja parantamaan sovellusta.";
-
-/* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Hae tai anna osoite";
 
 /* No comment provided by engineer. */
@@ -1225,8 +1648,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Suosikit";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "DuckDuckGo asettaa uudet standardit luottamukselle verkossa.\n\nDuckDuckGo-tietosuojaselain tarjoaa kaikki keskeiset tietosuojaominaisuudet nettihakujesi ja -selailusi turvaksi, kuten seurantapalvelinten eston, älykkäämmän salauksen ja yksityisen DuckDuckGo-haun.\n\nInternetin ei pitäisi tuntua karmivalta paikalta ja nettiyksityisyyden pitäisi olla yhtä helppoa kuin verhojen vetäminen ikkunan eteen.";
+/* about page */
+"settings.about.text" = "DuckDuckGo on vuonna 2008 perustettu riippumaton internetissä tietosuojaa tarjoava yritys niille, jotka ovat kyllästyneet siihen, että heitä seurataan netissä, ja haluavat yksinkertaisen ratkaisun. Olemme todiste siitä, että voit saada todellista tietosuojaa verkossa ilman kompromisseja.\n\nDuckDuckGo-selaimessa on kaikki parhaiden selainten ominaisuudet, kuten kirjanmerkit, välilehdet, salasanat ja paljon muuta, sekä yli [kymmenkunta tehokasta tietosuojausta](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) ei tarjolla oletuksena suosituimmissa selaimissa. Tämä ainutlaatuisen kattava tietosuoja auttaa turvaamaan haut, selaamisen, sähköpostin lähettämiseen ja muun toimintasi verkossa.\n\nTietosuojamme toimivat, vaikka et tietäisi mitään teknisistä yksityiskohdista tai osaisi käsitellä monimutkaisia asetuksia. Sinun tarvitsee vain vaihtaa selaimesi DuckDuckGohon kaikilla laitteillasi, ja saat tietosuojan oletuksena.\n\nJos kuitenkin haluat kurkistaa konepellin alle, lisätietoja DuckDuckGon tietosuojan toiminnasta on [ohjesivuillamme](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Lähetä raportti";
@@ -1245,6 +1668,9 @@
 
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Mikä verkkosivusto on viallinen?";
+
+/* No comment provided by engineer. */
+"sync.remove-device.message" = "\"%@\" ei enää pääse käsiksi synkronoituihin tietoihisi.";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Sulje koti-välilehti";
@@ -1318,6 +1744,57 @@
 /* Voice-search footer note with on-device privacy warning */
 "voiceSearch.footer.note" = "Ääni käsitellään laitteella. Sitä ei tallenneta eikä jaeta kenellekään, edes DuckDuckGolle.";
 
+/* Title for the button to enable push notifications in system settings */
+"waitlist.allow-notifications" = "Salli ilmoitukset";
+
+/* Body text for the waitlist notification */
+"waitlist.available.notification.body" = "Avaa kutsusi";
+
+/* Title for the copy action */
+"waitlist.copy" = "Kopioi";
+
+/* Label text for the invite code */
+"waitlist.invite-code" = "Kutsukoodi";
+
+/* Step title on the invite screen */
+"waitlist.invite-screen.step.title" = "Vaihe %d";
+
+/* Title for the invite code screen */
+"waitlist.invite-screen.youre-invited" = "Sinut on kutsuttu!";
+
+/* Title for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.join" = "Liity yksityiselle odotuslistalle";
+
+/* Temporary status text for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.joining" = "Liitytään odotuslistalle...";
+
+/* Title for the Share Link button */
+"waitlist.join-waitlist-screen.share-link" = "Jaa linkki";
+
+/* Notification text for the waitlist */
+"waitlist.joined.no-notification.get-notification" = "HALUAN ILMOITUKSEN";
+
+/* Title for the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.get-notification-confirmation-title" = "Haluatko saada ilmoituksen, kun on sinun vuorosi?";
+
+/* Cancel button in the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.no-thanks" = "Ei kiitos";
+
+/* Text used for the Notifications Disabled state */
+"waitlist.notification.disabled" = "Voimme ilmoittaa sinulle, kun on sinun vuorosi, mutta ilmoitukset ovat tällä hetkellä poissa käytöstä DuckDuckGossa.";
+
+/* Privacy disclaimer for the Waitlist feature */
+"waitlist.privacy-disclaimer" = "Sinun ei tarvitse jakaa henkilötietoja liittyäksesi jonotuslistalle. Varmistat paikkasi jonossa aikaleimalla, joka on olemassa vain laitteessasi. Näin voimme ilmoittaa sinulle, kun on sinun vuorosi.";
+
+/* Title for the queue screen */
+"waitlist.queue-screen.on-the-list" = "Olet odotuslistalla!";
+
+/* Title for the settings subtitle */
+"waitlist.settings.download-available" = "Lataus saatavilla";
+
+/* Title for the share sheet entry */
+"waitlist.share-sheet.title" = "Sinut on kutsuttu!";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Suosikki poistettu";
 
@@ -1341,4 +1818,52 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Viesti käyttäjältä %@:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Tervetuloa Duckin puolelle!";
+
+/* Title for the Windows waitlist notification */
+"windows-waitlist.available.notification.title" = "Hanki DuckDuckGo Windows-laitteeseesi!";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-1.description" = "Lataa tämä URL-osoite Windows-laitteessasi:";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-2.description" = "Avaa DuckDuckGo-asennusohjelma Lataukset-kohdasta, valitse Asenna ja kirjoita sitten kutsukoodisi.";
+
+/* Subtitle for the Windows Waitlist Invite screen */
+"windows-waitlist.invite-screen.subtitle" = "Oletko valmis käyttämään DuckDuckGota Windows-laitteessa?";
+
+/* Title for the Windows waitlist button redirecting to Mac waitlist */
+"windows-waitlist.join-waitlist-screen.mac-waitlist" = "Etsitkö Mac-versiota?";
+
+/* Title for the Join Windows Waitlist screen */
+"windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Kokeile Windows-laitteen DuckDuckGo-sovellusta!";
+
+/* Message for the alert to confirm enabling notifications */
+"windows-waitlist.joined.no-notification.get-notification-confirmation-message" = "Lähetämme sinulle ilmoituksen, kun DuckDuckGo-kopiosi on ladattavissa Windows-laitteeseen. ";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"windows-waitlist.joined.notifications-declined" = "Kutsusi kokeilla DuckDuckGon Windows-sovellusta saapuu tänne. Tarkista tilanne pian uudelleen. Voimme myös lähettää sinulle ilmoituksen, kun on sinun vuorosi.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"windows-waitlist.joined.notifications-enabled" = "Lähetämme sinulle ilmoituksen, kun DuckDuckGo-kopiosi on ladattavissa Windows-laitteeseen.";
+
+/* Title for the settings subtitle */
+"windows-waitlist.settings.browse-privately" = "Selaa yksityisesti Windows-sovelluksellamme";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"windows-waitlist.share-sheet.invite-code-message" = "Olet saanut kutsun!\n\nOletko valmis käyttämään DuckDuckGo'ta Windows-laitteessa?Vaihe 1\nLataa tämä URL-osoite Windows-laitteessasi:\nhttps://duckduckgo.com/windows\n\nVaihe 2\nAvaa DuckDuckGo-asennusohjelma Lataukset-kohdasta, valitse Asenna ja kirjoita sitten kutsukoodisi.\n\nKutsukoodi: %@";
+
+/* Message used when sharing to iMessage */
+"windows-waitlist.share-sheet.message" = "Oletko valmis aloittamaan yksityisen selaamisen Windows-laitteessa?\n\nLataa seuraavasta osoitteesta:\nhttps://duckduckgo.com/windows";
+
+/* Summary text for the Windows browser waitlist */
+"windows-waitlist.summary" = "DuckDuckGon Windows-sovellus tarjoaa kaiken, mitä tarvitset selaamiseen yksityisemmin. Siinä on yksityinen haku, jäljittäjien esto, pakotettu salaus ja evästeiden ponnahdusikkunoiden esto, ja tulossa on vielä lisää luokkansa parhaita suojauksia.";
+
+/* Title for the Windows Waitlist feature */
+"windows-waitlist.title" = "DuckDuckGo-sovellus Windowsille";
+
+/* Title for the Windows browser download link page */
+"windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows" = "Hanki DuckDuckGo Windowsille!";
 

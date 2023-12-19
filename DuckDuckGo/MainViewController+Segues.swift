@@ -22,6 +22,7 @@ import Common
 import Core
 import Bookmarks
 import BrowserServicesKit
+import PrivacyDashboard
 
 extension MainViewController {
 
@@ -87,7 +88,8 @@ extension MainViewController {
                                     bookmarksDatabase: self.bookmarksDatabase,
                                     bookmarksSearch: self.bookmarksCachingSearch,
                                     syncService: self.syncService,
-                                    syncDataProviders: self.syncDataProviders)
+                                    syncDataProviders: self.syncDataProviders,
+                                    appSettings: self.appSettings)
         }
         bookmarks.delegate = self
 
@@ -121,21 +123,37 @@ extension MainViewController {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
 
-        let storyboard = UIStoryboard(name: "Feedback", bundle: nil)
-        guard let controller: UINavigationController = storyboard.instantiateInitialViewController(),
-              let brokenSiteScreen = controller.topViewController as? ReportBrokenSiteViewController else {
-            assertionFailure()
+        let brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
+        guard let currentURL = currentTab?.url,
+              let privacyInfo = currentTab?.makePrivacyInfo(url: currentURL) else {
+            assertionFailure("Missing fundamental data")
             return
         }
-
-        brokenSiteScreen.brokenSiteInfo = currentTab?.getCurrentWebsiteInfo()
+        
+        let storyboard = UIStoryboard(name: "PrivacyDashboard", bundle: nil)
+        let controller = storyboard.instantiateInitialViewController { coder in
+             PrivacyDashboardViewController(coder: coder,
+                                           privacyInfo: privacyInfo,
+                                           privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+                                           contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
+                                           initMode: .reportBrokenSite)
+        }
+        
+        guard let controller = controller else {
+            assertionFailure("PrivacyDashboardViewController not initialised")
+            return
+        }
+        
+        currentTab?.privacyDashboard = controller
+        controller.popoverPresentationController?.delegate = controller
+        controller.brokenSiteInfo = brokenSiteInfo
 
         if UIDevice.current.userInterfaceIdiom == .pad {
             controller.modalPresentationStyle = .formSheet
         } else {
             controller.modalPresentationStyle = .pageSheet
         }
-
+        
         present(controller, animated: true)
     }
 
@@ -201,6 +219,14 @@ extension MainViewController {
         hideAllHighlightsIfNeeded()
         launchSettings {
             $0.openLogins(accountDetails: account)
+        }
+    }
+
+    func segueToSettingsSync() {
+        os_log(#function, log: .generalLog, type: .debug)
+        hideAllHighlightsIfNeeded()
+        launchSettings {
+            $0.showSync()
         }
     }
 

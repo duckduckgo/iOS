@@ -19,6 +19,7 @@
 
 import UIKit
 import WebKit
+import WidgetKit
 import Combine
 import Common
 import Core
@@ -78,20 +79,28 @@ class MainViewController: UIViewController {
     let previewsSource = TabPreviewsSource()
     let appSettings: AppSettings
     private var launchTabObserver: LaunchTabNotification.Observer?
-    
+
+#if APP_TRACKING_PROTECTION
     private let appTrackingProtectionDatabase: CoreDataDatabase
+#endif
+
     let bookmarksDatabase: CoreDataDatabase
     private weak var bookmarksDatabaseCleaner: BookmarkDatabaseCleaner?
-    private let favoritesViewModel: FavoritesListInteracting
+    private var favoritesViewModel: FavoritesListInteracting
     let syncService: DDGSyncing
     let syncDataProviders: SyncDataProviders
     private var localUpdatesCancellable: AnyCancellable?
     private var syncUpdatesCancellable: AnyCancellable?
+    private var favoritesDisplayModeCancellable: AnyCancellable?
     private var emailCancellables = Set<AnyCancellable>()
 
     private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
 
-    lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
+    lazy var menuBookmarksViewModel: MenuBookmarksInteracting = {
+        let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
+        viewModel.favoritesDisplayMode = appSettings.favoritesDisplayMode
+        return viewModel
+    }()
 
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
@@ -130,27 +139,50 @@ class MainViewController: UIViewController {
 
     var viewCoordinator: MainViewCoordinator!
 
+#if APP_TRACKING_PROTECTION
     init(
         bookmarksDatabase: CoreDataDatabase,
         bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
         appTrackingProtectionDatabase: CoreDataDatabase,
         syncService: DDGSyncing,
         syncDataProviders: SyncDataProviders,
-        appSettings: AppSettings
+        appSettings: AppSettings = AppUserDefaults()
     ) {
         self.appTrackingProtectionDatabase = appTrackingProtectionDatabase
         self.bookmarksDatabase = bookmarksDatabase
         self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
-        self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
+        self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         self.appSettings = appSettings
 
         super.init(nibName: nil, bundle: nil)
 
+        bindFavoritesDisplayMode()
         bindSyncService()
     }
+#else
+    init(
+        bookmarksDatabase: CoreDataDatabase,
+        bookmarksDatabaseCleaner: BookmarkDatabaseCleaner,
+        syncService: DDGSyncing,
+        syncDataProviders: SyncDataProviders,
+        appSettings: AppSettings
+    ) {
+        self.bookmarksDatabase = bookmarksDatabase
+        self.bookmarksDatabaseCleaner = bookmarksDatabaseCleaner
+        self.syncService = syncService
+        self.syncDataProviders = syncDataProviders
+        self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase, favoritesDisplayMode: appSettings.favoritesDisplayMode)
+        self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
+        self.appSettings = appSettings
+        
+        super.init(nibName: nil, bundle: nil)
+
+        bindSyncService()
+    }
+#endif
 
     fileprivate var tabCountInfo: TabCountInfo?
 
@@ -208,6 +240,7 @@ class MainViewController: UIViewController {
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
         registerForKeyboardNotifications()
+        registerForSyncPausedNotifications()
 
         applyTheme(ThemeManager.shared.currentTheme)
 
@@ -219,7 +252,6 @@ class MainViewController: UIViewController {
         registerForApplicationEvents()
         registerForCookiesManagedNotification()
         registerForSettingsChangeNotifications()
-        registerForOrientationChangeNotification()
 
         tabManager.cleanupTabsFaviconCache()
 
@@ -243,17 +275,6 @@ class MainViewController: UIViewController {
     override func performSegue(withIdentifier identifier: String, sender: Any?) {
         assertionFailure()
         super.performSegue(withIdentifier: identifier, sender: sender)
-    }
-
-    func registerForOrientationChangeNotification() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(orientationDidChange),
-                                               name: UIDevice.orientationDidChangeNotification,
-                                               object: nil)
-    }
-
-    @objc func orientationDidChange() {
-        onAddressBarPositionChanged()
     }
 
     func loadSuggestionTray() {
@@ -317,6 +338,46 @@ class MainViewController: UIViewController {
                                                selector: #selector(keyboardWillChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
+    }
+
+    private func registerForSyncPausedNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showSyncPausedError),
+            name: SyncBookmarksAdapter.bookmarksSyncLimitReached,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showSyncPausedError),
+            name: SyncCredentialsAdapter.credentialsSyncLimitReached,
+            object: nil)
+    }
+
+    @objc private func showSyncPausedError(_ notification: Notification) {
+        Task {
+            await MainActor.run {
+                var title = UserText.syncBookmarkPausedAlertTitle
+                var description = UserText.syncBookmarkPausedAlertDescription
+                if notification.name == SyncCredentialsAdapter.credentialsSyncLimitReached {
+                    title = UserText.syncCredentialsPausedAlertTitle
+                    description = UserText.syncCredentialsPausedAlertDescription
+                }
+                if self.presentedViewController is SyncSettingsViewController {
+                    return
+                }
+                self.presentedViewController?.dismiss(animated: true)
+                let alert = UIAlertController(title: title,
+                                              message: description,
+                                              preferredStyle: .alert)
+                let learnMoreAction = UIAlertAction(title: UserText.syncPausedAlertLearnMoreButton, style: .default) { _ in
+                    self.segueToSettingsSync()
+                }
+                let okAction = UIAlertAction(title: UserText.syncPausedAlertOkButton, style: .cancel)
+                alert.addAction(learnMoreAction)
+                alert.addAction(okAction)
+                self.present(alert, animated: true)
+            }
+        }
     }
 
     func registerForSettingsChangeNotifications() {
@@ -423,6 +484,20 @@ class MainViewController: UIViewController {
                                                                                   action: #selector(quickSaveBookmarkLongPress(gesture:))))
         gestureBookmarksButton.delegate = self
         gestureBookmarksButton.image = UIImage(named: "Bookmarks")
+    }
+
+    private func bindFavoritesDisplayMode() {
+        favoritesDisplayModeCancellable = NotificationCenter.default.publisher(for: AppUserDefaults.Notifications.favoritesDisplayModeChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self else {
+                    return
+                }
+                self.menuBookmarksViewModel.favoritesDisplayMode = self.appSettings.favoritesDisplayMode
+                self.favoritesViewModel.favoritesDisplayMode = self.appSettings.favoritesDisplayMode
+                self.homeController?.collectionView.reloadData()
+                WidgetCenter.shared.reloadAllTimelines()
+            }
     }
 
     private func bindSyncService() {
@@ -556,10 +631,22 @@ class MainViewController: UIViewController {
         AppDependencyProvider.shared.homePageConfiguration.refresh()
 
         let tabModel = currentTab?.tabModel
+
+#if APP_TRACKING_PROTECTION
         let controller = HomeViewController.loadFromStoryboard(model: tabModel!,
                                                                favoritesViewModel: favoritesViewModel,
+                                                               appSettings: appSettings,
+                                                               syncService: syncService,
+                                                               syncDataProviders: syncDataProviders,
                                                                appTPDatabase: appTrackingProtectionDatabase)
-        
+#else
+        let controller = HomeViewController.loadFromStoryboard(model: tabModel!,
+                                                               favoritesViewModel: favoritesViewModel,
+                                                               appSettings: appSettings,
+                                                               syncService: syncService,
+                                                               syncDataProviders: syncDataProviders)
+#endif
+
         homeController = controller
 
         controller.chromeDelegate = self
@@ -595,10 +682,10 @@ class MainViewController: UIViewController {
     func onQuickFirePressed() {
         wakeLazyFireButtonAnimator()
         
-        self.forgetAllWithAnimation {}
-        self.dismiss(animated: true)
+        forgetAllWithAnimation {}
+        dismiss(animated: true)
         if KeyboardSettings().onAppLaunch {
-            self.enterSearch()
+            enterSearch()
         }
     }
     
@@ -696,8 +783,8 @@ class MainViewController: UIViewController {
         allowContentUnderflow = false
         request()
         guard let tab = currentTab else { fatalError("no tab") }
-        select(tab: tab)
         dismissOmniBar()
+        select(tab: tab)
     }
 
     private func addTab(url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) {
@@ -913,7 +1000,7 @@ class MainViewController: UIViewController {
         suggestionTrayController?.didHide()
     }
     
-    fileprivate func launchAutofillLogins(with currentTabUrl: URL? = nil) {
+    func launchAutofillLogins(with currentTabUrl: URL? = nil) {
         let appSettings = AppDependencyProvider.shared.appSettings
         let autofillSettingsViewController = AutofillLoginSettingsListViewController(
             appSettings: appSettings,
@@ -1081,6 +1168,7 @@ class MainViewController: UIViewController {
     @objc
     private func onDuckDuckGoEmailSignOut(_ notification: Notification) {
         fireEmailPixel(.emailDisabled, notification: notification)
+        presentEmailProtectionSignInAlertIfNeeded(notification)
         if let object = notification.object as? EmailManager,
            let emailManager = syncDataProviders.settingsAdapter.emailManager,
            object !== emailManager {
@@ -1088,7 +1176,18 @@ class MainViewController: UIViewController {
             syncService.scheduler.notifyDataChanged()
         }
     }
-    
+
+    private func presentEmailProtectionSignInAlertIfNeeded(_ notification: Notification) {
+        guard let userInfo = notification.userInfo as? [String: String],
+            userInfo[EmailManager.NotificationParameter.isForcedSignOut] != nil else {
+            return
+        }
+        let alertController = CriticalAlerts.makeEmailProtectionSignInAlert()
+        dismiss(animated: true) {
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+
     private func fireEmailPixel(_ pixel: Pixel.Event, notification: Notification) {
         var pixelParameters: [String: String] = [:]
         
@@ -1374,7 +1473,7 @@ extension MainViewController: OmniBarDelegate {
     func onSharePressed() {
         hideSuggestionTray()
         guard let link = currentTab?.link else { return }
-        currentTab?.onShareAction(forLink: link, fromView: viewCoordinator.omniBar.shareButton, orginatedFromMenu: false)
+        currentTab?.onShareAction(forLink: link, fromView: viewCoordinator.omniBar.shareButton)
     }
 
     func onShareLongPressed() {

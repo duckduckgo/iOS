@@ -26,26 +26,122 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
     fileprivate var monitor = Monitor<SyncManagementViewModelDelegate>()
 
     lazy var model: SyncSettingsViewModel = {
-        let model = SyncSettingsViewModel()
+        let model = SyncSettingsViewModel(isOnDevEnvironment: { false }, switchToProdEnvironment: {})
         model.delegate = self
         return model
     }()
 
-    func test_WhenSyncIsNotSetup_AndEnableSyncIsTriggered_ThenManagerBecomesBusy_AndSetupIsShown() {
-        model.enableSync()
+    var createAccountAndStartSyncingCalled = false
+    var caprturedOptionModel: SyncSettingsViewModel?
+
+    func testWhenSingleDeviceSetUpPressed_ThenManagerBecomesBusy_AndAccounCreationRequested() {
+        model.startSyncPressed()
         XCTAssertTrue(model.isBusy)
 
+        XCTAssertTrue(createAccountAndStartSyncingCalled)
+        XCTAssertNotNil(caprturedOptionModel)
+    }
+
+    func testWhenShowRecoveryPDFPressed_ShowRecoveryPDFIsShown() {
+        model.delegate?.showRecoveryPDF()
+
         // You can either test one individual call was made x number of times or check for a whole number of calls
-        monitor.assert(#selector(showSyncSetup).description, calls: 1)
+        monitor.assert(#selector(showRecoveryPDF).description, calls: 1)
         monitor.assertCalls([
-            #selector(showSyncSetup).description: 1
+            #selector(showRecoveryPDF).description: 1
         ])
     }
 
+    func testWhenScanQRCodePressed_ThenSyncWithAnotherDeviceViewIsShown() {
+        model.scanQRCode()
+
+        // You can either test one individual call was made x number of times or check for a whole number of calls
+        monitor.assert(#selector(showSyncWithAnotherDevice).description, calls: 1)
+        monitor.assertCalls([
+            #selector(showSyncWithAnotherDevice).description: 1
+        ])
+    }
+
+    func testWhenCopyCodePressed_CodeIsCopied() {
+        model.copyCode()
+
+        // You can either test one individual call was made x number of times or check for a whole number of calls
+        monitor.assert(#selector(copyCode).description, calls: 1)
+        monitor.assertCalls([
+            #selector(copyCode).description: 1
+        ])
+    }
+
+
+    func testWhenManageBookmarkPressed_BookmarkVCIsLaunched() {
+        model.manageBookmarks()
+
+        // You can either test one individual call was made x number of times or check for a whole number of calls
+        monitor.assert(#selector(launchBookmarksViewController).description, calls: 1)
+        monitor.assertCalls([
+            #selector(launchBookmarksViewController).description: 1
+        ])
+    }
+
+    func testWhenManageLoginsPressed_LoginsVCIsLaunched() {
+        model.manageLogins()
+
+        // You can either test one individual call was made x number of times or check for a whole number of calls
+        monitor.assert(#selector(launchAutofillViewController).description, calls: 1)
+        monitor.assertCalls([
+            #selector(launchAutofillViewController).description: 1
+        ])
+    }
+
+    func testWhenSaveRecoveryPDFPressed_recoveryMethodShown() {
+        model.saveRecoveryPDF()
+
+        // You can either test one individual call was made x number of times or check for a whole number of calls
+        monitor.assert(#selector(shareRecoveryPDF).description, calls: 1)
+        monitor.assertCalls([
+            #selector(shareRecoveryPDF).description: 1
+        ])
+    }
+
+    func testWhenManageBookmarksCalled_BookmarksVCIsLaunched() {
+        model.manageBookmarks()
+
+        // You can either test one individual call was made x number of times or check for a whole number of calls
+        monitor.assert(#selector(launchBookmarksViewController).description, calls: 1)
+        monitor.assertCalls([
+            #selector(launchBookmarksViewController).description: 1
+        ])
+    }
+
+    func testWhenManageLogindCalled_AutofillVCIsLaunched() {
+        model.manageLogins()
+
+        // You can either test one individual call was made x number of times or check for a whole number of calls
+        monitor.assert(#selector(launchAutofillViewController).description, calls: 1)
+        monitor.assertCalls([
+            #selector(launchAutofillViewController).description: 1
+        ])
+    }
+
+
+    func testWhenRecoverSyncDataPressed_RecoverDataViewShown() {
+        model.recoverSyncDataPressed()
+
+        // You can either test one individual call was made x number of times or check for a whole number of calls
+        monitor.assert(#selector(showRecoverData).description, calls: 1)
+        monitor.assertCalls([
+            #selector(showRecoverData).description: 1
+        ])
+    }
     // MARK: Delegate functions
 
-    func showSyncSetup() {
+    func showSyncWithAnotherDeviceEnterText() {
         monitor.incrementCalls(function: #function.cleaningFunctionName())
+    }
+
+   func createAccountAndStartSyncing(optionsViewModel: SyncSettingsViewModel) {
+        createAccountAndStartSyncingCalled = true
+        caprturedOptionModel = optionsViewModel
     }
 
     func showRecoverData() {
@@ -61,10 +157,6 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
     }
 
     func showRecoveryPDF() {
-        monitor.incrementCalls(function: #function.cleaningFunctionName())
-    }
-
-    func createAccountAndStartSyncing() {
         monitor.incrementCalls(function: #function.cleaningFunctionName())
     }
 
@@ -100,6 +192,18 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
     }
 
     func refreshDevices(clearDevices: Bool) {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+    }
+
+    func updateOptions() {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+    }
+
+    func launchBookmarksViewController() {
+        monitor.incrementCalls(function: #function.cleaningFunctionName())
+    }
+
+    func launchAutofillViewController() {
         monitor.incrementCalls(function: #function.cleaningFunctionName())
     }
 

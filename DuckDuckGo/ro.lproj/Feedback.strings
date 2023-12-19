@@ -10,9 +10,6 @@
 /* Class = "UIButton"; normalTitle = "No Thanks! I’m Done"; ObjectID = "A1s-GY-hbq"; */
 "A1s-GY-hbq.normalTitle" = "Nu mulțumesc! Am terminat";
 
-/* Class = "UIBarButtonItem"; title = "Close"; ObjectID = "cZl-qB-kSL"; */
-"cZl-qB-kSL.title" = "Închidere";
-
 /* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "D8A-B7-Dqu"; */
 "D8A-B7-Dqu.title" = "Partajează feedback";
 
@@ -27,9 +24,6 @@
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "JF8-Ow-zXL"; */
 "JF8-Ow-zXL.title" = "Înapoi";
-
-/* Class = "UIBarButtonItem"; title = "Submit"; ObjectID = "jr6-Al-4fr"; */
-"jr6-Al-4fr.title" = "Trimite";
 
 /* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "lsB-Kq-U8p"; */
 "lsB-Kq-U8p.normalTitle" = "Trimite";
@@ -54,12 +48,6 @@
 
 /* Class = "UITextField"; placeholder = "Which website is broken?"; ObjectID = "TMj-NM-j3b"; */
 "TMj-NM-j3b.placeholder" = "Ce site este defect?";
-
-/* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
-"WjT-HM-yim.title" = "Raportați site-ul defect";
-
-/* Class = "UILabel"; text = "Broken Site Reason"; ObjectID = "Wx3-Vb-ItS"; */
-"Wx3-Vb-ItS.text" = "Motivul pentru care site-ul nu funcționează";
 
 /* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "Xb0-Zu-opM"; */
 "Xb0-Zu-opM.title" = "Partajează feedback";

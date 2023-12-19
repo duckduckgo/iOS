@@ -1,0 +1,38 @@
+appId: com.duckduckgo.mobile.ios
+tags:
+    - sync
+
+---
+
+# Clear and launch
+- clearState
+- launchApp
+
+# Run onboarding Flow
+- runFlow: 
+    when: 
+      visible: 
+        text: "Let’s Do It!"
+        index: 0
+    file: ../shared/onboarding.yaml
+
+# Set Internal User
+- tapOn: Settings
+- runFlow:
+    file: ../shared/set_internal_user_from_settings.yaml
+
+# Create account
+- runFlow:
+    file: ../shared/sync_create.yaml
+
+# Log Out
+- runFlow:
+    file: ../shared/sync_logout.yaml
+
+# Recover Data
+- runFlow:
+    file: ../shared/sync_recover_data.yaml
+
+# Clean up
+- runFlow:
+    file: ../shared/sync_delete.yaml

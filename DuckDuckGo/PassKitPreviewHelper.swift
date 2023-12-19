@@ -34,8 +34,9 @@ class PassKitPreviewHelper: FilePreview {
         do {
             let data = try Data(contentsOf: self.filePath)
             let pass = try PKPass(data: data)
-            let controller = PKAddPassesViewController(pass: pass)!
-            viewController?.present(controller, animated: true)
+            if let controller = PKAddPassesViewController(pass: pass) {
+                viewController?.present(controller, animated: true)
+            }
         } catch {
             os_log("Can't present passkit: %s", type: .debug, error.localizedDescription)
         }

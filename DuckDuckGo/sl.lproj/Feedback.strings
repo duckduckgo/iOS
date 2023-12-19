@@ -10,9 +10,6 @@
 /* Class = "UIButton"; normalTitle = "No Thanks! I’m Done"; ObjectID = "A1s-GY-hbq"; */
 "A1s-GY-hbq.normalTitle" = "Ne, hvala! Zaključil/a sem";
 
-/* Class = "UIBarButtonItem"; title = "Close"; ObjectID = "cZl-qB-kSL"; */
-"cZl-qB-kSL.title" = "Zapri";
-
 /* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "D8A-B7-Dqu"; */
 "D8A-B7-Dqu.title" = "Deli povratne informacije";
 
@@ -27,9 +24,6 @@
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "JF8-Ow-zXL"; */
 "JF8-Ow-zXL.title" = "Nazaj";
-
-/* Class = "UIBarButtonItem"; title = "Submit"; ObjectID = "jr6-Al-4fr"; */
-"jr6-Al-4fr.title" = "Potrdi";
 
 /* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "lsB-Kq-U8p"; */
 "lsB-Kq-U8p.normalTitle" = "Potrdi";
@@ -54,12 +48,6 @@
 
 /* Class = "UITextField"; placeholder = "Which website is broken?"; ObjectID = "TMj-NM-j3b"; */
 "TMj-NM-j3b.placeholder" = "Katera spletna stran je poškodovana?";
-
-/* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
-"WjT-HM-yim.title" = "Prijavi nedelujočo stran";
-
-/* Class = "UILabel"; text = "Broken Site Reason"; ObjectID = "Wx3-Vb-ItS"; */
-"Wx3-Vb-ItS.text" = "Vzrok za nedelujočo stran";
 
 /* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "Xb0-Zu-opM"; */
 "Xb0-Zu-opM.title" = "Deli povratne informacije";

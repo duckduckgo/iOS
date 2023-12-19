@@ -472,6 +472,7 @@ class OmniBar: UIView {
     }
 
     @IBAction func onSettingsButtonPressed(_ sender: Any) {
+        Pixel.fire(pixel: .addressBarSettings)
         omniDelegate?.onSettingsPressed()
     }
 
@@ -500,6 +501,7 @@ class OmniBar: UIView {
     }
     
     @IBAction func onSharePressed(_ sender: Any) {
+        Pixel.fire(pixel: .addressBarShare)
         omniDelegate?.onSharePressed()
     }
     

@@ -22,89 +22,38 @@ import DuckUI
 
 public struct DeviceConnectedView: View {
 
-    @Environment(\.verticalSizeClass) var verticalSizeClass
+    @Environment(\.presentationMode) var presentation
 
-    var isCompact: Bool {
-        verticalSizeClass == .compact
-    }
-
-    @State var showRecoveryPDF = false
-
-    let saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel
-    let devices: [SyncSettingsViewModel.Device]
-
-    public init(_ saveRecoveryKeyViewModel: SaveRecoveryKeyViewModel, devices: [SyncSettingsViewModel.Device]) {
-        self.saveRecoveryKeyViewModel = saveRecoveryKeyViewModel
-        self.devices = devices
-    }
+    public init() {}
 
     @ViewBuilder
     func deviceSyncedView() -> some View {
         UnderflowContainer {
             VStack(spacing: 0) {
-                Image("SyncSuccess")
-                    .padding(.bottom, 20)
+                Image("Sync-Start-128")
+                    .padding(20)
 
-                Text(UserText.deviceSyncedTitle)
-                    .font(.system(size: 28, weight: .bold))
+                Text(UserText.deviceSyncedSheetTitle)
+                    .daxTitle1()
                     .padding(.bottom, 24)
-
-                ZStack {
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(.black.opacity(0.14))
-
-                    ScrollView {
-                        VStack(spacing: 0) {
-                            ForEach(devices.indices, id: \.self) { deviceIndex in
-
-                                HStack(spacing: 0) {
-                                    Image(systemName: "checkmark.circle")
-                                        .padding(.horizontal, 18)
-                                    Text(devices[deviceIndex].name)
-                                    Spacer()
-                                }
-                                .frame(height: 44)
-
-                                if deviceIndex + 1 < devices.count {
-                                    Divider()
-                                        .padding(.leading, 52)
-                                }
-                            }
-                        }
-                    }
-                }
-                .padding(.bottom, 20)
-
-                Text(UserText.deviceSyncedMessage)
-                    .lineLimit(nil)
-                    .multilineTextAlignment(.center)
-
             }
             .padding(.horizontal, 20)
+            .padding(.top, 56)
         } foregroundContent: {
             Button {
-                withAnimation {
-                    self.showRecoveryPDF = true
-                }
+                presentation.wrappedValue.dismiss()
             } label: {
-                Text(UserText.nextButton)
+                Text(UserText.doneButton)
             }
             .buttonStyle(PrimaryButtonStyle())
             .frame(maxWidth: 360)
             .padding(.horizontal, 30)
         }
-        .padding(.top, isCompact ? 0 : 56)
         .padding(.bottom)
     }
 
     public var body: some View {
-        if showRecoveryPDF {
-            SaveRecoveryKeyView(model: saveRecoveryKeyViewModel)
-                .transition(.move(edge: .trailing))
-        } else {
-            deviceSyncedView()
-                .transition(.move(edge: .leading))
-        }
+        deviceSyncedView()
+            .transition(.move(edge: .leading))
     }
-
 }

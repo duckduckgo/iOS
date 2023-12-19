@@ -35,6 +35,10 @@ import TrackerRadarKit
 import Networking
 import SecureStorage
 
+#if NETWORK_PROTECTION
+import NetworkProtection
+#endif
+
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
 class TabViewController: UIViewController {
@@ -82,7 +86,7 @@ class TabViewController: UIViewController {
 
     private(set) var webView: WKWebView!
     private lazy var appRatingPrompt: AppRatingPrompt = AppRatingPrompt()
-    private weak var privacyDashboard: PrivacyDashboardViewController?
+    public weak var privacyDashboard: PrivacyDashboardViewController?
     
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache
     let appSettings: AppSettings
@@ -90,6 +94,7 @@ class TabViewController: UIViewController {
     lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var internalUserDecider = AppDependencyProvider.shared.internalUserDecider
 
+    private lazy var autofillNeverPromptWebsitesManager = AppDependencyProvider.shared.autofillNeverPromptWebsitesManager
     private lazy var autofillWebsiteAccountMatcher = AutofillWebsiteAccountMatcher(autofillUrlMatcher: AutofillDomainNameUrlMatcher(),
                                                                                    tld: TabViewController.tld)
     private(set) var tabModel: Tab
@@ -115,12 +120,20 @@ class TabViewController: UIViewController {
 
     private var trackersInfoWorkItem: DispatchWorkItem?
     
+#if NETWORK_PROTECTION
+    private let netPConnectionObserver = ConnectionStatusObserverThroughSession()
+    private var netPConnectionObserverCancellable: AnyCancellable?
+    private var netPConnectionStatus: ConnectionStatus = .default
+#endif
+
     // Required to know when to disable autofill, see SaveLoginViewModel for details
     // Stored in memory on TabViewController for privacy reasons
     private var domainSaveLoginPromptLastShownOn: String?
     // Required to prevent fireproof prompt presenting before autofill save login prompt
     private var saveLoginPromptLastDismissed: Date?
     private var saveLoginPromptIsPresenting: Bool = false
+
+    private var cachedRuntimeConfigurationForDomain: [String: String?] = [:]
 
     // If no trackers dax dialog was shown recently in this tab, ie without the user navigating somewhere else, e.g. backgrounding or tab switcher
     private var woShownRecently = false
@@ -303,6 +316,10 @@ class TabViewController: UIViewController {
         if #available(iOS 16.4, *) {
             registerForInspectableWebViewNotifications()
         }
+
+#if NETWORK_PROTECTION
+        observeNetPConnectionStatusChanges()
+#endif
     }
 
     @available(iOS 16.4, *)
@@ -322,6 +339,12 @@ class TabViewController: UIViewController {
 #endif
     }
 
+    private func observeNetPConnectionStatusChanges() {
+        netPConnectionObserverCancellable = netPConnectionObserver.publisher
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.netPConnectionStatus, onWeaklyHeld: self)
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // The email manager is pulled from the main view controller, so reconnect it now, otherwise, it's nil
@@ -335,6 +358,8 @@ class TabViewController: UIViewController {
 
     override func buildActivities() -> [UIActivity] {
         let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
+        viewModel.favoritesDisplayMode = appSettings.favoritesDisplayMode
+
         var activities: [UIActivity] = [SaveBookmarkActivity(controller: self,
                                                              viewModel: viewModel)]
 
@@ -614,6 +639,7 @@ class TabViewController: UIViewController {
 
     public func reload() {
         updateContentMode()
+        cachedRuntimeConfigurationForDomain = [:]
         webView.reload()
         privacyDashboard?.dismiss(animated: true)
     }
@@ -675,7 +701,7 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
             privacyDashboard = controller
-            privacyDashboard?.tabViewController = self
+            privacyDashboard?.brokenSiteInfo = getCurrentWebsiteInfo()
         }
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
@@ -701,8 +727,10 @@ class TabViewController: UIViewController {
         PrivacyDashboardViewController(coder: coder,
                                        privacyInfo: privacyInfo,
                                        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-                                       contentBlockingManager: ContentBlocking.shared.contentBlockingManager)
+                                       contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
+                                       initMode: .privacyDashboard)
     }
+    
     private func addTextSizeObserver() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onTextSizeChange),
@@ -764,7 +792,7 @@ class TabViewController: UIViewController {
         onPrivacyInfoChanged()
     }
     
-    private func makePrivacyInfo(url: URL) -> PrivacyInfo? {
+    public func makePrivacyInfo(url: URL) -> PrivacyInfo? {
         guard let host = url.host else { return nil }
         
         let entity = ContentBlocking.shared.trackerDataManager.trackerData.findEntity(forHost: host)
@@ -866,7 +894,10 @@ class TabViewController: UIViewController {
         
     public func getCurrentWebsiteInfo() -> BrokenSiteInfo {
         let blockedTrackerDomains = privacyInfo?.trackerInfo.trackersBlocked.compactMap { $0.domain } ?? []
-        
+
+        let configuration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
+        let protectionsState = configuration.isFeature(.contentBlocking, enabledForDomain: url?.host)
+
         return BrokenSiteInfo(url: url,
                               httpsUpgrade: httpsForced,
                               blockedTrackerDomains: blockedTrackerDomains,
@@ -874,7 +905,8 @@ class TabViewController: UIViewController {
                               isDesktop: tabModel.isDesktop,
                               tdsETag: ContentBlocking.shared.contentBlockingManager.currentMainRules?.etag ?? "",
                               ampUrl: linkProtection.lastAMPURLString,
-                              urlParametersRemoved: linkProtection.urlParametersRemoved)
+                              urlParametersRemoved: linkProtection.urlParametersRemoved,
+                              protectionsState: protectionsState)
     }
     
     public func print() {
@@ -1052,6 +1084,8 @@ extension TabViewController: WKNavigationDelegate {
                     } cancelHandler: {
                         decisionHandler(.cancel)
                     }
+                    // Rewrite the current URL to prevent spoofing from download URLs
+                    self.chromeDelegate?.omniBar.textField.text = "about:blank"
                 }
             } else {
                 Pixel.fire(pixel: .unhandledDownload)
@@ -1090,11 +1124,18 @@ extension TabViewController: WKNavigationDelegate {
         linkProtection.setMainFrameUrl(nil)
         referrerTrimming.onFinishNavigation()
         urlProvidedBasicAuthCredential = nil
+
+#if NETWORK_PROTECTION
+        if webView.url?.isDuckDuckGoSearch == true, case .connected = netPConnectionStatus {
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnabledOnSearch)
+        }
+#endif
     }
     
     func preparePreview(completion: @escaping (UIImage?) -> Void) {
         DispatchQueue.main.async { [weak self] in
-            guard let webView = self?.webView else { completion(nil); return }
+            guard let webView = self?.webView,
+                  webView.bounds.height > 0 && webView.bounds.width > 0 else { completion(nil); return }
             UIGraphicsBeginImageContextWithOptions(webView.bounds.size, false, UIScreen.main.scale)
             webView.drawHierarchy(in: webView.bounds, afterScreenUpdates: true)
             if let jsAlertController = self?.jsAlertController {
@@ -2294,7 +2335,7 @@ extension TabViewController: SecureVaultManagerDelegate {
     func secureVaultInitFailed(_ error: SecureStorageError) {
         SecureVaultErrorReporter.shared.secureVaultInitFailed(error)
     }
-    
+
     func secureVaultManagerIsEnabledStatus(_ manager: SecureVaultManager, forType type: AutofillType?) -> Bool {
         let isEnabled = AutofillSettingStatus.isAutofillEnabledInSettings &&
                         featureFlagger.isFeatureOn(.autofillCredentialInjecting) &&
@@ -2307,8 +2348,8 @@ extension TabViewController: SecureVaultManagerDelegate {
         return isEnabled
     }
 
-    func secureVaultManagerShouldSaveData(_: SecureVaultManager) -> Bool {
-        true
+    func secureVaultManagerShouldSaveData(_ manager: SecureVaultManager) -> Bool {
+        return secureVaultManagerIsEnabledStatus(manager, forType: nil)
     }
 
     func secureVaultManager(_ vault: SecureVaultManager,
@@ -2447,6 +2488,38 @@ extension TabViewController: SecureVaultManagerDelegate {
     func secureVaultManager(_: BrowserServicesKit.SecureVaultManager, didRequestPasswordManagerForDomain domain: String) {
     }
 
+    func secureVaultManager(_: SecureVaultManager, didRequestRuntimeConfigurationForDomain domain: String, completionHandler: @escaping (String?) -> Void) {
+        // didRequestRuntimeConfigurationForDomain fires for every iframe loaded on a website
+        // so caching the runtime configuration for the domain to prevent unnecessary re-building of the configuration
+        if let runtimeConfigurationForDomain = cachedRuntimeConfigurationForDomain[domain] as? String {
+            completionHandler(runtimeConfigurationForDomain)
+            return
+        }
+
+        let runtimeConfiguration =
+                DefaultAutofillSourceProvider.Builder(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+                                                                         properties: buildContentScopePropertiesForDomain(domain))
+                                                                .build()
+                                                                .buildRuntimeConfigResponse()
+
+        cachedRuntimeConfigurationForDomain = [domain: runtimeConfiguration]
+        completionHandler(runtimeConfiguration)
+    }
+
+    private func buildContentScopePropertiesForDomain(_ domain: String) -> ContentScopeProperties {
+        var supportedFeatures = ContentScopeFeatureToggles.supportedFeaturesOniOS
+
+        if AutofillSettingStatus.isAutofillEnabledInSettings,
+           featureFlagger.isFeatureOn(.autofillCredentialsSaving),
+           autofillNeverPromptWebsitesManager.hasNeverPromptWebsitesFor(domain: domain) {
+            supportedFeatures.passwordGeneration = false
+        }
+
+        return ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell,
+                                      sessionKey: autofillUserScript?.sessionKey ?? "",
+                                      featureToggles: supportedFeatures)
+    }
+
     func secureVaultManager(_: SecureVaultManager, didReceivePixel pixel: AutofillUserScript.JSPixel) {
         guard !pixel.isEmailPixel else {
             // The iOS app uses a native email autofill UI, and sends its pixels separately. Ignore pixels sent from the JS layer.
@@ -2511,11 +2584,22 @@ extension TabViewController: SaveLoginViewControllerDelegate {
         saveLoginPromptLastDismissed = Date()
         saveLoginPromptIsPresenting = false
     }
+
+    func saveLoginViewController(_ viewController: SaveLoginViewController, didRequestNeverPromptForWebsite domain: String) {
+        viewController.dismiss(animated: true)
+        saveLoginPromptLastDismissed = Date()
+        saveLoginPromptIsPresenting = false
+
+        do {
+            _ = try autofillNeverPromptWebsitesManager.saveNeverPromptWebsite(domain)
+        } catch {
+            os_log("%: failed to save never prompt for website %s", type: .error, #function, error.localizedDescription)
+        }
+    }
     
     func saveLoginViewController(_ viewController: SaveLoginViewController,
                                  didRequestPresentConfirmKeepUsingAlertController alertController: UIAlertController) {
-        Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptShown,
-                   withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
+        Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptShown)
         present(alertController, animated: true)
     }
 }

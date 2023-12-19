@@ -35,7 +35,7 @@ final class NetworkProtectionDebugUtilities {
             return
         }
 
-        try? activeSession.sendProviderMessage(.expireRegistrationKey)
+        try? await activeSession.sendProviderMessage(.expireRegistrationKey)
     }
 
     // MARK: - Notifications
@@ -45,7 +45,7 @@ final class NetworkProtectionDebugUtilities {
             return
         }
 
-        try? activeSession.sendProviderMessage(.triggerTestNotification)
+        try? await activeSession.sendProviderMessage(.triggerTestNotification)
     }
 
     // MARK: - Failure Simulation
@@ -58,7 +58,7 @@ final class NetworkProtectionDebugUtilities {
         guard let message = option.extensionMessage else {
             return
         }
-        try? activeSession.sendProviderMessage(message)
+        try? await activeSession.sendProviderMessage(message)
     }
 }
 

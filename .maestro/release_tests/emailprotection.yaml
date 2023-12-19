@@ -1,0 +1,24 @@
+appId: com.duckduckgo.mobile.ios
+tags:
+    - release
+
+---
+
+- clearState
+- launchApp
+- runFlow: 
+    when: 
+      visible: 
+        text: "Let’s Do It!"
+        index: 0
+    file: ../shared/onboarding.yaml
+
+- tapOn: Settings
+- scroll
+- scroll
+- assertVisible: Email Protection
+- tapOn: Email Protection
+- assertVisible:
+    id: searchEntry
+- assertVisible: https://duckduckgo.com/email/
+- assertVisible: Email privacy, simplified.

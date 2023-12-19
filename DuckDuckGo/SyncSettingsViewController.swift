@@ -18,21 +18,23 @@
 //
 
 import SwiftUI
+import Core
 import Combine
 import SyncUI
 import DDGSync
+import Common
 
 @MainActor
 class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
 
     lazy var authenticator = Authenticator()
 
-    let syncService: DDGSyncing! = (UIApplication.shared.delegate as? AppDelegate)!.syncService
+    let syncService: DDGSyncing
+    let syncBookmarksAdapter: SyncBookmarksAdapter
     var connector: RemoteConnecting?
 
     var recoveryCode: String {
         guard let code = syncService.account?.recoveryCode else {
-            assertionFailure("No recovery code")
             return ""
         }
 
@@ -50,9 +52,23 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     var cancellables = Set<AnyCancellable>()
 
     // For some reason, on iOS 14, the viewDidLoad wasn't getting called so do some setup here
-    convenience init() {
-        self.init(rootView: SyncSettingsView(model: SyncSettingsViewModel()))
+    init(syncService: DDGSyncing, syncBookmarksAdapter: SyncBookmarksAdapter, appSettings: AppSettings = AppDependencyProvider.shared.appSettings) {
+        self.syncService = syncService
+        self.syncBookmarksAdapter = syncBookmarksAdapter
 
+        let viewModel = SyncSettingsViewModel(
+            isOnDevEnvironment: { syncService.serverEnvironment == .development },
+            switchToProdEnvironment: {
+                syncService.updateServerEnvironment(.production)
+                UserDefaults.standard.set(ServerEnvironment.production.description, forKey: UserDefaultsWrapper<String>.Key.syncEnvironment.rawValue)
+            }
+        )
+
+        super.init(rootView: SyncSettingsView(model: viewModel))
+
+        setUpFaviconsFetcherSwitch(viewModel)
+        setUpFavoritesDisplayModeSwitch(viewModel, appSettings)
+        setUpSyncPaused(viewModel, appSettings)
         refreshForState(syncService.authState)
 
         syncService.authStatePublisher
@@ -66,6 +82,78 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         rootView.model.delegate = self
         navigationItem.title = UserText.syncTitle
     }
+    
+    @MainActor required dynamic init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setUpFaviconsFetcherSwitch(_ viewModel: SyncSettingsViewModel) {
+        viewModel.isFaviconsFetchingEnabled = syncBookmarksAdapter.isFaviconsFetchingEnabled
+
+        syncBookmarksAdapter.$isFaviconsFetchingEnabled
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .sink { isFaviconsFetchingEnabled in
+                if viewModel.isFaviconsFetchingEnabled != isFaviconsFetchingEnabled {
+                    viewModel.isFaviconsFetchingEnabled = isFaviconsFetchingEnabled
+                }
+            }
+            .store(in: &cancellables)
+
+        viewModel.$devices
+            .map { $0.count > 1 }
+            .removeDuplicates()
+            .sink { [weak self] hasMoreThanOneDevice in
+                self?.syncBookmarksAdapter.isEligibleForFaviconsFetcherOnboarding = hasMoreThanOneDevice
+            }
+            .store(in: &cancellables)
+
+        viewModel.$isFaviconsFetchingEnabled
+            .sink { [weak self] isFaviconsFetchingEnabled in
+                self?.syncBookmarksAdapter.isFaviconsFetchingEnabled = isFaviconsFetchingEnabled
+                if isFaviconsFetchingEnabled {
+                    self?.syncService.scheduler.notifyDataChanged()
+                }
+            }
+            .store(in: &cancellables)
+    }
+
+    private func setUpFavoritesDisplayModeSwitch(_ viewModel: SyncSettingsViewModel, _ appSettings: AppSettings) {
+        viewModel.isUnifiedFavoritesEnabled = appSettings.favoritesDisplayMode.isDisplayUnified
+
+        viewModel.$isUnifiedFavoritesEnabled.dropFirst()
+            .sink { [weak self] isEnabled in
+                appSettings.favoritesDisplayMode = isEnabled ? .displayUnified(native: .mobile) : .displayNative(.mobile)
+                NotificationCenter.default.post(name: AppUserDefaults.Notifications.favoritesDisplayModeChange, object: self)
+                self?.syncService.scheduler.notifyDataChanged()
+            }
+            .store(in: &cancellables)
+
+        NotificationCenter.default.publisher(for: AppUserDefaults.Notifications.favoritesDisplayModeChange)
+            .filter { [weak self] notification in
+                guard let viewController = notification.object as? SyncSettingsViewController else {
+                    return true
+                }
+                return viewController !== self
+            }
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                viewModel.isUnifiedFavoritesEnabled = appSettings.favoritesDisplayMode.isDisplayUnified
+            }
+            .store(in: &cancellables)
+    }
+
+    private func setUpSyncPaused(_ viewModel: SyncSettingsViewModel, _ appSettings: AppSettings) {
+        viewModel.isSyncBookmarksPaused = appSettings.isSyncBookmarksPaused
+        viewModel.isSyncCredentialsPaused = appSettings.isSyncCredentialsPaused
+        NotificationCenter.default.publisher(for: AppUserDefaults.Notifications.syncPausedStateChanged)
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                viewModel.isSyncBookmarksPaused = appSettings.isSyncBookmarksPaused
+                viewModel.isSyncCredentialsPaused = appSettings.isSyncCredentialsPaused
+            }
+            .store(in: &cancellables)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,6 +163,11 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         connector = nil
+        syncService.scheduler.requestSyncImmediately()
+    }
+
+    func updateOptions() {
+        syncService.scheduler.requestSyncImmediately()
     }
 
     func refreshForState(_ authState: SyncAuthState) {
@@ -85,8 +178,14 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         }
     }
 
-    func dismissPresentedViewController() {
-        navigationController?.topViewController?.dismiss(animated: true)
+    func dismissPresentedViewController(completion: (() -> Void)? = nil) {
+        guard let presentedViewController = navigationController?.presentedViewController,
+              !(presentedViewController is UIHostingController<SyncSettingsView>) else {
+            completion?()
+            return
+        }
+        presentedViewController.dismiss(animated: true, completion: completion)
+        endConnectMode()
     }
 
     func refreshDevices(clearDevices: Bool = true) {
@@ -101,7 +200,8 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
                 let devices = try await syncService.fetchDevices()
                 mapDevices(devices)
             } catch {
-                handleError(error)
+                // Not displaying error since there is the spinner and it is called every few seconds
+                os_log(error.localizedDescription, log: .syncLog, type: .error)
             }
         }
     }
@@ -134,71 +234,87 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
             self.startPolling()
             return self.connector?.code
         } catch {
-            self.handleError(error)
+            self.handleError(SyncError.unableToSync, error: error)
             return nil
         }
     }
 
     func loginAndShowDeviceConnected(recoveryKey: SyncCode.RecoveryKey) async throws {
-        let knownDevices = Set(self.rootView.model.devices.map { $0.id })
         let registeredDevices = try await syncService.login(recoveryKey, deviceName: deviceName, deviceType: deviceType)
         mapDevices(registeredDevices)
-        dismissPresentedViewController()
-        let devices = self.rootView.model.devices.filter { !knownDevices.contains($0.id) && !$0.isThisDevice }
-        showDeviceConnected(devices)
+        Pixel.fire(pixel: .syncLogin)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.dismissVCAndShowRecoveryPDF()
+        }
     }
 
     func startPolling() {
         Task { @MainActor in
             do {
                 if let recoveryKey = try await connector?.pollForRecoveryKey() {
+                    dismissPresentedViewController()
+                    showPreparingSync()
                     try await loginAndShowDeviceConnected(recoveryKey: recoveryKey)
                 } else {
                     // Likely cancelled elsewhere
                     return
                 }
             } catch {
-                handleError(error)
+                handleError(SyncError.unableToSync, error: error)
             }
         }
     }
 
     func syncCodeEntered(code: String) async -> Bool {
+        var shouldShowSyncEnabled = true
         do {
             guard let syncCode = try? SyncCode.decodeBase64String(code) else {
                 return false
             }
-
             if let recoveryKey = syncCode.recovery {
+                dismissPresentedViewController()
+                showPreparingSync()
                 try await loginAndShowDeviceConnected(recoveryKey: recoveryKey)
                 return true
             } else if let connectKey = syncCode.connect {
+                dismissPresentedViewController()
+                showPreparingSync()
                 if syncService.account == nil {
                     try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
+                    Pixel.fire(pixel: .syncSignupConnect)
+                    self.dismissVCAndShowRecoveryPDF()
+                    shouldShowSyncEnabled = false
                     rootView.model.syncEnabled(recoveryCode: recoveryCode)
                 }
+                try await syncService.transmitRecoveryKey(connectKey)
+
                 self.rootView.model.$devices
                     .removeDuplicates()
                     .dropFirst()
                     .prefix(1)
-                    .sink { [weak self] devices in
-                        self?.dismissPresentedViewController()
-                        self?.showDeviceConnected(devices.filter { !$0.isThisDevice })
+                    .sink { [weak self] _ in
+                        guard let self else { return }
+                        if shouldShowSyncEnabled {
+                            self.dismissVCAndShowRecoveryPDF()
+                        }
                     }.store(in: &cancellables)
-                try await syncService.transmitRecoveryKey(connectKey)
+
                 return true
             }
 
         } catch {
-            handleError(error)
+            handleError(SyncError.unableToSync, error: error)
         }
         return false
     }
 
+    func dismissVCAndShowRecoveryPDF() {
+        self.navigationController?.topViewController?.dismiss(animated: true, completion: self.showRecoveryPDF)
+    }
+
     func codeCollectionCancelled() {
-        assert(navigationController?.visibleViewController is UIHostingController<ScanOrPasteCodeView>)
+        assert(navigationController?.visibleViewController is UIHostingController<AnyView>)
         dismissPresentedViewController()
-        rootView.model.codeCollectionCancelled()
     }
 
     func gotoSettings() {

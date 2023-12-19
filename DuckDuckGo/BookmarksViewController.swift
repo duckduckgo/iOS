@@ -56,8 +56,10 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     private let favicons: Favicons
     private let syncService: DDGSyncing
     private let syncDataProviders: SyncDataProviders
+    private let appSettings: AppSettings
     private var localUpdatesCancellable: AnyCancellable?
     private var syncUpdatesCancellable: AnyCancellable?
+    private var favoritesDisplayModeCancellable: AnyCancellable?
 
     /// Creating left and right toolbar UIBarButtonItems with customView so that 'Edit' button is centered
     private lazy var addFolderButton: UIButton = {
@@ -94,7 +96,14 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     fileprivate let viewModel: BookmarkListInteracting
 
     fileprivate lazy var dataSource: BookmarksDataSource = {
-        return BookmarksDataSource(viewModel: viewModel)
+        let dataSource = BookmarksDataSource(viewModel: viewModel)
+        dataSource.onFaviconMissing = { [weak self] _ in
+            guard let self else {
+                return
+            }
+            self.faviconsFetcherOnboarding.presentOnboardingIfNeeded(from: self)
+        }
+        return dataSource
     }()
 
     var searchDataSource: SearchBookmarksDataSource
@@ -111,14 +120,21 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                    parentID: NSManagedObjectID? = nil,
                    favicons: Favicons = Favicons.shared,
                    syncService: DDGSyncing,
-                   syncDataProviders: SyncDataProviders
+                   syncDataProviders: SyncDataProviders,
+                   appSettings: AppSettings
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.searchDataSource = SearchBookmarksDataSource(searchEngine: bookmarksSearch)
-        self.viewModel = BookmarkListViewModel(bookmarksDatabase: bookmarksDatabase, parentID: parentID, syncService: syncService)
+        self.viewModel = BookmarkListViewModel(
+            bookmarksDatabase: bookmarksDatabase,
+            parentID: parentID,
+            favoritesDisplayMode: appSettings.favoritesDisplayMode,
+            syncService: syncService
+        )
         self.favicons = favicons
         self.syncService = syncService
         self.syncDataProviders = syncDataProviders
+        self.appSettings = appSettings
         super.init(coder: coder)
 
         bindSyncService()
@@ -143,6 +159,18 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             }
     }
 
+    private func bindFavoritesDisplayMode() {
+        favoritesDisplayModeCancellable = NotificationCenter.default.publisher(for: AppUserDefaults.Notifications.favoritesDisplayModeChange)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self else {
+                    return
+                }
+                self.viewModel.favoritesDisplayMode = self.appSettings.favoritesDisplayMode
+                self.tableView.reloadData()
+            }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -150,6 +178,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             self?.tableView.reloadData()
             self?.refreshAll()
         }
+        bindFavoritesDisplayMode()
 
         syncService.scheduler.requestSyncImmediately()
 
@@ -261,7 +290,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                                                      bookmarksSearch: self.searchDataSource.searchEngine,
                                                      parentID: parent.objectID,
                                                      syncService: self.syncService,
-                                                     syncDataProviders: self.syncDataProviders)
+                                                     syncDataProviders: self.syncDataProviders,
+                                                     appSettings: self.appSettings)
             controller?.delegate = self.delegate
             return controller
         })
@@ -278,8 +308,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.tintColor = .black
 
-        let title = bookmark.isFavorite ? UserText.actionRemoveFavorite : UserText.favorite
-        let iconName = bookmark.isFavorite ? "Favorite-Remove-24" : "Favorite-24"
+        let title = bookmark.isFavorite(on: viewModel.favoritesDisplayMode.displayedFolder) ? UserText.actionRemoveFavorite : UserText.favorite
+        let iconName = bookmark.isFavorite(on: viewModel.favoritesDisplayMode.displayedFolder) ? "Favorite-Remove-24" : "Favorite-24"
 
         let toggleFavoriteAction = UIContextualAction(style: .normal, title: title) { [weak self] (_, _, completionHandler) in
             completionHandler(true)
@@ -540,7 +570,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             guard let controller = AddOrEditBookmarkViewController(coder: coder,
                                                                    editingEntityID: id,
                                                                    bookmarksDatabase: bookmarksDatabase,
-                                                                   syncService: syncService) else {
+                                                                   syncService: syncService,
+                                                                   appSettings: appSettings) else {
                 assertionFailure("Failed to create controller")
                 return nil
             }
@@ -551,7 +582,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             guard let controller = AddOrEditBookmarkViewController(coder: coder,
                                                                    parentFolderID: viewModel.currentFolder?.objectID,
                                                                    bookmarksDatabase: bookmarksDatabase,
-                                                                   syncService: syncService) else {
+                                                                   syncService: syncService,
+                                                                   appSettings: appSettings) else {
                 assertionFailure("Failed to create controller")
                 return nil
             }
@@ -565,7 +597,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             coder: coder,
             bookmarksDatabase: bookmarksDatabase,
             syncService: syncService,
-            syncDataProviders: syncDataProviders
+            syncDataProviders: syncDataProviders,
+            appSettings: appSettings
         ) else {
             fatalError("Failed to create controller")
         }
@@ -597,7 +630,10 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         let bookmarksDatabase = bookmarksDatabase
         Task {
 
-            let result = await BookmarksImporter(coreDataStore: bookmarksDatabase).parseAndSave(html: html)
+            let result = await BookmarksImporter(
+                coreDataStore: bookmarksDatabase,
+                favoritesDisplayMode: appSettings.favoritesDisplayMode
+            ).parseAndSave(html: html)
             switch result {
             case .success:
                 WidgetCenter.shared.reloadAllTimelines()
@@ -632,7 +668,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         // create file to export
         let tempFileUrl = FileManager.default.temporaryDirectory.appendingPathComponent(Constants.bookmarksFileName)
         do {
-            try BookmarksExporter(coreDataStore: bookmarksDatabase).exportBookmarksTo(url: tempFileUrl)
+            try BookmarksExporter(coreDataStore: bookmarksDatabase, favoritesDisplayMode: viewModel.favoritesDisplayMode)
+                .exportBookmarksTo(url: tempFileUrl)
         } catch {
             os_log("bookmarks failed to export %s", type: .debug, error.localizedDescription)
             ActionMessageView.present(message: UserText.exportBookmarksFailedMessage)
@@ -803,6 +840,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         }
     }
 
+    private(set) lazy var faviconsFetcherOnboarding: FaviconsFetcherOnboarding =
+        .init(syncService: syncService, syncBookmarksAdapter: syncDataProviders.bookmarksAdapter)
 }
 
 extension BookmarksViewController: UISearchBarDelegate {
@@ -896,7 +935,6 @@ extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
     func showBookmarkDeletedMessage(_ bookmark: BookmarkEntity) {
         guard let parent = bookmark.parent,
               let index = parent.childrenArray.firstIndex(of: bookmark),
-              let domain = bookmark.urlObject?.host,
               let title = bookmark.title,
               let url = bookmark.url else {
             assertionFailure()
@@ -904,8 +942,10 @@ extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
         }
 
         // capture the optional details
-        let favoritesFolder = bookmark.favoriteFolder
-        let favoritesIndex = favoritesFolder?.favoritesArray.firstIndex(of: bookmark)
+        var favoritesFoldersAndIndexes: [BookmarkEntity: Int] = [:]
+        for favoritesFolder in bookmark.favoriteFoldersSet {
+            favoritesFoldersAndIndexes[favoritesFolder] = favoritesFolder.favoritesArray.firstIndex(of: bookmark) ?? 0
+        }
 
         // capture this locally because this VC might have been closed when undo gets pressed
         let localViewModel = self.viewModel
@@ -916,15 +956,16 @@ extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
                                           url: url,
                                           folder: parent,
                                           folderIndex: index,
-                                          favoritesFolder: favoritesFolder,
-                                          favoritesIndex: favoritesIndex)
+                                          favoritesFoldersAndIndexes: favoritesFoldersAndIndexes)
 
             self?.tableView.reloadData()
             self?.refreshAll()
         } onDidDismiss: {
-            NotificationCenter.default.post(name: FireproofFaviconUpdater.deleteFireproofFaviconNotification,
-                                            object: nil,
-                                            userInfo: [FireproofFaviconUpdater.UserInfoKeys.faviconDomain: domain])
+            if let domain = bookmark.urlObject?.host {
+                NotificationCenter.default.post(name: FireproofFaviconUpdater.deleteFireproofFaviconNotification,
+                                                object: nil,
+                                                userInfo: [FireproofFaviconUpdater.UserInfoKeys.faviconDomain: domain])
+            }
         }
     }
 

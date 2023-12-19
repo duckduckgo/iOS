@@ -27,6 +27,7 @@ extension FeatureName {
     // public static let experimentalFeature = FeatureName(rawValue: "experimentalFeature")
 
     public static let fixedUserAgent = FeatureName(rawValue: "fixedUserAgent")
+    public static let closestUserAgent = FeatureName(rawValue: "closestUserAgent")
 }
 
 public struct VariantIOS: Variant {
@@ -61,8 +62,10 @@ public struct VariantIOS: Variant {
         VariantIOS(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
         VariantIOS(name: "se", weight: doNotAllocate, isIncluded: When.always, features: []),
-        VariantIOS(name: "me", weight: 1, isIncluded: When.always, features: []),
-        VariantIOS(name: "mf", weight: 1, isIncluded: When.always, features: [.fixedUserAgent]),
+        VariantIOS(name: "me", weight: doNotAllocate, isIncluded: When.always, features: []),
+        VariantIOS(name: "mf", weight: doNotAllocate, isIncluded: When.always, features: []),
+        VariantIOS(name: "mg", weight: 1, isIncluded: When.always, features: [.fixedUserAgent]),
+        VariantIOS(name: "mh", weight: 1, isIncluded: When.always, features: [.closestUserAgent]),
         returningUser
     ]
 

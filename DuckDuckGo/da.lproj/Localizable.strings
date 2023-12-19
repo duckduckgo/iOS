@@ -4,6 +4,9 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
+/* No comment provided by engineer. */
+"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Rediger";
 
@@ -106,6 +109,12 @@
 /* Share action */
 "action.title.share" = "Del";
 
+/* Settings label for bottom position for the address bar */
+"address.bar.bottom" = "Nederst";
+
+/* Settings label for top position for the address bar */
+"address.bar.top" = "Top";
+
 /* No comment provided by engineer. */
 "addWidget.button" = "Tilføj widget";
 
@@ -126,6 +135,24 @@
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Eksisterende bogmærker duplikeres ikke.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Du har overskredet grænsen for bogmærkesynkronisering. Prøv at slette nogle bogmærker. Dine bogmærker vil ikke blive sikkerhedskopieret, før dette er løst.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Bogmærkesynkronisering er sat på pause";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Du har overskredet grænsen for synkronisering af adgangskoder. Prøv at slette nogle adgangskoder. Dine adgangskoder vil ikke blive sikkerhedskopieret, før dette er løst.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Synkronisering af adgangskoder er sat på pause";
+
+/* Learn more button in alert */
+"alert.sync-paused-alert-learn-more-button" = "Mere info";
+
+/* Confirmation button in alert */
+"alert.sync-paused-alert-ok-button" = "Okay";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Bogmærk alle faner?";
@@ -523,6 +550,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Login slettet";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Nulstil ekskluderede websteder";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Annullér";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Nulstil ekskluderede websteder";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Hvis du nulstiller ekskluderede websteder, vil du blive bedt om at gemme dit login, næste gang du logger ind på en af disse sider.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Søg logins";
 
@@ -557,7 +596,7 @@
 "autofill.logins.prompt.password.button.title" = "Adgangskode til %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Vil du bruge et gemt login?";
+"autofill.logins.prompt.title" = "Brug en gemt adgangskode?";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "for '%@'";
@@ -607,26 +646,23 @@
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Privat Duck Address-brugernavn blev fjernet";
 
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Spørg aldrig på dette websted";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Logins gemmes sikkert på din enhed i menuen Logins.";
+"autofill.save-login.new-user.message" = "Adgangskoder gemmes sikkert på din enhed i menuen Logins.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Skal DuckDuckGo gemme dit login?";
+"autofill.save-login.new-user.title" = "Skal DuckDuckGo gemme din adgangskode?";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Gem ikke";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Gem login";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Gem login?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Gem adgangskode";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Gem adgangskode?";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Vis adgangskode";
@@ -635,7 +671,7 @@
 "autofill.signin.to.manage" = "%@ for at administrere dine Duck-adresser på denne enhed.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "DuckDuckGo opdaterer dette gemte login på din enhed.";
+"autofill.update-password.message" = "DuckDuckGo opdaterer denne gemte adgangskode på din enhed.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Opdater adgangskode";
@@ -738,48 +774,6 @@
 
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Importér en HTML-fil med bogmærker fra en anden browser, eller eksportér dine eksisterende bogmærker.";
-
-/* Broken Site Category */
-"brokensite.category.comments" = "Kommentarer blev ikke indlæst";
-
-/* Broken Site Category */
-"brokensite.category.content" = "Indhold mangler";
-
-/* Broken Site Category */
-"brokensite.category.cookieprompt" = "Cookie-pop op blev ikke administreret";
-
-/* Broken Site Category */
-"brokensite.category.images" = "Billeder blev ikke indlæst";
-
-/* Broken Site Category */
-"brokensite.category.links" = "Links eller knapper fungerer ikke";
-
-/* Broken Site Category */
-"brokensite.category.login" = "Jeg kan ikke logge ind";
-
-/* Broken Site Category */
-"brokensite.category.other" = "Noget andet";
-
-/* Broken Site Category */
-"brokensite.category.paywall" = "Webstedet bad mig om at deaktivere";
-
-/* Broken Site Category */
-"brokensite.category.unsupported" = "Browseren er inkompatibel";
-
-/* Broken Site Category */
-"brokensite.category.videos" = "Videoen blev ikke spillet";
-
-/* Broken Site Category Placeholder */
-"brokensite.categoryPlaceholder" = "Vælg dit emne fra listen ...";
-
-/* Broken Site Category Section Title */
-"brokensite.categoryTitle" = "VÆLG EN KATEGORI";
-
-/* Broken Site Comment Placeholder */
-"brokensite.commentPlaceholder" = "Flere detaljer kan hjælpe os med at løse dette problem";
-
-/* Broken Site Section Title */
-"brokensite.sectionTitle" = "BESKRIV, HVAD DER SKETE";
 
 /* No comment provided by engineer. */
 "bucket: %@" = "bucket: %@";
@@ -1018,6 +1012,33 @@
 /* No comment provided by engineer. */
 "Error" = "Fejl";
 
+/* Button title to Sign In */
+"error.email-protection-sign-in.action" = "Log ind";
+
+/* Alert message */
+"error.email-protection-sign-in.body" = "Beklager, log på igen for at genaktivere Email Protection i denne browser.";
+
+/* Alert title */
+"error.email-protection-sign-in.title" = "Fejl i Email Protection";
+
+/* Button title to open device settings */
+"error.insufficient-disk-space.action" = "Åbn Indstillinger";
+
+/* Alert message */
+"error.insufficient-disk-space.body" = "Det ser ud til, at din enhed er løbet tør for lagerplads. Frigør plads for at fortsætte.";
+
+/* Alert title */
+"error.insufficient-disk-space.title" = "Ikke nok lagerplads";
+
+/* Button title that is shutting down the app */
+"error.preemptive-crash.action" = "Luk app";
+
+/* Alert message */
+"error.preemptive-crash.body" = "Det ser ud til, at der er et problem med appen, og at den skal lukkes. Åbn den igen for at fortsætte.";
+
+/* Alert title */
+"error.preemptive-crash.title" = "App-problem opdaget";
+
 /* Generic error message on a dialog for when the cause is not known. */
 "error.unknown.try.again" = "An unknown error has occurred";
 
@@ -1029,6 +1050,18 @@
 
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Fjern";
+
+/* Display Mode for favorites */
+"favorites.settings.all-devices" = "Alle favoritter på enheden";
+
+/* Footer of the favorites settings table */
+"favorites.settings.footer" = "Vælg, hvilke favoritter der skal vises på en ny fane baseret på deres oprindelse.";
+
+/* Header of the favorites settings table */
+"favorites.settings.header" = "Indstillinger for visning";
+
+/* Display Mode for favorites */
+"favorites.settings.mobile-only" = "Kun favoritter på mobil";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blokering af annoncer og pop op-vinduer";
@@ -1396,6 +1429,9 @@
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
 
+/* Title text for an iOS quick action that opens VPN settings */
+"network.protection.quick-action.open-vpn" = "Åbn VPN";
+
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Connected - %@";
 
@@ -1435,8 +1471,59 @@
 /* Location label shown in NetworkProtection's status view. */
 "network.protection.status.view.location" = "Location";
 
+/* Label shown on the title of the settings section in NetworkProtection's status view. */
+"network.protection.status.view.settings.section.title" = "Administrer";
+
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "Network Protection";
+
+/* Title for the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.button.title" = "Slå notifikationer til";
+
+/* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.section.footer" = "Tillad DuckDuckGo at give dig besked, hvis din forbindelse falder ud, eller VPN-status ændres.";
+
+/* List section footer for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.section.footer" = "Få besked, hvis din forbindelse falder ud, eller VPN-status ændres.";
+
+/* Title for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.title" = "VPN-advarsler";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.footer" = "Gendan automatisk en VPN-forbindelse efter afbrydelse.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.title" = "Altid aktiv";
+
+/* Title for the VPN Location screen's All Countries section. */
+"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Title for the VPN Location screen's Nearest Available selection item. */
+"network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
+
+/* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+
+/* Title for the VPN Location screen's Recommended section. */
+"network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Title for the VPN Notifications management screen. */
+"network.protection.vpn.notifications.title" = "VPN-meddelelser";
+
+/* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
+"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+
+/* Title for the Preferred Location VPN Settings item. */
+"network.protection.vpn.preferred.location.title" = "Preferred Location";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.footer" = "Network Protection forhindrer DNS-lækager til din internetudbyder ved at dirigere DNS-forespørgsler gennem VPN-tunnelen til vores egen resolver.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.title" = "Sikker DNS";
+
+/* Title for the VPN Settings screen. */
+"network.protection.vpn.settings.title" = "VPN-indstillinger";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
@@ -1553,9 +1640,6 @@
 "prompt.custom.url.scheme.title" = "Åbn i en anden app?";
 
 /* No comment provided by engineer. */
-"report.brokensite.header" = "Indsendelse af en anonym webstedsrapport om brud hjælper os med at debugge disse problemer og forbedre appen.";
-
-/* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Søg eller indtast adresse";
 
 /* No comment provided by engineer. */
@@ -1564,8 +1648,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Favoritter";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "Hos DuckDuckGo sætter vi den nye standard for tillid online.\n\nDuckDuckGo Privacy Browser giver dig alle de nødvendige værktøjer til at værne over privatlivets fred, så du kan beskytte dig selv, når du søger og surfer på nettet, herunder tracker-blokering, smartere kryptering og DuckDuckGo-privat søgning.\n\nInternettet bør trods alt ikke føles så skummelt, og det bør være lige så enkelt at få det privatliv, du fortjener online, som at lukke dine persienner ned.";
+/* about page */
+"settings.about.text" = "DuckDuckGo er en uafhængig virksomhed, grundlagt i 2008, der beskytter privatlivet på internettet for alle, der er trætte af at blive sporet online og ønsker en nem løsning. Vi er bevis på, at du kan få ægte beskyttelse af privatlivet online uden at gå på kompromis.\n\nDuckDuckGo-browseren kommer med de funktioner, du forventer af en standardbrowser, som bogmærker, faner, adgangskoder og meget mere, plus over [et dusin kraftfulde beskyttelser af privatlivet](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/), som ikke tilbydes i de fleste populære browsere som standard. Dette unikke og omfattende sæt af beskyttelsesfunktioner hjælper med at beskytte dine onlineaktiviteter, fra søgning til browsing, e-mailing og meget mere.\n\nVores beskyttelse af privatlivet fungerer, uden at du behøver at vide noget om de tekniske detaljer eller håndtere komplicerede indstillinger. Det eneste, du skal gøre, er at skifte din browser til DuckDuckGo på alle dine enheder, så får du privatliv som standard.\n\nMen hvis du gerne vil have et kig under motorhjelmen, kan du finde flere oplysninger om, hvordan DuckDuckGos beskyttelse af privatlivet fungerer, på vores [hjælpesider](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Indsend rapport";
@@ -1734,6 +1818,9 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "En besked fra %@:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Velkommen til Duck siden";
 
 /* Title for the Windows waitlist notification */
 "windows-waitlist.available.notification.title" = "Prøv DuckDuckGo til Windows!";

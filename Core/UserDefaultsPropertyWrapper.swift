@@ -70,7 +70,7 @@ public struct UserDefaultsWrapper<T> {
         case downloadedTrackerDataSetCount = "com.duckduckgo.app.downloadedTrackerDataSetCount"
         case downloadedPrivacyConfigurationCount = "com.duckduckgo.app.downloadedPrivacyConfigurationCount"
         case textSize = "com.duckduckgo.ios.textSize"
-        
+
         case emailWaitlistShouldReceiveNotifications = "com.duckduckgo.ios.showWaitlistNotification"
         case unseenDownloadsAvailable = "com.duckduckgo.app.unseenDownloadsAvailable"
         
@@ -82,7 +82,7 @@ public struct UserDefaultsWrapper<T> {
         case autofillCredentialsSavePromptShowAtLeastOnce = "com.duckduckgo.ios.autofillCredentialsSavePromptShowAtLeastOnce"
         case autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary =
                 "com.duckduckgo.ios.autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary"
-        
+
         case featureFlaggingDidVerifyInternalUser = "com.duckduckgo.app.featureFlaggingDidVerifyInternalUser"
         
         case voiceSearchEnabled = "com.duckduckgo.app.voiceSearchEnabled"
@@ -98,8 +98,18 @@ public struct UserDefaultsWrapper<T> {
         case defaultBrowserUsageLastSeen = "com.duckduckgo.ios.default-browser-usage-last-seen"
 
         case syncEnvironment = "com.duckduckgo.ios.sync-environment"
+        case syncBookmarksPaused = "com.duckduckgo.ios.sync-bookmarksPaused"
+        case syncCredentialsPaused = "com.duckduckgo.ios.sync-credentialsPaused"
+        case syncBookmarksPausedErrorDisplayed = "com.duckduckgo.ios.sync-bookmarksPausedErrorDisplayed"
+        case syncCredentialsPausedErrorDisplayed = "com.duckduckgo.ios.sync-credentialsPausedErrorDisplayed"
+        case syncAutomaticallyFetchFavicons = "com.duckduckgo.ios.sync-automatically-fetch-favicons"
+        case syncIsFaviconsFetcherEnabled = "com.duckduckgo.ios.sync-is-favicons-fetcher-enabled"
+        case syncIsEligibleForFaviconsFetcherOnboarding = "com.duckduckgo.ios.sync-is-eligible-for-favicons-fetcher-onboarding"
+        case syncDidPresentFaviconsFetcherOnboarding = "com.duckduckgo.ios.sync-did-present-favicons-fetcher-onboarding"
+        case syncDidMigrateToImprovedListsHandling = "com.duckduckgo.ios.sync-did-migrate-to-improved-lists-handling"
 
         case networkProtectionDebugOptionAlwaysOnDisabled = "com.duckduckgo.network-protection.always-on.disabled"
+        case networkProtectionWaitlistTermsAndConditionsAccepted = "com.duckduckgo.ios.vpn.terms-and-conditions-accepted"
 
         case addressBarPosition = "com.duckduckgo.ios.addressbarposition"
         case showFullSiteAddress = "com.duckduckgo.ios.showfullsiteaddress"

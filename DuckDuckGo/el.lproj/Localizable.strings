@@ -1,6 +1,12 @@
 /* No comment provided by engineer. */
 "%@" = "%@";
 
+/* No comment provided by engineer. */
+"%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
+
+/* No comment provided by engineer. */
+"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Επεξεργασία";
 
@@ -103,6 +109,12 @@
 /* Share action */
 "action.title.share" = "Κοινή χρήση";
 
+/* Settings label for bottom position for the address bar */
+"address.bar.bottom" = "Κάτω μέρος";
+
+/* Settings label for top position for the address bar */
+"address.bar.top" = "Κορυφή";
+
 /* No comment provided by engineer. */
 "addWidget.button" = "Προσθήκη γραφικού στοιχείου";
 
@@ -124,6 +136,24 @@
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Οι υπάρχοντες σελιδοδείκτες δεν θα αναπαραχθούν.";
 
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Έχετε υπερβεί το όριο συγχρονισμού σελιδοδεικτών. Προσπαθήστε να διαγράψετε ορισμένους σελιδοδείκτες. Μέχρι να επιλυθεί το πρόβλημα αυτό, δεν θα δημιουργηθούν αντίγραφα ασφαλείας για τους σελιδοδείκτες σας.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Ο συγχρονισμός σελιδοδεικτών έχει τεθεί σε παύση";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Έχετε υπερβεί το όριο συγχρονισμού κωδικών πρόσβασης. Προσπαθήστε να διαγράψετε κάποιους κωδικούς πρόσβασης. Μέχρι να επιλυθεί το πρόβλημα αυτό, δεν θα δημιουργηθούν αντίγραφα ασφαλείας για τους κωδικούς πρόσβασής σας.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Ο συγχρονισμός κωδικών πρόσβασης έχει τεθεί σε παύση";
+
+/* Learn more button in alert */
+"alert.sync-paused-alert-learn-more-button" = "Μάθετε περισσότερα";
+
+/* Confirmation button in alert */
+"alert.sync-paused-alert-ok-button" = "Εντάξει";
+
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Προσθήκη σελιδοδείκτη για όλες τις καρτέλες;";
 
@@ -141,6 +171,225 @@
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Ξεκλείδωμα DuckDuckGo.";
+
+/* First part of about page content (note the trailing space) */
+"appTP.about.content1" = "You’ve probably heard about companies like Google and Facebook tracking you behind the scenes on third-party websites. But did you know they also track your personal information through apps on your device?\n\nIn 2022, DuckDuckGo found that ";
+
+/* Second part of about page content (note the trailing space) */
+"appTP.about.content2" = "over 85% of free iOS apps tested contained hidden trackers from other companies.";
+
+/* Third part of about page content (note the leading space) */
+"appTP.about.content3" = " Of the 395 apps tested, 60% sent data to Google. This happens even while you’re not using your device.\n\nTrackers in apps may have access to a lot more information than their website tracker cousins, such as your location down to which floor of a building you're on, how often you play games while at work, and when and how long you sleep each day. Even if you haven’t given apps explicit permission to collect data, they can still take it without your knowledge.\n\nTracking networks like Facebook and Google use these little pieces of information to build a digital profile about you. With it, tracking networks can manipulate what you see online and allow advertisers to bid on access to you based on your data.\n\nTrackers in apps is a BIG problem for privacy. But DuckDuckGo has a solution that can help.\n\nWhen enabled in the DuckDuckGo Privacy Browser app, App Tracking Protection blocks many trackers in other apps, not just the trackers we find on websites when you browse. These dual layers of protection reduce what companies know about you overall, so you can use your apps with more peace of mind, knowing you’re more protected.";
+
+/* Navigation Title for AppTP about page */
+"appTP.about.navTitle" = "About App Trackers";
+
+/* Title for AppTP about page */
+"appTP.about.title" = "What Are App Trackers?";
+
+/* Title for 'Report an Issue' button in the activity view. */
+"appTP.activityView.reportIssue" = "Report Issue";
+
+/* Text label for switch that turns blocking on or off for a tracker */
+"appTP.blockTrackerText" = "Block this Tracker";
+
+/* Detail string describing what AppTP is */
+"appTP.cell.detail" = "Αποκλείστε εφαρμογές παρακολούθησης στη συσκευή σας";
+
+/* String indicating AppTP is disabled when viewed from the settings screen */
+"appTP.cell.disabled" = "Απενεργοποιήθηκε";
+
+/* String indicating AppTP is enabled when viewed from the settings screen */
+"appTP.cell.enabled" = "Ενεργοποιήθηκε";
+
+/* Info string informing the user what App Tracking Protection does. */
+"appTP.empty.disabled.info" = "Ενεργοποιήστε την App Tracking Protection, ώστε να μπορούμε να αποκλείουμε ενοχλητικές εφαρμογές παρακολούθησης σε άλλες εφαρμογές.";
+
+/* Info string informing the user we're looking for trackers in other apps. */
+"appTP.empty.enabled.heading" = "We’re blocking hidden trackers";
+
+/* Info string informing the user we're looking for trackers in other apps. */
+"appTP.empty.enabled.info" = "Come back soon to see a list of all the app trackers we’ve blocked.";
+
+/* First answer for AppTP FAQ page */
+"appTP.faq.answer1" = "App Tracking Protection blocks app trackers from other companies, like when Facebook tries to track you in a banking app. Companies may still track you in apps they own.";
+
+/* Second answer for AppTP FAQ page */
+"appTP.faq.answer2" = "Yes! App Tracking Protection works across all apps on your device to block the most common hidden trackers we find trying to collect your personal info.";
+
+/* Third answer for AppTP FAQ page */
+"appTP.faq.answer3" = "We currently only block the most common trackers that we find on iOS. This helps us to comprehensively test App Tracking Protection and lower frequency of app breakage, while blocking up to 70% of all tracking requests.";
+
+/* Fourth answer for AppTP FAQ page */
+"appTP.faq.answer4" = "You’ll be asked to set up a virtual private network (VPN) connection, but you don't need to install a VPN app for App Tracking Protection to work.\n\nThis permission, which works only on your device, allows App Tracking Protection to monitor network traffic so that it can block known trackers.";
+
+/* Fifth answer for AppTP FAQ page */
+"appTP.faq.answer5" = "You can use App Tracking Protection at the same time as using an IKEv2 protocol VPN app on an iOS device. You won’t be able to use App Tracking Protection on an iOS device if you’re using a VPN app that uses a different type of protocol, like WireGuard or OpenVPN type VPNs.";
+
+/* Sixth answer for AppTP FAQ page */
+"appTP.faq.answer6" = "A VPN sends your data from the device to its own server, where it secures and anonymizes your data from prying eyes. However, this allows the VPN company to see your network traffic.\n\nApp Tracking Protection is different. Instead of sending your data to a VPN server, App Tracking Protection works only on your device, sitting between your apps and the servers they talk to.\n\nWhenever App Tracking Protection recognizes a known tracker, it blocks the tracker from sending personal information (such as your IP address, activity, and device details) off your device. All other traffic reaches its destination, so your apps work normally.";
+
+/* Seventh answer for AppTP FAQ page */
+"appTP.faq.answer7" = "App Tracking Protection works only on your device and doesn’t send your data off your device to DuckDuckGo. We don’t collect or store any data from your apps.";
+
+/* First question for AppTP FAQ page */
+"appTP.faq.question1" = "How does App Tracking Protection work?";
+
+/* Second question for AppTP FAQ page */
+"appTP.faq.question2" = "Does App Tracking Protection block trackers in all apps on my device?";
+
+/* Third question for AppTP FAQ page */
+"appTP.faq.question3" = "Does App Tracking Protection block all app trackers?";
+
+/* Fourth question for AppTP FAQ page */
+"appTP.faq.question4" = "Why does App Tracking Protection use a VPN connection?";
+
+/* Fifth question for AppTP FAQ page */
+"appTP.faq.question5" = "Will App Tracking Protection work if I also use a VPN app?";
+
+/* Sixth question for AppTP FAQ page */
+"appTP.faq.question6" = "How is App Tracking Protection different from a VPN?";
+
+/* Seventh question for AppTP FAQ page */
+"appTP.faq.question7" = "Is my data private?";
+
+/* Title for AppTP FAQ page */
+"appTP.faq.title" = "App Tracking Protection FAQ";
+
+/* Do not translate. StringsDict entry -- Count part of string 'App Tracking Protection blocked x tracking attempts today' */
+"appTP.home.blockedCount" = "appTP.home.blockedCount";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the trailing space) */
+"appTP.home.blockedPrefix" = "Η App Tracking Protection απέκλεισε ";
+
+/* Prefix of string 'App Tracking Protection blocked x tracking attempts today' (note the leading space) */
+"appTP.home.blockedSuffix" = " στις εφαρμογές σας σήμερα.";
+
+/* Prefix of string 'App Tracking Protection disabled. Tap to re-enable.' (note the trailing space) */
+"appTP.home.disabledPrefix" = "App Tracking Protection disabled. ";
+
+/* Suffix of string 'App Tracking Protection disabled. Tap to re-enable.' */
+"appTP.home.disabledSuffix" = "Tap to continue blocking tracking attempts across your apps.";
+
+/* Text indicating the tracking event occured 'just now'. Example: Last attempt 'just now' */
+"appTP.justNow" = "Ακριβώς τώρα";
+
+/* View to manage trackers for AppTP. Allows the user to turn trackers on or off. */
+"appTP.manageTrackers" = "Διαχείριση εφαρμογών παρακολούθησης";
+
+/* Button title for AppTP onboarding */
+"appTP.onboarding.continueButton" = "Continue";
+
+/* Button title for AppTP onboarding to enable AppTP */
+"appTP.onboarding.enableeButton" = "Enable App Tracking Protection";
+
+/* Button title for AppTP onboarding to learn more about AppTP */
+"appTP.onboarding.learnMoreButton" = "Learn More";
+
+/* First part of info on the first AppTP onboarding page */
+"appTP.onboarding.page1Info1" = "Over 85% of free iOS apps";
+
+/* Second part of info on the first AppTP onboarding page (note the leading space) */
+"appTP.onboarding.page1Info2" = " we’ve tested allow other companies to track your personal information, even when you’re sleeping.";
+
+/* Third part of info on the first AppTP onboarding page */
+"appTP.onboarding.page1Info3" = "See who we catch trying to track you in your apps and take back control.";
+
+/* First part of info on the second AppTP onboarding page (note the trailing space) */
+"appTP.onboarding.page2Info1" = "App Tracking Protection ";
+
+/* Second part of info on the second AppTP onboarding page */
+"appTP.onboarding.page2Info2" = "detects and blocks app trackers from other companies,";
+
+/* Third part of info on the second AppTP onboarding page (note the leading space) */
+"appTP.onboarding.page2Info3" = " like when Google attempts to track you in a health app.";
+
+/* Fourth part of info on the second AppTP onboarding page */
+"appTP.onboarding.page2Info4" = "It’s free,";
+
+/* Fifth part of info on the second AppTP onboarding page (note the leading and trailing space) */
+"appTP.onboarding.page2Info5" = " and you can enjoy your apps as you normally would. Working in the background, it helps ";
+
+/* Sixth part of info on the second AppTP onboarding page */
+"appTP.onboarding.page2Info6" = "protect you night and day.";
+
+/* First part of info on the third AppTP onboarding page */
+"appTP.onboarding.page3Info1" = "App Tracking Protection is not a VPN.";
+
+/* Second part of info on the third AppTP onboarding page (note the leading space) */
+"appTP.onboarding.page3Info2" = " However, your device will recognize it as one. This is because it uses a local VPN connection to work.";
+
+/* Third part of info on the third AppTP onboarding page (note the trailing space) */
+"appTP.onboarding.page3Info3" = "App Tracking Protection is different. ";
+
+/* Fourth part of info on the third AppTP onboarding page */
+"appTP.onboarding.page3Info4" = "It never routes app data through an external server.";
+
+/* Title for first AppTP onboarding page */
+"appTP.onboarding.title1" = "One easy step for better app privacy!";
+
+/* Title for second AppTP onboarding page */
+"appTP.onboarding.title2" = "How does it work?";
+
+/* Title for third AppTP onboarding page */
+"appTP.onboarding.title3" = "Who sees your data?";
+
+/* Breakage report app name label */
+"appTP.report.appLabel" = "Which app is having issues?";
+
+/* Breakage report app name placeholder */
+"appTP.report.appPlaceholder" = "App name";
+
+/* Breakage report category label */
+"appTP.report.categoryLabel" = "Τι συμβαίνει;";
+
+/* Breakage report comment label */
+"appTP.report.commentLabel" = "Comments";
+
+/* Breakage report comment placeholder */
+"appTP.report.commentPlaceholder" = "Add additional details";
+
+/* Breakage report footer explaining what is collected in the breakage report */
+"appTP.report.footer" = "In addition to the details entered into this form, your app issue report will contain:\n• A list of trackers blocked in the last 10 min\n• Whether App Tracking Protection is enabled\n• Aggregate DuckDuckGo app diagnostics";
+
+/* Breakage report submit button */
+"appTP.report.submit" = "Υποβολή";
+
+/* Breakage report form title */
+"appTP.report.title" = "Report Issue";
+
+/* Breakage report succcess message */
+"appTP.report.toast" = "Σας ευχαριστούμε! Το σχόλιο υποβλήθηκε.";
+
+/* Cancel button for 'Report an Issue' alert. */
+"appTP.reportAlert.cancel" = "Όχι τώρα";
+
+/* Confirm button for 'Report an Issue' alert. */
+"appTP.reportAlert.confirm" = "Αναφορά προβλήματος";
+
+/* Message for 'Report an Issue' alert. */
+"appTP.reportAlert.message" = "Let us know if you disabled App Tracking Protection for this specific tracker because it caused app issues. Your feedback helps us improve!";
+
+/* Title for 'Report an Issue' alert. */
+"appTP.reportAlert.title" = "Report Issue?";
+
+/* Toast notification diplayed after restoring the blocklist to default settings */
+"appTP.restoreDefaultsToast" = "Default settings restored";
+
+/* Button to restore the blocklist to its default state. */
+"appTP.restoreDefualts" = "Επαναφορά προεπιλογών";
+
+/* Title for the App Tracking Protection feature */
+"appTP.title" = "Προστασία παρακολούθησης από εφαρμογές";
+
+/* Text indicating when the tracker was last allowed. Example: Last attempt allowed (timeString) */
+"appTP.trackerAllowedTimestamp" = "Τελευταία επιτρεπόμενη προσπάθεια %@";
+
+/* Text indicating when the tracker was last blocked. Example: Last attempt blocked (timeString) */
+"appTP.trackerBlockedTimestamp" = "Τελευταία αποκλεισμένη προσπάθεια %@";
+
+/* Do not translate. StringsDict entry -- Subtitle for tracking attempts in App Tracking Protection Activity View. Example: (count) tracking attempts */
+"appTP.trackingattempts" = "appTP.trackingattempts";
 
 /* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Είσοδος";
@@ -301,6 +550,18 @@
 /* Toast message when a login item without a title is deleted */
 "autofill.logins.list.login-deleted-message-no-title" = "Η σύνδεση διαγράφηκε";
 
+/* Title for a button that allows a user to reset their list of never saved sites */
+"autofill.logins.list.never.saved" = "Επαναφορά αποκλεισμένων ιστότοπων";
+
+/* Cancel button for resetting list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.cancel" = "Ακύρωση";
+
+/* Confirm button to reset list of never saved sites */
+"autofill.logins.list.never.saved.reset.action.confirm" = "Επαναφορά αποκλεισμένων ιστότοπων";
+
+/* Alert title */
+"autofill.logins.list.never.saved.reset.action.title" = "Εάν κάνετε επαναφορά των αποκλεισμένων ιστότοπων, θα σας ζητηθεί να αποθηκεύσετε τη σύνδεσή σας την επόμενη φορά που θα συνδεθείτε σε οποιονδήποτε από τους ιστότοπους αυτούς.";
+
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Αναζήτηση στοιχείων σύνδεσης";
 
@@ -335,7 +596,7 @@
 "autofill.logins.prompt.password.button.title" = "Κωδικός πρόσβασης για %@";
 
 /* Title for autofill login prompt */
-"autofill.logins.prompt.title" = "Χρήση αποθηκευμένων στοιχείων σύνδεσης;";
+"autofill.logins.prompt.title" = "Χρήση αποθηκευμένου κωδικού πρόσβασης;";
 
 /* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
 "autofill.logins.search.no-results.subtitle" = "για '%@'";
@@ -385,26 +646,23 @@
 /* Title for the alert dialog telling the user an updated username is no longer a private email address */
 "autofill.removed.duck.address.title" = "Το ιδιωτικό όνομα χρήστη Duck Address καταργήθηκε";
 
+/* CTA displayed on modal asking if the user never wants to be prompted to save a login for this website agin */
+"autofill.save-login.never-prompt.CTA" = "Μην ζητάτε ποτέ αυτόν τον ιστότοπο";
+
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Οι συνδέσεις αποθηκεύονται με ασφάλεια στη συσκευή σας στο μενού Συνδέσεις.";
+"autofill.save-login.new-user.message" = "Οι κωδικοί πρόσβασης αποθηκεύονται με ασφάλεια στη συσκευή σας στο μενού Συνδέσεις.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.title" = "Θέλετε να αποθηκεύσει το DuckDuckGo τη σύνδεσή σας;";
+"autofill.save-login.new-user.title" = "Θέλετε το DuckDuckGo να αποθηκεύσει τον κωδικό πρόσβασής σας;";
 
 /* Cancel CTA displayed on modal asking for the user to save the login */
 "autofill.save-login.not-now.CTA" = "Να μην αποθηκευτεί";
-
-/* Confirm CTA displayed on modal asking for the user to save the login */
-"autofill.save-login.save.CTA" = "Αποθήκευση σύνδεσης";
 
 /* Title displayed on modal asking for the user to save the login */
 "autofill.save-login.title" = "Αποθήκευση σύνδεσης;";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Αποθήκευση κωδικού πρόσβασης";
-
-/* Title displayed on modal asking for the user to save the password */
-"autofill.save-password.title" = "Αποθήκευση κωδικού πρόσβασης;";
 
 /* Accessibility title for a Show Password button displaying actial password instead of ***** */
 "autofill.show-password" = "Εμφάνιση κωδικού πρόσβασης";
@@ -413,7 +671,7 @@
 "autofill.signin.to.manage" = "%@ για διαχείριση των διευθύνσεών σας Duck Address σε αυτήν τη συσκευή.";
 
 /* Message displayed on modal asking for the user to update the password */
-"autofill.update-password.message" = "Το DuckDuckGo θα ενημερώσει αυτήν την αποθηκευμένη σύνδεση στη συσκευή σας.";
+"autofill.update-password.message" = "Το DuckDuckGo θα ενημερώσει αυτόν τον αποθηκευμένο κωδικό πρόσβασης στη συσκευή σας.";
 
 /* Confirm CTA displayed on modal asking for the user to update the password */
 "autofill.update-password.save.CTA" = "Ενημέρωση κωδικού πρόσβασης";
@@ -517,38 +775,8 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Κάντε εισαγωγή ενός αρχείου HTML με σελιδοδείκτες από άλλο πρόγραμμα περιήγησης, ή κάντε εξαγωγή των σελιδοδεικτών που διαθέτετε ήδη.";
 
-/* Broken Site Category */
-"brokensite.category.comments" = "Τα σχόλια δεν φορτώθηκαν";
-
-/* Broken Site Category */
-"brokensite.category.content" = "Το περιεχόμενο λείπει";
-
-/* Broken Site Category */
-"brokensite.category.cookieprompt" = "Δεν έγινε διαχείριση του αναδυόμενου παραθύρου για cookies";
-
-/* Broken Site Category */
-"brokensite.category.images" = "Οι εικόνες δεν φορτώθηκαν";
-
-/* Broken Site Category */
-"brokensite.category.links" = "Οι σύνδεσμοι ή τα κουμπιά δεν λειτουργούν";
-
-/* Broken Site Category */
-"brokensite.category.login" = "Δεν μπορώ να συνδεθώ";
-
-/* Broken Site Category */
-"brokensite.category.other" = "Κάτι άλλο";
-
-/* Broken Site Category */
-"brokensite.category.paywall" = "Ο ιστότοπος μου ζήτησε να απενεργοποιήσω";
-
-/* Broken Site Category */
-"brokensite.category.unsupported" = "Το πρόγραμμα περιήγησης είναι ασύμβατο";
-
-/* Broken Site Category */
-"brokensite.category.videos" = "Το βίντεο δεν αναπαράχθηκε";
-
-/* Broken Site Section Title */
-"brokensite.sectionTitle" = "ΠΕΡΙΓΡΑΨΤΕ ΤΙ ΣΥΝΕΒΗ";
+/* No comment provided by engineer. */
+"bucket: %@" = "κάδος: %@";
 
 /* Title for a section containing only items from past month */
 "date.range.past-month" = "Προηγούμενος μήνας";
@@ -782,6 +1010,39 @@
 "empty.search" = "Δεν βρέθηκαν αντιστοιχίες";
 
 /* No comment provided by engineer. */
+"Error" = "Σφάλμα";
+
+/* Button title to Sign In */
+"error.email-protection-sign-in.action" = "Είσοδος";
+
+/* Alert message */
+"error.email-protection-sign-in.body" = "Ζητούμε συγγνώμη. Συνδεθείτε ξανά για να ενεργοποιήσετε εκ νέου τις λειτουργίες του Email Protection σε αυτό το πρόγραμμα περιήγησης.";
+
+/* Alert title */
+"error.email-protection-sign-in.title" = "Σφάλμα προστασίας Email Protection";
+
+/* Button title to open device settings */
+"error.insufficient-disk-space.action" = "Άνοιγμα ρυθμίσεων";
+
+/* Alert message */
+"error.insufficient-disk-space.body" = "Φαίνεται ότι ο χώρος αποθήκευσης της συσκευής σας έχει εξαντληθεί. Απελευθερώστε χώρο για να συνεχίσετε.";
+
+/* Alert title */
+"error.insufficient-disk-space.title" = "Δεν υπάρχει αρκετός χώρος αποθήκευσης";
+
+/* Button title that is shutting down the app */
+"error.preemptive-crash.action" = "Κλείστε την εφαρμογή";
+
+/* Alert message */
+"error.preemptive-crash.body" = "Φαίνεται ότι υπάρχει κάποιο πρόβλημα με την εφαρμογή και χρειάζεται να κλείσει. Ανοίξτε τη ξανά για να συνεχίσετε.";
+
+/* Alert title */
+"error.preemptive-crash.title" = "Ανιχνεύθηκε πρόβλημα με την εφαρμογή";
+
+/* Generic error message on a dialog for when the cause is not known. */
+"error.unknown.try.again" = "An unknown error has occurred";
+
+/* No comment provided by engineer. */
 "favorite" = "Αγαπημένο";
 
 /* No comment provided by engineer. */
@@ -789,6 +1050,18 @@
 
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Αφαίρεση";
+
+/* Display Mode for favorites */
+"favorites.settings.all-devices" = "Αγαπημένα όλων των συσκευών";
+
+/* Footer of the favorites settings table */
+"favorites.settings.footer" = "Επιλέξτε ποια αγαπημένα θα εμφανίζονται σε μια νέα καρτέλα με βάση την προέλευσή τους.";
+
+/* Header of the favorites settings table */
+"favorites.settings.header" = "Προτιμήσεις προβολής";
+
+/* Display Mode for favorites */
+"favorites.settings.mobile-only" = "Αγαπημένα μόνο για κινητά";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Αποκλεισμός διαφημίσεων και αναδυόμενων παραθύρων";
@@ -1000,6 +1273,18 @@
 /* Home tab title */
 "homeTab.title" = "Αρχική σελίδα";
 
+/* OK title for invite screen alert dismissal button */
+"invite.alert.ok.button" = "OK";
+
+/* Continue button on an invite dialog */
+"invite.dialog.continue.button" = "Continue";
+
+/* Get Started button on an invite dialog */
+"invite.dialog.get.started.button" = "Get Started";
+
+/* Message to show after user enters an unrecognized invite code */
+"invite.dialog.unrecognized.code.message" = "We didn’t recognize this Invite Code.";
+
 /* No comment provided by engineer. */
 "keyCommandAddBookmark" = "Προσθήκη σελιδοδείκτη";
 
@@ -1066,14 +1351,14 @@
 /* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "Το DuckDuckGo για Mac έχει την ταχύτητα που χρειάζεστε, τις λειτουργίες περιήγησης που αναμένετε και περιλαμβάνει τις καλύτερες δυνατότητες απορρήτου στην κατηγορία μας.";
 
-/* Body text for the macOS waitlist notification */
-"mac-waitlist.available.notification.body" = "Ανοίξτε την πρόσκλησή σας";
-
 /* Title for the macOS waitlist notification */
 "mac-waitlist.available.notification.title" = "Το DuckDuckGo για Mac είναι έτοιμο!";
 
 /* Title for the copy action */
 "mac-waitlist.copy" = "Αντιγραφή";
+
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-computer-go-to" = "Στον υπολογιστή σας με Windows, μεταβείτε στη διεύθυνση:";
 
 /* Description text above the Share Link button */
 "mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Στον Mac σας, μεταβείτε στη διεύθυνση:";
@@ -1087,6 +1372,9 @@
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Έρχεται σύντομα για Windows!";
 
+/* Title for the macOS waitlist button redirecting to Windows waitlist */
+"mac-waitlist.join-waitlist-screen.windows-waitlist" = "Αναζητάτε την έκδοση των Windows;";
+
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Περιηγηθείτε ιδιωτικά με την εφαρμογή μας για Mac";
 
@@ -1097,7 +1385,7 @@
 "mac-waitlist.share-sheet.title" = "DuckDuckGo για Mac";
 
 /* Title for the Mac Waitlist feature */
-"mac-waitlist.title" = "Εφαρμογή DuckDuckGo για υπολογιστές";
+"mac-waitlist.title" = "Εφαρμογή DuckDuckGo για Mac";
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Μενού περιήγησης";
@@ -1114,8 +1402,134 @@
 /* Edit button */
 "navigation.title.edit" = "Επεξεργασία";
 
+/* String indicating NetP is connected when viewed from the settings screen */
+"netP.cell.connected" = "Connected";
+
+/* String indicating NetP is disconnected when viewed from the settings screen */
+"netP.cell.disconnected" = "Not connected";
+
+/* Title for the Network Protection feature */
+"netP.title" = "Network Protection";
+
+/* Message for the network protection invite dialog */
+"network.protection.invite.dialog.message" = "Enter your invite code to get started.";
+
+/* Title for the network protection invite screen */
+"network.protection.invite.dialog.title" = "You're invited to try Network Protection";
+
+/* Prompt for the network protection invite code text field */
+"network.protection.invite.field.prompt" = "Invite Code";
+
+/* Message explaining that netP is invite only */
+"network.protection.invite.only.message" = "DuckDuckGo Network Protection is currently invite-only.";
+
+/* Message for the network protection invite success view */
+"network.protection.invite.success.message" = "Hide your location from websites and conceal your online activity from Internet providers and others on your network.";
+
+/* Title for the network protection invite success view */
+"network.protection.invite.success.title" = "Success! You’re in.";
+
+/* Title text for an iOS quick action that opens VPN settings */
+"network.protection.quick-action.open-vpn" = "Ανοικτό VPN";
+
+/* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
+"network.protection.status.connected.format" = "Connected - %@";
+
+/* The label for the NetP VPN when connecting */
+"network.protection.status.connecting" = "Connecting...";
+
+/* The label for the NetP VPN when disconnected */
+"network.protection.status.disconnected" = "Not connected";
+
+/* The label for the NetP VPN when disconnecting */
+"network.protection.status.disconnecting" = "Disconnecting...";
+
+/* Message label text for the netP status view */
+"network.protection.status.header.message" = "DuckDuckGo's VPN secures all of your device's Internet traffic anytime, anywhere.";
+
+/* Header title label text for the status view when netP is disconnected */
+"network.protection.status.header.title.off" = "Network Protection is Off";
+
+/* Header title label text for the status view when netP is connected */
+"network.protection.status.header.title.on" = "Network Protection is On";
+
+/* The status view 'Share Feedback' button which is shown inline on the status view after the \(netPInviteOnlyMessage) text */
+"network.protection.status.menu.share.feedback" = "Share Feedback";
+
+/* Connection details label shown in NetworkProtection's status view. */
+"network.protection.status.view.connection.details" = "Connection Details";
+
+/* Generic connection failed error message shown in NetworkProtection's status view. */
+"network.protection.status.view.error.connection.failed.message" = "Please try again later.";
+
+/* Generic connection failed error title shown in NetworkProtection's status view. */
+"network.protection.status.view.error.connection.failed.title" = "Failed to Connect.";
+
+/* IP Address label shown in NetworkProtection's status view. */
+"network.protection.status.view.ip.address" = "IP Address";
+
+/* Location label shown in NetworkProtection's status view. */
+"network.protection.status.view.location" = "Location";
+
+/* Label shown on the title of the settings section in NetworkProtection's status view. */
+"network.protection.status.view.settings.section.title" = "Διαχείριση";
+
+/* Title label text for the status view when netP is disconnected */
+"network.protection.status.view.title" = "Network Protection";
+
+/* Title for the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.button.title" = "Ενεργοποίηση ειδοποιήσεων";
+
+/* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.section.footer" = "Επιτρέψτε στο DuckDuckGo να σας ειδοποιεί εάν η ισχύς της σύνδεσή σας μειωθεί ή αλλάξει η κατάσταση του VPN.";
+
+/* List section footer for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.section.footer" = "Ειδοποιηθείτε εάν η ισχύς της σύνδεσής σας μειωθεί ή αλλάξει η κατάσταση του VPN.";
+
+/* Title for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.title" = "Ειδοποιήσεις VPN";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.footer" = "Αυτόματη αποκατάσταση μιας σύνδεσης VPN έπειτα από διακοπή.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.title" = "Πάντα σε λειτουργία";
+
+/* Title for the VPN Location screen's All Countries section. */
+"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Title for the VPN Location screen's Nearest Available selection item. */
+"network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
+
+/* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+
+/* Title for the VPN Location screen's Recommended section. */
+"network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Title for the VPN Notifications management screen. */
+"network.protection.vpn.notifications.title" = "Ειδοποιήσεις VPN";
+
+/* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
+"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+
+/* Title for the Preferred Location VPN Settings item. */
+"network.protection.vpn.preferred.location.title" = "Preferred Location";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.footer" = "Η Προστασία δικτύου αποτρέπει διαρροές DNS προς τον πάροχο υπηρεσιών διαδικτύου σας, δρομολογώντας ερωτήματα DNS μέσω της σήραγγας VPN στο δικό μας πρόγραμμα επίλυσης.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.title" = "Ασφαλές DNS";
+
+/* Title for the VPN Settings screen. */
+"network.protection.vpn.settings.title" = "Ρυθμίσεις VPN";
+
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"Ok" = "Εντάξει";
 
 /* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Διαχειριζόμενα cookies";
@@ -1155,6 +1569,18 @@
 
 /* ’Link’ is link on a website */
 "open.externally.failed" = "Δεν είναι δυνατή η εύρεση της εφαρμογής που απαιτείται για άνοιγμα αυτού του συνδέσμου";
+
+/* No comment provided by engineer. */
+"Please enter which app on your device is broken." = "Εισαγάγετε ποια εφαρμογή δεν λειτουργεί σωστά στη συσκευή σας.";
+
+/* Activate button */
+"pm.activate" = "Reactivate";
+
+/* Cancel button */
+"pm.cancel" = "Cancel";
+
+/* Deactivate button */
+"pm.deactivate" = "Deactivate";
 
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Οι ιστότοποι βασίζονται σε cookies για να σας διατηρούν συνδεδεμένους. Όταν ενεργοποιείτε τη διαγραφή δραστηριότητας για έναν ιστότοπο, τα cookies δεν διαγράφονται και παραμένετε συνδεδεμένοι, ακόμα και μετά τη χρήση του Κουμπιού διαγραφής δραστηριότητας. Εξακολουθούμε να αποκλείουμε εφαρμογές παρακολούθησης από τρίτους που υπάρχουν σε ιστότοπους με διαγραφή δραστηριότητας.";
@@ -1214,9 +1640,6 @@
 "prompt.custom.url.scheme.title" = "Άνοιγμα σε άλλη εφαρμογή;";
 
 /* No comment provided by engineer. */
-"report.brokensite.header" = "Η υποβολή μιας ανώνυμης αναφοράς για σπασμένους συνδεσμους μασ βοηθά να πραγματοποιήσουμε επανόρθωση των εντοπισμένων σφαλμάτων και προβλημάτων αυτών των ζητημάτων και να βελτιώσουμε την εφαρμογή.";
-
-/* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Αναζήτηση ή εισαγωγή διεύθυνσης";
 
 /* No comment provided by engineer. */
@@ -1225,8 +1648,8 @@
 /* No comment provided by engineer. */
 "section.title.favorites" = "Αγαπημένα";
 
-/* No comment provided by engineer. */
-"settings.about.text" = "Στην DuckDuckGo, θέτουμε τα νέα πρότυπα σε ό,τι αφορά την αξιοπιστία του διαδικτύου.\n\nΤο πρόγραμμα περιήγησης Προστασίας προσωπικών δεδομένων DuckDuckGo παρέχει όλα όσα χρειάζεστε για να προστατεύετε τον εαυτό σας όταν πραγματοποιείτε αναζήτηση και περιήγηση στο διαδίκτυο, συμπεριλαμβανομένου του αποκλεισμού παρακολούθησης, πιο έξυπνης κρυπτογράφησης και ιδιωτικής αναζήτησης DuckDuckGo.\n\nΆλλωστε, στο διαδίκτυο δεν θα πρέπει να αισθάνεστε άβολα, ενώ το να απολαμβάνετε την ιδιωτικότητα που σας αξίζει στο διαδίκτυο θα πρέπει να είναι τόσο απλό όσο το κλείσιμο μιας πόρτας.";
+/* about page */
+"settings.about.text" = "Το DuckDuckGo αποτελεί την ανεξάρτητη εταιρεία προστασίας προσωπικών δεδομένων στο διαδίκτυο που ιδρύθηκε το 2008 για όσους έχουν βαρεθεί να παρακολουθούνται στο διαδίκτυο και επιθυμούν μια εύκολη λύση. Αποτελούμε τρανή απόδειξη ότι μπορείτε να αποκτήσετε πραγματική προστασία του απορρήτου σας στο διαδίκτυο χωρίς συμβιβασμούς.\n\nο πρόγραμμα περιήγησης DuckDuckGo διαθέτει τις λειτουργίες που περιμένετε από ένα πρόγραμμα περιήγησης, όπως σελιδοδείκτες, καρτέλες, κωδικούς πρόσβασης και πολλά άλλα, καθώς και πάνω από [δώδεκα ισχυρές λειτουργίες προστασίες απορρήτου](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/) που δεν προσφέρονται από τα περισσότερα δημοφιλή προγράμματα περιήγησης βάσει προεπιλογής. Αυτό το μοναδικά ολοκληρωμένο σύνολο προστασίας του απορρήτου συμβάλλει στην προστασία των διαδικτυακών δραστηριοτήτων σας, από αναζήτηση έως περιήγηση, αποστολή email και πολλά άλλα.\n\nΗ προστασία απορρήτου μας λειτουργεί χωρίς να χρειάζεται να γνωρίζετε τις τεχνικές λεπτομέρειες ή να ασχολείστε με περίπλοκες ρυθμίσεις. Το μόνο που έχετε να κάνετε είναι να αλλάξετε το πρόγραμμα περιήγησής σας σε DuckDuckGo σε όλες τις συσκευές σας και θα έχετε ιδιωτικότητα βάσει προεπιλογής.\n\nΑλλά αν *θέλετε* να ρίξετε μια αναλυτική ματιά, μπορείτε να βρείτε περισσότερες πληροφορίες σχετικά με το πώς λειτουργούν οι προστασίες απορρήτου του DuckDuckGo στις [σελίδες της ενότητας Βοήθεια](ddgQuickLink://duckduckgo.com/duckduckgo-help-pages/).";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Υποβολή αναφοράς";
@@ -1245,6 +1668,9 @@
 
 /* No comment provided by engineer. */
 "siteFeedback.urlPlaceholder" = "Ποιος ιστότοπος είναι κατεστραμμένος;";
+
+/* No comment provided by engineer. */
+"sync.remove-device.message" = "Το «%@» δεν θα μπορεί πλέον να έχει πρόσβαση στα συγχρονισμένα δεδομένα σας.";
 
 /* Accessibility label on remove button */
 "tab.close.home" = "Κλείσιμο αρχικής καρτέλας";
@@ -1318,6 +1744,57 @@
 /* Voice-search footer note with on-device privacy warning */
 "voiceSearch.footer.note" = "Η επεξεργασία του ήχου πραγματοποιείται στη συσκευή. Δεν αποθηκεύεται ούτε κοινοποιείται σε οποιονδήποτε, συμπεριλαμβανομένου του DuckDuckGo.";
 
+/* Title for the button to enable push notifications in system settings */
+"waitlist.allow-notifications" = "Επιτρέψτε ειδοποιήσεις";
+
+/* Body text for the waitlist notification */
+"waitlist.available.notification.body" = "Ανοίξτε την πρόσκλησή σας";
+
+/* Title for the copy action */
+"waitlist.copy" = "Αντιγραφή";
+
+/* Label text for the invite code */
+"waitlist.invite-code" = "Κωδικός πρόσκλησης";
+
+/* Step title on the invite screen */
+"waitlist.invite-screen.step.title" = "Βήμα %d";
+
+/* Title for the invite code screen */
+"waitlist.invite-screen.youre-invited" = "Έχετε προσκληθεί!";
+
+/* Title for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.join" = "Εγγραφείτε στην Ιδιωτική λίστα αναμονής";
+
+/* Temporary status text for the Join Waitlist screen */
+"waitlist.join-waitlist-screen.joining" = "Εγγραφή στη λίστα αναμονής...";
+
+/* Title for the Share Link button */
+"waitlist.join-waitlist-screen.share-link" = "Κοινή χρήση συνδέσμου";
+
+/* Notification text for the waitlist */
+"waitlist.joined.no-notification.get-notification" = "ΝΑ ΕΙΔΟΠΟΙΗΘΩ";
+
+/* Title for the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.get-notification-confirmation-title" = "Θα θέλατε να λάβετε ειδοποίηση όταν έρθει η σειρά σας;";
+
+/* Cancel button in the alert to confirm enabling notifications */
+"waitlist.joined.no-notification.no-thanks" = "Όχι, ευχαριστώ";
+
+/* Text used for the Notifications Disabled state */
+"waitlist.notification.disabled" = "Μπορούμε να σας ειδοποιήσουμε όταν έρθει η σειρά σας, ωστόσο οι ειδοποιήσεις είναι προς το παρόν απενεργοποιημένες για το DuckDuckGo.";
+
+/* Privacy disclaimer for the Waitlist feature */
+"waitlist.privacy-disclaimer" = "Δεν θα χρειαστεί να κοινοποιήσετε προσωπικά στοιχεία για εγγραφή στη λίστα αναμονής. Θα εξασφαλίσετε τη θέση σας στη λίστα αναμονής βάσει χρονικής σήμανσης που υπάρχει αποκλειστικά στη συσκευή σας, ώστε να μπορούμε να σας ειδοποιήσουμε μόλις έρθει η σειρά σας.";
+
+/* Title for the queue screen */
+"waitlist.queue-screen.on-the-list" = "Βρίσκεστε στη λίστα!";
+
+/* Title for the settings subtitle */
+"waitlist.settings.download-available" = "Διαθέσιμη λήψη";
+
+/* Title for the share sheet entry */
+"waitlist.share-sheet.title" = "Έχετε προσκληθεί!";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Το Αγαπημένο αφαιρέθηκε";
 
@@ -1341,4 +1818,52 @@
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "Μήνυμα από %@:";
+
+/* No comment provided by engineer. */
+"Welcome to the Duck Side!" = "Καλωσορίσατε στην πλευρά της Πάπιας!";
+
+/* Title for the Windows waitlist notification */
+"windows-waitlist.available.notification.title" = "Δοκιμάστε το DuckDuckGo για Windows!";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-1.description" = "Επισκεφτείτε αυτήν τη διεύθυνση URL στη συσκευή Windows που διαθέτετε για να κάνετε λήψη:";
+
+/* Description on the invite screen */
+"windows-waitlist.invite-screen.step-2.description" = "Ανοίξτε το πρόγραμμα εγκατάστασης του DuckDuckGo στις Λήψεις, επιλέξτε Εγκατάσταση και έπειτα εισαγάγετε τον κωδικό πρόσκλησής σας.";
+
+/* Subtitle for the Windows Waitlist Invite screen */
+"windows-waitlist.invite-screen.subtitle" = "Είστε έτοιμοι να χρησιμοποιήσετε το DuckDuckGo σε Windows;";
+
+/* Title for the Windows waitlist button redirecting to Mac waitlist */
+"windows-waitlist.join-waitlist-screen.mac-waitlist" = "Αναζητάτε την έκδοση των Mac;";
+
+/* Title for the Join Windows Waitlist screen */
+"windows-waitlist.join-waitlist-screen.try-duckduckgo-for-windows" = "Αποκτήστε πρόωρη πρόσβαση για να δοκιμάσετε το DuckDuckGo για Windows!";
+
+/* Message for the alert to confirm enabling notifications */
+"windows-waitlist.joined.no-notification.get-notification-confirmation-message" = "Θα σας στείλουμε ειδοποίηση όταν θα είναι έτοιμο προς λήψη το αντίγραφό σας DuckDuckGo για Windows. ";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"windows-waitlist.joined.notifications-declined" = "Η πρόσκλησή σας για να δοκιμάσετε το DuckDuckGo για Windows θα σταλεί εδώ. Ελέγξτε πάλι σύντομα. Διαφορετικά, μπορούμε να σας στείλουμε ειδοποίηση όταν έρθει η σειρά σας.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"windows-waitlist.joined.notifications-enabled" = "Θα σας στείλουμε ειδοποίηση όταν θα είναι έτοιμο προς λήψη το αντίγραφό σας DuckDuckGo για Windows.";
+
+/* Title for the settings subtitle */
+"windows-waitlist.settings.browse-privately" = "Περιηγηθείτε ιδιωτικά με την εφαρμογή μας για Windows";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"windows-waitlist.share-sheet.invite-code-message" = "Έχετε προσκληθεί!\n\nΕίστε έτοιμοι να χρησιμοποιήσετε το DuckDuckGo σε Windows;\n\nΒήμα 1\nΕπισκεφθείτε αυτήν τη διεύθυνση URL στη συσκευή σας Windows για να πραγματοποιήσετε λήψη:\nhttps://duckduckgo.com/windows\n\nΒήμα 2\nΑνοίξτε το πρόγραμμα εγκατάστασης του DuckDuckGo στις Λήψεις, επιλέξτε Εγκατάσταση και έπειτα εισαγάγετε τον κωδικό πρόσκλησής σας.\n\nΚωδικός πρόσκλησης: %@";
+
+/* Message used when sharing to iMessage */
+"windows-waitlist.share-sheet.message" = "Είστε έτοιμοι να αρχίσετε μια ιδιωτική περιήγηση σε Windows;\n\nΕπισκεφθείτε αυτήν τη διεύθυνση URL στον υπολογιστή σας για να πραγματοποιήσετε λήψη:\nhttps://duckduckgo.com/windows";
+
+/* Summary text for the Windows browser waitlist */
+"windows-waitlist.summary" = "Το DuckDuckGo για Windows έχει ό,τι χρειάζεστε για να περιηγηθείτε με περισσότερη ιδιωτικότητα — ιδιωτική αναζήτηση, αποκλεισμός εφαρμογών παρακολούθησης, αναγκαστική κρυπτογράφηση και αποκλεισμός αναδυόμενων παραθύρων για cookie, ενώ έρχονται σύντομα και περισσότερες κορυφαίες προστασίες στην κατηγορία τους.";
+
+/* Title for the Windows Waitlist feature */
+"windows-waitlist.title" = "Εφαρμογή DuckDuckGo για Windows";
+
+/* Title for the Windows browser download link page */
+"windows-waitlist.waitlist-download-screen.try-duckduckgo-for-windows" = "Αποκτήστε το DuckDuckGo για Windows!";
 

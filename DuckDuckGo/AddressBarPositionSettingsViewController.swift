@@ -43,7 +43,6 @@ class AddressBarPositionSettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let theme = ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
 
         cell.tintColor = theme.buttonTintColor
         cell.textLabel?.textColor = theme.tableCellTextColor
@@ -54,14 +53,6 @@ class AddressBarPositionSettingsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         appSettings.currentAddressBarPosition = AddressBarPosition.allCases[indexPath.row]
-
-        switch appSettings.currentAddressBarPosition {
-        case .top:
-            Pixel.fire(pixel: .navigationBarPositionTop)
-        case .bottom:
-            Pixel.fire(pixel: .navigationbarPositionBottom)
-        }
-
         tableView.performBatchUpdates {
             tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
             tableView.deselectRow(at: indexPath, animated: true)

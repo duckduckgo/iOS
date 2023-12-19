@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+import Bookmarks
 import Common
 import Kingfisher
 import UIKit
@@ -381,6 +382,8 @@ public class Favicons {
             return
         }
 
+        /// DuckDuckGo Privacy Browser uses built-in functionality from iOS to fetch the highest quality favicons for your bookmarks and favorites.
+        /// This functionality uses a user agent that is different from other network requests made by the app in order to find the best favicon available.
         let metadataFetcher = LPMetadataProvider()
         let completion: (LPLinkMetadata?, Error?) -> Void = { metadata, metadataError in
             guard let iconProvider = metadata?.iconProvider, metadataError == nil else {
@@ -478,5 +481,36 @@ public class Favicons {
         return "\(Constants.salt)\(domain)".sha256()
     }
 
+}
+
+extension Favicons: Bookmarks.FaviconStoring {
+
+    public func hasFavicon(for domain: String) -> Bool {
+        guard let targetCache = Favicons.Constants.caches[.fireproof],
+              let resource = defaultResource(forDomain: domain)
+        else {
+            return false
+        }
+
+        return targetCache.isCached(forKey: resource.cacheKey)
+    }
+
+    public func storeFavicon(_ imageData: Data, with url: URL?, for documentURL: URL) async throws {
+
+        guard let domain = documentURL.host,
+              let options = kfOptions(forDomain: domain, withURL: documentURL, usingCache: .fireproof),
+              let resource = defaultResource(forDomain: domain),
+              let targetCache = Favicons.Constants.caches[.fireproof],
+              let image = UIImage(data: imageData)
+        else {
+            return
+        }
+
+        Task {
+            let image = self.scaleDownIfNeeded(image: image, toFit: Constants.maxFaviconSize)
+            targetCache.store(image, forKey: resource.cacheKey, options: .init(options))
+            WidgetCenter.shared.reloadAllTimelines()
+        }
+    }
 }
 // swiftlint:enable type_body_length file_length

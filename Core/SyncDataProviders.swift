@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+import Bookmarks
 import BrowserServicesKit
 import Combine
 import Common
@@ -37,9 +38,21 @@ public class SyncDataProviders: DataProvidersSource {
             return []
         }
 
-        bookmarksAdapter.setUpProviderIfNeeded(database: bookmarksDatabase, metadataStore: syncMetadata)
-        credentialsAdapter.setUpProviderIfNeeded(secureVaultFactory: secureVaultFactory, metadataStore: syncMetadata)
-        settingsAdapter.setUpProviderIfNeeded(metadataDatabase: syncMetadataDatabase, metadataStore: syncMetadata)
+        bookmarksAdapter.setUpProviderIfNeeded(
+            database: bookmarksDatabase,
+            metadataStore: syncMetadata,
+            metricsEventsHandler: metricsEventsHandler
+        )
+        credentialsAdapter.setUpProviderIfNeeded(
+            secureVaultFactory: secureVaultFactory,
+            metadataStore: syncMetadata,
+            metricsEventsHandler: metricsEventsHandler
+        )
+        settingsAdapter.setUpProviderIfNeeded(
+            metadataDatabase: syncMetadataDatabase,
+            metadataStore: syncMetadata,
+            metricsEventsHandler: metricsEventsHandler
+        )
 
         let providers: [Any] = [
             bookmarksAdapter.provider as Any,
@@ -84,14 +97,16 @@ public class SyncDataProviders: DataProvidersSource {
     public init(
         bookmarksDatabase: CoreDataDatabase,
         secureVaultFactory: AutofillVaultFactory = AutofillSecureVaultFactory,
-        secureVaultErrorReporter: SecureVaultErrorReporting
+        secureVaultErrorReporter: SecureVaultErrorReporting,
+        settingHandlers: [SettingSyncHandler],
+        favoritesDisplayModeStorage: FavoritesDisplayModeStoring
     ) {
         self.bookmarksDatabase = bookmarksDatabase
         self.secureVaultFactory = secureVaultFactory
         self.secureVaultErrorReporter = secureVaultErrorReporter
-        bookmarksAdapter = SyncBookmarksAdapter(database: bookmarksDatabase)
+        bookmarksAdapter = SyncBookmarksAdapter(database: bookmarksDatabase, favoritesDisplayModeStorage: favoritesDisplayModeStorage)
         credentialsAdapter = SyncCredentialsAdapter(secureVaultFactory: secureVaultFactory, secureVaultErrorReporter: secureVaultErrorReporter)
-        settingsAdapter = SyncSettingsAdapter()
+        settingsAdapter = SyncSettingsAdapter(settingHandlers: settingHandlers)
     }
 
     private func initializeMetadataDatabaseIfNeeded() {
@@ -119,6 +134,7 @@ public class SyncDataProviders: DataProvidersSource {
     private var isDatabaseCleanersSetUp: Bool = false
     private var syncMetadata: SyncMetadataStore?
     private var syncAuthStateDidChangeCancellable: AnyCancellable?
+    private let metricsEventsHandler = SyncMetricsEventsHandler()
 
     private let syncMetadataDatabase: CoreDataDatabase = SyncMetadataDatabase.make()
     private let bookmarksDatabase: CoreDataDatabase

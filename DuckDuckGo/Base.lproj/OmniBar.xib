@@ -438,78 +438,6 @@
                 <action selector="onTrackersViewPressed:" destination="ojX-nM-dyN" id="2Hd-db-TD5"/>
             </connections>
         </tapGestureRecognizer>
-        <tableViewController id="ViM-4R-B1R" customClass="ConfigurationURLDebugViewController" customModule="DuckDuckGo" customModuleProvider="target">
-            <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="tky-yv-tqx">
-                <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
-                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                <prototypes>
-                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ConfigurationURLTableViewCell" id="2Fj-2z-xjX" customClass="ConfigurationURLTableViewCell" customModule="DuckDuckGo" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="50" width="1366" height="80"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2Fj-2z-xjX" id="1Pi-qM-qb2">
-                            <rect key="frame" x="0.0" y="0.0" width="1366" height="80"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                            <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9gx-nx-siU">
-                                    <rect key="frame" x="20" y="15" width="1326" height="50"/>
-                                    <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="abu-SY-5nG">
-                                            <rect key="frame" x="0.0" y="0.0" width="44" height="50"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Clz-m8-kWQ">
-                                                    <rect key="frame" x="0.0" y="0.0" width="44" height="16.5"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ArC-Dj-OiU">
-                                                    <rect key="frame" x="0.0" y="16.5" width="44" height="16.5"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" name="accent"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KkZ-kt-JEC">
-                                                    <rect key="frame" x="0.0" y="33.5" width="44" height="16.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </stackView>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a3k-wi-PYr">
-                                            <rect key="frame" x="1302" y="0.0" width="24" height="50"/>
-                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" image="Reload-24"/>
-                                        </button>
-                                    </subviews>
-                                </stackView>
-                            </subviews>
-                            <constraints>
-                                <constraint firstItem="9gx-nx-siU" firstAttribute="leading" secondItem="1Pi-qM-qb2" secondAttribute="leadingMargin" id="dPE-pa-cUq"/>
-                                <constraint firstItem="9gx-nx-siU" firstAttribute="top" secondItem="1Pi-qM-qb2" secondAttribute="topMargin" id="j6z-Nn-aPN"/>
-                                <constraint firstAttribute="trailingMargin" secondItem="9gx-nx-siU" secondAttribute="trailing" id="ksX-LW-VlI"/>
-                                <constraint firstAttribute="bottomMargin" secondItem="9gx-nx-siU" secondAttribute="bottom" id="ziT-ur-dIC"/>
-                            </constraints>
-                        </tableViewCellContentView>
-                        <connections>
-                            <outlet property="refresh" destination="a3k-wi-PYr" id="U1Z-8u-grk"/>
-                            <outlet property="subtitle" destination="ArC-Dj-OiU" id="v9j-Gn-9xY"/>
-                            <outlet property="ternary" destination="KkZ-kt-JEC" id="90h-Ju-cdB"/>
-                            <outlet property="title" destination="Clz-m8-kWQ" id="Klz-XR-Q3g"/>
-                        </connections>
-                    </tableViewCell>
-                </prototypes>
-                <connections>
-                    <outlet property="dataSource" destination="ViM-4R-B1R" id="VCt-bL-fPj"/>
-                    <outlet property="delegate" destination="ViM-4R-B1R" id="adE-gn-YL8"/>
-                </connections>
-            </tableView>
-            <navigationItem key="navigationItem" title="Configuration URLs" id="YW5-Xs-Q8G"/>
-            <point key="canvasLocation" x="4775" y="988"/>
-        </tableViewController>
     </objects>
     <designables>
         <designable name="fqM-N4-jNd">
@@ -527,17 +455,11 @@
         <image name="Reload-24" width="24" height="24"/>
         <image name="Settings-24" width="24" height="24"/>
         <image name="Share-24" width="24" height="24"/>
-        <namedColor name="accent">
-            <color red="0.22352941176470589" green="0.41176470588235292" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="background">
             <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

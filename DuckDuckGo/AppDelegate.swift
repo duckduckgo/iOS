@@ -289,9 +289,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         isSyncInProgressCancellable = syncService.isSyncInProgressPublisher
             .filter { $0 }
-            .prefix(1)
-            .sink { _ in
-                DailyPixel.fire(pixel: .syncDaily)
+            .sink { [weak syncService] _ in
+                DailyPixel.fire(pixel: .syncDaily, includedParameters: [.appVersion])
+                syncService?.syncDailyInfo.sendStatusIfNeeded(handler: { params in
+                    Pixel.fire(pixel: .syncSuccessRateDaily,
+                               withAdditionalParameters: params,
+                               includedParameters: [.appVersion])
+                })
             }
 
 #if APP_TRACKING_PROTECTION

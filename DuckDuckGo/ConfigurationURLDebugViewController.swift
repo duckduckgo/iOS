@@ -106,10 +106,6 @@ final class ConfigurationURLDebugViewController: UITableViewController {
         }
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         Sections.allCases.count
     }
@@ -195,10 +191,10 @@ struct CustomConfigurationURLProvider: ConfigurationURLProviding {
         switch configuration {
         case .bloomFilterSpec: customURL = customBloomFilterSpecURL
         case .bloomFilterBinary: customURL = customBloomFilterBinaryURL
-        case .bloomFilterExcludedDomains:customURL = customBloomFilterExcludedDomainsURL
-        case .privacyConfiguration:customURL = customPrivacyConfigurationURL
-        case .trackerDataSet:customURL = customTrackerDataSetURL
-        case .surrogates:customURL = customSurrogatesURL
+        case .bloomFilterExcludedDomains: customURL = customBloomFilterExcludedDomainsURL
+        case .privacyConfiguration: customURL = customPrivacyConfigurationURL
+        case .trackerDataSet: customURL = customTrackerDataSetURL
+        case .surrogates: customURL = customSurrogatesURL
         case .FBConfig: customURL = nil
         }
         return customURL ?? defaultURL

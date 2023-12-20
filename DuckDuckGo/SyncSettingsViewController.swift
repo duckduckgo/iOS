@@ -69,6 +69,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         setUpFaviconsFetcherSwitch(viewModel)
         setUpFavoritesDisplayModeSwitch(viewModel, appSettings)
         setUpSyncPaused(viewModel, appSettings)
+        setUpSyncFeatureFlags(viewModel)
         refreshForState(syncService.authState)
 
         syncService.authStatePublisher
@@ -85,6 +86,19 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setUpSyncFeatureFlags(_ viewModel: SyncSettingsViewModel) {
+        syncService.featureFlagsPublisher.prepend(syncService.featureFlags)
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .sink { featureFlags in
+                viewModel.isDataSyncingAvailable = featureFlags.contains(.dataSyncing)
+                viewModel.isConnectingDevicesAvailable = featureFlags.contains(.connectFlows)
+                viewModel.isAccountCreationAvailable = featureFlags.contains(.accountCreation)
+                viewModel.isAccountRecoveryAvailable = featureFlags.contains(.accountRecovery)
+            }
+            .store(in: &cancellables)
     }
 
     private func setUpFaviconsFetcherSwitch(_ viewModel: SyncSettingsViewModel) {

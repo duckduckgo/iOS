@@ -91,6 +91,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     private func setUpSyncFeatureFlags(_ viewModel: SyncSettingsViewModel) {
         syncService.featureFlagsPublisher.prepend(syncService.featureFlags)
             .removeDuplicates()
+            .receive(on: DispatchQueue.main)
             .sink { featureFlags in
                 viewModel.isDataSyncingAvailable = featureFlags.contains(.dataSyncing)
                 viewModel.isConnectingDevicesAvailable = featureFlags.contains(.connectFlows)

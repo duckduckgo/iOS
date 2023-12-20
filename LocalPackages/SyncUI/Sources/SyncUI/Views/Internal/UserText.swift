@@ -160,9 +160,10 @@ struct UserText {
     static let fetchFaviconsOnboardingButtonTitle = NSLocalizedString("fetch.favicons.onboarding.button.title", value: "Keep Bookmarks Icons Updated", comment: "Fetch Favicons Onboarding - Button Title")
 
     // Sync Feature Flags
-    static let serviceUnavailable = NSLocalizedString("sync.warning.service.unavailable", value: "Service Unavailable", comment: "Title of the warning message")
-    static let warningSyncDisabled = NSLocalizedString("sync.warning.sync.disabled", value: "We apologize, but the service is currently unavailable. Please try again later.", comment: "Sync unavailable warning message")
-    static let warningAccountCreationDisabled = NSLocalizedString("sync.warning.account.creation.disabled", value: "We apologize, but new account creation is currently unavailable for this service. Please try again later.", comment: "Sync unavailable warning message")
+    static let syncUnavailableTitle = NSLocalizedString("sync.warning.sync.unavailable", value: "Sync & Backup is Unavailable", comment: "Title of the warning message")
+    static let syncPausedTitle = NSLocalizedString("sync.warning.sync.paused", value: "Sync & Backup is Paused", comment: "Title of the warning message")
+    static let syncUnavailableMessage = NSLocalizedString("sync.warning.data.syncing.disabled", value: "Sorry, but Sync & Backup is currently unavailable. Please try again later.", comment: "Data syncing unavailable warning message")
+    static let syncUnavailableMessageUpgradeRequired = NSLocalizedString("sync.warning.data.syncing.disabled.upgrade.required", value: "Sorry, but Sync & Backup is no longer available in this app version. Please update DuckDuckGo to the latest version to continue.", comment: "Data syncing unavailable warning message")
 
     // swiftlint:enable line_length
 }

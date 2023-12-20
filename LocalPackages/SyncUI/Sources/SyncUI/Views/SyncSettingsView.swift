@@ -100,10 +100,8 @@ extension SyncSettingsView {
 
     @ViewBuilder
     fileprivate func syncUnavailableViewWhileLoggedOut() -> some View {
-        if !model.isDataSyncingAvailable || !model.isConnectingDevicesAvailable {
-            SyncWarningMessageView(title: UserText.serviceUnavailable, message: UserText.warningSyncDisabled)
-        } else if !model.isAccountCreationAvailable {
-            SyncWarningMessageView(title: UserText.serviceUnavailable, message: UserText.warningAccountCreationDisabled)
+        if !model.isDataSyncingAvailable || !model.isConnectingDevicesAvailable || !model.isAccountCreationAvailable {
+            SyncWarningMessageView(title: UserText.syncUnavailableTitle, message: UserText.syncUnavailableMessage)
         } else {
             EmptyView()
         }
@@ -182,7 +180,7 @@ extension SyncSettingsView {
         if model.isDataSyncingAvailable {
             EmptyView()
         } else {
-            SyncWarningMessageView(title: UserText.serviceUnavailable, message: UserText.warningSyncDisabled)
+            SyncWarningMessageView(title: UserText.syncPausedTitle, message: UserText.syncUnavailableMessage)
         }
     }
 

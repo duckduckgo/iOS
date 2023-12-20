@@ -260,7 +260,8 @@ class SettingsViewController: UITableViewController {
 
     private func configureSyncCell() {
         syncCell.textLabel?.text = "Sync & Backup"
-        if SyncBookmarksAdapter.isSyncBookmarksPaused || SyncCredentialsAdapter.isSyncCredentialsPaused {
+        let isDataSyncingDisabled = !syncService.featureFlags.contains(.dataSyncing) && syncService.authState == .active
+        if SyncBookmarksAdapter.isSyncBookmarksPaused || SyncCredentialsAdapter.isSyncCredentialsPaused || isDataSyncingDisabled {
             syncCell.textLabel?.text = "⚠️ " + "Sync & Backup"
         }
         syncCell.isHidden = !shouldShowSyncCell

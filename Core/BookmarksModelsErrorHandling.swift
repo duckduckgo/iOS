@@ -57,6 +57,7 @@ public class BookmarksModelsErrorHandling: EventMapping<BookmarksModelError> {
                 
             case .missingParent(let object):
                 domainEvent = .missingParent(object)
+            }
 
             if let domainEvent {
                 if let error = error {

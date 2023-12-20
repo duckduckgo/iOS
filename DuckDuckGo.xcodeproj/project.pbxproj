@@ -1244,6 +1244,7 @@
 		1E05D1D729C46EDA00BF9A1F /* TimedPixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimedPixel.swift; sourceTree = "<group>"; };
 		1E05D1D929C47B2B00BF9A1F /* DailyPixelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPixelTests.swift; sourceTree = "<group>"; };
 		1E0A75E927A2FBD000A2BFB6 /* Downloads.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Downloads.storyboard; sourceTree = "<group>"; };
+		1E0CEDC82B32BECE000321C9 /* BrowserServicesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BrowserServicesKit; path = ../BrowserServicesKit; sourceTree = "<group>"; };
 		1E162604296840D80004127F /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
 		1E1626062968413B0004127F /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		1E162614296D910F0004127F /* cookie-icon-animated-40-dark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cookie-icon-animated-40-dark.json"; sourceTree = "<group>"; };
@@ -3738,6 +3739,7 @@
 		84E341891E2F7EFB00BDBA6F = {
 			isa = PBXGroup;
 			children = (
+				1E0CEDC82B32BECE000321C9 /* BrowserServicesKit */,
 				EE3B98EB2A963515002F63A0 /* WidgetsExtensionAlpha.entitlements */,
 				6FB030C7234331B400A10DB9 /* Configuration.xcconfig */,
 				EEB8FDB92A990AEE00EBEDCF /* Configuration-Alpha.xcconfig */,

@@ -61,23 +61,25 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 self.refreshDevices()
                 navigationController?.topViewController?.dismiss(animated: true, completion: showRecoveryPDF)
             } catch {
-                handleError(SyncError.unableToSync, error: error)
+                handleError(SyncError.unableToSyncToServer, error: error)
             }
         }
     }
 
     @MainActor
-    func handleError(_ type: SyncError, error: Error) {
+    func handleError(_ type: SyncError, error: Error?) {
         let alertController = UIAlertController(
             title: type.title,
-            message: type.description + "\n" + error.localizedDescription,
+            message: type.description + "\n" + (error?.localizedDescription ?? ""),
             preferredStyle: .alert)
 
         let okAction = UIAlertAction(title: UserText.syncPausedAlertOkButton, style: .default, handler: nil)
         alertController.addAction(okAction)
 
-        if type == .unableToSync {
-            // Give time to the is syncing view to appear
+        if type == .unableToSyncToServer || 
+            type == .unableToSyncWithDevice ||
+            type == .unableToMergeTwoAccounts {
+            // Gives time to the is syncing view to appear
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.dismissPresentedViewController { [weak self] in
                     self?.present(alertController, animated: true, completion: nil)
@@ -283,12 +285,14 @@ private class PortraitNavigationController: UINavigationController {
 }
 
 enum SyncError {
-    case unableToSync
-    case unableToGetDevices
+    case unableToSyncToServer
+    case unableToSyncWithDevice
+    case unableToMergeTwoAccounts
     case unableToUpdateDeviceName
     case unableToTurnSyncOff
     case unableToDeleteData
     case unableToRemoveDevice
+    case unableToCreateRecoveryPdf
 
     var title: String {
         return UserText.syncErrorAlertTitle
@@ -296,10 +300,12 @@ enum SyncError {
 
     var description: String {
         switch self {
-        case .unableToSync:
-            return UserText.unableToSyncDescription
-        case .unableToGetDevices:
-            return UserText.unableToGetDevicesDescription
+        case .unableToSyncToServer:
+            return UserText.unableToSyncToServerDescription
+        case .unableToSyncWithDevice:
+            return UserText.unableToSyncWithOtherDeviceDescription
+        case .unableToMergeTwoAccounts:
+            return UserText.unableToMergeTwoAccountsErrorDescription
         case .unableToUpdateDeviceName:
             return UserText.unableToUpdateDeviceNameDescription
         case .unableToTurnSyncOff:
@@ -308,6 +314,8 @@ enum SyncError {
             return UserText.unableToDeleteDataDescription
         case .unableToRemoveDevice:
             return UserText.unableToRemoveDeviceDescription
+        case .unableToCreateRecoveryPdf:
+            return UserText.unableToCreateRecoveryPDF
         }
     }
 }

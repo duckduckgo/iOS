@@ -17,8 +17,9 @@
 //  limitations under the License.
 //
 
-import SwiftUI
 import DesignResourcesKit
+import DuckUI
+import SwiftUI
 
 public struct SyncSettingsView: View {
 
@@ -27,6 +28,7 @@ public struct SyncSettingsView: View {
     let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
     @State var isSyncWithSetUpSheetVisible = false
     @State var isRecoverSyncedDataSheetVisible = false
+    @State var isEnvironmentSwitcherInstructionsVisible = false
 
     public init(model: SyncSettingsViewModel) {
         self.model = model
@@ -45,6 +47,8 @@ public struct SyncSettingsView: View {
 
                 if model.isSyncEnabled {
                     
+                    syncUnavailableViewWhileLoggedIn()
+
                     turnOffSync()
                     
                     // Sync Paused Errors
@@ -64,6 +68,8 @@ public struct SyncSettingsView: View {
                     deleteAllData()
                     
                 } else {
+
+                    syncUnavailableViewWhileLoggedOut()
 
                     syncWithAnotherDeviceView()
 
@@ -88,8 +94,20 @@ public struct SyncSettingsView: View {
     @State var selectedDevice: SyncSettingsViewModel.Device?
 }
 
-// Sync Set up Views
+// MARK: - Sync Set up Views
+
 extension SyncSettingsView {
+
+    @ViewBuilder
+    fileprivate func syncUnavailableViewWhileLoggedOut() -> some View {
+        if !model.isDataSyncingAvailable || !model.isConnectingDevicesAvailable {
+            SyncWarningMessageView(title: UserText.serviceUnavailable, message: UserText.warningSyncDisabled)
+        } else if !model.isAccountCreationAvailable {
+            SyncWarningMessageView(title: UserText.serviceUnavailable, message: UserText.warningAccountCreationDisabled)
+        } else {
+            EmptyView()
+        }
+    }
 
     @ViewBuilder
     func syncWithAnotherDeviceView() -> some View {
@@ -104,23 +122,16 @@ extension SyncSettingsView {
                         .daxBodyRegular()
                         .multilineTextAlignment(.center)
                         .foregroundColor(Color(designSystemColor: .textPrimary))
-                    Button(action: {
-                        model.scanQRCode()
-                    }, label: {
-                        Text(UserText.syncWithAnotherDeviceButton)
-                            .daxButton()
-                            .foregroundColor(.white)
-                            .frame(maxWidth: 310)
-                            .frame(height: 50)
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color(designSystemColor: .accent))
-                            )
-                    })
-                    .padding(.vertical, 16)
+                    Button(UserText.syncWithAnotherDeviceButton, action: model.scanQRCode)
+                        .buttonStyle(PrimaryButtonStyle(disabled: !model.isAccountCreationAvailable))
+                        .frame(maxWidth: 310)
+                        .disabled(!model.isAccountCreationAvailable)
+                        .padding(.vertical, 16)
                 }
                 Spacer()
             }
+        } header: {
+            devEnvironmentIndicator()
         } footer: {
             HStack {
                 Spacer()
@@ -135,37 +146,46 @@ extension SyncSettingsView {
     @ViewBuilder
     func otherOptions() -> some View {
         Section {
-            Text(UserText.syncAndBackUpThisDeviceLink)
-                .daxBodyRegular()
-                .foregroundColor(Color(designSystemColor: .accent))
-                .onTapGesture {
-                    isSyncWithSetUpSheetVisible = true
-                }
-                .sheet(isPresented: $isSyncWithSetUpSheetVisible, content: {
-                    SyncWithServerView(model: model, onCancel: {
-                        isSyncWithSetUpSheetVisible = false
-                    })
+
+            Button(UserText.syncAndBackUpThisDeviceLink) {
+                isSyncWithSetUpSheetVisible = true
+            }
+            .sheet(isPresented: $isSyncWithSetUpSheetVisible, content: {
+                SyncWithServerView(model: model, onCancel: {
+                    isSyncWithSetUpSheetVisible = false
                 })
-            Text(UserText.recoverSyncedDataLink)
-                .daxBodyRegular()
-                .foregroundColor(Color(designSystemColor: .accent))
-                .onTapGesture {
-                    isRecoverSyncedDataSheetVisible = true
-                }
-                .sheet(isPresented: $isRecoverSyncedDataSheetVisible, content: {
-                    RecoverSyncedDataView(model: model, onCancel: {
-                        isRecoverSyncedDataSheetVisible = false
-                    })
+            })
+            .disabled(!model.isAccountCreationAvailable)
+
+            Button(UserText.recoverSyncedDataLink) {
+                isRecoverSyncedDataSheetVisible = true
+            }
+            .sheet(isPresented: $isRecoverSyncedDataSheetVisible, content: {
+                RecoverSyncedDataView(model: model, onCancel: {
+                    isRecoverSyncedDataSheetVisible = false
                 })
+            })
+            .disabled(!model.isAccountRecoveryAvailable)
+
         } header: {
             Text(UserText.otherOptionsSectionHeader)
         }
     }
 }
 
+// MARK: - Sync Enabled Views
 
-// Sync Enabled Views
 extension SyncSettingsView {
+
+    @ViewBuilder
+    fileprivate func syncUnavailableViewWhileLoggedIn() -> some View {
+        if model.isDataSyncingAvailable {
+            EmptyView()
+        } else {
+            SyncWarningMessageView(title: UserText.serviceUnavailable, message: UserText.warningSyncDisabled)
+        }
+    }
+
     @ViewBuilder
     func deleteAllData() -> some View {
         Section {
@@ -204,6 +224,7 @@ extension SyncSettingsView {
                     }
                 }
             }
+            .accessibility(identifier: "device")
         }
     }
 
@@ -215,12 +236,9 @@ extension SyncSettingsView {
                     .padding()
             }
             devicesList()
-            Button(action: {
-                model.scanQRCode()
-            }, label: {
-                Text(UserText.syncedDevicesSyncWithAnotherDeviceLabel)
-                    .padding(.leading, 32)
-            })
+            Button(UserText.syncedDevicesSyncWithAnotherDeviceLabel, action: model.scanQRCode)
+                .padding(.leading, 32)
+                .disabled(!model.isConnectingDevicesAvailable)
         } header: {
             Text(UserText.syncedDevicesSectionHeader)
         }
@@ -264,6 +282,7 @@ extension SyncSettingsView {
                     .fill(.green)
                     .frame(width: 8)
                     .padding(.bottom, 1)
+                devEnvironmentIndicator()
             }
         } footer: {
             Text(UserText.turnSyncOffSectionFooter)
@@ -282,6 +301,7 @@ extension SyncSettingsView {
                     Text(UserText.fetchFaviconsOptionCaption)
                         .daxFootnoteRegular()
                         .foregroundColor(.secondary)
+                        .accessibility(identifier: "FaviconFetchingToggle")
                 }
             }
             Toggle(isOn: $model.isUnifiedFavoritesEnabled) {
@@ -289,9 +309,12 @@ extension SyncSettingsView {
                     Text(UserText.unifiedFavoritesTitle)
                         .daxBodyRegular()
                         .foregroundColor(.primary)
+                        .accessibility(label: Text(UserText.unifiedFavoritesTitle))
+                        .accessibility(addTraits: .isStaticText)
                     Text(UserText.unifiedFavoritesInstruction)
                         .daxFootnoteRegular()
                         .foregroundColor(.secondary)
+                        .accessibility(identifier: "UnifiedFavoritesToggle")
                 }
             }
         } header: {
@@ -321,21 +344,43 @@ extension SyncSettingsView {
             }
         }
 
-        Section {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(UserText.syncLimitExceededTitle)
-                    .daxBodyBold()
-                Text(explanation)
-                    .daxBodyRegular()
+        SyncWarningMessageView(title: UserText.syncLimitExceededTitle, message: explanation, buttonTitle: buttonTitle) {
+            switch itemType {
+            case .bookmarks:
+                model.manageBookmarks()
+            case .credentials:
+                model.manageLogins()
             }
-            Button(buttonTitle) {
-                switch itemType {
-                case .bookmarks:
-                    model.manageBookmarks()
-                case .credentials:
-                    model.manageLogins()
+        }
+    }
+
+    @ViewBuilder
+    func devEnvironmentIndicator() -> some View {
+        if model.isOnDevEnvironment {
+            Button(action: {
+                isEnvironmentSwitcherInstructionsVisible.toggle()
+            }, label: {
+                if #available(iOS 15.0, *) {
+                    Text("Dev environment")
+                        .daxFootnoteRegular()
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 2)
+                        .foregroundColor(.white)
+                        .background(Color.red40)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                } else {
+                    Text("Dev environment")
                 }
+            })
+            .alert(isPresented: $isEnvironmentSwitcherInstructionsVisible) {
+                Alert(
+                    title: Text("You're using Sync Development environment"),
+                    primaryButton: .default(Text("Keep Development")),
+                    secondaryButton: .destructive(Text("Switch to Production"), action: model.switchToProdEnvironment)
+                )
             }
+        } else {
+            EmptyView()
         }
     }
 

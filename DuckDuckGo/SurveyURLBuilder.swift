@@ -36,6 +36,8 @@ struct DefaultSurveyURLBuilder: SurveyURLBuilder {
         case daysSinceActivated = "delta"
         case iosVersion = "mv"
         case appVersion = "ddgv"
+        case hardwareModel = "mo"
+        case lastActiveDate = "da"
     }
 
     private let statisticsStore: StatisticsStore
@@ -47,6 +49,7 @@ struct DefaultSurveyURLBuilder: SurveyURLBuilder {
         self.activationDateStore = activationDateStore
     }
 
+    // swiftlint:disable:next cyclomatic_complexity
     func addSurveyParameters(to surveyURL: URL) -> URL {
         guard var components = URLComponents(string: surveyURL.absoluteString) else {
             assertionFailure("Could not build URL components from survey URL")
@@ -73,12 +76,32 @@ struct DefaultSurveyURLBuilder: SurveyURLBuilder {
                 queryItems.append(URLQueryItem(name: parameter.rawValue, value: AppVersion.shared.osVersion))
             case .appVersion:
                 queryItems.append(URLQueryItem(name: parameter.rawValue, value: AppVersion.shared.versionAndBuildNumber))
+            case .hardwareModel:
+                let model = hardwareModel().addingPercentEncoding(withAllowedCharacters: .alphanumerics)
+                queryItems.append(URLQueryItem(name: parameter.rawValue, value: model))
+            case .lastActiveDate:
+                if let daysSinceLastActive = activationDateStore.daysSinceLastActive() {
+                    queryItems.append(URLQueryItem(name: parameter.rawValue, value: String(describing: daysSinceLastActive)))
+                }
             }
         }
 
         components.queryItems = queryItems
 
         return components.url ?? surveyURL
+    }
+
+    private func hardwareModel() -> String {
+        var systemInfo = utsname()
+        uname(&systemInfo)
+
+        let machineMirror = Mirror(reflecting: systemInfo.machine)
+        let identifier = machineMirror.children.reduce("") { identifier, element in
+            guard let value = element.value as? Int8, value != 0 else { return identifier }
+            return identifier + String(UnicodeScalar(UInt8(value)))
+        }
+
+        return identifier
     }
 
 }

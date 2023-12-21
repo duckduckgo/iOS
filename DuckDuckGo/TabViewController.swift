@@ -1352,7 +1352,7 @@ extension TabViewController: WKNavigationDelegate {
                                                                            navigationAction: navigationAction,
                                                                            onStartExtracting: { showProgressIndicator() },
                                                                            onFinishExtracting: { },
-                                                                           onLinkRewrite: { [weak self] newRequest, navigationAction in
+                                                                           onLinkRewrite: { [weak self] newRequest, _ in
                 guard let self = self else { return }
                 self.load(urlRequest: newRequest)
             },

@@ -105,6 +105,7 @@ class PrivacyConfigurationManagerMock: PrivacyConfigurationManaging {
     }
 
     var privacyConfig: PrivacyConfiguration = PrivacyConfigurationMock()
+    var internalUserDecider: InternalUserDecider = DefaultInternalUserDecider()
 
     var reloadFired = [(etag: String?, data: Data?)]()
     var reloadResult: PrivacyConfigurationManager.ReloadResult = .embedded

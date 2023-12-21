@@ -264,7 +264,7 @@ class SettingsViewController: UITableViewController {
         if SyncBookmarksAdapter.isSyncBookmarksPaused || SyncCredentialsAdapter.isSyncCredentialsPaused || isDataSyncingDisabled {
             syncCell.textLabel?.text = "⚠️ " + "Sync & Backup"
         }
-        syncCell.isHidden = false
+        syncCell.isHidden = !shouldShowSyncCell
     }
 
     private func configureVoiceSearchCell() {

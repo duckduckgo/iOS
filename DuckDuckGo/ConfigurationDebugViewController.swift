@@ -62,6 +62,22 @@ class ConfigurationDebugViewController: UITableViewController {
 
     }
 
+    private func fetchAssets() {
+        AppConfigurationFetch().start(isDebug: true) { [weak tableView] result in
+            switch result {
+            case .assetsUpdated(let protectionsUpdated):
+                if protectionsUpdated {
+                    ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+                }
+                DispatchQueue.main.async {
+                    tableView?.reloadData()
+                }
+            case .noData:
+                break
+            }
+        }
+    }
+
     @UserDefaultsWrapper(key: .lastConfigurationRefreshDate, defaultValue: .distantPast)
     private var lastConfigurationRefreshDate: Date
     private var queuedTasks: [BGTaskRequest] = []
@@ -100,7 +116,6 @@ class ConfigurationDebugViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         switch Sections(rawValue: indexPath.section) {
-
         case .refreshInformation:
             switch RefreshInformationRows(rawValue: indexPath.row) {
             case .lastRefreshDate:
@@ -166,19 +181,7 @@ class ConfigurationDebugViewController: UITableViewController {
                 let location = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContentBlockerStoreConstants.groupName)
                 UIPasteboard.general.string = location?.path ?? ""
             case .forceRefresh:
-                AppConfigurationFetch().start { [weak tableView] result in
-                    switch result {
-                    case .assetsUpdated(let protectionsUpdated):
-                        if protectionsUpdated {
-                            ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
-                        }
-                        DispatchQueue.main.async {
-                            tableView?.reloadData()
-                        }
-                    case .noData:
-                        break
-                    }
-                }
+                fetchAssets()
             default: break
             }
         case .etags:

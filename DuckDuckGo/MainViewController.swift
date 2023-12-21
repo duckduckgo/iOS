@@ -99,6 +99,8 @@ class MainViewController: UIViewController {
     private var favoritesDisplayModeCancellable: AnyCancellable?
     private var emailCancellables = Set<AnyCancellable>()
 
+    private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
+
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = {
         let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
         viewModel.favoritesDisplayMode = appSettings.favoritesDisplayMode
@@ -1458,7 +1460,15 @@ extension MainViewController: OmniBarDelegate {
         }
         segueToSettings()
     }
-    
+
+    func onSettingsLongPressed() {
+        if featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild {
+            segueToDebugSettings()
+        } else {
+            segueToSettings()
+        }
+    }
+
     func onCancelPressed() {
         dismissOmniBar()
         hideSuggestionTray()
@@ -1505,7 +1515,15 @@ extension MainViewController: OmniBarDelegate {
         guard let link = currentTab?.link else { return }
         currentTab?.onShareAction(forLink: link, fromView: viewCoordinator.omniBar.shareButton)
     }
-    
+
+    func onShareLongPressed() {
+        if featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild {
+            segueToDebugSettings()
+        } else {
+            onSharePressed()
+        }
+    }
+
     func onVoiceSearchPressed() {
         SpeechRecognizer.requestMicAccess { permission in
             if permission {

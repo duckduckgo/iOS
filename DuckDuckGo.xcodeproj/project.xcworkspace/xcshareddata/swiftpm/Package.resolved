@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "bartek/fix-internal-user-toggling",
-        "revision" : "6584ce53e2ac3220f828a654bdfe866b11df30ec"
+        "revision" : "064ed560f19fbfd36eb02decebf944689818ed35",
+        "version" : "98.0.0"
       }
     },
     {

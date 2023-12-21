@@ -426,16 +426,16 @@ class TabViewController: UIViewController {
         
         if consumeCookies {
             consumeCookiesThenLoadRequest(request)
-        } else if let url = request?.url {
+        } else if let urlRequest = request {
             var loadingStopped = false
-            linkProtection.getCleanURL(from: url, onStartExtracting: { [weak self] in
+            linkProtection.getCleanURLRequest(from: urlRequest, onStartExtracting: { [weak self] in
                 if loadingInitiatedByParentTab {
                     // stop parent-initiated URL loading only if canonical URL extraction process has started
                     loadingStopped = true
                     self?.webView.stopLoading()
                 }
                 self?.showProgressIndicator()
-            }, onFinishExtracting: {}, completion: { [weak self] cleanURL in
+            }, onFinishExtracting: {}, completion: { [weak self] cleanURLRequest in
                 // restart the cleaned-up URL loading here if:
                 //   link protection provided an updated URL
                 //   OR if loading was stopped for a popup loaded by its parent
@@ -443,8 +443,8 @@ class TabViewController: UIViewController {
                 // the check is here to let an (about:blank) popup which has its loading
                 // initiated by its parent to keep its active request, otherwise we would
                 // break a js-initiated popup request such as printing from a popup
-                guard url != cleanURL || loadingStopped || !loadingInitiatedByParentTab else { return }
-                self?.load(urlRequest: .userInitiated(cleanURL))
+                guard self?.url != cleanURLRequest.url || loadingStopped || !loadingInitiatedByParentTab else { return }
+                self?.load(urlRequest: cleanURLRequest)
             })
         }
 

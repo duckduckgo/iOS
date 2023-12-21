@@ -2,13 +2,12 @@ appId: com.duckduckgo.mobile.ios
 ---
 
 - tapOn: Settings
-- tapOn: Logins
-- assertVisible: Unlock device to access saved Logins
+- tapOn: Passwords
 - tapOn: Passcode field
 - inputText: "0000"
 - pressKey: Enter
 - tapOn: My Personal Website 
-- tapOn: Delete Login
-- tapOn: Delete Login
+- tapOn: Delete Password
+- tapOn: Delete Password
 - tapOn: Settings
 - tapOn: Done

@@ -35,6 +35,10 @@ import TrackerRadarKit
 import Networking
 import SecureStorage
 
+#if NETWORK_PROTECTION
+import NetworkProtection
+#endif
+
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
 class TabViewController: UIViewController {
@@ -116,6 +120,12 @@ class TabViewController: UIViewController {
 
     private var trackersInfoWorkItem: DispatchWorkItem?
     
+#if NETWORK_PROTECTION
+    private let netPConnectionObserver = ConnectionStatusObserverThroughSession()
+    private var netPConnectionObserverCancellable: AnyCancellable?
+    private var netPConnectionStatus: ConnectionStatus = .default
+#endif
+
     // Required to know when to disable autofill, see SaveLoginViewModel for details
     // Stored in memory on TabViewController for privacy reasons
     private var domainSaveLoginPromptLastShownOn: String?
@@ -306,6 +316,10 @@ class TabViewController: UIViewController {
         if #available(iOS 16.4, *) {
             registerForInspectableWebViewNotifications()
         }
+
+#if NETWORK_PROTECTION
+        observeNetPConnectionStatusChanges()
+#endif
     }
 
     @available(iOS 16.4, *)
@@ -323,6 +337,12 @@ class TabViewController: UIViewController {
 #else
         webView.isInspectable = AppUserDefaults().inspectableWebViewEnabled
 #endif
+    }
+
+    private func observeNetPConnectionStatusChanges() {
+        netPConnectionObserverCancellable = netPConnectionObserver.publisher
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.netPConnectionStatus, onWeaklyHeld: self)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -1105,6 +1125,12 @@ extension TabViewController: WKNavigationDelegate {
         linkProtection.setMainFrameUrl(nil)
         referrerTrimming.onFinishNavigation()
         urlProvidedBasicAuthCredential = nil
+
+#if NETWORK_PROTECTION
+        if webView.url?.isDuckDuckGoSearch == true, case .connected = netPConnectionStatus {
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnabledOnSearch)
+        }
+#endif
     }
     
     func preparePreview(completion: @escaping (UIImage?) -> Void) {

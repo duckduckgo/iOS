@@ -291,15 +291,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage()
         )
 
-        let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog, environment: environment)
+        let syncService = DDGSync(
+            dataProvidersSource: syncDataProviders,
+            errorEvents: SyncErrorHandler(),
+            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+            log: .syncLog,
+            environment: environment
+        )
         syncService.initializeIfNeeded()
         self.syncService = syncService
 
         isSyncInProgressCancellable = syncService.isSyncInProgressPublisher
             .filter { $0 }
-            .prefix(1)
-            .sink { _ in
-                DailyPixel.fire(pixel: .syncDaily)
+            .sink { [weak syncService] _ in
+                DailyPixel.fire(pixel: .syncDaily, includedParameters: [.appVersion])
+                syncService?.syncDailyStats.sendStatsIfNeeded(handler: { params in
+                    Pixel.fire(pixel: .syncSuccessRateDaily,
+                               withAdditionalParameters: params,
+                               includedParameters: [.appVersion])
+                })
             }
 
 #if APP_TRACKING_PROTECTION

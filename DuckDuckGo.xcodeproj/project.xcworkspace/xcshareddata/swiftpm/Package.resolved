@@ -15,7 +15,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "bartek/fix-internal-user-toggling",
-        "revision" : "a06ca546a04feb82f46aea3b2505c6c881739b3f"
+        "revision" : "6584ce53e2ac3220f828a654bdfe866b11df30ec"
       }
     },
     {

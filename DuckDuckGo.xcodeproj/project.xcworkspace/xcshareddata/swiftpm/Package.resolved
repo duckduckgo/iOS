@@ -15,7 +15,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "anh/multiple-timer-fix",
-        "revision" : "14fee7fde9fb6a6d371be22014c518a15cabd5ed"
+        "revision" : "1b9662616280d36b01865be0561e74df5849ad31"
       }
     },
     {
@@ -122,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-argument-parser",
       "state" : {
-        "revision" : "8f4d2753f0e4778c76d5f05ad16c74f707390531",
-        "version" : "1.2.3"
+        "revision" : "c8ed701b513cf5177118a175d85fbbbcd707ab41",
+        "version" : "1.3.0"
       }
     },
     {

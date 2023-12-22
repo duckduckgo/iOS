@@ -127,6 +127,7 @@ class BlankSnapshotViewController: UIViewController {
 }
 
 extension BlankSnapshotViewController: OmniBarDelegate {
+    
     func onVoiceSearchPressed() {
        // No-op
     }
@@ -142,7 +143,7 @@ extension BlankSnapshotViewController: OmniBarDelegate {
     func onSettingsPressed() {
         userInteractionDetected()
     }
-    
+
     func onTextFieldDidBeginEditing(_ omniBar: OmniBar) -> Bool {
         DispatchQueue.main.async {
             self.viewCoordinator.omniBar.resignFirstResponder()

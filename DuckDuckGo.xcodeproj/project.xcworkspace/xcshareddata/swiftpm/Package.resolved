@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "anh/multiple-timer-fix",
-        "revision" : "256a31cb498449b1aa5ce7e095b80c2bb40e08ab"
+        "revision" : "18043cbc24e5bb79aa1f44e01a367e0bccd2fa6e",
+        "version" : "99.0.2"
       }
     },
     {

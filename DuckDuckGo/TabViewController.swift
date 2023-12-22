@@ -35,6 +35,10 @@ import TrackerRadarKit
 import Networking
 import SecureStorage
 
+#if NETWORK_PROTECTION
+import NetworkProtection
+#endif
+
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
 class TabViewController: UIViewController {
@@ -82,7 +86,7 @@ class TabViewController: UIViewController {
 
     private(set) var webView: WKWebView!
     private lazy var appRatingPrompt: AppRatingPrompt = AppRatingPrompt()
-    private weak var privacyDashboard: PrivacyDashboardViewController?
+    public weak var privacyDashboard: PrivacyDashboardViewController?
     
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache
     let appSettings: AppSettings
@@ -116,6 +120,12 @@ class TabViewController: UIViewController {
 
     private var trackersInfoWorkItem: DispatchWorkItem?
     
+#if NETWORK_PROTECTION
+    private let netPConnectionObserver = ConnectionStatusObserverThroughSession()
+    private var netPConnectionObserverCancellable: AnyCancellable?
+    private var netPConnectionStatus: ConnectionStatus = .default
+#endif
+
     // Required to know when to disable autofill, see SaveLoginViewModel for details
     // Stored in memory on TabViewController for privacy reasons
     private var domainSaveLoginPromptLastShownOn: String?
@@ -306,6 +316,10 @@ class TabViewController: UIViewController {
         if #available(iOS 16.4, *) {
             registerForInspectableWebViewNotifications()
         }
+
+#if NETWORK_PROTECTION
+        observeNetPConnectionStatusChanges()
+#endif
     }
 
     @available(iOS 16.4, *)
@@ -323,6 +337,12 @@ class TabViewController: UIViewController {
 #else
         webView.isInspectable = AppUserDefaults().inspectableWebViewEnabled
 #endif
+    }
+
+    private func observeNetPConnectionStatusChanges() {
+        netPConnectionObserverCancellable = netPConnectionObserver.publisher
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.netPConnectionStatus, onWeaklyHeld: self)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -681,7 +701,7 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
             privacyDashboard = controller
-            privacyDashboard?.tabViewController = self
+            privacyDashboard?.brokenSiteInfo = getCurrentWebsiteInfo()
         }
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
@@ -707,8 +727,10 @@ class TabViewController: UIViewController {
         PrivacyDashboardViewController(coder: coder,
                                        privacyInfo: privacyInfo,
                                        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-                                       contentBlockingManager: ContentBlocking.shared.contentBlockingManager)
+                                       contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
+                                       initMode: .privacyDashboard)
     }
+    
     private func addTextSizeObserver() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onTextSizeChange),
@@ -770,7 +792,7 @@ class TabViewController: UIViewController {
         onPrivacyInfoChanged()
     }
     
-    private func makePrivacyInfo(url: URL) -> PrivacyInfo? {
+    public func makePrivacyInfo(url: URL) -> PrivacyInfo? {
         guard let host = url.host else { return nil }
         
         let entity = ContentBlocking.shared.trackerDataManager.trackerData.findEntity(forHost: host)
@@ -1062,6 +1084,8 @@ extension TabViewController: WKNavigationDelegate {
                     } cancelHandler: {
                         decisionHandler(.cancel)
                     }
+                    // Rewrite the current URL to prevent spoofing from download URLs
+                    self.chromeDelegate?.omniBar.textField.text = "about:blank"
                 }
             } else {
                 Pixel.fire(pixel: .unhandledDownload)
@@ -1100,6 +1124,12 @@ extension TabViewController: WKNavigationDelegate {
         linkProtection.setMainFrameUrl(nil)
         referrerTrimming.onFinishNavigation()
         urlProvidedBasicAuthCredential = nil
+
+#if NETWORK_PROTECTION
+        if webView.url?.isDuckDuckGoSearch == true, case .connected = netPConnectionStatus {
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnabledOnSearch)
+        }
+#endif
     }
     
     func preparePreview(completion: @escaping (UIImage?) -> Void) {
@@ -2569,8 +2599,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
     
     func saveLoginViewController(_ viewController: SaveLoginViewController,
                                  didRequestPresentConfirmKeepUsingAlertController alertController: UIAlertController) {
-        Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptShown,
-                   withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
+        Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptShown)
         present(alertController, animated: true)
     }
 }

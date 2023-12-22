@@ -1,0 +1,30 @@
+appId: com.duckduckgo.mobile.ios
+tags:
+    - securityTest
+---
+# Test 1
+- tapOn:
+    id: "searchEntry"
+- pressKey: Backspace
+- inputText: "https://privacy-test-pages.site/security/address-bar-spoofing/spoof-application-scheme.html"
+- pressKey: Enter
+- tapOn: "Start"
+# This will try to open another app
+- assertVisible: "Cancel"
+- tapOn: "Cancel"
+- copyTextFrom:
+    id: "searchEntry"
+- assertTrue: ${maestro.copiedText == "https://duckduckgo.com/"} # Should navigate directly here.
+- assertNotVisible: "Not DDG." # HTML content shouldn't be spoofed.
+- tapOn:
+    id: "searchEntry"
+# Test 2
+- inputText: "https://privacy-test-pages.site/security/address-bar-spoofing/spoof-unsupported-scheme.html"
+- pressKey: Enter
+- tapOn: "Start"
+# This will try to open another app
+- assertVisible: "Cancel"
+- tapOn: "Cancel"
+- copyTextFrom:
+    id: "searchEntry"
+- assertTrue: ${maestro.copiedText == "https://privacy-test-pages.site/security/address-bar-spoofing/spoof-unsupported-scheme.html"}

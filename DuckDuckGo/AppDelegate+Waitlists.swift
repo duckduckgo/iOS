@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 import BackgroundTasks
 import NetworkProtection
 
@@ -42,16 +43,21 @@ extension AppDelegate {
 
 #if NETWORK_PROTECTION
     private func checkNetworkProtectionWaitlist() {
+        let accessController = NetworkProtectionAccessController()
+        if accessController.isPotentialOrCurrentWaitlistUser {
+            DailyPixel.fire(pixel: .networkProtectionWaitlistUserActive)
+        }
+
         VPNWaitlist.shared.fetchInviteCodeIfAvailable { [weak self] error in
             guard error == nil else {
 #if !DEBUG
-                // If the user already has an invite code but their auth token has gone missing, attempt to redeem it again.
-                let tokenStore = NetworkProtectionKeychainTokenStore()
-                let waitlistStorage = VPNWaitlist.shared.waitlistStorage
-                if error == .alreadyHasInviteCode,
-                   let inviteCode = waitlistStorage.getWaitlistInviteCode(),
-                   !tokenStore.isFeatureActivated {
-                    self?.fetchVPNWaitlistAuthToken(inviteCode: inviteCode)
+                if error == .alreadyHasInviteCode {
+                    // If the user already has an invite code but their auth token has gone missing, attempt to redeem it again.
+                    let tokenStore = NetworkProtectionKeychainTokenStore()
+                    let waitlistStorage = VPNWaitlist.shared.waitlistStorage
+                    if let inviteCode = waitlistStorage.getWaitlistInviteCode(), !tokenStore.isFeatureActivated {
+                        self?.fetchVPNWaitlistAuthToken(inviteCode: inviteCode)
+                    }
                 }
 #endif
                 return
@@ -89,6 +95,8 @@ extension AppDelegate {
             do {
                 try await NetworkProtectionCodeRedemptionCoordinator().redeem(inviteCode)
                 VPNWaitlist.shared.sendInviteCodeAvailableNotification()
+
+                DailyPixel.fire(pixel: .networkProtectionWaitlistNotificationShown)
             } catch {}
         }
     }

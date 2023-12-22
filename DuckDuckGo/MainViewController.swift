@@ -89,10 +89,17 @@ class MainViewController: UIViewController {
     private var favoritesViewModel: FavoritesListInteracting
     let syncService: DDGSyncing
     let syncDataProviders: SyncDataProviders
+
+    @UserDefaultsWrapper(key: .syncDidShowSyncPausedByFeatureFlagAlert, defaultValue: false)
+    private var syncDidShowSyncPausedByFeatureFlagAlert: Bool
+
     private var localUpdatesCancellable: AnyCancellable?
     private var syncUpdatesCancellable: AnyCancellable?
+    private var syncFeatureFlagsCancellable: AnyCancellable?
     private var favoritesDisplayModeCancellable: AnyCancellable?
     private var emailCancellables = Set<AnyCancellable>()
+
+    private lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
 
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = {
         let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase, syncService: syncService)
@@ -349,6 +356,21 @@ class MainViewController: UIViewController {
             selector: #selector(showSyncPausedError),
             name: SyncCredentialsAdapter.credentialsSyncLimitReached,
             object: nil)
+        syncFeatureFlagsCancellable = syncService.featureFlagsPublisher
+            .dropFirst()
+            .map { $0.contains(.dataSyncing) }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isDataSyncingAvailable in
+                guard let self else {
+                    return
+                }
+                if isDataSyncingAvailable {
+                    self.syncDidShowSyncPausedByFeatureFlagAlert = false
+                } else if self.syncService.authState == .active, !self.syncDidShowSyncPausedByFeatureFlagAlert {
+                    self.showSyncPausedByFeatureFlagAlert()
+                    self.syncDidShowSyncPausedByFeatureFlagAlert = true
+                }
+            }
     }
 
     @objc private func showSyncPausedError(_ notification: Notification) {
@@ -376,6 +398,26 @@ class MainViewController: UIViewController {
                 self.present(alert, animated: true)
             }
         }
+    }
+
+    private func showSyncPausedByFeatureFlagAlert(upgradeRequired: Bool = false) {
+        let title = UserText.syncPausedTitle
+        let description = upgradeRequired ? UserText.syncUnavailableMessageUpgradeRequired : UserText.syncUnavailableMessage
+        if self.presentedViewController is SyncSettingsViewController {
+            return
+        }
+        self.presentedViewController?.dismiss(animated: true)
+        let alert = UIAlertController(title: title,
+                                      message: description,
+                                      preferredStyle: .alert)
+        if syncService.featureFlags.contains(.userInterface) {
+            let learnMoreAction = UIAlertAction(title: UserText.syncPausedAlertLearnMoreButton, style: .default) { _ in
+                self.segueToSettingsSync()
+            }
+            alert.addAction(learnMoreAction)
+        }
+        alert.addAction(UIAlertAction(title: UserText.syncPausedAlertOkButton, style: .cancel))
+        self.present(alert, animated: true)
     }
 
     func registerForSettingsChangeNotifications() {
@@ -634,9 +676,15 @@ class MainViewController: UIViewController {
         let controller = HomeViewController.loadFromStoryboard(model: tabModel!,
                                                                favoritesViewModel: favoritesViewModel,
                                                                appSettings: appSettings,
+                                                               syncService: syncService,
+                                                               syncDataProviders: syncDataProviders,
                                                                appTPDatabase: appTrackingProtectionDatabase)
 #else
-        let controller = HomeViewController.loadFromStoryboard(model: tabModel!, favoritesViewModel: favoritesViewModel, appSettings: appSettings)
+        let controller = HomeViewController.loadFromStoryboard(model: tabModel!,
+                                                               favoritesViewModel: favoritesViewModel,
+                                                               appSettings: appSettings,
+                                                               syncService: syncService,
+                                                               syncDataProviders: syncDataProviders)
 #endif
 
         homeController = controller
@@ -674,10 +722,10 @@ class MainViewController: UIViewController {
     func onQuickFirePressed() {
         wakeLazyFireButtonAnimator()
         
-        self.forgetAllWithAnimation {}
-        self.dismiss(animated: true)
+        forgetAllWithAnimation {}
+        dismiss(animated: true)
         if KeyboardSettings().onAppLaunch {
-            self.enterSearch()
+            enterSearch()
         }
     }
     
@@ -1412,7 +1460,15 @@ extension MainViewController: OmniBarDelegate {
         }
         segueToSettings()
     }
-    
+
+    func onSettingsLongPressed() {
+        if featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild {
+            segueToDebugSettings()
+        } else {
+            segueToSettings()
+        }
+    }
+
     func onCancelPressed() {
         dismissOmniBar()
         hideSuggestionTray()
@@ -1457,9 +1513,17 @@ extension MainViewController: OmniBarDelegate {
     func onSharePressed() {
         hideSuggestionTray()
         guard let link = currentTab?.link else { return }
-        currentTab?.onShareAction(forLink: link, fromView: viewCoordinator.omniBar.shareButton, orginatedFromMenu: false)
+        currentTab?.onShareAction(forLink: link, fromView: viewCoordinator.omniBar.shareButton)
     }
-    
+
+    func onShareLongPressed() {
+        if featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild {
+            segueToDebugSettings()
+        } else {
+            onSharePressed()
+        }
+    }
+
     func onVoiceSearchPressed() {
         SpeechRecognizer.requestMicAccess { permission in
             if permission {

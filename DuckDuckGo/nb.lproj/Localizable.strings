@@ -4,6 +4,9 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
+/* No comment provided by engineer. */
+"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Rediger";
 
@@ -132,6 +135,24 @@
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Eksisterende bokmerker blir ikke duplisert.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Du har overskredet grensen for synkronisering av bokmerker. Prøv å slette noen bokmerker. Inntil dette er løst, blir ikke bokmerkene sikkerhetskopiert.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Synkronisering av bokmerker er satt på pause";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Du har overskredet grensen for synkronisering av passord. Prøv å slette noen passord. Inntil dette er løst, blir ikke passordene sikkerhetskopiert.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Synkronisering av passord er satt på pause";
+
+/* Learn more button in alert */
+"alert.sync-paused-alert-learn-more-button" = "Finn ut mer";
+
+/* Confirmation button in alert */
+"alert.sync-paused-alert-ok-button" = "OK";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Legg til alle faner i bokmerker?";
@@ -754,48 +775,6 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Importer en HTML-fil med bokmerker fra en annen nettleser, eller eksporter dine eksisterende bokmerker.";
 
-/* Broken Site Category */
-"brokensite.category.comments" = "Kommentarene ble ikke lastet inn";
-
-/* Broken Site Category */
-"brokensite.category.content" = "Innhold mangler";
-
-/* Broken Site Category */
-"brokensite.category.cookieprompt" = "Popup-vinduet om informasjonskapsler ble ikke håndtert";
-
-/* Broken Site Category */
-"brokensite.category.images" = "Bildene ble ikke lastet inn";
-
-/* Broken Site Category */
-"brokensite.category.links" = "Lenker eller knapper fungerer ikke";
-
-/* Broken Site Category */
-"brokensite.category.login" = "Jeg kan ikke logge inn";
-
-/* Broken Site Category */
-"brokensite.category.other" = "Noe annet";
-
-/* Broken Site Category */
-"brokensite.category.paywall" = "Nettstedet ba meg om å deaktivere";
-
-/* Broken Site Category */
-"brokensite.category.unsupported" = "Nettleseren er inkompatibel";
-
-/* Broken Site Category */
-"brokensite.category.videos" = "Video ble ikke avspilt";
-
-/* Broken Site Category Placeholder */
-"brokensite.categoryPlaceholder" = "Velg problemet ditt fra listen …";
-
-/* Broken Site Category Section Title */
-"brokensite.categoryTitle" = "VELG EN KATEGORI";
-
-/* Broken Site Comment Placeholder */
-"brokensite.commentPlaceholder" = "Hvis du gir oss flere detaljer, kan det hjelpe oss å løse dette problemet";
-
-/* Broken Site Section Title */
-"brokensite.sectionTitle" = "BESKRIV HVA SOM SKJEDDE";
-
 /* No comment provided by engineer. */
 "bucket: %@" = "bucket: %@";
 
@@ -1071,6 +1050,18 @@
 
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Fjern";
+
+/* Display Mode for favorites */
+"favorites.settings.all-devices" = "Alle favoritter på enheten";
+
+/* Footer of the favorites settings table */
+"favorites.settings.footer" = "Velg hvilke favoritter som skal vises på en ny fane basert på opprinnelsen deres.";
+
+/* Header of the favorites settings table */
+"favorites.settings.header" = "Visningsinnstillinger";
+
+/* Display Mode for favorites */
+"favorites.settings.mobile-only" = "Kun favoritter på mobil";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blokkering av reklame og popups";
@@ -1438,6 +1429,9 @@
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
 
+/* Title text for an iOS quick action that opens VPN settings */
+"network.protection.quick-action.open-vpn" = "Åpne VPN";
+
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Connected - %@";
 
@@ -1477,8 +1471,59 @@
 /* Location label shown in NetworkProtection's status view. */
 "network.protection.status.view.location" = "Location";
 
+/* Label shown on the title of the settings section in NetworkProtection's status view. */
+"network.protection.status.view.settings.section.title" = "Administrere";
+
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "Network Protection";
+
+/* Title for the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.button.title" = "Slå på varslinger";
+
+/* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.section.footer" = "Tillat DuckDuckGo å varsle deg hvis tilkoblingen blir brutt eller VPN-statusen endret.";
+
+/* List section footer for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.section.footer" = "Få varsel hvis tilkoblingen blir brutt eller VPN-statusen endret.";
+
+/* Title for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.title" = "VPN-varsler";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.footer" = "Gjenopprett automatisk VPN-tilkobling etter avbrudd.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.title" = "Alltid på";
+
+/* Title for the VPN Location screen's All Countries section. */
+"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Title for the VPN Location screen's Nearest Available selection item. */
+"network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
+
+/* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+
+/* Title for the VPN Location screen's Recommended section. */
+"network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Title for the VPN Notifications management screen. */
+"network.protection.vpn.notifications.title" = "VPN-varsler";
+
+/* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
+"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+
+/* Title for the Preferred Location VPN Settings item. */
+"network.protection.vpn.preferred.location.title" = "Preferred Location";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.footer" = "Nettverksbeskyttelse forhindrer DNS-lekkasjer til internettleverandøren din ved å rute DNS-forespørsler gjennom VPN-tunnelen til vår egen resolver.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.title" = "Sikker DNS";
+
+/* Title for the VPN Settings screen. */
+"network.protection.vpn.settings.title" = "VPN-innstillinger";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
@@ -1593,9 +1638,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Åpne i en annen app?";
-
-/* No comment provided by engineer. */
-"report.brokensite.header" = "Når du sender inn en anonym rapport om nettstedfeil, hjelper det oss med å feilsøke disse problemene og forbedre appen.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Søk eller skriv inn adresse";

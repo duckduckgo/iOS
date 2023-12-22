@@ -113,7 +113,7 @@ class SettingsViewController: UITableViewController {
     }
 
     private var shouldShowSyncCell: Bool {
-        return featureFlagger.isFeatureOn(.sync)
+        return syncService.featureFlags.contains(.userInterface)
     }
 
     private var shouldShowTextSizeCell: Bool {
@@ -127,7 +127,8 @@ class SettingsViewController: UITableViewController {
     private lazy var shouldShowNetPCell: Bool = {
 #if NETWORK_PROTECTION
         if #available(iOS 15, *) {
-            return featureFlagger.isFeatureOn(.networkProtection)
+            let accessController = NetworkProtectionAccessController()
+            return accessController.networkProtectionAccessType() != .none
         } else {
             return false
         }
@@ -258,9 +259,10 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configureSyncCell() {
-        syncCell.textLabel?.text = "Sync & Back Up"
-        if SyncBookmarksAdapter.isSyncBookmarksPaused || SyncCredentialsAdapter.isSyncCredentialsPaused {
-            syncCell.textLabel?.text = "⚠️ " + "Sync & Back Up"
+        syncCell.textLabel?.text = "Sync & Backup"
+        let isDataSyncingDisabled = !syncService.featureFlags.contains(.dataSyncing) && syncService.authState == .active
+        if SyncBookmarksAdapter.isSyncBookmarksPaused || SyncCredentialsAdapter.isSyncCredentialsPaused || isDataSyncingDisabled {
+            syncCell.textLabel?.text = "⚠️ " + "Sync & Backup"
         }
         syncCell.isHidden = !shouldShowSyncCell
     }
@@ -388,7 +390,7 @@ class SettingsViewController: UITableViewController {
     }
 
     func showSync(animated: Bool = true) {
-        let controller = SyncSettingsViewController()
+        let controller = SyncSettingsViewController(syncService: syncService, syncBookmarksAdapter: syncDataProviders.bookmarksAdapter)
         navigationController?.pushViewController(controller, animated: animated)
     }
 
@@ -399,8 +401,7 @@ class SettingsViewController: UITableViewController {
             syncDataProviders: syncDataProviders
         )
         autofillController.delegate = self
-        Pixel.fire(pixel: .autofillSettingsOpened,
-                   withAdditionalParameters: [PixelParameters.autofillDefaultState: AutofillSettingStatus.defaultState])
+        Pixel.fire(pixel: .autofillSettingsOpened)
         navigationController?.pushViewController(autofillController, animated: animated)
     }
     
@@ -511,16 +512,11 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
         let theme = ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
-        
-        if cell.accessoryType == .disclosureIndicator {
-            let accesoryImage = UIImageView(image: UIImage(named: "DisclosureIndicator"))
-            accesoryImage.frame = CGRect(x: 0, y: 0, width: 8, height: 13)
-            accesoryImage.tintColor = theme.tableCellAccessoryColor
-            cell.accessoryView = accesoryImage
+
+        if cell == netPCell {
+            DailyPixel.fire(pixel: .networkProtectionSettingsRowDisplayed)
         }
     }
 

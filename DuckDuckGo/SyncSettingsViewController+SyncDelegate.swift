@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+import Core
 import UIKit
 import SwiftUI
 import SyncUI
@@ -27,13 +28,13 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
 
     func launchAutofillViewController() {
         guard let mainVC = view.window?.rootViewController as? MainViewController else { return }
-        self.dismiss(animated: true)
+        dismiss(animated: true)
         mainVC.launchAutofillLogins()
     }
 
     func launchBookmarksViewController() {
         guard let mainVC = view.window?.rootViewController as? MainViewController else { return }
-        self.dismiss(animated: true)
+        dismiss(animated: true)
         mainVC.segueToBookmarks()
     }
 
@@ -44,7 +45,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 let devices = try await syncService.updateDeviceName(name)
                 mapDevices(devices)
             } catch {
-                handleError(error)
+                handleError(SyncError.unableToUpdateDeviceName, error: error)
             }
         }
     }
@@ -52,67 +53,87 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     func createAccountAndStartSyncing(optionsViewModel: SyncSettingsViewModel) {
         Task { @MainActor in
             do {
+                self.dismissPresentedViewController()
+                self.showPreparingSync()
                 try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
+                Pixel.fire(pixel: .syncSignupDirect, includedParameters: [.appVersion])
                 self.rootView.model.syncEnabled(recoveryCode: recoveryCode)
                 self.refreshDevices()
-                self.showDeviceConnected([], optionsModel: optionsViewModel, isSingleSetUp: true, shouldShowOptions: false)
+                navigationController?.topViewController?.dismiss(animated: true, completion: showRecoveryPDF)
             } catch {
-                handleError(error)
+                handleError(SyncError.unableToSync, error: error)
             }
         }
     }
 
     @MainActor
-    func handleError(_ error: Error) {
-        // Work out how to handle this properly later
-        assertionFailure(error.localizedDescription)
+    func handleError(_ type: SyncError, error: Error) {
+        let alertController = UIAlertController(
+            title: type.title,
+            message: type.description + "\n" + error.localizedDescription,
+            preferredStyle: .alert)
+
+        let okAction = UIAlertAction(title: UserText.syncPausedAlertOkButton, style: .default, handler: nil)
+        alertController.addAction(okAction)
+
+        if type == .unableToSync {
+            // Give time to the is syncing view to appear
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.dismissPresentedViewController { [weak self] in
+                    self?.present(alertController, animated: true, completion: nil)
+                }
+            }
+        } else {
+            self.dismissPresentedViewController { [weak self] in
+                self?.present(alertController, animated: true, completion: nil)
+            }
+        }
     }
 
     func showSyncWithAnotherDevice() {
-        collectCode(showConnectMode: syncService.account == nil)
-    }
-
-    func showSyncWithAnotherDeviceEnterText() {
-        collectCode(showConnectMode: syncService.account == nil, showEnterTextCode: true)
+        collectCode(showConnectMode: true)
     }
 
     func showRecoverData() {
+        dismissPresentedViewController()
         collectCode(showConnectMode: false)
     }
 
-    func showDeviceConnected(_ devices: [SyncSettingsViewModel.Device], optionsModel: SyncSettingsViewModel, isSingleSetUp: Bool, shouldShowOptions: Bool) {
-        let model = SaveRecoveryKeyViewModel(key: recoveryCode) { [weak self] in
-            self?.shareRecoveryPDF()
-        }
+    func showDeviceConnected() {
         let controller = UIHostingController(
-            rootView: DeviceConnectedView(model,
-                                        optionsViewModel: optionsModel,
-                                          devices: devices,
-                                          isSingleSetUp: isSingleSetUp,
-                                          shouldShowOptions: shouldShowOptions))
+            rootView: DeviceConnectedView())
         navigationController?.present(controller, animated: true) { [weak self] in
             self?.rootView.model.syncEnabled(recoveryCode: self!.recoveryCode)
-            self?.refreshDevices()
         }
     }
 
-    func showRecoveryPDF() {
-        let model = SaveRecoveryKeyViewModel(key: recoveryCode) { [weak self] in
-            self?.shareRecoveryPDF()
-        }
-        let controller = UIHostingController(rootView: SaveRecoveryKeyView(model: model))
+    func showPreparingSync() {
+        let controller = UIHostingController(rootView: PreparingToSyncView())
         navigationController?.present(controller, animated: true)
     }
 
-    private func collectCode(showConnectMode: Bool, showEnterTextCode: Bool = false) {
-        let model = ScanOrPasteCodeViewModel(showConnectMode: showConnectMode)
+    @MainActor
+    func showRecoveryPDF() {
+        let model = SaveRecoveryKeyViewModel(key: recoveryCode) { [weak self] in
+            self?.shareRecoveryPDF()
+        } onDismiss: {
+            self.showDeviceConnected()
+        }
+        let controller = UIHostingController(rootView: SaveRecoveryKeyView(model: model))
+        navigationController?.present(controller, animated: true) { [weak self] in
+            self?.rootView.model.syncEnabled(recoveryCode: self!.recoveryCode)
+        }
+    }
+
+    private func collectCode(showConnectMode: Bool) {
+        let model = ScanOrPasteCodeViewModel(showConnectMode: showConnectMode, recoveryCode: recoveryCode.isEmpty ? nil : recoveryCode)
         model.delegate = self
 
         var controller: UIHostingController<AnyView>
-        if showEnterTextCode {
-            controller = UIHostingController(rootView: AnyView(PasteCodeView(model: model, isfirstScreen: true)))
+        if showConnectMode {
+            controller = UIHostingController(rootView: AnyView(ScanOrSeeCode(model: model)))
         } else {
-            controller = UIHostingController(rootView: AnyView(ScanOrPasteCodeView(model: model)))
+            controller = UIHostingController(rootView: AnyView(ScanOrEnterCodeToRecoverSyncedDataView(model: model)))
         }
 
         let navController = UIDevice.current.userInterfaceIdiom == .phone
@@ -155,14 +176,15 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             alert.addAction(title: UserText.syncTurnOffConfirmAction, style: .destructive) {
                 Task { @MainActor in
                     do {
-                        self.rootView.model.isSyncEnabled = false
                         try await self.syncService.disconnect()
+                        self.rootView.model.isSyncEnabled = false
                         AppUserDefaults().isSyncBookmarksPaused = false
                         AppUserDefaults().isSyncCredentialsPaused = false
+                        continuation.resume(returning: true)
                     } catch {
-                        self.handleError(error)
+                        self.handleError(SyncError.unableToTurnSyncOff, error: error)
+                        continuation.resume(returning: false)
                     }
-                    continuation.resume(returning: true)
                 }
             }
             self.present(alert, animated: true)
@@ -180,14 +202,15 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             alert.addAction(title: UserText.syncDeleteAllConfirmAction, style: .destructive) {
                 Task { @MainActor in
                     do {
-                        self.rootView.model.isSyncEnabled = false
                         try await self.syncService.deleteAccount()
+                        self.rootView.model.isSyncEnabled = false
                         AppUserDefaults().isSyncBookmarksPaused = false
                         AppUserDefaults().isSyncCredentialsPaused = false
+                        continuation.resume(returning: true)
                     } catch {
-                        self.handleError(error)
+                        self.handleError(SyncError.unableToDeleteData, error: error)
+                        continuation.resume(returning: false)
                     }
-                    continuation.resume(returning: true)
                 }
             }
             self.present(alert, animated: true)
@@ -221,7 +244,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 try await syncService.disconnect(deviceId: device.id)
                 refreshDevices()
             } catch {
-                handleError(error)
+                handleError(SyncError.unableToRemoveDevice, error: error)
             }
         }
     }
@@ -257,4 +280,34 @@ private class PortraitNavigationController: UINavigationController {
         [.portrait, .portraitUpsideDown]
     }
 
+}
+
+enum SyncError {
+    case unableToSync
+    case unableToGetDevices
+    case unableToUpdateDeviceName
+    case unableToTurnSyncOff
+    case unableToDeleteData
+    case unableToRemoveDevice
+
+    var title: String {
+        return UserText.syncErrorAlertTitle
+    }
+
+    var description: String {
+        switch self {
+        case .unableToSync:
+            return UserText.unableToSyncDescription
+        case .unableToGetDevices:
+            return UserText.unableToGetDevicesDescription
+        case .unableToUpdateDeviceName:
+            return UserText.unableToUpdateDeviceNameDescription
+        case .unableToTurnSyncOff:
+            return UserText.unableToTurnSyncOffDescription
+        case .unableToDeleteData:
+            return UserText.unableToDeleteDataDescription
+        case .unableToRemoveDevice:
+            return UserText.unableToRemoveDeviceDescription
+        }
+    }
 }

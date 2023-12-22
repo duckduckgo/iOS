@@ -80,8 +80,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private(set) var syncDataProviders: SyncDataProviders!
     private var syncDidFinishCancellable: AnyCancellable?
     private var syncStateCancellable: AnyCancellable?
+    private var isSyncInProgressCancellable: AnyCancellable?
 
     // MARK: lifecycle
+
+    @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
+    private var privacyConfigCustomURL: String?
 
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -104,7 +108,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         cleanUpIncrementalRolloutPixelTest()
 
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
-        Configuration.setURLProvider(AppConfigurationURLProvider())
+
+        if isDebugBuild, let privacyConfigCustomURL, let url = URL(string: privacyConfigCustomURL) {
+            Configuration.setURLProvider(CustomConfigurationURLProvider(customPrivacyConfigurationURL: url))
+        } else {
+            Configuration.setURLProvider(AppConfigurationURLProvider())
+        }
 
         CrashCollection.start {
             Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: $0, includedParameters: [])
@@ -166,8 +175,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DatabaseMigration.migrate(to: context)
         }
 
-        var shouldResetBookmarksSyncTimestamp = false
-
         let preMigrationErrorHandling = EventMapping<BookmarkFormFactorFavoritesMigration.MigrationErrors> { _, error, _, _ in
             if let error = error {
                 Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
@@ -220,11 +227,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                                                           in: context)
                 if context.hasChanges {
                     try context.save(onErrorFire: .bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders)
-                    if let syncDataProviders = self?.syncDataProviders {
-                        syncDataProviders.bookmarksAdapter.shouldResetBookmarksSyncTimestamp = true
-                    } else {
-                        shouldResetBookmarksSyncTimestamp = true
-                    }
                 }
             } catch {
                 Thread.sleep(forTimeInterval: 1)
@@ -288,11 +290,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             settingHandlers: [FavoritesDisplayModeSyncHandler()],
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage()
         )
-        syncDataProviders.bookmarksAdapter.shouldResetBookmarksSyncTimestamp = shouldResetBookmarksSyncTimestamp
 
-        let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog, environment: environment)
+        let syncService = DDGSync(
+            dataProvidersSource: syncDataProviders,
+            errorEvents: SyncErrorHandler(),
+            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+            log: .syncLog,
+            environment: environment
+        )
         syncService.initializeIfNeeded()
         self.syncService = syncService
+
+        isSyncInProgressCancellable = syncService.isSyncInProgressPublisher
+            .filter { $0 }
+            .sink { [weak syncService] _ in
+                DailyPixel.fire(pixel: .syncDaily, includedParameters: [.appVersion])
+                syncService?.syncDailyStats.sendStatsIfNeeded(handler: { params in
+                    Pixel.fire(pixel: .syncSuccessRateDaily,
+                               withAdditionalParameters: params,
+                               includedParameters: [.appVersion])
+                })
+            }
 
 #if APP_TRACKING_PROTECTION
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,
@@ -562,6 +580,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         lastBackgroundDate = Date()
         AppDependencyProvider.shared.autofillLoginSession.endSession()
         suspendSync()
+        syncDataProviders.bookmarksAdapter.cancelFaviconsFetching(application)
     }
 
     private func suspendSync() {
@@ -844,6 +863,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
             if identifier == VPNWaitlist.notificationIdentifier {
                 presentNetworkProtectionWaitlistModal()
+                DailyPixel.fire(pixel: .networkProtectionWaitlistNotificationLaunched)
             }
 #endif
         }

@@ -4,6 +4,9 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
+/* No comment provided by engineer. */
+"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Rediģēt";
 
@@ -132,6 +135,24 @@
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Esošās grāmatzīmes netiks dublētas.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Tu esi pārsniedzis grāmatzīmju sinhronizācijas ierobežojumu. Mēģini izdzēst dažas grāmatzīmes. Kamēr šī problēma nebūs atrisināta, grāmatzīmes netiks dublētas.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Grāmatzīmju sinhronizācija ir apturēta";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Tu esi pārsniedzis paroļu sinhronizācijas ierobežojumu. Mēģini izdzēst dažas paroles. Kamēr šī problēma nebūs atrisināta, paroles netiks dublētas.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Paroļu sinhronizācija ir apturēta";
+
+/* Learn more button in alert */
+"alert.sync-paused-alert-learn-more-button" = "Uzzināt vairāk";
+
+/* Confirmation button in alert */
+"alert.sync-paused-alert-ok-button" = "Labi";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Vai pievienot grāmatzīmes visām cilnēm?";
@@ -754,48 +775,6 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Importē grāmatzīmju HTML failu no citas pārlūkprogrammas vai eksportē esošās grāmatzīmes.";
 
-/* Broken Site Category */
-"brokensite.category.comments" = "Komentāri netika ielādēti";
-
-/* Broken Site Category */
-"brokensite.category.content" = "Trūkst satura";
-
-/* Broken Site Category */
-"brokensite.category.cookieprompt" = "Sīkfailu uznirstošais logs netika pārvaldīts";
-
-/* Broken Site Category */
-"brokensite.category.images" = "Attēli netika ielādēti";
-
-/* Broken Site Category */
-"brokensite.category.links" = "Saites vai pogas nedarbojas";
-
-/* Broken Site Category */
-"brokensite.category.login" = "Es nevaru pierakstīties";
-
-/* Broken Site Category */
-"brokensite.category.other" = "Kaut kas cits";
-
-/* Broken Site Category */
-"brokensite.category.paywall" = "Vietne pieprasīja atspējošanu";
-
-/* Broken Site Category */
-"brokensite.category.unsupported" = "Pārlūks nav saderīgs";
-
-/* Broken Site Category */
-"brokensite.category.videos" = "Video netika demonstrēts";
-
-/* Broken Site Category Placeholder */
-"brokensite.categoryPlaceholder" = "Norādi problēmu sarakstā...";
-
-/* Broken Site Category Section Title */
-"brokensite.categoryTitle" = "ATLASĪT KATEGORIJU";
-
-/* Broken Site Comment Placeholder */
-"brokensite.commentPlaceholder" = "Sīkākas informācijas sniegšana var mums palīdzēt atrisināt šo problēmu";
-
-/* Broken Site Section Title */
-"brokensite.sectionTitle" = "APRAKSTI NOTIKUŠO";
-
 /* No comment provided by engineer. */
 "bucket: %@" = "bucket: %@";
 
@@ -1071,6 +1050,18 @@
 
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Noņemt";
+
+/* Display Mode for favorites */
+"favorites.settings.all-devices" = "Visu ierīču izlase";
+
+/* Footer of the favorites settings table */
+"favorites.settings.footer" = "Izvēlies, kurus izlases vienumus rādīt jaunā cilnē, pamatojoties uz to izcelsmi.";
+
+/* Header of the favorites settings table */
+"favorites.settings.header" = "Displeja preferences";
+
+/* Display Mode for favorites */
+"favorites.settings.mobile-only" = "Tikai mobilā izlase";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Reklāmu un uznirstošo logu bloķēšana";
@@ -1438,6 +1429,9 @@
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
 
+/* Title text for an iOS quick action that opens VPN settings */
+"network.protection.quick-action.open-vpn" = "Atvērt VPN";
+
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Connected - %@";
 
@@ -1477,8 +1471,59 @@
 /* Location label shown in NetworkProtection's status view. */
 "network.protection.status.view.location" = "Location";
 
+/* Label shown on the title of the settings section in NetworkProtection's status view. */
+"network.protection.status.view.settings.section.title" = "Pārvaldīt";
+
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "Network Protection";
+
+/* Title for the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.button.title" = "Ieslēgt paziņojumus";
+
+/* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.section.footer" = "Ļauj DuckDuckGo tev paziņot, ja savienojums pārtrūkst vai mainās VPN statuss.";
+
+/* List section footer for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.section.footer" = "Saņem paziņojumu, ja savienojums pārtrūkst vai mainās VPN statuss.";
+
+/* Title for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.title" = "VPN brīdinājumi";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.footer" = "Automātiski atjaunot VPN savienojumu pēc pārtraukuma.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.title" = "Vienmēr ieslēgts";
+
+/* Title for the VPN Location screen's All Countries section. */
+"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Title for the VPN Location screen's Nearest Available selection item. */
+"network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
+
+/* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+
+/* Title for the VPN Location screen's Recommended section. */
+"network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Title for the VPN Notifications management screen. */
+"network.protection.vpn.notifications.title" = "VPN paziņojumi";
+
+/* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
+"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+
+/* Title for the Preferred Location VPN Settings item. */
+"network.protection.vpn.preferred.location.title" = "Preferred Location";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.footer" = "Tīkla aizsardzība novērš DNS noplūdi uz tavu interneta pakalpojumu sniedzēju, novirzot DNS vaicājumus caur VPN tuneli uz mūsu pašu atrisinātāju.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.title" = "Drošs DNS";
+
+/* Title for the VPN Settings screen. */
+"network.protection.vpn.settings.title" = "VPN iestatījumi";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
@@ -1593,9 +1638,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Vai atvērt citā lietotnē?";
-
-/* No comment provided by engineer. */
-"report.brokensite.header" = "Ja iesniegsi anonīmu ziņojumu par bojātu vietni, mēs varēsim atkļūdot šīs problēmas un uzlabot lietotni.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Meklē vai ievadi adresi";

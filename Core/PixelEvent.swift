@@ -21,6 +21,8 @@ import Foundation
 import BrowserServicesKit
 import Bookmarks
 import Configuration
+import DDGSync
+import NetworkProtection
 
 // swiftlint:disable file_length
 extension Pixel {
@@ -37,8 +39,10 @@ extension Pixel {
         case forgetAllDataCleared
         
         case privacyDashboardOpened
-        case privacyDashboardProtectionDisabled
-        case privacyDashboardProtectionEnabled
+        
+        case dashboardProtectionAllowlistAdd
+        case dashboardProtectionAllowlistRemove
+        
         case privacyDashboardReportBrokenSite
         case privacyDashboardPixelFromJS(rawPixel: String)
         
@@ -74,6 +78,19 @@ extension Pixel {
         case browsingMenuFireproof
         case browsingMenuAutofill
         
+        case addressBarShare
+        case addressBarSettings
+
+        case shareSheetResultSuccess
+        case shareSheetResultFail
+        case shareSheetActivityCopy
+        case shareSheetActivityAddBookmark
+        case shareSheetActivityAddFavorite
+        case shareSheetActivityFindInPage
+        case shareSheetActivityPrint
+        case shareSheetActivityAddToReadingList
+        case shareSheetActivityOther
+
         case tabBarBackPressed
         case tabBarForwardPressed
         case bookmarksButtonPressed
@@ -249,9 +266,6 @@ extension Pixel {
 
         case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
         
-        case navigationbarPositionBottom
-        case navigationBarPositionTop
-
         case secureVaultInitError
         case secureVaultError
         
@@ -301,9 +315,21 @@ extension Pixel {
         // MARK: Network Protection
 
         case networkProtectionActiveUser
+        case networkProtectionNewUser
+
+        case networkProtectionEnableAttemptConnecting
+        case networkProtectionEnableAttemptSuccess
+        case networkProtectionEnableAttemptFailure
+
+        case networkProtectionTunnelFailureDetected
+        case networkProtectionTunnelFailureRecovered
+
+        case networkProtectionLatency(quality: NetworkProtectionLatencyMonitor.ConnectionQuality)
+        case networkProtectionLatencyError
+
+        case networkProtectionEnabledOnSearch
 
         case networkProtectionRekeyCompleted
-        case networkProtectionLatency
 
         case networkProtectionTunnelConfigurationNoServerRegistrationInfo
         case networkProtectionTunnelConfigurationCouldNotSelectClosestServer
@@ -353,6 +379,19 @@ extension Pixel {
         case networkProtectionMemoryCritical
 
         case networkProtectionUnhandledError
+
+        case networkProtectionWaitlistUserActive
+        case networkProtectionSettingsRowDisplayed
+        case networkProtectionWaitlistIntroScreenDisplayed
+        case networkProtectionWaitlistTermsDisplayed
+        case networkProtectionWaitlistTermsAccepted
+        case networkProtectionWaitlistNotificationShown
+        case networkProtectionWaitlistNotificationLaunched
+
+        case networkProtectionGeoswitchingOpened
+        case networkProtectionGeoswitchingSetNearest
+        case networkProtectionGeoswitchingSetCustom
+        case networkProtectionGeoswitchingNoLocations
 
         // MARK: remote messaging pixels
 
@@ -466,7 +505,6 @@ extension Pixel {
         case indexOutOfRange(BookmarksModelError.ModelType)
         case saveFailed(BookmarksModelError.ModelType)
         case missingParent(BookmarksModelError.ObjectType)
-        case orphanedBookmarksPresent
         
         case bookmarksCouldNotLoadDatabase
         case bookmarksCouldNotPrepareDatabase
@@ -478,6 +516,13 @@ extension Pixel {
         case bookmarksMigrationCouldNotRemoveOldStore
         case bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders
 
+        case syncSignupDirect
+        case syncSignupConnect
+        case syncLogin
+        case syncDaily
+        case syncDuckAddressOverride
+        case syncSuccessRateDaily
+        case syncLocalTimestampResolutionTriggered(Feature)
         case syncFailedToMigrate
         case syncFailedToLoadAccount
         case syncFailedToSetupEngine
@@ -498,6 +543,8 @@ extension Pixel {
         case bookmarksCleanupFailed
         case bookmarksCleanupAttemptedWhileSyncWasEnabled
         case favoritesCleanupFailed
+        case bookmarksFaviconsFetcherStateStoreInitializationFailed
+        case bookmarksFaviconsFetcherFailed
 
         case credentialsDatabaseCleanupFailed
         case credentialsCleanupAttemptedWhileSyncWasEnabled
@@ -533,9 +580,10 @@ extension Pixel.Event {
         case .forgetAllDataCleared: return "mf_dc"
             
         case .privacyDashboardOpened: return "mp"
-
-        case .privacyDashboardProtectionDisabled: return "mp_wla"
-        case .privacyDashboardProtectionEnabled: return "mp_wlr"
+           
+        case .dashboardProtectionAllowlistAdd: return "mp_wla"
+        case .dashboardProtectionAllowlistRemove: return "mp_wlr"
+            
         case .privacyDashboardReportBrokenSite: return "mp_rb"
         case .privacyDashboardPixelFromJS(let rawPixel): return rawPixel
             
@@ -560,7 +608,6 @@ extension Pixel.Event {
         case .browsingMenuRemoveFromFavorites: return "mb_df"
         case .browsingMenuAddToFavoritesAddFavoriteFlow: return "mb_aff"
         case .browsingMenuToggleBrowsingMode: return "mb_dm"
-        case .browsingMenuShare: return "mb_sh"
         case .browsingMenuCopy: return "mb_cp"
         case .browsingMenuPrint: return "mb_pr"
         case .browsingMenuSettings: return "mb_st"
@@ -570,7 +617,21 @@ extension Pixel.Event {
         case .browsingMenuReportBrokenSite: return "mb_rb"
         case .browsingMenuFireproof: return "mb_f"
         case .browsingMenuAutofill: return "m_nav_autofill_menu_item_pressed"
-            
+
+        case .browsingMenuShare: return "m_browsingmenu_share"
+
+        case .addressBarShare: return "m_addressbar_share"
+        case .addressBarSettings: return "m_addressbar_settings"
+        case .shareSheetResultSuccess: return "m_sharesheet_result_success"
+        case .shareSheetResultFail: return "m_sharesheet_result_fail"
+        case .shareSheetActivityCopy: return "m_sharesheet_activity_copy"
+        case .shareSheetActivityAddBookmark: return "m_sharesheet_activity_addbookmark"
+        case .shareSheetActivityAddFavorite: return "m_sharesheet_activity_addfavorite"
+        case .shareSheetActivityFindInPage: return "m_sharesheet_activity_findinpage"
+        case .shareSheetActivityPrint: return "m_sharesheet_activity_print"
+        case .shareSheetActivityAddToReadingList: return "m_sharesheet_activity_addtoreadinglist"
+        case .shareSheetActivityOther: return "m_sharesheet_activity_other"
+
         case .tabBarBackPressed: return "mt_bk"
         case .tabBarForwardPressed: return "mt_fw"
         case .bookmarksButtonPressed: return "mt_bm"
@@ -588,9 +649,6 @@ extension Pixel.Event {
             
         case .autocompleteSelectedLocal: return "m_au_l"
         case .autocompleteSelectedRemote: return "m_au_r"
-
-        case .navigationbarPositionBottom: return "m_seturlbar_bottom"
-        case .navigationBarPositionTop: return "m_seturlbar_top"
 
         case .feedbackPositive: return "mfbs_positive_submit"
         case .feedbackNegativePrefix(category: let category): return "mfbs_negative_\(category)"
@@ -803,8 +861,16 @@ extension Pixel.Event {
         // MARK: Network Protection pixels
 
         case .networkProtectionActiveUser: return "m_netp_daily_active_d"
+        case .networkProtectionNewUser: return "m_netp_daily_active_u"
+        case .networkProtectionEnableAttemptConnecting: return "m_netp_ev_enable_attempt"
+        case .networkProtectionEnableAttemptSuccess: return "m_netp_ev_enable_attempt_success"
+        case .networkProtectionEnableAttemptFailure: return "m_netp_ev_enable_attempt_failure"
+        case .networkProtectionTunnelFailureDetected: return "m_netp_ev_tunnel_failure"
+        case .networkProtectionTunnelFailureRecovered: return "m_netp_ev_tunnel_failure_recovered"
+        case .networkProtectionLatency(let quality): return "m_netp_ev_\(quality.rawValue)_latency"
+        case .networkProtectionLatencyError: return "m_netp_ev_latency_error_d"
         case .networkProtectionRekeyCompleted: return "m_netp_rekey_completed"
-        case .networkProtectionLatency: return "m_netp_latency"
+        case .networkProtectionEnabledOnSearch: return "m_netp_enabled_on_search"
         case .networkProtectionTunnelConfigurationNoServerRegistrationInfo: return "m_netp_tunnel_config_error_no_server_registration_info"
         case .networkProtectionTunnelConfigurationCouldNotSelectClosestServer: return "m_netp_tunnel_config_error_could_not_select_closest_server"
         case .networkProtectionTunnelConfigurationCouldNotGetPeerPublicKey: return "m_netp_tunnel_config_error_could_not_get_peer_public_key"
@@ -847,6 +913,19 @@ extension Pixel.Event {
         case .networkProtectionMemoryWarning: return "m_netp_vpn_memory_warning"
         case .networkProtectionMemoryCritical: return "m_netp_vpn_memory_critical"
         case .networkProtectionUnhandledError: return "m_netp_unhandled_error"
+
+        case .networkProtectionWaitlistUserActive: return "m_netp_waitlist_user_active"
+        case .networkProtectionSettingsRowDisplayed: return "m_netp_waitlist_settings_entry_viewed"
+        case .networkProtectionWaitlistIntroScreenDisplayed: return "m_netp_waitlist_intro_screen_viewed"
+        case .networkProtectionWaitlistTermsDisplayed: return "m_netp_waitlist_terms_viewed"
+        case .networkProtectionWaitlistTermsAccepted: return "m_netp_waitlist_terms_accepted"
+        case .networkProtectionWaitlistNotificationShown: return "m_netp_waitlist_notification_shown"
+        case .networkProtectionWaitlistNotificationLaunched: return "m_netp_waitlist_notification_launched"
+
+        case .networkProtectionGeoswitchingOpened: return "m_netp_imp_geoswitching"
+        case .networkProtectionGeoswitchingSetNearest: return "m_netp_ev_geoswitching_set_nearest"
+        case .networkProtectionGeoswitchingSetCustom: return "m_netp_ev_geoswitching_set_custom"
+        case .networkProtectionGeoswitchingNoLocations: return "m_netp_ev_geoswitching_no_locations"
 
         // MARK: remote messaging pixels
 
@@ -956,7 +1035,6 @@ extension Pixel.Event {
         case .indexOutOfRange(let modelType): return "m_d_bookmarks_index_out_of_range_\(modelType.rawValue)"
         case .saveFailed(let modelType): return "m_d_bookmarks_view_model_save_failed_\(modelType.rawValue)"
         case .missingParent(let objectType): return "m_d_bookmark_model_missing_parent_\(objectType.rawValue)"
-        case .orphanedBookmarksPresent: return "m_d_bookmarks_orphans_present"
             
         case .bookmarksCouldNotLoadDatabase: return "m_d_bookmarks_could_not_load_database"
         case .bookmarksCouldNotPrepareDatabase: return "m_d_bookmarks_could_not_prepare_database"
@@ -969,6 +1047,13 @@ extension Pixel.Event {
         case .bookmarksMigrationCouldNotRemoveOldStore: return "m_d_bookmarks_migration_could_not_remove_old_store"
         case .bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders: return "m_d_bookmarks_migration_could_not_prepare_multiple_favorite_folders"
 
+        case .syncSignupDirect: return "m_sync_signup_direct"
+        case .syncSignupConnect: return "m_sync_signup_connect"
+        case .syncLogin: return "m_sync_login"
+        case .syncDaily: return "m_sync_daily"
+        case .syncDuckAddressOverride: return "m_sync_duck_address_override"
+        case .syncSuccessRateDaily: return "m_sync_success_rate_daily"
+        case .syncLocalTimestampResolutionTriggered(let feature): return "m_sync_\(feature.name)_local_timestamp_resolution_triggered"
         case .syncFailedToMigrate: return "m_d_sync_failed_to_migrate"
         case .syncFailedToLoadAccount: return "m_d_sync_failed_to_load_account"
         case .syncFailedToSetupEngine: return "m_d_sync_failed_to_setup_engine"
@@ -990,6 +1075,8 @@ extension Pixel.Event {
         case .bookmarksCleanupFailed: return "m_d_bookmarks_cleanup_failed"
         case .bookmarksCleanupAttemptedWhileSyncWasEnabled: return "m_d_bookmarks_cleanup_attempted_while_sync_was_enabled"
         case .favoritesCleanupFailed: return "m_d_favorites_cleanup_failed"
+        case .bookmarksFaviconsFetcherStateStoreInitializationFailed: return "m_d_bookmarks_favicons_fetcher_state_store_initialization_failed"
+        case .bookmarksFaviconsFetcherFailed: return "m_d_bookmarks_favicons_fetcher_failed"
 
         case .credentialsDatabaseCleanupFailed: return "m_d_credentials_database_cleanup_failed_2"
         case .credentialsCleanupAttemptedWhileSyncWasEnabled: return "m_d_credentials_cleanup_attempted_while_sync_was_enabled"

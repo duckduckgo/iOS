@@ -4,6 +4,9 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
+/* No comment provided by engineer. */
+"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Upravit";
 
@@ -132,6 +135,24 @@
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existující záložky nebudou duplikovány.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Máš překročený limit pro synchronizaci záložek. Zkus pár záložek smazat. Dokud problém nevyřešíš, záložky se nebudou zálohovat.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Synchronizace záložek je pozastavená";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Máš překročený limit pro synchronizaci hesel. Zkus pár hesel smazat. Dokud tenhle problém nevyřešíš, hesla se nebudou zálohovat.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Synchronizace hesel je pozastavená";
+
+/* Learn more button in alert */
+"alert.sync-paused-alert-learn-more-button" = "Více informací";
+
+/* Confirmation button in alert */
+"alert.sync-paused-alert-ok-button" = "DOBŘE";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Dát do záložek všechny karty?";
@@ -754,48 +775,6 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Naimportuj soubor HTML se záložkami z jiného prohlížeče nebo vyexportuj svoje existující záložky.";
 
-/* Broken Site Category */
-"brokensite.category.comments" = "Komentáře se nenačetly";
-
-/* Broken Site Category */
-"brokensite.category.content" = "Chybí obsah";
-
-/* Broken Site Category */
-"brokensite.category.cookieprompt" = "Správa vyskakovacích oken pro souhlas s cookies se neaktivovala";
-
-/* Broken Site Category */
-"brokensite.category.images" = "Obrázky se nenačetly";
-
-/* Broken Site Category */
-"brokensite.category.links" = "Odkazy nebo tlačítka nefungují";
-
-/* Broken Site Category */
-"brokensite.category.login" = "Nemohu se přihlásit";
-
-/* Broken Site Category */
-"brokensite.category.other" = "Něco jiného";
-
-/* Broken Site Category */
-"brokensite.category.paywall" = "Tato stránka mě požádala o deaktivaci";
-
-/* Broken Site Category */
-"brokensite.category.unsupported" = "Prohlížeč je nekompatibilní";
-
-/* Broken Site Category */
-"brokensite.category.videos" = "Video se nepřehrálo";
-
-/* Broken Site Category Placeholder */
-"brokensite.categoryPlaceholder" = "Vyber problém ze seznamu...";
-
-/* Broken Site Category Section Title */
-"brokensite.categoryTitle" = "VYBER KATEGORII";
-
-/* Broken Site Comment Placeholder */
-"brokensite.commentPlaceholder" = "Tento problém snáz vyřešíme, když nám nasdílíš další informace";
-
-/* Broken Site Section Title */
-"brokensite.sectionTitle" = "POPIŠTE, CO SE STALO";
-
 /* No comment provided by engineer. */
 "bucket: %@" = "bucket: % @";
 
@@ -1071,6 +1050,18 @@
 
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Odstranit";
+
+/* Display Mode for favorites */
+"favorites.settings.all-devices" = "Všechny oblíbené položky na zařízení";
+
+/* Footer of the favorites settings table */
+"favorites.settings.footer" = "Vyber, které oblíbené položky se mají zobrazit na nové kartě podle jejich původu.";
+
+/* Header of the favorites settings table */
+"favorites.settings.header" = "Předvolby zobrazení";
+
+/* Display Mode for favorites */
+"favorites.settings.mobile-only" = "Jenom oblíbené mobilní položky";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blokování reklam a vyskakovacích oken";
@@ -1438,6 +1429,9 @@
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
 
+/* Title text for an iOS quick action that opens VPN settings */
+"network.protection.quick-action.open-vpn" = "Otevřít VPN";
+
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Connected - %@";
 
@@ -1477,8 +1471,59 @@
 /* Location label shown in NetworkProtection's status view. */
 "network.protection.status.view.location" = "Location";
 
+/* Label shown on the title of the settings section in NetworkProtection's status view. */
+"network.protection.status.view.settings.section.title" = "Spravovat";
+
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "Network Protection";
+
+/* Title for the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.button.title" = "Zapnout oznámení";
+
+/* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.section.footer" = "Nech si od DuckDuckGo poslat upozornění, když se přeruší připojení nebo se změní stav VPN.";
+
+/* List section footer for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.section.footer" = "Nech si poslat upozornění, když se přeruší připojení nebo se změní stav VPN.";
+
+/* Title for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.title" = "Upozornění VPN";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.footer" = "Po přerušení automaticky obnovit připojení VPN.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.title" = "Vždycky zapnuté";
+
+/* Title for the VPN Location screen's All Countries section. */
+"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Title for the VPN Location screen's Nearest Available selection item. */
+"network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
+
+/* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+
+/* Title for the VPN Location screen's Recommended section. */
+"network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Title for the VPN Notifications management screen. */
+"network.protection.vpn.notifications.title" = "Oznámení sítě VPN";
+
+/* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
+"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+
+/* Title for the Preferred Location VPN Settings item. */
+"network.protection.vpn.preferred.location.title" = "Preferred Location";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.footer" = "Ochrana sítě zabraňuje únikům DNS k poskytovateli internetových služeb tím, že směruje dotazy DNS přes tunel VPN na náš vlastní resolver.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.title" = "Zabezpečený systém DNS";
+
+/* Title for the VPN Settings screen. */
+"network.protection.vpn.settings.title" = "Nastavení sítě VPN";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
@@ -1593,9 +1638,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Otevřít v jiné aplikaci?";
-
-/* No comment provided by engineer. */
-"report.brokensite.header" = "Odeslání anonymní zprávy o nefunkčním webu nám pomůže tyto problémy řešit a vylepšovat aplikaci.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Vyhledejte nebo zadejte adresu";

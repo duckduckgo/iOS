@@ -22,10 +22,11 @@
 import Foundation
 import Combine
 import NetworkProtection
+import Core
 
 final class NetworkProtectionVPNLocationViewModel: ObservableObject {
     private let locationListRepository: NetworkProtectionLocationListRepository
-    private let tunnelSettings: TunnelSettings
+    private let settings: VPNSettings
     @Published public var state: LoadingState
     @Published public var isNearestSelected: Bool
 
@@ -43,32 +44,38 @@ final class NetworkProtectionVPNLocationViewModel: ObservableObject {
         }
     }
 
-    init(locationListRepository: NetworkProtectionLocationListRepository, tunnelSettings: TunnelSettings) {
+    init(locationListRepository: NetworkProtectionLocationListRepository, settings: VPNSettings) {
         self.locationListRepository = locationListRepository
-        self.tunnelSettings = tunnelSettings
+        self.settings = settings
         state = .loading
-        self.isNearestSelected = tunnelSettings.selectedLocation == .nearest
+        self.isNearestSelected = settings.selectedLocation == .nearest
     }
 
     func onViewAppeared() async {
+        Pixel.fire(pixel: .networkProtectionGeoswitchingOpened)
         await reloadList()
     }
 
     func onNearestItemSelection() async {
-        tunnelSettings.selectedLocation = .nearest
+        DailyPixel.fireDailyAndCount(pixel: .networkProtectionGeoswitchingSetNearest)
+        settings.selectedLocation = .nearest
         await reloadList()
     }
 
     func onCountryItemSelection(id: String, cityId: String? = nil) async {
+        DailyPixel.fireDailyAndCount(pixel: .networkProtectionGeoswitchingSetCustom)
         let location = NetworkProtectionSelectedLocation(country: id, city: cityId)
-        tunnelSettings.selectedLocation = .location(location)
+        settings.selectedLocation = .location(location)
         await reloadList()
     }
     
     @MainActor
     private func reloadList() async {
         guard let list = try? await locationListRepository.fetchLocationList() else { return }
-        let selectedLocation = self.tunnelSettings.selectedLocation
+        if list.isEmpty {
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionGeoswitchingNoLocations)
+        }
+        let selectedLocation = self.settings.selectedLocation
         let isNearestSelected = selectedLocation == .nearest
 
         let countryItems = list.map { currentLocation in
@@ -113,34 +120,28 @@ private typealias CountryItem = NetworkProtectionVPNCountryItemModel
 private typealias CityItem = NetworkProtectionVPNCityItemModel
 
 struct NetworkProtectionVPNCountryItemModel: Identifiable {
+    private let labelsModel: NetworkProtectionVPNCountryLabelsModel
+
+    var emoji: String {
+        labelsModel.emoji
+    }
+    var title: String {
+        labelsModel.title
+    }
     let isSelected: Bool
     var id: String
-    let emoji: String
-    let title: String
     let subtitle: String?
     let cityPickerItems: [NetworkProtectionVPNCityItemModel]
     let shouldShowPicker: Bool
 
     fileprivate init(netPLocation: NetworkProtectionLocation, isSelected: Bool, cityPickerItems: [NetworkProtectionVPNCityItemModel]) {
+        self.labelsModel = .init(country: netPLocation.country)
         self.isSelected = isSelected
         self.id = netPLocation.country
-        self.title = Locale.current.localizedString(forRegionCode: id) ?? id
         let hasMultipleCities = netPLocation.cities.count > 1
         self.subtitle = hasMultipleCities ? UserText.netPVPNLocationCountryItemFormattedCitiesCount(netPLocation.cities.count) : nil
         self.cityPickerItems = cityPickerItems
-        self.emoji = Self.flag(country: netPLocation.country)
         self.shouldShowPicker = hasMultipleCities
-    }
-
-    static func flag(country: String) -> String {
-        let flagBase = UnicodeScalar("🇦").value - UnicodeScalar("A").value
-
-        let flag = country
-            .uppercased()
-            .unicodeScalars
-            .compactMap({ UnicodeScalar(flagBase + $0.value)?.description })
-            .joined()
-        return flag
     }
 }
 

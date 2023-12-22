@@ -46,6 +46,8 @@ class SyncDebugViewController: UITableViewController {
         case syncNow
         case logOut
         case toggleFavoritesDisplayMode
+        case resetFaviconsFetcherOnboardingDialog
+        case getRecoveryCode
 
     }
 
@@ -111,6 +113,10 @@ class SyncDebugViewController: UITableViewController {
                 cell.textLabel?.text = "Log out of sync in 10 seconds"
             case .toggleFavoritesDisplayMode:
                 cell.textLabel?.text = "Toggle favorites display mode in 10 seconds"
+            case .resetFaviconsFetcherOnboardingDialog:
+                cell.textLabel?.text = "Reset Favicons Fetcher onboarding dialog"
+            case .some(.getRecoveryCode):
+                cell.textLabel?.text = "Paste and Copy Recovery Code"
             case .none:
                 break
             }
@@ -161,6 +167,7 @@ class SyncDebugViewController: UITableViewController {
         }
     }
 
+    // swiftlint:disable:next cyclomatic_complexity
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch Sections(rawValue: indexPath.section) {
         case .info:
@@ -184,6 +191,12 @@ class SyncDebugViewController: UITableViewController {
                     AppDependencyProvider.shared.appSettings.favoritesDisplayMode = displayMode
                     NotificationCenter.default.post(name: AppUserDefaults.Notifications.favoritesDisplayModeChange, object: nil)
                 }
+            case .resetFaviconsFetcherOnboardingDialog:
+                var udWrapper = UserDefaultsWrapper(key: .syncDidPresentFaviconsFetcherOnboarding, defaultValue: false)
+                udWrapper.wrappedValue = false
+            case .getRecoveryCode:
+                showCopyPasteCodeAlert()
+
             default: break
             }
         case .environment:
@@ -199,6 +212,29 @@ class SyncDebugViewController: UITableViewController {
         }
 
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+    private func showCopyPasteCodeAlert() {
+        let alertController = UIAlertController(title: "Paste and Copy Recovery Code", message: nil, preferredStyle: .alert)
+
+        alertController.addTextField { textField in
+            textField.placeholder = "Enter recovery code here"
+        }
+
+        let copyAction = UIAlertAction(title: "Copy", style: .default) { _ in
+            if let text = alertController.textFields?.first?.text {
+                // Use the text as needed, e.g., copy to the clipboard
+                UIPasteboard.general.string = text
+            }
+        }
+        alertController.addAction(copyAction)
+
+        // Add a "Cancel" action
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+
+        // Present the alert
+        present(alertController, animated: true, completion: nil)
     }
 
 }

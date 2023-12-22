@@ -4,8 +4,11 @@ tags:
 
 ---
 
+# Clear and launch
 - clearState
 - launchApp
+
+# Run onboarding Flow
 - runFlow: 
     when: 
       visible: 
@@ -13,15 +16,17 @@ tags:
         index: 0
     file: ../shared/onboarding.yaml
 
+# Set Internal User
 - tapOn: Settings
 - runFlow:
-    file: ../shared/set_internal_user.yaml
+    file: ../shared/set_internal_user_from_settings.yaml
+
+# Create account
 - runFlow:
     file: ../shared/sync_create.yaml
 
 
 # Clean up
-- tapOn: Not Now
-- assertVisible: Sync & Back Up
+- assertVisible: Sync & Backup
 - runFlow:
     file: ../shared/sync_delete.yaml

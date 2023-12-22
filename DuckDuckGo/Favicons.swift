@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+import Bookmarks
 import Common
 import Kingfisher
 import UIKit
@@ -480,5 +481,36 @@ public class Favicons {
         return "\(Constants.salt)\(domain)".sha256()
     }
 
+}
+
+extension Favicons: Bookmarks.FaviconStoring {
+
+    public func hasFavicon(for domain: String) -> Bool {
+        guard let targetCache = Favicons.Constants.caches[.fireproof],
+              let resource = defaultResource(forDomain: domain)
+        else {
+            return false
+        }
+
+        return targetCache.isCached(forKey: resource.cacheKey)
+    }
+
+    public func storeFavicon(_ imageData: Data, with url: URL?, for documentURL: URL) async throws {
+
+        guard let domain = documentURL.host,
+              let options = kfOptions(forDomain: domain, withURL: documentURL, usingCache: .fireproof),
+              let resource = defaultResource(forDomain: domain),
+              let targetCache = Favicons.Constants.caches[.fireproof],
+              let image = UIImage(data: imageData)
+        else {
+            return
+        }
+
+        Task {
+            let image = self.scaleDownIfNeeded(image: image, toFit: Constants.maxFaviconSize)
+            targetCache.store(image, forKey: resource.cacheKey, options: .init(options))
+            WidgetCenter.shared.reloadAllTimelines()
+        }
+    }
 }
 // swiftlint:enable type_body_length file_length

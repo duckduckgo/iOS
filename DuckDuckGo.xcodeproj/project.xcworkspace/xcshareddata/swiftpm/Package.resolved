@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "revision" : "ea133abe237b6cb57a4237e0373318a40c10afc2",
-        "version" : "98.0.1"
+        "branch" : "sam/add-netp-subscription-auth-support",
+        "revision" : "a2e41dbf95c49f66120497002c680b929e969f97"
       }
     },
     {

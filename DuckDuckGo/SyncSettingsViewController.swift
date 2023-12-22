@@ -294,7 +294,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                 if self.rootView.model.isSyncEnabled {
                     handleError(.unableToMergeTwoAccounts, error: nil)
                 } else {
-                    handleError(.unableToSyncToServer, error: nil)
+                    handleError(.unableToSyncToServer, error: error)
                 }
             }
         } else if let connectKey = syncCode.connect {

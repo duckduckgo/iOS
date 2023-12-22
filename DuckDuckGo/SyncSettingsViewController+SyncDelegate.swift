@@ -76,7 +76,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
         let okAction = UIAlertAction(title: UserText.syncPausedAlertOkButton, style: .default, handler: nil)
         alertController.addAction(okAction)
 
-        if type == .unableToSyncToServer || 
+        if type == .unableToSyncToServer ||
             type == .unableToSyncWithDevice ||
             type == .unableToMergeTwoAccounts {
             // Gives time to the is syncing view to appear

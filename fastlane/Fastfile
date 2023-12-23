@@ -181,7 +181,8 @@ private_lane :build_alpha do |options|
     configuration: "Alpha",
     scheme: "DuckDuckGo-Alpha",
     export_options: "alphaExportOptions.plist",
-    derived_data_path: "DerivedData"
+    derived_data_path: "DerivedData",
+    xcargs: "-skipPackagePluginValidation"
   )
 end
 

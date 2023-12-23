@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1703026028516,
+    "version": 1703251114570,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -63,6 +63,9 @@
         "ampLinks": {
             "exceptions": [
                 {
+                    "domain": "asana.com"
+                },
+                {
                     "domain": "freecodecamp.org"
                 },
                 {
@@ -110,7 +113,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "5bfae22c5e0cb13c0a25ce80531827ff"
+            "hash": "369b8aac2cb358e0df3a828c1e3b9a29"
         },
         "androidBrowserConfig": {
             "exceptions": [],
@@ -124,6 +127,9 @@
                 },
                 {
                     "domain": "bild.de"
+                },
+                {
+                    "domain": "breitbart.com"
                 },
                 {
                     "domain": "derstandard.de"
@@ -267,7 +273,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "a1060783f1bf56f5cc661b994c9c9e56"
+            "hash": "2c63be0009057e4511dc6f6726251a47"
         },
         "autofill": {
             "exceptions": [
@@ -995,6 +1001,9 @@
                     "domain": "ads.google.com"
                 },
                 {
+                    "domain": "soranews24.com"
+                },
+                {
                     "domain": "earth.google.com"
                 },
                 {
@@ -1007,7 +1016,7 @@
                     "domain": "sundancecatalog.com"
                 }
             ],
-            "hash": "71ad0f38f9ce2bbacae5ff7db05511ec"
+            "hash": "e37447d42ee8194f185e35e40f577f41"
         },
         "cookie": {
             "settings": {
@@ -1075,71 +1084,12 @@
                 "closestUserAgent": {
                     "versions": []
                 },
-                "omitApplicationSites": [
-                    {
-                        "domain": "thingiverse.com"
-                    },
-                    {
-                        "domain": "qubushotel.com"
-                    },
-                    {
-                        "domain": "digid.nl"
-                    },
-                    {
-                        "domain": "intymna.pl"
-                    },
-                    {
-                        "domain": "sme.sk"
-                    },
-                    {
-                        "domain": "tiktok.com"
-                    },
-                    {
-                        "domain": "wykop.pl"
-                    },
-                    {
-                        "domain": "nypost.com"
-                    },
-                    {
-                        "domain": "crunchynihongo.com"
-                    },
-                    {
-                        "domain": "vsp.com"
-                    },
-                    {
-                        "domain": "earth.google.com"
-                    },
-                    {
-                        "domain": "iscorp.com"
-                    },
-                    {
-                        "domain": "marvel.com"
-                    },
-                    {
-                        "domain": "sundancecatalog.com"
-                    }
-                ],
-                "omitVersionSites": [
-                    {
-                        "domain": "crunchynihongo.com"
-                    },
-                    {
-                        "domain": "earth.google.com"
-                    },
-                    {
-                        "domain": "iscorp.com"
-                    },
-                    {
-                        "domain": "marvel.com"
-                    },
-                    {
-                        "domain": "sundancecatalog.com"
-                    }
-                ]
+                "omitApplicationSites": [],
+                "omitVersionSites": []
             },
             "exceptions": [],
             "state": "enabled",
-            "hash": "161a405c1f003e7d2c0df2a14d873389"
+            "hash": "0f937241a1692188edfa86eb1d098d06"
         },
         "dbp": {
             "state": "disabled",
@@ -1887,6 +1837,18 @@
                         ]
                     },
                     {
+                        "domain": "beverfood.com",
+                        "rules": [
+                            {
+                                "type": "disable-default"
+                            },
+                            {
+                                "selector": ".adsbygoogle",
+                                "type": "override"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "bild.de",
                         "rules": [
                             {
@@ -2588,6 +2550,32 @@
                             {
                                 "selector": ".connatix-player",
                                 "type": "closest-empty"
+                            },
+                            {
+                                "selector": ".ad-container",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": ".bottom-right-sticky-container",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": ".video-container",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": ".top-ad-recirc",
+                                "type": "modify-style",
+                                "values": [
+                                    {
+                                        "property": "height",
+                                        "value": "auto"
+                                    },
+                                    {
+                                        "property": "min-height",
+                                        "value": "auto"
+                                    }
+                                ]
                             }
                         ]
                     },
@@ -3300,6 +3288,14 @@
                         ]
                     },
                     {
+                        "domain": "soranews24.com",
+                        "rules": [
+                            {
+                                "type": "disable-default"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "spanishdict.com",
                         "rules": [
                             {
@@ -3414,6 +3410,15 @@
                             {
                                 "selector": "[class*='responsive__NativeAd']",
                                 "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "thewindowsclub.com",
+                        "rules": [
+                            {
+                                "selector": ".adtester-container",
+                                "type": "hide"
                             }
                         ]
                     },
@@ -3800,7 +3805,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "182ef21a9dcfd3a160468f851c4b1789"
+            "hash": "37ba16a450c6df51867a69cd83304b0f"
         },
         "exceptionHandler": {
             "exceptions": [
@@ -4420,6 +4425,11 @@
             "state": "disabled",
             "hash": "dede7e70939822f5ecb9eb5fae577fa3"
         },
+        "privacyProtectionsPopup": {
+            "state": "disabled",
+            "exceptions": [],
+            "hash": "c292bb627849854515cebbded288ef5a"
+        },
         "referrer": {
             "exceptions": [
                 {
@@ -4515,7 +4525,6 @@
             "hash": "5e792dd491428702bc0104240fbce0ce"
         },
         "sync": {
-            "exceptions": [],
             "state": "internal",
             "features": {
                 "level0ShowSync": {
@@ -4531,7 +4540,8 @@
                     "state": "enabled"
                 }
             },
-            "hash": "92673fe625ae2b888a4b0bfa9a974ce4"
+            "exceptions": [],
+            "hash": "4e4382e6a69f7cc99222fd924168e80f"
         },
         "trackerAllowlist": {
             "state": "enabled",
@@ -5052,6 +5062,12 @@
                             },
                             {
                                 "rule": "challenges.cloudflare.com",
+                                "domains": [
+                                    "<all>"
+                                ]
+                            },
+                            {
+                                "rule": "cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/",
                                 "domains": [
                                     "<all>"
                                 ]
@@ -6147,7 +6163,7 @@
                             {
                                 "rule": "cmp.inmobi.com",
                                 "domains": [
-                                    "express.co.uk"
+                                    "<all>"
                                 ]
                             }
                         ]
@@ -7563,7 +7579,7 @@
                     "domain": "sundancecatalog.com"
                 }
             ],
-            "hash": "c1968268cb8a82bf532443edd17d9499"
+            "hash": "125a4930376740ff93c957d52454a955"
         },
         "trackingCookies1p": {
             "settings": {

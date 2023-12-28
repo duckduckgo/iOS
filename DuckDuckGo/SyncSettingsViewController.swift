@@ -69,6 +69,7 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
         setUpFaviconsFetcherSwitch(viewModel)
         setUpFavoritesDisplayModeSwitch(viewModel, appSettings)
         setUpSyncPaused(viewModel, appSettings)
+        setUpSyncFeatureFlags(viewModel)
         refreshForState(syncService.authState)
 
         syncService.authStatePublisher
@@ -85,6 +86,19 @@ class SyncSettingsViewController: UIHostingController<SyncSettingsView> {
     
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setUpSyncFeatureFlags(_ viewModel: SyncSettingsViewModel) {
+        syncService.featureFlagsPublisher.prepend(syncService.featureFlags)
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .sink { featureFlags in
+                viewModel.isDataSyncingAvailable = featureFlags.contains(.dataSyncing)
+                viewModel.isConnectingDevicesAvailable = featureFlags.contains(.connectFlows)
+                viewModel.isAccountCreationAvailable = featureFlags.contains(.accountCreation)
+                viewModel.isAccountRecoveryAvailable = featureFlags.contains(.accountRecovery)
+            }
+            .store(in: &cancellables)
     }
 
     private func setUpFaviconsFetcherSwitch(_ viewModel: SyncSettingsViewModel) {
@@ -242,7 +256,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
     func loginAndShowDeviceConnected(recoveryKey: SyncCode.RecoveryKey) async throws {
         let registeredDevices = try await syncService.login(recoveryKey, deviceName: deviceName, deviceType: deviceType)
         mapDevices(registeredDevices)
-        Pixel.fire(pixel: .syncLogin)
+        Pixel.fire(pixel: .syncLogin, includedParameters: [.appVersion])
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.dismissVCAndShowRecoveryPDF()
         }
@@ -281,7 +295,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                 showPreparingSync()
                 if syncService.account == nil {
                     try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
-                    Pixel.fire(pixel: .syncSignupConnect)
+                    Pixel.fire(pixel: .syncSignupConnect, includedParameters: [.appVersion])
                     self.dismissVCAndShowRecoveryPDF()
                     shouldShowSyncEnabled = false
                     rootView.model.syncEnabled(recoveryCode: recoveryCode)

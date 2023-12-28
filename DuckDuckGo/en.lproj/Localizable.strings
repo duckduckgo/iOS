@@ -1771,6 +1771,15 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* No comment provided by engineer. */
 "sync.remove-device.message" = "\"%@\" will no longer be able to access your synced data.";
 
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled" = "Sorry, but Sync & Backup is currently unavailable. Please try again later.";
+
+/* Data syncing unavailable warning message */
+"sync.warning.data.syncing.disabled.upgrade.required" = "Sorry, but Sync & Backup is no longer available in this app version. Please update DuckDuckGo to the latest version to continue.";
+
+/* Title of the warning message */
+"sync.warning.sync.paused" = "Sync & Backup is Paused";
+
 /* Accessibility label on remove button */
 "tab.close.home" = "Close home tab";
 

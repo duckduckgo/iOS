@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "autofill/anya-never-save-site",
-        "revision" : "a4606dd015ed1f9cd97c6b1a26476b47091cf105"
+        "revision" : "e9c344c15d550112d02853c07efeaa154e911e2b",
+        "version" : "100.0.1"
       }
     },
     {

@@ -851,7 +851,7 @@
 "dax.onboarding.browsing.without.trackers.cta" = "Fatto";
 
 /* Encourage user to try clearing data with the fire button */
-"dax.onboarding.fire.button" = "I dati personali possono accumularsi nel tuo browser. Non va bene! Usa il pulsante Proteggi per sbarazzarti di tutto. Prova subito! 👇";
+"dax.onboarding.fire.button" = "I dati personali possono accumularsi nel tuo browser. Non va bene! Usa il Fire Button (icona del fuoco) per sbarazzarti di tutto. Prova subito! 👇";
 
 /* Cancel action */
 "dax.onboarding.fire.button.cancelAction" = "Annulla";
@@ -1583,34 +1583,34 @@
 "pm.deactivate" = "Deactivate";
 
 /* No comment provided by engineer. */
-"preserveLogins.domain.list.footer" = "Per mantenere l'accesso degli utenti, i siti web si affidano ai cookie. Quando attivi la Protezione per un sito, i cookie non verranno cancellati e manterrai l'accesso, anche dopo aver usato il pulsante Proteggi (icona del fuoco). Continueremo a bloccare i tracker di terze parti che si trovano su siti web protetti.";
+"preserveLogins.domain.list.footer" = "Per mantenere l'accesso degli utenti, i siti web si affidano ai cookie. Quando attivi la Protezione dal fuoco per un sito, i cookie non verranno cancellati e manterrai l'accesso, anche dopo aver usato il Fire Button (icona del fuoco). Continueremo a bloccare i tracker di terze parti anche sui siti ignifughi.";
 
 /* Section header above Fireproofed websites list */
-"preserveLogins.domain.list.title" = "Siti protetti";
+"preserveLogins.domain.list.title" = "Siti a prova di fuoco";
 
 /* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
-"preserveLogins.fireproof.message" = "L'attivazione della protezione su questo sito ti consentirà di effettuare l'accesso dopo aver utilizzato il pulsante Proteggi (icona del fuoco).";
+"preserveLogins.fireproof.message" = "Proteggere dal fuoco questo sito manterrà valido l'accesso dopo aver utilizzato il Fire Button (icona del fuoco).";
 
 /* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
-"preserveLogins.fireproof.title" = "Rendere %@ resistente al fuoco per mantenere l'accesso?";
+"preserveLogins.fireproof.title" = "Proteggi dal fuoco %@ per mantenere l'accesso?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Proteggi";
+"preserveLogins.menu.confirm" = "Proteggi dal fuoco";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
-"preserveLogins.menu.confirm.message" = "%@ è adesso protetto";
+"preserveLogins.menu.confirm.message" = "%@ è ora a prova di fuoco";
 
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Non adesso";
 
 /* Disable fireproofing for site */
-"preserveLogins.menu.disable" = "Rimuovi protezione";
+"preserveLogins.menu.disable" = "Rimuovi protezione dal fuoco";
 
 /* Enable fireproofing for site */
-"preserveLogins.menu.enable" = "Attiva protezione per questo sito";
+"preserveLogins.menu.enable" = "Proteggi questo sito dal fuoco";
 
 /* Messege confirms that website is no longer fireproofed. */
-"preserveLogins.menu.removal.message" = "Protezione rimossa";
+"preserveLogins.menu.removal.message" = "Protezione dal fuoco rimossa";
 
 /* Alert title */
 "preserveLogins.remove.all" = "Elimina tutto";

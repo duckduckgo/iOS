@@ -164,7 +164,7 @@
 "alert.title.save.favorite" = "Save Favorite";
 
 /* Description for unable to create recovery pdf error */
-"alert.unable-to-create-recovery-pdf-description" = "Unable to create the recovery PDF. ";
+"alert.unable-to-create-recovery-pdf-description" = "Unable to create the recovery PDF.";
 
 /* Description for unable to delete data error */
 "alert.unable-to-delete-data-description" = "Unable to delete data on the server.";

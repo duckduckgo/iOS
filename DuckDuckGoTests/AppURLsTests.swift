@@ -205,20 +205,20 @@ final class AppURLsTests: XCTestCase {
     }
 
     func testSearchUrlCreatesSearchUrlWhenFloatingPointNumberIsPassed() {
-        let url = URL.makeSearchURL(text: "1.4")
+        let url = URL.makeSearchURL(query: "1.4")
         XCTAssertEqual(url?.getParameter(named: "q"), "1.4")
     }
 
     func testSearchUrlCreatesSearchUrlWhenFloatingPointNumbersDivisionIsPassed() {
-        let url = URL.makeSearchURL(text: "1.4/3.4")
+        let url = URL.makeSearchURL(query: "1.4/3.4")
         XCTAssertEqual(url?.getParameter(named: "q"), "1.4/3.4")
 
-        let url2 = URL.makeSearchURL(text: "4/3.4")
+        let url2 = URL.makeSearchURL(query: "4/3.4")
         XCTAssertEqual(url2?.getParameter(named: "q"), "4/3.4")
     }
 
     func testSearchUrlCreatesWebUrlWhenIPv4WithFourOctetsIsPassed() {
-        let url = URL.makeSearchURL(text: "1.0.0.4/3.4")
+        let url = URL.makeSearchURL(query: "1.0.0.4/3.4")
         XCTAssertEqual(url?.absoluteString, "http://1.0.0.4/3.4")
     }
 

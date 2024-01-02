@@ -70,7 +70,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
     func handleError(_ type: SyncError, error: Error?) {
         let alertController = UIAlertController(
             title: type.title,
-            message: type.description + "\n" + (error?.localizedDescription ?? ""),
+            message: [type.description, error?.localizedDescription].compactMap({ $0 }).joined(separator: "\n"),
             preferredStyle: .alert)
 
         let okAction = UIAlertAction(title: UserText.syncPausedAlertOkButton, style: .default, handler: nil)

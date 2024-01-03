@@ -113,7 +113,7 @@ class SettingsViewController: UITableViewController {
     }
 
     private var shouldShowSyncCell: Bool {
-        return featureFlagger.isFeatureOn(.sync)
+        return syncService.featureFlags.contains(.userInterface)
     }
 
     private var shouldShowTextSizeCell: Bool {
@@ -127,7 +127,8 @@ class SettingsViewController: UITableViewController {
     private lazy var shouldShowNetPCell: Bool = {
 #if NETWORK_PROTECTION
         if #available(iOS 15, *) {
-            return featureFlagger.isFeatureOn(.networkProtection)
+            let accessController = NetworkProtectionAccessController()
+            return accessController.networkProtectionAccessType() != .none
         } else {
             return false
         }
@@ -259,7 +260,8 @@ class SettingsViewController: UITableViewController {
 
     private func configureSyncCell() {
         syncCell.textLabel?.text = "Sync & Backup"
-        if SyncBookmarksAdapter.isSyncBookmarksPaused || SyncCredentialsAdapter.isSyncCredentialsPaused {
+        let isDataSyncingDisabled = !syncService.featureFlags.contains(.dataSyncing) && syncService.authState == .active
+        if SyncBookmarksAdapter.isSyncBookmarksPaused || SyncCredentialsAdapter.isSyncCredentialsPaused || isDataSyncingDisabled {
             syncCell.textLabel?.text = "⚠️ " + "Sync & Backup"
         }
         syncCell.isHidden = !shouldShowSyncCell

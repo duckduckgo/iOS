@@ -1,3 +1,5 @@
+allow_zero_lintable_files: true
+
 disabled_rules:
   - discarded_notification_center_observer
   - notification_center_detachment
@@ -93,3 +95,4 @@ excluded:
   - vendor
   - LocalPackages/*/Package.swift
   - PacketTunnelProvider/ProxyServer
+  - .ruby-lsp

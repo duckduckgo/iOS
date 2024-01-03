@@ -79,8 +79,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private(set) var syncDataProviders: SyncDataProviders!
     private var syncDidFinishCancellable: AnyCancellable?
     private var syncStateCancellable: AnyCancellable?
+    private var isSyncInProgressCancellable: AnyCancellable?
 
     // MARK: lifecycle
+
+    @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
+    private var privacyConfigCustomURL: String?
 
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -103,7 +107,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         cleanUpIncrementalRolloutPixelTest()
 
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
-        Configuration.setURLProvider(AppConfigurationURLProvider())
+
+        if isDebugBuild, let privacyConfigCustomURL, let url = URL(string: privacyConfigCustomURL) {
+            Configuration.setURLProvider(CustomConfigurationURLProvider(customPrivacyConfigurationURL: url))
+        } else {
+            Configuration.setURLProvider(AppConfigurationURLProvider())
+        }
 
         CrashCollection.start {
             Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: $0, includedParameters: [])
@@ -221,9 +230,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage()
         )
 
-        let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog, environment: environment)
+        let syncService = DDGSync(
+            dataProvidersSource: syncDataProviders,
+            errorEvents: SyncErrorHandler(),
+            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+            log: .syncLog,
+            environment: environment
+        )
         syncService.initializeIfNeeded()
         self.syncService = syncService
+
+        isSyncInProgressCancellable = syncService.isSyncInProgressPublisher
+            .filter { $0 }
+            .sink { [weak syncService] _ in
+                DailyPixel.fire(pixel: .syncDaily, includedParameters: [.appVersion])
+                syncService?.syncDailyStats.sendStatsIfNeeded(handler: { params in
+                    Pixel.fire(pixel: .syncSuccessRateDaily,
+                               withAdditionalParameters: params,
+                               includedParameters: [.appVersion])
+                })
+            }
 
 #if APP_TRACKING_PROTECTION
         let main = MainViewController(bookmarksDatabase: bookmarksDatabase,

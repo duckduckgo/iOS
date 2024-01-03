@@ -32,6 +32,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../DuckUI"),
+        .package(url: "https://github.com/duckduckgo/BrowserServicesKit", exact: "100.0.2"),
         .package(url: "https://github.com/duckduckgo/DesignResourcesKit", exact: "2.0.0")
     ],
     targets: [
@@ -40,6 +41,11 @@ let package = Package(
             dependencies: [
                 .product(name: "DuckUI", package: "DuckUI"),
                 "DesignResourcesKit"
-            ])
+            ],
+            swiftSettings: [
+                .define("DEBUG", .when(configuration: .debug))
+            ],
+            plugins: [.plugin(name: "SwiftLintPlugin", package: "BrowserServicesKit")]
+        )
     ]
 )

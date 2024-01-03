@@ -12,3 +12,4 @@ appId: com.duckduckgo.mobile.ios
 - tapOn: Next
 - assertVisible: Your Data is Synced!
 - tapOn: Done
+- assertVisible: Sync Enabled

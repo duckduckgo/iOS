@@ -22,23 +22,14 @@ import UIKit
 import SwiftUI
 
 struct QRCodeView: View {
-
-    enum Style {
-
-        case light, dark
-
-    }
-
     let context = CIContext()
 
     let string: String
     let size: CGFloat
-    let style: Style
 
-    init(string: String, size: CGFloat, style: Style = .light) {
+    init(string: String, size: CGFloat) {
         self.string = string
         self.size = size
-        self.style = style
     }
 
     var body: some View {
@@ -69,8 +60,8 @@ struct QRCodeView: View {
         }
 
         let colorParameters: [String: Any] = [
-            "inputColor0": CIColor(color: style == .light ? .white : .black),
-            "inputColor1": CIColor(color: style == .light ? .black : .white)
+            "inputColor0": CIColor(color: .black),
+            "inputColor1": CIColor(color: .white)
         ]
         let coloredImage = outputImage.applyingFilter("CIFalseColor", parameters: colorParameters)
 

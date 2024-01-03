@@ -117,6 +117,43 @@ final class NetworkProtectionAccessControllerTests: XCTestCase {
         XCTAssertEqual(controller.networkProtectionAccessType(), .waitlistInvited)
     }
 
+    func testWhenUserHasWaitlistAccess_ThenWaitlistUserCheckIsTrue() {
+        let controller = createMockAccessController(
+            isInternalUser: true,
+            featureActivated: true,
+            termsAccepted: true,
+            featureFlagsEnabled: true,
+            hasJoinedWaitlist: true,
+            hasBeenInvited: true
+        )
+
+        XCTAssertTrue(controller.isPotentialOrCurrentWaitlistUser)
+    }
+
+    func testWhenUserDoesNotHaveWaitlistAccess_ThenWaitlistUserCheckIsFalse() {
+        let controller = createMockAccessController(
+            featureActivated: false,
+            termsAccepted: false,
+            featureFlagsEnabled: false,
+            hasJoinedWaitlist: false,
+            hasBeenInvited: false
+        )
+
+        XCTAssertFalse(controller.isPotentialOrCurrentWaitlistUser)
+    }
+
+    func testWhenUserIsInternal_ThenWaitlistUserCheckIsFalse() {
+        let controller = createMockAccessController(
+            featureActivated: true,
+            termsAccepted: false,
+            featureFlagsEnabled: false,
+            hasJoinedWaitlist: false,
+            hasBeenInvited: false
+        )
+
+        XCTAssertFalse(controller.isPotentialOrCurrentWaitlistUser)
+    }
+
     // MARK: - Mock Creation
 
     private func createMockAccessController(
@@ -146,12 +183,14 @@ final class NetworkProtectionAccessControllerTests: XCTestCase {
         let mockTermsAndConditionsStore = MockNetworkProtectionTermsAndConditionsStore()
         mockTermsAndConditionsStore.networkProtectionWaitlistTermsAndConditionsAccepted = termsAccepted
         let mockFeatureFlagger = createFeatureFlagger(withSubfeatureEnabled: featureFlagsEnabled)
+        let internalUserDecider = DefaultInternalUserDecider(store: internalUserDeciderStore)
 
         return NetworkProtectionAccessController(
             networkProtectionActivation: mockActivation,
             networkProtectionWaitlistStorage: mockWaitlistStorage,
             networkProtectionTermsAndConditionsStore: mockTermsAndConditionsStore,
-            featureFlagger: mockFeatureFlagger
+            featureFlagger: mockFeatureFlagger,
+            internalUserDecider: internalUserDecider
         )
     }
 

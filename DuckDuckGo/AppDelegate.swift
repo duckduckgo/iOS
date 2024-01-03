@@ -164,13 +164,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DatabaseMigration.migrate(to: context)
         }
 
-        var shouldResetBookmarksSyncTimestamp = false
         if BookmarksDatabaseSetup(crashOnError: !shouldPresentInsufficientDiskSpaceAlertAndCrash)
                 .loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase) {
-
             // MARK: post-Bookmarks migration logic
-            assertBookmarksMigrationHappensOnlyOnce()
-            shouldResetBookmarksSyncTimestamp = true
         }
 
         WidgetCenter.shared.reloadAllTimelines()
@@ -315,18 +311,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #endif
 
         return true
-    }
-
-    private func assertBookmarksMigrationHappensOnlyOnce() {
-        let key = UserDefaultsWrapper<Any>.Key.bookmarksLastGoodVersion.rawValue
-        if let lastGoodVersion = UserDefaults.standard.string(forKey: key) {
-            Pixel.fire(pixel: .debugBookmarksLost, withAdditionalParameters: [
-                PixelParameters.bookmarksLastGoodVersion: lastGoodVersion
-            ])
-            assertionFailure("Unexpected bookmarks migration")
-        } else {
-            UserDefaults.standard.setValue(AppVersion().versionNumber, forKey: key)
-        }
     }
 
     private func presentPreemptiveCrashAlert() {

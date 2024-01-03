@@ -27,9 +27,83 @@ import Common
 struct BookmarksDatabaseSetup {
 
     let crashOnError: Bool
+    
+    private let migrationAssertion = BookmarksMigrationAssertion()
 
     func loadStoreAndMigrate(bookmarksDatabase: CoreDataDatabase) -> Bool {
-        let preMigrationErrorHandling = EventMapping<BookmarkFormFactorFavoritesMigration.MigrationErrors> { _, error, _, _ in
+        let preMigrationErrorHandling = createErrorHandling()
+
+        let oldFavoritesOrder = BookmarkFormFactorFavoritesMigration
+            .getFavoritesOrderFromPreV4Model(
+                dbContainerLocation: BookmarksDatabase.defaultDBLocation,
+                dbFileURL: BookmarksDatabase.defaultDBFileURL,
+                errorEvents: preMigrationErrorHandling
+            )
+
+        var migrationHappened = false
+        bookmarksDatabase.loadStore { context, error in
+            guard let context = assertContext(context, error, crashOnError) else { return }
+            self.migrateFromLegacyCoreDataStorageIfNeeded(context)
+            migrationHappened = self.migrateToFormFactorSpecificFavorites(context, oldFavoritesOrder)
+            // Add new migrations and set migrationHappened flag here. Only the last migration is relevant.
+            // Also bump the int passed to the assert function below.
+        }
+        
+        if migrationHappened {
+            do {
+                try migrationAssertion.assert(migrationVersion: 1)
+            } catch {
+                assertionFailure(error.localizedDescription)
+            }
+        }
+
+        return migrationHappened
+    }
+    
+    private func migrateToFormFactorSpecificFavorites(_ context: NSManagedObjectContext, _ oldFavoritesOrder: [String]?) -> Bool {
+        do {
+            BookmarkFormFactorFavoritesMigration.migrateToFormFactorSpecificFavorites(byCopyingExistingTo: .mobile,
+                                                                                      preservingOrderOf: oldFavoritesOrder,
+                                                                                      in: context)
+            if context.hasChanges {
+                try context.save(onErrorFire: .bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders)
+                return true
+            }
+        } catch {
+            Thread.sleep(forTimeInterval: 1)
+            fatalError("Could not prepare Bookmarks DB structure")
+        }
+        return false
+    }
+    
+    private func migrateFromLegacyCoreDataStorageIfNeeded(_ context: NSManagedObjectContext) {
+        let legacyStorage = LegacyBookmarksCoreDataStorage()
+        legacyStorage?.loadStoreAndCaches()
+        LegacyBookmarksStoreMigration.migrate(from: legacyStorage, to: context)
+        legacyStorage?.removeStore()
+    }
+    
+    private func assertContext(_ context: NSManagedObjectContext?, _ error: Error?, _ crashOnError: Bool) -> NSManagedObjectContext? {
+        guard let context = context else {
+            if let error = error {
+                Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
+                           error: error)
+            } else {
+                Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase)
+            }
+
+            if !crashOnError {
+                return nil
+            } else {
+                Thread.sleep(forTimeInterval: 1)
+                fatalError("Could not create Bookmarks database stack: \(error?.localizedDescription ?? "err")")
+            }
+        }
+        return context
+    }
+
+    private func createErrorHandling() -> EventMapping<BookmarkFormFactorFavoritesMigration.MigrationErrors> {
+        return EventMapping<BookmarkFormFactorFavoritesMigration.MigrationErrors> { _, error, _, _ in
             if let error = error {
                 Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
                            error: error)
@@ -44,51 +118,36 @@ struct BookmarksDatabaseSetup {
                 fatalError("Could not create Bookmarks database stack: \(error?.localizedDescription ?? "err")")
             }
         }
+    }
+    
+}
 
-        let oldFavoritesOrder = BookmarkFormFactorFavoritesMigration
-            .getFavoritesOrderFromPreV4Model(
-                dbContainerLocation: BookmarksDatabase.defaultDBLocation,
-                dbFileURL: BookmarksDatabase.defaultDBFileURL,
-                errorEvents: preMigrationErrorHandling
-            )
+class BookmarksMigrationAssertion {
+    
+    enum Error: Swift.Error {
+        case unexpectedMigration
+    }
+    
+    @UserDefaultsWrapper(key: .bookmarksLastGoodVersion, defaultValue: nil)
+    var lastGoodVersion: String?
+    
+    @UserDefaultsWrapper(key: .bookmarksMigrationVersion, defaultValue: 0)
+    var migrationVersion: Int
 
-        bookmarksDatabase.loadStore { context, error in
-            guard let context = context else {
-                if let error = error {
-                    Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
-                               error: error)
-                } else {
-                    Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase)
-                }
-
-                if !crashOnError {
-                    return
-                } else {
-                    Thread.sleep(forTimeInterval: 1)
-                    fatalError("Could not create Bookmarks database stack: \(error?.localizedDescription ?? "err")")
-                }
-            }
-
-            let legacyStorage = LegacyBookmarksCoreDataStorage()
-            legacyStorage?.loadStoreAndCaches()
-            LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
-                                                  to: context)
-            legacyStorage?.removeStore()
-
-            do {
-                BookmarkFormFactorFavoritesMigration.migrateToFormFactorSpecificFavorites(byCopyingExistingTo: .mobile,
-                                                                                          preservingOrderOf: oldFavoritesOrder,
-                                                                                          in: context)
-                if context.hasChanges {
-                    try context.save(onErrorFire: .bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders)
-                }
-            } catch {
-                Thread.sleep(forTimeInterval: 1)
-                fatalError("Could not prepare Bookmarks DB structure")
-            }
-
+    // Wanted to use assertions here, but that's trick to test.
+    func assert(migrationVersion: Int) throws {
+        if migrationVersion != self.migrationVersion {
+            // this is a new migration, so save the app version and move on
+            self.lastGoodVersion = Bundle.main.releaseVersionNumber
+            self.migrationVersion = migrationVersion
+            return
         }
-        return true
-   }
-
+        
+        Pixel.fire(pixel: .debugBookmarksMigratedMoreThanOnce, withAdditionalParameters: [
+            PixelParameters.bookmarksLastGoodVersion: lastGoodVersion ?? ""
+        ])
+        
+        throw Error.unexpectedMigration
+    }
+    
 }

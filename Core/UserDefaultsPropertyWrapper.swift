@@ -116,6 +116,8 @@ public struct UserDefaultsWrapper<T> {
         case showFullSiteAddress = "com.duckduckgo.ios.showfullsiteaddress"
 
         case bookmarksLastGoodVersion = "com.duckduckgo.ios.bookmarksLastGoodVersion"
+        case bookmarksMigrationVersion = "com.duckduckgo.ios.bookmarksMigrationVersion"
+        
         case privacyConfigCustomURL = "com.duckduckgo.ios.privacyConfigCustomURL"
     }
 

@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
-        "branch" : "dominik/ipv4-parsing",
-        "revision" : "4dc0cf36c7be0d156d628881f788341ad35b3998"
+        "revision" : "39a5daf268f9fcb57d95e6193eca20f7ea222de6",
+        "version" : "100.0.2"
       }
     },
     {

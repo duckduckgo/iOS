@@ -7,7 +7,7 @@ on:
 jobs:
   end-to-end-tests:
     name: End to end Tests
-    runs-on: macos-13
+    runs-on: flyci-macos-large-latest-m2
 
     steps:
     - name: Check out the code

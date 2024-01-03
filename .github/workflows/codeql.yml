@@ -18,7 +18,7 @@ on:
 jobs:
   analyze:
     name: Analyze
-    runs-on: macos-13
+    runs-on: flyci-macos-large-latest-m2
     timeout-minutes: 60
     permissions:
       actions: read

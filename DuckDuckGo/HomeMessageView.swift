@@ -139,6 +139,7 @@ struct HomeMessageView: View {
     private var title: some View {
         Text(viewModel.title)
             .padding(.top, Const.Spacing.imageAndTitle)
+            .frame(maxWidth: .infinity)
    }
 
     @ViewBuilder

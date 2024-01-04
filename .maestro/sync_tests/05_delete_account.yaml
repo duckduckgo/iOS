@@ -35,5 +35,5 @@ tags:
 - assertVisible: Scan QR Code
 - tapOn: Manually Enter Code
 - tapOn: Paste
-- assertVisible: Sync Error
+- assertVisible: Sync & Backup Error
 - tapOn: OK

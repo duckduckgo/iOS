@@ -76,6 +76,27 @@ final class SettingsViewModel: ObservableObject {
     }
                 
     var shouldShowNoMicrophonePermissionAlert: Bool = false
+    var shouldShowDebugCell: Bool { return featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild }
+    var cellTitle: String {
+        let syncService = legacyViewProvider.syncService
+        let isDataSyncingDisabled = !syncService.featureFlags.contains(.dataSyncing) && syncService.authState == .active
+        if SyncBookmarksAdapter.isSyncBookmarksPaused || SyncCredentialsAdapter.isSyncCredentialsPaused || isDataSyncingDisabled {
+            return "⚠️ \(UserText.settingsSync)"
+        }
+        return UserText.settingsSync
+    }
+
+    var shouldShowNetworkProtectionCell: Bool {
+#if NETWORK_PROTECTION
+        if #available(iOS 15, *) {
+            return featureFlagger.isFeatureOn(.networkProtection)
+        } else {
+            return false
+        }
+#else
+        return false
+#endif
+    }
     
     // MARK: Bindings
     var themeBinding: Binding<ThemeName> {

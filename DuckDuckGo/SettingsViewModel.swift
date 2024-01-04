@@ -77,7 +77,7 @@ final class SettingsViewModel: ObservableObject {
                 
     var shouldShowNoMicrophonePermissionAlert: Bool = false
     var shouldShowDebugCell: Bool { return featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild }
-    var cellTitle: String {
+    var syncCellTitle: String {
         let syncService = legacyViewProvider.syncService
         let isDataSyncingDisabled = !syncService.featureFlags.contains(.dataSyncing) && syncService.authState == .active
         if SyncBookmarksAdapter.isSyncBookmarksPaused || SyncCredentialsAdapter.isSyncCredentialsPaused || isDataSyncingDisabled {

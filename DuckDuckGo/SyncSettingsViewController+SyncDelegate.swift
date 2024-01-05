@@ -45,7 +45,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 let devices = try await syncService.updateDeviceName(name)
                 mapDevices(devices)
             } catch {
-                handleError(error)
+                handleError(SyncError.unableToUpdateDeviceName, error: error)
             }
         }
     }
@@ -56,20 +56,40 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 self.dismissPresentedViewController()
                 self.showPreparingSync()
                 try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
-                Pixel.fire(pixel: .syncSignupDirect)
+                Pixel.fire(pixel: .syncSignupDirect, includedParameters: [.appVersion])
                 self.rootView.model.syncEnabled(recoveryCode: recoveryCode)
                 self.refreshDevices()
                 navigationController?.topViewController?.dismiss(animated: true, completion: showRecoveryPDF)
             } catch {
-                handleError(error)
+                handleError(SyncError.unableToSyncToServer, error: error)
             }
         }
     }
 
     @MainActor
-    func handleError(_ error: Error) {
-        // Work out how to handle this properly later
-        assertionFailure(error.localizedDescription)
+    func handleError(_ type: SyncError, error: Error?) {
+        let alertController = UIAlertController(
+            title: type.title,
+            message: [type.description, error?.localizedDescription].compactMap({ $0 }).joined(separator: "\n"),
+            preferredStyle: .alert)
+
+        let okAction = UIAlertAction(title: UserText.syncPausedAlertOkButton, style: .default, handler: nil)
+        alertController.addAction(okAction)
+
+        if type == .unableToSyncToServer ||
+            type == .unableToSyncWithDevice ||
+            type == .unableToMergeTwoAccounts {
+            // Gives time to the is syncing view to appear
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.dismissPresentedViewController { [weak self] in
+                    self?.present(alertController, animated: true, completion: nil)
+                }
+            }
+        } else {
+            self.dismissPresentedViewController { [weak self] in
+                self?.present(alertController, animated: true, completion: nil)
+            }
+        }
     }
 
     func showSyncWithAnotherDevice() {
@@ -158,14 +178,15 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             alert.addAction(title: UserText.syncTurnOffConfirmAction, style: .destructive) {
                 Task { @MainActor in
                     do {
-                        self.rootView.model.isSyncEnabled = false
                         try await self.syncService.disconnect()
+                        self.rootView.model.isSyncEnabled = false
                         AppUserDefaults().isSyncBookmarksPaused = false
                         AppUserDefaults().isSyncCredentialsPaused = false
+                        continuation.resume(returning: true)
                     } catch {
-                        self.handleError(error)
+                        self.handleError(SyncError.unableToTurnSyncOff, error: error)
+                        continuation.resume(returning: false)
                     }
-                    continuation.resume(returning: true)
                 }
             }
             self.present(alert, animated: true)
@@ -183,14 +204,15 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
             alert.addAction(title: UserText.syncDeleteAllConfirmAction, style: .destructive) {
                 Task { @MainActor in
                     do {
-                        self.rootView.model.isSyncEnabled = false
                         try await self.syncService.deleteAccount()
+                        self.rootView.model.isSyncEnabled = false
                         AppUserDefaults().isSyncBookmarksPaused = false
                         AppUserDefaults().isSyncCredentialsPaused = false
+                        continuation.resume(returning: true)
                     } catch {
-                        self.handleError(error)
+                        self.handleError(SyncError.unableToDeleteData, error: error)
+                        continuation.resume(returning: false)
                     }
-                    continuation.resume(returning: true)
                 }
             }
             self.present(alert, animated: true)
@@ -224,7 +246,7 @@ extension SyncSettingsViewController: SyncManagementViewModelDelegate {
                 try await syncService.disconnect(deviceId: device.id)
                 refreshDevices()
             } catch {
-                handleError(error)
+                handleError(SyncError.unableToRemoveDevice, error: error)
             }
         }
     }
@@ -260,4 +282,40 @@ private class PortraitNavigationController: UINavigationController {
         [.portrait, .portraitUpsideDown]
     }
 
+}
+
+enum SyncError {
+    case unableToSyncToServer
+    case unableToSyncWithDevice
+    case unableToMergeTwoAccounts
+    case unableToUpdateDeviceName
+    case unableToTurnSyncOff
+    case unableToDeleteData
+    case unableToRemoveDevice
+    case unableToCreateRecoveryPdf
+
+    var title: String {
+        return UserText.syncErrorAlertTitle
+    }
+
+    var description: String {
+        switch self {
+        case .unableToSyncToServer:
+            return UserText.unableToSyncToServerDescription
+        case .unableToSyncWithDevice:
+            return UserText.unableToSyncWithOtherDeviceDescription
+        case .unableToMergeTwoAccounts:
+            return UserText.unableToMergeTwoAccountsErrorDescription
+        case .unableToUpdateDeviceName:
+            return UserText.unableToUpdateDeviceNameDescription
+        case .unableToTurnSyncOff:
+            return UserText.unableToTurnSyncOffDescription
+        case .unableToDeleteData:
+            return UserText.unableToDeleteDataDescription
+        case .unableToRemoveDevice:
+            return UserText.unableToRemoveDeviceDescription
+        case .unableToCreateRecoveryPdf:
+            return UserText.unableToCreateRecoveryPDF
+        }
+    }
 }

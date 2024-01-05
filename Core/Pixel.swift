@@ -106,6 +106,7 @@ public struct PixelParameters {
     public static let emailKeychainKeychainOperation = "keychain_operation"
 
     public static let bookmarkErrorOrphanedFolderCount = "bookmark_error_orphaned_count"
+    public static let bookmarksLastGoodVersion = "previous_app_version"
 
     // Remote messaging
     public static let message = "message"
@@ -203,7 +204,7 @@ public class Pixel {
                                                      headers: headers)
         let request = APIRequest(configuration: configuration, urlSession: .session(useMainThreadCallbackQueue: true))
         request.fetch { _, error in
-            os_log("Pixel fired %s %s", log: .generalLog, type: .debug, pixelName, "\(params)")
+            os_log("Pixel fired %{public}s %{public}s", log: .generalLog, type: .debug, pixelName, "\(params)")
             onComplete(error)
         }
     }

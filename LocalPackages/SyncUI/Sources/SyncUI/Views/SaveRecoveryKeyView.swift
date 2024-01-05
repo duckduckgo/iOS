@@ -39,22 +39,18 @@ public struct SaveRecoveryKeyView: View {
 
     @ViewBuilder
     func recoveryInfo() -> some View {
-            VStack(spacing: 26) {
-                HStack(spacing: 16) {
-                    QRCodeView(string: model.key, size: 64)
-
-                    Text(model.key)
-                        .fontWeight(.light)
-                        .lineSpacing(1.6)
-                        .lineLimit(3)
-                        .applyKerning(2)
-                        .truncationMode(.tail)
-                        .monospaceSystemFont(ofSize: 16)
-                        .frame(maxWidth: .infinity)
-                }
-                codeButtons()
-            }
-            .padding(.top, 20)
+        VStack(spacing: 26) {
+            Text(model.key)
+                .fontWeight(.light)
+                .lineSpacing(1.6)
+                .lineLimit(3)
+                .applyKerning(2)
+                .truncationMode(.tail)
+                .monospaceSystemFont(ofSize: 16)
+                .frame(maxWidth: .infinity)
+            codeButtons()
+        }
+        .padding(.top, 20)
             .padding(.horizontal, 20)
             .padding(.bottom, 12)
             .background(RoundedRectangle(cornerRadius: 10).foregroundColor(.black.opacity(0.03)))

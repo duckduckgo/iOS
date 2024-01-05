@@ -201,6 +201,12 @@ extension MainViewController {
         launchSettings()
     }
 
+    func segueToDebugSettings() {
+        os_log(#function, log: .generalLog, type: .debug)
+        hideAllHighlightsIfNeeded()
+        launchDebugSettings()
+    }
+
     func segueToSettingsCookiePopupManagement() {
         os_log(#function, log: .generalLog, type: .debug)
         hideAllHighlightsIfNeeded()
@@ -250,6 +256,24 @@ extension MainViewController {
 
         present(navController, animated: true) {
             completion?(settingsViewModel)
+        }
+    }
+
+    private func launchDebugSettings(completion: ((RootDebugViewController) -> Void)? = nil) {
+        os_log(#function, log: .generalLog, type: .debug)
+
+        let storyboard = UIStoryboard(name: "Debug", bundle: nil)
+        let settings = storyboard.instantiateViewController(identifier: "DebugMenu") { coder in
+            RootDebugViewController(coder: coder,
+                                    sync: self.syncService,
+                                    bookmarksDatabase: self.bookmarksDatabase,
+                                    internalUserDecider: AppDependencyProvider.shared.internalUserDecider)
+        }
+
+        let controller = ThemableNavigationController(rootViewController: settings)
+        controller.modalPresentationStyle = .automatic
+        present(controller, animated: true) {
+            completion?(settings)
         }
     }
 

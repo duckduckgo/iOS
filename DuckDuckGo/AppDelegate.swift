@@ -21,7 +21,6 @@ import UIKit
 import Combine
 import Common
 import Core
-import CoreData
 import UserNotifications
 import Kingfisher
 import WidgetKit
@@ -84,6 +83,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: lifecycle
 
+    @UserDefaultsWrapper(key: .privacyConfigCustomURL, defaultValue: nil)
+    private var privacyConfigCustomURL: String?
+
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
@@ -105,7 +107,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         cleanUpIncrementalRolloutPixelTest()
 
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
-        Configuration.setURLProvider(AppConfigurationURLProvider())
+
+        if isDebugBuild, let privacyConfigCustomURL, let url = URL(string: privacyConfigCustomURL) {
+            Configuration.setURLProvider(CustomConfigurationURLProvider(customPrivacyConfigurationURL: url))
+        } else {
+            Configuration.setURLProvider(AppConfigurationURLProvider())
+        }
 
         CrashCollection.start {
             Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: $0, includedParameters: [])
@@ -118,17 +125,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if testing {
             _ = DefaultUserAgentManager.shared
             Database.shared.loadStore { _, _ in }
-            bookmarksDatabase.loadStore { context, error in
-                guard let context = context else {
-                    fatalError("Error: \(error?.localizedDescription ?? "<unknown>")")
-                }
-                
-                let legacyStorage = LegacyBookmarksCoreDataStorage()
-                legacyStorage?.loadStoreAndCaches()
-                LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
-                                                      to: context)
-                legacyStorage?.removeStore()
-            }
+            _ = BookmarksDatabaseSetup(crashOnError: true).loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase)
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
         }
@@ -167,66 +164,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DatabaseMigration.migrate(to: context)
         }
 
-        let preMigrationErrorHandling = EventMapping<BookmarkFormFactorFavoritesMigration.MigrationErrors> { _, error, _, _ in
-            if let error = error {
-                Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
-                           error: error)
-            } else {
-                Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase)
-            }
-
-            if shouldPresentInsufficientDiskSpaceAlertAndCrash {
-                return
-            } else {
-                Thread.sleep(forTimeInterval: 1)
-                fatalError("Could not create Bookmarks database stack: \(error?.localizedDescription ?? "err")")
-            }
+        if BookmarksDatabaseSetup(crashOnError: !shouldPresentInsufficientDiskSpaceAlertAndCrash)
+                .loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase) {
+            // MARK: post-Bookmarks migration logic
         }
 
-        let oldFavoritesOrder = BookmarkFormFactorFavoritesMigration
-            .getFavoritesOrderFromPreV4Model(
-                dbContainerLocation: BookmarksDatabase.defaultDBLocation,
-                dbFileURL: BookmarksDatabase.defaultDBFileURL,
-                errorEvents: preMigrationErrorHandling
-            )
-
-        bookmarksDatabase.loadStore { [weak self] context, error in
-            guard let context = context else {
-                if let error = error {
-                    Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
-                               error: error)
-                } else {
-                    Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase)
-                }
-
-                if shouldPresentInsufficientDiskSpaceAlertAndCrash {
-                    return
-                } else {
-                    Thread.sleep(forTimeInterval: 1)
-                    fatalError("Could not create Bookmarks database stack: \(error?.localizedDescription ?? "err")")
-                }
-            }
-            
-            let legacyStorage = LegacyBookmarksCoreDataStorage()
-            legacyStorage?.loadStoreAndCaches()
-            LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
-                                                  to: context)
-            legacyStorage?.removeStore()
-
-            do {
-                BookmarkFormFactorFavoritesMigration.migrateToFormFactorSpecificFavorites(byCopyingExistingTo: .mobile,
-                                                                                          preservingOrderOf: oldFavoritesOrder,
-                                                                                          in: context)
-                if context.hasChanges {
-                    try context.save(onErrorFire: .bookmarksMigrationCouldNotPrepareMultipleFavoriteFolders)
-                }
-            } catch {
-                Thread.sleep(forTimeInterval: 1)
-                fatalError("Could not prepare Bookmarks DB structure")
-            }
-
-            WidgetCenter.shared.reloadAllTimelines()
-        }
+        WidgetCenter.shared.reloadAllTimelines()
 
 #if APP_TRACKING_PROTECTION
         appTrackingProtectionDatabase.loadStore { context, error in
@@ -283,15 +226,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             favoritesDisplayModeStorage: FavoritesDisplayModeStorage()
         )
 
-        let syncService = DDGSync(dataProvidersSource: syncDataProviders, errorEvents: SyncErrorHandler(), log: .syncLog, environment: environment)
+        let syncService = DDGSync(
+            dataProvidersSource: syncDataProviders,
+            errorEvents: SyncErrorHandler(),
+            privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+            log: .syncLog,
+            environment: environment
+        )
         syncService.initializeIfNeeded()
         self.syncService = syncService
 
         isSyncInProgressCancellable = syncService.isSyncInProgressPublisher
             .filter { $0 }
-            .prefix(1)
-            .sink { _ in
-                DailyPixel.fire(pixel: .syncDaily)
+            .sink { [weak syncService] _ in
+                DailyPixel.fire(pixel: .syncDaily, includedParameters: [.appVersion])
+                syncService?.syncDailyStats.sendStatsIfNeeded(handler: { params in
+                    Pixel.fire(pixel: .syncSuccessRateDaily,
+                               withAdditionalParameters: params,
+                               includedParameters: [.appVersion])
+                })
             }
 
 #if APP_TRACKING_PROTECTION

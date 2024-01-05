@@ -33,6 +33,7 @@ jobs:
   make-alpha:
     runs-on: macos-13
     name: Make TestFlight Alpha Build
+    timeout-minutes: 30
 
     env:
       destination: ${{ github.event.inputs.destination || inputs.destination }}
@@ -58,7 +59,7 @@ jobs:
 
     - name: Set cache key hash
       run: |
-         has_only_tags=$(jq '[ .object.pins[].state | has("version") ] | all' DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
+         has_only_tags=$(jq '[ .pins[].state | has("version") ] | all' DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
          if [[ "$has_only_tags" == "true" ]]; then
            echo "cache_key_hash=${{ hashFiles('DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}" >> $GITHUB_ENV
          else
@@ -97,7 +98,7 @@ jobs:
         echo "build_version=${build_version}" >> $GITHUB_ENV
 
     - name: Upload dSYMs artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: DuckDuckGo-Alpha-dSYM-${{ env.app_version }}
         path: ${{ env.dsyms_path }}

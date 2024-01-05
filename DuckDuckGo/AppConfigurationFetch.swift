@@ -98,6 +98,7 @@ class AppConfigurationFetch {
     }
     
     func start(isBackgroundFetch: Bool = false,
+               isDebug: Bool = false,
                completion: AppConfigurationFetchCompletion?) {
         guard Self.shouldRefresh else {
             // Statistics are not sent after a successful background refresh in order to reduce the time spent in the background, so they are checked
@@ -113,7 +114,7 @@ class AppConfigurationFetch {
         
         type(of: self).fetchQueue.async {
             let taskID = UIApplication.shared.beginBackgroundTask(withName: Constants.backgroundTaskName)
-            self.fetchConfigurationFiles(isBackground: isBackgroundFetch) { result in
+            self.fetchConfigurationFiles(isBackground: isBackgroundFetch, isDebug: isDebug) { result in
                 if !isBackgroundFetch {
                     type(of: self).fetchQueue.async {
                         self.sendStatistics {
@@ -165,10 +166,10 @@ class AppConfigurationFetch {
         #endif
     }
     
-    private func fetchConfigurationFiles(isBackground: Bool, onDidComplete: @escaping AppConfigurationFetchCompletion) {
+    private func fetchConfigurationFiles(isBackground: Bool, isDebug: Bool = false, onDidComplete: @escaping AppConfigurationFetchCompletion) {
         Task {
             self.markFetchStarted(isBackground: isBackground)
-            let result = await AppDependencyProvider.shared.configurationManager.update()
+            let result = await AppDependencyProvider.shared.configurationManager.update(isDebug: isDebug)
 
             switch result {
             case .noData:

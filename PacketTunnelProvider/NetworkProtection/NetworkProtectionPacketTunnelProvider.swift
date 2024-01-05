@@ -37,10 +37,33 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     private static var packetTunnelProviderEvents: EventMapping<PacketTunnelProvider.Event> = .init { event, _, _, _ in
         switch event {
         case .userBecameActive:
-            DailyPixel.fire(pixel: .networkProtectionActiveUser)
-        case .reportLatency, .reportTunnelFailure, .reportConnectionAttempt:
-            // TODO: Fire these pixels
-            break
+            let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+            DailyPixel.fire(pixel: .networkProtectionActiveUser,
+                            withAdditionalParameters: ["cohort": UniquePixel.dateString(for: settings.vpnFirstEnabled)])
+        case .reportConnectionAttempt(attempt: let attempt):
+            switch attempt {
+            case .connecting:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptConnecting)
+            case .success:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptSuccess)
+            case .failure:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptFailure)
+            }
+        case .reportTunnelFailure(result: let result):
+            switch result {
+            case .failureDetected:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelFailureDetected)
+            case .failureRecovered:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelFailureRecovered)
+            }
+        case .reportLatency(result: let result):
+            switch result {
+            case .error:
+                DailyPixel.fire(pixel: .networkProtectionLatencyError)
+            case .quality(let quality):
+                guard quality != .unknown else { return }
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionLatency(quality: quality))
+            }
         case .rekeyCompleted:
             Pixel.fire(pixel: .networkProtectionRekeyCompleted)
         }
@@ -119,8 +142,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 params[PixelParameters.keychainErrorCode] = String(status)
             case .wireGuardCannotLocateTunnelFileDescriptor:
                 pixelEvent = .networkProtectionWireguardErrorCannotLocateTunnelFileDescriptor
-            case .wireGuardInvalidState:
+            case .wireGuardInvalidState(reason: let reason):
                 pixelEvent = .networkProtectionWireguardErrorInvalidState
+                params[PixelParameters.reason] = reason
             case .wireGuardDnsResolution:
                 pixelEvent = .networkProtectionWireguardErrorFailedDNSResolution
             case .wireGuardSetNetworkSettings(let error):
@@ -136,6 +160,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 params[PixelParameters.function] = function
                 params[PixelParameters.line] = String(line)
                 pixelError = error
+            case .failedToRetrieveAuthToken:
+                return
             case .failedToFetchLocationList:
                 return
             case .failedToParseLocationListResponse:

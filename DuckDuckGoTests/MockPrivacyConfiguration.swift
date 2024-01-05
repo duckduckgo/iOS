@@ -53,6 +53,7 @@ class MockPrivacyConfiguration: PrivacyConfiguration {
 
 @objc(MockPrivacyConfigurationManager)
 class MockPrivacyConfigurationManager: NSObject, PrivacyConfigurationManaging {
+
     var embeddedConfigData: BrowserServicesKit.PrivacyConfigurationManager.ConfigurationData {
         fatalError("not implemented")
     }
@@ -71,4 +72,5 @@ class MockPrivacyConfigurationManager: NSObject, PrivacyConfigurationManaging {
 
     var updatesPublisher: AnyPublisher<Void, Never> = Just(()).eraseToAnyPublisher()
     var privacyConfig: PrivacyConfiguration = MockPrivacyConfiguration()
+    var internalUserDecider: InternalUserDecider = DefaultInternalUserDecider()
 }

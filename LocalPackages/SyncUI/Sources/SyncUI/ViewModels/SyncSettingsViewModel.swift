@@ -84,9 +84,22 @@ public class SyncSettingsViewModel: ObservableObject {
     @Published var isBusy = false
     @Published var recoveryCode = ""
 
-    public weak var delegate: SyncManagementViewModelDelegate?
+    @Published public var isDataSyncingAvailable: Bool = true
+    @Published public var isConnectingDevicesAvailable: Bool = true
+    @Published public var isAccountCreationAvailable: Bool = true
+    @Published public var isAccountRecoveryAvailable: Bool = true
 
-    public init() { }
+    public weak var delegate: SyncManagementViewModelDelegate?
+    private(set) var isOnDevEnvironment: Bool
+    private(set) var switchToProdEnvironment: () -> Void = {}
+
+    public init(isOnDevEnvironment: @escaping () -> Bool, switchToProdEnvironment: @escaping () -> Void) {
+        self.isOnDevEnvironment = isOnDevEnvironment()
+        self.switchToProdEnvironment = { [weak self] in
+            switchToProdEnvironment()
+            self?.isOnDevEnvironment = isOnDevEnvironment()
+        }
+    }
 
     func disableSync() {
         isBusy = true

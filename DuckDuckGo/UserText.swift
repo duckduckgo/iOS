@@ -940,7 +940,7 @@ But if you *do* want a peek under the hood, you can find more information about 
     public static let settingsAddToDock = NSLocalizedString("settings.add.to.dock", value: "Add App to Your Dock", comment: "Settings screen cell text for adding the app to the dock")
     public static let settingsAddWidget = NSLocalizedString("settings.add.widget", value: "Add Widget to Home Screen", comment: "Settings screen cell text for add widget to the home screen")
     public static let settingsSync = NSLocalizedString("settings.sync", value: "Sync & Backup", comment: "Settings screen cell text for sync and backup")
-    public static let settingsLogins = NSLocalizedString("settings.logins", value: "Logins", comment: "Settings screen cell text for logins")
+    public static let settingsLogins = NSLocalizedString("settings.logins", value: "Passwords", comment: "Settings screen cell text for passwords")
     
     // Appeareance Section
     public static let settingsAppearanceSection = NSLocalizedString("settings.appearance", value: "Appearance", comment: "Settings screen appearance section title")

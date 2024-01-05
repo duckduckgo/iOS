@@ -115,8 +115,10 @@ public struct UserDefaultsWrapper<T> {
         case addressBarPosition = "com.duckduckgo.ios.addressbarposition"
         case showFullSiteAddress = "com.duckduckgo.ios.showfullsiteaddress"
 
+        case bookmarksLastGoodVersion = "com.duckduckgo.ios.bookmarksLastGoodVersion"
+        case bookmarksMigrationVersion = "com.duckduckgo.ios.bookmarksMigrationVersion"
+        
         case privacyConfigCustomURL = "com.duckduckgo.ios.privacyConfigCustomURL"
-
     }
 
     private let key: Key

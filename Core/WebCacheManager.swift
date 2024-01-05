@@ -154,9 +154,10 @@ public class WebCacheManager {
     @available(iOS 17, *)
     func checkDataStores() async {
         let ids = await WKWebsiteDataStore.allDataStoreIdentifiers
-        if ids.count >  0 {
-            Pixel.fire(pixel: .debugUnexpectedWebsiteDataStores)
-            assertionFailure("Unexpected number of data stores")
+        if ids.count > 1 {
+            Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedMultiple)
+        } else if ids.count > 0 {
+            Pixel.fire(pixel: .debugWebsiteDataStoresNotClearedOne)
         }
     }
 
@@ -177,14 +178,7 @@ public class WebCacheManager {
 
             let uuids = await WKWebsiteDataStore.allDataStoreIdentifiers
             for uuid in uuids {
-                do {
-                    try await WKWebsiteDataStore.remove(forIdentifier: uuid)
-                } catch {
-                    Pixel.fire(pixel: .debugCouldNotRemoveWebsiteDataStore, error: error)
-
-                    // Not a fatal error because it will get deleted next time
-                    assertionFailure("Failed to remove datastore")
-                }
+                try? await WKWebsiteDataStore.remove(forIdentifier: uuid)
             }
 
             await checkDataStores()

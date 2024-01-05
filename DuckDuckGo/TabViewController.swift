@@ -35,6 +35,10 @@ import TrackerRadarKit
 import Networking
 import SecureStorage
 
+#if NETWORK_PROTECTION
+import NetworkProtection
+#endif
+
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
 class TabViewController: UIViewController {
@@ -82,7 +86,7 @@ class TabViewController: UIViewController {
 
     private(set) var webView: WKWebView!
     private lazy var appRatingPrompt: AppRatingPrompt = AppRatingPrompt()
-    private weak var privacyDashboard: PrivacyDashboardViewController?
+    public weak var privacyDashboard: PrivacyDashboardViewController?
     
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache
     let appSettings: AppSettings
@@ -116,6 +120,12 @@ class TabViewController: UIViewController {
 
     private var trackersInfoWorkItem: DispatchWorkItem?
     
+#if NETWORK_PROTECTION
+    private let netPConnectionObserver = ConnectionStatusObserverThroughSession()
+    private var netPConnectionObserverCancellable: AnyCancellable?
+    private var netPConnectionStatus: ConnectionStatus = .default
+#endif
+
     // Required to know when to disable autofill, see SaveLoginViewModel for details
     // Stored in memory on TabViewController for privacy reasons
     private var domainSaveLoginPromptLastShownOn: String?
@@ -306,6 +316,10 @@ class TabViewController: UIViewController {
         if #available(iOS 16.4, *) {
             registerForInspectableWebViewNotifications()
         }
+
+#if NETWORK_PROTECTION
+        observeNetPConnectionStatusChanges()
+#endif
     }
 
     @available(iOS 16.4, *)
@@ -323,6 +337,12 @@ class TabViewController: UIViewController {
 #else
         webView.isInspectable = AppUserDefaults().inspectableWebViewEnabled
 #endif
+    }
+
+    private func observeNetPConnectionStatusChanges() {
+        netPConnectionObserverCancellable = netPConnectionObserver.publisher
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.netPConnectionStatus, onWeaklyHeld: self)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -406,16 +426,16 @@ class TabViewController: UIViewController {
         
         if consumeCookies {
             consumeCookiesThenLoadRequest(request)
-        } else if let url = request?.url {
+        } else if let urlRequest = request {
             var loadingStopped = false
-            linkProtection.getCleanURL(from: url, onStartExtracting: { [weak self] in
+            linkProtection.getCleanURLRequest(from: urlRequest, onStartExtracting: { [weak self] in
                 if loadingInitiatedByParentTab {
                     // stop parent-initiated URL loading only if canonical URL extraction process has started
                     loadingStopped = true
                     self?.webView.stopLoading()
                 }
                 self?.showProgressIndicator()
-            }, onFinishExtracting: {}, completion: { [weak self] cleanURL in
+            }, onFinishExtracting: {}, completion: { [weak self] cleanURLRequest in
                 // restart the cleaned-up URL loading here if:
                 //   link protection provided an updated URL
                 //   OR if loading was stopped for a popup loaded by its parent
@@ -423,8 +443,8 @@ class TabViewController: UIViewController {
                 // the check is here to let an (about:blank) popup which has its loading
                 // initiated by its parent to keep its active request, otherwise we would
                 // break a js-initiated popup request such as printing from a popup
-                guard url != cleanURL || loadingStopped || !loadingInitiatedByParentTab else { return }
-                self?.load(urlRequest: .userInitiated(cleanURL))
+                guard self?.url != cleanURLRequest.url || loadingStopped || !loadingInitiatedByParentTab else { return }
+                self?.load(urlRequest: cleanURLRequest)
             })
         }
 
@@ -477,7 +497,7 @@ class TabViewController: UIViewController {
             webView.evaluateJavaScript(js)
         }
     }
-    
+
     public func load(url: URL) {
         webView.stopLoading()
         dismissJSAlertIfNeeded()
@@ -540,6 +560,7 @@ class TabViewController: UIViewController {
         }
 
         webView.stopLoading()
+        dismissJSAlertIfNeeded()
         webView.load(urlRequest)
     }
     
@@ -691,7 +712,7 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
             privacyDashboard = controller
-            privacyDashboard?.tabViewController = self
+            privacyDashboard?.brokenSiteInfo = getCurrentWebsiteInfo()
         }
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
@@ -717,8 +738,10 @@ class TabViewController: UIViewController {
         PrivacyDashboardViewController(coder: coder,
                                        privacyInfo: privacyInfo,
                                        privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
-                                       contentBlockingManager: ContentBlocking.shared.contentBlockingManager)
+                                       contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
+                                       initMode: .privacyDashboard)
     }
+    
     private func addTextSizeObserver() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onTextSizeChange),
@@ -780,7 +803,7 @@ class TabViewController: UIViewController {
         onPrivacyInfoChanged()
     }
     
-    private func makePrivacyInfo(url: URL) -> PrivacyInfo? {
+    public func makePrivacyInfo(url: URL) -> PrivacyInfo? {
         guard let host = url.host else { return nil }
         
         let entity = ContentBlocking.shared.trackerDataManager.trackerData.findEntity(forHost: host)
@@ -1112,6 +1135,12 @@ extension TabViewController: WKNavigationDelegate {
         linkProtection.setMainFrameUrl(nil)
         referrerTrimming.onFinishNavigation()
         urlProvidedBasicAuthCredential = nil
+
+#if NETWORK_PROTECTION
+        if webView.url?.isDuckDuckGoSearch == true, case .connected = netPConnectionStatus {
+            DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnabledOnSearch)
+        }
+#endif
     }
     
     func preparePreview(completion: @escaping (UIImage?) -> Void) {
@@ -1333,16 +1362,9 @@ extension TabViewController: WKNavigationDelegate {
                                                                            navigationAction: navigationAction,
                                                                            onStartExtracting: { showProgressIndicator() },
                                                                            onFinishExtracting: { },
-                                                                           onLinkRewrite: { [weak self] newURL, navigationAction in
+                                                                           onLinkRewrite: { [weak self] newRequest, _ in
                 guard let self = self else { return }
-                if self.isNewTargetBlankRequest(navigationAction: navigationAction) {
-                    self.delegate?.tab(self,
-                                       didRequestNewTabForUrl: newURL,
-                                       openedByPage: true,
-                                       inheritingAttribution: self.adClickAttributionLogic.state)
-                } else {
-                    self.load(url: newURL)
-                }
+                self.load(urlRequest: newRequest)
             },
                                                                            policyDecisionHandler: decisionHandler)
 

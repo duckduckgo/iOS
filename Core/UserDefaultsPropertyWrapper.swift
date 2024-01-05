@@ -57,6 +57,7 @@ public struct UserDefaultsWrapper<T> {
         case legacyCovidInfo = "com.duckduckgo.ios.home.covidInfo"
         
         case lastConfigurationRefreshDate = "com.duckduckgo.ios.lastConfigurationRefreshDate"
+        case lastConfigurationUpdateDate = "com.duckduckgo.ios.lastConfigurationUpdateDate"
         case lastRemoteMessagingRefreshDate = "com.duckduckgo.ios.lastRemoteMessagingRefreshDate"
 
         case doNotSell = "com.duckduckgo.ios.sendDoNotSell"
@@ -105,6 +106,8 @@ public struct UserDefaultsWrapper<T> {
         case syncIsFaviconsFetcherEnabled = "com.duckduckgo.ios.sync-is-favicons-fetcher-enabled"
         case syncIsEligibleForFaviconsFetcherOnboarding = "com.duckduckgo.ios.sync-is-eligible-for-favicons-fetcher-onboarding"
         case syncDidPresentFaviconsFetcherOnboarding = "com.duckduckgo.ios.sync-did-present-favicons-fetcher-onboarding"
+        case syncDidMigrateToImprovedListsHandling = "com.duckduckgo.ios.sync-did-migrate-to-improved-lists-handling"
+        case syncDidShowSyncPausedByFeatureFlagAlert = "com.duckduckgo.ios.sync-did-show-sync-paused-by-feature-flag-alert"
 
         case networkProtectionDebugOptionAlwaysOnDisabled = "com.duckduckgo.network-protection.always-on.disabled"
         case networkProtectionWaitlistTermsAndConditionsAccepted = "com.duckduckgo.ios.vpn.terms-and-conditions-accepted"
@@ -113,6 +116,7 @@ public struct UserDefaultsWrapper<T> {
         case showFullSiteAddress = "com.duckduckgo.ios.showfullsiteaddress"
 
         case webContainerId = "com.duckduckgo.ios.webcontainer.id"
+        case privacyConfigCustomURL = "com.duckduckgo.ios.privacyConfigCustomURL"
     }
 
     private let key: Key

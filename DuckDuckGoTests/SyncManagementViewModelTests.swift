@@ -26,7 +26,7 @@ class SyncManagementViewModelTests: XCTestCase, SyncManagementViewModelDelegate 
     fileprivate var monitor = Monitor<SyncManagementViewModelDelegate>()
 
     lazy var model: SyncSettingsViewModel = {
-        let model = SyncSettingsViewModel()
+        let model = SyncSettingsViewModel(isOnDevEnvironment: { false }, switchToProdEnvironment: {})
         model.delegate = self
         return model
     }()

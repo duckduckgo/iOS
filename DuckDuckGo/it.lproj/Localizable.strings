@@ -4,6 +4,9 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
+/* No comment provided by engineer. */
+"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Modifica";
 
@@ -132,6 +135,24 @@
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "I segnalibri già presenti non saranno duplicati.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Hai superato il limite di sincronizzazione dei segnalibri. Prova a eliminarne qualcuno. Fino a quando il problema non verrà risolto, non sarà eseguito il backup dei tuoi segnalibri.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "La sincronizzazione dei segnalibri è in pausa";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Hai superato il limite di sincronizzazione delle password. Prova a eliminarne qualcuna. Fino a quando il problema non verrà risolto, non sarà eseguito il backup delle tue password.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "La sincronizzazione delle password è in pausa";
+
+/* Learn more button in alert */
+"alert.sync-paused-alert-learn-more-button" = "Ulteriori informazioni";
+
+/* Confirmation button in alert */
+"alert.sync-paused-alert-ok-button" = "OK";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Creare un segnalibro con tutte le schede?";
@@ -754,48 +775,6 @@
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Importa un file HTML di segnalibri da un altro browser o esporta i segnalibri esistenti.";
 
-/* Broken Site Category */
-"brokensite.category.comments" = "I commenti non sono stati caricati";
-
-/* Broken Site Category */
-"brokensite.category.content" = "Manca il contenuto";
-
-/* Broken Site Category */
-"brokensite.category.cookieprompt" = "Il pop-up dei cookie non era gestito";
-
-/* Broken Site Category */
-"brokensite.category.images" = "Le immagini non sono state caricate";
-
-/* Broken Site Category */
-"brokensite.category.links" = "I collegamenti o i pulsanti non funzionano";
-
-/* Broken Site Category */
-"brokensite.category.login" = "Non riesco ad accedere";
-
-/* Broken Site Category */
-"brokensite.category.other" = "Qualcos'altro";
-
-/* Broken Site Category */
-"brokensite.category.paywall" = "Il sito mi ha chiesto di disabilitare";
-
-/* Broken Site Category */
-"brokensite.category.unsupported" = "Il browser non è compatibile";
-
-/* Broken Site Category */
-"brokensite.category.videos" = "Il video non è stato riprodotto";
-
-/* Broken Site Category Placeholder */
-"brokensite.categoryPlaceholder" = "Seleziona il problema dall'elenco...";
-
-/* Broken Site Category Section Title */
-"brokensite.categoryTitle" = "SELEZIONA UNA CATEGORIA";
-
-/* Broken Site Comment Placeholder */
-"brokensite.commentPlaceholder" = "Condividere maggiori dettagli può aiutarci a risolvere questo problema";
-
-/* Broken Site Section Title */
-"brokensite.sectionTitle" = "DESCRIVI COSA È SUCCESSO";
-
 /* No comment provided by engineer. */
 "bucket: %@" = "bucket: %@";
 
@@ -1071,6 +1050,18 @@
 
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Rimuovi";
+
+/* Display Mode for favorites */
+"favorites.settings.all-devices" = "Tutti i preferiti sul dispositivo";
+
+/* Footer of the favorites settings table */
+"favorites.settings.footer" = "Scegli i preferiti da visualizzare in una nuova scheda in base alla loro origine.";
+
+/* Header of the favorites settings table */
+"favorites.settings.header" = "Preferenze di visualizzazione";
+
+/* Display Mode for favorites */
+"favorites.settings.mobile-only" = "Solo preferiti sul dispositivo mobile";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blocco di annunci e popup";
@@ -1438,6 +1429,9 @@
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
 
+/* Title text for an iOS quick action that opens VPN settings */
+"network.protection.quick-action.open-vpn" = "Apri VPN";
+
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Connected - %@";
 
@@ -1477,8 +1471,59 @@
 /* Location label shown in NetworkProtection's status view. */
 "network.protection.status.view.location" = "Location";
 
+/* Label shown on the title of the settings section in NetworkProtection's status view. */
+"network.protection.status.view.settings.section.title" = "Gestisci";
+
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "Network Protection";
+
+/* Title for the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.button.title" = "Attiva le notifiche";
+
+/* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.section.footer" = "Consenti a DuckDuckGo di inviarti notifiche se la tua connessione si interrompe o lo stato della VPN cambia.";
+
+/* List section footer for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.section.footer" = "Ricevi una notifica se la tua connessione si interrompe o lo stato della VPN cambia.";
+
+/* Title for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.title" = "Avvisi VPN";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.footer" = "Ripristina automaticamente una connessione VPN dopo un'interruzione.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.title" = "Sempre attiva";
+
+/* Title for the VPN Location screen's All Countries section. */
+"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Title for the VPN Location screen's Nearest Available selection item. */
+"network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
+
+/* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+
+/* Title for the VPN Location screen's Recommended section. */
+"network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Title for the VPN Notifications management screen. */
+"network.protection.vpn.notifications.title" = "Notifiche VPN";
+
+/* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
+"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+
+/* Title for the Preferred Location VPN Settings item. */
+"network.protection.vpn.preferred.location.title" = "Preferred Location";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.footer" = "Network Protection previene le fughe di DNS verso il tuo Internet Service Provider instradando le query DNS tramite tunneling VPN verso il nostro resolver.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.title" = "DNS sicuro";
+
+/* Title for the VPN Settings screen. */
+"network.protection.vpn.settings.title" = "Impostazioni VPN";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
@@ -1593,9 +1638,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Aprire in un'altra app?";
-
-/* No comment provided by engineer. */
-"report.brokensite.header" = "L'invio di un rapporto sul sito non funzionante nell'anonimato ci consente di eseguire il debug di questi problemi e migliorare l'app.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Cerca o digita l'indirizzo";

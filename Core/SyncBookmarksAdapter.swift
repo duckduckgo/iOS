@@ -65,12 +65,6 @@ public final class SyncBookmarksAdapter {
     public let databaseCleaner: BookmarkDatabaseCleaner
     public let syncDidCompletePublisher: AnyPublisher<Void, Never>
 
-    public var shouldResetBookmarksSyncTimestamp: Bool = false {
-        willSet {
-            assert(provider == nil, "Setting this value has no effect after provider has been instantiated")
-        }
-    }
-
     @UserDefaultsWrapper(key: .syncBookmarksPaused, defaultValue: false)
     static public var isSyncBookmarksPaused: Bool {
         didSet {
@@ -80,6 +74,9 @@ public final class SyncBookmarksAdapter {
 
     @UserDefaultsWrapper(key: .syncBookmarksPausedErrorDisplayed, defaultValue: false)
     static private var didShowBookmarksSyncPausedError: Bool
+
+    @UserDefaultsWrapper(key: .syncDidMigrateToImprovedListsHandling, defaultValue: false)
+    private var didMigrateToImprovedListsHandling: Bool
 
     @Published
     public var isFaviconsFetchingEnabled: Bool = UserDefaultsWrapper(key: .syncAutomaticallyFetchFavicons, defaultValue: false).wrappedValue {
@@ -122,7 +119,11 @@ public final class SyncBookmarksAdapter {
         }
     }
 
-    public func setUpProviderIfNeeded(database: CoreDataDatabase, metadataStore: SyncMetadataStore) {
+    public func setUpProviderIfNeeded(
+        database: CoreDataDatabase,
+        metadataStore: SyncMetadataStore,
+        metricsEventsHandler: EventMapping<MetricsEvent>? = nil
+    ) {
         guard provider == nil else {
             return
         }
@@ -132,6 +133,7 @@ public final class SyncBookmarksAdapter {
         let provider = BookmarksProvider(
             database: database,
             metadataStore: metadataStore,
+            metricsEvents: metricsEventsHandler,
             syncDidUpdateData: { [weak self] in
                 self?.syncDidCompleteSubject.send()
                 Self.isSyncBookmarksPaused = false
@@ -149,7 +151,8 @@ public final class SyncBookmarksAdapter {
                 }
             }
         )
-        if shouldResetBookmarksSyncTimestamp {
+        if !didMigrateToImprovedListsHandling {
+            didMigrateToImprovedListsHandling = true
             provider.lastSyncTimestamp = nil
         }
 

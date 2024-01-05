@@ -126,8 +126,8 @@ class FingerprintUITest: XCTestCase {
         app.navigationBars.buttons["Done"].tap()
         
         // Clear all tabs and data
-        app.toolbars["Toolbar"].buttons["Fire"].tap()
-        app.buttons["Close Tabs and Clear Data"].tap()
+        app.toolbars["Toolbar"].buttons["Close Tabs and Clear Data"].tap()
+        app.buttons["alert.forget-data.confirm"].tap()
         
         sleep(2)
         
@@ -148,7 +148,11 @@ class FingerprintUITest: XCTestCase {
         } else {
             XCTFail("Bookmarks button missing")
         }
-        app.tables.staticTexts["DuckDuckGo — Privacy, simplified."].tap()
+        if app.tables.staticTexts["DuckDuckGo — Privacy, simplified."].waitForExistence(timeout: 25) {
+            app.staticTexts["DuckDuckGo — Privacy, simplified."].tap()
+        } else {
+            XCTFail("Could not find bookmark")
+        }
         
         // Verify the test passed
         XCTAssertTrue(webview.staticTexts["TEST PASSED"].waitForExistence(timeout: 25), "Test not run")

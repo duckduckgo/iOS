@@ -24,7 +24,7 @@ import NetworkProtection
 
 @available(iOS 15, *)
 struct NetworkProtectionStatusView: View {
-    @ObservedObject public var statusModel: NetworkProtectionStatusViewModel
+    @StateObject public var statusModel: NetworkProtectionStatusViewModel
 
     var body: some View {
         List {

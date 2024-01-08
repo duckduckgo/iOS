@@ -154,7 +154,7 @@ final class NetworkProtectionStatusViewModel: ObservableObject {
             .assign(to: \.shouldDisableToggle, onWeaklyHeld: self)
             .store(in: &cancellables)
 
-        // Set up a delayed publisher to fire just once that disabled the toggle
+        // Set up a delayed publisher to fire just once that reenables the toggle
         // Each event cancels the previous delayed publisher
         isLoadingPublisher
             .filter { $0 }

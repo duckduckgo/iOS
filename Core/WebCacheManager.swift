@@ -297,7 +297,7 @@ public class WebCacheManager {
 
                     self.removeObservationsData()
 
-                    self.performSanityCheck(for: cookieStore, summary: cookieClearingSummary, tabCountInfo: tabCountInfo)
+                    self.validateLegacyClearing(for: cookieStore, summary: cookieClearingSummary, tabCountInfo: tabCountInfo)
 
                     DispatchQueue.main.async {
                         completion(cookiesToKeep)
@@ -309,7 +309,7 @@ public class WebCacheManager {
     }
     // swiftlint:enable function_body_length
 
-    private func performSanityCheck(for cookieStore: WebCacheManagerCookieStore, summary: WebStoreCookieClearingSummary, tabCountInfo: TabCountInfo?) {
+    private func validateLegacyClearing(for cookieStore: WebCacheManagerCookieStore, summary: WebStoreCookieClearingSummary, tabCountInfo: TabCountInfo?) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             cookieStore.getAllCookies { cookiesAfterCleaning in
                 let storageCookiesAfterCleaning = HTTPCookieStorage.shared.cookies ?? []
@@ -398,13 +398,6 @@ extension WKHTTPCookieStore: WebCacheManagerCookieStore {
 }
 
 extension WKWebsiteDataStore: WebCacheManagerDataStore {
-
-    @MainActor
-    public func storeCookies(_ cookies: [HTTPCookie]) async {
-        for cookie in cookies {
-            await httpCookieStore.setCookie(cookie)
-        }
-    }
 
     @MainActor
     public func preservedCookies(_ preservedLogins: PreserveLogins) async -> [HTTPCookie] {

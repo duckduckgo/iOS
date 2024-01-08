@@ -33,6 +33,7 @@ jobs:
   make-alpha:
     runs-on: macos-13
     name: Make TestFlight Alpha Build
+    timeout-minutes: 30
 
     env:
       destination: ${{ github.event.inputs.destination || inputs.destination }}

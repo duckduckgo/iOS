@@ -1828,8 +1828,8 @@ But if you *do* want a peek under the hood, you can find more information about 
 /* Settings screen cell for Keyboard */
 "settings.keyboard" = "Keyboard";
 
-/* Settings screen cell text for logins */
-"settings.logins" = "Logins";
+/* Settings screen cell text for passwords */
+"settings.logins" = "Passwords";
 
 /* Settings title for the 'More' section */
 "settings.more" = "More from DuckDuckGo";

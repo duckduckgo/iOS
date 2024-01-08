@@ -231,14 +231,6 @@ extension MainViewController {
         }
     }
     
-    class HostingControllerCommunicator: ObservableObject {
-        var pushView: (() -> Void)?
-
-        func requestPush() {
-            pushView?()
-        }
-    }
-    
     private func launchSettings(completion: ((SettingsViewModel) -> Void)? = nil) {
         let legacyViewProvider = SettingsLegacyViewProvider(syncService: syncService,
                                                             syncDataProviders: syncDataProviders,

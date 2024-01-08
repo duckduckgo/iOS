@@ -26,7 +26,7 @@ struct SettingsMoreView: View {
     
 
     var body: some View {
-        Section(header: Text(UserText.settingsMoreSction)) {
+        Section(header: Text(UserText.settingsMoreSection)) {
             
             SettingsCellView(label: UserText.settingsEmailProtection,
                              subtitle: UserText.settingsEmailProtectionDescription,

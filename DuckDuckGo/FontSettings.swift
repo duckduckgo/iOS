@@ -19,7 +19,7 @@
 
 import UIKit
 
-struct FontSettings {
+enum FontSettings {
     static var fontSizeForHeaderView: CGFloat {
         let contentSize = UIApplication.shared.preferredContentSizeCategory
         switch contentSize {

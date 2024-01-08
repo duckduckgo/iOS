@@ -30,7 +30,7 @@ struct SettingsCellComponents {
 /// Encapsulates a View representing a Cell with different configurations
 struct SettingsCellView: View, Identifiable {
     
-    enum Accesory {
+    enum Accessory {
         case none
         case rightDetail(String)
         case toggle(isOn: Binding<Bool>)
@@ -43,7 +43,7 @@ struct SettingsCellView: View, Identifiable {
     var image: Image?
     var action: () -> Void = {}
     var enabled: Bool = true
-    var accesory: Accesory
+    var accesory: Accessory
     var asLink: Bool
     var disclosureIndicator: Bool
     var id: UUID = UUID()
@@ -60,7 +60,7 @@ struct SettingsCellView: View, Identifiable {
     ///   - enabled: A Boolean value that determines whether the cell is enabled.
     ///   - asLink: Wraps the view inside a Button.  Used for views not wrapped in a NavigationLink
     ///   - disclosureIndicator: Forces Adds a disclosure indicator on the right (chevron)
-    init(label: String, subtitle: String? = nil, image: Image? = nil, action: @escaping () -> Void = {}, accesory: Accesory = .none, enabled: Bool = true, asLink: Bool = false, disclosureIndicator: Bool = false) {
+    init(label: String, subtitle: String? = nil, image: Image? = nil, action: @escaping () -> Void = {}, accesory: Accessory = .none, enabled: Bool = true, asLink: Bool = false, disclosureIndicator: Bool = false) {
         self.label = label
         self.subtitle = subtitle
         self.image = image

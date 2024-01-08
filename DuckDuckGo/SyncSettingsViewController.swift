@@ -248,7 +248,7 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
             self.startPolling()
             return self.connector?.code
         } catch {
-            self.handleError(SyncError.unableToSync, error: error)
+            self.handleError(SyncError.unableToSyncToServer, error: error)
             return nil
         }
     }
@@ -274,34 +274,45 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                     return
                 }
             } catch {
-                handleError(SyncError.unableToSync, error: error)
+                handleError(SyncError.unableToSyncWithDevice, error: error)
             }
         }
     }
 
     func syncCodeEntered(code: String) async -> Bool {
         var shouldShowSyncEnabled = true
-        do {
-            guard let syncCode = try? SyncCode.decodeBase64String(code) else {
-                return false
-            }
-            if let recoveryKey = syncCode.recovery {
-                dismissPresentedViewController()
-                showPreparingSync()
+        guard let syncCode = try? SyncCode.decodeBase64String(code) else {
+            return false
+        }
+        if let recoveryKey = syncCode.recovery {
+            dismissPresentedViewController()
+            showPreparingSync()
+            do {
                 try await loginAndShowDeviceConnected(recoveryKey: recoveryKey)
                 return true
-            } else if let connectKey = syncCode.connect {
-                dismissPresentedViewController()
-                showPreparingSync()
-                if syncService.account == nil {
+            } catch {
+                if self.rootView.model.isSyncEnabled {
+                    handleError(.unableToMergeTwoAccounts, error: nil)
+                } else {
+                    handleError(.unableToSyncToServer, error: error)
+                }
+            }
+        } else if let connectKey = syncCode.connect {
+            dismissPresentedViewController()
+            showPreparingSync()
+            if syncService.account == nil {
+                do {
                     try await syncService.createAccount(deviceName: deviceName, deviceType: deviceType)
                     Pixel.fire(pixel: .syncSignupConnect, includedParameters: [.appVersion])
                     self.dismissVCAndShowRecoveryPDF()
                     shouldShowSyncEnabled = false
                     rootView.model.syncEnabled(recoveryCode: recoveryCode)
+                } catch {
+                    handleError(.unableToSyncToServer, error: error)
                 }
+            }
+            do {
                 try await syncService.transmitRecoveryKey(connectKey)
-
                 self.rootView.model.$devices
                     .removeDuplicates()
                     .dropFirst()
@@ -312,12 +323,11 @@ extension SyncSettingsViewController: ScanOrPasteCodeViewModelDelegate {
                             self.dismissVCAndShowRecoveryPDF()
                         }
                     }.store(in: &cancellables)
-
-                return true
+            } catch {
+                handleError(.unableToSyncWithDevice, error: error)
             }
 
-        } catch {
-            handleError(SyncError.unableToSync, error: error)
+            return true
         }
         return false
     }

@@ -140,7 +140,7 @@
 "alert.sync-credentials-paused-title" = "Passwords Sync is Paused";
 
 /* Title for sync error alert */
-"alert.sync-error" = "Sync Error";
+"alert.sync-error" = "Sync & Backup Error";
 
 /* Learn more button in alert */
 "alert.sync-paused-alert-learn-more-button" = "Learn More";
@@ -163,23 +163,29 @@
 /* Save Favorite action */
 "alert.title.save.favorite" = "Save Favorite";
 
+/* Description for unable to create recovery pdf error */
+"alert.unable-to-create-recovery-pdf-description" = "Unable to create the recovery PDF.";
+
 /* Description for unable to delete data error */
 "alert.unable-to-delete-data-description" = "Unable to delete data on the server.";
 
-/* Description for unable to get devices error */
-"alert.unable-to-get-devices-description" = "Unable to retrieve the list of connected devices.";
+/* Description for unable to merge two accounts error */
+"alert.unable-to-merge-two-accounts-description" = "To pair these devices, turn off Sync & Backup on one device then tap \"Sync with Another Device\" on the other device.";
 
 /* Description for unable to remove device error */
-"alert.unable-to-remove-device-description" = "Unable to remove the specified device from the synchronized devices.";
+"alert.unable-to-remove-device-description" = "Unable to remove this device from Sync & Backup.";
 
-/* Description for unable to sync error */
-"alert.unable-to-sync-description" = "Unable to sync.";
+/* Description for unable to sync to server error */
+"alert.unable-to-sync-to-server-description" = "Unable to connect to the server.";
+
+/* Description for unable to sync with another device error */
+"alert.unable-to-sync-with-other-device-description" = "Unable to Sync with another device.";
 
 /* Description for unable to turn sync off error */
-"alert.unable-to-turn-sync-off-description" = "Unable to turn sync off.";
+"alert.unable-to-turn-sync-off-description" = "Unable to turn Sync & Backup off.";
 
 /* Description for unable to update device name error */
-"alert.unable-to-update-device-name-description" = "Unable to update the name of the device.";
+"alert.unable-to-update-device-name-description" = "Unable to update the device name.";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Unlock DuckDuckGo.";

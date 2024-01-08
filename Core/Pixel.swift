@@ -106,6 +106,7 @@ public struct PixelParameters {
     public static let emailKeychainKeychainOperation = "keychain_operation"
 
     public static let bookmarkErrorOrphanedFolderCount = "bookmark_error_orphaned_count"
+    public static let bookmarksLastGoodVersion = "previous_app_version"
 
     // Remote messaging
     public static let message = "message"

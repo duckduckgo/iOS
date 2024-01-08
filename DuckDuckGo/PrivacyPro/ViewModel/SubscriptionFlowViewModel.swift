@@ -78,9 +78,11 @@ final class SubscriptionFlowViewModel: ObservableObject {
     func restoreAppstoreTransaction() {
         Task {
             if await subFeature.restoreAccountFromAppStorePurchase() {
-                shouldReloadWebview = true
+                await MainActor.run { shouldReloadWebview = true }
             } else {
-                // TODO: Display error when restoring subscription
+                await MainActor.run {
+                    // TODO: Display error when restoring subscription
+                }
             }
         }
     }

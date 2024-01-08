@@ -29,23 +29,36 @@ public class CookieStorage {
     private var userDefaults: UserDefaults
 
     var cookies: [HTTPCookie] {
-
-        var storedCookies = [HTTPCookie]()
-        if let cookies = userDefaults.object(forKey: Constants.key) as? [[String: Any?]] {
-            for cookieData in cookies {
-                var properties = [HTTPCookiePropertyKey: Any]()
-                cookieData.forEach({
-                    properties[HTTPCookiePropertyKey(rawValue: $0.key)] = $0.value
-                })
-
-                if let cookie = HTTPCookie(properties: properties) {
-                    os_log("read cookie %s %s %s", log: .generalLog, type: .debug, cookie.domain, cookie.name, cookie.value)
-                    storedCookies.append(cookie)
+        get {
+            var storedCookies = [HTTPCookie]()
+            if let cookies = userDefaults.object(forKey: Constants.key) as? [[String: Any?]] {
+                for cookieData in cookies {
+                    var properties = [HTTPCookiePropertyKey: Any]()
+                    cookieData.forEach({
+                        properties[HTTPCookiePropertyKey(rawValue: $0.key)] = $0.value
+                    })
+                    
+                    if let cookie = HTTPCookie(properties: properties) {
+                        os_log("read cookie %s %s %s", log: .generalLog, type: .debug, cookie.domain, cookie.name, cookie.value)
+                        storedCookies.append(cookie)
+                    }
                 }
             }
+            
+            return storedCookies
         }
-
-        return storedCookies
+        
+        set {
+            var cookies = [[String: Any?]]()
+            newValue.forEach { cookie in
+                var mappedCookie = [String: Any?]()
+                cookie.properties?.forEach {
+                    mappedCookie[$0.key.rawValue] = $0.value
+                }
+                cookies.append(mappedCookie)
+            }
+            userDefaults.setValue(cookies, forKey: Constants.key)
+        }
     }
 
     public init(userDefaults: UserDefaults = UserDefaults.app) {

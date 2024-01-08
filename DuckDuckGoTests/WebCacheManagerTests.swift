@@ -189,7 +189,7 @@ class WebCacheManagerTests: XCTestCase {
         
         var cookieStore: WebCacheManagerCookieStore?
         
-        func removeAllDataExceptCookies(completion: @escaping () -> Void) {
+        func legacyClearingRemovingAllDataExceptCookies(completion: @escaping () -> Void) {
             removeAllDataCalledCount += 1
             completion()
         }

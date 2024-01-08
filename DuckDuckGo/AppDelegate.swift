@@ -341,8 +341,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         autoClear = AutoClear(worker: main)
         autoClear?.applicationDidLaunch()
         
-        clearLegacyAllowedDomainCookies()
-        
         AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()
 
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
@@ -406,15 +404,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
             os_log("Failed to delete tmp dir")
         }
-    }
-
-    private func clearLegacyAllowedDomainCookies() {
-        let domains = PreserveLogins.shared.legacyAllowedDomains
-        guard !domains.isEmpty else { return }
-        WebCacheManager.shared.removeCookies(forDomains: domains, dataStore: WKWebsiteDataStore.current(), completion: {
-            os_log("Removed cookies for %d legacy allowed domains", domains.count)
-            PreserveLogins.shared.clearLegacyAllowedDomains()
-        })
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

@@ -399,8 +399,6 @@ extension Pixel {
         
         case cookieDeletionTimedOut
         case cookieDeletionLeftovers
-        case legacyCookieMigration
-        case legacyCookieCleanupError
         
         case cachedTabPreviewsExceedsTabCount
         case cachedTabPreviewRemovalError
@@ -441,6 +439,7 @@ extension Pixel {
         case debugCannotClearObservationsDatabase
         case debugWebsiteDataStoresNotClearedMultiple
         case debugWebsiteDataStoresNotClearedOne
+        case debugCookieCleanupError
 
         // Return user measurement
         case debugReturnUserAddATB
@@ -881,8 +880,6 @@ extension Pixel.Event {
             
         case .cookieDeletionTimedOut: return "m_d_csto"
         case .cookieDeletionLeftovers: return "m_cookie_deletion_leftovers"
-        case .legacyCookieMigration: return "m_legacy_cookie_migration"
-        case .legacyCookieCleanupError: return "m_legacy_cookie_cleanup_error"
             
         case .cachedTabPreviewsExceedsTabCount: return "m_d_tpetc"
         case .cachedTabPreviewRemovalError: return "m_d_tpre"
@@ -910,6 +907,7 @@ extension Pixel.Event {
         case .debugCannotClearObservationsDatabase: return "m_d_cannot_clear_observations_database"
         case .debugWebsiteDataStoresNotClearedMultiple: return "m_d_wkwebsitedatastoresnotcleared_multiple"
         case .debugWebsiteDataStoresNotClearedOne: return "m_d_wkwebsitedatastoresnotcleared_one"
+        case .debugCookieCleanupError: return "m_cookie_cleanup_error"
 
         // MARK: Ad Attribution
             

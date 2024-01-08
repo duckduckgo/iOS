@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1703251114570,
+    "version": 1704707649212,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -1056,6 +1056,9 @@
                     "domain": "optout.networkadvertising.org"
                 },
                 {
+                    "domain": "news.ti.com"
+                },
+                {
                     "domain": "earth.google.com"
                 },
                 {
@@ -1069,7 +1072,7 @@
                 }
             ],
             "state": "disabled",
-            "hash": "e41dbd0af3841636937030d91bc305b1"
+            "hash": "37a27966915571085613911b47e6e2eb"
         },
         "customUserAgent": {
             "settings": {
@@ -4011,6 +4014,9 @@
                     "domain": "hyatt.com"
                 },
                 {
+                    "domain": "proton.me"
+                },
+                {
                     "domain": "earth.google.com"
                 },
                 {
@@ -4024,7 +4030,7 @@
                 }
             ],
             "state": "enabled",
-            "hash": "911cbc583f376d416ac75c57ecc577f1"
+            "hash": "46fbcd4738329731c1b11e88e3afcb7b"
         },
         "fingerprintingScreenSize": {
             "settings": {
@@ -4153,6 +4159,9 @@
                     "domain": "chime.com"
                 },
                 {
+                    "domain": "tirerack.com"
+                },
+                {
                     "domain": "earth.google.com"
                 },
                 {
@@ -4177,7 +4186,7 @@
                     "privacy-test-pages.site"
                 ]
             },
-            "hash": "d11962aceb1417d05e8f2854d5fb72a9"
+            "hash": "549a6e76edaf16c1fffced31b97e9553"
         },
         "harmfulApis": {
             "settings": {
@@ -5876,7 +5885,8 @@
                                 "rule": "googletagmanager.com/gtag/js",
                                 "domains": [
                                     "abril.com.br",
-                                    "cosmicbook.news"
+                                    "cosmicbook.news",
+                                    "tradersync.com"
                                 ]
                             }
                         ]
@@ -7579,7 +7589,7 @@
                     "domain": "sundancecatalog.com"
                 }
             ],
-            "hash": "125a4930376740ff93c957d52454a955"
+            "hash": "a5e90f6d573b68977a05183a366ff307"
         },
         "trackingCookies1p": {
             "settings": {

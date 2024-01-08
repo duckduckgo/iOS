@@ -37,6 +37,7 @@ final class SubscriptionFlowViewModel: ObservableObject {
     @Published var purchaseURL = URL.purchaseSubscription
     @Published var hasActiveSubscription = false
     @Published var transactionInProgress = false
+    @Published var shouldReloadWebview = false
     
     
     init(userScript: SubscriptionPagesUserScript = SubscriptionPagesUserScript(),
@@ -76,7 +77,11 @@ final class SubscriptionFlowViewModel: ObservableObject {
     
     func restoreAppstoreTransaction() {
         Task {
-            await subFeature.restoreAccountFromAppStorePurchase()
+            if await subFeature.restoreAccountFromAppStorePurchase() {
+                shouldReloadWebview = true
+            } else {
+                // TODO: Display error when restoring subscription
+            }
         }
     }
     

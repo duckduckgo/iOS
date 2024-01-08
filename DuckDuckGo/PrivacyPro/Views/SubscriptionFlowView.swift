@@ -30,17 +30,25 @@ struct SubscriptionFlowView: View {
         ZStack {
             AsyncHeadlessWebView(url: $viewModel.purchaseURL,
                                  userScript: viewModel.userScript,
-                                 subFeature: viewModel.subFeature).background()
+                                 subFeature: viewModel.subFeature,
+                                 shouldReload: $viewModel.shouldReloadWebview).background()
 
             // Overlay that appears when transaction is in progress
             if viewModel.transactionInProgress {
                 PurchaseInProgressView()
             }
         }
+        .onChange(of: viewModel.shouldReloadWebview) { shouldReload in
+            if shouldReload {
+                print("WebView reload triggered")
+                viewModel.shouldReloadWebview = false
+            }
+        }
         .onAppear(perform: {
             Task { await viewModel.initializeViewData() }
         })
         .navigationTitle(viewModel.viewTitle)
+
         
         // Active subscription found Alert
         .alert(isPresented: $viewModel.hasActiveSubscription) {

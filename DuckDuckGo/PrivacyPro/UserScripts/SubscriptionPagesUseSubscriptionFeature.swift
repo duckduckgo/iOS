@@ -257,16 +257,14 @@ final class SubscriptionPagesUseSubscriptionFeature: Subfeature, ObservableObjec
         broker.push(method: method.rawValue, params: params, for: self, into: webView)
     }
     
-    func restoreAccountFromAppStorePurchase() async {
+    func restoreAccountFromAppStorePurchase() async -> Bool {
         
         await withTransactionInProgress {
             switch await AppStoreRestoreFlow.restoreAccountFromPastPurchase() {
             case .success(let update):
-                // TODO: Have the webview reload the current page to show the subscription
-                break
+                return true
             case .failure:
-                // TODO: Handle restore error
-                break
+                return false
             }
         }
         

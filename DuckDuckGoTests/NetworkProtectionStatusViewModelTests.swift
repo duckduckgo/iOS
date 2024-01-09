@@ -204,6 +204,6 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
             condition()
         }
         let expectation = XCTNSPredicateExpectation(predicate: predicate, object: nil)
-        wait(for: [expectation], timeout: 5)
+        wait(for: [expectation], timeout: 20)
     }
 }

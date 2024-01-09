@@ -322,9 +322,8 @@ final class DaxDialog: XCTestCase {
     
     private func makePrivacyInfo(url: URL) -> PrivacyInfo {
         let protectionStatus = ProtectionStatus(unprotectedTemporary: false, enabledFeatures: [], allowlisted: false, denylisted: false)
-        let privacyInfo = PrivacyInfo(url: url,
-                                      parentEntity: entityProvider.entity(forHost: url.host!),
-                                      protectionStatus: protectionStatus)
-        return privacyInfo
+        return PrivacyInfo(url: url,
+                           parentEntity: entityProvider.entity(forHost: url.host!),
+                           protectionStatus: protectionStatus)
     }
 }

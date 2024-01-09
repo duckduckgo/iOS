@@ -481,10 +481,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func onApplicationLaunch(_ application: UIApplication) {
-        beginAuthentication()
-        initialiseBackgroundFetch(application)
-        applyAppearanceChanges()
-        refreshRemoteMessages()
+        Task { @MainActor in
+            await beginAuthentication()
+            initialiseBackgroundFetch(application)
+            applyAppearanceChanges()
+            refreshRemoteMessages()
+        }
     }
     
     private func applyAppearanceChanges() {
@@ -503,10 +505,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillEnterForeground(_ application: UIApplication) {
         ThemeManager.shared.updateUserInterfaceStyle()
 
-        beginAuthentication()
-        autoClear?.applicationWillMoveToForeground()
-        showKeyboardIfSettingOn = true
-        syncService.scheduler.resumeSyncQueue()
+        Task { @MainActor in
+            await beginAuthentication()
+            autoClear?.applicationWillMoveToForeground()
+            showKeyboardIfSettingOn = true
+            syncService.scheduler.resumeSyncQueue()
+        }
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -634,7 +638,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.isHidden = true
     }
 
-    private func beginAuthentication() {
+    private func beginAuthentication() async {
         
         guard privacyStore.authenticationEnabled else { return }
 
@@ -646,7 +650,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         
-        controller.beginAuthentication { [weak self] in
+        await controller.beginAuthentication { [weak self] in
             self?.removeOverlay()
             self?.showKeyboardOnLaunch()
         }

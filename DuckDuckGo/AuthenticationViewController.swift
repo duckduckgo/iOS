@@ -50,28 +50,29 @@ class AuthenticationViewController: UIViewController {
         return .portrait
     }
 
-    public func beginAuthentication(completion: (() -> Void)?) {
+    public func beginAuthentication(completion: (() -> Void)?) async {
         self.completion = completion
         if authenticator.canAuthenticate() {
-            authenticate()
+            await authenticate()
         } else {
             onCouldNotAuthenticate()
         }
     }
 
-    private func authenticate() {
+    private func authenticate() async {
         hideUnlockInstructions()
-        authenticator.authenticate { (success, _) in
-            if success {
-                self.onAuthenticationSucceeded()
-            } else {
-                self.onAuthenticationFailed()
-            }
+        let success = await authenticator.authenticate(reason: UserText.appUnlock)
+        if success {
+            self.onAuthenticationSucceeded()
+        } else {
+            self.onAuthenticationFailed()
         }
     }
 
     @IBAction func onTap(_ sender: Any) {
-        authenticate()
+        Task { @MainActor in
+            await authenticate()
+        }
     }
 
     private func onCouldNotAuthenticate() {

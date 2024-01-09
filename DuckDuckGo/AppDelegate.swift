@@ -100,6 +100,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 #endif
 
+        if isDebugBuild {
+            Pixel.isDryRun = true
+        } else {
+            Pixel.isDryRun = false
+        }
+
         ContentBlocking.shared.onCriticalError = presentPreemptiveCrashAlert
 
         // Can be removed after a couple of versions
@@ -123,6 +129,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = DefaultUserAgentManager.shared
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
+            Pixel.isDryRun = true
             _ = DefaultUserAgentManager.shared
             Database.shared.loadStore { _, _ in }
             _ = BookmarksDatabaseSetup(crashOnError: true).loadStoreAndMigrate(bookmarksDatabase: bookmarksDatabase)

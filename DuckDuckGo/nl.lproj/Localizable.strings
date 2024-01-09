@@ -20,7 +20,7 @@
 "action.title.add" = "Toevoegen";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Aanmeldgegevens";
+"action.title.autofill.logins" = "Wachtwoorden";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Toevoegen aan bladwijzers";
@@ -437,16 +437,16 @@
 "autofill.keep-enabled.alert.message" = "Je kunt dit op elk moment uitschakelen in de instellingen.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Wil je aanmeldgegevens blijven opslaan?";
+"autofill.keep-enabled.alert.title" = "Wil je wachtwoorden blijven opslaan?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Weergeven";
 
 /* Message displayed after saving an autofill login */
-"autofill.login-saved.toast" = "Login opgeslagen";
+"autofill.login-saved.toast" = "Wachtwoord opgeslagen";
 
 /* Message displayed after updating an autofill login */
-"autofill.login-updated.toast" = "Login bijgewerkt";
+"autofill.login-updated.toast" = "Wachtwoord bijgewerkt";
 
 /* Menu item text for copying autofill login details */
 "autofill.logins.copy-prompt" = "%@ kopiëren";
@@ -467,19 +467,19 @@
 "autofill.logins.details.address" = "URL van de website";
 
 /* Title for autofill login details */
-"autofill.logins.details.default-title" = "Inloggen";
+"autofill.logins.details.default-title" = "Wachtwoord";
 
 /* Delete button when deleting an autofill login */
-"autofill.logins.details.delete" = "Aanmeldgegevens verwijderen";
+"autofill.logins.details.delete" = "Wachtwoord verwijderen";
 
 /* Autofill alert button confirming delete autofill login */
-"autofill.logins.details.delete-confirmation.button" = "Aanmeldgegevens verwijderen";
+"autofill.logins.details.delete-confirmation.button" = "Wachtwoord verwijderen";
 
 /* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "Weet je zeker dat je deze aanmeldgegevens wilt verwijderen?";
+"autofill.logins.details.delete-confirmation.title" = "Weet je zeker dat je dit wachtwoord wilt verwijderen?";
 
 /* Title when editing autofill login details */
-"autofill.logins.details.edit-title" = "Aanmeldgegevens bewerken";
+"autofill.logins.details.edit-title" = "Wachtwoord bewerken";
 
 /* Placeholder for password field on autofill login details */
 "autofill.logins.details.edit.password-placeholder" = "Wachtwoord";
@@ -493,14 +493,14 @@
 /* Placeholder for userbane field on autofill login details */
 "autofill.logins.details.edit.username-placeholder" = "gebruikersnaam@voorbeeld.com";
 
-/* Message displaying when the login was last updated by */
-"autofill.logins.details.last-updated" = "Aanmeldgegevens laatst bijgewerkt op %s";
+/* Message displaying when the login was last updated */
+"autofill.logins.details.last-updated" = "Laatst bijgewerkt op %@";
 
 /* Login name label for login details on autofill */
-"autofill.logins.details.login-name" = "Aanmeldgegevens Titel";
+"autofill.logins.details.login-name" = "Titel";
 
 /* Title when adding new autofill login */
-"autofill.logins.details.new-title" = "Aanmeldgegevens toevoegen";
+"autofill.logins.details.new-title" = "Wachtwoord toevoegen";
 
 /* Notes label for login details on autofill */
 "autofill.logins.details.notes" = "Opmerkingen";
@@ -515,37 +515,37 @@
 "autofill.logins.details.save-duplicate-alert.action" = "OK";
 
 /* Message for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.message" = "Je hebt al aanmeldgegevens voor deze gebruikersnaam en website.";
+"autofill.logins.details.save-duplicate-alert.message" = "Je hebt al een wachtwoord opgeslagen voor deze gebruikersnaam en website.";
 
 /* Title for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.title" = "Dubbele aanmeldgegevens";
+"autofill.logins.details.save-duplicate-alert.title" = "Wachtwoord dupliceren";
 
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Gebruikersnaam";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Aanmeldgegevens worden veilig opgeslagen op je apparaat.";
+"autofill.logins.empty-view.subtitle" = "Wachtwoorden worden veilig opgeslagen op je apparaat.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Nog geen aanmeldgegevens opgeslagen";
+"autofill.logins.empty-view.title" = "Nog geen wachtwoorden opgeslagen";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Annuleren";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Ontgrendel het apparaat om toegang te krijgen tot opgeslagen aanmeldgegevens";
+"autofill.logins.list.auth.reason" = "Ontgrendel het apparaat om toegang te krijgen tot wachtwoorden";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Sluiten";
 
 /* Title for a toggle that enables autofill */
-"autofill.logins.list.enable" = "Aanmeldgegevens opslaan en automatisch invullen";
+"autofill.logins.list.enable" = "Wachtwoorden opslaan en automatisch invullen";
 
 /* Toast message when a login item is deleted */
-"autofill.logins.list.login-deleted-message" = "Aanmeldgegevens voor %@ verwijderd";
+"autofill.logins.list.login-deleted-message" = "Wachtwoord voor %@ verwijderd";
 
 /* Toast message when a login item without a title is deleted */
-"autofill.logins.list.login-deleted-message-no-title" = "Aanmeldgegevens verwijderd";
+"autofill.logins.list.login-deleted-message-no-title" = "Wachtwoord verwijderd";
 
 /* Title for a button that allows a user to reset their list of never saved sites */
 "autofill.logins.list.never.saved" = "Uitgesloten sites opnieuw instellen";
@@ -557,28 +557,28 @@
 "autofill.logins.list.never.saved.reset.action.confirm" = "Uitgesloten sites opnieuw instellen";
 
 /* Alert title */
-"autofill.logins.list.never.saved.reset.action.title" = "Als je uitgesloten sites opnieuw instelt, zie je de volgende keer dat je bij een van deze sites inlogt een melding om je inloggegevens op te slaan.";
+"autofill.logins.list.never.saved.reset.action.title" = "Als je uitgesloten sites opnieuw instelt, zie je de volgende keer dat je bij een van deze sites inlogt een melding om je wachtwoord op te slaan.";
 
 /* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Aanmeldgegevens zoeken";
+"autofill.logins.list.search-placeholder" = "Wachtwoorden zoeken";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Aanbevolen";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Aanmeldgegevens";
+"autofill.logins.list.title" = "Wachtwoorden";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Er is een toegangscode vereist om je aanmeldgegevens te beschermen.";
+"autofill.logins.no-auth.subtitle" = "Er is een toegangscode vereist om je wachtwoorden te beschermen.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Beveilig je apparaat om aanmeldgegevens op te slaan";
+"autofill.logins.no-auth.title" = "Beveilig je apparaat om wachtwoorden op te slaan";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Annuleren";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Ontgrendelen om opgeslagen aanmeldgegevens te gebruiken";
+"autofill.logins.prompt.auth.reason" = "Ontgrendel om opgeslagen wachtwoord te gebruiken";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Van deze website";
@@ -602,7 +602,7 @@
 "autofill.logins.search.no-results.title" = "Geen resultaten";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Wachtwoorden worden veilig opgeslagen op je apparaat in het menu 'Aanmeldingen'.";
+"autofill.password-generation-prompt.subtitle" = "Wachtwoorden worden veilig opgeslagen op je apparaat.";
 
 /* Title for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.title" = "Een sterk wachtwoord van DuckDuckGo gebruiken?";
@@ -647,7 +647,7 @@
 "autofill.save-login.never-prompt.CTA" = "Nooit vragen voor deze site";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Wachtwoorden worden veilig opgeslagen op je apparaat in het menu 'Aanmeldingen'.";
+"autofill.save-login.new-user.message" = "Wachtwoorden worden veilig opgeslagen op je apparaat.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Wil je dat DuckDuckGo je wachtwoord opslaat?";
@@ -656,7 +656,7 @@
 "autofill.save-login.not-now.CTA" = "Niet opslaan";
 
 /* Title displayed on modal asking for the user to save the login */
-"autofill.save-login.title" = "Login opslaan?";
+"autofill.save-login.title" = "Wachtwoord opslaan?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Wachtwoord opslaan";

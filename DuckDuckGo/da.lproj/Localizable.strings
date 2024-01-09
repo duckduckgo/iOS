@@ -20,7 +20,7 @@
 "action.title.add" = "Tilføj";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Logins";
+"action.title.autofill.logins" = "Adgangskoder";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Føj til bogmærker";
@@ -437,16 +437,16 @@
 "autofill.keep-enabled.alert.message" = "Du kan til enhver tid deaktivere automatisk udfyldning i Indstillinger.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Vil du fortsat gemme logins?";
+"autofill.keep-enabled.alert.title" = "Vil du fortsætte med at gemme adgangskoder?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Se";
 
 /* Message displayed after saving an autofill login */
-"autofill.login-saved.toast" = "Login er gemt";
+"autofill.login-saved.toast" = "Adgangskode gemt";
 
 /* Message displayed after updating an autofill login */
-"autofill.login-updated.toast" = "Login er opdateret";
+"autofill.login-updated.toast" = "Adgangskode opdateret";
 
 /* Menu item text for copying autofill login details */
 "autofill.logins.copy-prompt" = "Kopiér %@";
@@ -467,19 +467,19 @@
 "autofill.logins.details.address" = "URL til webstedet";
 
 /* Title for autofill login details */
-"autofill.logins.details.default-title" = "Log på";
+"autofill.logins.details.default-title" = "Adgangskode";
 
 /* Delete button when deleting an autofill login */
-"autofill.logins.details.delete" = "Slet login";
+"autofill.logins.details.delete" = "Slet adgangskode";
 
 /* Autofill alert button confirming delete autofill login */
-"autofill.logins.details.delete-confirmation.button" = "Slet login";
+"autofill.logins.details.delete-confirmation.button" = "Slet adgangskode";
 
 /* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "Er du sikker på, at du vil slette dette login?";
+"autofill.logins.details.delete-confirmation.title" = "Er du sikker på, at du vil slette denne adgangskode?";
 
 /* Title when editing autofill login details */
-"autofill.logins.details.edit-title" = "Rediger login";
+"autofill.logins.details.edit-title" = "Rediger adgangskode";
 
 /* Placeholder for password field on autofill login details */
 "autofill.logins.details.edit.password-placeholder" = "Adgangskode";
@@ -493,14 +493,14 @@
 /* Placeholder for userbane field on autofill login details */
 "autofill.logins.details.edit.username-placeholder" = "brugernavn@eksempel.dk";
 
-/* Message displaying when the login was last updated by */
-"autofill.logins.details.last-updated" = "Login sidst opdateret %s";
+/* Message displaying when the login was last updated */
+"autofill.logins.details.last-updated" = "Sidst opdateret %@";
 
 /* Login name label for login details on autofill */
-"autofill.logins.details.login-name" = "Login-titel";
+"autofill.logins.details.login-name" = "Titel";
 
 /* Title when adding new autofill login */
-"autofill.logins.details.new-title" = "Tilføj login";
+"autofill.logins.details.new-title" = "Tilføj adgangskode";
 
 /* Notes label for login details on autofill */
 "autofill.logins.details.notes" = "Noter";
@@ -515,37 +515,37 @@
 "autofill.logins.details.save-duplicate-alert.action" = "Okay";
 
 /* Message for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.message" = "Du har allerede et login til dette brugernavn og websted.";
+"autofill.logins.details.save-duplicate-alert.message" = "Du har allerede gemt en adgangskode til dette brugernavn og websted.";
 
 /* Title for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.title" = "Duplikeret login";
+"autofill.logins.details.save-duplicate-alert.title" = "Duplikeret adgangskode";
 
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Brugernavn";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Login gemmes sikkert på din enhed.";
+"autofill.logins.empty-view.subtitle" = "Adgangskoder gemmes sikkert på din enhed.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Ingen logins gemt endnu";
+"autofill.logins.empty-view.title" = "Ingen adgangskoder gemt endnu";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Annullér";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Lås enheden op for at få adgang til gemte logins";
+"autofill.logins.list.auth.reason" = "Lås enheden op for at få adgang til adgangskoder";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Luk";
 
 /* Title for a toggle that enables autofill */
-"autofill.logins.list.enable" = "Gem og udfyld automatisk logins";
+"autofill.logins.list.enable" = "Gem og udfyld adgangskoder automatisk";
 
 /* Toast message when a login item is deleted */
-"autofill.logins.list.login-deleted-message" = "Login til %@ slettet";
+"autofill.logins.list.login-deleted-message" = "Adgangskode til %@ slettet";
 
 /* Toast message when a login item without a title is deleted */
-"autofill.logins.list.login-deleted-message-no-title" = "Login slettet";
+"autofill.logins.list.login-deleted-message-no-title" = "Adgangskode slettet";
 
 /* Title for a button that allows a user to reset their list of never saved sites */
 "autofill.logins.list.never.saved" = "Nulstil ekskluderede websteder";
@@ -557,28 +557,28 @@
 "autofill.logins.list.never.saved.reset.action.confirm" = "Nulstil ekskluderede websteder";
 
 /* Alert title */
-"autofill.logins.list.never.saved.reset.action.title" = "Hvis du nulstiller ekskluderede websteder, vil du blive bedt om at gemme dit login, næste gang du logger ind på en af disse sider.";
+"autofill.logins.list.never.saved.reset.action.title" = "Hvis du nulstiller ekskluderede websteder, vil du blive bedt om at gemme din adgangskode, næste gang du logger ind på en af disse sider.";
 
 /* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Søg logins";
+"autofill.logins.list.search-placeholder" = "Søg adgangskoder";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Foreslået";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Logins";
+"autofill.logins.list.title" = "Adgangskoder";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "En adgangskode er påkrævet for at beskytte dine logins.";
+"autofill.logins.no-auth.subtitle" = "En adgangskode er påkrævet for at beskytte dine adgangskoder.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Beskyt din enhed for at gemme logins";
+"autofill.logins.no-auth.title" = "Beskyt din enhed for at gemme adgangskoder";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Annullér";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Lås op for at bruge gemte logins";
+"autofill.logins.prompt.auth.reason" = "Lås op for at bruge gemt adgangskode";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Fra dette websted";
@@ -602,7 +602,7 @@
 "autofill.logins.search.no-results.title" = "Ingen resultater";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Adgangskoder gemmes sikkert på din enhed i menuen Logins.";
+"autofill.password-generation-prompt.subtitle" = "Adgangskoder gemmes sikkert på din enhed.";
 
 /* Title for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.title" = "Brug en stærk adgangskode fra DuckDuckGo?";
@@ -647,7 +647,7 @@
 "autofill.save-login.never-prompt.CTA" = "Spørg aldrig på dette websted";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Adgangskoder gemmes sikkert på din enhed i menuen Logins.";
+"autofill.save-login.new-user.message" = "Adgangskoder gemmes sikkert på din enhed.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Skal DuckDuckGo gemme din adgangskode?";
@@ -656,7 +656,7 @@
 "autofill.save-login.not-now.CTA" = "Gem ikke";
 
 /* Title displayed on modal asking for the user to save the login */
-"autofill.save-login.title" = "Gem login?";
+"autofill.save-login.title" = "Gem adgangskode?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Gem adgangskode";

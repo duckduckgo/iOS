@@ -20,7 +20,7 @@
 "action.title.add" = "Pievienot";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Pieteikšanās dati";
+"action.title.autofill.logins" = "Paroles";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Pievienot grāmatzīmēm";
@@ -437,16 +437,16 @@
 "autofill.keep-enabled.alert.message" = "Vari to jebkurā laikā atspējot iestatījumos.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Vai vēlies turpināt saglabāt pieteikšanās datus?";
+"autofill.keep-enabled.alert.title" = "Vai vēlaties turpināt saglabāt paroles?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Skatīt";
 
 /* Message displayed after saving an autofill login */
-"autofill.login-saved.toast" = "Pieteikšanās saglabāta";
+"autofill.login-saved.toast" = "Parole saglabāta";
 
 /* Message displayed after updating an autofill login */
-"autofill.login-updated.toast" = "Pieteikšanās atjaunināta";
+"autofill.login-updated.toast" = "Parole atjaunināta";
 
 /* Menu item text for copying autofill login details */
 "autofill.logins.copy-prompt" = "Kopēt %@";
@@ -467,19 +467,19 @@
 "autofill.logins.details.address" = "Tīmekļa vietnes URL";
 
 /* Title for autofill login details */
-"autofill.logins.details.default-title" = "Pieteikšanās dati";
+"autofill.logins.details.default-title" = "Parole";
 
 /* Delete button when deleting an autofill login */
-"autofill.logins.details.delete" = "Dzēst pieteikšanās datus";
+"autofill.logins.details.delete" = "Dzēst paroli";
 
 /* Autofill alert button confirming delete autofill login */
-"autofill.logins.details.delete-confirmation.button" = "Dzēst pieteikšanās datus";
+"autofill.logins.details.delete-confirmation.button" = "Dzēst paroli";
 
 /* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "Vai tiešām vēlies dzēst šos pieteikšanās datus?";
+"autofill.logins.details.delete-confirmation.title" = "Vai tiešām vēlies dzēst šo paroli?";
 
 /* Title when editing autofill login details */
-"autofill.logins.details.edit-title" = "Rediģēt pieteikšanās datus";
+"autofill.logins.details.edit-title" = "Paroles rediģēšana";
 
 /* Placeholder for password field on autofill login details */
 "autofill.logins.details.edit.password-placeholder" = "Parole";
@@ -493,14 +493,14 @@
 /* Placeholder for userbane field on autofill login details */
 "autofill.logins.details.edit.username-placeholder" = "lietotajvards@piemers.com";
 
-/* Message displaying when the login was last updated by */
-"autofill.logins.details.last-updated" = "Pieteikšanās dati pēdējo reizi atjaunināti: %@";
+/* Message displaying when the login was last updated */
+"autofill.logins.details.last-updated" = "Pēdējoreiz atjaunināts %@";
 
 /* Login name label for login details on autofill */
-"autofill.logins.details.login-name" = "Pieteikšanās datu nosaukums";
+"autofill.logins.details.login-name" = "Nosaukums";
 
 /* Title when adding new autofill login */
-"autofill.logins.details.new-title" = "Pievienot pieteikšanās datus";
+"autofill.logins.details.new-title" = "Pievienot paroli";
 
 /* Notes label for login details on autofill */
 "autofill.logins.details.notes" = "Piezīmes";
@@ -515,37 +515,37 @@
 "autofill.logins.details.save-duplicate-alert.action" = "Labi";
 
 /* Message for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.message" = "Tev jau ir pieteikšanās dati šim lietotājvārdam un vietnei.";
+"autofill.logins.details.save-duplicate-alert.message" = "Tev jau ir saglabāta šī lietotājvārda un vietnes parole.";
 
 /* Title for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.title" = "Dublēti pieteikšanās dati";
+"autofill.logins.details.save-duplicate-alert.title" = "Dublēta parole";
 
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Lietotājvārds";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Pieteikšanās dati tiek droši saglabāti tavā ierīcē.";
+"autofill.logins.empty-view.subtitle" = "Paroles tiek droši glabātas tavā ierīcē.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Nav saglabātu pieteikšanās datu";
+"autofill.logins.empty-view.title" = "Vēl nav saglabāta neviena parole";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Atcelt";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Atbloķē ierīci, lai piekļūtu saglabātajiem pieteikšanās datiem";
+"autofill.logins.list.auth.reason" = "Atbloķē ierīci, lai piekļūtu parolēm";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Aizvērt";
 
 /* Title for a toggle that enables autofill */
-"autofill.logins.list.enable" = "Saglabāt un automātiski aizpildīt pieteikšanās datus";
+"autofill.logins.list.enable" = "Saglabāt un automātiski aizpildīt paroles";
 
 /* Toast message when a login item is deleted */
-"autofill.logins.list.login-deleted-message" = "%@ pieteikšanās dati izdzēsti";
+"autofill.logins.list.login-deleted-message" = "%@ parole dzēsta";
 
 /* Toast message when a login item without a title is deleted */
-"autofill.logins.list.login-deleted-message-no-title" = "Pieteikšanās dati izdzēsti";
+"autofill.logins.list.login-deleted-message-no-title" = "Parole dzēsta";
 
 /* Title for a button that allows a user to reset their list of never saved sites */
 "autofill.logins.list.never.saved" = "Atiestatīt izslēgtās vietnes";
@@ -557,28 +557,28 @@
 "autofill.logins.list.never.saved.reset.action.confirm" = "Atiestatīt izslēgtās vietnes";
 
 /* Alert title */
-"autofill.logins.list.never.saved.reset.action.title" = "Ja atiestatīsi izslēgtās vietnes, nākamreiz pierakstoties kādā no šīm vietnēm, tev tiks piedāvāts saglabāt savus pieteikšanās datus.";
+"autofill.logins.list.never.saved.reset.action.title" = "Ja atiestatīsi izslēgtās vietnes, tev tiks piedāvāts saglabāt savus pieteikšanās datus, kad nākamreiz tajās pierakstīsies.";
 
 /* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Meklēt pieteikšanās datus";
+"autofill.logins.list.search-placeholder" = "Meklēt paroles";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Ieteikts";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Pieteikšanās dati";
+"autofill.logins.list.title" = "Paroles";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Lai aizsargātu tavus pieteikšanās datus, ir nepieciešams piekļuves kods.";
+"autofill.logins.no-auth.subtitle" = "Lai aizsargātu tavas paroles, ir nepieciešams piekļuves kods.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Aizsargājiet savu ierīci, lai saglabātu pieteikšanās datus";
+"autofill.logins.no-auth.title" = "Aizsargā savu ierīci, lai saglabātu paroles";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Atcelt";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Atbloķē, lai izmantotu saglabātos pieteikšanās datus";
+"autofill.logins.prompt.auth.reason" = "Jāatbloķē, lai izmantotu saglabātu paroli";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "No šīs vietnes";
@@ -602,7 +602,7 @@
 "autofill.logins.search.no-results.title" = "Nav rezultātu";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Paroles tiek droši saglabātas tavā ierīcē, izvēlnē Pieteikšanās dati.";
+"autofill.password-generation-prompt.subtitle" = "Paroles tiek droši glabātas tavā ierīcē.";
 
 /* Title for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.title" = "Vai izmantot spēcīgu DuckDuckGo paroli?";
@@ -647,7 +647,7 @@
 "autofill.save-login.never-prompt.CTA" = "Nekad nejautāt par šo vietni";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Paroles tiek droši saglabātas tavā ierīcē, izvēlnē Pieteikšanās dati.";
+"autofill.save-login.new-user.message" = "Paroles tiek droši glabātas tavā ierīcē.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vai vēlies, lai DuckDuckGo saglabātu tavu paroli?";
@@ -656,7 +656,7 @@
 "autofill.save-login.not-now.CTA" = "Nesaglabāt";
 
 /* Title displayed on modal asking for the user to save the login */
-"autofill.save-login.title" = "Saglabāt pieteikšanās datus?";
+"autofill.save-login.title" = "Saglabāt paroli?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Saglabāt paroli";

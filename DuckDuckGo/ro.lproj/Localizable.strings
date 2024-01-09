@@ -20,7 +20,7 @@
 "action.title.add" = "Adăugați";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Conectări";
+"action.title.autofill.logins" = "Parole";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Adaugă la marcaje";
@@ -437,16 +437,16 @@
 "autofill.keep-enabled.alert.message" = "Poți dezactiva oricând acest lucru din Setări.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Vrei să salvezi în continuare datele de conectare?";
+"autofill.keep-enabled.alert.title" = "Dorești să continui să salvezi parolele?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Vezi";
 
 /* Message displayed after saving an autofill login */
-"autofill.login-saved.toast" = "Autentificare salvată";
+"autofill.login-saved.toast" = "Parolă salvată";
 
 /* Message displayed after updating an autofill login */
-"autofill.login-updated.toast" = "Autentificare actualizată";
+"autofill.login-updated.toast" = "Parolă actualizată";
 
 /* Menu item text for copying autofill login details */
 "autofill.logins.copy-prompt" = "Copiază %@";
@@ -467,19 +467,19 @@
 "autofill.logins.details.address" = "URL-ul site-ului";
 
 /* Title for autofill login details */
-"autofill.logins.details.default-title" = "Autentificare";
+"autofill.logins.details.default-title" = "Parolă";
 
 /* Delete button when deleting an autofill login */
-"autofill.logins.details.delete" = "Șterge datele de autentificare";
+"autofill.logins.details.delete" = "Șterge parola";
 
 /* Autofill alert button confirming delete autofill login */
-"autofill.logins.details.delete-confirmation.button" = "Șterge datele de autentificare";
+"autofill.logins.details.delete-confirmation.button" = "Șterge parola";
 
 /* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "Sigur dorești să ștergi aceste date de autentificare?";
+"autofill.logins.details.delete-confirmation.title" = "Sigur dorești să ștergi această parolă?";
 
 /* Title when editing autofill login details */
-"autofill.logins.details.edit-title" = "Editează datele de autentificare";
+"autofill.logins.details.edit-title" = "Editează parola";
 
 /* Placeholder for password field on autofill login details */
 "autofill.logins.details.edit.password-placeholder" = "Parolă";
@@ -493,14 +493,14 @@
 /* Placeholder for userbane field on autofill login details */
 "autofill.logins.details.edit.username-placeholder" = "numedeutilizator@exemplu.com";
 
-/* Message displaying when the login was last updated by */
-"autofill.logins.details.last-updated" = "Datele de autentificare au fost actualizate ultima dată la %s";
+/* Message displaying when the login was last updated */
+"autofill.logins.details.last-updated" = "Ultima actualizare la %@";
 
 /* Login name label for login details on autofill */
-"autofill.logins.details.login-name" = "Titlu autentificare";
+"autofill.logins.details.login-name" = "Titlu";
 
 /* Title when adding new autofill login */
-"autofill.logins.details.new-title" = "Adaugă date de autentificare";
+"autofill.logins.details.new-title" = "Adaugă parola";
 
 /* Notes label for login details on autofill */
 "autofill.logins.details.notes" = "Note";
@@ -515,37 +515,37 @@
 "autofill.logins.details.save-duplicate-alert.action" = "OK";
 
 /* Message for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.message" = "Ai deja date de autentificare pentru acest nume de utilizator și site.";
+"autofill.logins.details.save-duplicate-alert.message" = "Ai deja o parolă salvată pentru acest nume de utilizator și site.";
 
 /* Title for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.title" = "Date de autentificare duplicate";
+"autofill.logins.details.save-duplicate-alert.title" = "Parolă duplicată";
 
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Nume utilizator";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Datele de conectare sunt stocate în siguranță pe dispozitivul tău.";
+"autofill.logins.empty-view.subtitle" = "Parolele sunt stocate în siguranță pe dispozitivul tău.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Nu au fost salvate încă date de conectare";
+"autofill.logins.empty-view.title" = "Nici o parolă nu a fost salvată încă";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Renunță";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Deblochează dispozitivul pentru a accesa datele de conectare salvate";
+"autofill.logins.list.auth.reason" = "Deblochează dispozitivul pentru a accesa parolele";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Închidere";
 
 /* Title for a toggle that enables autofill */
-"autofill.logins.list.enable" = "Salvează și completează automat datele de autentificare";
+"autofill.logins.list.enable" = "Salvează și completează automat parolele";
 
 /* Toast message when a login item is deleted */
-"autofill.logins.list.login-deleted-message" = "S-a șters autentificarea pentru %@";
+"autofill.logins.list.login-deleted-message" = "Parola pentru %@ a fost ștearsă";
 
 /* Toast message when a login item without a title is deleted */
-"autofill.logins.list.login-deleted-message-no-title" = "Date de conectare șterse";
+"autofill.logins.list.login-deleted-message-no-title" = "Parolă ștearsă";
 
 /* Title for a button that allows a user to reset their list of never saved sites */
 "autofill.logins.list.never.saved" = "Resetează site-urile excluse";
@@ -557,28 +557,28 @@
 "autofill.logins.list.never.saved.reset.action.confirm" = "Resetează site-urile excluse";
 
 /* Alert title */
-"autofill.logins.list.never.saved.reset.action.title" = "Dacă resetezi site-urile excluse, ți se va cere să îți salvezi datele de conectare data viitoare când te conectezi la oricare dintre aceste site-uri.";
+"autofill.logins.list.never.saved.reset.action.title" = "Dacă resetezi site-urile excluse, ți se va solicita să îți salvezi parola data viitoare când te conectezi la oricare dintre aceste site-uri.";
 
 /* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Date de autentificare pentru căutare";
+"autofill.logins.list.search-placeholder" = "Caută parole";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Sugerat";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Conectări";
+"autofill.logins.list.title" = "Parole";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Este necesară o parolă pentru a-ți proteja datele de conectare.";
+"autofill.logins.no-auth.subtitle" = "Este necesar un cod de acces pentru a-ți proteja parolele.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Securizează-ți dispozitivul pentru a salva conectările";
+"autofill.logins.no-auth.title" = "Securizează-ți dispozitivul pentru a salva parolele";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Renunță";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Deblochează pentru a utiliza Datele de autentificare salvate";
+"autofill.logins.prompt.auth.reason" = "Deblochează pentru a utiliza parola salvată";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "De pe acest site web";
@@ -602,7 +602,7 @@
 "autofill.logins.search.no-results.title" = "Niciun rezultat";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Parolele sunt stocate în siguranță pe dispozitivul dvs. în meniul Autentificări.";
+"autofill.password-generation-prompt.subtitle" = "Parolele sunt stocate în siguranță pe dispozitivul tău.";
 
 /* Title for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.title" = "Folosiți o parolă puternică de la DuckDuckGo?";
@@ -647,7 +647,7 @@
 "autofill.save-login.never-prompt.CTA" = "Nu solicita niciodată pentru acest site";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Parolele sunt stocate în siguranță pe dispozitivul dvs. în meniul Autentificări.";
+"autofill.save-login.new-user.message" = "Parolele sunt stocate în siguranță pe dispozitivul tău.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Dorești ca DuckDuckGo să-ți salveze parola?";
@@ -656,7 +656,7 @@
 "autofill.save-login.not-now.CTA" = "Nu salva";
 
 /* Title displayed on modal asking for the user to save the login */
-"autofill.save-login.title" = "Salvezi autentificarea?";
+"autofill.save-login.title" = "Salvezi parola?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Salvează parola";

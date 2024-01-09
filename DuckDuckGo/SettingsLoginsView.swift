@@ -28,7 +28,7 @@ struct SettingsLoginsView: View {
     @EnvironmentObject var viewModel: SettingsViewModel
     
     var body: some View {
-        if viewModel.shouldShowLoginsCell {
+        if viewModel.state.loginsEnabled {
             Section {
                 SettingsCellView(label: UserText.settingsLogins,
                                  action: { viewModel.presentLegacyView(.logins) },

@@ -42,15 +42,15 @@ struct SettingsAppeareanceView: View {
                                    options: FireButtonAnimationType.allCases,
                                    selectedOption: viewModel.fireButtonAnimationBinding)
              
-            if viewModel.shouldShowTextSizeCell {
+            if viewModel.state.textSize.enabled {
                 SettingsCellView(label: UserText.settingsText,
                                  action: { viewModel.presentLegacyView(.textSize) },
-                                 accesory: .rightDetail("\(viewModel.state.textSize)%"),
+                                 accesory: .rightDetail("\(viewModel.state.textSize.size)%"),
                                  asLink: true,
                                  disclosureIndicator: true)
             }
             
-            if viewModel.shouldShowAddressBarPositionCell {
+            if viewModel.state.addressbar.enabled {
                 SettingsPickerCellView(label: UserText.settingsAddressBar,
                                        options: AddressBarPosition.allCases,
                                        selectedOption: viewModel.addressBarPositionBinding)

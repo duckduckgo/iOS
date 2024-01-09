@@ -282,9 +282,6 @@ extension SyncSettingsView {
                     .padding(.bottom, 1)
                 devEnvironmentIndicator()
             }
-        } footer: {
-            Text(UserText.turnSyncOffSectionFooter)
-                .multilineTextAlignment(.leading)
         }
     }
 

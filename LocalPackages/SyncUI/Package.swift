@@ -21,6 +21,7 @@ import PackageDescription
 
 let package = Package(
     name: "SyncUI",
+    defaultLocalization: "en",
     platforms: [
         .iOS(.v14)
     ],

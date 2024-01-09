@@ -41,7 +41,6 @@ struct UserText {
     // Turn Sync Off
     static let turnSyncOff = NSLocalizedString("turn.sync.off", value: "Turn Off Sync & Backup...", comment: "Turn Sync Off - Button")
     static let turnSyncOffSectionHeader = NSLocalizedString("turn.sync.off.section.header", value: "Sync Enabled", comment: "Turn Sync Off - Section Header")
-    static let turnSyncOffSectionFooter = NSLocalizedString("turn.sync.off.section.footer", value: "Bookmarks and passwords are currently synced across your devices.", comment: "Turn Sync Off - Section Footer")
     // Sync Paused Errors
     static let syncLimitExceededTitle = NSLocalizedString("sync.limit.exceeded.title", value: "Sync Paused", comment: "Sync Paused Errors - Title")
     static let bookmarksLimitExceededDescription = NSLocalizedString("bookmarks.limit.exceeded.description", value: "Bookmark limit exceeded. Delete some to resume syncing.", comment: "Sync Paused Errors - Bookmarks Limit Exceeded Description")
@@ -56,8 +55,8 @@ struct UserText {
     static let optionsSectionHeader = NSLocalizedString("options.section.header", value: "Options", comment: "Options - Section Header")
     static let unifiedFavoritesTitle = NSLocalizedString("unified.favorites.title", value: "Unify Favorites", comment: "Options - Unify Favorites Title")
     static let unifiedFavoritesInstruction = NSLocalizedString("unified.favorites.instruction", value: "Use the same favorite bookmarks on all your devices. Leave off to keep mobile and desktop favorites separate.", comment: "Options - Unify Favorites Instruction")
-    static let fetchFaviconsOptionTitle = NSLocalizedString("fetch.favicons.option.title", value: "Auto-Download Icons", comment: "Automatically download icons for your synced bookmarks. Icon downloads are exposed to your network.")
-    static let fetchFaviconsOptionCaption = NSLocalizedString("fetch.favicons.option.caption", value: "Automatically download icons for synced bookmarks.", comment: "Options - Fetch Favicons Caption")
+    static let fetchFaviconsOptionTitle = NSLocalizedString("fetch.favicons.option.title", value: "Auto-Download Icons", comment: "Options - Fetch Favicons Title")
+    static let fetchFaviconsOptionCaption = NSLocalizedString("fetch.favicons.option.caption", value: "Automatically download icons for your synced bookmarks. Icon downloads are exposed to your network.", comment: "Options - Fetch Favicons Description")
 
     // Save RecoveryPDF
     static let saveRecoveryPDFButton = NSLocalizedString("save.recovery.pdf.button", value: "Save Recovery PDF", comment: "Save RecoveryPDF - Button")

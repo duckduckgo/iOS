@@ -67,6 +67,7 @@ struct SettingsPrivacyProView: View {
                              disclosureIndicator: true)
             SettingsCellView(label: UserText.settingsPProDBPTitle, subtitle: UserText.settingsPProDBPSubTitle)
             SettingsCellView(label: UserText.settingsPProITRTitle, subtitle: UserText.settingsPProITRSubTitle)
+            
             NavigationLink(destination: SubscriptionFlowView(viewModel: SubscriptionFlowViewModel())) {
                 SettingsCustomCell(content: { manageSubscriptionView })
             }

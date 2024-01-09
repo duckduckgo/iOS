@@ -239,14 +239,16 @@ struct SettingsCustomCell<Content: View>: View {
     }
 
     var body: some View {
-        if asLink {
-            Button(action: action) {
+        Group {
+            if asLink {
+                Button(action: action) {
+                    cellContent
+                }
+                .buttonStyle(PlainButtonStyle())
+                .contentShape(Rectangle())
+            } else {
                 cellContent
             }
-            .buttonStyle(PlainButtonStyle())
-            .contentShape(Rectangle())
-        } else {
-            cellContent
         }
     }
     

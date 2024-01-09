@@ -65,6 +65,7 @@ struct SettingsPrivacyProView: View {
                              action: { viewModel.presentLegacyView(.netP) },
                              asLink: true,
                              disclosureIndicator: true)
+            
             SettingsCellView(label: UserText.settingsPProDBPTitle, subtitle: UserText.settingsPProDBPSubTitle)
             SettingsCellView(label: UserText.settingsPProITRTitle, subtitle: UserText.settingsPProITRSubTitle)
             

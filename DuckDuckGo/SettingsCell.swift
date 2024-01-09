@@ -239,18 +239,17 @@ struct SettingsCustomCell<Content: View>: View {
     }
 
     var body: some View {
-        Group {
-            if asLink {
-                Button(action: action) {
-                    cellContent
-                }
-                .buttonStyle(PlainButtonStyle())
-                .contentShape(Rectangle())
-            } else {
+        if asLink {
+            Button(action: action) {
                 cellContent
             }
+            .buttonStyle(PlainButtonStyle())
+            .contentShape(Rectangle())
+        } else {
+            cellContent
         }
     }
+
     
     private var cellContent: some View {
         HStack {

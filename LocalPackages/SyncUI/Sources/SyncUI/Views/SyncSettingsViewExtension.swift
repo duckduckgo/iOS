@@ -311,14 +311,9 @@ extension SyncSettingsView {
         } header: {
             HStack(alignment: .top, spacing: 16) {
                 Image("Info-Color-16")
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(UserText.syncRollOutBannerTitle)
-                        .font(.system(size: 12, weight: .semibold))
-                        .foregroundColor(.black)
-                    Text(UserText.syncRollOutBannerDescription)
-                        .font(.system(size: 12))
-                        .foregroundColor(.black)
-                }
+                Text(UserText.syncRollOutBannerDescription)
+                    .font(.system(size: 12))
+                    .foregroundColor(.black)
             }
             .padding()
             .background(RoundedRectangle(cornerRadius: 8).foregroundColor(.blue10))

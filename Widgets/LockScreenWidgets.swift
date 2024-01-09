@@ -114,6 +114,7 @@ struct LockScreenWidgetView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Circle().foregroundColor(.white.opacity(0.3)))
+        .widgetContainerBackground()
     }
 
 }

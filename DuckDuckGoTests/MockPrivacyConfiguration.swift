@@ -28,6 +28,13 @@ class MockPrivacyConfiguration: PrivacyConfiguration {
         isSubfeatureKeyEnabled?(subfeature, versionProvider) ?? false
     }
 
+    func stateFor(_ subfeature: any PrivacySubfeature, versionProvider: AppVersionProvider, randomizer: (Range<Double>) -> Double) -> PrivacyConfigurationFeatureState {
+        if isSubfeatureKeyEnabled?(subfeature, versionProvider) == true {
+            return .enabled
+        }
+        return .disabled(.disabledInConfig)
+    }
+
     var identifier: String = "MockPrivacyConfiguration"
     var userUnprotectedDomains: [String] = []
     var tempUnprotectedDomains: [String] = []
@@ -41,6 +48,13 @@ class MockPrivacyConfiguration: PrivacyConfiguration {
     func isEnabled(featureKey: PrivacyFeature, versionProvider: AppVersionProvider) -> Bool {
         isFeatureKeyEnabled?(featureKey, versionProvider) ?? true
     }
+    func stateFor(featureKey: PrivacyFeature, versionProvider: AppVersionProvider) -> PrivacyConfigurationFeatureState {
+        if isFeatureKeyEnabled?(featureKey, versionProvider) == true {
+            return .enabled
+        }
+        return .disabled(.disabledInConfig)
+    }
+
     func isFeature(_ feature: PrivacyFeature, enabledForDomain: String?) -> Bool { true }
     func isProtected(domain: String?) -> Bool { true }
     func isUserUnprotected(domain: String?) -> Bool { false }

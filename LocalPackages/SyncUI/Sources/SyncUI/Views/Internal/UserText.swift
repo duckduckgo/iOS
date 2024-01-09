@@ -25,6 +25,7 @@ struct UserText {
 
     // Sync Title
     static let syncTitle = NSLocalizedString("sync.title", value: "Sync & Backup", comment: "Sync & Backup Title")
+    static let syncRollOutBannerDescription = NSLocalizedString("preferences.sync.rollout-banner.description", value: "Sync & Backup is rolling out gradually and may not be available yet within DuckDuckGo on your other devices.", comment: "Description of rollout banner")
 
     // Sync Set Up
     // Sync With Another Device Card

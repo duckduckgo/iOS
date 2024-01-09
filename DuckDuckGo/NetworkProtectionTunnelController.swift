@@ -48,6 +48,8 @@ final class NetworkProtectionTunnelController: TunnelController {
             #if DEBUG
             errorStore.lastErrorMessage = error.localizedDescription
             #endif
+
+            await saveLastDisconnectErrorMessage()
         }
     }
 
@@ -62,6 +64,8 @@ final class NetworkProtectionTunnelController: TunnelController {
             #if DEBUG
             errorStore.lastErrorMessage = error.localizedDescription
             #endif
+
+            await saveLastDisconnectErrorMessage()
         }
 
         tunnelManager.connection.stopVPNTunnel()
@@ -69,6 +73,19 @@ final class NetworkProtectionTunnelController: TunnelController {
 
     func removeVPN() async {
         try? await tunnelManager?.removeFromPreferences()
+    }
+
+    private func saveLastDisconnectErrorMessage() async {
+        guard let tunnelManager = await tunnelManager,
+              tunnelManager.connection.status == .disconnected || tunnelManager.connection.status == .disconnecting else {
+            return
+        }
+
+        if #available(iOS 16.0, *) {
+            tunnelManager.connection.fetchLastDisconnectError { [weak self] error in
+                self?.errorStore.saveLastDisconnectError(error)
+            }
+        }
     }
 
     // MARK: - Connection Status Querying

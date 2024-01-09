@@ -39,11 +39,13 @@ struct VPNMetadata: Encodable {
 
     struct NetworkInfo: Encodable {
         let currentPath: String
+        let lastPathChangeDate: String
+        let lastPathChange: String
     }
 
     struct VPNState: Encodable {
         let connectionState: String
-        let lastErrorMessage: String
+        let lastDisconnectError: String
         let connectedServer: String
         let connectedServerIP: String
     }
@@ -145,13 +147,13 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
             if !monitor.currentPath.availableInterfaces.isEmpty {
                 path = monitor.currentPath
                 monitor.cancel()
-                return .init(currentPath: path.debugDescription)
+                return .init(currentPath: path.debugDescription, lastPathChangeDate: "none", lastPathChange: "none")
             }
 
             // Wait up to 3 seconds to fetch the path.
             let currentExecutionTime = CFAbsoluteTimeGetCurrent() - startTime
             if currentExecutionTime >= 3.0 {
-                return .init(currentPath: "Timed out fetching path")
+                return .init(currentPath: "Timed out fetching path", lastPathChangeDate: "none", lastPathChange: "none")
             }
         }
     }
@@ -159,11 +161,12 @@ final class DefaultVPNMetadataCollector: VPNMetadataCollector {
     @MainActor
     func collectVPNState() async -> VPNMetadata.VPNState {
         let connectionState = String(describing: statusObserver.recentValue)
-        let lastErrorMessage = errorStore.lastErrorMessage ?? "none"
+        let lastDisconnectError = errorStore.lastDisconnectErrorMessage ?? "none"
         let connectedServer = serverInfoObserver.recentValue.serverLocation ?? "none"
         let connectedServerIP = serverInfoObserver.recentValue.serverAddress ?? "none"
+
         return .init(connectionState: connectionState,
-                     lastErrorMessage: lastErrorMessage,
+                     lastDisconnectError: lastDisconnectError,
                      connectedServer: connectedServer,
                      connectedServerIP: connectedServerIP)
     }

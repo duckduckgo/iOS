@@ -858,13 +858,25 @@ class MainViewController: UIViewController {
         updateFindInPage()
         currentTab?.progressWorker.progressBar = nil
         currentTab?.chromeDelegate = nil
-        addToView(controller: tab)
+        currentTab?.webView.scrollView.contentInsetAdjustmentBehavior = .never
+
+        // addToView(controller: tab)
+        addChild(tab)
+        tab.willMove(toParent: self)
+        view.insertSubview(tab.view, at: 0)
+        tab.view.frame = self.view.frame
+        tab.didMove(toParent: self)
+        
+        viewCoordinator.logoContainer.isHidden = true
+        viewCoordinator.contentContainer.isHidden = true
+        
         tab.progressWorker.progressBar = viewCoordinator.progress
         chromeManager.attach(to: tab.webView.scrollView)
         tab.chromeDelegate = self
     }
 
     private func addToView(controller: UIViewController) {
+        viewCoordinator.contentContainer.isHidden = false
         addChild(controller)
         viewCoordinator.contentContainer.subviews.forEach { $0.removeFromSuperview() }
         viewCoordinator.contentContainer.addSubview(controller.view)
@@ -1293,18 +1305,35 @@ extension MainViewController: BrowserChromeDelegate {
         let updateBlock = {
             self.updateToolbarConstant(percent)
             self.updateNavBarConstant(percent)
-            
+          
             self.view.layoutIfNeeded()
             
-            self.viewCoordinator.omniBar.alpha = percent
+            self.viewCoordinator.navigationBarContainer.alpha = percent
             self.viewCoordinator.tabBarContainer.alpha = percent
             self.viewCoordinator.toolbar.alpha = percent
         }
+  
+        func completion(_ finished: Bool) {
+            if self.appSettings.currentAddressBarPosition == .top {
+                let top: CGFloat = self.viewCoordinator.statusBackground.frame.height * percent
+                let bottom: CGFloat = (self.viewCoordinator.toolbar.frame.height * percent) 
+                                        + self.view.safeAreaInsets.bottom + self.additionalSafeAreaInsets.bottom
+                print("***", bottom, top, percent, animated)
+                self.currentTab?.webView.scrollView.contentInset = .init(top: top, left: 0, bottom: bottom, right: 0)
+            } else {
+                let top: CGFloat = self.viewCoordinator.statusBackground.frame.height * percent
+                let bottom: CGFloat = ((self.viewCoordinator.toolbar.frame.height + self.viewCoordinator.navigationBarContainer.frame.height) * percent)
+                                        + self.view.safeAreaInsets.bottom + self.additionalSafeAreaInsets.bottom
+                print("***", bottom, top, percent, animated)
+                self.currentTab?.webView.scrollView.contentInset = .init(top: top, left: 0, bottom: bottom, right: 0)
+            }
+        }
         
         if animated {
-            UIView.animate(withDuration: ChromeAnimationConstants.duration, animations: updateBlock)
+            UIView.animate(withDuration: ChromeAnimationConstants.duration, animations: updateBlock, completion: completion)
         } else {
             updateBlock()
+            completion(true)
         }
     }
 
@@ -1315,6 +1344,7 @@ extension MainViewController: BrowserChromeDelegate {
         viewCoordinator.omniBar.alpha = hidden ? 0 : 1
         viewCoordinator.tabBarContainer.alpha = hidden ? 0 : 1
         viewCoordinator.statusBackground.alpha = hidden ? 0 : 1
+        
     }
     
     var canHideBars: Bool {

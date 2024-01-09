@@ -42,14 +42,24 @@ struct SettingsPrivacyProView: View {
             .foregroundColor(Color.init(designSystemColor: .accent))
     }
     
+    private var purchaseSubscriptionView: some View {
+        return Group {
+            SettingsCustomCell(content: { privacyProDescriptionView })
+            NavigationLink(destination: SubscriptionFlowView(viewModel: SubscriptionFlowViewModel())) {
+                SettingsCustomCell(content: { learnMoreView })
+            }
+        }
+    }
+    
     var body: some View {
-        if viewModel.canPurchaseSubscription {
+        
+        if viewModel.state.privacyPro.enabled {
             Section(header: Text(UserText.settingsPProSection)) {
-                    SettingsCustomCell(content: { privacyProDescriptionView })
+                if viewModel.state.privacyPro.hasActiveSubscription {
                     
-                    NavigationLink(destination: SubscriptionFlowView(viewModel: SubscriptionFlowViewModel())) {
-                        SettingsCustomCell(content: { learnMoreView })
-                    }
+                } else {
+                    purchaseSubscriptionView
+                }
             }
         }
     }

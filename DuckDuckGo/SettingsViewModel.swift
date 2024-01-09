@@ -71,17 +71,8 @@ final class SettingsViewModel: ObservableObject {
         case networkProtection
 #endif
     }
-    
-    var shouldShowSyncCell: Bool { featureFlagger.isFeatureOn(.sync) }
-    var shouldShowLoginsCell: Bool { featureFlagger.isFeatureOn(.autofillAccessCredentialManagement) }
-    var shouldShowTextSizeCell: Bool { !isPad }
-    var shouldShowVoiceSearchCell: Bool { AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable }
-    var shouldShowAddressBarPositionCell: Bool { !isPad }
-    var shouldShowSpeechRecognitionCell: Bool { AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable }
+                
     var shouldShowNoMicrophonePermissionAlert: Bool = false
-    var shouldShowDebugCell: Bool { return featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild }
-    var shouldShowPrivacyProCell: Bool { return featureFlagger.isFeatureOn(.privacyPro) }
-    @Published var canPurchaseSubscription = SubscriptionPurchaseEnvironment.canPurchase
     
     var shouldShowNetworkProtectionCell: Bool {
 #if NETWORK_PROTECTION
@@ -128,11 +119,11 @@ final class SettingsViewModel: ObservableObject {
     var addressBarPositionBinding: Binding<AddressBarPosition> {
         Binding<AddressBarPosition>(
             get: {
-                self.state.addressBarPosition
+                self.state.addressbar.position
             },
             set: {
                 self.appSettings.currentAddressBarPosition = $0
-                self.state.addressBarPosition = $0
+                self.state.addressbar.position = $0
             }
         )
     }
@@ -214,19 +205,45 @@ extension SettingsViewModel {
             appTheme: appSettings.currentThemeName,
             appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: appSettings.currentFireButtonAnimation,
-            textSize: appSettings.textSize,
-            addressBarPosition: appSettings.currentAddressBarPosition,
+            textSize: SettingsState.TextSize(enabled: !isPad, size: appSettings.textSize),
+            addressbar: SettingsState.AddressBar(enabled: !isPad, position: appSettings.currentAddressBarPosition),
             sendDoNotSell: appSettings.sendDoNotSell,
             autoconsentEnabled: appSettings.autoconsentEnabled,
             autoclearDataEnabled: AutoClearSettingsModel(settings: appSettings) != nil,
             applicationLock: privacyStore.authenticationEnabled,
             autocomplete: appSettings.autocomplete,
-            voiceSearchEnabled: appSettings.voiceSearchEnabled && AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
             longPressPreviews: appSettings.longPressPreviews,
             allowUniversalLinks: appSettings.allowUniversalLinks,
-            activeWebsiteAccount: nil, // Default value for logins
-            netPSubtitle: "", // Default value for Network Protection
-            version: versionProvider.versionAndBuildNumber
+            activeWebsiteAccount: nil,
+            version: versionProvider.versionAndBuildNumber,
+            debugModeEnabled: featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild,
+            syncEnabled: featureFlagger.isFeatureOn(.sync),
+            voiceSearchEnabled: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
+            speechRecognitionEnabled: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
+            loginsEnabled: featureFlagger.isFeatureOn(.autofillAccessCredentialManagement),
+            networkProtection: {
+                var enabled = false
+#if NETWORK_PROTECTION
+                    if #available(iOS 15, *) {
+                        let accessController = NetworkProtectionAccessController()
+                        enabled = accessController.networkProtectionAccessType() != .none
+                    }
+#endif
+                return SettingsState.NetworkProtection(enabled: enabled, status: "")
+            }(),
+            privacyPro: {
+                var enabled = false
+                var canPurchaseSubscription = false
+                var hasActiveSubscription = false
+#if SUBSCRIPTION
+                enabled = featureFlagger.isFeatureOn(.privacyPro)
+                canPurchaseSubscription = SubscriptionPurchaseEnvironment.canPurchase
+                hasActiveSubscription = false
+#endif
+                return SettingsState.PrivacyPro(enabled: enabled,
+                                                canPurchaseSubscription: canPurchaseSubscription,
+                                                hasActiveSubscription: hasActiveSubscription)
+            }()
         )
         setupSubscribers()
 #if SUBSCRIPTION
@@ -257,23 +274,24 @@ extension SettingsViewModel {
             PurchaseManager.shared.$availableProducts
                 .receive(on: RunLoop.main)
                 .sink { [weak self] products in
-                    self?.canPurchaseSubscription = !products.isEmpty
+                    self?.state.privacyPro.enabled = !products.isEmpty
+                    self?.state.privacyPro.canPurchaseSubscription = !products.isEmpty
                 }.store(in: &cancellables)
        
     }
 #endif
     
 #if NETWORK_PROTECTION
-    private func updateNetPCellSubtitle(connectionStatus: ConnectionStatus) {
+    private func updateNetPStatus(connectionStatus: ConnectionStatus) {
         switch NetworkProtectionAccessController().networkProtectionAccessType() {
         case .none, .waitlistAvailable, .waitlistJoined, .waitlistInvitedPendingTermsAcceptance:
-            self.state.netPSubtitle = VPNWaitlist.shared.settingsSubtitle
+            self.state.networkProtection.status = VPNWaitlist.shared.settingsSubtitle
         case .waitlistInvited, .inviteCodeInvited:
             switch connectionStatus {
             case .connected:
-                self.state.netPSubtitle = UserText.netPCellConnected
+                self.state.networkProtection.status = UserText.netPCellConnected
             default:
-                self.state.netPSubtitle = UserText.netPCellDisconnected
+                self.state.networkProtection.status = UserText.netPCellDisconnected
             }
         }
     }
@@ -290,7 +308,7 @@ extension SettingsViewModel {
         connectionObserver.publisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] status in
-                self?.updateNetPCellSubtitle(connectionStatus: status)
+                self?.updateNetPStatus(connectionStatus: status)
             }
             .store(in: &cancellables)
 #endif

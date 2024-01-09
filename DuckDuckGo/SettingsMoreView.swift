@@ -47,9 +47,9 @@ struct SettingsMoreView: View {
                              disclosureIndicator: true)
 
 #if NETWORK_PROTECTION
-            if viewModel.shouldShowNetworkProtectionCell {
+            if viewModel.state.networkProtection.enabled {
                 SettingsCellView(label: UserText.netPNavTitle,
-                                 subtitle: viewModel.state.netPSubtitle != "" ? viewModel.state.netPSubtitle : nil,
+                                 subtitle: viewModel.state.networkProtection.status != "" ? viewModel.state.networkProtection.status : nil,
                                  action: { viewModel.presentLegacyView(.netP) },
                                  asLink: true,
                                  disclosureIndicator: true)

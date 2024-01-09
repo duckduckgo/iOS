@@ -37,7 +37,7 @@ struct SettingsCustomizeView: View {
             SettingsCellView(label: UserText.settingsAutocomplete,
                              accesory: .toggle(isOn: viewModel.autocompleteBinding))
             
-            if viewModel.shouldShowSpeechRecognitionCell {
+            if viewModel.state.speechRecognitionEnabled {
                 SettingsCellView(label: UserText.settingsVoiceSearch,
                                  accesory: .toggle(isOn: viewModel.voiceSearchEnabledBinding))
             }

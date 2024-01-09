@@ -21,12 +21,33 @@ import BrowserServicesKit
 
 struct SettingsState {
     
+    struct AddressBar {
+        var enabled: Bool
+        var position: AddressBarPosition
+    }
+    
+    struct TextSize {
+        var enabled: Bool
+        var size: Int
+    }
+    
+    struct NetworkProtection {
+        var enabled: Bool
+        var status: String
+    }
+    
+    struct PrivacyPro {
+        var enabled: Bool
+        var canPurchaseSubscription: Bool
+        var hasActiveSubscription: Bool
+    }
+    
     // Appearance properties
     var appTheme: ThemeName
     var appIcon: AppIcon
     var fireButtonAnimation: FireButtonAnimationType
-    var textSize: Int
-    var addressBarPosition: AddressBarPosition
+    var textSize: TextSize
+    var addressbar: AddressBar
 
     // Privacy properties
     var sendDoNotSell: Bool
@@ -36,37 +57,51 @@ struct SettingsState {
 
     // Customization properties
     var autocomplete: Bool
-    var voiceSearchEnabled: Bool
     var longPressPreviews: Bool
     var allowUniversalLinks: Bool
 
     // Logins properties
     var activeWebsiteAccount: SecureVaultModels.WebsiteAccount?
 
-    // Network Protection properties
-    var netPSubtitle: String
-
     // About properties
     var version: String
+        
+    // Features
+    var debugModeEnabled: Bool
+    var syncEnabled: Bool
+    var voiceSearchEnabled: Bool
+    var speechRecognitionEnabled: Bool
+    var loginsEnabled: Bool
+    
+    // Network Protection properties
+    var networkProtection: NetworkProtection
+    
+    // Subscriptions Properties
+    var privacyPro: PrivacyPro
 
     static var defaults: SettingsState {
         return SettingsState(
             appTheme: .systemDefault,
             appIcon: AppIconManager.shared.appIcon,
             fireButtonAnimation: .fireRising,
-            textSize: 100,
-            addressBarPosition: .top,
+            textSize: TextSize(enabled: false, size: 100),
+            addressbar: AddressBar(enabled: false, position: .top),
             sendDoNotSell: true,
             autoconsentEnabled: false,
             autoclearDataEnabled: false,
             applicationLock: false,
             autocomplete: true,
-            voiceSearchEnabled: false,
             longPressPreviews: true,
             allowUniversalLinks: true,
             activeWebsiteAccount: nil,
-            netPSubtitle: "",
-            version: "0.0.0.0"
+            version: "0.0.0.0",
+            debugModeEnabled: false,
+            syncEnabled: false,
+            voiceSearchEnabled: false,
+            speechRecognitionEnabled: false,
+            loginsEnabled: false,
+            networkProtection: NetworkProtection(enabled: false, status: ""),
+            privacyPro: PrivacyPro(enabled: false, canPurchaseSubscription: false, hasActiveSubscription: false)
         )
     }
 }

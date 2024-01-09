@@ -76,27 +76,6 @@ final class SettingsViewModel: ObservableObject {
     }
                 
     var shouldShowNoMicrophonePermissionAlert: Bool = false
-    var shouldShowDebugCell: Bool { return featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild }
-    var syncCellTitle: String {
-        let syncService = legacyViewProvider.syncService
-        let isDataSyncingDisabled = !syncService.featureFlags.contains(.dataSyncing) && syncService.authState == .active
-        if SyncBookmarksAdapter.isSyncBookmarksPaused || SyncCredentialsAdapter.isSyncCredentialsPaused || isDataSyncingDisabled {
-            return "⚠️ \(UserText.settingsSync)"
-        }
-        return UserText.settingsSync
-    }
-
-    var shouldShowNetworkProtectionCell: Bool {
-#if NETWORK_PROTECTION
-        if #available(iOS 15, *) {
-            return featureFlagger.isFeatureOn(.networkProtection)
-        } else {
-            return false
-        }
-#else
-        return false
-#endif
-    }
     
     // MARK: Bindings
     var themeBinding: Binding<ThemeName> {
@@ -229,36 +208,50 @@ extension SettingsViewModel {
             activeWebsiteAccount: nil,
             version: versionProvider.versionAndBuildNumber,
             debugModeEnabled: featureFlagger.isFeatureOn(.debugMenu) || isDebugBuild,
-            syncEnabled: featureFlagger.isFeatureOn(.sync),
             voiceSearchEnabled: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
             speechRecognitionEnabled: AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable,
             loginsEnabled: featureFlagger.isFeatureOn(.autofillAccessCredentialManagement),
             networkProtection: {
                 var enabled = false
-#if NETWORK_PROTECTION
+                #if NETWORK_PROTECTION
                     if #available(iOS 15, *) {
                         let accessController = NetworkProtectionAccessController()
                         enabled = accessController.networkProtectionAccessType() != .none
                     }
-#endif
+                #endif
                 return SettingsState.NetworkProtection(enabled: enabled, status: "")
             }(),
             privacyPro: {
                 var enabled = false
                 var canPurchase = false
                 var status = SettingsState.PrivacyProSubscriptionStatus.unknown
-#if SUBSCRIPTION
-                enabled = featureFlagger.isFeatureOn(.privacyPro)
-                canPurchase = SubscriptionPurchaseEnvironment.canPurchase
-                status = SettingsState.PrivacyProSubscriptionStatus.unknown
-#endif
+                #if SUBSCRIPTION
+                    enabled = featureFlagger.isFeatureOn(.privacyPro)
+                    canPurchase = SubscriptionPurchaseEnvironment.canPurchase
+                    status = SettingsState.PrivacyProSubscriptionStatus.unknown
+                #endif
                 return SettingsState.PrivacyPro(enabled: enabled,
                                                 canPurchase: canPurchase,
                                                 status: status)
-            }()
+            }(),
+            sync: SettingsState.SyncSettings(enabled: legacyViewProvider.syncService.featureFlags.contains(.userInterface),
+                                     title: {
+                                         let syncService = legacyViewProvider.syncService
+                                         let isDataSyncingDisabled = !syncService.featureFlags.contains(.dataSyncing)
+                                          && syncService.authState == .active
+                                         if SyncBookmarksAdapter.isSyncBookmarksPaused
+                                             || SyncCredentialsAdapter.isSyncCredentialsPaused
+                                             || isDataSyncingDisabled {
+                                             return "⚠️ \(UserText.settingsSync)"
+                                         }
+                                         return UserText.settingsSync
+                                     }()
+            )
         )
+        
         setupSubscribers()
-#if SUBSCRIPTION
+        
+        #if SUBSCRIPTION
         if #available(iOS 15, *) {
             Task {
                 if state.privacyPro.enabled {
@@ -266,7 +259,7 @@ extension SettingsViewModel {
                 }
             }
         }
-#endif
+        #endif
     }
         
     private func firePixel(_ event: Pixel.Event) {
@@ -283,8 +276,9 @@ extension SettingsViewModel {
             completion(true)
         }
     }
+    
 
-#if SUBSCRIPTION
+    #if SUBSCRIPTION
     @available(iOS 15.0, *)
     @MainActor
     private func setupSubscriptionEnvironment() async {
@@ -312,8 +306,6 @@ extension SettingsViewModel {
         } else {
             setupSubscriptionPurchaseOptions()
         }
-
-        
     }
     
     @available(iOS 15.0, *)
@@ -325,9 +317,9 @@ extension SettingsViewModel {
                 self?.state.privacyPro.canPurchase = !products.isEmpty
             }.store(in: &cancellables)
     }
-#endif
+    #endif
     
-#if NETWORK_PROTECTION
+    #if NETWORK_PROTECTION
     private func updateNetPStatus(connectionStatus: ConnectionStatus) {
         switch NetworkProtectionAccessController().networkProtectionAccessType() {
         case .none, .waitlistAvailable, .waitlistJoined, .waitlistInvitedPendingTermsAcceptance:
@@ -341,7 +333,8 @@ extension SettingsViewModel {
             }
         }
     }
-#endif
+    #endif
+    
 }
 
 // MARK: Subscribers
@@ -350,14 +343,14 @@ extension SettingsViewModel {
     private func setupSubscribers() {
                
 
-#if NETWORK_PROTECTION
+    #if NETWORK_PROTECTION
         connectionObserver.publisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] status in
                 self?.updateNetPStatus(connectionStatus: status)
             }
             .store(in: &cancellables)
-#endif
+    #endif
         
     }
 }

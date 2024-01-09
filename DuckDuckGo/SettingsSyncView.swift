@@ -31,9 +31,9 @@ struct SettingsSyncView: View {
 
     
     var body: some View {
-        if viewModel.state.syncEnabled {
+        if viewModel.state.sync.enabled {
             Section {
-                SettingsCellView(label: viewModel.syncCellTitle,
+                SettingsCellView(label: viewModel.state.sync.title,
                                  action: { viewModel.presentLegacyView(.sync) },
                                  asLink: true,
                                  disclosureIndicator: true)

@@ -15,7 +15,7 @@
       "location" : "https://github.com/DuckDuckGo/BrowserServicesKit",
       "state" : {
         "branch" : "dominik/grdb-2.3.0",
-        "revision" : "f4caf0d2416982cc3a285f138368ea2f15ef8478"
+        "revision" : "9f9d7d0704228ceb7cc6d098a0cc09f9f6b630b9"
       }
     },
     {
@@ -156,7 +156,7 @@
     {
       "identity" : "trackerradarkit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/duckduckgo/TrackerRadarKit.git",
+      "location" : "https://github.com/duckduckgo/TrackerRadarKit",
       "state" : {
         "revision" : "a6b7ba151d9dc6684484f3785293875ec01cc1ff",
         "version" : "1.2.2"

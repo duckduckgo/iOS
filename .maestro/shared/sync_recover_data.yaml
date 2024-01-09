@@ -1,0 +1,17 @@
+appId: com.duckduckgo.mobile.ios
+---
+
+- assertVisible: Sync & Backup
+- tapOn: Sync & Backup
+- assertVisible: Begin Syncing
+- tapOn: Recover Synced Data
+- assertVisible: Recover Synced Data
+- assertVisible: Get Started
+- tapOn: Get Started
+- tapOn: Enter Text Code Manually
+- tapOn: Paste
+- assertVisible: Save Recovery Code
+- tapOn: Next
+- assertVisible: Your Data is Synced!
+- tapOn: Done
+- assertVisible: Sync Enabled

@@ -37,14 +37,33 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
     private static var packetTunnelProviderEvents: EventMapping<PacketTunnelProvider.Event> = .init { event, _, _, _ in
         switch event {
         case .userBecameActive:
-            DailyPixel.fire(pixel: .networkProtectionActiveUser)
-        case .reportLatency(ms: let ms, server: let server, networkType: let networkType):
-            let params = [
-                PixelParameters.latency: String(ms),
-                PixelParameters.server: server,
-                PixelParameters.networkType: networkType.rawValue
-            ]
-            Pixel.fire(pixel: .networkProtectionLatency, withAdditionalParameters: params)
+            let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
+            DailyPixel.fire(pixel: .networkProtectionActiveUser,
+                            withAdditionalParameters: ["cohort": UniquePixel.dateString(for: settings.vpnFirstEnabled)])
+        case .reportConnectionAttempt(attempt: let attempt):
+            switch attempt {
+            case .connecting:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptConnecting)
+            case .success:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptSuccess)
+            case .failure:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionEnableAttemptFailure)
+            }
+        case .reportTunnelFailure(result: let result):
+            switch result {
+            case .failureDetected:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelFailureDetected)
+            case .failureRecovered:
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionTunnelFailureRecovered)
+            }
+        case .reportLatency(result: let result):
+            switch result {
+            case .error:
+                DailyPixel.fire(pixel: .networkProtectionLatencyError)
+            case .quality(let quality):
+                guard quality != .unknown else { return }
+                DailyPixel.fireDailyAndCount(pixel: .networkProtectionLatency(quality: quality))
+            }
         case .rekeyCompleted:
             Pixel.fire(pixel: .networkProtectionRekeyCompleted)
         }
@@ -123,8 +142,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 params[PixelParameters.keychainErrorCode] = String(status)
             case .wireGuardCannotLocateTunnelFileDescriptor:
                 pixelEvent = .networkProtectionWireguardErrorCannotLocateTunnelFileDescriptor
-            case .wireGuardInvalidState:
+            case .wireGuardInvalidState(reason: let reason):
                 pixelEvent = .networkProtectionWireguardErrorInvalidState
+                params[PixelParameters.reason] = reason
             case .wireGuardDnsResolution:
                 pixelEvent = .networkProtectionWireguardErrorFailedDNSResolution
             case .wireGuardSetNetworkSettings(let error):
@@ -140,6 +160,8 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                 params[PixelParameters.function] = function
                 params[PixelParameters.line] = String(line)
                 pixelError = error
+            case .failedToRetrieveAuthToken:
+                return
             case .failedToFetchLocationList:
                 return
             case .failedToParseLocationListResponse:
@@ -176,9 +198,9 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                                                              errorEvents: nil)
         let errorStore = NetworkProtectionTunnelErrorStore()
         let notificationsPresenter = NetworkProtectionUNNotificationPresenter()
-        let notificationsSettingsStore = NetworkProtectionNotificationsSettingsUserDefaultsStore(userDefaults: .networkProtectionGroupDefaults)
+        let settings = VPNSettings(defaults: .networkProtectionGroupDefaults)
         let nofificationsPresenterDecorator = NetworkProtectionNotificationsPresenterTogglableDecorator(
-            notificationSettingsStore: notificationsSettingsStore,
+            settings: settings,
             wrappee: notificationsPresenter
         )
         notificationsPresenter.requestAuthorization()
@@ -189,9 +211,10 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
                    tokenStore: tokenStore,
                    debugEvents: Self.networkProtectionDebugEvents(controllerErrorStore: errorStore),
                    providerEvents: Self.packetTunnelProviderEvents,
-                   tunnelSettings: TunnelSettings(defaults: .networkProtectionGroupDefaults))
+                   settings: settings)
         startMonitoringMemoryPressureEvents()
         observeServerChanges()
+        observeStatusChanges()
         APIRequest.Headers.setUserAgent(DefaultUserAgentManager.duckDuckGoUserAgent)
     }
 
@@ -226,6 +249,19 @@ final class NetworkProtectionPacketTunnelProvider: PacketTunnelProvider {
         }
         .store(in: &cancellables)
     }
+
+    private let activationDateStore = DefaultVPNWaitlistActivationDateStore()
+
+    private func observeStatusChanges() {
+        connectionStatusPublisher.sink { [weak self] status in
+            if case .connected = status {
+                self?.activationDateStore.setActivationDateIfNecessary()
+                self?.activationDateStore.updateLastActiveDate()
+            }
+        }
+        .store(in: &cancellables)
+    }
+
 }
 
 #endif

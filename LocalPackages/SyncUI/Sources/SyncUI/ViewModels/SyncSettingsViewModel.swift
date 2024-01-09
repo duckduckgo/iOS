@@ -24,7 +24,6 @@ public protocol SyncManagementViewModelDelegate: AnyObject {
 
     func showRecoverData()
     func showSyncWithAnotherDevice()
-    func showSyncWithAnotherDeviceEnterText()
     func showRecoveryPDF()
     func shareRecoveryPDF()
     func createAccountAndStartSyncing(optionsViewModel: SyncSettingsViewModel)
@@ -76,7 +75,7 @@ public class SyncSettingsViewModel: ObservableObject {
     }
 
     @Published public var devices = [Device]()
-    @Published public var isFaviconsSyncEnabled = false
+    @Published public var isFaviconsFetchingEnabled = false
     @Published public var isUnifiedFavoritesEnabled = true
     @Published public var isSyncingDevices = false
     @Published public var isSyncBookmarksPaused = false
@@ -85,9 +84,22 @@ public class SyncSettingsViewModel: ObservableObject {
     @Published var isBusy = false
     @Published var recoveryCode = ""
 
-    public weak var delegate: SyncManagementViewModelDelegate?
+    @Published public var isDataSyncingAvailable: Bool = true
+    @Published public var isConnectingDevicesAvailable: Bool = true
+    @Published public var isAccountCreationAvailable: Bool = true
+    @Published public var isAccountRecoveryAvailable: Bool = true
 
-    public init() { }
+    public weak var delegate: SyncManagementViewModelDelegate?
+    private(set) var isOnDevEnvironment: Bool
+    private(set) var switchToProdEnvironment: () -> Void = {}
+
+    public init(isOnDevEnvironment: @escaping () -> Bool, switchToProdEnvironment: @escaping () -> Void) {
+        self.isOnDevEnvironment = isOnDevEnvironment()
+        self.switchToProdEnvironment = { [weak self] in
+            switchToProdEnvironment()
+            self?.isOnDevEnvironment = isOnDevEnvironment()
+        }
+    }
 
     func disableSync() {
         isBusy = true
@@ -121,14 +133,6 @@ public class SyncSettingsViewModel: ObservableObject {
         delegate?.showSyncWithAnotherDevice()
     }
 
-    func showEnterTextView() {
-        delegate?.showSyncWithAnotherDeviceEnterText()
-    }
-
-    func showRecoverDataView() {
-        delegate?.showRecoverData()
-    }
-
     func createEditDeviceModel(_ device: Device) -> EditDeviceViewModel {
         return EditDeviceViewModel(device: device) { [weak self] newValue in
             self?.delegate?.updateDeviceName(newValue.name)
@@ -160,4 +164,7 @@ public class SyncSettingsViewModel: ObservableObject {
         delegate?.launchAutofillViewController()
     }
 
+    public func recoverSyncDataPressed() {
+        delegate?.showRecoverData()
+    }
 }

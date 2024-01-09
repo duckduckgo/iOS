@@ -51,10 +51,14 @@ public final class DailyPixel {
     /// Does not append any suffix unlike the alternative function below
     public static func fire(pixel: Pixel.Event,
                             withAdditionalParameters params: [String: String] = [:],
+                            includedParameters: [Pixel.QueryParameters] = [.atb, .appVersion],
                             onComplete: @escaping (Swift.Error?) -> Void = { _ in }) {
                 
         if !pixel.hasBeenFiredToday(dailyPixelStorage: storage) {
-            Pixel.fire(pixel: pixel, withAdditionalParameters: params, onComplete: onComplete)
+            Pixel.fire(pixel: pixel,
+                       withAdditionalParameters: params,
+                       includedParameters: includedParameters,
+                       onComplete: onComplete)
             updatePixelLastFireDate(pixel: pixel)
         } else {
             onComplete(Error.alreadyFired)

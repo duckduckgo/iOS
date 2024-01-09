@@ -4,6 +4,7 @@
 <dict>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
+		<string>com.duckduckgo.app.vpnWaitlistStatus</string>
 		<string>com.duckduckgo.app.windowsBrowserWaitlistStatus</string>
 		<string>com.duckduckgo.app.configurationRefresh</string>
 		<string>com.duckduckgo.app.remoteMessageRefresh</string>

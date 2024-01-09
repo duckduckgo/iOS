@@ -1,9 +1,9 @@
 appId: com.duckduckgo.mobile.ios
 ---
 
-- assertVisible: Sync & Back Up
+- assertVisible: Sync & Backup
 - scroll
-- tapOn:
-    point: 50%,91% # TODO: Revisit after new setup flow has been implemented. 
+- tapOn: Turn Off and Delete Server Data...
 - assertVisible: Delete Server Data?
 - tapOn: Delete Server Data
+- assertVisible: Begin Syncing

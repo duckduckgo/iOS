@@ -4,6 +4,9 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
+/* No comment provided by engineer. */
+"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Modifier";
 
@@ -20,7 +23,7 @@
 "action.title.add" = "Ajouter";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Identifiants";
+"action.title.autofill.logins" = "Mots de passe";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Ajouter aux signets";
@@ -132,6 +135,24 @@
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Les signets existants ne seront pas dupliqués.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Vous avez dépassé le nombre maximal de signets à synchroniser. Veuillez en supprimer quelques-uns pour pouvoir sauvegarder vos signets.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "La synchronisation des signets est suspendue";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Vous avez dépassé le nombre maximal de mots de passe à synchroniser. Veuillez en supprimer quelques-uns pour pouvoir sauvegarder vos mots de passe.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "La synchronisation des mots de passe est suspendue";
+
+/* Learn more button in alert */
+"alert.sync-paused-alert-learn-more-button" = "En savoir plus";
+
+/* Confirmation button in alert */
+"alert.sync-paused-alert-ok-button" = "OK";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Ajouter tous les onglets aux signets ?";
@@ -419,16 +440,16 @@
 "autofill.keep-enabled.alert.message" = "Cette fonction peut être désactivée à tout moment dans Paramètres.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Voulez-vous continuer à enregistrer les identifiants de connexion ?";
+"autofill.keep-enabled.alert.title" = "Voulez-vous continuer à enregistrer vos mots de passe ?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Voir";
 
 /* Message displayed after saving an autofill login */
-"autofill.login-saved.toast" = "Identifiant enregistré";
+"autofill.login-saved.toast" = "Le mot de passe a été enregistré";
 
 /* Message displayed after updating an autofill login */
-"autofill.login-updated.toast" = "Identifiant modifié";
+"autofill.login-updated.toast" = "Le mot de passe a été modifié";
 
 /* Menu item text for copying autofill login details */
 "autofill.logins.copy-prompt" = "Copier %@";
@@ -449,19 +470,19 @@
 "autofill.logins.details.address" = "URL du site Web";
 
 /* Title for autofill login details */
-"autofill.logins.details.default-title" = "Connexion";
+"autofill.logins.details.default-title" = "Mot de passe";
 
 /* Delete button when deleting an autofill login */
-"autofill.logins.details.delete" = "Supprimer l'identifiant";
+"autofill.logins.details.delete" = "Supprimer le mot de passe";
 
 /* Autofill alert button confirming delete autofill login */
-"autofill.logins.details.delete-confirmation.button" = "Supprimer l'identifiant";
+"autofill.logins.details.delete-confirmation.button" = "Supprimer le mot de passe";
 
 /* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "Voulez-vous vraiment supprimer cet identifiant ?";
+"autofill.logins.details.delete-confirmation.title" = "Voulez-vous vraiment supprimer ce mot de passe ?";
 
 /* Title when editing autofill login details */
-"autofill.logins.details.edit-title" = "Modifier l'identifiant";
+"autofill.logins.details.edit-title" = "Modifier le mot de passe";
 
 /* Placeholder for password field on autofill login details */
 "autofill.logins.details.edit.password-placeholder" = "Mot de passe";
@@ -475,14 +496,14 @@
 /* Placeholder for userbane field on autofill login details */
 "autofill.logins.details.edit.username-placeholder" = "nomdutilisateur@exemple.com";
 
-/* Message displaying when the login was last updated by */
-"autofill.logins.details.last-updated" = "Dernière mise à jour de l'identifiant %@";
+/* Message displaying when the login was last updated */
+"autofill.logins.details.last-updated" = "Dernière modification : %@";
 
 /* Login name label for login details on autofill */
-"autofill.logins.details.login-name" = "Titre de l'identifiant";
+"autofill.logins.details.login-name" = "Titre";
 
 /* Title when adding new autofill login */
-"autofill.logins.details.new-title" = "Ajouter un identifiant";
+"autofill.logins.details.new-title" = "Ajouter un mot de passe";
 
 /* Notes label for login details on autofill */
 "autofill.logins.details.notes" = "Notes";
@@ -497,37 +518,37 @@
 "autofill.logins.details.save-duplicate-alert.action" = "OK";
 
 /* Message for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.message" = "Vous avez déjà un identifiant pour ce nom d'utilisateur et ce site Web.";
+"autofill.logins.details.save-duplicate-alert.message" = "Vous avez déjà enregistré un mot de passe pour ce nom d'utilisateur et ce site Web.";
 
 /* Title for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.title" = "Identifiant dupliqué";
+"autofill.logins.details.save-duplicate-alert.title" = "Mot de passe dupliqué";
 
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Nom d'utilisateur";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Les identifiants de connexion sont stockés en toute sécurité sur votre appareil.";
+"autofill.logins.empty-view.subtitle" = "Les mots de passe sont stockés en toute sécurité sur votre appareil.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Aucun identifiant enregistré pour l'instant";
+"autofill.logins.empty-view.title" = "Aucun mot de passe n'a été enregistré";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Annuler";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Déverrouiller l'appareil pour accéder aux identifiants enregistrés";
+"autofill.logins.list.auth.reason" = "Déverrouiller l'appareil pour accéder aux mots de passe";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Fermer";
 
 /* Title for a toggle that enables autofill */
-"autofill.logins.list.enable" = "Enregistrer et saisir automatiquement les identifiants";
+"autofill.logins.list.enable" = "Enregistrer et saisir automatiquement les mots de passe";
 
 /* Toast message when a login item is deleted */
-"autofill.logins.list.login-deleted-message" = "Identifiant pour %@ supprimé";
+"autofill.logins.list.login-deleted-message" = "Le mot de passe associé à %@ a été supprimé";
 
 /* Toast message when a login item without a title is deleted */
-"autofill.logins.list.login-deleted-message-no-title" = "Identifiant supprimé";
+"autofill.logins.list.login-deleted-message-no-title" = "Le mot de passe a été supprimé";
 
 /* Title for a button that allows a user to reset their list of never saved sites */
 "autofill.logins.list.never.saved" = "Réinitialiser les sites exclus";
@@ -539,28 +560,28 @@
 "autofill.logins.list.never.saved.reset.action.confirm" = "Réinitialiser les sites exclus";
 
 /* Alert title */
-"autofill.logins.list.never.saved.reset.action.title" = "Si vous réinitialisez les sites exclus, on vous invitera à enregistrer votre identifiant la prochaine fois que vous vous connecterez à l'un de ces sites.";
+"autofill.logins.list.never.saved.reset.action.title" = "Si vous réinitialisez les sites exclus, vous serez invité(e) à enregistrer votre mot de passe lors de votre prochaine connexion à l'un de ces sites.";
 
 /* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Recherche d'identifiants";
+"autofill.logins.list.search-placeholder" = "Rechercher un mot de passe";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Suggéré";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Identifiants";
+"autofill.logins.list.title" = "Mots de passe";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "Un code d'accès est nécessaire pour protéger vos identifiants.";
+"autofill.logins.no-auth.subtitle" = "Un code d'accès est nécessaire pour protéger vos mots de passe.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Sécurisez votre appareil pour enregistrer des identifiants";
+"autofill.logins.no-auth.title" = "Sécurisez votre appareil pour enregistrer vos mots de passe";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Annuler";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Déverrouiller pour utiliser l'identifiant enregistré";
+"autofill.logins.prompt.auth.reason" = "Déverrouiller pour utiliser le mot de passe enregistré";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "À partir de ce site Web";
@@ -584,7 +605,7 @@
 "autofill.logins.search.no-results.title" = "Aucun résultat";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Les mots de passe sont stockés en toute sécurité sur votre appareil dans le menu Identifiants.";
+"autofill.password-generation-prompt.subtitle" = "Les mots de passe sont stockés en toute sécurité sur votre appareil.";
 
 /* Title for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.title" = "Utiliser un mot de passe fort généré par DuckDuckGo ?";
@@ -629,7 +650,7 @@
 "autofill.save-login.never-prompt.CTA" = "Ne jamais demander pour ce site";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Les mots de passe sont stockés en toute sécurité sur votre appareil dans le menu Identifiants.";
+"autofill.save-login.new-user.message" = "Les mots de passe sont stockés en toute sécurité sur votre appareil.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Voulez-vous que DuckDuckGo enregistre votre mot de passe ?";
@@ -638,7 +659,7 @@
 "autofill.save-login.not-now.CTA" = "Ne pas enregistrer";
 
 /* Title displayed on modal asking for the user to save the login */
-"autofill.save-login.title" = "Enregistrer l'identifiant ?";
+"autofill.save-login.title" = "Enregistrer le mot de passe ?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Enregistrer le mot de passe";
@@ -753,48 +774,6 @@
 
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Importez un fichier HTML de signets à partir d'un autre navigateur, ou exportez vos signets existants.";
-
-/* Broken Site Category */
-"brokensite.category.comments" = "Les commentaires n'ont pas pu être chargés";
-
-/* Broken Site Category */
-"brokensite.category.content" = "Le contenu est manquant";
-
-/* Broken Site Category */
-"brokensite.category.cookieprompt" = "La fenêtre contextuelle des cookies n'a pas été gérée";
-
-/* Broken Site Category */
-"brokensite.category.images" = "Les images n'ont pas pu être chargées";
-
-/* Broken Site Category */
-"brokensite.category.links" = "Les liens ou les boutons ne fonctionnent pas";
-
-/* Broken Site Category */
-"brokensite.category.login" = "Je ne peux pas me connecter";
-
-/* Broken Site Category */
-"brokensite.category.other" = "Autre chose";
-
-/* Broken Site Category */
-"brokensite.category.paywall" = "Le site m'a demandé de désactiver";
-
-/* Broken Site Category */
-"brokensite.category.unsupported" = "Le navigateur est incompatible";
-
-/* Broken Site Category */
-"brokensite.category.videos" = "La vidéo n'a pas été lue";
-
-/* Broken Site Category Placeholder */
-"brokensite.categoryPlaceholder" = "Sélectionnez votre problème dans la liste...";
-
-/* Broken Site Category Section Title */
-"brokensite.categoryTitle" = "SÉLECTIONNER UNE CATÉGORIE";
-
-/* Broken Site Comment Placeholder */
-"brokensite.commentPlaceholder" = "Le fait de partager plus d'informations peut nous aider à résoudre ce problème";
-
-/* Broken Site Section Title */
-"brokensite.sectionTitle" = "DÉCRIVEZ CE QU'IL S'EST PASSÉ";
 
 /* No comment provided by engineer. */
 "bucket: %@" = "case : %@";
@@ -1071,6 +1050,18 @@
 
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Supprimer";
+
+/* Display Mode for favorites */
+"favorites.settings.all-devices" = "Tous les favoris de l'appareil";
+
+/* Footer of the favorites settings table */
+"favorites.settings.footer" = "Choisissez les favoris à afficher dans un nouvel onglet en fonction de leur origine.";
+
+/* Header of the favorites settings table */
+"favorites.settings.header" = "Préférences d'affichage";
+
+/* Display Mode for favorites */
+"favorites.settings.mobile-only" = "Favoris sur mobile uniquement";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Bloquer les publicités et les fenêtres contextuelles";
@@ -1438,6 +1429,9 @@
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
 
+/* Title text for an iOS quick action that opens VPN settings */
+"network.protection.quick-action.open-vpn" = "Ouvrir le VPN";
+
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Connected - %@";
 
@@ -1477,8 +1471,59 @@
 /* Location label shown in NetworkProtection's status view. */
 "network.protection.status.view.location" = "Location";
 
+/* Label shown on the title of the settings section in NetworkProtection's status view. */
+"network.protection.status.view.settings.section.title" = "Gérer";
+
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "Network Protection";
+
+/* Title for the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.button.title" = "Activer les notifications";
+
+/* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.section.footer" = "Autorisez DuckDuckGo à vous avertir si votre connexion échoue ou si l'état de votre VPN change.";
+
+/* List section footer for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.section.footer" = "Recevez une notification si votre connexion échoue ou si l'état de votre VPN change.";
+
+/* Title for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.title" = "Alertes VPN";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.footer" = "Restaurez automatiquement une connexion VPN après une interruption.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.title" = "Toujours activé";
+
+/* Title for the VPN Location screen's All Countries section. */
+"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Title for the VPN Location screen's Nearest Available selection item. */
+"network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
+
+/* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+
+/* Title for the VPN Location screen's Recommended section. */
+"network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Title for the VPN Notifications management screen. */
+"network.protection.vpn.notifications.title" = "Notifications VPN";
+
+/* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
+"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+
+/* Title for the Preferred Location VPN Settings item. */
+"network.protection.vpn.preferred.location.title" = "Preferred Location";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.footer" = "Network Protection empêche les fuites DNS vers votre fournisseur de services Internet en acheminant les requêtes DNS via le tunnel VPN vers notre propre résolveur.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.title" = "DNS sécurisé";
+
+/* Title for the VPN Settings screen. */
+"network.protection.vpn.settings.title" = "Paramètres VPN";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
@@ -1593,9 +1638,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Ouvrir dans une autre application ?";
-
-/* No comment provided by engineer. */
-"report.brokensite.header" = "La soumission d'un rapport anonyme pour signaler le mauvais fonctionnement du site nous aide à déboguer ces problèmes et à améliorer l'application.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Rechercher ou saisir une adresse";

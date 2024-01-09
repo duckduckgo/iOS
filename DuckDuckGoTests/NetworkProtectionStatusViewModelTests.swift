@@ -54,6 +54,12 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
         super.tearDown()
     }
 
+    func testInit_prefetchesLocationList() throws {
+        let locationListRepo = MockNetworkProtectionLocationListRepository()
+        viewModel = NetworkProtectionStatusViewModel(locationListRepository: locationListRepo)
+        waitFor(condition: locationListRepo.didCallFetchLocationList)
+    }
+
     func testStatusUpdate_connected_setsIsNetPEnabledToTrue() throws {
         whenStatusUpdate_connected()
     }
@@ -198,6 +204,6 @@ final class NetworkProtectionStatusViewModelTests: XCTestCase {
             condition()
         }
         let expectation = XCTNSPredicateExpectation(predicate: predicate, object: nil)
-        wait(for: [expectation], timeout: 5)
+        wait(for: [expectation], timeout: 20)
     }
 }

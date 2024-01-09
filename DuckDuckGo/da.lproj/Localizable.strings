@@ -4,6 +4,9 @@
 /* No comment provided by engineer. */
 "%@ [%@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)" = "%1$@ [%2$@](https://form.asana.com/?k=_wNLt6YcT5ILpQjDuW0Mxw&d=137249556945)";
 
+/* No comment provided by engineer. */
+"⚠️ FEATURE IS WORK IN PROGRESS ⚠️" = "⚠️ FEATURE IS WORK IN PROGRESS ⚠️";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Rediger";
 
@@ -20,7 +23,7 @@
 "action.title.add" = "Tilføj";
 
 /* Autofill Logins menu item opening the login list */
-"action.title.autofill.logins" = "Logins";
+"action.title.autofill.logins" = "Adgangskoder";
 
 /* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Føj til bogmærker";
@@ -132,6 +135,24 @@
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Eksisterende bogmærker duplikeres ikke.";
+
+/* Description for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-description" = "Du har overskredet grænsen for bogmærkesynkronisering. Prøv at slette nogle bogmærker. Dine bogmærker vil ikke blive sikkerhedskopieret, før dette er løst.";
+
+/* Title for alert shown when sync bookmarks paused for too many items */
+"alert.sync-bookmarks-paused-title" = "Bogmærkesynkronisering er sat på pause";
+
+/* Description for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-description" = "Du har overskredet grænsen for synkronisering af adgangskoder. Prøv at slette nogle adgangskoder. Dine adgangskoder vil ikke blive sikkerhedskopieret, før dette er løst.";
+
+/* Title for alert shown when sync credentials paused for too many items */
+"alert.sync-credentials-paused-title" = "Synkronisering af adgangskoder er sat på pause";
+
+/* Learn more button in alert */
+"alert.sync-paused-alert-learn-more-button" = "Mere info";
+
+/* Confirmation button in alert */
+"alert.sync-paused-alert-ok-button" = "Okay";
 
 /* Question from confirmation dialog */
 "alert.title.bookmarkAll" = "Bogmærk alle faner?";
@@ -419,16 +440,16 @@
 "autofill.keep-enabled.alert.message" = "Du kan til enhver tid deaktivere automatisk udfyldning i Indstillinger.";
 
 /* Title for alert when asking the user if they want to keep using autofill */
-"autofill.keep-enabled.alert.title" = "Vil du fortsat gemme logins?";
+"autofill.keep-enabled.alert.title" = "Vil du fortsætte med at gemme adgangskoder?";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Se";
 
 /* Message displayed after saving an autofill login */
-"autofill.login-saved.toast" = "Login er gemt";
+"autofill.login-saved.toast" = "Adgangskode gemt";
 
 /* Message displayed after updating an autofill login */
-"autofill.login-updated.toast" = "Login er opdateret";
+"autofill.login-updated.toast" = "Adgangskode opdateret";
 
 /* Menu item text for copying autofill login details */
 "autofill.logins.copy-prompt" = "Kopiér %@";
@@ -449,19 +470,19 @@
 "autofill.logins.details.address" = "URL til webstedet";
 
 /* Title for autofill login details */
-"autofill.logins.details.default-title" = "Log på";
+"autofill.logins.details.default-title" = "Adgangskode";
 
 /* Delete button when deleting an autofill login */
-"autofill.logins.details.delete" = "Slet login";
+"autofill.logins.details.delete" = "Slet adgangskode";
 
 /* Autofill alert button confirming delete autofill login */
-"autofill.logins.details.delete-confirmation.button" = "Slet login";
+"autofill.logins.details.delete-confirmation.button" = "Slet adgangskode";
 
 /* Title of confirmation alert when deleting an autofill login */
-"autofill.logins.details.delete-confirmation.title" = "Er du sikker på, at du vil slette dette login?";
+"autofill.logins.details.delete-confirmation.title" = "Er du sikker på, at du vil slette denne adgangskode?";
 
 /* Title when editing autofill login details */
-"autofill.logins.details.edit-title" = "Rediger login";
+"autofill.logins.details.edit-title" = "Rediger adgangskode";
 
 /* Placeholder for password field on autofill login details */
 "autofill.logins.details.edit.password-placeholder" = "Adgangskode";
@@ -475,14 +496,14 @@
 /* Placeholder for userbane field on autofill login details */
 "autofill.logins.details.edit.username-placeholder" = "brugernavn@eksempel.dk";
 
-/* Message displaying when the login was last updated by */
-"autofill.logins.details.last-updated" = "Login sidst opdateret %s";
+/* Message displaying when the login was last updated */
+"autofill.logins.details.last-updated" = "Sidst opdateret %@";
 
 /* Login name label for login details on autofill */
-"autofill.logins.details.login-name" = "Login-titel";
+"autofill.logins.details.login-name" = "Titel";
 
 /* Title when adding new autofill login */
-"autofill.logins.details.new-title" = "Tilføj login";
+"autofill.logins.details.new-title" = "Tilføj adgangskode";
 
 /* Notes label for login details on autofill */
 "autofill.logins.details.notes" = "Noter";
@@ -497,37 +518,37 @@
 "autofill.logins.details.save-duplicate-alert.action" = "Okay";
 
 /* Message for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.message" = "Du har allerede et login til dette brugernavn og websted.";
+"autofill.logins.details.save-duplicate-alert.message" = "Du har allerede gemt en adgangskode til dette brugernavn og websted.";
 
 /* Title for alert when attempting to save a duplicate login */
-"autofill.logins.details.save-duplicate-alert.title" = "Duplikeret login";
+"autofill.logins.details.save-duplicate-alert.title" = "Duplikeret adgangskode";
 
 /* Username label for login details on autofill */
 "autofill.logins.details.username" = "Brugernavn";
 
 /* Subtitle for view displayed when autofill has no items */
-"autofill.logins.empty-view.subtitle" = "Login gemmes sikkert på din enhed.";
+"autofill.logins.empty-view.subtitle" = "Adgangskoder gemmes sikkert på din enhed.";
 
 /* Title for view displayed when autofill has no items */
-"autofill.logins.empty-view.title" = "Ingen logins gemt endnu";
+"autofill.logins.empty-view.title" = "Ingen adgangskoder gemt endnu";
 
 /* Cancel button for auth when opening login list */
 "autofill.logins.list.auth.cancel" = "Annullér";
 
 /* Reason for auth when opening login list */
-"autofill.logins.list.auth.reason" = "Lås enheden op for at få adgang til gemte logins";
+"autofill.logins.list.auth.reason" = "Lås enheden op for at få adgang til adgangskoder";
 
 /* Title for close navigation button */
 "autofill.logins.list.close-title" = "Luk";
 
 /* Title for a toggle that enables autofill */
-"autofill.logins.list.enable" = "Gem og udfyld automatisk logins";
+"autofill.logins.list.enable" = "Gem og udfyld adgangskoder automatisk";
 
 /* Toast message when a login item is deleted */
-"autofill.logins.list.login-deleted-message" = "Login til %@ slettet";
+"autofill.logins.list.login-deleted-message" = "Adgangskode til %@ slettet";
 
 /* Toast message when a login item without a title is deleted */
-"autofill.logins.list.login-deleted-message-no-title" = "Login slettet";
+"autofill.logins.list.login-deleted-message-no-title" = "Adgangskode slettet";
 
 /* Title for a button that allows a user to reset their list of never saved sites */
 "autofill.logins.list.never.saved" = "Nulstil ekskluderede websteder";
@@ -539,28 +560,28 @@
 "autofill.logins.list.never.saved.reset.action.confirm" = "Nulstil ekskluderede websteder";
 
 /* Alert title */
-"autofill.logins.list.never.saved.reset.action.title" = "Hvis du nulstiller ekskluderede websteder, vil du blive bedt om at gemme dit login, næste gang du logger ind på en af disse sider.";
+"autofill.logins.list.never.saved.reset.action.title" = "Hvis du nulstiller ekskluderede websteder, vil du blive bedt om at gemme din adgangskode, næste gang du logger ind på en af disse sider.";
 
 /* Placeholder for search field on autofill login listing */
-"autofill.logins.list.search-placeholder" = "Søg logins";
+"autofill.logins.list.search-placeholder" = "Søg adgangskoder";
 
 /* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Foreslået";
 
 /* Title for screen listing autofill logins */
-"autofill.logins.list.title" = "Logins";
+"autofill.logins.list.title" = "Adgangskoder";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "En adgangskode er påkrævet for at beskytte dine logins.";
+"autofill.logins.no-auth.subtitle" = "En adgangskode er påkrævet for at beskytte dine adgangskoder.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Beskyt din enhed for at gemme logins";
+"autofill.logins.no-auth.title" = "Beskyt din enhed for at gemme adgangskoder";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Annullér";
 
 /* Reason for auth during login prompt */
-"autofill.logins.prompt.auth.reason" = "Lås op for at bruge gemte logins";
+"autofill.logins.prompt.auth.reason" = "Lås op for at bruge gemt adgangskode";
 
 /* Title for section of autofill logins that are an exact match to the current website */
 "autofill.logins.prompt.exact.match.title" = "Fra dette websted";
@@ -584,7 +605,7 @@
 "autofill.logins.search.no-results.title" = "Ingen resultater";
 
 /* Subtitle for prompt to use suggested strong password for creating a login */
-"autofill.password-generation-prompt.subtitle" = "Adgangskoder gemmes sikkert på din enhed i menuen Logins.";
+"autofill.password-generation-prompt.subtitle" = "Adgangskoder gemmes sikkert på din enhed.";
 
 /* Title for prompt to use suggested strong password for creating a login */
 "autofill.password-generation-prompt.title" = "Brug en stærk adgangskode fra DuckDuckGo?";
@@ -629,7 +650,7 @@
 "autofill.save-login.never-prompt.CTA" = "Spørg aldrig på dette websted";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Adgangskoder gemmes sikkert på din enhed i menuen Logins.";
+"autofill.save-login.new-user.message" = "Adgangskoder gemmes sikkert på din enhed.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Skal DuckDuckGo gemme din adgangskode?";
@@ -638,7 +659,7 @@
 "autofill.save-login.not-now.CTA" = "Gem ikke";
 
 /* Title displayed on modal asking for the user to save the login */
-"autofill.save-login.title" = "Gem login?";
+"autofill.save-login.title" = "Gem adgangskode?";
 
 /* Confirm CTA displayed on modal asking for the user to save the password */
 "autofill.save-password.save.CTA" = "Gem adgangskode";
@@ -753,48 +774,6 @@
 
 /* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
 "bookmarks.importExport.title" = "Importér en HTML-fil med bogmærker fra en anden browser, eller eksportér dine eksisterende bogmærker.";
-
-/* Broken Site Category */
-"brokensite.category.comments" = "Kommentarer blev ikke indlæst";
-
-/* Broken Site Category */
-"brokensite.category.content" = "Indhold mangler";
-
-/* Broken Site Category */
-"brokensite.category.cookieprompt" = "Cookie-pop op blev ikke administreret";
-
-/* Broken Site Category */
-"brokensite.category.images" = "Billeder blev ikke indlæst";
-
-/* Broken Site Category */
-"brokensite.category.links" = "Links eller knapper fungerer ikke";
-
-/* Broken Site Category */
-"brokensite.category.login" = "Jeg kan ikke logge ind";
-
-/* Broken Site Category */
-"brokensite.category.other" = "Noget andet";
-
-/* Broken Site Category */
-"brokensite.category.paywall" = "Webstedet bad mig om at deaktivere";
-
-/* Broken Site Category */
-"brokensite.category.unsupported" = "Browseren er inkompatibel";
-
-/* Broken Site Category */
-"brokensite.category.videos" = "Videoen blev ikke spillet";
-
-/* Broken Site Category Placeholder */
-"brokensite.categoryPlaceholder" = "Vælg dit emne fra listen ...";
-
-/* Broken Site Category Section Title */
-"brokensite.categoryTitle" = "VÆLG EN KATEGORI";
-
-/* Broken Site Comment Placeholder */
-"brokensite.commentPlaceholder" = "Flere detaljer kan hjælpe os med at løse dette problem";
-
-/* Broken Site Section Title */
-"brokensite.sectionTitle" = "BESKRIV, HVAD DER SKETE";
 
 /* No comment provided by engineer. */
 "bucket: %@" = "bucket: %@";
@@ -1071,6 +1050,18 @@
 
 /* No comment provided by engineer. */
 "favorite.menu.remove" = "Fjern";
+
+/* Display Mode for favorites */
+"favorites.settings.all-devices" = "Alle favoritter på enheden";
+
+/* Footer of the favorites settings table */
+"favorites.settings.footer" = "Vælg, hvilke favoritter der skal vises på en ny fane baseret på deres oprindelse.";
+
+/* Header of the favorites settings table */
+"favorites.settings.header" = "Indstillinger for visning";
+
+/* Display Mode for favorites */
+"favorites.settings.mobile-only" = "Kun favoritter på mobil";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blokering af annoncer og pop op-vinduer";
@@ -1438,6 +1429,9 @@
 /* Title for the network protection invite success view */
 "network.protection.invite.success.title" = "Success! You’re in.";
 
+/* Title text for an iOS quick action that opens VPN settings */
+"network.protection.quick-action.open-vpn" = "Åbn VPN";
+
 /* The label for when NetP VPN is connected plus the length of time connected as a formatter HH:MM:SS string */
 "network.protection.status.connected.format" = "Connected - %@";
 
@@ -1477,8 +1471,59 @@
 /* Location label shown in NetworkProtection's status view. */
 "network.protection.status.view.location" = "Location";
 
+/* Label shown on the title of the settings section in NetworkProtection's status view. */
+"network.protection.status.view.settings.section.title" = "Administrer";
+
 /* Title label text for the status view when netP is disconnected */
 "network.protection.status.view.title" = "Network Protection";
+
+/* Title for the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.button.title" = "Slå notifikationer til";
+
+/* Footer text under the button to link to the iOS app settings and enable notifications app-wide. */
+"network.protection.turn.on.notifications.section.footer" = "Tillad DuckDuckGo at give dig besked, hvis din forbindelse falder ud, eller VPN-status ændres.";
+
+/* List section footer for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.section.footer" = "Få besked, hvis din forbindelse falder ud, eller VPN-status ændres.";
+
+/* Title for the toggle for VPN alerts. */
+"network.protection.vpn.alerts.toggle.title" = "VPN-advarsler";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.footer" = "Gendan automatisk en VPN-forbindelse efter afbrydelse.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.always.on.setting.title" = "Altid aktiv";
+
+/* Title for the VPN Location screen's All Countries section. */
+"network.protection.vpn.location.all.countries.section.title" = "All Countries";
+
+/* Title for the VPN Location screen's Nearest Available selection item. */
+"network.protection.vpn.location.nearest.available.item.title" = "Nearest Available";
+
+/* Footer describing the VPN Location screen's Recommended section which just has Nearest Available. */
+"network.protection.vpn.location.recommended.section.footer" = "Automatically connect to the nearest server we can find";
+
+/* Title for the VPN Location screen's Recommended section. */
+"network.protection.vpn.location.recommended.section.title" = "Recommended";
+
+/* Title for the VPN Notifications management screen. */
+"network.protection.vpn.notifications.title" = "VPN-meddelelser";
+
+/* Label for the Preferred Location VPN Settings item when the nearest available location is selected. */
+"network.protection.vpn.preferred.location.nearest" = "Nearest Available";
+
+/* Title for the Preferred Location VPN Settings item. */
+"network.protection.vpn.preferred.location.title" = "Preferred Location";
+
+/* Footer text for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.footer" = "Network Protection forhindrer DNS-lækager til din internetudbyder ved at dirigere DNS-forespørgsler gennem VPN-tunnelen til vores egen resolver.";
+
+/* Title for the Always on VPN setting item. */
+"network.protection.vpn.secure.dns.setting.title" = "Sikker DNS";
+
+/* Title for the VPN Settings screen. */
+"network.protection.vpn.settings.title" = "VPN-indstillinger";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
@@ -1593,9 +1638,6 @@
 
 /* Alert title */
 "prompt.custom.url.scheme.title" = "Åbn i en anden app?";
-
-/* No comment provided by engineer. */
-"report.brokensite.header" = "Indsendelse af en anonym webstedsrapport om brud hjælper os med at debugge disse problemer og forbedre appen.";
 
 /* No comment provided by engineer. */
 "search.hint.duckduckgo" = "Søg eller indtast adresse";

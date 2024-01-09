@@ -5,9 +5,10 @@ on:
     - cron: '0 5 * * *' # run at 5 AM UTC
 
 jobs:
-  sync-end-to-end-tests:
-    name: Sync End to end Tests
+  build-for-sync-end-to-end-tests:
+    name: Build for Sync End To End Tests
     runs-on: macos-13
+    timeout-minutes: 30
 
     steps:
     - name: Check out the code
@@ -17,7 +18,7 @@ jobs:
 
     - name: Set cache key hash
       run: |
-         has_only_tags=$(jq '[ .object.pins[].state | has("version") ] | all' DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
+         has_only_tags=$(jq '[ .pins[].state | has("version") ] | all' DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
          if [[ "$has_only_tags" == "true" ]]; then
            echo "cache_key_hash=${{ hashFiles('DuckDuckGo.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}" >> $GITHUB_ENV
          else
@@ -40,37 +41,19 @@ jobs:
       run: |
         set -o pipefail && xcodebuild \
           -scheme "DuckDuckGo" \
-          -destination "platform=iOS Simulator,name=iPhone 14,OS=16.4" \
+          -destination "platform=iOS Simulator,name=iPhone 14" \
           -derivedDataPath "DerivedData" \
+          -skipPackagePluginValidation \
         | tee xcodebuild.log
-    
-    - name: Create test account for Sync and return the recovery code
-      uses: duckduckgo/sync_crypto/action@main
-      id: sync-recovery-code
-      with:
-        debug: true
-    
-    - name: Sync e2e tests
-      uses: mobile-dev-inc/action-maestro-cloud@v1.6.0
-      with:
-        api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
-        app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
-        workspace: .maestro
-        include-tags: sync
-        env: |
-            CODE=${{ steps.sync-recovery-code.outputs.recovery-code }}
-    
-    - name: Create Asana task when workflow failed
-      if: ${{ failure() }}
-      run: |
-        curl -s "https://app.asana.com/api/1.0/tasks" \
-          --header "Accept: application/json" \
-          --header "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
-          --header "Content-Type: application/json" \
-          --data ' { "data": { "name": "GH Workflow Failure - Sync End to end tests", "workspace": "${{ vars.GH_ASANA_WORKSPACE_ID }}", "projects": [ "${{ vars.GH_ASANA_IOS_APP_PROJECT_ID }}" ], "notes" : "The end to end workflow has failed. See https://github.com/duckduckgo/iOS/actions/runs/${{ github.run_id }}" } }'
 
+    - name: Store Binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: duckduckgo-ios-app
+        path: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
+    
     - name: Upload logs when workflow failed
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: failure()
       with:
         name: BuildLogs
@@ -78,5 +61,60 @@ jobs:
           xcodebuild.log
           DerivedData/Logs/Test/*.xcresult
         retention-days: 7
+    
+  sync-end-to-end-tests:
+    name: Sync End To End Tests
+    needs: build-for-sync-end-to-end-tests
+    runs-on: macos-13
+    timeout-minutes: 60
+    strategy:
+      matrix:
+        os-version: [15, 16, 17]
+      max-parallel: 1 # Uncomment this line to run tests sequentially. 
+      fail-fast: false
+    
+    steps:
+    - name: Check out the code
+      uses: actions/checkout@v3 # Don't need submodules here as this is only for the tests folder
+
+    - name: Create test account for Sync and return the recovery code
+      uses: duckduckgo/sync_crypto/action@main
+      id: sync-recovery-code
+      with:
+        debug: true
+    
+    - name: Retrieve Binary
+      uses: actions/download-artifact@v4
+      with:
+        name: duckduckgo-ios-app
+        path: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
+
+    - name: Sync e2e tests 
+      uses: mobile-dev-inc/action-maestro-cloud@v1.8.0
+      with:
+        api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
+        app-file: DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app
+        ios-version: ${{ matrix.os-version }}
+        workspace: .maestro
+        include-tags: sync
+        env: |
+            CODE=${{ steps.sync-recovery-code.outputs.recovery-code }}
+    
+  notify-failure:
+    name: Notify on failure
+    if: ${{ always() && contains(join(needs.*.result, ','), 'failure') }}
+    needs: [build-for-sync-end-to-end-tests, sync-end-to-end-tests]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create Asana task when workflow failed
+        run: |
+          curl -s "https://app.asana.com/api/1.0/tasks" \
+            --header "Accept: application/json" \
+            --header "Authorization: Bearer ${{ secrets.ASANA_ACCESS_TOKEN }}" \
+            --header "Content-Type: application/json" \
+            --data ' { "data": { "name": "GH Workflow Failure - Sync End to end tests", "workspace": "${{ vars.GH_ASANA_WORKSPACE_ID }}", "projects": [ "${{ vars.GH_ASANA_IOS_APP_PROJECT_ID }}" ], "notes" : "The end to end workflow has failed. See https://github.com/duckduckgo/iOS/actions/runs/${{ github.run_id }}" } }'
+
+    
     
     

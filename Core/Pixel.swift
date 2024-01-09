@@ -106,6 +106,7 @@ public struct PixelParameters {
     public static let emailKeychainKeychainOperation = "keychain_operation"
 
     public static let bookmarkErrorOrphanedFolderCount = "bookmark_error_orphaned_count"
+    public static let bookmarksLastGoodVersion = "previous_app_version"
 
     // Remote messaging
     public static let message = "message"
@@ -126,8 +127,6 @@ public struct PixelParameters {
     public static let returnUserErrorCode = "error_code"
     public static let returnUserOldATB = "old_atb"
     public static let returnUserNewATB = "new_atb"
-
-    public static let autofillDefaultState = "default_state"
 }
 
 public struct PixelValues {
@@ -205,7 +204,7 @@ public class Pixel {
                                                      headers: headers)
         let request = APIRequest(configuration: configuration, urlSession: .session(useMainThreadCallbackQueue: true))
         request.fetch { _, error in
-            os_log("Pixel fired %s %s", log: .generalLog, type: .debug, pixelName, "\(params)")
+            os_log("Pixel fired %{public}s %{public}s", log: .generalLog, type: .debug, pixelName, "\(params)")
             onComplete(error)
         }
     }
@@ -216,13 +215,14 @@ extension Pixel {
     
     public static func fire(pixel: Pixel.Event,
                             error: Error?,
+                            includedParameters: [QueryParameters] = [.appVersion],
                             withAdditionalParameters params: [String: String] = [:],
                             onComplete: @escaping (Error?) -> Void = { _ in }) {
         var newParams = params
         if let error {
             newParams.appendErrorPixelParams(error: error)
         }
-        fire(pixel: pixel, withAdditionalParameters: newParams, includedParameters: [], onComplete: onComplete)
+        fire(pixel: pixel, withAdditionalParameters: newParams, includedParameters: includedParameters, onComplete: onComplete)
     }
 }
 

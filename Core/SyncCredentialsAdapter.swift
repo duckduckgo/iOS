@@ -39,6 +39,7 @@ public final class SyncCredentialsAdapter {
             NotificationCenter.default.post(name: syncCredentialsPausedStateChanged, object: nil)
         }
     }
+
     @UserDefaultsWrapper(key: .syncCredentialsPausedErrorDisplayed, defaultValue: false)
     static private var didShowCredentialsSyncPausedError: Bool
 
@@ -62,7 +63,11 @@ public final class SyncCredentialsAdapter {
         }
     }
 
-    public func setUpProviderIfNeeded(secureVaultFactory: AutofillVaultFactory, metadataStore: SyncMetadataStore) {
+    public func setUpProviderIfNeeded(
+        secureVaultFactory: AutofillVaultFactory,
+        metadataStore: SyncMetadataStore,
+        metricsEventsHandler: EventMapping<MetricsEvent>? = nil
+    ) {
         guard provider == nil else {
             return
         }
@@ -72,6 +77,7 @@ public final class SyncCredentialsAdapter {
                 secureVaultFactory: secureVaultFactory,
                 secureVaultErrorReporter: secureVaultErrorReporter,
                 metadataStore: metadataStore,
+                metricsEvents: metricsEventsHandler,
                 syncDidUpdateData: { [weak self] in
                     self?.syncDidCompleteSubject.send()
                     Self.isSyncCredentialsPaused = false

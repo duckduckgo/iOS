@@ -4,8 +4,11 @@ tags:
 
 ---
 
+# Clear and launch
 - clearState
 - launchApp
+
+# Run onboarding Flow
 - runFlow: 
     when: 
       visible: 
@@ -13,40 +16,23 @@ tags:
         index: 0
     file: ../shared/onboarding.yaml
 
-# <WORKAROUND>This is a workaround to:
-# - Put the code in the clipboard on Maestro Cloud
-# - Prevent iOS from showing the Paste permission alert as Maestro can't handle it
-- tapOn:
-    id: searchEntry
-- inputText: ${CODE}
-- repeat:
-    while:
-      notVisible: "Select All"
-    commands:
-      - tapOn:
-            id: searchEntry
-- tapOn: Select All
-- tapOn: Cut
-- tapOn:
-    id: searchEntry
-- longPressOn:
-    id: searchEntry
-- tapOn: Paste
-- tapOn: Cancel
-#</WORKAROUND>
-
-# Recover Account test
+# Set Internal User
 - tapOn: Settings
 - runFlow:
-    file: ../shared/set_internal_user.yaml
-- assertVisible: Sync & Back Up
-- tapOn: Sync & Back Up
-- assertVisible: Sync & Back up
-- tapOn: Recover Your Data
-- tapOn: Enter Text Code
-- tapOn: Paste
-- assertVisible: Device Synced!
-- tapOn: Next
-- tapOn: Not Now
-- tapOn: Settings
-- tapOn: Done
+    file: ../shared/set_internal_user_from_settings.yaml
+
+# Create account
+- runFlow:
+    file: ../shared/sync_create.yaml
+
+# Log Out
+- runFlow:
+    file: ../shared/sync_logout.yaml
+
+# Recover Data
+- runFlow:
+    file: ../shared/sync_recover_data.yaml
+
+# Clean up
+- runFlow:
+    file: ../shared/sync_delete.yaml
